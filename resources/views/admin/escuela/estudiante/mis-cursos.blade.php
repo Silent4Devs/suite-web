@@ -97,6 +97,7 @@
             font-size: 12px;
             padding: 10px 25px;
         }
+
         .btn-mas-info-c:hover {
             color: #fff;
         }
@@ -120,6 +121,9 @@
                         <a href="{{ route('admin.curso-estudiante', $cu->cursos->id) }}">
                             <div class="caja-img-mi-curso">
                                 <img src="{{ asset($cu->cursos->image->url) }}" alt="">
+                            </div>
+                            <div class="caja-info-card-mc">
+                                <p style="font-size: 18px;"><strong>{{ $cu->cursos->title }}</strong></p>
                             </div>
                         </a>
                     </div>

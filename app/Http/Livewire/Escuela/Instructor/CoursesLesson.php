@@ -16,13 +16,24 @@ class CoursesLesson extends Component
     use WithFileUploads;
 
     public $section;
+
     public $lesson;
+
     public $platforms;
+
     public $name;
+
     public $platform_id = 1;
+
     public $url;
+
     public $description;
+
     public $file;
+
+    public $openElementId;
+
+    protected $listeners = ['closeCollapse'];
 
     protected $rules = [
         'lesson.name' => 'required',
@@ -141,5 +152,10 @@ class CoursesLesson extends Component
             'toast' => true,
             'timerProgressBar' => true,
         ]);
+    }
+
+    public function closeCollapse()
+    {
+        $this->openElementId = null;
     }
 }

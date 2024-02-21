@@ -44,7 +44,6 @@ class ContratosController extends AppBaseController
     /**
      * Display a listing of the Contratos.
      *
-     * @param  Request  $request
      * @return Response
      */
     public function index(Request $request)
@@ -91,19 +90,19 @@ class ContratosController extends AppBaseController
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'no_contrato' => 'required_unless:identificador_privado,1',
-            'nombre_servicio' => 'required',
+            'no_contrato' => 'required_unless:identificador_privado,1|max:255',
+            'nombre_servicio' => 'required|max:500',
             'tipo_contrato' => 'required',
             'proveedor_id' => 'required',
             'area_id' => 'required',
-            'objetivo' => 'required',
-            'estatus' => 'required',
+            'objetivo' => 'required|max:500',
+            'estatus' => 'required|max:255',
             'cargo_administrador' => 'max:250',
             'area_administrador' => 'max:250',
             'puesto' => 'max:250',
             'area' => 'max:250',
             'file_contrato' => 'required',
-            'fase' => 'required',
+            'fase' => 'required|max:255',
             'vigencia_contrato' => 'required',
             'fecha_inicio' => 'required',
             'fecha_fin' => 'required|after:fecha_inicio',
@@ -365,28 +364,32 @@ class ContratosController extends AppBaseController
      */
     public function show($id)
     {
-        $contrato = $this->contratoRepository->find($id);
-        $formatoFecha = new FormatearFecha;
-        $organizacion = Organizacion::getFirst();
-        $areas = Area::getIdNameAll();
-        if (empty($contrato)) {
-            // notify()->error('¡El registro no fue encontrado!');
+        try {
+            $contrato = $this->contratoRepository->find($id);
+            $formatoFecha = new FormatearFecha;
+            $organizacion = Organizacion::getFirst();
+            $areas = Area::getIdNameAll();
+            if (empty($contrato)) {
+                // notify()->error('¡El registro no fue encontrado!');
 
-            return redirect(route('contract_manager.contratos-katbol.index'));
+                return redirect(route('contract_manager.contratos-katbol.index'));
+            }
+            $proveedor_id = $contrato->proveedor_id;
+            $contratos = Contrato::with('ampliaciones')->find($id);
+            $proveedores = TimesheetCliente::get();
+            $contrato->fecha_inicio = $contrato->fecha_inicio;
+            $contrato->fecha_fin = $contrato->fecha_fin;
+            $contrato->fecha_firma = $contrato->fecha_firma;
+            $descargar_archivo =
+                '/public/storage/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/' . $contrato->file_contrato;
+            $convenios = ConveniosModificatorios::where('contrato_id', '=', $contratos->id)->get();
+            $dolares = DolaresContrato::where('contrato_id', $id)->first();
+
+            //dd($descargar_archivo);
+            return view('contract_manager.contratos-katbol.show', compact('proveedor_id', 'dolares', 'areas'))->with('contrato', $contrato)->with('proveedores', $proveedores)->with('contratos', $contratos)->with('ids', $id)->with('descargar_archivo', $descargar_archivo)->with('convenios', $convenios)->with('organizacion', $organizacion);
+        } catch (\Exception $e) {
+            return redirect()->route('contract_manager.contratos-katbol.index')->with('error', $e->getMessage());
         }
-        $proveedor_id = $contrato->proveedor_id;
-        $contratos = Contrato::with('ampliaciones')->find($id);
-        $proveedores = TimesheetCliente::get();
-        $contrato->fecha_inicio = $contrato->fecha_inicio;
-        $contrato->fecha_fin = $contrato->fecha_fin;
-        $contrato->fecha_firma = $contrato->fecha_firma;
-        $descargar_archivo =
-            '/public/storage/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/' . $contrato->file_contrato;
-        $convenios = ConveniosModificatorios::where('contrato_id', '=', $contratos->id)->get();
-        $dolares = DolaresContrato::where('contrato_id', $id)->first();
-
-        //dd($descargar_archivo);
-        return view('contract_manager.contratos-katbol.show', compact('proveedor_id', 'dolares', 'areas'))->with('contrato', $contrato)->with('proveedores', $proveedores)->with('contratos', $contratos)->with('ids', $id)->with('descargar_archivo', $descargar_archivo)->with('convenios', $convenios)->with('organizacion', $organizacion);
     }
 
     /**
@@ -397,41 +400,45 @@ class ContratosController extends AppBaseController
      */
     public function edit($id)
     {
-        abort_if(Gate::denies('katbol_contratos_modificar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $contrato = $this->contratoRepository->find($id);
-        $areas = Area::getAll();
-        // dd($areas->count());
-        $formatoFecha = new FormatearFecha;
-        if (empty($contrato)) {
-            // toastr()->error('Contratos not found.');
+        try {
+            abort_if(Gate::denies('katbol_contratos_modificar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            $contrato = $this->contratoRepository->find($id);
+            $areas = Area::getAll();
+            // dd($areas->count());
+            $formatoFecha = new FormatearFecha;
+            if (empty($contrato)) {
+                // toastr()->error('Contratos not found.');
 
-            return redirect(route('contract_manager.contratos-katbol.index'));
-        }
-        $proveedor_id = $contrato->proveedor_id;
-        $contratos = Contrato::with('ampliaciones', 'dolares')->find($id);
-        // dd($contratos);
-        $proveedores = TimesheetCliente::get();
-        if (!is_null($contrato->fecha_inicio)) {
-            $contrato->fecha_inicio = $contrato->fecha_inicio;
-        }
-        if (!is_null($contrato->fecha_fin)) {
-            $contrato->fecha_fin = $contrato->fecha_fin;
-        }
-        if (!is_null($contrato->fecha_firma)) {
-            $contrato->fecha_firma = $contrato->fecha_firma;
-        } else {
-            $fecha_firma = null;
-        }
+                return redirect(route('contract_manager.contratos-katbol.index'));
+            }
+            $proveedor_id = $contrato->proveedor_id;
+            $contratos = Contrato::with('ampliaciones', 'dolares')->find($id);
+            // dd($contratos);
+            $proveedores = TimesheetCliente::get();
+            if (!is_null($contrato->fecha_inicio)) {
+                $contrato->fecha_inicio = $contrato->fecha_inicio;
+            }
+            if (!is_null($contrato->fecha_fin)) {
+                $contrato->fecha_fin = $contrato->fecha_fin;
+            }
+            if (!is_null($contrato->fecha_firma)) {
+                $contrato->fecha_firma = $contrato->fecha_firma;
+            } else {
+                $fecha_firma = null;
+            }
 
-        $descargar_archivo = '/public/storage/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/' . $contrato->file_contrato;
+            $descargar_archivo = '/public/storage/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/' . $contrato->file_contrato;
 
-        $convenios = ConveniosModificatorios::where('contrato_id', '=', $contratos->id)->get();
-        // dd($convenios);
-        $dolares = DolaresContrato::where('contrato_id', $id)->first();
-        // dd($dolares);
-        $organizacion = Organizacion::getFirst();
+            $convenios = ConveniosModificatorios::where('contrato_id', '=', $contratos->id)->get();
+            // dd($convenios);
+            $dolares = DolaresContrato::where('contrato_id', $id)->first();
 
-        return view('contract_manager.contratos-katbol.edit', compact('proveedor_id', 'dolares', 'organizacion', 'areas'))->with('contrato', $contrato)->with('proveedores', $proveedores)->with('contratos', $contratos)->with('ids', $id)->with('descargar_archivo', $descargar_archivo)->with('convenios', $convenios)->with('organizacion', $organizacion);
+            $organizacion = Organizacion::getFirst();
+
+            return view('contract_manager.contratos-katbol.edit', compact('proveedor_id', 'dolares', 'organizacion', 'areas'))->with('contrato', $contrato)->with('proveedores', $proveedores)->with('contratos', $contratos)->with('ids', $id)->with('descargar_archivo', $descargar_archivo)->with('convenios', $convenios)->with('organizacion', $organizacion);
+        } catch (\Exception $e) {
+            return redirect()->route('contract_manager.contratos-katbol.index')->with('error', $e->getMessage());
+        }
     }
 
     /**
@@ -445,19 +452,19 @@ class ContratosController extends AppBaseController
     {
         // dd($request->signed);
         $validatedData = $request->validate([
-            'no_contrato' => ['required', new NumeroContrato($id)],
-            'nombre_servicio' => 'required',
+            'no_contrato' => ['required|max:255', new NumeroContrato($id)],
+            'nombre_servicio' => 'required|max:500',
             'tipo_contrato' => 'required',
             'proveedor_id' => 'required',
-            'objetivo' => 'required',
-            'estatus' => 'required',
+            'objetivo' => 'required|max:500',
+            'estatus' => 'required|max:255',
             //  'file_contrato' => 'required',
             'cargo_administrador' => 'max:250',
             'area_administrador' => 'max:250',
             'puesto' => 'max:250',
             'area' => 'max:250',
             'fase' => 'required',
-            'vigencia_contrato' => 'required',
+            'vigencia_contrato' => 'required|max:255',
             'fecha_inicio' => 'required',
             'fecha_fin' => 'required|after:fecha_inicio',
             'area_id' => 'required',

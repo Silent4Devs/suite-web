@@ -9,9 +9,16 @@
             min-width: 200px !important;
         }
     </style>
-    @include('flash::message')
     @include('partials.flashMessages')
     <h5 class="col-12 titulo_general_funcion">Razones Sociales</h5>
+
+    <div class="text-right">
+        <div class="d-flex justify-content-end">
+            <a href="{{ route('contract_manager.sucursales.create') }}" type="button" class="btn btn-primary">Registrar Razon</a> &nbsp; &nbsp;
+            <a href="{{ route('contract_manager.sucursales.view_archivados') }}" type="button" class="btn btn-primary">Archivados</a>
+        </div>
+    </div>
+
     <div class="mt-5 card">
 
         <div class="card-body datatable-fix">
@@ -125,35 +132,35 @@
             ];
             let btnAgregar = {
                 @can('katbol_sucursales_agregar')
-                    text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                    titleAttr: 'Agregar razon social',
-                    url: "{{ route('contract_manager.sucursales.create') }}",
-                    className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                    action: function(e, dt, node, config) {
-                        let {
-                            url
-                        } = config;
-                        window.location.href = url;
-                    }
+                    // text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                    // titleAttr: 'Agregar razon social',
+                    // url: "{{ route('contract_manager.sucursales.create') }}",
+                    // className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                    // action: function(e, dt, node, config) {
+                    //     let {
+                    //         url
+                    //     } = config;
+                    //     window.location.href = url;
+                    // }
                 @endcan
             };
 
             let btnArchivar = {
                 @can('katbol_sucursales_archivar')
-                    text: '<i class="fa-solid fa-box-archive"></i> Archivados',
-                    titleAttr: 'Archivar sucursales',
-                    url: "{{ route('contract_manager.sucursales.view_archivados') }}",
-                    className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                    action: function(e, dt, node, config) {
-                        let {
-                            url
-                        } = config;
-                        window.location.href = url;
-                    },
+                    // text: '<i class="fa-solid fa-box-archive"></i> Archivados',
+                    // titleAttr: 'Archivar sucursales',
+                    // url: "{{ route('contract_manager.sucursales.view_archivados') }}",
+                    // className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                    // action: function(e, dt, node, config) {
+                    //     let {
+                    //         url
+                    //     } = config;
+                    //     window.location.href = url;
+                    // },
                 @endcan
             };
 
-            dtButtons.push(btnAgregar, btnArchivar);
+            // dtButtons.push(btnAgregar, btnArchivar);
             let archivoButton = {
                 @can('katbol_sucursales_archivar')
                     text: 'Archivar Registro',

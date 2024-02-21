@@ -1,79 +1,31 @@
 @extends('layouts.admin')
+@section('css')
+    <link rel="stylesheet" href="{{ asset('css/vacaciones.css') }}{{config('app.cssVersion')}}">
+@endsection
 @section('content')
-    <div class="mt-3">
-        {{ Breadcrumbs::render('Reglas-Goce-Sueldo') }}
-    </div>
-
-    <style>
-        .btn_cargar {
-            border-radius: 100px !important;
-            border: 1px solid #345183;
-            color: #345183;
-            text-align: center;
-            padding: 0;
-            width: 45px;
-            height: 45px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 0 !important;
-            margin-right: 10px !important;
-        }
-
-        .btn_cargar:hover {
-            color: #fff;
-            background: #345183;
-        }
-
-        .btn_cargar i {
-            font-size: 15pt;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .agregar {
-            margin-right: 15px;
-        }
-    </style>
+    {{ Breadcrumbs::render('Reglas-Goce-Sueldo') }}
 
     <h5 class="col-12 titulo_general_funcion">Lineamientos para Permisos</h5>
 
-    <div class="card">
-        <div class="px-1 py-2 mb-4 rounded mt-2 mr-1 ml-1 " style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
-            <div class="row w-100">
-                <div class="text-center col-1 align-items-center d-flex justify-content-center">
-                    <div class="w-100">
-                        <i class="bi bi-info mr-3" style="color: #3B82F6; font-size: 30px"></i>
-                    </div>
-                </div>
-                <div class="col-11">
-                    <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
-                    <p class="m-0" style="font-size: 14px; color:#1E3A8A ">En esta sección se determinarán los
-                        lineamientos que se aplicarán a las solicitudes de permisos de los colaborares.
-                    </p>
-
-                </div>
-            </div>
+    <div class="text-right">
+        <div class="d-flex justify-content-end">
+            <a href="{{ route('admin.permisos-goce-sueldo.create') }}" type="button" class="btn btn-crear">Crear Lineamiento
+                +</a>
         </div>
+    </div>
+
+    <div class="datatable-fix datatable-rds">
         @can('reglas_goce_sueldo_crear')
-            <div style="margin-bottom: 10px; margin-left:10px;" class="row">
-                <div class="col-lg-12">
-                    @include('csvImport.modal', [
-                        'model' => 'Amenaza',
-                        'route' => 'admin.amenazas.parseCsvImport',
-                    ])
-                </div>
-            @endcan
-        </div>
-
-        @include('flash::message')
+            <div class="col-lg-12">
+                @include('csvImport.modal', [
+                    'model' => 'Amenaza',
+                    'route' => 'admin.amenazas.parseCsvImport',
+                ])
+            </div>
+        @endcan
         @include('partials.flashMessages')
-        <div class="card-body datatable-fix">
-            @include('admin.permisosGoceSueldo.table')
-        </div>
+        <h3 class="title-table-rds">Lineamientos para Permisos</h3>
+        @include('admin.permisosGoceSueldo.table')
     </div>
 @endsection
 

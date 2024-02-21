@@ -45,7 +45,7 @@ class LaravelChart
         $this->validateOptions($this->options);
 
         try {
-            if (!class_exists($this->options['model'])) {
+            if (! class_exists($this->options['model'])) {
                 return [];
             }
 
@@ -67,10 +67,10 @@ class LaravelChart
                                 $start = date('Y-m-d', strtotime('last Monday'));
                                 break;
                             case 'month':
-                                $start = date('Y-m') . '-01';
+                                $start = date('Y-m').'-01';
                                 break;
                             case 'year':
-                                $start = date('Y') . '-01-01';
+                                $start = date('Y').'-01-01';
                                 break;
                         }
                         if (isset($start)) {
@@ -159,7 +159,7 @@ class LaravelChart
                     $dates = $data->keys();
                     $interval = $this->options['group_by_period'] ?? 'day';
                     $newArr = [];
-                    if (!is_null($dates->first()) or !is_null($dates->last())) {
+                    if (! is_null($dates->first()) or ! is_null($dates->last())) {
                         $period = CarbonPeriod::since($dates->first())->$interval()->until($dates->last())
                             ->filter(function (Carbon $date) use ($data, &$newArr) {
                                 $key = $date->format($this->options['date_format'] ?? 'Y-m-d');
@@ -175,7 +175,7 @@ class LaravelChart
 
             return $datasets;
         } catch (\Error $ex) {
-            throw new \Exception('Laravel Charts error: ' . $ex->getMessage());
+            throw new \Exception('Laravel Charts error: '.$ex->getMessage());
         }
     }
 
@@ -220,7 +220,7 @@ class LaravelChart
         $validator = Validator::make($options, $rules, $messages, $attributes);
 
         if ($validator->fails()) {
-            throw new \Exception('Laravel Charts options validator: ' . $validator->errors()->first());
+            throw new \Exception('Laravel Charts options validator: '.$validator->errors()->first());
         }
     }
 

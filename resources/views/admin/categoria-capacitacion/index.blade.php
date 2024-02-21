@@ -42,41 +42,71 @@
                 margin-right: 15px;
             }
 
+            .boton-sin-borde {
+            border: none;
+            outline: none; /* Esto elimina el contorno al hacer clic */
+           }
+        .boton-transparente {
+        background-color: transparent;
+        border: none; /* Elimina el borde del botón si lo deseas */
+        }
+
+
         </style>
 
         {{ Breadcrumbs::render('admin.CategoriaCapacitacion.index') }}
         <h5 class="col-12 titulo_general_funcion">Categorías de capacitaciones</h5>
 
-        <div class="mt-5 card">
-            <div style="margin-bottom: 10px; margin-left:10px;" class="row">
-                <div class="col-lg-12">
-                    @include('csvImport.modalcategoriacapacitacion', ['model' => 'Vulnerabilidad', 'route' =>
-                    'admin.vulnerabilidads.parseCsvImport'])
+            <div class="text-right">
+                <div class="d-flex justify-content-end">
+                    <a href="{{ route('admin.categoria-capacitacion.create') }}" type="button" class="btn btn-primary">Registrar Categoría de capacitacion</a>
                 </div>
             </div>
-        <div class="card-body datatable-fix">
-            <table class="table table-bordered tbl-categorias w-100">
-                <thead class="thead-dark">
-                    <tr>
-                        <th style="max-width:50px;">No.</th>
-                        <th>
-                            ID
-                        </th>
-                        <th>
-                            Nombre
-                        </th>
-                        <th style="max-width: 100px;">
-                            Opciones
-                        </th>
-                    </tr>
+            @include('partials.flashMessages')
+            <div class="datatable-fix datatable-rds">
+                <div class="d-flex justify-content-end">
+                    <a class="boton-transparente boton-sin-borde" href="{{ route('descarga-categoriacapacitacion') }}">
+                        <img src="{{ asset('download_FILL0_wght300_GRAD0_opsz24.svg') }}" alt="Importar" class="icon">
+                    </a> &nbsp;&nbsp;&nbsp;
+                    <a class="boton-transparente boton-sin-borde" id="btnImport">
+                        <img src="{{ asset('upload_file_FILL0_wght300_GRAD0_opsz24.svg') }}" alt="Importar" class="icon">
+                    </a>
+                    @include('csvImport.modalcategoriacapacitacion', [
+                        'model' => 'Vulnerabilidad',
+                        'route' => 'admin.vulnerabilidads.parseCsvImport',
+                    ])
+                </div>
+                <h3 class="title-table-rds"> Categorías de capacitaciones</h3>
+                <table class="datatable tbl-categorias" id="tbl-categorias">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th style="min-width:200px;">No.</th>
+                            <th style="min-width:200px;">
+                                ID
+                            </th>
+                            <th style="min-width:200px;">
+                                Nombre
+                            </th>
+                            <th style="min-width:200px;">
+                                Opciones
+                            </th>
+                        </tr>
 
-                </thead>
-            </table>
-        </div>
-    </div>
+                    </thead>
+                </table>
+            </div>
 @endsection
+
 @section('scripts')
     @parent
+
+    <script>
+        $('#btnImport').on('click', function(e) {
+        e.preventDefault();
+        $('#xlsxImportModal').modal('show');
+     });
+    </script>
+
     <script>
         $(function() {
             let dtButtons = [{
@@ -99,22 +129,6 @@
                         columns: ['th:not(:last-child):visible']
                     }
                 },
-                // {
-                //     extend: 'pdfHtml5',
-                //     title: `Cursos y Capacitaciones ${new Date().toLocaleDateString().trim()}`,
-                //     text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
-                //     className: "btn-sm rounded pr-2",
-                //     titleAttr: 'Exportar PDF',
-                //     orientation: 'portrait',
-                //     exportOptions: {
-                //         columns: ['th:not(:last-child):visible']
-                //     },
-                //     customize: function(doc) {
-                //         doc.pageMargins = [20, 60, 20, 30];
-                //         // doc.styles.tableHeader.fontSize = 7.5;
-                //         // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
-                //     }
-                // },
                 {
                     extend: 'print',
                     title: `Cursos y Capacitaciones ${new Date().toLocaleDateString().trim()}`,
@@ -180,16 +194,6 @@
             ];
 
             @can('capacitaciones_categorias_agregar')
-                let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar curso y capacitación',
-                url: "{{ route('admin.categoria-capacitacion.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
-                action: function(e, dt, node, config){
-                let {url} = config;
-                window.location.href = url;
-                }
-                };
                 let btnExport = {
                 text: '<i class="fas fa-download"></i>',
                 titleAttr: 'Descargar plantilla',
@@ -210,8 +214,6 @@
                 $('#xlsxImportModal').modal('show');
                 }
                 };
-
-                dtButtons.push(btnAgregar);
                 dtButtons.push(btnExport);
                 dtButtons.push(btnImport);
             @endcan

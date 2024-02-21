@@ -3,9 +3,9 @@
 namespace App\Models;
 
 use App\Traits\ClearsResponseCache;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
-use Illuminate\Database\Eloquent\Collection;
 
 /**
  * Class PuestoIdiomaPorcentajePivot.
@@ -23,7 +23,7 @@ use Illuminate\Database\Eloquent\Collection;
  */
 class PuestoIdiomaPorcentajePivot extends Model implements Auditable
 {
-    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
 
     protected $table = 'puesto_idioma_porcentaje_pivot';
 

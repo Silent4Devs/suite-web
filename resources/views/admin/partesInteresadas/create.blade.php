@@ -3,7 +3,22 @@
     {{ Breadcrumbs::render('admin.partes-interesadas.create') }}
 
 
-    <h5 class="col-12 titulo_general_funcion">Registrar: Partes Interesadas</h5>
+    <h5 class="col-12 titulo_general_funcion">Partes Interesadas</h5>
+<div class="card card-body" style="background-color: #5397D5; color: #fff;">
+    <div class="d-flex" style="gap: 25px;">
+        <img src="{{ asset('img/audit_port.jpg') }}" alt="Auditoria" style="width: 200px;">
+        <div>
+            <br>
+            <h4>¿Qué es Partes Interesadas?</h4>
+            <p>
+                Son aquellas personas o grupos que tienen algún interés o influencia en la seguridad de la información de la organización.
+            </p>
+            <p>
+              Pueden ser clientes, empleados, proveedores, autoridades gubernamentales, entre otros.
+            </p>
+        </div>
+    </div>
+</div>
     <div class="mt-4 card">
 
         <div class="card-body">

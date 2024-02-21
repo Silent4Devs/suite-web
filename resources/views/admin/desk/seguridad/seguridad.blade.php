@@ -81,67 +81,40 @@
     </div>
 </div>
 
-<div class="datatable-fix" style="width: 100%;">
-    <div class="mb-3 text-right">
-        <a class="btn btn-danger" href="{{ asset('admin/inicioUsuario/reportes/seguridad') }}">Crear reporte</a>
-    </div>
 
-    <table class="table tabla_incidentes_seguridad">
-        <thead>
-            <tr>
-                {{-- <th>ID</th> --}}
-                <th style="min-width: 250px;">Folio</th>
-                <th style="min-width: 250px;">Título</th>
-                <th style="min-width: 250px;">Sede</th>
-                <th style="min-width: 250px;">Ubicación</th>
-                <th style="min-width: 500px;">Descripción</th>
-                <th style="min-width: 250px;">Areas Afectadas</th>
-                <th style="min-width: 250px;">Procesos Afectados</th>
-                <th style="min-width: 250px;">Activos Afectados</th>
-                <th style="min-width: 150px;">Fecha</th>
-                <th style="min-width: 250px;">Quién reportó</th>
-                <th style="min-width: 250px;">Correo</th>
-                <th style="min-width: 250px;">Teléfono</th>
-                <th style="min-width: 90px;">Estatus</th>
-                <th style="min-width: 150px;">Fecha de cierre</th>
-                <th style="min-width: 250px;">Asignado a</th>
-                <th style="min-width: 500px;">Comentarios</th>
-                <th>Opciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            {{-- @foreach ($incidentes_seguridad as $incidentes)
-	   			<tr>
-	       			<td>{{ $incidentes->id }}</td>
-	       			<td>{{ $incidentes->folio }}</td>
-	       			<td>{{ $incidentes->titulo }}</td>
-	       			<td>{{ $incidentes->descripción }}</td>
-	       			<td>{{ $incidentes->activos_afectados }}</td>
-	       			<td>{{ $incidentes->fecha }}</td>
-	       			<td>{{ $incidentes->reporto->name }}</td>
-	       			<td>{{ $incidentes->reporto->email }}</td>
-	       			<td>{{ $incidentes->reporto->telefono }}</td>
-	       			<td>{{ $incidentes->categoria }}</td>
-	       			<td>{{ $incidentes->clacificacion }}</td>
-	       			<td>{{ $incidentes->prioridad }}</td>
-	       			<td>{{ $incidentes->estatus }}</td>
-	       			<td>{{ $incidentes->asignado ? $incidentes->asignado->name:'sin asignar'}}</td>
-	       			<td>{{ $incidentes->comentarios }}</td>
-	       			<td>
-	       				<a href="{{ route('admin.desk.seguridad-edit', $incidentes->id) }}"><i class="fas fa-edit"></i></a>
-
-	       				@if ($incidentes->estatus == 'cerrado' or $incidentes->estatus == 'cancelado')
-		       					<button class="btn archivar" data-id={{ $incidentes->id }}>
-		       						<i class="fas fa-archive"></i></a>
-		       					</button>
-	       				@endif
-	       			</td>
-	   			</tr>
-   			@endforeach --}}
-        </tbody>
-    </table>
+<div class="mb-3 text-right">
+    <a class="btn btn-danger" href="{{ asset('admin/inicioUsuario/reportes/seguridad') }}">Crear reporte</a>
 </div>
 
+    @include('partials.flashMessages')
+    <div class="datatable-fix datatable-rds">
+        <table class="datatable tabla_incidentes_seguridad">
+            <thead>
+                <tr>
+                    {{-- <th>ID</th> --}}
+                    <th style="min-width: 250px;">Folio</th>
+                    <th style="min-width: 250px;">Título</th>
+                    <th style="min-width: 250px;">Sede</th>
+                    <th style="min-width: 250px;">Ubicación</th>
+                    <th style="min-width: 500px;">Descripción</th>
+                    <th style="min-width: 250px;">Areas Afectadas</th>
+                    <th style="min-width: 250px;">Procesos Afectados</th>
+                    <th style="min-width: 250px;">Activos Afectados</th>
+                    <th style="min-width: 150px;">Fecha</th>
+                    <th style="min-width: 250px;">Quién reportó</th>
+                    <th style="min-width: 250px;">Correo</th>
+                    <th style="min-width: 250px;">Teléfono</th>
+                    <th style="min-width: 90px;">Estatus</th>
+                    <th style="min-width: 150px;">Fecha de cierre</th>
+                    <th style="min-width: 250px;">Asignado a</th>
+                    <th style="min-width: 500px;">Comentarios</th>
+                    <th>Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
 
 @section('scripts')
     @parent

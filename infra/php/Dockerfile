@@ -52,7 +52,9 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
     opcache \
     sockets \
     sodium \
-    excimer
+    excimer \
+    pcntl \
+    posix
 
 # Enable phpredis extension
 #RUN echo "extension=redis.so" > /usr/local/etc/php/conf.d/docker-php-ext-redis.ini
@@ -69,4 +71,3 @@ RUN chown -R www-data:www-data /var/www \
 # Healthcheck
 HEALTHCHECK --interval=15m --timeout=3s \
     CMD curl --fail http://localhost/ || exit 1
-

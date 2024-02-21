@@ -3,13 +3,13 @@
 namespace App\Models\Escuela;
 
 use App\Traits\ClearsResponseCache;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Section extends Model
 {
-    use HasFactory, ClearsResponseCache;
+    use ClearsResponseCache, HasFactory;
     use SoftDeletes;
 
     protected $guarded = ['id'];
@@ -18,7 +18,7 @@ class Section extends Model
 
     public function lessons()
     {
-        return $this->hasMany('App\Models\Escuela\Lesson');
+        return $this->hasMany('App\Models\Escuela\Lesson')->orderBy('created_at', 'asc');
     }
 
     //Relacion uno a muchos inversa

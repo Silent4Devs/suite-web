@@ -20,7 +20,8 @@ services:
       - 8080:8080
     volumes:
       - .:/var/www/html
-      - ./infra/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./infra/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./infra/nginx/ssl:/etc/nginx/ssl
     depends_on:
       - php
       - postgres-tabantaj
@@ -36,6 +37,7 @@ services:
     volumes:
       # - ./infra/postgres/data:/var/lib/postgresql/data #localpath
       - tabantaj-db:/var/lib/postgresql/data
+      - ./infra/postgres/postgresql.conf:/etc/postgresql/postgresql.conf
     environment:
       - POSTGRES_USER=homestead
       - POSTGRES_PASSWORD=secret
@@ -115,6 +117,23 @@ services:
       #- REDIS_1_AUTH=silent11!
     networks:
       - tabantajnetwork
+
+  rabbitmq-tabantaj:
+    image: rabbitmq:3-management-alpine
+    container_name: rabbit-tabantaj
+    environment:
+      - RABBITMQ_DEFAULT_USER=desarrollo
+      - RABBITMQ_DEFAULT_PASS=Password123.
+      - RABBITMQ_DEFAULT_VHOST=desarrollo # Add this line
+    ports:
+      - 5672:5672
+      - 15672:15672
+    restart: unless-stopped
+    tty: true
+    networks:
+      - tabantajnetwork
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
 
   # prometheus-tabantaj:
   #   image: prom/prometheus
@@ -275,6 +294,8 @@ services:
 
 volumes:
   tabantaj-db:
+    driver: local
+  rabbitmq_data:
     driver: local
   pgadmin-data:
     driver: local

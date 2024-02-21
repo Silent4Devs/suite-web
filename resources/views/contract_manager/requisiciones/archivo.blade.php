@@ -12,7 +12,7 @@
     word-wrap: break-word
     }
     </style>
-    <h5 class="col-12 titulo_general_funcion">Requisiciónes</h5>
+    <h5 class="col-12 titulo_general_funcion">Requisiciónes Archivadas</h5>
     <div class="mt-5 card">
         <div class="card-body datatable-fix">
             <table id="dom" class="table table-bordered w-100 datatable-perspectiva" style="width: 100%">
@@ -38,7 +38,11 @@
                         <td>{{$requisicion->referencia}}</td>
                         <td>{{$requisicion->proveedor_catalogo}}</td>
                         <td>{{$requisicion->estado}}</td>
-                        <td>{{$requisicion->contrato->nombre_servicio}}</td>
+
+                        <td>
+                            {{ !empty($requisicion->contrato->nombre_servicio) ? $requisicion->contrato->nombre_servicio : "Sin registro" }}
+                        </td>
+
                         <td>{{$requisicion->area}}</td>
                         <td>{{$requisicion->user}}</td>
                         <td>
@@ -56,6 +60,13 @@
                     @endforeach
                 </tbody>
             </table>
+            <br>
+            <form class="text-right" action="{{ route('contract_manager.requisiciones') }}" method="GET">
+                @method('GET')
+                <button class="btn btn-primary" type="submit" title="Regresar">
+                    Regresar
+                </button>
+            </form>
         </div>
     </div>
 
@@ -75,7 +86,7 @@
                  cancelButtonText: 'Cancelar'
              }).then((result) => {
                  if (result.isConfirmed) {
-                     // Coloca aquí la lógica para eliminar el elemento
+                     // Coloca aquí la lógica para eliminar el elemet
                      // Esto puede incluir una solicitud AJAX al servidor o cualquier otra lógica de eliminación
                      // Una vez que el elemento se haya eliminado, puedes mostrar un mensaje de éxito
                      Swal.fire('¡Eliminado!', 'El elemento ha sido eliminado.', 'success');

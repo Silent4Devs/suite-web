@@ -171,6 +171,16 @@
             color: red;
             font-size: 10pt;
         }
+
+        #btn_cancelar{
+
+        background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
+        border: 1px solid var(--unnamed-color-057be2);
+        background: #FFFFFF 0% 0% no-repeat padding-box;
+        border: 1px solid #057BE2;
+        border-radius: 4px;
+        opacity: 1;
+        }
     </style>
     <h5 class="col-12 titulo_general_funcion">Registrar: Empleado</h5>
     <div class="mt-4 card">
@@ -232,8 +242,8 @@
                     </div>
                 @endcan
                 <div class="text-right form-group col-12">
-                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-                    <button class="btn btn-danger" type="submit" id="btnGuardar">
+                    <a href="{{ redirect()->getUrlGenerator()->previous() }}"  class="btn" id="btn_cancelar" style="color:#057BE2; height: 3rem;">Cancelar</a>
+                    <button class="btn btn-primary" type="submit" id="btnGuardar">
                         {{ trans('global.save') }}
                     </button>
                 </div>

@@ -4,7 +4,7 @@
     {{ Breadcrumbs::render('admin.accion-correctivas.create') }}
 
 @section('styles')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/formularios_centro_atencion.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/formularios_centro_atencion.css') }}{{config('app.cssVersion')}}">
     <style type="text/css">
         sup {
             color: red;
@@ -137,13 +137,11 @@
             border-radius: 100px;
             margin-top: 6px;
         }
-
     </style>
 @endsection
 <h5 class="col-12 titulo_general_funcion">Registrar: Acción Correctiva</h5>
 <div class="mt-4 card">
     @include('layouts.errors')
-    @include('flash::message')
     <div class="card-body">
 
         <div class="container">

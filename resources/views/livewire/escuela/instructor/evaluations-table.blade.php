@@ -1,9 +1,9 @@
-<div>
+<div class="datatable-rds datatable-fix">
     {{-- <livewire:datatable model="App\Models\Evaluation" name="evaluations" include="id, name, description, linkedTo"  /> --}}
     {{-- <x-loading-indicator wire:loading/> --}}
     {{-- <x-table-responsive> --}}
-        <table class="table">
-            <thead class="">
+        <table id="datatable_evaluaciones-cursos" class="table">
+            <thead>
                 <tr>
                     <th scope="col"
                         class="px-6 py-3 text-xs font-medium tracking-wider text-left  uppercase">
@@ -38,10 +38,10 @@
                            <a href="{{route('admin.courses.evaluation.questions',['course'=>$course->slug,'evaluation'=>$evaluacion->id])}}"><i style="font-size:10pt; color:#747474;" class="ml-1 fas fa-file-alt" title="Ver preguntas" ></i></a>
 
                             <i style="font-size:10pt" class="ml-1 cursor-pointer fas fa-edit"
-                                wire:click.prevent="edit({{ $evaluacion->id }})"></i>
+                                wire:click.prevent="edit({{ $evaluacion->id }})" title="Editar"></i>
 
-                            <i style="font-size:10pt;" class="ml-1 fa-regular fa-trash-can" data-toggle="tooltip"
-                                data-placement="top" title="Eliminar"
+                            <i style="font-size:10pt;" class="ml-1 fa-regular fa-trash-can" title="Eliminar"
+
                                 wire:click.prevent="destroy({{ $evaluacion->id }})"></i>
 
                         </td>

@@ -48,6 +48,7 @@
 
         }
 
+
         .iconos-top {
 
             margin-right: 5px;
@@ -66,10 +67,7 @@
     </style>
      {{ Breadcrumbs::render('admin.analisisdebrechas.index') }}
 
-
     @include('partials.flashMessages')
-
-    <h5 class="col-12 titulo_general_funcion">Análisis de Brechas </h5>
 
     <div class="mt-5 card">
         <div class="card-body datatable-fix">

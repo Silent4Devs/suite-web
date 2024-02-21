@@ -203,7 +203,6 @@ class DeskController extends Controller
 
         $incidentesSeguridad = IncidentesSeguridad::findOrfail(intval($id_incidente));
 
-
         $request->validate([
             'titulo' => 'required|string',
             'fecha' => 'required',
@@ -237,13 +236,13 @@ class DeskController extends Controller
 
         $documento = $incidentesSeguridad->evidencia;
 
-        if ($request->file('evidencia') != null or !empty($request->file('evidencia'))) {
+        if ($request->file('evidencia') != null or ! empty($request->file('evidencia'))) {
             foreach ($request->file('evidencia') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_documento = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
+                $name_documento = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
 
-                $new_name_documento = 'Seguridad_file_' . $incidentesSeguridad->id . '_' . $name_documento . '.' . $extension;
+                $new_name_documento = 'Seguridad_file_'.$incidentesSeguridad->id.'_'.$name_documento.'.'.$extension;
 
                 $route = 'public/evidencias_seguridad';
 
@@ -973,13 +972,13 @@ class DeskController extends Controller
 
         $image = null;
 
-        if ($request->file('evidencia') != null or !empty($request->file('evidencia'))) {
+        if ($request->file('evidencia') != null or ! empty($request->file('evidencia'))) {
             foreach ($request->file('evidencia') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
+                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
 
-                $new_name_image = 'Queja_file_' . $quejasClientes->id . '_' . $name_image . '.' . $extension;
+                $new_name_image = 'Queja_file_'.$quejasClientes->id.'_'.$name_image.'.'.$extension;
 
                 $route = 'public/evidencias_quejas_clientes';
 
@@ -995,7 +994,7 @@ class DeskController extends Controller
         }
 
         if ($correo_cliente) {
-            Mail::to(removeUnicodeCharacters($quejasClientes->correo))->cc(removeUnicodeCharacters($quejasClientes->registro->email))->send(new SeguimientoQuejaClienteEmail($quejasClientes));
+            Mail::to(removeUnicodeCharacters($quejasClientes->correo))->cc(removeUnicodeCharacters($quejasClientes->registro->email))->queue(new SeguimientoQuejaClienteEmail($quejasClientes));
         }
 
         return redirect()->route('admin.desk.index')->with('success', 'Reporte generado');
@@ -1107,13 +1106,13 @@ class DeskController extends Controller
 
         $documento = null;
 
-        if ($request->file('evidencia') != null or !empty($request->file('evidencia'))) {
+        if ($request->file('evidencia') != null or ! empty($request->file('evidencia'))) {
             foreach ($request->file('evidencia') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_documento = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
+                $name_documento = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
 
-                $new_name_documento = 'Queja_file_' . $quejasClientes->id . '_' . $name_documento . '.' . $extension;
+                $new_name_documento = 'Queja_file_'.$quejasClientes->id.'_'.$name_documento.'.'.$extension;
 
                 $route = 'public/evidencias_quejas_clientes';
 
@@ -1130,13 +1129,13 @@ class DeskController extends Controller
 
         $image = null;
 
-        if ($request->file('cierre') != null or !empty($request->file('cierre'))) {
+        if ($request->file('cierre') != null or ! empty($request->file('cierre'))) {
             foreach ($request->file('cierre') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
+                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
 
-                $new_name_image = 'Queja_file_' . $quejasClientes->id . '_' . $name_image . '.' . $extension;
+                $new_name_image = 'Queja_file_'.$quejasClientes->id.'_'.$name_image.'.'.$extension;
 
                 $route = 'public/evidencias_quejas_clientes_cerrado';
 
@@ -1166,12 +1165,12 @@ class DeskController extends Controller
 
         if ($notificar_atencion_queja_no_aprobada) {
             if ($cerrar_ticket == false) {
-                if (!$quejasClientes->email_env_resolucion_rechazada) {
+                if (! $quejasClientes->email_env_resolucion_rechazada) {
                     if ($quejasClientes->registro != null && $quejasClientes->responsableAtencion != null) {
                         $quejasClientes->update([
                             'email_env_resolucion_rechazada' => true,
                         ]);
-                        Mail::to(removeUnicodeCharacters($quejasClientes->responsableAtencion->email))->cc(removeUnicodeCharacters($quejasClientes->registro->email))->send(new ResolucionQuejaRechazadaEmail($quejasClientes));
+                        Mail::to(removeUnicodeCharacters($quejasClientes->responsableAtencion->email))->cc(removeUnicodeCharacters($quejasClientes->registro->email))->queue(new ResolucionQuejaRechazadaEmail($quejasClientes));
                     }
                 }
             }
@@ -1179,35 +1178,35 @@ class DeskController extends Controller
 
         if ($notificar_atencion_queja_no_aprobada) {
             if ($cerrar_ticket) {
-                if (!$quejasClientes->email_env_resolucion_aprobada) {
+                if (! $quejasClientes->email_env_resolucion_aprobada) {
                     if ($quejasClientes->registro != null && $quejasClientes->responsableAtencion != null) {
                         $quejasClientes->update([
                             'email_env_resolucion_aprobada' => true,
                         ]);
-                        Mail::to(removeUnicodeCharacters($quejasClientes->responsableAtencion->email))->cc(removeUnicodeCharacters($quejasClientes->registro->email))->send(new CierreQuejaAceptadaEmail($quejasClientes));
+                        Mail::to(removeUnicodeCharacters($quejasClientes->responsableAtencion->email))->cc(removeUnicodeCharacters($quejasClientes->registro->email))->queue(new CierreQuejaAceptadaEmail($quejasClientes));
                     }
                 }
             }
         }
 
-        if (!$email_realizara_accion_inmediata) {
-            if (!is_null($quejasClientes->acciones_tomara_responsable)) {
+        if (! $email_realizara_accion_inmediata) {
+            if (! is_null($quejasClientes->acciones_tomara_responsable)) {
                 if ($quejasClientes->registro != null && $quejasClientes->responsableAtencion != null) {
                     $quejasClientes->update([
                         'email_realizara_accion_inmediata' => true,
                     ]);
-                    Mail::to(removeUnicodeCharacters($quejasClientes->registro->email))->cc(removeUnicodeCharacters($quejasClientes->responsableAtencion->email))->send(new AtencionQuejaAtendidaEmail($quejasClientes));
+                    Mail::to(removeUnicodeCharacters($quejasClientes->registro->email))->cc(removeUnicodeCharacters($quejasClientes->responsableAtencion->email))->queue(new AtencionQuejaAtendidaEmail($quejasClientes));
                 }
             }
         }
 
         if ($notificar_registro_queja) {
-            if (!$quejasClientes->correo_enviado_registro) {
+            if (! $quejasClientes->correo_enviado_registro) {
                 if ($quejasClientes->registro != null && $quejasClientes->responsableAtencion != null) {
                     $quejasClientes->update([
                         'correo_enviado_registro' => true,
                     ]);
-                    Mail::to(removeUnicodeCharacters($quejasClientes->registro->email))->cc(removeUnicodeCharacters($quejasClientes->responsableAtencion->email))->send(new NotificacionResponsableQuejaEmail($quejasClientes, $quejasClientes->responsableAtencion));
+                    Mail::to(removeUnicodeCharacters($quejasClientes->registro->email))->cc(removeUnicodeCharacters($quejasClientes->responsableAtencion->email))->queue(new NotificacionResponsableQuejaEmail($quejasClientes, $quejasClientes->responsableAtencion));
                 }
             }
         }
@@ -1223,7 +1222,7 @@ class DeskController extends Controller
                 $query->where('acciones_correctivas_aprobacionables_id', $quejasClientes->id);
             })->exists();
 
-            if (!$existeAC) {
+            if (! $existeAC) {
                 $accion_correctiva = AccionCorrectiva::create([
                     'tema' => $request->titulo,
                     'causaorigen' => 'Queja de un cliente',
@@ -1250,11 +1249,11 @@ class DeskController extends Controller
                 $quejasClientes->accionCorrectivaAprobacional()->sync($accion_correctiva->id);
             }
 
-            if (!$quejasClientes->correoEnviado) {
+            if (! $quejasClientes->correoEnviado) {
                 $quejasClientes->update([
                     'correoEnviado' => true,
                 ]);
-                Mail::to(removeUnicodeCharacters($quejasClientes->responsableSgi->email))->cc(removeUnicodeCharacters($quejasClientes->registro->email))->send(new AceptacionAccionCorrectivaEmail($quejasClientes, $evidenciaArr));
+                Mail::to(removeUnicodeCharacters($quejasClientes->responsableSgi->email))->cc(removeUnicodeCharacters($quejasClientes->registro->email))->queue(new AceptacionAccionCorrectivaEmail($quejasClientes, $evidenciaArr));
             }
         }
         if ($request->ajax()) {
@@ -1278,7 +1277,7 @@ class DeskController extends Controller
         $empleado_copia = User::getCurrentUser()->empleado;
 
         if ($quejasClientes->registro != null && $request->responsable_atencion_queja_id != null) {
-            Mail::to(removeUnicodeCharacters($empleado_email->email))->cc(removeUnicodeCharacters($empleado_copia->email))->send(new NotificacionResponsableQuejaEmail($quejasClientes, $empleado_email));
+            Mail::to(removeUnicodeCharacters($empleado_email->email))->cc(removeUnicodeCharacters($empleado_copia->email))->queue(new NotificacionResponsableQuejaEmail($quejasClientes, $empleado_email));
         }
 
         return response()->json(['success' => true, 'request' => $request->all(), 'message' => 'Enviado con éxito']);
@@ -1289,7 +1288,7 @@ class DeskController extends Controller
         $id_quejas = $request->id;
         $quejasClientes = QuejasCliente::find(intval($id_quejas))->load('evidencias_quejas', 'planes', 'cierre_evidencias', 'cliente', 'proyectos', 'responsableAtencion');
 
-        Mail::to(removeUnicodeCharacters($quejasClientes->registro->email))->cc(removeUnicodeCharacters($quejasClientes->responsableAtencion->email))->send(new SolicitarCierreQuejaEmail($quejasClientes));
+        Mail::to(removeUnicodeCharacters($quejasClientes->registro->email))->cc(removeUnicodeCharacters($quejasClientes->responsableAtencion->email))->queue(new SolicitarCierreQuejaEmail($quejasClientes));
 
         return response()->json(['success' => true, 'request' => $request->all(), 'message' => 'Enviado con éxito']);
     }
@@ -1468,7 +1467,7 @@ class DeskController extends Controller
         }, ARRAY_FILTER_USE_KEY);
 
         $quejasproyectos = array_unique(QuejasCliente::pluck('proyectos_id')->toArray());
-        $proyectos = TimesheetProyecto::getAll()->with('cliente')->find($quejasproyectos);
+        $proyectos = TimesheetProyecto::getAllWithCliente()->find($quejasproyectos);
         $proyectosLabel = [];
         foreach ($proyectos as $proyecto) {
 
@@ -1559,7 +1558,7 @@ class DeskController extends Controller
 
             return response()->json(['isValid' => true]);
         } elseif ($request->tipo_validacion == 'queja-atencion') {
-            if (!is_null($quejasClientes->responsable_atencion_queja_id)) {
+            if (! is_null($quejasClientes->responsable_atencion_queja_id)) {
                 if ($quejasClientes->responsable_atencion_queja_id != User::getCurrentUser()->empleado->id) {
                     $this->validateRequestRegistroQuejaCliente($request);
                     $this->validateRequestAnalisisQuejaCliente($request);

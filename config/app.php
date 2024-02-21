@@ -162,6 +162,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        Carbon\Laravel\ServiceProvider::class,
         /*
          * Package Service Providers...
          */
@@ -183,7 +184,6 @@ return [
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
         EloquentFilter\ServiceProvider::class,
         OwenIt\Auditing\AuditingServiceProvider::class,
-
     ],
 
     /*
@@ -241,13 +241,13 @@ return [
         'Geocoder' => Spatie\Geocoder\Facades\Geocoder::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
-        'Flash' => Laracasts\Flash\Flash::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Date' => Jenssegers\Date\Date::class,
         'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
         'Redis' => Illuminate\Support\Facades\Redis::class,
         'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
-
     ],
 
+    // css version
+    'cssVersion' => '?v=1.1.2.1',
 ];

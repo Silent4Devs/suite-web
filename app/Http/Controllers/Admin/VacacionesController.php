@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Exports\VistaGlobalVacacionesExport;
 use App\Http\Controllers\Controller;
 use App\Models\Area;
 use App\Models\SolicitudVacaciones;
 use App\Models\User;
 use App\Models\Vacaciones;
 use App\Traits\ObtenerOrganizacion;
-use Flash;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
+use Maatwebsite\Excel\Facades\Excel;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class VacacionesController extends Controller
 {
@@ -96,26 +98,37 @@ class VacacionesController extends Controller
     {
         abort_if(Gate::denies('reglas_vacaciones_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
-            'nombre' => 'required|string',
-            'dias' => 'required|int',
+            'nombre' => 'required|string|max:255',
+            'dias' => 'required|int|gte:1|lte:24',
             'afectados' => 'required|int',
             'tipo_conteo' => 'required|int',
-            'inicio_conteo' => 'required|int',
-            'fin_conteo' => 'required|int',
+            'inicio_conteo' => 'required|int|gte:1',
+            'fin_conteo' => 'required|int|gte:inicio_conteo',
             'periodo_corte' => 'required|int',
         ]);
 
         if ($request->afectados == 2) {
-            $areas = array_map(function ($value) {
-                return intval($value);
-            }, $request->areas);
-            $vacacion = Vacaciones::create($request->all());
-            $vacacion->areas()->sync($areas);
+            if (empty($request->areas)) {
+                $errorMessage = 'Debe seleccionar un area.';
+
+                // Manually add error message to $errors bag
+                $errors = new \Illuminate\Support\MessageBag();
+                $errors->add('custom_areas', $errorMessage);
+
+                // Redirect back with the input data and errors
+                return redirect()->back()->withErrors($errors)->withInput();
+            } else {
+                $areas = array_map(function ($value) {
+                    return intval($value);
+                }, $request->areas);
+                $vacacion = Vacaciones::create($request->all());
+                $vacacion->areas()->sync($areas);
+            }
         } else {
             $vacacion = Vacaciones::create($request->all());
         }
 
-        Flash::success('Regla añadida satisfactoriamente.');
+        Alert::success('éxito', 'Información añadida con éxito');
 
         return redirect()->route('admin.vacaciones.index');
     }
@@ -134,7 +147,7 @@ class VacacionesController extends Controller
         $areas = Area::getAll();
         $vacacion = Vacaciones::with('areas')->find($id);
         if (empty($vacacion)) {
-            Flash::error('Vacación not found');
+            Alert::warning('warning', 'Data not found');
 
             return redirect(route('admin.vacaciones.index'));
         }
@@ -147,28 +160,39 @@ class VacacionesController extends Controller
     {
         abort_if(Gate::denies('reglas_vacaciones_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
-            'nombre' => 'required|string',
-            'dias' => 'required|int',
+            'nombre' => 'required|string|max:255',
+            'dias' => 'required|int|gte:1|lte:24',
             'afectados' => 'required|int',
             'tipo_conteo' => 'required|int',
-            'inicio_conteo' => 'required|int',
-            'fin_conteo' => 'required|int',
+            'inicio_conteo' => 'required|int|gte:1',
+            'fin_conteo' => 'required|int|gte:inicio_conteo',
             'periodo_corte' => 'required|int',
         ]);
 
         $vacacion = Vacaciones::find($id);
 
         if ($request->afectados == 2) {
-            $vacacion->update($request->all());
-            $areas = array_map(function ($value) {
-                return intval($value);
-            }, $request->areas);
-            $vacacion->areas()->sync($areas);
+            if (empty($request->areas)) {
+                $errorMessage = 'Debe seleccionar un area.';
+
+                // Manually add error message to $errors bag
+                $errors = new \Illuminate\Support\MessageBag();
+                $errors->add('custom_areas', $errorMessage);
+
+                // Redirect back with the input data and errors
+                return redirect()->back()->withErrors($errors)->withInput();
+            } else {
+                $vacacion->update($request->all());
+                $areas = array_map(function ($value) {
+                    return intval($value);
+                }, $request->areas);
+                $vacacion->areas()->sync($areas);
+            }
         } else {
             $vacacion->update($request->all());
         }
 
-        Flash::success('Regla de vacaciones actualizada.');
+        Alert::success('éxito', 'Información actualizada con éxito');
 
         return redirect(route('admin.vacaciones.index'));
     }
@@ -178,6 +202,7 @@ class VacacionesController extends Controller
         abort_if(Gate::denies('reglas_vacaciones_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vacaciones = Vacaciones::find($id);
         $vacaciones->delete();
+        Alert::success('éxito', 'Información eliminada con éxito');
 
         return back()->with('deleted', 'Registro eliminado con éxito');
     }
@@ -187,11 +212,11 @@ class VacacionesController extends Controller
         abort_if(Gate::denies('reglas_vacaciones_vista_global'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $data = User::getCurrentUser()->empleado->id;
 
-        $solVac = SolicitudVacaciones::with('empleado')->orderByDesc('id')->get();
+        $solVac = SolicitudVacaciones::getAllwithEmpleados();
         // dd($solVac);
 
         // if ($request->ajax()) {
-        //     $query = SolicitudVacaciones::with('empleado')->orderByDesc('id')->get();
+        //     $query = SolicitudVacaciones::getAllwithEmpleados();
         //     $table = datatables()::of($query);
 
         //     $table->addColumn('placeholder', '&nbsp;');
@@ -227,5 +252,13 @@ class VacacionesController extends Controller
         $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.vacaciones.solicitudes', compact('logo_actual', 'empresa_actual', 'solVac'));
+    }
+
+    public function exportExcel()
+    {
+        abort_if(Gate::denies('reglas_vacaciones_vista_global'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $export = new VistaGlobalVacacionesExport();
+
+        return Excel::download($export, 'Control_Ausencias_Vacaciones.xlsx');
     }
 }

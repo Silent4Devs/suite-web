@@ -1,21 +1,20 @@
 @extends('layouts.admin')
+@section('css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}{{config('app.cssVersion')}}">
+@endsection
 @section('content')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
-
-    {{ Breadcrumbs::render('timesheet-empleados-proyecto') }}
-
-    <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Asignacion de Empleados por Proyecto</font>
+    <h5 class="col-12 titulo_general_funcion">
+        TimeSheet:
+        <font style="font-weight:lighter;">
+            Asignacion de Empleados por Proyecto
+        </font>
     </h5>
-
     <div class="card card-body">
         <div class="row">
-
             @livewire('timesheet.timesheet-proyecto-empleados-component', ['proyecto_id' => $proyecto->id])
-
         </div>
     </div>
 @endsection
-
 @section('scripts')
     @parent
     <script>
@@ -23,7 +22,6 @@
 
         function tablaLivewire(id_tabla) {
             $('#' + id_tabla).attr('id', id_tabla + cont);
-
             $(function() {
                 let dtButtons = [{
                         extend: 'csvHtml5',
@@ -50,15 +48,13 @@
                         text: '<i class="fas fa-print" style="font-size: 1.1rem;color:#345183"></i>',
                         className: "btn-sm rounded pr-2",
                         titleAttr: 'Imprimir',
-                        // set custom header when print
                         customize: function(doc) {
                             let logo_actual = @json($logo_actual);
                             let empresa_actual = @json($empresa_actual);
                             let empleado = @json(auth()->user()->empleado->name);
-
                             var now = new Date();
                             var jsDate = now.getDate() + '-' + (now.getMonth() + 1) + '-' + now
-                            .getFullYear();
+                                .getFullYear();
                             $(doc.document.body).prepend(`
                                 <div class="row">
                                     <div class="col-4 text-center p-2" style="border:2px solid #CCCCCC">
@@ -73,11 +69,9 @@
                                     </div>
                                 </div>
                             `);
-
                             $(doc.document.body).find('table')
                                 .css('font-size', '12px')
                                 .css('margin-top', '15px')
-                            // .css('margin-bottom', '60px')
                             $(doc.document.body).find('th').each(function(index) {
                                 $(this).css('font-size', '18px');
                                 $(this).css('color', '#fff');
@@ -109,27 +103,14 @@
                         titleAttr: 'Restaurar a estado anterior',
                     }
                 ];
-                let btnAgregar = {
-                    text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                    titleAttr: 'Agregar empleado',
-                    url: "{{ asset('admin/inicioUsuario/reportes/quejas') }}",
-                    className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                    action: function(e, dt, node, config) {
-                        let {
-                            url
-                        } = config;
-                        window.location.href = url;
-                    }
-                };
                 let dtOverrideGlobals = {
                     buttons: dtButtons,
-                    order: [
-                        [0, 'desc']
-                    ],
                     destroy: true,
                     render: true,
+                    paging: true, // Enable pagination
+                    pageLength: 10, // Set the number of records per page
+                    lengthMenu: [5, 10, 25, 50, 100], // Define available page lengths
                 };
-
                 let table = $('#' + id_tabla + cont).DataTable(dtOverrideGlobals);
             });
         }
@@ -137,12 +118,6 @@
             setTimeout(() => {
                 tablaLivewire('tabla_time_poyect_empleados');
             }, 100);
-        });
-    </script>
-
-    <script type="text/javascript">
-        $('.select2').select2({
-            'theme': 'bootstrap4',
         });
     </script>
 @endsection

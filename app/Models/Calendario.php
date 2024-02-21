@@ -3,15 +3,15 @@
 namespace App\Models;
 
 use App\Traits\ClearsResponseCache;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Contracts\Auditable;
 
 class Calendario extends Model implements Auditable
 {
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
     use SoftDeletes;
-    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
 
     public $table = 'calendario';
 
@@ -63,7 +63,7 @@ class Calendario extends Model implements Auditable
     //Redis methods
     public static function getAll()
     {
-        return Cache::remember('calendario_all', 3600 * 12, function () {
+        return Cache::remember('Calendario:calendario_all', 3600 * 8, function () {
             return self::get();
         });
     }

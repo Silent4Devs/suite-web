@@ -94,8 +94,57 @@
                 </div>
             </div>
         </form>  --}}
-        <div class="text-right">
-            <a href="{{ route('admin.timesheet-proyectos-create') }}" class="btn btn-success">Crear Proyecto</a>
+
+        <div class="d-flex justify-content-between mb-4" style="gap: 10px;  margin:auto;">
+            <a href="#" id="btn_todos" wire:click="actualizarEstatus('todos')">
+                <div class="card-complement">
+                    <div class="bg-objet" style="background-color: #bdefff;"></div>
+                    <div class="card-comple-info d-flex align-items-center justify-content-between px-3 w-100">
+                        <strong style="font-size: 16px;">Todos</strong>
+                        <span class="d-flex align-items-center" style="gap: 5px;">
+                            <strong style="font-size: 22px"> {{ $terminado_count + $proceso_count + $cancelado_count }}
+                            </strong>
+                        </span>
+                    </div>
+                </div>
+            </a>
+            <a href="#" wire:click="actualizarEstatus('procesos')">
+                <div class="card-complement">
+                    <div class="bg-objet" style="background-color: #a4ffa7;"></div>
+                    <div class="card-comple-info d-flex align-items-center justify-content-between px-3 w-100">
+                        <strong style="font-size: 16px;"> En proceso</strong>
+                        <span class="d-flex align-items-center" style="gap: 5px;">
+                            <strong style="font-size: 22px"> {{ $proceso_count }} </strong>
+                        </span>
+                    </div>
+                </div>
+            </a>
+            <a href="#" id="btn_papelera" wire:click="actualizarEstatus('cancelados')">
+                <div class="card-complement">
+                    <div class="bg-objet" style="background-color: #F2ADAD;"></div>
+                    <div class="card-comple-info d-flex align-items-center justify-content-between px-3 w-100">
+                        <strong style="font-size: 16px;"> Cancelados</strong>
+                        <span class="d-flex align-items-center" style="gap: 5px;">
+                            <strong style="font-size: 22px"> {{ $cancelado_count }} </strong>
+                        </span>
+                    </div>
+                </div>
+            </a>
+            <a href="#" id="btn_pendiente" wire:click="actualizarEstatus('terminados')">
+                <div class="card-complement">
+                    <div class="bg-objet" style="background-color: #d9d9d9;"></div>
+                    <div class="card-comple-info d-flex align-items-center justify-content-between px-3 w-100">
+                        <strong style="font-size: 16px;"> Terminados</strong>
+                        <span class="d-flex align-items-center" style="gap: 5px;">
+                            <strong style="font-size: 22px"> {{ $terminado_count }} </strong>
+                        </span>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="text-right mb-4">
+            <a href="{{ route('admin.timesheet-proyectos-create') }}" class="btn btn-outline-primary">Crear Proyecto</a>
         </div>
     @endcan
 
@@ -105,115 +154,122 @@
         }
     </style>
 
-    <div class="w-100 d-flex justify-content-between mt-5">
-        <h5 id="titulo_estatus">Registros</h5>
-        <div class="btn_estatus_caja">
-            <button class="btn btn-primary ml-3"
-                style="background-color: #F48C16; border:none !important; position: relative;" id="btn_todos"
-                wire:click="actualizarEstatus('procesos')">
-                @if ($proceso_count > 0)
-                    <span class="indicador_numero" style="filter: contrast(200%);">{{ $proceso_count }}</span>
-                @endif
-                En Proceso
-            </button>
-            <button class="btn btn-primary ml-3"
-                style="background-color: #aaa; border:none !important; position: relative;" id="btn_papelera"
-                wire:click="actualizarEstatus('cancelados')">
-                @if ($cancelado_count > 0)
-                    <span class="indicador_numero" style="filter: contrast(200%);">{{ $cancelado_count }}</span>
-                @endif
-                Cancelados
-            </button>
-            <button class="btn btn-primary ml-3"
-                style="background-color: #61CB5C; border:none !important; position: relative;" id="btn_pendiente"
-                wire:click="actualizarEstatus('terminados')">
-                @if ($terminado_count > 0)
-                    <span class="indicador_numero" style="filter: contrast(200%);">{{ $terminado_count }}</span>
-                @endif
-                Terminados
-            </button>
-            <button class="btn btn-primary ml-3"
-                style="background-color: #1E88D7; border:none !important; position: relative;" id="btn_pendiente"
-                wire:click="actualizarEstatus('todos')">
-                <span class="indicador_numero"
-                    style="filter: contrast(200%);">{{ $terminado_count + $proceso_count + $cancelado_count }}</span>
-                Todos
-            </button>
+    <div class="card card-body">
+        <div class="row">
+            <div class="col-12">
+                <h5 id="titulo_estatus" class="title-card-time" style="text-transform: capitalize;">{{ $estatus }}
+                </h5>
+                <hr class="my-4">
+            </div>
+            {{-- <div class="btn_estatus_caja">
+                <button class="btn btn-primary ml-3"
+                    style="background-color: #F48C16; border:none !important; position: relative;" id="btn_todos"
+                    wire:click="actualizarEstatus('procesos')">
+                    @if ($proceso_count > 0)
+                        <span class="indicador_numero" style="filter: contrast(200%);">{{ $proceso_count }}</span>
+                    @endif
+                    En Proceso
+                </button>
+                <button class="btn btn-primary ml-3"
+                    style="background-color: #aaa; border:none !important; position: relative;" id="btn_papelera"
+                    wire:click="actualizarEstatus('cancelados')">
+                    @if ($cancelado_count > 0)
+                        <span class="indicador_numero" style="filter: contrast(200%);">{{ $cancelado_count }}</span>
+                    @endif
+                    Cancelados
+                </button>
+                <button class="btn btn-primary ml-3"
+                    style="background-color: #61CB5C; border:none !important; position: relative;" id="btn_pendiente"
+                    wire:click="actualizarEstatus('terminados')">
+                    @if ($terminado_count > 0)
+                        <span class="indicador_numero" style="filter: contrast(200%);">{{ $terminado_count }}</span>
+                    @endif
+                    Terminados
+                </button>
+                <button class="btn btn-primary ml-3"
+                    style="background-color: #1E88D7; border:none !important; position: relative;" id="btn_pendiente"
+                    wire:click="actualizarEstatus('todos')">
+                    <span class="indicador_numero"
+                        style="filter: contrast(200%);">{{ $terminado_count + $proceso_count + $cancelado_count }}</span>
+                    Todos
+                </button>
+            </div> --}}
+        </div>
+        @include('partials.flashMessages')
+        <div class="datatable-fix w-100">
+            <table id="datatable_timesheet_proyectos" class="table w-100 tabla-animada">
+                <thead class="w-100">
+                    <tr>
+                        <th>ID </th>
+                        <th>Nombre del proyecto </th>
+                        <th>Fecha inicio </th>
+                        <th>Fecha termino</th>
+                        <th>Cliente</th>
+                        <th style="max-width: 250px !important;">Área(s)</th>
+                        <th>Sede</th>
+                        <th>Estatus</th>
+                        <th>Tipo</th>
+                        <th style="max-width:150px !important; width:150px ;">Opciones</th>
+                    </tr>
+                </thead>
+
+                <tbody style="position:relative;">
+                    @foreach ($proyectos as $proyecto)
+                        <tr>
+                            <td>{{ $proyecto->identificador }} </td>
+                            <td>{{ $proyecto->proyecto }} </td>
+                            <td>{{ $proyecto->fecha_inicio }} </td>
+                            <td>{{ $proyecto->fecha_fin }} </td>
+                            <td>{{ $proyecto->cliente_id ? $proyecto->cliente->nombre : '' }} </td>
+                            <td>
+                                <ul style="padding-left:10px; ">
+                                    @foreach ($proyecto->areas as $area)
+                                        <li>{{ $area->area }}</li>
+                                    @endforeach
+                                </ul>
+                            </td>
+                            <td>{{ $proyecto->sede_id ? $proyecto->sede->sede : '' }} </td>
+                            <td>{{ $proyecto->estatus }} </td>
+                            <td>{{ $proyecto->tipo ?? 'No Definido' }} </td>
+                            <td>
+                                @can('timesheet_administrador_proyectos_delete')
+                                    @php
+                                        $time_proyecto = TimesheetHoras::where('proyecto_id', $proyecto->id)->exists();
+                                    @endphp
+                                    @if (!$time_proyecto)
+                                        <button class="btn" data-toggle="modal"
+                                            data-target="#modal_proyecto_eliminar_{{ $proyecto->id }}">
+                                            <i class="fas fa-trash-alt" style="color: red; font-size: 15pt;"
+                                                title="Eliminar"></i>
+                                        </button>
+                                    @else
+                                        <div class="btn">
+                                            <i class="fas fa-trash-alt" style="color: #aaa; font-size: 15pt;"
+                                                title="Este proyecto no puede ser eliminado debido a que está en uso"></i>
+                                        </div>
+                                    @endif
+                                    <a href="{{ route('admin.timesheet-proyectos-edit', $proyecto->id) }}" class="btn">
+                                        <i class="fa-solid fa-pen-to-square" style="font-size:15pt;"
+                                            title="Editar proyecto: {{ $proyecto->proyecto }}"></i>
+                                    </a>
+                                @endcan
+                                @can('timesheet_administrador_tareas_proyectos_access')
+                                    <a href="{{ route('admin.timesheet-tareas-proyecto', $proyecto->id) }}" class="btn">
+                                        <i class="fas fa-list-alt" style="color:#888; font-size: 15pt;"
+                                            title="Tareas de {{ $proyecto->proyecto }}"></i>
+                                    </a>
+                                @endcan
+                                <button class="btn" data-toggle="modal"
+                                    data-target="#modal_proyecto_{{ $proyecto->id }}"><i
+                                        class="fa-solid fa-signal"></i></button>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
     </div>
-    @include('partials.flashMessages')
-    <div class="datatable-fix w-100 mt-4">
-        <table id="datatable_timesheet_proyectos" class="table w-100 tabla-animada">
-            <thead class="w-100">
-                <tr>
-                    <th>ID </th>
-                    <th>Nombre del proyecto </th>
-                    <th>Fecha inicio </th>
-                    <th>Fecha termino</th>
-                    <th>Cliente</th>
-                    <th style="max-width: 250px !important;">Área(s)</th>
-                    <th>Sede</th>
-                    <th>Estatus</th>
-                    <th>Tipo</th>
-                    <th style="max-width:150px !important; width:150px ;">Opciones</th>
-                </tr>
-            </thead>
 
-            <tbody style="position:relative;">
-                @foreach ($proyectos as $proyecto)
-                    <tr>
-                        <td>{{ $proyecto->identificador }} </td>
-                        <td>{{ $proyecto->proyecto }} </td>
-                        <td>{{ $proyecto->fecha_inicio }} </td>
-                        <td>{{ $proyecto->fecha_fin }} </td>
-                        <td>{{ $proyecto->cliente_id ? $proyecto->cliente->nombre : '' }} </td>
-                        <td>
-                            <ul style="padding-left:10px; ">
-                                @foreach ($proyecto->areas as $area)
-                                    <li>{{ $area->area }}</li>
-                                @endforeach
-                            </ul>
-                        </td>
-                        <td>{{ $proyecto->sede_id ? $proyecto->sede->sede : '' }} </td>
-                        <td>{{ $proyecto->estatus }} </td>
-                        <td>{{ $proyecto->tipo ?? 'No Definido' }} </td>
-                        <td>
-                            @can('timesheet_administrador_proyectos_delete')
-                                @php
-                                    $time_proyecto = TimesheetHoras::where('proyecto_id', $proyecto->id)->exists();
-                                @endphp
-                                @if (!$time_proyecto)
-                                    <button class="btn" data-toggle="modal"
-                                        data-target="#modal_proyecto_eliminar_{{ $proyecto->id }}">
-                                        <i class="fas fa-trash-alt" style="color: red; font-size: 15pt;"
-                                            title="Eliminar"></i>
-                                    </button>
-                                @else
-                                    <div class="btn">
-                                        <i class="fas fa-trash-alt" style="color: #aaa; font-size: 15pt;"
-                                            title="Este proyecto no puede ser eliminado debido a que está en uso"></i>
-                                    </div>
-                                @endif
-                                <a href="{{ route('admin.timesheet-proyectos-edit', $proyecto->id) }}" class="btn">
-                                    <i class="fa-solid fa-pen-to-square" style="font-size:15pt;"
-                                        title="Editar proyecto: {{ $proyecto->proyecto }}"></i>
-                                </a>
-                            @endcan
-                            @can('timesheet_administrador_tareas_proyectos_access')
-                                <a href="{{ route('admin.timesheet-tareas-proyecto', $proyecto->id) }}" class="btn">
-                                    <i class="fas fa-list-alt" style="color:#888; font-size: 15pt;"
-                                        title="Tareas de {{ $proyecto->proyecto }}"></i>
-                                </a>
-                            @endcan
-                            <button class="btn" data-toggle="modal"
-                                data-target="#modal_proyecto_{{ $proyecto->id }}"><i
-                                    class="fa-solid fa-signal"></i></button>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
 
     @foreach ($proyectos as $proyecto)
         <div class="modal fade" id="modal_proyecto_{{ $proyecto->id }}" tabindex="-1" role="dialog"

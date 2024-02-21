@@ -92,6 +92,7 @@ class ComunicacionSgiController extends Controller
             'fecha_programable' => 'required|date',
             'fecha_programable_fin' => 'nullable|date',
         ]);
+
         if ($request->by_area) {
             $opts = $request->by_area;
         } else {
@@ -103,58 +104,61 @@ class ComunicacionSgiController extends Controller
         $comunicacionSgi = ComunicacionSgi::create($request->all());
 
         $image = null;
-        if ($request->file('imagen') != null or !empty($request->file('imagen'))) {
-            $extension = pathinfo($request->file('imagen')->getClientOriginalName(), PATHINFO_EXTENSION);
-            $name_image = basename(pathinfo($request->file('imagen')->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
+        if ($request->hasFile('imagen')) {
+            $imagen = $request->file('imagen');
+            $extension = $imagen->getClientOriginalExtension();
+            $name_image = pathinfo($imagen->getClientOriginalName(), PATHINFO_FILENAME);
             $new_name_image = 'UID_' . $comunicacionSgi->id . '_' . $name_image . '.' . $extension;
             $route = storage_path() . '/app/public/imagen_comunicado_SGI/' . $new_name_image;
             $image = $new_name_image;
-            if ($extension == 'mp4' || $extension == 'mov' || $extension == 'webm' || $extension == 'wmv' || $extension == 'avi') {
-                $request->file('imagen')->storeAs('public/imagen_comunicado_SGI/', $new_name_image);
-                $tipo_archivo = 'video';
-            } else {
-                //Usamos image_intervention para disminuir el peso de la imagen
-                $img_intervention = Image::make($request->file('imagen'));
-                $img_intervention->resize(720, null, function ($constraint) {
-                    $constraint->aspectRatio();
-                })->save($route);
+
+            // Manejo de imágenes
+            if (in_array($extension, ['jpg', 'jpeg', 'png', 'gif', 'webp'])) {
+                // Almacenar imágenes jpg, jpeg, png, y gif directamente
+                $imagen->storeAs('public/imagen_comunicado_SGI/', $new_name_image);
                 $tipo_archivo = 'imagen';
+            } else {
+                // Para otros tipos de archivos, como videos, procesar según sea necesario
+                // En este caso, simplemente almacenamos el archivo como está
+                $imagen->storeAs('public/imagen_comunicado_SGI/', $new_name_image);
+                $tipo_archivo = 'video';
             }
         }
 
-        /*  $comunicacionSgi->update([
-        'imagen'=>$image
-        ]);
-*/
         ImagenesComunicacionSgis::create([
             'imagen' => $image,
             'comunicacion_id' => $comunicacionSgi->id,
             'tipo' => $tipo_archivo,
         ]);
 
-        $files = $request->file('files');
+        // Manejo de documentos
         if ($request->hasFile('files')) {
-            foreach ($files as $file) {
-                if (Storage::putFileAs('public/documento_comunicado_SGI', $file, $file->getClientOriginalName())) {
+            foreach ($request->file('files') as $file) {
+                $nombreDocumento = $file->getClientOriginalName();
+                if (Storage::putFileAs('public/documento_comunicado_SGI', $file, $nombreDocumento)) {
                     DocumentoComunicacionSgis::create([
-                        'documento' => $file->getClientOriginalName(),
+                        'documento' => $nombreDocumento,
                         'comunicacion_id' => $comunicacionSgi->id,
                     ]);
                 }
             }
         }
+
         $comunicacionSgi->empleados()->sync($publicoObjetivo);
 
+        // Manejo de archivos adicionales
         if ($request->input('archivo', false)) {
             $comunicacionSgi->addMedia(storage_path('tmp/uploads/' . $request->input('archivo')))->toMediaCollection('archivo');
         }
 
+        // Manejo de medios adicionales
         if ($media = $request->input('ck-media', false)) {
             Media::whereIn('id', $media)->update(['model_id' => $comunicacionSgi->id]);
         }
 
         return redirect()->route('admin.comunicacion-sgis.index')->with('success', 'Guardado con éxito');
     }
+
 
     public function obtenerPublicoObjetivo($evaluados_objetivo, $opts)
     {
@@ -190,6 +194,7 @@ class ComunicacionSgiController extends Controller
     public function update(UpdateComunicacionSgiRequest $request, ComunicacionSgi $comunicacionSgi)
     {
         abort_if(Gate::denies('comunicados_generales_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $request->validate([
             'titulo' => 'required',
             'descripcion' => 'required',
@@ -198,31 +203,33 @@ class ComunicacionSgiController extends Controller
             'fecha_programable' => 'required|date',
             'fecha_programable_fin' => 'nullable|date',
         ]);
+
         if ($request->by_area) {
             $opts = $request->by_area;
         } else {
             $opts = $request->by_manual;
         }
+
         $publicoObjetivo = $this->obtenerPublicoObjetivo($request->evaluados_objetivo, $opts);
+
         $comunicacionSgi->update($request->all());
-        // $image = $comunicacionSgi->imagen;
-        if ($request->file('imagen') != null or !empty($request->file('imagen'))) {
-            $extension = pathinfo($request->file('imagen')->getClientOriginalName(), PATHINFO_EXTENSION);
-            $name_image = basename(pathinfo($request->file('imagen')->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
+
+        if ($request->hasFile('imagen')) {
+            $imagen = $request->file('imagen');
+            $extension = $imagen->getClientOriginalExtension();
+            $name_image = pathinfo($imagen->getClientOriginalName(), PATHINFO_FILENAME);
             $new_name_image = 'UID_' . $comunicacionSgi->id . '_' . $name_image . '.' . $extension;
             $route = storage_path() . '/app/public/imagen_comunicado_SGI/' . $new_name_image;
             $image = $new_name_image;
-            if ($extension == 'mp4' || $extension == 'mov' || $extension == 'webm' || $extension == 'wmv' || $extension == 'avi') {
-                $request->file('imagen')->storeAs('public/imagen_comunicado_SGI/', $new_name_image);
-                $tipo_archivo = 'video';
-            } else {
-                //Usamos image_intervention para disminuir el peso de la imagen
-                $img_intervention = Image::make($request->file('imagen'));
-                $img_intervention->resize(256, null, function ($constraint) {
-                    $constraint->aspectRatio();
-                })->save($route);
+
+            if (in_array($extension, ['jpg', 'jpeg', 'png', 'gif', 'webp'])) {
+                $imagen->storeAs('public/imagen_comunicado_SGI/', $new_name_image);
                 $tipo_archivo = 'imagen';
+            } else {
+                $imagen->storeAs('public/imagen_comunicado_SGI/', $new_name_image);
+                $tipo_archivo = 'video';
             }
+
             $imagen_sgsi = $comunicacionSgi->imagenes_comunicacion->first();
             if ($imagen_sgsi) {
                 $imagen_sgsi->update([
@@ -238,11 +245,6 @@ class ComunicacionSgiController extends Controller
                 ]);
             }
         }
-
-        /*  $comunicacionSgi->update([
-        'imagen'=>$image
-        ]);
-*/
 
         $files = $request->file('files');
         if ($request->hasFile('files')) {
@@ -271,6 +273,7 @@ class ComunicacionSgiController extends Controller
 
         return redirect()->route('admin.comunicacion-sgis.index')->with('success', 'Editado con éxito');
     }
+
 
     public function show(ComunicacionSgi $comunicacionSgi)
     {

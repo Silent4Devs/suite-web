@@ -1,8 +1,8 @@
 <div>
     <x-loading-indicator />
-    <div class="mt-5 card card-body">
+    <div class=" card card-body">
         <div class="row">
-            <div class="col-md-4 form-group" style="padding-left:0px !important;">
+            <div class="col-md-3 form-group" style="padding-left:0px !important;">
                 <label class="form-label">Colaborador</label>
                 <select class="form-control" wire:model.defer="emp_id">
                     <option selected value="0">Todos</option>
@@ -11,17 +11,7 @@
                     @endforeach
                 </select>
             </div>
-            <div class="col-md-4 form-group">
-                <label class="form-label">Fecha de inicio</label>
-                <input class="form-control date_librery" type="date" name="fecha_inicio" wire:model.defer="fecha_inicio">
-            </div>
-            <div class="col-md-4 form-group">
-                <label class="form-label">Fecha de fin</label>
-                <input class="form-control date_librery" type="date" name="fecha_fin" wire:model.defer="fecha_fin">
-            </div>
-        </div>
-        <div class="row" wire:ignore>
-            <div class="col-md-4 form-group" style="padding-left:0px !important;">
+            <div class="col-md-3 form-group" style="padding-left:0px !important;" wire:ignore>
                 <label class="form-label">Proyecto</label>
                 <select class="form-control" wire:model.defer="proy_id">
                     <option selected value="0">Todos</option>
@@ -30,50 +20,43 @@
                     @endforeach
                 </select>
             </div>
-        </div>
-        <div class="row mt-5">
-            @include('partials.flashMessages')
-            <div class="col-12 d-flex justify-content-between"
-                style="padding-left: 0 !important; padding-right: 0 !important;">
-                <h5 id="titulo_estatus">Registros Proyectos</h5>
+            <div class="col-md-3 form-group">
+                <label class="form-label">Fecha de inicio</label>
+                <input class="form-control date_librery" type="date" name="fecha_inicio"
+                    wire:model.defer="fecha_inicio">
             </div>
-            <div class="row w-100 mt-4" style="align-items: end">
-                <div class="col-6">
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="row" style="justify-content: center">
-                                <div class="col-3 p-0" style="font-size: 11px;align-self: center">
-                                    <p class="m-0">Mostrando</p>
-                                </div>
-                                <div class="col-4 p-0">
-                                    <select name="" id="" class="form-control" wire:model.lazy="perPage">
-                                        <option value="5">5</option>
-                                        <option value="10">10</option>
-                                        <option value="20">20</option>
-                                        <option value="50">50</option>
-                                        <option value="100">100</option>
-                                    </select>
-                                </div>
-                                <div class="col-5 p-0" style="font-size: 11px;align-self: center;text-align: end">
-                                    <p class="m-0"> proyectos por página</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <button id="" class="btn-sm rounded pr-2"
-                                style="background-color:#b9eeb9; border: #fff" wire:click="exportExcel()">
-                                <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"
-                                    title="Exportar Excel"></i>
-                                Exportar Excel
-                            </button>
-                            <button id="" class="btn-sm rounded pr-2"
-                            style="background-color:#b9eeb9; border: #fff" wire:click="refreshComponent">
-                            <i class="fas fa-search" style="font-size: 1.1rem;"></i>
-                            &nbsp;&nbsp; Buscar
-                        </button>
-                        </div>
-                    </div>
-                </div>
+            <div class="col-md-3 form-group">
+                <label class="form-label">Fecha de fin</label>
+                <input class="form-control date_librery" type="date" name="fecha_fin" wire:model.defer="fecha_fin">
+            </div>
+        </div>
+    </div>
+    <div class="card card-body">
+        <div class="row">
+            @include('partials.flashMessages')
+            <div class="col-12">
+                <h5 id="titulo_estatus" class="title-card-time">Registros Proyectos</h5>
+                <hr class="my-4">
+            </div>
+            <div class="d-flex align-items-center" style="gap: 20px;">
+                <label for="">Mostrar registros</label>
+                <select name="" id="" class="form-control" wire:model.lazy="perPage">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>
+                <button id="" class="btn-sm rounded pr-2" style="background-color:#b9eeb9; border: #fff"
+                    wire:click="exportExcel()">
+                    <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935" title="Exportar Excel"></i>
+                    Exportar&nbsp;Excel
+                </button>
+                <button id="" class="btn-sm rounded pr-2" style="background-color:#b9eeb9; border: #fff"
+                    wire:click="refreshComponent">
+                    <i class="fas fa-search" style="font-size: 1.1rem;"></i>
+                    &nbsp;&nbsp; Buscar
+                </button>
             </div>
             <div class="datatable-fix w-100 mt-2">
                 <table class="table w-100">
@@ -96,11 +79,11 @@
                                 <td>{!! $time->timesheet->fin !!}</td>
                                 <td>{{ $time->timesheet->empleado->name }}</td>
                                 <td>{{ $time->timesheet->aprobador->name }}</td>
-                                <td>{{ $time->proyecto->proyecto }}</td>
-                                <td>{{ $time->tarea->tarea }}</td>
+                                <td>{{ $time->proyecto }}</td>
+                                <td>{{ $time->tarea }}</td>
                                 <td>{{ $time->descripcion }}</td>
                                 <td>
-                                    {{ (floatval($time->horas_lunes) + floatval($time->horas_martes) + floatval($time->horas_miercoles) + floatval($time->horas_jueves) + floatval($time->horas_viernes) + floatval($time->horas_sabado) + floatval($time->horas_domingo)) }}
+                                    {{ $time->horas_totales_tarea }} h
                                 </td>
                             </tr>
                         @endforeach

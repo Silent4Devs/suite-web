@@ -3,14 +3,14 @@
 namespace App\Models\RH;
 
 use App\Traits\ClearsResponseCache;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class EvaluadoEvaluador extends Model implements Auditable
 {
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
     use HasFactory;
-    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
 
     protected $table = 'ev360_evaluado_evaluador';
 
@@ -54,7 +54,9 @@ class EvaluadoEvaluador extends Model implements Auditable
 
     public function evaluador()
     {
-        return $this->belongsTo('App\Models\Empleado', 'evaluador_id', 'id');
+        return $this->belongsTo('App\Models\Empleado', 'evaluador_id', 'id')
+            ->select('id', 'name', 'area_id', 'puesto_id', 'foto')
+            ->with('area', 'puestoRelacionado');
     }
 
     public function evaluacion()

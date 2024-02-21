@@ -8,20 +8,23 @@ use App\Mail\SolicitudDayOff as MailSolicitudDayoff;
 use App\Models\DayOff;
 use App\Models\Empleado;
 use App\Models\IncidentesDayoff;
+use App\Models\ListaInformativa;
 use App\Models\Organizacion;
 use App\Models\SolicitudDayOff;
 use App\Models\User;
 use App\Traits\ObtenerOrganizacion;
 use Carbon\Carbon;
-use Flash;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class SolicitudDayOffController extends Controller
 {
     use ObtenerOrganizacion;
+
+    public $modelo = 'SolicitudDayOff';
 
     public function index(Request $request)
     {
@@ -110,12 +113,12 @@ class SolicitudDayOffController extends Controller
                     $q->where('area_id', $usuario->empleado->area_id);
                 })->select('dias', 'tipo_conteo')->first();
             } else {
-                Flash::error('Regla de Day´s Off no asociada');
+                Alert::warning('warning', 'Regla de Day´s Off no asociada');
 
                 return redirect(route('admin.solicitud-dayoff.index'));
             }
         } else {
-            Flash::error('Regla de Day´s Off no asociada');
+            Alert::warning('warning', 'Regla de Day´s Off no asociada');
 
             return redirect(route('admin.solicitud-dayoff.index'));
         }
@@ -148,9 +151,27 @@ class SolicitudDayOffController extends Controller
         $supervisor = $empleado->find($request->autoriza);
         $solicitante = $empleado->find($request->empleado_id);
         $solicitud = SolicitudDayOff::create($request->all());
-        Mail::to(removeUnicodeCharacters($supervisor->email))->send(new MailSolicitudDayOff($solicitante, $supervisor, $solicitud));
 
-        Flash::success('Solicitud creada satisfactoriamente.');
+        $informados = ListaInformativa::with('participantes.empleado', 'usuarios.usuario')->where('modelo', '=', $this->modelo)->first();
+
+        if (isset($informados->participantes[0]) || isset($informados->usuarios[0])) {
+
+            if (isset($informados->participantes[0])) {
+                foreach ($informados->participantes as $participante) {
+                    $correos[] = $participante->empleado->email;
+                }
+            }
+
+            if (isset($informados->usuarios[0])) {
+                foreach ($informados->usuarios as $usuario) {
+                    $correos[] = $usuario->usuario->email;
+                }
+            }
+            Mail::to(removeUnicodeCharacters($supervisor->email))->queue(new MailSolicitudDayOff($solicitante, $supervisor, $solicitud, $correos));
+        } else {
+            Mail::to(removeUnicodeCharacters($supervisor->email))->queue(new MailSolicitudDayOff($solicitante, $supervisor, $solicitud));
+        }
+        Alert::success('éxito', 'Información añadida con éxito');
 
         return redirect()->route('admin.solicitud-dayoff.index');
     }
@@ -162,7 +183,7 @@ class SolicitudDayOffController extends Controller
         $vacacion = SolicitudDayOff::with('empleado')->find($id);
 
         if (empty($vacacion)) {
-            Flash::error('Day Off not found');
+            Alert::warning('warning', 'Regla de Day´s Off no asociada');
 
             return redirect(route('admin.solicitud-dayoff.index'));
         }
@@ -197,9 +218,27 @@ class SolicitudDayOffController extends Controller
         $solicitante = $empleados->find($request->empleado_id);
 
         $solicitud->update($request->all());
-        Mail::to(removeUnicodeCharacters($solicitante->email))->send(new MailRespuestaDayOff($solicitante, $supervisor, $solicitud));
 
-        Flash::success('Respuesta enviada satisfactoriamente.');
+        $informados = ListaInformativa::with('participantes.empleado', 'usuarios.usuario')->where('modelo', '=', $this->modelo)->first();
+
+        if (isset($informados->participantes[0]) || isset($informados->usuarios[0])) {
+
+            if (isset($informados->participantes[0])) {
+                foreach ($informados->participantes as $participante) {
+                    $correos[] = $participante->empleado->email;
+                }
+            }
+
+            if (isset($informados->usuarios[0])) {
+                foreach ($informados->usuarios as $usuario) {
+                    $correos[] = $usuario->usuario->email;
+                }
+            }
+            Mail::to(removeUnicodeCharacters($solicitante->email))->queue(new MailRespuestaDayOff($solicitante, $supervisor, $solicitud, $correos));
+        } else {
+            Mail::to(removeUnicodeCharacters($solicitante->email))->queue(new MailRespuestaDayOff($solicitante, $supervisor, $solicitud));
+        }
+        Alert::success('éxito', 'Información añadida con éxito');
 
         return redirect(route('admin.solicitud-dayoff.aprobacion'));
     }
@@ -210,8 +249,53 @@ class SolicitudDayOffController extends Controller
         $id = $request->id;
         $vacaciones = SolicitudDayOff::find($id);
         $vacaciones->delete();
+        Alert::success('éxito', 'Información eliminada con éxito');
 
         return response()->json(['status' => 200]);
+    }
+
+    public function filtrado_empleados($efecto, $usuario, $año)
+    {
+        //Sacamos los ids del empleado
+        $areaId = $usuario->empleado->area_id;
+        $puestoId = $usuario->empleado->puesto_id;
+        $idempleado = $usuario->empleado->id;
+
+        //Preparamos los querys que se van a utilizar, buscando si existe coincidencia con el area, puesto o id del empleado
+        $queryArea = IncidentesDayoff::where('efecto', $efecto)->where('aniversario', $año)
+            ->whereHas('areas', function ($query) use ($areaId) {
+                $query->where('area_id', $areaId);
+            });
+
+        $queryPuesto = IncidentesDayoff::where('efecto', $efecto)->where('aniversario', $año)
+            ->whereHas('puestos', function ($query) use ($puestoId) {
+                $query->where('puesto_id', $puestoId);
+            });
+
+        $queryEmpleado = IncidentesDayoff::where('efecto', $efecto)->where('aniversario', $año)
+            ->whereHas('empleados', function ($q) use ($idempleado) {
+                $q->where('empleado_id', $idempleado);
+            });
+
+        //Se realizan las consultas buscando coincidencias por jerarquia, 1ro area, 2do puesto
+        // y 3ro empleado, de no existir ninguna se manda 0
+        if (($queryArea->get())->isNotEmpty()) {
+            $dias = $queryArea->pluck('dias_aplicados')->sum();
+
+            return $dias;
+        } elseif (($queryPuesto->get())->isNotEmpty()) {
+            $dias = $queryPuesto->pluck('dias_aplicados')->sum();
+
+            return $dias;
+        } elseif (($queryEmpleado->get())->isNotEmpty()) {
+            $dias = $queryEmpleado->pluck('dias_aplicados')->sum();
+
+            return $dias;
+        } else {
+            $dias = 0;
+
+            return $dias;
+        }
     }
 
     public function diasDisponibles()
@@ -238,12 +322,14 @@ class SolicitudDayOffController extends Controller
             return 0;
         }
         $dias_otorgados = $regla_aplicada;
-        $dias_extra = IncidentesDayoff::where('efecto', 1)->where('aniversario', $año)->whereHas('empleados', function ($q) use ($usuario) {
-            $q->where('empleado_id', $usuario->empleado->id);
-        })->pluck('dias_aplicados')->sum();
-        $dias_restados = IncidentesDayoff::where('efecto', 2)->where('aniversario', $año)->whereHas('empleados', function ($q) use ($usuario) {
-            $q->where('empleado_id', $usuario->empleado->id);
-        })->pluck('dias_aplicados')->sum();
+        $dias_extra = $this->filtrado_empleados(1, $usuario, $año);
+        $dias_restados = $this->filtrado_empleados(2, $usuario, $año);
+        // $dias_extra = IncidentesDayoff::where('efecto', 1)->where('aniversario', $año)->whereHas('empleados', function ($q) use ($usuario) {
+        //     $q->where('empleado_id', $usuario->empleado->id);
+        // })->pluck('dias_aplicados')->sum();
+        // $dias_restados = IncidentesDayoff::where('efecto', 2)->where('aniversario', $año)->whereHas('empleados', function ($q) use ($usuario) {
+        //     $q->where('empleado_id', $usuario->empleado->id);
+        // })->pluck('dias_aplicados')->sum();
 
         $dias_gastados = SolicitudDayOff::where('empleado_id', $usuario->empleado->id)->where('año', '=', $año)->where(function ($query) {
             $query->where('aprobacion', '=', 1)
@@ -304,7 +390,7 @@ class SolicitudDayOffController extends Controller
         $vacacion = SolicitudDayOff::with('empleado')->find($id);
 
         if (empty($vacacion)) {
-            Flash::error('Vacación not found');
+            Alert::warning('warning', 'Data not found');
 
             return redirect(route('admin.solicitud-vacaciones.index'));
         }
@@ -375,7 +461,7 @@ class SolicitudDayOffController extends Controller
         $vacacion = SolicitudDayOff::with('empleado')->find($id);
 
         if (empty($vacacion)) {
-            Flash::error('Vacación not found');
+            Alert::warning('warning', 'Data not found');
 
             return redirect(route('admin.solicitud-dayoff.index'));
         }
@@ -389,7 +475,7 @@ class SolicitudDayOffController extends Controller
         $vacacion = SolicitudDayOff::with('empleado')->find($id);
 
         if (empty($vacacion)) {
-            Flash::error('Vacación not found');
+            Alert::warning('warning', 'Data not found');
 
             return redirect(route('admin.solicitud-dayoff.index'));
         }

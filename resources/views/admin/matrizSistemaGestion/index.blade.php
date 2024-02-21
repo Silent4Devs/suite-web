@@ -19,10 +19,14 @@
     </style>
     <div class="mt-5 card">
 
-        <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-            <h3 class="mb-2 text-center text-white"><strong>Matriz Análisis de Riesgo Integral
+        <div class="py-3 col-md-10 col-sm-9 align-self-center " style="margin-top:-40px;">
+            <h3 class="mb-2 text-center" style="#345183 !important;"><strong>Matriz Análisis de Riesgo Integral
                 </strong></h3>
         </div>
+        <br>
+        <br>
+        <br>
+        <br>
         @can('analisis_de_riesgo_integral_agregar')
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
@@ -406,7 +410,7 @@
                 retrieve: true,
                 aaSorting: [],
                 ajax: {
-                    url: "/admin/matriz-seguridad/sistema-gestion/data?id=" + id_matriz,
+                    url: "/admin/matriz-seguridad/sistema-gestion/data",
                     method: 'POST',
                 },
                 columns: [{
@@ -576,9 +580,9 @@
                         data: 'version_historico',
                         name: 'version_historico',
                         render: function(data) {
-                            if(data === true) {
+                            if (data === true) {
                                 return `<div style="text-align:center"><div>27001:2013</div></div>`;
-                            }else{
+                            } else {
                                 return `<div style="text-align:center"><div>27001:2022</div></div>`;
                             }
                         }

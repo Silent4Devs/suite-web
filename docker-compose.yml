@@ -33,7 +33,7 @@ services:
         max-size: "30m"
         max-file: "1"
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:80"]
+      test: [ "CMD", "curl", "-f", "http://localhost:80" ]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -49,6 +49,7 @@ services:
     volumes:
       # - ./infra/postgres/data:/var/lib/postgresql/data #localpath
       - tabantaj-db:/var/lib/postgresql/data
+      - ./infra/postgres/postgresql.conf:/etc/postgresql/postgresql.conf
     environment:
       - POSTGRES_USER=homestead
       - POSTGRES_PASSWORD=secret
@@ -151,9 +152,10 @@ services:
     tty: true
     volumes:
       - ./infra/redis/redis.conf:/usr/local/etc/redis/redis.conf # Mount the Redis configuration file
+      - ./infra/redis/sysctl.conf:/etc/sysctl.conf # Mount the sysctl configuration file
     networks:
       - tabantajnetwork
-    mem_limit: 2g
+    mem_limit: 3g
     labels:
       com.datadoghq.ad.check_names: "[redisdb]"
       com.datadoghq.ad.init_configs: "[{}]"
@@ -177,6 +179,38 @@ services:
     networks:
       - tabantajnetwork
 
+  rabbitmq-tabantaj:
+    image: rabbitmq:3-management-alpine
+    container_name: rabbit-tabantaj
+    environment:
+      - RABBITMQ_DEFAULT_USER=desarrollo
+      - RABBITMQ_DEFAULT_PASS=Password123.
+      - RABBITMQ_DEFAULT_VHOST=desarrollo # Add this line
+    ports:
+      - 5672:5672
+      - 15672:15672
+    restart: unless-stopped
+    tty: true
+    networks:
+      - tabantajnetwork
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+
+volumes:
+  tabantaj-db:
+    driver: local
+  rabbitmq_data:
+    driver: local
+  pgadmin-data:
+    driver: local
+  # elasticsearch:
+  #   driver: local
+  # elasticsearch-logs:
+  #   driver: local
+
+networks:
+  tabantajnetwork:
+    driver: bridge
   # dd-agent:
   #   image: gcr.io/datadoghq/agent:7
   #   container_name: dd-agent
@@ -358,16 +392,3 @@ services:
   #   networks:
   #     - tabantajnetwork
 
-volumes:
-  tabantaj-db:
-    driver: local
-  pgadmin-data:
-    driver: local
-  # elasticsearch:
-  #   driver: local
-  # elasticsearch-logs:
-  #   driver: local
-
-networks:
-  tabantajnetwork:
-    driver: bridge

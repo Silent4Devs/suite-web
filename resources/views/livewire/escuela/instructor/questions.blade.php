@@ -6,7 +6,7 @@
         @if ($onlyIcon)
 
             <i class="ml-2 fas fa-plus-square" style="font-size:10px;"
-                data-toggle="modal" data-target="#createDataModal{{$evaluation_id}}" ></i>
+                data-toggle="modal" data-target="#createDataModal{{$evaluation_id}}" title="Agregar pregunta"></i>
         @else
             <button class="btn btn-light text-primary" data-toggle="modal"
                 data-target="#createDataModal{{$evaluation_id}}">

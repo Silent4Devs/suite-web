@@ -8,20 +8,20 @@
                 enctype="multipart/form-data">
                 @method('PUT')
                 @csrf
-                <div class="form-group">
-                    <label class="required" for="nombre">Nombre del Nivel</label>
+                <div class="form-group anima-focus">
                     <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text" name="nombre"
-                        id="nombre" value="{{ old('nombre', $perfil->nombre) }}" required>
+                        id="nombre" placeholder="" value="{{ old('nombre', $perfil->nombre) }}" required>
+                        {!! Form::label('nombre', 'Nombre del Nivel*', ['class' => 'asterisco']) !!}
                     @if ($errors->has('nombre'))
                         <div class="invalid-feedback">
                             {{ $errors->first('nombre') }}
                         </div>
                     @endif
                 </div>
-                <div class="form-group">
-                    <label for="descripcion">Descripción</label>
+                <div class="form-group anima-focus">
                     <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" name="descripcion"
-                        id="descripcion">{{ old('descripcion', $perfil->descripcion) }}</textarea>
+                        id="descripcion" placeholder="">{{ old('descripcion', $perfil->descripcion) }}</textarea>
+                        {!! Form::label('descripcion', 'Descripción*', ['class' => 'asterisco']) !!}
                     @if ($errors->has('descripcion'))
                         <div class="invalid-feedback">
                             {{ $errors->first('descripcion') }}

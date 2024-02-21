@@ -17,10 +17,10 @@ class AreasExport implements FromCollection, WithHeadings, WithMapping
     public function map($area): array
     {
         $supervisor = 'Sin Supervisor';
-        if (!is_null($area->supervisor)) {
+        if (! is_null($area->supervisor)) {
             $supervisor = $area->supervisor->area;
         }
-        if (!is_null($area->grupo)) {
+        if (! is_null($area->grupo)) {
             $grupo = $area->grupo->nombre;
         }
 

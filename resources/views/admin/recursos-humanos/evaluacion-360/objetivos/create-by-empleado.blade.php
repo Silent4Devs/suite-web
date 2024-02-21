@@ -1,5 +1,18 @@
 @extends('layouts.admin')
+@section('css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/evaluaciones.css') }}{{ config('app.cssVersion') }}">
+@endsection
 @section('content')
+    @php
+        use App\Models\Organizacion;
+        $organizacion = Organizacion::getLogo();
+        if (!is_null($organizacion)) {
+            $logotipo = $organizacion->logotipo;
+        } else {
+            $logotipo = 'logotipo-tabantaj.png';
+        }
+    @endphp
+
     <style>
         .lds-facebook {
             display: inline-block;
@@ -65,9 +78,14 @@
             font-size: 30px;
         }
     </style>
-    {{ Breadcrumbs::render('EV360-Objetivos-Create', $empleado) }}
-    <h5 class="col-12 titulo_general_funcion">Asignar Objetivos Estratégicos</h5>
-    <div class="mt-4 card">
+    @can('objetivos_estrategicos_acceder')
+        {{ Breadcrumbs::render('EV360-Objetivos-Create', $empleado) }}
+    @endcan
+
+    <h5 class="titulo_general_funcion">Asignar Objetivos Estratégicos: <span
+            style="font-weight: lighter;">{{ $empleado->name }}</span></h5>
+
+    <div class="card">
         <div class="card-body">
             <form id="formObjetivoCreate" method="POST" action="{{ route('admin.ev360-objetivos.index') }}"
                 enctype="multipart/form-data" class="mt-3 row">
@@ -174,75 +192,77 @@
                 retrieve: true,
                 ajax: "{{ route('admin.ev360-objetivos-empleado.create', $empleado->id) }}",
                 columns: [{
-                    data: 'objetivo.tipo.nombre',
-                }, {
-                    data: 'objetivo.nombre'
-                },{
-                    data: 'id',
-                    render: function(data, type, row, meta) {
-                        return row.evaluacion_id;
-                    }
-                },
-                {
-                    data: 'objetivo.KPI',
-                }, {
-                    data: 'objetivo',
-                    render: function(data, type, row, meta) {
-                        return data.meta + ' ' + row.objetivo?.metrica?.definicion;
-                    }
-                }, {
-                    data: 'objetivo.esta_aprobado',
-                    render: function(data, type, row, meta) {
-                        if (data == 1) {
-                            return '<span class="badge badge-success">Aprobado</span>';
-                        } else if (data == 2) {
-                            let html = `
+                        data: 'objetivo.tipo.nombre',
+                    }, {
+                        data: 'objetivo.nombre'
+                    },
+                    // {
+                    //     data: 'id',
+                    //     render: function(data, type, row, meta) {
+                    //         return row.evaluacion_id;
+                    //     }
+                    // },
+                    {
+                        data: 'objetivo.KPI',
+                    }, {
+                        data: 'objetivo',
+                        render: function(data, type, row, meta) {
+                            return data.meta + ' ' + row.objetivo?.metrica?.definicion;
+                        }
+                    }, {
+                        data: 'objetivo.esta_aprobado',
+                        render: function(data, type, row, meta) {
+                            if (data == 1) {
+                                return '<span class="badge badge-success">Aprobado</span>';
+                            } else if (data == 2) {
+                                let html = `
                             <span class="badge badge-danger">No Aprobado
                                 <i class="fas fa-comment ml-1" title="${row.objetivo.comentarios_aprobacion}"></i>
                             </span>`;
-                            return html;
-                        } else {
-                            return '<span class="badge badge-warning">Pendiente</span>';
+                                return html;
+                            } else {
+                                return '<span class="badge badge-warning">Pendiente</span>';
+                            }
                         }
-                    }
-                }, {
-                    data: 'objetivo.descripcion_meta',
-                }, {
-                    data: 'id',
-                    render: function(data, type, row, meta) {
+                    }, {
+                        data: 'objetivo.descripcion_meta',
+                    }, {
+                        data: 'id',
+                        render: function(data, type, row, meta) {
 
-                        let urlBtnEditar =
-                            `/admin/recursos-humanos/evaluacion-360/${row.empleado_id}/objetivos/${row.objetivo_id}/editByEmpleado`;
-                        let urlBtnActualizar =
-                            `/admin/recursos-humanos/evaluacion-360/objetivos/${row.objetivo_id}/empleado`;
-                        let urlBtnEliminar =
-                            `/admin/recursos-humanos/evaluacion-360/objetivos/${row.id}`;
-                        let urlShow =
-                            `/admin/recursos-humanos/evaluacion-360/${row.empleado_id}/objetivos/lista`;
-                        let botones = `
+                            let urlBtnEditar =
+                                `/admin/recursos-humanos/evaluacion-360/${row.empleado_id}/objetivos/${row.objetivo_id}/editByEmpleado`;
+                            let urlBtnActualizar =
+                                `/admin/recursos-humanos/evaluacion-360/objetivos/${row.objetivo_id}/empleado`;
+                            let urlBtnEliminar =
+                                `/admin/recursos-humanos/evaluacion-360/objetivos/${row.id}`;
+                            let urlShow =
+                                `/admin/recursos-humanos/evaluacion-360/${row.empleado_id}/objetivos/lista`;
+                            let botones = `
                             <div class="row">
                                 <div class="col-12">
                                     <button class="btn btn-sm btn-editar" title="Editar" onclick="event.preventDefault();Editar('${urlBtnEditar}','${urlBtnActualizar}')"><i class="fas fa-edit"></i></button>
                                     <button class="btn btn-sm btn-eliminar text-danger" title="Eliminar" onclick="event.preventDefault();Eliminar('${urlBtnEliminar}')"><i class="fas fa-trash-alt"></i></button>
                                 </div>
                                 `;
-                        if (row.objetivo.esta_aprobado == 0) {
-                            if (auth.id == supervisor.id) {
-                                botones +=
-                                    `<div class="col-12">
+                            if (row.objetivo.esta_aprobado == 0) {
+                                if (auth.id == supervisor.id) {
+                                    botones +=
+                                        `<div class="col-12">
                                         <button onclick="event.preventDefault();aprobarObjetivoEstrategico(${row.objetivo_id},${row.empleado_id},true);" class="btn btn-small text-success"><i class="fa-solid fa-thumbs-up"></i></button>
                                         <button onclick="event.preventDefault();aprobarObjetivoEstrategico(${row.objetivo_id},${row.empleado_id},false);" class="btn btn-small text-danger"><i class="fa-solid fa-thumbs-down"></i></button>
                                         </div>
                                     </div>
                                     `;
+                                }
+                            } else {
+                                botones += `</div>`;
                             }
-                        } else {
-                            botones += `</div>`;
-                        }
 
-                        return botones;
+                            return botones;
+                        }
                     }
-                }],
+                ],
                 order: [
                     [1, 'asc']
                 ],
@@ -254,9 +274,14 @@
             window.tblObjetivos = $('.tblObjetivos').DataTable(dtOverrideGlobals);
 
             window.aprobarObjetivoEstrategico = (objetivo, empleado, estaAprobado) => {
+                console.log(objetivo, empleado, estaAprobado);
                 let textoAprobacion = estaAprobado ? 'Aprobar' : 'Rechazar';
                 let textoAprobado = estaAprobado ? 'Aprobado' : 'Rechazado';
-                let urlAprobacion = @json(route('admin.ev360-objetivos-empleado.aprobarRechazarObjetivo', ['empleado' => ':idEmpleado', 'objetivo' => ':idObjetivo']));
+                // let ruta_aux =
+                //     '{{ route('admin.ev360-objetivos-empleado.aprobarRechazarObjetivo', ['empleado' => ':idEmpleado', 'objetivo' => ':idObjetivo']) }}';
+                let urlAprobacion =
+                    '{{ route('admin.ev360-objetivos-empleado.aprobarRechazarObjetivo', ['empleado' => ':idEmpleado', 'objetivo' => ':idObjetivo']) }}';
+
                 urlAprobacion = urlAprobacion.replace(':idEmpleado', empleado);
                 urlAprobacion = urlAprobacion.replace(':idObjetivo', objetivo);
                 console.log(urlAprobacion);

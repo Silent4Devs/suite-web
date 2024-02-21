@@ -101,7 +101,7 @@ class AnalisisBrechaIsoController extends Controller
 
                 $cuentas = $gapunoPorc->GAPTotal($porcentajeGap1, $porcentajeGap2['Avance'], $porcentajeGap3['porcentaje']);
 
-                return $cuentas . '%' ? $cuentas . '%' : '';
+                return $cuentas.'%' ? $cuentas.'%' : '';
             });
 
             $table->editColumn('elaboro', function ($row) {
@@ -259,5 +259,10 @@ class AnalisisBrechaIsoController extends Controller
         AnalisisBrechasIso::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function inicioBrechas()
+    {
+        return view('admin.analisisdebrechas2022.inicio-brechas');
     }
 }

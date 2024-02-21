@@ -2,23 +2,23 @@
 
 namespace App\Models;
 
-use DateTime;
-use Carbon\Carbon;
-use DateTimeInterface;
-use EloquentFilter\Filterable;
-use Illuminate\Support\Facades\DB;
-use App\Traits\ClearsResponseCache;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Database\Eloquent\Model;
-use App\Models\RH\BeneficiariosEmpleado;
-use OwenIt\Auditing\Contracts\Auditable;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\RH\ContactosEmergenciaEmpleado;
-use App\Models\RH\DependientesEconomicosEmpleados;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\Iso27\DeclaracionAplicabilidadAprobarIso;
 use App\Models\Iso27\DeclaracionAplicabilidadResponsableIso;
+use App\Models\RH\BeneficiariosEmpleado;
+use App\Models\RH\ContactosEmergenciaEmpleado;
+use App\Models\RH\DependientesEconomicosEmpleados;
+use App\Traits\ClearsResponseCache;
+use Carbon\Carbon;
+use DateTime;
+use DateTimeInterface;
+use EloquentFilter\Filterable;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class Empleado.
@@ -56,10 +56,10 @@ use App\Models\Iso27\DeclaracionAplicabilidadResponsableIso;
  */
 class Empleado extends Model implements Auditable
 {
-    use SoftDeletes;
-    use HasFactory;
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
     use Filterable;
-    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
+    use HasFactory;
+    use SoftDeletes;
 
     const BAJA = 'baja';
 
@@ -94,6 +94,7 @@ class Empleado extends Model implements Auditable
 
     //, 'jefe_inmediato', 'empleados_misma_area'
     protected $fillable = [
+        'id',
         'name',
         'n_registro',
         'foto',
@@ -163,6 +164,13 @@ class Empleado extends Model implements Auditable
         });
     }
 
+    public static function getCeoExists()
+    {
+        return Cache::remember('Empleados:empleados_ceo_exists', 3600 * 6, function () {
+            return DB::table('empleados')->select('supervisor_id')->whereNull('supervisor_id')->exists();
+        });
+    }
+
     public static function getAll(array $options = [])
     {
         return Cache::remember('Empleados:empleados_all', 3600 * 8, function () use ($options) {
@@ -177,11 +185,25 @@ class Empleado extends Model implements Auditable
         });
     }
 
+    public static function getAllwithDeleted(array $options = [])
+    {
+        return Cache::remember('Empleados:empleados_all_borrados', 3600 * 8, function () use ($options) {
+            $query = self::query();
+
+            if (isset($options['orderBy'])) {
+                $orderBy = $options['orderBy'];
+                $query->orderBy($orderBy[0], $orderBy[1]);
+            }
+
+            return $query->withTrashed()->get();
+        });
+    }
+
     public static function getIdNameAll(array $options = [])
     {
         // Generate a unique cache key based on the options provided
 
-        return Cache::remember('Empleados:empleados_id_name_all', 3600 * 8, function () use ($options) {
+        return Cache::remember('Empleados:empleados_id_name_all', 3600 * 8, function () {
             $query = self::select('id', 'name')->where('estatus', 'alta')->orderBy('id', 'desc')->get();
 
             return $query;
@@ -191,43 +213,75 @@ class Empleado extends Model implements Auditable
     public static function getEmpleadoCurriculum($id)
     {
         return
-            Cache::remember('EmpleadoCurriculum_' . $id, 3600 * 8, function () use ($id) {
+            Cache::remember('Empleados:EmpleadoCurriculum_' . $id, 3600 * 8, function () use ($id) {
                 return self::alta()->with('empleado_certificaciones', 'empleado_cursos', 'empleado_experiencia')->findOrFail($id);
             });
     }
 
     public static function getAltaEmpleados()
     {
-        return Cache::remember('empleados_alta', 3600 * 12, function () {
-            return self::alta()->select('id', 'area_id', 'name')->get();
+        return Cache::remember('Empleados:empleados_alta', 3600 * 8, function () {
+            return DB::table('empleados')
+                ->select('id', 'area_id', 'name', 'puesto')
+                ->alta()
+                ->get();
+        });
+    }
+
+    public static function getAltaEmpleadosWithCertificacionesCursosExperiencia()
+    {
+        return Cache::remember('Empleados:empleados_alta_WithCertificacionesCursosExperiencia', 3600 * 7, function () {
+            return self::with('empleado_certificaciones', 'empleado_cursos', 'empleado_experiencia')->alta()->get();
+        });
+    }
+
+    public static function getAltaEmpleadosWithAreaSedeSupervisor()
+    {
+        return Cache::remember('Empleados:empleados_alta_area_sede_supervisor', 3600 * 8, function () {
+            return self::with('area', 'sede', 'supervisor')->alta()->orderByDesc('id')->get();
         });
     }
 
     public static function getAltaEmpleadosWithArea()
     {
-        return Cache::remember('Empleados:empleados_alta_area', 3600 * 12, function () {
+        return Cache::remember('Empleados:empleados_alta_area', 3600 * 6, function () {
             return self::with('area')->alta()->get();
         });
     }
 
     public static function getSelectEmpleadosWithArea()
     {
-        return Cache::remember('Empleados:empleados_select_area', 3600 * 12, function () {
-            return self::select('id', 'antiguedad', 'estatus', 'name', 'puesto', 'fecha_baja', 'area_id', 'foto')->with('area')->get();
+        return Cache::remember('Empleados:empleados_select_area', 3600 * 6, function () {
+            return self::select('id', 'antiguedad', 'estatus', 'name', 'fecha_baja', 'area_id', 'foto', 'puesto_id')->with('area', 'puesto')->get();
         });
     }
 
     public static function getIDaltaAll()
     {
-        return Cache::remember('empleados_alta_id', 3600 * 12, function () {
+        return Cache::remember('Empleados:empleados_alta_id', 3600 * 6, function () {
             return self::alta()->with('area', 'puestoRelacionado')->select('id', 'name', 'email', 'area_id', 'puesto_id')->get();
         });
     }
 
     public static function getaltaAll()
     {
-        return Cache::remember('empleados_alta_all', 3600 * 12, function () {
-            return self::alta()->get();
+        return Cache::remember('Empleados:empleados_alta_all', 3600 * 6, function () {
+            return self::orderBy('name')->alta()->get();
+        });
+    }
+
+    public static function getaltaAllWithAreaObjetivoPerfil()
+    {
+        return Cache::remember('Empleados:empleados_alta_all_area', 3600 * 6, function () {
+            return self::alta()->select(
+                'n_empleado',
+                'name',
+                'puesto_id',
+                'area_id',
+                'perfil_empleado_id',
+                'id',
+                'foto'
+            )->with(['objetivos', 'area', 'perfil', 'puestoRelacionado'])->get();
         });
     }
 
@@ -238,8 +292,22 @@ class Empleado extends Model implements Auditable
 
     public static function getreportesAll()
     {
-        return Cache::remember('empleados_reportes_all', 3600 * 24, function () {
+        return Cache::remember('Empleados:empleados_reportes_all', 3600 * 6, function () {
             return self::select('id', 'antiguedad', 'puesto_id', 'area_id', 'name', 'estatus', 'antiguedad')->get();
+        });
+    }
+
+    public static function getAltaDataColumns()
+    {
+        return Cache::remember('Empleados:empleados_alta_data_columns_all', 3600 * 6, function () {
+            return self::alta()->select('id', 'name', 'email', 'foto')->get();
+        });
+    }
+
+    public static function getDataColumns()
+    {
+        return Cache::remember('Empleados:empleados_data_columns_all', 3600 * 6, function () {
+            return self::select('id', 'name', 'email', 'foto')->get();
         });
     }
 
@@ -451,7 +519,9 @@ class Empleado extends Model implements Auditable
 
     public function childrenOrganigrama()
     {
-        return $this->hasMany(self::class, 'supervisor_id', 'id')->with('childrenOrganigrama', 'supervisor', 'area')->vacanteActiva(); //Eager Loading utilizar solo para construir un arbol si no puede desbordar la pila
+        return $this->hasMany(self::class, 'supervisor_id', 'id')
+            ->with('childrenOrganigrama:id,name,foto,puesto_id,genero', 'supervisor:id,name,foto,puesto_id,genero', 'area')
+            ->vacanteActiva();
     }
 
     public function scopeAlta($query)
@@ -557,7 +627,7 @@ class Empleado extends Model implements Auditable
 
     public function objetivos()
     {
-        return $this->hasMany('App\Models\RH\ObjetivoEmpleado', 'empleado_id', 'id')->where('en_curso', true);
+        return $this->hasMany('App\Models\RH\ObjetivoEmpleado', 'empleado_id', 'id');
     }
 
     public function perfil()
@@ -571,10 +641,10 @@ class Empleado extends Model implements Auditable
         return $this->belongsToMany('App\Models\Empleado', 'ev360_evaluado_evaluador', 'evaluador_id', 'id');
     }
 
-    // public function getJefeInmediatoAttribute()
-    // {
-    //     return $this->supervisor ? $this->supervisor->id : $this->id;
-    // }
+    public function getJefeInmediatoAttribute()
+    {
+        return $this->supervisor ? $this->supervisor->name : $this->id;
+    }
 
     public function getEmpleadosMismaAreaAttribute()
     {

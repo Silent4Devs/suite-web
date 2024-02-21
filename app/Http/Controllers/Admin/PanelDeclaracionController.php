@@ -110,9 +110,9 @@ class PanelDeclaracionController extends Controller
         if ($readyExistResponsable) {
             return response()->json(['estatus' => 'ya_es_aprobador', 'message' => 'Ya fue asignado aprobador'], 200);
         } else {
-            if (!$existResponsable) {
+            if (! $existResponsable) {
                 $exists = DeclaracionAplicabilidadResponsable::where('declaracion_id', $declaracion)->where('empleado_id', $responsable)->exists();
-                if (!$exists) {
+                if (! $exists) {
                     // dd($responsable);
                     DeclaracionAplicabilidadResponsable::updateOrCreate([
                         'declaracion_id' => $declaracion,
@@ -165,9 +165,9 @@ class PanelDeclaracionController extends Controller
         if ($readyExistResponsable) {
             return response()->json(['estatus' => 'ya_es_responsable', 'message' => 'Ya fue asignado responsable'], 200);
         } else {
-            if (!$existAprobador) {
+            if (! $existAprobador) {
                 $exists = DeclaracionAplicabilidadAprobadores::where('declaracion_id', $declaracion)->where('aprobadores_id', $aprobador)->exists();
-                if (!$exists) {
+                if (! $exists) {
                     DeclaracionAplicabilidadAprobadores::updateOrCreate(
                         [
                             'declaracion_id' => $declaracion,
@@ -234,7 +234,7 @@ class PanelDeclaracionController extends Controller
             foreach ($responsable as $control) {
                 $controles->push($control->declaracion_aplicabilidad);
             }
-            Mail::to(removeUnicodeCharacters($empleado->email))->send(new MailDeclaracionAplicabilidad($empleado->name, $tipo, $controles));
+            Mail::to(removeUnicodeCharacters($empleado->email))->queue(new MailDeclaracionAplicabilidad($empleado->name, $tipo, $controles));
             $responsable = DeclaracionAplicabilidadResponsable::where('empleado_id', $destinatario)->first();
             $responsable->update(['esta_correo_enviado' => true]);
         }

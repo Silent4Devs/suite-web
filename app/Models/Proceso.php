@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
-use Illuminate\Support\Str;
 use App\Traits\ClearsResponseCache;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class Proceso.
@@ -27,8 +27,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Proceso extends Model implements Auditable
 {
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
     use SoftDeletes;
-    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
 
     protected $table = 'procesos';
 
@@ -74,10 +74,10 @@ class Proceso extends Model implements Auditable
     }
 
     //Redis methods
-    public static function getAll($columns = ['id', 'codigo', 'nombre'])
+    public static function getAll($columns = ['id', 'codigo', 'nombre', 'id_macroproceso', 'descripcion'])
     {
         return Cache::remember('procesos_all', 3600 * 24, function () use ($columns) {
-            return self::select($columns)->get();
+            return self::select($columns)->with('macroproceso')->get();
         });
     }
 
@@ -88,7 +88,7 @@ class Proceso extends Model implements Auditable
 
     public function getNameAttribute()
     {
-        return $this->codigo . ' ' . $this->nombre;
+        return $this->codigo.' '.$this->nombre;
     }
 
     public function getContentAttribute()

@@ -14,18 +14,18 @@ use App\Models\ContractManager\ProveedorOC as KatbolProveedorOC;
 use App\Models\ContractManager\Requsicion as KatbolRequsicion;
 use App\Models\Organizacion;
 use App\Models\User;
+use App\Traits\ObtenerOrganizacion;
 use Gate;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use NumberFormatter;
 use PDF;
 use Symfony\Component\HttpFoundation\Response;
-use App\Traits\ObtenerOrganizacion;
 
 class OrdenCompraController extends Controller
 {
     use ObtenerOrganizacion;
+
     /**
      * Display a listing of the resource.
      *
@@ -90,7 +90,6 @@ class OrdenCompraController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -125,7 +124,7 @@ class OrdenCompraController extends Controller
         $requisicion = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->find($id);
         $proveedores = KatbolProveedorOC::get();
         $proveedor = $proveedores->where('id', $requisicion->proveedor_id)->first();
-        $contratos = KatbolContrato::get();
+        $contratos = KatbolContrato::getAll();
         $centro_costos = KatbolCentroCosto::get();
         $monedas = KatbolMoneda::get();
         $contrato = $contratos->where('id', $requisicion->contrato_id)->first();
@@ -136,7 +135,6 @@ class OrdenCompraController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -169,21 +167,21 @@ class OrdenCompraController extends Controller
         $data = $request->all();
         for ($i = 1; $i <= $request->count_productos; $i++) {
             $producto_nuevo = KatbolProductoRequisicion::create([
-                'cantidad' => $data['cantidad' . $i],
-                'producto_id' => $data['producto' . $i],
-                'centro_costo_id' => $data['centro_costo' . $i],
-                'espesificaciones' => $data['especificaciones' . $i],
-                'contrato_id' => $data['contrato' . $i],
+                'cantidad' => $data['cantidad'.$i],
+                'producto_id' => $data['producto'.$i],
+                'centro_costo_id' => $data['centro_costo'.$i],
+                'espesificaciones' => $data['especificaciones'.$i],
+                'contrato_id' => $data['contrato'.$i],
                 'requisiciones_id' => $requisicion->id,
-                'no_personas' => $data['no_personas' . $i],
-                'porcentaje_involucramiento' => $data['porcentaje_involucramiento' . $i],
-                'sub_total' => $data['sub_total' . $i],
-                'iva' => $data['iva' . $i],
-                'iva_retenido' => $data['iva_retenido' . $i],
-                'descuento' => $data['descuento' . $i],
-                'otro_impuesto' => $data['otro_impuesto' . $i],
-                'isr_retenido' => $data['isr_retenido' . $i],
-                'total' => $data['total' . $i],
+                'no_personas' => $data['no_personas'.$i],
+                'porcentaje_involucramiento' => $data['porcentaje_involucramiento'.$i],
+                'sub_total' => $data['sub_total'.$i],
+                'iva' => $data['iva'.$i],
+                'iva_retenido' => $data['iva_retenido'.$i],
+                'descuento' => $data['descuento'.$i],
+                'otro_impuesto' => $data['otro_impuesto'.$i],
+                'isr_retenido' => $data['isr_retenido'.$i],
+                'total' => $data['total'.$i],
             ]);
         }
 
@@ -249,6 +247,10 @@ class OrdenCompraController extends Controller
             $requisicion->save();
             $user = 'lourdes.abadia@silent4business.com';
             $userEmail = $user;
+
+            $organizacion = Organizacion::getFirst();
+
+            Mail::to('ldelgadillo@silent4business.com')->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
         }
         if ($tipo_firma == 'firma_comprador_orden') {
             $fecha = date('d-m-Y');
@@ -271,7 +273,7 @@ class OrdenCompraController extends Controller
             $userEmail = $requisicion->email;
         }
         $organizacion = Organizacion::getFirst();
-        Mail::to($userEmail)->send(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
+        Mail::to($userEmail)->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
 
         return redirect(route('contract_manager.orden-compra'));
     }
@@ -297,7 +299,7 @@ class OrdenCompraController extends Controller
         $userEmail = User::getCurrentUser()->email;
         $organizacion = Organizacion::getFirst();
         $tipo_firma = 'rechazado';
-        Mail::to($requisicion->email)->send(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
+        Mail::to($requisicion->email)->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
 
         return redirect('contract_manager/orden-compra');
     }

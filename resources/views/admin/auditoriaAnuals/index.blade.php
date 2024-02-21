@@ -59,7 +59,34 @@
     {{ Breadcrumbs::render('admin.auditoria-anuals.index') }}
 
 
-    <h5 class="col-12 titulo_general_funcion">Programa Anual de Auditoría</h5>
+    <h5 class="col-12 titulo_general_funcion">Programa Anual de Auditoría </h5>
+            <div class="card card-body" style="background-color: #5397D5; color: #fff;">
+                <div class="d-flex" style="gap: 25px;">
+                    <img src="{{ asset('img/audit_port.jpg') }}" alt="Auditoria" style="width: 200px;">
+                    <div>
+                        <br>
+                        <h4>¿Qué es Programa Anual de Auditoria?</h4>
+                        <p>
+                            Define y documenta de manera detallada qué trabajo se llevará a cabo y qué no se incluirá dentro de los
+                            límites del proyecto.
+                        </p>
+                        <p>
+                            Es un paso crucial que establece las bases para la planificación y ejecución exitosa de un proyecto, ya
+                            que ayuda a evitar
+                            la expansión no controlada del proyecto y asegura que todas las partes involucradas tengan una
+                            comprensión clara de lo que se espera.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+
+
+    <div class="text-right">
+        <div class="d-flex justify-content-end">
+            <a href="{{ route('admin.auditoria-anuals.create') }}" type="button" class="btn btn-primary">Registrar Programa</a> &nbsp;
+        </div>
+    </div>
     <div class="mt-5 card">
         <div class="card-body datatable-fix">
             <div class="modal fade" id="largeModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
@@ -197,19 +224,19 @@
             ];
 
             @can('programa_anual_auditoria_agregar')
-                let btnAgregar = {
-                    text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                    titleAttr: 'Agregar programa anual de auditoría',
-                    url: "{{ route('admin.auditoria-anuals.create') }}",
-                    className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                    action: function(e, dt, node, config) {
-                        let {
-                            url
-                        } = config;
-                        window.location.href = url;
-                    }
-                };
-                dtButtons.push(btnAgregar);
+                // let btnAgregar = {
+                //     text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                //     titleAttr: 'Agregar programa anual de auditoría',
+                //     url: "{{ route('admin.auditoria-anuals.create') }}",
+                //     className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                //     action: function(e, dt, node, config) {
+                //         let {
+                //             url
+                //         } = config;
+                //         window.location.href = url;
+                //     }
+                // };
+                // dtButtons.push(btnAgregar);
             @endcan
             @can('programa_anual_auditoria_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';

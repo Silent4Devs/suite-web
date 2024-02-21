@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use App\Traits\ClearsResponseCache;
-use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class IndicadoresSgsi.
@@ -42,8 +42,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class IndicadoresSgsi extends Model implements Auditable
 {
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
     use SoftDeletes;
-    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
 
     protected $table = 'indicadores_sgsis';
 
@@ -80,7 +80,7 @@ class IndicadoresSgsi extends Model implements Auditable
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'id_empleado')->alta();
+        return $this->belongsTo(Empleado::class, 'id_empleado')->select(['name', 'foto']);
     }
 
     public function proceso()

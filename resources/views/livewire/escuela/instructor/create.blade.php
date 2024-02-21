@@ -1,23 +1,22 @@
-<div wire:ignore.self class="modal fade" id="createDataModal{{$evaluacion_id}}" data-backdrop="static" tabindex="-1" role="dialog"
-    aria-labelledby="createDataModalLabel{{$evaluacion_id}}" aria-hidden="true">
+<div wire:ignore.self class="modal fade" id="createDataModal{{ $evaluacion_id }}" data-backdrop="static" tabindex="-1"
+    role="dialog" aria-labelledby="createDataModalLabel{{ $evaluacion_id }}" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="createDataModalLabel{{$evaluacion_id}}">Agregar preguntas a la evaluación</h4>
+                <h4 class="modal-title" id="createDataModalLabel{{ $evaluacion_id }}">Agregar preguntas a la evaluación
+                </h4>
             </div>
             <div class="modal-body">
-                <div>
-                    <label>Pregunta<span style="color:red">*</span></label>
-                    <input class="form-control" type="text" value="" id="title"
-                        wire:model.defer="question">
+                <div class="form-group anima-focus">
+                    <input class="form-control" type="text" value="" id="title" placeholder="" wire:model.defer="question">
+                    <label>Pregunta*</label>
                     @error('question')
                         <p class="text-xs text-red-700">El campo pregunta es obligatorio.</p>
                     @enderror
                 </div>
-                <div>
+                <div class="form-group anima-focus">
+                    <input class="form-control" type="text" value="" id="title" placeholder="" wire:model.defer="explanation">
                     <label>Descripción</label>
-                    <input class="form-control" type="text" value="" id="title"
-                        wire:model.defer="explanation">
                     @error('explanation')
                         <p class="text-xs text-red-700">El campo descripción es obligatorio.</p>
                     @enderror
@@ -61,7 +60,8 @@
             <div class="modal-footer">
                 <button type="button" class="btn cancel" data-dismiss="modal"
                     wire:click.prevent="default()">Cerrar</button>
-                <button wire:click.prevent="save({{$evaluation_id}})" class="btn btn-primary close-modal" style="background-color: #345183">
+                <button wire:click.prevent="save({{ $evaluation_id }})" class="btn btn-primary close-modal"
+                    style="background-color: #345183">
                     Guardar
                 </button>
             </div>

@@ -1,42 +1,23 @@
 pipeline {
-  agent any
-  stages {
+    agent any
 
-    stage('install') {
-      steps {
-        git branch: 'develop', url: 'https://gitlab.com/silent4business/tabantaj.git'
-      }
+    environment {
+        SSH_USER = 'desarrollo'
+        SSH_PASSWORD = 'S3cur3.qa'
+        SERVER_IP = '192.168.9.78'
     }
 
 
-     stage('build') {
-      steps {
-        script{
-          try {
-                sh 'docker-compose exec php cp .env.example .env'
-                sh 'docker-compose exec php composer install --ignore-platform-reqs'
-                sh 'docker-compose exec php php artisan key:generate'
-                sh 'docker-compose exec php php artisan migrate'
-                sh 'docker-compose exec php chmod 777 -R storage'
-                sh 'docker-compose exec php php artisan optimize:clear'
-            } catch (Exception e) {
-              echo 'Exception occurred: ' + e.toString()
-            }
-        }
-      }
-    }
-
-     stage('Deploy via SSH') {
+    stages {
+        stage('Git Pull via SSH') {
             steps {
                 script {
-                   sshagent(['/root/.ssh/id_rsa.pub']) {
-                   sh 'ssh desarrollo@192.168.9.78 "cd /var/contenedor/tabantaj && git pull origin stagging"'
-                  }
-              }
-          }
-     }
+                   sh '''
+                       echo $SSH_PASSWORD | sshpass -p $SSH_PASSWORD ssh $SSH_USER@$SERVER_IP "cd /var/contenedor/suite-web && sudo -S git pull"
+                    '''
+                }
+            }
+        }
+    }
 
-
-     }
 }
-

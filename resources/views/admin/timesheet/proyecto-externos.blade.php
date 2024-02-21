@@ -1,10 +1,11 @@
 @extends('layouts.admin')
 @section('content')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}{{config('app.cssVersion')}}">
 
     {{ Breadcrumbs::render('timesheet-externos-proyecto') }}
 
-    <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Asignacion de Proveedores/Consultores por Proyecto</font>
+    <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Asignacion de
+            Proveedores/Consultores por Proyecto</font>
     </h5>
 
     <div class="card card-body">
@@ -58,7 +59,7 @@
 
                             var now = new Date();
                             var jsDate = now.getDate() + '-' + (now.getMonth() + 1) + '-' + now
-                            .getFullYear();
+                                .getFullYear();
                             $(doc.document.body).prepend(`
                                 <div class="row">
                                     <div class="col-4 text-center p-2" style="border:2px solid #CCCCCC">
@@ -133,11 +134,11 @@
                 let table = $('#' + id_tabla + cont).DataTable(dtOverrideGlobals);
             });
         }
-        document.addEventListener('DOMContentLoaded', () => {
-            setTimeout(() => {
-                tablaLivewire('tabla_time_proyect_externos');
-            }, 100);
-        });
+        // document.addEventListener('DOMContentLoaded', () => {
+        //     setTimeout(() => {
+        //         tablaLivewire('tabla_time_proyect_externos');
+        //     }, 50);
+        // });
     </script>
 
     <script type="text/javascript">

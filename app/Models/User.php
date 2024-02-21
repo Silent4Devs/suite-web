@@ -2,23 +2,24 @@
 
 namespace App\Models;
 
-use Hash;
+use App\Notifications\MyResetPassword;
+use App\Traits\ClearsResponseCache;
 use Carbon\Carbon;
 use DateTimeInterface;
-use Illuminate\Support\Facades\DB;
-use App\Traits\ClearsResponseCache;
-use Illuminate\Support\Facades\Cache;
-use App\Notifications\MyResetPassword;
-use Illuminate\Notifications\Notifiable;
-use OwenIt\Auditing\Contracts\Auditable;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Hash;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
+use Laravel\Sanctum\HasApiTokens;
+use OwenIt\Auditing\Contracts\Auditable;
 
 class User extends Authenticatable implements Auditable
 {
-    use SoftDeletes, Notifiable, HasFactory;
-    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
 
     public $table = 'users';
 
@@ -73,7 +74,16 @@ class User extends Authenticatable implements Auditable
     public static function getAll()
     {
         return Cache::remember('Users:users_all', 3600 * 13, function () {
-            return self::select('name', 'n_empleado', 'email', 'approved', 'verified', 'organizacion_id', 'area_id', 'puesto_id', 'is_active', 'empleado_id')->get();
+            return self::select('id', 'name', 'n_empleado', 'email', 'approved', 'verified', 'organizacion_id', 'area_id', 'puesto_id', 'is_active', 'empleado_id')->get();
+        });
+    }
+
+    public static function getAllWithEmpleado()
+    {
+        return Cache::remember('Users:users_with_empleado', 3600 * 13, function () {
+            return self::select('id', 'name', 'n_empleado', 'email', 'approved', 'verified', 'organizacion_id', 'area_id', 'puesto_id', 'is_active', 'empleado_id')
+                ->with('empleado')
+                ->get();
         });
     }
 
@@ -86,7 +96,7 @@ class User extends Authenticatable implements Auditable
 
     public static function getCurrentUser()
     {
-        $cacheKey = 'Auth_user:user' . auth()->user()->id;
+        $cacheKey = 'Auth_user:user'.auth()->user()->id;
 
         return Cache::remember($cacheKey, now()->addMinutes(60), function () {
             return auth()->user();
@@ -124,7 +134,7 @@ class User extends Authenticatable implements Auditable
         self::created(function (self $user) {
             $registrationRole = config('panel.registration_default_role');
 
-            if (!$user->roles()->get()->contains($registrationRole)) {
+            if (! $user->roles()->get()->contains($registrationRole)) {
                 $user->roles()->attach($registrationRole);
             }
         });
@@ -134,7 +144,7 @@ class User extends Authenticatable implements Auditable
     {
         $this->timestamps = false;
         $this->two_factor_code = rand(100000, 999999);
-        $this->two_factor_expires_at = now()->addMinutes(15)->format(config('panel.date_format') . ' ' . config('panel.time_format'));
+        $this->two_factor_expires_at = now()->addMinutes(15)->format(config('panel.date_format').' '.config('panel.time_format'));
         $this->save();
     }
 
@@ -153,12 +163,12 @@ class User extends Authenticatable implements Auditable
 
     public function getEmailVerifiedAtAttribute($value)
     {
-        return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
+        return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format').' '.config('panel.time_format')) : null;
     }
 
     public function setEmailVerifiedAtAttribute($value)
     {
-        $this->attributes['email_verified_at'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
+        $this->attributes['email_verified_at'] = $value ? Carbon::createFromFormat(config('panel.date_format').' '.config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
     }
 
     public function setPasswordAttribute($input)
@@ -179,12 +189,12 @@ class User extends Authenticatable implements Auditable
 
     public function getVerifiedAtAttribute($value)
     {
-        return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
+        return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format').' '.config('panel.time_format')) : null;
     }
 
     public function setVerifiedAtAttribute($value)
     {
-        $this->attributes['verified_at'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
+        $this->attributes['verified_at'] = $value ? Carbon::createFromFormat(config('panel.date_format').' '.config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
     }
 
     public function roles()
@@ -214,12 +224,12 @@ class User extends Authenticatable implements Auditable
 
     public function getTwoFactorExpiresAtAttribute($value)
     {
-        return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
+        return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format').' '.config('panel.time_format')) : null;
     }
 
     public function setTwoFactorExpiresAtAttribute($value)
     {
-        $this->attributes['two_factor_expires_at'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
+        $this->attributes['two_factor_expires_at'] = $value ? Carbon::createFromFormat(config('panel.date_format').' '.config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
     }
 
     //# Get empleado_id

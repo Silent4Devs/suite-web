@@ -34,7 +34,7 @@ class Ev360TablaCompetencias extends Component
         if ($this->showTable) {
             $competencias = Competencia::search($this->search)->simplePaginate($this->perPage);
         }
-        $tipos = TipoCompetencia::select('id', 'nombre')->get();
+        $tipos = TipoCompetencia::getAll();
 
         return view('livewire.ev360-tabla-competencias', ['competencias' => $competencias, 'tipos' => $tipos]);
     }

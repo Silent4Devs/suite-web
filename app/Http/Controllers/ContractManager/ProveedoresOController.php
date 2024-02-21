@@ -53,7 +53,6 @@ class ProveedoresOController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -79,7 +78,8 @@ class ProveedoresOController extends Controller
             return redirect('/contract_manager/proveedores');
         } catch (QueryException $e) {
             DB::rollback();
-            return "Error al insertar el proveedor: " . $e->getMessage();
+
+            return 'Error al insertar el proveedor: '.$e->getMessage();
         }
     }
 
@@ -111,7 +111,6 @@ class ProveedoresOController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */

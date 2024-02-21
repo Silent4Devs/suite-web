@@ -30,13 +30,38 @@ class OrganigramaController extends Controller
             } else {
                 if ($request->id == null) {
                     // La construccion del arbol necesita un primer nodo (NULL)
-                    $organizacionTree = Empleado::select('id', 'name', 'area_id', 'foto', 'puesto_id', 'antiguedad', 'email', 'telefono', 'estatus', 'n_registro', 'n_empleado', 'genero', 'telefono_movil')->vacanteActiva()->with(['supervisor.childrenOrganigrama', 'supervisor.supervisor' => function ($queryC) {
-                        return $queryC->select('id', 'name', 'foto', 'puesto_id', 'genero');
-                    }, 'area' => function ($queryC) {
-                        return $queryC->select('id', 'area');
-                    }, 'childrenOrganigrama.supervisor' => function ($queryC) {
-                        return $queryC->select('id', 'name', 'foto', 'puesto_id', 'genero');
-                    }, 'childrenOrganigrama.childrenOrganigrama'])->whereNull('supervisor_id')->first(); //Eager loading
+                    $organizacionTree = Empleado::select(
+                        'id',
+                        'name',
+                        'area_id',
+                        'foto',
+                        'puesto_id',
+                        'antiguedad',
+                        'email',
+                        'telefono',
+                        'estatus',
+                        'n_registro',
+                        'n_empleado',
+                        'genero',
+                        'telefono_movil'
+                    )
+                        ->vacanteActiva()
+                        ->with([
+                            'supervisor.childrenOrganigrama',
+                            'supervisor.supervisor' => function ($queryC) {
+                                return $queryC->select('id', 'name', 'foto', 'puesto_id', 'genero');
+                            },
+                            'area' => function ($queryC) {
+                                return $queryC->select('id', 'area');
+                            },
+                            'childrenOrganigrama.supervisor' => function ($queryC) {
+                                return $queryC->select('id', 'name', 'foto', 'puesto_id', 'genero');
+                            },
+                            'childrenOrganigrama.childrenOrganigrama'
+                        ])
+                        ->whereNull('supervisor_id')
+                        ->first(); // Carga ansiosa (Eager loading)
+
 
                     return $organizacionTree->toJson();
                 } else {

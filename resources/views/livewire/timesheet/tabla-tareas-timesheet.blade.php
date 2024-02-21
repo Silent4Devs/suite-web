@@ -30,7 +30,7 @@
     </style>
     <x-loading-indicator />
     @can('timesheet_administrador_tareas_proyectos_create')
-        <form wire:submit.prevent="create()"  class="form-group w-100">
+        <form wire:submit.prevent="create()" class="form-group w-100">
             <div class="d-flex justify-content-center w-100">
                 <div class="form-group w-100 mr-4 ">
                     <label><i class="fas fa-list iconos-crear"></i> Proyecto</label>
@@ -39,7 +39,7 @@
                         </div>
                     @endif
                     @if ($origen == 'tareas')
-                        <select wire:ignore id="proyectos_select" class="mr-4 form-control" wire:model="proyecto_id"
+                        <select id="proyectos_select" class="mr-4 form-control" wire:model.lazy="proyecto_id"
                             required>
                             <option selected value="">- -</option>
                             @foreach ($proyectos as $proyecto)
@@ -62,21 +62,22 @@
                     </select>
                 </div>
                 <div class="form-group w-100 mr-4">
-                    <label><i class="fas fa-list-alt iconos-crear"></i> Tarea Nueva</label>
-                    <input class="form-control w-100 mr-4" placeholder="Nombre de la tarea" id="tarea_name" required>
+                    <label> Tarea Nueva</label>
+                    <input class="form-control w-100 mr-4" maxlength="255" title="Por favor, no incluyas comas en el nombre de la tarea." placeholder="Nombre de la tarea" id="tarea_name" required pattern="[^\.,]*">
                 </div>
                 <div class="form-group" style="position:relative; min-width:150px;">
-                    <button class="btn btn-success" style="position: absolute; bottom: 0;"><i class="fas fa-plus"></i>
+                    <button class="btn btn-primary" style="position: absolute; bottom: 0;">
                         Agregar</button>
                 </div>
             </div>
         </form>
+        <hr class="my-4">
     @endcan
-    <div class="row mt-5">
+    <div class="row">
         @if ($origen == 'tareas')
             <div class="col-6 form-group">
                 <label>Filtrar por proyecto</label>
-                <select wire:ignore id="proyecto_filtro" class="form-control">
+                <select  id="proyecto_filtro" class="form-control">
                     <option value=""></option>
                     @foreach ($proyectos as $proyecto)
                         <option value="{{ $proyecto->id }}">{{ $proyecto->identificador }} -
@@ -196,7 +197,12 @@
 
             Livewire.on('select2', () => {
                 initSelect2();
-            })
+            });
+
+            Livewire.on('scriptTabla', () => {
+                tablaLivewire('tabla_time_tareas');
+            });
+
             $('#proyectos_select').on('select2:select', function(e) {
                 var data = e.params.data;
                 let proyecto_id = data.id;
@@ -209,10 +215,6 @@
                 let proyecto_id = data.id;
                 console.log(proyecto_id);
                 @this.updateProyecto(proyecto_id);
-            });
-
-            Livewire.on('scriptTabla', () => {
-                tablaLivewire('tabla_time_tareas');
             });
 
             document.getElementById('tarea_name')?.addEventListener('keyup', (e) => {

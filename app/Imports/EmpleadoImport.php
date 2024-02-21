@@ -19,8 +19,8 @@ use Maatwebsite\Excel\Concerns\WithValidation;
 
 class EmpleadoImport implements ToModel, WithHeadingRow, WithValidation
 {
-    use Importable;
     use GeneratePassword;
+    use Importable;
 
     private $empleados;
 
@@ -49,7 +49,7 @@ class EmpleadoImport implements ToModel, WithHeadingRow, WithValidation
             ]
         );
 
-        if (!User::select('id', 'empleado_id')->where('empleado_id', $empleado->id)->exists()) {
+        if (! User::select('id', 'empleado_id')->where('empleado_id', $empleado->id)->exists()) {
             $this->createUserFromEmpleado($empleado);
         }
 
@@ -61,26 +61,26 @@ class EmpleadoImport implements ToModel, WithHeadingRow, WithValidation
         return [
             '*.nombre' => 'required|string|min:2|max:255',
             '*.puesto' => ['required', 'string', 'min:2', 'max:255', function ($attribute, $value, $onFailure) {
-                if (!Puesto::where('puesto', $value)->exists()) {
-                    $onFailure('El puesto ' . $value . ' no está registrado en la herramienta, registrelo e intente nuevamente');
+                if (! Puesto::where('puesto', $value)->exists()) {
+                    $onFailure('El puesto '.$value.' no está registrado en la herramienta, registrelo e intente nuevamente');
                 }
             }],
             '*.area' => ['required', 'string', 'min:2', 'max:255', function ($attribute, $value, $onFailure) {
-                if (!Area::where('area', $value)->exists()) {
-                    $onFailure('El área ' . $value . ' no está registrado en la herramienta, registrelo e intente nuevamente');
+                if (! Area::where('area', $value)->exists()) {
+                    $onFailure('El área '.$value.' no está registrado en la herramienta, registrelo e intente nuevamente');
                 }
             }],
             '*.ingreso' => 'required|numeric',
             '*.nacimiento' => 'required|numeric',
             '*.correo' => 'required|email',
             '*.jefe' => ['required', 'string', 'min:2', 'max:255', function ($attribute, $value, $onFailure) {
-                if (!Empleado::where('name', $value)->exists()) {
-                    $onFailure('El jefe inmediato ' . $value . ' no está registrado en la herramienta, registrelo e intente nuevamente');
+                if (! Empleado::where('name', $value)->exists()) {
+                    $onFailure('El jefe inmediato '.$value.' no está registrado en la herramienta, registrelo e intente nuevamente');
                 }
             }],
             '*.jerarquia' => ['required', 'string', 'min:2', 'max:255', function ($attribute, $value, $onFailure) {
-                if (!PerfilEmpleado::where('nombre', $value)->exists()) {
-                    $onFailure('La jerarquía ' . $value . ' no está registrada en la herramienta, registrela e intente nuevamente');
+                if (! PerfilEmpleado::where('nombre', $value)->exists()) {
+                    $onFailure('La jerarquía '.$value.' no está registrada en la herramienta, registrela e intente nuevamente');
                 }
             }],
             '*.sexo' => 'required|string|min:1|max:1|in:H,M',
@@ -110,7 +110,7 @@ class EmpleadoImport implements ToModel, WithHeadingRow, WithValidation
             User::findOrFail($user->id)->roles()->sync(4);
         }
         //Send email with generated password
-        Mail::to(removeUnicodeCharacters($empleado->email))->send(new EnviarCorreoBienvenidaTabantaj($empleado, $generatedPassword['password']));
+        Mail::to(removeUnicodeCharacters($empleado->email))->queue(new EnviarCorreoBienvenidaTabantaj($empleado, $generatedPassword['password']));
 
         return $user;
     }

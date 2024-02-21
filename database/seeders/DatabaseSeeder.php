@@ -95,19 +95,29 @@ class DatabaseSeeder extends Seeder
                 // MonedasTableSeeder::class,
                 // ProveedorOCSTableSeeder::class,
                 // CompradoresSeeder::class,
-                RequsicionesTableSeeder::class,
-                ProductosRequisicionTableSeeder::class,
-                ProveedoresRequisicionesCatalogosTableSeeder::class,
-                ProveedorIndistintosTableSeeder::class,
-                ProveedorRequisicionsTableSeeder::class,
+                // RequsicionesTableSeeder::class,
+                // ProductosRequisicionTableSeeder::class,
+                // ProveedoresRequisicionesCatalogosTableSeeder::class,
+                // ProveedorIndistintosTableSeeder::class,
+                // ProveedorRequisicionsTableSeeder::class,
                 // PermisosKatbol::class,
                 // DashboardGestionContratosSeeder::class,
+
+                // ListaDistribucionSeeder::class,
+                // ClasificacionesAuditoriasSeeder::class,
+                // ClausulasAuditoriasSeeder::class,
+                // TemplateSeeder::class,
+                // PermisosCatalogosSG::class,
 
                 //kaans
                 // PermisosEscuelaInstructorSeeder::class,
                 // PlatformSeeder::class,
                 // PermisosEscuelaAdminSeeder::class,
                 // PermisosEscuelaEstudianteSeeder::class
+                // AdminTemplateAnalisisBrechasIso::class,
+
+                //Lista Informativa
+                ListaInformativaSeeder::class,
             ]
         );
     }

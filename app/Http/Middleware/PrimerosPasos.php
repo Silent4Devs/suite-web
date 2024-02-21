@@ -2,14 +2,13 @@
 
 namespace App\Http\Middleware;
 
-use Closure;
 use App\Models\Area;
-use App\Models\User;
-use App\Models\Puesto;
 use App\Models\Empleado;
 use App\Models\Organizacion;
+use App\Models\Puesto;
+use App\Models\User;
+use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class PrimerosPasos
 {
@@ -31,11 +30,11 @@ class PrimerosPasos
         $existsPuesto = Puesto::getExists();
         $existsVinculoEmpleadoAdmin = User::getExists();
         if (
-            !$existsEmpleado ||
-            !$existsOrganizacion ||
-            !$existsAreas ||
-            !$existsPuesto ||
-            !$existsVinculoEmpleadoAdmin
+            ! $existsEmpleado ||
+            ! $existsOrganizacion ||
+            ! $existsAreas ||
+            ! $existsPuesto ||
+            ! $existsVinculoEmpleadoAdmin
         ) {
             return redirect()->route('admin.inicio-Usuario.index');
         }

@@ -69,7 +69,7 @@
 
     {{-- {{ Breadcrumbs::render('centro-atencion') }} --}}
     <h5 class="col-12 titulo_general_funcion">Centro de Atención</h5>
-    <div id="desk" class="mt-5 card" style="">
+    <div id="desk" class="mt-5 card" style="border: none;">
 
         @include('partials.flashMessages')
         <div class="caja_botones_secciones">

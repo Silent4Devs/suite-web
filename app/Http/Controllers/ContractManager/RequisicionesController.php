@@ -11,14 +11,12 @@ use App\Models\ContractManager\ProveedorIndistinto as KatbolProveedorIndistinto;
 use App\Models\ContractManager\ProveedorOC as KatbolProveedorOC;
 use App\Models\ContractManager\Requsicion as KatbolRequsicion;
 use App\Models\ContractManager\Sucursal as KatbolSucursal;
-use App\Models\Empleado;
 use App\Models\Organizacion;
 use App\Models\User;
 use App\Models\User as ModelsUser;
 use App\Traits\ObtenerOrganizacion;
 use Gate;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use PDF;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,6 +24,7 @@ use Symfony\Component\HttpFoundation\Response;
 class RequisicionesController extends Controller
 {
     use ObtenerOrganizacion;
+
     public $bandera = true;
 
     /**
@@ -55,12 +54,14 @@ class RequisicionesController extends Controller
         foreach ($roles as $rol) {
             if ($rol->title === 'Admin') {
                 $requisiciones = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->orderByDesc('id')->where('archivo', false)->get();
+
                 return view('contract_manager.requisiciones.index', compact('ids', 'requisiciones', 'proveedor_indistinto', 'empresa_actual', 'logo_actual'));
             } else {
                 $requisiciones_solicitante = null;
                 $id = User::getCurrentUser()->id;
 
                 $requisiciones_solicitante = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->where('id_user', $id)->orderByDesc('id')->get();
+
                 return view('contract_manager.requisiciones.index_solicitante', compact('ids', 'requisiciones_solicitante', 'empresa_actual', 'logo_actual', 'proveedor_indistinto'));
             }
         }
@@ -131,7 +132,6 @@ class RequisicionesController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -143,7 +143,7 @@ class RequisicionesController extends Controller
             'empresa' => 'required',
             'cuenta_contable' => 'required',
             'estado' => 'required',
-            'zona' =>  'required',
+            'zona' => 'required',
         ]);
         $sucursal = KatbolSucursal::find($id);
 
@@ -153,7 +153,7 @@ class RequisicionesController extends Controller
             'empresa' => $request->empresa,
             'cuenta_contable' => $request->cuenta_contable,
             'estado' => $request->estado,
-            'zona' =>  $request->zona,
+            'zona' => $request->zona,
         ]);
 
         return redirect()->route('catalogos');
@@ -227,6 +227,10 @@ class RequisicionesController extends Controller
             $requisicion->fecha_firma_jefe_requi = $fecha;
             $requisicion->save();
             $userEmail = 'lourdes.abadia@silent4business.com';
+
+            $organizacion = Organizacion::getFirst();
+
+            Mail::to('ldelgadillo@silent4business.com')->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
         }
         if ($tipo_firma == 'firma_finanzas') {
             $fecha = date('d-m-Y');
@@ -247,7 +251,7 @@ class RequisicionesController extends Controller
             ]);
         }
         $organizacion = Organizacion::getFirst();
-        Mail::to($userEmail)->send(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
+        Mail::to($userEmail)->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
 
         return redirect(route('contract_manager.requisiciones'));
     }
@@ -288,7 +292,7 @@ class RequisicionesController extends Controller
         if ($requisicion->firma_solicitante === null) {
             $tipo_firma = 'firma_solicitante';
         } elseif ($requisicion->firma_jefe === null) {
-            $user =   User::getCurrentUser();
+            $user = User::getCurrentUser();
             $supervisor = User::find($requisicion->id_user)->empleado->supervisor->name;
             if ($supervisor === $user->name) {
                 $tipo_firma = 'firma_jefe';
@@ -296,14 +300,14 @@ class RequisicionesController extends Controller
                 return view('contract_manager.requisiciones.error')->with('mensaje', 'No tiene permisos para firmar');
             }
         } elseif ($requisicion->firma_finanzas === null) {
-            $user =   User::getCurrentUser();
-            if ($user->name === 'Lourdes Del Pilar Abadia Velasco') {
+            $user = User::getCurrentUser();
+            if ($user->name === 'Lourdes Del Pilar Abadia Velasco' || $user->name === 'Layla Esperanza Delgadillo Aguilar') {
                 $tipo_firma = 'firma_finanzas';
             } else {
                 return view('contract_manager.requisiciones.error')->with('mensaje', 'No tiene permisos para firmar');
             }
         } elseif ($requisicion->firma_compras === null) {
-            $user =   User::getCurrentUser();
+            $user = User::getCurrentUser();
             $comprador = KatbolComprador::with('user')->where('id', $requisicion->comprador_id)->first();
             if ($comprador->user->name === $user->name) {
                 $tipo_firma = 'firma_compras';
@@ -373,10 +377,11 @@ class RequisicionesController extends Controller
             'firma_compras' => null,
         ]);
 
-        $userEmail = User::getCurrentUser()->email;
+        $userEmail = User::where('id', $requisicion->id_user)->first();
         $organizacion = Organizacion::getFirst();
         $tipo_firma = 'rechazado_requisicion';
-        Mail::to($requisicion->email)->send(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
+
+        Mail::to(trim($userEmail->email))->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
 
         return redirect(route('contract_manager.requisiciones'));
     }

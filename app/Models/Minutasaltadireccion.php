@@ -2,22 +2,23 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
-use DateTimeInterface;
-use Spatie\MediaLibrary\HasMedia;
 use App\Traits\ClearsResponseCache;
 use App\Traits\MultiTenantModelTrait;
-use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
-use Spatie\MediaLibrary\InteractsWithMedia;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Carbon\Carbon;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Contracts\Auditable;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class Minutasaltadireccion extends Model implements HasMedia, Auditable
+class Minutasaltadireccion extends Model implements Auditable, HasMedia
 {
-    use SoftDeletes, MultiTenantModelTrait, InteractsWithMedia, HasFactory;
-    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
+    use HasFactory, InteractsWithMedia, MultiTenantModelTrait, SoftDeletes;
 
     // ESTATUS MINUTAS
     const EN_ELABORACION = 1;
@@ -29,6 +30,8 @@ class Minutasaltadireccion extends Model implements HasMedia, Auditable
     const DOCUMENTO_RECHAZADO = 4;
 
     const DOCUMENTO_OBSOLETO = 5;
+
+    const APROBADO = 6;
 
     protected $appends = [
         'archivo', 'estatus_formateado', 'color_estatus',
@@ -53,6 +56,7 @@ class Minutasaltadireccion extends Model implements HasMedia, Auditable
         'responsable_id',
         'arearesponsable',
         'fechareunion',
+        'tipo_reunion',
         'hora_inicio',
         'hora_termino',
         'tema_reunion',
@@ -65,12 +69,19 @@ class Minutasaltadireccion extends Model implements HasMedia, Auditable
         'team_id',
     ];
 
+    public static function getAllMinutasAltaDireccion()
+    {
+        return Cache::remember('MinutasAltaDireccion:minutas_alta_direccion_all', 3600 * 8, function () {
+            return self::with(['responsable', 'participantes', 'planes'])->orderByDesc('id')->get();
+        });
+    }
+
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
     }
 
-    public function registerMediaConversions(Media $media = null): void
+    public function registerMediaConversions(?Media $media = null): void
     {
         $this->addMediaConversion('thumb')->fit('crop', 50, 50);
         $this->addMediaConversion('preview')->fit('crop', 120, 120);
@@ -155,7 +166,14 @@ class Minutasaltadireccion extends Model implements HasMedia, Auditable
 
     public function participantes()
     {
-        return $this->belongsToMany(Empleado::class, 'empleados_minutas_alta_direccion', 'minuta_id', 'empleado_id')->alta()->with('area');
+        return $this->belongsToMany(Empleado::class, 'empleados_minutas_alta_direccion', 'minuta_id', 'empleado_id')
+            ->select('empleados.id', 'name', 'foto', 'area_id', 'puesto_id', 'email')->alta()->with('area', 'puestoRelacionado');
+    }
+
+    public function participantesCorreo()
+    {
+        return $this->belongsToMany(Empleado::class, 'empleados_minutas_alta_direccion', 'minuta_id', 'empleado_id')->alta()->with('area')
+            ->select('empleados.id', 'name', 'email');
     }
 
     public function documentos()

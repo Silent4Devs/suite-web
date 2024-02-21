@@ -33,29 +33,19 @@
         margin-right:15px;
     }
 
+    .boton-sin-borde {
+        border: none;
+        outline: none; /* Esto elimina el contorno al hacer clic */
+    }
+    .boton-transparente {
+    background-color: transparent;
+    border: none; /* Elimina el borde del botón si lo deseas */
+    }
+
 </style>
 
     {{ Breadcrumbs::render('perfil-puesto') }}
-    @can('puestos_agregar')
         <h5 class="col-12 titulo_general_funcion">Perfiles de Puestos</h5>
-        <div class="mt-5 card">
-            <div style="margin-bottom: 10px; margin-left:10px;" class="row">
-                <div class="col-lg-12">
-                    @include('csvImport.modalperfilpuesto', ['model' => 'Vulnerabilidad', 'route' => 'admin.vulnerabilidads.parseCsvImport'])
-                </div>
-            </div>
-            {{-- <div style="margin-bottom: 10px; margin-left:10px;" class="row">
-                <div class="col-lg-12"> --}}
-                    {{-- <a class="btn btn-success" href="{{ route('admin.puestos.create') }}">
-                  Agregar <strong>+</strong>
-            </a>
-            <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
-                {{ trans('global.app_csvImport') }}
-            </button> --}}
-                    {{-- @include('csvImport.modal', ['model' => 'Puesto', 'route' => 'admin.puestos.parseCsvImport'])
-                </div>
-            </div> --}}
-        @endcan
 
         <div class="card-body datatable-fix">
             <div class="mb-2 row">
@@ -70,29 +60,53 @@
                     </select>
                 </div>
             </div>
-            <table class="table table-bordered w-100 datatable-Puesto">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>
-                            {{ trans('cruds.puesto.fields.puesto') }}
-                        </th>
-                        <th>
-                            Área
-                        </th>
-                        <th style="min-width: 500px;">
-                            {{ trans('cruds.puesto.fields.descripcion') }}
-                        </th>
-                        <th>
-                            Opciones
-                        </th>
-                    </tr>
-                </thead>
-            </table>
+
+            @include('partials.flashMessages')
+            <div class="datatable-fix datatable-rds">
+                <div class="d-flex justify-content-end">
+                    <a class="boton-transparente boton-sin-borde" href="{{ route('descarga-puesto') }}">
+                        <img src="{{ asset('download_FILL0_wght300_GRAD0_opsz24.svg') }}" alt="Importar" class="icon">
+                    </a> &nbsp;&nbsp;&nbsp;
+                    <a class="boton-transparente boton-sin-borde" id="btnImport">
+                        <img src="{{ asset('upload_file_FILL0_wght300_GRAD0_opsz24.svg') }}" alt="Importar" class="icon">
+                    </a>
+                    @include('csvImport.modalperfilpuesto', [
+                        'model' => 'Vulnerabilidad',
+                        'route' => 'admin.vulnerabilidads.parseCsvImport',
+                    ])
+                </div>
+                <h3 class="title-table-rds"> Puestos</h3>
+                <table class="datatable datatable-Puesto" id="datatable-Puesto">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>
+                                {{ trans('cruds.puesto.fields.puesto') }}
+                            </th>
+                            <th>
+                                Área
+                            </th>
+                            <th>
+                                {{ trans('cruds.puesto.fields.descripcion') }}
+                            </th>
+                            <th>
+                                Opciones
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+
         </div>
     </div>
 @endsection
 @section('scripts')
     @parent
+    <script>
+        $('#btnImport').on('click', function(e) {
+        e.preventDefault();
+        $('#xlsxImportModal').modal('show');
+     });
+    </script>
     <script>
         $(function() {
             let dtButtons = [{

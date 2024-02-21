@@ -6,33 +6,32 @@
 
         .advance {
             background-color: #345183;
-            color:#FFFFFF;
+            color: #FFFFFF;
         }
 
-        .advance:hover{
-            color:#FFFFFF;
+        .advance:hover {
+            color: #FFFFFF;
         }
-
     </style>
     <x-loading-indicator wire:loading />
     <div class="card shadow-none" wire:ignore>
 
-            <h4 class="card-answer mt-4">Nombre Evaluación</h4>
-            <h6 class="card-answer">{{ $evaluation->name }}</h6>
+        <h4 class="card-answer mt-4">Nombre Evaluación</h4>
+        <h6 class="card-answer">{{ $evaluation->name }}</h6>
 
-            <h4 class="card-answer mt-4">Descripción</h4>
-            <p class="card-answer mt-2">{{$evaluation->description}}</p>
+        <h4 class="card-answer mt-4">Descripción</h4>
+        <p class="card-answer mt-2">{{ $evaluation->description }}</p>
 
-                <div class="d-flex justify-content-end m-3">
-                    @livewire('escuela.instructor.questions', ['evaluation_id' => $evaluation->id,'edit' => false, 'onlyIcon' => false], key($evaluation->id))
-                </div>
+        <div class="d-flex justify-content-end m-3">
+            @livewire('escuela.instructor.questions', ['evaluation_id' => $evaluation->id, 'edit' => false, 'onlyIcon' => false], key($evaluation->id))
+        </div>
     </div>
-        {{-- <x-table-responsive> --}}
-            <table class="table">
-                <thead class="bg-gray-50">
+    {{-- <x-table-responsive> --}}
+        <div class="datatable-rds datatable-fix">
+            <table class="table" id="datatable_questions-cursos">
+                <thead >
                     <tr>
-                        <th scope="col"
-                            class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                        <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                             ID
                         </th>
                         <th scope="col"
@@ -71,11 +70,12 @@
                     @endforeach
                 </tbody>
             </table>
+        </div>
 
-            <a class="btn advance mb-3" href="{{ route('admin.courses.edit', $course) }}" role="button">REGRESAR</a>
+    <a class="btn advance mt-3 mb-3" href="{{ route('admin.courses.edit', $course) }}" role="button">REGRESAR</a>
 
-        {{-- </x-table-responsive> --}}
-        {{-- @push('js')
+    {{-- </x-table-responsive> --}}
+    {{-- @push('js')
 
             <script>
                 Livewire.on('deleteQuestion', questionId => {
@@ -100,10 +100,10 @@
 </div>
 
 @section('scripts')
-<script>
-    window.addEventListener('closeModal', event => {
+    <script>
+        window.addEventListener('closeModal', event => {
             $('.modal').modal('hide');
             $('.modal-backdrop').remove();
         })
-</script>
+    </script>
 @endsection

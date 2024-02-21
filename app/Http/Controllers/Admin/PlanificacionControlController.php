@@ -105,7 +105,7 @@ class PlanificacionControlController extends Controller
 
         $duenos = User::getAll()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $alta = Empleado::alta()->with('area')->get();
+        $alta = Empleado::getAltaEmpleadosWithArea();
 
         $empleados = $alta;
 
@@ -155,7 +155,7 @@ class PlanificacionControlController extends Controller
             'id_responsable_aprobar' => $request->id_responsable_aprobar,
         ]);
 
-        Mail::to(removeUnicodeCharacters($planificacionControl->empleado->email)->send(new SolicitudFirmasControlCambios($planificacionControl)));
+        Mail::to(removeUnicodeCharacters($planificacionControl->empleado->email)->queue(new SolicitudFirmasControlCambios($planificacionControl)));
 
         // dd($request->all());
         // $planificacionControl = PlanificacionControl::create($request->all());
@@ -182,7 +182,7 @@ class PlanificacionControlController extends Controller
         abort_if(Gate::denies('planificacion_y_control_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $duenos = User::getAll()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $alta = Empleado::alta()->with('area')->get();
+        $alta = Empleado::getAltaEmpleadosWithArea();
         $empleados = $alta;
 
         $planificacionControl->load('team');
@@ -236,7 +236,7 @@ class PlanificacionControlController extends Controller
         // dd($planificacionControl);
 
         if ($planificacionControl->es_aprobado == 'pendiente') {
-            Mail::to(removeUnicodeCharacters($planificacionControl->responsableAprobar->email))->cc([removeUnicodeCharacters($planificacionControl->empleado->email), removeUnicodeCharacters($planificacionControl->responsable->email)])->send(new PlanificacionSolicitudResponsableAprobador($planificacionControl));
+            Mail::to(removeUnicodeCharacters($planificacionControl->responsableAprobar->email))->cc([removeUnicodeCharacters($planificacionControl->empleado->email), removeUnicodeCharacters($planificacionControl->responsable->email)])->queue(new PlanificacionSolicitudResponsableAprobador($planificacionControl));
         }
 
         if ($request->participantes) {
@@ -254,7 +254,7 @@ class PlanificacionControlController extends Controller
 
         $planificacionControl->load('empleado', 'responsable', 'origen', 'team', 'participantes');
         // dd( $planificacionControl);
-        $route = 'storage/planificacion/firmas/' . preg_replace(['/\s+/i', '/-/i'], '_', $planificacionControl->id) . '/';
+        $route = 'storage/planificacion/firmas/'.preg_replace(['/\s+/i', '/-/i'], '_', $planificacionControl->id).'/';
 
         return view('admin.planificacionControls.show', compact('route', 'planificacionControl'));
     }
@@ -288,37 +288,37 @@ class PlanificacionControlController extends Controller
     {
         // dd($request->all());
         $planificacionControl = PlanificacionControl::find($request->id)->load('responsableAprobar');
-        $existsFolderFirmasCartas = Storage::exists('public/planificacion/firmas/' . preg_replace(['/\s+/i', '/-/i'], '_', $planificacionControl->id));
-        if (!$existsFolderFirmasCartas) {
-            Storage::makeDirectory('public/planificacion/firmas/' . preg_replace(['/\s+/i', '/-/i'], '_', $planificacionControl->id));
+        $existsFolderFirmasCartas = Storage::exists('public/planificacion/firmas/'.preg_replace(['/\s+/i', '/-/i'], '_', $planificacionControl->id));
+        if (! $existsFolderFirmasCartas) {
+            Storage::makeDirectory('public/planificacion/firmas/'.preg_replace(['/\s+/i', '/-/i'], '_', $planificacionControl->id));
         }
         if (preg_match('/^data:image\/(\w+);base64,/', $request->firma)) {
             $value = substr($request->firma, strpos($request->firma, ',') + 1);
             $value = base64_decode($value);
-            $new_name_image = $request->tipo . $planificacionControl->id . time() . '.png';
+            $new_name_image = $request->tipo.$planificacionControl->id.time().'.png';
             $image = $new_name_image;
-            $route = 'public/planificacion/firmas/' . preg_replace(['/\s+/i', '/-/i'], '_', $planificacionControl->id) . '/' . $new_name_image;
+            $route = 'public/planificacion/firmas/'.preg_replace(['/\s+/i', '/-/i'], '_', $planificacionControl->id).'/'.$new_name_image;
             Storage::put($route, $value);
             // dd($request->aprobado);
 
             if ($request->tipo == 'responsable_aprobador') {
                 $planificacionControl->update([
-                    'firma_' . $request->tipo => $image,
+                    'firma_'.$request->tipo => $image,
 
                 ]);
             } else {
                 $planificacionControl->update([
-                    'firma_' . $request->tipo => $image,
+                    'firma_'.$request->tipo => $image,
 
                 ]);
             }
 
             if ($planificacionControl->firma_registro) {
-                Mail::to(removeUnicodeCharacters($planificacionControl->responsable->email))->cc(removeUnicodeCharacters($planificacionControl->empleado->email))->send(new SolicitudFirmasControlCambios($planificacionControl));
+                Mail::to(removeUnicodeCharacters($planificacionControl->responsable->email))->cc(removeUnicodeCharacters($planificacionControl->empleado->email))->queue(new SolicitudFirmasControlCambios($planificacionControl));
             }
 
             if ($planificacionControl->firma_registro && $planificacionControl->firma_responsable) {
-                Mail::to(removeUnicodeCharacters($planificacionControl->responsableAprobar->email))->cc([removeUnicodeCharacters($planificacionControl->empleado->email), removeUnicodeCharacters($planificacionControl->responsable->email)])->send(new PlanificacionSolicitudResponsableAprobador($planificacionControl));
+                Mail::to(removeUnicodeCharacters($planificacionControl->responsableAprobar->email))->cc([removeUnicodeCharacters($planificacionControl->empleado->email), removeUnicodeCharacters($planificacionControl->responsable->email)])->queue(new PlanificacionSolicitudResponsableAprobador($planificacionControl));
             }
         }
         // dd($request->aprobado);
@@ -327,7 +327,7 @@ class PlanificacionControlController extends Controller
                 'es_aprobado' => $request->aprobado == '1' ? 'aprobado' : 'rechazado',
                 'comentarios' => $request->comentarios,
             ]);
-            Mail::to(removeUnicodeCharacters($planificacionControl->empleado->email))->cc([removeUnicodeCharacters($planificacionControl->responsableAprobar->email), removeUnicodeCharacters($planificacionControl->responsable->email)])->send(new PlanificacionAceptadaRechazada($planificacionControl));
+            Mail::to(removeUnicodeCharacters($planificacionControl->empleado->email))->cc([removeUnicodeCharacters($planificacionControl->responsableAprobar->email), removeUnicodeCharacters($planificacionControl->responsable->email)])->queue(new PlanificacionAceptadaRechazada($planificacionControl));
         }
 
         return response()->json(['success' => true]);

@@ -2,18 +2,18 @@
 
 namespace App\Models;
 
+use App\Traits\ClearsResponseCache;
+use App\Traits\MultiTenantModelTrait;
 use Carbon\Carbon;
 use DateTimeInterface;
 use EloquentFilter\Filterable;
-use Illuminate\Support\Facades\DB;
-use App\Traits\ClearsResponseCache;
-use App\Traits\MultiTenantModelTrait;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class Area.
@@ -38,8 +38,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Area extends Model implements Auditable
 {
-    use SoftDeletes, MultiTenantModelTrait, HasFactory, Filterable;
-    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
+    use Filterable, HasFactory, MultiTenantModelTrait, SoftDeletes;
 
     protected $table = 'areas';
 
@@ -77,8 +77,22 @@ class Area extends Model implements Auditable
 
     public static function getAll()
     {
-        return Cache::remember('areas_all', 3600 * 12, function () {
+        return Cache::remember('Areas:areas_all', 3600 * 8, function () {
             return self::orderByDesc('id')->get();
+        });
+    }
+
+    public static function getWithEmpleados()
+    {
+        return Cache::remember('Areas:areas_with_empleados', 3600 * 4, function () {
+            return self::with('empleados')->get();
+        });
+    }
+
+    public static function getAllPluck()
+    {
+        return Cache::remember('Areas:areas_pluck', 3600 * 8, function () {
+            return self::orderByDesc('id')->get()->pluck('area', 'id');
         });
     }
 
@@ -126,7 +140,13 @@ class Area extends Model implements Auditable
 
     public function children()
     {
-        return $this->hasMany(self::class, 'id_reporta', 'id')->with('children', 'supervisor', 'grupo', 'lider'); //Eager Loading utilizar solo para construir un arbol si no puede desbordar la pila
+        return $this->hasMany(self::class, 'id_reporta', 'id')
+            ->with([
+                'children:id,name,foto,puesto_id,genero',
+                'supervisor:id,name,foto,puesto_id,genero',
+                'lider:id,name,foto,puesto_id,genero',
+                'grupo'
+            ]);
     }
 
     public function concientizacion_sgis()

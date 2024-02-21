@@ -2,20 +2,20 @@
 
 namespace App\Models;
 
-use DateTimeInterface;
-use Illuminate\Support\Facades\DB;
 use App\Traits\ClearsResponseCache;
 use App\Traits\MultiTenantModelTrait;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
+use OwenIt\Auditing\Contracts\Auditable;
 
 class Puesto extends Model implements Auditable
 {
-    use SoftDeletes, MultiTenantModelTrait, HasFactory;
-    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
+    use HasFactory, MultiTenantModelTrait, SoftDeletes;
 
     public $table = 'puestos';
 
@@ -72,7 +72,7 @@ class Puesto extends Model implements Auditable
 
     public static function getAll()
     {
-        return Cache::remember('Puestos_all', 3600 * 8, function () {
+        return Cache::remember('Puestos:Puestos_all', 3600 * 8, function () {
             return self::get();
         });
     }
@@ -106,6 +106,11 @@ class Puesto extends Model implements Auditable
     // {
     //     return $this->belongsTo(Empleado::class, 'id_reporto', 'id')->with('area');
     // }
+
+    public function puesto_empleados()
+    {
+        return $this->hasMany(Empleado::class, 'puesto_id', 'id')->alta()->select('id', 'name', 'puesto_id');
+    }
 
     public function empleados()
     {

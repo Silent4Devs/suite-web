@@ -51,14 +51,17 @@ class EV360CompetenciasController extends Controller
         if ($request->hasFile('foto')) {
             Storage::makeDirectory('public/competencias/img'); //Crear si no existe
             $extension = pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_EXTENSION);
-            $nombre_imagen = 'COMPETENCIA_' . $competencia->id . '_' . $competencia->nombre . '.' . $extension;
-            $route = storage_path() . '/app/public/competencias/img/' . $nombre_imagen;
+            $nombre_imagen = 'COMPETENCIA_'.$competencia->id.'_'.$competencia->nombre.'.'.$extension;
+            $route = storage_path().'/app/public/competencias/img/'.$nombre_imagen;
             $imagen = $nombre_imagen;
             //Usamos image_intervention para disminuir el peso de la imagen
             $img_intervention = Image::make($request->file('foto'));
             $img_intervention->resize(720, null, function ($constraint) {
                 $constraint->aspectRatio();
-            })->save($route);
+            });
+
+            $img_intervention->encode('png', 70)->save($route);
+
             $competencia->update([
                 'imagen' => $imagen,
             ]);
@@ -113,14 +116,17 @@ class EV360CompetenciasController extends Controller
         if ($request->hasFile('foto')) {
             Storage::makeDirectory('public/competencias/img'); //Crear si no existe
             $extension = pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_EXTENSION);
-            $nombre_imagen = 'COMPETENCIA_' . $competencia->id . '_' . $competencia->nombre . '.' . $extension;
-            $route = storage_path() . '/app/public/competencias/img/' . $nombre_imagen;
+            $nombre_imagen = 'COMPETENCIA_'.$competencia->id.'_'.$competencia->nombre.'.'.$extension;
+            $route = storage_path().'/app/public/competencias/img/'.$nombre_imagen;
 
             //Usamos image_intervention para disminuir el peso de la imagen
             $img_intervention = Image::make($request->file('foto'));
             $img_intervention->resize(1080, null, function ($constraint) {
                 $constraint->aspectRatio();
-            })->save($route);
+            });
+
+            $img_intervention->encode('png', 70)->save($route);
+
             $competencia->update([
                 'imagen' => $nombre_imagen,
             ]);
@@ -132,7 +138,7 @@ class EV360CompetenciasController extends Controller
                 $exists = CompetenciaPuesto::where('puesto_id', '=', $puesto->id)
                     ->where('competencia_id', '=', $competencia->id)
                     ->exists();
-                if (!$exists) {
+                if (! $exists) {
                     CompetenciaPuesto::create([
                         'puesto_id' => $puesto->id,
                         'competencia_id' => $competencia->id,

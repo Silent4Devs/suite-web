@@ -2,18 +2,18 @@
 
 namespace App\Models;
 
-use DateTimeInterface;
 use App\Traits\ClearsResponseCache;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Contracts\Auditable;
 
 class Permission extends Model implements Auditable
 {
-    use SoftDeletes, HasFactory;
-    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
+    use HasFactory, SoftDeletes;
 
     public $table = 'permissions';
 
@@ -32,8 +32,8 @@ class Permission extends Model implements Auditable
 
     public static function getAll()
     {
-        return Cache::remember('Permissions:permissions_all', 3600 * 13, function () {
-            return self::get();
+        return Cache::remember('Permissions:permissions_all', 3600 * 6, function () {
+            return self::orderBy('id')->get();
         });
     }
 

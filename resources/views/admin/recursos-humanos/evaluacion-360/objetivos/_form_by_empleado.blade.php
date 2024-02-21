@@ -9,52 +9,16 @@
         margin-top: 10px !important;
     }
 </style>
-
-@if (!$editar)
-    <div class="col-12">
-        <div class="px-1 py-2 mb-3 rounded" style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
-            <div class="row w-100">
-                <div class="text-center col-1 align-items-center d-flex justify-content-center">
-                    <div class="w-100">
-                        <i class="bi bi-info mr-3" style="color: #3B82F6; font-size: 30px"></i>
-                    </div>
-                </div>
-                <div class="col-11">
-                    <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">
-                    </p>
-                    <p class="m-0" style="font-size: 14px; color:#1E3A8A ">
-                        @if (auth()->user()->empleado->id == $empleado->id)
-                            Define tus objetivos, <strong>los objetivos que sean creados deberan ser aprobados por tú
-                                Jefe Inmediato
-                                ({{ $empleado->supervisor ? $empleado->supervisor->name : 'No definido' }})</strong>
-                        @else
-                            Define los objetivos estratégicos esperados para: <strong>{{ $empleado->name }}</strong>
-                        @endif
-
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-@endif
-@if (!$editar)
-    <div class="mt-3 col-12">
-        <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
-            CREACIÓN DE OBJETIVOS ESTRATÉGICOS
-        </div>
-    </div>
-@endif
-<div class="col-sm-12 col-lg-12 col-md-12 col-12">
-    <div class="form-group">
-        <label for="nombre">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                class="bi bi-pen-fill iconos-crear" viewBox="0 0 16 16">
-                <path
-                    d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z" />
-            </svg> Objetivo Estratégico <span class="text-danger">*</span>
-        </label>
+<div class="col-12">
+    <h4 class="title-card-evaluacion">Objetivo</h4>
+</div>
+<div class="col-12 mt-4">
+    <div class="form-group anima-focus">
         <input type="text" class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" id="nombre"
-            aria-describedby="nombreHelp" name="nombre" value="{{ old('nombre', $objetivo->nombre) }}">
+        aria-describedby="nombreHelp" name="nombre" value="{{ old('nombre', $objetivo->nombre) }}" placeholder="">
+        <label for="nombre">
+            Objetivo Estratégico
+        </label>
         <small id="nombreHelp" class="form-text text-muted">Ingresa el nombre del objetivo estratégico</small>
         @if ($errors->has('nombre'))
             <div class="invalid-feedback">
@@ -67,11 +31,7 @@
 <div class="col-sm-12 col-lg-6 col-md-6 col-12">
     <div class="form-group">
         <label for="tipo_id">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                class="bi bi-puzzle-fill iconos-crear" viewBox="0 0 16 16">
-                <path
-                    d="M3.112 3.645A1.5 1.5 0 0 1 4.605 2H7a.5.5 0 0 1 .5.5v.382c0 .696-.497 1.182-.872 1.469a.459.459 0 0 0-.115.118.113.113 0 0 0-.012.025L6.5 4.5v.003l.003.01c.004.01.014.028.036.053a.86.86 0 0 0 .27.194C7.09 4.9 7.51 5 8 5c.492 0 .912-.1 1.19-.24a.86.86 0 0 0 .271-.194.213.213 0 0 0 .036-.054l.003-.01v-.008a.112.112 0 0 0-.012-.025.459.459 0 0 0-.115-.118c-.375-.287-.872-.773-.872-1.469V2.5A.5.5 0 0 1 9 2h2.395a1.5 1.5 0 0 1 1.493 1.645L12.645 6.5h.237c.195 0 .42-.147.675-.48.21-.274.528-.52.943-.52.568 0 .947.447 1.154.862C15.877 6.807 16 7.387 16 8s-.123 1.193-.346 1.638c-.207.415-.586.862-1.154.862-.415 0-.733-.246-.943-.52-.255-.333-.48-.48-.675-.48h-.237l.243 2.855A1.5 1.5 0 0 1 11.395 14H9a.5.5 0 0 1-.5-.5v-.382c0-.696.497-1.182.872-1.469a.459.459 0 0 0 .115-.118.113.113 0 0 0 .012-.025L9.5 11.5v-.003l-.003-.01a.214.214 0 0 0-.036-.053.859.859 0 0 0-.27-.194C8.91 11.1 8.49 11 8 11c-.491 0-.912.1-1.19.24a.859.859 0 0 0-.271.194.214.214 0 0 0-.036.054l-.003.01v.002l.001.006a.113.113 0 0 0 .012.025c.016.027.05.068.115.118.375.287.872.773.872 1.469v.382a.5.5 0 0 1-.5.5H4.605a1.5 1.5 0 0 1-1.493-1.645L3.356 9.5h-.238c-.195 0-.42.147-.675.48-.21.274-.528.52-.943.52-.568 0-.947-.447-1.154-.862C.123 9.193 0 8.613 0 8s.123-1.193.346-1.638C.553 5.947.932 5.5 1.5 5.5c.415 0 .733.246.943.52.255.333.48.48.675.48h.238l-.244-2.855z" />
-            </svg> Perspectiva <span class="text-danger">*</span>
+            Perspectiva <span class="text-danger">*</span>
         </label>
         {{-- Modulo para tipo de objetivo --}}
         <div class="row align-items-center">
@@ -98,16 +58,12 @@
 
 </div>
 <div class="col-sm-12 col-lg-6 col-md-6 col-12">
-    <div class="form-group">
-        <label for="KPI">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                class="bi bi-lightning-fill iconos-crear" viewBox="0 0 16 16">
-                <path
-                    d="M5.52.359A.5.5 0 0 1 6 0h4a.5.5 0 0 1 .474.658L8.694 6H12.5a.5.5 0 0 1 .395.807l-7 9a.5.5 0 0 1-.873-.454L6.823 9.5H3.5a.5.5 0 0 1-.48-.641l2.5-8.5z" />
-            </svg>KPI <span class="text-danger">*</span>
-        </label>
+    <div class="form-group anima-focus">
         <input class="form-control {{ $errors->has('KPI') ? 'is-invalid' : '' }}" type="text" name="KPI"
-            value="{{ old('KPI', $objetivo->KPI) }}">
+            value="{{ old('KPI', $objetivo->KPI) }}" placeholder="">
+        <label for="KPI">
+            KPIs
+        </label>
         <small id="KPIHelp" class="form-text text-muted">Ingresa el KPI del objetivo estratégico </small>
         @if ($errors->has('KPI'))
             <div class="invalid-feedback">
@@ -118,18 +74,12 @@
     </div>
 </div>
 <div class="col-sm-12 col-lg-6 col-md-6 col-12">
-    <div class="form-group">
-        <label for="meta">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                class="bi bi-bullseye iconos-crear" viewBox="0 0 16 16">
-                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                <path d="M8 13A5 5 0 1 1 8 3a5 5 0 0 1 0 10zm0 1A6 6 0 1 0 8 2a6 6 0 0 0 0 12z" />
-                <path d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" />
-                <path d="M9.5 8a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
-            </svg>Meta a alcanzar <span class="text-danger">*</span>
-        </label>
+    <div class="form-group anima-focus">
         <input type="number" class="form-control {{ $errors->has('meta') ? 'is-invalid' : '' }}" id="meta"
-            aria-describedby="metaHelp" name="meta" value="{{ old('meta', $objetivo->meta) }}">
+        aria-describedby="metaHelp" name="meta" value="{{ old('meta', $objetivo->meta) }}" placeholder="">
+        <label for="meta">
+            Meta a alcanzar
+        </label>
         <small id="metaHelp" class="form-text text-muted">Ingresa la Meta del objetivo estratégico </small>
         @if ($errors->has('meta'))
             <div class="invalid-feedback">
@@ -142,7 +92,7 @@
 <div class="col-sm-12 col-lg-6 col-md-6 col-12">
     <div class="form-group">
         <label for="metrica_id">
-            <i class="fas fa-ruler-combined iconos-crear"></i> Unidad de medida <span class="text-danger">*</span>
+            Unidad de medida <span class="text-danger">*</span>
         </label>
         {{-- Modulo para metrica de objetivo --}}
         <div class="row align-items-center">
@@ -152,8 +102,9 @@
             @if (!$editar)
                 <div class="p-1 col" style="margin-top:-28px;height: 38px;margin-left: -12px;">
                     <button id="btnAgregarMetrica" class="text-white btn btn-sm"
-                        style="background:#3eb2ad;height: 32px;" data-toggle="modal" data-target="#metricaObjetivoModal"
-                        title="Agregar unidad"><i class="fas fa-plus"></i></button>
+                        style="background:#3eb2ad;height: 32px;" data-toggle="modal"
+                        data-target="#metricaObjetivoModal" title="Agregar unidad"><i
+                            class="fas fa-plus"></i></button>
                     <a href="{{ route('admin.Metrica.index') }}" class="text-white btn btn-sm"
                         style="background:#3eb2ad;height: 32px;"><i class="fas fa-edit"></i></a>
                 </div>
@@ -164,14 +115,14 @@
     </div>
 </div>
 <div class="col-sm-12 col-lg-12 col-md-12 col-12">
-    <div class="form-group">
+    <div class="form-group anima-focus">
+        <textarea class="form-control {{ $errors->has('descripcion_meta') ? 'is-invalid' : '' }}" name="descripcion_meta"
+            id="" cols="30" rows="1" placeholder="">{{ old('descripcion_meta', $objetivo->descripcion_meta) }}</textarea>
         <label for="descripcion_meta">
-            <i class="fas fa-pencil-alt iconos-crear"></i>Descripción
+            Descripción
         </label>
         {{-- <input class="form-control {{ $errors->has('descripcion_meta') ? 'is-invalid' : '' }}" type="text"
             name="descripcion_meta" value="{{ old('descripcion_meta', $objetivo->descripcion_meta) }}"> --}}
-        <textarea class="form-control {{ $errors->has('descripcion_meta') ? 'is-invalid' : '' }}" name="descripcion_meta"
-            id="" cols="30" rows="1">{{ old('descripcion_meta', $objetivo->descripcion_meta) }}</textarea>
         <small id="descripcion_metaHelp" class="form-text text-muted">Ingresa una breve descripción del objetivo
             estratégico</small>
         @if ($errors->has('descripcion_meta'))
@@ -220,14 +171,13 @@
                 class="mr-2 fas fa-plus-circle"></i>Agregar</button>
     </div>
     <div class="card-body datatable-fix">
-        <div class="mt-3">
-            <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
-                OBJETIVOS ESTRATÉGICOS ASIGNADOS
+        <div class="row">
+            <div class="col-12">
+                <h4 class="title-card-evaluaciones">Objetivos Estratégicos Asignados</h4>
             </div>
         </div>
         <div style="text-align: right">
-            <button class="btn btn-success" id="copiarObjetivos"><i class="fas fa-copy mr-2"></i>Importar
-                Objetivos</button>
+            <button class="btn btn-success" id="copiarObjetivos"><i class="fas fa-copy mr-2"></i>Importar Objetivos</button>
         </div>
         <table class="table table-bordered w-100 tblObjetivos">
             <thead class="thead-dark">
@@ -238,9 +188,9 @@
                     <th style="vertical-align: top">
                         Objetivos Estratégicos
                     </th>
-                    <th style="vertical-align: top">
+                    {{-- <th style="vertical-align: top">
                         Evaluación Asignada
-                    </th>
+                    </th> --}}
                     <th style="vertical-align: top">
                         KPI
                     </th>
@@ -259,8 +209,8 @@
                 </tr>
             </thead>
         </table>
-        <div class="modal fade" id="modalCopiarObjetivos" data-backdrop="static" data-keyboard="false" tabindex="-1"
-            aria-labelledby="modalCopiarObjetivosLabel" aria-hidden="true">
+        <div class="modal fade" id="modalCopiarObjetivos" data-backdrop="static" data-keyboard="false"
+            tabindex="-1" aria-labelledby="modalCopiarObjetivosLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header" style="background: #345183;color: white;">

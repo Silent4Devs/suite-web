@@ -124,10 +124,10 @@ class HomeController
                             $start = date('Y-m-d', strtotime('last Monday'));
                             break;
                         case 'month':
-                            $start = date('Y-m') . '-01';
+                            $start = date('Y-m').'-01';
                             break;
                         case 'year':
-                            $start = date('Y') . '-01-01';
+                            $start = date('Y').'-01-01';
                             break;
                     }
 
@@ -169,10 +169,10 @@ class HomeController
                             $start = date('Y-m-d', strtotime('last Monday'));
                             break;
                         case 'month':
-                            $start = date('Y-m') . '-01';
+                            $start = date('Y-m').'-01';
                             break;
                         case 'year':
-                            $start = date('Y') . '-01-01';
+                            $start = date('Y').'-01-01';
                             break;
                     }
 
@@ -273,7 +273,7 @@ class HomeController
         $capacitaciones = Recurso::getAll();
         $categorias_arr = [];
         $recursos_categoria_arr = [];
-        $categorias = CategoriaCapacitacion::with('recursos')->get();
+        $categorias = CategoriaCapacitacion::getAllWithRecursos();
         foreach ($categorias as $categoria) {
             array_push($categorias_arr, $categoria->nombre);
             array_push($recursos_categoria_arr, count($categoria->recursos));

@@ -2,7 +2,7 @@
 @section('content')
     {{ Breadcrumbs::render('admin.accion-correctivas.index') }}
 
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/centro_atencion_cards.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/centro_atencion_cards.css') }}{{config('app.cssVersion')}}">
 
 
     <style>
@@ -31,7 +31,6 @@
         .textoCentroCard {
             font-size: 12pt !important;
         }
-
     </style>
     <h5 class="col-12 titulo_general_funcion">Acciones Correctivas</h5>
 
@@ -78,9 +77,16 @@
             </div>
         </div>
     </div>
+
     <div class="caja_caja_secciones">
         <div class="caja_secciones">
             <section id="indexAc">
+                <div class="text-right">
+                    <div class="d-flex justify-content-end">
+                        <a href="{{ route('admin.accion-correctivas.create') }}" type="button" class="btn btn-primary">Registrar Acción</a> 
+                    </div>
+                </div>
+                
                 <div class="mt-1 card">
                     <div class="container">
                         <div class="row">
@@ -88,15 +94,15 @@
                             </div>
                             <div class="col-sm-8 align-content-center">
                                 @include('layouts.errors')
-                                @include('flash::message')
+
                             </div>
                             <div class="col-sm-2">
                             </div>
                         </div>
                     </div>
+
                     <div class="card">
                         <div class="card-body datatable-fix">
-
                             <table class="table table-bordered w-100 datatable-AccionCorrectiva">
                                 <thead class="thead-dark">
                                     <tr>
@@ -161,6 +167,11 @@
             </section>
 
             <section id="aprobaciones" class="caja_tab_reveldada">
+                <div class="text-right">
+                    <div class="d-flex justify-content-end">
+                        <a href="{{ route('admin.accion-correctivas.create') }}" type="button" class="btn btn-primary">Registrar Solicitud</a> 
+                    </div>
+                </div>
                 <div class="mt-1 card">
                     <div class="card-body datatable-fix">
                         <table id="tabla_usuario_aprobaciones" class="table">
@@ -272,57 +283,57 @@
                 }
 
             ];
-                let btnAgregar = {
-                    text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                    titleAttr: 'Agregar acciones correctivas',
-                    url: "{{ route('admin.accion-correctivas.create') }}",
-                    className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                    action: function(e, dt, node, config) {
-                        let {
-                            url
-                        } = config;
-                        window.location.href = url;
+            let btnAgregar = {
+                // text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                // titleAttr: 'Agregar acciones correctivas',
+                // url: "{{ route('admin.accion-correctivas.create') }}",
+                // className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                // action: function(e, dt, node, config) {
+                //     let {
+                //         url
+                //     } = config;
+                //     window.location.href = url;
+                // }
+            };
+            // dtButtons.push(btnAgregar);
+
+            let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
+            let deleteButton = {
+                text: deleteButtonTrans,
+                url: "{{ route('admin.accion-correctivas.massDestroy') }}",
+                className: 'btn-danger',
+                action: function(e, dt, node, config) {
+                    var ids = $.map(dt.rows({
+                        selected: true
+                    }).data(), function(entry) {
+                        return entry.id
+                    });
+
+                    if (ids.length === 0) {
+                        alert('{{ trans('global.datatables.zero_selected') }}')
+
+                        return
                     }
-                };
-                dtButtons.push(btnAgregar);
 
-                let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
-                let deleteButton = {
-                    text: deleteButtonTrans,
-                    url: "{{ route('admin.accion-correctivas.massDestroy') }}",
-                    className: 'btn-danger',
-                    action: function(e, dt, node, config) {
-                        var ids = $.map(dt.rows({
-                            selected: true
-                        }).data(), function(entry) {
-                            return entry.id
-                        });
-
-                        if (ids.length === 0) {
-                            alert('{{ trans('global.datatables.zero_selected') }}')
-
-                            return
-                        }
-
-                        if (confirm('{{ trans('global.areYouSure') }}')) {
-                            $.ajax({
-                                    headers: {
-                                        'x-csrf-token': _token
-                                    },
-                                    method: 'POST',
-                                    url: config.url,
-                                    data: {
-                                        ids: ids,
-                                        _method: 'DELETE'
-                                    }
-                                })
-                                .done(function() {
-                                    location.reload()
-                                })
-                        }
+                    if (confirm('{{ trans('global.areYouSure') }}')) {
+                        $.ajax({
+                                headers: {
+                                    'x-csrf-token': _token
+                                },
+                                method: 'POST',
+                                url: config.url,
+                                data: {
+                                    ids: ids,
+                                    _method: 'DELETE'
+                                }
+                            })
+                            .done(function() {
+                                location.reload()
+                            })
                     }
                 }
-                //dtBu@endcan
+            }
+            //dtBu@endcan
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,
@@ -502,33 +513,33 @@
                 ],
                 createdRow: (row, data, dataIndex, cells) => {
                     let fondo = "green";
-                        let letras = "white";
-                        if (data.estatus == 'Sin atender') {
-                            fondo = "#FFCB63";
-                            letras = "white";
-                        }
-                        if (data.estatus == 'En curso') {
-                            fondo = "#AC84FF";
-                            letras = "white";
-                        }
-                        if (data.estatus == 'En espera') {
-                            fondo = "#6863FF";
-                            letras = "white";
-                        }
-                        if (data.estatus == 'Cerrado') {
-                            fondo = "#6DC866";
-                            letras = "white";
-                        }
-                        if (data.estatus == 'No procedente') {
-                            fondo = "#FF417B";
-                            letras = "white";
-                        }
-                        if(data.estatus !=null){
-                            $(cells[4]).css('background-color', fondo)
-                            $(cells[4]).css('color', letras)
-                        }
+                    let letras = "white";
+                    if (data.estatus == 'Sin atender') {
+                        fondo = "#FFCB63";
+                        letras = "white";
+                    }
+                    if (data.estatus == 'En curso') {
+                        fondo = "#AC84FF";
+                        letras = "white";
+                    }
+                    if (data.estatus == 'En espera') {
+                        fondo = "#6863FF";
+                        letras = "white";
+                    }
+                    if (data.estatus == 'Cerrado') {
+                        fondo = "#6DC866";
+                        letras = "white";
+                    }
+                    if (data.estatus == 'No procedente') {
+                        fondo = "#FF417B";
+                        letras = "white";
+                    }
+                    if (data.estatus != null) {
+                        $(cells[4]).css('background-color', fondo)
+                        $(cells[4]).css('color', letras)
+                    }
 
-                    },
+                },
                 orderCellsTop: true,
                 order: [
                     [0, 'desc']
@@ -613,57 +624,57 @@
 
             ];
 
-                let btnAgregarAprobacion = {
-                    text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                    titleAttr: 'Agregar acciones correctivas',
-                    url: "{{ route('admin.accion-correctivas.create') }}",
-                    className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                    action: function(e, dt, node, config) {
-                        let {
-                            url
-                        } = config;
-                        window.location.href = url;
+            let btnAgregarAprobacion = {
+                // text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                // titleAttr: 'Agregar acciones correctivas',
+                // url: "{{ route('admin.accion-correctivas.create') }}",
+                // className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                // action: function(e, dt, node, config) {
+                //     let {
+                //         url
+                //     } = config;
+                //     window.location.href = url;
+                // }
+            };
+            // dtButtonsAprobacion.push(btnAgregarAprobacion);
+
+            let deleteButtonTransAprobacion = '{{ trans('global.datatables.delete') }}';
+            let deleteButtonAprobacion = {
+                text: deleteButtonTransAprobacion,
+                url: "{{ route('admin.accion-correctivas.massDestroy') }}",
+                className: 'btn-danger',
+                action: function(e, dt, node, config) {
+                    var ids = $.map(dt.rows({
+                        selected: true
+                    }).data(), function(entry) {
+                        return entry.id
+                    });
+
+                    if (ids.length === 0) {
+                        alert('{{ trans('global.datatables.zero_selected') }}')
+
+                        return
                     }
-                };
-                dtButtonsAprobacion.push(btnAgregarAprobacion);
 
-                let deleteButtonTransAprobacion = '{{ trans('global.datatables.delete') }}';
-                let deleteButtonAprobacion = {
-                    text: deleteButtonTransAprobacion,
-                    url: "{{ route('admin.accion-correctivas.massDestroy') }}",
-                    className: 'btn-danger',
-                    action: function(e, dt, node, config) {
-                        var ids = $.map(dt.rows({
-                            selected: true
-                        }).data(), function(entry) {
-                            return entry.id
-                        });
-
-                        if (ids.length === 0) {
-                            alert('{{ trans('global.datatables.zero_selected') }}')
-
-                            return
-                        }
-
-                        if (confirm('{{ trans('global.areYouSure') }}')) {
-                            $.ajax({
-                                    headers: {
-                                        'x-csrf-token': _token
-                                    },
-                                    method: 'POST',
-                                    url: config.url,
-                                    data: {
-                                        ids: ids,
-                                        _method: 'DELETE'
-                                    }
-                                })
-                                .done(function() {
-                                    location.reload()
-                                })
-                        }
+                    if (confirm('{{ trans('global.areYouSure') }}')) {
+                        $.ajax({
+                                headers: {
+                                    'x-csrf-token': _token
+                                },
+                                method: 'POST',
+                                url: config.url,
+                                data: {
+                                    ids: ids,
+                                    _method: 'DELETE'
+                                }
+                            })
+                            .done(function() {
+                                location.reload()
+                            })
                     }
                 }
-                //dtButtons.push(deleteButton)
+            }
+            //dtButtons.push(deleteButton)
 
 
             let dtOverrideGlobalsAprobacion = {

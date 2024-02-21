@@ -19,8 +19,8 @@ class RevisionMinutasController extends Controller
     public function edit(RevisionMinuta $revisionMinuta)
     {
         $minuta = Minutasaltadireccion::find(intval($revisionMinuta->minuta_id));
-        if (!$minuta) {
-            abort_if(!$minuta, 404);
+        if (! $minuta) {
+            abort_if(! $minuta, 404);
         }
         $empleado = Empleado::alta()->find(intval($revisionMinuta->empleado_id));
 
@@ -55,8 +55,8 @@ class RevisionMinutasController extends Controller
                             'estatus' => strval(Minutasaltadireccion::DOCUMENTO_RECHAZADO),
                         ]);
                     } else {
-                        $path_documento_aprobacion = 'public/minutas/en aprobacion/' . $minutaOriginal->documento;
-                        $ruta_publicacion = 'public/minutas/aprobadas/' . $minutaOriginal->documento;
+                        $path_documento_aprobacion = 'public/minutas/en aprobacion/'.$minutaOriginal->documento;
+                        $ruta_publicacion = 'public/minutas/aprobadas/'.$minutaOriginal->documento;
                         $minutaOriginal->update([
                             'estatus' => strval(Minutasaltadireccion::PUBLICADO),
                         ]);
@@ -181,8 +181,8 @@ class RevisionMinutasController extends Controller
                             'estatus' => strval(Minutasaltadireccion::DOCUMENTO_RECHAZADO),
                         ]);
                     } else {
-                        $path_documento_aprobacion = 'public/minutas/en aprobacion/' . $minutaOriginal->documento;
-                        $ruta_publicacion = 'public/minutas/aprobadas/' . $minutaOriginal->documento;
+                        $path_documento_aprobacion = 'public/minutas/en aprobacion/'.$minutaOriginal->documento;
+                        $ruta_publicacion = 'public/minutas/aprobadas/'.$minutaOriginal->documento;
                         $minutaOriginal->update([
                             'estatus' => strval(Minutasaltadireccion::PUBLICADO),
                         ]);
@@ -207,21 +207,21 @@ class RevisionMinutasController extends Controller
 
     public function sendMailApprove($mail, $modelo, $revision)
     {
-        Mail::to(removeUnicodeCharacters($mail))->send(new MinutaConfirmacionAprobacion($modelo, $revision));
+        Mail::to(removeUnicodeCharacters($mail))->queue(new MinutaConfirmacionAprobacion($modelo, $revision));
     }
 
     public function sendMailPublish($mail, $modelo)
     {
-        Mail::to(removeUnicodeCharacters($mail))->send(new MinutaAprobada($modelo));
+        Mail::to(removeUnicodeCharacters($mail))->queue(new MinutaAprobada($modelo));
     }
 
     public function sendMailNotPublish($mail, $modelo)
     {
-        Mail::to(removeUnicodeCharacters($mail))->send(new MinutaRechazada($modelo));
+        Mail::to(removeUnicodeCharacters($mail))->queue(new MinutaRechazada($modelo));
     }
 
     public function sendMailReject($mail, $modelo, $revision)
     {
-        Mail::to(removeUnicodeCharacters($mail))->send(new MinutaConfirmacionRechazo($modelo, $revision));
+        Mail::to(removeUnicodeCharacters($mail))->queue(new MinutaConfirmacionRechazo($modelo, $revision));
     }
 }

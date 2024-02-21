@@ -10,11 +10,11 @@ use App\Models\EnvioDocumentosAjustes;
 use App\Models\User;
 use App\Traits\ObtenerOrganizacion;
 use Carbon\Carbon;
-use Flash;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class EnvioDocumentosController extends Controller
 {
@@ -105,9 +105,9 @@ class EnvioDocumentosController extends Controller
         $solicitud = EnvioDocumentos::create($request->all());
         $coordinador = $empleado->find($request->id_coordinador);
         $solicitante = $empleado->find($request->id_solicita);
-        Mail::to(removeUnicodeCharacters($coordinador->email))->send(new MailMensajeria($solicitante, $coordinador, $solicitud));
+        Mail::to(removeUnicodeCharacters($coordinador->email))->queue(new MailMensajeria($solicitante, $coordinador, $solicitud));
 
-        Flash::success('Solicitud creada satisfactoriamente.');
+        Alert::success('éxito', 'Información añadida con éxito');
 
         return redirect()->route('admin.envio-documentos.index');
     }
@@ -119,7 +119,7 @@ class EnvioDocumentosController extends Controller
         $envio = EnvioDocumentos::with(['mensajero', 'coordinador', 'solicita'])->find($id);
 
         if (empty($envio)) {
-            Flash::error('Solicitud no localizada');
+            Alert::warning('warning', 'Solicitud not found');
 
             return redirect(route('admin.envio-documentos.index'));
         }
@@ -133,7 +133,7 @@ class EnvioDocumentosController extends Controller
         $solicitud = EnvioDocumentos::find($id);
 
         if (empty($solicitud)) {
-            Flash::error('Amenaza not found');
+            Alert::warning('warning', 'Data not found');
 
             return redirect(route('admin.envio-documentos.index'));
         }
@@ -151,14 +151,14 @@ class EnvioDocumentosController extends Controller
         $solicitud = EnvioDocumentos::find($id);
 
         if (empty($solicitud)) {
-            Flash::error('Error al actualizar');
+            Alert::warning('warning', 'Data not found');
 
             return redirect(route('admin.envio-documentos.index'));
         }
 
         $solicitud->update($request->all());
 
-        Flash::success('Solicitud actualizada correctamente.');
+        Alert::success('éxito', 'Información añadida con éxito');
 
         return redirect(route('admin.envio-documentos.index'));
     }
@@ -181,7 +181,7 @@ class EnvioDocumentosController extends Controller
         $id = 1;
         $ajustes = EnvioDocumentosAjustes::find($id);
         if (empty($ajustes)) {
-            Flash::error('Ajustes no encontrados');
+            Alert::warning('warning', 'Data not found');
 
             return redirect(route('admin.Ausencias.index'));
         }
@@ -196,7 +196,7 @@ class EnvioDocumentosController extends Controller
         abort_if(Gate::denies('solicitud_mensajeria_ajustes'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $ajustes = EnvioDocumentosAjustes::find($id);
         $ajustes->update($request->all());
-        Flash::success('Ajustes aplicados satisfactoriamente.');
+        Alert::success('éxito', 'Información añadida con éxito');
 
         return redirect()->route('admin.Ausencias.index');
     }
@@ -263,7 +263,7 @@ class EnvioDocumentosController extends Controller
         $solicitud = EnvioDocumentos::find($id);
 
         if (empty($solicitud)) {
-            Flash::error('Amenaza not found');
+            Alert::warning('warning', 'Data not found');
 
             return redirect(route('admin.envio-documentos.index'));
         }
@@ -281,14 +281,14 @@ class EnvioDocumentosController extends Controller
         $solicitud = EnvioDocumentos::find($id);
 
         if (empty($solicitud)) {
-            Flash::error('Error al actualizar');
+            Alert::warning('warning', 'Data not found');
 
             return redirect(route('admin.envio-documentos.index'));
         }
 
         $solicitud->update($request->all());
 
-        Flash::success('Solicitud actualizada correctamente.');
+        Alert::success('éxito', 'Información añadida con éxito');
 
         return redirect(route('admin.envio-documentos.atencion'));
     }

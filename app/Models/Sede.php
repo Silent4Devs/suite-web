@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use App\Traits\ClearsResponseCache;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class Sede.
@@ -31,9 +31,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Sede extends Model implements Auditable
 {
-    use SoftDeletes;
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
     use HasFactory;
-    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
+    use SoftDeletes;
 
     protected $table = 'sedes';
 
@@ -57,14 +57,14 @@ class Sede extends Model implements Auditable
     public static function getAll($columns = ['id', 'sede'])
     {
         //retrieve all data or can pass columns to retrieve
-        return Cache::remember('sedes_all', 3600 * 24, function () use ($columns) {
+        return Cache::remember('Sede:sedes_all', 3600 * 8, function () use ($columns) {
             return self::select($columns)->get();
         });
     }
 
     public static function getbyId($id)
     {
-        return Cache::remember('sede_' . $id, 3600 * 24, function () use ($id) {
+        return Cache::remember('Sede:sede_'.$id, 3600 * 8, function () use ($id) {
             return self::find($id);
         });
     }

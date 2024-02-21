@@ -8,7 +8,7 @@ use OwenIt\Auditing\Contracts\Auditable;
 
 class MatrizRiesgosSistemaGestionControlesPivot extends Model implements Auditable
 {
-    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
 
     protected $table = 'matriz_riesgos_sistema_gestion_controles_pivot';
 

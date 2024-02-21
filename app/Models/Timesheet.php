@@ -2,18 +2,18 @@
 
 namespace App\Models;
 
-use EloquentFilter\Filterable;
 use App\Traits\ClearsResponseCache;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
+use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Contracts\Auditable;
 
 class Timesheet extends Model implements Auditable
 {
-    use HasFactory;
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
     use Filterable;
-    use \OwenIt\Auditing\Auditable, ClearsResponseCache;
+    use HasFactory;
 
     protected $table = 'timesheet';
 
@@ -25,26 +25,31 @@ class Timesheet extends Model implements Auditable
         'aprobado',
         'empleado_id',
         'aprobador_id',
-        'aprobado',
         'rechazado',
         'estatus',
         'comentarios',
         'dia_semana',
         'inicio_semana',
         'fin_semana',
+        'created_at',
     ];
+
+
+    public static function getPersonalTimesheetQuery()
+    {
+        return self::where('empleado_id', auth()->user()->empleado->id);
+    }
 
     public static function getPersonalTimesheet()
     {
-        return Cache::remember('Timesheet:timesheet-' . auth()->user()->empleado->id, now()->addHours(3), function () {
-            return self::where('empleado_id', auth()->user()->empleado->id)->get();
-        });
+        return self::getPersonalTimesheetQuery()->latest()->get();
     }
+
 
     public static function getAll()
     {
         return Cache::remember('Timesheet:timesheet_all', now()->addHours(4), function () {
-            return self::get();
+            return self::orderBy('created_at', 'desc')->get();
         });
     }
 

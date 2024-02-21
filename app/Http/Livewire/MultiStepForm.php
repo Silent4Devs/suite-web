@@ -128,12 +128,12 @@ class MultiStepForm extends Component
     public function render()
     {
         $evaluacion = new Evaluacion;
-        $areas = Area::all();
-        $empleados = Empleado::orderBy('name')->alta()->get();
-        $grupos_evaluados = GruposEvaluado::all();
+        $areas = Area::getAll();
+        $empleados = Empleado::getaltaAll();
+        $grupos_evaluados = GruposEvaluado::getAll();
 
         $competencias = Competencia::search($this->search)->simplePaginate($this->perPage);
-        $tipos = TipoCompetencia::select('id', 'nombre')->get();
+        $tipos = TipoCompetencia::getAll();
 
         return view('livewire.multi-step-form', ['evaluacion' => $evaluacion, 'areas' => $areas, 'empleados' => $empleados, 'grupos_evaluados' => $grupos_evaluados, 'competencias' => $competencias, 'tipos' => $tipos]);
     }
@@ -258,7 +258,7 @@ class MultiStepForm extends Component
         $this->sumaTotalPesoGeneral = 0;
         if ($this->includeCompetencias == null && $this->includeObjetivos == null) {
             $this->validate([
-                'nombre' => 'required|string',
+                'nombre' => 'required|string|max:250',
                 'descripcion' => 'nullable|string|max:1000',
                 'includeCompetencias' => 'accepted',
                 'includeObjetivos' => 'accepted',
@@ -270,7 +270,7 @@ class MultiStepForm extends Component
             if ($this->includeCompetencias && $this->includeObjetivos) {
                 $this->sumaTotalPesoGeneral = $this->pesoGeneralCompetencias + $this->pesoGeneralObjetivos;
                 $this->validate([
-                    'nombre' => 'required|string',
+                    'nombre' => 'required|string|max:250',
                     'descripcion' => 'nullable|string|max:1000',
                     'pesoGeneralCompetencias' => 'required|numeric',
                     'pesoGeneralObjetivos' => 'required|numeric',
@@ -281,10 +281,11 @@ class MultiStepForm extends Component
                 ]);
             } elseif ($this->includeCompetencias && $this->includeObjetivos == null) {
                 $this->sumaTotalPesoGeneral = $this->pesoGeneralCompetencias;
+                $this->pesoGeneralObjetivos = 0;
                 $this->validate([
-                    'nombre' => 'required|string',
+                    'nombre' => 'required|string|max:250',
                     'descripcion' => 'nullable|string|max:1000',
-                    'pesoGeneralCompetencias' => 'required|numeric',
+                    'pesoGeneralCompetencias' => 'required|numeric|min:100|max:100',
                     'sumaTotalPesoGeneral' => 'required|numeric|min:100|max:100',
                 ], [
                     'sumaTotalPesoGeneral.max' => 'El peso total debe de ser 100% el total actual es: ' . $this->sumaTotalPesoGeneral . '%',
@@ -292,10 +293,11 @@ class MultiStepForm extends Component
                 ]);
             } elseif ($this->includeCompetencias == null && $this->includeObjetivos) {
                 $this->sumaTotalPesoGeneral = $this->pesoGeneralObjetivos;
+                $this->pesoGeneralCompetencias = 0;
                 $this->validate([
-                    'nombre' => 'required|string',
+                    'nombre' => 'required|string|max:250',
                     'descripcion' => 'nullable|string|max:1000',
-                    'pesoGeneralObjetivos' => 'required|numeric',
+                    'pesoGeneralObjetivos' => 'required|numeric|min:100|max:100',
                     'sumaTotalPesoGeneral' => 'required|numeric|min:100|max:100',
                 ], [
                     'sumaTotalPesoGeneral.max' => 'El peso total debe de ser 100% el total actual es: ' . $this->sumaTotalPesoGeneral . '%',
@@ -685,12 +687,6 @@ class MultiStepForm extends Component
                                 'evaluador_id' => $evaluador['id'],
                                 'evaluacion_id' => $evaluacion->id,
                             ]);
-                            ObjetivoEmpleado::where('empleado_id', '=', $empleado->id)
-                                ->where('objetivo_id', '=', $objetivo->objetivo_id)
-                                ->where('en_curso', '=', true)
-                                ->update([
-                                    'evaluacion_id' => $evaluacion->id,
-                                ]);
                         }
                     }
                 }
@@ -718,7 +714,7 @@ class MultiStepForm extends Component
 
     public function enviarNotificacionAlEvaluador($email, $evaluacion, $evaluador, $evaluados)
     {
-        Mail::to(removeUnicodeCharacters($email))->send(new NotificacionEvaluador($evaluacion, $evaluador, $evaluados));
+        Mail::to(removeUnicodeCharacters($email))->queue(new NotificacionEvaluador($evaluacion, $evaluador, $evaluados));
     }
 
     public function obtenerEvaluadosConEvaluadores($evaluados_objetivo)

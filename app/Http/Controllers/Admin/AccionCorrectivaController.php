@@ -21,10 +21,10 @@ use App\Models\TimesheetCliente;
 use App\Models\TimesheetProyecto;
 use App\Models\Tipoactivo;
 use App\Models\User;
-use Flash;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use RealRashid\SweetAlert\Facades\Alert;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
@@ -127,12 +127,13 @@ class AccionCorrectivaController extends Controller
         $puestos = Puesto::getAll();
         $teams = Team::get();
 
-        $total_AC = AccionCorrectiva::get()->count();
-        $nuevos_AC = AccionCorrectiva::where('estatus', 'Sin atender')->get()->count();
-        $en_curso_AC = AccionCorrectiva::where('estatus', 'En curso')->get()->count();
-        $en_espera_AC = AccionCorrectiva::where('estatus', 'En espera')->get()->count();
-        $cerrados_AC = AccionCorrectiva::where('estatus', 'Cerrado')->get()->count();
-        $cancelados_AC = AccionCorrectiva::where('estatus', 'No procedente')->get()->count();
+        $query_ac = AccionCorrectiva::getAll();
+        $total_AC = $query_ac->count();
+        $nuevos_AC = $query_ac->where('estatus', 'Sin atender')->count();
+        $en_curso_AC = $query_ac->where('estatus', 'En curso')->count();
+        $en_espera_AC = $query_ac->where('estatus', 'En espera')->count();
+        $cerrados_AC = $query_ac->where('estatus', 'Cerrado')->count();
+        $cancelados_AC = $query_ac->where('estatus', 'No procedente')->count();
 
         return view('admin.accionCorrectivas.index', compact('total_AC', 'nuevos_AC', 'en_curso_AC', 'en_espera_AC', 'cerrados_AC', 'cancelados_AC', 'users', 'puestos', 'users', 'puestos', 'users', 'users', 'teams'));
     }
@@ -159,7 +160,7 @@ class AccionCorrectivaController extends Controller
         // dd($accionCorrectiva->quejasCliente);
 
         $quejasClientes = QuejasCliente::find($request->id_queja_cliente)->load('responsableSgi', 'registro', 'accionCorrectiva');
-        Mail::to(removeUnicodeCharacters($quejasClientes->registro->email))->cc($quejasClientes->responsableSgi->email)->send(new AprobacionAccionCorrectivaEmail($quejasClientes));
+        Mail::to(removeUnicodeCharacters($quejasClientes->registro->email))->cc($quejasClientes->responsableSgi->email)->queue(new AprobacionAccionCorrectivaEmail($quejasClientes));
 
         if ($esAprobada) {
             return response()->json(['success' => true, 'message' => 'Acción Correctiva Generada', 'aprobado' => true]);
@@ -187,7 +188,7 @@ class AccionCorrectivaController extends Controller
 
         $nombre_autorizas = $user->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $empleados = Empleado::alta()->with('area')->get();
+        $empleados = Empleado::getAltaEmpleadosWithArea();
 
         $areas = Area::getAll();
 
@@ -238,7 +239,7 @@ class AccionCorrectivaController extends Controller
              //$generar->Generate($request['pdf-value'], $request);
              $generar->Generate($request['pdf-value'], $accionCorrectiva);      */
 
-        Flash::success('Registro guardado exitosamente');
+        Alert::success('éxito', 'Información añadida con éxito');
 
         // return redirect('admin/plan-correctiva?param=' . $accionCorrectiva->id);
         return redirect()->route('admin.accion-correctivas.edit', $accionCorrectiva);
@@ -310,12 +311,12 @@ class AccionCorrectivaController extends Controller
 
         $accionCorrectiva->update($request->all());
         if ($request->input('documentometodo', false)) {
-            if (!$accionCorrectiva->documentometodo || $request->input('documentometodo') !== $accionCorrectiva->documentometodo->file_name) {
+            if (! $accionCorrectiva->documentometodo || $request->input('documentometodo') !== $accionCorrectiva->documentometodo->file_name) {
                 if ($accionCorrectiva->documentometodo) {
                     $accionCorrectiva->documentometodo->delete();
                 }
 
-                $accionCorrectiva->addMedia(storage_path('tmp/uploads/' . $request->input('documentometodo')))->toMediaCollection('documentometodo');
+                $accionCorrectiva->addMedia(storage_path('tmp/uploads/'.$request->input('documentometodo')))->toMediaCollection('documentometodo');
             }
         } elseif ($accionCorrectiva->documentometodo) {
             $accionCorrectiva->documentometodo->delete();
@@ -337,7 +338,7 @@ class AccionCorrectivaController extends Controller
         //     'accion_correctiva_id' => $accionCorrectiva->id,
         // ]);
 
-        Flash::success('Editado con éxito');
+        Alert::success('éxito', 'Editado con éxito');
 
         return redirect()->route('admin.accion-correctivas.index')->with('success', 'Editado con éxito');
     }
@@ -359,7 +360,7 @@ class AccionCorrectivaController extends Controller
 
         $accionCorrectiva->delete();
 
-        Flash::success('Registro eliminado exitosamente');
+        Alert::success('éxito', 'Registro eliminado con éxito');
 
         return back();
     }

@@ -1055,6 +1055,7 @@
 </body>
 
 <script src="{{ asset('js/app.js') }}"></script>
+
 <script src="https://unpkg.com/@coreui/coreui@3.4.0/dist/js/coreui.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"
     integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
@@ -1334,6 +1335,7 @@
                 },
                 data: {
                     term: $(this).val().toLowerCase()
+                    console.log(data);
                 },
                 beforeSend: function() {
                     $("#buscando").removeClass('d-none');
@@ -1341,6 +1343,7 @@
                 },
                 success: function(data) {
                     if (data.length == undefined) {
+                        console.log(data);
                         let filtro = "<ul class='list-group'>";
                         for (const [key, value] of Object.entries(data)) {
                             filtro += `

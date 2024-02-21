@@ -53,46 +53,49 @@
     </div>
 </div>
 
-<div class="datatable-fix" style="width: 100%;">
+<div class=" mb-3 text-right">
+    @can('centro_atencion_quejas_clientes_agregar')
+        <a class="btn btn-danger" href="{{ asset('admin/desk/quejas-clientes') }}">Crear reporte</a>
+    @endcan
 
-        <div class=" mb-3 text-right">
-            @can('centro_atencion_quejas_clientes_agregar')
-                <a class="btn btn-danger" href="{{ asset('admin/desk/quejas-clientes') }}">Crear reporte</a>
-            @endcan
-
-            @can('centro_atencion_quejas_cliente_dashboard')
-                <a class="btn btn-danger" href="{{ asset('admin/desk/quejas-clientes/dashboard') }}">Dashboard</a>
-            @endcan
-        </div>
-
-    <table class="table tabla_quejasclientes" id="tabla-procesos">
-        <thead>
-            <tr>
-                <th style="min-width:60px;">Folio</th>
-                <th style="min-width:200px;">Cliente</th>
-                <th style="min-width:200px;">Proyecto</th>
-                <th style="min-width:200px;">Nombre del Cliente</th>
-                <th style="min-width:200px;">Puesto</th>
-                <th style="min-width:200px;">Teléfono</th>
-                <th style="min-width:200px;">Correo</th>
-                <th style="min-width:200px;">Título de la Queja</th>
-                <th style="text-align:left !important;min-width:150px;">Fecha de Registro</th>
-                <th style="min-width:150px;">Fecha de Cierre</th>
-                <th style="min-width:200px;">Proceso</th>
-                <th style="min-width:200px;">Ubicación</th>
-                <th style="min-width:200px;">Otros</th>
-                <th style="min-width:500px;">Descripción</th>
-                <th style="min-width:80px;">Estatus</th>
-                <th>Prioridad</th>
-                <th style="min-width:150px;">Acción Correctiva</th>
-                <th>Opciones</th>
-            </tr>
-        </thead>
-        <tbody>
-
-        </tbody>
-    </table>
+    @can('centro_atencion_quejas_cliente_dashboard')
+        <a class="btn btn-danger" href="{{ asset('admin/desk/quejas-clientes/dashboard') }}">Dashboard</a>
+    @endcan
 </div>
+
+         @include('partials.flashMessages')
+            <div class="datatable-fix datatable-rds">
+                     <table class="datatable tabla_quejasclientes" id="tabla-procesos" style="border-collapse: separate; border-spacing: 0; border-radius: 10px;">
+                        <thead>
+                            <tr>
+                                <th style="min-width:60px;">Folio</th>
+                                <th style="min-width:200px;">Cliente</th>
+                                <th style="min-width:200px;">Proyecto</th>
+                                <th style="min-width:200px;">Nombre del Cliente</th>
+                                <th style="min-width:200px;">Puesto</th>
+                                <th style="min-width:200px;">Teléfono</th>
+                                <th style="min-width:200px;">Correo</th>
+                                <th style="min-width:200px;">Título de la Queja</th>
+                                <th style="text-align:left !important;min-width:150px;">Fecha de Registro</th>
+                                <th style="min-width:150px;">Fecha de Cierre</th>
+                                <th style="min-width:200px;">Proceso</th>
+                                <th style="min-width:200px;">Ubicación</th>
+                                <th style="min-width:200px;">Otros</th>
+                                <th style="min-width:500px;">Descripción</th>
+                                <th style="min-width:80px;">Estatus</th>
+                                <th>Prioridad</th>
+                                <th style="min-width:150px;">Acción Correctiva</th>
+                                <th>Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                </table>
+            </div>
+
+
+
 
 
 @section('scripts')
