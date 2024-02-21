@@ -273,7 +273,7 @@ header {
 
 
 .card.vrd-agua {
-    border-radius: 100px !important;
+    border-radius: 100px ;
     overflow: hidden;
 }
 
@@ -1154,7 +1154,7 @@ table.dataTable thead>tr>td.sorting_desc_disabled:before {
 
 .anima-focus .form-control {
     background-color: #00000000;
-    z-index: 2;
+    /* z-index: 2; */
 }
 
 .anima-focus .form-control:not(textarea) {
@@ -1318,4 +1318,11 @@ a {
     width: 100%;
     max-width: 1750px;
     margin: auto;
+}
+
+.vrd-agua{
+    border: none;
+    border-bottom: 1px solid #006DDB;
+    color: #006DDB;
+    border-radius: 0px !important;
 }
