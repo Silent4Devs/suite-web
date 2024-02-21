@@ -97,8 +97,12 @@ class TimesheetProyectoEmpleadosComponent extends Component
     public function addEmpleado()
     {
 
-
         $empleado_add_proyecto = Empleado::where('estatus', 'alta')->where('id', intval($this->empleado_añadido))->first();
+
+        if (!$empleado_add_proyecto) {
+            return redirect()->route('admin.timesheet-proyecto-empleados', ['proyecto_id' => intval($this->proyecto_id)])
+                ->with('error', 'El registro fue eliminado');
+        }
 
         if ($this->proyecto->tipo == 'Externo') {
             if (isset($this->horas_asignadas) && isset($this->costo_hora)) {
