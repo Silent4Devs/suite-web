@@ -2,7 +2,7 @@
 
 @section('content')
 @section('titulo', 'Firmar Requisicion')
-<link rel="stylesheet" href="{{ asset('css/requisiciones.css') }}">
+<link rel="stylesheet" href="{{ asset('css/requisiciones.css') }}{{config('app.cssVersion')}}">
 
 <div class="card card-content caja-blue">
 

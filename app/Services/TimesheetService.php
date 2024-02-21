@@ -2,6 +2,10 @@
 
 namespace App\Services;
 
+use App\Models\Area;
+use App\Models\Empleado;
+use App\Models\Timesheet;
+use App\Models\TimesheetProyecto;
 use App\Repos\AreaRepo;
 use App\Repos\EmpleadoRepo;
 use App\Repos\TimesheetHorasRepo;
@@ -25,12 +29,13 @@ class TimesheetService
 
     public function __construct(TimesheetsRepo $timesheetRepo, AreaRepo $areaRepo, EmpleadoRepo $empleadoRepo, Carbon $carbon, TimesheetProyectoRepo $timesheetProyectoRepo, TimesheetHorasRepo $timesheetHorasRepo)
     {
-        $this->timesheetRepo = $timesheetRepo;
-        $this->areaRepo = $areaRepo;
-        $this->empleadoRepo = $empleadoRepo;
+        // $this->timesheetRepo = $timesheetRepo;
+        // $this->areaRepo = $areaRepo;
+        $this->empleadoRepo = Empleado::getAltaDataColumns();
         $this->carbon = $carbon;
-        $this->timesheetProyectoRepo = $timesheetProyectoRepo;
-        $this->timesheetHorasRepo = $timesheetHorasRepo;
+        // $this->timesheetProyectoRepo = $timesheetProyectoRepo;
+        // $this->timesheetHorasRepo = $timesheetHorasRepo;
+        // dd($this->empleadoRepo->count());
     }
 
     /**
@@ -38,7 +43,8 @@ class TimesheetService
      */
     public function totalCounters(): array
     {
-        $counters = $this->timesheetRepo->find(['estatus']);
+        // $counters = $this->timesheetRepo->find(['estatus']);
+        $counters = Timesheet::getAllEstatus();
         $papelera = 0;
         $pendiente = 0;
         $rechazado = 0;
@@ -72,7 +78,8 @@ class TimesheetService
     public function totalRegisterByAreas(): array
     {
         $array = [];
-        $areas = $this->areaRepo->find(['id', 'area']);
+        // $areas = $this->areaRepo->find(['id', 'area']);
+        $areas = Area::getIdNameAll();
         $participacion_total = 0;
         $hoy = $this->carbon->now();
         $semanas_del_mes = intval(($hoy->format('d') * 4) / 29);
@@ -172,7 +179,8 @@ class TimesheetService
     public function getRegistersByProyects(): array
     {
         // Obtenemos la lista de los proyectos
-        $proyectos = $this->timesheetProyectoRepo->find(['id', 'proyecto', 'estatus']);
+        // $proyectos = $this->timesheetProyectoRepo->find(['id', 'proyecto', 'estatus']);
+        $proyectos = TimesheetProyecto::getAllDashboard();
         $proyectos_array = [];
         $cancelados = 0;
         $terminados = 0;

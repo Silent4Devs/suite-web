@@ -248,4 +248,6 @@ return [
         'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
     ],
 
+    // css version
+    'cssVersion' => '?v=1.1.2.1',
 ];

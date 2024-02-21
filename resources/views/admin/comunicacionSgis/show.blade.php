@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
 @section('styles')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/print_foda.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/print_foda.css') }}{{config('app.cssVersion')}}">
 
     <style type="text/css">
         .img_comunicado {

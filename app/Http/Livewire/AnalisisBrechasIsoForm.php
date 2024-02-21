@@ -68,18 +68,17 @@ class AnalisisBrechasIsoForm extends Component
             'name.max' => 'El campo nombre no debe ser mayor a 255 caracteres',
         ]);
         if ($this->selectedCard) {
-            // $template_general = TemplateAnalisisdeBrechas::with('parametros')
-            // ->with('secciones')
-            // ->find($this->selectedCard);
-            // dd($template_general);
+
             $this->evaluacion();
 
             $this->resetInput();
             $this->emit('limpiarNameInput');
 
-            return;
+            return redirect('admin/analisisdebrechas-2022/create');
         } else {
             $this->emit('selectedCardAlert');
+
+            return redirect('admin/analisisdebrechas-2022/create');
         }
     }
 
@@ -130,6 +129,8 @@ class AnalisisBrechasIsoForm extends Component
     public function destroy($id)
     {
         AnalisisBrechasIso::destroy($id);
+
+        return redirect('admin/analisisdebrechas-2022/create');
     }
 
     public function evaluacion()

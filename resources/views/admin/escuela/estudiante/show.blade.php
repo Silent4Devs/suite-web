@@ -127,8 +127,16 @@
                 <div class="mb-4 card shadow-sm ">
                     <div class="card-body">
                         <div class="flex items-center">
+                            @php
+                            $instructor = App\Models\User::find($course->empleado_id);
+                            @endphp
                             <div class="ml-4">
-                                <h4 class="">Instructor: {{ $course->teacher->name }}</h4>
+                                @if($instructor)
+                                   <h4 class="">Instructor: {{ $instructor->name }}</h4>
+                                @else
+                                    <h4 class="">Instructor: No disponible</h4>
+                                @endif
+
                             </div>
                         </div>
                         <div class="d-flex justify-content-center">

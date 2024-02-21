@@ -33,7 +33,7 @@ class Ev360EvaluadosSelect extends Component
 
     public function render()
     {
-        $grupos_evaluados = GruposEvaluado::get();
+        $grupos_evaluados = GruposEvaluado::getAll();
         $empleados = Empleado::getaltaAll();
         $areas = Area::getAll();
 

@@ -15,6 +15,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
@@ -228,6 +229,12 @@ class FacturaComponent extends Component
                 $fecha_liberacion_formateada = $this->fecha_liberacion;
             }
 
+            if (strlen($this->concepto) >= 255 || strlen($this->hallazgos_comentarios) >= 255 || strlen($this->conformidad) >= 255) {
+                $mensajeError = 'Intentelo de nuevo, no exceda los 255 caracteres';
+
+                return Redirect::back()->with('mensajeError', $mensajeError);
+            }
+
             $factura = Factura::create([
                 'contrato_id' => $this->contrato_id,
                 'no_factura' => $this->no_factura,
@@ -242,8 +249,6 @@ class FacturaComponent extends Component
                 'monto_factura' => $monto_factura,
                 'hallazgos_comentarios' => $this->hallazgos_comentarios,
                 'estatus' => $this->estatus,
-                // 'created_by' => auth()->user()->empleado->id,
-                // 'updated_by' => auth()->user()->empleado->id,
             ]);
 
             $date = Carbon::now();

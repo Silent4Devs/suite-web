@@ -40,7 +40,7 @@ class EV360ObjetivosController extends Controller
         //     $empleados,
         //     $isAdmin
         // );
-        if ($usuario->empleado->children->count() > 0 && !$isAdmin) {
+        if ($usuario->empleado->children->count() > 0 && ! $isAdmin) {
             // dd('Caso 1');
             $empleados = $usuario->empleado->children;
 
@@ -81,29 +81,50 @@ class EV360ObjetivosController extends Controller
 
     public function createByEmpleado(Request $request, $empleado)
     {
-        abort_if(Gate::denies('objetivos_estrategicos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $objetivo = new Objetivo;
-        // dd(intval($empleado));
-        $empleado = Empleado::select('id', 'name', 'foto', 'area_id', 'puesto_id', 'supervisor_id')->find(intval($empleado));
-        // dd($empleado);
-        $empleado->load(['objetivos' => function ($q) {
-            $q->with(['objetivo' => function ($query) {
-                $query->with(['tipo', 'metrica']);
+        if (User::getCurrentUser()->empleado->id == $empleado) {
+            $objetivo = new Objetivo;
+            // dd(intval($empleado));
+            $empleado = Empleado::select('id', 'name', 'foto', 'area_id', 'puesto_id', 'supervisor_id')->find(intval($empleado));
+            // dd($empleado);
+            $empleado->load(['objetivos' => function ($q) {
+                $q->with(['objetivo' => function ($query) {
+                    $query->with(['tipo', 'metrica']);
+                }]);
             }]);
-        }]);
-        if ($request->ajax()) {
-            $objetivos = $empleado->objetivos ? $empleado->objetivos : collect();
+            if ($request->ajax()) {
+                $objetivos = $empleado->objetivos ? $empleado->objetivos : collect();
 
-            return datatables()->of($objetivos)->toJson();
+                return datatables()->of($objetivos)->toJson();
+            }
+            $tipo_seleccionado = null;
+            $metrica_seleccionada = null;
+
+            $empleados = Empleado::getAltaDataColumns();
+
+            return view('admin.recursos-humanos.evaluacion-360.objetivos.create-by-empleado', compact('objetivo', 'tipo_seleccionado', 'metrica_seleccionada', 'empleado', 'empleados'));
+        } else {
+            abort_if(Gate::denies('objetivos_estrategicos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            $objetivo = new Objetivo;
+            // dd(intval($empleado));
+            $empleado = Empleado::select('id', 'name', 'foto', 'area_id', 'puesto_id', 'supervisor_id')->find(intval($empleado));
+            // dd($empleado);
+            $empleado->load(['objetivos' => function ($q) {
+                $q->with(['objetivo' => function ($query) {
+                    $query->with(['tipo', 'metrica']);
+                }]);
+            }]);
+            if ($request->ajax()) {
+                $objetivos = $empleado->objetivos ? $empleado->objetivos : collect();
+
+                return datatables()->of($objetivos)->toJson();
+            }
+            $tipo_seleccionado = null;
+            $metrica_seleccionada = null;
+
+            $empleados = Empleado::getAltaDataColumns();
+
+            return view('admin.recursos-humanos.evaluacion-360.objetivos.create-by-empleado', compact('objetivo', 'tipo_seleccionado', 'metrica_seleccionada', 'empleado', 'empleados'));
         }
-        $tipo_seleccionado = null;
-        $metrica_seleccionada = null;
-        // if ($request->ajax()) {
-        // }
-
-        $empleados = Empleado::getAltaDataColumns();
-
-        return view('admin.recursos-humanos.evaluacion-360.objetivos.create-by-empleado', compact('objetivo', 'tipo_seleccionado', 'metrica_seleccionada', 'empleado', 'empleados'));
     }
 
     public function storeByEmpleado(Request $request, $empleado)
@@ -136,8 +157,8 @@ class EV360ObjetivosController extends Controller
             if ($request->hasFile('foto')) {
                 Storage::makeDirectory('public/objetivos/img'); //Crear si no existe
                 $extension = pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_EXTENSION);
-                $nombre_imagen = 'OBJETIVO_' . $objetivo->id . '_' . $objetivo->nombre . 'EMPLEADO_' . $empleado->id . '.' . $extension;
-                $route = storage_path() . '/app/public/objetivos/img/' . $nombre_imagen;
+                $nombre_imagen = 'OBJETIVO_'.$objetivo->id.'_'.$objetivo->nombre.'EMPLEADO_'.$empleado->id.'.'.$extension;
+                $route = storage_path().'/app/public/objetivos/img/'.$nombre_imagen;
                 //Usamos image_intervention para disminuir el peso de la imagen
                 $img_intervention = Image::make($request->file('foto'));
                 $img_intervention->resize(720, null, function ($constraint) {
@@ -339,8 +360,8 @@ class EV360ObjetivosController extends Controller
         if ($request->hasFile('foto')) {
             Storage::makeDirectory('public/objetivos/img'); //Crear si no existe
             $extension = pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_EXTENSION);
-            $nombre_imagen = 'OBJETIVO_' . $objetivo->id . '_' . $objetivo->nombre . 'EMPLEADO_' . $objetivo->empleado_id . '.' . $extension;
-            $route = storage_path() . '/app/public/objetivos/img/' . $nombre_imagen;
+            $nombre_imagen = 'OBJETIVO_'.$objetivo->id.'_'.$objetivo->nombre.'EMPLEADO_'.$objetivo->empleado_id.'.'.$extension;
+            $route = storage_path().'/app/public/objetivos/img/'.$nombre_imagen;
             //Usamos image_intervention para disminuir el peso de la imagen
             $img_intervention = Image::make($request->file('foto'));
             $img_intervention->resize(720, null, function ($constraint) {

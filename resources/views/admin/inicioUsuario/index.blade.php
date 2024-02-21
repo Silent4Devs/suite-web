@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/inicio_usuario.css') }}?v=1.2">
+    <link rel="stylesheet" href="{{ asset('css/inicio_usuario.css') }}{{ config('app.cssVersion') }}">
 @endsection
 @section('content')
     @include('partials.menu-slider')

@@ -109,13 +109,21 @@ class SolicitudPermisoGoceSueldoController extends Controller
         $solicitante = $empleados->find($request->empleado_id);
         $solicitud = SolicitudPermisoGoceSueldo::create($request->all());
 
-        $informados = ListaInformativa::with('participantes.empleado')->where('modelo', '=', $this->modelo)->first();
+        $informados = ListaInformativa::with('participantes.empleado', 'usuarios.usuario')->where('modelo', '=', $this->modelo)->first();
 
-        if (isset($informados->participantes[0])) {
-            foreach ($informados->participantes as $participante) {
-                $correos[] = $participante->empleado->email;
+        if (isset($informados->participantes[0]) || isset($informados->usuarios[0])) {
+
+            if (isset($informados->participantes[0])) {
+                foreach ($informados->participantes as $participante) {
+                    $correos[] = $participante->empleado->email;
+                }
             }
 
+            if (isset($informados->usuarios[0])) {
+                foreach ($informados->usuarios as $usuario) {
+                    $correos[] = $usuario->usuario->email;
+                }
+            }
             Mail::to(removeUnicodeCharacters($supervisor->email))->queue(new MailSolicitudPermisoGoceSueldo($solicitante, $supervisor, $solicitud, $correos));
         } else {
             Mail::to(removeUnicodeCharacters($supervisor->email))->queue(new MailSolicitudPermisoGoceSueldo($solicitante, $supervisor, $solicitud));
@@ -169,13 +177,21 @@ class SolicitudPermisoGoceSueldoController extends Controller
         $solicitante = $empleados->find($request->empleado_id);
         $solicitud->update($request->all());
 
-        $informados = ListaInformativa::with('participantes.empleado')->where('modelo', '=', $this->modelo)->first();
+        $informados = ListaInformativa::with('participantes.empleado', 'usuarios.usuario')->where('modelo', '=', $this->modelo)->first();
 
-        if (isset($informados->participantes[0])) {
-            foreach ($informados->participantes as $participante) {
-                $correos[] = $participante->empleado->email;
+        if (isset($informados->participantes[0]) || isset($informados->usuarios[0])) {
+
+            if (isset($informados->participantes[0])) {
+                foreach ($informados->participantes as $participante) {
+                    $correos[] = $participante->empleado->email;
+                }
             }
 
+            if (isset($informados->usuarios[0])) {
+                foreach ($informados->usuarios as $usuario) {
+                    $correos[] = $usuario->usuario->email;
+                }
+            }
             Mail::to(removeUnicodeCharacters($solicitante->email))->queue(new MailRespuestaPermisoGoceSueldo($solicitante, $supervisor, $solicitud, $correos));
         } else {
             Mail::to(removeUnicodeCharacters($solicitante->email))->queue(new MailRespuestaPermisoGoceSueldo($solicitante, $supervisor, $solicitud));

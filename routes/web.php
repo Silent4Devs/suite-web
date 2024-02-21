@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\EmpleadoController;
 use App\Http\Controllers\Admin\Escuela\CapacitacionesController;
 use App\Http\Controllers\Admin\GrupoAreaController;
 use App\Http\Controllers\Admin\InicioUsuarioController;
+use App\Http\Controllers\Admin\PortalComunicacionController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\QueueCorreo;
 use App\Http\Controllers\UsuarioBloqueado;
@@ -43,7 +44,7 @@ Auth::routes();
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'active']], function () {
 
     Route::get('inicioUsuario', [InicioUsuarioController::class, 'index'])->name('inicio-Usuario.index');
-    Route::get('/', [InicioUsuarioController::class, 'index']);
+    Route::get('/', [PortalComunicacionController::class, 'index']);
     Route::get('/home', [InicioUsuarioController::class, 'index'])->name('home');
     //log-viewer
     //Route::get('log-viewer', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->name('log-viewer');
@@ -440,7 +441,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             'index' => 'ev360-objetivos.index',
             'destroy' => 'ev360-objetivos.destroy',
         ])->except(['show']);
-        Route::resource('recursos-humanos/evaluacion-360/objetivos/rangos', 'RH\CatalogoRangosObjetivosController');
 
         Route::get('Perspectiva/edit/{perspectivas}', 'RH\ObejetivoPerspectivaController@edit')->name('perspectivas.edit');
         Route::resource('Perspectiva', 'RH\ObejetivoPerspectivaController', ['except' => ['edit']]);
@@ -451,7 +451,24 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::view('iso27001', 'admin.iso27001.index')->name('iso27001.index');
         Route::view('iso27001/guia', 'admin.iso27001.guia')->name('iso27001.guia');
         Route::view('iso27001/normas-guia', 'admin.iso27001.normas-guia')->name('iso27001.normas-guia');
-        Route::view('iso27001/inicio-guia', 'admin.iso27001.inicio-guia')->name('iso27001.inicio-guia');
+
+        Route::get('recursos-humanos/evaluacion-360/objetivos-periodo/configuracion', 'RH\ObjetivosPeriodoController@config')->name('ev360-objetivos-periodo.config');
+
+        // Definición de la ruta
+        Route::get('iso27001/inicio-guia', function () {
+            // Verifica si la sesión 'visited_first_link' está definida
+            if (session()->has('visited_first_link')) {
+                // Si ya se ha visitado el primer enlace, redirige a la tercera ruta
+                return redirect()->route('admin.iso27001.guia');
+            } else {
+                // Si es la primera vez que se accede, establece la sesión 'visited_first_link'
+                session(['visited_first_link' => true]);
+
+                // Retorna la vista del primer enlace
+                return view('admin.iso27001.inicio-guia');
+            }
+        })->name('iso27001.inicio-guia');
+
         Route::view('iso27001M', 'admin.iso27001M.index')->name('iso27001M.index');
         Route::view('iso9001', 'admin.iso9001.index')->name('iso9001.index');
         Route::view('contratos', 'admin.contratos.index')->name('contratos.index');
@@ -785,7 +802,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::resource('macroprocesos', 'MacroprocesoController');
 
         // Timesheet
-        Route::get('timesheet', 'TimesheetController@index')->name('timesheet');
+        Route::get('timesheet/', 'TimesheetController@index')->name('timesheet');
+        Route::get('timesheet/mis-registros/{estatus?}', 'TimesheetController@misRegistros')->name('timesheet-mis-registros');
         Route::get('timesheet/show/{id}', 'TimesheetController@show')->name('timesheet-show');
         Route::get('timesheet/create-copia/{id}', 'TimesheetController@createCopia')->name('timesheet-create-copia');
         Route::get('timesheet/edit/{id}', 'TimesheetController@edit')->name('timesheet-edit');

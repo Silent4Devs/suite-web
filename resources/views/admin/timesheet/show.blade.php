@@ -1,16 +1,23 @@
 @extends('layouts.admin')
 @section('content')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}{{config('app.cssVersion')}}">
     @php
         use App\Models\Organizacion;
     @endphp
-
     {{ Breadcrumbs::render('timesheet-create') }}
 
-
-
-    <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">
-            {!! $timesheet->semana !!} | <font style="font-weight:lighter;">{{ $timesheet->empleado->name }}</font>
+    {{-- @include('admin.timesheet.complementos.cards') --}}
+    @include('admin.timesheet.complementos.admin-aprob')
+    {{-- @include('admin.timesheet.complementos.blue-card-header') --}}
+    
+    <h5 class="col-12 titulo_general_funcion">Timesheet: <font style="font-weight:lighter;">
+            @if (isset($timesheet->semana))
+                {!! $timesheet->semana !!} |
+            @endif | <font style="font-weight:lighter;">
+                @if (isset($timesheet->empleado->name))
+                    {{ $timesheet->empleado->name }}
+                @endif
+            </font>
     </h5>
 
     <div class="card card-body">
@@ -19,12 +26,12 @@
                 <div class="col-12 d-flex justify-content-between mb-4">
                     <div class=""><strong>Fecha: </strong>
                         {{ \Carbon\Carbon::parse($timesheet->fecha_dia)->format('d/m/Y') }}</div>
-                        <form method="POST" action="{{ route('admin.timesheet.pdf', ['id' => $timesheet->id]) }}">
+                    <form method="POST" action="{{ route('admin.timesheet.pdf', ['id' => $timesheet->id]) }}">
                         @csrf
                         <button class="boton-transparentev2" type="submit" style="color: #306BA9;">
                             IMPRIMIR <img src="{{ asset('imprimir.svg') }}" alt="Importar" class="icon">
                         </button>
-                       </form>
+                    </form>
                 </div>
                 <div id="content_times_show_print" class="w-100">
                     @php
@@ -39,6 +46,7 @@
                         @page {
                             size: landscape;
                         }
+
                         .boton-transparentev2 {
                             top: 214px;
                             width: 135px;
@@ -104,7 +112,8 @@
                             @foreach ($horas as $index => $hora)
                                 <tr>
                                     <td>
-                                        <div class="form-control" style="height:unset;">{{ $hora->proyecto->identificador }}
+                                        <div class="form-control" style="height:unset;">
+                                            {{ $hora->proyecto->identificador }}
                                             -
                                             {{ $hora->proyecto->proyecto }}
                                         </div>
@@ -194,7 +203,7 @@
             @if (asset('admin/timesheet/aprobaciones') ==
                     redirect()->getUrlGenerator()->previous())
                 <div class="col-12 d-flex justify-content-between">
-                    <a href="{{ route('admin.timesheet-inicio') }}" class="btn_cancelar">Regresar</a>
+                    <a href="{{ route('admin.timesheet-create') }}" class="btn_cancelar">Regresar</a>
                     <div class="">
                         <button title="Rechazar" class="btn btn-info" style="background-color:#F05353; border: none;"
                             data-toggle="modal" data-target="#modal_rechazar_{{ $timesheet->id }}">

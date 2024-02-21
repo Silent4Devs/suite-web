@@ -15,6 +15,7 @@ use Gate;
 use Illuminate\Auth\Access\Gate as AccessGate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use Maatwebsite\Excel\Facades\Excel;
@@ -118,21 +119,27 @@ class AreasController extends Controller
         $area = Area::create($request->all());
 
         $image = null;
-        if ($request->file('foto_area') != null or ! empty($request->file('foto_area'))) {
-            $extension = pathinfo($request->file('foto_area')->getClientOriginalName(), PATHINFO_EXTENSION);
-            $name_image = basename(pathinfo($request->file('foto_area')->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
+
+        if ($request->hasFile('foto_area')) {
+            $file = $request->file('foto_area');
+            $extension = $file->getClientOriginalExtension();
+            $name_image = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
             $new_name_image = 'UID_'.$area->id.'_'.$name_image.'.'.$extension;
-            $route = storage_path().'/app/public/areas/'.$new_name_image;
-            $image = $new_name_image;
-            //Usamos image_intervention para disminuir el peso de la imagen
-            $img_intervention = Image::make($request->file('foto_area'));
-            $img_intervention->resize(256, null, function ($constraint) {
+            $route = storage_path('/app/public/areas/'.$new_name_image);
+
+            $image = Image::make($file)->encode('png', 70)->resize(256, null, function ($constraint) {
                 $constraint->aspectRatio();
-            })->save($route);
+            });
+
+            $image->save($route);
+        } else {
+            $mensajeError = 'Intentelo de nuevo, Ingrese  todos los campos';
+
+            return Redirect::back()->with('mensajeError', $mensajeError);
         }
 
         $area->update([
-            'foto_area' => $image,
+            'foto_area' => $new_name_image,
         ]);
 
         return redirect()->route('admin.areas.index')->with('success', 'Guardado con éxito');
@@ -174,25 +181,26 @@ class AreasController extends Controller
         ]);
 
         $image = $area->foto_area;
-        if ($request->file('foto_area') != null or ! empty($request->file('foto_area'))) {
-            //Si existe la imagen entonces se elimina al editarla
 
-            $isExists = Storage::disk('public')->exists('/app/public/areas/'.$area->foto_area);
-            if ($isExists) {
-                if ($area->foto_area != null) {
-                    unlink(storage_path('/app/public/areas/'.$area->foto_area));
-                }
+        if ($request->hasFile('foto_area')) {
+            //Si existe la imagen entonces se elimina al editarla
+            $file = $request->file('foto_area');
+
+            $filePath = '/app/public/areas/'.$area->foto_area;
+
+            if (Storage::disk('public')->exists($filePath)) {
+                Storage::disk('public')->delete($filePath);
             }
-            $extension = pathinfo($request->file('foto_area')->getClientOriginalName(), PATHINFO_EXTENSION);
-            $name_image = basename(pathinfo($request->file('foto_area')->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
+
+            $extension = $file->getClientOriginalExtension();
+            $name_image = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
             $new_name_image = 'UID_'.$area->id.'_'.$name_image.'.'.$extension;
-            $route = storage_path().'/app/public/areas/'.$new_name_image;
-            $image = $new_name_image;
-            //Usamos image_intervention para disminuir el peso de la imagen
-            $img_intervention = Image::make($request->file('foto_area'));
-            $img_intervention->resize(256, null, function ($constraint) {
+            $route = storage_path('/app/public/areas/'.$new_name_image);
+            $image = Image::make($file)->encode('png', 70)->resize(256, null, function ($constraint) {
                 $constraint->aspectRatio();
-            })->save($route);
+            });
+
+            $image->save($route);
         }
 
         $area->update([
@@ -201,7 +209,7 @@ class AreasController extends Controller
             'id_reporta' => $request->id_reporta,
             'descripcion' => $request->descripcion,
             'empleados_id' => $request->empleados_id,
-            'foto_area' => $image,
+            'foto_area' => $new_name_image,
 
         ]);
 
@@ -267,7 +275,6 @@ class AreasController extends Controller
         $areasTree = Area::with(['lider', 'supervisor.children', 'supervisor.supervisor', 'grupo', 'children.supervisor', 'children.children'])->whereNull('id_reporta')->first(); //Eager loading
 
         return json_encode($areasTree);
-        // dd($areasTree);
     }
 
     public function exportTo()

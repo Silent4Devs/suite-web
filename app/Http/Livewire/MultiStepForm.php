@@ -5,9 +5,7 @@ namespace App\Http\Livewire;
 use App\Mail\RH\Evaluaciones\NotificacionEvaluador;
 use App\Models\Area;
 use App\Models\Empleado;
-use App\Models\RH\CatalogoRangosObjetivos;
 use App\Models\RH\Competencia;
-use App\Models\RH\Ev360ParametrosObjetivos;
 use App\Models\RH\Evaluacion;
 use App\Models\RH\EvaluacionCompetencia;
 use App\Models\RH\EvaluacionObjetivo;
@@ -60,8 +58,6 @@ class MultiStepForm extends Component
     public $pesoGeneralObjetivos = 50;
 
     public $sumaTotalPesoGeneral;
-
-    public $catalogoObjetivos = '';
     // public $description;
 
     //STEP 2
@@ -132,15 +128,14 @@ class MultiStepForm extends Component
     public function render()
     {
         $evaluacion = new Evaluacion;
-        $areas = Area::all();
-        $empleados = Empleado::orderBy('name')->alta()->get();
-        $grupos_evaluados = GruposEvaluado::all();
-        $catalogo_rangos_objetivos = CatalogoRangosObjetivos::get();
+        $areas = Area::getAll();
+        $empleados = Empleado::getaltaAll();
+        $grupos_evaluados = GruposEvaluado::getAll();
 
         $competencias = Competencia::search($this->search)->simplePaginate($this->perPage);
-        $tipos = TipoCompetencia::select('id', 'nombre')->get();
+        $tipos = TipoCompetencia::getAll();
 
-        return view('livewire.multi-step-form', ['evaluacion' => $evaluacion, 'areas' => $areas, 'empleados' => $empleados, 'grupos_evaluados' => $grupos_evaluados, 'competencias' => $competencias, 'tipos' => $tipos, 'catalogo_rangos_objetivos' => $catalogo_rangos_objetivos]);
+        return view('livewire.multi-step-form', ['evaluacion' => $evaluacion, 'areas' => $areas, 'empleados' => $empleados, 'grupos_evaluados' => $grupos_evaluados, 'competencias' => $competencias, 'tipos' => $tipos]);
     }
 
     public function habilitarSelectAlternativo()
@@ -263,7 +258,7 @@ class MultiStepForm extends Component
         $this->sumaTotalPesoGeneral = 0;
         if ($this->includeCompetencias == null && $this->includeObjetivos == null) {
             $this->validate([
-                'nombre' => 'required|string',
+                'nombre' => 'required|string|max:250',
                 'descripcion' => 'nullable|string|max:1000',
                 'includeCompetencias' => 'accepted',
                 'includeObjetivos' => 'accepted',
@@ -275,38 +270,38 @@ class MultiStepForm extends Component
             if ($this->includeCompetencias && $this->includeObjetivos) {
                 $this->sumaTotalPesoGeneral = $this->pesoGeneralCompetencias + $this->pesoGeneralObjetivos;
                 $this->validate([
-                    'nombre' => 'required|string',
+                    'nombre' => 'required|string|max:250',
                     'descripcion' => 'nullable|string|max:1000',
                     'pesoGeneralCompetencias' => 'required|numeric',
                     'pesoGeneralObjetivos' => 'required|numeric',
-                    'catalogoObjetivos' => 'required|numeric',
                     'sumaTotalPesoGeneral' => 'required|numeric|min:100|max:100',
                 ], [
-                    'sumaTotalPesoGeneral.max' => 'El peso total debe de ser 100% el total actual es: ' . $this->sumaTotalPesoGeneral . '%',
-                    'sumaTotalPesoGeneral.min' => 'El peso total debe de ser 100% el total actual es: ' . $this->sumaTotalPesoGeneral . '%',
+                    'sumaTotalPesoGeneral.max' => 'El peso total debe de ser 100% el total actual es: '.$this->sumaTotalPesoGeneral.'%',
+                    'sumaTotalPesoGeneral.min' => 'El peso total debe de ser 100% el total actual es: '.$this->sumaTotalPesoGeneral.'%',
                 ]);
             } elseif ($this->includeCompetencias && $this->includeObjetivos == null) {
                 $this->sumaTotalPesoGeneral = $this->pesoGeneralCompetencias;
+                $this->pesoGeneralObjetivos = 0;
                 $this->validate([
-                    'nombre' => 'required|string',
+                    'nombre' => 'required|string|max:250',
                     'descripcion' => 'nullable|string|max:1000',
-                    'pesoGeneralCompetencias' => 'required|numeric',
+                    'pesoGeneralCompetencias' => 'required|numeric|min:100|max:100',
                     'sumaTotalPesoGeneral' => 'required|numeric|min:100|max:100',
                 ], [
-                    'sumaTotalPesoGeneral.max' => 'El peso total debe de ser 100% el total actual es: ' . $this->sumaTotalPesoGeneral . '%',
-                    'sumaTotalPesoGeneral.min' => 'El peso total debe de ser 100% el total actual es: ' . $this->sumaTotalPesoGeneral . '%',
+                    'sumaTotalPesoGeneral.max' => 'El peso total debe de ser 100% el total actual es: '.$this->sumaTotalPesoGeneral.'%',
+                    'sumaTotalPesoGeneral.min' => 'El peso total debe de ser 100% el total actual es: '.$this->sumaTotalPesoGeneral.'%',
                 ]);
             } elseif ($this->includeCompetencias == null && $this->includeObjetivos) {
                 $this->sumaTotalPesoGeneral = $this->pesoGeneralObjetivos;
+                $this->pesoGeneralCompetencias = 0;
                 $this->validate([
-                    'nombre' => 'required|string',
+                    'nombre' => 'required|string|max:250',
                     'descripcion' => 'nullable|string|max:1000',
-                    'pesoGeneralObjetivos' => 'required|numeric',
-                    'catalogoObjetivos' => 'required|numeric',
+                    'pesoGeneralObjetivos' => 'required|numeric|min:100|max:100',
                     'sumaTotalPesoGeneral' => 'required|numeric|min:100|max:100',
                 ], [
-                    'sumaTotalPesoGeneral.max' => 'El peso total debe de ser 100% el total actual es: ' . $this->sumaTotalPesoGeneral . '%',
-                    'sumaTotalPesoGeneral.min' => 'El peso total debe de ser 100% el total actual es: ' . $this->sumaTotalPesoGeneral . '%',
+                    'sumaTotalPesoGeneral.max' => 'El peso total debe de ser 100% el total actual es: '.$this->sumaTotalPesoGeneral.'%',
+                    'sumaTotalPesoGeneral.min' => 'El peso total debe de ser 100% el total actual es: '.$this->sumaTotalPesoGeneral.'%',
                 ]);
             }
         }
@@ -411,8 +406,8 @@ class MultiStepForm extends Component
         $this->validate([
             'sumaTotalPeso' => 'numeric|max:100|min:100',
         ], [
-            'sumaTotalPeso.max' => 'El peso total debe de ser 100% el total actual es: ' . $this->sumaTotalPeso . '%',
-            'sumaTotalPeso.min' => 'El peso total debe de ser 100% el total actual es: ' . $this->sumaTotalPeso . '%',
+            'sumaTotalPeso.max' => 'El peso total debe de ser 100% el total actual es: '.$this->sumaTotalPeso.'%',
+            'sumaTotalPeso.min' => 'El peso total debe de ser 100% el total actual es: '.$this->sumaTotalPeso.'%',
         ]);
     }
 
@@ -445,7 +440,7 @@ class MultiStepForm extends Component
             // }
             $this->createEvaluation(
                 $idx,
-                $this->nombre . '-' . ($idx + 1),
+                $this->nombre.'-'.($idx + 1),
                 $this->descripcion,
                 $estatus,
                 $this->evaluados_objetivo,
@@ -522,20 +517,6 @@ class MultiStepForm extends Component
                 $this->crearCuestionario($evaluacion, $evaluado->id, $evaluadores, $this->includeCompetencias, $this->includeObjetivos);
             }
         }
-
-        //Se asignan los valores que tendra la evaluacion
-        $catalogo = CatalogoRangosObjetivos::with('rangos')->find($this->catalogoObjetivos);
-
-        foreach ($catalogo->rangos as $r) {
-            Ev360ParametrosObjetivos::create([
-                'evaluacion_id' => $evaluacion->id,
-                'parametro' => $r->parametro,
-                'valor' => $r->valor,
-                'color' => $r->color,
-                'descripcion' => $r->descripcion,
-            ]);
-        }
-
         if ($idx == 0) {
             if ($this->sendEmail) {
                 $evaluacion->update([
@@ -673,8 +654,8 @@ class MultiStepForm extends Component
                         $q->with(['competencia']);
                     }]);
                 }])->find($empleado->id);
-                $competencias = !is_null($competencias_por_puesto->puestoRelacionado) ? $competencias_por_puesto->puestoRelacionado->competencias : null;
-                if (!is_null($competencias)) {
+                $competencias = ! is_null($competencias_por_puesto->puestoRelacionado) ? $competencias_por_puesto->puestoRelacionado->competencias : null;
+                if (! is_null($competencias)) {
                     foreach ($competencias as $competencia) {
                         EvaluacionRepuesta::create([
                             'calificacion' => 0,
@@ -692,7 +673,7 @@ class MultiStepForm extends Component
         $evaluadores_objetivos = $evaluadores_objetivos->unique('id')->toArray();
         if ($includeObjetivos) {
             $objetivos = $empleado->objetivos;
-            if (!is_null($objetivos)) {
+            if (! is_null($objetivos)) {
                 foreach ($evaluadores_objetivos as $evaluador) {
                     foreach ($objetivos as $objetivo) {
                         $objvo = Objetivo::find($objetivo->objetivo_id);

@@ -62,10 +62,10 @@
         <a class="btn btn-danger" href="{{ asset('admin/desk/quejas-clientes/dashboard') }}">Dashboard</a>
     @endcan
 </div>
-<div class="card card-body">
+
          @include('partials.flashMessages')
             <div class="datatable-fix datatable-rds">
-                     <table class="datatable tabla_quejasclientes" id="tabla-procesos">
+                     <table class="datatable tabla_quejasclientes" id="tabla-procesos" style="border-collapse: separate; border-spacing: 0; border-radius: 10px;">
                         <thead>
                             <tr>
                                 <th style="min-width:60px;">Folio</th>
@@ -94,7 +94,7 @@
                 </table>
             </div>
 
-</div>
+
 
 
 

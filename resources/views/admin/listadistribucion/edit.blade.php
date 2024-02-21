@@ -25,7 +25,7 @@
     }
 </style>
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/listadistribucion.css') }}" @endsection
+<link rel="stylesheet" href="{{ asset('css/listadistribucion.css') }}{{config('app.cssVersion')}}" @endsection
     @section('content')
     @include('admin.listadistribucion.estilos')
 
@@ -69,7 +69,7 @@
                 </div>
             </div>
         </div>
-        <div class="card">
+        <div class="card" style="height: 680px;">
             <div class="card-body">
                 <h4 style="color:#057BE2; title-table-rds">Configuración Listas de Aprobación</h4>
                 <hr>

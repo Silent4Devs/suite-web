@@ -1,10 +1,10 @@
 @extends('layouts.admin')
 @section('styles')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/colores.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/colores.css') }}{{config('app.cssVersion')}}">
     <link rel="stylesheet" href="{{ asset('orgchart/orgchart.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.0-canary.13/tailwind.min.css"
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.0-canary.13/tailwind.min.css"
         integrity="sha512-0mXZvQboEKApqdohlHGMJ/OZ09yeQa6UgZRkgG+b3t3JlcyIqvDnUMgpUm5CvlHT9HNtRm9xbRAJPlKaFCXzdQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+        crossorigin="anonymous" referrerpolicy="no-referrer" /> --}}
     <style>
         #chart-container {
             position: relative;
@@ -262,7 +262,7 @@
         .slider-zoom {
             position: absolute;
             top: 0;
-            right: 70px;
+            right: 30px;
         }
     </style>
     <style>
@@ -474,9 +474,9 @@
                             Control de zoom
                         </span>
                         <div class="d-flex justify-content-center align-items-center" style="height: 75%">
-                            <input id="zoomer" class="range-slider__range" type="range" value="70" min="10"
+                            <input id="zoomer" class="range-slider__range" type="range" value="30" min="10"
                                 max="200">
-                            <span id="output" class="range-slider__value">70</span>
+                            <span id="output" class="range-slider__value">30</span>
                         </div>
                     </div>
                 </div>
@@ -592,8 +592,8 @@
 
             window.seleccionarUsuario = function(id, name, email) {
                 $('.areas').val(null).trigger('change');
-                document.querySelector("#zoomer").value = 70;
-                document.querySelector("#output").innerHTML = 70;
+                document.querySelector("#zoomer").value = 30;
+                document.querySelector("#output").innerHTML = 30;
                 orientacion = localStorage.getItem('orientationOrgChart');
                 document.getElementById("contenedorOrganigrama").style.pointerEvents = 'none';
                 renderOrganigrama(OrgChart, orientacion, id);
@@ -645,7 +645,7 @@
                         let img = document.createElement('img');
                         img.classList.add('imagen-search');
                         img.src = "{{ asset('img/searching.svg') }}";
-                        img.width = 500;
+                        img.width = 400;
                         img.style.margin = 'auto';
                         let texto = document.createElement('h3');
                         texto.classList.add('texto-search');
@@ -698,7 +698,7 @@
                         let img = document.createElement('img');
                         img.classList.add('imagen-search');
                         img.src = "{{ asset('img/empleados_no_encontrados.svg') }}";
-                        img.width = 350;
+                        img.width = 300;
                         img.style.margin = 'auto';
                         let texto = document.createElement('h3');
                         texto.classList.add('texto-search');
@@ -734,8 +734,8 @@
                 if (document.querySelector("#participantes_search").value != "") {
                     document.querySelector("#participantes_search").value = "";
                 }
-                document.querySelector("#zoomer").value = 70;
-                document.querySelector("#output").innerHTML = 70;
+                document.querySelector("#zoomer").value = 30;
+                document.querySelector("#output").innerHTML = 30;
                 document.getElementById("contenedorOrganigrama").style.pointerEvents = 'none';
                 renderOrganigrama(OrgChart, orientacion, null, true, area_id);
             });
@@ -747,8 +747,8 @@
                     document.getElementById("contenedorOrganigrama").style.pointerEvents = 'none';
                     $('.areas').val(null).trigger('change');
                     document.querySelector("#participantes_search").value = "";
-                    document.querySelector("#zoomer").value = 70;
-                    document.querySelector("#output").innerHTML = 70;
+                    document.querySelector("#zoomer").value = 30;
+                    document.querySelector("#output").innerHTML = 30;
                     contador = 0;
                     orientacion = orientaciones[contador];
                     localStorage.setItem('orientationOrgChart', orientaciones[contador]);
@@ -765,8 +765,8 @@
                 document.getElementById("contenedorOrganigrama").style.pointerEvents = 'none';
                 $('.areas').val(null).trigger('change');
                 document.querySelector("#participantes_search").value = "";
-                document.querySelector("#zoomer").value = 70;
-                document.querySelector("#output").innerHTML = 70;
+                document.querySelector("#zoomer").value = 30;
+                document.querySelector("#output").innerHTML = 30;
                 contador = 0;
                 orientacion = orientaciones[contador];
                 localStorage.setItem('orientationOrgChart', orientaciones[contador]);
@@ -778,8 +778,8 @@
             $("#orientacion").click(function(e) {
                 e.preventDefault();
                 document.getElementById("contenedorOrganigrama").style.pointerEvents = 'none';
-                document.querySelector("#zoomer").value = 70;
-                document.querySelector("#output").innerHTML = 70;
+                document.querySelector("#zoomer").value = 30;
+                document.querySelector("#output").innerHTML = 30;
                 let orientacion;
                 if (contador < 3) {
                     ++contador;

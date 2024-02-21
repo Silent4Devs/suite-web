@@ -1,4 +1,7 @@
 @extends('layouts.admin')
+@section('css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}{{config('app.cssVersion')}}">
+@endsection
 @section('content')
     <style type="text/css">
         .td-cj-1 {
@@ -20,35 +23,45 @@
         @page {
             size: landscape;
         }
+
         #form_id {
-        display: none;
+            display: none;
         }
     </style>
 
 
     {{ Breadcrumbs::render('timesheet-clientes') }}
 
-    <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Clientes</font>
+    <h5 class="titulo_general_funcion">
+        Timesheet: <font style="font-weight:lighter;">Clientes</font>
     </h5>
 
     <form method="POST" id="form_id" style="position: relative; left: 10rem; "
-    action="{{ route('admin.timesheet-cliente.pdf') }}">
-    @csrf
-    <button class="boton-transparentev2" type="submit" style="color: #306BA9;">
-        IMPRIMIR <img src="{{ asset('imprimir.svg') }}" alt="Importar" class="icon">
-    </button>
-   </form>
+        action="{{ route('admin.timesheet-cliente.pdf') }}">
+        @csrf
+        <button class="boton-transparentev2" type="submit" style="color: #306BA9;">
+            IMPRIMIR <img src="{{ asset('imprimir.svg') }}" alt="Importar" class="icon">
+        </button>
+    </form>
 
 
-    <div class="text-right">
-        <div class="d-flex justify-content-end">
-            <a href="{{ route('admin.timesheet-clientes-create') }}" type="button" class="btn btn-primary">Registrar TimeSheet</a> &nbsp;
-        </div>
+    <div class="text-right mb-3">
+        <a href="{{ route('admin.timesheet-clientes-create') }}" type="button" class="btn btn-outline-primary">
+            Agregar Cliente
+        </a>
     </div>
-<br>
-<br>
+
+    {{-- @include('admin.timesheet.complementos.cards') --}}
+    @include('admin.timesheet.complementos.admin-aprob')
+    {{-- @include('admin.timesheet.complementos.blue-card-header') --}}
 
     <div class="card card-body">
+        <div class="row">
+            <div class="col-12">
+                <h3 class="title-card-time">Clientes</h3>
+                <hr class="my-4">
+            </div>
+        </div>
         <div class="row">
             @include('partials.flashMessages')
             <div class="datatable-fix w-100">
@@ -88,7 +101,14 @@
                     <tbody>
                         @foreach ($clientes as $cliente)
                             <tr>
-                                <td>{{ $cliente->identificador }}</td>
+                            <td>
+                                @if ($cliente->identificador)
+                                    {{$cliente->identificador}}
+                                @else
+                                    No hay registro
+                                @endif
+                            
+                            </td>
                                 <td>{{ $cliente->razon_social }}</td>
                                 <td>{{ $cliente->nombre }}</td>
                                 <td>{{ $cliente->rfc }}</td>
@@ -188,7 +208,7 @@
                     exportOptions: {
                         columns: ['th:not(:last-child):visible']
                     },
-                    action: function (e, dt, button, config) {
+                    action: function(e, dt, button, config) {
                         // Aquí ejecutas la acción del formulario al presionar el botón
                         var form = document.getElementById('form_id');
                         form.submit();

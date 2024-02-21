@@ -81,10 +81,10 @@ class MinutasaltadireccionController extends Controller
         $request->validate([
             'objetivoreunion' => 'required',
             'responsable_id' => 'required',
-            'fechareunion' => 'required',
+            'fechareunion' => 'required|date',
             'hora_inicio' => 'required',
             'hora_termino' => 'required',
-            'tema_reunion' => 'required',
+            'tema_reunion' => 'required|max:255',
             'tema_tratado' => 'required',
             'tipo_reunion' => 'required',
             'actividades' => new ActividadesPlanAccionRule,
@@ -239,6 +239,7 @@ class MinutasaltadireccionController extends Controller
 
     public function vincularActividadesPlanDeAccion($request, $minuta, $planEdit = null, $edit = false)
     {
+        // dd($request->actividades);
         if (isset($request->actividades)) {
             $tasks = [
                 [
@@ -266,24 +267,62 @@ class MinutasaltadireccionController extends Controller
 
             foreach ($actividades as $actividad) {
                 $asignados = [];
-                // dd($actividad, $actividad[5]->participantes_id);
+                $tmp_id = null;
+                $dur = null;
+                $desc = null;
                 if ($edit) {
-                    if (gettype($actividad[5]->participantes_id) == 'string') {
-                        if (str_contains($actividad[5]->participantes_id, ',')) {
-                            $asignados = explode(',', $actividad[5]->participantes_id);
+                    if (isset($actividad[5]->participantes_id)) {
+                        if (gettype($actividad[5]->participantes_id) == 'string') {
+                            if (str_contains($actividad[5]->participantes_id, ',')) {
+                                $tmp_id = $actividad[5]->id;
+                                $dur = $actividad[5]->duration;
+                                $desc = $actividad[4];
+                                $asignados = explode(',', $actividad[5]->participantes_id);
+                            } else {
+                                $tmp_id = $actividad[5]->id;
+                                $dur = $actividad[5]->duration;
+                                $desc = $actividad[4];
+                                array_push($asignados, $actividad[5]->participantes_id);
+                            }
                         } else {
-                            array_push($asignados, $actividad[5]->participantes_id);
+                            $tmp_id = $actividad[5]->id;
+                            $dur = $actividad[5]->duration;
+                            $desc = $actividad[4];
+                            $asignados = $actividad[5]->participantes_id;
                         }
                     } else {
-                        $asignados = $actividad[5]->participantes_id;
+                        // Si funciona si no se agregan mas actividades
+                        if (! isset($actividad[5]->id)) {
+                            $planes_minuta = Minutasaltadireccion::with(
+                                'planes'
+                            )
+                                ->find($minuta->id);
+                            $activ = array_filter($planes_minuta->planes->first()->tasks, function ($actividad) {
+                                return intval($actividad->level) > 0;
+                            });
+                            foreach ($activ as $act) {
+                                foreach ($act->assigs as $as) {
+                                    if ($act->name == $actividad[0]) {
+                                        $asignados[] = $as->resourceId;
+
+                                        $tmp_id = $as->id;
+                                        $dur = $act->duration;
+                                        $desc = $actividad[4];
+                                    }
+                                }
+                            }
+                        }
                     }
                 } else {
+                    $desc = $actividad[4];
+                    $tmp_id = $actividad[5]->id;
+                    $dur = $actividad[5]->duration;
                     $asignados = $actividad[5]->participantes_id;
                 }
+
                 $assigs = [];
                 foreach ($asignados as $asignado) {
                     $id = intval($asignado);
-                    // $empleado = Empleado::find($id);
                     $assigs[] = [
                         'id' => 'tmp_'.time().'_'.$id,
                         'effort' => '0',
@@ -293,7 +332,7 @@ class MinutasaltadireccionController extends Controller
                 }
 
                 $tasks[] = [
-                    'id' => $actividad[5]->id,
+                    'id' => $tmp_id,
                     'end' => strtotime($actividad[2]) * 1000,
                     'name' => $actividad[0],
                     'level' => 1,
@@ -301,13 +340,13 @@ class MinutasaltadireccionController extends Controller
                     'canAdd' => true,
                     'status' => 'STATUS_ACTIVE',
                     'canWrite' => true,
-                    'duration' => $actividad[5]->duration,
+                    'duration' => $dur,
                     'progress' => 0,
                     'canDelete' => true,
                     'collapsed' => false,
                     'relevance' => '0',
                     'canAddIssue' => true,
-                    'description' => $actividad[4],
+                    'description' => $desc,
                     'endIsMilestone' => false,
                     'startIsMilestone' => false,
                     'progressByWorklog' => false,
@@ -383,8 +422,7 @@ class MinutasaltadireccionController extends Controller
             // ->select('name', 'area_id', 'foto')
             ->withPivot('asistencia')
             ->get();
-
-        $responsablereunions = Empleado::select('name', 'foto')->get();
+        $responsablereunions = Empleado::alta()->select('id', 'name', 'foto')->with('area')->get();
 
         return view('admin.minutasaltadireccions.edit', compact(
             'minutasaltadireccion',
@@ -398,12 +436,12 @@ class MinutasaltadireccionController extends Controller
     {
         $request->validate([
             'objetivoreunion' => 'required',
-            'responsable_id' => 'required',
-            'fechareunion' => 'required',
+            'responsable_id' => 'required|integer',
+            'fechareunion' => 'required|date',
             'tipo_reunion' => 'required',
             'hora_inicio' => 'required',
             'hora_termino' => 'required',
-            'tema_reunion' => 'required',
+            'tema_reunion' => 'required|max:255',
             'tema_tratado' => 'required',
             'actividades' => new ActividadesPlanAccionRule,
             'participantes' => new ParticipantesMinutasAltaDireccionRule,
@@ -514,7 +552,6 @@ class MinutasaltadireccionController extends Controller
 
     public function revision($id)
     {
-
         abort_if(Gate::denies('revision_por_direccion_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $minutas = Minutasaltadireccion::with('responsable')->find($id);
@@ -532,18 +569,30 @@ class MinutasaltadireccionController extends Controller
     public function aprobado($id, Request $request)
     {
         // dd($id);
-        $revision_actual = intval(RevisionMinuta::where('minuta_id', $id)->max('no_revision'));
-        $aprobacion = RevisionMinuta::where('minuta_id', '=', $id)->where('empleado_id', '=', User::getCurrentUser()->empleado->id)
-            ->where('no_revision', '=', $revision_actual)->first();
-        // dd($aprobacion);
-        $aprobacion->update([
-            'estatus' => RevisionMinuta::APROBADO,
-            'comentarios' => $request->comentario,
-        ]);
+        try {
+            //code...
+            $revision_actual = intval(RevisionMinuta::where('minuta_id', $id)->max('no_revision'));
+            $aprobacion = RevisionMinuta::where('minuta_id', '=', $id)->where('empleado_id', '=', User::getCurrentUser()->empleado->id)
+                ->where('no_revision', '=', $revision_actual)->first();
 
-        $this->confirmacionAprobacion($id, $revision_actual);
+            if (empty($request->comentarios)) {
+                $coment = null;
+            } else {
+                $coment = $request->comentarios;
+            }
+            // dd($aprobacion);
+            $aprobacion->update([
+                'estatus' => RevisionMinuta::APROBADO,
+                'comentarios' => $coment,
+            ]);
 
-        return redirect(route('admin.minutasaltadireccions.index'));
+            $this->confirmacionAprobacion($id, $revision_actual);
+
+            return redirect(route('admin.minutasaltadireccions.index'));
+        } catch (\Throwable $th) {
+            return redirect(route('admin.minutasaltadireccions.index'));
+            //throw $th;
+        }
     }
 
     public function rechazado($id, Request $request)

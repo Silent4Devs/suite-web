@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/listadistribucion.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/listadistribucion.css') }}{{config('app.cssVersion')}}">
     @include('admin.listadistribucion.estilos')
 @endsection
 @section('content')

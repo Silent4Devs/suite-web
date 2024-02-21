@@ -1,22 +1,27 @@
 @extends('layouts.admin')
+@section('css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}{{ config('app.cssVersion') }}">
+@endsection
 @section('content')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
-
     {{ Breadcrumbs::render('timesheet-rechazos') }}
 
-    <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Aprobados</font>
+    <h5 class="col-12 titulo_general_funcion">Timesheet: <font style="font-weight:lighter;">Aprobados</font>
     </h5>
+
+    {{-- @include('admin.timesheet.complementos.cards') --}}
+    @include('admin.timesheet.complementos.admin-aprob')
+    {{-- @include('admin.timesheet.complementos.blue-card-header') --}}
 
     <div class="card card-body">
         <div class="row">
             <div class="btn_estatus_caja mb-3" style="display: flex; justify-content: end; width: 100%">
-                <a href="{{ route('admin.timesheet-aprobados') }}" class="btn btn-sm mr-2"
-                    style="{{ !$habilitarTodos ? 'background-color: #345183;color:white;' : '' }} border:none !important; position: relative;padding:10px;"
+                <a href="{{ route('admin.timesheet-aprobados') }}" class="btn btn-outline-primary mr-2"
+                    style="{{ !$habilitarTodos ? 'background-color: #E9F9FF;color:#006DDB;' : '' }} position: relative;padding:10px;"
                     id="btn_directos" title="Mostrar todos los colaboradores de los cuales eres líder directo">
                     Directos
                 </a>
-                <a href="{{ route('admin.timesheet-aprobados') }}?habilitarTodos=true" class="btn btn-sm"
-                    style="{{ $habilitarTodos ? 'background-color: #345183;color:white;' : '' }} border:none !important; position: relative;padding:10px;"
+                <a href="{{ route('admin.timesheet-aprobados') }}?habilitarTodos=true" class="btn btn-outline-primary"
+                    style="{{ $habilitarTodos ? 'background-color: #E9F9FF;color:#006DDB;' : '' }}  position: relative;padding:10px;"
                     id="btn_todos" title="Mostrar todos los colaboradores de los cuales eres líder">
                     Todos
                 </a>
@@ -29,7 +34,7 @@
                             <th>Empleado</th>
                             <th>Responsable</th>
                             <th>Aprobación</th>
-                            <th>opciones</th>
+                            <th>Opciones</th>
                         </tr>
                     </thead>
 
@@ -50,8 +55,8 @@
                                 </td>
                                 <td class="">
                                     @can('timesheet_administrador_aprobar_horas')
-                                        <a href="{{ asset('admin/timesheet/show') }}/{{ $aprobado->id }}"
-                                            title="Visualizar" class="btn"><i class="fa-solid fa-eye"></i></a>
+                                        <a href="{{ asset('admin/timesheet/show') }}/{{ $aprobado->id }}" title="Visualizar"
+                                            class="btn"><i class="fa-solid fa-eye"></i></a>
 
                                         @if ($aprobado->estatus == 'aprobado')
                                             @if ($aprobado->aprobador_id == auth()->user()->empleado->id)

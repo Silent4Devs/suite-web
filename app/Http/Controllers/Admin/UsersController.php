@@ -54,7 +54,7 @@ class UsersController extends Controller
 
         $organizacions = Organizacione::all()->pluck('organizacion', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $areas = Area::all()->pluck('area', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $areas = Area::getAllPluck();
 
         $puestos = Puesto::all()->pluck('puesto', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -87,7 +87,7 @@ class UsersController extends Controller
 
             $organizacions = Organizacione::all()->pluck('organizacion', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-            $areas = Area::all()->pluck('area', 'id')->prepend(trans('global.pleaseSelect'), '');
+            $areas = Area::getAllPluck();
 
             $puestos = Puesto::all()->pluck('puesto', 'id')->prepend(trans('global.pleaseSelect'), '');
 

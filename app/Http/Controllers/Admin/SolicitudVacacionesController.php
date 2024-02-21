@@ -264,11 +264,20 @@ class SolicitudVacacionesController extends Controller
 
         $solicitud = SolicitudVacaciones::create($request->all());
 
-        $informados = ListaInformativa::with('participantes.empleado')->where('modelo', '=', $this->modelo)->first();
+        $informados = ListaInformativa::with('participantes.empleado', 'usuarios.usuario')->where('modelo', '=', $this->modelo)->first();
 
-        if (isset($informados->participantes[0])) {
-            foreach ($informados->participantes as $participante) {
-                $correos[] = $participante->empleado->email;
+        if (isset($informados->participantes[0]) || isset($informados->usuarios[0])) {
+
+            if (isset($informados->participantes[0])) {
+                foreach ($informados->participantes as $participante) {
+                    $correos[] = $participante->empleado->email;
+                }
+            }
+
+            if (isset($informados->usuarios[0])) {
+                foreach ($informados->usuarios as $usuario) {
+                    $correos[] = $usuario->usuario->email;
+                }
             }
             Mail::to(removeUnicodeCharacters($supervisor->email))->queue(new MailSolicitudVacaciones($solicitante, $supervisor, $solicitud, $correos));
         } else {
@@ -320,13 +329,21 @@ class SolicitudVacacionesController extends Controller
 
         $solicitud->update($request->all());
 
-        $informados = ListaInformativa::with('participantes.empleado')->where('modelo', '=', $this->modelo)->first();
+        $informados = ListaInformativa::with('participantes.empleado', 'usuarios.usuario')->where('modelo', '=', $this->modelo)->first();
 
-        if (isset($informados->participantes[0])) {
-            foreach ($informados->participantes as $participante) {
-                $correos[] = $participante->empleado->email;
+        if (isset($informados->participantes[0]) || isset($informados->usuarios[0])) {
+
+            if (isset($informados->participantes[0])) {
+                foreach ($informados->participantes as $participante) {
+                    $correos[] = $participante->empleado->email;
+                }
             }
 
+            if (isset($informados->usuarios[0])) {
+                foreach ($informados->usuarios as $usuario) {
+                    $correos[] = $usuario->usuario->email;
+                }
+            }
             Mail::to(trim(removeUnicodeCharacters($solicitante->email)))->queue(new MailRespuestaVacaciones($solicitante, $supervisor, $solicitud, $correos));
         } else {
             Mail::to(trim(removeUnicodeCharacters($solicitante->email)))->queue(new MailRespuestaVacaciones($solicitante, $supervisor, $solicitud));

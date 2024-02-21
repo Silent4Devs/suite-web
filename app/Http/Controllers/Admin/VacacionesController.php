@@ -108,11 +108,22 @@ class VacacionesController extends Controller
         ]);
 
         if ($request->afectados == 2) {
-            $areas = array_map(function ($value) {
-                return intval($value);
-            }, $request->areas);
-            $vacacion = Vacaciones::create($request->all());
-            $vacacion->areas()->sync($areas);
+            if (empty($request->areas)) {
+                $errorMessage = 'Debe seleccionar un area.';
+
+                // Manually add error message to $errors bag
+                $errors = new \Illuminate\Support\MessageBag();
+                $errors->add('custom_areas', $errorMessage);
+
+                // Redirect back with the input data and errors
+                return redirect()->back()->withErrors($errors)->withInput();
+            } else {
+                $areas = array_map(function ($value) {
+                    return intval($value);
+                }, $request->areas);
+                $vacacion = Vacaciones::create($request->all());
+                $vacacion->areas()->sync($areas);
+            }
         } else {
             $vacacion = Vacaciones::create($request->all());
         }
@@ -161,11 +172,22 @@ class VacacionesController extends Controller
         $vacacion = Vacaciones::find($id);
 
         if ($request->afectados == 2) {
-            $vacacion->update($request->all());
-            $areas = array_map(function ($value) {
-                return intval($value);
-            }, $request->areas);
-            $vacacion->areas()->sync($areas);
+            if (empty($request->areas)) {
+                $errorMessage = 'Debe seleccionar un area.';
+
+                // Manually add error message to $errors bag
+                $errors = new \Illuminate\Support\MessageBag();
+                $errors->add('custom_areas', $errorMessage);
+
+                // Redirect back with the input data and errors
+                return redirect()->back()->withErrors($errors)->withInput();
+            } else {
+                $vacacion->update($request->all());
+                $areas = array_map(function ($value) {
+                    return intval($value);
+                }, $request->areas);
+                $vacacion->areas()->sync($areas);
+            }
         } else {
             $vacacion->update($request->all());
         }

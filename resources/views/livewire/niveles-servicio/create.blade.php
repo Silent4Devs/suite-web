@@ -10,7 +10,7 @@
 
     @include('livewire.niveles-servicio.form')
 
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/botones.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/botones.css') }}{{config('app.cssVersion')}}">
 
 
 
