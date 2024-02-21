@@ -58,19 +58,29 @@ class TimesheetController extends Controller
     {
         $cacheKey = 'timesheet-' . User::getCurrentUser()->empleado->id;
 
-        $times = Timesheet::getPersonalTimesheet();
-
-        $todos_contador = $times->count();
-        $borrador_contador = $times->where('estatus', 'papelera')->count();
-        $pendientes_contador = $times->where('estatus', 'pendiente')->count();
-        $aprobados_contador = $times->where('estatus', 'aprobado')->count();
-        $rechazos_contador = $times->where('estatus', 'rechazado')->count();
+        // $times = Timesheet::getPersonalTimesheet()->sortBy('fecha_dia');
+        // dd($times);
+        // $todos_contador = $times->count();
+        // $borrador_contador = $times->where('estatus', 'papelera')->count();
+        // $pendientes_contador = $times->where('estatus', 'pendiente')->count();
+        // $aprobados_contador = $times->where('estatus', 'aprobado')->count();
+        // $rechazos_contador = $times->where('estatus', 'rechazado')->count();
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.timesheet.mis-registros', compact('times', 'rechazos_contador', 'todos_contador', 'borrador_contador', 'pendientes_contador', 'aprobados_contador', 'logo_actual', 'empresa_actual', 'estatus'));
+        return view('admin.timesheet.mis-registros', compact(
+            // 'times',
+            // 'rechazos_contador',
+            // 'todos_contador',
+            // 'borrador_contador',
+            // 'pendientes_contador',
+            // 'aprobados_contador',
+            'logo_actual',
+            'empresa_actual',
+            'estatus'
+        ));
     }
 
     public function misRegistros($estatus = 'todos')
@@ -124,7 +134,7 @@ class TimesheetController extends Controller
             'semanas_adicionales' => $semanasAdicionales,
         ]);
 
-        $empleados = Empleado::getAll();
+        $empleados = Empleado::getDataColumns();
         foreach ($empleados as $key => $empleado) {
             $empleado->update([
                 'semanas_min_timesheet' => $request->semanas_min_timesheet,
@@ -381,7 +391,7 @@ class TimesheetController extends Controller
      */
     public function edit($id)
     {
-        $empleado = Empleado::find(Auth::user()->empleado->id);
+        $empleado = Empleado::find(User::getCurrentUser()->empleado->id);
         // areas proyectos
         $proyectos_array = collect();
 
