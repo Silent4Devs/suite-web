@@ -18,13 +18,13 @@
             <div class="col-12">
                 <div class="mb-3" style="display: flex; justify-content: end; width: 100%">
                     <a href="{{ route('admin.timesheet-aprobaciones') }}" class="btn btn-outline-primary mr-2"
-                        style="{{ !$habilitarTodos ? 'background-color: #345183;color:white;' : '' }} border:none !important; position: relative;padding:10px;"
+                        style="{{ !$habilitarTodos ? 'background-color: #E9F9FF;color:#006DDB;' : '' }} position: relative;padding:10px;"
                         id="btn_directos" title="Mostrar todos los colaboradores de los cuales eres líder directo">
                         Directos
                     </a>
                     <a href="{{ route('admin.timesheet-aprobaciones') }}?habilitarTodos=true"
                         class="btn btn-outline-primary"
-                        style="{{ $habilitarTodos ? 'background-color: #345183;color:white;' : '' }} border:none !important; position: relative;padding:10px;"
+                        style="{{ $habilitarTodos ? 'background-color: #E9F9FF;color:#006DDB;' : '' }} position: relative;padding:10px;"
                         id="btn_todos" title="Mostrar todos los colaboradores de los cuales eres líder">
                         Todos
                     </a>
@@ -38,7 +38,7 @@
                             <th>Empleado</th>
                             <th>Responsable</th>
                             <th>Aprobación</th>
-                            <th>opciones</th>
+                            <th>Opciones</th>
                         </tr>
                     </thead>
 
