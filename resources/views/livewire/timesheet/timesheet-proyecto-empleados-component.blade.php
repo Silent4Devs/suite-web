@@ -16,7 +16,7 @@
         <div class="row mt-4">
             <div class="form-group col-md-7">
                 <label for="">Empleado<sup>*</sup></label>
-                <select wire:model.defer="empleado_añadido" name="" id="" class="select2" required>
+                <select wire:model.lazy="empleado_añadido" name="" id="" class="select2" required>
                     <option value="" selected readonly>Seleccione un empleado</option>
                     @foreach ($empleados as $empleado)
                         @foreach ($areasempleado as $ae)
@@ -225,12 +225,14 @@
 
                     $('.select2').select2().on('change', function(e) {
                         var data = $(this).select2("val");
+                        console.log('saul', data);
                         @this.set('empleado_añadido', data);
                     });
                 });
 
                 $('.select2').select2().on('change', function(e) {
                     var data = $(this).select2("val");
+                    console.log('saul', data);
                     @this.set('empleado_añadido', data);
                 });
             });
