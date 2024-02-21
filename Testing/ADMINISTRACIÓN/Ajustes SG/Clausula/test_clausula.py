@@ -27,7 +27,7 @@ def driver():
     driver.quit()
     
 
-def test_areas(driver):
+def test_clausula(driver):
 
     # Abrir la URL de Tabantaj
     driver.get('https://192.168.9.78/')
