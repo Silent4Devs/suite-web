@@ -94,7 +94,7 @@ def test_puestos(driver):
         EC.presence_of_element_located((By.XPATH, "//INPUT[@id='puesto']"))
         )
     campo_puestos.click()
-    campo_puestos.send_keys("Nombre de Puesto de Prueba 33")
+    campo_puestos.send_keys("Nombre de Puesto de Prueba 117")
 
     time.sleep(tiempo_modulos)
 
@@ -176,7 +176,7 @@ def test_puestos(driver):
         EC.presence_of_element_located((By.XPATH, campo_buscar_xpath))
     )
     campo_entrada.clear()
-    campo_entrada.send_keys("Nombre de Puesto de Prueba")
+    campo_entrada.send_keys("Nombre de Puesto de Prueba 117")
 
     time.sleep(tiempo_carga)
 
