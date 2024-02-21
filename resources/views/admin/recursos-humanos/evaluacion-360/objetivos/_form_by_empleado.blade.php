@@ -9,27 +9,56 @@
         margin-top: 10px !important;
     }
 </style>
-<div class="col-12">
-    <h4 class="title-card-evaluacion">Objetivo</h4>
-</div>
-<div class="col-12 mt-4">
-    <div class="form-group anima-focus">
-        <input type="text" class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" id="nombre"
-        aria-describedby="nombreHelp" name="nombre" value="{{ old('nombre', $objetivo->nombre) }}" placeholder="">
-        <label for="nombre">
-            Objetivo Estratégico
-        </label>
-        <small id="nombreHelp" class="form-text text-muted">Ingresa el nombre del objetivo estratégico</small>
-        @if ($errors->has('nombre'))
-            <div class="invalid-feedback">
-                {{ $errors->first('nombre') }}
-            </div>
-        @endif
-        <span class="errors nombre_error{{ $editar ? '_edit' : '' }} text-danger"></span>
+<div class="row">
+    <div class="col-12">
+        <div class="info-first-config">
+            <h4 class="title-config">Nuevo Objetivo</h4>
+            <p>
+                Define los Valores y Escalas con los que se medirán los objetivos.
+            </p>
+            <hr class="my-4">
+        </div>
     </div>
 </div>
-<div class="col-sm-12 col-lg-6 col-md-6 col-12">
-    <div class="form-group">
+<div class="row">
+    <div class="col-12">
+        <div class="form-group anima-focus">
+            <input type="text" class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" id="nombre"
+            aria-describedby="nombreHelp" name="nombre" value="{{ old('nombre', $objetivo->nombre) }}" placeholder="">
+            <label for="nombre">
+                Objetivo Estratégico
+            </label>
+            <small id="nombreHelp" class="form-text text-muted">Ingresa el nombre del objetivo estratégico</small>
+            @if ($errors->has('nombre'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('nombre') }}
+                </div>
+            @endif
+            <span class="errors nombre_error{{ $editar ? '_edit' : '' }} text-danger"></span>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 form-group anima-focus">
+        <textarea class="form-control {{ $errors->has('descripcion_meta') ? 'is-invalid' : '' }}" name="descripcion_meta"
+            id="" cols="30" rows="1" placeholder="">{{ old('descripcion_meta', $objetivo->descripcion_meta) }}</textarea>
+        <label for="descripcion_meta">
+            Descripción
+        </label>
+        {{-- <input class="form-control {{ $errors->has('descripcion_meta') ? 'is-invalid' : '' }}" type="text"
+            name="descripcion_meta" value="{{ old('descripcion_meta', $objetivo->descripcion_meta) }}"> --}}
+        <small id="descripcion_metaHelp" class="form-text text-muted">Ingresa una breve descripción del objetivo
+            estratégico</small>
+        @if ($errors->has('descripcion_meta'))
+            <div class="invalid-feedback">
+                {{ $errors->first('descripcion_meta') }}
+            </div>
+        @endif
+        <span class="errors descripcion_meta_error{{ $editar ? '_edit' : '' }} text-danger"></span>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3 form-group">
         <label for="tipo_id">
             Perspectiva <span class="text-danger">*</span>
         </label>
@@ -55,82 +84,80 @@
         {{-- Fin Modulo para tipo de competencia --}}
 
     </div>
+</div>
 
-</div>
-<div class="col-sm-12 col-lg-6 col-md-6 col-12">
-    <div class="form-group anima-focus">
-        <input class="form-control {{ $errors->has('KPI') ? 'is-invalid' : '' }}" type="text" name="KPI"
-            value="{{ old('KPI', $objetivo->KPI) }}" placeholder="">
-        <label for="KPI">
-            KPIs
-        </label>
-        <small id="KPIHelp" class="form-text text-muted">Ingresa el KPI del objetivo estratégico </small>
-        @if ($errors->has('KPI'))
-            <div class="invalid-feedback">
-                {{ $errors->first('KPI') }}
-            </div>
-        @endif
-        <span class="errors KPI_error{{ $editar ? '_edit' : '' }} text-danger"></span>
-    </div>
-</div>
-<div class="col-sm-12 col-lg-6 col-md-6 col-12">
-    <div class="form-group anima-focus">
-        <input type="number" class="form-control {{ $errors->has('meta') ? 'is-invalid' : '' }}" id="meta"
-        aria-describedby="metaHelp" name="meta" value="{{ old('meta', $objetivo->meta) }}" placeholder="">
-        <label for="meta">
-            Meta a alcanzar
-        </label>
-        <small id="metaHelp" class="form-text text-muted">Ingresa la Meta del objetivo estratégico </small>
-        @if ($errors->has('meta'))
-            <div class="invalid-feedback">
-                {{ $errors->first('meta') }}
-            </div>
-        @endif
-        <span class="errors meta_error{{ $editar ? '_edit' : '' }} text-danger"></span>
-    </div>
-</div>
-<div class="col-sm-12 col-lg-6 col-md-6 col-12">
-    <div class="form-group">
-        <label for="metrica_id">
-            Unidad de medida <span class="text-danger">*</span>
-        </label>
-        {{-- Modulo para metrica de objetivo --}}
-        <div class="row align-items-center">
-            <div class="col-10" style="margin-top:-11px">
-                @livewire('metrica-objetivo-select', ['metrica_seleccionada' => $metrica_seleccionada])
-            </div>
-            @if (!$editar)
-                <div class="p-1 col" style="margin-top:-28px;height: 38px;margin-left: -12px;">
-                    <button id="btnAgregarMetrica" class="text-white btn btn-sm"
-                        style="background:#3eb2ad;height: 32px;" data-toggle="modal"
-                        data-target="#metricaObjetivoModal" title="Agregar unidad"><i
-                            class="fas fa-plus"></i></button>
-                    <a href="{{ route('admin.Metrica.index') }}" class="text-white btn btn-sm"
-                        style="background:#3eb2ad;height: 32px;"><i class="fas fa-edit"></i></a>
+
+
+
+
+
+
+
+
+
+
+
+<div class="row">
+    <div class="col-sm-12 col-lg-6 col-md-6 col-12">
+        <div class="form-group anima-focus">
+            <input class="form-control {{ $errors->has('KPI') ? 'is-invalid' : '' }}" type="text" name="KPI"
+                value="{{ old('KPI', $objetivo->KPI) }}" placeholder="">
+            <label for="KPI">
+                KPIs
+            </label>
+            <small id="KPIHelp" class="form-text text-muted">Ingresa el KPI del objetivo estratégico </small>
+            @if ($errors->has('KPI'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('KPI') }}
                 </div>
             @endif
+            <span class="errors KPI_error{{ $editar ? '_edit' : '' }} text-danger"></span>
         </div>
-        @livewire('metrica-objetivo-create')
-        {{-- Fin Modulo para tipo de competencia --}}
     </div>
 </div>
-<div class="col-sm-12 col-lg-12 col-md-12 col-12">
-    <div class="form-group anima-focus">
-        <textarea class="form-control {{ $errors->has('descripcion_meta') ? 'is-invalid' : '' }}" name="descripcion_meta"
-            id="" cols="30" rows="1" placeholder="">{{ old('descripcion_meta', $objetivo->descripcion_meta) }}</textarea>
-        <label for="descripcion_meta">
-            Descripción
-        </label>
-        {{-- <input class="form-control {{ $errors->has('descripcion_meta') ? 'is-invalid' : '' }}" type="text"
-            name="descripcion_meta" value="{{ old('descripcion_meta', $objetivo->descripcion_meta) }}"> --}}
-        <small id="descripcion_metaHelp" class="form-text text-muted">Ingresa una breve descripción del objetivo
-            estratégico</small>
-        @if ($errors->has('descripcion_meta'))
-            <div class="invalid-feedback">
-                {{ $errors->first('descripcion_meta') }}
+<div class="row">
+    <div class="col-sm-12 col-lg-6 col-md-6 col-12">
+        <div class="form-group anima-focus">
+            <input type="number" class="form-control {{ $errors->has('meta') ? 'is-invalid' : '' }}" id="meta"
+            aria-describedby="metaHelp" name="meta" value="{{ old('meta', $objetivo->meta) }}" placeholder="">
+            <label for="meta">
+                Meta a alcanzar
+            </label>
+            <small id="metaHelp" class="form-text text-muted">Ingresa la Meta del objetivo estratégico </small>
+            @if ($errors->has('meta'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('meta') }}
+                </div>
+            @endif
+            <span class="errors meta_error{{ $editar ? '_edit' : '' }} text-danger"></span>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12 col-lg-6 col-md-6 col-12">
+        <div class="form-group">
+            <label for="metrica_id">
+                Unidad de medida <span class="text-danger">*</span>
+            </label>
+            {{-- Modulo para metrica de objetivo --}}
+            <div class="row align-items-center">
+                <div class="col-10" style="margin-top:-11px">
+                    @livewire('metrica-objetivo-select', ['metrica_seleccionada' => $metrica_seleccionada])
+                </div>
+                @if (!$editar)
+                    <div class="p-1 col" style="margin-top:-28px;height: 38px;margin-left: -12px;">
+                        <button id="btnAgregarMetrica" class="text-white btn btn-sm"
+                            style="background:#3eb2ad;height: 32px;" data-toggle="modal"
+                            data-target="#metricaObjetivoModal" title="Agregar unidad"><i
+                                class="fas fa-plus"></i></button>
+                        <a href="{{ route('admin.Metrica.index') }}" class="text-white btn btn-sm"
+                            style="background:#3eb2ad;height: 32px;"><i class="fas fa-edit"></i></a>
+                    </div>
+                @endif
             </div>
-        @endif
-        <span class="errors descripcion_meta_error{{ $editar ? '_edit' : '' }} text-danger"></span>
+            @livewire('metrica-objetivo-create')
+            {{-- Fin Modulo para tipo de competencia --}}
+        </div>
     </div>
 </div>
 
@@ -166,9 +193,11 @@
     </div>
 </div> --}}
 @if (!$editar)
-    <div class="col-12">
-        <button id="BtnAgregarObjetivo" class="btn btn-success" style="float: right" title="Agregar objetivo"><i
-                class="mr-2 fas fa-plus-circle"></i>Agregar</button>
+    <div class="row">
+        <div class="col-12">
+            <button id="BtnAgregarObjetivo" class="btn btn-success" style="float: right" title="Agregar objetivo"><i
+                    class="mr-2 fas fa-plus-circle"></i>Agregar</button>
+        </div>
     </div>
     <div class="card-body datatable-fix">
         <div class="row">

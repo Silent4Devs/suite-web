@@ -72,3 +72,18 @@
     font-weight: bold;
     border-radius: 12px;
 }
+
+.line-perador-config {
+    position: relative;
+}
+
+.line-perador-config::before {
+    content: "";
+    width: 1px;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    background-color: #818181;
+    position: absolute;
+    transform: translateX(-25px);
+}

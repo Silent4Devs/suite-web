@@ -271,7 +271,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-12 form-group anima-focus">
+                    <div class="col-9 form-group anima-focus">
                         <input id="buscar" type="search" class="form-control" placeholder="" style="border: none; border-bottom: 1px solid; border-radius: 0px !important;">
                         <label for="buscar"><i class="material-symbols-outlined" style="transform: translateY(50%);">search</i> Buscar</label>
                     </div>

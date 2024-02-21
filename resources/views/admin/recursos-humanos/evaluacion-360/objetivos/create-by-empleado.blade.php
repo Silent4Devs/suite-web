@@ -80,20 +80,39 @@
     </style>
     {{ Breadcrumbs::render('EV360-Objetivos-Create', $empleado) }}
 
-    <h5 class="titulo_general_funcion">Asignar Objetivos Estratégicos: <span
-            style="font-weight: lighter;">{{ $empleado->name }}</span></h5>
+    <h5 class="titulo_general_funcion">
+        Asignar Objetivos Estratégicos: <span style="font-weight: lighter;">{{ $empleado->name }}</span>
+    </h5>
+
+    <div class="card card-body">
+        <div class="d-flex align-items-center" style="gap: 50px;">
+            <div class="d-flex align-items-center" style="gap: 15px;">
+                <div class="img-person" style="width: 100px; height: 100px;">
+                    <img src="{{ $empleado->ruta_avatar }}" alt="">
+                </div>
+                <span style="font-size: 16px;">{{ $empleado->name }}</span>
+            </div>
+            <div class="line-perador-config">
+                <span>{{ $empleado->puesto }}</span> <br><br>
+                <span>{{ $empleado->area->area }}</span>
+            </div>
+        </div>
+    </div>
 
     <div class="card">
         <div class="card-body">
             <form id="formObjetivoCreate" method="POST" action="{{ route('admin.ev360-objetivos.index') }}"
-                enctype="multipart/form-data" class="mt-3 row">
+                enctype="multipart/form-data" class="mt-3">
                 @csrf
                 @include('admin.recursos-humanos.evaluacion-360.objetivos._form_by_empleado', [
                     'editar' => false,
                 ])
-                <div class="col-12">
-                    <div class="d-flex justify-content-end w-100">
-                        <a href="{{ route('admin.ev360-objetivos.index') }}" class="btn_cancelar">Regresar</a>
+                <div class="row">
+
+                    <div class="col-12">
+                        <div class="d-flex justify-content-end w-100">
+                            <a href="{{ route('admin.ev360-objetivos.index') }}" class="btn_cancelar">Regresar</a>
+                        </div>
                     </div>
                 </div>
             </form>
