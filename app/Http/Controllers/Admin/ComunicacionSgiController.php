@@ -15,7 +15,6 @@ use App\Models\Team;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Intervention\Image\Facades\Image;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
@@ -108,8 +107,8 @@ class ComunicacionSgiController extends Controller
             $imagen = $request->file('imagen');
             $extension = $imagen->getClientOriginalExtension();
             $name_image = pathinfo($imagen->getClientOriginalName(), PATHINFO_FILENAME);
-            $new_name_image = 'UID_' . $comunicacionSgi->id . '_' . $name_image . '.' . $extension;
-            $route = storage_path() . '/app/public/imagen_comunicado_SGI/' . $new_name_image;
+            $new_name_image = 'UID_'.$comunicacionSgi->id.'_'.$name_image.'.'.$extension;
+            $route = storage_path().'/app/public/imagen_comunicado_SGI/'.$new_name_image;
             $image = $new_name_image;
 
             // Manejo de imágenes
@@ -148,7 +147,7 @@ class ComunicacionSgiController extends Controller
 
         // Manejo de archivos adicionales
         if ($request->input('archivo', false)) {
-            $comunicacionSgi->addMedia(storage_path('tmp/uploads/' . $request->input('archivo')))->toMediaCollection('archivo');
+            $comunicacionSgi->addMedia(storage_path('tmp/uploads/'.$request->input('archivo')))->toMediaCollection('archivo');
         }
 
         // Manejo de medios adicionales
@@ -158,7 +157,6 @@ class ComunicacionSgiController extends Controller
 
         return redirect()->route('admin.comunicacion-sgis.index')->with('success', 'Guardado con éxito');
     }
-
 
     public function obtenerPublicoObjetivo($evaluados_objetivo, $opts)
     {
@@ -218,8 +216,8 @@ class ComunicacionSgiController extends Controller
             $imagen = $request->file('imagen');
             $extension = $imagen->getClientOriginalExtension();
             $name_image = pathinfo($imagen->getClientOriginalName(), PATHINFO_FILENAME);
-            $new_name_image = 'UID_' . $comunicacionSgi->id . '_' . $name_image . '.' . $extension;
-            $route = storage_path() . '/app/public/imagen_comunicado_SGI/' . $new_name_image;
+            $new_name_image = 'UID_'.$comunicacionSgi->id.'_'.$name_image.'.'.$extension;
+            $route = storage_path().'/app/public/imagen_comunicado_SGI/'.$new_name_image;
             $image = $new_name_image;
 
             if (in_array($extension, ['jpg', 'jpeg', 'png', 'gif', 'webp'])) {
@@ -260,12 +258,12 @@ class ComunicacionSgiController extends Controller
         $comunicacionSgi->empleados()->sync($publicoObjetivo);
 
         if ($request->input('archivo', false)) {
-            if (!$comunicacionSgi->archivo || $request->input('archivo') !== $comunicacionSgi->archivo->file_name) {
+            if (! $comunicacionSgi->archivo || $request->input('archivo') !== $comunicacionSgi->archivo->file_name) {
                 if ($comunicacionSgi->archivo) {
                     $comunicacionSgi->archivo->delete();
                 }
 
-                $comunicacionSgi->addMedia(storage_path('tmp/uploads/' . $request->input('archivo')))->toMediaCollection('archivo');
+                $comunicacionSgi->addMedia(storage_path('tmp/uploads/'.$request->input('archivo')))->toMediaCollection('archivo');
             }
         } elseif ($comunicacionSgi->archivo) {
             $comunicacionSgi->archivo->delete();
@@ -273,7 +271,6 @@ class ComunicacionSgiController extends Controller
 
         return redirect()->route('admin.comunicacion-sgis.index')->with('success', 'Editado con éxito');
     }
-
 
     public function show(ComunicacionSgi $comunicacionSgi)
     {
