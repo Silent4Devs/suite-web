@@ -40,6 +40,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
     {
         $proyecto_id = $this->proyecto_id;
 
+
         $this->proyecto = TimesheetProyecto::getIdNameAll()->find($proyecto_id);
 
         $this->areasempleado =  DB::table('timesheet_proyectos_areas')
@@ -47,36 +48,13 @@ class TimesheetProyectoEmpleadosComponent extends Component
             ->where('proyecto_id', $proyecto_id)
             ->get();
 
-
-        // Inicia el contador de tiempo
-        $start1 = microtime(true);
-        // Aquí colocas tu consulta
-        $result1 = DB::table('empleados')
-            ->select('id', 'area_id', 'name', 'puesto')
-            ->where('estatus', 'alta')
+        $this->empleados = DB::table('empleados')
+            ->select('empleados.id', 'empleados.area_id', 'empleados.name', 'empleados.puesto_id', 'puestos.puesto as puesto')
+            ->join('puestos', 'empleados.puesto_id', '=', 'puestos.id')
+            ->where('empleados.estatus', 'alta')
             ->get();
-        // Calcula el tiempo transcurrido
-        $time_elapsed_secs1 = microtime(true) - $start1;
-        // Imprime el tiempo de ejecución
-        echo "Tiempo de ejecución query 1: $time_elapsed_secs1 segundos <br>";
 
 
-
-
-
-
-
-        // Inicia el contador de tiempo
-        $start = microtime(true);
-        // Aquí colocas tu consulta
-        $result = Empleado::getAltaEmpleados();
-        // Calcula el tiempo transcurrido
-        $time_elapsed_secs = microtime(true) - $start;
-        // Imprime el tiempo de ejecución
-        echo "Tiempo de ejecución query 2: $time_elapsed_secs segundos <br>";
-
-
-        dd('hola');
 
         $this->proyecto_empleados = DB::table('timesheet_proyectos_empleados')
             ->select(
@@ -119,9 +97,9 @@ class TimesheetProyectoEmpleadosComponent extends Component
     public function addEmpleado()
     {
 
-        $empleado_add_proyecto = Empleado::getAltaEmpleados()->find($this->empleado_añadido);
 
-        // dd($empleado_add_proyecto);
+        $empleado_add_proyecto = Empleado::where('estatus', 'alta')->where('id', intval($this->empleado_añadido))->first();
+
         if ($this->proyecto->tipo == 'Externo') {
             if (isset($this->horas_asignadas) && isset($this->costo_hora)) {
                 $time_proyect_empleado = TimesheetProyectoEmpleado::firstOrCreate([
