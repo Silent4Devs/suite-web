@@ -4,7 +4,6 @@ namespace App\Http\Livewire\Timesheet;
 
 use App\Models\Empleado;
 use App\Models\TimesheetProyecto;
-use App\Models\TimesheetProyectoArea;
 use App\Models\TimesheetProyectoEmpleado;
 use Illuminate\Support\Facades\DB;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
@@ -35,15 +34,13 @@ class TimesheetProyectoEmpleadosComponent extends Component
         $this->proyecto_id = $proyecto_id;
     }
 
-
     public function render()
     {
         $proyecto_id = $this->proyecto_id;
 
-
         $this->proyecto = TimesheetProyecto::getIdNameAll()->find($proyecto_id);
 
-        $this->areasempleado =  DB::table('timesheet_proyectos_areas')
+        $this->areasempleado = DB::table('timesheet_proyectos_areas')
             ->select('id', 'area_id', 'proyecto_id')
             ->where('proyecto_id', $proyecto_id)
             ->get();
@@ -53,8 +50,6 @@ class TimesheetProyectoEmpleadosComponent extends Component
             ->join('puestos', 'empleados.puesto_id', '=', 'puestos.id')
             ->where('empleados.estatus', 'alta')
             ->get();
-
-
 
         $this->proyecto_empleados = DB::table('timesheet_proyectos_empleados')
             ->select(
@@ -78,7 +73,6 @@ class TimesheetProyectoEmpleadosComponent extends Component
             ->where('timesheet_proyectos_empleados.proyecto_id', $this->proyecto->id)
             ->get();
 
-
         return view('livewire.timesheet.timesheet-proyecto-empleados-component');
     }
 
@@ -99,7 +93,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
 
         $empleado_add_proyecto = Empleado::where('estatus', 'alta')->where('id', intval($this->empleado_añadido))->first();
 
-        if (!$empleado_add_proyecto) {
+        if (! $empleado_add_proyecto) {
             return redirect()->route('admin.timesheet-proyecto-empleados', ['proyecto_id' => intval($this->proyecto_id)])
                 ->with('error', 'El registro fue eliminado');
         }

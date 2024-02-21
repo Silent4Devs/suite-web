@@ -27,6 +27,6 @@ class NotificacionSolicitudAprobacionAnalisisFODA extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.entendimiento-organizacion.notificacion-analisis-participantes')->subject('Solicitud Aprobación de Analisis FODA: ' . $this->nombre_analisis);
+        return $this->view('mails.entendimiento-organizacion.notificacion-analisis-participantes')->subject('Solicitud Aprobación de Analisis FODA: '.$this->nombre_analisis);
     }
 }

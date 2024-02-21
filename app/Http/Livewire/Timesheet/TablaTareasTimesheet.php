@@ -4,7 +4,6 @@ namespace App\Http\Livewire\Timesheet;
 
 use App\Models\TimesheetProyecto;
 use App\Models\TimesheetTarea;
-use Illuminate\Support\Facades\DB;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
@@ -72,7 +71,7 @@ class TablaTareasTimesheet extends Component
         if ($this->origen == 'tareas-proyectos') {
             // Fetch the selected project along with its tasks
             $this->proyecto_seleccionado = TimesheetProyecto::with('tareas:id,tarea,proyecto_id,area_id,todos')
-                                            ->find($this->proyecto_id);
+                ->find($this->proyecto_id);
             // Assign tasks directly
             $this->tareas = $this->proyecto_seleccionado->tareas;
             // Assign selected area

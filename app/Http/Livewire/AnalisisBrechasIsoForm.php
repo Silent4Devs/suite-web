@@ -77,6 +77,7 @@ class AnalisisBrechasIsoForm extends Component
             return redirect('admin/analisisdebrechas-2022/create');
         } else {
             $this->emit('selectedCardAlert');
+
             return redirect('admin/analisisdebrechas-2022/create');
         }
     }
@@ -128,6 +129,7 @@ class AnalisisBrechasIsoForm extends Component
     public function destroy($id)
     {
         AnalisisBrechasIso::destroy($id);
+
         return redirect('admin/analisisdebrechas-2022/create');
     }
 

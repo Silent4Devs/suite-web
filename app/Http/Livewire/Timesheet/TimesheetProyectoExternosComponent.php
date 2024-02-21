@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\Timesheet;
 
-use App\Models\Empleado;
 use App\Models\TimesheetProyecto;
 use App\Models\TimesheetProyectoProveedor;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
