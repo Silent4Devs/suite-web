@@ -103,7 +103,7 @@ class TimesheetService
                 $rechazado = 0;
                 $aprobado = 0;
                 $timesheets_empleado = $empleado->timesheet;
-                if (!$timesheets_empleado->isEmpty()) {
+                if (! $timesheets_empleado->isEmpty()) {
                     foreach ($timesheets_empleado as $timesheet) {
                         switch ($timesheet->estatus) {
                             case 'aprobado':
@@ -245,7 +245,7 @@ class TimesheetService
     {
         $total = 0;
         foreach ($tareas as $tarea) {
-            if (!$tarea->horas->isEmpty()) {
+            if (! $tarea->horas->isEmpty()) {
                 foreach ($tarea->horas as $horas) {
                     $total += floatval($horas->horas_lunes);
                     $total += floatval($horas->horas_martes);

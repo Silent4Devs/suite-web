@@ -59,10 +59,10 @@ class TimesheetObserver
 
     private function forgetCache()
     {
-        Cache::forget('Timesheet:timesheet-' . auth()->user()->empleado->id);
+        Cache::forget('Timesheet:timesheet-'.auth()->user()->empleado->id);
         Cache::forget('Timesheet:timesheet_horas_all');
         Cache::forget('Timesheet:timesheet_all');
-        Cache::forget('timesheet_estatus');
-        Cache::forget('timesheet_reportes');
+        Cache::forget('Timesheet:timesheet_estatus');
+        Cache::forget('Timesheet:timesheet_reportes');
     }
 }
