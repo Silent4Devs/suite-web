@@ -14,12 +14,12 @@
     <div class="card card-body">
         <div class="row">
             <div class="btn_estatus_caja mb-3" style="display: flex; justify-content: end; width: 100%">
-                <a href="{{ route('admin.timesheet-rechazos') }}" class="btn btn-sm mr-2"
+                <a href="{{ route('admin.timesheet-rechazos') }}" class="btn btn-outline-primary mr-2"
                     style="{{ !$habilitarTodos ? 'background-color: #345183;color:white;' : '' }} border:none !important; position: relative;padding:10px;"
                     id="btn_directos" title="Mostrar todos los colaboradores de los cuales eres líder directo">
                     Directos
                 </a>
-                <a href="{{ route('admin.timesheet-rechazos') }}?habilitarTodos=true" class="btn btn-sm"
+                <a href="{{ route('admin.timesheet-rechazos') }}?habilitarTodos=true" class="btn btn-outline-primary"
                     style="{{ $habilitarTodos ? 'background-color: #345183;color:white;' : '' }} border:none !important; position: relative;padding:10px;"
                     id="btn_todos" title="Mostrar todos los colaboradores de los cuales eres líder">
                     Todos
