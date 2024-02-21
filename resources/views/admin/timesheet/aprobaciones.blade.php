@@ -15,17 +15,20 @@
     {{-- @include('admin.timesheet.complementos.blue-card-header') --}}
     <div class="card card-body">
         <div class="row">
-            <div class="btn_estatus_caja mb-3" style="display: flex; justify-content: end; width: 100%">
-                <a href="{{ route('admin.timesheet-aprobaciones') }}" class="btn btn-sm mr-2"
-                    style="{{ !$habilitarTodos ? 'background-color: #345183;color:white;' : '' }} border:none !important; position: relative;padding:10px;"
-                    id="btn_directos" title="Mostrar todos los colaboradores de los cuales eres líder directo">
-                    Directos
-                </a>
-                <a href="{{ route('admin.timesheet-aprobaciones') }}?habilitarTodos=true" class="btn btn-sm"
-                    style="{{ $habilitarTodos ? 'background-color: #345183;color:white;' : '' }} border:none !important; position: relative;padding:10px;"
-                    id="btn_todos" title="Mostrar todos los colaboradores de los cuales eres líder">
-                    Todos
-                </a>
+            <div class="col-12">
+                <div class="mb-3" style="display: flex; justify-content: end; width: 100%">
+                    <a href="{{ route('admin.timesheet-aprobaciones') }}" class="btn btn-outline-primary mr-2"
+                        style="{{ !$habilitarTodos ? 'background-color: #345183;color:white;' : '' }} border:none !important; position: relative;padding:10px;"
+                        id="btn_directos" title="Mostrar todos los colaboradores de los cuales eres líder directo">
+                        Directos
+                    </a>
+                    <a href="{{ route('admin.timesheet-aprobaciones') }}?habilitarTodos=true"
+                        class="btn btn-outline-primary"
+                        style="{{ $habilitarTodos ? 'background-color: #345183;color:white;' : '' }} border:none !important; position: relative;padding:10px;"
+                        id="btn_todos" title="Mostrar todos los colaboradores de los cuales eres líder">
+                        Todos
+                    </a>
+                </div>
             </div>
             <div class="datatable-fix w-100">
                 <table id="datatable_timesheet" class="table w-100">

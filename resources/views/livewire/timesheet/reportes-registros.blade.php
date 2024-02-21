@@ -1,5 +1,5 @@
 <div>
-    <div class="d-flex justify-content-between mb-4" style="gap: 10px; width: 95%; margin:auto;">
+    <div class="box-caja-cards-times d-flex justify-content-between mb-4" style="gap: 20px; width: 95%; margin:auto;">
         <a href="#" id="btn_todos" wire:click="todos">
             <div class="card-complement">
                 <div class="bg-objet" style="background-color: #83BCFE;"></div>

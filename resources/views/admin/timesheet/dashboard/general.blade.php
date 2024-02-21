@@ -3,52 +3,6 @@
         <div class="card-body card">
             <h5 class="titulo-grafica d-flex justify-content-between">
                 <div>
-                    <i class="fa-solid fa-circle mr-3" style="color:#8BE578;"></i>Registros Totales del mes
-                </div>
-            </h5>
-            <div class="row p-2 d-flex align-items-center justify-content-center">
-                <div class="col-12 row d-flex justify-content-center">
-                    <div class="card col-2 bg-secondary text-center text-light m-1 p-3">
-                        <span>
-                            <strong>{{ $counters['totales'] }}</strong>
-                        </span>
-                        <span>Totales</span>
-                    </div>
-                    <div class="card col-2 bg-success text-center text-light m-1 p-3">
-                        <span>
-                            <strong>{{ $counters['aprobados_contador'] }}</strong>
-                        </span>
-                        <span>Aprobados</span>
-                    </div>
-                    <div class="card col-2 bg-primary text-center text-light m-1 p-3">
-                        <span>
-                            <strong>{{ $counters['pendientes_contador'] }}</strong>
-                        </span>
-                        <span>Pendientes</span>
-                    </div>
-                    <div class="card col-2 bg-warning text-center text-light m-1 p-3">
-                        <span>
-                            <strong>{{ $counters['rechazos_contador'] }}</strong>
-                        </span>
-                        <span>Rechazados</span>
-                    </div>
-                    <div class="card col-2 bg-danger text-center text-light m-1 p-3">
-                        <span>
-                            <strong>{{ $counters['borrador_contador'] }}</strong>
-                        </span>
-                        <span>Borradores</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-12">
-        <div class="card-body card">
-            <h5 class="titulo-grafica d-flex justify-content-between">
-                <div>
                     <i class="fa-solid fa-circle mr-3" style="color:#8BE578;"></i>Registros de Timesheet por Área
                 </div>
                 <div class="row">
@@ -191,8 +145,7 @@
                         <div class="progress">
                             <div class="progress-bar partisipacion-{{ $area_p['nivel_p'] }}" role="progressbar"
                                 style="width: {{ $area_p['partisipacion'] }}%"
-                                aria-valuenow="{{ $area_p['partisipacion'] }}" aria-valuemin="0"
-                                aria-valuemax="100">
+                                aria-valuenow="{{ $area_p['partisipacion'] }}" aria-valuemin="0" aria-valuemax="100">
                             </div>
                         </div>
                         <small><strong>{{ $area_p['times_aprobados'] }}</strong> aprobados</small>

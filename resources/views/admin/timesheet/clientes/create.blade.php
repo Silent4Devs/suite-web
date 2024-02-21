@@ -22,8 +22,10 @@
 
     <div class="card card-body">
         <div class="row">
-            <h4 class="title-card-time">Nueva Tarea</h4>
-            <hr class="my-4">
+            <div class="col-12">
+                <h4 class="title-card-time">Nuevo Cliente</h4>
+                <hr class="my-4">
+            </div>
         </div>
         <form action="{{ asset('admin/timesheet/clientes/store') }}" method="POST" class="row">
             @csrf
@@ -72,8 +74,8 @@
                 </div> --}}
 
                 <div class="col-md-12 col-sm-12 mt-4">
-                    <div class="card vrd-agua" style="background-color:#345183;">
-                        <p class="mb-1 text-center text-white">DOMICILIO</p>
+                    <div class="card vrd-agua" style="background-color:#fff;">
+                        <p class="mb-1">DOMICILIO</p>
                     </div>
                 </div>
 
@@ -95,7 +97,7 @@
                     {!! Form::label(
                         'ciudad',
                         ' Ciudad o Municipio/
-                                                                                                                                                                                                                            País*',
+                                                                                                                                                                                                                                                                                                                                País*',
                         ['class' => 'asterisco'],
                     ) !!}
                 </div>
@@ -120,8 +122,8 @@
                 </div>
 
                 <div class="col-md-12 col-sm-12 mt-4">
-                    <div class="card vrd-agua" style="background-color:#345183;">
-                        <p class="mb-1 text-center text-white">DATOS DEL CONTACTO</p>
+                    <div class="card vrd-agua" style="background-color:#fff;">
+                        <p class="mb-1">DATOS DEL CONTACTO</p>
                     </div>
                 </div>
 
@@ -131,7 +133,7 @@
                     {!! Form::label(
                         'nombre_contacto',
                         'Nombre Completo del
-                                                                                                                                                                                                                                contacto*',
+                                                                                                                                                                                                                                                                                                                                    contacto*',
                         ['class' => 'asterisco'],
                     ) !!}
 
@@ -161,8 +163,8 @@
 
 
                 <div class="col-md-12 col-sm-12 mt-4">
-                    <div class="card vrd-agua" style="background-color:#345183;">
-                        <p class="mb-1 text-center text-white">PRODUCTOS Y/O SERVICIOS</p>
+                    <div class="card vrd-agua" style="background-color:#fff;">
+                        <p class="mb-1">PRODUCTOS Y/O SERVICIOS</p>
                     </div>
                 </div>
 
@@ -172,7 +174,7 @@
                     {!! Form::label(
                         'objeto_descripcion',
                         'Objeto social / Descripción
-                                                                                                                                                                                                                                del servicio o producto*',
+                                                                                                                                                                                                                                                                                                                                    del servicio o producto*',
                         ['class' => 'asterisco'],
                     ) !!}
                 </div>
@@ -182,7 +184,7 @@
                     {!! Form::label(
                         'cobertura',
                         'Cobertura, Rango geográfico
-                                                                                                                                                                                                                            en el cual presta los servicios*',
+                                                                                                                                                                                                                                                                                                                                en el cual presta los servicios*',
                         ['class' => 'asterisco'],
                     ) !!}
                 </div>

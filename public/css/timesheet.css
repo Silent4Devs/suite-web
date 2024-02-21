@@ -59,8 +59,8 @@ table {
     background-color: #F8FAFC !important;
 }
 .caja-calendar-semana .anima-focus label {
-    background-color: #6F8FB8;
-    color: #fff;
+    background-color: #6F8FB8 !important;
+    color: #fff !important;
     font-size: 18px;
 }
 
@@ -516,9 +516,12 @@ table.dataTable tbody tr.selected td {
 }
 
 /* componentes --------------- */
+.box-caja-cards-times a{
+    width: 100%;
+}
 .card-complement {
     flex-direction: row;
-    width: 220px;
+    min-width: 100%;
     height: 60px;
     overflow: hidden;
     border-radius: 6px !important;
@@ -815,4 +818,6 @@ div .form-control:not(#form_timesheet .form-control) {
     margin-left: 0px !important;
     padding-right: 0px !important;
     padding-left: 0px !important;
-}
+
+.btn-secondary:hover {
+    background-color: #E8E8E8;

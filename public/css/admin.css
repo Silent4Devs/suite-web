@@ -273,7 +273,7 @@ header {
 
 
 .card.vrd-agua {
-    border-radius: 100px !important;
+    border-radius: 100px ;
     overflow: hidden;
 }
 
@@ -1318,4 +1318,11 @@ a {
     width: 100%;
     max-width: 1750px;
     margin: auto;
+}
+
+.vrd-agua{
+    border: none;
+    border-bottom: 1px solid #006DDB;
+    color: #006DDB;
+    border-radius: 0px !important;
 }
