@@ -60,6 +60,13 @@ class Timesheet extends Model implements Auditable
         });
     }
 
+    public static function getAllEstatus()
+    {
+        return Cache::remember('timesheet_estatus', now()->addHours(2), function () {
+            return self::select('estatus')->get();
+        });
+    }
+
     public function empleado()
     {
         return $this->belongsTo(Empleado::class, 'empleado_id')->select('id', 'name', 'area_id');
