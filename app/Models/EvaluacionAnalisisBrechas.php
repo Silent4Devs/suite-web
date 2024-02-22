@@ -5,11 +5,11 @@ namespace App\Models;
 use App\Models\Iso27\AnalisisBrechasIso;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
-class EvaluacionAnalisisBrechas extends Model
+use OwenIt\Auditing\Contracts\Auditable;
+class EvaluacionAnalisisBrechas extends Model implements Auditable
 {
     use HasFactory;
-
+    use \OwenIt\Auditing\Auditable;
     public $table = 'evaluacion_analisis_brechas';
 
     public $fillable = [

@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
-class UsuariosListaInformativa extends Model
+use OwenIt\Auditing\Contracts\Auditable;
+class UsuariosListaInformativa extends Model implements Auditable
 {
     use HasFactory;
-
+    use \OwenIt\Auditing\Auditable;
     protected $table = 'usuarios_lista_informativas';
 
     protected $fillable = [
