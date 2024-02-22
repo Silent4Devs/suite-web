@@ -11,6 +11,7 @@ class UsuariosCursos extends Model implements Auditable
 {
     use ClearsResponseCache, HasFactory;
     use \OwenIt\Auditing\Auditable;
+
     protected $table = 'course_user';
 
     protected $fillable = [

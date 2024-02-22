@@ -4,11 +4,8 @@ namespace App\Http\Livewire;
 
 use App\Models\RH\CatalogoRangosObjetivos;
 use App\Models\RH\RangosObjetivos as RHRangosObjetivos;
-use Hamcrest\Core\IsNot;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
-
-use function PHPUnit\Framework\isNull;
 
 class EditRangosObjetivos extends Component
 {
@@ -46,7 +43,7 @@ class EditRangosObjetivos extends Component
                 'parametro' => '',
                 'valor' => null,
                 'descripcion' => '',
-            ];;
+            ];
     }
 
     public function removeParametro1($keyndex)
@@ -97,7 +94,7 @@ class EditRangosObjetivos extends Component
 
         $param_extra = $this->groupValues($data);
 
-        if (!empty($param_extra)) {
+        if (! empty($param_extra)) {
             foreach ($param_extra as $key => $p) {
                 RHRangosObjetivos::create([
                     'catalogo_rangos_id' => $catalogo->id,
@@ -134,10 +131,10 @@ class EditRangosObjetivos extends Component
 
             if ($posicion <= 2) {
                 // Construct the variable name by concatenating $posicion to $estatus_
-                $estatus_variable_name = 'estatus_' . $posicion;
-                $valor_estatus_name = 'valor_estatus_' . $posicion;
-                $descripcion_parametros_name = 'descripcion_parametros_' . $posicion;
-                $color_estatus_name = 'color_estatus_' . $posicion;
+                $estatus_variable_name = 'estatus_'.$posicion;
+                $valor_estatus_name = 'valor_estatus_'.$posicion;
+                $descripcion_parametros_name = 'descripcion_parametros_'.$posicion;
+                $color_estatus_name = 'color_estatus_'.$posicion;
                 // dd($parametro, $posicion);
                 $this->$estatus_variable_name = $parametro->parametro;
                 $this->$valor_estatus_name = $parametro->valor;
@@ -169,7 +166,7 @@ class EditRangosObjetivos extends Component
 
             if (
                 isset($values[$estatusKey]) && isset($values[$valorKey]) &&
-                !empty($values[$estatusKey]) && !empty($values[$valorKey])
+                ! empty($values[$estatusKey]) && ! empty($values[$valorKey])
             ) {
                 $groupedValues["group_{$key}"] = [
                     'estatus' => $values[$estatusKey],
@@ -179,6 +176,7 @@ class EditRangosObjetivos extends Component
                 ];
             }
         }
+
         // dd($groupedValues);
         return $groupedValues;
     }

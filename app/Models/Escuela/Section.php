@@ -11,8 +11,9 @@ use OwenIt\Auditing\Contracts\Auditable;
 class Section extends Model implements Auditable
 {
     use ClearsResponseCache, HasFactory;
-    use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
+    use SoftDeletes;
+
     protected $guarded = ['id'];
 
     //Relacion uno a muchos

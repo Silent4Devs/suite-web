@@ -7,10 +7,12 @@ use App\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
+
 class SolicitudAprobador extends Model implements Auditable
 {
     use ClearsResponseCache, HasFactory;
     use \OwenIt\Auditing\Auditable;
+
     public $table = 'solicitudes_aprobadores';
 
     protected $dates = ['deleted_at'];
