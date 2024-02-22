@@ -8,12 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 use OwenIt\Auditing\Contracts\Auditable;
 
-class TimesheetCliente extends Model
+class TimesheetCliente extends Model implements Auditable
     // implements Auditable
 {
     use ClearsResponseCache, HasFactory;
-    // use \OwenIt\Auditing\Auditable;
-
+    use \OwenIt\Auditing\Auditable;
     protected $table = 'timesheet_clientes';
 
     public $incrementing = false;

@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
-class ComentariosProcesosListaDistribucion extends Model
+use OwenIt\Auditing\Contracts\Auditable;
+class ComentariosProcesosListaDistribucion extends Model implements Auditable
 {
     use HasFactory;
-
+    use \OwenIt\Auditing\Auditable;
     protected $table = 'comentarios_procesos_lista_distribucions';
 
     protected $fillable = [
