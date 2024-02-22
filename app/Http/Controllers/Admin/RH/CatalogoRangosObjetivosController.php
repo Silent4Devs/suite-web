@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin\RH;
 
 use App\Http\Controllers\Controller;
-use App\Models\rh\CatalogoRangosObjetivos;
+use App\Models\RH\CatalogoRangosObjetivos;
 use Illuminate\Http\Request;
 
 class CatalogoRangosObjetivosController extends Controller
