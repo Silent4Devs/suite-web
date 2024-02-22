@@ -1148,7 +1148,7 @@ table.dataTable thead>tr>td.sorting_desc_disabled:before {
     display: grid !important;
     grid-template-areas: "input";
     position: relative !important;
-    /* margin-top: 12px; */
+    margin-bottom: 25px;
 }
 
 .anima-focus label,
