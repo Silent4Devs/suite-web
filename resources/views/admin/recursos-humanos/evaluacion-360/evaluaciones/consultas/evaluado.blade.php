@@ -1011,7 +1011,7 @@
                     pointHoverBackgroundColor: '#fff',
                     pointHoverBorderColor: 'rgb(51,109,255)'
                 }, {
-                    label: 'Califiación Jefe',
+                    label: 'Calificación Jefe',
                     data: @json($calificacionObjetivos),
                     fill: true,
                     backgroundColor: 'rgba(46, 204, 65, 0.5)',
