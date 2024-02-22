@@ -54,10 +54,10 @@
                                     {{-- @if ($time->estatus == 'papelera' || $time->estatus == 'rechazado')
                                         <button title="Eliminar" class="btn" style="color:red;" data-toggle="modal" data-target="#alert_time_delet_{{ $time->id }}"><i class="fa-solid fa-trash-can"></i></button>
                                     @endif --}}
-                                    <a href="{{ route('admin.timesheet-create-copia', $time->id) }}" class="btn"
+                                    {{-- <a href="{{ route('admin.timesheet-create-copia', $time->id) }}" class="btn"
                                         title="Copiar Timesheet">
                                         <i class="fa-solid fa-copy"></i>
-                                    </a>
+                                    </a> --}}
                                 </td>
                             </tr>
                         @endforeach
