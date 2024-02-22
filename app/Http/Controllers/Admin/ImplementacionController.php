@@ -24,7 +24,7 @@ class ImplementacionController extends Controller
         // PlanBaseActividade::with('fase')->get()
         $path_asset = asset($gantt_path);
         $gant_readed = end($archivos_gantt);
-        $planbase = PlanBaseActividade::with('actividad_fase')->get();
+        $planbase = PlanBaseActividade::getWithActividad();
         $responsable = $users;
         $responsablenom = $users->where('id', '=', '3');
 

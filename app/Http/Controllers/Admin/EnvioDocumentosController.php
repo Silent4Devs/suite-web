@@ -81,7 +81,7 @@ class EnvioDocumentosController extends Controller
     public function create()
     {
         abort_if(Gate::denies('solicitud_mensajeria_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $operadores = EnvioDocumentosAjustes::with(['coordinador', 'mensajero'])->first();
+        $operadores = EnvioDocumentosAjustes::getFirstWithCoordinadorMensajero();
         $solicitud = new EnvioDocumentos();
         $solicita = User::getCurrentUser()->empleado->supervisor_id;
         $fecha_solicitud = Carbon::now();
@@ -139,7 +139,7 @@ class EnvioDocumentosController extends Controller
         }
 
         $fecha_solicitud = $solicitud->fecha_solicitud;
-        $operadores = EnvioDocumentosAjustes::with(['coordinador', 'mensajero'])->first();
+        $operadores = EnvioDocumentosAjustes::getFirstWithCoordinadorMensajero();
 
         return view('admin.envio-documentos.edit', compact('solicitud', 'fecha_solicitud', 'operadores'));
     }
@@ -269,7 +269,7 @@ class EnvioDocumentosController extends Controller
         }
 
         $fecha_solicitud = $solicitud->fecha_solicitud;
-        $operadores = EnvioDocumentosAjustes::with(['coordinador', 'mensajero'])->first();
+        $operadores = EnvioDocumentosAjustes::getFirstWithCoordinadorMensajero();
 
         return view('admin.envio-documentos.seguimiento', compact('solicitud', 'fecha_solicitud', 'operadores'));
     }

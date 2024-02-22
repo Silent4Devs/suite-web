@@ -122,7 +122,7 @@ class EmpleadoController extends Controller
         $perfiles_seleccionado = null;
         $puestos_seleccionado = null;
         //$perfiles = PerfilEmpleado::all();
-        $tipoContratoEmpleado = TipoContratoEmpleado::select('id', 'name', 'slug', 'description')->get();
+        $tipoContratoEmpleado = TipoContratoEmpleado::getAll();
         $entidadesCrediticias = EntidadCrediticia::select('id', 'entidad')->get();
         $empleado = new Empleado;
         $idiomas = Language::get();
@@ -944,7 +944,7 @@ class EmpleadoController extends Controller
         $documentos = EvidenciasDocumentosEmpleados::getAll();
         $puestos = Puesto::getAll();
         $perfiles = PerfilEmpleado::getAll();
-        $tipoContratoEmpleado = TipoContratoEmpleado::select('id', 'name', 'description', 'slug')->get();
+        $tipoContratoEmpleado = TipoContratoEmpleado::getAll();
         $entidadesCrediticias = EntidadCrediticia::select('id', 'entidad')->get();
         if (isset($empleado->perfil_empleado_id)) {
             $perfiles_seleccionado = $empleado->perfil_empleado_id;
