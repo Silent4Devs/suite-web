@@ -74,7 +74,7 @@
                         <td>
                             @foreach ($evaluaciones_a_realizar as $evaluar)
                                 <a
-                                    href="{{ url('admin/recursos-humanos/evaluacion-360/evaluaciones/' . $evaluacion->id . '/evaluacion/' . $evaluado->id . '/' . $evaluar->empleado_evaluado->id) }}">
+                                    href="{{ url('admin/recursos-humanos/evaluacion-360/evaluaciones/' . $evaluacion->id . '/evaluacion/' . $evaluar->empleado_evaluado->id . '/' . $evaluado->id) }}">
                                     <img style=""
                                         src="{{ asset('storage/empleados/imagenes/') }}/{{ $evaluar->empleado_evaluado->avatar }}"
                                         class="rounded-circle" alt="{{ $evaluar->empleado_evaluado->name }}"

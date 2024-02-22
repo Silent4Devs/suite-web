@@ -65,8 +65,8 @@
                 <img src="{{ asset('assets/Rectángulo 2344@2x.png') }}" style="width: 128px; height: 119px;">
             </div>
             <div class="col-md-10" style="margin-left: 10px;">
-                <h3>Crea tu template</h3>
-                <h4>Genera tus preguntas y personaliza tus campos según lo requieras</h4>
+                <h3>Crea tu Catalogo Rangos</h3>
+                <h4>Genera tus Parametros, valores y color con el que seran mostrados</h4>
                 {{-- <p class="letra-subtitulo-template mb-2">Elaboraremos nuestro cuestionario que nos permitirá evaluar el cumplimiento de nuestra norma seleccionada.</p> --}}
             </div>
         </div>
