@@ -85,27 +85,14 @@
                             <p>Modifique los rangos de calificación por categoría</p>
                             <form action="{{ route('admin.ev360-normalizar-resultados', $evaluacion) }}" method="POST">
                                 @csrf
-                                <div class="form-group">
-                                    <label for="">Inaceptable (menor o igual a)</label>
-                                    <input type="number" class="form-control" id="inaceptable" name="inaceptable"
-                                        placeholder="Inaceptable" value="{{ $rangosResultados['inaceptable'] }}">
-                                </div>
-                                <div class="form-group">
-                                    <label for="">Mínimo Aceptable (menor o igual a)</label>
-                                    <input type="number" class="form-control" id="minimoAceptable" name="minimoAceptable"
-                                        placeholder="Mínimo Aceptable" value="{{ $rangosResultados['minimo_aceptable'] }}">
-                                </div>
-                                <div class="form-group">
-                                    <label for="">Aceptable (menor o igual a)</label>
-                                    <input type="number" class="form-control" id="aceptable" name="aceptable"
-                                        placeholder="Aceptable" value="{{ $rangosResultados['aceptable'] }}">
-                                </div>
-                                <div class="form-group">
-                                    <label for="">Sobresaliente (mayor a)</label>
-                                    <input type="number" class="form-control" id="sobresaliente" name="sobresaliente"
-                                        readonly placeholder="Sobresaliente"
-                                        value="{{ $rangosResultados['sobresaliente'] }}">
-                                </div>
+                                @foreach ($rangosResultados as $parametro => $valor)
+                                    <div class="form-group">
+                                        <label for="">{{ $parametro }} (menor o igual a)</label>
+                                        <input type="number" class="form-control" id="{{ $parametro }}"
+                                            name="{{ $parametro }}" placeholder="{{ $parametro }}"
+                                            value="{{ $valor }}">
+                                    </div>
+                                @endforeach
                                 <button id="resetValues" type="button" class="btn btn-primary">Restablecer Valores</button>
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                                 <button type="submit" class="btn btn-success" style="float: right;">Normalizar</button>
@@ -148,7 +135,7 @@
                 </div>
             </div>
             <div class="col-12" x-show="open" x-transition>
-                @livewire('ev360-resumen-tabla', ['evaluacion' => $evaluacion->id, 'rangos' => $rangosResultados])
+                @livewire('ev360-resumen-tabla-parametros', ['evaluacion' => $evaluacion->id, 'rangos' => $rangosResultados, 'colores' => $rangosColores])
             </div>
         </div>
     </div>
@@ -163,15 +150,20 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('resetValues').addEventListener('click', () => {
-                document.getElementById('inaceptable').value = '60';
-                document.getElementById('minimoAceptable').value = '80';
-                document.getElementById('aceptable').value = '100';
-                document.getElementById('sobresaliente').value = '100';
+                @foreach ($rangosResultados as $parametro => $valor)
+                    document.getElementById('{{ $parametro }}').value = '{{ $valor }}';
+                @endforeach
             });
-            document.getElementById('aceptable').addEventListener('keyup', () => {
-                document.getElementById('sobresaliente').value = parseInt(document.getElementById(
-                    'aceptable').value);
+
+            document.getElementById('resetValues').addEventListener('keyup', () => {
+                @foreach ($rangosResultados as $parametro => $valor)
+                    document.getElementById('{{ $parametro }}').value = '{{ $valor }}';
+                @endforeach
             });
+
+            // Chart creation script
+            var backgroundColors = Object.values(@json($rangosColores));
+
             var ctx = document.getElementById('resultadosGenerales').getContext('2d');
             var resultadosGenerales = new Chart(ctx, {
                 type: 'bar',
@@ -179,20 +171,8 @@
                     datasets: [{
                         label: 'Resultados Generales',
                         data: @json($calificaciones),
-                        backgroundColor: [
-                            'rgba(231, 76, 60, 0.8)',
-                            'rgba(230, 126, 34 , 0.8)',
-                            'rgba(54, 162, 235, 0.8)',
-                            'rgba(46, 204, 113 , 0.8)',
-
-                        ],
-                        borderColor: [
-                            'rgba(231, 76, 60, 1)',
-                            'rgba(230, 126, 34 , 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(46, 204, 113 , 1)',
-
-                        ],
+                        backgroundColor: backgroundColors,
+                        borderColor: backgroundColors.map(color => color.replace('0.8', '1')),
                         borderWidth: 1
                     }]
                 },
@@ -211,6 +191,7 @@
             });
         });
     </script>
+
     <script>
         $(function() {
             let dtButtons = [{
