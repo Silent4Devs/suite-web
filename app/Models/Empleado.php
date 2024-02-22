@@ -94,7 +94,6 @@ class Empleado extends Model implements Auditable
 
     //, 'jefe_inmediato', 'empleados_misma_area'
     protected $fillable = [
-        'id',
         'name',
         'n_registro',
         'foto',
@@ -299,6 +298,13 @@ class Empleado extends Model implements Auditable
     {
         return Cache::remember('Empleados:empleados_alta_data_columns_all', 3600 * 6, function () {
             return self::alta()->select('id', 'name', 'email', 'foto')->get();
+        });
+    }
+
+    public static function getAllDataColumns()
+    {
+        return Cache::remember('Empleados:empleados_all_data_columns_all', 3600 * 6, function () {
+            return self::select('id', 'name', 'email', 'foto')->get();
         });
     }
 
