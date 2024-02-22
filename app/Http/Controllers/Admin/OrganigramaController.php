@@ -57,11 +57,10 @@ class OrganigramaController extends Controller
                             'childrenOrganigrama.supervisor' => function ($queryC) {
                                 return $queryC->select('id', 'name', 'foto', 'puesto_id', 'genero');
                             },
-                            'childrenOrganigrama.childrenOrganigrama'
+                            'childrenOrganigrama.childrenOrganigrama',
                         ])
                         ->whereNull('supervisor_id')
                         ->first(); // Carga ansiosa (Eager loading)
-
 
                     return $organizacionTree->toJson();
                 } else {
@@ -82,8 +81,8 @@ class OrganigramaController extends Controller
         }
         $rutaImagenes = asset('storage/empleados/imagenes/');
         $organizacionDB = Organizacion::getFirst();
-        $organizacion = !is_null($organizacionDB) ? Organizacion::getFirst()->empresa : 'la organización';
-        $org_foto = !is_null($organizacionDB) ? url('images/' . DB::table('organizacions')->select('logotipo')->first()->logotipo) : url('img/Silent4Business-Logo-Color.png');
+        $organizacion = ! is_null($organizacionDB) ? Organizacion::getFirst()->empresa : 'la organización';
+        $org_foto = ! is_null($organizacionDB) ? url('images/'.DB::table('organizacions')->select('logotipo')->first()->logotipo) : url('img/Silent4Business-Logo-Color.png');
         $areas = Area::getAll();
 
         return view('admin.organigrama.index', compact('organizacionTree', 'rutaImagenes', 'organizacion', 'org_foto', 'areas'));

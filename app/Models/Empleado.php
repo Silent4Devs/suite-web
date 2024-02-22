@@ -220,9 +220,7 @@ class Empleado extends Model implements Auditable
     public static function getAltaEmpleados()
     {
         return Cache::remember('Empleados:empleados_alta', 3600 * 8, function () {
-            return DB::table('empleados')
-                ->select('id', 'area_id', 'name', 'puesto')
-                ->alta()
+            return self::alta()->select('id', 'area_id', 'name', 'puesto')
                 ->get();
         });
     }
@@ -300,6 +298,13 @@ class Empleado extends Model implements Auditable
     {
         return Cache::remember('Empleados:empleados_alta_data_columns_all', 3600 * 6, function () {
             return self::alta()->select('id', 'name', 'email', 'foto')->get();
+        });
+    }
+
+    public static function getAllDataColumns()
+    {
+        return Cache::remember('Empleados:empleados_all_data_columns_all', 3600 * 6, function () {
+            return self::select('id', 'name', 'email', 'foto')->get();
         });
     }
 

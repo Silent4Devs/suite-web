@@ -12,41 +12,47 @@
             height: 1px;
         }
 
-        .tabla-fija .celdas-colaborador{
+        .tabla-fija .celdas-colaborador {
             position: sticky !important;
             left: 0px;
             z-index: 2;
         }
-        .tabla-fija td.celdas-colaborador{
+
+        .tabla-fija td.celdas-colaborador {
             background-color: #fff;
         }
-        .tabla-fija tr:nth-child(even) td.celdas-colaborador{
+
+        .tabla-fija tr:nth-child(even) td.celdas-colaborador {
             background-color: #eee;
         }
 
-        .tabla-fija .celdas-puesto{
+        .tabla-fija .celdas-puesto {
             position: sticky !important;
             left: 91px;
             background-color: #fff;
             z-index: 2;
         }
-        .tabla-fija td.celdas-puesto{
+
+        .tabla-fija td.celdas-puesto {
             background-color: #fff;
         }
-        .tabla-fija tr:nth-child(even) td.celdas-puesto{
+
+        .tabla-fija tr:nth-child(even) td.celdas-puesto {
             background-color: #eee;
         }
-        
-        .tabla-fija .celdas-evaluacion{
+
+        .tabla-fija .celdas-evaluacion {
             position: sticky !important;
             left: 209px;
             background-color: #fff;
             z-index: 2;
         }
-        .tabla-fija td.celdas-evaluacion{
+
+        .tabla-fija td.celdas-evaluacion {
             background-color: #fff;
         }
-        .tabla-fija tr:nth-child(even) td.celdas-evaluacion{
+
+        .tabla-fija tr:nth-child(even) td.celdas-evaluacion {
             background-color: #eee;
         }
     </style>
@@ -87,8 +93,7 @@
                                 <div class="form-group">
                                     <label for="">Mínimo Aceptable (menor o igual a)</label>
                                     <input type="number" class="form-control" id="minimoAceptable" name="minimoAceptable"
-                                        placeholder="Mínimo Aceptable"
-                                        value="{{ $rangosResultados['minimo_aceptable'] }}">
+                                        placeholder="Mínimo Aceptable" value="{{ $rangosResultados['minimo_aceptable'] }}">
                                 </div>
                                 <div class="form-group">
                                     <label for="">Aceptable (menor o igual a)</label>
@@ -114,7 +119,7 @@
             </div>
             <div class="col-12" x-show="open" x-transition>
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-6" style="min-height: 450px;">
                         <canvas id="resultadosGenerales"></canvas>
                     </div>
                     <div class="col-6">

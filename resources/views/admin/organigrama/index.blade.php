@@ -364,6 +364,11 @@
         .supervisor img {
             height: 80px !important;
         }
+
+        #chart-container .img-person{
+          width: 150px;
+          height: 150px;
+        }
     </style>
 @endsection
 

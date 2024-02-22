@@ -145,7 +145,7 @@ class Area extends Model implements Auditable
                 'children:id,name,foto,puesto_id,genero',
                 'supervisor:id,name,foto,puesto_id,genero',
                 'lider:id,name,foto,puesto_id,genero',
-                'grupo'
+                'grupo',
             ]);
     }
 
