@@ -21,7 +21,7 @@ class EV360CompetenciasController extends Controller
     {
         // abort_if(Gate::denies('capital_humano_competencias_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
-            $competencias = Competencia::with('tipo')->get();
+            $competencias = Competencia::getAllWithtipo();
 
             return datatables()->of($competencias)->toJson();
         }

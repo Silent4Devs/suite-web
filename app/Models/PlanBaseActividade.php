@@ -2,16 +2,17 @@
 
 namespace App\Models;
 
-use App\Traits\ClearsResponseCache;
-use App\Traits\MultiTenantModelTrait;
 use Carbon\Carbon;
 use DateTimeInterface;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\MediaLibrary\HasMedia;
+use App\Traits\ClearsResponseCache;
+use App\Traits\MultiTenantModelTrait;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class PlanBaseActividade extends Model implements Auditable, HasMedia
@@ -52,6 +53,27 @@ class PlanBaseActividade extends Model implements Auditable, HasMedia
         'team_id',
     ];
 
+    //Redis methods
+    public static function getAll()
+    {
+        return Cache::remember('PlanBaseActividades:PlanBaseActividades_all', 3600 * 4, function () {
+            return self::get();
+        });
+    }
+
+    public static function getSelectId()
+    {
+        return Cache::remember('PlanBaseActividades:PlanBaseActividades_select_id', 3600 * 4, function () {
+            return self::select('id')->get();
+        });
+    }
+
+    public static function getWithActividad()
+    {
+        return Cache::remember('PlanBaseActividades:PlanBaseActividades_with_actividad', 3600 * 4, function () {
+            return self::with('actividad_fase')->get();
+        });
+    }
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
