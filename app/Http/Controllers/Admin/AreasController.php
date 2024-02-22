@@ -21,6 +21,7 @@ use Intervention\Image\Facades\Image;
 use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
+use PDF;
 
 class AreasController extends Controller
 {
@@ -124,8 +125,8 @@ class AreasController extends Controller
             $file = $request->file('foto_area');
             $extension = $file->getClientOriginalExtension();
             $name_image = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-            $new_name_image = 'UID_'.$area->id.'_'.$name_image.'.'.$extension;
-            $route = storage_path('/app/public/areas/'.$new_name_image);
+            $new_name_image = 'UID_' . $area->id . '_' . $name_image . '.' . $extension;
+            $route = storage_path('/app/public/areas/' . $new_name_image);
 
             $image = Image::make($file)->encode('png', 70)->resize(256, null, function ($constraint) {
                 $constraint->aspectRatio();
@@ -186,7 +187,7 @@ class AreasController extends Controller
             //Si existe la imagen entonces se elimina al editarla
             $file = $request->file('foto_area');
 
-            $filePath = '/app/public/areas/'.$area->foto_area;
+            $filePath = '/app/public/areas/' . $area->foto_area;
 
             if (Storage::disk('public')->exists($filePath)) {
                 Storage::disk('public')->delete($filePath);
@@ -194,8 +195,8 @@ class AreasController extends Controller
 
             $extension = $file->getClientOriginalExtension();
             $name_image = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-            $new_name_image = 'UID_'.$area->id.'_'.$name_image.'.'.$extension;
-            $route = storage_path('/app/public/areas/'.$new_name_image);
+            $new_name_image = 'UID_' . $area->id . '_' . $name_image . '.' . $extension;
+            $route = storage_path('/app/public/areas/' . $new_name_image);
             $image = Image::make($file)->encode('png', 70)->resize(256, null, function ($constraint) {
                 $constraint->aspectRatio();
             });
@@ -260,8 +261,8 @@ class AreasController extends Controller
         $rutaImagenes = asset('storage/empleados/imagenes/');
         $grupos = Grupo::with('areas')->orderBy('id')->get();
         $organizacionDB = Organizacion::getFirst();
-        $organizacion = ! is_null($organizacionDB) ? Organizacion::getFirst()->empresa : 'la organización';
-        $org_foto = ! is_null($organizacionDB) ? url('images/'.DB::table('organizacions')->select('logotipo')->first()->logotipo) : url('img/Silent4Business-Logo-Color.png');
+        $organizacion = !is_null($organizacionDB) ? Organizacion::getFirst()->empresa : 'la organización';
+        $org_foto = !is_null($organizacionDB) ? url('images/' . DB::table('organizacions')->select('logotipo')->first()->logotipo) : url('img/Silent4Business-Logo-Color.png');
         $areas_sin_grupo = Area::whereDoesntHave('grupo')->get();
         $organizacion = Organizacion::getFirst();
 
@@ -282,5 +283,14 @@ class AreasController extends Controller
         // abort_if(AccessGate::denies('configuracion_area_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return Excel::download(new AreasExport, 'areas.csv');
+    }
+
+    public function pdf()
+    {
+        $areas = Area::get();
+        $pdf = PDF::loadView('areas', compact('areas'));
+        $pdf->setPaper('A4', 'portrait');
+
+        return $pdf->download('areas.pdf');
     }
 }
