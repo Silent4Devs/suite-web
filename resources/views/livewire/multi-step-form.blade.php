@@ -461,7 +461,7 @@
                                             <input type="text" wire:model.defer="nombre"
                                                 class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}"
                                                 id="nombre" aria-describedby="nombreHelp" name="nombre"
-                                                value="{{ old('nombre') }}">
+                                                maxlength="250" value="{{ old('nombre') }}">
                                             <small id="nombreHelp" class="form-text text-muted">Ingresa el nombre de la
                                                 evaluación</small>
                                             @if ($errors->has('nombre'))
@@ -531,12 +531,14 @@
                                                     style="position: relative;">
                                                     <input style="width: 120px;text-align: center;padding-right: 20px;"
                                                         wire:model.defer="pesoGeneralCompetencias"
-                                                        id="pesoGeneralCompetencias" class="form-control" type="number"
+                                                        id="pesoGeneralCompetencias" class="form-control" type="text"
+                                                        pattern="[0-9]*"
+                                                        oninput="this.value = this.value.replace(/[^0-9]/g, '');"
                                                         min="0" max="100">
                                                     <span style="position: absolute;top: 8px;left: 80px;">%</span>
                                                 </div>
                                             </div>
-                                            <div class="mt-3 row">
+                                            <div class="mt-3 row align-items-center"">
                                                 <div class="col-5">
                                                     <div style="margin-top: 8px;">
                                                         <label class="container-check">Objetivos
@@ -555,7 +557,9 @@
                                                 <div class="col-3 {{ $showPesoGeneralObjetivos ? '' : 'd-none' }}">
                                                     <input style="width: 120px;text-align: center;padding-right: 20px;"
                                                         wire:model.defer="pesoGeneralObjetivos"
-                                                        id="pesoGeneralOnjetivos" class="form-control" type="number"
+                                                        id="pesoGeneralOnjetivos" class="form-control" type="text"
+                                                        pattern="[0-9]*"
+                                                        oninput="this.value = this.value.replace(/[^0-9]/g, '');"
                                                         min="0" max="100">
                                                     <span style="position: absolute;top: 8px;left: 80px;">%</span>
                                                 </div>

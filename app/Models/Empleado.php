@@ -262,7 +262,7 @@ class Empleado extends Model implements Auditable
     public static function getaltaAll()
     {
         return Cache::remember('Empleados:empleados_alta_all', 3600 * 6, function () {
-            return self::alta()->get();
+            return self::orderBy('name')->alta()->get();
         });
     }
 
@@ -523,8 +523,7 @@ class Empleado extends Model implements Auditable
     public function childrenOrganigrama()
     {
         return $this->hasMany(self::class, 'supervisor_id', 'id')
-            ->select('id', 'name', 'foto', 'puesto_id', 'genero') // Agrega los campos que deseas seleccionar
-            ->with('childrenOrganigrama', 'supervisor', 'area')
+            ->with('childrenOrganigrama:id,name,foto,puesto_id,genero', 'supervisor:id,name,foto,puesto_id,genero', 'area')
             ->vacanteActiva();
     }
 
