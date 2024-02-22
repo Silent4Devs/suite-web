@@ -95,7 +95,7 @@
             </div>
         </form>  --}}
 
-        <div class="d-flex justify-content-between mb-4" style="gap: 10px;  margin:auto;">
+        <div class="box-caja-cards-times d-flex justify-content-between mb-4" style="gap: 10px;  margin:auto;">
             <a href="#" id="btn_todos" wire:click="actualizarEstatus('todos')">
                 <div class="card-complement">
                     <div class="bg-objet" style="background-color: #bdefff;"></div>
