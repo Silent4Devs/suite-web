@@ -244,17 +244,21 @@
                 </div>
             </a>
 
-            {{-- <a href="">
-                <div class="item-ob-ev" style="background-color: #19A877;">
-                    <div class="img-ob-ev">
-                        <img src="{{ asset('img/inicio_usuario/ev360.png') }}" alt="">
+            @if (isset($mis_evaluaciones->evaluacion) && $mis_evaluaciones->evaluacion->estatus == 2)
+                <a
+                    href="{{ url('admin/recursos-humanos/evaluacion-360/evaluaciones/' . $mis_evaluaciones->evaluacion->id . '/evaluacion/' . $usuario->empleado->id . '/' . $usuario->empleado->id) }}">
+
+                    <div class="item-ob-ev" style="background-color: #19A877;">
+                        <div class="img-ob-ev">
+                            <img src="{{ asset('img/inicio_usuario/ev360.png') }}" alt="">
+                        </div>
+                        <div class="info-ob-ev">
+                            <h5>Evaluación 360</h5>
+                            <p><small>Ver mi evaluación 360</small></p>
+                        </div>
                     </div>
-                    <div class="info-ob-ev">
-                        <h5>Evaluación 360</h5>
-                        <p><small>Ver mi evaluación 360</small></p>
-                    </div>
-                </div>
-            </a> --}}
+                </a>
+            @endif
 
         </div>
     </div>
