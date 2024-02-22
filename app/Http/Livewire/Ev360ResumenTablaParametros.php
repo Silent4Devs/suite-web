@@ -20,7 +20,7 @@ use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class Ev360ResumenTabla extends Component
+class Ev360ResumenTablaParametros extends Component
 {
     use FuncionesEvaluacion360;
     use LivewireAlert;
@@ -29,6 +29,8 @@ class Ev360ResumenTabla extends Component
     protected $paginationTheme = 'bootstrap';
 
     public $evaluacion;
+
+    public $maxValue = 0;
 
     public $lista_evaluados;
 
@@ -42,14 +44,18 @@ class Ev360ResumenTabla extends Component
 
     public $rangos;
 
-    public function mount($evaluacion, $rangos = null)
+    public $colores;
+
+    public function mount($evaluacion, $rangos = null, $colores = null)
     {
         $this->evaluacion = $evaluacion;
         $this->rangos = $rangos;
+        $this->colores = $colores;
     }
 
     public function render()
     {
+        // dd($this->rangos);
         $evaluacion = Evaluacion::select('id', 'nombre')->with('evaluados')->find(intval($this->evaluacion));
 
         $evaluados = $evaluacion->evaluados;
@@ -60,6 +66,9 @@ class Ev360ResumenTabla extends Component
         $aceptable = 0;
         $sobresaliente = 0;
         $ev360EvaluacionesController = new EV360EvaluacionesController();
+
+        $this->maxValue = max(array_map('intval', $this->rangos));
+
         foreach ($evaluados as $evaluado) {
             // $evaluado->load('area');
             $this->lista_evaluados->push([
@@ -71,23 +80,19 @@ class Ev360ResumenTabla extends Component
         }
         // dd($this->lista_evaluados);
         foreach ($this->lista_evaluados as $evaluado) {
-            if ($evaluado['informacion_evaluacion']['calificacion_final'] <= $this->rangos['inaceptable']) {
-                $inaceptable++;
-            } elseif ($evaluado['informacion_evaluacion']['calificacion_final'] <= $this->rangos['minimo_aceptable']) {
-                $minimo_aceptable++;
-            } elseif ($evaluado['informacion_evaluacion']['calificacion_final'] <= $this->rangos['aceptable']) {
-                $aceptable++;
-            } elseif ($evaluado['informacion_evaluacion']['calificacion_final'] > $this->rangos['sobresaliente']) {
-                $sobresaliente++;
+            $calificacionFinal = $evaluado['informacion_evaluacion']['calificacion_final'];
+            foreach ($this->rangos as $parametro => $valor) {
+                // dd($calificacionFinal, $valor);
+                if ($calificacionFinal <= $valor) {
+                    $counts[$parametro] = isset($counts[$parametro]) ? $counts[$parametro] + 1 : 1;
+                } elseif ($valor == $this->maxValue && $calificacionFinal > $valor) {
+                    // dd('entra elseif');
+                    $counts[$parametro] = isset($counts[$parametro]) ? $counts[$parametro] + 1 : 1;
+                }
             }
         }
 
-        $calificaciones->push([
-            'Inaceptable' => $inaceptable,
-            'Mínimo Aceptable' => $minimo_aceptable,
-            'Aceptable' => $aceptable,
-            'Sobresaliente' => $sobresaliente,
-        ]);
+        $calificaciones->push($counts);
         $calificaciones = $calificaciones->first();
 
         if ($this->search != '') {
@@ -106,7 +111,7 @@ class Ev360ResumenTabla extends Component
         $this->competencias_evaluadas = Competencia::find($this->obtenerCompetenciasEvaluadasEnLaEvaluacion($evaluacion->id));
         $this->objetivos_evaluados = $this->obtenerCantidadMaximaDeObjetivos($evaluacion->evaluados, $evaluacion->id);
 
-        return view('livewire.ev360-resumen-tabla', ['lista_evaluados', 'calificaciones', 'evaluacion', 'competencias_evaluadas', 'lista' => $collection]);
+        return view('livewire.ev360-resumen-tabla-parametros', ['lista_evaluados', 'calificaciones', 'evaluacion', 'competencias_evaluadas', 'lista' => $collection, 'maxValue']);
     }
 
     // public function paginate($items, $perPage = 5, $page = null, $options = [])
@@ -194,7 +199,7 @@ class Ev360ResumenTabla extends Component
                     $evaluaciones_competencias = EvaluacionRepuesta::with('competencia', 'evaluador')->where('evaluacion_id', $evaluacion->id)
                         ->where('evaluado_id', $evaluado->id)
                         ->where('evaluador_id', $evaluador->evaluador_id)->orderBy('id')->get();
-                    $evaluador_empleado = Empleado::getAllDataColumns()->find($evaluador->evaluador_id);
+                    $evaluador_empleado = Empleado::getAll()->find($evaluador->evaluador_id);
 
                     return $this->obtenerInformacionDeLaEvaluacionDeCompetencia($evaluador_empleado, $evaluador, $evaluado, $evaluaciones_competencias, $evaluacion);
                 }),
@@ -220,7 +225,7 @@ class Ev360ResumenTabla extends Component
             if ($jefe_evaluador_id == null) {
                 $jefe_evaluador = '-';
             } else {
-                $jefe_evaluador = Empleado::getAllDataColumns()->find($jefe_evaluador_id->evaluador_id);
+                $jefe_evaluador = Empleado::getAll()->find($jefe_evaluador_id->evaluador_id);
             }
 
             $lista_jefe_inmediato->push([
@@ -231,7 +236,7 @@ class Ev360ResumenTabla extends Component
                     $evaluaciones_competencias = EvaluacionRepuesta::with('competencia', 'evaluador')->where('evaluacion_id', $evaluacion->id)
                         ->where('evaluado_id', $evaluado->id)
                         ->where('evaluador_id', $evaluador->evaluador_id)->orderBy('id')->get();
-                    $evaluador_empleado = Empleado::getAllDataColumns()->find($evaluador->evaluador_id);
+                    $evaluador_empleado = Empleado::getAll()->find($evaluador->evaluador_id);
 
                     return $this->obtenerInformacionDeLaEvaluacionDeCompetencia($evaluador_empleado, $evaluador, $evaluado, $evaluaciones_competencias, $evaluacion);
                 }),
@@ -256,7 +261,7 @@ class Ev360ResumenTabla extends Component
                     $evaluaciones_competencias = EvaluacionRepuesta::with('competencia', 'evaluador')->where('evaluacion_id', $evaluacion->id)
                         ->where('evaluado_id', $evaluado->id)
                         ->where('evaluador_id', $evaluador->evaluador_id)->orderBy('id')->get();
-                    $evaluador_empleado = Empleado::getAllDataColumns()->find($evaluador->evaluador_id);
+                    $evaluador_empleado = Empleado::getAll()->find($evaluador->evaluador_id);
 
                     return $this->obtenerInformacionDeLaEvaluacionDeCompetencia($evaluador_empleado, $evaluador, $evaluado, $evaluaciones_competencias, $evaluacion);
                 }),
@@ -280,7 +285,7 @@ class Ev360ResumenTabla extends Component
                     $evaluaciones_competencias = EvaluacionRepuesta::with('competencia', 'evaluador')->where('evaluacion_id', $evaluacion->id)
                         ->where('evaluado_id', $evaluado->id)
                         ->where('evaluador_id', $evaluador->evaluador_id)->orderBy('id')->get();
-                    $evaluador_empleado = Empleado::getAllDataColumns()->find($evaluador->evaluador_id);
+                    $evaluador_empleado = Empleado::getAll()->find($evaluador->evaluador_id);
 
                     return $this->obtenerInformacionDeLaEvaluacionDeCompetencia($evaluador_empleado, $evaluador, $evaluado, $evaluaciones_competencias, $evaluacion);
                 }),
@@ -333,7 +338,7 @@ class Ev360ResumenTabla extends Component
             if ($jefe_evaluador_id == null) {
                 $jefe_evaluador = '-';
             } else {
-                $jefe_evaluador = Empleado::getAllDataColumns()->find($jefe_evaluador_id->evaluador_id);
+                $jefe_evaluador = Empleado::getAll()->find($jefe_evaluador_id->evaluador_id);
             }
 
             if ($supervisorObjetivos) {
@@ -423,7 +428,7 @@ class Ev360ResumenTabla extends Component
             'promedio_objetivos' => $promedio_objetivos,
             'promedio_general_objetivos' => $promedio_general_objetivos,
             'calificacion_final' => $calificacion_final,
-            'evaluadores' => Empleado::getAllDataColumns()->find($evaluadores->pluck('evaluador_id')),
+            'evaluadores' => Empleado::getAll()->find($evaluadores->pluck('evaluador_id')),
         ];
     }
 
