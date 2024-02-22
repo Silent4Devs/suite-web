@@ -4,12 +4,14 @@ namespace App\Models\RH;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class CatalogoRangosObjetivos extends Model
+class CatalogoRangosObjetivos extends Model implements Auditable
 {
     use HasFactory;
+    use \OwenIt\Auditing\Auditable;
 
-    protected $table = "catalogo_rangos_objetivos";
+    protected $table = 'catalogo_rangos_objetivos';
 
     protected $fillable = [
         'nombre_catalogo',
