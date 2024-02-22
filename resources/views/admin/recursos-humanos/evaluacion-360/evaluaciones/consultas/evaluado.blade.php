@@ -997,6 +997,7 @@
                 document.getElementById('barCompetencias'),
                 configBarCompetenciasChart
             );
+
             //OBJETIVOS
             const dataRadarObjetivos = {
                 labels: @json($nombresObjetivos),
