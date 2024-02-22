@@ -6,12 +6,12 @@ use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
-class UserAnswer extends Model
+use OwenIt\Auditing\Contracts\Auditable;
+class UserAnswer extends Model implements Auditable
 {
     use ClearsResponseCache, SoftDeletes;
     use HasFactory;
-
+    use \OwenIt\Auditing\Auditable;
     protected $table = 'user_answers';
 
     protected $fillable = [

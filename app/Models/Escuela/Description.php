@@ -6,12 +6,12 @@ use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
-class Description extends Model
+use OwenIt\Auditing\Contracts\Auditable;
+class Description extends Model implements Auditable
 {
     use ClearsResponseCache, HasFactory;
     use SoftDeletes;
-
+    use \OwenIt\Auditing\Auditable;
     protected $guarded = ['id'];
 
     protected $fillable = [
