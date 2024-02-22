@@ -18,7 +18,7 @@
                         $cleanedUri = str_replace('admin/', '', $route['uri']);
                     @endphp
                     <li class="list-group-item text-black"><a style="color: black"
-                            href="{{ url($route['uri']) }}">{{ ucfirst($cleanedUri) }}</a>
+                            href="{{ url($route['uri']) }}">{{ ucfirst(str_replace('-', ' ', $cleanedUri)) }}</a>
                     </li>
                 @endforeach
             </ul>
@@ -35,7 +35,7 @@
                         $cleanedUri = str_replace('admin/', '', $route['uri']);
                     @endphp
                     <li class="list-group-item text-black"><a style="color: black"
-                            href="{{ url($route['uri']) }}">{{ ucfirst($cleanedUri) }}</a>
+                            href="{{ url($route['uri']) }}">{{ ucfirst(str_replace('-', ' ', $cleanedUri)) }}</a>
                     </li>
                 @endforeach
             </ul>

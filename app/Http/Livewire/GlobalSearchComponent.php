@@ -65,7 +65,7 @@ class GlobalSearchComponent extends Component
             })->map(function ($route) {
                 // Map routes to an array of route information
                 return [
-                    'uri' => str_replace('-', ' ', $route->uri()),
+                    'uri' => $route->uri(),
                     //'method' => implode('|', $route->methods()),
                     //'name' => $route->getName(),
                     // Add more route details as needed
