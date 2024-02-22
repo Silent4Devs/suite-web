@@ -22,6 +22,7 @@ use App\Models\AuditoriaAnual;
 use App\Models\AuditoriaInterna;
 use App\Models\Calendario;
 use App\Models\CalendarioOficial;
+use App\Models\CategoriaCapacitacion;
 use App\Models\ComunicacionSgi;
 use App\Models\ContractManager\Contrato;
 use App\Models\DeclaracionAplicabilidad;
@@ -56,6 +57,7 @@ use App\Models\Registromejora;
 use App\Models\RevisionDocumento;
 use App\Models\RH\Competencia;
 use App\Models\RH\Evaluacion;
+use App\Models\RH\GruposEvaluado;
 use App\Models\RH\MetricasObjetivo;
 use App\Models\RH\ObjetivoEmpleado;
 use App\Models\RH\TipoCompetencia;
@@ -84,6 +86,7 @@ use App\Observers\AreasObserver;
 use App\Observers\AuditoriaAnualObserver;
 use App\Observers\AuditoriaInternaObserver;
 use App\Observers\CalendarioObserver;
+use App\Observers\CategoriaCapacitacionObserver;
 use App\Observers\CompetenciaObserver;
 use App\Observers\ComunicadoSgiObserver;
 use App\Observers\ContratoObserver;
@@ -94,6 +97,7 @@ use App\Observers\DocumentoObserver;
 use App\Observers\EvaluacionObserver;
 use App\Observers\EvidenciasDocumentosEmpleadosObserver;
 use App\Observers\ExperienciaEmpleadosObserver;
+use App\Observers\GruposEvaluadoObserver;
 use App\Observers\IncidentesDayoffObserver;
 use App\Observers\IncidentesDeSeguridadObserver;
 use App\Observers\IncidentesSeguridadObserver;
@@ -211,7 +215,6 @@ class EventServiceProvider extends ServiceProvider
         Competencia::observe(CompetenciaObserver::class);
         SubcategoriaActivo::observe(SubCategoriaActivoObserver::class);
         TipoObjetivo::observe(tipoObjetivoObserver::class);
-        Evaluacion::observe(EvaluacionObserver::class);
         MetricasObjetivo::observe(MetricasObjetivoObserver::class);
         TipoCompetencia::observe(TipoCompetenciaObserver::class);
         Puesto::observe(PuestosObserver::class);
@@ -250,5 +253,7 @@ class EventServiceProvider extends ServiceProvider
         Minutasaltadireccion::observe(MinutasAltaDireccionObserver::class);
         Role::observe(RolesObserver::class);
         ObjetivoEmpleado::observe(ObjetivoEmpleadoObserver::class);
+        GruposEvaluado::observe(GruposEvaluadoObserver::class);
+        CategoriaCapacitacion::observe(CategoriaCapacitacionObserver::class);
     }
 }

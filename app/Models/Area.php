@@ -77,8 +77,22 @@ class Area extends Model implements Auditable
 
     public static function getAll()
     {
-        return Cache::remember('Areas:areas_all', 3600 * 12, function () {
+        return Cache::remember('Areas:areas_all', 3600 * 8, function () {
             return self::orderByDesc('id')->get();
+        });
+    }
+
+    public static function getWithEmpleados()
+    {
+        return Cache::remember('Areas:areas_with_empleados', 3600 * 4, function () {
+            return self::with('empleados')->get();
+        });
+    }
+
+    public static function getAllPluck()
+    {
+        return Cache::remember('Areas:areas_pluck', 3600 * 8, function () {
+            return self::orderByDesc('id')->get()->pluck('area', 'id');
         });
     }
 
@@ -131,7 +145,7 @@ class Area extends Model implements Auditable
                 'children:id,name,foto,puesto_id,genero',
                 'supervisor:id,name,foto,puesto_id,genero',
                 'lider:id,name,foto,puesto_id,genero',
-                'grupo'
+                'grupo',
             ]);
     }
 

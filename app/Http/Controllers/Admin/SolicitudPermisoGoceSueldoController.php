@@ -109,7 +109,7 @@ class SolicitudPermisoGoceSueldoController extends Controller
         $solicitante = $empleados->find($request->empleado_id);
         $solicitud = SolicitudPermisoGoceSueldo::create($request->all());
 
-        $informados = ListaInformativa::with('participantes.empleado', 'usuarios.usuario')->where('modelo', '=', $this->modelo_proyectos)->first();
+        $informados = ListaInformativa::with('participantes.empleado', 'usuarios.usuario')->where('modelo', '=', $this->modelo)->first();
 
         if (isset($informados->participantes[0]) || isset($informados->usuarios[0])) {
 

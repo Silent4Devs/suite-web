@@ -108,10 +108,10 @@ class RecursosController extends Controller
     public function create()
     {
         abort_if(Gate::denies('capacitaciones_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $categorias = CategoriaCapacitacion::get();
+        $categorias = CategoriaCapacitacion::getAll();
         $recurso = new Recurso;
-        $areas = Area::with('empleados')->get();
-        $grupos = GruposEvaluado::with('empleados')->get();
+        $areas = Area::getWithEmpleados();
+        $grupos = GruposEvaluado::getAllWithEmpleado();
         $empleados = Empleado::getaltaAll();
 
         return view('admin.recursos.create', compact('recurso', 'categorias', 'areas', 'grupos', 'empleados'));
@@ -267,9 +267,9 @@ class RecursosController extends Controller
     public function edit(Recurso $recurso)
     {
         abort_if(Gate::denies('capacitaciones_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $categorias = CategoriaCapacitacion::get();
-        $areas = Area::with('empleados')->get();
-        $grupos = GruposEvaluado::with('empleados')->get();
+        $categorias = CategoriaCapacitacion::getAll();
+        $areas = Area::getWithEmpleados();
+        $grupos = GruposEvaluado::getAllWithEmpleado();
         $empleados = Empleado::getaltaAll();
 
         return view('admin.recursos.edit', compact('recurso', 'categorias', 'areas', 'grupos', 'empleados'));

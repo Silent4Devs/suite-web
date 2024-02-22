@@ -42,8 +42,15 @@ class Evaluacion extends Model implements Auditable
     //Redis methods
     public static function getAll()
     {
-        return Cache::remember('Evaluacion_all', 3600 * 24, function () {
-            return self::get();
+        return Cache::remember('Evaluacion:Evaluacion_all', 3600 * 3, function () {
+            return self::orderByDesc('id')->get();
+        });
+    }
+
+    public static function getAllLatestFirst()
+    {
+        return Cache::remember('Evaluacion:Evaluacion_latest_first', 3600 * 3, function () {
+            return self::select('id', 'nombre', 'fecha_inicio', 'fecha_fin')->latest()->first();
         });
     }
 
@@ -123,7 +130,7 @@ class Evaluacion extends Model implements Auditable
 
     public static function getEvaluados($id_evaluacion)
     {
-        return Cache::remember('Evaluacion:evaluacion_all_'.$id_evaluacion, 3600 * 8, function () use ($id_evaluacion) {
+        return Cache::remember('Evaluacion:evaluacion_all_' . $id_evaluacion, 3600 * 8, function () use ($id_evaluacion) {
             $query = self::with(['evaluados' => function ($q) use ($id_evaluacion) {
                 return $q->with(['area', 'evaluadores' => function ($qry) use ($id_evaluacion) {
                     $qry->where('evaluacion_id', $id_evaluacion);
@@ -132,5 +139,10 @@ class Evaluacion extends Model implements Auditable
 
             return $query;
         });
+    }
+
+    public function rangos()
+    {
+        return $this->hasMany(Ev360ParametrosObjetivos::class, 'evaluacion_id', 'id');
     }
 }

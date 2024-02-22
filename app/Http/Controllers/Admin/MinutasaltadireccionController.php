@@ -552,7 +552,6 @@ class MinutasaltadireccionController extends Controller
 
     public function revision($id)
     {
-
         abort_if(Gate::denies('revision_por_direccion_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $minutas = Minutasaltadireccion::with('responsable')->find($id);

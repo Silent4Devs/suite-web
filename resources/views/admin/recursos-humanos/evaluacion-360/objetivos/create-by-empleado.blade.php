@@ -78,7 +78,9 @@
             font-size: 30px;
         }
     </style>
-    {{ Breadcrumbs::render('EV360-Objetivos-Create', $empleado) }}
+    @can('objetivos_estrategicos_acceder')
+        {{ Breadcrumbs::render('EV360-Objetivos-Create', $empleado) }}
+    @endcan
 
     <h5 class="titulo_general_funcion">
         Asignar Objetivos Estratégicos: <span style="font-weight: lighter;">{{ $empleado->name }}</span>
