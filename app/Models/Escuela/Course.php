@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Cache;
-
-class Course extends Model
+use OwenIt\Auditing\Contracts\Auditable;
+class Course extends Model implements Auditable
 {
     use ClearsResponseCache, SoftDeletes;
     use HasFactory;
-
+    use \OwenIt\Auditing\Auditable;
     protected $guarded = ['id', 'status'];
 
     protected $withCount = ['students', 'reviews'];
