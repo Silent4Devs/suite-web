@@ -57,13 +57,15 @@
             </button>
 
             <button class="btn btn-retreat-time-config-aprob d-none" style="position: absolute; right: 10px; top: 10px;"
-            onclick="reportesCardsAprob()">
+                onclick="reportesCardsAprob()">
                 <i class="bi bi-chevron-left text-white" style="font-size: 40px;"></i>
             </button>
 
-            <h3 class="text-white text-center title-aprob-time-config-aprob" style="font-size:30px; margin-top: 100px;">Aprobador</h3>
+            <h3 class="text-white text-center title-aprob-time-config-aprob" style="font-size:30px; margin-top: 100px;">
+                Aprobador</h3>
 
-            <h3 class="text-white text-center title-report-time-config-aprob d-none" style="font-size:30px; margin-top: 100px;">
+            <h3 class="text-white text-center title-report-time-config-aprob d-none"
+                style="font-size:30px; margin-top: 100px;">
                 Reportes</h3>
 
             <div class="caja-cards-time-admin cards-config-config-aprob active" style="gap: 60px; margin-top: 100px;">
@@ -319,6 +321,7 @@
         document.querySelector('.btn-close-time-config').classList.toggle('d-none');
         document.querySelector('.btn-retreat-time-config').classList.toggle('d-none');
     }
+
     function reportesCardsAprob() {
         document.querySelector('.cards-reportes-config-aprob').classList.toggle('active');
         document.querySelector('.cards-config-config-aprob').classList.toggle('active');

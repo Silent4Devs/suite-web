@@ -37,11 +37,11 @@ class EV360EvaluacionesController extends Controller
     {
         abort_if(Gate::denies('seguimiento_evaluaciones_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // dd($this->obtenerCantidadMaximaDeObjetivos(20));
-        $areas = Area::all();
+        $areas = Area::getAll();
         $empleados = Empleado::getaltaAll();
 
         if ($request->ajax()) {
-            $evaluaciones = Evaluacion::orderByDesc('id')->get();
+            $evaluaciones = Evaluacion::getAll();
 
             return datatables()->of($evaluaciones)->toJson();
         }
@@ -53,7 +53,7 @@ class EV360EvaluacionesController extends Controller
     {
         abort_if(Gate::denies('seguimiento_evaluaciones_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $evaluacion = Evaluacion::getAll();
-        $areas = Area::all();
+        $areas = Area::getAll();
         $empleados = Empleado::getaltaAll();
 
         return view('admin.recursos-humanos.evaluacion-360.evaluaciones.create', compact('evaluacion', 'areas', 'empleados'));
