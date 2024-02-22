@@ -12,6 +12,7 @@ class CourseUser extends Model implements Auditable
 {
     use ClearsResponseCache, HasFactory;
     use \OwenIt\Auditing\Auditable;
+
     // use SoftDeletes;
     protected $table = 'course_user';
 
