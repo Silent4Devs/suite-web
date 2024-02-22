@@ -11,18 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('rangos_objetivos', function (Blueprint $table) {
+        Schema::create('ev360_parametros_objetivos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('catalogo_rangos_id');
+            $table->unsignedBigInteger('evaluacion_id');
             $table->string('parametro');
             $table->float('valor');
             $table->string('color');
             $table->longText('descripcion');
 
-            $table->foreign('catalogo_rangos_id')->references('id')->on('catalogo_rangos_objetivos')->onDelete('cascade');
+            $table->foreign('evaluacion_id')->references('id')->on('ev360_evaluaciones')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
-            // catalogo_rangos_objetivos
         });
     }
 
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('rangos_objetivos');
+        Schema::dropIfExists('ev360_parametros_objetivos');
     }
 };
