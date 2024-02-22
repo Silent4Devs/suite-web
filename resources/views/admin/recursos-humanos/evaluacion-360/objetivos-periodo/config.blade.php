@@ -55,7 +55,7 @@
 
                     <div class="item-config-cat">
                         <div class="d-flex align-items-center" style="gap: 10px;">
-                            <div class="form-group anima-focus w-100">
+                            <div class="form-group anima-focus" style="width: 85%;">
                                 <input type="text" class="form-control anima-focus" placeholder="">
                                 <label for="">Categoría</label>
                             </div>
@@ -63,7 +63,7 @@
                                 <i class="material-symbols-outlined" title="Eliminar" onclick="deleteItem('item-config-cat')">delete</i>
                             </div>
                         </div>
-                        <div class="form-group anima-focus">
+                        <div class="form-group anima-focus" style="width: 85%;">
                             <textarea name="" id="" class="form-control" placeholder=""></textarea>
                             <label for="">Descripción</label>
                         </div>

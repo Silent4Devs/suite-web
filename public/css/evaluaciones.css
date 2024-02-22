@@ -87,3 +87,15 @@
     position: absolute;
     transform: translateX(-25px);
 }
+
+#BtnAgregarObjetivo {
+    background-color: #ECFBFF;
+    border: 1px solid #9EB4C9;
+    border-radius: 100px;
+    color: #006DDB;
+    padding: 13px 40px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

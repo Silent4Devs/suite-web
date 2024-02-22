@@ -99,26 +99,25 @@
         </div>
     </div>
 
-    <div class="card">
-        <div class="card-body">
-            <form id="formObjetivoCreate" method="POST" action="{{ route('admin.ev360-objetivos.index') }}"
-                enctype="multipart/form-data" class="mt-3">
-                @csrf
-                @include('admin.recursos-humanos.evaluacion-360.objetivos._form_by_empleado', [
-                    'editar' => false,
-                ])
-                <div class="row">
+    <div class="">
+        <form id="formObjetivoCreate" method="POST" action="{{ route('admin.ev360-objetivos.index') }}"
+            enctype="multipart/form-data" class="mt-3">
+            @csrf
+            @include('admin.recursos-humanos.evaluacion-360.objetivos._form_by_empleado', [
+                'editar' => false,
+            ])
+            <div class="row pb-5">
 
-                    <div class="col-12">
-                        <div class="d-flex justify-content-end w-100">
-                            <a href="{{ route('admin.ev360-objetivos.index') }}" class="btn_cancelar">Regresar</a>
-                        </div>
+                <div class="col-12">
+                    <div class="d-flex justify-content-end w-100">
+                        <a href="{{ route('admin.ev360-objetivos.index') }}" class="btn_cancelar">Regresar</a>
                     </div>
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
-    <div class="modal fade" id="objetivoModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+
+        <div class="modal fade" id="objetivoModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
         aria-labelledby="objetivoModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
