@@ -4,16 +4,23 @@
 @endsection
 @section('content')
 
+    <h5 class="col-12 titulo_general_funcion">Timesheet: <font style="font-weight:lighter;">Proyecto</font>
+    </h5>
 
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    {{-- @include('admin.timesheet.complementos.cards') --}}
+    @include('admin.timesheet.complementos.admin-aprob')
+    {{-- @include('admin.timesheet.complementos.blue-card-header') --}}
 
     <div class="card card-body mt-4">
         @php
             use App\Models\TimesheetHoras;
         @endphp
         @can('timesheet_administrador_proyectos_create')
-            <div class="d-flex">
-                <h5 id="titulo_estatus">Crear Proyecto</h5>
+            <div class="row">
+                <div class="col-12">
+                    <h4 class="title-card-time">Nuevo Proyecto</h4>
+                    <hr class="my-4">
+                </div>
             </div>
             <form method="POST" action="{{ route('admin.timesheet-proyectos-store') }}">
                 @csrf
@@ -103,7 +110,8 @@
                     <div class="form-group col-md-4 anima-focus">
                         <select class="form-control" name="tipo" id="tipo" required>
                             @foreach ($tipos as $tipo_it)
-                                <option value="{{ $tipo_it }}" {{ $tipo == $tipo_it ? 'selected' : '' }}>{{ $tipo_it }}
+                                <option value="{{ $tipo_it }}" {{ $tipo == $tipo_it ? 'selected' : '' }}>
+                                    {{ $tipo_it }}
                                 </option>
                             @endforeach
                         </select>
@@ -151,8 +159,6 @@
 @endsection
 
 @section('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
     <script>
         $(document).ready(function() {
             // Select2 Multiple
