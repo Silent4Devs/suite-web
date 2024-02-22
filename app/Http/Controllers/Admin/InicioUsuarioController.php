@@ -175,6 +175,7 @@ class InicioUsuarioController extends Controller
         $contador_revisiones = 0;
         $evaluaciones = collect();
         $mis_evaluaciones = collect();
+        $como_evaluador = collect();
         $lista_evaluaciones = collect();
         $last_evaluacion = collect();
         $esLider = false;
@@ -209,6 +210,27 @@ class InicioUsuarioController extends Controller
                     ->where('evaluado_id', $usuario->empleado->id)
                     ->first();
             }
+
+            if ($last_evaluacion) {
+                $evaluaciones = EvaluadoEvaluador::whereHas('evaluacion', function ($q) use ($last_evaluacion) {
+                    $q->where('estatus', Evaluacion::ACTIVE)
+                        ->where('fecha_inicio', '<=', Carbon::now())
+                        ->where('fecha_fin', '>', Carbon::now())
+                        ->where('id', $last_evaluacion->id);
+                })->with('empleado_evaluado', 'evaluador')->where('evaluador_id', $usuario->empleado->id)
+                    ->where('evaluado_id', '!=', $usuario->empleado->id)
+                    ->where('evaluado', false)
+                    ->get();
+                $como_evaluador = EvaluadoEvaluador::whereHas('evaluacion', function ($q) use ($last_evaluacion) {
+                    $q->where('estatus', Evaluacion::ACTIVE)
+                        ->where('fecha_inicio', '<=', Carbon::now())
+                        ->where('fecha_fin', '>', Carbon::now())
+                        ->where('id', $last_evaluacion->id);
+                })->with('empleado_evaluado', 'evaluador')->where('evaluador_id', $usuario->empleado->id)
+                    ->where('evaluado_id', '!=', $usuario->empleado->id)
+                    ->first();
+            }
+            // dd($como_evaluador->evaluacion, $mis_evaluaciones);
             $mis_objetivos = $usuario->empleado->objetivos;
 
             // SECCION MIS DATOS
@@ -305,6 +327,7 @@ class InicioUsuarioController extends Controller
             'evaluaciones',
             'oficiales',
             'mis_evaluaciones',
+            'como_evaluador',
             'equipo_a_cargo',
             'equipo_trabajo',
             'supervisor',
