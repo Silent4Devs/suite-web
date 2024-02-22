@@ -5,10 +5,11 @@ namespace App\Models\ContractManager;
 use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
-class ProductoRequisicion extends Model
+use OwenIt\Auditing\Contracts\Auditable;
+class ProductoRequisicion extends Model implements Auditable
 {
     use ClearsResponseCache, HasFactory;
+    use \OwenIt\Auditing\Auditable;
 
     protected $fillable = [
         'espesificaciones',
