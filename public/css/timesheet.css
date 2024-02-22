@@ -52,22 +52,35 @@ table {
 
 .caja-calendar-semana label,
 .caja-calendar-semana label i {
-    color: #fff;
+    color: #486489;
 }
 
 .anima-focus label{
     background-color: #F8FAFC !important;
 }
 .caja-calendar-semana .anima-focus label {
-    background-color: #6F8FB8 !important;
-    color: #fff !important;
+    background-color: #fff !important;
+    color: #486489 !important;
     font-size: 18px;
 }
 
 .caja-calendar-semana .anima-focus input {
-    color: #fff !important;
+    color: #486489 !important;
     font-size: 18px;
+    background-color: #fff;
 }
+
+
+.caja-calendar-semana .anima-focus .form-control:focus+label,
+.caja-calendar-semana .anima-focus .form-control:not(:placeholder-shown)+label{
+    opacity: 0;
+}
+
+.caja-calendar-semana .anima-focus .form-control:focus,
+.caja-calendar-semana .anima-focus .form-control:not(:placeholder-shown){
+    background-color: #fff !important;
+}
+
 
 .tabla-llenar-horas input,
 .tabla-llenar-horas div.form-control {
@@ -746,7 +759,7 @@ table.dataTable tbody tr.selected td {
 }
 
 .caja-calendar-semana {
-    background-color: #6F8FB8;
+    background-color: #3f699f;
     padding: 0px 20px;
     padding-top: 5px;
     border-top-left-radius: 16px;
@@ -806,7 +819,7 @@ div .form-control:not(#form_timesheet .form-control) {
     color: #818181 !important;
     background-color: #E8E8E8;
     border: none !important;
-    padding: 8px 25px !important
+    padding: 8px 18px !important
 }
 
 .btn-secondary:hover {
@@ -818,6 +831,13 @@ div .form-control:not(#form_timesheet .form-control) {
     margin-left: 0px !important;
     padding-right: 0px !important;
     padding-left: 0px !important;
-
+}
 .btn-secondary:hover {
     background-color: #E8E8E8;
+}
+
+#form_timesheet .datatable-rds td,
+#form_timesheet .dataTables_scroll td,
+#form_timesheet .datatable-fix td{
+    padding: 15px 10px !important;
+}
