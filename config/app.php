@@ -249,5 +249,5 @@ return [
     ],
 
     // css version
-    'cssVersion' => '?v=1.1.2.1',
+    'cssVersion' => '?v=1.1.2.2',
 ];

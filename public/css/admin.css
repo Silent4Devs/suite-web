@@ -351,6 +351,10 @@ header {
     box-sizing: border-box;
 }
 
+.btn{
+    cursor: pointer !important;
+}
+
 .breadcrumb {
     display: flex;
     flex-wrap: wrap;
@@ -1325,4 +1329,8 @@ a {
     border-bottom: 1px solid #006DDB;
     color: #006DDB;
     border-radius: 0px !important;
+}
+
+.btn label{
+    cursor: pointer;
 }
