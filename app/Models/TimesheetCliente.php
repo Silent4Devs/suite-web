@@ -13,6 +13,7 @@ class TimesheetCliente extends Model implements Auditable
 {
     use ClearsResponseCache, HasFactory;
     use \OwenIt\Auditing\Auditable;
+
     protected $table = 'timesheet_clientes';
 
     public $incrementing = false;
