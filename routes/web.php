@@ -122,6 +122,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('areas/grupo', 'AreasController@obtenerAreasPorGrupo')->name('areas.obtenerAreasPorGrupo');
     Route::post('areas/parse-csv-import', 'AreasController@parseCsvImport')->name('areas.parseCsvImport');
     Route::get('areas/jerarquia', 'AreasController@renderJerarquia')->name('areas.renderJerarquia');
+    Route::post('areas/pdf', 'AreasController@pdf')->name('areas.pdf');
     Route::get('areas/jerarquia/lista', 'AreasController@obtenerJerarquia')->name('areas.obtenerJerarquia');
     Route::post('areas/process-csv-import', 'AreasController@processCsvImport')->name('areas.processCsvImport');
     Route::resource('areas', 'AreasController');
