@@ -1,30 +1,79 @@
+import pytest
+import time
 from selenium import webdriver
-import os
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import NoSuchElementException
-from selenium.common.exceptions import TimeoutException
-import time
-tiempo_modulos=4
-tiempo_carga=10
-tiempo_espera=2.5
-#driver Firefox
-driver=webdriver.Firefox()
 
-#Open URL
-driver.get('https://192.168.9.78/')
+timesheet_btn_xpath = "(//a[contains(.,'Timesheet')])[2]"
+timesheet_title_xpath = '//h5[@class="titulo_general_funcion" and contains(text(), "Timesheet: Registrar Jornada Laboral")]'
 
-#Maximize Window
-driver.maximize_window()
-time.sleep(5)
 
-#Login
-usr=driver.find_element(By.XPATH,"//input[contains(@name,'email')]").send_keys("zaid.garcia@becarios.silent4business.com")
-time.sleep(tiempo_modulos)
-pw=driver.find_element(By.XPATH,"//input[contains(@name,'password')]").send_keys("$QB&kT3&R4")
-time.sleep(tiempo_modulos)
-btn=driver.find_element(By.XPATH,"//button[@type='submit'][contains(.,'Enviar')]")
-btn.click()
+@pytest.fixture(scope="module")
+def browser():
+    driver = webdriver.Firefox()
+    yield driver
+    driver.quit()
+
+
+def login(driver, username, password):
+    driver.get('https://192.168.9.78/')
+    driver.maximize_window()
+    print("------ LOGIN - TABANTAJ -----")
+    time.sleep(5)
+    username_input = WebDriverWait(driver, 3).until(
+        EC.visibility_of_element_located((By.CSS_SELECTOR, "input[name='email']"))
+    )
+    username_input.clear()
+    username_input.send_keys(username)
+    print("Usario ingresado")
+
+    password_input = WebDriverWait(driver, 3).until(
+        EC.visibility_of_element_located((By.CSS_SELECTOR, "input[name='password']"))
+    )
+    password_input.clear()
+    password_input.send_keys(password)
+    print("Contraseña ingresada")
+
+    submit_button = WebDriverWait(driver, 3).until(
+        EC.element_to_be_clickable((By.XPATH, "//button[@type='submit'][contains(text(),'Enviar')]"))
+    )
+    submit_button.click()
+    print("Enviando credenciales de acceso")
+
+    WebDriverWait(driver, 2).until(
+        EC.presence_of_element_located((By.CSS_SELECTOR, "img[alt='Logo Tabantaj']"))
+    )
+    print("Login correcto")
+    print("URL actual:", driver.current_url)
+
+def test_login(browser):
+    username = "admin@admin.com"
+    password = "#S3cur3P4$$w0Rd!"
+
+    login(browser, username, password)
+
+def portalcomunicacion(driver):
+    print("Ingresando a Portal de comunicacion")
+    menu_button = WebDriverWait(driver, 3).until(
+        EC.element_to_be_clickable((By.XPATH, "//button[contains(@class,'btn-menu-header')]"))
+    )
+    menu_button.click()
+
+    comunicacion_button = WebDriverWait(driver, 3).until(
+        EC.element_to_be_clickable((By.XPATH, "(//a[contains(.,'Comunicación')])[1]"))
+
+    )
+    comunicacion_button.click()
+    print("URL actual:", driver.current_url)
+
+    timesheet_btn = WebDriverWait(driver, 3).until(
+        EC.element_to_be_clickable((By.XPATH, timesheet_btn_xpath))
+    )
+    timesheet_btn.click()
+    print("Ingresando a Timesheet")
+    print("URL actual:", driver.current_url)
+
+def test_portalcomunicacion(browser):
+
+    portalcomunicacion(browser)
