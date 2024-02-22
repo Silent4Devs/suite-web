@@ -1,20 +1,21 @@
 @extends('layouts.admin')
+@section('css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}{{ config('app.cssVersion') }}">
+@endsection
 @section('content')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}{{config('app.cssVersion')}}">
-
     {{ Breadcrumbs::render('timesheet-edit') }}
-    @include('admin.timesheet.complementos.cards')
-    <h5 class="col-12 titulo_general_funcion">Timesheet: <font style="font-weight:lighter;">
-            {!! $timesheet->semana !!} | <font style="font-weight:lighter;">{{ $timesheet->empleado->name }}</font>
+
+    <h5 class="col-12 titulo_general_funcion">
+        Timesheet:
+        <font style="font-weight:lighter;"> {!! $timesheet->semana !!} | {{ $timesheet->empleado->name }}</font>
     </h5>
 
-    <div class="card card-body">
-        <div class="row">
-            <x-loading-indicator />
-            @livewire('timesheet-horas-edit', ['proyectos' => $proyectos, 'tareas' => $tareas, 'origen' => 'edit', 'timesheet_id' => $timesheet->id])
+    @include('admin.timesheet.complementos.cards')
 
-        </div>
-    </div>
+    @include('admin.timesheet.complementos.admin-aprob')
+
+    <x-loading-indicator />
+    @livewire('timesheet-horas-edit', ['proyectos' => $proyectos, 'tareas' => $tareas, 'origen' => 'edit', 'timesheet_id' => $timesheet->id])
 @endsection
 
 @section('scripts')
