@@ -66,17 +66,17 @@
                             {{ $evaluacion->nombre }}
                         </td>
                         <td>
-                            {{ $evaluacion->fecha_inicio }}
+                            {{ \Carbon\Carbon::parse($evaluacion->fecha_fin)->format('d-m-Y') }}
                         </td>
                         <td>
-                            {{ $evaluacion->fecha_fin }}
+                            {{ \Carbon\Carbon::parse($evaluacion->fecha_fin)->format('d-m-Y') }}
                         </td>
                         <td>
                             @foreach ($evaluaciones_a_realizar as $evaluar)
                                 <img style=""
                                     src="{{ asset('storage/empleados/imagenes/') }}/{{ $evaluar->empleado_evaluado->avatar }}"
                                     class="rounded-circle" alt="{{ $evaluar->empleado_evaluado->name }}"
-                                    title="{{ $evaluar->empleado_evaluado->name }}" width="40" height="37">
+                                    title="{{ $evaluar->empleado_evaluado->name }}">
                                 @if ($evaluar->evaluado)
                                     <i class="fas fa-check-circle"
                                         style="position: relative; top: 0; left: -20px; z-index: 1; color: #002102; text-shadow: 1px 1px 0px gainsboro;"></i>
