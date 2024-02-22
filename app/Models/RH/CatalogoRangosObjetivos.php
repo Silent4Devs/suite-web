@@ -10,7 +10,8 @@ class CatalogoRangosObjetivos extends Model implements Auditable
 {
     use HasFactory;
     use \OwenIt\Auditing\Auditable;
-    protected $table = "catalogo_rangos_objetivos";
+
+    protected $table = 'catalogo_rangos_objetivos';
 
     protected $fillable = [
         'nombre_catalogo',

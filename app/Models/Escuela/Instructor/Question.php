@@ -11,8 +11,9 @@ use OwenIt\Auditing\Contracts\Auditable;
 class Question extends Model implements Auditable
 {
     use ClearsResponseCache, HasFactory;
-    use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
+    use SoftDeletes;
+
     protected $table = 'questions';
 
     protected $fillable = [

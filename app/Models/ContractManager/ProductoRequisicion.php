@@ -6,6 +6,7 @@ use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
+
 class ProductoRequisicion extends Model implements Auditable
 {
     use ClearsResponseCache, HasFactory;
