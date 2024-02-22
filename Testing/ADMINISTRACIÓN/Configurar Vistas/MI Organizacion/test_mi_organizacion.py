@@ -8,9 +8,9 @@ from selenium.common.exceptions import TimeoutException
 
 #Variables
 element_confirgurar_organizacion = "(//A[@href='#'])[4]"
-element_entrar_submodulo = "//A[@href='https://192.168.9.78/admin/panel-inicio'][text()='Mis Datos']"
+element_entrar_submodulo = "//A[@href='https://192.168.9.78/admin/panel-organizacion'][text()='Mi Organización']"
 agregar_btn_xpath= "//A[@href='https://192.168.9.78/admin/empleados/create'][text()='Registrar Empleados']"
-save_btn_xpath="//button[@class='btn btn-danger'][contains(.,'Guagrdar')]"
+save_btn_xpath="//button[@class='btn btn-danger'][contains(.,'Guardar')]"
 campo_buscar_xpath= "(//INPUT[@type='search'])[2]"
 btn2_editar = "(//I[@class='fas fa-edit'])[1]"
 trespuntos_btn_xpath= "(//BUTTON[@class='btn btn-action-show-datatables-global d-none'])[1]"
@@ -71,12 +71,12 @@ def test_empleados(driver):
     
     time.sleep(tiempo_modulos)
 
-    # Entrando a Sub Modulo Mis datos
-    print("Entrando a Sub Modulo Mis datos...")
+    # Entrando a Sub Modulo Mi Organizacion
+    print("Entrando a Sub Modulo Mi Organizacion...")
     entrar = driver.find_element(By.XPATH,element_entrar_submodulo)
     driver.execute_script("arguments[0].scrollIntoView(true);", element)
     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH,element_entrar_submodulo)))
-    print("Dando clic en Sub Modulo Mis datos...")
+    print("Dando clic en Sub Modulo Mi Organizacion...")
     entrar.click()
     
     time.sleep(tiempo_modulos)
@@ -84,32 +84,32 @@ def test_empleados(driver):
     
     ##################################################### AGREGAR Y LLENAR REPOSITORIO ######################################
 
-    # Numero de empleado 
+    # Logo
     
-    campo_n_empleado = WebDriverWait(driver, 10).until(
+    campo_logo = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.XPATH, "(//SPAN[@class='c-switch-slider'])[1]"))
         )
-    campo_n_empleado.click()
+    campo_logo.click()
    
 
     time.sleep(tiempo_modulos)
 
-    # Genero
+    # Telefono
     
-    campo_genero = WebDriverWait(driver, 10).until(
+    campo_telefono = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, "(//SPAN[@class='c-switch-slider'])[6]"))
+    )
+    campo_telefono.click()
+   
+
+    time.sleep(tiempo_modulos)
+    
+    # Correo
+    
+    campo_correo = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.XPATH, "(//SPAN[@class='c-switch-slider'])[7]"))
     )
-    campo_genero.click()
-   
-
-    time.sleep(tiempo_modulos)
-    
-    # Puesto
-    
-    campo_puesto = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, "(//SPAN[@class='c-switch-slider'])[4]"))
-    )
-    campo_puesto.click()
+    campo_correo.click()
 
 
     time.sleep(tiempo_modulos)
@@ -142,11 +142,11 @@ def test_empleados(driver):
     time.sleep(tiempo_modulos)
 
     # Entrando a Sub Modulo Mis datos
-    print("Entrando de nuevo a Sub Modulo Mis datos...")
+    print("Entrando de nuevo a Sub Modulo Mi Organizacion...")
     entrar = driver.find_element(By.XPATH,element_entrar_submodulo)
     driver.execute_script("arguments[0].scrollIntoView(true);", element)
     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH,element_entrar_submodulo)))
-    print("Dando clic de nuevo en Sub Modulo Mis datos...")
+    print("Dando clic de nuevo en Sub Modulo Mi Organizacion...")
     entrar.click()
     
     time.sleep(tiempo_modulos)
