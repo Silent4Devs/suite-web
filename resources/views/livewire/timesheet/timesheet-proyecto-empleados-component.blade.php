@@ -12,6 +12,7 @@
             <a href="{{ route('admin.timesheet-proyectos') }}" class="btn btn-info">Pagina Principal de Proyectos</a>
         </div>
     </div>
+    {{-- @dd($empleados) --}}
     <form wire:submit.prevent="addEmpleado" wire:ignore>
         <div class="row mt-4">
             <div class="form-group col-md-7">
@@ -225,14 +226,12 @@
 
                     $('.select2').select2().on('change', function(e) {
                         var data = $(this).select2("val");
-                        console.log('saul', data);
                         @this.set('empleado_añadido', data);
                     });
                 });
 
                 $('.select2').select2().on('change', function(e) {
                     var data = $(this).select2("val");
-                    console.log('saul', data);
                     @this.set('empleado_añadido', data);
                 });
             });
