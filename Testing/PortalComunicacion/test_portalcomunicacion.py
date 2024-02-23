@@ -71,7 +71,9 @@ def portalcomunicacion(driver):
         EC.element_to_be_clickable((By.XPATH, timesheet_btn_xpath))
     )
     timesheet_btn.click()
+
     print("Ingresando a Timesheet")
+    time.sleep(10)
     print("URL actual:", driver.current_url)
 
 
