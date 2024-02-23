@@ -2,8 +2,8 @@
 
 namespace App\Observers;
 
-use Illuminate\Support\Facades\Cache;
 use App\Models\ContractManager\ProveedorIndistinto;
+use Illuminate\Support\Facades\Cache;
 
 class KatbolProveedorIndistintoObserver
 {
@@ -12,7 +12,7 @@ class KatbolProveedorIndistintoObserver
      */
     public function created(ProveedorIndistinto $proveedorIndistinto): void
     {
-         $this->forgetCache();
+        $this->forgetCache();
     }
 
     /**
@@ -20,7 +20,7 @@ class KatbolProveedorIndistintoObserver
      */
     public function updated(ProveedorIndistinto $proveedorIndistinto): void
     {
-         $this->forgetCache();
+        $this->forgetCache();
     }
 
     /**
@@ -28,7 +28,7 @@ class KatbolProveedorIndistintoObserver
      */
     public function deleted(ProveedorIndistinto $proveedorIndistinto): void
     {
-         $this->forgetCache();
+        $this->forgetCache();
     }
 
     /**
@@ -36,7 +36,7 @@ class KatbolProveedorIndistintoObserver
      */
     public function restored(ProveedorIndistinto $proveedorIndistinto): void
     {
-         $this->forgetCache();
+        $this->forgetCache();
     }
 
     /**
@@ -44,7 +44,7 @@ class KatbolProveedorIndistintoObserver
      */
     public function forceDeleted(ProveedorIndistinto $proveedorIndistinto): void
     {
-         $this->forgetCache();
+        $this->forgetCache();
     }
 
     private function forgetCache()
