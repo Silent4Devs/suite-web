@@ -64,6 +64,7 @@ class CompetenciaObserver
 
     private function forgetCache()
     {
-        Cache::forget('Competencias_all');
+        Cache::forget('Competencias:Competencias_all');
+        Cache::forget('Competencias:Competencias_with_tipo');
     }
 }

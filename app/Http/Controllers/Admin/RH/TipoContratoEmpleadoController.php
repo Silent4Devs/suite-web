@@ -19,7 +19,7 @@ class TipoContratoEmpleadoController extends Controller
     public function index(Request $request)
     {
         abort_if(Gate::denies('tipos_de_contrato_para_empleados_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $tipoContratoEmpleado = TipoContratoEmpleado::select('id', 'name', 'description')->get();
+        $tipoContratoEmpleado = TipoContratoEmpleado::getAll();
         if ($request->ajax()) {
             return datatables()->of($tipoContratoEmpleado)->toJson();
         }
