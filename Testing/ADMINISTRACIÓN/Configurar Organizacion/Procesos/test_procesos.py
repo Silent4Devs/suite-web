@@ -24,14 +24,13 @@ tiempo_carga = 10
 tiempo_espera = 2.5
 tiempo_tres = 3
 
-@pytest.fixture
-def driver():
+@pytest.fixture(scope="module")
+def browser():
     driver = webdriver.Firefox()
     yield driver
     driver.quit()
     
-
-def test_procesos(driver):
+def login (driver):
 
     # Abrir la URL de Tabantaj
     driver.get('https://192.168.9.78/')
@@ -42,14 +41,34 @@ def test_procesos(driver):
 
     # Ingresar credenciales
     usuario = driver.find_element(By.XPATH, "//input[contains(@name,'email')]").send_keys("admin@admin.com")
+    print("Introduciendo Correo")
     time.sleep(tiempo_modulos)
     password = driver.find_element(By.XPATH, "//input[contains(@name,'password')]").send_keys("#S3cur3P4$$w0Rd!")
+    print("Introduciendo Contraseña")
     time.sleep(tiempo_modulos)
 
     # Hacer clic en el botón de envío
     btn = driver.find_element(By.XPATH, "//button[@type='submit'][contains(.,'Enviar')]")
     btn.click()
+    print("Haciendo clic en boton enviar")
     
+    WebDriverWait(driver, 2).until(
+        EC.presence_of_element_located((By.CSS_SELECTOR, "img[alt='Logo Tabantaj']"))
+    ) 
+    print("Login correcto")
+    
+    print("URL actual:", driver.current_url)
+    
+def test_login(browser):
+    
+    login(browser)
+    
+################################################## Entrar a Modulos y Submodulos
+
+def in_modulos(driver):
+    
+    time.sleep(tiempo_modulos)
+        
     # Entrando a Menu Hamburguesa
     print("URL actual:", driver.current_url)
     print("Entrando a Menu Hamburguesa...")
@@ -72,15 +91,26 @@ def test_procesos(driver):
     time.sleep(tiempo_modulos)
 
     # Entrando a Sub Modulo Procesos 
-    print("Entrando a Sub Modulo Glosario..")
+    print("Entrando a Sub Modulo Procesos..")
     entrar = driver.find_element(By.XPATH,element_entrar_submodulo)
     driver.execute_script("arguments[0].scrollIntoView(true);", element)
     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH,element_entrar_submodulo)))
-    print("Dando clic en Sub Modulo Categoria de Crear Areas...")
+    print("Dando clic en Sub Modulo Procesos...")
     entrar.click()
     
     time.sleep(tiempo_modulos)
+    
+    print("URL actual:", driver.current_url)
 
+def test_in_modulos(browser):
+    
+    in_modulos(browser)
+
+    
+##################################################### AGREGAR Y LLENAR REPOSITORIO ####################################
+
+def add_procesos(driver):
+    
     # Dando clic en Boton Resgistrar Procesos
     print("Dando clic al botón registrar procesos...")
     wait = WebDriverWait(driver, 10)
@@ -89,14 +119,13 @@ def test_procesos(driver):
     
     time.sleep(tiempo_modulos)
     
-    ##################################################### AGREGAR Y LLENAR REPOSITORIO ####################################
-    
     # Codigo
     campo_codigo = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.XPATH, "//INPUT[@id='codigo']"))
         )
     campo_codigo.click()
-    campo_codigo.send_keys("5432122")
+    campo_codigo.send_keys("000117")
+    print("Escribiendo Campo Codigo")
 
     time.sleep(tiempo_modulos)
     
@@ -106,6 +135,7 @@ def test_procesos(driver):
         )
     campo_nombre.click()
     campo_nombre.send_keys("Nombre de Prueba")
+    print("Escribiendo Campo Nombre")
 
     time.sleep(tiempo_modulos)
     
@@ -118,6 +148,7 @@ def test_procesos(driver):
     campo_macroproceso.send_keys("AFI")
     time.sleep(tiempo_espera)
     campo_macroproceso.click()
+    print("Escribiendo Campo Macroproceso")
    
     time.sleep(tiempo_modulos)
     
@@ -127,6 +158,7 @@ def test_procesos(driver):
         )
     campo_descripcion.click()
     campo_descripcion.send_keys("Descripcion de prueba")
+    print("Escribiendo Campo Descripcion")
    
     time.sleep(tiempo_modulos)
     
@@ -137,8 +169,15 @@ def test_procesos(driver):
     )
     guardar.click()
     
+    print("URL actual:", driver.current_url)
+
+def test_add_procesos(browser):
     
-    #################################BUSCAR REPOSITORIO Y ENTRAR A BOTONES DE EDICION###################################
+    add_procesos(browser)
+    
+#################################BUSCAR REPOSITORIO Y ENTRAR A BOTONES DE EDICION###################################
+
+def update_procesos(driver):
 
     # Campo Buscar
     campo_buscar = WebDriverWait(driver, 10).until(
@@ -146,6 +185,7 @@ def test_procesos(driver):
     )
     campo_buscar.clear()
     campo_buscar.send_keys("5432122")
+    print("Seleccionando campo buscar")
 
     time.sleep(tiempo_carga)
     
@@ -164,8 +204,10 @@ def test_procesos(driver):
         EC.presence_of_element_located((By.XPATH, "//TEXTAREA[@id='descripcion']"))
         )
     campo_descripcion.click()
+    campo_descripcion.clear()
     campo_descripcion.send_keys("Descripcion de prueba actualiada")
-   
+    print("Escribiendo Campo Descripcion")
+    
     time.sleep(tiempo_modulos)
     
     # Guardar actualización
@@ -176,5 +218,11 @@ def test_procesos(driver):
     guardar.click()
 
     time.sleep(tiempo_modulos)
+    
+    print("URL actual:", driver.current_url)
+    
+def test_update_procesos(browser):
+    
+    update_procesos(browser)
 
 
