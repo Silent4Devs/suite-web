@@ -4,11 +4,11 @@ namespace App\Models\RH;
 
 use App\Models\Empleado;
 use App\Traits\ClearsResponseCache;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Contracts\Auditable;
 
 class TipoContratoEmpleado extends Model implements Auditable
 {
@@ -24,6 +24,7 @@ class TipoContratoEmpleado extends Model implements Auditable
             return self::select('id', 'name', 'slug', 'description')->get();
         });
     }
+
     protected function empleados()
     {
         return $this->hasMany(Empleado::class, 'tipo_contrato_empleado_id', 'id')->alta();

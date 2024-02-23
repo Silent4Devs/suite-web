@@ -2,8 +2,8 @@
 
 namespace App\Observers;
 
-use Illuminate\Support\Facades\Cache;
 use App\Models\EntendimientoOrganizacion;
+use Illuminate\Support\Facades\Cache;
 
 class EntendimientoOrganizacionObserver
 {

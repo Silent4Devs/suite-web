@@ -2,17 +2,17 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
-use DateTimeInterface;
-use Spatie\MediaLibrary\HasMedia;
 use App\Traits\ClearsResponseCache;
 use App\Traits\MultiTenantModelTrait;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
-use Spatie\MediaLibrary\InteractsWithMedia;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Carbon\Carbon;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Contracts\Auditable;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class PlanBaseActividade extends Model implements Auditable, HasMedia
@@ -74,6 +74,7 @@ class PlanBaseActividade extends Model implements Auditable, HasMedia
             return self::with('actividad_fase')->get();
         });
     }
+
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
