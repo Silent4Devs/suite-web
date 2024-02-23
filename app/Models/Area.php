@@ -99,7 +99,7 @@ class Area extends Model implements Auditable
     public static function getIdNameAll()
     {
         return Cache::remember('Areas:area_id_name_all', 3600 * 12, function () {
-            return self::select('id', 'area')->orderByDesc('id')->get();
+            return DB::table('areas')->select('id', 'area')->orderByDesc('id')->get();
         });
     }
 
