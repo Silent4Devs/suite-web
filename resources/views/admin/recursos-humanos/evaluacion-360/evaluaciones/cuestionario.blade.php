@@ -37,9 +37,9 @@
             font-size: 14px;
         }
     </style>
-    <div class="mt-3">
+    {{-- <div class="mt-3">
         {{ Breadcrumbs::render('EV360-Evaluacion-Cuestionario', ['evaluacion' => $evaluacion, 'evaluado' => $evaluado, 'evaluador' => $evaluador]) }}
-    </div>
+    </div> --}}
     @include('partials.flashMessages')
     <h5 class="col-12 titulo_general_funcion">Evaluación: {{ $evaluacion->nombre }}</h5>
 

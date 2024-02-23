@@ -71,7 +71,7 @@ class Area extends Model implements Auditable
     public static function getExists()
     {
         return Cache::remember('Areas:Areas_exists', 3600 * 12, function () {
-            return DB::table('areas')->exists();
+            return DB::table('areas')->select('id')->exists();
         });
     }
 

@@ -159,7 +159,7 @@ class Empleado extends Model implements Auditable
     public static function getExists()
     {
         return Cache::remember('Empleados:empleados_exists', 3600 * 8, function () {
-            return DB::table('empleados')->exists();
+            return DB::table('empleados')->select('id')->exists();
         });
     }
 
