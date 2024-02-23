@@ -299,7 +299,7 @@ class EntendimientoOrganizacionController extends Controller
     public function cardFoda()
     {
         abort_if(Gate::denies('analisis_foda_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $query = EntendimientoOrganizacion::with('empleado', 'participantes')->orderByDesc('id')->get();
+        $query = EntendimientoOrganizacion::getAllWithEmpleadoParticipantes();
 
         return view('admin.entendimientoOrganizacions.cardFoda', compact('query'));
     }
@@ -327,7 +327,7 @@ class EntendimientoOrganizacionController extends Controller
         abort_if(Gate::denies('analisis_foda_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $modulo = ListaDistribucion::with('participantes.empleado')->where('modelo', '=', $this->modelo)->first();
-        $query = EntendimientoOrganizacion::with('empleado', 'participantes')->orderByDesc('id')->get();
+        $query = EntendimientoOrganizacion::getAllWithEmpleadoParticipantes();
 
         $listavacia = 'cumple';
 

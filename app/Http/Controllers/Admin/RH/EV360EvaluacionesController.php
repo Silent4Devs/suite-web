@@ -1681,6 +1681,25 @@ class EV360EvaluacionesController extends Controller
         return response()->json(['deleted' => true]);
     }
 
+    public function vistaevaluador($evaluacion, $evaluador)
+    {
+        $usuario = User::getCurrentUser();
+        // dd($usuario, $evaluador);
+        if ($usuario->empleado->id == $evaluador) {
+            $data_evaluacion = Evaluacion::find($evaluacion);
+            $evaluaciones_a_realizar = EvaluadoEvaluador::with('empleado_evaluado')->where('evaluacion_id', $data_evaluacion->id)
+                ->where('evaluador_id', $evaluador)->get();
+
+            return view('admin.recursos-humanos.evaluacion-360.evaluaciones.vista-evaluador', compact(
+                'data_evaluacion',
+                'evaluaciones_a_realizar',
+                'usuario'
+            ));
+        } else {
+            return redirect(route('admin.inicio-Usuario.index'));
+        }
+    }
+
     public function objetivostemporal()
     {
         $reacLA = EvaluadoEvaluador::where('evaluacion_id', '=', '24')->where('evaluado_id', '=', '140')->where('evaluador_id', '=', '132')

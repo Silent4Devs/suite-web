@@ -154,7 +154,7 @@ class PuestosController extends Controller
         $this->saveUpdateContactosExternos($request->externos, $puesto);
         $this->saveOrUpdateLanguage($request->id_language, $puesto);
 
-        return redirect()->route('admin.puestos.index');
+        return redirect()->route('admin.puestos.index')->with('success', 'Puesto Creado');
     }
 
     public function edit(Puesto $puesto)
