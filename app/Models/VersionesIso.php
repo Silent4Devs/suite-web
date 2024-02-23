@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\DB;
 use App\Traits\ClearsResponseCache;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class VersionesIso extends Model implements Auditable
 {
@@ -28,7 +29,7 @@ class VersionesIso extends Model implements Auditable
         $cacheKey = 'VersionesIso:First';
 
         return Cache::remember($cacheKey, now()->addHours(12), function () {
-            return self::select('id', 'version_historico')->first();
+            return DB::table('versiones_iso')->select('id', 'version_historico')->first();
         });
     }
 }
