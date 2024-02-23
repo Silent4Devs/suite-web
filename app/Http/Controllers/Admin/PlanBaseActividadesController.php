@@ -83,7 +83,7 @@ class PlanBaseActividadesController extends Controller
             return $table->make(true);
         }
 
-        $plan_base_actividades = PlanBaseActividade::get();
+        $plan_base_actividades = PlanBaseActividade::getAll();
         $enlaces_ejecutars = EnlacesEjecutar::get();
         $estatus_plan_trabajos = EstatusPlanTrabajo::get();
         $users = User::getAll();
@@ -98,7 +98,7 @@ class PlanBaseActividadesController extends Controller
 
         $users = User::getAll();
 
-        $actividad_padres = PlanBaseActividade::all()->pluck('actividad', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $actividad_padres = PlanBaseActividade::getAll()->pluck('actividad', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $ejecutars = EnlacesEjecutar::all()->pluck('ejecutar', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -132,7 +132,7 @@ class PlanBaseActividadesController extends Controller
 
         $users = User::getAll();
 
-        $actividad_padres = PlanBaseActividade::all()->pluck('actividad', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $actividad_padres = PlanBaseActividade::getAll()->pluck('actividad', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $ejecutars = EnlacesEjecutar::all()->pluck('ejecutar', 'id')->prepend(trans('global.pleaseSelect'), '');
 

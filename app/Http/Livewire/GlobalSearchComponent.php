@@ -61,6 +61,7 @@ class GlobalSearchComponent extends Component
                     && strpos($uri, 'get') === false // Exclude routes with curly braces {}
                     && strpos($uri, 'Export') === false // Exclude routes with curly braces {}
                     && strpos($uri, 'File-manager') === false // Exclude routes with curly braces {}
+                    && strpos($uri, 'Contract_manager') === false // Exclude routes with curly braces {}
                     && ! empty($matchingSegments); // At least one segment matches the search term
             })->map(function ($route) {
                 // Map routes to an array of route information

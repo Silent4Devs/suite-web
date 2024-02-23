@@ -282,6 +282,18 @@ class Empleado extends Model implements Auditable
         });
     }
 
+    public static function getaltaAllObjetivoSupervisorChildren()
+    {
+        return Cache::remember('Empleados:empleados_alta_all_evaluaciones', 3600 * 6, function () {
+            return self::alta()->select(
+                'id',
+                'name',
+                'area_id',
+                'supervisor_id',
+            )->with(['objetivos', 'children', 'supervisor', 'area'])->get();
+        });
+    }
+
     public function TimesheetProyectoEmpleado()
     {
         return $this->hasMany(TimesheetProyectoEmpleado::class, 'empleado_id', 'id');
