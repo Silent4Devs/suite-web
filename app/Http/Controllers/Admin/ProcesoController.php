@@ -31,7 +31,7 @@ class ProcesoController extends Controller
     public function index(Request $request)
     {
         abort_if(Gate::denies('procesos_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $query = Proceso::getAll();
+        $query = Proceso::with('macroproceso')->get();
 
         // dd($query);
         // if ($request->ajax()) {
