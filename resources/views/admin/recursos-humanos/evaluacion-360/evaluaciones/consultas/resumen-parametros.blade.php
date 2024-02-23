@@ -66,11 +66,11 @@
                     RESUMEN GENERAL <i x-bind:class="open ? 'fas fa-minus' : 'fas fa-plus'" @click="open = !open"></i>
                 </div>
             </div>
-            <div class="my-2 col-12" style="text-align: end;">
+            {{-- <div class="my-2 col-12" style="text-align: end;">
                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#normalizarResultados">
                     <i class="fas fa-chart-line mr-2"></i>Normalizar Resultados
                 </button>
-            </div>
+            </div> --}}
             <div class="modal fade" id="normalizarResultados" data-backdrop="static" data-keyboard="false" tabindex="-1"
                 aria-labelledby="normalizarResultadosLabel" aria-hidden="true">
                 <div class="modal-dialog">
