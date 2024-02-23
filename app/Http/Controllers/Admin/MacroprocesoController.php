@@ -23,7 +23,7 @@ class MacroprocesoController extends Controller
         abort_if(Gate::denies('macroprocesos_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // dd($query = Macroproceso::get());
         if ($request->ajax()) {
-            $query = Macroproceso::get();
+            $query = Macroproceso::getAll();
             $table = DataTables::of($query);
 
             $table->addColumn('actions', '&nbsp;');

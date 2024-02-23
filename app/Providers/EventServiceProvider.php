@@ -25,6 +25,7 @@ use App\Models\CalendarioOficial;
 use App\Models\CategoriaCapacitacion;
 use App\Models\ComunicacionSgi;
 use App\Models\ContractManager\Contrato;
+use App\Models\ContractManager\ProveedorIndistinto;
 use App\Models\DeclaracionAplicabilidad;
 use App\Models\Denuncias;
 use App\Models\Documento;
@@ -39,6 +40,7 @@ use App\Models\IncidentesDayoff;
 use App\Models\IncidentesDeSeguridad;
 use App\Models\IncidentesSeguridad;
 use App\Models\IncidentesVacaciones;
+use App\Models\Macroproceso;
 use App\Models\Marca;
 use App\Models\MatrizRiesgo;
 use App\Models\MatrizRiesgosSistemaGestion;
@@ -108,7 +110,9 @@ use App\Observers\IncidentesDayoffObserver;
 use App\Observers\IncidentesDeSeguridadObserver;
 use App\Observers\IncidentesSeguridadObserver;
 use App\Observers\IncidentesVacacionesObserver;
+use App\Observers\KatbolProveedorIndistintoObserver;
 use App\Observers\LessonObserver;
+use App\Observers\MacroprocesoObserver;
 use App\Observers\MarcasObserver;
 use App\Observers\MatrizRiesgoObserver;
 use App\Observers\MatrizRiesgosSistemaGestionObserver;
@@ -267,5 +271,7 @@ class EventServiceProvider extends ServiceProvider
         EntendimientoOrganizacion::observe(EntendimientoOrganizacionObserver::class);
         EnvioDocumentosAjustes::observe(EnvioDocumentosAjustesObserver::class);
         PlanBaseActividade::observe(PlanBaseActividadesObserver::class);
+        Macroproceso::observe(MacroprocesoObserver::class);
+        ProveedorIndistinto::observe(KatbolProveedorIndistintoObserver::class);
     }
 }

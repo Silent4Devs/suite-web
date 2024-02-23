@@ -56,7 +56,7 @@ class PlanTrabajoBaseController extends Controller
         // $gantt_path = 'storage/gantt/';
         // $path = public_path($gantt_path);
         // $json_code = json_decode(file_get_contents($path . '/gantt_inicial.json'), true);
-        // $json_code['resources'] = Empleado::select('id', 'name', 'foto', 'genero')->get()->toArray();
+        // $json_code['resources'] = Empleado::getAltaEmpleados()->toArray();
         // $write_empleados = $json_code;
         // file_put_contents($path . '/gantt_inicial.json', json_encode($write_empleados));
 

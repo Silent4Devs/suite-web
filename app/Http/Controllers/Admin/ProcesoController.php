@@ -157,7 +157,7 @@ class ProcesoController extends Controller
             $q->with('procesosWithDocumento');
         }])->orderBy('id')->get();
 
-        $macros_mapa = Macroproceso::get();
+        $macros_mapa = Macroproceso::getAll();
         $procesos_mapa = Proceso::getAll();
         $organizacion = Organizacion::getFirst();
         $exist_no_publicado = Proceso::select('estatus')->where('estatus', Proceso::NO_ACTIVO)->exists();
