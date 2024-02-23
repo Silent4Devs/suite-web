@@ -77,6 +77,8 @@ def portalcomunicacion(driver):
 
 
 
+
+
 def test_portalcomunicacion(browser):
 
     portalcomunicacion(browser)
