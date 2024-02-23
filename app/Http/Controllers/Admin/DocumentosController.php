@@ -30,7 +30,7 @@ class DocumentosController extends Controller
         abort_if(Gate::denies('control_documentar_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $documentos = Documento::with('revisor', 'elaborador', 'aprobador', 'responsable', 'revisiones', 'proceso', 'macroproceso')->orderByDesc('id')->get();
 
-        $macroprocesos = Macroproceso::pluck('nombre')->toArray();
+        $macroprocesos = Macroproceso::getAll()->pluck('nombre')->toArray();
         $procesos = Proceso::pluck('nombre')->toArray();
         $macroprocesosAndProcesos = array_merge($macroprocesos, $procesos);
 
@@ -40,7 +40,7 @@ class DocumentosController extends Controller
     public function create()
     {
         abort_if(Gate::denies('control_documentar_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $macroprocesos = Macroproceso::get();
+        $macroprocesos = Macroproceso::getAll();
         $procesos = Proceso::getAll();
         $empleados = Empleado::getaltaAll();
         $documentoActual = new Documento;
@@ -197,7 +197,7 @@ class DocumentosController extends Controller
     public function edit(Documento $documento)
     {
         abort_if(Gate::denies('control_documentar_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $macroprocesos = Macroproceso::get();
+        $macroprocesos = Macroproceso::getAll();
         $procesos = Proceso::getAll();
         $empleados = Empleado::getaltaAll();
         $documentoActual = $documento;
@@ -740,7 +740,7 @@ class DocumentosController extends Controller
         } else {
             $organizacion = 'La Organización';
         }
-        $macroprocesos = Macroproceso::pluck('nombre')->toArray();
+        $macroprocesos = Macroproceso::getAll()->pluck('nombre')->toArray();
         $procesos = Proceso::pluck('nombre')->toArray();
         $macroprocesosAndProcesos = array_merge($macroprocesos, $procesos);
 
