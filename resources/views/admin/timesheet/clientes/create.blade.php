@@ -13,12 +13,13 @@
 
     {{ Breadcrumbs::render('timesheet-clientes-form') }}
 
-    {{-- @include('admin.timesheet.complementos.cards') --}}
-    @include('admin.timesheet.complementos.admin-aprob')
-    {{-- @include('admin.timesheet.complementos.blue-card-header') --}}
 
     <h5 class="col-12 titulo_general_funcion">Timesheet: <font style="font-weight:lighter;">Cliente</font>
     </h5>
+
+    {{-- @include('admin.timesheet.complementos.cards') --}}
+    @include('admin.timesheet.complementos.admin-aprob')
+    {{-- @include('admin.timesheet.complementos.blue-card-header') --}}
 
     <div class="card card-body">
         <div class="row">
@@ -97,7 +98,7 @@
                     {!! Form::label(
                         'ciudad',
                         ' Ciudad o Municipio/
-                                                                                                                                                                                                                                                                                                                                País*',
+                                                                                                                                                                                                                                                                                                                                                    País*',
                         ['class' => 'asterisco'],
                     ) !!}
                 </div>
@@ -133,7 +134,7 @@
                     {!! Form::label(
                         'nombre_contacto',
                         'Nombre Completo del
-                                                                                                                                                                                                                                                                                                                                    contacto*',
+                                                                                                                                                                                                                                                                                                                                                        contacto*',
                         ['class' => 'asterisco'],
                     ) !!}
 
@@ -174,7 +175,7 @@
                     {!! Form::label(
                         'objeto_descripcion',
                         'Objeto social / Descripción
-                                                                                                                                                                                                                                                                                                                                    del servicio o producto*',
+                                                                                                                                                                                                                                                                                                                                                        del servicio o producto*',
                         ['class' => 'asterisco'],
                     ) !!}
                 </div>
@@ -184,7 +185,7 @@
                     {!! Form::label(
                         'cobertura',
                         'Cobertura, Rango geográfico
-                                                                                                                                                                                                                                                                                                                                en el cual presta los servicios*',
+                                                                                                                                                                                                                                                                                                                                                    en el cual presta los servicios*',
                         ['class' => 'asterisco'],
                     ) !!}
                 </div>
