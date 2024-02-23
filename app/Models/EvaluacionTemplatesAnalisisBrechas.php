@@ -5,10 +5,12 @@ namespace App\Models;
 use App\Models\Iso27\AnalisisBrechasIso;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class EvaluacionTemplatesAnalisisBrechas extends Model
+class EvaluacionTemplatesAnalisisBrechas extends Model implements Auditable
 {
     use HasFactory;
+    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'evaluacion_templates_analisis_brechas';
 

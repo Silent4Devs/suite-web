@@ -250,6 +250,7 @@ class ReportesEmpleados extends Component
                 ->where('fecha_dia', '<=', $fecha_fin_timesheet_empleado)
                 ->where('empleado_id', $empleado_list->id)
                 ->where('estatus', '!=', 'rechazado')
+                ->where('estatus', '!=', 'Rechazada')
                 ->where('estatus', '!=', 'papelera')
                 ->get();
 

@@ -1,4 +1,10 @@
 @extends('layouts.admin')
+<style>
+ #form_id {
+    display: none;
+}
+
+</style>
 @section('content')
 
 
@@ -61,6 +67,15 @@
         </div>
     </div>
 @endsection
+
+<form method="POST" id="form_id" style="position: relative; left: 10rem; "
+        action="{{ route('admin.areas.pdf') }}">
+        @csrf
+        <button class="boton-transparentev2" type="submit" style="color: #306BA9;">
+            IMPRIMIR <img src="{{ asset('imprimir.svg') }}" alt="Importar" class="icon">
+        </button>
+    </form>
+
 @section('scripts')
     @parent
     <script>
@@ -95,11 +110,11 @@
                     exportOptions: {
                         columns: ['th:not(:last-child):visible']
                     },
-                    customize: function(doc) {
-                        doc.pageMargins = [20, 60, 20, 30];
-                        // doc.styles.tableHeader.fontSize = 7.5;
-                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
-                    }
+                    action: function(e, dt, button, config) {
+                        // Aquí ejecutas la acción del formulario al presionar el botón
+                        var form = document.getElementById('form_id');
+                        form.submit();
+                    },
                 },
                 {
                     extend: 'print',
@@ -194,7 +209,7 @@
                 ajax: "{{ route('admin.areas.index') }}",
                 columns: [{
                         data: 'id',
-                        name: 'id',               
+                        name: 'id',
                     },
                     {
                         data: 'area',

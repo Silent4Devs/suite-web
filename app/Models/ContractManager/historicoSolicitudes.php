@@ -4,11 +4,13 @@ namespace App\Models\ContractManager;
 
 use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class historicoSolicitudes extends Model
+class historicoSolicitudes extends Model implements Auditable
 {
     // use SoftDeletes;
     use ClearsResponseCache;
+    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'historico_solicitudes';
 

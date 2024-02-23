@@ -5,7 +5,9 @@ namespace App\Http\Livewire;
 use App\Mail\RH\Evaluaciones\NotificacionEvaluador;
 use App\Models\Area;
 use App\Models\Empleado;
+use App\Models\RH\CatalogoRangosObjetivos;
 use App\Models\RH\Competencia;
+use App\Models\RH\Ev360ParametrosObjetivos;
 use App\Models\RH\Evaluacion;
 use App\Models\RH\EvaluacionCompetencia;
 use App\Models\RH\EvaluacionObjetivo;
@@ -58,6 +60,8 @@ class MultiStepForm extends Component
     public $pesoGeneralObjetivos = 50;
 
     public $sumaTotalPesoGeneral;
+
+    public $catalogoObjetivos = '';
     // public $description;
 
     //STEP 2
@@ -129,13 +133,14 @@ class MultiStepForm extends Component
     {
         $evaluacion = new Evaluacion;
         $areas = Area::getAll();
-        $empleados = Empleado::getaltaAll();
+        $empleados = Empleado::getIDaltaAll();
         $grupos_evaluados = GruposEvaluado::getAll();
+        $catalogo_rangos_objetivos = CatalogoRangosObjetivos::get();
 
         $competencias = Competencia::search($this->search)->simplePaginate($this->perPage);
         $tipos = TipoCompetencia::getAll();
 
-        return view('livewire.multi-step-form', ['evaluacion' => $evaluacion, 'areas' => $areas, 'empleados' => $empleados, 'grupos_evaluados' => $grupos_evaluados, 'competencias' => $competencias, 'tipos' => $tipos]);
+        return view('livewire.multi-step-form', ['evaluacion' => $evaluacion, 'areas' => $areas, 'empleados' => $empleados, 'grupos_evaluados' => $grupos_evaluados, 'competencias' => $competencias, 'tipos' => $tipos, 'catalogo_rangos_objetivos' => $catalogo_rangos_objetivos]);
     }
 
     public function habilitarSelectAlternativo()
@@ -274,6 +279,7 @@ class MultiStepForm extends Component
                     'descripcion' => 'nullable|string|max:1000',
                     'pesoGeneralCompetencias' => 'required|numeric',
                     'pesoGeneralObjetivos' => 'required|numeric',
+                    'catalogoObjetivos' => 'required|numeric',
                     'sumaTotalPesoGeneral' => 'required|numeric|min:100|max:100',
                 ], [
                     'sumaTotalPesoGeneral.max' => 'El peso total debe de ser 100% el total actual es: '.$this->sumaTotalPesoGeneral.'%',
@@ -298,6 +304,7 @@ class MultiStepForm extends Component
                     'nombre' => 'required|string|max:250',
                     'descripcion' => 'nullable|string|max:1000',
                     'pesoGeneralObjetivos' => 'required|numeric|min:100|max:100',
+                    'catalogoObjetivos' => 'required|numeric',
                     'sumaTotalPesoGeneral' => 'required|numeric|min:100|max:100',
                 ], [
                     'sumaTotalPesoGeneral.max' => 'El peso total debe de ser 100% el total actual es: '.$this->sumaTotalPesoGeneral.'%',
@@ -458,10 +465,10 @@ class MultiStepForm extends Component
     public function createEvaluation($idx, $nombre, $descripcion, $estatus, $evaluados_objetivo, $autoevaluacion, $evaluado_por_jefe, $evaluado_por_equipo_a_cargo, $evaluado_por_misma_area, $fecha_inicio, $fecha_fin)
     {
         if ($evaluados_objetivo == 'all') {
-            $evaluados = Empleado::getaltaAll()->pluck('id')->toArray();
+            $evaluados = Empleado::getIDaltaAll()->pluck('id')->toArray();
         } elseif ($evaluados_objetivo == 'area') {
             $evaluados_area = intval($this->by_area);
-            $evaluados = Empleado::getaltaAll()->where('area_id', $evaluados_area)->pluck('id')->toArray();
+            $evaluados = Empleado::getIDaltaAll()->where('area_id', $evaluados_area)->pluck('id')->toArray();
         } elseif ($evaluados_objetivo == 'manual') {
             $evaluados = $this->by_manual;
         } else {
@@ -517,6 +524,20 @@ class MultiStepForm extends Component
                 $this->crearCuestionario($evaluacion, $evaluado->id, $evaluadores, $this->includeCompetencias, $this->includeObjetivos);
             }
         }
+
+        //Se asignan los valores que tendra la evaluacion
+        $catalogo = CatalogoRangosObjetivos::with('rangos')->find($this->catalogoObjetivos);
+
+        foreach ($catalogo->rangos as $r) {
+            Ev360ParametrosObjetivos::create([
+                'evaluacion_id' => $evaluacion->id,
+                'parametro' => $r->parametro,
+                'valor' => $r->valor,
+                'color' => $r->color,
+                'descripcion' => $r->descripcion,
+            ]);
+        }
+
         if ($idx == 0) {
             if ($this->sendEmail) {
                 $evaluacion->update([
@@ -632,7 +653,7 @@ class MultiStepForm extends Component
 
     public function crearCuestionario($evaluacion, $evaluado, $evaluadores, $includeCompetencias, $includeObjetivos)
     {
-        $empleado = Empleado::with('children', 'supervisor', 'objetivos')->find(intval($evaluado));
+        $empleado = Empleado::getaltaAllObjetivoSupervisorChildren()->find(intval($evaluado));
         $evaluadores_objetivos = collect();
         $evaluacion = Evaluacion::with('competencias')->find($evaluacion->id);
 
@@ -720,10 +741,10 @@ class MultiStepForm extends Component
     public function obtenerEvaluadosConEvaluadores($evaluados_objetivo)
     {
         if ($evaluados_objetivo == 'all') {
-            $evaluados = Empleado::getaltaAll()->pluck('id')->toArray();
+            $evaluados = Empleado::getIDaltaAll()->pluck('id')->toArray();
         } elseif ($evaluados_objetivo == 'area') {
             $evaluados_area = intval($this->by_area);
-            $evaluados = Empleado::getaltaAll()->where('area_id', $evaluados_area)->pluck('id')->toArray();
+            $evaluados = Empleado::getIDaltaAll()->where('area_id', $evaluados_area)->pluck('id')->toArray();
         } elseif ($evaluados_objetivo == 'manual') {
             $evaluados = $this->by_manual;
         } else {
@@ -731,9 +752,10 @@ class MultiStepForm extends Component
         }
 
         $evaluadosEvaluadores = collect();
+        $emps = Empleado::getaltaAllObjetivoSupervisorChildren();
 
         foreach ($evaluados as $evaluado) {
-            $empleado = Empleado::with('children', 'supervisor')->find(intval($evaluado));
+            $empleado = $emps->find(intval($evaluado));
             $evaluadores = collect();
 
             $evaluadores->put('autoevaluacion', ['id' => intval($empleado->id), 'peso' => $this->pesoAutoevaluacion, 'tipo' => EvaluadoEvaluador::AUTOEVALUACION]);
@@ -754,7 +776,7 @@ class MultiStepForm extends Component
                 //     $evaluadores->put('jefe', ['id' => 135, 'peso' => $this->pesoEvaluacionJefe, 'tipo' => EvaluadoEvaluador::JEFE_INMEDIATO]);
                 // }
 
-                $evaluadores->put('jefe', ['id' => Empleado::getaltaAll()->unique()->random()->id, 'peso' => $this->pesoEvaluacionJefe, 'tipo' => EvaluadoEvaluador::JEFE_INMEDIATO]);
+                $evaluadores->put('jefe', ['id' => Empleado::getIDaltaAll()->unique()->random()->id, 'peso' => $this->pesoEvaluacionJefe, 'tipo' => EvaluadoEvaluador::JEFE_INMEDIATO]);
             }
 
             $lista_evaluado_por_equipo_a_cargo = collect();
@@ -769,7 +791,7 @@ class MultiStepForm extends Component
                     $evaluadores->put('subordinado', $lista_evaluado_por_equipo_a_cargo->random());
                 }
             } else {
-                $evaluadores->put('subordinado', ['id' => Empleado::getaltaAll()->unique()->random()->id, 'peso' => $this->pesoEvaluacionEquipo, 'tipo' => EvaluadoEvaluador::EQUIPO]);
+                $evaluadores->put('subordinado', ['id' => Empleado::getIDaltaAll()->unique()->random()->id, 'peso' => $this->pesoEvaluacionEquipo, 'tipo' => EvaluadoEvaluador::EQUIPO]);
             }
 
             // $lista_empleados_misma_area = collect();
@@ -792,7 +814,7 @@ class MultiStepForm extends Component
             //     $evaluadores->put('par', ['id' => 135, 'peso' => $this->pesoEvaluacionArea, 'tipo' => EvaluadoEvaluador::MISMA_AREA]);
             // }
 
-            $evaluadores->put('par', ['id' => Empleado::getaltaAll()->unique()->random()->id, 'peso' => $this->pesoEvaluacionArea, 'tipo' => EvaluadoEvaluador::MISMA_AREA]);
+            $evaluadores->put('par', ['id' => Empleado::getIDaltaAll()->unique()->random()->id, 'peso' => $this->pesoEvaluacionArea, 'tipo' => EvaluadoEvaluador::MISMA_AREA]);
 
             // foreach ($evaluadores as $key => $evaluador) {
             //     if ($evaluador['id'] == 0) {

@@ -96,7 +96,7 @@ class PlanAuditoriaController extends Controller
 
         $equipoauditorias = Empleado::getaltaAll();
 
-        $empleados = Empleado::getaltaAll();
+        $empleados = $equipoauditorias;
 
         $puesto = Puesto::getAll();
 

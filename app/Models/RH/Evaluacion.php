@@ -140,4 +140,9 @@ class Evaluacion extends Model implements Auditable
             return $query;
         });
     }
+
+    public function rangos()
+    {
+        return $this->hasMany(Ev360ParametrosObjetivos::class, 'evaluacion_id', 'id');
+    }
 }
