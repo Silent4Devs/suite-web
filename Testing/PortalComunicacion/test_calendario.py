@@ -5,16 +5,14 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-timesheet_btn_xpath = "(//a[contains(.,'Timesheet')])[2]"
-timesheet_title_xpath = '//h5[@class="titulo_general_funcion" and contains(text(), "Timesheet: Registrar Jornada Laboral")]'
-
+calendario_btn_xpath = "(//a[contains(.,'Calendario')])[1]"
+menu_button_xpath = "//button[contains(@class,'btn-menu-header')]"
 
 @pytest.fixture(scope="module")
 def browser():
     driver = webdriver.Firefox()
     yield driver
     driver.quit()
-
 
 def login(driver, username, password):
     driver.get('https://192.168.9.78/')
@@ -46,6 +44,18 @@ def login(driver, username, password):
     )
     print("Login correcto")
     print("URL actual:", driver.current_url)
+    menu_btn= WebDriverWait(driver, 1).until(
+        EC.element_to_be_clickable((By.XPATH, menu_button_xpath))
+    )
+    menu_btn.click()
+    calendario_btn= WebDriverWait(driver, 1).until(
+        EC.element_to_be_clickable((By.XPATH, calendario_btn_xpath))
+    )
+    calendario_btn.click()
+    print("URL actual:", driver.current_url)
+
+
+
 
 def test_login(browser):
     username = "admin@admin.com"
@@ -53,34 +63,4 @@ def test_login(browser):
 
     login(browser, username, password)
 
-def portalcomunicacion(driver):
-    print("Ingresando a Portal de comunicacion")
-    menu_button = WebDriverWait(driver, 3).until(
-        EC.element_to_be_clickable((By.XPATH, "//button[contains(@class,'btn-menu-header')]"))
-    )
-    menu_button.click()
 
-    comunicacion_button = WebDriverWait(driver, 3).until(
-        EC.element_to_be_clickable((By.XPATH, "(//a[contains(.,'Comunicación')])[1]"))
-
-    )
-    comunicacion_button.click()
-    print("URL actual:", driver.current_url)
-
-    timesheet_btn = WebDriverWait(driver, 3).until(
-        EC.element_to_be_clickable((By.XPATH, timesheet_btn_xpath))
-    )
-    timesheet_btn.click()
-
-    print("Ingresando a Timesheet")
-    time.sleep(10)
-    print("URL actual:", driver.current_url)
-
-
-
-
-
-
-def test_portalcomunicacion(browser):
-
-    portalcomunicacion(browser)
