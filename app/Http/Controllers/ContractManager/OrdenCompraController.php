@@ -39,7 +39,7 @@ class OrdenCompraController extends Controller
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        $proveedor_indistinto = KatbolProveedorIndistinto::pluck('requisicion_id')->first();
+        $proveedor_indistinto = KatbolProveedorIndistinto::getFirst()->pluck('requisicion_id');
 
         $id = $user->id;
         $roles = User::find($id)->roles()->get();

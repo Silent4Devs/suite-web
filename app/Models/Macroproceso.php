@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
-use App\Traits\ClearsResponseCache;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\ClearsResponseCache;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * Class Macroproceso.
@@ -48,6 +49,14 @@ class Macroproceso extends Model implements Auditable
         'id_grupo',
         'descripcion',
     ];
+
+    //Redis methods
+    public static function getAll()
+    {
+        return Cache::remember('Macroprocesos:Macroprocesos_all', 3600 * 7, function () {
+            return self::get();
+        });
+    }
 
     public function grupo()
     {

@@ -312,7 +312,7 @@ class HomeController
 
         // Gantt Tasks
         $actividades = collect();
-        $implementacion = PlanImplementacion::first();
+        $implementacion = PlanImplementacion::getFirst();
         if ($implementacion) {
             $tasks = $implementacion->tasks;
             foreach ($tasks as $task) {

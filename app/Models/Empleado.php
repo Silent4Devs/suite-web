@@ -220,7 +220,7 @@ class Empleado extends Model implements Auditable
     public static function getAltaEmpleados()
     {
         return Cache::remember('Empleados:empleados_alta', 3600 * 8, function () {
-            return self::alta()->select('id', 'area_id', 'name', 'puesto')
+            return self::alta()->select('id', 'area_id', 'name', 'puesto', 'foto', 'genero')
                 ->get();
         });
     }
