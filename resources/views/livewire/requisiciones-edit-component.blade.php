@@ -1,3 +1,9 @@
+@if (session('mensajeError'))
+<div class="alert alert-danger">
+    {{ session('mensajeError') }}
+</div>
+@endif
+
 <div class="create-requisicion">
     <div class="card card-body caja-blue">
 
@@ -88,7 +94,7 @@
                                 <label for="" class="txt-tamaño">
                                     Referencia (Título de la requisición) <font class="asterisco">*</font>
                                 </label>
-                                <input class="browser-default" type="text" name="descripcion" required
+                                <input class="browser-default" type="text" name="descripcion" maxlength="255" required
                                     value="{{ old('descripcion', $editrequisicion->referencia) }}">
                             </div>
 
@@ -173,7 +179,7 @@
                                         <label for="" class="txt-tamaño">
                                             Especificaciones del producto o servicio <font class="asterisco">*</font>
                                         </label>
-                                        <textarea class="model-especificaciones browser-default" name="especificaciones_{{ $count }}" required>{{ $edtprod->espesificaciones }}</textarea>
+                                        <textarea class="model-especificaciones browser-default" maxlength="500" name="especificaciones_{{ $count }}" required>{{ $edtprod->espesificaciones }}</textarea>
                                     </div>
                                 </div>
                             </div>

@@ -185,6 +185,11 @@ class SedeController extends Controller
 
             // Enqueue the image processing job, passing the file, route and the desired width
             Queue::push(new ProcessImageCompressor($file, $route, 256));
+        } else {
+
+            $mensajeError = 'Intentelo de nuevo, Ingrese  todos los campos';
+
+            return Redirect::back()->with('mensajeError', $mensajeError);
         }
 
         $sede->update([
