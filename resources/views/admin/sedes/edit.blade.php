@@ -3,6 +3,11 @@
 <h5 class="col-12 titulo_general_funcion">Editar: Sedes</h5>
 <div class="mt-4 card">
 
+    @if (session('mensajeError'))
+    <div class="alert alert-danger">
+        {{ session('mensajeError') }}
+    </div>
+    @endif
 
     <div class="card-body">
         <form method="POST" action="{{ route("admin.sedes.update", [$sede->id]) }}" enctype="multipart/form-data">
