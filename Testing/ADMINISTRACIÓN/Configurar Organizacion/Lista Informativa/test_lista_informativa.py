@@ -55,7 +55,7 @@ def login (driver):
     
     WebDriverWait(driver, 2).until(
         EC.presence_of_element_located((By.CSS_SELECTOR, "img[alt='Logo Tabantaj']"))
-    )
+    ) 
     print("Login correcto")
     
     print("URL actual:", driver.current_url)
