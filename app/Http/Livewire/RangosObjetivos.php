@@ -80,7 +80,7 @@ class RangosObjetivos extends Component
 
         $param_extra = $this->groupValues($data);
 
-        if (!empty($param_extra)) {
+        if (! empty($param_extra)) {
             foreach ($param_extra as $key => $p) {
                 RHRangosObjetivos::create([
                     'catalogo_rangos_id' => $catalogo->id,
@@ -102,7 +102,6 @@ class RangosObjetivos extends Component
         return redirect(route('admin.rangos.index'));
     }
 
-
     public function groupValues($values)
     {
         $groupedValues = [];
@@ -114,7 +113,7 @@ class RangosObjetivos extends Component
 
             if (
                 isset($values[$estatusKey]) && isset($values[$valorKey]) &&
-                !empty($values[$estatusKey]) && !empty($values[$valorKey])
+                ! empty($values[$estatusKey]) && ! empty($values[$valorKey])
             ) {
                 $groupedValues["group_{$key}"] = [
                     'estatus' => $values[$estatusKey],
@@ -124,6 +123,7 @@ class RangosObjetivos extends Component
                 ];
             }
         }
+
         // dd($groupedValues);
         return $groupedValues;
     }

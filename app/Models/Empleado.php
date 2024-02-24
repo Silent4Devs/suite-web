@@ -159,7 +159,7 @@ class Empleado extends Model implements Auditable
     public static function getExists()
     {
         return Cache::remember('Empleados:empleados_exists', 3600 * 8, function () {
-            return DB::table('empleados')->exists();
+            return DB::table('empleados')->select('id')->exists();
         });
     }
 
@@ -220,7 +220,7 @@ class Empleado extends Model implements Auditable
     public static function getAltaEmpleados()
     {
         return Cache::remember('Empleados:empleados_alta', 3600 * 8, function () {
-            return self::alta()->select('id', 'area_id', 'name', 'puesto')
+            return self::alta()->select('id', 'area_id', 'name', 'puesto', 'foto', 'genero')
                 ->get();
         });
     }
@@ -279,6 +279,19 @@ class Empleado extends Model implements Auditable
                 'id',
                 'foto'
             )->with(['objetivos', 'area', 'perfil', 'puestoRelacionado'])->get();
+        });
+    }
+
+    public static function getaltaAllObjetivoSupervisorChildren()
+    {
+        return Cache::remember('Empleados:empleados_alta_all_evaluaciones', 3600 * 6, function () {
+            return self::alta()->select(
+                'id',
+                'name',
+                'area_id',
+                'supervisor_id',
+                'puesto_id',
+            )->with(['objetivos', 'children', 'supervisor', 'area', 'puestoRelacionado'])->get();
         });
     }
 

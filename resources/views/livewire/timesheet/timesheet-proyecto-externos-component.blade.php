@@ -15,7 +15,7 @@
         <div class="row">
             <div class="form-group col-md-8">
                 <label for="">Externo<sup>*</sup>(obligatorio)</label><br>
-                <input wire:model.defer="externo_añadido" name="" id=""type="text" class="form-control"
+                <input wire:model.defer="externo_añadido" name="" maxlength="255" id=""type="text" class="form-control"
                     required>
             </div>
         </div>

@@ -60,6 +60,13 @@ class PlanImplementacion extends Model implements Auditable
         });
     }
 
+    public static function getFirst()
+    {
+        return Cache::remember('PlanImplementacion:implementaciones_first', 3600 * 8, function () {
+            return self::first();
+        });
+    }
+
     public function getRolesAttribute()
     {
         $roles = Role::select('id', 'title as name')->get();

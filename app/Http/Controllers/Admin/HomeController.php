@@ -261,10 +261,11 @@ class HomeController
         $incidentescancelado = $incidentesSeguridad->where('estado_id', '=', '5')->count('id');
         $incidentescurso = $incidentesSeguridad->where('estado_id', '=', '2')->count('id');
 
-        $actividadsininici = PlanBaseActividade::select('id')->where('estatus_id', '=', '1')->count('id');
-        $actividadenproc = PlanBaseActividade::select('id')->where('estatus_id', '=', '2')->count('id');
-        $actividadcompl = PlanBaseActividade::select('id')->where('estatus_id', '=', '3')->count('id');
-        $actividadretr = PlanBaseActividade::select('id')->where('estatus_id', '=', '4')->count('id');
+        $actividadQuery = PlanBaseActividade::getSelectId();
+        $actividadsininici = $actividadQuery->where('estatus_id', '=', '1')->count('id');
+        $actividadenproc = $actividadQuery->where('estatus_id', '=', '2')->count('id');
+        $actividadcompl = $actividadQuery->where('estatus_id', '=', '3')->count('id');
+        $actividadretr = $actividadQuery->where('estatus_id', '=', '4')->count('id');
 
         $auditexterna = AuditoriaAnual::select('id')->count('id');
         $auditinterna = AuditoriaAnual::select('id')->count('id');
@@ -311,7 +312,7 @@ class HomeController
 
         // Gantt Tasks
         $actividades = collect();
-        $implementacion = PlanImplementacion::first();
+        $implementacion = PlanImplementacion::getFirst();
         if ($implementacion) {
             $tasks = $implementacion->tasks;
             foreach ($tasks as $task) {

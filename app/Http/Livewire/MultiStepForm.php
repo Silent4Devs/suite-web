@@ -653,7 +653,7 @@ class MultiStepForm extends Component
 
     public function crearCuestionario($evaluacion, $evaluado, $evaluadores, $includeCompetencias, $includeObjetivos)
     {
-        $empleado = Empleado::with('children', 'supervisor', 'objetivos')->find(intval($evaluado));
+        $empleado = Empleado::getaltaAllObjetivoSupervisorChildren()->find(intval($evaluado));
         $evaluadores_objetivos = collect();
         $evaluacion = Evaluacion::with('competencias')->find($evaluacion->id);
 
@@ -752,9 +752,10 @@ class MultiStepForm extends Component
         }
 
         $evaluadosEvaluadores = collect();
+        $emps = Empleado::getaltaAllObjetivoSupervisorChildren();
 
         foreach ($evaluados as $evaluado) {
-            $empleado = Empleado::with('children', 'supervisor')->find(intval($evaluado));
+            $empleado = $emps->find(intval($evaluado));
             $evaluadores = collect();
 
             $evaluadores->put('autoevaluacion', ['id' => intval($empleado->id), 'peso' => $this->pesoAutoevaluacion, 'tipo' => EvaluadoEvaluador::AUTOEVALUACION]);

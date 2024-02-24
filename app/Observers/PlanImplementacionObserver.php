@@ -25,6 +25,6 @@ class PlanImplementacionObserver
     private function forgetCache()
     {
         Cache::forget('PlanImplementacion:plan_implementacion_all');
-        //Cache::forget('PlanImplementacion:plan_implementacion_9001_all');
+        Cache::forget('PlanImplementacion:implementaciones_first');
     }
 }

@@ -37,16 +37,16 @@
             font-size: 14px;
         }
     </style>
-    <div class="mt-3">
+    {{-- <div class="mt-3">
         {{ Breadcrumbs::render('EV360-Evaluacion-Cuestionario', ['evaluacion' => $evaluacion, 'evaluado' => $evaluado, 'evaluador' => $evaluador]) }}
-    </div>
+    </div> --}}
     @include('partials.flashMessages')
     <h5 class="col-12 titulo_general_funcion">Evaluación: {{ $evaluacion->nombre }}</h5>
 
     @if ($evaluador->id == $evaluado->id)
         <div class="mt-4 card">
-            <div class="pt-0 card-body">
-                <table class="datatable-rds">
+            <div class="pt-0 card-body mt-4 col-12">
+                <table class="datatable-rds" style="width: 100%;">
                     <thead>
                         <th>
                             Nombre de la evaluación
@@ -66,21 +66,24 @@
                             {{ $evaluacion->nombre }}
                         </td>
                         <td>
-                            {{ $evaluacion->fecha_inicio }}
+                            {{ \Carbon\Carbon::parse($evaluacion->fecha_fin)->format('d-m-Y') }}
                         </td>
                         <td>
-                            {{ $evaluacion->fecha_fin }}
+                            {{ \Carbon\Carbon::parse($evaluacion->fecha_fin)->format('d-m-Y') }}
                         </td>
                         <td>
                             @foreach ($evaluaciones_a_realizar as $evaluar)
-                                <img style=""
-                                    src="{{ asset('storage/empleados/imagenes/') }}/{{ $evaluar->empleado_evaluado->avatar }}"
-                                    class="rounded-circle" alt="{{ $evaluar->empleado_evaluado->name }}"
-                                    title="{{ $evaluar->empleado_evaluado->name }}" width="40" height="37">
-                                @if ($evaluar->evaluado)
-                                    <i class="fas fa-check-circle"
-                                        style="position: relative; top: 0; left: -20px; z-index: 1; color: #002102; text-shadow: 1px 1px 0px gainsboro;"></i>
-                                @endif
+                                <a
+                                    href="{{ url('admin/recursos-humanos/evaluacion-360/evaluaciones/' . $evaluacion->id . '/evaluacion/' . $evaluar->empleado_evaluado->id . '/' . $evaluado->id) }}">
+                                    <img style=""
+                                        src="{{ asset('storage/empleados/imagenes/') }}/{{ $evaluar->empleado_evaluado->avatar }}"
+                                        class="rounded-circle" alt="{{ $evaluar->empleado_evaluado->name }}"
+                                        title="{{ $evaluar->empleado_evaluado->name }}">
+                                    @if ($evaluar->evaluado)
+                                        <i class="fas fa-check-circle"
+                                            style="position: relative; top: 0; left: -20px; z-index: 1; color: #002102; text-shadow: 1px 1px 0px gainsboro;"></i>
+                                    @endif
+                                </a>
                             @endforeach
                         </td>
                     </tbody>
