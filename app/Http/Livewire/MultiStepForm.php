@@ -697,11 +697,11 @@ class MultiStepForm extends Component
 
         switch ($evaluados_objetivo) {
             case 'all':
-                $evaluados = Empleado::getAltaEmpleados()()->pluck('id')->toArray();
+                $evaluados = Empleado::getAltaEmpleados()->pluck('id')->toArray();
                 break;
             case 'area':
                 $evaluados_area = intval($this->by_area);
-                $evaluados = Empleado::getAltaEmpleados()()->where('area_id', $this->by_area)->pluck('id')->toArray();
+                $evaluados = Empleado::getAltaEmpleados()->where('area_id', $this->by_area)->pluck('id')->toArray();
                 break;
             case 'manual':
                 $evaluados = $this->by_manual;
