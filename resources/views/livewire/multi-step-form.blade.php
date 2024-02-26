@@ -538,7 +538,7 @@
                                                     <span style="position: absolute;top: 8px;left: 80px;">%</span>
                                                 </div>
                                             </div>
-                                            <div class="mt-3 row align-items-center"">
+                                            <div class="mt-3 row align-items-center">
                                                 <div class="col-5">
                                                     <div style="margin-top: 8px;">
                                                         <label class="container-check">Objetivos
@@ -1389,7 +1389,7 @@
                 }
             });
 
-            /*window.initSelect2 = () => {
+            window.initSelect2 = () => {
                 $('#by_manual').select2({
                     'theme': 'bootstrap4'
                 });
@@ -1406,7 +1406,7 @@
                 initSelect2();
             });
 
-            */
+
             window.livewire.on('increaseStep', () => {
                 if (document.getElementById('btnModalOpen')) {
                     document.getElementById('btnModalOpen').addEventListener('click', function(e) {
