@@ -24,14 +24,14 @@ tiempo_carga = 10
 tiempo_espera = 2.5
 tiempo_tres = 3
 
-@pytest.fixture
-def driver():
+@pytest.fixture(scope="module")
+def browser():
     driver = webdriver.Firefox()
     yield driver
     driver.quit()
     
 
-def test_macroprocesos(driver):
+def login (driver):
 
     # Abrir la URL de Tabantaj
     driver.get('https://192.168.9.78/')
@@ -42,13 +42,33 @@ def test_macroprocesos(driver):
 
     # Ingresar credenciales
     usuario = driver.find_element(By.XPATH, "//input[contains(@name,'email')]").send_keys("admin@admin.com")
+    print("Introduciendo Correo")
     time.sleep(tiempo_modulos)
     password = driver.find_element(By.XPATH, "//input[contains(@name,'password')]").send_keys("#S3cur3P4$$w0Rd!")
+    print("Introduciendo Contraseña")
     time.sleep(tiempo_modulos)
 
     # Hacer clic en el botón de envío
     btn = driver.find_element(By.XPATH, "//button[@type='submit'][contains(.,'Enviar')]")
     btn.click()
+    print("Haciendo clic en boton enviar")
+    
+    WebDriverWait(driver, 2).until(
+        EC.presence_of_element_located((By.CSS_SELECTOR, "img[alt='Logo Tabantaj']"))
+    ) 
+    print("Login correcto")
+    
+    print("URL actual:", driver.current_url)
+    
+def test_login(browser):
+    
+    login(browser)
+
+################################################## Entrar a Modulos y Submodulos
+
+def in_modulos(driver):
+    
+    time.sleep(tiempo_modulos)
     
     # Entrando a Menu Hamburguesa
     print("URL actual:", driver.current_url)
@@ -72,11 +92,11 @@ def test_macroprocesos(driver):
     time.sleep(tiempo_modulos)
 
     # Entrando a Sub Modulo Macroprocesos 
-    print("Entrando a Sub Modulo Categoria de Crear Areas...")
+    print("Entrando a Sub Modulo Macroprocesos...")
     entrar = driver.find_element(By.XPATH,element_entrar_submodulo)
     driver.execute_script("arguments[0].scrollIntoView(true);", element)
     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH,element_entrar_submodulo)))
-    print("Dando clic en Sub Modulo Categoria de Crear Areas...")
+    print("Dando clic en Sub Modulo Macroprocesos...")
     entrar.click()
     
     time.sleep(tiempo_modulos)
@@ -89,14 +109,23 @@ def test_macroprocesos(driver):
     
     time.sleep(tiempo_modulos)
     
-    ##################################################### AGREGAR Y LLENAR REPOSITORIO ####################################
+    print("URL actual:", driver.current_url)
+
+def test_in_modulos(browser):
+    
+    in_modulos(browser)
+    
+##################################################### AGREGAR Y LLENAR REPOSITORIO ####################################
+    
+def add_macroprocesos(driver):
     
     # Codigo
     campo_codigo = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.XPATH, "//INPUT[@id='codigo']"))
         )
     campo_codigo.click()
-    campo_codigo.send_keys("12345")
+    campo_codigo.send_keys("00117")
+    print("Escribiendo Campo Codigo")
 
     time.sleep(tiempo_modulos)
     
@@ -106,6 +135,7 @@ def test_macroprocesos(driver):
         )
     campo_nombre.click()
     campo_nombre.send_keys("Nombre del activo de prueba")
+    print("Escribiendo Campo Nombre del activo")
 
     time.sleep(tiempo_modulos)
     
@@ -118,6 +148,7 @@ def test_macroprocesos(driver):
     campo_grupo.send_keys("Grupo Soporte")
     time.sleep(tiempo_espera)
     campo_grupo.click()
+    print("Escribiendo Campo Grupo")
 
     time.sleep(tiempo_modulos)
     
@@ -127,6 +158,7 @@ def test_macroprocesos(driver):
         )
     campo_nombre.click()
     campo_nombre.send_keys("Descripcion del macroproceso de prueba")
+    print("Escribiendo Campo Descripcion")
 
     time.sleep(tiempo_modulos)
     
@@ -137,15 +169,26 @@ def test_macroprocesos(driver):
     )
     guardar.click()
     
+    time.sleep(tiempo_modulos)
     
-    #################################BUSCAR REPOSITORIO Y ENTRAR A BOTONES DE EDICION###################################
+    print("URL actual:", driver.current_url)
+    
+def test_add_macroprocesos(browser):
+    
+    add_macroprocesos(browser)
+        
+################################ BUSCAR REPOSITORIO Y ENTRAR A BOTONES DE EDICION###################################
+
+def update_macroprocesos(driver):
+    
+    time.sleep(tiempo_carga)
 
     # Campo Buscar
     campo_entrada = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.XPATH, campo_buscar_xpath))
     )
     campo_entrada.clear()
-    campo_entrada.send_keys("12345")
+    campo_entrada.send_keys("00117")
 
     time.sleep(tiempo_carga)
     
@@ -174,6 +217,7 @@ def test_macroprocesos(driver):
         EC.presence_of_element_located((By.XPATH, "//TEXTAREA[@id='descripcion']"))
         )
     campo_descripcion.click()
+    campo_descripcion.clear()
     campo_descripcion.send_keys("Descripcion de Prueba Actualizado")
 
     time.sleep(tiempo_modulos)
@@ -186,6 +230,12 @@ def test_macroprocesos(driver):
     guardar.click()
 
     time.sleep(tiempo_modulos)
+    
+    print("URL actual:", driver.current_url)
+    
+def test_update_macroprocesos(browser):
+    
+    update_macroprocesos(browser) 
     
     
 

@@ -10,11 +10,12 @@ from selenium.common.exceptions import TimeoutException
 element_confirgurar_organizacion = "(//A[@href='#'])[3]"
 element_entrar_submodulo = "//A[@href='https://192.168.9.78/admin/puestos'][text()='Puestos']"
 agregar_btn_xpath= "//BUTTON[@class='btn btn-xs btn-outline-success rounded ml-2 pr-3 agregar']"
-save_btn_xpath="//button[@class='btn btn-danger'][contains(.,'Guardar')]"
 campo_buscar_xpath= "(//INPUT[@type='search'])[2]"
 btn2_editar = "(//I[@class='fas fa-edit'])[1]"
 trespuntos_btn_xpath= "(//BUTTON[@class='btn btn-action-show-datatables-global d-none'])[1]"
 menu_hamburguesa = "//BUTTON[@class='btn-menu-header']"
+guardar_xpath = "//BUTTON[contains(@class, 'btn') and contains(@class, 'btn-danger') and normalize-space()='Guardar']"
+guardar_act_xpath = "//BUTTON[contains(@class, 'btn') and contains(@class, 'btn-danger') and normalize-space()='Guardar']"
 
 
 #Temporizadores
@@ -22,14 +23,13 @@ tiempo_modulos = 6
 tiempo_carga = 10
 tiempo_espera = 2.5
 
-@pytest.fixture
-def driver():
+@pytest.fixture(scope="module")
+def browser():
     driver = webdriver.Firefox()
     yield driver
     driver.quit()
     
-
-def test_capacitaciones(driver):
+def login (driver):
 
     # Abrir la URL de Tabantaj
     driver.get('https://192.168.9.78/')
@@ -40,13 +40,33 @@ def test_capacitaciones(driver):
 
     # Ingresar credenciales
     usuario = driver.find_element(By.XPATH, "//input[contains(@name,'email')]").send_keys("admin@admin.com")
+    print("Introduciendo Correo")
     time.sleep(tiempo_modulos)
     password = driver.find_element(By.XPATH, "//input[contains(@name,'password')]").send_keys("#S3cur3P4$$w0Rd!")
+    print("Introduciendo Contraseña")
     time.sleep(tiempo_modulos)
 
     # Hacer clic en el botón de envío
     btn = driver.find_element(By.XPATH, "//button[@type='submit'][contains(.,'Enviar')]")
     btn.click()
+    print("Haciendo clic en boton enviar")
+    
+    WebDriverWait(driver, 2).until(
+        EC.presence_of_element_located((By.CSS_SELECTOR, "img[alt='Logo Tabantaj']"))
+    ) 
+    print("Login correcto")
+    
+    print("URL actual:", driver.current_url)
+    
+def test_login(browser):
+    
+    login(browser)
+    
+################################################## Entrar a Modulos y Submodulos
+
+def in_modulos(driver):
+    
+    time.sleep(tiempo_modulos)
     
     # Entrando a Menu Hamburguesa
     print("URL actual:", driver.current_url)
@@ -78,7 +98,19 @@ def test_capacitaciones(driver):
     entrar.click()
     
     time.sleep(tiempo_modulos)
+    
+    print("URL actual:", driver.current_url)
+    
+def test_in_modulos(browser):
+        
+    in_modulos(browser)
+    
+##################################################### AGREGAR Y LLENAR REPOSITORIO ######################################
 
+def add_capacitaciones(driver):
+    
+    time.sleep(tiempo_modulos)
+    
     # Dando clic en Boton Agregar Glosario
     print("Dando clic al botón Agregar...")
     wait = WebDriverWait(driver, 10)
@@ -86,15 +118,14 @@ def test_capacitaciones(driver):
     agregar_btn.click()
     
     time.sleep(tiempo_modulos)
-    
-    ##################################################### AGREGAR Y LLENAR REPOSITORIO ######################################
 
     # Nombre del Puesto
     campo_puestos = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.XPATH, "//INPUT[@id='puesto']"))
         )
     campo_puestos.click()
-    campo_puestos.send_keys("Nombre de Puesto de Prueba 117")
+    campo_puestos.send_keys("Nombre de Puesto de Prueba 00117")
+    print("Llenando Campo Nombre del puestos ...")
 
     time.sleep(tiempo_modulos)
 
@@ -107,6 +138,7 @@ def test_capacitaciones(driver):
     campo_area.send_keys("Arquitectura")
     time.sleep(tiempo_espera)
     campo_area.click()
+    print("Llenando Campo Area ...")
 
     time.sleep(tiempo_modulos)
     
@@ -119,6 +151,7 @@ def test_capacitaciones(driver):
     campo_reportara_a.send_keys("Consultor jr")
     time.sleep(tiempo_espera)
     campo_reportara_a.click()
+    print("Llenando Campo Reportará a ...")
 
     time.sleep(tiempo_modulos)
 
@@ -128,6 +161,7 @@ def test_capacitaciones(driver):
     )
     campo_n_de_personas_internas.click()
     campo_n_de_personas_internas.send_keys("5")
+    print("Llenando Campo Numero de personas a su cargo internas...")
 
     time.sleep(tiempo_modulos)
     
@@ -137,6 +171,7 @@ def test_capacitaciones(driver):
     )
     campo_n_de_personas_externas.click()
     campo_n_de_personas_externas.send_keys("5")
+    print("Llenando Campo Numero de personas a su cargo externas ...")
 
     time.sleep(tiempo_modulos)
 
@@ -146,6 +181,7 @@ def test_capacitaciones(driver):
     )
     campo_actividad.clear()
     campo_actividad.send_keys("Actividad de Prueba")
+    print("Llenando Campo actividad ...")
    
     time.sleep(tiempo_modulos)
 
@@ -155,21 +191,29 @@ def test_capacitaciones(driver):
     )
     campo_esperado.clear()
     campo_esperado.send_keys("Resultado esperado de prueba")
+    print("Llenando Campo Resultado esperado ...")
  
     time.sleep(tiempo_modulos)
 
     # Guardar
-
-    guardar_xpath = "//BUTTON[contains(@class, 'btn') and contains(@class, 'btn-danger') and normalize-space()='Guardar']"
     guardar = WebDriverWait(driver, 20).until(
         EC.element_to_be_clickable((By.XPATH, guardar_xpath))
     )
     guardar.click()
+    print("Dando click en boton guardar ...")
 
     time.sleep(tiempo_modulos)
     
+    print("URL actual:", driver.current_url)
+
+def test_add_capacitaciones(browser):
     
-    #################################BUSCAR REPOSITORIO Y ENTRAR A BOTONES DE EDICION###################################
+    add_capacitaciones(browser)
+    
+    
+#################################BUSCAR REPOSITORIO Y ENTRAR A BOTONES DE EDICION###################################
+
+def update_capacitaciones(driver):
 
     # Campo Buscar
     campo_entrada = WebDriverWait(driver, 10).until(
@@ -177,6 +221,7 @@ def test_capacitaciones(driver):
     )
     campo_entrada.clear()
     campo_entrada.send_keys("Nombre de Puesto de Prueba 117")
+    print("Llenando Campo Buscar ...")
 
     time.sleep(tiempo_carga)
 
@@ -209,12 +254,12 @@ def test_capacitaciones(driver):
 
     campo_entrada.clear()
     campo_entrada.send_keys(resultado_esperado_ingresado)
+    print("Llenando Campo Resultado esperado actualizado ...")
 
     time.sleep(tiempo_modulos)  
 
     # Guardar actualización
     print("Dando clic al botón Guardar para guardar actualización...")
-    guardar_xpath = "//BUTTON[contains(@class, 'btn') and contains(@class, 'btn-danger') and normalize-space()='Guardar']"
     guardar = WebDriverWait(driver, 20).until(
         EC.element_to_be_clickable((By.XPATH, guardar_xpath))
     )
@@ -222,12 +267,9 @@ def test_capacitaciones(driver):
 
     time.sleep(tiempo_modulos)  
     
-    """
-    def test_puestos(browser):
-       
-    user = "admin@admin.com"
-    psw = "#S3cur3P4$$w0Rd!"
+    print("URL actual:", driver.current_url)
     
-    test_puestos(browser, user,psw)"""
-
+def test_update_capacitaciones(browser):
+    
+    update_capacitaciones(browser)
 
