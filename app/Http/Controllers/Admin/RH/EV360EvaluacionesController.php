@@ -290,10 +290,10 @@ class EV360EvaluacionesController extends Controller
     public function contestarCuestionario($evaluacion, $evaluado, $evaluador)
     {
         $usuario = User::getCurrentuser();
+        $evaluacion = Evaluacion::with('rangos')->find(intval($evaluacion));
 
-        if ($usuario->empleado->id == $evaluador) {
-            $evaluacion = Evaluacion::with('rangos')->find(intval($evaluacion));
-            // dd($evaluacion);
+        // dd($evaluacion);
+        if ($usuario->empleado->id == $evaluador && $evaluacion->estatus == 2) {
             $evaluado = Empleado::alta()->with(['puestoRelacionado' => function ($q) {
                 $q->with(['competencias' => function ($q) {
                     $q->with('competencia');

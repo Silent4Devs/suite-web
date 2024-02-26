@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin\RH;
 use App\Http\Controllers\Controller;
 use App\Models\RH\CatalogoRangosObjetivos;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
 
 class CatalogoRangosObjetivosController extends Controller
 {
@@ -14,6 +16,8 @@ class CatalogoRangosObjetivosController extends Controller
     public function index()
     {
         //
+        abort_if(Gate::denies('objetivos_estrategicos_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $catalogos = CatalogoRangosObjetivos::with('rangos')->get();
 
         return view('admin.recursos-humanos.evaluacion-360.objetivos.rangos.index', compact('catalogos'));
@@ -25,6 +29,8 @@ class CatalogoRangosObjetivosController extends Controller
     public function create()
     {
         //
+        abort_if(Gate::denies('objetivos_estrategicos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return view('admin.recursos-humanos.evaluacion-360.objetivos.rangos.create');
     }
 
@@ -42,7 +48,7 @@ class CatalogoRangosObjetivosController extends Controller
     public function show(CatalogoRangosObjetivos $catalogoRangosObjetivos)
     {
         //
-        dd('show', $catalogoRangosObjetivos);
+
     }
 
     /**
@@ -51,6 +57,8 @@ class CatalogoRangosObjetivosController extends Controller
     public function edit($cat_id)
     {
         //
+        abort_if(Gate::denies('objetivos_estrategicos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return view('admin.recursos-humanos.evaluacion-360.objetivos.rangos.edit', compact('cat_id'));
     }
 
@@ -67,9 +75,11 @@ class CatalogoRangosObjetivosController extends Controller
      */
     public function destroy($id)
     {
+        abort_if(Gate::denies('objetivos_estrategicos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $catalogoRangosObjetivos = CatalogoRangosObjetivos::find($id);
 
-        if (! $catalogoRangosObjetivos) {
+        if (!$catalogoRangosObjetivos) {
             return response()->json(['error' => 'Catalogo no encontrado.'], 404);
         }
 

@@ -153,6 +153,8 @@ use App\Observers\IncidentesDeSeguridadObserver;
 use App\Observers\TimesheetProyectoAreaObserver;
 use App\Observers\EnvioDocumentosAjustesObserver;
 use App\Models\ContractManager\ProveedorIndistinto;
+use App\Models\RH\CatalogoRangosObjetivos;
+use App\Observers\CatalogoRangosObjetivosObserver;
 use App\Observers\DeclaracionAplicabilidadObserver;
 use App\Observers\EntendimientoOrganizacionObserver;
 use App\Observers\KatbolProveedorIndistintoObserver;
@@ -276,5 +278,6 @@ class EventServiceProvider extends ServiceProvider
         Macroproceso::observe(MacroprocesoObserver::class);
         ProveedorIndistinto::observe(KatbolProveedorIndistintoObserver::class);
         Sucursal::observe(SucursalObserver::class);
+        CatalogoRangosObjetivos::observe(CatalogoRangosObjetivosObserver::class);
     }
 }
