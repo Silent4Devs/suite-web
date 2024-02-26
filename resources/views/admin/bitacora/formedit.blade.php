@@ -153,7 +153,7 @@
                 Contrato<font class="asterisco">*
                 </font></label>
             <input class="form-control {{ $errors->has('no_contrato') ? 'is-invalid' : '' }}" type="text"
-                maxlength="250" name="no_contrato" id="no_contrato"
+                maxlength="230" name="no_contrato" id="no_contrato"
                 value="{{ old('no_contrato', $contrato->no_contrato) }}"
                 @if ($show_contrato) disabled @endif required>
             <span id="existCode"></span>
