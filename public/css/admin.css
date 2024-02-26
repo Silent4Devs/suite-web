@@ -273,7 +273,7 @@ header {
 
 
 .card.vrd-agua {
-    border-radius: 100px ;
+    border-radius: 100px;
     overflow: hidden;
 }
 
@@ -351,7 +351,7 @@ header {
     box-sizing: border-box;
 }
 
-.btn{
+.btn {
     cursor: pointer !important;
 }
 
@@ -1158,7 +1158,6 @@ table.dataTable thead>tr>td.sorting_desc_disabled:before {
 
 .anima-focus .form-control {
     background-color: #00000000;
-    /* z-index: 2; */
 }
 
 .anima-focus .form-control:not(textarea) {
@@ -1174,19 +1173,18 @@ table.dataTable thead>tr>td.sorting_desc_disabled:before {
     margin-top: 10px;
     margin-left: 7px;
     margin-bottom: 0px;
-    background-color: #ffffff00;
+    background-color: rgba(0, 0, 0, 0);
     width: max-content;
     height: max-content;
     transition: 0.3s;
     padding: 0px 12px;
-    backdrop-filter: grayscale(100%) brightness(400%);
+    backdrop-filter: blur(100px);
     border-radius: 100%;
 }
 
 .anima-focus .form-control:focus+label,
 .anima-focus .form-control:not(:placeholder-shown)+label {
     transform: translateY(-100%) !important;
-    z-index: 2;
 }
 
 .form-control {
@@ -1326,13 +1324,13 @@ a {
     margin: auto;
 }
 
-.vrd-agua{
+.vrd-agua {
     border: none;
     border-bottom: 1px solid #006DDB;
     color: #006DDB;
     border-radius: 0px !important;
 }
 
-.btn label{
+.btn label {
     cursor: pointer;
 }
