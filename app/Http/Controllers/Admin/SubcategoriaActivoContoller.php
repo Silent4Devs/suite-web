@@ -21,6 +21,7 @@ class SubcategoriaActivoContoller extends Controller
 
         if ($request->ajax()) {
             $query = SubcategoriaActivo::with('tipoactivo')->select('*')->orderByDesc('id');
+
             return datatables()::of($query)
                 ->addColumn('actions', function ($row) {
                     $viewGate = 'subcategoria_activos_ver';
@@ -53,7 +54,6 @@ class SubcategoriaActivoContoller extends Controller
 
         return view('admin.SubtipoActivos.index', compact('teams'));
     }
-
 
     public function create()
     {

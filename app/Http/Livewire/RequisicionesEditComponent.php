@@ -155,12 +155,12 @@ class RequisicionesEditComponent extends Component
         ContractManagerProductoRequisicion::where('requisiciones_id', $this->editar_requisicion->id)->delete();
 
         for ($i = 1; $i <= $this->products_servs_count; $i++) {
-            if (isset($data['cantidad_' . $i])) {
+            if (isset($data['cantidad_'.$i])) {
                 $producto_req = new ContractManagerProductoRequisicion();
 
-                $producto_req->espesificaciones = $data['especificaciones_' . $i];
-                $producto_req->cantidad = $data['cantidad_' . $i];
-                $producto_req->producto_id = $data['producto_' . $i];
+                $producto_req->espesificaciones = $data['especificaciones_'.$i];
+                $producto_req->cantidad = $data['cantidad_'.$i];
+                $producto_req->producto_id = $data['producto_'.$i];
                 $producto_req->requisiciones_id = $this->editar_requisicion->id;
                 $producto_req->save();
             }
@@ -205,8 +205,8 @@ class RequisicionesEditComponent extends Component
             for ($i = 0; $i <= $this->proveedores_indistintos_count; $i++) {
                 $this->provedores_indistinto_catalogo = ContractManagerProveedorIndistinto::create([
                     'requisicion_id' => $editrequisicion,
-                    'fecha_inicio' => $data['contacto_fecha_inicio_' . $i],
-                    'fecha_fin' => $data['contacto_fecha_fin_' . $i],
+                    'fecha_inicio' => $data['contacto_fecha_inicio_'.$i],
+                    'fecha_fin' => $data['contacto_fecha_fin_'.$i],
                 ]);
 
                 $this->emit('cambiarTab', 'contact');
@@ -220,25 +220,25 @@ class RequisicionesEditComponent extends Component
             $prove_count = 0;
             $this->provedores_colllection = collect();
             for ($i = 0; $i <= $this->proveedores_count; $i++) {
-                if (isset($data['detalles_' . $i])) {
+                if (isset($data['detalles_'.$i])) {
                     // nuevo proveedor
                     $proveedor_req = new ContractManagerProveedorRequisicion();
-                    $proveedor_req->proveedor = $data['proveedor_' . $i];
-                    $proveedor_req->detalles = $data['detalles_' . $i];
-                    $proveedor_req->tipo = $data['tipo_' . $i];
-                    $proveedor_req->comentarios = $data['comentarios_' . $i];
-                    $proveedor_req->contacto = $data['contacto_' . $i];
-                    $proveedor_req->cel = $data['contacto_telefono_' . $i];
-                    $proveedor_req->contacto_correo = $data['contacto_correo_' . $i];
-                    $proveedor_req->url = $data['contacto_url_' . $i];
-                    $proveedor_req->fecha_inicio = $data['contacto_fecha_inicio_' . $i];
-                    $proveedor_req->fecha_fin = $data['contacto_fecha_fin_' . $i];
+                    $proveedor_req->proveedor = $data['proveedor_'.$i];
+                    $proveedor_req->detalles = $data['detalles_'.$i];
+                    $proveedor_req->tipo = $data['tipo_'.$i];
+                    $proveedor_req->comentarios = $data['comentarios_'.$i];
+                    $proveedor_req->contacto = $data['contacto_'.$i];
+                    $proveedor_req->cel = $data['contacto_telefono_'.$i];
+                    $proveedor_req->contacto_correo = $data['contacto_correo_'.$i];
+                    $proveedor_req->url = $data['contacto_url_'.$i];
+                    $proveedor_req->fecha_inicio = $data['contacto_fecha_inicio_'.$i];
+                    $proveedor_req->fecha_fin = $data['contacto_fecha_fin_'.$i];
                     $proveedor_req->requisiciones_id = $this->requisicion_id;
 
                     // cotizacion y validacion
                     if (isset($this->cotizaciones[$cotizacion_count])) {
                         $cotizacion_actual = $this->cotizaciones[$cotizacion_count];
-                        $name_cotizacion = 'requisicion_' . $editrequisicion . '_cotizazcion_' . $cotizacion_count . '_' . uniqid() . '.' . $cotizacion_actual->getClientOriginalExtension();
+                        $name_cotizacion = 'requisicion_'.$editrequisicion.'_cotizazcion_'.$cotizacion_count.'_'.uniqid().'.'.$cotizacion_actual->getClientOriginalExtension();
                         $ruta_cotizacion = $cotizacion_actual->storeAs('public/cotizaciones_requisiciones_proveedores/', $name_cotizacion);
                     } else {
                         //  $name_cotizacion = $names_cotizaciones[$i];
@@ -266,8 +266,8 @@ class RequisicionesEditComponent extends Component
                 if (isset($this->selectedInput[$prove_count])) {
                     $this->proveedores_catalogo = ContractManagerProveedorOC::where('id', $this->selectedInput[$prove_count])->first();
 
-                    if (isset($data['id_catalogo_' . $i])) {
-                        $provedores_requi_catalogo_delete = ContractManagerProvedorRequisicionCatalogo::find($data['id_catalogo_' . $i]);
+                    if (isset($data['id_catalogo_'.$i])) {
+                        $provedores_requi_catalogo_delete = ContractManagerProvedorRequisicionCatalogo::find($data['id_catalogo_'.$i]);
                         if ($provedores_requi_catalogo_delete) {
                             $provedores_requi_catalogo_delete->delete();
                         } else {
@@ -281,8 +281,8 @@ class RequisicionesEditComponent extends Component
                     $this->provedores_colllection_catalogo = ContractManagerProvedorRequisicionCatalogo::create([
                         'requisicion_id' => $editrequisicion,
                         'proveedor_id' => $this->selectedInput[$prove_count],
-                        'fecha_inicio' => $data['contacto_fecha_inicio_' . $i],
-                        'fecha_fin' => $data['contacto_fecha_fin_' . $i],
+                        'fecha_inicio' => $data['contacto_fecha_inicio_'.$i],
+                        'fecha_fin' => $data['contacto_fecha_fin_'.$i],
                     ]);
                 }
 
