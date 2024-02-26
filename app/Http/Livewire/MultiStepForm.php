@@ -136,7 +136,7 @@ class MultiStepForm extends Component
     {
         $evaluacion = new Evaluacion;
         $areas = Area::getAll();
-        $empleados = Empleado::getIDaltaAll();
+        $empleados = Empleado::getIdNameAll();
         $grupos_evaluados = GruposEvaluado::getAll();
         $catalogo_rangos_objetivos = CatalogoRangosObjetivos::get();
 
@@ -420,10 +420,10 @@ class MultiStepForm extends Component
 
         switch ($evaluados_objetivo) {
             case 'all':
-                $evaluados = $this->empleados->pluck('id')->toArray();
+                $evaluados = Empleado::getAltaEmpleados()()->pluck('id')->toArray();
                 break;
             case 'area':
-                $evaluados = $this->empleados->where('area_id', $this->by_area)->pluck('id')->toArray();
+                $evaluados = Empleado::getAltaEmpleados()()->where('area_id', $this->by_area)->pluck('id')->toArray();
                 break;
             case 'manual':
                 $evaluados = $this->by_manual;
@@ -601,7 +601,7 @@ class MultiStepForm extends Component
     public function crearCuestionario($evaluacion, $evaluado, $evaluadores, $includeCompetencias, $includeObjetivos)
     {
         //se modifico el codigo para no generar consultas de mas y hacer cargas batch
-        $empleado = Empleado::getaltaAllObjetivoSupervisorChildren()->find(intval($evaluado));
+        $empleado = Empleado::getaltaAllObjetivoSupervisorChildren()->where('id', '=', intval($evaluado));
         $evaluadores_objetivos = collect();
         $evaluacion = Evaluacion::with('competencias')->find($evaluacion->id);
 
@@ -697,11 +697,11 @@ class MultiStepForm extends Component
 
         switch ($evaluados_objetivo) {
             case 'all':
-                $evaluados = $this->empleados->pluck('id')->toArray();
+                $evaluados = Empleado::getIDaltaAll()->pluck('id')->toArray();
                 break;
             case 'area':
                 $evaluados_area = intval($this->by_area);
-                $evaluados = $this->empleados->where('area_id', $evaluados_area)->pluck('id')->toArray();
+                $evaluados = Empleado::getIDaltaAll()->where('area_id', $evaluados_area)->pluck('id')->toArray();
                 break;
             case 'manual':
                 $evaluados = $this->by_manual;
@@ -721,7 +721,7 @@ class MultiStepForm extends Component
             $evaluadores->put('autoevaluacion', ['id' => intval($empleado->id), 'peso' => $this->pesoAutoevaluacion, 'tipo' => EvaluadoEvaluador::AUTOEVALUACION]);
 
             $evaluadores->put('jefe', [
-                'id' => $empleado->supervisor ? intval($empleado->supervisor->id) : $this->empleados->unique()->random()->id,
+                'id' => $empleado->supervisor ? intval($empleado->supervisor->id) : Empleado::getIDaltaAll()->unique()->random()->id,
                 'peso' => $this->pesoEvaluacionJefe,
                 'tipo' => EvaluadoEvaluador::JEFE_INMEDIATO,
             ]);
