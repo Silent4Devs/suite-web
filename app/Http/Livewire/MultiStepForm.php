@@ -721,15 +721,15 @@ class MultiStepForm extends Component
             $evaluadores->put('autoevaluacion', ['id' => intval($empleado->id), 'peso' => $this->pesoAutoevaluacion, 'tipo' => EvaluadoEvaluador::AUTOEVALUACION]);
 
             $evaluadores->put('jefe', [
-                'id' => $empleado->supervisor ? intval($empleado->supervisor->id) : Empleado::getIDaltaAll()->unique()->random()->id,
+                'id' => $empleado->supervisor ? intval($empleado->supervisor->id) : Empleado::getAltaEmpleados()->unique()->random()->id,
                 'peso' => $this->pesoEvaluacionJefe,
                 'tipo' => EvaluadoEvaluador::JEFE_INMEDIATO,
             ]);
 
-            $equipo = $empleado->children->isEmpty() ? [Empleado::getIDaltaAll()->unique()->random()->id] : $this->obtenerEquipoACargo($empleado->children);
+            $equipo = $empleado->children->isEmpty() ? [Empleado::getAltaEmpleados()->unique()->random()->id] : $this->obtenerEquipoACargo($empleado->children);
             $evaluadores->put('subordinado', ['id' => $equipo[array_rand($equipo)], 'peso' => $this->pesoEvaluacionEquipo, 'tipo' => EvaluadoEvaluador::EQUIPO]);
 
-            $evaluadores->put('par', ['id' => Empleado::getIDaltaAll()->unique()->random()->id, 'peso' => $this->pesoEvaluacionArea, 'tipo' => EvaluadoEvaluador::MISMA_AREA]);
+            $evaluadores->put('par', ['id' => Empleado::getAltaEmpleados()->unique()->random()->id, 'peso' => $this->pesoEvaluacionArea, 'tipo' => EvaluadoEvaluador::MISMA_AREA]);
 
             $evaluadosEvaluadores->push(['evaluado' => $empleado, 'evaluadores' => $evaluadores]);
         }
