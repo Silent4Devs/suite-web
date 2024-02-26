@@ -718,7 +718,7 @@
                                                     name="evaluados_objetivo"
                                                     wire:change="habilitarSelectAlternativo()">
                                                     <option value="" selected>-- Seleciona una opción --</option>
-                                                    <option value="all">Toda la empresa</option>
+                                                    {{--  <option value="all">Toda la empresa</option>  --}}
                                                     <option value="area">Por Área</option>
                                                     @foreach ($grupos_evaluados as $grupo)
                                                         <option value="{{ $grupo->id }}">{{ $grupo->nombre }} -
