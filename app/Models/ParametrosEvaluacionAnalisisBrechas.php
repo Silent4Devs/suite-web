@@ -9,7 +9,7 @@ use OwenIt\Auditing\Contracts\Auditable;
 class ParametrosEvaluacionAnalisisBrechas extends Model implements Auditable
 {
     use HasFactory;
-    use  \OwenIt\Auditing\Auditable;
+    use \OwenIt\Auditing\Auditable;
 
     public $table = 'parametros_evaluacion_analisis_brechas';
 

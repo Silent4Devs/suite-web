@@ -2,16 +2,16 @@
 
 namespace App\Models\RH;
 
+use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Support\Facades\Cache;
-use App\Traits\ClearsResponseCache;
+use OwenIt\Auditing\Contracts\Auditable;
 
 class CatalogoRangosObjetivos extends Model implements Auditable
 {
-    use HasFactory;
     use ClearsResponseCache;
+    use HasFactory;
     use \OwenIt\Auditing\Auditable;
 
     protected $table = 'catalogo_rangos_objetivos';

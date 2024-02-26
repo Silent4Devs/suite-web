@@ -79,7 +79,7 @@ class CatalogoRangosObjetivosController extends Controller
 
         $catalogoRangosObjetivos = CatalogoRangosObjetivos::find($id);
 
-        if (!$catalogoRangosObjetivos) {
+        if (! $catalogoRangosObjetivos) {
             return response()->json(['error' => 'Catalogo no encontrado.'], 404);
         }
 

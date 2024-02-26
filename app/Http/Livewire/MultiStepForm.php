@@ -30,53 +30,89 @@ class MultiStepForm extends Component
 
     // Properties for all steps
     public $showTable = false;
+
     public $search = '';
+
     public $perPage = 10;
+
     public $filter = 1;
+
     public $selected = [];
+
     public $sendEmail = true;
 
     // Properties for step 1
     public $showContentTable = false;
+
     public $nombre;
+
     public $descripcion;
+
     public $includeCompetencias;
+
     public $includeObjetivos;
+
     public $showPesoGeneralCompetencias = false;
+
     public $pesoGeneralCompetencias = 50;
+
     public $showPesoGeneralObjetivos = false;
+
     public $pesoGeneralObjetivos = 50;
+
     public $sumaTotalPesoGeneral;
+
     public $catalogoObjetivos = '';
 
-     // Properties for step 2
-     protected $listeners = ['grupoEvaluadosSaved' => 'render'];
-     public $evaluados_objetivo;
-     public $by_manual;
-     public $by_area;
-     public $habilitarSelectManual = false;
-     public $habilitarSelectAreas = false;
-     public $listaEvaluados;
+    // Properties for step 2
+    protected $listeners = ['grupoEvaluadosSaved' => 'render'];
+
+    public $evaluados_objetivo;
+
+    public $by_manual;
+
+    public $by_area;
+
+    public $habilitarSelectManual = false;
+
+    public $habilitarSelectAreas = false;
+
+    public $listaEvaluados;
 
     // Properties for step 3
     public $typeEvaluation = 360;
+
     public $evaluado_por_jefe = true;
+
     public $evaluado_por_misma_area = true;
+
     public $evaluado_por_equipo_a_cargo = true;
+
     public $autoevaluacion = true;
+
     public $pesoEvaluacionJefe = 25;
+
     public $pesoEvaluacionArea = 25;
+
     public $pesoEvaluacionEquipo = 25;
+
     public $pesoAutoevaluacion = 25;
+
     public $sumaTotalPeso;
+
     public $aceptado = true;
 
     // Properties for step 4
     public $periodos = [];
+
     public $hayEmpleadosSinCompetencias = false;
+
     public $totalEmpleadosSinCompetencias = 0;
+
     public $listaEmpleadosSinCompetencias;
+
     public $totalSteps = 5;
+
     public $currentStep = 1;
 
     public $hoy;
@@ -144,7 +180,6 @@ class MultiStepForm extends Component
                 break;
         }
     }
-
 
     public function removePeriodo($index)
     {
@@ -232,7 +267,7 @@ class MultiStepForm extends Component
                 'catalogoObjetivos' => 'required|numeric',
                 //'sumaTotalPesoGeneral' => 'required|numeric|in:100',
             ]));
-        } elseif ($this->includeCompetencias && !$this->includeObjetivos) {
+        } elseif ($this->includeCompetencias && ! $this->includeObjetivos) {
             // If only competencias are included
             $this->sumaTotalPesoGeneral = $this->pesoGeneralCompetencias;
             $this->pesoGeneralObjetivos = 0;
@@ -240,7 +275,7 @@ class MultiStepForm extends Component
                 // 'pesoGeneralCompetencias' => 'required|numeric|in:100',
                 // 'sumaTotalPesoGeneral' => 'required|numeric|in:100',
             ]));
-        } elseif (!$this->includeCompetencias && $this->includeObjetivos) {
+        } elseif (! $this->includeCompetencias && $this->includeObjetivos) {
             // If only objetivos are included
             $this->sumaTotalPesoGeneral = $this->pesoGeneralObjetivos;
             $this->pesoGeneralCompetencias = 0;
@@ -287,7 +322,7 @@ class MultiStepForm extends Component
         $messages = [];
 
         // Validation for evaluado options
-        if (!$this->evaluado_por_jefe && !$this->evaluado_por_misma_area && !$this->evaluado_por_equipo_a_cargo && !$this->autoevaluacion) {
+        if (! $this->evaluado_por_jefe && ! $this->evaluado_por_misma_area && ! $this->evaluado_por_equipo_a_cargo && ! $this->autoevaluacion) {
             $rules += [
                 'evaluado_por_jefe' => 'accepted',
                 'evaluado_por_misma_area' => 'accepted',
@@ -328,8 +363,8 @@ class MultiStepForm extends Component
         // Validate total sum of weights
         $rules['sumaTotalPeso'] = 'numeric|max:100|min:100';
         $messages += [
-            'sumaTotalPeso.max' => 'El peso total debe ser 100%, actual: ' . $this->sumaTotalPeso . '%',
-            'sumaTotalPeso.min' => 'El peso total debe ser 100%, actual: ' . $this->sumaTotalPeso . '%',
+            'sumaTotalPeso.max' => 'El peso total debe ser 100%, actual: '.$this->sumaTotalPeso.'%',
+            'sumaTotalPeso.min' => 'El peso total debe ser 100%, actual: '.$this->sumaTotalPeso.'%',
         ];
 
         $this->validate($rules, $messages);
@@ -364,7 +399,7 @@ class MultiStepForm extends Component
             // }
             $this->createEvaluation(
                 $idx,
-                $this->nombre . '-' . ($idx + 1),
+                $this->nombre.'-'.($idx + 1),
                 $this->descripcion,
                 $estatus,
                 $this->evaluados_objetivo,
@@ -385,10 +420,10 @@ class MultiStepForm extends Component
 
         switch ($evaluados_objetivo) {
             case 'all':
-                $evaluados = Empleado::getIDaltaAll()->pluck('id')->toArray();
+                $evaluados = $this->empleados->pluck('id')->toArray();
                 break;
             case 'area':
-                $evaluados = Empleado::getIDaltaAll()->where('area_id', $this->by_area)->pluck('id')->toArray();
+                $evaluados = $this->empleados->where('area_id', $this->by_area)->pluck('id')->toArray();
                 break;
             case 'manual':
                 $evaluados = $this->by_manual;
@@ -456,7 +491,6 @@ class MultiStepForm extends Component
             $this->enviarCorreoAEvaluadores($evaluacion, $evaluadores);
         }
     }
-
 
     public function relacionarEvaluadoConEvaluadores($evaluacion, $listaEvaluado)
     {
@@ -576,13 +610,13 @@ class MultiStepForm extends Component
             $supervisorObjetivos = $evaluadores->firstWhere('tipo', EvaluadoEvaluador::JEFE_INMEDIATO);
             $evaluadores_objetivos = collect([
                 ['id' => intval($empleado->id), 'peso' => 0],
-                ['id' => intval($supervisorObjetivos->evaluador_id), 'peso' => 100]
+                ['id' => intval($supervisorObjetivos->evaluador_id), 'peso' => 100],
             ]);
         }
 
         if ($includeCompetencias) {
             $competencias = $empleado->puestoRelacionado->competencias ?? null;
-            if (!is_null($competencias)) {
+            if (! is_null($competencias)) {
                 $evaluacionRespuestas = [];
                 foreach ($evaluadores as $evaluador) {
                     foreach ($competencias as $competencia) {
@@ -652,7 +686,6 @@ class MultiStepForm extends Component
         }
     }
 
-
     public function enviarNotificacionAlEvaluador($email, $evaluacion, $evaluador, $evaluados)
     {
         Mail::to(removeUnicodeCharacters($email))->queue(new NotificacionEvaluador($evaluacion, $evaluador, $evaluados));
@@ -664,11 +697,11 @@ class MultiStepForm extends Component
 
         switch ($evaluados_objetivo) {
             case 'all':
-                $evaluados = Empleado::getIDaltaAll()->pluck('id')->toArray();
+                $evaluados = $this->empleados->pluck('id')->toArray();
                 break;
             case 'area':
                 $evaluados_area = intval($this->by_area);
-                $evaluados = Empleado::getIDaltaAll()->where('area_id', $evaluados_area)->pluck('id')->toArray();
+                $evaluados = $this->empleados->where('area_id', $evaluados_area)->pluck('id')->toArray();
                 break;
             case 'manual':
                 $evaluados = $this->by_manual;
@@ -688,9 +721,9 @@ class MultiStepForm extends Component
             $evaluadores->put('autoevaluacion', ['id' => intval($empleado->id), 'peso' => $this->pesoAutoevaluacion, 'tipo' => EvaluadoEvaluador::AUTOEVALUACION]);
 
             $evaluadores->put('jefe', [
-                'id' => $empleado->supervisor ? intval($empleado->supervisor->id) : Empleado::getIDaltaAll()->unique()->random()->id,
+                'id' => $empleado->supervisor ? intval($empleado->supervisor->id) : $this->empleados->unique()->random()->id,
                 'peso' => $this->pesoEvaluacionJefe,
-                'tipo' => EvaluadoEvaluador::JEFE_INMEDIATO
+                'tipo' => EvaluadoEvaluador::JEFE_INMEDIATO,
             ]);
 
             $equipo = $empleado->children->isEmpty() ? [Empleado::getIDaltaAll()->unique()->random()->id] : $this->obtenerEquipoACargo($empleado->children);
@@ -703,5 +736,4 @@ class MultiStepForm extends Component
 
         return $evaluadosEvaluadores;
     }
-
 }
