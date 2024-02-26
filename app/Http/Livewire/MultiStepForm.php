@@ -28,91 +28,55 @@ class MultiStepForm extends Component
     //TABLA
     use WithPagination;
 
+    // Properties for all steps
     public $showTable = false;
-
     public $search = '';
-
     public $perPage = 10;
-
     public $filter = 1;
-
     public $selected = [];
-
     public $sendEmail = true;
 
-    //STEP 1
+    // Properties for step 1
     public $showContentTable = false;
-
     public $nombre;
-
     public $descripcion;
-
     public $includeCompetencias;
-
     public $includeObjetivos;
-
     public $showPesoGeneralCompetencias = false;
-
     public $pesoGeneralCompetencias = 50;
-
     public $showPesoGeneralObjetivos = false;
-
     public $pesoGeneralObjetivos = 50;
-
     public $sumaTotalPesoGeneral;
-
     public $catalogoObjetivos = '';
-    // public $description;
 
-    //STEP 2
-    protected $listeners = ['grupoEvaluadosSaved' => 'render'];
+     // Properties for step 2
+     protected $listeners = ['grupoEvaluadosSaved' => 'render'];
+     public $evaluados_objetivo;
+     public $by_manual;
+     public $by_area;
+     public $habilitarSelectManual = false;
+     public $habilitarSelectAreas = false;
+     public $listaEvaluados;
 
-    public $evaluados_objetivo;
-
-    public $by_manual;
-
-    public $by_area;
-
-    public $habilitarSelectManual = false;
-
-    public $habilitarSelectAreas = false;
-
-    public $listaEvaluados;
-
-    //STEP 3
+    // Properties for step 3
     public $typeEvaluation = 360;
-
     public $evaluado_por_jefe = true;
-
     public $evaluado_por_misma_area = true;
-
     public $evaluado_por_equipo_a_cargo = true;
-
     public $autoevaluacion = true;
-
     public $pesoEvaluacionJefe = 25;
-
     public $pesoEvaluacionArea = 25;
-
     public $pesoEvaluacionEquipo = 25;
-
     public $pesoAutoevaluacion = 25;
-
     public $sumaTotalPeso;
-
     public $aceptado = true;
 
-    //STEP 4
+    // Properties for step 4
     public $periodos = [];
-
     public $hayEmpleadosSinCompetencias = false;
-
     public $totalEmpleadosSinCompetencias = 0;
-
     public $listaEmpleadosSinCompetencias;
-
     public $totalSteps = 5;
-
     public $currentStep = 1;
 
     public function mount()

@@ -833,6 +833,8 @@
                                         {{ $errors->first('sumaTotalPeso') }}
                                     </p>
                                 @endif
+
+                                <!-- Evaluators checkboxes and inputs -->
                                 <section class="mt-4 row justify-content-center">
                                     <div class="col-8" wire:loading.class="disableEvents">
                                         <article class="ml-5 feature1">
@@ -1387,7 +1389,7 @@
                 }
             });
 
-            window.initSelect2 = () => {
+            /*window.initSelect2 = () => {
                 $('#by_manual').select2({
                     'theme': 'bootstrap4'
                 });
@@ -1403,6 +1405,8 @@
             Livewire.on('select2', () => {
                 initSelect2();
             });
+
+            */
             window.livewire.on('increaseStep', () => {
                 if (document.getElementById('btnModalOpen')) {
                     document.getElementById('btnModalOpen').addEventListener('click', function(e) {
