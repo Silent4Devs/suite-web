@@ -72,7 +72,7 @@ class CoursesLesson extends Component
         $resource = Lesson::create([
             'name' => $this->name,
             'platform_id' => $this->platform_id,
-            'url' => $this->url,
+            'url' => $this->url."?rel=0",
             'section_id' => $this->section->id,
             'description' => $this->description,
         ]);
@@ -120,7 +120,7 @@ class CoursesLesson extends Component
         if ($this->file) {
             $urlresorce = $this->file->store('cursos');
             $this->lesson->resource()->create([
-                'url' => $urlresorce,
+                'url' => $urlresorce."?rel=0",
             ]);
         }
         // $this->lesson = new Lesson();
