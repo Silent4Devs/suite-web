@@ -22,14 +22,13 @@ tiempo_modulos = 6
 tiempo_carga = 10
 tiempo_espera = 2.5
 
-@pytest.fixture
-def driver():
+@pytest.fixture(scope="module")
+def browser():
     driver = webdriver.Firefox()
     yield driver
     driver.quit()
     
-
-def test_empleados(driver):
+def login (driver):
 
     # Abrir la URL de Tabantaj
     driver.get('https://192.168.9.78/')
@@ -40,13 +39,31 @@ def test_empleados(driver):
 
     # Ingresar credenciales
     usuario = driver.find_element(By.XPATH, "//input[contains(@name,'email')]").send_keys("admin@admin.com")
+    print("Introduciendo Correo")
     time.sleep(tiempo_modulos)
     password = driver.find_element(By.XPATH, "//input[contains(@name,'password')]").send_keys("#S3cur3P4$$w0Rd!")
+    print("Introduciendo Contraseña")
     time.sleep(tiempo_modulos)
 
     # Hacer clic en el botón de envío
     btn = driver.find_element(By.XPATH, "//button[@type='submit'][contains(.,'Enviar')]")
     btn.click()
+    print("Haciendo clic en boton enviar")
+    
+    WebDriverWait(driver, 2).until(
+        EC.presence_of_element_located((By.CSS_SELECTOR, "img[alt='Logo Tabantaj']"))
+    ) 
+    print("Login correcto")
+    
+    print("URL actual:", driver.current_url)
+    
+def test_login(browser):
+    
+    login(browser)
+    
+################################################## Entrar a Modulos y Submodulos
+
+def in_modulos(driver):
     
     time.sleep(tiempo_modulos)
     
@@ -80,9 +97,16 @@ def test_empleados(driver):
     entrar.click()
     
     time.sleep(tiempo_modulos)
-
     
-    ##################################################### AGREGAR Y LLENAR REPOSITORIO ######################################
+def test_in_modulo(browser):
+
+    in_modulos(browser)
+    
+##################################################### AGREGAR Y LLENAR REPOSITORIO ######################################
+    
+def check_mis_datos(driver):
+    
+    time.sleep(tiempo_modulos)
 
     # Numero de empleado 
     
@@ -116,7 +140,15 @@ def test_empleados(driver):
     
     driver.back()
     
-    ############################## ENTRANDO DE NUEVO AL SUBMODULO PARA COMPROBAR CAMBIOS
+def test_check_mis_datos(browser):
+    
+    check_mis_datos(browser)
+    
+############################## ENTRANDO DE NUEVO AL SUBMODULO PARA COMPROBAR CAMBIOS
+
+def review_mis_datos(driver):
+    
+    time.sleep(tiempo_espera)
     
     # Entrando de nuevo a Menu Hamburguesa
     print("URL actual:", driver.current_url)
@@ -126,8 +158,6 @@ def test_empleados(driver):
     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, menu_hamburguesa)))
     print("Dando clic ende nuevo a Menu Hamburguesa...")
     element.click()
-    
-    time.sleep(tiempo_modulos)
     
     time.sleep(tiempo_modulos)
     
@@ -152,4 +182,8 @@ def test_empleados(driver):
     time.sleep(tiempo_modulos)
     
     driver.back()
+    
+def test_review_mis_datos(browser):
+    
+    review_mis_datos(browser)
     

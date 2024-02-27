@@ -20,16 +20,15 @@ menu_hamburguesa = "//BUTTON[@class='btn-menu-header']"
 #Temporizadores
 tiempo_modulos = 6
 tiempo_carga = 10
-tiempo_espera = 2.5
+tiempo_espera = 3
 
-@pytest.fixture
-def driver():
+@pytest.fixture(scope="module")
+def browser():
     driver = webdriver.Firefox()
     yield driver
     driver.quit()
     
-
-def test_empleados(driver):
+def login (driver):
 
     # Abrir la URL de Tabantaj
     driver.get('https://192.168.9.78/')
@@ -40,13 +39,31 @@ def test_empleados(driver):
 
     # Ingresar credenciales
     usuario = driver.find_element(By.XPATH, "//input[contains(@name,'email')]").send_keys("admin@admin.com")
+    print("Introduciendo Correo")
     time.sleep(tiempo_modulos)
     password = driver.find_element(By.XPATH, "//input[contains(@name,'password')]").send_keys("#S3cur3P4$$w0Rd!")
+    print("Introduciendo Contraseña")
     time.sleep(tiempo_modulos)
 
     # Hacer clic en el botón de envío
     btn = driver.find_element(By.XPATH, "//button[@type='submit'][contains(.,'Enviar')]")
     btn.click()
+    print("Haciendo clic en boton enviar")
+    
+    WebDriverWait(driver, 2).until(
+        EC.presence_of_element_located((By.CSS_SELECTOR, "img[alt='Logo Tabantaj']"))
+    ) 
+    print("Login correcto")
+    
+    print("URL actual:", driver.current_url)
+    
+def test_login(browser):
+    
+    login(browser)
+    
+################################################## Entrar a Modulos y Submodulos
+
+def in_modulos(driver):
     
     time.sleep(tiempo_modulos)
     
@@ -80,9 +97,15 @@ def test_empleados(driver):
     entrar.click()
     
     time.sleep(tiempo_modulos)
+    
+def test_in_modulos(browser):
+    
+    in_modulos(browser)
 
     
-    ##################################################### AGREGAR Y LLENAR REPOSITORIO ######################################
+##################################################### AGREGAR Y LLENAR REPOSITORIO ######################################
+
+def check_mi_organizacion(driver):
 
     # Logo
     
@@ -90,9 +113,10 @@ def test_empleados(driver):
         EC.presence_of_element_located((By.XPATH, "(//SPAN[@class='c-switch-slider'])[1]"))
         )
     campo_logo.click()
+    print("Dando clic en campo Logo")
    
 
-    time.sleep(tiempo_modulos)
+    time.sleep(tiempo_espera)
 
     # Telefono
     
@@ -100,9 +124,9 @@ def test_empleados(driver):
         EC.presence_of_element_located((By.XPATH, "(//SPAN[@class='c-switch-slider'])[6]"))
     )
     campo_telefono.click()
-   
+    print("Dando clic en campo Telefono")
 
-    time.sleep(tiempo_modulos)
+    time.sleep(tiempo_espera)
     
     # Correo
     
@@ -110,13 +134,22 @@ def test_empleados(driver):
         EC.presence_of_element_located((By.XPATH, "(//SPAN[@class='c-switch-slider'])[7]"))
     )
     campo_correo.click()
+    print("Dando clic en campo Correo")
 
-
-    time.sleep(tiempo_modulos)
+    time.sleep(tiempo_espera)
     
     driver.back()
+    print("Regresando a pantalla de inicio")
     
-    ############################## ENTRANDO DE NUEVO AL SUBMODULO PARA COMPROBAR CAMBIOS
+def test_check_mi_organizacion(browser):
+    
+    check_mi_organizacion(browser)
+    
+############################## ENTRANDO DE NUEVO AL SUBMODULO PARA COMPROBAR CAMBIOS
+
+def review_mi_organizacion(driver):
+
+    time.sleep(tiempo_modulos)
     
     # Entrando de nuevo a Menu Hamburguesa
     print("URL actual:", driver.current_url)
@@ -129,7 +162,6 @@ def test_empleados(driver):
     
     time.sleep(tiempo_modulos)
     
-    time.sleep(tiempo_modulos)
     
     # Entrando a Modulo Configurar Vistas
     print("Entrando de nuevo a Configurar Vistas...")
@@ -152,5 +184,9 @@ def test_empleados(driver):
     time.sleep(tiempo_modulos)
     
     driver.back()
+    print("Regresando a pantalla de inicio")
+
+def test_review_mi_organizacion(browser):
     
+    review_mi_organizacion(browser)
 #HOLA

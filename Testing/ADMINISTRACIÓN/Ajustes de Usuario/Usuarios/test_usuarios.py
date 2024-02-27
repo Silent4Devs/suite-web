@@ -8,8 +8,8 @@ from selenium.common.exceptions import TimeoutException
 
 #Variables
 element_confirgurar_organizacion = "(//A[@href='#'])[5]"
-element_entrar_submodulo = "//A[@href='https://192.168.9.78/admin/roles'][text()='Roles']"
-agregar_btn_xpath= "//BUTTON[@class='btn btn-xs btn-outline-success rounded ml-2 pr-3 agregar']"
+element_entrar_submodulo = "//A[@href='https://192.168.9.78/admin/users'][text()='Usuarios']"
+agregar_btn_xpath= "//BUTTON[@class='btn btn-xs btn-outline-success rounded ml-2 pr-3']"
 save_btn_xpath="//button[@class='btn btn-danger'][contains(.,'Guardar')]"
 campo_buscar_xpath= "(//INPUT[@type='search'])[2]"
 btn2_editar = "(//I[@class='fas fa-edit'])[1]"
@@ -89,15 +89,17 @@ def in_modulos(driver):
     
     time.sleep(tiempo_modulos)
 
-    # Entrando a Sub Modulo Roles
-    print("Entrando a Sub Modulo Roles...")
+    # Entrando a Sub Modulo Usuarios
+    print("Entrando a Sub Modulo Usuarios...")
     entrar = driver.find_element(By.XPATH,element_entrar_submodulo)
     driver.execute_script("arguments[0].scrollIntoView(true);", element)
     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH,element_entrar_submodulo)))
-    print("Dando clic en Sub Modulo Roles...")
+    print("Dando clic en Sub Modulo Usuarios...")
     entrar.click()
     
     time.sleep(tiempo_modulos)
+    
+    print("URL actual:", driver.current_url)
     
 def test_in_modulos(browser):
     
@@ -106,7 +108,7 @@ def test_in_modulos(browser):
     
 ##################################################### AGREGAR Y LLENAR REPOSITORIO ######################################
     
-def add_roles(driver):
+def add_usuarios(driver):
     
     time.sleep(tiempo_carga)
     
@@ -118,77 +120,53 @@ def add_roles(driver):
     
     time.sleep(tiempo_modulos)
     
-    # Nombre de Rol
+    # Nombre de Usuario
     
-    campo_n_rol = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, "//INPUT[@id='title']"))
+    campo_n_usuario = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, "//INPUT[@id='name']"))
         )
-    campo_n_rol.click()
-    campo_n_rol.send_keys("Nombre de Rol de Prueba 01117")
-    print("Asignando nombre de Rol")
+    campo_n_usuario.click()
+    campo_n_usuario.send_keys("Usuario de Prueba 01117")
+    print("Asignando nombre de Usuario")
+    
+    time.sleep(tiempo_espera)
+    
+    # Correo Electronico
+    
+    campo_email = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, "//INPUT[@id='email']"))
+        )
+    campo_email.click()
+    campo_email.send_keys("prueba@prueba.com")
+    print("Asignando correo electronico")
+    
+    time.sleep(tiempo_espera)
+    
+    # Contraseña
+    
+    password = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, "//INPUT[@id='password']"))
+        )
+    password.click()
+    password.send_keys("123")
+    print("Asignando contraseña")
+    
+    time.sleep(tiempo_espera)
+    
+    # Roles
+    
+    campo_roles = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, "//LI[@class='select2-search select2-search--inline']"))
+        )
+    campo_roles.click()
+    time.sleep(tiempo_espera)
+    campo_roles.send_keys("Colaborador")
+    time.sleep(tiempo_espera)
+    campo_roles.click()
+    print("Asignando Rol de Usuario")
     
     time.sleep(tiempo_espera)
 
-    # mi_perfil_acceder
-    
-    campo_n1 = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, "(//TD[@class=' select-checkbox'])[2]"))
-        )
-    campo_n1.click()
-    print("Seleccionar campo mi_perfil_acceder")
-    
-    time.sleep(tiempo_espera)
-
-    #mi_perfil_mis_datos_acceder
-    
-    campo_n2 = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, "(//TD[@class=' select-checkbox'])[3]"))
-        )
-    campo_n2.click()
-    print("Seleccionar campo mi_perfil_mis_datos_acceder")
-    
-    time.sleep(tiempo_espera)
-    
-    # mi_perfil_mis_datos_ver_perfil_de_puesto
-    
-    campo_n3 = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, "(//TD[@class=' select-checkbox'])[5]"))
-        )
-    campo_n3.click()
-    print("Seleccionar campo mi_perfil_mis_datos_ver_perfil_de_puesto")
-    
-    time.sleep(tiempo_espera)
-
-    # Seleccionar opcion 3 de carrusel
-    
-    campo_n4 = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, "//A[@href='#'][text()='3']"))
-        )
-    campo_n4.click()
-    print("Seleccionar opcion 3 de carrusel")
-    
-    time.sleep(tiempo_espera)
-    
-    # mi_perfil_mis_datos_ver_mis_competencias
-    
-    campo_n5 = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, "(//TD[@class=' select-checkbox'])[1]"))
-        )
-    campo_n5.click()
-    print("Seleccionar campo mi_perfil_mis_datos_ver_mis_competencias")
-    
-    time.sleep(tiempo_espera)
-    
-    # mi_perfil_mi_calendario_acceder
-    
-    campo_n6 = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, "(//TD[@class=' select-checkbox'])[3]"))
-        )
-    campo_n6.click()
-    print("Seleccionar campo mi_perfil_mi_calendario_acceder")
-    
-    time.sleep(tiempo_espera)
-    
     # Guardar Repositorio
     print("Dando clic al botón Guardar...")
     guardar = WebDriverWait(driver, 20).until(
@@ -198,15 +176,17 @@ def add_roles(driver):
     
     time.sleep(tiempo_espera)
     
-    #driver.back()
-
-def test_add_roles(browser):
+    print("URL actual:", driver.current_url)
     
-    add_roles(browser)
+    time.sleep(tiempo_carga)
+    
+def test_add_usuarios(browser):
+    
+    add_usuarios(browser)
     
 ############################## ENTRANDO DE NUEVO AL SUBMODULO PARA COMPROBAR CAMBIOS 
 
-def update_roles(driver):
+def update_usuarios(driver):
     
     time.sleep(tiempo_carga)
     
@@ -215,10 +195,11 @@ def update_roles(driver):
         EC.presence_of_element_located((By.XPATH, campo_buscar_xpath))
     )
     campo_entrada.clear()
-    campo_entrada.send_keys("Nombre de Rol de Prueba 01117")
+    #campo_entrada.send_keys("Nombre de Usuario de Prueba 01117")
 
     time.sleep(tiempo_carga)
 
+    """
     # Boton 3 puntos
     print("Dando clic al botón 3 puntos...")
     wait = WebDriverWait(driver, 10)
@@ -227,7 +208,7 @@ def update_roles(driver):
     # Ahora intenta hacer clic en el elemento
     puntos_btn.click()
 
-    time.sleep(tiempo_modulos)
+    time.sleep(tiempo_modulos) """
 
     # Boton editar
     print("Dando clic al botón editar...")
@@ -239,15 +220,17 @@ def update_roles(driver):
 
     time.sleep(tiempo_modulos)  
     
-    # Actualizar campo mi_perfil_mi_calendario_acceder
+    # Actualizar Correo Electronico
     
-    campo_n6 = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, "(//TD[@class=' select-checkbox'])[3]"))
+    campo_email = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, "//INPUT[@id='email']"))
         )
-    campo_n6.click()
-    print("Actualizando campo mi_perfil_mi_calendario_acceder")
-
-    time.sleep(tiempo_modulos)
+    campo_email.click()
+    campo_email.send_keys("prueba@prueba.com")
+    print("Actualizando correo electronico")
+    
+    time.sleep(tiempo_espera)
+    
 
     # Guardar actualización
     print("Dando clic al botón Guardar para guardar actualización...")
@@ -262,7 +245,7 @@ def update_roles(driver):
     time.sleep(tiempo_modulos)  
 
     
-def test_update_roles(browser):
+def test_update_usuarios(browser):
     
-    update_roles(browser)
+    update_usuarios(browser)
     

@@ -8,8 +8,8 @@ from selenium.common.exceptions import TimeoutException
 
 #Variables
 element_confirgurar_organizacion = "(//A[@href='#'])[3]"
-element_entrar_submodulo = "//A[@href='https://192.168.9.78/admin/puestos'][text()='Puestos']"
-agregar_btn_xpath= "//BUTTON[@class='btn btn-xs btn-outline-success rounded ml-2 pr-3 agregar']"
+element_entrar_submodulo = "//A[@href='https://192.168.9.78/admin/recursos'][text()='Capacitaciones']"
+agregar_btn_xpath= "//A[@href='https://192.168.9.78/admin/recursos/create'][text()='Registrar Capacitaciones']"
 campo_buscar_xpath= "(//INPUT[@type='search'])[2]"
 btn2_editar = "(//I[@class='fas fa-edit'])[1]"
 trespuntos_btn_xpath= "(//BUTTON[@class='btn btn-action-show-datatables-global d-none'])[1]"
@@ -89,12 +89,12 @@ def in_modulos(driver):
     
     time.sleep(tiempo_modulos)
 
-    # Entrando a Sub Modulo Puestos
-    print("Entrando a Sub Modulo Puestos...")
+    # Entrando a Sub Modulo Cpacitaciones
+    print("Entrando a Sub Modulo Capacitaciones...")
     entrar = driver.find_element(By.XPATH,element_entrar_submodulo)
     driver.execute_script("arguments[0].scrollIntoView(true);", element)
     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH,element_entrar_submodulo)))
-    print("Dando clic en Sub Modulo Puestos...")
+    print("Dando clic en Sub Modulo Capacitaciones...")
     entrar.click()
     
     time.sleep(tiempo_modulos)
@@ -111,8 +111,8 @@ def add_capacitaciones(driver):
     
     time.sleep(tiempo_modulos)
     
-    # Dando clic en Boton Agregar Glosario
-    print("Dando clic al botón Agregar...")
+    # Dando clic en Boton Registrar Capacitaciones
+    print("Dando clic al botón Registrar Capacitaciones...")
     wait = WebDriverWait(driver, 10)
     agregar_btn = wait.until(EC.presence_of_element_located((By.XPATH, agregar_btn_xpath)))
     agregar_btn.click()
