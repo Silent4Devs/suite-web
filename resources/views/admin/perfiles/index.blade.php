@@ -143,22 +143,6 @@
                 }
             }
             //dtButtons.push(deleteButton)
-
-            let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar nuevo',
-                url: "{{ route('admin.perfiles.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config) {
-                    let {
-                        url
-                    } = config;
-                    window.location.href = url;
-                }
-            };
-            @can('niveles_jerarquicos_agregar')
-                dtButtons.push(btnAgregar);
-            @endcan
             let dtOverrideGlobals = {
                 buttons: dtButtons,
                 processing: true,

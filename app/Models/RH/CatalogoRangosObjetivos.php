@@ -2,12 +2,15 @@
 
 namespace App\Models\RH;
 
+use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class CatalogoRangosObjetivos extends Model implements Auditable
 {
+    use ClearsResponseCache;
     use HasFactory;
     use \OwenIt\Auditing\Auditable;
 
@@ -17,6 +20,13 @@ class CatalogoRangosObjetivos extends Model implements Auditable
         'nombre_catalogo',
         'descripcion',
     ];
+
+    public static function getAll()
+    {
+        return Cache::remember('CatalogosRangos:catalogos_rangos_all', 3600 * 12, function () {
+            return self::with('rangos')->get();
+        });
+    }
 
     public function rangos()
     {

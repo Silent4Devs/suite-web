@@ -36,7 +36,6 @@
 
     </style>
     @can('role_create')
-        <h5 class="col-12 titulo_general_funcion">Roles</h5>
         <div class="mt-5 card">
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
@@ -47,17 +46,20 @@
                 </div>
             </div>
         @endcan
-        <div class="card-body datatable-fix">
-            <table class="table table-bordered w-100 datatable datatable-Role">
+
+        @include('partials.flashMessages')
+        <div class="datatable-fix datatable-rds">
+            <h5 class="col-12 titulo_general_funcion">Roles</h5>
+            <table class="datatable datatable-Role">
                 <thead class="thead-dark">
                     <tr>
-                        <th style="max-width: 50px;">
+                        <th style="min-width: 500px;">
                             {{ trans('cruds.role.fields.id') }}
                         </th>
-                        <th>
+                        <th  style="min-width: 500px;">
                             Nombre&nbsp;del&nbsp;rol
                         </th>
-                        <th style="max-width: 100px;">
+                        <th style="min-width: 500px;">
                             Opciones
                         </th>
                     </tr>

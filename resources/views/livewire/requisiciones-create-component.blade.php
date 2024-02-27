@@ -1,3 +1,9 @@
+@if (session('mensajeError'))
+<div class="alert alert-danger">
+    {{ session('mensajeError') }}
+</div>
+@endif
+
 <div class="create-requisicion">
     <div class="card card-body caja-blue">
 
@@ -91,7 +97,7 @@
 
                                     Referencia (Título de la requisición) <font class="asterisco">*</font>
                                 </label>
-                                <input class="browser-default" type="text" value="" name="descripcion"
+                                <input class="browser-default" type="text" value="" maxlength="255" name="descripcion"
                                     required>
                             </div>
 
@@ -149,7 +155,7 @@
                                     <label for="" class="txt-tamaño">
                                         Cantidad <font class="asterisco">*</font>
                                     </label>
-                                    <input type="number" name="cantidad_1" min="1" max="9000000000"
+                                    <input type="number" name="cantidad_1" min="1" max="900000"
                                         class="model-cantidad browser-default" required>
                                 </div>
                                 <div class="col s12 l8">
@@ -172,7 +178,7 @@
 
                                         Especificaciones del producto o servicio <font class="asterisco">*</font>
                                     </label>
-                                    <textarea class="model-especificaciones browser-default" name="especificaciones_1" required></textarea>
+                                    <textarea class="model-especificaciones browser-default" maxlength="500" name="especificaciones_1" required></textarea>
                                 </div>
                             </div>
 

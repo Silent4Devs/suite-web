@@ -156,7 +156,7 @@ class Ev360ResumenTablaParametros extends Component
 
     public function obtenerInformacionDeLaConsultaPorEvaluado($evaluacion, $evaluado)
     {
-        $evaluacion = Evaluacion::find(intval($evaluacion));
+        $evaluacion = Evaluacion::with('rangos')->find(intval($evaluacion));
         $evaluado = Empleado::with(['area', 'puestoRelacionado' => function ($q) {
             $q->with('competencias');
         }])->find(intval($evaluado));
@@ -348,7 +348,6 @@ class Ev360ResumenTablaParametros extends Component
                     ->where('evaluado_id', $evaluado->id)
                     ->where('evaluador_id', $supervisorObjetivos->evaluador_id)
                     ->orderBy('id')->get();
-
                 $evaluadores_objetivos->push([
                     'id' => $evaluado->supervisor_id, 'nombre' => $evaluado->name,
                     'esSupervisor' => true,
@@ -362,7 +361,7 @@ class Ev360ResumenTablaParametros extends Component
                             'descripcion_meta' => $objetivo->objetivo->descripcion_meta,
                             'metrica' => $objetivo->objetivo->metrica->definicion,
                             'meta_alcanzada' => $objetivo->meta_alcanzada,
-                            'calificacion' => $objetivo->calificacion,
+                            'calificacion' => $this->calificacion_con_parametro($objetivo->calificacion_persepcion, $objetivo->objetivo->meta, $objetivo->evaluacion_id),
                         ];
                     }),
                 ]);
@@ -370,8 +369,10 @@ class Ev360ResumenTablaParametros extends Component
             $calificacion_objetivos = 0;
             if ($evaluadores_objetivos->first()) {
                 if (count($evaluadores_objetivos->first()['objetivos'])) {
+                    // dd($evaluadores_objetivos->first()['objetivos']);
                     foreach ($evaluadores_objetivos->first()['objetivos'] as $objetivo) {
                         $calificacion_objetivos += $objetivo['calificacion'] / ($objetivo['meta'] > 0 ? $objetivo['meta'] : 1);
+                        // dd($calificacion_objetivos);
                     }
                 }
             }
@@ -396,7 +397,7 @@ class Ev360ResumenTablaParametros extends Component
                         'descripcion_meta' => $objetivo->objetivo->descripcion_meta,
                         'metrica' => $objetivo->objetivo->metrica->definicion,
                         'meta_alcanzada' => $objetivo->meta_alcanzada,
-                        'calificacion' => $objetivo->calificacion,
+                        'calificacion' => $this->calificacion_con_parametro($objetivo->calificacion_persepcion, $objetivo->objetivo->meta, $objetivo->evaluacion_id),
                     ];
                 }),
             ]);
@@ -430,6 +431,26 @@ class Ev360ResumenTablaParametros extends Component
             'calificacion_final' => $calificacion_final,
             'evaluadores' => Empleado::getAll()->find($evaluadores->pluck('evaluador_id')),
         ];
+    }
+
+    public function calificacion_con_parametro($calificacion, $meta, $evaluacion)
+    {
+        $ev = Evaluacion::with('rangos')->find($evaluacion);
+
+        if (! empty($this->maxValue)) {
+            $regla = $meta / $this->maxValue;
+            $nv_cal = $regla * $calificacion;
+
+            return $nv_cal;
+        } else {
+            $maximo = $ev->rangos->max('valor');
+
+            $regla = $meta / $maximo;
+            $nv_cal = $regla * $calificacion;
+
+            // dd($calificacion, $meta, $ev, $maximo, $regla);
+            return $nv_cal;
+        }
     }
 
     public function obtenerInformacionDeLaEvaluacionDeCompetencia($evaluador_empleado, $evaluador, $evaluado, $evaluaciones_competencias, $evaluacion = null)

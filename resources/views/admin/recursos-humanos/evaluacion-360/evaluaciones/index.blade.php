@@ -13,12 +13,26 @@
             padding: 0;
         }
 
+
+        #form_id {
+            display: none;
+        }
+
     </style>
     <div class="mt-3">
         {{ Breadcrumbs::render('EV360-Evaluaciones') }}
     </div>
+
     <h5 class="col-12 titulo_general_funcion">Evaluaciones 360°</h5>
     <div class="mt-5 card">
+
+        <form method="POST" id="form_id" style="position: relative; left: 75rem; top: 1.5rem; "
+        action="{{ route('admin.ev360-evaluaciones.pdf') }}">
+        @csrf
+        <button class="boton-transparentev2" type="submit" style="color: #306BA9;">
+            IMPRIMIR <img src="{{ asset('imprimir.svg') }}" alt="Importar" class="icon">
+        </button>
+        </form>
 
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
@@ -111,6 +125,8 @@
         </div>
     </div>
 @endsection
+
+
 @section('scripts')
     @parent
     <script>
@@ -144,6 +160,11 @@
                     orientation: 'landscape',
                     exportOptions: {
                         columns: ['th:not(:last-child):visible']
+                    },
+                    action: function(e, dt, button, config) {
+                        // Aquí ejecutas la acción del formulario al presionar el botón
+                        var form = document.getElementById('form_id');
+                        form.submit();
                     },
                     customize: function(doc) {
                         doc.pageMargins = [5, 20, 5, 20];

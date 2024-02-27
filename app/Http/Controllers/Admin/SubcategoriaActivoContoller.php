@@ -21,39 +21,33 @@ class SubcategoriaActivoContoller extends Controller
 
         if ($request->ajax()) {
             $query = SubcategoriaActivo::with('tipoactivo')->select('*')->orderByDesc('id');
-            $table = datatables()::of($query);
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
+            return datatables()::of($query)
+                ->addColumn('actions', function ($row) {
+                    $viewGate = 'subcategoria_activos_ver';
+                    $editGate = 'subcategoria_activos_editar';
+                    $deleteGate = 'subcategoria_activos_eliminar';
+                    $crudRoutePart = 'subtipoactivos';
 
-            $table->editColumn('actions', function ($row) {
-                $viewGate = 'subcategoria_activos_ver';
-                $editGate = 'subcategoria_activos_editar';
-                $deleteGate = 'subcategoria_activos_eliminar';
-                $crudRoutePart = 'subtipoactivos';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->editColumn('tipo', function ($row) {
-                return $row->tipoactivo ? $row->tipoactivo->tipo : '';
-            });
-            $table->editColumn('subtipo', function ($row) {
-                return $row->subcategoria ? $row->subcategoria : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder']);
-
-            return $table->make(true);
+                    return view('partials.datatablesActions', compact(
+                        'viewGate',
+                        'editGate',
+                        'deleteGate',
+                        'crudRoutePart',
+                        'row'
+                    ));
+                })
+                ->editColumn('id', function ($row) {
+                    return $row->id ? $row->id : '';
+                })
+                ->editColumn('tipo', function ($row) {
+                    return $row->tipoactivo ? $row->tipoactivo->tipo : '';
+                })
+                ->editColumn('subtipo', function ($row) {
+                    return $row->subcategoria ? $row->subcategoria : '';
+                })
+                ->rawColumns(['actions'])
+                ->make(true);
         }
 
         $teams = Team::get();

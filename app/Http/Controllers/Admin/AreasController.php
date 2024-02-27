@@ -111,11 +111,17 @@ class AreasController extends Controller
             $validateReporta = 'required|exists:areas,id';
         }
         $request->validate([
-            'area' => 'required|string',
+            'area' => 'required|string|max:255',
             'id_reporta' => $validateReporta,
         ], [
             'id_reporta.required' => 'El área a la que reporta es requerido',
         ]);
+
+        if (! $request->hasFile('foto_area')) {
+            $mensajeError = 'Intentelo de nuevo, Ingrese  el campo foto';
+
+            return Redirect::back()->with('mensajeError', $mensajeError);
+        }
 
         $area = Area::create($request->all());
 
@@ -133,10 +139,6 @@ class AreasController extends Controller
             });
 
             $image->save($route);
-        } else {
-            $mensajeError = 'Intentelo de nuevo, Ingrese  todos los campos';
-
-            return Redirect::back()->with('mensajeError', $mensajeError);
         }
 
         $area->update([
@@ -175,7 +177,7 @@ class AreasController extends Controller
         }
 
         $request->validate([
-            'area' => 'required|string',
+            'area' => 'required|string|max:255',
             'id_reporta' => $validateReporta,
         ], [
             'id_reporta.required' => 'El área a la que reporta es requerido',
@@ -202,6 +204,11 @@ class AreasController extends Controller
             });
 
             $image->save($route);
+        } else {
+
+            $mensajeError = 'Intentelo de nuevo, Ingrese  el campo foto';
+
+            return Redirect::back()->with('mensajeError', $mensajeError);
         }
 
         $area->update([

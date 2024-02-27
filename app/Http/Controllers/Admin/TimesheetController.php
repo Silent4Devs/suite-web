@@ -637,8 +637,8 @@ class TimesheetController extends Controller
     {
         $request->validate(
             [
-                'identificador' => 'required|unique:timesheet_proyectos,identificador',
-                'proyecto_name' => 'required',
+                'identificador' => 'required|unique:timesheet_proyectos,identificador|max:255',
+                'proyecto_name' => 'required|max:255',
                 'cliente_id' => 'required',
                 'sede_id' => 'required',
                 'tipo' => 'required',
@@ -737,8 +737,8 @@ class TimesheetController extends Controller
     {
         $request->validate(
             [
-                'identificador' => 'required',
-                'proyecto_name' => 'required',
+                'identificador' => 'required|unique:timesheet_proyectos,identificador|max:255',
+                'proyecto_name' => 'required|max:255',
                 'cliente_id' => 'required',
                 'sede_id' => 'required',
                 'tipo' => 'required',

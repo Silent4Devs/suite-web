@@ -106,6 +106,13 @@ class SedeController extends Controller
         $result = $geocoder->getCoordinatesForAddress($request->direccion);
         $request['latitude'] = $result['lat'];
         $request['longitud'] = $result['lng'];
+
+        if (strlen($request->input('sede')) > 255 || strlen($request->input('descripcion')) > 255 || strlen($request->input('direccion')) > 255) {
+            $mensajeError = 'Intentelo de nuevo, Ingrese  todos los campos';
+
+            return Redirect::back()->with('mensajeError', $mensajeError);
+        }
+
         $sede = Sede::create($request->all());
 
         if ($request->hasFile('foto_sedes')) {
@@ -121,7 +128,7 @@ class SedeController extends Controller
 
             $image->encode('png', 70)->save($route);
         } else {
-            $mensajeError = 'Intentelo de nuevo, Ingrese  todos los campos';
+            $mensajeError = 'Intentelo de nuevo, Ingrese  el campos foto';
 
             return Redirect::back()->with('mensajeError', $mensajeError);
         }
@@ -151,6 +158,12 @@ class SedeController extends Controller
         $sede = Sede::getbyId($id);
         $image = $sede->foto_sedes;
 
+        if (strlen($request->input('sede')) > 255 || strlen($request->input('descripcion')) > 255 || strlen($request->input('direccion')) > 255) {
+            $mensajeError = 'Intentelo de nuevo, Ingrese  todos los campos';
+
+            return Redirect::back()->with('mensajeError', $mensajeError);
+        }
+
         if ($request->hasFile('foto_sedes')) {
             // Check and delete the existing image if it exists
             $existingImagePath = 'sedes/imagenes/'.$sede->foto_sedes;
@@ -168,6 +181,11 @@ class SedeController extends Controller
 
             // Enqueue the image processing job, passing the file, route and the desired width
             Queue::push(new ProcessImageCompressor($file, $route, 256));
+        } else {
+
+            $mensajeError = 'Intentelo de nuevo, Ingrese  todos los campos';
+
+            return Redirect::back()->with('mensajeError', $mensajeError);
         }
 
         $sede->update([

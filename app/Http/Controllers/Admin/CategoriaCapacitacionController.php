@@ -87,7 +87,7 @@ class CategoriaCapacitacionController extends Controller
         ], ['nombre.unique' => 'Esta categoria ya ha sido utilizada']);
         CategoriaCapacitacion::create($request->all());
 
-        return redirect()->route('admin.categoria-capacitacion.index');
+        return redirect()->route('admin.categoria-capacitacion.index')->with('success', 'Registro creado con exito');
     }
 
     /**

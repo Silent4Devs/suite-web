@@ -113,7 +113,7 @@ class EditRangosObjetivos extends Component
             'text' => 'Se ha editado el catalogo de rangos, lo puedes consultar y editar cuando lo necesites.',
         ]);
 
-        return redirect(route('admin.analisisdebrechas-2022.create'));
+        return redirect(route('admin.rangos.index'));
     }
 
     public function asignarInputs($catalogo)

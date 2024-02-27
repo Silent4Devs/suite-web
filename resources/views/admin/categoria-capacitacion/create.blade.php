@@ -40,5 +40,8 @@
             border: 1px solid #057BE2;
             border-radius: 4px;
             opacity: 1;
+            padding: 12px 25px !important;
+    border-radius: 8px !important;
+    cursor: pointer;
             }
 </style>

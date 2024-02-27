@@ -16,6 +16,7 @@ use App\Models\ContractManager\Sucursal as KatbolSucursal;
 use App\Models\Organizacion;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Redirect;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -114,6 +115,14 @@ class RequisicionesCreateComponent extends Component
     public function servicioStore($data)
     {
         $usuario = User::getCurrentUser();
+
+        if (strlen($data['descripcion']) > 255) {
+
+            $mensajeError = 'Intentelo de nuevo, Ingrese  todos los campos';
+
+            return Redirect::back()->with('mensajeError', $mensajeError);
+        }
+
         if ($this->nueva_requisicion) {
             $this->nueva_requisicion->update([
                 'fecha' => $data['fecha'],

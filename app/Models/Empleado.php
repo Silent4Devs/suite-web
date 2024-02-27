@@ -159,7 +159,7 @@ class Empleado extends Model implements Auditable
     public static function getExists()
     {
         return Cache::remember('Empleados:empleados_exists', 3600 * 8, function () {
-            return DB::table('empleados')->exists();
+            return DB::table('empleados')->select('id')->exists();
         });
     }
 
@@ -242,9 +242,35 @@ class Empleado extends Model implements Auditable
     public static function getAltaEmpleadosWithArea()
     {
         return Cache::remember('Empleados:empleados_alta_area', 3600 * 6, function () {
-            return self::with('area')->alta()->get();
+            return self::with('area')->alta()->orderBy('name')->get();
         });
     }
+
+    // public static function getAltaEmpleadosEvaluaciones()
+    // {
+    //     return Cache::remember('Empleados:empleados_alta', 3600 * 8, function () {
+    //         DB::table('empleados')
+    //             ->select('empleados.id', 'empleados.name', 'empleados.email', 'empleados.area_id', 'empleados.puesto_id')
+    //             ->join('areas', 'empleados.area_id', '=', 'areas.id')
+    //             ->join('puestos', 'empleados.puesto_id', '=', 'puestos.id')
+    //             ->select(
+    //                 'empleados.id',
+    //                 'empleados.name',
+    //                 'empleados.email',
+    //                 'empleados.area_id',
+    //                 'empleados.puesto_id',
+    //                 'areas.id as area_id',
+    //                 'areas.area',
+    //                 'puestos.id as puesto_id',
+    //                 'puestos.puesto'
+    //             )
+    //             ->where('empleados.estatus', 'alta')
+    //             ->whereNull('empleados.deleted_at')
+    //             // ->where('empleados.area_id', $evaluados_area)
+    //             ->pluck('empleados.id')
+    //             ->toArray();
+    //     });
+    // }
 
     public static function getSelectEmpleadosWithArea()
     {
@@ -290,9 +316,26 @@ class Empleado extends Model implements Auditable
                 'name',
                 'area_id',
                 'supervisor_id',
-            )->with(['objetivos', 'children', 'supervisor', 'area'])->get();
+                'puesto_id',
+            )->with(['objetivos.objetivo', 'children', 'supervisor', 'area', 'puestoRelacionado'])->get();
         });
     }
+
+    // public static function getaltaAllEvaluacionesObjetivoSupervisorChildren()
+    // {
+    //     return Cache::remember('Empleados:empleados_alta_all_evaluaciones', 3600 * 6, function () {
+    //         return self::select(
+    //             'id',
+    //             'name',
+    //             'area_id',
+    //             'supervisor_id',
+    //             'puesto_id',
+    //         )->with(['objetivos:*', 'children:id,name', 'supervisor:id,name', 'area:id,area', 'puestoRelacionado:id,puesto'])
+    //             ->where('estatus', 'alta')
+    //             ->whereNull('deleted_at')
+    //             ->get();
+    //     });
+    // }
 
     public function TimesheetProyectoEmpleado()
     {
@@ -518,6 +561,11 @@ class Empleado extends Model implements Auditable
         return $this->belongsTo(self::class)->alta();
     }
 
+    public function supervisorCrearEvaluacion()
+    {
+        return $this->belongsTo(self::class)->alta()->select('id', 'name', 'area_id');
+    }
+
     public function supervisorEv360()
     {
         return $this->belongsTo(self::class, 'supervisor_id', 'id');
@@ -533,6 +581,11 @@ class Empleado extends Model implements Auditable
         return $this->hasMany(self::class, 'supervisor_id', 'id')->with('children', 'supervisor', 'area'); //Eager Loading utilizar solo para construir un arbol si no puede desbordar la pila
     }
 
+    public function childrenCrearEvaluacion()
+    {
+        return $this->hasMany(self::class, 'supervisor_id', 'id')->with('children', 'supervisor', 'area')->select('id', 'name', 'area_id', 'supervisor_id'); //Eager Loading utilizar solo para construir un arbol si no puede desbordar la pila
+    }
+
     public function childrenOrganigrama()
     {
         return $this->hasMany(self::class, 'supervisor_id', 'id')
@@ -542,7 +595,7 @@ class Empleado extends Model implements Auditable
 
     public function scopeAlta($query)
     {
-        return $query->where('estatus', 'alta');
+        return $query->where('estatus', 'alta')->where('deleted_at', null);
     }
 
     public function scopeVacanteActiva($query)

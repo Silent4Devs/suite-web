@@ -36,7 +36,7 @@
                     <div class="form-group col-sm-4">
                         <label class="required" for="area"><i
                                 class="fab fa-adn iconos-crear"></i>{{ trans('cruds.area.fields.area') }}</label>
-                        <input class="form-control {{ $errors->has('area') ? 'is-invalid' : '' }}" type="text"
+                        <input class="form-control {{ $errors->has('area') ? 'is-invalid' : '' }}" maxlength="255" type="text"
                             name="area" id="area" value="{{ old('area', '') }}">
                         @if ($errors->has('area'))
                             <div class="invalid-feedback">
@@ -142,7 +142,7 @@
                 <div class="row col-12">
                     <div class="form-group col-sm-{{ $direccion_exists ? '12' : '12' }}">
                         <label for="descripcion"><i class="fas fa-pencil-alt iconos-crear"></i>Descripción</label>
-                        <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" type="text" name="descripcion"
+                        <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" maxlength="550" type="text" name="descripcion"
                             id="descripcion">{{ old('descripcion', '') }}</textarea>
                         @if ($errors->has('descripcion'))
                             <div class="invalid-feedback">
@@ -154,7 +154,7 @@
                 </div>
 
                 <div class="text-right form-group col-12" style="margin-left:15px;">
-                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                    <a onclick="redirigirARuta()" class="btn_cancelar">Cancelar</a>
                     <button class="btn btn-danger" type="submit">
                         {{ trans('global.save') }}
                     </button>
@@ -166,6 +166,11 @@
 
     @endsection
 
+    <script>
+        function redirigirARuta() {
+            window.location.href = "{{ route('admin.areas.index') }}";
+        }
+    </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             let contacto = document.querySelector('#nombre_contacto_puesto');
