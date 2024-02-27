@@ -296,6 +296,9 @@
                     <option value="">Evaluador</option>
                 </select>
             </div>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Buscar ...">
+            </div>
         </div>
     </div>
 
@@ -315,19 +318,152 @@
 
         <div class="tab-pane mb-4 fade show active" id="nav-config-obj-1" role="tabpanel"
             aria-labelledby="nav-config-obj-1">
+            <div class="card card-body">
 
+                <table id="datatable-empleados-config-evaluaciones" class="table table-bordered w-100 datatable">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Evaluadores</th>
+                            <th>Avance</th>
+                            <th>Actividad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Nombre</td>
+                            <td>Evaluadores</td>
+                            <td>Avance</td>
+                            <td>Actividad</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
         </div>
 
         <div class="tab-pane mb-4 fade" id="nav-config-obj-2" role="tabpanel" aria-labelledby="nav-config-obj-2">
+            <div class="card card-body">
+                <div class="datatable-fix">
+                    <table id="" class="table table-bordered w-100 datatable">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th colspan="8">RESULTADOS</th>
+                                <th colspan="21">COMPETENCIAS</th>
+                                <th colspan="20">OBJETIVOS</th>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <th>Nombre</th>
+                                <th>Puesto y Área</th>
+                                <th>Evaluadores</th>
+                                <th>Competencias</th>
+                                <th>Objetivos</th>
+                                <th>Calificación</th>
+                                <th>Nivel</th>
 
-        </div>
+                                <th>Apego a procesos</th>
+                                <th>Innovación y creatividad</th>
+                                <th>Comunicación efectiva</th>
+                                <th>Enfocque al cliente</th>
+                                <th>Trabajo en equipo</th>
+                                <th>Adaptabilidad al cambio</th>
+                                <th>Solución de problemas y toma de desiciones</th>
+                                <th>Liderazgo e influencia</th>
+                                <th>Pensamiento estratégico</th>
+                                <th>Planificación y organización</th>
+                                <th>Negociación comercial</th>
+                                <th>Analisis de negocio</th>
+                                <th>Visión de negocio</th>
+                                <th>Enfoque a resultados</th>
+                                <th>Mejora continua</th>
+                                <th>Búsqueda de información</th>
+                                <th>Análisis y síntesis</th>
+                                <th>Efectividad interpersonal (Empatía)</th>
+                                <th>Negociación</th>
+                                <th>Trabajo bajo presión</th>
+                                <th>Impacto e influencia</th>
 
-        <div class="tab-pane mb-4 fade" id="nav-config-obj-3" role="tabpanel" aria-labelledby="nav-config-obj-3">
+                                <th>Objetivo 1</th>
+                                <th>%</th>
+                                <th>Objetivo 2</th>
+                                <th>%</th>
+                                <th>Objetivo 3</th>
+                                <th>%</th>
+                                <th>Objetivo 4</th>
+                                <th>%</th>
+                                <th>Objetivo 5</th>
+                                <th>%</th>
+                                <th>Objetivo 6</th>
+                                <th>%</th>
+                                <th>Objetivo 7</th>
+                                <th>%</th>
+                                <th>Objetivo 8</th>
+                                <th>%</th>
+                                <th>Objetivo 9</th>
+                                <th>%</th>
+                                <th>Objetivo 10</th>
+                                <th>%</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td>Nombre</td>
+                                <td>Puesto y Área</td>
+                                <td>Evaluadores</td>
+                                <td>Competencias</td>
+                                <td>Objetivos</td>
+                                <td>Calificación</td>
+                                <td>Nivel</td>
 
-        </div>
+                                <td>Apego a procesos</td>
+                                <td>Innovación y creatividad</td>
+                                <td>Comunicación efectiva</td>
+                                <td>Enfocque al cliente</td>
+                                <td>Trabajo en equipo</td>
+                                <td>Adaptabilidad al cambio</td>
+                                <td>Solución de problemas y toma de desiciones</td>
+                                <td>Liderazgo e influencia</td>
+                                <td>Pensamiento estratégico</td>
+                                <td>Planificación y organización</td>
+                                <td>Negociación comercial</td>
+                                <td>Analisis de negocio</td>
+                                <td>Visión de negocio</td>
+                                <td>Enfoque a resultados</td>
+                                <td>Mejora continua</td>
+                                <td>Búsqueda de información</td>
+                                <td>Análisis y síntesis</td>
+                                <td>Efectividad interpersonal (Empatía)</td>
+                                <td>Negociación</td>
+                                <td>Trabajo bajo presión</td>
+                                <td>Impacto e influencia</td>
 
-        <div class="tab-pane mb-4 fade" id="nav-config-obj-4" role="tabpanel" aria-labelledby="nav-config-obj-4">
-
+                                <td>Objetivo 1</td>
+                                <td>%</td>
+                                <td>Objetivo 2</td>
+                                <td>%</td>
+                                <td>Objetivo 3</td>
+                                <td>%</td>
+                                <td>Objetivo 4</td>
+                                <td>%</td>
+                                <td>Objetivo 5</td>
+                                <td>%</td>
+                                <td>Objetivo 6</td>
+                                <td>%</td>
+                                <td>Objetivo 7</td>
+                                <td>%</td>
+                                <td>Objetivo 8</td>
+                                <td>%</td>
+                                <td>Objetivo 9</td>
+                                <td>%</td>
+                                <td>Objetivo 10</td>
+                                <td>%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -335,5 +471,84 @@
 
 @section('scripts')
     @parent
+    <script>
+        $(function() {
+            let dtButtons = [{
+                    extend: 'csvHtml5',
+                    title: `Sedes - Ubicación ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Exportar CSV',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible']
+                    }
+                },
+                {
+                    extend: 'excelHtml5',
+                    title: `Sedes - Ubicación ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Exportar Excel',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible']
+                    }
+                },
+                {
+                    extend: 'pdfHtml5',
+                    title: `Sedes - Ubicación ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Exportar PDF',
+                    orientation: 'portrait',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible']
+                    },
+                    customize: function(doc) {
+                        doc.pageMargins = [20, 60, 20, 30];
+                        // doc.styles.tableHeader.fontSize = 7.5;
+                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
+                    }
+                },
+                {
+                    extend: 'print',
+                    title: `Sedes - Ubicación ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Imprimir',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible']
+                    }
+                },
+                {
+                    extend: 'colvis',
+                    text: '<i class="fas fa-filter" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Seleccionar Columnas',
+                },
+                {
+                    extend: 'colvisGroup',
+                    text: '<i class="fas fa-eye" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    show: ':hidden',
+                    titleAttr: 'Ver todo',
+                },
+                {
+                    extend: 'colvisRestore',
+                    text: '<i class="fas fa-undo" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Restaurar a estado anterior',
+                }
 
+            ];
+
+
+            let dtOverrideGlobals = {
+                buttons: dtButtons,
+                order: [
+                    [0, 'desc']
+                ],
+            };
+            let table = $('.datatable').DataTable(dtOverrideGlobals);
+        });
+    </script>
 @endsection

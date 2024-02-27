@@ -15,4 +15,14 @@ class EvaluacionesDesempeñoController extends Controller
     {
         return view('admin.recursos-humanos.evaluaciones-desempeño.dashboard-general');
     }
+
+    public function dashboardGlobal()
+    {
+        return view('admin.recursos-humanos.evaluaciones-desempeño.dashboard-global');
+    }
+
+    public function configEvaluaciones()
+    {
+        return view('admin.recursos-humanos.evaluaciones-desempeño.config-evaluaciones-cards');
+    }
 }
