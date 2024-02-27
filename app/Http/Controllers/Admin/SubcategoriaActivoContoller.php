@@ -20,7 +20,7 @@ class SubcategoriaActivoContoller extends Controller
         abort_if(Gate::denies('subcategoria_activos_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = SubcategoriaActivo::with('tipoactivo')->select('*')->orderByDesc('id');
+            $query = SubcategoriaActivo::with('tipoactivo')->get();
 
             return datatables()::of($query)
                 ->addColumn('actions', function ($row) {

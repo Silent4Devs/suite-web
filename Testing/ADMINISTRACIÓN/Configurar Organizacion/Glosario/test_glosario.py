@@ -24,14 +24,13 @@ tiempo_carga = 10
 tiempo_espera = 2.5
 tiempo_tres = 3
 
-@pytest.fixture
-def driver():
+@pytest.fixture(scope="module")
+def browser():
     driver = webdriver.Firefox()
     yield driver
     driver.quit()
     
-
-def test_glosario(driver):
+def login (driver):
 
     # Abrir la URL de Tabantaj
     driver.get('https://192.168.9.78/')
@@ -42,13 +41,33 @@ def test_glosario(driver):
 
     # Ingresar credenciales
     usuario = driver.find_element(By.XPATH, "//input[contains(@name,'email')]").send_keys("admin@admin.com")
+    print("Introduciendo Correo")
     time.sleep(tiempo_modulos)
     password = driver.find_element(By.XPATH, "//input[contains(@name,'password')]").send_keys("#S3cur3P4$$w0Rd!")
+    print("Introduciendo Contraseña")
     time.sleep(tiempo_modulos)
 
     # Hacer clic en el botón de envío
     btn = driver.find_element(By.XPATH, "//button[@type='submit'][contains(.,'Enviar')]")
     btn.click()
+    print("Haciendo clic en boton enviar")
+    
+    WebDriverWait(driver, 2).until(
+        EC.presence_of_element_located((By.CSS_SELECTOR, "img[alt='Logo Tabantaj']"))
+    ) 
+    print("Login correcto")
+    
+    print("URL actual:", driver.current_url)
+    
+def test_login(browser):
+    
+    login(browser)
+    
+################################################## Entrar a Modulos y Submodulos
+
+def in_modulos(driver):
+    
+    time.sleep(tiempo_modulos)
     
     # Entrando a Menu Hamburguesa
     print("URL actual:", driver.current_url)
@@ -76,11 +95,24 @@ def test_glosario(driver):
     entrar = driver.find_element(By.XPATH,element_entrar_submodulo)
     driver.execute_script("arguments[0].scrollIntoView(true);", element)
     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH,element_entrar_submodulo)))
-    print("Dando clic en Sub Modulo Categoria de Crear Areas...")
+    print("Dando clic en Sub Modulo Glosario...")
     entrar.click()
     
     time.sleep(tiempo_modulos)
 
+    print("URL actual:", driver.current_url)
+
+def test_in_modulos(browser):
+    
+    in_modulos(browser)
+
+    
+################################################### AGREGAR Y LLENAR REPOSITORIO ####################################
+    
+def add_glosario(driver):
+    
+    time.sleep(tiempo_modulos)
+    
     # Dando clic en Boton Agregar Area
     print("Dando clic al botón Agregar Crear Areas...")
     wait = WebDriverWait(driver, 10)
@@ -89,14 +121,13 @@ def test_glosario(driver):
     
     time.sleep(tiempo_modulos)
     
-    ##################################################### AGREGAR Y LLENAR REPOSITORIO ####################################
-    
     # Inciso
     campo_inciso = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.XPATH, "//INPUT[@id='numero']"))
         )
     campo_inciso.click()
-    campo_inciso.send_keys("54321")
+    campo_inciso.send_keys("00117")
+    print("Campo Inciso llenado")
 
     time.sleep(tiempo_modulos)
     
@@ -106,6 +137,7 @@ def test_glosario(driver):
         )
     campo_norma.click()
     campo_norma.send_keys("Norma de Prueba")
+    print("Campo Norma llenado")
 
     time.sleep(tiempo_modulos)
     
@@ -115,7 +147,7 @@ def test_glosario(driver):
         )
     campo_concepto.click()  
     campo_concepto.send_keys("Concepto de Prueba")
-   
+    print("Campo Concepto llenado")
 
     time.sleep(tiempo_modulos)
     
@@ -125,6 +157,7 @@ def test_glosario(driver):
         )
     campo_definicion.click()
     campo_definicion.send_keys("Definicion de prueba")
+    print("Campo Definicion llenado")
    
     time.sleep(tiempo_modulos)
     
@@ -134,7 +167,8 @@ def test_glosario(driver):
         )
     campo_explicacion.click()
     campo_explicacion.send_keys("Explicacion de prueba")
-
+    print("Campo Explicacion llenado")
+    
     time.sleep(tiempo_modulos)
     
     # Guardar Repositorio
@@ -144,15 +178,24 @@ def test_glosario(driver):
     )
     guardar.click()
     
+    print("URL actual:", driver.current_url)
     
-    #################################BUSCAR REPOSITORIO Y ENTRAR A BOTONES DE EDICION###################################
+def test_add_glosario(browser):
+    
+    add_glosario(browser)
+    
+    
+#################################BUSCAR REPOSITORIO Y ENTRAR A BOTONES DE EDICION###################################
+
+def update_glosario(driver):
 
     # Campo Buscar
     campo_entrada = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.XPATH, campo_buscar_xpath))
     )
     campo_entrada.clear()
-    campo_entrada.send_keys("54321")
+    campo_entrada.send_keys("00117")
+    print("Campo Buscar llenado")
 
     time.sleep(tiempo_carga)
     
@@ -172,6 +215,7 @@ def test_glosario(driver):
         )
     campo_definicion.click()
     campo_definicion.send_keys("Definicion de prueba Actualizado")
+    print("Campo Definicion Actualizado")
    
     time.sleep(tiempo_modulos)
 
@@ -183,5 +227,11 @@ def test_glosario(driver):
     guardar.click()
 
     time.sleep(tiempo_modulos)
+    
+    print("URL actual:", driver.current_url)
+
+def test_update_glosario(browser):
+    
+    update_glosario(browser)
 
 

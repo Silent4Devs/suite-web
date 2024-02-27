@@ -24,65 +24,105 @@ tiempo_carga = 10
 tiempo_espera = 2.5
 tiempo_tres = 3
 
-@pytest.fixture
-def driver():
+@pytest.fixture(scope="module")
+def browser():
     driver = webdriver.Firefox()
     yield driver
     driver.quit()
     
+######################################## LOGIN
 
-def test_lista_d_distribucion(driver):
-
+def login(driver, username, password):
+    
     # Abrir la URL de Tabantaj
     driver.get('https://192.168.9.78/')
 
     # Maximizar la ventana del navegador
     driver.maximize_window()
-    time.sleep(5)
-
-    # Ingresar credenciales
-    usuario = driver.find_element(By.XPATH, "//input[contains(@name,'email')]").send_keys("admin@admin.com")
-    time.sleep(tiempo_modulos)
-    password = driver.find_element(By.XPATH, "//input[contains(@name,'password')]").send_keys("#S3cur3P4$$w0Rd!")
-    time.sleep(tiempo_modulos)
-
-    # Hacer clic en el botón de envío
-    btn = driver.find_element(By.XPATH, "//button[@type='submit'][contains(.,'Enviar')]")
-    btn.click()
     
-    # Entrando a Menu Hamburguesa
+    time.sleep(tiempo_modulos)
+    
+    print("------ LOGIN - TABANTAJ -----")
+    
+    #Correo
+    correo = WebDriverWait(driver, 3).until(
+        EC.visibility_of_element_located((By.XPATH, "//INPUT[@id='email']"))
+    )
+    correo.click()
+    correo.send_keys(username)
+    print("Correo ingresado")
+
+    #Contraseña
+    camp_password = WebDriverWait(driver, 3).until(
+        EC.visibility_of_element_located((By.XPATH, "//INPUT[@id='password']"))
+    )
+    camp_password.click()
+    camp_password.send_keys(password)
+    print("Contraseña ingresada")
+
+    #Boton enviar
+    btn_enviar = WebDriverWait(driver, 3).until(
+        EC.element_to_be_clickable((By.XPATH, "//button[@type='submit'][contains(text(),'Enviar')]"))
+    )
+    btn_enviar.click()
+    print("Enviando credenciales de acceso")
+
+    WebDriverWait(driver, 2).until(
+        EC.presence_of_element_located((By.CSS_SELECTOR, "img[alt='Logo Tabantaj']"))
+    )
+    print("Login correcto")
     print("URL actual:", driver.current_url)
-    print("Entrando a Menu Hamburguesa...")
-    element = driver.find_element(By.XPATH, menu_hamburguesa)
-    driver.execute_script("arguments[0].scrollIntoView(true);", element)
-    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, menu_hamburguesa)))
-    print("Dando clic en Menu Hamburguesa...")
-    element.click()
+
+def test_login(browser):
+    
+    username = "admin@admin.com"
+    password = "#S3cur3P4$$w0Rd!"
+
+    login(browser, username, password)
+
+########################################## Entrar a Modulo y Submodulo
+
+def in_submodulo(driver):
+    
+    #Menu Hamburguesa
+    print("Ingresando a Menu Hamburguesa")
+    menu_hamb = WebDriverWait(driver, 3).until(
+        EC.element_to_be_clickable((By.XPATH, menu_hamburguesa))
+    )
+    menu_hamb.click()
 
     time.sleep(tiempo_modulos)
     
-    # Entrando a Modulo Ajustes SG
-    print("Entrando a Modulo Ajustes SG...")
-    element = driver.find_element(By.XPATH, element_confirgurar_organizacion)
-    driver.execute_script("arguments[0].scrollIntoView(true);", element)
-    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, element_confirgurar_organizacion)))
-    print("Dando clic en Modulo Ajustes SG...")
-    element.click()
+    #Modulo Ajustes SG
+    print("Ingresando a Moldulo Ajustes SG")
+    modulo = WebDriverWait(driver, 3).until(
+        EC.element_to_be_clickable((By.XPATH, element_confirgurar_organizacion))
+    )
+    modulo.click()
     
     time.sleep(tiempo_modulos)
+    
+    #Submodulo Lista de Distribucion 
+    print("Ingresando a Submenu Clausula")
+    sub_modulo= WebDriverWait(driver, 3).until(
+        EC.element_to_be_clickable((By.XPATH, element_entrar_submodulo))
+    )
+    sub_modulo.click()
+    
+    time.sleep(tiempo_modulos)
+    
+    print("URL actual:", driver.current_url)
 
-    # Entrando a Sub Modulo Clasificacion
-    print("Entrando a Sub Modulo Clasifiacion...")
-    entrar = driver.find_element(By.XPATH,element_entrar_submodulo)
-    driver.execute_script("arguments[0].scrollIntoView(true);", element)
-    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH,element_entrar_submodulo)))
-    print("Dando clic en Sub Modulo Clasifiacion...")
-    entrar.click()
+def test_in_submodulo(browser):
+
+    in_submodulo(browser)
+
     
-    time.sleep(tiempo_modulos)
+################################################### Buscar y actualizar clasificacion
+
+def update_clasificacion(driver):
     
-    
-    #################################BUSCAR REPOSITORIO Y ENTRAR A BOTONES DE EDICION###################################
+    time.sleep(tiempo_carga)
     
     # Boton 3 puntos
     print("Dando clic al botón 3 puntos...")
@@ -122,6 +162,13 @@ def test_lista_d_distribucion(driver):
     guardar.click()
 
     time.sleep(tiempo_modulos)
+
+    
+    print("URL actual:", driver.current_url)
+    
+def test_update_submodulo(browser):
+
+    update_clasificacion(browser)
 
 
 
