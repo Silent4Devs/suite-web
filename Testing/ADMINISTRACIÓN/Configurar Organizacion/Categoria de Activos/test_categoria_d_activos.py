@@ -21,14 +21,13 @@ tiempo_modulos = 4
 tiempo_carga = 10
 tiempo_espera = 2.5
 
-@pytest.fixture
-def driver():
+@pytest.fixture(scope="module")
+def browser():
     driver = webdriver.Firefox()
     yield driver
     driver.quit()
     
-
-def test_categoria_d_activos(driver):
+def login (driver):
 
     # Abrir la URL de Tabantaj
     driver.get('https://192.168.9.78/')
@@ -39,13 +38,33 @@ def test_categoria_d_activos(driver):
 
     # Ingresar credenciales
     usuario = driver.find_element(By.XPATH, "//input[contains(@name,'email')]").send_keys("admin@admin.com")
+    print("Introduciendo Correo")
     time.sleep(tiempo_modulos)
     password = driver.find_element(By.XPATH, "//input[contains(@name,'password')]").send_keys("#S3cur3P4$$w0Rd!")
+    print("Introduciendo Contraseña")
     time.sleep(tiempo_modulos)
 
     # Hacer clic en el botón de envío
     btn = driver.find_element(By.XPATH, "//button[@type='submit'][contains(.,'Enviar')]")
     btn.click()
+    print("Haciendo clic en boton enviar")
+    
+    WebDriverWait(driver, 2).until(
+        EC.presence_of_element_located((By.CSS_SELECTOR, "img[alt='Logo Tabantaj']"))
+    ) 
+    print("Login correcto")
+    
+    print("URL actual:", driver.current_url)
+    
+def test_login(browser):
+    
+    login(browser)
+    
+################################################## Entrar a Modulos y Submodulos
+
+def in_modulos(driver):
+    
+    time.sleep(tiempo_modulos)
     
     # Entrando a Menu Hamburguesa
     print("URL actual:", driver.current_url)
@@ -77,6 +96,18 @@ def test_categoria_d_activos(driver):
     entrar.click()
     
     time.sleep(tiempo_modulos)
+    
+    print("URL actual:", driver.current_url)
+    
+def test_in_modulos(browser):
+    
+    in_modulos(browser)
+
+##################################################### AGREGAR Y LLENAR REPOSITORIO ####################################
+
+def add_categoria_d_activos(driver):
+    
+    time.sleep(tiempo_modulos)
 
     # Dando clic en Boton Agregar Categoria de Activos
     print("Dando clic al botón Agregar Categoria de Activos...")
@@ -86,14 +117,13 @@ def test_categoria_d_activos(driver):
     
     time.sleep(tiempo_modulos)
     
-    ##################################################### AGREGAR Y LLENAR REPOSITORIO ####################################
-    
     # Nombre de la Categoria
-    campo_puestos = WebDriverWait(driver, 10).until(
+    campo_categoria = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.XPATH, "//INPUT[@id='tipo']"))
         )
-    campo_puestos.click()
-    campo_puestos.send_keys("Nombre de Categoria de Prueba 33")
+    campo_categoria.click()
+    campo_categoria.send_keys("Nombre de Categoria de Prueba 00117")
+    print("Escribiendo campo nombre de la categoria")
 
     time.sleep(tiempo_modulos)
     
@@ -104,17 +134,29 @@ def test_categoria_d_activos(driver):
         EC.element_to_be_clickable((By.XPATH, guardar_xpath))
     )
     guardar.click()
+    print("Dando clic boton guardar")
 
     time.sleep(tiempo_modulos)
     
-     #################################BUSCAR REPOSITORIO Y ENTRAR A BOTONES DE EDICION###################################
+    print("URL actual:", driver.current_url)
+    
+def test_add_categoria_d_activos(browser):
+    
+    add_categoria_d_activos(browser)
+    
+#################################BUSCAR REPOSITORIO Y ENTRAR A BOTONES DE EDICION###################################
+
+def update_categoria_d_activos(driver):
+    
+    time.sleep(tiempo_carga)
 
     # Campo Buscar
     campo_entrada = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.XPATH, campo_buscar_xpath))
     )
     campo_entrada.clear()
-    campo_entrada.send_keys("Nombre de Categoria de Prueba 33")
+    campo_entrada.send_keys("Nombre de Categoria de Prueba 00117")
+    print("Dando clic en campo buscar")
 
     time.sleep(tiempo_carga)
 
@@ -143,10 +185,11 @@ def test_categoria_d_activos(driver):
         EC.presence_of_element_located((By.XPATH, "//INPUT[@id='tipo']"))
         )
     campo_puestos.click()
-    campo_puestos.send_keys("Nombre de Categoria de Prueba 33 Actualizado")
+    campo_puestos.clear()
+    campo_puestos.send_keys("Nombre de Categoria de Prueba Actualizado 00117")
+    print("Actualizando campo nombre de la categoria")
 
     time.sleep(tiempo_modulos)
-
 
     # Guardar actualización
     print("Dando clic al botón Guardar para guardar actualización...")
@@ -157,6 +200,14 @@ def test_categoria_d_activos(driver):
     guardar.click()
 
     time.sleep(tiempo_modulos)  
+    
+    print("URL actual:", driver.current_url)
+
+def test_update_categoria_d_activos(browser):
+    
+    update_categoria_d_activos(browser)
+    
+
     
 
  
