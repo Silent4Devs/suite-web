@@ -1,8 +1,3 @@
-@if (session('mensajeError'))
-<div class="alert alert-danger">
-    {{ session('mensajeError') }}
-</div>
-@endif
 
 <div class="create-requisicion">
     <div class="card card-body caja-blue">
