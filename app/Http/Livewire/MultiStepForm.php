@@ -440,6 +440,7 @@ class MultiStepForm extends Component
                         'puestos.puesto'
                     )
                     ->where('empleados.estatus', 'alta')
+                    ->where('deleted_at', null)
                     // ->where('empleados.area_id', $evaluados_area)
                     ->pluck('empleados.id')
                     ->toArray();
@@ -752,6 +753,8 @@ class MultiStepForm extends Component
                     )
                     ->join('areas', 'empleados.area_id', '=', 'areas.id')
                     ->join('puestos', 'empleados.puesto_id', '=', 'puestos.id')
+                    ->where('empleados.estatus', 'alta')
+                    ->whereNull('empleados.deleted_at')
                     ->pluck('empleados.id')
                     ->toArray();
                 break;
