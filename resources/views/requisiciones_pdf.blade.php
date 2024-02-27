@@ -173,12 +173,17 @@
                         <strong> Fecha Inicio: </strong> <br> <br>
                         @isset($prov->fecha_inicio)
                             {{ date('d-m-Y', strtotime($prov->fecha_inicio)) }}
+                        @else
+                            La fecha de inicio no está disponible.
                         @endisset
+                       
                     </td>
                     <td colspan="2">
                         <strong> Fecha Fin: </strong> <br> <br>
                         @isset($prov->fecha_fin)
                             {{ date('d-m-Y', strtotime($prov->fecha_fin)) }}
+                        @else
+                            La fecha fin no está disponible.
                         @endisset
                     </td>
                 </tr>
@@ -194,11 +199,19 @@
                 <tr>
                     <td>
                         <strong> Fecha Inicio: </strong> <br> <br>
-                        {{ date('d-m-Y', strtotime($proveedor_indistinto->fecha_inicio))  }}
+                        @isset($proveedor_indistinto->fecha_inicio)
+                            {{ date('d-m-Y', strtotime($proveedor_indistinto->fecha_inicio))  }}
+                        @else
+                            La fecha de inicio no está disponible.
+                        @endisset
                     </td>
                     <td>
                         <strong> Fecha fin: </strong> <br> <br>
+                        @isset($proveedor_indistinto->fecha_inicio)
                         {{ date('d-m-Y', strtotime($proveedor_indistinto->fecha_fin))  }}
+                        @else
+                            La fecha fin no está disponible.
+                        @endisset
                     </td>
                 </tr>
             </table>
