@@ -299,7 +299,7 @@
                                                                                 data-evaluado="{{ $evaluado->id }}"
                                                                                 data-evaluador="{{ $evaluador->id }}"
                                                                                 value="{{ $opcion->ponderacion }}"
-                                                                                {{ $opcion->ponderacion == $competencia->calificacion ? 'selected' : ($opcion->ponderacion == '' && $competencia->calificacion == null ? 'selected' : '') }}>
+                                                                                {{ $opcion->ponderacion == $competencia->calificacion ? 'selected' : '' }}>
                                                                                 {{ $opcion->ponderacion }}
                                                                             </option>
                                                                         @endforeach
