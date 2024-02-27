@@ -423,7 +423,7 @@ class MultiStepForm extends Component
 
         switch ($evaluados_objetivo) {
             case 'all':
-                // $evaluados = Empleado::getAltaEmpleados()->pluck('id')->toArray();
+                // $evaluados = Empleado::getAltaEmpleadosEvaluaciones()->pluck('id')->toArray();
                 $evaluados = DB::table('empleados')
                     ->select('empleados.id', 'empleados.name', 'empleados.email', 'empleados.area_id', 'empleados.puesto_id')
                     ->join('areas', 'empleados.area_id', '=', 'areas.id')
@@ -440,13 +440,12 @@ class MultiStepForm extends Component
                         'puestos.puesto'
                     )
                     ->where('empleados.estatus', 'alta')
-                    ->where('deleted_at', null)
                     // ->where('empleados.area_id', $evaluados_area)
                     ->pluck('empleados.id')
                     ->toArray();
                 break;
             case 'area':
-                // $evaluados = Empleado::getAltaEmpleados()->where('area_id', $this->by_area)->pluck('id')->toArray();
+                // $evaluados = Empleado::getAltaEmpleadosEvaluaciones()->where('area_id', $this->by_area)->pluck('id')->toArray();
                 $evaluados = DB::table('empleados')
                     ->select('empleados.id', 'empleados.name', 'empleados.email', 'empleados.area_id', 'empleados.puesto_id')
                     ->join('areas', 'empleados.area_id', '=', 'areas.id')
@@ -499,7 +498,7 @@ class MultiStepForm extends Component
 
         $evaluacion = Evaluacion::create($evaluacionData);
 
-        $evaluados_puesto = Empleado::with('puestoRelacionado')->whereIn('id', $evaluados)->get()->pluck('puestoRelacionado.id', 'id')->toArray();
+        $evaluados_puesto = Empleado::with('puestoRelacionado')->whereIn('id', $evaluados)->get()->pluck('id', 'puestoRelacionado.id')->toArray();
 
         $evaluacion->evaluados()->sync($evaluados_puesto);
 
@@ -643,7 +642,8 @@ class MultiStepForm extends Component
     public function crearCuestionario($evaluacion, $evaluado, $evaluadores, $includeCompetencias, $includeObjetivos)
     {
         //se modifico el codigo para no generar consultas de mas y hacer cargas batch
-        $empleado = Empleado::getaltaAllObjetivoSupervisorChildren()->where('id', '=', intval($evaluado));
+        $empleado = Empleado::getaltaAllObjetivoSupervisorChildren()->find(intval($evaluado));
+        // dd($empleado);
         $evaluadores_objetivos = collect();
         $evaluacion = Evaluacion::with('competencias')->find($evaluacion->id);
 
@@ -676,12 +676,23 @@ class MultiStepForm extends Component
                 EvaluacionRepuesta::insert($evaluacionRespuestas);
             }
         }
+        // dd($empleado->objetivos);
+        $objetivos = [];
 
         if ($includeObjetivos) {
-            $objetivos = $empleado->objetivos()->where('esta_aprobado', Objetivo::APROBADO)->get(['objetivo_id']);
-            if ($objetivos->isNotEmpty()) {
-                $objetivoIds = $objetivos->pluck('objetivo_id')->toArray();
+            foreach ($empleado->objetivos as $obj) {
+                if ($obj->objetivo->esta_aprobado == Objetivo::APROBADO) {
+                    $objetivos[] = $obj->objetivo_id;
+                }
+            }
+            // dd('Aprobado');
+
+            if (!empty($objetivos)) {
+                $objetivoIds = $objetivos;
                 $evaluadores_objetivos = $evaluadores_objetivos->unique('id')->toArray();
+                // dd($empleado->objetivos, $objetivos, $objetivoIds, $evaluadores_objetivos);
+                // $objetivoIds = $objetivos->pluck('objetivo_id')->toArray();
+                // $evaluadores_objetivos = $evaluadores_objetivos->unique('id')->toArray();
                 $objetivoRespuestas = [];
                 foreach ($evaluadores_objetivos as $evaluador) {
                     foreach ($objetivoIds as $objetivoId) {
@@ -696,6 +707,7 @@ class MultiStepForm extends Component
                         ];
                     }
                 }
+                // dd($objetivoRespuestas);
 
                 // Batch insert objetivo respuestas
                 ObjetivoRespuesta::insert($objetivoRespuestas);
@@ -738,7 +750,7 @@ class MultiStepForm extends Component
 
         switch ($evaluados_objetivo) {
             case 'all':
-                // $evaluados = Empleado::getAltaEmpleados()->pluck('id')->toArray();
+                // $evaluados = Empleado::getAltaEmpleadosEvaluaciones()->pluck('id')->toArray();
                 $evaluados = DB::table('empleados')
                     ->select(
                         'empleados.id',
@@ -753,8 +765,6 @@ class MultiStepForm extends Component
                     )
                     ->join('areas', 'empleados.area_id', '=', 'areas.id')
                     ->join('puestos', 'empleados.puesto_id', '=', 'puestos.id')
-                    ->where('empleados.estatus', 'alta')
-                    ->whereNull('empleados.deleted_at')
                     ->pluck('empleados.id')
                     ->toArray();
                 break;
@@ -780,7 +790,8 @@ class MultiStepForm extends Component
                     ->where('empleados.area_id', $evaluados_area)
                     ->pluck('empleados.id')
                     ->toArray();
-                // $evaluados = Empleado::getAltaEmpleados()->where('area_id', $this->by_area)->pluck('id')->toArray();
+                // $evaluados = Empleado::getAltaEmpleadosEvaluaciones();
+                // dd($evaluados);
                 break;
             case 'manual':
                 $evaluados = $this->by_manual;
@@ -797,7 +808,7 @@ class MultiStepForm extends Component
         // Calcula el tiempo transcurrido
 
         $evaluadosEvaluadores = collect();
-        // $emps = Empleado::getaltaAllObjetivoSupervisorChildren();
+        // $emps = Empleado::getaltaAllEvaluacionesObjetivoSupervisorChildren();
         $emps = Empleado::select(
             'id',
             'name',

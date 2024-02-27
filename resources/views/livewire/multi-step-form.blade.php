@@ -969,7 +969,6 @@
                                 <div class="mt-3 text-center">
                                     <h3>
                                         Evaluación <span class="silent-color">{{ $typeEvaluation }}°</span>
-                                        <h1> {{ $time_elapsed_secs }}</h1>
                                     </h3>
                                 </div>
 

@@ -246,6 +246,32 @@ class Empleado extends Model implements Auditable
         });
     }
 
+    // public static function getAltaEmpleadosEvaluaciones()
+    // {
+    //     return Cache::remember('Empleados:empleados_alta', 3600 * 8, function () {
+    //         DB::table('empleados')
+    //             ->select('empleados.id', 'empleados.name', 'empleados.email', 'empleados.area_id', 'empleados.puesto_id')
+    //             ->join('areas', 'empleados.area_id', '=', 'areas.id')
+    //             ->join('puestos', 'empleados.puesto_id', '=', 'puestos.id')
+    //             ->select(
+    //                 'empleados.id',
+    //                 'empleados.name',
+    //                 'empleados.email',
+    //                 'empleados.area_id',
+    //                 'empleados.puesto_id',
+    //                 'areas.id as area_id',
+    //                 'areas.area',
+    //                 'puestos.id as puesto_id',
+    //                 'puestos.puesto'
+    //             )
+    //             ->where('empleados.estatus', 'alta')
+    //             ->whereNull('empleados.deleted_at')
+    //             // ->where('empleados.area_id', $evaluados_area)
+    //             ->pluck('empleados.id')
+    //             ->toArray();
+    //     });
+    // }
+
     public static function getSelectEmpleadosWithArea()
     {
         return Cache::remember('Empleados:empleados_select_area', 3600 * 6, function () {
@@ -291,9 +317,25 @@ class Empleado extends Model implements Auditable
                 'area_id',
                 'supervisor_id',
                 'puesto_id',
-            )->with(['objetivos', 'children', 'supervisor', 'area', 'puestoRelacionado'])->get();
+            )->with(['objetivos.objetivo', 'children', 'supervisor', 'area', 'puestoRelacionado'])->get();
         });
     }
+
+    // public static function getaltaAllEvaluacionesObjetivoSupervisorChildren()
+    // {
+    //     return Cache::remember('Empleados:empleados_alta_all_evaluaciones', 3600 * 6, function () {
+    //         return self::select(
+    //             'id',
+    //             'name',
+    //             'area_id',
+    //             'supervisor_id',
+    //             'puesto_id',
+    //         )->with(['objetivos:*', 'children:id,name', 'supervisor:id,name', 'area:id,area', 'puestoRelacionado:id,puesto'])
+    //             ->where('estatus', 'alta')
+    //             ->whereNull('deleted_at')
+    //             ->get();
+    //     });
+    // }
 
     public function TimesheetProyectoEmpleado()
     {
