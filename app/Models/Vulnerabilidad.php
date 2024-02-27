@@ -2,12 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Support\Facades\DB;
 use App\Traits\ClearsResponseCache;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class Vulnerabilidad.
@@ -70,6 +69,7 @@ class Vulnerabilidad extends Model implements Auditable
             return self::orderByDesc('nombre')->get();
         });
     }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      **/
