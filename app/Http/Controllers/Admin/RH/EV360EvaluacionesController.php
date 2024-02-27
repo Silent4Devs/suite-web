@@ -30,8 +30,8 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
-use Spatie\CalendarLinks\Link;
 use PDF;
+use Spatie\CalendarLinks\Link;
 
 class EV360EvaluacionesController extends Controller
 {
@@ -290,10 +290,10 @@ class EV360EvaluacionesController extends Controller
     public function contestarCuestionario($evaluacion, $evaluado, $evaluador)
     {
         $usuario = User::getCurrentuser();
+        $evaluacion = Evaluacion::with('rangos')->find(intval($evaluacion));
 
-        if ($usuario->empleado->id == $evaluador) {
-            $evaluacion = Evaluacion::with('rangos')->find(intval($evaluacion));
-            // dd($evaluacion);
+        // dd($evaluacion);
+        if ($usuario->empleado->id == $evaluador && $evaluacion->estatus == 2) {
             $evaluado = Empleado::alta()->with(['puestoRelacionado' => function ($q) {
                 $q->with(['competencias' => function ($q) {
                     $q->with('competencia');
@@ -338,11 +338,11 @@ class EV360EvaluacionesController extends Controller
                 $preguntas_contestadas = EvaluacionRepuesta::where('evaluacion_id', $evaluacion->id)
                     ->where('evaluado_id', $evaluado->id)
                     ->where('evaluador_id', $evaluador->id)
-                    ->where('calificacion', '>', 0)->count();
+                    ->where('calificacion', '>=', 0)->count();
                 $preguntas_no_contestadas = EvaluacionRepuesta::where('evaluacion_id', $evaluacion->id)
                     ->where('evaluado_id', $evaluado->id)
                     ->where('evaluador_id', $evaluador->id)
-                    ->where('calificacion', '=', 0)->count();
+                    ->where('calificacion', null)->count();
                 if ($total_preguntas > 0) {
                     $progreso = floatval(number_format((($preguntas_contestadas / $total_preguntas) * 100)));
                 }
@@ -983,6 +983,7 @@ class EV360EvaluacionesController extends Controller
             if ($existeFirmaPar) {
                 $firmaPar = '/storage/' . $informacion_obtenida['lista_misma_area'][0]['firma'];
             }
+
             // dd($calificacionObjetivos);
             return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluado', compact(
                 'evaluacion',
@@ -2855,16 +2856,12 @@ class EV360EvaluacionesController extends Controller
         //         }
         //     }
 
-
     }
-
-
 
     public function pdf()
     {
 
         $evaluadoEvaluador = Evaluacion::get();
-
 
         $pdf = PDF::loadView('evaluador', compact('evaluadoEvaluador'));
         $pdf->setPaper('A4', 'portrait');

@@ -81,7 +81,7 @@
                                         title="{{ $evaluar->empleado_evaluado->name }}">
                                     @if ($evaluar->evaluado)
                                         <i class="fas fa-check-circle"
-                                            style="position: relative; top: 0; left: -20px; z-index: 1; color: #002102; text-shadow: 1px 1px 0px gainsboro;"></i>
+                                            style="position: relative; top: 0; left: -70px; z-index: 1; color: #002102; text-shadow: 1px 1px 0px gainsboro;"></i>
                                     @endif
                                 </a>
                             @endforeach
@@ -305,6 +305,7 @@
                                                                         @endforeach
                                                                     </select>
                                                                 </div>
+
                                                             </div>
                                                         </div>
                                                     @endif
@@ -979,7 +980,7 @@
                             let evaluacionContenedor = document.getElementById(`autoev${index}`);
                             if (evaluacionContenedor != null) {
                                 evaluacionContenedor.innerHTML = competencia
-                                    .calificacion == 0 ? 'No se ha evaluado' : competencia.calificacion;
+                                    .calificacion == null ? 'No se ha evaluado' : competencia.calificacion;
                                 evaluacionContenedor.classList.add('form-control');
                                 evaluacionContenedor.style.background = 'aliceblue';
                             }

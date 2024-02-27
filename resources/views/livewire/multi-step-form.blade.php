@@ -538,7 +538,7 @@
                                                     <span style="position: absolute;top: 8px;left: 80px;">%</span>
                                                 </div>
                                             </div>
-                                            <div class="mt-3 row align-items-center"">
+                                            <div class="mt-3 row align-items-center">
                                                 <div class="col-5">
                                                     <div style="margin-top: 8px;">
                                                         <label class="container-check">Objetivos
@@ -833,6 +833,8 @@
                                         {{ $errors->first('sumaTotalPeso') }}
                                     </p>
                                 @endif
+
+                                <!-- Evaluators checkboxes and inputs -->
                                 <section class="mt-4 row justify-content-center">
                                     <div class="col-8" wire:loading.class="disableEvents">
                                         <article class="ml-5 feature1">
@@ -967,7 +969,6 @@
                                 <div class="mt-3 text-center">
                                     <h3>
                                         Evaluación <span class="silent-color">{{ $typeEvaluation }}°</span>
-
                                     </h3>
                                 </div>
 
@@ -1403,6 +1404,8 @@
             Livewire.on('select2', () => {
                 initSelect2();
             });
+
+
             window.livewire.on('increaseStep', () => {
                 if (document.getElementById('btnModalOpen')) {
                     document.getElementById('btnModalOpen').addEventListener('click', function(e) {

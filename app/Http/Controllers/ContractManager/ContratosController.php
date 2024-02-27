@@ -90,7 +90,7 @@ class ContratosController extends AppBaseController
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'no_contrato' => 'required_unless:identificador_privado,1|max:255',
+            'no_contrato' => 'required_unless:identificador_privado,1',
             'nombre_servicio' => 'required|max:500',
             'tipo_contrato' => 'required',
             'proveedor_id' => 'required',
@@ -452,7 +452,7 @@ class ContratosController extends AppBaseController
     {
         // dd($request->signed);
         $validatedData = $request->validate([
-            'no_contrato' => ['required|max:255', new NumeroContrato($id)],
+            'no_contrato' => ['required', new NumeroContrato($id)],
             'nombre_servicio' => 'required|max:500',
             'tipo_contrato' => 'required',
             'proveedor_id' => 'required',
