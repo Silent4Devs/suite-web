@@ -299,12 +299,13 @@
                                                                                 data-evaluado="{{ $evaluado->id }}"
                                                                                 data-evaluador="{{ $evaluador->id }}"
                                                                                 value="{{ $opcion->ponderacion }}"
-                                                                                {{ $opcion->ponderacion == $competencia->calificacion ? 'selected' : '' }}>
+                                                                                {{ $opcion->ponderacion == $competencia->calificacion ? 'selected' : ($opcion->ponderacion == '' && $competencia->calificacion == null ? 'selected' : '') }}>
                                                                                 {{ $opcion->ponderacion }}
                                                                             </option>
                                                                         @endforeach
                                                                     </select>
                                                                 </div>
+
                                                             </div>
                                                         </div>
                                                     @endif
@@ -979,7 +980,7 @@
                             let evaluacionContenedor = document.getElementById(`autoev${index}`);
                             if (evaluacionContenedor != null) {
                                 evaluacionContenedor.innerHTML = competencia
-                                    .calificacion == 0 ? 'No se ha evaluado' : competencia.calificacion;
+                                    .calificacion == null ? 'No se ha evaluado' : competencia.calificacion;
                                 evaluacionContenedor.classList.add('form-control');
                                 evaluacionContenedor.style.background = 'aliceblue';
                             }

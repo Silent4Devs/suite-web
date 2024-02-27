@@ -51,8 +51,8 @@ class EV360CompetenciasController extends Controller
         if ($request->hasFile('foto')) {
             Storage::makeDirectory('public/competencias/img'); //Crear si no existe
             $extension = pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_EXTENSION);
-            $nombre_imagen = 'COMPETENCIA_'.$competencia->id.'_'.$competencia->nombre.'.'.$extension;
-            $route = storage_path().'/app/public/competencias/img/'.$nombre_imagen;
+            $nombre_imagen = 'COMPETENCIA_' . $competencia->id . '_' . $competencia->nombre . '.' . $extension;
+            $route = storage_path() . '/app/public/competencias/img/' . $nombre_imagen;
             $imagen = $nombre_imagen;
             //Usamos image_intervention para disminuir el peso de la imagen
             $img_intervention = Image::make($request->file('foto'));
@@ -116,8 +116,8 @@ class EV360CompetenciasController extends Controller
         if ($request->hasFile('foto')) {
             Storage::makeDirectory('public/competencias/img'); //Crear si no existe
             $extension = pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_EXTENSION);
-            $nombre_imagen = 'COMPETENCIA_'.$competencia->id.'_'.$competencia->nombre.'.'.$extension;
-            $route = storage_path().'/app/public/competencias/img/'.$nombre_imagen;
+            $nombre_imagen = 'COMPETENCIA_' . $competencia->id . '_' . $competencia->nombre . '.' . $extension;
+            $route = storage_path() . '/app/public/competencias/img/' . $nombre_imagen;
 
             //Usamos image_intervention para disminuir el peso de la imagen
             $img_intervention = Image::make($request->file('foto'));
@@ -138,7 +138,7 @@ class EV360CompetenciasController extends Controller
                 $exists = CompetenciaPuesto::where('puesto_id', '=', $puesto->id)
                     ->where('competencia_id', '=', $competencia->id)
                     ->exists();
-                if (! $exists) {
+                if (!$exists) {
                     CompetenciaPuesto::create([
                         'puesto_id' => $puesto->id,
                         'competencia_id' => $competencia->id,
@@ -199,11 +199,12 @@ class EV360CompetenciasController extends Controller
             $sin_contestar = EvaluacionRepuesta::where('evaluacion_id', $request->evaluacion_id)
                 ->where('evaluado_id', $request->evaluado_id)
                 ->where('evaluador_id', $request->evaluador_id)
-                ->where('calificacion', '=', 0)->count();
+                ->where('calificacion', null)
+                ->count();
             $contestadas = EvaluacionRepuesta::where('evaluacion_id', $request->evaluacion_id)
                 ->where('evaluado_id', $request->evaluado_id)
                 ->where('evaluador_id', $request->evaluador_id)
-                ->where('calificacion', '>', 0)->count();
+                ->where('calificacion', '>=', 0)->count();
             $progreso = $progreso = floatval(number_format((($contestadas / $total_preguntas) * 100)));
 
             if ($repuesta_u) {
