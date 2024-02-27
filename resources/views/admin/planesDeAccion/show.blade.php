@@ -45,9 +45,6 @@
             height: 400px;
         }
 
-
-
-
         .gdfTable.table.ganttFixHead thead tr .gdfColHeader.gdfied.unselectable {
             font-size: 12px !important;
         }
@@ -55,8 +52,6 @@
         .gdfTable.table.ganttFixHead {
             display: none !important;
         }
-
-
 
         .ganttFixHead {
             border-bottom: 1px solid #ccc !important;
@@ -66,13 +61,6 @@
             border-bottom: none !important;
             border-top: none !important;
         }
-
-
-        /*.taskBox.taskBoxSVG.taskStatusSVG.deSVGdrag.deSVG rect:nth-child(even){
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  fill: #fff !important;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  height: 15px !important;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 }*/
-
 
         #workSpace {
             border: none !important;
@@ -84,7 +72,6 @@
             background-color: #fff !important;
             z-index: 2;
         }
-
 
         .icons_propios_gantt {
             transform: scale(1.2);
@@ -104,28 +91,32 @@
         }
 
         .botones_vistas_gantt a {
-            width: 100px;
-            display: inline-block;
             padding: 5px 10px;
-            background-color: #fff;
-            color: #345183;
-            font-size: 9pt;
+            color: #FFFFFF;
             cursor: pointer;
-            border: 1px solid #345183;
-            border-radius: 5px;
             text-align: center;
-            vertical-align: middle;
         }
 
         .botones_vistas_gantt a:hover {
-            border: 1px solid #345183;
-            background-color: #345183;
+            border: 0px solid #6F8FB8;
+            background-color: #6F8FB8;
+            color: #fff;
+        }
+
+        .caja_botones_menu a:hover {
+            background-color: #6F8FB8;
+        }
+
+        .caja_botones_menu a.btn_activo,
+        .caja_botones_menu a.btn_activo:hover {
+            background-color: #6F8FB8;
+            box-shadow: 0px 0px 0px 0px;
             color: #fff;
         }
 
         .boton_activo {
-            border: 1px solid #345183 !important;
-            background-color: #345183 !important;
+            border: 1px solid #6F8FB8 !important;
+            background-color: #6F8FB8 !important;
             color: #fff !important;
         }
 
@@ -133,10 +124,6 @@
             font-size: 11pt;
             margin-right: 5px;
         }
-
-
-
-
 
         select.formElements option {
             text-transform: capitalize !important;
@@ -161,9 +148,6 @@
             ry: 5px;
         }
 
-
-
-
         @media print {
 
             header,
@@ -178,18 +162,15 @@
                 transform: scale(1.001);
             }
         }
-
         .rounded-circle {
             border-radius: 0 !important;
             clip-path: circle(18px at 50% 50%);
             height: 37px;
         }
-
         h3.mb-2 {
             position: relative;
             z-index: 2;
         }
-
         select {
             appearance: none;
             background-color: transparent;
@@ -212,33 +193,77 @@
         }
 
         .caja_botones_menu {
-
             display: inline-block !important;
+        }
+        .caja_botones_menu a {
+            display: inline-block;
+            align-items: center;
+        }
+
+        .vertical-line {
+            height: 20px;
+            border-left: 1px solid #ccc;
+            margin: 0 10px;
+        }
+
+        .navNew {
+            height: 68px;
+            background-color: #6F8FB8;
+            border-radius: 10px 10px 0 0;
+            margin-left: 45px;
+            margin-right: 45px;
+            display: flex;
+            align-items: center;
+        }
+
+        .text-capitalize {
+            text-transform: capitalize !important;
+            color: #ffff;
+            margin-left: 20px;
+            display: contents;
+            font-size: 25px;
+        }
+
+        .img_nav {
+            padding-right: 10px;
+            width: 40px;
         }
     </style>
     <h5 class="col-12 titulo_general_funcion">Plan de Acción - {{ $planImplementacion->parent }}</h5>
     <div class="mt-5 mb-5">
         <div id="bloqueado"></div>
+        <div>
+            <div class="navNew">
+                <div class="botones_vistas_gantt">
+                    <div class="row">
+                        <div class="col-4" style="display: flex; align-items: center; padding-left: 50px;">
+                            <p id="titlo-tab" class="text-capitalize">Diagrama Gantt</p>
+                        </div>
+                        <div class="text-right col-8 caja_botones_menu">
+                            <a href="#" data-tabs="original_gantt" onclick="cambiarTitulo('Diagrama Gantt');"
+                                class="boton_activo">
+                                <img class="img_nav" src="{{ asset('img/plan-trabajo/gantt.svg') }}">Gantt
+                            </a>
 
-        <div class="botones_vistas_gantt">
-            <div class="row">
-                <div class="col-4">
-                    <h2 id="titlo-tab" class="text-capitalize">Diagrama Gantt</h2>
-                </div>
-                <div class="text-right col-8 caja_botones_menu">
-                    <a href="#" data-tabs="original_gantt" onclick="cambiarTitulo('Gantt');"
-                        class="btn_gantt_vista boton_activo"><i class="fas fa-stream"></i>Gantt</a>
-                    <a href="#" data-tabs="calendario_gantt" onclick="renderCaleendar();cambiarTitulo('Calendario');"
-                        class="btn_gantt_calendario_vista"><i class="fas fa-calendar-alt"></i>Calendario</a>
-                    <a href="#" data-tabs="kanban_gantt" onclick="cambiarTitulo('Kanban');"
-                        class="btn_gantt_kanban_vista"><i class="fas fa-th-large"></i>Kanban</a>
+                            <span class="vertical-line"></span>
+
+                            <a href="#" data-tabs="calendario_gantt"
+                                onclick="renderCaleendar();cambiarTitulo('Calendario');" class="">
+                                <img class="img_nav" src="{{ asset('img/plan-trabajo/calendar.svg') }}"
+                                    alt="Imagen 2">Calendario
+                            </a>
+
+                            <span class="vertical-line"></span>
+
+                            <a href="#" data-tabs="kanban_gantt" onclick="cambiarTitulo('Kanban');" class="">
+                                <img class="img_nav" src="{{ asset('img/plan-trabajo/kanban.svg') }}" alt="Imagen 3">Kanban
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-
         </div>
         <div id="plan_trabajo_workspace">
-            <p><i class="mr-2 fas fa-calendar"></i>Última modificación: <span id="ultima_modificacion"></span></p>
             <div class="caja_caja_secciones">
                 <div class="caja_secciones">
                     <section id="original_gantt" class="caja_tab_reveldada">
@@ -295,8 +320,8 @@
                 url: "{{ route('admin.planes-de-accion.loadProject', $planImplementacion) }}",
                 success: function(response) {
                     ge.loadProject(response);
-                    document.getElementById("ultima_modificacion").innerHTML = moment(response.updated_at)
-                        .format("DD-MM-YYYY hh:mm:ss A")
+                    // document.getElementById("ultima_modificacion").innerHTML = moment(response.updated_at)
+                    //     .format("DD-MM-YYYY hh:mm:ss A")
                     ge.checkpoint(); //empty the undo stac
                     renderKanban(response);
                     //renderTable(response);
@@ -313,6 +338,7 @@
             });
             return ret;
         }
+        //funciones globales para gantt y kamba
 
         function getRow(task, tasks) {
             return tasks.indexOf(task);
@@ -338,6 +364,143 @@
             const pos = getRow(task, tasks);
             const children = tasks.slice(pos + 1);
             return children.filter(child => child.level === task.level + 1);
+        }
+
+        function renderResources(response, tarea_correspondiente, nombre = null) {
+            let recursos = nombre ? response.resources.filter(r => r.name.toLowerCase().includes(nombre.toLowerCase())) :
+                response.resources;
+
+            return recursos.map(resource => {
+                let foto = resource.foto || (resource.genero === 'M' ? 'woman.png' : 'usuario_no_cargado.png');
+
+                return `<li class="list-group-item ${tarea_correspondiente.assigs?.some(assig => Number(assig.resourceId) === Number(resource.id)) ? 'selected_resource_task':''}" resource-id="${resource.id}">
+                    <div class="row">
+                        <div class="col-11">
+                            <img class="rounded-circle" src="{{ asset('storage/empleados/imagenes') }}/${foto}" title="${resource.name}" />
+                            <span class="m-0 ml-2">${resource.name}</span>
+                        </div>
+                        <div class="text-center col-1">
+                            ${tarea_correspondiente.assigs?.some(assig => Number(assig.resourceId) === Number(resource.id)) ? '<i class="fas fa-trash-alt resources-modal-remove text-danger" style="vertical-align:middle;margin-top:7px; font-size:15pt; cursor:pointer;"></i>':'<i class="fa fa-plus-circle resources-modal text-success" style="vertical-align:middle;margin-top:7px; font-size:15pt; cursor:pointer;"></i>'}
+                        </div>
+                    </div>
+                </li>`;
+            }).join('');
+        }
+
+        function renderListEvent(response, tarea_correspondiente, id_row, funRenderCallback) {
+            addResource(response, tarea_correspondiente, id_row, funRenderCallback);
+            removeResource(response, tarea_correspondiente, id_row, funRenderCallback);
+        }
+
+        function addResource(response, tarea_correspondiente, id_row, funRenderCallback) {
+            let resources_modal = document.querySelectorAll('.resources-modal');
+            resources_modal.forEach(resource_modal => {
+                resource_modal.addEventListener('click', function() {
+                    let id = Number(this.closest('[resource-id]').getAttribute('resource-id'));
+                    let resource = response.resources.find(r => r.id === id);
+                    let new_assig = {
+                        "id": `tmp_162439120526${resource.id}_${resource.id}`,
+                        "resourceId": resource.id,
+                        "roleId": "tmp_1",
+                        "effort": 0
+                    };
+                    if (!tarea_correspondiente.assigs) {
+                        tarea_correspondiente.assigs = [];
+                    }
+                    if (!tarea_correspondiente.assigs.some(a => a.resourceId === id)) {
+                        tarea_correspondiente.assigs.push(new_assig);
+                        let id_tbody = this.closest('.modal').getAttribute('tbody-contenedor');
+                        saveOnServer(response);
+                        funRenderCallback(response, id_tbody);
+                    }
+                    $(`#${id_row}-modal`).modal('hide');
+                });
+            });
+        }
+
+        function removeResource(response, tarea_correspondiente, id_row, funRenderCallback) {
+            let resources_modal_remove = document.querySelectorAll('.resources-modal-remove');
+            resources_modal_remove.forEach(resource_modal => {
+                resource_modal.addEventListener('click', function() {
+                    let id = Number(this.closest('[resource-id]').getAttribute('resource-id'));
+                    let idx_resource = tarea_correspondiente.assigs.findIndex(a => a.resourceId === id);
+                    if (idx_resource !== -1) {
+                        tarea_correspondiente.assigs.splice(idx_resource, 1);
+                        let id_tbody = this.closest('.modal').getAttribute('tbody-contenedor');
+                        saveOnServer(response);
+                        funRenderCallback(response, id_tbody);
+                    }
+                    $(`#${id_row}-modal`).modal('hide');
+                });
+            });
+        }
+
+        function saveOnServer(response) {
+            $.ajax({
+                type: "post",
+                url: "{{ route('admin.planes-de-accion.saveProject', $planImplementacion) }}",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    prj: JSON.stringify(response),
+                },
+                dataType: "JSON",
+                success: function(response) {
+                    $('#workSpace').trigger('refreshTasks.gantt');
+                    document.getElementById('ultima_modificacion').innerHTML = response.ultima_modificacion;
+                    // toastr.success('Tarea actualizada con éxito');
+                }
+            });
+        }
+
+        function calculateAverageOnNodes(tasks) {
+            let root = tasks.find(t => Number(t.level) === 0);
+            let tasksWitOutRoot = tasks.filter(t => Number(t.level) !== 0);
+            let rootAverage = tasksWitOutRoot.map(task => isParent(task, tasks) ? getAVG(task, tasks) : task.progress);
+            let rootTotal = rootAverage.reduce((accumulator, value) => accumulator + value, 0) / rootAverage.length;
+            root.progress = rootTotal;
+        }
+
+        function calculateStatus(tasks) {
+            let root = tasks.find(t => Number(t.level) === 0);
+            let tasksWithoutRoot = tasks.filter(t => Number(t.level) !== 0);
+
+            tasksWithoutRoot.forEach(task => {
+                if (isParent(task, tasks)) {
+                    calculateStatusOnChildrens(task, tasks);
+                } else {
+                    changeStatusByProgress(task);
+                }
+            });
+
+            changeStatusByProgress(root);
+        }
+
+        function calculateStatusOnChildrens(node, tasks) {
+            let children = getChildren(node, tasks);
+            children.forEach(task => changeStatusByProgress(task));
+            changeStatusByProgress(node);
+        }
+
+        function changeStatusByProgress(task) {
+            if (task.isFailed) {
+                task.status = "STATUS_FAILED";
+            } else if (task.isSuspended) {
+                task.status = "STATUS_SUSPENDED";
+            } else {
+                switch (true) {
+                    case (task.progress == 100):
+                        task.status = "STATUS_DONE";
+                        break;
+                    case (task.progress >= 1 && task.progress <= 99):
+                        task.status = "STATUS_ACTIVE";
+                        break;
+                    case (task.progress == 0):
+                        task.status = "STATUS_UNDEFINED";
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
     </script>
 @endsection

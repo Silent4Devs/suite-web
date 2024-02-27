@@ -1,0 +1,391 @@
+.kanban-container {
+    position: relative;
+    box-sizing: border-box;
+    width: auto
+}
+
+.kanban-container * {
+    box-sizing: border-box
+}
+
+.kanban-container:after {
+    clear: both;
+    display: block;
+    content: ""
+}
+
+.kanban-board {
+    position: relative;
+    float: left;
+    /* UI Properties */
+    background: #F6F9FF 0% 0% no-repeat padding-box;
+    box-shadow: 0px 2px 3px #0000001C;
+    border: 1px solid #D1D1D1;
+    border-radius: 16px;
+    opacity: 1;
+    transition: all .3s cubic-bezier(.23, 1, .32, 1)
+}
+
+.kanban-board.disabled-board {
+    opacity: .3
+}
+
+.kanban-board.is-moving.gu-mirror {
+    transform: rotate(3deg)
+}
+
+.kanban-board.is-moving.gu-mirror .kanban-drag {
+    overflow: hidden;
+    padding-right: 50px
+}
+
+.kanban-board headerKanba {
+    font-size: 16px;
+    padding: 15px;
+    text-align: left;
+    padding-bottom: 10px;
+    margin-bottom: 7px;
+    display: flex;
+    align-items: center;
+}
+
+.kanban-board headerKanba .kanban-title-board {
+    font-weight: 700;
+    margin: 0;
+    /* padding: 0; */
+    display: inline;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 18px;
+}
+
+.kanban-board headerKanba .kanban-title-button {
+    float: right
+}
+
+.kanban-board .kanban-drag {
+    min-height: 200px;
+    padding: 20px;
+    overflow-y: auto;
+    height: 500px;
+}
+
+.kanban-board .kanban-drag::-webkit-scrollbar {
+    width: 5px;
+    /* Ancho de la barra de desplazamiento */
+}
+
+.kanban-board .kanban-drag::-webkit-scrollbar-thumb {
+    background-color: #D3DFF5;
+    /* Color del pulgar (la parte que el usuario arrastra) */
+    border-radius: 5px;
+    /* Borde redondeado del pulgar */
+}
+
+.kanban-board .kanban-drag::-webkit-scrollbar-track {
+    background-color: #F0F0F0;
+    /* Color de fondo de la pista (la parte que no se mueve) */
+}
+
+.kanban-board:after {
+    clear: both;
+    display: block;
+    content: ""
+}
+
+.kanban-item {
+    background: #fff;
+    /* padding: 15px; */
+    border-radius: 15px;
+    margin-bottom: 20px;
+    transition: all .3s cubic-bezier(.23, 1, .32, 1);
+    animation: append-animate .3s cubic-bezier(.23, 1, .32, 1)
+}
+
+@keyframes append-animate {
+    from {
+        transform: translateY(-20px)
+    }
+
+    to {
+        transform: translateY(0)
+    }
+}
+
+.kanban-item:hover {
+    cursor: move
+}
+
+.kanban-item:last-child {
+    margin: 0
+}
+
+.kanban-item.is-moving.gu-mirror {
+    transform: rotate(3deg);
+    height: auto !important
+}
+
+.gu-mirror {
+    position: fixed !important;
+    margin: 0 !important;
+    z-index: 9999 !important
+}
+
+.gu-hide {
+    display: none !important
+}
+
+.gu-unselectable {
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important
+}
+
+.gu-transit {
+    opacity: .2 !important;
+    transform: rotate(0) !important
+}
+
+.drag_handler {
+    background: #fff;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    position: relative;
+    float: left;
+    top: -3px;
+    margin-right: 4px
+}
+
+.drag_handler:hover {
+    cursor: move
+}
+
+.drag_handler_icon {
+    position: relative;
+    display: block;
+    background: #000;
+    width: 24px;
+    height: 2px;
+    top: 12px;
+    transition: .5s ease-in-out
+}
+
+.drag_handler_icon:after, .drag_handler_icon:before {
+    background: #000;
+    content: '';
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    transition: .5s ease-in-out
+}
+
+.drag_handler_icon:before {
+    top: 6px
+}
+
+.drag_handler_icon:after {
+    bottom: 6px
+}
+
+/* animacion pulse */
+.pulse {
+    animation: pulse-animation 2s infinite;
+}
+
+@keyframes pulse-animation {
+    0% {
+        box-shadow: 0 0 0 0px rgba(255, 0, 0, 0.2);
+    }
+
+    100% {
+        box-shadow: 0 0 0 20px rgba(255, 0, 0, 0);
+    }
+}
+
+#resourceIMG {
+    background-image: url("{{ asset('img/plan-trabajo/attach.svg') }}");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 15px;
+    height: 15px;
+}
+
+.addSVG {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: left;
+    width: 15px;
+    height: 15px;
+    margin-right: 10px;
+}
+
+.assigned-to {
+    display: flex;
+}
+
+.person {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+
+.person-img {
+    border-radius: 50px;
+    width: 45px;
+    height: 45px;
+    object-fit: cover;
+    margin-right: 5px;
+}
+
+.UNDEFINED {
+    border-bottom: 6px solid #ECCE7D;
+}
+
+.DONE {
+    border-bottom: 6px solid #7DEC97;
+}
+
+.FAILED {
+    border-bottom: 6px solid #EC7D94;
+}
+
+.SUSPENDED {
+    border-bottom: 6px solid #D4D4D4;
+}
+
+.ACTIVE {
+    border-bottom: 6px solid #7DC0EC;
+}
+
+.tituloCard {
+    border-bottom: 1px solid #D6D6D6;
+    text-align: left;
+    padding-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+
+.card-body {
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 10px;
+}
+
+.cardKanban {
+    display: flex;
+    flex-direction: column;
+    overflow-x: auto;
+}
+
+.cardKanban::-webkit-scrollbar {
+    width: 2px;
+}
+
+.cardKanban::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.cardKanban::-webkit-scrollbar-thumb {
+    background: #DEEFFF;
+    border-radius: 10px;
+}
+
+.cardKanban::-webkit-scrollbar-thumb:hover {
+    background: #0080FF;
+}
+
+.cardContenido {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+    gap: 1rem;
+    color: rgb(152, 162, 179);
+    font-size: 14px;
+    background: rgb(252, 252, 253);
+    box-shadow: rgb(16 24 40 / 30%) 0px 0.5px 2px;
+    border-radius: 8px;
+    max-width: 350px;
+    margin: auto;
+}
+
+.contenido {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.etiquetaContenido,
+.estatusContenido {
+    flex: 1;
+    text-align: left;
+    align-items: center;
+}
+
+.estatusContenido {
+    text-align: center;
+}
+
+.resourceContenido {
+    display: flex;
+    align-items: center;
+}
+
+.etiquetaColor {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background-color: #ff0000;
+    margin-top: 10px;
+    margin-left: 15px;
+}
+
+.STATUS_UNDEFINED-estatusColor {
+    background-color: #FFECAF;
+    color: #FF9900;
+    border-radius: 10px;
+    margin-top: 8px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.STATUS_ACTIVE-estatusColor {
+    background-color: #DEEFFF;
+    color: #0080FF;
+    border-radius: 10px;
+    margin-top: 8px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.STATUS_DONE-estatusColor {
+    background-color: #DEFFE6;
+    color: #42A500;
+    border-radius: 10px;
+    margin-top: 8px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.STATUS_FAILED-estatusColor {
+    background-color: #FFDFDF;
+    color: #FF5C3A;
+    border-radius: 10px;
+    margin-top: 8px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.STATUS_SUSPENDED-estatusColor {
+    background-color: #EEEEEE;
+    color: #818181;
+    border-radius: 10px;
+    margin-top: 8px;
+    font-weight: 700;
+    text-align: center;
+}

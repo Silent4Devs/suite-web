@@ -8,7 +8,7 @@
     }
 
     #calendar {
-        max-width: 1100px;
+        /* max-width: 1100px; */
         margin: -2px auto;
     }
 
@@ -30,9 +30,34 @@
         border-radius: 5px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     }
-</style>
 
-<div class="card" style="box-shadow: none; !important">
+    .cardCalendario {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 20px;
+        gap: 1rem;
+        color: rgb(152, 162, 179);
+        font-size: 14px;
+        background: rgb(252, 252, 253);
+        box-shadow: rgb(16 24 40 / 30%) 0px 0.5px 2px;
+        border-radius: 8px;
+        /* max-width: 350px; */
+        margin: auto;
+    }
+</style>
+{{-- <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="home-tab" data-toggle="tab" data-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Home</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="profile-tab" data-toggle="tab" data-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Profile</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="contact-tab" data-toggle="tab" data-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Contact</button>
+    </li>
+  </ul> --}}
+<div class="cardCalendario" style="box-shadow: none; !important">
     <div class="card-body" style="height: 658px;">
         <div id='calendar'></div>
     </div>

@@ -40,7 +40,7 @@
                     <table class="table table-responsive" style="font-size: 12px;">
                         <thead class="thead-dark letras-dashboard2 align-middle">
                             <tr>
-                                <th scope="col" width="2%">No</th>
+                                <th scope="col" width="50px">No</th>
                                 <th scope="col" width="30%">Actividad</th>
                                 <th scope="col" width="10%">Actividad Principal</th>
                                 <th scope="col" width="10%">Ejecutar</th>
