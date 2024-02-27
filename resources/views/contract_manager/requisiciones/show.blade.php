@@ -242,7 +242,7 @@
                             @isset($proveedor_indistinto->fecha_fin)
                                 {{ date('d-m-Y', strtotime($proveedor_indistinto->fecha_fin)) }}
                             @else
-                                La fecha de inicio no está disponible.
+                                La fecha  fin no está disponible.
                             @endisset
                         </div>
                         
