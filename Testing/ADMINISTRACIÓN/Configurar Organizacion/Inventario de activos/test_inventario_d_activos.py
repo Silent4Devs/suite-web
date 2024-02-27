@@ -24,14 +24,13 @@ tiempo_carga = 10
 tiempo_espera = 2.5
 tiempo_tres = 3
 
-@pytest.fixture
-def driver():
+@pytest.fixture(scope="module")
+def browser():
     driver = webdriver.Firefox()
     yield driver
     driver.quit()
     
-
-def test_inventario_d_activos(driver):
+def login (driver):
 
     # Abrir la URL de Tabantaj
     driver.get('https://192.168.9.78/')
@@ -42,13 +41,33 @@ def test_inventario_d_activos(driver):
 
     # Ingresar credenciales
     usuario = driver.find_element(By.XPATH, "//input[contains(@name,'email')]").send_keys("admin@admin.com")
+    print("Introduciendo Correo")
     time.sleep(tiempo_modulos)
     password = driver.find_element(By.XPATH, "//input[contains(@name,'password')]").send_keys("#S3cur3P4$$w0Rd!")
+    print("Introduciendo Contraseña")
     time.sleep(tiempo_modulos)
 
     # Hacer clic en el botón de envío
     btn = driver.find_element(By.XPATH, "//button[@type='submit'][contains(.,'Enviar')]")
     btn.click()
+    print("Haciendo clic en boton enviar")
+    
+    WebDriverWait(driver, 2).until(
+        EC.presence_of_element_located((By.CSS_SELECTOR, "img[alt='Logo Tabantaj']"))
+    ) 
+    print("Login correcto")
+    
+    print("URL actual:", driver.current_url)
+    
+def test_login(browser):
+    
+    login(browser)
+    
+################################################## Entrar a Modulos y Submodulos
+
+def in_modulos(driver):
+    
+    time.sleep(tiempo_modulos)
     
     # Entrando a Menu Hamburguesa
     print("URL actual:", driver.current_url)
@@ -72,31 +91,42 @@ def test_inventario_d_activos(driver):
     time.sleep(tiempo_modulos)
 
     # Entrando a Sub Modulo Inventario de Activos   
-    print("Entrando a Sub Modulo Categoria de Crear Areas...")
+    print("Entrando a Sub Modulo Inventario de Activos  ...")
     entrar = driver.find_element(By.XPATH,element_entrar_submodulo)
     driver.execute_script("arguments[0].scrollIntoView(true);", element)
     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH,element_entrar_submodulo)))
-    print("Dando clic en Sub Modulo Categoria de Crear Areas...")
+    print("Dando clic en Sub Modulo Inventario de Activos  ...")
     entrar.click()
     
     time.sleep(tiempo_modulos)
+    
+    print("URL actual:", driver.current_url)
 
+def test_in_modulos(browser):
+    
+    in_modulos(browser)
+
+##################################################### AGREGAR Y LLENAR REPOSITORIO ####################################
+
+def add_inventario_de_activos(driver):
+    
+    time.sleep(tiempo_modulos)
+    
     # Dando clic en Boton Agregar Area
-    print("Dando clic al botón Agregar Crear Areas...")
+    print("Dando clic al botón Agregar Inventario de Activos...")
     wait = WebDriverWait(driver, 10)
     agregar_btn = wait.until(EC.presence_of_element_located((By.XPATH, agregar_btn_xpath)))
     agregar_btn.click()
     
     time.sleep(tiempo_modulos)
     
-    ##################################################### AGREGAR Y LLENAR REPOSITORIO ####################################
-    
     # ID
     campo_id = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.XPATH, "//INPUT[@id='identificador']"))
         )
     campo_id.click()
-    campo_id.send_keys("12345")
+    campo_id.send_keys("00117")
+    print("Llenando campo ID")
 
     time.sleep(tiempo_modulos)
     
@@ -105,41 +135,45 @@ def test_inventario_d_activos(driver):
         EC.presence_of_element_located((By.XPATH, "//INPUT[@id='nombre_activo']"))
         )
     campo_nombre_activo.click()
-    campo_nombre_activo.send_keys("Nombre del activo de prueba")
+    campo_nombre_activo.send_keys("Nombre del activo de prueba 117")
+    print("Llenando campo nombre del activo")
 
     time.sleep(tiempo_modulos)
     
-    # Nombre del Categoria
-    campo_grupo = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, "//SELECT[@id='tipoactivo_id']"))
+    # Nombre de la Categoria
+    campo_n_categoria = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, "(//SPAN[@class='select2-selection select2-selection--single'])[1]"))
         )
-    campo_grupo.click()
+    campo_n_categoria.click()
     time.sleep(tiempo_espera)
-    campo_grupo.send_keys("Aplicaciones")
+    campo_n_categoria.send_keys("Site")
     time.sleep(tiempo_espera)
-    campo_grupo.click()
+    campo_n_categoria.click()
+    print("Llenando campo Nombre de la categoria")
 
     time.sleep(tiempo_modulos)
     
     # Nombre Subcategoria
-    campo_grupo = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, "//SELECT[@id='subtipo_id']"))
+    campo_n_subcategoria = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, "(//SPAN[@class='select2-selection select2-selection--single'])[2]"))
         )
-    campo_grupo.click()
+    campo_n_subcategoria.click()
     time.sleep(tiempo_espera)
-    campo_grupo.send_keys("")
+    campo_n_subcategoria.send_keys("Servidores")
     time.sleep(tiempo_espera)
-    campo_grupo.click()
+    campo_n_subcategoria.click()
+    print("Llenando campo Nombre de Subcategoria")
     
     # Sede
-    campo_grupo = WebDriverWait(driver, 10).until(
+    campo_sede = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.XPATH, "//SELECT[@id='ubicacion_id']"))
         )
-    campo_grupo.click()
+    campo_sede.click()
     time.sleep(tiempo_espera)
-    campo_grupo.send_keys("Torre Murano")
+    campo_sede.send_keys("Torre Murano")
     time.sleep(tiempo_espera)
-    campo_grupo.click()
+    campo_sede.click()
+    print("Llenando campo Sede")
     
     time.sleep(tiempo_modulos)
     
@@ -150,15 +184,24 @@ def test_inventario_d_activos(driver):
     )
     guardar.click()
     
+    print("URL actual:", driver.current_url)
     
-    #################################BUSCAR REPOSITORIO Y ENTRAR A BOTONES DE EDICION###################################
+def test_add_inventario_de_activos(browser):
+    
+    add_inventario_de_activos(browser)
+    
+    
+#################################BUSCAR REPOSITORIO Y ENTRAR A BOTONES DE EDICION###################################
 
+def update_inventario_de_activos(driver):
+    
     # Campo Buscar
     campo_entrada = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.XPATH, campo_buscar_xpath))
     )
     campo_entrada.clear()
-    campo_entrada.send_keys("Nombre del activo de prueba")
+    campo_entrada.send_keys("Nombre del activo de prueba 117")
+    print("Campo Buscar llenado")
 
     time.sleep(tiempo_carga)
     
@@ -188,7 +231,8 @@ def test_inventario_d_activos(driver):
         )
     campo_descripcion.click()
     campo_descripcion.send_keys("Descripcion de Prueba Actualizado")
-
+    print("Campo Descripcion Actualizado")
+    
     time.sleep(tiempo_modulos)
 
     # Guardar actualización
@@ -199,5 +243,12 @@ def test_inventario_d_activos(driver):
     guardar.click()
 
     time.sleep(tiempo_modulos)
+    
+    print("URL actual:", driver.current_url)
+    
+def test_update_inventario_de_activos(browser):
+    
+    update_inventario_de_activos(browser)
+    
 
 
