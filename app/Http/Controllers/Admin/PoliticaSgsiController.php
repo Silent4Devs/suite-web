@@ -37,7 +37,7 @@ class PoliticaSgsiController extends Controller
     {
         abort_if(Gate::denies('politica_sistema_gestion_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
-            $query = PoliticaSgsi::orderByDesc('id')->get();
+            $query = PoliticaSgsi::getAll();
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');

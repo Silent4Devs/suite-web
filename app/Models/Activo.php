@@ -61,7 +61,7 @@ class Activo extends Model implements Auditable
     //Redis methods
     public static function getAll()
     {
-        return Cache::remember('activos_all', 3600 * 12, function () {
+        return Cache::remember('Activos:activos_all', 3600 * 7, function () {
             return self::get();
         });
     }

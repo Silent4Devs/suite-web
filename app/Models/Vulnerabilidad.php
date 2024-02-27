@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\DB;
 use App\Traits\ClearsResponseCache;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Vulnerabilidad.
@@ -62,6 +64,12 @@ class Vulnerabilidad extends Model implements Auditable
         'deleted_at' => 'nullable',
     ];
 
+    public static function getAll()
+    {
+        return Cache::remember('Vulnerabilidades:vulnerabilidad_all', 3600 * 7, function () {
+            return self::orderByDesc('nombre')->get();
+        });
+    }
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      **/
