@@ -120,7 +120,7 @@ class CoursesLesson extends Component
         if ($this->file) {
             $urlresorce = $this->file->store('cursos');
             $this->lesson->resource()->create([
-                'url' => $urlresorce."&rel=0",
+                'url' => $urlresorce."?rel=0",
             ]);
         }
         // $this->lesson = new Lesson();
