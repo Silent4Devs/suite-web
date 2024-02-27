@@ -242,7 +242,7 @@ class Empleado extends Model implements Auditable
     public static function getAltaEmpleadosWithArea()
     {
         return Cache::remember('Empleados:empleados_alta_area', 3600 * 6, function () {
-            return self::with('area')->alta()->get();
+            return self::with('area')->alta()->orderBy('name')->get();
         });
     }
 

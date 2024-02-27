@@ -131,7 +131,7 @@ class MatrizRiesgosController extends Controller
         $activos = SubcategoriaActivo::select('id', 'subcategoria')->get();
         $amenazas = Amenaza::select('id', 'nombre')->get();
 
-        $vulnerabilidades = Vulnerabilidad::select('id', 'nombre')->get();
+        $vulnerabilidades = Vulnerabilidad::getAll();
 
         if ($version_historico === 'true') {
             $controles = DeclaracionAplicabilidad::getAll();
@@ -192,7 +192,7 @@ class MatrizRiesgosController extends Controller
         $numero_sedes = $sedes->count();
         $numero_matriz = MatrizRiesgo::getAll()->count();
         $responsables = Empleado::getaltaAll();
-        $vulnerabilidades = Vulnerabilidad::get();
+        $vulnerabilidades = Vulnerabilidad::getAll();
         $planes_seleccionados = [];
         $planes = $matrizRiesgo->load('planes');
         if ($matrizRiesgo->planes) {
@@ -828,7 +828,7 @@ class MatrizRiesgosController extends Controller
         $responsables = Empleado::getaltaAll();
         $activos = SubcategoriaActivo::getAll();
         $amenazas = Amenaza::get();
-        $vulnerabilidades = Vulnerabilidad::get();
+        $vulnerabilidades = Vulnerabilidad::getAll();
 
         $ver = VersionesIso::getFirst();
         if ($ver->version_historico === false) {
@@ -916,7 +916,7 @@ class MatrizRiesgosController extends Controller
         $numero_sedes = $sedes->count();
         $numero_matriz = MatrizRiesgo::getAll()->count();
         $responsables = Empleado::getaltaAll();
-        $vulnerabilidades = Vulnerabilidad::get();
+        $vulnerabilidades = Vulnerabilidad::getAll();
         $planes_seleccionados = [];
         $planes = $matrizRiesgo->load('planes');
         if ($matrizRiesgo->planes) {
@@ -1099,7 +1099,7 @@ class MatrizRiesgosController extends Controller
         $amenazas = Amenaza::get();
         $duenos = Empleado::getaltaAll();
         $custodios = Empleado::getaltaAll();
-        $vulnerabilidades = Vulnerabilidad::get();
+        $vulnerabilidades = Vulnerabilidad::getAll();
         $controles = DeclaracionAplicabilidad::getAll();
         $activosoctave = MatrizOctave::get();
         $matrizOctave = new MatrizOctave();
@@ -1118,7 +1118,7 @@ class MatrizRiesgosController extends Controller
         $amenazas = Amenaza::get();
         $duenos = Empleado::getaltaAll();
         $custodios = Empleado::getaltaAll();
-        $vulnerabilidades = Vulnerabilidad::get();
+        $vulnerabilidades = Vulnerabilidad::getAll();
         $controles = DeclaracionAplicabilidad::getAll();
         $activosoctave = MatrizOctave::get();
         $matrizOctave = MatrizOctave::with('matrizActivos')->find($id);
@@ -1240,7 +1240,7 @@ class MatrizRiesgosController extends Controller
         $activos = Activo::getAll();
         $amenazas = Amenaza::get();
 
-        $vulnerabilidades = Vulnerabilidad::get();
+        $vulnerabilidades = Vulnerabilidad::getAll();
         $controles = DeclaracionAplicabilidad::getAll();
         $activosmatriz31000 = MatrizIso31000::get();
 
@@ -1255,7 +1255,7 @@ class MatrizRiesgosController extends Controller
         $responsables = Empleado::getaltaAll();
         $activos = Activo::getAll();
         $amenazas = Amenaza::get();
-        $vulnerabilidades = Vulnerabilidad::get();
+        $vulnerabilidades = Vulnerabilidad::getAll();
         $controles = DeclaracionAplicabilidad::getAll();
         $activosmatriz31000 = MatrizIso31000::with('activosInformacion')->find($id);
 
@@ -1377,7 +1377,7 @@ class MatrizRiesgosController extends Controller
         $activos = Activo::getAll();
         $amenazas = Amenaza::get();
         $matrizNist = new MatrizNist();
-        $vulnerabilidades = Vulnerabilidad::get();
+        $vulnerabilidades = Vulnerabilidad::getAll();
         $controles = DeclaracionAplicabilidad::getAll();
 
         return view('admin.NIST.create', compact('activos', 'amenazas', 'vulnerabilidades', 'sedes', 'areas', 'procesos', 'controles', 'responsables', 'matrizNist'))->with('id_analisis', $request->id_analisis);
@@ -1392,7 +1392,7 @@ class MatrizRiesgosController extends Controller
         $activos = Activo::getAll();
         $amenazas = Amenaza::get();
         $matrizNist = MatrizNist::find($id);
-        $vulnerabilidades = Vulnerabilidad::get();
+        $vulnerabilidades = Vulnerabilidad::getAll();
         $controles = DeclaracionAplicabilidad::getAll();
 
         return view('admin.NIST.edit', compact('activos', 'amenazas', 'vulnerabilidades', 'sedes', 'areas', 'procesos', 'controles', 'responsables', 'matrizNist'))->with('id_analisis', $request->id_analisis);

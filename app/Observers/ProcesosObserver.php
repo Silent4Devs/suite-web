@@ -59,6 +59,6 @@ class ProcesosObserver
 
     private function forgetCache()
     {
-        Cache::forget('activos_all');
+        Cache::forget('Procesos:procesos_all');
     }
 }

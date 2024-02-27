@@ -21,7 +21,7 @@ class TipoactivoController extends Controller
         abort_if(Gate::denies('categoria_activos_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Tipoactivo::select('*')->orderByDesc('id');
+            $query = Tipoactivo::getAll();
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
