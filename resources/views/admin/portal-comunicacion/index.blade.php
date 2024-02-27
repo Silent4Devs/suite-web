@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+ @extends('layouts.admin')
 @section('css')
     <link rel="stylesheet" href="{{ asset('css/portal_comunicacion.css') }}{{ config('app.cssVersion') }}">
 @endsection
@@ -395,7 +395,7 @@
                                                 <span>{{ $documento->macroproceso->nombre }}</span>
                                             @endif
                                             @if ($documento->proceso_id)
-                                                <span>{{ $documento->proceso->nombre }}</span>
+                                                <span>{{ isset($documento->proceso->nombre) }}</span>
                                             @endif
 
                                         </div>
