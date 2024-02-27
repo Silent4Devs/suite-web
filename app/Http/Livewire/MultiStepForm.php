@@ -22,6 +22,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\DB;
 
 class MultiStepForm extends Component
 {
@@ -63,6 +64,8 @@ class MultiStepForm extends Component
     public $sumaTotalPesoGeneral;
 
     public $catalogoObjetivos = '';
+
+    public $time_elapsed_secs;
 
     // Properties for step 2
     protected $listeners = ['grupoEvaluadosSaved' => 'render'];
@@ -267,7 +270,7 @@ class MultiStepForm extends Component
                 'catalogoObjetivos' => 'required|numeric',
                 //'sumaTotalPesoGeneral' => 'required|numeric|in:100',
             ]));
-        } elseif ($this->includeCompetencias && ! $this->includeObjetivos) {
+        } elseif ($this->includeCompetencias && !$this->includeObjetivos) {
             // If only competencias are included
             $this->sumaTotalPesoGeneral = $this->pesoGeneralCompetencias;
             $this->pesoGeneralObjetivos = 0;
@@ -275,7 +278,7 @@ class MultiStepForm extends Component
                 // 'pesoGeneralCompetencias' => 'required|numeric|in:100',
                 // 'sumaTotalPesoGeneral' => 'required|numeric|in:100',
             ]));
-        } elseif (! $this->includeCompetencias && $this->includeObjetivos) {
+        } elseif (!$this->includeCompetencias && $this->includeObjetivos) {
             // If only objetivos are included
             $this->sumaTotalPesoGeneral = $this->pesoGeneralObjetivos;
             $this->pesoGeneralCompetencias = 0;
@@ -322,7 +325,7 @@ class MultiStepForm extends Component
         $messages = [];
 
         // Validation for evaluado options
-        if (! $this->evaluado_por_jefe && ! $this->evaluado_por_misma_area && ! $this->evaluado_por_equipo_a_cargo && ! $this->autoevaluacion) {
+        if (!$this->evaluado_por_jefe && !$this->evaluado_por_misma_area && !$this->evaluado_por_equipo_a_cargo && !$this->autoevaluacion) {
             $rules += [
                 'evaluado_por_jefe' => 'accepted',
                 'evaluado_por_misma_area' => 'accepted',
@@ -363,8 +366,8 @@ class MultiStepForm extends Component
         // Validate total sum of weights
         $rules['sumaTotalPeso'] = 'numeric|max:100|min:100';
         $messages += [
-            'sumaTotalPeso.max' => 'El peso total debe ser 100%, actual: '.$this->sumaTotalPeso.'%',
-            'sumaTotalPeso.min' => 'El peso total debe ser 100%, actual: '.$this->sumaTotalPeso.'%',
+            'sumaTotalPeso.max' => 'El peso total debe ser 100%, actual: ' . $this->sumaTotalPeso . '%',
+            'sumaTotalPeso.min' => 'El peso total debe ser 100%, actual: ' . $this->sumaTotalPeso . '%',
         ];
 
         $this->validate($rules, $messages);
@@ -399,7 +402,7 @@ class MultiStepForm extends Component
             // }
             $this->createEvaluation(
                 $idx,
-                $this->nombre.'-'.($idx + 1),
+                $this->nombre . '-' . ($idx + 1),
                 $this->descripcion,
                 $estatus,
                 $this->evaluados_objetivo,
@@ -420,10 +423,48 @@ class MultiStepForm extends Component
 
         switch ($evaluados_objetivo) {
             case 'all':
-                $evaluados = Empleado::getAltaEmpleados()()->pluck('id')->toArray();
+                // $evaluados = Empleado::getAltaEmpleados()->pluck('id')->toArray();
+                $evaluados = DB::table('empleados')
+                    ->select('empleados.id', 'empleados.name', 'empleados.email', 'empleados.area_id', 'empleados.puesto_id')
+                    ->join('areas', 'empleados.area_id', '=', 'areas.id')
+                    ->join('puestos', 'empleados.puesto_id', '=', 'puestos.id')
+                    ->select(
+                        'empleados.id',
+                        'empleados.name',
+                        'empleados.email',
+                        'empleados.area_id',
+                        'empleados.puesto_id',
+                        'areas.id as area_id',
+                        'areas.area',
+                        'puestos.id as puesto_id',
+                        'puestos.puesto'
+                    )
+                    ->where('empleados.estatus', 'alta')
+                    // ->where('empleados.area_id', $evaluados_area)
+                    ->pluck('empleados.id')
+                    ->toArray();
                 break;
             case 'area':
-                $evaluados = Empleado::getAltaEmpleados()()->where('area_id', $this->by_area)->pluck('id')->toArray();
+                // $evaluados = Empleado::getAltaEmpleados()->where('area_id', $this->by_area)->pluck('id')->toArray();
+                $evaluados = DB::table('empleados')
+                    ->select('empleados.id', 'empleados.name', 'empleados.email', 'empleados.area_id', 'empleados.puesto_id')
+                    ->join('areas', 'empleados.area_id', '=', 'areas.id')
+                    ->join('puestos', 'empleados.puesto_id', '=', 'puestos.id')
+                    ->select(
+                        'empleados.id',
+                        'empleados.name',
+                        'empleados.email',
+                        'empleados.area_id',
+                        'empleados.puesto_id',
+                        'areas.id as area_id',
+                        'areas.area',
+                        'puestos.id as puesto_id',
+                        'puestos.puesto'
+                    )
+                    ->where('empleados.estatus', 'alta')
+                    ->where('empleados.area_id', $this->by_area)
+                    ->pluck('empleados.id')
+                    ->toArray();
                 break;
             case 'manual':
                 $evaluados = $this->by_manual;
@@ -616,7 +657,7 @@ class MultiStepForm extends Component
 
         if ($includeCompetencias) {
             $competencias = $empleado->puestoRelacionado->competencias ?? null;
-            if (! is_null($competencias)) {
+            if (!is_null($competencias)) {
                 $evaluacionRespuestas = [];
                 foreach ($evaluadores as $evaluador) {
                     foreach ($competencias as $competencia) {
@@ -659,7 +700,6 @@ class MultiStepForm extends Component
                 ObjetivoRespuesta::insert($objetivoRespuestas);
             }
         }
-
     }
 
     public function enviarCorreoAEvaluadores($evaluacion)
@@ -697,11 +737,47 @@ class MultiStepForm extends Component
 
         switch ($evaluados_objetivo) {
             case 'all':
-                $evaluados = Empleado::getAltaEmpleados()->pluck('id')->toArray();
+                // $evaluados = Empleado::getAltaEmpleados()->pluck('id')->toArray();
+                $evaluados = DB::table('empleados')
+                    ->select(
+                        'empleados.id',
+                        'empleados.name',
+                        'empleados.email',
+                        'empleados.area_id',
+                        'empleados.puesto_id',
+                        'areas.id as area_id',
+                        'areas.area',
+                        'puestos.id as puesto_id',
+                        'puestos.puesto'
+                    )
+                    ->join('areas', 'empleados.area_id', '=', 'areas.id')
+                    ->join('puestos', 'empleados.puesto_id', '=', 'puestos.id')
+                    ->pluck('empleados.id')
+                    ->toArray();
                 break;
             case 'area':
                 $evaluados_area = intval($this->by_area);
-                $evaluados = Empleado::getAltaEmpleados()->where('area_id', $this->by_area)->pluck('id')->toArray();
+                $evaluados = DB::table('empleados')
+                    ->select('empleados.id', 'empleados.name', 'empleados.email', 'empleados.area_id', 'empleados.puesto_id')
+                    ->join('areas', 'empleados.area_id', '=', 'areas.id')
+                    ->join('puestos', 'empleados.puesto_id', '=', 'puestos.id')
+                    ->select(
+                        'empleados.id',
+                        'empleados.name',
+                        'empleados.email',
+                        'empleados.area_id',
+                        'empleados.puesto_id',
+                        'areas.id as area_id',
+                        'areas.area',
+                        'puestos.id as puesto_id',
+                        'puestos.puesto'
+                    )
+                    ->where('empleados.estatus', 'alta')
+                    ->whereNull('empleados.deleted_at')
+                    ->where('empleados.area_id', $evaluados_area)
+                    ->pluck('empleados.id')
+                    ->toArray();
+                // $evaluados = Empleado::getAltaEmpleados()->where('area_id', $this->by_area)->pluck('id')->toArray();
                 break;
             case 'manual':
                 $evaluados = $this->by_manual;
@@ -710,29 +786,62 @@ class MultiStepForm extends Component
                 $evaluados = GruposEvaluado::find(intval($evaluados_objetivo))->empleados->pluck('id')->toArray();
                 break;
         }
+        // Inicia el contador de tiempo
+
+        $start = microtime(true);
+        // Aquí colocas tu consulta
+
+        // Calcula el tiempo transcurrido
 
         $evaluadosEvaluadores = collect();
-        $emps = Empleado::getaltaAllObjetivoSupervisorChildren();
+        // $emps = Empleado::getaltaAllObjetivoSupervisorChildren();
+        $emps = Empleado::select(
+            'id',
+            'name',
+            'area_id',
+            'supervisor_id',
+            'puesto_id',
+        )->with(['objetivos', 'children:id,name', 'supervisor:id,name', 'area:id,area', 'puestoRelacionado:id,puesto'])->where('estatus', 'alta')->whereNull('deleted_at')->get();
 
+        // $emps = Empleado::alta()->select(
+        //     'id',
+        //     'name',
+        //     'area_id',
+        //     'supervisor_id',
+        //     'puesto_id',
+        // )->with(['objetivos', 'children:id,name', 'supervisor:id,name', 'area:id,area', 'puestoRelacionado:id,puesto'])->get();
+        // dd($emps);
+        // dd($evaluados);
         foreach ($evaluados as $evaluado) {
-            $empleado = $emps->find(intval($evaluado));
+            // dd($emps[0], $evaluado);
+            $empleado = $emps->find($evaluado);
             $evaluadores = collect();
+            // dd($empleado);
+            try {
+                //code...
+                $evaluadores->put('autoevaluacion', ['id' => intval($empleado->id), 'peso' => $this->pesoAutoevaluacion, 'tipo' => EvaluadoEvaluador::AUTOEVALUACION]);
+                $evaluadores->put('jefe', [
+                    'id' => $empleado->supervisor ? intval($empleado->supervisor->id) : Empleado::getAltaEmpleados()->unique()->random()->id,
+                    'peso' => $this->pesoEvaluacionJefe,
+                    'tipo' => EvaluadoEvaluador::JEFE_INMEDIATO,
+                ]);
 
-            $evaluadores->put('autoevaluacion', ['id' => intval($empleado->id), 'peso' => $this->pesoAutoevaluacion, 'tipo' => EvaluadoEvaluador::AUTOEVALUACION]);
+                $equipo = $empleado->children->isEmpty() ? [Empleado::getAltaEmpleados()->unique()->random()->id] : $this->obtenerEquipoACargo($empleado->children);
+                $evaluadores->put('subordinado', ['id' => $equipo[array_rand($equipo)], 'peso' => $this->pesoEvaluacionEquipo, 'tipo' => EvaluadoEvaluador::EQUIPO]);
 
-            $evaluadores->put('jefe', [
-                'id' => $empleado->supervisor ? intval($empleado->supervisor->id) : Empleado::getAltaEmpleados()->unique()->random()->id,
-                'peso' => $this->pesoEvaluacionJefe,
-                'tipo' => EvaluadoEvaluador::JEFE_INMEDIATO,
-            ]);
+                $evaluadores->put('par', ['id' => Empleado::getAltaEmpleados()->unique()->random()->id, 'peso' => $this->pesoEvaluacionArea, 'tipo' => EvaluadoEvaluador::MISMA_AREA]);
 
-            $equipo = $empleado->children->isEmpty() ? [Empleado::getAltaEmpleados()->unique()->random()->id] : $this->obtenerEquipoACargo($empleado->children);
-            $evaluadores->put('subordinado', ['id' => $equipo[array_rand($equipo)], 'peso' => $this->pesoEvaluacionEquipo, 'tipo' => EvaluadoEvaluador::EQUIPO]);
-
-            $evaluadores->put('par', ['id' => Empleado::getAltaEmpleados()->unique()->random()->id, 'peso' => $this->pesoEvaluacionArea, 'tipo' => EvaluadoEvaluador::MISMA_AREA]);
-
-            $evaluadosEvaluadores->push(['evaluado' => $empleado, 'evaluadores' => $evaluadores]);
+                $evaluadosEvaluadores->push(['evaluado' => $empleado, 'evaluadores' => $evaluadores]);
+            } catch (\Throwable $th) {
+                //throw $th;
+                dd($th, $empleado, $evaluado);
+            }
         }
+        $this->time_elapsed_secs
+            =
+            microtime(true) -
+            $start;
+        // Imprime el tiempo de ejecución
 
         return $evaluadosEvaluadores;
     }
