@@ -115,7 +115,7 @@ class MultiStepForm extends Component
     public $totalEmpleadosSinCompetencias = 0;
 
     public $listaEmpleadosSinCompetencias;
-    // public $listaIDSinCompetencias;
+    public $listaIDSinCompetencias;
 
     public $totalSteps = 5;
 
@@ -215,7 +215,7 @@ class MultiStepForm extends Component
         }
         if ($this->currentStep == 4) {
             $this->listaEmpleadosSinCompetencias = collect();
-            // $this->listaIDSinCompetencias = collect();
+            $this->listaIDSinCompetencias = collect();
             $this->totalEmpleadosSinCompetencias = 0;
             $this->hayEmpleadosSinCompetencias = false;
             foreach ($this->listaEvaluados as $evaluadoL) {
@@ -224,7 +224,7 @@ class MultiStepForm extends Component
                     $this->hayEmpleadosSinCompetencias = true;
                     $this->totalEmpleadosSinCompetencias++;
                     $this->listaEmpleadosSinCompetencias->push($evaluadoL['evaluado']['name']);
-                    // $this->listaIDSinCompetencias->push($evaluadoL['evaluado']['id']);
+                    $this->listaIDSinCompetencias->push($evaluadoL['evaluado']['id']);
                 }
             }
 
@@ -901,31 +901,40 @@ class MultiStepForm extends Component
         return $evaluadosEvaluadores;
     }
 
-    // public function repetirConsulta()
-    // {
-    //     // dd($this->listaEmpleadosSinCompetencias, $this->listaIDSinCompetencias);
-    //     foreach ($this->listaIDSinCompetencias as $IDsinComp) {
+    public function repetirConsulta()
+    {
+        // dd($this->listaEmpleadosSinCompetencias, $this->listaIDSinCompetencias);
+        foreach ($this->listaIDSinCompetencias as $IDsinComp) {
 
-    //         $rev_emp_comp = Empleado::select(
-    //             'id',
-    //             'name',
-    //             'area_id',
-    //             'puesto_id',
-    //         )->with(['area:id,area', 'puestoRelacionado:id,puesto'])
-    //             ->where('estatus', 'alta')
-    //             ->whereNull('deleted_at')
-    //             ->where('empleados.id', $IDsinComp)
-    //             ->first();
-    //         // dd($IDsinComp, $rev_emp_comp->competencias_asignadas);
-    //         // dd($this->totalEmpleadosSinCompetencias, $this->listaEmpleadosSinCompetencias);
-    //         if ($rev_emp_comp->competencias_asignadas > 0) {
-    //             dd('entra');
-    //             // Remove $rev_emp_comp from $this->listaEmpleadosSinCompetencias
-    //             $this->listaEmpleadosSinCompetencias = $this->listaEmpleadosSinCompetencias->reject(function ($item) use ($rev_emp_comp) {
-    //                 return $item->id === $rev_emp_comp->name;
-    //             });
-    //             $this->totalEmpleadosSinCompetencias--;
-    //         }
-    //     }
-    // }
+            $rev_emp_comp = Empleado::select(
+                'id',
+                'name',
+                'area_id',
+                'puesto_id',
+            )->with(['area:id,area', 'puestoRelacionado:id,puesto'])
+                ->where('estatus', 'alta')
+                ->whereNull('deleted_at')
+                ->where('empleados.id', $IDsinComp)
+                ->first();
+            // dd($IDsinComp, $rev_emp_comp->competencias_asignadas);
+            // dd($this->totalEmpleadosSinCompetencias, $this->listaEmpleadosSinCompetencias);
+            if ($rev_emp_comp->competencias_asignadas > 0) {
+                // dump('entra if', $this->listaEmpleadosSinCompetencias, $this->totalEmpleadosSinCompetencias, $rev_emp_comp->name);
+                dump('1');
+                $rev_emp_comp_array = $rev_emp_comp->toArray();
+                dump('2');
+                // dd($rev_emp_comp_array);
+                // Iterate through the array and filter based on 'name'
+                $this->listaEmpleadosSinCompetencias = $this->listaEmpleadosSinCompetencias->filter(function ($item) use ($rev_emp_comp) {
+                    // Adjust this condition based on your collection structure
+                    return $item['name'] !== $rev_emp_comp->name;
+                });
+                dd('3');
+                $this->totalEmpleadosSinCompetencias--;
+                dd($this->listaEmpleadosSinCompetencias, $this->totalEmpleadosSinCompetencias);
+            } else {
+                dd('else');
+            }
+        }
+    }
 }

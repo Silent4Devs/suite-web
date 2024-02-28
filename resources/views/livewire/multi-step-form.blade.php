@@ -1213,7 +1213,7 @@
                                             @endforeach
                                         </ul>
                                         <button type="button" class="btn btn-outline-primary" onclick="openNewTab()"
-                                            wire:click="redirigirCompetencias">Asignar Competencias
+                                            wire:click="repetirConsulta">Asignar Competencias
                                         </button>
                                     </div>
                                 @endif
