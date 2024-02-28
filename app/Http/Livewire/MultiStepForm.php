@@ -23,12 +23,13 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class MultiStepForm extends Component
 {
     //TABLA
     use WithPagination;
-
+    use LivewireAlert;
     // Properties for all steps
     public $showTable = false;
 
@@ -119,6 +120,8 @@ class MultiStepForm extends Component
     public $currentStep = 1;
 
     public $hoy;
+
+    public $bloquear_evaluacion = true;
 
     public function mount()
     {
@@ -219,6 +222,21 @@ class MultiStepForm extends Component
                     $this->totalEmpleadosSinCompetencias++;
                     $this->listaEmpleadosSinCompetencias->push($evaluadoL['evaluado']['name']);
                 }
+            }
+
+            if ($this->totalEmpleadosSinCompetencias > 0) {
+                $this->alert('warning', 'Sin Competencias', [
+                    'position' => 'center',
+                    'timer' => '600000',
+                    'toast' => false,
+                    'text' => 'Existen colaboradores sin competencias asignadas, no podra crear la evaluación si los colaboradores no tienen competencias para evaluar',
+                    'showConfirmButton' => true,
+                    'onConfirmed' => '',
+                    'confirmButtonText' => 'Confirmar',
+                    'timerProgressBar' => true,
+                ]);
+            } else {
+                $this->bloquear_evaluacion = false;
             }
         }
 
