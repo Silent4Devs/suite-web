@@ -126,7 +126,7 @@
                 <div class="form-row">
                     <div class="form-group col-sm-12 col-md-12 col-lg-12">
                         <div class="form-group anima-focus">
-                            <input required data-vincular-nombre='true' class="form-control date" type="text"
+                            <input required data-vincular-nombre='true' class="form-control date" type="text" 
                                 name="tema_reunion" id="tema_reunion" value="{{ old('tema_reunion') }}" placeholder=""
                                 maxlength="250">
                             <label for="tema_reunion">Tema de la reunión<span class="text-danger">*</span></label>
@@ -197,21 +197,21 @@
                         </div>
                         <div class="form-group col-sm-12 col-md-12 col-lg-6">
                             <div class="form-group anima-focus">
-                                <input class="form-control" type="text" id="email" placeholder="" readonly
+                                <input class="form-control" type="text" maxlength="255" id="email" placeholder="" readonly
                                     style="cursor: not-allowed" />
                                 <label for="email">Email</label>
                             </div>
                         </div>
                         <div class="form-group col-sm-12 col-md-12 col-lg-6">
                             <div class="form-group anima-focus">
-                                <input class="form-control" type="text" id="puesto" placeholder="" readonly
+                                <input class="form-control" type="text" maxlength="255" id="puesto" placeholder="" readonly
                                     style="cursor: not-allowed" />
                                 <label for="puesto">Puesto</label>
                             </div>
                         </div>
                         <div class="form-group col-sm-12 col-md-12 col-lg-6">
                             <div class="form-group anima-focus">
-                                <input class="form-control" type="text" id="area" placeholder="" readonly
+                                <input class="form-control" type="text" maxlength="255" id="area" placeholder="" readonly
                                     style="cursor: not-allowed" />
                                 <label for="area">Área</label>
                             </div>
@@ -253,19 +253,19 @@
                         <p class="font-weight-bold col-12" style="font-size:11pt;">Participantes externos.</p>
                         <hr>
                         <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-6">
-                            <input class="form-control" type="text" id="nombreEXT" placeholder="" />
+                            <input class="form-control" type="text" maxlength="255" id="nombreEXT" placeholder="" />
                             <label for="nombreEXT">Nombre</label>
                         </div>
                         <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-6">
-                            <input class="form-control" type="text" id="emailEXT" placeholder="" />
+                            <input class="form-control" type="text" maxlength="255" id="emailEXT" placeholder="" />
                             <label for="emailEXT">Email</label>
                         </div>
                         <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-6">
-                            <input class="form-control" type="text" id="puestoEXT" placeholder="" />
+                            <input class="form-control" type="text" maxlength="255" id="puestoEXT" placeholder="" />
                             <label for="puestoEXT">Puesto</label>
                         </div>
                         <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-6">
-                            <input class="form-control" type="text" id="empresaEXT" placeholder="" />
+                            <input class="form-control" type="text" maxlength="255" id="empresaEXT" placeholder="" />
                             <label for="empresaEXT">Empresa u
                                 Organización</label>
                         </div>
