@@ -1212,6 +1212,9 @@
                                                 <li>{{ $eSinCompetencias }}</li>
                                             @endforeach
                                         </ul>
+                                        <button type="button" class="btn btn-outline-primary" onclick="openNewTab()"
+                                            wire:click="redirigirCompetencias">Asignar Competencias
+                                        </button>
                                     </div>
                                 @endif
                                 <div class="px-1 py-2 mb-3 rounded shadow-sm"
@@ -1479,4 +1482,10 @@
         }());
     </script>
 
+    <script>
+        function openNewTab() {
+            var url = "{{ route('admin.ev360-competencias-por-puesto.index') }}"; // Replace with the actual route name
+            window.open(url, '_blank');
+        }
+    </script>
 </div>
