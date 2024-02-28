@@ -10,6 +10,13 @@
         </div>
     </div>
 @endsection
+<script>
+    window.addEventListener('popstate', function(event) {
+        // Recarga la página cuando el usuario intenta navegar hacia atrás
+        window.location.reload();
+    });
+</script>
+
 @section('scripts')
     <script src="https://unpkg.com/@yaireo/tagify"></script>
     <script src="https://unpkg.com/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
