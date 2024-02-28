@@ -118,7 +118,7 @@
                         {!! Form::label('tipo', 'Tipo', ['class' => 'asterisco']) !!}
                     </div>
                     <div class="form-group col-md-4 anima-focus">
-                        <input type="number" min="0" name="horas_proyecto" maxlength="250" placeholder=""
+                        <input type="text" pattern="[0-9]+" title="Por favor, ingrese solo números enteros." placeholder="" name="horas_proyecto" maxlength="250"
                             id="horas_asignadas" class="form-control">
                         {!! Form::label('horas_proyecto', 'Horas Asignadas al proyecto', ['class' => 'asterisco']) !!}
                         @if ($errors->has('horas_proyecto'))

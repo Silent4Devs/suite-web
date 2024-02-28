@@ -80,12 +80,12 @@
                 <div class="form-group anima-focus">
                         <textarea required placeholder="" maxlength="255"  pattern="[a-zA-Z0-9\s\u00C0-\u024F\u1E00-\u1EFF\u0400-\u04FF\u0500-\u052F\u2DE0-\u2DFF\uA640-\uA69F\uA720-\uA7FF\uAB30-\uAB6F\uAC00-\uD7AF\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FFF\u3400-\u4DBF\u20000-\u2A6DF\u2A700-\u2B73F\u2B740-\u2B81F\u2B820-\u2CEAF\u2CEB0-\u2EBEF]+"  class="form-control {{ $errors->has('alcancesgsi') ? 'is-invalid' : '' }} form" name="alcancesgsi"
                             id="alcancesgsi" >{!! old('alcancesgsi', strip_tags($alcanceSgsi->alcancesgsi)) !!}</textarea>
+                            {!! Form::label('alcancesgsi', 'Alcance*', ['class' => 'asterisco']) !!}
                         @if ($errors->has('alcancesgsi'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('alcancesgsi') }}
                             </div>
                         @endif
-                        {!! Form::label('alcancesgsi', 'Alcance*', ['class' => 'asterisco']) !!}
                 </div>
                 <br>
                     <div class="row">
