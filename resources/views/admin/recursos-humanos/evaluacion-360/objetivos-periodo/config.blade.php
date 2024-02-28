@@ -44,45 +44,7 @@
         <div class="tab-pane mb-4 fade show active" id="nav-config-obj-1" role="tabpanel"
             aria-labelledby="nav-config-obj-1">
 
-            <div class="card card-body">
-                <div class="info-first-config">
-                    <h4 class="title-config">Categorias</h4>
-                    <p>Da de alta los grupos en los que clasificaras los objetivos.</p>
-                    <hr class="my-4">
-                </div>
-
-                <div class="grid-config-categorias mt-4">
-
-                    <div class="item-config-cat">
-                        <div class="d-flex align-items-center" style="gap: 10px;">
-                            <div class="form-group anima-focus" style="width: 85%;">
-                                <input type="text" class="form-control anima-focus" placeholder="">
-                                <label for="">Categoría</label>
-                            </div>
-                            <div class="btn-delete-cat">
-                                <i class="material-symbols-outlined" title="Eliminar"
-                                    onclick="deleteItem('item-config-cat')">delete</i>
-                            </div>
-                        </div>
-                        <div class="form-group anima-focus" style="width: 85%;">
-                            <textarea name="" id="" class="form-control" placeholder=""></textarea>
-                            <label for="">Descripción</label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="d-flex align-items-center mt-4" style="color: #006DDB; gap: 10px; cursor: pointer;"
-                        onclick="addItem('item-config-cat', 'grid-config-categorias')">
-                        <span class="material-symbols-outlined">add_circle</span>
-                        Agregar Categoría
-                    </div>
-
-                    <button class="btn btn-primary">
-                        GUARDAR
-                    </button>
-                </div>
-            </div>
+            @livewire('ev-trimestral-config-categorias')
 
         </div>
 
@@ -401,7 +363,7 @@
         });
     </script>
 
-    <script>
+    {{-- <script>
         function addItem(classItem, classContent) {
             let item = document.querySelector('.' + classItem);
             let newItem = document.createElement('div');
@@ -415,5 +377,5 @@
         function deleteItem(classItem) {
             document.querySelector('.' + classItem + ':hover').remove();
         }
-    </script>
+    </script> --}}
 @endsection
