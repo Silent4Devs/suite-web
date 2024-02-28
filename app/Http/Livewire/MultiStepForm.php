@@ -21,6 +21,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Response;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
@@ -243,6 +244,18 @@ class MultiStepForm extends Component
         if ($this->currentStep > $this->totalSteps) {
             $this->currentStep = $this->totalSteps;
         }
+    }
+
+    public function redirigirCompetencias()
+    {
+        // $this->emit('openNewTab', ['url' => route('admin.ev360-competencias-por-puesto.index')]);
+
+        // Define the URL you want to redirect to
+        // $url = route('admin.ev360-competencias-por-puesto.index');
+        // $this->dispatchBrowserEvent('openNewTab', ['url' => $url]);
+
+        $this->decreaseStep();
+        // $this->openNewTab();
     }
 
     public function decreaseStep()
