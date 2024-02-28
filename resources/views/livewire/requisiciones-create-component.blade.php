@@ -1,8 +1,3 @@
-@if (session('mensajeError'))
-<div class="alert alert-danger">
-    {{ session('mensajeError') }}
-</div>
-@endif
 
 <div class="create-requisicion">
     <div class="card card-body caja-blue">
@@ -155,8 +150,8 @@
                                     <label for="" class="txt-tamaño">
                                         Cantidad <font class="asterisco">*</font>
                                     </label>
-                                    <input type="number" name="cantidad_1" min="1" max="900000"
-                                        class="model-cantidad browser-default" required>
+                                    <input type="text" name="cantidad_1" pattern="[0-9]+" title="Por favor, ingrese solo números enteros."
+                                    class="model-cantidad browser-default" required>
                                 </div>
                                 <div class="col s12 l8">
                                     <label for="" class="txt-tamaño">
