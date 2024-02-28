@@ -14,18 +14,28 @@
         .card {
             border-radius: 16px;
         }
+
+        .boton-transparentev2 {
+            top: 214px;
+            width: 135px;
+            height: 40px;
+            /* UI Properties */
+            background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
+            border: 1px solid var(--unnamed-color-057be2);
+            background: #FFFFFF 0% 0% no-repeat padding-box;
+            border: 1px solid #057BE2;
+            opacity: 1;
+        }
     </style>
 
     <div class="card card-body">
-        <div class="row d-flex align-items-center justify-content-center">
+        <div class="row d-flex">
             <!-- Modal -->
 
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                 style="margin:50px 0px 50px 1230px; background:none; border: none;">
                 <i class="fa-solid fa-x fa-2xl" style="color: #ffffff;"></i>
             </button>
-            <div class="print-none">
-            </div>
             <div class="card col-sm-12 col-md-10"
                 style="border-radius: 0px; box-shadow: none; border-color:white; width:800px;">
                 <div class="card-body" style=" position: relative; left:4.5rem; width:1200px;">
