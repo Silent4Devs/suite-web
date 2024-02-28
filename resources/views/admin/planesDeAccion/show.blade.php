@@ -237,12 +237,11 @@
                 <div class="botones_vistas_gantt">
                     <div class="row">
                         <div class="col-4" style="display: flex; align-items: center; padding-left: 50px;">
-                            <p id="titlo-tab" class="text-capitalize">Diagrama Gantt</p>
+                            <p id="titlo-tab" class="text-capitalize">Kanban</p>
                         </div>
                         <div class="text-right col-8 caja_botones_menu">
-                            <a href="#" data-tabs="original_gantt" onclick="cambiarTitulo('Diagrama Gantt');"
-                                class="boton_activo">
-                                <img class="img_nav" src="{{ asset('img/plan-trabajo/gantt.svg') }}">Gantt
+                            <a href="#" data-tabs="kanban_gantt" onclick="cambiarTitulo('Kanban');" class="boton_activo">
+                                <img class="img_nav" src="{{ asset('img/plan-trabajo/kanban.svg') }}" alt="Imagen 3">Kanban
                             </a>
 
                             <span class="vertical-line"></span>
@@ -255,8 +254,9 @@
 
                             <span class="vertical-line"></span>
 
-                            <a href="#" data-tabs="kanban_gantt" onclick="cambiarTitulo('Kanban');" class="">
-                                <img class="img_nav" src="{{ asset('img/plan-trabajo/kanban.svg') }}" alt="Imagen 3">Kanban
+                            <a href="#" data-tabs="original_gantt" onclick="cambiarTitulo('Diagrama Gantt');"
+                                class="">
+                                <img class="img_nav" src="{{ asset('img/plan-trabajo/gantt.svg') }}">Gantt
                             </a>
                         </div>
                     </div>
@@ -266,8 +266,8 @@
         <div id="plan_trabajo_workspace">
             <div class="caja_caja_secciones">
                 <div class="caja_secciones">
-                    <section id="original_gantt" class="caja_tab_reveldada">
-                        @include('admin.planesDeAccion.diagramas-implementacion.gantt')
+                    <section id="kanban_gantt" class="caja_tab_reveldada">
+                        @include('admin.planesDeAccion.diagramas-implementacion.kanban')
                     </section>
 
                     {{-- <section id="tabla_gantt">
@@ -278,8 +278,8 @@
                         @include('admin.planesDeAccion.diagramas-implementacion.calendario')
                     </section>
 
-                    <section id="kanban_gantt">
-                        @include('admin.planesDeAccion.diagramas-implementacion.kanban')
+                    <section id="original_gantt">
+                        @include('admin.planesDeAccion.diagramas-implementacion.gantt')
                     </section>
                 </div>
             </div>

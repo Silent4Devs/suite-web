@@ -139,10 +139,132 @@
         border-radius: 5px;
     }
 
+    input::file-selector-button {
+        background-color: #E3EBFF;
+        color: #5A5A5A;
+        font-size: 14px;
+        width: -webkit-fill-available;
+        height: 36px;
+        justify-content: center;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        margin-left: 30px;
+        margin-right: 30px;
+        border: none;
+        border-radius: 5px;
+    }
+
     .contenedorSelect {
         display: flow;
         align-content: center;
         padding-left: 30px;
+    }
+
+    .textcomplement {
+        text-align: left;
+        font-size: 14px;
+        padding-bottom: 8px;
+        padding-top: 8px;
+    }
+
+    #task-container {
+        margin-bottom: 20px;
+    }
+
+    #task-list {
+        list-style-type: none;
+        column-count: 4;
+    }
+
+    .task-item {
+        margin-bottom: 10px;
+    }
+
+    .progress-container {
+        margin-bottom: 10px;
+    }
+
+    .progress-bar {
+        width: 0;
+        height: 10px;
+        background-color: green;
+        transition: width 0.5s;
+    }
+
+    .collapsible {
+        background-color: #777;
+        color: white;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 15px;
+    }
+
+    .content {
+        padding: 0 18px;
+        display: none;
+        overflow: hidden;
+        background-color: #f1f1f1;
+    }
+
+    /*  */
+    .litcss {
+        list-style: none;
+        padding: 10px;
+        margin: 5px 0;
+        background-color: #f2f2f2;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+    }
+
+    .filename {
+        margin-left: 10px;
+    }
+
+    .filesize {
+        margin-left: auto;
+        color: #818181;
+        font-size: 0.9em;
+    }
+
+    .delete-btn {
+        margin-left: 10px;
+        color: #818181;
+        border: none;
+        border-radius: 3px;
+        padding: 5px 10px;
+        cursor: pointer;
+    }
+
+    .listaarchivos {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
+    .circle {
+        display: inline-block;
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        margin-left: 10px;
+    }
+
+    .butonLog {
+        background-color: #E3EBFF;
+        color: #5A5A5A;
+        font-size: 14px;
+        height: 36px;
+        justify-content: center;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        border: none;
+        border-radius: 5px;
     }
 </style>
 <link rel=stylesheet href="{{ asset('css/kanban/jkanban.min.css') }}" type="text/css">
@@ -157,11 +279,14 @@
             <!-- Modal Header -->
             <div class="modal-header">
                 <h4 id="modal-title" class="modal-title">Modal Heading</h4>
+                <p id="idTaks" style="display: none;">
+                    Contenido del div invisible
+                </p>
                 <button type="button" class="close" data-dismiss="modal">×</button>
             </div>
             <!-- Modal body -->
             <div class="modal-body">
-                <div class="row">
+                <div class="row" style="padding-top: 25px;">
                     <div class="col-sm-8">
                         <form>
                             <div class="form-group">
@@ -177,31 +302,34 @@
                                     <label for="descriptionLabel">Descripción</label>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-sm-8">
-                                    <div class="form-group anima-focus">
-                                        <input type="date" min="1945-01-01" class="form-control" id="inicio"
-                                            name="inicio">
-                                        <label for="inicio"> Inicio <span class="text-danger">*</span></label>
-                                        <small class="p-0 m-0 text-xs error_inicio errores text-danger"></small>
+                            <div class="container" style="padding-top: 10px;">
+                                <div class="row">
+                                    <div class="col-sm" style="padding-left: inherit !important">
+                                        <div class="form-group anima-focus">
+                                            <input type="date" min="1945-01-01" class="form-control" id="inicio"
+                                                name="inicio">
+                                            <label for="inicio"> Inicio <span class="text-danger">*</span></label>
+                                            <small class="p-0 m-0 text-xs error_inicio errores text-danger"></small>
+                                        </div>
                                     </div>
-
-                                    <div class="form-group anima-focus">
-                                        <input type="date" min="1945-01-01" class="form-control" id="fin"
-                                            name="fin">
-                                        <label for="fin"> Fin <span class="text-danger">*</span></label>
-                                        <small class="p-0 m-0 text-xs error_fin errores text-danger"></small>
+                                    <div class="col-sm">
+                                        <div class="form-group anima-focus">
+                                            <input type="date" min="1945-01-01" class="form-control" id="fin"
+                                                name="fin">
+                                            <label for="fin"> Fin <span class="text-danger">*</span></label>
+                                            <small class="p-0 m-0 text-xs error_fin errores text-danger"></small>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group anima-focus">
-                                        <input type="text" class="form-control" id="diasLabel" name="diasLabel"
-                                            placeholder="">
-                                        <label for="diasLabel"> Dias <span class="text-danger">*</span></label>
+                                    <div class="col-sm" style="padding-right: 0px;">
+                                        <div class="form-group anima-focus">
+                                            <input type="text" class="form-control" id="diasLabel" name="diasLabel"
+                                                placeholder="">
+                                            <label for="diasLabel"> Dias <span class="text-danger">*</span></label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row" style="padding-top: 10px;">
                                 <div class="col-8">
                                     <div class="form-group anima-focus">
                                         <select required class="form-control" name="estatusSelect" id="estatusSelect">
@@ -225,7 +353,7 @@
                         </form>
                     </div>
                     <div class="col-sm-4">
-                        <div class="dropdownBtn" style="padding-bottom: 30px;">
+                        <div class="dropdownBtn" style="padding-bottom: 20px;">
                             <button onclick="dropEtiquetas()" class="dropbtn">
                                 <img class="addSVG" src="{{ asset('img/plan-trabajo/add.svg') }}">
                                 <span>Etiquetas</span>
@@ -236,34 +364,40 @@
                                 </div>
                                 <ul class="checkbox-list">
                                     <li class="etiquetasLista color1">
-                                        <input type="checkbox" name="etiqueta1" />
+                                        <input type="checkbox" name="etiqueta1" value="#C2DCFE"
+                                            class="checkboxp1" />
                                         <div></div>
                                     </li>
                                     <li class="etiquetasLista color2">
-                                        <input type="checkbox" name="etiqueta2" />
+                                        <input type="checkbox" name="etiqueta2" value="#DEC2FE"
+                                            class="checkboxp1" />
                                         <div></div>
                                     </li>
                                     <li class="etiquetasLista color3">
-                                        <input type="checkbox" name="etiqueta3" />
+                                        <input type="checkbox" name="etiqueta3" value="#CAEFC0"
+                                            class="checkboxp1" />
                                         <div></div>
                                     </li>
                                     <li class="etiquetasLista color4">
-                                        <input type="checkbox" name="etiqueta4" />
+                                        <input type="checkbox" name="etiqueta4" value="#EFC0C0"
+                                            class="checkboxp1" />
                                         <div></div>
                                     </li>
                                     <li class="etiquetasLista color5">
-                                        <input type="checkbox" name="etiqueta5" />
+                                        <input type="checkbox" name="etiqueta5" value="#FFD1F7"
+                                            class="checkboxp1" />
                                         <div></div>
                                     </li>
                                     <li class="etiquetasLista color6">
-                                        <input type="checkbox" name="etiqueta6" />
+                                        <input type="checkbox" name="etiqueta6" value="#FFECAF"
+                                            class="checkboxp1" />
                                         <div></div>
                                     </li>
                                 </ul>
                             </div>
                         </div>
 
-                        <div class="dropdownBtn">
+                        <div class="dropdownBtn" style="padding-bottom: 20px;">
                             <button onclick="dropAdjuntar()" class="dropbtn">
                                 <img class="addSVG" src="{{ asset('img/plan-trabajo/attach.svg') }}">
                                 <span>Adjuntar</span>
@@ -273,14 +407,12 @@
                                     <p>Carga de archivos</p>
                                 </div>
                                 <p class="txtSub">Adjunta un archivo de tu computadora</p>
-                                <button class="buttonArchivo">Selecciona el archivo</button>
-                                <ul>
-                                    <li>archivo 1</li>
-                                </ul>
+                                <input type="file" id="fileInput" multiple>
+                                <ul id="listaArchivos" class="listaarchivos"></ul>
                             </div>
                         </div>
 
-                        <div class="dropdownBtn">
+                        <div class="dropdownBtn" style="padding-bottom: 20px;">
                             <button onclick="dropPersonas()" class="dropbtn">
                                 <img class="addSVG" src="{{ asset('img/plan-trabajo/account.svg') }}">
                                 <span>Etiquetas</span>
@@ -312,29 +444,61 @@
                                     </div>
                                 </div>
                                 <p class="txtSub">Participantes agregados</p>
-                                <ul>
-                                    <li>archivo 1</li>
-                                </ul>
+                                <div class="assigned-to" id="personasAsignadas"></div>
                             </div>
                         </div>
+                        <div class="dropdownBtn">
+                            <button onclick="dropguardar()" class="dropbtn">
+                                <img class="addSVG" src="{{ asset('img/plan-trabajo/save.svg') }}">
+                                <span>Guardar</span>
+                            </button>
+                        </div>
                     </div>
-
                 </div>
                 <div>
-                    <p>Participantes</p>
+                    <h6 class="textcomplement">Participantes</h6>
                     <div class="assigned-to" id="imagenesParticipantes"></div>
                 </div>
                 <div>
-                    <p>Etiquetas</p>
+                    <h6 class="textcomplement">Etiquetas</h6>
+                    <div id="circle-container"></div>
                 </div>
                 <div>
-                    <p>Adjuntos</p>
+                    <h6 class="textcomplement">Adjuntos</h6>
                 </div>
                 <div>
-                    <p>Sub tareas</p>
+                    <h6 class="textcomplement" style="border-bottom: 1px dashed #0000001C;">Sub tareas</h6>
+                    <div>
+                        <div id="task-container">
+                            <div class="progress-container">
+                                <div class="progress-bar"></div>
+                            </div>
+                            <ul id="task-list"></ul>
+                        </div>
+                        <div id="task-add">
+                            <input type="text" id="task-input" placeholder="Ingrese una tarea">
+                            <button onclick="addTask()">Agregar Tarea</button>
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    <p>Log</p>
+                <div class="container">
+                    <div class="row" style="border-bottom: 1px dashed #0000001C;">
+                        <div class="col"
+                            style="
+                        justify-content: left;
+                        display: flex;">
+                            <h6 class="textcomplement">Log</h6>
+                        </div>
+                        <div class="col"
+                            style="
+                        justify-content: right;
+                        display: flex;">
+                            <button class="butonLog" onclick="toggleCollapse()">Mostrar detalles</button>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <p>This is the content that will be collapsed or expanded.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -345,25 +509,8 @@
 @section('scripts')
     @parent
     <script src="{{ asset('../js/kanban/jkanban.js') }}"></script>
+    <script src="{{ asset('../js/kanban/kanbanFunc.js') }}"></script>
     <script>
-        $(document).ready(function() {
-            //initKanban();
-        });
-
-        function dropEtiquetas() {
-            document.getElementById("drop-Etiquetas").classList.toggle("show");
-        }
-
-        function dropAdjuntar() {
-            document.getElementById("drop-Adjuntar").classList.toggle("show");
-        }
-
-        function dropPersonas() {
-            document.getElementById("drop-Personas").classList.toggle("show");
-        }
-        // Obtener el token CSRF una vez
-        var csrfToken = $('meta[name="csrf-token"]').attr('content');
-
         function initKanban() {
             $.ajax({
                 type: "POST", // Cambiado a GET si es posible
@@ -372,7 +519,7 @@
                 },
                 url: "{{ route('admin.planes-de-accion.loadProject', $planImplementacion) }}",
                 success: function(response) {
-                    renderKanban(response);
+                    renderKanbanNew(response.tasks, response);
                 },
                 error: function(xhr, status, error) {
                     // Manejo de errores
@@ -410,39 +557,19 @@
                 }
             });
         }
+        // Obtener el token CSRF una vez
+        document.getElementById('fileInput').addEventListener('change', manejarSeleccionArchivos);
+        var csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+        let tasksModel = [];
+        let responseLocal = {};
 
         function renderKanbanNew(tasks, response) {
             let progreso = [];
             let grupos = [];
+            responseLocal = response;
+            tasksModel = tasks;
             const modal = new bootstrap.Modal(document.getElementById('myModal'));
-            const mapStatusToColor = {
-                "STATUS_ACTIVE": "#DEEFFF",
-                "STATUS_DONE": "#DEFFE6",
-                "STATUS_FAILED": "#FFDFDF",
-                "STATUS_SUSPENDED": "#EEEEEE",
-                "STATUS_UNDEFINED": "#FFECAF"
-            };
-            const mapStatusToColorText = {
-                "STATUS_ACTIVE": "#0080FF",
-                "STATUS_DONE": "#42A500",
-                "STATUS_FAILED": "#FF5C3A",
-                "STATUS_SUSPENDED": "#818181",
-                "STATUS_UNDEFINED": "#FF9900"
-            };
-            const mapStatusToEstatus = {
-                "STATUS_ACTIVE": "progreso",
-                "STATUS_DONE": "completado",
-                "STATUS_FAILED": "retraso",
-                "STATUS_SUSPENDED": "suspendida",
-                "STATUS_UNDEFINED": "iniciar"
-            };
-            const mapStatusToEstatusText = {
-                "STATUS_ACTIVE": "En proceso",
-                "STATUS_DONE": "Completado",
-                "STATUS_FAILED": "Retrasado",
-                "STATUS_SUSPENDED": "Suspendido",
-                "STATUS_UNDEFINED": "Lista de tareas"
-            };
 
             for (const estado in mapStatusToEstatus) {
                 grupos[mapStatusToEstatus[estado]] = [];
@@ -466,7 +593,7 @@
                 dragBoards: false,
                 click: function(el) {
                     // $("#myModal").modal();
-                    abrirModalConDatos(el.dataset.eid, tasks);
+                    abrirModalConDatos(el.dataset.eid, tasks, response);
                 },
                 context: function(el, e) {
                     console.log("Trigger on all items right-click!");
@@ -579,22 +706,6 @@
                 }
             }
 
-            function timestampToDateString(timestamp) {
-                let date = new Date(timestamp);
-                let day = date.getDate();
-                let month = date.getMonth() + 1;
-                let year = date.getFullYear();
-                if (day < 10) {
-                    day = '0' + day;
-                }
-                if (month < 10) {
-                    month = '0' + month;
-                }
-                let formattedDate = year + '-' + month + '-' + day;
-                console.log(formattedDate);
-                return formattedDate;
-            }
-
             function items(array) {
                 const cards = [];
                 array.forEach(item => {
@@ -635,17 +746,17 @@
                 <div id="resourceIMG"></div>
                 <div id="resourceText">1</div>
               </div>
-            </div>
-            `,
+            </div>`,
                     };
                     cards.push(jsonEvents);
                 });
                 return cards
             }
 
-            function abrirModalConDatos(id, array) {
+            function abrirModalConDatos(id, array, response) {
                 let task;
                 let imagenes = "";
+                let imagenestogle = "";
                 let assigs = [];
                 //se busca el usuario seleccionado
                 for (let i = 0; i < array.length; i++) {
@@ -654,7 +765,10 @@
                     }
                 }
                 //se agregan la simagenes por usuarios agregados
-                assigs = task.assigs;
+                if (task.assigs) {
+                    assigs = task.assigs.map(asignado => response.resources.find(r => Number(r.id) === Number(asignado
+                        .resourceId)));
+                }
                 let filteredAssigs = assigs.filter(a => a != null);
                 filteredAssigs.slice(0, 4).forEach(asignado => {
                     let foto = asignado.foto || (asignado.genero === 'M' ? 'woman.png' : 'usuario_no_cargado.png');
@@ -663,18 +777,53 @@
                             <img class="person-img" title="${asignado.name}" src="{{ asset('storage/empleados/imagenes') }}/${foto}" />
                         </div>`;
                 });
+                let filteredAssigsM = assigs.filter(a => a != null);
+                filteredAssigsM.slice(0, 4).forEach(asignado => {
+                    if (asignado.name) {
+                        let initials = asignado.name.trim().split(' ').map(word => word.charAt(0)).join('')
+                            .toUpperCase();
+                        let color = asignado.genero === 'M' ? 'blue' : 'pink';
+                        imagenestogle =
+                            `<div class="person" style="display: flex; align-items: center; margin-bottom: 5px; margin-left: 20px;">
+                                <div class="initials" style="background-color: ${color}; color: white; border-radius: 50%; width: 45px; height: 45px; display: flex; justify-content: center; align-items: center; margin-right: 5px;">${initials}</div>
+                                <div style="margin-left: 5px; margin-right: auto;">${asignado.name}</div>
+                            </div>`;
+                    }
+                });
 
                 //se agregan parametros por elemento del modal
+                document.getElementById('idTaks').value = `${task.id}`;
                 document.getElementById('modal-title').innerHTML = `${task.name}`;
                 document.getElementById('imagenesParticipantes').innerHTML = `${imagenes}`;
                 document.getElementById('nombreLabel').value = `${task.name}`;
                 document.getElementById('descriptionLabel').value = `${task.description}`;
-                document.getElementById('progresoLabel').value = `${task.progress}`;
+                document.getElementById('progresoLabel').value = `${task.progress}%`;
                 document.getElementById('diasLabel').value = `${task.duration}`;
                 document.getElementById('inicio').value = `${timestampToDateString(task.start)}`;
                 document.getElementById('fin').value = `${timestampToDateString(task.end)}`;
+                document.getElementById('estatusSelect').value = `${mapStatusToEstatusText[task.status]}`;
+                document.getElementById('personasAsignadas').innerHTML = `${imagenestogle}`;
                 // Mostrar el modal
                 modal.show();
+            }
+        }
+
+        function guardarDatosmodal(id, nombre, descripcion, inicio, fin, dias, estatus, progreso) {
+            let taksnew = tasksModel.findIndex(objeto => objeto.id === id);
+            if (taksnew !== -1) {
+                const objet = tasksModel;
+                objet[taksnew].name = nombre;
+                objet[taksnew].progress = progreso.replace('%', '');;
+                objet[taksnew].description = descripcion;
+                objet[taksnew].status = estatus;
+                objet[taksnew].start = inicio;
+                objet[taksnew].end = fin;
+                objet[taksnew].duration = dias;
+                responseLocal.tasks = objet;
+                saveOnServer(responseLocal);
+                location.reload();
+            } else {
+                console.log('No se encontró ningún objeto con el ID dado.');
             }
         }
 
