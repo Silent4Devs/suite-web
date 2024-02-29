@@ -50,63 +50,60 @@ class Ev360ResumenTabla extends Component
 
     public function render()
     {
-        $evaluacion = Evaluacion::select('id', 'nombre')->with('evaluados')->find(intval($this->evaluacion));
+        $evaluacion = Evaluacion::select('id', 'nombre')
+        ->with('evaluados.area')
+        ->find(intval($this->evaluacion));
 
-        $evaluados = $evaluacion->evaluados;
-        $this->lista_evaluados = collect();
-        $calificaciones = collect();
-        $inaceptable = 0;
-        $minimo_aceptable = 0;
-        $aceptable = 0;
-        $sobresaliente = 0;
-        $ev360EvaluacionesController = new EV360EvaluacionesController();
-        foreach ($evaluados as $evaluado) {
-            // $evaluado->load('area');
-            $this->lista_evaluados->push([
+        $this->lista_evaluados = $evaluacion->evaluados->map(function ($evaluado) use ($evaluacion) {
+            $informacion = $this->obtenerInformacionDeLaConsultaPorEvaluado($evaluacion->id, $evaluado->id);
+
+            return [
                 'evaluado' => $evaluado->name,
                 'puesto' => $evaluado->puesto,
                 'area' => $evaluado->area->area,
-                'informacion_evaluacion' => $this->obtenerInformacionDeLaConsultaPorEvaluado($evaluacion->id, $evaluado->id),
-            ]);
-        }
-        // dd($this->lista_evaluados);
-        foreach ($this->lista_evaluados as $evaluado) {
-            if ($evaluado['informacion_evaluacion']['calificacion_final'] <= $this->rangos['inaceptable']) {
-                $inaceptable++;
-            } elseif ($evaluado['informacion_evaluacion']['calificacion_final'] <= $this->rangos['minimo_aceptable']) {
-                $minimo_aceptable++;
-            } elseif ($evaluado['informacion_evaluacion']['calificacion_final'] <= $this->rangos['aceptable']) {
-                $aceptable++;
-            } elseif ($evaluado['informacion_evaluacion']['calificacion_final'] > $this->rangos['sobresaliente']) {
-                $sobresaliente++;
+                'informacion_evaluacion' => $informacion,
+                'calificacion_final' => $informacion['calificacion_final'],
+            ];
+        });
+
+        $calificaciones = $this->lista_evaluados->mapToGroups(function ($evaluado) {
+            $calificacion = $evaluado['calificacion_final'];
+            switch (true) {
+                case $calificacion <= $this->rangos['inaceptable']:
+                    return ['Inaceptable' => 1];
+                case $calificacion <= $this->rangos['minimo_aceptable']:
+                    return ['Mínimo Aceptable' => 1];
+                case $calificacion <= $this->rangos['aceptable']:
+                    return ['Aceptable' => 1];
+                case $calificacion > $this->rangos['sobresaliente']:
+                    return ['Sobresaliente' => 1];
+                default:
+                    return [];
             }
-        }
+        });
 
-        $calificaciones->push([
-            'Inaceptable' => $inaceptable,
-            'Mínimo Aceptable' => $minimo_aceptable,
-            'Aceptable' => $aceptable,
-            'Sobresaliente' => $sobresaliente,
-        ]);
-        $calificaciones = $calificaciones->first();
+        $calificaciones = [
+            'Inaceptable' => $calificaciones->get('Inaceptable', 0),
+            'Mínimo Aceptable' => $calificaciones->get('Mínimo Aceptable', 0),
+            'Aceptable' => $calificaciones->get('Aceptable', 0),
+            'Sobresaliente' => $calificaciones->get('Sobresaliente', 0),
+        ];
 
-        if ($this->search != '') {
-            $collection = $this->lista_evaluados->filter(function ($item) {
+        $collection = $this->lista_evaluados;
+        if ($this->search !== '') {
+            $collection = $collection->filter(function ($item) {
                 return Str::contains(strtolower($item['evaluado']), strtolower($this->search));
             });
-        } else {
-            $collection = $this->lista_evaluados;
         }
+
         $offset = max(0, ($this->page - 1) * $this->perPage);
-        // need one more here so the simple paginatior knows
-        // if there are more pages left
         $items = $collection->slice($offset, $this->perPage + 1);
         $paginator = new Paginator($items, $this->perPage, $this->page);
 
         $this->competencias_evaluadas = Competencia::find($this->obtenerCompetenciasEvaluadasEnLaEvaluacion($evaluacion->id));
         $this->objetivos_evaluados = $this->obtenerCantidadMaximaDeObjetivos($evaluacion->evaluados, $evaluacion->id);
 
-        return view('livewire.ev360-resumen-tabla', ['lista_evaluados', 'calificaciones', 'evaluacion', 'competencias_evaluadas', 'lista' => $collection]);
+        return view('livewire.ev360-resumen-tabla', compact('lista_evaluados', 'calificaciones', 'evaluacion', 'competencias_evaluadas', 'lista'));
     }
 
     // public function paginate($items, $perPage = 5, $page = null, $options = [])
@@ -118,36 +115,28 @@ class Ev360ResumenTabla extends Component
 
     public function obtenerCompetenciasEvaluadasEnLaEvaluacion($evaluacion, $evaluado = 0)
     {
+        $query = EvaluacionRepuesta::where('evaluacion_id', $evaluacion);
         if ($evaluado > 0) {
-            $competencias = EvaluacionRepuesta::where('evaluacion_id', $evaluacion)->where('evaluado_id', $evaluado)->pluck('competencia_id')->unique()->toArray();
-        } else {
-            $competencias = EvaluacionRepuesta::where('evaluacion_id', $evaluacion)->pluck('competencia_id')->unique()->toArray();
+            $query->where('evaluado_id', $evaluado);
         }
-
-        return $competencias;
+        return $query->pluck('competencia_id')->unique()->toArray();
     }
 
     public function obtenerCantidadMaximaDeObjetivos($evaluados, $evaluacion)
     {
         $max = 0;
         foreach ($evaluados as $evaluado) {
-            $objetivos = ObjetivoRespuesta::with('objetivo')
-                ->where('evaluacion_id', $evaluacion)
+            $count = ObjetivoRespuesta::where('evaluacion_id', $evaluacion)
                 ->where('evaluado_id', $evaluado->id)
                 ->where('evaluador_id', $evaluado->id)
-                ->orderBy('id')->get();
-            if ($objetivos->count() > $max) {
-                $max = $objetivos->count();
+                ->count();
+            if ($count > $max) {
+                $max = $count;
             }
         }
-
         return $max;
-        // $competencias = DB::table('ev360_objetivos_calificaciones')->where('evaluacion_id', $evaluacion);
-        // $agrupar_competencias = $competencias->select(DB::raw('count(id) AS total'))->groupBy('evaluado_id')
-        //     ->get();
-
-        // return $agrupar_competencias->max('total');
     }
+
 
     public function obtenerInformacionDeLaConsultaPorEvaluado($evaluacion, $evaluado)
     {
