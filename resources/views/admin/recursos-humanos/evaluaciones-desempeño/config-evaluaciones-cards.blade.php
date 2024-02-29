@@ -42,10 +42,40 @@
 
     <div class="card card-body">
         <div class="text-right">
-            <a href="" class="btn btn-success" style="background-color: #59BB87;">
+            <a href="" class="btn btn-success" style="background-color: #59BB87 !important;">
                 Crear nueva evaluación
                 <i class="fa-solid fa-plus"></i>
             </a>
+        </div>
+
+        <div class="d-flex flex-wrap mt-5" style="gap: 20px; max-width: 1000px; margin: auto;">
+
+            @for ($i=0; $i<10; $i++)
+                <div class="card overflow-hidden m-0" style="width: 230px;">
+                    <div class="card-header text-center position-relative" style="background-color: #fff;">
+                        <span style="color: #0489FE;">28-02-2022</span>
+                        <i class="fa-solid fa-ellipsis-vertical btn-menu-card-evaluaciones"></i>
+                    </div>
+                    <div class="card-body py-1">
+                        <div class="contetn-card-evaluaciones-config">
+                            <p class="mt-2">
+                                <strong>
+                                    Evaluación Trimestral 2022
+                                </strong>
+                            </p>
+                            <p>
+                                <span class="estatus-card-evaluaciones-config" style="background-color: #039C55;">En curso</span>
+                            </p>
+                            <p>
+                                <small>
+                                    <strong>Público: Desarrollo</strong>
+                                </small>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            @endfor
+
         </div>
     </div>
 @endsection

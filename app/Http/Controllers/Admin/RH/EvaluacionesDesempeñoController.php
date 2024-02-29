@@ -25,4 +25,9 @@ class EvaluacionesDesempeñoController extends Controller
     {
         return view('admin.recursos-humanos.evaluaciones-desempeño.config-evaluaciones-cards');
     }
+
+    public function createEvaluacion()
+    {
+        return view('admin.recursos-humanos.evaluaciones-desempeño.create-evaluacion');
+    }
 }
