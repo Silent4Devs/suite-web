@@ -496,8 +496,8 @@
                             <button class="butonLog" onclick="toggleCollapse()">Mostrar detalles</button>
                         </div>
                     </div>
-                    <div class="content">
-                        <p>This is the content that will be collapsed or expanded.</p>
+                    <div id="logHistorico" class="content">
+
                     </div>
                 </div>
             </div>
@@ -670,7 +670,7 @@
                     const objet = tasks;
                     objet[objetoEncontrado].status = statusFinal;
                     response.tasks = objet;
-                    insertHistorico(statusInicial, statusFinal);
+                    insertHistorico(statusInicial, statusFinal, objet[objetoEncontrado])
                     saveOnServer(response);
                 } else {
                     console.log('No se encontró ningún objeto con el ID dado.');
@@ -678,17 +678,22 @@
 
             }
 
-            function insertHistorico(statusInicial, statusFinal) {
+            function insertHistorico(statusInicial, statusFinal, history) {
+                const timestamp = new Date().getTime();
                 const historicoNuevo = {
                     "initialstatus": statusInicial,
                     "finestatus": statusFinal,
-                    "edito": "marti"
+                    "fecha": timestamp,
+                    "edito": "asdasd"
                 };
 
                 if ('historic' in response) {
-                    response.tasks.historic.push(historicoNuevo);
+                    history.historic.push(historicoNuevo);
                 } else {
-                    response.tasks.historic = [historicoNuevo];
+                    if (!history.historic) {
+                        history.historic = [];
+                    }
+                    history.historic.push(historicoNuevo);
                 }
             }
 
@@ -758,6 +763,7 @@
                 let imagenes = "";
                 let imagenestogle = "";
                 let assigs = [];
+                let history = [];
                 //se busca el usuario seleccionado
                 for (let i = 0; i < array.length; i++) {
                     if (array[i].id === id) {
@@ -791,6 +797,22 @@
                     }
                 });
 
+                var htmlContent = ""; // Inicializamos el contenido HTML vacío
+
+                // Verificamos si task.historic existe y tiene elementos
+                if (task.historic && task.historic.length > 0) {
+                    htmlContent += "<ul>";
+                    // Iteramos sobre cada elemento del arreglo historic
+                    task.historic.forEach(function(item) {
+                        htmlContent += "<li>Initial Status: " + mapStatusToEstatusText[item.initialstatus] + ", Final Status: " + mapStatusToEstatusText[item
+                            .finestatus] + ", Fecha: " + item.fecha + ", Edito: " + item.edito + "</li>";
+                    });
+                    htmlContent += "</ul>";
+                } else {
+                    // Si no existe o está vacío historic, mostramos un mensaje
+                    htmlContent = "<span>No tiene historial</span>";
+                }
+
                 //se agregan parametros por elemento del modal
                 document.getElementById('idTaks').value = `${task.id}`;
                 document.getElementById('modal-title').innerHTML = `${task.name}`;
@@ -803,6 +825,7 @@
                 document.getElementById('fin').value = `${timestampToDateString(task.end)}`;
                 document.getElementById('estatusSelect').value = `${mapStatusToEstatusText[task.status]}`;
                 document.getElementById('personasAsignadas').innerHTML = `${imagenestogle}`;
+                document.getElementById('logHistorico').innerHTML = `${htmlContent}`;
                 // Mostrar el modal
                 modal.show();
             }
