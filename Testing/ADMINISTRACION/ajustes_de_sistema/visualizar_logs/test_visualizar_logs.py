@@ -39,7 +39,7 @@ def login (driver):
     time.sleep(5)
 
     # Ingresar credenciales
-    usuario = driver.find_element(By.XPATH, "//input[contains(@name,'email')]").send_keys("admin@admin.com")
+    usuario = driver.find_element(By.XPATH, "//input[contains(@name,'email')]").send_keys("admi 1n@admin.com")
     print("Introduciendo Correo")
     time.sleep(tiempo_modulos)
     password = driver.find_element(By.XPATH, "//input[contains(@name,'password')]").send_keys("#S3cur3P4$$w0Rd!")
