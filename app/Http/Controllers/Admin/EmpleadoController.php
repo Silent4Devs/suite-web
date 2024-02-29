@@ -1318,6 +1318,7 @@ class EmpleadoController extends Controller
                     ->select('empleados.id', 'empleados.name', 'empleados.email', 'empleados.puesto', 'areas.area')
                     ->leftJoin('areas', 'empleados.area_id', '=', 'areas.id')
                     ->where('empleados.name', 'ILIKE', '%' . $nombre . '%')
+                    ->where('empleados.estatus', 'alta')
                     ->get();
 
                 return compact('usuarios');
