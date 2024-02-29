@@ -144,12 +144,13 @@ class ProcesoController extends Controller
     {
         $proceso = Proceso::find($id);
 
-        if (!$proceso) {
+        if (! $proceso) {
             return response()->json(['success' => false, 'message' => 'El proceso no existe.']);
         }
 
         try {
             $proceso->delete();
+
             return response()->json(['success' => true, 'message' => 'El proceso ha sido eliminado.']);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => 'No se pudo eliminar el proceso debido a relaciones existentes.']);

@@ -1,5 +1,13 @@
 <div>
     <style>
+        .your-custom-alert-class {
+            /* Your custom styles here */
+            /* For example: */
+            font-size: 18px;
+            width: 300px;
+            height: 300px;
+        }
+
         .alerta-error {
             font-size: 13px;
             padding: 5px;
@@ -1204,6 +1212,9 @@
                                                 <li>{{ $eSinCompetencias }}</li>
                                             @endforeach
                                         </ul>
+                                        <button type="button" class="btn btn-outline-primary" onclick="openNewTab()"
+                                            wire:click="redirigirCompetencias">Asignar Competencias
+                                        </button>
                                     </div>
                                 @endif
                                 <div class="px-1 py-2 mb-3 rounded shadow-sm"
@@ -1317,8 +1328,10 @@
                     @if ($currentStep == 4)
                         {{-- <button type="submit" class="btn btn-md btn-danger"><i
                                 class="mr-2 fab fa-firstdraft"></i>Draft</button> --}}
-                        <button type="button" wire:click="activateEvaluation" class="btn btn-md btn-danger"><i
-                                class="mr-2 fas fa-paper-plane"></i>Activar</button>
+                        @if ($bloquear_evaluacion == false)
+                            <button type="button" wire:click="activateEvaluation" class="btn btn-md btn-danger"><i
+                                    class="mr-2 fas fa-paper-plane"></i>Activar</button>
+                        @endif
                     @endif
                     @if ($currentStep == 5)
                         <a type="button" href="{{ route('admin.ev360-evaluaciones.index') }}"
@@ -1469,4 +1482,10 @@
         }());
     </script>
 
+    <script>
+        function openNewTab() {
+            var url = "{{ route('admin.ev360-competencias-por-puesto.index') }}"; // Replace with the actual route name
+            window.open(url, '_blank');
+        }
+    </script>
 </div>

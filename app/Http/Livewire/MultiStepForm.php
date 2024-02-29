@@ -21,11 +21,13 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class MultiStepForm extends Component
 {
+    use LivewireAlert;
     //TABLA
     use WithPagination;
 
@@ -113,12 +115,15 @@ class MultiStepForm extends Component
     public $totalEmpleadosSinCompetencias = 0;
 
     public $listaEmpleadosSinCompetencias;
+    // public $listaIDSinCompetencias;
 
     public $totalSteps = 5;
 
     public $currentStep = 1;
 
     public $hoy;
+
+    public $bloquear_evaluacion = true;
 
     public function mount()
     {
@@ -207,24 +212,53 @@ class MultiStepForm extends Component
         $this->currentStep++;
         if ($this->currentStep == 3) {
             $this->listaEvaluados = $this->obtenerEvaluadosConEvaluadores($this->evaluados_objetivo);
-            // dd($this->evaluados_objetivo);
         }
         if ($this->currentStep == 4) {
             $this->listaEmpleadosSinCompetencias = collect();
+            // $this->listaIDSinCompetencias = collect();
             $this->totalEmpleadosSinCompetencias = 0;
             $this->hayEmpleadosSinCompetencias = false;
             foreach ($this->listaEvaluados as $evaluadoL) {
                 if ($evaluadoL['evaluado']['competencias_asignadas'] == 0) {
+                    // dd($evaluadoL['evaluado']['id']);
                     $this->hayEmpleadosSinCompetencias = true;
                     $this->totalEmpleadosSinCompetencias++;
                     $this->listaEmpleadosSinCompetencias->push($evaluadoL['evaluado']['name']);
+                    // $this->listaIDSinCompetencias->push($evaluadoL['evaluado']['id']);
                 }
+            }
+
+            if ($this->totalEmpleadosSinCompetencias > 0) {
+                $this->alert('warning', 'Sin Competencias', [
+                    'position' => 'center',
+                    'timer' => '600000',
+                    'toast' => false,
+                    'text' => 'Existen colaboradores sin competencias asignadas, no podra crear la evaluación si los colaboradores no tienen competencias para evaluar',
+                    'showConfirmButton' => true,
+                    'onConfirmed' => '',
+                    'confirmButtonText' => 'Confirmar',
+                    'timerProgressBar' => true,
+                ]);
+            } else {
+                $this->bloquear_evaluacion = false;
             }
         }
 
         if ($this->currentStep > $this->totalSteps) {
             $this->currentStep = $this->totalSteps;
         }
+    }
+
+    public function redirigirCompetencias()
+    {
+        // $this->emit('openNewTab', ['url' => route('admin.ev360-competencias-por-puesto.index')]);
+
+        // Define the URL you want to redirect to
+        // $url = route('admin.ev360-competencias-por-puesto.index');
+        // $this->dispatchBrowserEvent('openNewTab', ['url' => $url]);
+
+        $this->decreaseStep();
+        // $this->openNewTab();
     }
 
     public function decreaseStep()
@@ -679,15 +713,18 @@ class MultiStepForm extends Component
         }
         // dd($empleado->objetivos);
         $objetivos = [];
-
+        // dump($empleado);
         if ($includeObjetivos) {
             foreach ($empleado->objetivos as $obj) {
-                if ($obj->objetivo->esta_aprobado == Objetivo::APROBADO) {
+                // dump($obj->objetivo->esta_aprobado);
+                if (intval($obj->objetivo->esta_aprobado) == Objetivo::APROBADO) {
+                    // dd('entra');
                     $objetivos[] = $obj->objetivo_id;
                 }
+                // dd($objetivos, gettype(intval($obj->objetivo->esta_aprobado)), gettype(Objetivo::APROBADO));
             }
             // dd('Aprobado');
-
+            // dump($objetivos);
             if (!empty($objetivos)) {
                 $objetivoIds = $objetivos;
                 $evaluadores_objetivos = $evaluadores_objetivos->unique('id')->toArray();
@@ -711,7 +748,8 @@ class MultiStepForm extends Component
                 // dd($objetivoRespuestas);
 
                 // Batch insert objetivo respuestas
-                ObjetivoRespuesta::insert($objetivoRespuestas);
+                $BATCH = ObjetivoRespuesta::insert($objetivoRespuestas);
+                // dd($BATCH);
             }
         }
     }
@@ -862,4 +900,32 @@ class MultiStepForm extends Component
 
         return $evaluadosEvaluadores;
     }
+
+    // public function repetirConsulta()
+    // {
+    //     // dd($this->listaEmpleadosSinCompetencias, $this->listaIDSinCompetencias);
+    //     foreach ($this->listaIDSinCompetencias as $IDsinComp) {
+
+    //         $rev_emp_comp = Empleado::select(
+    //             'id',
+    //             'name',
+    //             'area_id',
+    //             'puesto_id',
+    //         )->with(['area:id,area', 'puestoRelacionado:id,puesto'])
+    //             ->where('estatus', 'alta')
+    //             ->whereNull('deleted_at')
+    //             ->where('empleados.id', $IDsinComp)
+    //             ->first();
+    //         // dd($IDsinComp, $rev_emp_comp->competencias_asignadas);
+    //         // dd($this->totalEmpleadosSinCompetencias, $this->listaEmpleadosSinCompetencias);
+    //         if ($rev_emp_comp->competencias_asignadas > 0) {
+    //             dd('entra');
+    //             // Remove $rev_emp_comp from $this->listaEmpleadosSinCompetencias
+    //             $this->listaEmpleadosSinCompetencias = $this->listaEmpleadosSinCompetencias->reject(function ($item) use ($rev_emp_comp) {
+    //                 return $item->id === $rev_emp_comp->name;
+    //             });
+    //             $this->totalEmpleadosSinCompetencias--;
+    //         }
+    //     }
+    // }
 }

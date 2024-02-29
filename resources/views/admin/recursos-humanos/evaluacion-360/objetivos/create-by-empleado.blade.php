@@ -119,7 +119,7 @@
         </form>
     </div>
 
-        <div class="modal fade" id="objetivoModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+    <div class="modal fade" id="objetivoModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
         aria-labelledby="objetivoModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -202,6 +202,7 @@
             let dtButtons = [];
             let empleado = @json($empleado);
             let auth = @json(Auth::user()->empleado);
+            let permiso = @json($permiso);
             let supervisor = @json($empleado->supervisor);
             let dtOverrideGlobals = {
                 buttons: dtButtons,
@@ -264,7 +265,7 @@
                                 </div>
                                 `;
                             if (row.objetivo.esta_aprobado == 0) {
-                                if (auth.id == supervisor.id) {
+                                if (auth.id == supervisor.id || permiso == true) {
                                     botones +=
                                         `<div class="col-12">
                                         <button onclick="event.preventDefault();aprobarObjetivoEstrategico(${row.objetivo_id},${row.empleado_id},true);" class="btn btn-small text-success"><i class="fa-solid fa-thumbs-up"></i></button>

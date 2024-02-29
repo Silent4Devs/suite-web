@@ -452,8 +452,9 @@
             <div class="form-group col-md-4">
                 <label for="no_contrato" class="txt-tamaño">
                     &nbsp;No. Pagos<font class="asterisco">*</font></label><br>
-                <input type="number" name="no_pagos" id="no_pagos" class="form-control required" min="1"
-                    max="10000">
+                    <input type="text"  name="no_pagos" id="no_pagos" pattern="[0-9]+" title="Por favor, ingrese solo números enteros."
+                    class="model-cantidad browser-default" required>
+        
                 {{-- {!! Form::number('no_pagos', null, ['class' => 'form-control', 'required'], ['min' => "1"] ) !!} --}}
                 @if ($errors->has('no_pagos'))
                     <div class="invalid-feedback red-text">

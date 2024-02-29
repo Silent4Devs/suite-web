@@ -79,7 +79,7 @@ class AnalisisBrechaController extends Controller
 
                 $cuentas = $gapunoPorc->GAPTotal($porcentajeGap1, $porcentajeGap2['Avance'], $porcentajeGap3['porcentaje']);
 
-                return $cuentas . '%' ? $cuentas . '%' : '';
+                return $cuentas.'%' ? $cuentas.'%' : '';
             });
 
             $table->editColumn('elaboro', function ($row) {
@@ -154,7 +154,7 @@ class AnalisisBrechaController extends Controller
 
         $analisisBrecha = AnalisisBrecha::find($id);
 
-        if (!$analisisBrecha) {
+        if (! $analisisBrecha) {
             return redirect()->route('admin.analisisdebrechas-2022.index')->with('error', 'No existe el registro.');
         }
 
@@ -196,7 +196,7 @@ class AnalisisBrechaController extends Controller
 
         $analisisBrecha = AnalisisBrecha::find($id);
 
-        if (!$analisisBrecha) {
+        if (! $analisisBrecha) {
             return redirect()->route('admin.analisisdebrechas-2022.index')->with('error', 'No existe el registro.');
         }
 

@@ -16,7 +16,6 @@ use App\Models\ContractManager\Sucursal as KatbolSucursal;
 use App\Models\Organizacion;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Redirect;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -174,6 +173,7 @@ class RequisicionesCreateComponent extends Component
         $prove_count = 0;
         $this->provedores_colllection = collect();
 
+
         for ($i = 0; $i <= $this->proveedores_count; $i++) {
             if (isset($data['proveedor_' . $i])) {
                 if ($this->selectedInput[$prove_count] === 'otro') {
@@ -224,6 +224,7 @@ class RequisicionesCreateComponent extends Component
 
                         $this->disabled = 'disabled';
                     } else {
+                        dd('saul');
                         $this->provedores_indistinto_catalogo = collect();
                         $this->provedores_indistinto_catalogo = KatbolProveedorIndistinto::create([
                             'requisicion_id' => $this->nueva_requisicion->id,
