@@ -232,7 +232,6 @@
                         @else
                             La fecha de inicio no está disponible.
                         @endisset
-
                     </div>
                     <div class="col s12 l4">
                         <strong>Fecha Fin:</strong><br><br>

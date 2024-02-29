@@ -238,11 +238,11 @@
                         </div>
 
                         <div class="col s12 l4">
-                            <strong> Fecha Inicio: </strong> <br> <br>
+                            <strong> Fecha fin: </strong> <br> <br>
                             @isset($proveedor_indistinto->fecha_fin)
                                 {{ date('d-m-Y', strtotime($proveedor_indistinto->fecha_fin)) }}
                             @else
-                                La fecha  fin no está disponible.
+                                La fecha fin no está disponible.
                             @endisset
                         </div>
                         
