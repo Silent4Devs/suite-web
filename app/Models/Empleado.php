@@ -268,6 +268,18 @@ class Empleado extends Model implements Auditable
         });
     }
 
+    public static function getAllDataObjetivosEmpleado()
+    {
+        return Cache::remember('Empleados:empleados_all_objetivos_empleado', 3600 * 6, function () {
+            return self::alta()->select('id', 'name', 'foto', 'area_id', 'puesto_id', 'supervisor_id')
+                ->with(['objetivos' => function ($q) {
+                    $q->with(['objetivo' => function ($query) {
+                        $query->with(['tipo', 'metrica']);
+                    }]);
+                }])->get();
+        });
+    }
+
     public static function getaltaAllWithAreaObjetivoPerfil()
     {
         return Cache::remember('Empleados:empleados_alta_all_area', 3600 * 6, function () {
