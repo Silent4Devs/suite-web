@@ -29,6 +29,11 @@
                                                                                                                                                                                                                                                                                                                                                                                                                 }*/
     </style>
 
+    @if (session('mensajeError'))
+    <div class="alert alert-danger">
+        {{ session('mensajeError') }}
+    </div>
+    @endif
     {{-- {{ Breadcrumbs::render('contratos_edit', $contrato) }} --}}
     @include('admin.bitacora.formedit', ['show_contrato' => false])
 
