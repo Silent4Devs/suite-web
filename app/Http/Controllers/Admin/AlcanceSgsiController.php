@@ -38,7 +38,7 @@ class AlcanceSgsiController extends Controller
         $alcanceSgsi = AlcanceSgsi::get(); // Puedes ajustar esto según tu lógica
 
         if ($request->ajax()) {
-            $query = AlcanceSgsi::select(sprintf('%s.*', (new AlcanceSgsi)->table))->orderByDesc('id');
+            $query = AlcanceSgsi::orderByDesc('id')->get();
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');

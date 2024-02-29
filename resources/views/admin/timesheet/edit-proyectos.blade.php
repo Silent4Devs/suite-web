@@ -144,7 +144,7 @@
                         {!! Form::label('tipo', 'Tipo', ['class' => 'asterisco']) !!}
                     </div>
                     <div class="form-group col-md-4 anima-focus">
-                        <input type="number" min="0" name="horas_proyecto" id="horas_asignadas" class="form-control"
+                        <input type="text" pattern="[0-9]+" title="Por favor, ingrese solo números enteros." name="horas_proyecto" placeholder="" id="horas_asignadas" class="form-control"
                             value="{{ old('horas_proyecto', $proyecto->horas_proyecto, '') }}">
                         {!! Form::label('horas_proyecto', 'Horas Asignadas al proyecto', ['class' => 'asterisco']) !!}
                     </div>
