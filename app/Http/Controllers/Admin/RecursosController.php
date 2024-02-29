@@ -110,7 +110,7 @@ class RecursosController extends Controller
     {
         abort_if(Gate::denies('capacitaciones_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $categorias = CategoriaCapacitacion::orderByDesc('id')->get();
+        $categorias = CategoriaCapacitacion::getAll();
 
         $recurso = new Recurso;
 

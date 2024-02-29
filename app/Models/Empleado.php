@@ -7,6 +7,7 @@ use App\Models\Iso27\DeclaracionAplicabilidadResponsableIso;
 use App\Models\RH\BeneficiariosEmpleado;
 use App\Models\RH\ContactosEmergenciaEmpleado;
 use App\Models\RH\DependientesEconomicosEmpleados;
+use App\Models\RH\Objetivo;
 use App\Traits\ClearsResponseCache;
 use Carbon\Carbon;
 use DateTime;
@@ -87,7 +88,7 @@ class Empleado extends Model implements Auditable
     //protected $with = ['children:id,name,foto,puesto as title,area,supervisor_id']; //Se desborda la memoria al entrar en un bucle infinito se opto por utilizar eager loading
     protected $appends = [
         'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
-        'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'es_supervisor', 'fecha_min_timesheet',
+        'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet',
     ];
 
     protected $with = ['area', 'supervisor'];
@@ -212,7 +213,7 @@ class Empleado extends Model implements Auditable
     public static function getEmpleadoCurriculum($id)
     {
         return
-            Cache::remember('Empleados:EmpleadoCurriculum_'.$id, 3600 * 8, function () use ($id) {
+            Cache::remember('Empleados:EmpleadoCurriculum_' . $id, 3600 * 8, function () use ($id) {
                 return self::alta()->with('empleado_certificaciones', 'empleado_cursos', 'empleado_experiencia')->findOrFail($id);
             });
     }
@@ -245,32 +246,6 @@ class Empleado extends Model implements Auditable
             return self::with('area')->alta()->orderBy('name')->get();
         });
     }
-
-    // public static function getAltaEmpleadosEvaluaciones()
-    // {
-    //     return Cache::remember('Empleados:empleados_alta', 3600 * 8, function () {
-    //         DB::table('empleados')
-    //             ->select('empleados.id', 'empleados.name', 'empleados.email', 'empleados.area_id', 'empleados.puesto_id')
-    //             ->join('areas', 'empleados.area_id', '=', 'areas.id')
-    //             ->join('puestos', 'empleados.puesto_id', '=', 'puestos.id')
-    //             ->select(
-    //                 'empleados.id',
-    //                 'empleados.name',
-    //                 'empleados.email',
-    //                 'empleados.area_id',
-    //                 'empleados.puesto_id',
-    //                 'areas.id as area_id',
-    //                 'areas.area',
-    //                 'puestos.id as puesto_id',
-    //                 'puestos.puesto'
-    //             )
-    //             ->where('empleados.estatus', 'alta')
-    //             ->whereNull('empleados.deleted_at')
-    //             // ->where('empleados.area_id', $evaluados_area)
-    //             ->pluck('empleados.id')
-    //             ->toArray();
-    //     });
-    // }
 
     public static function getSelectEmpleadosWithArea()
     {
@@ -321,22 +296,6 @@ class Empleado extends Model implements Auditable
         });
     }
 
-    // public static function getaltaAllEvaluacionesObjetivoSupervisorChildren()
-    // {
-    //     return Cache::remember('Empleados:empleados_alta_all_evaluaciones', 3600 * 6, function () {
-    //         return self::select(
-    //             'id',
-    //             'name',
-    //             'area_id',
-    //             'supervisor_id',
-    //             'puesto_id',
-    //         )->with(['objetivos:*', 'children:id,name', 'supervisor:id,name', 'area:id,area', 'puestoRelacionado:id,puesto'])
-    //             ->where('estatus', 'alta')
-    //             ->whereNull('deleted_at')
-    //             ->get();
-    //     });
-    // }
-
     public function TimesheetProyectoEmpleado()
     {
         return $this->hasMany(TimesheetProyectoEmpleado::class, 'empleado_id', 'id');
@@ -372,14 +331,14 @@ class Empleado extends Model implements Auditable
 
     public function getActualBirdthdayAttribute()
     {
-        $birdthday = date('Y').'-'.Carbon::parse($this->cumpleaños)->format('m-d');
+        $birdthday = date('Y') . '-' . Carbon::parse($this->cumpleaños)->format('m-d');
 
         return $birdthday;
     }
 
     public function getActualAniversaryAttribute()
     {
-        $aniversario = date('Y').'-'.Carbon::parse($this->antiguedad)->format('m-d');
+        $aniversario = date('Y') . '-' . Carbon::parse($this->antiguedad)->format('m-d');
 
         return $aniversario;
     }
@@ -465,7 +424,7 @@ class Empleado extends Model implements Auditable
             }
         }
 
-        return asset('storage/empleados/imagenes/'.$this->foto);
+        return asset('storage/empleados/imagenes/' . $this->foto);
     }
 
     public function area()
@@ -507,7 +466,28 @@ class Empleado extends Model implements Auditable
 
     public function getCompetenciasAsignadasAttribute()
     {
-        return ! is_null($this->puestoRelacionado) ? $this->puestoRelacionado->competencias->count() : 0;
+        return !is_null($this->puestoRelacionado) ? $this->puestoRelacionado->competencias->count() : 0;
+    }
+
+    public function getObjetivosAsignadosAttribute()
+    {
+        $cuenta_objetivos = !is_null($this->objetivos) ? $this->objetivos->count() : 0;
+        $objetivos = $this->objetivos;
+
+        $objetivo_pendiente = false;
+
+        if ($cuenta_objetivos > 0) {
+            foreach ($objetivos as $obj) {
+                if ($obj->objetivo->esta_aprobado == Objetivo::SIN_DEFINIR) {
+                    $objetivo_pendiente = true;
+                }
+            }
+        }
+
+        return [
+            'cuenta' => $cuenta_objetivos,
+            'pendientes' => $objetivo_pendiente,
+        ];
     }
 
     public function getFechaMinTimesheetAttribute($value)
