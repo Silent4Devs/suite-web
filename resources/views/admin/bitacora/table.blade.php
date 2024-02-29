@@ -107,6 +107,11 @@
     }
 </style>
 
+@if (session('mensajeError'))
+<div class="alert alert-danger">
+    {{ session('mensajeError') }}
+</div>
+@endif
 <form method="POST" action="{{ route('contract_manager.contratos-katbol.store') }}" enctype="multipart/form-data">
     @csrf
     <div class="card card-content">
@@ -454,7 +459,7 @@
                     &nbsp;No. Pagos<font class="asterisco">*</font></label><br>
                     <input type="text"  name="no_pagos" id="no_pagos" pattern="[0-9]+" title="Por favor, ingrese solo números enteros."
                     class="model-cantidad browser-default" required>
-        
+
                 {{-- {!! Form::number('no_pagos', null, ['class' => 'form-control', 'required'], ['min' => "1"] ) !!} --}}
                 @if ($errors->has('no_pagos'))
                     <div class="invalid-feedback red-text">
