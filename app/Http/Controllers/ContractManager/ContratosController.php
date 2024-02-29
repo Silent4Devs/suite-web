@@ -525,7 +525,7 @@ class ContratosController extends AppBaseController
             return redirect()->route('contract_manager.contratos-katbol.index')->with('error', 'Ocurrio un error.');
         }
 
-        if (strlen($num_contrato) > 255) {
+        if (strlen($request->no_contrato) > 255) {
             $mensajeError = 'Intentelo de nuevo, Ingrese  todos los campos con caracteres menores a 255';
 
             return Redirect::back()->with('mensajeError', $mensajeError);
