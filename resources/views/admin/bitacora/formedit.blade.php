@@ -106,6 +106,12 @@
 
 
 
+@if (session('mensajeError'))
+<div class="alert alert-danger">
+    {{ session('mensajeError') }}
+</div>
+@endif
+
 {{-- <form method="PATH" action="{{ route('contratos.update', $contrato->id) }}" enctype="multipart/form-data"> --}}
 {!! Form::open([
     'route' => ['contract_manager.contratos-katbol.update', $contrato->id],
@@ -486,7 +492,7 @@
                     'pattern' => '[0-9]+', // Aquí agregamos el patrón para permitir solo números enteros
                     $show_contrato ? 'readonly' : '',
                 ]) !!}
-                
+
             @if ($errors->has('no_pagos'))
                 <div class="invalid-feedback red-text">
                     {{ $errors->first('no_pagos') }}

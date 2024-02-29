@@ -81,7 +81,8 @@ class EV360ObjetivosController extends Controller
 
     public function createByEmpleado(Request $request, $empleado)
     {
-        if (User::getCurrentUser()->empleado->id == $empleado) {
+        $user = User::getCurrentUser();
+        if ($user->empleado->id == $empleado) {
             $objetivo = new Objetivo;
             // dd(intval($empleado));
             $empleado = Empleado::select('id', 'name', 'foto', 'area_id', 'puesto_id', 'supervisor_id')->find(intval($empleado));
@@ -101,7 +102,9 @@ class EV360ObjetivosController extends Controller
 
             $empleados = Empleado::getAltaDataColumns();
 
-            return view('admin.recursos-humanos.evaluacion-360.objetivos.create-by-empleado', compact('objetivo', 'tipo_seleccionado', 'metrica_seleccionada', 'empleado', 'empleados'));
+            $permiso = $user->can('aprobacion_objetivos_estrategicos');
+
+            return view('admin.recursos-humanos.evaluacion-360.objetivos.create-by-empleado', compact('objetivo', 'tipo_seleccionado', 'metrica_seleccionada', 'empleado', 'empleados', 'permiso'));
         } else {
             abort_if(Gate::denies('objetivos_estrategicos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
             $objetivo = new Objetivo;
@@ -122,8 +125,10 @@ class EV360ObjetivosController extends Controller
             $metrica_seleccionada = null;
 
             $empleados = Empleado::getAltaDataColumns();
+            $permiso = $user->can('aprobacion_objetivos_estrategicos');
 
-            return view('admin.recursos-humanos.evaluacion-360.objetivos.create-by-empleado', compact('objetivo', 'tipo_seleccionado', 'metrica_seleccionada', 'empleado', 'empleados'));
+            // dd($permiso);
+            return view('admin.recursos-humanos.evaluacion-360.objetivos.create-by-empleado', compact('objetivo', 'tipo_seleccionado', 'metrica_seleccionada', 'empleado', 'empleados', 'permiso'));
         }
     }
 
@@ -142,7 +147,7 @@ class EV360ObjetivosController extends Controller
 
         if ($request->ajax()) {
             $usuario = User::getCurrentUser();
-            if ($empleado->id == $usuario->empleado->id) {
+            if ($empleado->id == $usuario->empleado->id || $usuario->empleado->id != $empleado->supervisor->id) {
                 //add esta_aprobado in $request
                 $request->merge(['esta_aprobado' => Objetivo::SIN_DEFINIR]);
             }
