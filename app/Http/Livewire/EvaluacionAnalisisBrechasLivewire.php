@@ -57,6 +57,10 @@ class EvaluacionAnalisisBrechasLivewire extends Component
         // $analisisBrecha = AnalisisBrechasIso::with('evaluacionTemplateAnalisisBrechas')->find($this->analisisId);
 
         $analisisBrecha = AnalisisBrechasIso::with('evaluacionAnalisisBrechas')->find($this->analisisId);
+
+        if (!$analisisBrecha) {
+            abort(404); // O redirige a una página de error personalizada
+        }
         // dd($analisisBrecha->evaluacionAnalisisBrechas);
 
         $this->itemId = $analisisBrecha->evaluacionAnalisisBrechas->id;
@@ -78,10 +82,10 @@ class EvaluacionAnalisisBrechasLivewire extends Component
                     $this->selectedValues[$pregunta->id]['option1'] = old("selectedValues.{$pregunta->id}.option1", $pregunta->respuesta->parametro->id ?? null);
                     $this->oldSelectedValues[$pregunta->id]['option1'] = $this->selectedValues[$pregunta->id]['option1'];
 
-                    $this->evidenciaValues[$pregunta->id] = old('recomendacionValues.'.$pregunta->id, $pregunta->respuesta->evidencia ?? '');
+                    $this->evidenciaValues[$pregunta->id] = old('recomendacionValues.' . $pregunta->id, $pregunta->respuesta->evidencia ?? '');
                     $this->oldEvidenciaValues[$pregunta->id] = $this->evidenciaValues[$pregunta->id];
 
-                    $this->recomendacionValues[$pregunta->id] = old('recomendacionValues.'.$pregunta->id, $pregunta->respuesta->recomendacion ?? '');
+                    $this->recomendacionValues[$pregunta->id] = old('recomendacionValues.' . $pregunta->id, $pregunta->respuesta->recomendacion ?? '');
                     $this->oldRecomendacionValues[$pregunta->id] = $this->recomendacionValues[$pregunta->id];
                 }
             }
@@ -148,7 +152,6 @@ class EvaluacionAnalisisBrechasLivewire extends Component
 
             $this->emit('renderAreas', $grafica_cuentas, $grafica_colores);
             $this->emit('renderGraficsModal', $this->grafica_cuentas2, $resultskeys);
-
         }
 
         $this->totalAnalisis = $this->porcentajeTotal()[0]['percentage'];
@@ -178,7 +181,10 @@ class EvaluacionAnalisisBrechasLivewire extends Component
             'sectionPercentages',
             'peso_parametros',
             'totalPorcentaje',
-            'organizacion_actual', 'empresa_actual', 'direccion', 'rfc'
+            'organizacion_actual',
+            'empresa_actual',
+            'direccion',
+            'rfc'
         ));
     }
 
@@ -354,7 +360,6 @@ class EvaluacionAnalisisBrechasLivewire extends Component
     public function changeSeccion($newSeccion)
     {
         $this->seccion_vista = $newSeccion;
-
     }
 
     public function saveDataParametros($preguntaID, $parametroID)
@@ -371,7 +376,6 @@ class EvaluacionAnalisisBrechasLivewire extends Component
                 ['parametro_id' => $parametroID], // Values to update or create
             );
         }
-
     }
 
     public function saveEvidencia($preguntaID)
