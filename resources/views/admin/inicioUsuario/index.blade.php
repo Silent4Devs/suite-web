@@ -50,7 +50,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <h3 class="title-user-card">{{ $usuario->empleado->area->area }}</h3>
+                        <h3 class="title-user-card">{{ isset($usuario->empleado->area->area) }}</h3>
                         <span> {{ $usuario->empleado->puesto }}</span>
                         <hr class="my-4">
                         <div class=" caja-info-user-main">
