@@ -1315,8 +1315,9 @@ class EmpleadoController extends Controller
             $nombre = $request->nombre;
             if ($nombre != null) {
                 $usuarios = DB::table('empleados')
-                    ->select('empleados.id', 'empleados.name', 'empleados.email', 'empleados.puesto', 'areas.area')
+                    ->select('empleados.id', 'empleados.name', 'empleados.email', 'empleados.puesto', 'areas.area', 'puestos.puesto as puesto')
                     ->leftJoin('areas', 'empleados.area_id', '=', 'areas.id')
+                    ->leftJoin('puestos', 'empleados.puesto_id', '=', 'puestos.id')
                     ->where('empleados.name', 'ILIKE', '%' . $nombre . '%')
                     ->where('empleados.estatus', 'alta')
                     ->get();
