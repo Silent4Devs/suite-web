@@ -290,30 +290,30 @@ class RequisicionesController extends Controller
     {
         $bandera = true;
         $requisicion = KatbolRequsicion::where('id', $id)->first();
+
+        $user = User::getCurrentUser();
+        $supervisor = User::find($requisicion->id_user)->empleado->supervisor->name;
+        $comprador = KatbolComprador::with('user')->where('id', $requisicion->comprador_id)->first();
+
         if ($requisicion->firma_solicitante === null) {
             $tipo_firma = 'firma_solicitante';
         } elseif ($requisicion->firma_jefe === null) {
-            $user = User::getCurrentUser();
-            $supervisor = User::find($requisicion->id_user)->empleado->supervisor->name;
             if ($supervisor === $user->name) {
                 $tipo_firma = 'firma_jefe';
             } else {
-                return view('contract_manager.requisiciones.error')->with('mensaje', 'No tiene permisos para firmar');
+                return view('contract_manager.requisiciones.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del jefe directo: <br> <strong>'.$supervisor.'</strong>');
             }
         } elseif ($requisicion->firma_finanzas === null) {
-            $user = User::getCurrentUser();
             if ($user->name === 'Lourdes Del Pilar Abadia Velasco' || $user->name === 'Layla Esperanza Delgadillo Aguilar') {
                 $tipo_firma = 'firma_finanzas';
             } else {
-                return view('contract_manager.requisiciones.error')->with('mensaje', 'No tiene permisos para firmar');
+                return view('contract_manager.requisiciones.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera de finanzas');
             }
         } elseif ($requisicion->firma_compras === null) {
-            $user = User::getCurrentUser();
-            $comprador = KatbolComprador::with('user')->where('id', $requisicion->comprador_id)->first();
             if ($comprador->user->name === $user->name) {
                 $tipo_firma = 'firma_compras';
             } else {
-                return view('contract_manager.requisiciones.error')->with('mensaje', 'No tiene permisos para firmar');
+                return view('contract_manager.requisiciones.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>'.$comprador->user->name.'</strong>');
             }
         } else {
             $tipo_firma = 'firma_final_aprobadores';
@@ -322,9 +322,6 @@ class RequisicionesController extends Controller
 
         $organizacion = Organizacion::getFirst();
         $contrato = KatbolContrato::where('id', $requisicion->contrato_id)->first();
-        $comprador = KatbolComprador::with('user')->where('id', $requisicion->comprador_id)->first();
-
-        $supervisor = User::find($requisicion->id_user)->empleado->supervisor->name;
 
         $proveedores_show = KatbolProvedorRequisicionCatalogo::where('requisicion_id', $requisicion->id)->pluck('proveedor_id')->toArray();
 
