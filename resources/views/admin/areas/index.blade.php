@@ -116,16 +116,16 @@
                         form.submit();
                     },
                 },
-                {
-                    extend: 'print',
-                    title: `Áreas ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Imprimir',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    }
-                },
+                // {
+                //     extend: 'print',
+                //     title: `Áreas ${new Date().toLocaleDateString().trim()}`,
+                //     text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
+                //     className: "btn-sm rounded pr-2",
+                //     titleAttr: 'Imprimir',
+                //     exportOptions: {
+                //         columns: ['th:not(:last-child):visible']
+                //     }
+                // },
                 {
                     extend: 'colvis',
                     text: '<i class="fas fa-filter" style="font-size: 1.1rem;"></i>',
