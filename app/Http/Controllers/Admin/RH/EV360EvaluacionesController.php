@@ -854,7 +854,7 @@ class EV360EvaluacionesController extends Controller
         $preguntas_contestadas = EvaluacionRepuesta::where('evaluacion_id', $evaluacion)
             ->where('evaluado_id', $evaluado)
             ->where('evaluador_id', $evaluador)
-            ->where('calificacion', '>', 0)->count();
+            ->where('calificacion', '>=', 0)->count();
         $preguntas_contestadas = $preguntas_contestadas > 0 ? $preguntas_contestadas : 1;
         $total_preguntas = $total_preguntas > 0 ? $total_preguntas : 1;
         $progreso = floatval(number_format((($preguntas_contestadas / $total_preguntas) * 100)));

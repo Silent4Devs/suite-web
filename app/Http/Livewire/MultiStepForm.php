@@ -593,7 +593,9 @@ class MultiStepForm extends Component
 
         $evaluacion = Evaluacion::create($evaluacionData);
 
-        $evaluados_puesto = Empleado::with('puestoRelacionado')->whereIn('id', $evaluados)->get()->pluck('id', 'puestoRelacionado.id')->toArray();
+        $evaluados_puesto = Empleado::whereIn('id', $evaluados)
+            ->pluck('id')
+            ->toArray();
 
         $evaluacion->evaluados()->sync($evaluados_puesto);
 
@@ -771,10 +773,9 @@ class MultiStepForm extends Component
                 EvaluacionRepuesta::insert($evaluacionRespuestas);
             }
         }
-        // dd($empleado->objetivos);
-        $objetivos = [];
-        // dump($empleado);
+
         if ($includeObjetivos) {
+            $objetivos = [];
             foreach ($empleado->objetivos as $obj) {
                 // dump($obj->objetivo->esta_aprobado);
                 if (intval($obj->objetivo->esta_aprobado) == Objetivo::APROBADO) {
@@ -808,7 +809,7 @@ class MultiStepForm extends Component
                 // dd($objetivoRespuestas);
 
                 // Batch insert objetivo respuestas
-                $BATCH = ObjetivoRespuesta::insert($objetivoRespuestas);
+                ObjetivoRespuesta::insert($objetivoRespuestas);
                 // dd($BATCH);
             }
         }
