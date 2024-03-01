@@ -112,18 +112,27 @@ class MultiStepForm extends Component
     public $periodos = [];
 
     public $hayEmpleadosSinCompetencias = false;
+
     public $totalEmpleadosSinCompetencias = 0;
+
     public $listaEmpleadosSinCompetencias;
+
     public $listaIDSinCompetencias;
 
     public $hayEmpleadosSinObjetivos = false;
+
     public $totalEmpleadosSinObjetivos = 0;
+
     public $listaEmpleadosSinObjetivos;
+
     public $listaIDSinObjetivos;
 
     public $hayEmpleadosObjetivosPendiente = false;
+
     public $totalEmpleadosObjetivosPendiente = 0;
+
     public $listaEmpleadosObjetivosPendiente;
+
     public $listaIDObjetivosPendiente;
 
     public $totalSteps = 5;
