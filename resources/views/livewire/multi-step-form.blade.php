@@ -1205,15 +1205,58 @@
                                 </p> --}}
                                 @if ($hayEmpleadosSinCompetencias)
                                     <div class="alert alert-danger" role="alert">
-                                        Existen {{ $totalEmpleadosSinCompetencias }} empleados que no contienen
+                                        Existen {{ $totalEmpleadosSinCompetencias }} colaboradores que no contienen
                                         competencias
                                         <ul>
                                             @foreach ($listaEmpleadosSinCompetencias as $eSinCompetencias)
                                                 <li>{{ $eSinCompetencias }}</li>
                                             @endforeach
                                         </ul>
-                                        <button type="button" class="btn btn-outline-primary" onclick="openNewTab()"
-                                            wire:click="redirigirCompetencias">Asignar Competencias
+                                        <button type="button" class="btn btn-outline-primary"
+                                            onclick="openNewTabCompetencias()">Asignar
+                                            Competencias
+                                        </button>
+                                        <button type="button" class="btn btn-outline-primary"
+                                            wire:click="repetirConsultaCompetencias">
+                                            Validar Competencias de Colaboradores
+                                        </button>
+                                    </div>
+                                @endif
+                                @if ($hayEmpleadosSinObjetivos)
+                                    <div class="alert alert-danger" role="alert">
+                                        Existen {{ $totalEmpleadosSinObjetivos }} colaboradores que no contienen
+                                        objetivos
+                                        <ul>
+                                            @foreach ($listaEmpleadosSinObjetivos as $eSinObjetivo)
+                                                <li>{{ $eSinObjetivo }}</li>
+                                            @endforeach
+                                        </ul>
+                                        <button type="button" class="btn btn-outline-primary"
+                                            onclick="openNewTabObjetivos()">Asignar
+                                            Objetivos
+                                        </button>
+                                        <button type="button" class="btn btn-outline-primary"
+                                            wire:click="repetirConsultaObjetivos">
+                                            Validar Objetivos de Colaboradores
+                                        </button>
+                                    </div>
+                                @endif
+                                @if ($hayEmpleadosObjetivosPendiente)
+                                    <div class="alert alert-danger" role="alert">
+                                        Existen {{ $totalEmpleadosObjetivosPendiente }} colaboradores que tienen
+                                        objetivos pendientes de revisión.
+                                        <ul>
+                                            @foreach ($listaEmpleadosObjetivosPendiente as $eObjetivoPendiente)
+                                                <li>{{ $eObjetivoPendiente }}</li>
+                                            @endforeach
+                                        </ul>
+                                        <button type="button" class="btn btn-outline-primary"
+                                            onclick="openNewTabObjetivos()">Revisar Objetivos
+                                            Pendientes
+                                        </button>
+                                        <button type="button" class="btn btn-outline-primary"
+                                            wire:click="repetirConsultaObjetivosPendientes">
+                                            Revisar Objetivos de Colaboradores
                                         </button>
                                     </div>
                                 @endif
@@ -1483,8 +1526,14 @@
     </script>
 
     <script>
-        function openNewTab() {
+        function openNewTabCompetencias() {
             var url = "{{ route('admin.ev360-competencias-por-puesto.index') }}"; // Replace with the actual route name
+            window.open(url, '_blank');
+        }
+    </script>
+    <script>
+        function openNewTabObjetivos() {
+            var url = "{{ route('admin.ev360-objetivos.index') }}"; // Replace with the actual route name
             window.open(url, '_blank');
         }
     </script>

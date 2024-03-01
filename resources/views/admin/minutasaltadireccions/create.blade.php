@@ -485,7 +485,7 @@
                 let searchValue = $(this).val().trim();
                 let currentRequestNumber = ++currentSearchRequest; // Increment the request number
 
-                if (searchValue === "") {
+                if (searchValue === '') {
                     // Clear or hide suggestions when the search input is empty
                     $("#participantes_sugeridos").hide();
                     return;
@@ -525,7 +525,6 @@
                     }
                 });
             });
-
 
             document.getElementById('btn-suscribir-participante').addEventListener('click', function(e) {
                 e.preventDefault();

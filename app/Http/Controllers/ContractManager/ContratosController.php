@@ -27,6 +27,7 @@ use Carbon\Carbon;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\Response;
@@ -195,26 +196,12 @@ class ContratosController extends AppBaseController
             $num_contrato = $no_contrato_sin_slashes;
         }
 
-        // forma de contrato
-        // $folderPath = storage_path('app/firmas/');
+        if (strlen($num_contrato) > 255) {
+            $mensajeError = 'Intentelo de nuevo, Ingrese  todos los campos con caracteres menores a 255';
 
-        // $image_parts = explode(";base64,", $request->signed);
+            return Redirect::back()->with('mensajeError', $mensajeError);
+        }
 
-        // $image_type_aux = explode("image/", $image_parts[0]);
-
-        // $image_type = $image_type_aux[1];
-
-        // $image_base64 = base64_decode($image_parts[1]);
-
-        // $firma = uniqid() . '.'.$image_type;
-
-        // $file = $folderPath . $firma;
-
-        // file_put_contents($file, $image_base64);
-
-        // dd($firma, $file);
-
-        // dd($this->contratoRepository);
         $contrato = $this->contratoRepository->create([
             'tipo_contrato' => $request->tipo_contrato,
             'identificador_privado' => $request->identificador_privado,
@@ -536,6 +523,12 @@ class ContratosController extends AppBaseController
 
         if (! $contrato) {
             return redirect()->route('contract_manager.contratos-katbol.index')->with('error', 'Ocurrio un error.');
+        }
+
+        if (strlen($request->no_contrato) > 255) {
+            $mensajeError = 'Intentelo de nuevo, Ingrese  todos los campos con caracteres menores a 255';
+
+            return Redirect::back()->with('mensajeError', $mensajeError);
         }
 
         $formatoFecha = new FormatearFecha;

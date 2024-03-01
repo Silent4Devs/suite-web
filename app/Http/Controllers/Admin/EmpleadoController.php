@@ -35,6 +35,7 @@ use Barryvdh\DomPDF\Facade as PDF;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -1313,26 +1314,16 @@ class EmpleadoController extends Controller
         if ($request->ajax()) {
             $nombre = $request->nombre;
             if ($nombre != null) {
-                $usuarios = Empleado::alta()->with('area')->where('name', 'ILIKE', '%'.$nombre.'%')->take(5)->get();
+                $usuarios = DB::table('empleados')
+                    ->select('empleados.id', 'empleados.name', 'empleados.email', 'empleados.puesto', 'areas.area')
+                    ->leftJoin('areas', 'empleados.area_id', '=', 'areas.id')
+                    ->where('empleados.name', 'ILIKE', '%'.$nombre.'%')
+                    ->where('empleados.estatus', 'alta')
+                    ->get();
 
-                // dd(compact('usuarios'));
                 return compact('usuarios');
             }
         }
-        /*
-        if ($request->ajax()) {
-            $nombre = $request->nombre;
-            if ($nombre != null) {
-                $usuarios = Empleado::with('area')->where('name', 'ILIKE', '%' . $nombre . '%')->take(5)->get();
-                $lista = "<ul class='list-group' id='empleados-lista'>";
-                foreach ($usuarios as $usuario) {
-                    $lista .= "<button type='button' class='px-2 py-1 text-muted list-group-item list-group-item-action' onClick='seleccionarUsuario(".$usuario.")' > <i class='mr-2 fas fa-user-circle'></i>" . $usuario->name . '</button>';
-                }
-                $lista .= '</ul>';
-                return $lista;
-            }
-        }
-        */
     }
 
     public function getListaEmpleados(Request $request)
