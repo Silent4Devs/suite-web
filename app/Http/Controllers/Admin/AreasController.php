@@ -201,21 +201,21 @@ class AreasController extends Controller
             });
 
             $image->save($route);
-
-            $area->update([
-                'area' => $request->area,
-                'id_grupo' => $request->id_grupo,
-                'id_reporta' => $request->id_reporta,
-                'descripcion' => $request->descripcion,
-                'empleados_id' => $request->empleados_id,
-                'foto_area' => $new_name_image,
-
-            ]);
         } else {
             $area->update([
                 'foto_area' => null,
             ]);
         }
+
+        $area->update([
+            'area' => $request->area,
+            'id_grupo' => $request->id_grupo,
+            'id_reporta' => $request->id_reporta,
+            'descripcion' => $request->descripcion,
+            'empleados_id' => $request->empleados_id,
+            'foto_area' => $new_name_image ?? null,
+
+        ]);
 
         return redirect()->route('admin.areas.index')->with('success', 'Editado con éxito');
     }
