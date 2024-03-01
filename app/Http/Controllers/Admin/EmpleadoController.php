@@ -1320,6 +1320,7 @@ class EmpleadoController extends Controller
                     ->leftJoin('puestos', 'empleados.puesto_id', '=', 'puestos.id')
                     ->where('empleados.name', 'ILIKE', '%' . $nombre . '%')
                     ->where('empleados.estatus', 'alta')
+                    ->whereNull('empleados.deleted_at')
                     ->get();
 
                 return compact('usuarios');

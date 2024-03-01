@@ -499,16 +499,24 @@
                         $("#cargando_participantes").show();
                     },
                     success: function(data) {
-                        // Check if the response corresponds to the latest search query
-                        if (currentRequestNumber === currentSearchRequest) {
+                    // Check if the response corresponds to the latest search query
+                    if (currentRequestNumber === currentSearchRequest) {
+                        if (data.usuarios.length === 0) {
+                            // No se encontraron usuarios, mostrar un mensaje
+                            let mensaje = "<p>No se encontraron usuarios.</p>";
+                            $("#participantes_sugeridos").html(mensaje);
+                            $("#cargando_participantes").hide();
+                            $("#participantes_sugeridos").show();
+                            $("#participantes_search").css("background", "#FFF");
+                        } else {
                             let lista = "<ul class='list-group id=empleados-lista'>";
                             $.each(data.usuarios, function(ind, usuario) {
                                 var result = `{"id":"${usuario.id}",
-                        "name":"${usuario.name}",
-                        "email":"${usuario.email}",
-                        "puesto":"${usuario.puesto}",
-                        "area":"${usuario.area}"
-                    }`;
+                                    "name":"${usuario.name}",
+                                    "email":"${usuario.email}",
+                                    "puesto":"${usuario.puesto}",
+                                    "area":"${usuario.area}"
+                                }`;
                                 lista +=
                                     "<button type='button' class='px-2 py-1 text-muted list-group-item list-group-item-action' onClick='seleccionarUsuario(" +
                                     result + ")' >" +
@@ -522,6 +530,7 @@
                             sugeridos.innerHTML = lista;
                             $("#participantes_search").css("background", "#FFF");
                         }
+                }
                     }
                 });
             });
