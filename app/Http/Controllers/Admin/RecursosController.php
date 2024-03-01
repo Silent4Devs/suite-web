@@ -22,12 +22,12 @@ use Carbon\Carbon;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
-use Illuminate\Support\Facades\DB;
 
 class RecursosController extends Controller
 {
@@ -79,14 +79,14 @@ class RecursosController extends Controller
                 return $row->instructor ? $row->instructor : '';
             });
             $table->editColumn('certificado', function ($row) {
-                if (!$row->certificado) {
+                if (! $row->certificado) {
                     return '';
                 }
 
                 $links = [];
 
                 foreach ($row->certificado as $media) {
-                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
+                    $links[] = '<a href="'.$media->getUrl().'" target="_blank">'.trans('global.downloadFile').'</a>';
                 }
 
                 return implode(', ', $links);
@@ -114,12 +114,9 @@ class RecursosController extends Controller
 
         $recurso = new Recurso;
 
-
         $areas = DB::table('areas')
             ->leftJoin('empleados', 'areas.id', '=', 'empleados.area_id')
             ->get();
-
-
 
         $grupos = GruposEvaluado::with('empleados:id,name')->get();
 
@@ -128,7 +125,6 @@ class RecursosController extends Controller
             ->orderBy('name')
             ->where('estatus', 'alta')
             ->get();
-
 
         return view('admin.recursos.create', compact('recurso', 'categorias', 'areas', 'grupos', 'empleados'));
     }
@@ -151,7 +147,7 @@ class RecursosController extends Controller
             $limit_date = Carbon::parse($request->fecha_limite)->addDays(5);
             $limit_date->toDateString();
             $request->validate([
-                'fecha_envio_invitacion' => 'required|date|before:' . $limit_date,
+                'fecha_envio_invitacion' => 'required|date|before:'.$limit_date,
             ]);
         }
         $request->merge(
@@ -170,7 +166,7 @@ class RecursosController extends Controller
         if ($request->isElearning) {
             if ($request->estatus == 'Enviado') {
                 $empleados = Empleado::getaltaAll()->find($request->participantes)->toArray();
-                $emails = Http::post(env('APP_ELEARNING') . '/api/users', [
+                $emails = Http::post(env('APP_ELEARNING').'/api/users', [
                     'students' => json_encode($empleados),
                     'course' => $request->cursoscapacitaciones,
                 ]);
@@ -309,7 +305,7 @@ class RecursosController extends Controller
             $limit_date = Carbon::parse($request->fecha_limite)->addDays(5);
             $limit_date->toDateString();
             $request->validate([
-                'fecha_envio_invitacion' => 'required|date|before:' . $limit_date,
+                'fecha_envio_invitacion' => 'required|date|before:'.$limit_date,
             ]);
         }
         $request->merge(
@@ -557,7 +553,7 @@ class RecursosController extends Controller
             $recurso = Recurso::find(intval($request->id_recurso));
             // dd($recurso->empleados);
             $exists = $recurso->empleados()->where('empleado_id', intval($request->id_empleado))->exists();
-            if (!$exists) {
+            if (! $exists) {
                 $recurso->empleados()->attach($request->id_empleado);
 
                 return response()->json(['success' => true]);
@@ -594,13 +590,13 @@ class RecursosController extends Controller
         ]);
         $empleado = json_decode($request->empleado);
         $recurso = Recurso::find($request->recurso);
-        if (!Storage::disk('capacitaciones')->exists('certificados')) {
+        if (! Storage::disk('capacitaciones')->exists('certificados')) {
             Storage::disk('capacitaciones')->makeDirectory('certificados');
         }
         $certificadoImg = $empleado->pivot->certificado;
         if ($request->file('certificado')) {
             $carpetaCapacitacion = "{$recurso->id}_capacitacion";
-            if (!Storage::disk('capacitaciones')->exists("certificados/{$carpetaCapacitacion}/{$empleado->n_empleado}")) {
+            if (! Storage::disk('capacitaciones')->exists("certificados/{$carpetaCapacitacion}/{$empleado->n_empleado}")) {
                 Storage::disk('capacitaciones')->makeDirectory("certificados/{$carpetaCapacitacion}/{$empleado->n_empleado}");
             }
 
@@ -634,7 +630,7 @@ class RecursosController extends Controller
                 $new_fecha_limite = Carbon::parse($request->fecha_limite)->subDays(3);
                 $new_fecha_limite->toDateString();
                 $request->validate([
-                    'fecha_envio_invitacion' => 'required|date|before:' . $new_fecha_limite,
+                    'fecha_envio_invitacion' => 'required|date|before:'.$new_fecha_limite,
                 ]);
             }
 
@@ -671,7 +667,7 @@ class RecursosController extends Controller
             // $request->file('certificado')->storeAs($route, $certificadoImg);
             return response()->json(['estatus' => 200, 'mensaje' => 'Capacitación Cancelada']);
         } else {
-            return response()->json(['estatus' => 500, 'mensaje' => 'No se ha podido cancelar la capacitación, la capacitación ha finalizado el día' . $recurso->fecha_fin_name]);
+            return response()->json(['estatus' => 500, 'mensaje' => 'No se ha podido cancelar la capacitación, la capacitación ha finalizado el día'.$recurso->fecha_fin_name]);
         }
     }
 
@@ -684,7 +680,7 @@ class RecursosController extends Controller
 
             return response()->json(['estatus' => 200, 'mensaje' => 'Invitaciones enviadas']);
         } else {
-            return response()->json(['estatus' => 500, 'mensaje' => 'No se han podido enviar las invitaciones ya que la fecha límite de confirmación para la capacitación fue:' . $recurso->fecha_limite_name]);
+            return response()->json(['estatus' => 500, 'mensaje' => 'No se han podido enviar las invitaciones ya que la fecha límite de confirmación para la capacitación fue:'.$recurso->fecha_limite_name]);
         }
     }
 
