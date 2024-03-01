@@ -445,8 +445,7 @@
                 },
                 dataType: "JSON",
                 success: function(response) {
-                    $('#workSpace').trigger('refreshTasks.gantt');
-                    document.getElementById('ultima_modificacion').innerHTML = response.ultima_modificacion;
+                    $('#workSpace').trigger('refreshTasks.gantt')
                     // toastr.success('Tarea actualizada con éxito');
                 }
             });

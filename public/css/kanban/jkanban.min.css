@@ -205,15 +205,6 @@
     }
 }
 
-#resourceIMG {
-    background-image: url("{{ asset('img/plan-trabajo/attach.svg') }}");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    width: 15px;
-    height: 15px;
-}
-
 .addSVG {
     background-size: contain;
     background-repeat: no-repeat;
@@ -388,4 +379,111 @@
     margin-top: 8px;
     font-weight: 700;
     text-align: center;
+}
+
+/* diseño para lista de archivos */
+.file-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.file-img-container {
+    margin-right: 10px;
+}
+
+.file-img-container img {
+    max-width: 30px;
+    max-height: 30px;
+    cursor: pointer;
+}
+
+.file-name-container {
+    flex: 1;
+}
+
+.file-buttons {
+    display: flex;
+    gap: 5px;
+}
+
+.file-buttons button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+/* se agrega css para las subtareas y el progres var */
+#task-container {
+    margin-bottom: 20px;
+}
+
+#task-list {
+    list-style-type: none;
+    column-count: 4;
+}
+
+.task-item {
+    margin-bottom: 10px;
+}
+
+.progress-container {
+    margin-bottom: 10px;
+}
+
+.progress-bar {
+    width: 0;
+    height: 10px;
+    background-color: green;
+    transition: width 0.5s;
+}
+
+/* css para todo el teema de etiquetas */
+
+.show {
+    display: block;
+}
+
+.checkbox-list {
+    list-style-type: none;
+    padding-left: 20px;
+}
+
+.color1 {
+    background-color: #C2DCFE;
+}
+
+.color2 {
+    background-color: #DEC2FE;
+}
+
+.color3 {
+    background-color: #CAEFC0;
+}
+
+.color4 {
+    background-color: #EFC0C0;
+}
+
+.color5 {
+    background-color: #FFD1F7;
+}
+
+.color6 {
+    background-color: #FFECAF;
+}
+
+.etiquetasLista {
+    margin-right: 20px;
+    margin-left: 30px;
+    height: 30px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
 }

@@ -56,48 +56,6 @@
         background-color: #ddd;
     }
 
-    .show {
-        display: block;
-    }
-
-    .checkbox-list {
-        list-style-type: none;
-        padding-left: 20px;
-    }
-
-    .color1 {
-        background-color: #C2DCFE;
-    }
-
-    .color2 {
-        background-color: #DEC2FE;
-    }
-
-    .color3 {
-        background-color: #CAEFC0;
-    }
-
-    .color4 {
-        background-color: #EFC0C0;
-    }
-
-    .color5 {
-        background-color: #FFD1F7;
-    }
-
-    .color6 {
-        background-color: #FFECAF;
-    }
-
-    .etiquetasLista {
-        margin-right: 20px;
-        margin-left: 30px;
-        height: 30px;
-        margin-bottom: 15px;
-        display: flex;
-        align-items: center;
-    }
-
     .texto-Etiquetas {
         display: flex;
         align-items: center;
@@ -166,30 +124,6 @@
         font-size: 14px;
         padding-bottom: 8px;
         padding-top: 8px;
-    }
-
-    #task-container {
-        margin-bottom: 20px;
-    }
-
-    #task-list {
-        list-style-type: none;
-        column-count: 4;
-    }
-
-    .task-item {
-        margin-bottom: 10px;
-    }
-
-    .progress-container {
-        margin-bottom: 10px;
-    }
-
-    .progress-bar {
-        width: 0;
-        height: 10px;
-        background-color: green;
-        transition: width 0.5s;
     }
 
     .collapsible {
@@ -266,6 +200,8 @@
         border: none;
         border-radius: 5px;
     }
+
+
 </style>
 <link rel=stylesheet href="{{ asset('css/kanban/jkanban.min.css') }}" type="text/css">
 <div class="cardKanban" style="box-shadow: none; !important;margin-top: 30px;">
@@ -396,7 +332,6 @@
                                 </ul>
                             </div>
                         </div>
-
                         <div class="dropdownBtn" style="padding-bottom: 20px;">
                             <button onclick="dropAdjuntar()" class="dropbtn">
                                 <img class="addSVG" src="{{ asset('img/plan-trabajo/attach.svg') }}">
@@ -415,7 +350,7 @@
                         <div class="dropdownBtn" style="padding-bottom: 20px;">
                             <button onclick="dropPersonas()" class="dropbtn">
                                 <img class="addSVG" src="{{ asset('img/plan-trabajo/account.svg') }}">
-                                <span>Etiquetas</span>
+                                <span>Participantes</span>
                             </button>
                             <div id="drop-Personas" class="dropdownBtn-content">
                                 <div class="texto-Etiquetas">
@@ -455,18 +390,19 @@
                         </div>
                     </div>
                 </div>
-                <div>
+                <div id="participantes">
                     <h6 class="textcomplement">Participantes</h6>
                     <div class="assigned-to" id="imagenesParticipantes"></div>
                 </div>
-                <div>
+                <div id="etiquetas">
                     <h6 class="textcomplement">Etiquetas</h6>
                     <div id="circle-container"></div>
                 </div>
-                <div>
+                <div id="adjuntos">
                     <h6 class="textcomplement">Adjuntos</h6>
+                    <div id="conteiner-adjuntos"></div>
                 </div>
-                <div>
+                <div id="sub-tareas">
                     <h6 class="textcomplement" style="border-bottom: 1px dashed #0000001C;">Sub tareas</h6>
                     <div>
                         <div id="task-container">
@@ -476,8 +412,8 @@
                             <ul id="task-list"></ul>
                         </div>
                         <div id="task-add">
-                            <input type="text" id="task-input" placeholder="Ingrese una tarea">
-                            <button onclick="addTask()">Agregar Tarea</button>
+                            <input type="text" id="task-input" placeholder="Enter task">
+                            <button id="add-task-btn">Add Task</button>
                         </div>
                     </div>
                 </div>
@@ -534,25 +470,6 @@
                 type: "GET",
                 url: "{{ asset('storage/gantt/status.json') }}",
                 success: function(estatuses) {
-                    // let contenedor = $('#c_kanban');
-                    // let html = "";
-                    // let tasks = response.tasks.filter(task => task.level > 0 && !isParent(task, response
-                    //     .tasks));
-
-                    // estatuses.forEach(estatus => {
-                    //     let key = Object.keys(estatus)[0];
-                    //     let value = Object.values(estatus)[0];
-                    //     let actividad_por_estatus = tasks.filter(actividad => actividad.status == key);
-
-                    //     let renderedActividades = actividad_por_estatus.map(actividad =>
-                    //         renderActividad(actividad, response));
-                    //     html +=
-                    //         `<ul><i class="fas fa-grip-vertical dragg-icon"></i><div><div class="${key}-titulo"><span class="name">${value}</span><div class="separator"></div><span class="subtitle">${actividad_por_estatus.length}</span></div></div><div id="${key}" class="scroll-li">${renderedActividades.join('')}</div></ul>`;
-                    // });
-
-                    // contenedor.html(html);
-                    // attachEventListeners(response);
-                    // initializeSortable(response);
                     renderKanbanNew(response.tasks, response);
                 }
             });
@@ -580,9 +497,6 @@
                     grupos[estado].push(item);
                 }
             });
-
-            console.log(items(grupos.iniciar));
-
             let countIniciar;
             var KanbanTest = new jKanban({
                 element: "#myKanban",
@@ -592,42 +506,22 @@
                 dragItems: true,
                 dragBoards: false,
                 click: function(el) {
-                    // $("#myModal").modal();
                     abrirModalConDatos(el.dataset.eid, tasks, response);
                 },
-                context: function(el, e) {
-                    console.log("Trigger on all items right-click!");
-                },
+                context: function(el, e) {},
                 dragEl: function(el, source) {
                     console.log("START DRAG: " + el.dataset.eid);
                     console.log("donde biene: " + source.offsetParent.dataset.id);
                     console.log("END DRAG: " + el);
-
                 },
-                dragendEl: function(el) {
-
-                    // if (el == null) {
-
-                    // } else {
-
-                    //   pintar(el.dataset.eid, el.offsetParent.dataset.id);
-
-
-                    // }
-                },
+                dragendEl: function(el) {},
                 dropEl: function(el, target, source, sibling) {
                     console.log("DROPPED: " + el.dataset.eid);
                     console.log("de donde va: " + target.offsetParent.dataset.id);
                     console.log("donde biene: " + source.offsetParent.dataset.id);
-                    // if (!confirm("¿Estás seguro de mover esta tarjeta?")) {
-                    //   return false; // Cancela el movimiento
-                    // }
-                    // console.log("entrooooo");
                     pintar(el.dataset.eid, el.offsetParent.dataset.id);
                     guardarStatus(el.dataset.eid, source.offsetParent.dataset.id, target.offsetParent.dataset
                         .id);
-                    // return true;
-                    //KanbanTest.moveElement(el, source.id);
                 },
                 buttonClick: function(el, boardId) {},
                 boards: [{
@@ -728,30 +622,32 @@
                         resources
                     } = item;
 
+                    const resourcesCount = resources ? resources.length : 0;
+
                     const jsonEvents = {
                         id: id,
                         title: `
-          <div id="${id}" class="cardContenido">
-            <div class="tituloCard">${name}</div>
-            <div class="contenido">
-              <div class="etiquetaContenido">
-                <div class="etiquetaTitulo">Etiqueta</div>
-                <div class="etiquetaColor"></div>
-              </div>
-              <div class="estatusContenido">
-                <div class="estatusTitulo">Estatus</div>
-                <div id="estatusColor" class="${status}-estatusColor">${statusC}</div>
-              </div>
-            </div>
-            <div class="contenido">
-              <div id="taskContenido">
-                <div id="taskText">2/3</div>
-              </div>
-              <div class="resourceContenido">
-                <div id="resourceIMG"></div>
-                <div id="resourceText">1</div>
-              </div>
-            </div>`,
+                            <div id="${id}" class="cardContenido">
+                              <div class="tituloCard">${name}</div>
+                              <div class="contenido">
+                                <div class="etiquetaContenido">
+                                  <div class="etiquetaTitulo">Etiqueta</div>
+                                  <div class="etiquetaColor"></div>
+                                </div>
+                                <div class="estatusContenido">
+                                  <div class="estatusTitulo">Estatus</div>
+                                  <div id="estatusColor" class="${status}-estatusColor">${statusC}</div>
+                                </div>
+                              </div>
+                              <div class="contenido">
+                                <div id="taskContenido">
+                                  <div id="taskText">2/3</div>
+                                </div>
+                                <div class="resourceContenido">
+                                  <img class="addSVG" src="{{ asset('img/plan-trabajo/attach.svg') }}">
+                                  <div id="resourceText">${resourcesCount}</div>
+                                </div>
+                              </div>`,
                     };
                     cards.push(jsonEvents);
                 });
@@ -764,6 +660,7 @@
                 let imagenestogle = "";
                 let assigs = [];
                 let history = [];
+                let tag = [];
                 //se busca el usuario seleccionado
                 for (let i = 0; i < array.length; i++) {
                     if (array[i].id === id) {
@@ -775,44 +672,63 @@
                     assigs = task.assigs.map(asignado => response.resources.find(r => Number(r.id) === Number(asignado
                         .resourceId)));
                 }
+                //////////////////
+                var divparticipantes = document.getElementById("participantes");
                 let filteredAssigs = assigs.filter(a => a != null);
-                filteredAssigs.slice(0, 4).forEach(asignado => {
-                    let foto = asignado.foto || (asignado.genero === 'M' ? 'woman.png' : 'usuario_no_cargado.png');
-                    imagenes +=
-                        `<div class="person">
+                if (filteredAssigs.length > 0) {
+                    divparticipantes.style.display = "block";
+                    filteredAssigs.slice(0, 4).forEach(asignado => {
+                        let foto = asignado.foto || (asignado.genero === 'M' ? 'woman.png' :
+                            'usuario_no_cargado.png');
+                        imagenes +=
+                            `<div class="person">
                             <img class="person-img" title="${asignado.name}" src="{{ asset('storage/empleados/imagenes') }}/${foto}" />
                         </div>`;
-                });
+                    });
+                } else {
+                    divparticipantes.style.display = "none";
+                }
+                ///////////////////
                 let filteredAssigsM = assigs.filter(a => a != null);
                 filteredAssigsM.slice(0, 4).forEach(asignado => {
                     if (asignado.name) {
                         let initials = asignado.name.trim().split(' ').map(word => word.charAt(0)).join('')
                             .toUpperCase();
                         let color = asignado.genero === 'M' ? 'blue' : 'pink';
-                        imagenestogle =
+                        imagenestogle +=
                             `<div class="person" style="display: flex; align-items: center; margin-bottom: 5px; margin-left: 20px;">
                                 <div class="initials" style="background-color: ${color}; color: white; border-radius: 50%; width: 45px; height: 45px; display: flex; justify-content: center; align-items: center; margin-right: 5px;">${initials}</div>
                                 <div style="margin-left: 5px; margin-right: auto;">${asignado.name}</div>
                             </div>`;
                     }
                 });
-
-                var htmlContent = ""; // Inicializamos el contenido HTML vacío
-
-                // Verificamos si task.historic existe y tiene elementos
+                //Historial
+                var htmlContentHistory = "";
                 if (task.historic && task.historic.length > 0) {
-                    htmlContent += "<ul>";
-                    // Iteramos sobre cada elemento del arreglo historic
+                    htmlContentHistory += "<ul>";
                     task.historic.forEach(function(item) {
-                        htmlContent += "<li>Initial Status: " + mapStatusToEstatusText[item.initialstatus] + ", Final Status: " + mapStatusToEstatusText[item
-                            .finestatus] + ", Fecha: " + item.fecha + ", Edito: " + item.edito + "</li>";
+                        htmlContentHistory +=
+                            `<li>Initial Status:  ${mapStatusToEstatusText[item.initialstatus]}
+                        , Final Status:  ${mapStatusToEstatusText[item.finestatus]}  Fecha:  ${item.fecha} , Edito:  ${item.edito} </li>`;
                     });
-                    htmlContent += "</ul>";
+                    htmlContentHistory += "</ul>";
                 } else {
-                    // Si no existe o está vacío historic, mostramos un mensaje
-                    htmlContent = "<span>No tiene historial</span>";
+                    htmlContentHistory = "<span>No tiene historial</span>";
+                }
+                //Resourses
+                var divadjuntos = document.getElementById("adjuntos");
+                if (task.resources && task.resources.length > 0) {
+                    divadjuntos.style.display = "block";
+                    document.getElementById('conteiner-adjuntos').innerHTML = '';
+                    task.resources.forEach(function(item) {
+                        base64Aarchivo(item.archivo, item.name);
+                    });
+                } else {
+                    divadjuntos.style.display = "none";
+                    document.getElementById('conteiner-adjuntos').innerHTML = '';
                 }
 
+                console.log(listArrayP1);
                 //se agregan parametros por elemento del modal
                 document.getElementById('idTaks').value = `${task.id}`;
                 document.getElementById('modal-title').innerHTML = `${task.name}`;
@@ -825,7 +741,9 @@
                 document.getElementById('fin').value = `${timestampToDateString(task.end)}`;
                 document.getElementById('estatusSelect').value = `${mapStatusToEstatusText[task.status]}`;
                 document.getElementById('personasAsignadas').innerHTML = `${imagenestogle}`;
-                document.getElementById('logHistorico').innerHTML = `${htmlContent}`;
+                document.getElementById('logHistorico').innerHTML = `${htmlContentHistory}`;
+
+                seleccionarCheckboxes(task.tag);
                 // Mostrar el modal
                 modal.show();
             }
@@ -843,13 +761,76 @@
                 objet[taksnew].end = fin;
                 objet[taksnew].duration = dias;
                 responseLocal.tasks = objet;
+                insertResources(archivosArray, objet[taksnew]);
+                insertTag(listArrayP1, objet[taksnew]);
                 saveOnServer(responseLocal);
                 location.reload();
             } else {
                 console.log('No se encontró ningún objeto con el ID dado.');
             }
         }
+        //////////////////////////insericion de modulos faltantes en el js/////////////////////////////////////////////////
+        function insertResources(value, resources) {
+            if ('resources' in responseLocal.tasks) {
+                value.forEach(element => {
+                    const resourcesNuevo = {
+                        "name": element.name,
+                        "archivo": element.archivo
+                    };
+                    resources.resources.push(resourcesNuevo);
+                });
+            } else {
+                if (!resources.resources) {
+                    resources.resources = [];
+                }
+                value.forEach(element => {
+                    const resourcesNuevo = {
+                        "name": element.name,
+                        "archivo": element.archivo
+                    };
+                    resources.resources.push(resourcesNuevo);
+                });
+            }
+        }
 
+        function insertTag(value, tag) {
+            if ('tag' in responseLocal.tasks) {
+                value.forEach(element => {
+                    const resourcesNuevo = {
+                        "etiqueta": element,
+                    };
+                    tag.tag.push(resourcesNuevo);
+                });
+            } else {
+                if (!tag.tag) {
+                    tag.tag = [];
+                }
+                value.forEach(element => {
+                    const resourcesNuevo = {
+                        "etiqueta": element,
+                    };
+                    tag.tag.push(resourcesNuevo);
+                });
+            }
+        }
+
+        function insertSubTasks(value, resources) {
+            if ('resources' in responseLocal.tasks) {
+                resources.resources.push(resourcesNuevo);
+            } else {
+                if (!resources.resources) {
+                    resources.resources = [];
+                }
+                value.forEach(element => {
+                    const resourcesNuevo = {
+                        "name": element.name,
+                        "archivo": element.archivo
+                    };
+                    resources.resources.push(resourcesNuevo);
+                });
+            }
+        }
+        /////////////////////////////////////////////////////
         function renderActividad(actividad, response) {
             let imagenes = "";
             let assigs = [];
@@ -1192,3 +1173,14 @@
         }
     </script>
 @endsection
+
+
+{{-- 'resources' =>  [],
+'subtasks' => [],
+'historic' => [], --}}
+
+{{-- // if (!confirm("¿Estás seguro de mover esta tarjeta?")) {
+    //   return false; // Cancela el movimiento
+    // }
+    // console.log("entrooooo");
+    // return true; --}}

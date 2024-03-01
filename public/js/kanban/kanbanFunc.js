@@ -2,16 +2,13 @@
 function dropEtiquetas() {
     document.getElementById("drop-Etiquetas").classList.toggle("show");
 }
-
 function dropAdjuntar() {
     document.getElementById("drop-Adjuntar").classList.toggle("show");
 }
-
 function dropPersonas() {
     document.getElementById("drop-Personas").classList.toggle("show");
 }
 function dropguardar() {
-    console.log('asdasdasd');
     let id = document.getElementById('idTaks').value;
     let nombre = document.getElementById('nombreLabel').value;
     let descripcion = document.getElementById('descriptionLabel').value;
@@ -76,7 +73,6 @@ const mapStatusToEstatusText = {
     "STATUS_SUSPENDED": "Suspendido",
     "STATUS_UNDEFINED": "Lista de tareas"
 };
-
 const mapTextToStatus = {
     "En proceso": "STATUS_ACTIVE",
     "Completado": "STATUS_DONE",
@@ -84,12 +80,12 @@ const mapTextToStatus = {
     "Suspendido": "STATUS_SUSPENDED",
     "Lista de tareas": "STATUS_UNDEFINED"
 };
-//agregar archivos en la lista
+var archivosArray = []; // Array para almacenar objetos {name, base64}
+
 function manejarSeleccionArchivos() {
     var input = document.getElementById('fileInput');
     var files = input.files;
     var lista = document.getElementById('listaArchivos');
-    var archivosArray = []; // Array para almacenar archivos en Base64
 
     // Agregar archivos uno por uno a la lista
     for (var i = 0; i < files.length; i++) {
@@ -98,23 +94,10 @@ function manejarSeleccionArchivos() {
         listItem.classList.add('litcss');
         listItem.classList.add('file-item');
 
-        function archivoAbase64(file) {
-            return new Promise((resolve, reject) => {
-                var reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = function () {
-                    resolve(reader.result);
-                };
-                reader.onerror = function (error) {
-                    reject(error);
-                };
-            });
-        }
         // Agregar elementos adicionales dentro del <li>
         var fileNameElement = document.createElement('span');
         fileNameElement.textContent = file.name;
         fileNameElement.classList.add('filename');
-
         listItem.appendChild(fileNameElement);
 
         var fileSizeElement = document.createElement('span');
@@ -133,16 +116,124 @@ function manejarSeleccionArchivos() {
 
         // Convertir archivo a Base64 y almacenar en el array
         archivoAbase64(file).then(base64 => {
-            archivosArray.push(base64);
+            const resourcesNuevo = {
+                "name": file.name,
+                "archivo": base64
+            };
+            archivosArray.push(resourcesNuevo); // Modificación aquí
             console.log("Archivo convertido a Base64:", base64);
+            console.log("Array de archivos en Base64:", archivosArray); // Aquí puedes ver el contenido actualizado del array
         }).catch(error => {
             console.error("Error al convertir archivo a Base64:", error);
         });
     }
-
-    console.log("Array de archivos en Base64:", archivosArray);
 }
 
+function archivoAbase64(file) {
+    return new Promise((resolve, reject) => {
+        var reader = new FileReader();
+        reader.onload = function () {
+            resolve(reader.result);
+        };
+        reader.onerror = function (error) {
+            reject(error);
+        };
+        reader.readAsDataURL(file);
+    });
+}
+
+function base64Aarchivo(file, nombreArchivo) {
+    const listItem = document.createElement('div');
+    listItem.classList.add('file-item');
+
+    const imgContainer = document.createElement('div');
+    imgContainer.classList.add('file-img-container');
+    if (file.startsWith('data:image')) {
+        const img = document.createElement('img');
+        img.src = file;
+        imgContainer.appendChild(img);
+    }
+    listItem.appendChild(imgContainer);
+
+    const nameContainer = document.createElement('div');
+    nameContainer.classList.add('file-name-container');
+    const name = document.createElement('span');
+    name.textContent = nombreArchivo;
+    nameContainer.appendChild(name);
+    listItem.appendChild(nameContainer);
+
+    const buttonsContainer = document.createElement('div');
+    buttonsContainer.classList.add('file-buttons');
+
+    const downloadButton = document.createElement('button');
+    downloadButton.innerHTML = '<i class="fas fa-download"></i>';
+    downloadButton.addEventListener('click', function () {
+        downloadFile(file, nombreArchivo);
+    });
+    buttonsContainer.appendChild(downloadButton);
+
+    const viewButton = document.createElement('button');
+    viewButton.innerHTML = '<i class="fas fa-eye"></i>';
+    viewButton.addEventListener('click', function () {
+        viewInBrowser(file);
+    });
+    buttonsContainer.appendChild(viewButton);
+
+    listItem.appendChild(buttonsContainer);
+
+    const listaArchivosDiv = document.getElementById('conteiner-adjuntos');
+    listaArchivosDiv.appendChild(listItem);
+}
+
+function downloadFile(fileData, fileName) {
+    // Convertir el archivo base64 en un blob
+    const byteCharacters = atob(fileData.split(',')[1]);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    const blob = new Blob([byteArray], { type: 'application/octet-stream' });
+
+    // Crear un enlace temporal
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = fileName;
+
+    // Hacer clic en el enlace para iniciar la descarga
+    document.body.appendChild(link);
+    link.click();
+
+    // Limpiar después de la descarga
+    document.body.removeChild(link);
+}
+
+function viewInBrowser(fileData) {
+    const newWindow = window.open();
+    newWindow.document.open();
+
+    if (fileData.startsWith('data:text/html')) {
+        // Si es un archivo HTML, abrirlo en una nueva ventana
+        newWindow.document.write(fileData);
+    } else if (fileData.startsWith('data:image')) {
+        // Si es una imagen, mostrarla en una ventana emergente
+        newWindow.document.write(`<img src="${fileData}" alt="Image Preview" />`);
+    } else if (fileData.startsWith('data:text/plain')) {
+        // Si es un archivo de texto, abrirlo en una nueva ventana
+        newWindow.document.write(`<pre>${fileData}</pre>`);
+    } else if (fileData.startsWith('data:application/pdf')) {
+        // Si es un archivo PDF, mostrarlo en una ventana emergente usando un iframe
+        newWindow.document.write(`<iframe src="${fileData}" style="width:100%;height:100%;" frameborder="0"></iframe>`);
+    } else if (fileData.startsWith('data:application/vnd.openxmlformats-officedocument')) {
+        // Si es un archivo de Office (por ejemplo, docx, xlsx, pptx), mostrarlo en una ventana emergente usando embed
+        newWindow.document.write(`<embed src="${fileData}" style="width:100%;height:100%;" type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">`);
+    } else {
+        // Si no se puede determinar el tipo de archivo, mostrar el archivo como texto plano
+        newWindow.document.write(`<pre>${fileData}</pre>`);
+    }
+
+    newWindow.document.close();
+}
 //log colapsee
 function toggleCollapse() {
     var content = document.querySelector('.content');
@@ -154,16 +245,16 @@ function toggleCollapse() {
 }
 
 //taks modal
-function addTask() {
-    var taskName = document.getElementById("task-input").value.trim();
+const addTask = () => {
+    const taskName = document.getElementById("task-input").value.trim();
     if (taskName) {
-        var taskList = document.getElementById("task-list");
-        var li = document.createElement("li");
+        const taskList = document.getElementById("task-list");
+        const li = document.createElement("li");
         li.classList.add("task-item");
-        var checkbox = document.createElement("input");
+        const checkbox = document.createElement("input");
         checkbox.type = "checkbox";
         checkbox.addEventListener("change", updateProgressBar);
-        var span = document.createElement("span");
+        const span = document.createElement("span");
         span.textContent = taskName;
         span.addEventListener("click", editTaskName);
 
@@ -173,72 +264,127 @@ function addTask() {
 
         document.getElementById("task-input").value = ""; // Limpiar el campo de entrada después de agregar la tarea
     }
-}
+};
 
-function updateProgressBar() {
-    var checkboxes = document.querySelectorAll("input[type='checkbox']");
-    var completedTasks = Array.from(checkboxes).filter(checkbox => checkbox.checked).length;
-    var progressBarWidth = (completedTasks / checkboxes.length) * 100;
-    var progressBar = document.querySelector(".progress-bar");
-    progressBar.style.width = progressBarWidth + "%";
-}
+const updateProgressBar = () => {
+    const checkboxes = document.querySelectorAll("input[type='checkbox']");
+    const completedTasks = Array.from(checkboxes).filter(checkbox => checkbox.checked).length;
+    const progressBarWidth = (completedTasks / checkboxes.length) * 100;
+    const progressBar = document.querySelector(".progress-bar");
+    progressBar.style.width = `${progressBarWidth}%`;
+};
 
-function editTaskName(event) {
-    var span = event.target;
-    var taskName = span.textContent;
-    var input = document.createElement("input");
+const editTaskName = (event) => {
+    const span = event.target;
+    const taskName = span.textContent;
+    const input = document.createElement("input");
     input.type = "text";
     input.value = taskName;
-    input.addEventListener("blur", function () {
+    input.addEventListener("blur", () => {
         span.textContent = input.value;
     });
     span.textContent = "";
     span.appendChild(input);
     input.focus();
-}
-/// se agrega logica para etiquetas
+};
+
+document.getElementById("add-task-btn").addEventListener("click", addTask);
+
+/// se agrega logica para etiquetas etiquetas
 var circleContainer = document.getElementById('circle-container');
 var listArrayP1 = [];
 var checkboxes1 = document.querySelectorAll('.checkboxp1');
 checkboxes1.forEach(function (checkbox, index) {
     checkbox.addEventListener('change', function () {
         if (this.checked) {
-            listArrayP1.push(this.value);
+            listArrayP1.push(this.getAttribute('name')); // Modificado para obtener el atributo 'name'
         } else {
-            listArrayP1.splice(listArrayP1.indexOf(this.value), 1);
+            listArrayP1.splice(listArrayP1.indexOf(this.getAttribute('name')), 1); // Modificado para obtener el atributo 'name'
         }
         updateDisplay();
     });
 });
 
+var tagss = [
+    { etiqueta: "etiqueta1" },
+    { etiqueta: "etiqueta2" },
+    { etiqueta: "etiqueta3" },
+    { etiqueta: "etiqueta4" },
+    { etiqueta: "etiqueta5" },
+    { etiqueta: "etiqueta6" }
+];
+var tagCheckboxesMap = {};
+
+// Mapeo de etiquetas a checkboxes
+tagss.forEach(tag => {
+    tagCheckboxesMap[tag.etiqueta] = document.querySelector('input[name="' + tag.etiqueta + '"]');
+});
+var divetiquetas = document.getElementById("etiquetas");
+function seleccionarCheckboxes(tags) {
+    if (tags && tags.length > 0) {
+        divetiquetas.style.display = "block";
+        deseleccionarCheckboxes();
+        tags.forEach(tag => {
+            var checkbox = tagCheckboxesMap[tag.etiqueta];
+            if (checkbox) {
+                checkbox.checked = true;
+            }
+        });
+        listArrayP1 = tags.map(tag => tag.etiqueta);
+        updateDisplay();
+    } else {
+        if (tags && tags.length > 0) {
+        divetiquetas.style.display = "none";
+        }else{
+            divetiquetas.style.display = "block";
+        }
+        deseleccionarCheckboxes();
+        listArrayP1 = [];
+        updateDisplay();
+    }
+}
+
+function deseleccionarCheckboxes() {
+    Object.values(tagCheckboxesMap).forEach(checkbox => {
+        checkbox.checked = false;
+    });
+}
+
 function updateDisplay() {
     var displayValue = '';
-    circleContainer.innerHTML = '';
+    var fragment = document.createDocumentFragment();
     listArrayP1.forEach(function (value) {
         var circle = document.createElement('span');
         circle.className = 'circle';
         circle.style.backgroundColor = getCircleColor(value);
-        circleContainer.appendChild(circle);
+        fragment.appendChild(circle);
         displayValue += value;
     });
-    //valuelist1.innerHTML = displayValue;
+    if (listArrayP1.length === 0){
+        divetiquetas.style.display = "none";
+    }else {
+        divetiquetas.style.display = "block";
+    }
+    circleContainer.innerHTML = ''; // Limpiar el contenedor anterior
+    circleContainer.appendChild(fragment);
 }
 
 function getCircleColor(value) {
     switch (value) {
-        case '#C2DCFE':
+        case 'etiqueta1':
             return '#C2DCFE';
-        case '#DEC2FE':
+        case 'etiqueta2':
             return '#DEC2FE';
-        case '#CAEFC0':
+        case 'etiqueta3':
             return '#CAEFC0';
-        case '#EFC0C0':
+        case 'etiqueta4':
             return '#EFC0C0';
-        case '#FFD1F7':
+        case 'etiqueta5':
             return '#FFD1F7';
-        case '#FFECAF':
+        case 'etiqueta6':
             return '#FFECAF';
         default:
             return 'black';
     }
 }
+///////////////// acaba funciones para checkbox
