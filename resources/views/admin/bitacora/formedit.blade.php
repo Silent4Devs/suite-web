@@ -486,13 +486,14 @@
         <div class="form-group col-md-4">
             <label for="no_contrato" class="txt-tamaño">
                 No. Pagos<font class="asterisco">*</font></label>
-                {!! Form::text('no_pagos', $contrato->no_pagos, [
+                {!! Form::number('no_pagos', $contrato->no_pagos, [
                     'class' => 'form-control',
                     'required',
-                    'pattern' => '[0-9]+', // Aquí agregamos el patrón para permitir solo números enteros
+                    'pattern' => '[0-9]+',
+                    'min' => 0, // Opcional: especifica el valor mínimo permitido
+                    'step' => 1, // Opcional: especifica el paso de incremento/decremento
                     $show_contrato ? 'readonly' : '',
                 ]) !!}
-
             @if ($errors->has('no_pagos'))
                 <div class="invalid-feedback red-text">
                     {{ $errors->first('no_pagos') }}
