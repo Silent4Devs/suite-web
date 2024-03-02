@@ -8,6 +8,9 @@ function dropAdjuntar() {
 function dropPersonas() {
     document.getElementById("drop-Personas").classList.toggle("show");
 }
+function dropEtiquetasd() {
+    document.getElementById("drop-Etiquetasd").classList.toggle("show");
+}
 function dropguardar() {
     let id = document.getElementById('idTaks').value;
     let nombre = document.getElementById('nombreLabel').value;
@@ -80,6 +83,7 @@ const mapTextToStatus = {
     "Suspendido": "STATUS_SUSPENDED",
     "Lista de tareas": "STATUS_UNDEFINED"
 };
+//inica lo referente a documentos y como mostrarlos //////////////////////
 var archivosArray = []; // Array para almacenar objetos {name, base64}
 
 function manejarSeleccionArchivos() {
@@ -148,9 +152,9 @@ function base64Aarchivo(file, nombreArchivo) {
 
     const imgContainer = document.createElement('div');
     imgContainer.classList.add('file-img-container');
-    if (file.startsWith('data:image')) {
+    if (imagePath) {
         const img = document.createElement('img');
-        img.src = file;
+        img.src = imagePath;
         imgContainer.appendChild(img);
     }
     listItem.appendChild(imgContainer);
@@ -166,14 +170,14 @@ function base64Aarchivo(file, nombreArchivo) {
     buttonsContainer.classList.add('file-buttons');
 
     const downloadButton = document.createElement('button');
-    downloadButton.innerHTML = '<i class="fas fa-download"></i>';
+    downloadButton.innerHTML = '<i class="download-button"></i>';
     downloadButton.addEventListener('click', function () {
         downloadFile(file, nombreArchivo);
     });
     buttonsContainer.appendChild(downloadButton);
 
     const viewButton = document.createElement('button');
-    viewButton.innerHTML = '<i class="fas fa-eye"></i>';
+    viewButton.innerHTML = `<i class="view-button"></i>`;
     viewButton.addEventListener('click', function () {
         viewInBrowser(file);
     });
@@ -234,9 +238,10 @@ function viewInBrowser(fileData) {
 
     newWindow.document.close();
 }
-//log colapsee
+
+//log  /////////////////////////////
 function toggleCollapse() {
-    var content = document.querySelector('.content');
+    var content = document.querySelector('.contentLog');
     if (content.style.display === 'none') {
         content.style.display = 'block';
     } else {
@@ -244,34 +249,89 @@ function toggleCollapse() {
     }
 }
 
-//taks modal
+//taks modal //////////////////////////////
+let subTasks = [];
+let taskIdCounter = 0;
+
 const addTask = () => {
-    const taskName = document.getElementById("task-input").value.trim();
+    const taskInput = document.getElementById("task-input");
+    const taskName = taskInput.value.trim();
     if (taskName) {
-        const taskList = document.getElementById("task-list");
-        const li = document.createElement("li");
-        li.classList.add("task-item");
-        const checkbox = document.createElement("input");
-        checkbox.type = "checkbox";
-        checkbox.addEventListener("change", updateProgressBar);
-        const span = document.createElement("span");
-        span.textContent = taskName;
-        span.addEventListener("click", editTaskName);
-
-        li.appendChild(checkbox);
-        li.appendChild(span);
-        taskList.appendChild(li);
-
-        document.getElementById("task-input").value = ""; // Limpiar el campo de entrada después de agregar la tarea
+        const taskId = `task-${taskIdCounter++}`;
+        const checkbox = createCheckbox(taskId);
+        const span = createTaskSpan(taskName);
+        const li = createTaskListItem(taskId, checkbox, span);
+        addTaskToDOM(li);
+        subTasks.push({ selected: false, id: taskId, taskName });
+        taskInput.value = "";
     }
 };
 
+const createCheckbox = (taskId) => {
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.addEventListener("change", () => {
+        const taskIndex = subTasks.findIndex(task => task.id === taskId);
+        if (taskIndex !== -1) {
+            subTasks[taskIndex].selected = checkbox.checked;
+            updateProgressBar();
+        }
+    });
+    return checkbox;
+};
+
+const createTaskSpan = (taskName) => {
+    const span = document.createElement("span");
+    span.textContent = taskName;
+    span.addEventListener("click", editTaskName);
+    return span;
+};
+
+const createTaskListItem = (taskId, checkbox, span) => {
+    const li = document.createElement("li");
+    li.id = taskId;
+    li.classList.add("task-item");
+    li.appendChild(checkbox);
+    li.appendChild(span);
+    return li;
+};
+
+const addTaskToDOM = (taskElement) => {
+    const taskList = document.getElementById("task-list");
+    taskList.appendChild(taskElement);
+};
+
 const updateProgressBar = () => {
-    const checkboxes = document.querySelectorAll("input[type='checkbox']");
-    const completedTasks = Array.from(checkboxes).filter(checkbox => checkbox.checked).length;
-    const progressBarWidth = (completedTasks / checkboxes.length) * 100;
+    const checkboxes = document.querySelectorAll("#task-list input[type='checkbox']");
+    const completedTasks = Array.from(checkboxes).filter(({ checked }) => checked).length;
+    const progressBarWidth = (completedTasks / checkboxes.length) * 100 || 0;
     const progressBar = document.querySelector(".progress-bar");
     progressBar.style.width = `${progressBarWidth}%`;
+};
+
+const clearTasks = () => {
+    const taskList = document.getElementById("task-list");
+    taskList.innerHTML = "";
+    subTasks = [];
+    taskIdCounter = 0;
+};
+
+const insertTasksFromService = (tasksFromService) => {
+    clearTasks();
+    if (tasksFromService && Array.isArray(tasksFromService)) {
+         // Limpiar tareas antes de insertar nuevas
+        tasksFromService.forEach(({ selected, taskName }) => {
+            const taskId = `task-${taskIdCounter++}`;
+            const checkbox = createCheckbox(taskId);
+            checkbox.checked = selected;
+            const span = createTaskSpan(taskName);
+            const li = createTaskListItem(taskId, checkbox, span);
+            addTaskToDOM(li);
+            subTasks.push({ selected, id: taskId, taskName });
+        });
+    } else {
+        console.error("El parámetro subtasks no es un array definido.");
+    }
 };
 
 const editTaskName = (event) => {
@@ -289,8 +349,8 @@ const editTaskName = (event) => {
 };
 
 document.getElementById("add-task-btn").addEventListener("click", addTask);
-
-/// se agrega logica para etiquetas etiquetas
+///////////////////////////////////////////////////////////////////////////////////////
+/// se agrega logica para etiquetas etiquetas ////////////////
 var circleContainer = document.getElementById('circle-container');
 var listArrayP1 = [];
 var checkboxes1 = document.querySelectorAll('.checkboxp1');
@@ -315,7 +375,7 @@ var tagss = [
 ];
 var tagCheckboxesMap = {};
 
-// Mapeo de etiquetas a checkboxes
+// Mapeo de etiquetas a checkboxes ///////////////////////////////
 tagss.forEach(tag => {
     tagCheckboxesMap[tag.etiqueta] = document.querySelector('input[name="' + tag.etiqueta + '"]');
 });
@@ -334,8 +394,8 @@ function seleccionarCheckboxes(tags) {
         updateDisplay();
     } else {
         if (tags && tags.length > 0) {
-        divetiquetas.style.display = "none";
-        }else{
+            divetiquetas.style.display = "none";
+        } else {
             divetiquetas.style.display = "block";
         }
         deseleccionarCheckboxes();
@@ -360,9 +420,9 @@ function updateDisplay() {
         fragment.appendChild(circle);
         displayValue += value;
     });
-    if (listArrayP1.length === 0){
+    if (listArrayP1.length === 0) {
         divetiquetas.style.display = "none";
-    }else {
+    } else {
         divetiquetas.style.display = "block";
     }
     circleContainer.innerHTML = ''; // Limpiar el contenedor anterior

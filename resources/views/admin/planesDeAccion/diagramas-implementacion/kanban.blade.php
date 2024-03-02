@@ -1,4 +1,38 @@
 <style>
+    .view-button {
+        background-image: url('{{ asset('img/plan-trabajo/visibility.svg') }}');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+        border: none;
+        padding: 8px 13px;
+    }
+
+    .download-button {
+        background-image: url('{{ asset('img/plan-trabajo/download.svg') }}');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+        border: none;
+        padding: 0px 9px;
+    }
+
+    /* Estilos para el botón */
+    #add-task-btn {
+        padding: 10px 20px;
+        background-color: transparent;
+        color: #006DDB;
+        border: none;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-image: url('{{ asset('img/plan-trabajo/add.svg') }}');
+        background-size: 20px;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
     .dropbtn {
         background-color: #EFEFEF;
         color: #818181;
@@ -121,7 +155,7 @@
 
     .textcomplement {
         text-align: left;
-        font-size: 14px;
+        font-size: 13px;
         padding-bottom: 8px;
         padding-top: 8px;
     }
@@ -138,12 +172,7 @@
         font-size: 15px;
     }
 
-    .content {
-        padding: 0 18px;
-        display: none;
-        overflow: hidden;
-        background-color: #f1f1f1;
-    }
+
 
     /*  */
     .litcss {
@@ -200,8 +229,6 @@
         border: none;
         border-radius: 5px;
     }
-
-
 </style>
 <link rel=stylesheet href="{{ asset('css/kanban/jkanban.min.css') }}" type="text/css">
 <div class="cardKanban" style="box-shadow: none; !important;margin-top: 30px;">
@@ -359,21 +386,11 @@
                                 <div class="contenedorSelect">
                                     <div class="form-group anima-focus">
                                         <select required class="form-control" name="grupoSelect" id="grupoSelect">
-                                            <option>En proceso</option>
-                                            <option>Completado</option>
-                                            <option>Retrasado</option>
-                                            <option>Suspendido</option>
-                                            <option>Lista de tareas</option>
                                         </select>
                                         <label for="grupoSelect">Agregar</label>
                                     </div>
                                     <div class="form-group anima-focus">
                                         <select required class="form-control" name="areaSelect" id="areaSelect">
-                                            <option>En proceso</option>
-                                            <option>Completado</option>
-                                            <option>Retrasado</option>
-                                            <option>Suspendido</option>
-                                            <option>Lista de tareas</option>
                                         </select>
                                         <label for="areaSelect">Área</label>
                                     </div>
@@ -395,15 +412,16 @@
                     <div class="assigned-to" id="imagenesParticipantes"></div>
                 </div>
                 <div id="etiquetas">
-                    <h6 class="textcomplement">Etiquetas</h6>
+                    <h6 class="textcomplement" style="padding-top: 20px;">Etiquetas</h6>
                     <div id="circle-container"></div>
                 </div>
                 <div id="adjuntos">
-                    <h6 class="textcomplement">Adjuntos</h6>
+                    <h6 class="textcomplement" style="padding-top: 20px;">Adjuntos</h6>
                     <div id="conteiner-adjuntos"></div>
                 </div>
                 <div id="sub-tareas">
-                    <h6 class="textcomplement" style="border-bottom: 1px dashed #0000001C;">Sub tareas</h6>
+                    <h6 class="textcomplement"
+                        style="border-bottom: 1px dashed #0000001C;font-size: 18px;padding-top: 20px;">Sub tareas</h6>
                     <div>
                         <div id="task-container">
                             <div class="progress-container">
@@ -412,28 +430,21 @@
                             <ul id="task-list"></ul>
                         </div>
                         <div id="task-add">
+                            <button id="add-task-btn"></button>
                             <input type="text" id="task-input" placeholder="Enter task">
-                            <button id="add-task-btn">Add Task</button>
                         </div>
                     </div>
                 </div>
-                <div class="container">
+                <div class="container" style="padding-top: 20px;">
                     <div class="row" style="border-bottom: 1px dashed #0000001C;">
-                        <div class="col"
-                            style="
-                        justify-content: left;
-                        display: flex;">
-                            <h6 class="textcomplement">Log</h6>
+                        <div class="col" style="justify-content: left;display: flex;">
+                            <h6 class="textcomplement" style="font-size: 18px;">Log</h6>
                         </div>
-                        <div class="col"
-                            style="
-                        justify-content: right;
-                        display: flex;">
+                        <div class="col" style="justify-content: right;display: flex;">
                             <button class="butonLog" onclick="toggleCollapse()">Mostrar detalles</button>
                         </div>
                     </div>
-                    <div id="logHistorico" class="content">
-
+                    <div id="logHistorico" class="contentLog">
                     </div>
                 </div>
             </div>
@@ -447,6 +458,9 @@
     <script src="{{ asset('../js/kanban/jkanban.js') }}"></script>
     <script src="{{ asset('../js/kanban/kanbanFunc.js') }}"></script>
     <script>
+        const imagePath = '{{ asset('img/plan-trabajo/documento.svg') }}';
+        const imagePathEye = '{{ asset('img/plan-trabajo/visibility.svg') }}';
+
         function initKanban() {
             $.ajax({
                 type: "POST", // Cambiado a GET si es posible
@@ -655,114 +669,99 @@
             }
 
             function abrirModalConDatos(id, array, response) {
-                let task;
-                let imagenes = "";
-                let imagenestogle = "";
-                let assigs = [];
-                let history = [];
-                let tag = [];
-                //se busca el usuario seleccionado
-                for (let i = 0; i < array.length; i++) {
-                    if (array[i].id === id) {
-                        task = array[i];
-                    }
+                const task = array.find(item => item.id === id);
+
+                if (!task) {
+                    console.log('No se encontró ningún objeto con el ID dado.');
+                    return;
                 }
-                //se agregan la simagenes por usuarios agregados
-                if (task.assigs) {
-                    assigs = task.assigs.map(asignado => response.resources.find(r => Number(r.id) === Number(asignado
-                        .resourceId)));
-                }
-                //////////////////
-                var divparticipantes = document.getElementById("participantes");
-                let filteredAssigs = assigs.filter(a => a != null);
-                if (filteredAssigs.length > 0) {
-                    divparticipantes.style.display = "block";
-                    filteredAssigs.slice(0, 4).forEach(asignado => {
-                        let foto = asignado.foto || (asignado.genero === 'M' ? 'woman.png' :
-                            'usuario_no_cargado.png');
-                        imagenes +=
-                            `<div class="person">
-                            <img class="person-img" title="${asignado.name}" src="{{ asset('storage/empleados/imagenes') }}/${foto}" />
-                        </div>`;
-                    });
-                } else {
-                    divparticipantes.style.display = "none";
-                }
-                ///////////////////
-                let filteredAssigsM = assigs.filter(a => a != null);
-                filteredAssigsM.slice(0, 4).forEach(asignado => {
+
+                const assigs = task.assigs ? task.assigs.map(asignado => response.resources.find(r => Number(r.id) ===
+                    Number(asignado.resourceId))).filter(Boolean) : [];
+
+                const divparticipantes = document.getElementById("participantes");
+                const imagenes = assigs.slice(0, 4).map(asignado => {
+                    const foto = asignado.foto || (asignado.genero === 'M' ? 'woman.png' :
+                    'usuario_no_cargado.png');
+                    return `<div class="person"><img class="person-img" title="${asignado.name}" src="{{ asset('storage/empleados/imagenes') }}/${foto}" /></div>`;
+                }).join("");
+
+                divparticipantes.style.display = assigs.length > 0 ? "block" : "none";
+
+                const imagenestogle = assigs.slice(0, 4).map(asignado => {
                     if (asignado.name) {
-                        let initials = asignado.name.trim().split(' ').map(word => word.charAt(0)).join('')
+                        const initials = asignado.name.trim().split(' ').map(word => word.charAt(0)).join('')
                             .toUpperCase();
-                        let color = asignado.genero === 'M' ? 'blue' : 'pink';
-                        imagenestogle +=
-                            `<div class="person" style="display: flex; align-items: center; margin-bottom: 5px; margin-left: 20px;">
-                                <div class="initials" style="background-color: ${color}; color: white; border-radius: 50%; width: 45px; height: 45px; display: flex; justify-content: center; align-items: center; margin-right: 5px;">${initials}</div>
-                                <div style="margin-left: 5px; margin-right: auto;">${asignado.name}</div>
-                            </div>`;
+                        const color = asignado.genero === 'M' ? 'blue' : 'pink';
+                        return `<div class="person" style="display: flex; align-items: center; margin-bottom: 5px; margin-left: 20px;"><div class="initials" style="background-color: ${color}; color: white; border-radius: 50%; width: 45px; height: 45px; display: flex; justify-content: center; align-items: center; margin-right: 5px;">${initials}</div><div style="margin-left: 5px; margin-right: auto;">${asignado.name}</div></div>`;
                     }
-                });
-                //Historial
-                var htmlContentHistory = "";
-                if (task.historic && task.historic.length > 0) {
-                    htmlContentHistory += "<ul>";
-                    task.historic.forEach(function(item) {
-                        htmlContentHistory +=
-                            `<li>Initial Status:  ${mapStatusToEstatusText[item.initialstatus]}
-                        , Final Status:  ${mapStatusToEstatusText[item.finestatus]}  Fecha:  ${item.fecha} , Edito:  ${item.edito} </li>`;
-                    });
-                    htmlContentHistory += "</ul>";
-                } else {
-                    htmlContentHistory = "<span>No tiene historial</span>";
-                }
-                //Resourses
-                var divadjuntos = document.getElementById("adjuntos");
+                }).join("");
+
+                const htmlContentHistory = task.historic && task.historic.length > 0 ?
+                    "<ul>" + task.historic.map(item =>
+                        `<li class="log-list">Initial Status: ${mapStatusToEstatusText[item.initialstatus]}, Final Status: ${mapStatusToEstatusText[item.finestatus]}  Fecha: ${item.fecha} , Edito: ${item.edito} </li>`
+                        ).join("") + "</ul>" :
+                    "<span>No tiene historial</span>";
+
+                const divadjuntos = document.getElementById("adjuntos");
+                const conteinerAdjuntos = document.getElementById('conteiner-adjuntos');
                 if (task.resources && task.resources.length > 0) {
                     divadjuntos.style.display = "block";
-                    document.getElementById('conteiner-adjuntos').innerHTML = '';
-                    task.resources.forEach(function(item) {
+                    conteinerAdjuntos.innerHTML = '';
+                    task.resources.forEach(item => {
                         base64Aarchivo(item.archivo, item.name);
                     });
                 } else {
                     divadjuntos.style.display = "none";
-                    document.getElementById('conteiner-adjuntos').innerHTML = '';
+                    conteinerAdjuntos.innerHTML = '';
                 }
 
-                console.log(listArrayP1);
-                //se agregan parametros por elemento del modal
-                document.getElementById('idTaks').value = `${task.id}`;
-                document.getElementById('modal-title').innerHTML = `${task.name}`;
-                document.getElementById('imagenesParticipantes').innerHTML = `${imagenes}`;
-                document.getElementById('nombreLabel').value = `${task.name}`;
-                document.getElementById('descriptionLabel').value = `${task.description}`;
-                document.getElementById('progresoLabel').value = `${task.progress}%`;
-                document.getElementById('diasLabel').value = `${task.duration}`;
-                document.getElementById('inicio').value = `${timestampToDateString(task.start)}`;
-                document.getElementById('fin').value = `${timestampToDateString(task.end)}`;
-                document.getElementById('estatusSelect').value = `${mapStatusToEstatusText[task.status]}`;
-                document.getElementById('personasAsignadas').innerHTML = `${imagenestogle}`;
-                document.getElementById('logHistorico').innerHTML = `${htmlContentHistory}`;
+                document.getElementById('idTaks').value = task.id;
+                document.getElementById('modal-title').innerHTML = task.name;
+                document.getElementById('imagenesParticipantes').innerHTML = imagenes;
+                document.getElementById('nombreLabel').value = task.name;
+                document.getElementById('descriptionLabel').value = task.description;
+                document.getElementById('progresoLabel').value = task.progress + "%";
+                document.getElementById('diasLabel').value = task.duration;
+                document.getElementById('inicio').value = timestampToDateString(task.start);
+                document.getElementById('fin').value = timestampToDateString(task.end);
+                document.getElementById('estatusSelect').value = mapStatusToEstatusText[task.status];
+                document.getElementById('personasAsignadas').innerHTML = imagenestogle;
+                document.getElementById('logHistorico').innerHTML = htmlContentHistory;
 
                 seleccionarCheckboxes(task.tag);
-                // Mostrar el modal
+                insertTasksFromService(task.subtasks);
+
                 modal.show();
             }
+
         }
 
         function guardarDatosmodal(id, nombre, descripcion, inicio, fin, dias, estatus, progreso) {
-            let taksnew = tasksModel.findIndex(objeto => objeto.id === id);
-            if (taksnew !== -1) {
-                const objet = tasksModel;
-                objet[taksnew].name = nombre;
-                objet[taksnew].progress = progreso.replace('%', '');;
-                objet[taksnew].description = descripcion;
-                objet[taksnew].status = estatus;
-                objet[taksnew].start = inicio;
-                objet[taksnew].end = fin;
-                objet[taksnew].duration = dias;
-                responseLocal.tasks = objet;
-                insertResources(archivosArray, objet[taksnew]);
-                insertTag(listArrayP1, objet[taksnew]);
+            const taskIndex = tasksModel.findIndex(objeto => objeto.id === id);
+            if (taskIndex !== -1) {
+                const updatedTask = {
+                    ...tasksModel[taskIndex],
+                    name: nombre,
+                    progress: progreso.replace('%', ''),
+                    description: descripcion,
+                    status: estatus,
+                    start: inicio,
+                    end: fin,
+                    duration: dias
+                };
+
+                tasksModel[taskIndex] = updatedTask;
+
+                const updatedTasks = [...responseLocal.tasks];
+                updatedTasks[taskIndex] = updatedTask;
+
+                responseLocal.tasks = updatedTasks;
+
+                insertResources(archivosArray, updatedTask);
+                insertTag(listArrayP1, updatedTask);
+                insertSubTasks(subTasks, updatedTask);
+
                 saveOnServer(responseLocal);
                 location.reload();
             } else {
@@ -770,6 +769,27 @@
             }
         }
         //////////////////////////insericion de modulos faltantes en el js/////////////////////////////////////////////////
+        function insertTag(value, tag) {
+            if ('tag' in responseLocal.tasks) {
+                value.forEach(element => {
+                    const etiquetaNuevo = {
+                        "etiqueta": element,
+                    };
+                    tag.tag.push(etiquetaNuevo);
+                });
+            } else {
+                if (!tag.tag) {
+                    tag.tag = [];
+                }
+                value.forEach(element => {
+                    const etiquetaNuevo = {
+                        "etiqueta": element,
+                    };
+                    tag.tag.push(etiquetaNuevo);
+                });
+            }
+        }
+
         function insertResources(value, resources) {
             if ('resources' in responseLocal.tasks) {
                 value.forEach(element => {
@@ -793,40 +813,27 @@
             }
         }
 
-        function insertTag(value, tag) {
-            if ('tag' in responseLocal.tasks) {
+        function insertSubTasks(value, subtasks) {
+            if ('subtasks' in responseLocal.tasks) {
                 value.forEach(element => {
-                    const resourcesNuevo = {
-                        "etiqueta": element,
+                    const subtasksNuevo = {
+                        "selected": element.selected,
+                        "id": element.id,
+                        "taskName": element.taskName
                     };
-                    tag.tag.push(resourcesNuevo);
+                    subtasks.subtasks.push(subtasksNuevo);
                 });
             } else {
-                if (!tag.tag) {
-                    tag.tag = [];
+                if (!subtasks.subtasks) {
+                    subtasks.subtasks = [];
                 }
                 value.forEach(element => {
-                    const resourcesNuevo = {
-                        "etiqueta": element,
+                    const subtasksNuevo = {
+                        "selected": element.selected,
+                        "id": element.id,
+                        "taskName": element.taskName
                     };
-                    tag.tag.push(resourcesNuevo);
-                });
-            }
-        }
-
-        function insertSubTasks(value, resources) {
-            if ('resources' in responseLocal.tasks) {
-                resources.resources.push(resourcesNuevo);
-            } else {
-                if (!resources.resources) {
-                    resources.resources = [];
-                }
-                value.forEach(element => {
-                    const resourcesNuevo = {
-                        "name": element.name,
-                        "archivo": element.archivo
-                    };
-                    resources.resources.push(resourcesNuevo);
+                    subtasks.subtasks.push(subtasksNuevo);
                 });
             }
         }
