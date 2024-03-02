@@ -982,7 +982,7 @@
                             let evaluacionContenedor = document.getElementById(`autoev${index}`);
                             if (evaluacionContenedor != null) {
                                 evaluacionContenedor.innerHTML = competencia
-                                    .calificacion == null ? 'No se ha evaluado' : competencia
+                                    .calificacion === null ? 'No se ha evaluado' : competencia
                                     .calificacion;
                                 evaluacionContenedor.classList.add('form-control');
                                 evaluacionContenedor.style.background = 'aliceblue';
@@ -1019,7 +1019,7 @@
                         response.forEach((objetivo, index) => {
                             let contenedorMetaAlcanzada = document.getElementById(
                                 `autoevaluacionObjetivos${objetivo.objetivo_id}`);
-                            contenedorMetaAlcanzada.innerHTML = objetivo.calificacion == 0 ?
+                            contenedorMetaAlcanzada.innerHTML = objetivo.calificacion === null ?
                                 'No se ha evaluado' : objetivo.calificacion;
                         });
 
