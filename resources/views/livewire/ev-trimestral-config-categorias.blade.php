@@ -17,7 +17,8 @@
                                 <div class="anima-focus mb-3 ">
                                     <input type="text" id="categoria_arreglo_{{ $key }}"
                                         name="categoria_arreglo_{{ $key }}" class="form-control" placeholder=""
-                                        maxlength="120">
+                                        maxlength="120" value="{{ $p['nombre'] ?? '' }}"
+                                        wire:change="editRegistro($event.target.value, 'nombre', {{ $p['id'] ?? '' }})">
                                     <label for="categoria_arreglo_{{ $key }}">Categoria</label>
                                 </div>
                             </div>
@@ -26,7 +27,7 @@
                 en el arreglo y la elimina  --}}
                                 <div style="text-align: end;">
                                     <button class="btn trash-button"
-                                        wire:click.prevent="removeCategoria({{ $key }})">
+                                        wire:click.prevent="removeCategoria({{ $key }}, {{ $p['id'] }})">
                                         <i class="fa-regular fa-trash-can" style="color: rgb(0, 0, 0); font-size: 15pt;"
                                             title="Eliminar"></i>
                                     </button>
@@ -34,9 +35,10 @@
                             </div>
                             <div class="col-11">
                                 <div class="anima-focus mb-3 ">
-                                    <input type="text" id="descripcion_categoria_arreglo_{{ $key }}"
-                                        name="descripcion_categoria_arreglo_{{ $key }}" class="form-control"
-                                        placeholder="" style="height: 150px !important;">
+                                    <textarea id="descripcion_categoria_arreglo_{{ $key }}"
+                                        name="descripcion_categoria_arreglo_{{ $key }}" class="form-control" placeholder=""
+                                        style="height: 150px !important;"
+                                        wire:change="editRegistro($event.target.value, 'descripcion', {{ $p['id'] ?? '' }})">{{ $p['descripcion'] ?? '' }}</textarea>
                                     <label for="descripcion_categoria_arreglo_{{ $key }}">Descripción</label>
                                 </div>
                             </div>

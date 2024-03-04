@@ -11,11 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categorias_evaluaciones_trimestrales', function (Blueprint $table) {
-            $table->id();
-            $table->string('nombre_categoria');
-            $table->longText('descripcion');
-            $table->timestamps();
+        Schema::table('ev360_tipo_objetivos', function (Blueprint $table) {
+            //
+            $table->longText('descripcion')->nullable();
         });
     }
 
@@ -24,6 +22,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categorias_evaluaciones_trimestrales');
+        Schema::table('ev360_tipo_objetivos', function (Blueprint $table) {
+            //
+            $table->dropColumn('descripcion');
+        });
     }
 };

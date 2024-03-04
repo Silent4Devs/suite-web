@@ -23,14 +23,14 @@ class TipoObjetivo extends Model implements Auditable
     public static function getAll()
     {
         return Cache::remember('TipoObjetivo_all', 3600 * 24, function () {
-            return self::get();
+            return self::orderBy('id')->get();
         });
     }
 
     public function getImagenRutaAttribute()
     {
         if ($this->imagen) {
-            return asset('storage/perspectivas/img/'.$this->imagen);
+            return asset('storage/perspectivas/img/' . $this->imagen);
         }
 
         return asset('img/bullseye.png');
@@ -39,5 +39,12 @@ class TipoObjetivo extends Model implements Auditable
     public function objetivos()
     {
         return $this->hasMany('App\Models\RH\Objetivo', 'tipo_id', 'id');
+    }
+
+    public function tipoObjetivoOcupado($objetivoId)
+    {
+        return Objetivo::where('tipo_id', $this->id)
+            ->where('id', $objetivoId)
+            ->exists();
     }
 }
