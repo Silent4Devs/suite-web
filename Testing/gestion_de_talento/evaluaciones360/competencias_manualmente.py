@@ -194,26 +194,55 @@ def create_publico_objetivo(driver):
     campo_objetivo.click()
     time.sleep(tiempo_llenado)
     print("Llenando campo nombre")
-    campo_objetivo.send_keys("Por Área")
+    campo_objetivo.send_keys("Manualmente")
     print("Dando click en campo objetivo")
     time.sleep(tiempo_llenado)
     campo_objetivo.click()
     
     time.sleep(tiempo_espera)
     
-    # Area a seleccionar
+     # Seleccionar empleados a evaluar
     
-    area = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, "//SELECT[@id='by_area']"))
+    campo_empleados_1 = WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.XPATH, "//UL[@class='select2-selection__rendered']"))
+    )
+    print("Dando click en campo selecciona empleados a evaluar")
+    campo_empleados_1.click()
+    time.sleep(tiempo_espera)
+    print("Llenando campo selecciona empleados a evaluar")
+    campo_empleados_1.send_keys("Cesar Ernesto Escobar Hernández")
+    print("Esperando resultados de búsqueda")
+    WebDriverWait(driver, 10).until(
+        EC.visibility_of_element_located((By.XPATH, "//li[@role='treeitem'][contains(text(),'Cesar Ernesto Escobar Hernández')]"))
+    )
+    print("Seleccionando empleado")
+  
+
+    campo_empleados_2 = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, "//UL[@class='select2-selection__rendered']"))
         )
-    print("Dando click en campo area")
-    area.click()
-    time.sleep(tiempo_llenado)
-    print("Llenando campo area")
-    area.send_keys("Desarrollo")
-    print("Dando click en campo area")
-    time.sleep(tiempo_llenado)
-    area.click()
+    print("Dando click en campo selecciona empleados a evaluar")
+    campo_empleados_2.click()
+    time.sleep(tiempo_espera)
+    print("Llenando campo selecciona empleados a evaluar")
+    campo_empleados_2.send_keys("Marti David Tendilla Gonzalez")
+    print("Dando click en campo selecciona empleados a evaluar")
+    time.sleep(tiempo_espera)
+    campo_empleados_2.click()
+    
+    time.sleep(tiempo_espera)
+    
+    campo_empleados_3 = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, "//UL[@class='select2-selection__rendered']"))
+        )
+    print("Dando click en campo selecciona empleados a evaluar")
+    campo_empleados_3.click()
+    time.sleep(tiempo_espera)
+    print("Llenando campo selecciona empleados a evaluar")
+    campo_empleados_3.send_keys("Zaid Arath García Hernández")
+    print("Dando click en campo selecciona empleados a evaluar")
+    time.sleep(tiempo_espera)
+    campo_empleados_3.click()
     
     time.sleep(tiempo_espera)
     
@@ -258,13 +287,13 @@ def create_evaluadores(driver):
      # Pares segunda opcion
     
     pares_2 = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, "(//SELECT[@name=''])[35]"))
+        EC.presence_of_element_located((By.XPATH, "(//SELECT[@name=''])[7]"))
         )
     print("Dando click en segundo campo pares")
     pares_2.click()
     time.sleep(tiempo_llenado)
     print("Llenando campo pares")
-    pares_2.send_keys("Zaid Arath García Hernández")
+    pares_2.send_keys("Nelly Arriaga Dimas")
     print("Dando click en campo pares")
     time.sleep(tiempo_llenado)
     pares_2.click()
@@ -286,7 +315,8 @@ def create_evaluadores(driver):
 def test_create_evaluadores(browser):
     
     create_evaluadores(browser)
-    
+
+
 ################################################# Repositorio Periodos
 
 def create_periodos(driver):

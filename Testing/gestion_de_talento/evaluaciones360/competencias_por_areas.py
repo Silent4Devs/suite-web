@@ -333,8 +333,6 @@ def create_periodos(driver):
     print("Dando agregar perido")
     btn_periodo.click()
     
-    time.sleep(tiempo_espera)
-    
     # Fecha evaluacion 2
     """
     fecha_inicio = WebDriverWait(driver, 10).until(
@@ -369,7 +367,7 @@ def create_periodos(driver):
     
     time.sleep(tiempo_espera)"""
     
-    time.sleep(tiempo_carga)
+    time.sleep(tiempo_modulos)
     
     # Boton Activar
     
@@ -379,7 +377,7 @@ def create_periodos(driver):
     print("Dando click en activar")
     btn_activar.click()
     
-    time.sleep(tiempo_carga)
+    time.sleep(tiempo_modulos)
     
     # Boton Activar
     
@@ -389,7 +387,23 @@ def create_periodos(driver):
     print("Dando click en activar")
     btn_activar.click()
     
-    time.sleep(tiempo_carga)
+    time.sleep(tiempo_modulos)
+    
+    btn_activar = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, "(//BUTTON[@type='button'])[2]"))
+        )
+    print("Dando click en activar")
+    btn_activar.click()
+    
+    time.sleep(tiempo_modulos)
+    
+    btn_activar = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, "(//BUTTON[@type='button'])[2]"))
+        )
+    print("Dando click en activar")
+    btn_activar.click()
+    
+    time.sleep(tiempo_modulos)
     
     print("URL actual:", driver.current_url)
       
