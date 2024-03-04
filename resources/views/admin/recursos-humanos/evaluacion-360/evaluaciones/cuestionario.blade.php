@@ -290,7 +290,8 @@
                                                                     class="col-{{ $evaluacion->autoevaluacion ? ($isJefeInmediato ? '4' : '6') : '6' }} justify-content-between">
                                                                     <select class="form-control" name="respuesta"
                                                                         onchange="event.preventDefault();GuardarRepuesta(this,'{{ route('admin.ev360-competencias.guardarRespuestaCompetencia', $competencia->competencia->id) }}')">
-                                                                        <option value="" disabled selected>
+                                                                        <option value="" disabled selected
+                                                                            {{ $competencia->calificacion === null ? 'selected' : '' }}>
                                                                             -- Selecciona una calificación --
                                                                         </option>
                                                                         @foreach ($competencia->competencia->opciones as $opcion)
@@ -299,12 +300,13 @@
                                                                                 data-evaluado="{{ $evaluado->id }}"
                                                                                 data-evaluador="{{ $evaluador->id }}"
                                                                                 value="{{ $opcion->ponderacion }}"
-                                                                                {{ $opcion->ponderacion == $competencia->calificacion ? 'selected' : '' }}>
+                                                                                {{ $opcion->ponderacion == $competencia->calificacion && $competencia->calificacion !== null ? 'selected' : '' }}>
                                                                                 {{ $opcion->ponderacion }}
                                                                             </option>
                                                                         @endforeach
                                                                     </select>
                                                                 </div>
+
 
                                                             </div>
                                                         </div>
@@ -980,7 +982,8 @@
                             let evaluacionContenedor = document.getElementById(`autoev${index}`);
                             if (evaluacionContenedor != null) {
                                 evaluacionContenedor.innerHTML = competencia
-                                    .calificacion == null ? 'No se ha evaluado' : competencia.calificacion;
+                                    .calificacion === null ? 'No se ha evaluado' : competencia
+                                    .calificacion;
                                 evaluacionContenedor.classList.add('form-control');
                                 evaluacionContenedor.style.background = 'aliceblue';
                             }
@@ -1016,7 +1019,7 @@
                         response.forEach((objetivo, index) => {
                             let contenedorMetaAlcanzada = document.getElementById(
                                 `autoevaluacionObjetivos${objetivo.objetivo_id}`);
-                            contenedorMetaAlcanzada.innerHTML = objetivo.calificacion == 0 ?
+                            contenedorMetaAlcanzada.innerHTML = objetivo.calificacion === null ?
                                 'No se ha evaluado' : objetivo.calificacion;
                         });
 
