@@ -170,3 +170,16 @@
     border-top: 1px solid #006DDB;
     transform: translateY(-10px);
 }
+
+.nav-evaluaciones-card .nav.nav-tabs{
+    justify-content: start;
+}
+.nav-evaluaciones-card .nav.nav-tabs .nav-link.active,
+.nav-evaluaciones-card .nav.nav-tabs .nav-link{
+    background-color: #fff !important;
+    font-weight: bolder;
+}
+
+.nav-evaluaciones-card .nav-tabs .nav-link:not(.nav-link:first-child)::before{
+    background-color: #cacaca;
+}

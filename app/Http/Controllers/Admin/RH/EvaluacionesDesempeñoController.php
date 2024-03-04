@@ -16,6 +16,11 @@ class EvaluacionesDesempeñoController extends Controller
         return view('admin.recursos-humanos.evaluaciones-desempeño.dashboard-general');
     }
 
+    public function dashboardArea()
+    {
+        return view('admin.recursos-humanos.evaluaciones-desempeño.dashboard-area');
+    }
+
     public function dashboardGlobal()
     {
         return view('admin.recursos-humanos.evaluaciones-desempeño.dashboard-global');
