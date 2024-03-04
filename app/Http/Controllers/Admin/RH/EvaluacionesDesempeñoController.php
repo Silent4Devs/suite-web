@@ -30,4 +30,34 @@ class EvaluacionesDesempeñoController extends Controller
     {
         return view('admin.recursos-humanos.evaluaciones-desempeño.create-evaluacion');
     }
+
+    public function dashboardPersonal()
+    {
+        return view('admin.recursos-humanos.evaluaciones-desempeño.dashboard-personal');
+    }
+
+    public function misEvaluaciones()
+    {
+        return view('admin.recursos-humanos.evaluaciones-desempeño.mis-evaluaciones');
+    }
+
+    public function cargaObjetivosEmpleado()
+    {
+        return view('admin.recursos-humanos.evaluaciones-desempeño.carga-objetivos-empleado');
+    }
+
+    public function objetivosImportar()
+    {
+        return view('admin.recursos-humanos.evaluaciones-desempeño.objetivos-importar');
+    }
+
+    public function objetivosPapelera()
+    {
+        return view('admin.recursos-humanos.evaluaciones-desempeño.objetivos-papelera');
+    }
+
+    public function objetivosExportar()
+    {
+        return view('admin.recursos-humanos.evaluaciones-desempeño.objetivos-exportar');
+    }
 }
