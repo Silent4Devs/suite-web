@@ -1,235 +1,71 @@
 @extends('layouts.admin')
+@section('css')
+    <link rel="stylesheet" href="{{ asset('css/plan_accion.css') }}{{ config('app.cssVersion') }}">
+
+    <link rel=stylesheet href="{{ asset('gantt/platform.css') }}" type="text/css">
+    <link rel=stylesheet href="{{ asset('gantt/libs/jquery/dateField/jquery.dateField.css') }}" type="text/css">
+
+    <link rel=stylesheet href="{{ asset('gantt/gantt.css') }}" type="text/css">
+    <link rel=stylesheet href="{{ asset('gantt/ganttPrint.css') }}" type="text/css" media="print">
+    <link rel=stylesheet href="{{ asset('gantt/libs/jquery/valueSlider/mb.slider.css') }}" type="text/css" media="print">
+
+    <link rel=stylesheet href="{{ asset('css/kanban/jkanban.min.css') }}" type="text/css">
+@endsection
 @section('content')
-    <style>
-        body {
-            background-color: #fff !important;
-        }
+    <h5 class="col-12 titulo_general_funcion">
+        Plan de Acción:
+        <span style="font-weight: lighter;"> {{ $planImplementacion->parent }} </span>
+    </h5>
 
-        .resEdit {
-            padding: 15px;
-        }
+    <div class="row cards-top-plan">
+        <div class="col-md-2">
+            <div class="card card-body" style="border-left-color: #83BCFE;">
+                <span>Totales</span>
+                <strong>20</strong>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="card card-body" style="border-left-color: #ECCE7D;">
+                <span>Lista de tareas</span>
+                <strong>20</strong>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="card card-body" style="border-left-color: #D4D4D4;">
+                <span>Suspendidos</span>
+                <strong>20</strong>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="card card-body" style="border-left-color: #7DC0EC;">
+                <span>En proceso </span>
+                <strong>20</strong>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="card card-body" style="border-left-color: #EC7D94;">
+                <span>Retrasados</span>
+                <strong>20</strong>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="card card-body" style="border-left-color: #AAE29A;">
+                <span>Completados</span>
+                <strong>20</strong>
+            </div>
+        </div>
+    </div>
 
-        .resLine {
-            width: 95%;
-            padding: 3px;
-            margin: 5px;
-            border: 1px solid #d0d0d0;
-        }
+    <div class="blue-menu-header-plan d-flex align-items-center justify-content-between px-5">
+        <h3 id="titlo-tab" class="mb-0">Kanban</h3>
+        <div class="">
+            <button class="btn">
+                <i class="material-symbols-outlined"> view_kanban</i>
+                Kanban
+            </button>
+        </div>
+    </div>
 
-
-        .ganttButtonBar h1 {
-            color: #000000;
-            font-weight: bold;
-            font-size: 28px;
-            margin-left: 10px;
-        }
-
-        #TWGanttArea {
-            height: 550px !important;
-        }
-
-        #__popup__1 {
-            background-color: rgba(0, 0, 0, 0.5) !important;
-        }
-
-        .bwinPopupd {
-            position: absolute;
-            width: 90%;
-            max-width: 600px;
-            top: 0px;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            margin: auto;
-            margin-top: 100px !important;
-            height: 400px;
-        }
-
-        .gdfTable.table.ganttFixHead thead tr .gdfColHeader.gdfied.unselectable {
-            font-size: 12px !important;
-        }
-
-        .gdfTable.table.ganttFixHead {
-            display: none !important;
-        }
-
-        .ganttFixHead {
-            border-bottom: 1px solid #ccc !important;
-        }
-
-        .table thead th {
-            border-bottom: none !important;
-            border-top: none !important;
-        }
-
-        #workSpace {
-            border: none !important;
-        }
-
-        table.gdfTable thead>tr:nth-child(1n) {
-            position: sticky;
-            top: 0;
-            background-color: #fff !important;
-            z-index: 2;
-        }
-
-        .icons_propios_gantt {
-            transform: scale(1.2);
-            color: #34495e !important;
-        }
-
-        .icons_propios_gantt.guardar {
-            transform: scale(1.5);
-            color: #345183 !important;
-        }
-
-
-        .botones_vistas_gantt {
-            width: 100%;
-            position: relative;
-            z-index: 2;
-        }
-
-        .botones_vistas_gantt a {
-            padding: 5px 10px;
-            color: #FFFFFF;
-            cursor: pointer;
-            text-align: center;
-        }
-
-        .botones_vistas_gantt a:hover {
-            border: 0px solid #6F8FB8;
-            background-color: #6F8FB8;
-            color: #fff;
-        }
-
-        .caja_botones_menu a:hover {
-            background-color: #6F8FB8;
-        }
-
-        .caja_botones_menu a.btn_activo,
-        .caja_botones_menu a.btn_activo:hover {
-            background-color: #6F8FB8;
-            box-shadow: 0px 0px 0px 0px;
-            color: #fff;
-        }
-
-        .boton_activo {
-            border: 1px solid #6F8FB8 !important;
-            background-color: #6F8FB8 !important;
-            color: #fff !important;
-        }
-
-        .botones_vistas_gantt a i {
-            font-size: 11pt;
-            margin-right: 5px;
-        }
-
-        select.formElements option {
-            text-transform: capitalize !important;
-        }
-
-        .splitterContainer rect:nth-child(1) {
-            rx: 10px;
-            ry: 10px;
-            width: calc(+ 20px);
-        }
-
-        .splitterContainer rect[height="3"] {
-            height: 10px;
-            fill: #505050 !important;
-            rx: 11px;
-            ry: 14px;
-        }
-
-        .splitterContainer rect[height="60%"] {
-            transform: scaleX(0.9) translate(5%);
-            rx: 5px;
-            ry: 5px;
-        }
-
-        @media print {
-
-            header,
-            footer,
-            .sistema_gantt p,
-            .botones_vistas_gantt,
-            body.font-lato {
-                display: none !important;
-            }
-
-            * {
-                transform: scale(1.001);
-            }
-        }
-        .rounded-circle {
-            border-radius: 0 !important;
-            clip-path: circle(18px at 50% 50%);
-            height: 37px;
-        }
-        h3.mb-2 {
-            position: relative;
-            z-index: 2;
-        }
-        select {
-            appearance: none;
-            background-color: transparent;
-            border: none;
-            padding: 0 1em 0 0;
-            margin: 0;
-            width: 100%;
-            min-width: 15ch;
-            max-width: 30ch;
-            font-family: inherit;
-            font-size: inherit;
-            cursor: inherit;
-            line-height: inherit;
-            outline: none;
-            cursor: pointer;
-        }
-
-        select::-ms-expand {
-            display: none;
-        }
-
-        .caja_botones_menu {
-            display: inline-block !important;
-        }
-        .caja_botones_menu a {
-            display: inline-block;
-            align-items: center;
-        }
-
-        .vertical-line {
-            height: 20px;
-            border-left: 1px solid #ccc;
-            margin: 0 10px;
-        }
-
-        .navNew {
-            height: 68px;
-            background-color: #6F8FB8;
-            border-radius: 10px 10px 0 0;
-            margin-left: 45px;
-            margin-right: 45px;
-            display: flex;
-            align-items: center;
-        }
-
-        .text-capitalize {
-            text-transform: capitalize !important;
-            color: #ffff;
-            margin-left: 20px;
-            display: contents;
-            font-size: 25px;
-        }
-
-        .img_nav {
-            padding-right: 10px;
-            width: 40px;
-        }
-    </style>
-    <h5 class="col-12 titulo_general_funcion">Plan de Acción - {{ $planImplementacion->parent }}</h5>
     <div class="mt-5 mb-5">
         <div id="bloqueado"></div>
         <div>
@@ -240,7 +76,8 @@
                             <p id="titlo-tab" class="text-capitalize">Kanban</p>
                         </div>
                         <div class="text-right col-8 caja_botones_menu">
-                            <a href="#" data-tabs="kanban_gantt" onclick="cambiarTitulo('Kanban');" class="boton_activo">
+                            <a href="#" data-tabs="kanban_gantt" onclick="cambiarTitulo('Kanban');"
+                                class="boton_activo">
                                 <img class="img_nav" src="{{ asset('img/plan-trabajo/kanban.svg') }}" alt="Imagen 3">Kanban
                             </a>
 
