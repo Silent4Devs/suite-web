@@ -199,11 +199,12 @@ class EV360CompetenciasController extends Controller
             $sin_contestar = EvaluacionRepuesta::where('evaluacion_id', $request->evaluacion_id)
                 ->where('evaluado_id', $request->evaluado_id)
                 ->where('evaluador_id', $request->evaluador_id)
-                ->where('calificacion', '=', 0)->count();
+                ->where('calificacion', null)
+                ->count();
             $contestadas = EvaluacionRepuesta::where('evaluacion_id', $request->evaluacion_id)
                 ->where('evaluado_id', $request->evaluado_id)
                 ->where('evaluador_id', $request->evaluador_id)
-                ->where('calificacion', '>', 0)->count();
+                ->where('calificacion', '>=', 0)->count();
             $progreso = $progreso = floatval(number_format((($contestadas / $total_preguntas) * 100)));
 
             if ($repuesta_u) {

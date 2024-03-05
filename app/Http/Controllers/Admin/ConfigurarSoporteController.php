@@ -20,7 +20,7 @@ class ConfigurarSoporteController extends Controller
         // dd($query);
         abort_if(Gate::denies('configurar_soporte_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
-            $query = ConfigurarSoporteModel::with(['empleado'])->select('*')->orderByDesc('id')->get();
+            $query = ConfigurarSoporteModel::with('empleado:id,name,telefono,email')->orderByDesc('id')->get();
             // dd($query);
             $table = Datatables::of($query);
             // dd($table);
@@ -74,14 +74,14 @@ class ConfigurarSoporteController extends Controller
         // $ConfigurarSoporteModel = ConfigurarSoporteModel::get();
         // dd($ConfigurarSoporteModel);
 
-        $ConfigurarSoporteModel = ConfigurarSoporteModel::join('empleados', 'empleados.id', '=', 'configuracion_soporte.id_elaboro')
-            ->join('puestos', 'puestos.id', '=', 'empleados.puesto_id')
-            ->get();
+        // $ConfigurarSoporteModel = ConfigurarSoporteModel::join('empleados', 'empleados.id', '=', 'configuracion_soporte.id_elaboro')
+        //     ->join('puestos', 'puestos.id', '=', 'empleados.puesto_id')
+        //     ->get();
 
         // dd($ConfigurarSoporteModel);
         // $ConfigurarSoporteModel = ConfigurarSoporteModel::join('empleados', 'empleados.id', '=', 'configuracion_soporte.puesto')->get();
 
-        return view('admin.confSoporte.index', compact('ConfigurarSoporteModel'));
+        return view('admin.confSoporte.index');
     }
 
     public function create()

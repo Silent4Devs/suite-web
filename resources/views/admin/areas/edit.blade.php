@@ -1,5 +1,10 @@
 @extends('layouts.admin')
 @section('content')
+@if (session('mensajeError'))
+<div class="alert alert-danger">
+    {{ session('mensajeError') }}
+</div>
+@endif
     <h5 class="col-12 titulo_general_funcion">Editar: Registro de Área</h5>
     <div class="mt-4 card">
         <div class="card-body">

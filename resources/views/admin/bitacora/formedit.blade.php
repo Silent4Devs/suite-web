@@ -106,6 +106,12 @@
 
 
 
+@if (session('mensajeError'))
+<div class="alert alert-danger">
+    {{ session('mensajeError') }}
+</div>
+@endif
+
 {{-- <form method="PATH" action="{{ route('contratos.update', $contrato->id) }}" enctype="multipart/form-data"> --}}
 {!! Form::open([
     'route' => ['contract_manager.contratos-katbol.update', $contrato->id],
@@ -153,7 +159,7 @@
                 Contrato<font class="asterisco">*
                 </font></label>
             <input class="form-control {{ $errors->has('no_contrato') ? 'is-invalid' : '' }}" type="text"
-                maxlength="250" name="no_contrato" id="no_contrato"
+                maxlength="230" name="no_contrato" id="no_contrato"
                 value="{{ old('no_contrato', $contrato->no_contrato) }}"
                 @if ($show_contrato) disabled @endif required>
             <span id="existCode"></span>
@@ -480,11 +486,14 @@
         <div class="form-group col-md-4">
             <label for="no_contrato" class="txt-tamaño">
                 No. Pagos<font class="asterisco">*</font></label>
-            {!! Form::number('no_pagos', $contrato->no_pagos, [
-                'class' => 'form-control',
-                'required',
-                $show_contrato ? 'readonly' : '',
-            ]) !!}
+                {!! Form::number('no_pagos', $contrato->no_pagos, [
+                    'class' => 'form-control',
+                    'required',
+                    'pattern' => '[0-9]+',
+                    'min' => 0, // Opcional: especifica el valor mínimo permitido
+                    'step' => 1, // Opcional: especifica el paso de incremento/decremento
+                    $show_contrato ? 'readonly' : '',
+                ]) !!}
             @if ($errors->has('no_pagos'))
                 <div class="invalid-feedback red-text">
                     {{ $errors->first('no_pagos') }}

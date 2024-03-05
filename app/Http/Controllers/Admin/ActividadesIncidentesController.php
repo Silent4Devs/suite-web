@@ -98,6 +98,9 @@ class ActividadesIncidentesController extends Controller
                         'startIsMilestone' => false,
                         'progressByWorklog' => false,
                         'assigs' => [],
+                        'resources' => [],
+                        'subtasks' => [],
+                        'historic' => [],
                     ],
                     [
                         'id' => 'tmp_'.(strtotime(now())).rand(1, 1000),
@@ -119,6 +122,9 @@ class ActividadesIncidentesController extends Controller
                         'startIsMilestone' => false,
                         'progressByWorklog' => false,
                         'assigs' => [],
+                        'resources' => [],
+                        'subtasks' => [],
+                        'historic' => [],
                     ],
                 ];
 
@@ -157,6 +163,9 @@ class ActividadesIncidentesController extends Controller
                     'startIsMilestone' => false,
                     'progressByWorklog' => false,
                     'assigs' => $assigs,
+                    'resources' => [],
+                    'subtasks' => [],
+                    'historic' => [],
                 ];
             } else {
                 $planActual = $modelo->planes->first();
@@ -198,6 +207,9 @@ class ActividadesIncidentesController extends Controller
                     'startIsMilestone' => false,
                     'progressByWorklog' => false,
                     'assigs' => $assigs,
+                    'resources' => [],
+                    'subtasks' => [],
+                    'historic' => [],
                 ];
             }
 

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin\RH;
 
 use App\Http\Controllers\Controller;
 use App\Http\Livewire\Ev360ResumenTabla;
-use App\http\Livewire\Ev360ResumenTablaParametros;
+use App\Http\Livewire\Ev360ResumenTablaParametros;
 use App\Mail\RH\Evaluaciones\CitaEvaluadorEvaluado;
 use App\Mail\RH\Evaluaciones\RecordatorioEvaluadores;
 use App\Models\Area;
@@ -30,8 +30,8 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
-use Spatie\CalendarLinks\Link;
 use PDF;
+use Spatie\CalendarLinks\Link;
 
 class EV360EvaluacionesController extends Controller
 {
@@ -290,10 +290,10 @@ class EV360EvaluacionesController extends Controller
     public function contestarCuestionario($evaluacion, $evaluado, $evaluador)
     {
         $usuario = User::getCurrentuser();
+        $evaluacion = Evaluacion::with('rangos')->find(intval($evaluacion));
 
-        if ($usuario->empleado->id == $evaluador) {
-            $evaluacion = Evaluacion::with('rangos')->find(intval($evaluacion));
-            // dd($evaluacion);
+        // dd($evaluacion);
+        if ($usuario->empleado->id == $evaluador && $evaluacion->estatus == 2) {
             $evaluado = Empleado::alta()->with(['puestoRelacionado' => function ($q) {
                 $q->with(['competencias' => function ($q) {
                     $q->with('competencia');
@@ -338,11 +338,11 @@ class EV360EvaluacionesController extends Controller
                 $preguntas_contestadas = EvaluacionRepuesta::where('evaluacion_id', $evaluacion->id)
                     ->where('evaluado_id', $evaluado->id)
                     ->where('evaluador_id', $evaluador->id)
-                    ->where('calificacion', '>', 0)->count();
+                    ->where('calificacion', '>=', 0)->count();
                 $preguntas_no_contestadas = EvaluacionRepuesta::where('evaluacion_id', $evaluacion->id)
                     ->where('evaluado_id', $evaluado->id)
                     ->where('evaluador_id', $evaluador->id)
-                    ->where('calificacion', '=', 0)->count();
+                    ->where('calificacion', null)->count();
                 if ($total_preguntas > 0) {
                     $progreso = floatval(number_format((($preguntas_contestadas / $total_preguntas) * 100)));
                 }
@@ -620,6 +620,7 @@ class EV360EvaluacionesController extends Controller
 
     public function saveCalificacionPersepcion(Request $request)
     {
+        // dump($request->all());
         $objetivo = ObjetivoRespuesta::with('evaluacion.rangos')
             ->where('evaluado_id', $request->evaluado)
             ->where('evaluador_id', $request->evaluador)
@@ -629,10 +630,36 @@ class EV360EvaluacionesController extends Controller
 
         $update_objetivo = $objetivo->update([
             'calificacion_persepcion' => $request->calificacion_persepcion,
+            'evaluado' => true,
         ]);
-
+        // dump($objetivo, $update_objetivo);
+        $objetivos = ObjetivoRespuesta::where('evaluado_id', $request->evaluado)
+            ->where('evaluador_id', $request->evaluador)
+            ->where('evaluacion_id', $request->evaluacion)
+            ->count();
+        $objetivos_evaluados = ObjetivoRespuesta::where('evaluado_id', $request->evaluado)
+            ->where('evaluador_id', $request->evaluador)
+            ->where('evaluacion_id', $request->evaluacion)
+            ->where('evaluado', true)
+            ->count();
+        $objetivos_no_evaluados = ObjetivoRespuesta::where('evaluado_id', $request->evaluado)
+            ->where('evaluador_id', $request->evaluador)
+            ->where('evaluacion_id', $request->evaluacion)
+            ->where('evaluado', false)
+            ->count();
+        // dump(
+        //     $objetivos,
+        //     $objetivos_evaluados,
+        //     $objetivos_no_evaluados
+        // );
+        if ($objetivos) {
+            $progreso_objetivos = floatval(number_format((($objetivos_evaluados / $objetivos) * 100)));
+        } else {
+            $progreso_objetivos = 0;
+        }
+        // dd($progreso_objetivos);
         if ($update_objetivo) {
-            return response()->json(['success' => true]);
+            return response()->json(['success' => true, 'progreso' => $progreso_objetivos, 'contestadas' => $objetivos_evaluados, 'sin_contestar' => $objetivos_no_evaluados]);
         } else {
             return response()->json(['error' => true]);
         }
@@ -854,7 +881,7 @@ class EV360EvaluacionesController extends Controller
         $preguntas_contestadas = EvaluacionRepuesta::where('evaluacion_id', $evaluacion)
             ->where('evaluado_id', $evaluado)
             ->where('evaluador_id', $evaluador)
-            ->where('calificacion', '>', 0)->count();
+            ->where('calificacion', '>=', 0)->count();
         $preguntas_contestadas = $preguntas_contestadas > 0 ? $preguntas_contestadas : 1;
         $total_preguntas = $total_preguntas > 0 ? $total_preguntas : 1;
         $progreso = floatval(number_format((($preguntas_contestadas / $total_preguntas) * 100)));
@@ -983,6 +1010,7 @@ class EV360EvaluacionesController extends Controller
             if ($existeFirmaPar) {
                 $firmaPar = '/storage/' . $informacion_obtenida['lista_misma_area'][0]['firma'];
             }
+
             // dd($calificacionObjetivos);
             return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluado', compact(
                 'evaluacion',
@@ -2855,16 +2883,12 @@ class EV360EvaluacionesController extends Controller
         //         }
         //     }
 
-
     }
-
-
 
     public function pdf()
     {
 
         $evaluadoEvaluador = Evaluacion::get();
-
 
         $pdf = PDF::loadView('evaluador', compact('evaluadoEvaluador'));
         $pdf->setPaper('A4', 'portrait');

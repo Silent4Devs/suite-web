@@ -76,6 +76,9 @@ class ActividadAccionCorrectivaController extends Controller
                         'startIsMilestone' => false,
                         'progressByWorklog' => false,
                         'assigs' => [],
+                        'resources' => [],
+                        'subtasks' => [],
+                        'historic' => [],
                     ],
                     [
                         'id' => 'tmp_'.(strtotime(now())).rand(1, 1000),
@@ -97,6 +100,9 @@ class ActividadAccionCorrectivaController extends Controller
                         'startIsMilestone' => false,
                         'progressByWorklog' => false,
                         'assigs' => [],
+                        'resources' => [],
+                        'subtasks' => [],
+                        'historic' => [],
                     ],
                 ];
 
@@ -135,6 +141,9 @@ class ActividadAccionCorrectivaController extends Controller
                     'startIsMilestone' => false,
                     'progressByWorklog' => false,
                     'assigs' => $assigs,
+                    'resources' => [],
+                    'subtasks' => [],
+                    'historic' => [],
                 ];
             } else {
                 $planActual = $modelo->planes->first();
@@ -176,6 +185,9 @@ class ActividadAccionCorrectivaController extends Controller
                     'startIsMilestone' => false,
                     'progressByWorklog' => false,
                     'assigs' => $assigs,
+                    'resources' => [],
+                    'subtasks' => [],
+                    'historic' => [],
                 ];
             }
 

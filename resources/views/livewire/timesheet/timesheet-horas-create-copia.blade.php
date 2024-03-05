@@ -486,7 +486,7 @@
                         } else {
                             toastr.error(
                                 '!Error al enviar valide  que la semana  laboral no este vacia y/o que al menos una fila este llena!'
-                                );
+                            );
                         }
                     },
                     error: function(request, status, error) {
