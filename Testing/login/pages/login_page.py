@@ -7,6 +7,7 @@ class LoginPage:
     def __init__(self, driver):
         self.driver = driver
 
+
     def login(self, username, password):
         self.driver.get('https://192.168.9.78/')
         self.driver.maximize_window()

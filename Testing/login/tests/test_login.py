@@ -27,6 +27,11 @@ def test_fg_password_login(browser):
 
 @pytest.mark.usefixtures("browser")
 def test_registro_visitantes_login(browser):
+    nombre="Tester User"
+    apellido="Tester User"
+    correo="zaid.garcia@becarios.silent4business.com"
+    telefono="+525610435996"
     registro_visitantes_login= RegistroVisitantesLogin(browser)
-    registro_visitantes_login.registro_visitantes_login()
+    registro_visitantes_login.registro_visitantes_login(nombre,apellido,correo,telefono)
     pass
+
