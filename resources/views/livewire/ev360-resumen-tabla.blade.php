@@ -8,8 +8,9 @@
     </div>
     <div class="container">
         <div wire:ignore class="container pl-0 datatable-fix">
-            <table class="table table-bordered w-100 tabla-fija" style="font-size: 10px;">
-                {{--  <table class="table table-bordered w-100 datatable-Activo tabla-fija" id="tblResumen" style="font-size: 10px;">  --}}
+            {{--  <table class="table table-bordered w-100 tabla-fija" style="font-size: 10px;">  --}}
+            <table class="table table-bordered w-100 datatable-Activo tabla-fija" id="tblResumen"
+                style="font-size: 10px;">
                 <thead class="thead-dark">
                     <tr>
                         <th class="text-center" colspan="9">
