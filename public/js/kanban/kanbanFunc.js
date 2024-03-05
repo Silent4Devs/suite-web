@@ -319,6 +319,7 @@ const clearTasks = () => {
 const insertTasksFromService = (tasksFromService) => {
     clearTasks();
     if (tasksFromService && Array.isArray(tasksFromService)) {
+        clearTasks();
          // Limpiar tareas antes de insertar nuevas
         tasksFromService.forEach(({ selected, taskName }) => {
             const taskId = `task-${taskIdCounter++}`;
@@ -328,24 +329,57 @@ const insertTasksFromService = (tasksFromService) => {
             const li = createTaskListItem(taskId, checkbox, span);
             addTaskToDOM(li);
             subTasks.push({ selected, id: taskId, taskName });
+            updateProgressBar();
         });
     } else {
+        clearTasks();
+        updateProgressBar();
         console.error("El parámetro subtasks no es un array definido.");
     }
 };
 
 const editTaskName = (event) => {
     const span = event.target;
-    const taskName = span.textContent;
+    const taskId = span.parentNode.id;
+
+    // Crear un campo de entrada editable
     const input = document.createElement("input");
     input.type = "text";
-    input.value = taskName;
-    input.addEventListener("blur", () => {
-        span.textContent = input.value;
-    });
-    span.textContent = "";
-    span.appendChild(input);
+    input.value = span.textContent.trim();
+    input.classList.add("edit-task-input");
+
+    // Reemplazar el span con el input
+    span.parentNode.replaceChild(input, span);
+
+    // Enfocar el campo de entrada
     input.focus();
+
+    // Manejar el evento 'blur' para guardar los cambios
+    input.addEventListener("blur", () => {
+        const newTaskName = input.value.trim();
+        if (newTaskName !== "") {
+            // Actualizar el nombre de la tarea en el DOM y en subTasks
+            const span = document.createElement("span");
+            span.textContent = newTaskName;
+            span.addEventListener("click", editTaskName);
+
+            // Reemplazar el input con el span actualizado
+            input.parentNode.replaceChild(span, input);
+
+            // Actualizar el nombre de la tarea en subTasks
+            const taskIndex = subTasks.findIndex(task => task.id === taskId);
+            if (taskIndex !== -1) {
+                subTasks[taskIndex].taskName = newTaskName;
+            }
+        } else {
+            // Si el nuevo nombre está vacío, eliminar la tarea
+            input.parentNode.remove();
+            const taskIndex = subTasks.findIndex(task => task.id === taskId);
+            if (taskIndex !== -1) {
+                subTasks.splice(taskIndex, 1);
+            }
+        }
+    });
 };
 
 document.getElementById("add-task-btn").addEventListener("click", addTask);
@@ -448,3 +482,78 @@ function getCircleColor(value) {
     }
 }
 ///////////////// acaba funciones para checkbox
+/////////////////////////////////////////////////////////funciones para agregar personas
+function addOptionsFromArray(dataArray, addedArray) {
+    var checkboxesContainer = document.querySelector('.dropdown-checkboxes');
+    var divParticipantesContainer = document.getElementById("personasAsignadas");
+
+    // Si addedArray no está definido o es nulo, lo establecemos como un array vacío
+    addedArray = addedArray || [];
+
+    function filterItems(searchTerm) {
+        checkboxesContainer.innerHTML = '';
+        for (var i = 0; i < dataArray.length; i++) {
+            var item = dataArray[i];
+            var isChecked = addedArray.some(addedItem => addedItem.id === item.id);
+            if (item.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+                var newCheckboxLabel = document.createElement('label');
+                newCheckboxLabel.classList.add('dropdown-item-personas');
+                newCheckboxLabel.innerHTML = `
+                    <span style="max-width: calc(100% - 30px); display: inline-block; margin-right: 5px;">${item.name}</span>
+                    <input type="checkbox" value="${item.id}" ${isChecked ? 'checked' : ''} style="float: right;">`;
+                checkboxesContainer.appendChild(newCheckboxLabel);
+            }
+        }
+
+        // Actualizar la lista de participantes después de filtrar los elementos
+        updateParticipantsList();
+    }
+
+    function updateParticipantsList() {
+        // Mostrar o ocultar la lista de participantes según la longitud del array de asignados
+        divParticipantesContainer.style.display = addedArray.length > 0 ? "block" : "none";
+
+        // Generar el HTML para la lista de participantes
+        const participantesHTML = addedArray.map(asignado => {
+            if (asignado.name) {
+                const initials = asignado.name.trim().split(' ').map(word => word.charAt(0)).join('').toUpperCase();
+                const color = asignado.genero === 'M' ? 'blue' : 'pink';
+                return `<div class="person" style="display: flex; align-items: center; margin-bottom: 5px; margin-left: 20px;"><div class="initials" style="background-color: ${color}; color: white; border-radius: 50%; width: 45px; height: 45px; display: flex; justify-content: center; align-items: center; margin-right: 5px;">${initials}</div><div style="margin-left: 5px; margin-right: auto;">${asignado.name}</div></div>`;
+            }
+        }).join("");
+
+        // Actualizar el contenido del contenedor de participantes
+        divParticipantesContainer.innerHTML = participantesHTML;
+    }
+
+    filterItems('');
+
+    checkboxesContainer.style.height = '200px';
+    checkboxesContainer.style.overflowY = 'auto';
+
+    var searchInput = document.querySelector('.search-input');
+    searchInput.addEventListener('input', function() {
+        var searchTerm = this.value.trim();
+        filterItems(searchTerm);
+    });
+
+    checkboxesContainer.addEventListener('change', function(event) {
+        if (event.target.type === 'checkbox') {
+            var selectedId = event.target.value;
+            var selectedName = event.target.previousElementSibling.textContent.trim();
+            var isChecked = event.target.checked;
+            if (isChecked) {
+                // Añadir a la lista de agregados
+                addedArray.push({ id: selectedId, name: selectedName });
+            } else {
+                // Quitar de la lista de agregados
+                addedArray = addedArray.filter(item => item.id !== selectedId);
+            }
+            console.log('ID:', selectedId, 'Nombre:', selectedName, 'Seleccionado:', isChecked);
+            console.log('Lista de agregados:', addedArray);
+
+            // Actualizar la lista de participantes después de cambiar los checkboxes
+            updateParticipantsList();
+        }
+    });
+}

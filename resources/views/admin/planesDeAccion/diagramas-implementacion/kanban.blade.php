@@ -33,33 +33,7 @@
         background-position: center;
     }
 
-    .dropbtn {
-        background-color: #EFEFEF;
-        color: #818181;
-        font-size: 16px;
-        border: none;
-        cursor: pointer;
-        width: inherit;
-        display: flex;
-        align-items: center;
-        border-radius: 5px;
-    }
-
-    #myInput {
-        box-sizing: border-box;
-        background-image: url('searchicon.png');
-        background-position: 14px 12px;
-        background-repeat: no-repeat;
-        font-size: 16px;
-        padding: 14px 20px 12px 45px;
-        border: none;
-        border-bottom: 1px solid #ddd;
-    }
-
-    #myInput:focus {
-        outline: 3px solid #ddd;
-    }
-
+    /* droop */
     .dropdownBtn {
         width: 100%;
         max-width: 800px;
@@ -88,6 +62,34 @@
 
     .dropdownBtn a:hover {
         background-color: #ddd;
+    }
+
+    /*  */
+    .dropbtn {
+        background-color: #EFEFEF;
+        color: #818181;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+        width: inherit;
+        display: flex;
+        align-items: center;
+        border-radius: 5px;
+    }
+
+    #myInput {
+        box-sizing: border-box;
+        background-image: url('searchicon.png');
+        background-position: 14px 12px;
+        background-repeat: no-repeat;
+        font-size: 16px;
+        padding: 14px 20px 12px 45px;
+        border: none;
+        border-bottom: 1px solid #ddd;
+    }
+
+    #myInput:focus {
+        outline: 3px solid #ddd;
     }
 
     .texto-Etiquetas {
@@ -172,8 +174,6 @@
         font-size: 15px;
     }
 
-
-
     /*  */
     .litcss {
         list-style: none;
@@ -185,30 +185,6 @@
         align-items: center;
     }
 
-    .filename {
-        margin-left: 10px;
-    }
-
-    .filesize {
-        margin-left: auto;
-        color: #818181;
-        font-size: 0.9em;
-    }
-
-    .delete-btn {
-        margin-left: 10px;
-        color: #818181;
-        border: none;
-        border-radius: 3px;
-        padding: 5px 10px;
-        cursor: pointer;
-    }
-
-    .listaarchivos {
-        padding-left: 5px;
-        padding-right: 5px;
-    }
-
     .circle {
         display: inline-block;
         width: 45px;
@@ -217,17 +193,48 @@
         margin-left: 10px;
     }
 
-    .butonLog {
-        background-color: #E3EBFF;
-        color: #5A5A5A;
-        font-size: 14px;
-        height: 36px;
-        justify-content: center;
-        text-align: center;
+    .dropdown-menu {
+        overflow-x: auto;
+        overflow-y: auto;
+    }
+
+    .dropdown-item-personas {
+        display: block;
+        width: 100%;
+        padding-left: 10px;
+    }
+
+    .personas-button {
+        background-color: transparent;
+        border: 1px solid #818181;
+        color: #818181;
+        padding: 5px 10px;
+        cursor: pointer;
+        outline: none;
+        width: 232px;
+        border-radius: 10px;
+        height: 37px;
+    }
+
+    .personas-button:hover {
+        color: #818181;
+    }
+
+    .dropdown-wrapper {
         display: flex;
+        justify-content: center;
         align-items: center;
-        border: none;
-        border-radius: 5px;
+        padding-bottom: 20px;
+    }
+
+    .dropdown-personas {
+        position: relative;
+    }
+
+    .dropdown-menu {
+        display: none;
+        position: absolute;
+        z-index: 1;
     }
 </style>
 <link rel=stylesheet href="{{ asset('css/kanban/jkanban.min.css') }}" type="text/css">
@@ -286,7 +293,7 @@
                                     <div class="col-sm" style="padding-right: 0px;">
                                         <div class="form-group anima-focus">
                                             <input type="text" class="form-control" id="diasLabel" name="diasLabel"
-                                                placeholder="">
+                                                placeholder="" style="text-align: center;pointer-events: none;">
                                             <label for="diasLabel"> Dias <span class="text-danger">*</span></label>
                                         </div>
                                     </div>
@@ -308,7 +315,7 @@
                                 <div class="col-4">
                                     <div class="form-group anima-focus">
                                         <input type="text" class="form-control" id="progresoLabel"
-                                            name="progresoLabel" placeholder="">
+                                            name="progresoLabel" placeholder="" style="text-align: center;">
                                         <label for="progresoLabel"> Progreso <span class="text-danger">*</span></label>
                                     </div>
                                 </div>
@@ -379,20 +386,44 @@
                                 <img class="addSVG" src="{{ asset('img/plan-trabajo/account.svg') }}">
                                 <span>Participantes</span>
                             </button>
-                            <div id="drop-Personas" class="dropdownBtn-content">
+                            <div id="drop-Personas" class="dropdownBtn-content" style="height: 700px;">
                                 <div class="texto-Etiquetas">
                                     <p>Participantes</p>
                                 </div>
                                 <div class="contenedorSelect">
                                     <div class="form-group anima-focus">
-                                        <select required class="form-control" name="grupoSelect" id="grupoSelect">
+                                        <select required class="form-control" name="agregarSelect" id="agregarSelect"
+                                            onchange="manejarSeleccion()">
+                                            <option selected>Área</option>
+                                            <option>Por persona</option>
                                         </select>
-                                        <label for="grupoSelect">Agregar</label>
+                                        <label for="agregarSelect">Agregar</label>
                                     </div>
-                                    <div class="form-group anima-focus">
-                                        <select required class="form-control" name="areaSelect" id="areaSelect">
-                                        </select>
-                                        <label for="areaSelect">Área</label>
+                                    <div id="areaForm">
+                                        <div class="form-group anima-focus">
+                                            <select required class="form-control" name="areaSelect" id="areaSelect">
+                                                <option selected>Selecciona un area</option>
+                                            </select>
+                                            <label for="areaSelect">Área</label>
+                                        </div>
+                                    </div>
+                                    {{--  --}}
+                                </div>
+                                {{-- mostar personas --}}
+                                <div class="dropdown-wrapper">
+                                    <div class="dropdown-personas">
+                                        <button class="personas-button dropdown-toggle" type="button"
+                                            data-toggle="dropdown" aria-expanded="false">
+                                            Integrantes
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <div class="dropdown-divider"></div>
+                                            <input type="text" class="form-control search-input"
+                                                placeholder="Search">
+                                            <div class="dropdown-divider"></div>
+                                            <div class="dropdown-checkboxes">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <p class="txtSub">Participantes agregados</p>
@@ -431,7 +462,7 @@
                         </div>
                         <div id="task-add">
                             <button id="add-task-btn"></button>
-                            <input type="text" id="task-input" placeholder="Enter task">
+                            <input type="text" id="task-input" placeholder="Agregar sub tarea">
                         </div>
                     </div>
                 </div>
@@ -493,6 +524,7 @@
         var csrfToken = $('meta[name="csrf-token"]').attr('content');
 
         let tasksModel = [];
+        let taskSelection = [];
         let responseLocal = {};
 
         function renderKanbanNew(tasks, response) {
@@ -530,9 +562,6 @@
                 },
                 dragendEl: function(el) {},
                 dropEl: function(el, target, source, sibling) {
-                    console.log("DROPPED: " + el.dataset.eid);
-                    console.log("de donde va: " + target.offsetParent.dataset.id);
-                    console.log("donde biene: " + source.offsetParent.dataset.id);
                     pintar(el.dataset.eid, el.offsetParent.dataset.id);
                     guardarStatus(el.dataset.eid, source.offsetParent.dataset.id, target.offsetParent.dataset
                         .id);
@@ -637,11 +666,18 @@
                     } = item;
 
                     const resourcesCount = resources ? resources.length : 0;
+                    const subtasksCount = subtasks ? subtasks.length : 0;
+                    const subtasksReady = subtasks ? subtasks.filter(subtask => subtask.selected).length : 0;
+
+                    let cardpulseClass = "";
+                    if (status === "STATUS_FAILED") {
+                        cardpulseClass = "pulse";
+                    }
 
                     const jsonEvents = {
                         id: id,
                         title: `
-                            <div id="${id}" class="cardContenido">
+                            <div id="${id}" class="cardContenido ${cardpulseClass}">
                               <div class="tituloCard">${name}</div>
                               <div class="contenido">
                                 <div class="etiquetaContenido">
@@ -655,7 +691,7 @@
                               </div>
                               <div class="contenido">
                                 <div id="taskContenido">
-                                  <div id="taskText">2/3</div>
+                                  <div id="taskText">${subtasksCount}/${subtasksReady}</div>
                                 </div>
                                 <div class="resourceContenido">
                                   <img class="addSVG" src="{{ asset('img/plan-trabajo/attach.svg') }}">
@@ -676,18 +712,19 @@
                     return;
                 }
 
+                //lista de participantes en el detalle
                 const assigs = task.assigs ? task.assigs.map(asignado => response.resources.find(r => Number(r.id) ===
                     Number(asignado.resourceId))).filter(Boolean) : [];
-
+                taskSelection = assigs;
                 const divparticipantes = document.getElementById("participantes");
                 const imagenes = assigs.slice(0, 4).map(asignado => {
                     const foto = asignado.foto || (asignado.genero === 'M' ? 'woman.png' :
-                    'usuario_no_cargado.png');
+                        'usuario_no_cargado.png');
                     return `<div class="person"><img class="person-img" title="${asignado.name}" src="{{ asset('storage/empleados/imagenes') }}/${foto}" /></div>`;
                 }).join("");
 
                 divparticipantes.style.display = assigs.length > 0 ? "block" : "none";
-
+                //mostar lista de participantes en el down
                 const imagenestogle = assigs.slice(0, 4).map(asignado => {
                     if (asignado.name) {
                         const initials = asignado.name.trim().split(' ').map(word => word.charAt(0)).join('')
@@ -696,13 +733,13 @@
                         return `<div class="person" style="display: flex; align-items: center; margin-bottom: 5px; margin-left: 20px;"><div class="initials" style="background-color: ${color}; color: white; border-radius: 50%; width: 45px; height: 45px; display: flex; justify-content: center; align-items: center; margin-right: 5px;">${initials}</div><div style="margin-left: 5px; margin-right: auto;">${asignado.name}</div></div>`;
                     }
                 }).join("");
-
+                //mostrar el historial
                 const htmlContentHistory = task.historic && task.historic.length > 0 ?
                     "<ul>" + task.historic.map(item =>
                         `<li class="log-list">Initial Status: ${mapStatusToEstatusText[item.initialstatus]}, Final Status: ${mapStatusToEstatusText[item.finestatus]}  Fecha: ${item.fecha} , Edito: ${item.edito} </li>`
-                        ).join("") + "</ul>" :
+                    ).join("") + "</ul>" :
                     "<span>No tiene historial</span>";
-
+                //funcion mostar los documentos adjuntos
                 const divadjuntos = document.getElementById("adjuntos");
                 const conteinerAdjuntos = document.getElementById('conteiner-adjuntos');
                 if (task.resources && task.resources.length > 0) {
@@ -716,6 +753,16 @@
                     conteinerAdjuntos.innerHTML = '';
                 }
 
+                //mostar las areas de la empresa en areaSelect
+                const areaSelect = document.getElementById('areaSelect');
+                response.area.forEach(area => {
+                    const option = document.createElement('option');
+                    option.value = area.id;
+                    option.text = area.area;
+                    areaSelect.appendChild(option);
+                });
+                //document.body.appendChild(areaSelect);
+
                 document.getElementById('idTaks').value = task.id;
                 document.getElementById('modal-title').innerHTML = task.name;
                 document.getElementById('imagenesParticipantes').innerHTML = imagenes;
@@ -726,7 +773,7 @@
                 document.getElementById('inicio').value = timestampToDateString(task.start);
                 document.getElementById('fin').value = timestampToDateString(task.end);
                 document.getElementById('estatusSelect').value = mapStatusToEstatusText[task.status];
-                document.getElementById('personasAsignadas').innerHTML = imagenestogle;
+                //document.getElementById('personasAsignadas').innerHTML = imagenestogle;
                 document.getElementById('logHistorico').innerHTML = htmlContentHistory;
 
                 seleccionarCheckboxes(task.tag);
@@ -770,23 +817,28 @@
         }
         //////////////////////////insericion de modulos faltantes en el js/////////////////////////////////////////////////
         function insertTag(value, tag) {
+            if (!value || value.length === 0) {
+                tag.tag = []; // Si value está vacío, borramos todas las etiquetas
+                return;
+            }
+
             if ('tag' in responseLocal.tasks) {
                 value.forEach(element => {
-                    const etiquetaNuevo = {
-                        "etiqueta": element,
-                    };
-                    tag.tag.push(etiquetaNuevo);
+                    const existingTagIndex = tag.tag.findIndex(existingTag => existingTag.etiqueta === element);
+                    if (existingTagIndex !== -1) {
+                        // Si la etiqueta ya existe, no hacemos nada
+                        return;
+                    } else {
+                        // Si la etiqueta no existe, la agregamos
+                        tag.tag.push({
+                            "etiqueta": element
+                        });
+                    }
                 });
             } else {
-                if (!tag.tag) {
-                    tag.tag = [];
-                }
-                value.forEach(element => {
-                    const etiquetaNuevo = {
-                        "etiqueta": element,
-                    };
-                    tag.tag.push(etiquetaNuevo);
-                });
+                tag.tag = value.map(element => ({
+                    "etiqueta": element
+                }));
             }
         }
 
@@ -816,17 +868,22 @@
         function insertSubTasks(value, subtasks) {
             if ('subtasks' in responseLocal.tasks) {
                 value.forEach(element => {
-                    const subtasksNuevo = {
-                        "selected": element.selected,
-                        "id": element.id,
-                        "taskName": element.taskName
-                    };
-                    subtasks.subtasks.push(subtasksNuevo);
+                    const existingTaskIndex = subtasks.subtasks.findIndex(task => task.id === element.id);
+                    if (existingTaskIndex !== -1) {
+                        // Si la tarea ya existe, actualiza sus valores
+                        subtasks.subtasks[existingTaskIndex].selected = element.selected;
+                        subtasks.subtasks[existingTaskIndex].taskName = element.taskName;
+                    } else {
+                        // Si la tarea no existe, agrégala
+                        subtasks.subtasks.push({
+                            "selected": element.selected,
+                            "id": element.id,
+                            "taskName": element.taskName
+                        });
+                    }
                 });
             } else {
-                if (!subtasks.subtasks) {
-                    subtasks.subtasks = [];
-                }
+                subtasks.subtasks = [];
                 value.forEach(element => {
                     const subtasksNuevo = {
                         "selected": element.selected,
@@ -837,7 +894,30 @@
                 });
             }
         }
-        /////////////////////////////////////////////////////
+
+        // function insertResources(idTasks,idResourse,resources) {
+
+        // }
+        ///////////////////////////////funciones para agregar, eliminar,mostrar,editar personas agregadas//////////////////
+        const areaSelect = document.getElementById('areaSelect');
+        areaSelect.addEventListener('change', function() {
+            const id = parseInt(areaSelect.value);
+            const personafiltrada = responseLocal.resources.filter(persona => persona.area_id === id);
+            addOptionsFromArray(personafiltrada, taskSelection);
+        });
+
+        function manejarSeleccion() {
+            var seleccion = document.getElementById("agregarSelect").value;
+            var areaFormGroup = document.getElementById("areaForm");
+
+            if (seleccion === "Por persona") {
+                areaFormGroup.style.display = "none"; // Ocultar el formulario de área
+                addOptionsFromArray(personafiltrada, taskSelection);
+            } else {
+                areaFormGroup.style.display = "block";
+            }
+        }
+        //////////////////////////////////////////////////no es mio///////////////////////////////////
         function renderActividad(actividad, response) {
             let imagenes = "";
             let assigs = [];

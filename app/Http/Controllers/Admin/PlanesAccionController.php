@@ -382,10 +382,17 @@ class PlanesAccionController extends Controller
                 'id',
                 'title as name'
             )->get();
+        $area = DB::table('areas')
+            ->select(
+                'id',
+                'area',
+                'foto_area'
+            )->get();
 
         $implementacion->resources = $elaborador;
         $implementacion->roles = $roles;
         $implementacion->tasks = $tasks;
+        $implementacion->area = $area;
 
         return $implementacion;
     }

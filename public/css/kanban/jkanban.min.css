@@ -412,12 +412,36 @@
 }
 
 #conteiner-adjuntos {
-    height: 80px;
+    height: 60px;
     overflow-y: scroll;
     position: relative;
 }
 
-/* Estilo para el diseño del scroll */
+.filename {
+    margin-left: 10px;
+}
+
+.filesize {
+    margin-left: auto;
+    color: #818181;
+    font-size: 0.9em;
+}
+
+.delete-btn {
+    margin-left: 10px;
+    color: #818181;
+    border: none;
+    border-radius: 3px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.listaarchivos {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+/* Estilo para el diseño del scroll para archivos*/
 #conteiner-adjuntos::-webkit-scrollbar {
     width: 8px;
 }
@@ -453,10 +477,21 @@
     background-color: transparent;
 }
 
-/* Estilos para el input */
+/* Estilos para el input subtasks */
 #task-input {
     border: 1px solid transparent;
     color: #006DDB;
+}
+
+#task-input::placeholder {
+    color: #006DDB; /* Cambia el color según tus preferencias */
+}
+
+#task-input:focus {
+    color: #006DDB;
+    outline: none;
+    border: 0px solid transparent;
+    background-color: transparent;
 }
 
 .task-item {
@@ -480,18 +515,15 @@
     width: 60px;
 }
 
-#task-input:focus {
-    border-color: #9FC6F9;
-}
-
 .progress-container {
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 }
 
 .progress-bar {
     width: 0;
-    height: 10px;
-    background-color: green;
+    height: 8px;
+    border-radius: 5px;
+    background-color: #D3DFF5;
     transition: width 0.5s;
 }
 
@@ -540,6 +572,18 @@
 }
 
 /* LOG */
+.butonLog {
+    background-color: #E3EBFF;
+    color: #5A5A5A;
+    font-size: 14px;
+    height: 36px;
+    justify-content: center;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    border: none;
+    border-radius: 5px;
+}
 .contentLog {
     padding-top: 10px;
     overflow-y: auto;
@@ -576,3 +620,7 @@
 .contentLog::-webkit-scrollbar-thumb:hover {
     background: #0080FF;
 }
+/* se agregan estilos para personas */
+.float-right {
+    float: right;
+  }
