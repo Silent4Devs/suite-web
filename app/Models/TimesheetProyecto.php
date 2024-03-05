@@ -44,7 +44,7 @@ class TimesheetProyecto extends Model implements Auditable
                 return self::orderBy('proyecto')->get();
             });
         } else {
-            return Cache::remember('TimesheetProyecto:timesheetproyecto_show_' . $proyecto_id, 3600, function () {
+            return Cache::remember('TimesheetProyecto:timesheetproyecto_show_'.$proyecto_id, 3600, function () {
                 return self::orderBy('proyecto')->get();
             });
         }
@@ -74,7 +74,7 @@ class TimesheetProyecto extends Model implements Auditable
                 return self::select('id', 'identificador', 'proyecto', 'cliente_id', 'tipo')->orderBy('proyecto')->get();
             });
         } else {
-            return Cache::remember('TimesheetProyecto:timesheetproyecto_show_' . $proyecto_id, 3600, function () {
+            return Cache::remember('TimesheetProyecto:timesheetproyecto_show_'.$proyecto_id, 3600, function () {
                 return self::select('id', 'identificador', 'proyecto', 'cliente_id', 'tipo')->orderBy('proyecto')->get();
             });
         }

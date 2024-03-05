@@ -261,7 +261,7 @@ class MinutasaltadireccionController extends Controller
                     'startIsMilestone' => false,
                     'progressByWorklog' => false,
                     'assigs' => [],
-                    'resources' =>  [],
+                    'resources' => [],
                     'subtasks' => [],
                     'historic' => [],
                 ],
@@ -354,7 +354,7 @@ class MinutasaltadireccionController extends Controller
                     'startIsMilestone' => false,
                     'progressByWorklog' => false,
                     'assigs' => $assigs,
-                    'resources' =>  [],
+                    'resources' => [],
                     'subtasks' => [],
                     'historic' => [],
                 ];
