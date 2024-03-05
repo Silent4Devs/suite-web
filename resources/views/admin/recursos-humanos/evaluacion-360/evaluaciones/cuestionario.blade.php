@@ -796,7 +796,8 @@
                     }
                 });
             }
-            window.saveCalificacionPersepcion = function(input, objetivo, evaluado, evaluador, evaluacion, url) {
+            window.saveCalificacionPersepcion = function(input, objetivo, evaluado, evaluador, evaluacion, url,
+                iconoObjetivoId) {
                 let data = {
                     calificacion_persepcion: input.value,
                     objetivo,
@@ -817,10 +818,30 @@
                         toastr.info('Guardando información, espere un momento...');
                     },
                     success: function(response) {
+                        console.log(response, iconoObjetivoId);
                         if (response.success) {
+                            document.getElementById(`iconObjetivo${iconoObjetivoId}`).classList
+                                .remove(
+                                    'fa-times-circle');
+                            document.getElementById(`iconObjetivo${iconoObjetivoId}`).classList
+                                .remove(
+                                    'text-danger');
+                            document.getElementById(`iconObjetivo${iconoObjetivoId}`).classList.add(
+                                'fa-check-circle');
+                            document.getElementById(`iconObjetivo${iconoObjetivoId}`).classList
+                                .add(
+                                    'text-success');
+                            let barra = document.getElementById('progresoEvaluacionObjetivos');
+                            barra.style.width = `${response.progreso}%`;
+                            barra.innerHTML = `${response.progreso}%`;
+                            let contestadas = document.getElementById('objetivosEvaluados');
+                            let no_contestadas = document.getElementById('objetivosNoEvaluados');
+                            contestadas.innerHTML = `${response.contestadas}`;
+                            no_contestadas.innerHTML = `${response.sin_contestar}`;
                             toastr.success('Guardado con éxito');
                         }
                         if (response.error) {
+                            console.log(response.error);
                             toastr.error('Algo salió mal, intente de nuevo...');
                         }
                     },
@@ -902,7 +923,8 @@
                         let data = {}
                         let isEmptyObjetivosSigned = false;
                         if (cargarAutoevaluacion) {
-                            var canvasObjetivos = document.getElementById("sig-evaluado-canvas");
+                            var canvasObjetivos = document.getElementById(
+                                "sig-evaluado-canvas");
                             var dataUrlObjetivos = canvasObjetivos.toDataURL();
                             isEmptyObjetivosSigned = isCanvasEmpty(canvasObjetivos);
                             if (isEmptyObjetivosSigned) {
@@ -912,7 +934,8 @@
                             }
 
                         }
-                        var canvasCompetencias = document.getElementById("sig-evaluador-canvas");
+                        var canvasCompetencias = document.getElementById(
+                            "sig-evaluador-canvas");
                         var dataUrl = canvasCompetencias.toDataURL();
                         var isEmptyCompetenciasSigned = isCanvasEmpty(canvasCompetencias);
                         if (isEmptyCompetenciasSigned) {
@@ -923,18 +946,21 @@
                         if (!isEmptyCompetenciasSigned && !isEmptyObjetivosSigned) {
                             $.ajax({
                                 headers: {
-                                    "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
+                                    "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr(
+                                        "content")
                                 },
                                 type: "POST",
                                 data: data,
                                 url: url,
                                 beforeSend: function() {
                                     toastr.info(
-                                        'Cerrando evaluación, espere un momento...');
+                                        'Cerrando evaluación, espere un momento...'
+                                    );
                                 },
                                 success: function(response) {
                                     if (response.success) {
-                                        toastr.success('Evaluación contestada con éxito');
+                                        toastr.success(
+                                            'Evaluación contestada con éxito');
                                         setTimeout(() => {
                                             window.location.reload();
                                         }, 1500)
@@ -979,7 +1005,8 @@
                     if (response.length > 0) {
                         console.log(response);
                         response.forEach((competencia, index) => {
-                            let evaluacionContenedor = document.getElementById(`autoev${index}`);
+                            let evaluacionContenedor = document.getElementById(
+                                `autoev${index}`);
                             if (evaluacionContenedor != null) {
                                 evaluacionContenedor.innerHTML = competencia
                                     .calificacion === null ? 'No se ha evaluado' : competencia
@@ -1051,8 +1078,10 @@
                     if (response.length > 0) {
                         console.log(response);
                         response.forEach((objetivo, index) => {
-                            let contenedorComentariosObjetivosAutoevaluacion = document.getElementById(
-                                `autoevaluacionComentariosObjetivos${objetivo.objetivo_id}`);
+                            let contenedorComentariosObjetivosAutoevaluacion = document
+                                .getElementById(
+                                    `autoevaluacionComentariosObjetivos${objetivo.objetivo_id}`
+                                );
                             contenedorComentariosObjetivosAutoevaluacion.innerHTML = objetivo
                                 .meta_alcanzada
                         });
