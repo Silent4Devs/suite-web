@@ -337,7 +337,6 @@ class Ev360ResumenTabla extends Component
 
         if ($evaluacion->include_objetivos && $supervisorObjetivos) {
 
-
             $jefe_evaluador_id = EvaluadoEvaluador::where('evaluacion_id', $evaluacion->id)
                 ->where('evaluado_id', $evaluado->id)
                 ->where('tipo', EvaluadoEvaluador::JEFE_INMEDIATO) // Assuming '1' represents Jefe Inmediato
