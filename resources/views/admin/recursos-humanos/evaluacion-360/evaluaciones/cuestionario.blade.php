@@ -416,7 +416,7 @@
                                                                 {{ $objetivo->objetivo->metrica->definicion }}
                                                             </div>
                                                             <div class="row">
-                                                                @if ($evaluacion->autoevaluacion)
+                                                                {{-- @if ($evaluacion->autoevaluacion)
                                                                     @if ($isJefeInmediato)
                                                                         <div class="col-6">
                                                                             <label class="m-0 mt-2"><i
@@ -447,7 +447,7 @@
                                                                         value="{{ $objetivo->calificacion }}"
                                                                         class="form-control" type="number"
                                                                         placeholder="Ingresa la meta alcanzada">
-                                                                </div>
+                                                                </div> --}}
                                                                 <div class="col-12">
                                                                     <label class="m-0 mt-2">
                                                                         <i class="mr-2 far fa-dot-circle"></i>
@@ -670,7 +670,7 @@
                 let contains_autoevaluacion = @json($evaluacion->autoevaluacion ? true : false);
                 if (contains_autoevaluacion) {
                     mostrarAutoevaluacion(evaluado, evaluador, evaluacion);
-                    mostrarAutoevaluacionObjetivos(evaluado, evaluador, evaluacion);
+                    // mostrarAutoevaluacionObjetivos(evaluado, evaluador, evaluacion);
                     mostrarAutoevaluacionComentariosObjetivos(evaluado, evaluador, evaluacion);
                 }
             }
@@ -831,58 +831,58 @@
                 });
             }
 
-            window.saveMetaAlcanzada = function(input, objetivo, evaluado, evaluador, evaluacion, url,
-                iconoObjetivoId) {
-                let data = {
-                    calificacion: input.value,
-                    objetivo,
-                    evaluado,
-                    evaluador,
-                    evaluacion,
-                }
-                $.ajax({
-                    headers: {
-                        "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
-                    },
-                    type: "POST",
-                    url: url,
-                    data: data,
-                    dataType: "JSON",
-                    beforeSend: function() {
-                        toastr.info('Guardando información, espere un momento...');
-                    },
-                    success: function(response) {
-                        if (response.success) {
-                            document.getElementById(`iconObjetivo${iconoObjetivoId}`).classList
-                                .remove(
-                                    'fa-times-circle');
-                            document.getElementById(`iconObjetivo${iconoObjetivoId}`).classList
-                                .remove(
-                                    'text-danger');
-                            document.getElementById(`iconObjetivo${iconoObjetivoId}`).classList.add(
-                                'fa-check-circle');
-                            document.getElementById(`iconObjetivo${iconoObjetivoId}`).classList
-                                .add(
-                                    'text-success');
-                            let barra = document.getElementById('progresoEvaluacionObjetivos');
-                            barra.style.width = `${response.progreso}%`;
-                            barra.innerHTML = `${response.progreso}%`;
-                            let contestadas = document.getElementById('objetivosEvaluados');
-                            let no_contestadas = document.getElementById('objetivosNoEvaluados');
-                            contestadas.innerHTML = `${response.contestadas}`;
-                            no_contestadas.innerHTML = `${response.sin_contestar}`;
-                            toastr.success('Guardado con éxito');
-                        }
-                        if (response.error) {
-                            toastr.error('Algo salió mal, intente de nuevo...');
-                        }
-                    },
-                    error: function(request, status, error) {
-                        toastr.error(
-                            'Ocurrió un error: ' + error);
-                    }
-                });
-            }
+            // window.saveMetaAlcanzada = function(input, objetivo, evaluado, evaluador, evaluacion, url,
+            //     iconoObjetivoId) {
+            //     let data = {
+            //         calificacion: input.value,
+            //         objetivo,
+            //         evaluado,
+            //         evaluador,
+            //         evaluacion,
+            //     }
+            //     $.ajax({
+            //         headers: {
+            //             "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
+            //         },
+            //         type: "POST",
+            //         url: url,
+            //         data: data,
+            //         dataType: "JSON",
+            //         beforeSend: function() {
+            //             toastr.info('Guardando información, espere un momento...');
+            //         },
+            //         success: function(response) {
+            //             if (response.success) {
+            //                 document.getElementById(`iconObjetivo${iconoObjetivoId}`).classList
+            //                     .remove(
+            //                         'fa-times-circle');
+            //                 document.getElementById(`iconObjetivo${iconoObjetivoId}`).classList
+            //                     .remove(
+            //                         'text-danger');
+            //                 document.getElementById(`iconObjetivo${iconoObjetivoId}`).classList.add(
+            //                     'fa-check-circle');
+            //                 document.getElementById(`iconObjetivo${iconoObjetivoId}`).classList
+            //                     .add(
+            //                         'text-success');
+            //                 let barra = document.getElementById('progresoEvaluacionObjetivos');
+            //                 barra.style.width = `${response.progreso}%`;
+            //                 barra.innerHTML = `${response.progreso}%`;
+            //                 let contestadas = document.getElementById('objetivosEvaluados');
+            //                 let no_contestadas = document.getElementById('objetivosNoEvaluados');
+            //                 contestadas.innerHTML = `${response.contestadas}`;
+            //                 no_contestadas.innerHTML = `${response.sin_contestar}`;
+            //                 toastr.success('Guardado con éxito');
+            //             }
+            //             if (response.error) {
+            //                 toastr.error('Algo salió mal, intente de nuevo...');
+            //             }
+            //         },
+            //         error: function(request, status, error) {
+            //             toastr.error(
+            //                 'Ocurrió un error: ' + error);
+            //         }
+            //     });
+            // }
 
             window.FinalizarEvaluacion = function(url) {
                 Swal.fire({
@@ -994,39 +994,39 @@
             });
         }
 
-        function mostrarAutoevaluacionObjetivos(evaluado, evaluador, evaluacion) {
-            let data = {
-                evaluado,
-                evaluador,
-                evaluacion
-            }
-            let url = "{{ route('admin.ev360-evaluaciones.autoevaluacion.objetivos.get') }}";
+        // function mostrarAutoevaluacionObjetivos(evaluado, evaluador, evaluacion) {
+        //     let data = {
+        //         evaluado,
+        //         evaluador,
+        //         evaluacion
+        //     }
+        //     let url = "{{ route('admin.ev360-evaluaciones.autoevaluacion.objetivos.get') }}";
 
-            $.ajax({
-                headers: {
-                    "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
-                },
-                type: "POST",
-                url: url,
-                data: data,
-                dataType: "JSON",
-                beforeSend: function() {
+        //     $.ajax({
+        //         headers: {
+        //             "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
+        //         },
+        //         type: "POST",
+        //         url: url,
+        //         data: data,
+        //         dataType: "JSON",
+        //         beforeSend: function() {
 
-                },
-                success: function(response) {
-                    if (response.length > 0) {
-                        console.log(response);
-                        response.forEach((objetivo, index) => {
-                            let contenedorMetaAlcanzada = document.getElementById(
-                                `autoevaluacionObjetivos${objetivo.objetivo_id}`);
-                            contenedorMetaAlcanzada.innerHTML = objetivo.calificacion === null ?
-                                'No se ha evaluado' : objetivo.calificacion;
-                        });
+        //         },
+        //         success: function(response) {
+        //             if (response.length > 0) {
+        //                 console.log(response);
+        //                 response.forEach((objetivo, index) => {
+        //                     let contenedorMetaAlcanzada = document.getElementById(
+        //                         `autoevaluacionObjetivos${objetivo.objetivo_id}`);
+        //                     contenedorMetaAlcanzada.innerHTML = objetivo.calificacion === null ?
+        //                         'No se ha evaluado' : objetivo.calificacion;
+        //                 });
 
-                    }
-                }
-            });
-        }
+        //             }
+        //         }
+        //     });
+        // }
 
         function mostrarAutoevaluacionComentariosObjetivos(evaluado, evaluador, evaluacion) {
             let data = {
