@@ -71,7 +71,7 @@ class Ev360ResumenTabla extends Component
                 'informacion_evaluacion' => $informacion,
             ];
         });
-        // dd($this->lista_evaluados);
+
         foreach ($this->lista_evaluados as $evaluado) {
             if ($evaluado['informacion_evaluacion']['calificacion_final'] <= $this->rangos['inaceptable']) {
                 $inaceptable++;
@@ -332,22 +332,18 @@ class Ev360ResumenTabla extends Component
         $promedio_objetivos = 0;
         $promedio_general_objetivos = 0;
         $evaluadores_objetivos = collect();
-        $supervisorObjetivos = $evaluadores->filter(function ($item) {
-            return intval($item->tipo) == EvaluadoEvaluador::JEFE_INMEDIATO;
-        })->first();
-        //        dd($evaluado->supervisor_id, $evaluado->name);
-        if ($evaluacion->include_objetivos) {
+
+        $supervisorObjetivos = $evaluadores->firstWhere('tipo', EvaluadoEvaluador::JEFE_INMEDIATO);
+
+        if ($evaluacion->include_objetivos && $supervisorObjetivos) {
+
 
             $jefe_evaluador_id = EvaluadoEvaluador::where('evaluacion_id', $evaluacion->id)
                 ->where('evaluado_id', $evaluado->id)
-                ->where('tipo', '=', 1)
+                ->where('tipo', EvaluadoEvaluador::JEFE_INMEDIATO) // Assuming '1' represents Jefe Inmediato
                 ->first();
 
-            if ($jefe_evaluador_id == null) {
-                $jefe_evaluador = '-';
-            } else {
-                $jefe_evaluador = Empleado::getAllDataColumns()->find($jefe_evaluador_id->evaluador_id);
-            }
+            $jefe_evaluador = $jefe_evaluador_id ? Empleado::getAllDataColumns()->find($jefe_evaluador_id) : '-';
 
             if ($supervisorObjetivos) {
                 $objetivos_calificaciones = ObjetivoRespuesta::with(['objetivo' => function ($q) {
@@ -443,9 +439,11 @@ class Ev360ResumenTabla extends Component
     public function obtenerInformacionDeLaEvaluacionDeCompetencia($evaluador_empleado, $evaluador, $evaluado, $evaluaciones_competencias, $evaluacion = null)
     {
         $competencias = $this->obtenerCompetenciasDelPuestoDelEvaluadoEnLaEvaluacion($evaluacion->id, $evaluado->id);
+        //$supervisorId = $evaluado->supervisorEv360 ? $evaluado->supervisorEv360->id : null;
 
         return [
-            'id' => $evaluador_empleado->id, 'nombre' => $evaluador_empleado->name,
+            'id' => $evaluador_empleado->id,
+            'nombre' => $evaluador_empleado->name,
             'esSupervisor' => $evaluado->supervisorEv360 ? ($evaluado->supervisorEv360->id == $evaluador->evaluador_id ? true : false) : false,
             'esAutoevaluacion' => $evaluado->id == $evaluador->evaluador_id ? true : false,
             'tipo' => $evaluador->tipo_formateado,
