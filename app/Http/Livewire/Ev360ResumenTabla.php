@@ -13,6 +13,7 @@ use App\Models\RH\ObjetivoRespuesta;
 use App\Traits\FuncionesEvaluacion360;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Benchmark;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -50,7 +51,8 @@ class Ev360ResumenTabla extends Component
 
     public function render()
     {
-        $evaluacion = Evaluacion::select('id', 'nombre')->with('evaluados')->find(intval($this->evaluacion));
+        //$evaluacion = Evaluacion::select('id', 'nombre')->with('evaluados')->find(intval($this->evaluacion));
+        $evaluacion = Evaluacion::select('id', 'nombre')->with('evaluados')->where('id', '=', intval($this->evaluacion))->get()->first();
 
         $evaluados = $evaluacion->evaluados;
         $this->lista_evaluados = collect();
@@ -60,15 +62,16 @@ class Ev360ResumenTabla extends Component
         $aceptable = 0;
         $sobresaliente = 0;
         $ev360EvaluacionesController = new EV360EvaluacionesController();
-        foreach ($evaluados as $evaluado) {
-            // $evaluado->load('area');
-            $this->lista_evaluados->push([
+        $this->lista_evaluados = $evaluacion->evaluados->map(function ($evaluado) use ($evaluacion) {
+            $informacion = $this->obtenerInformacionDeLaConsultaPorEvaluado($evaluacion->id, $evaluado->id);
+
+            return [
                 'evaluado' => $evaluado->name,
                 'puesto' => $evaluado->puesto,
                 'area' => $evaluado->area->area,
-                'informacion_evaluacion' => $this->obtenerInformacionDeLaConsultaPorEvaluado($evaluacion->id, $evaluado->id),
-            ]);
-        }
+                'informacion_evaluacion' => $informacion,
+            ];
+        });
         // dd($this->lista_evaluados);
         foreach ($this->lista_evaluados as $evaluado) {
             if ($evaluado['informacion_evaluacion']['calificacion_final'] <= $this->rangos['inaceptable']) {
@@ -103,7 +106,7 @@ class Ev360ResumenTabla extends Component
         $items = $collection->slice($offset, $this->perPage + 1);
         $paginator = new Paginator($items, $this->perPage, $this->page);
 
-        $this->competencias_evaluadas = Competencia::find($this->obtenerCompetenciasEvaluadasEnLaEvaluacion($evaluacion->id));
+        $this->competencias_evaluadas = Competencia::select('id', 'nombre')->find($this->obtenerCompetenciasEvaluadasEnLaEvaluacion($evaluacion->id));
         $this->objetivos_evaluados = $this->obtenerCantidadMaximaDeObjetivos($evaluacion->evaluados, $evaluacion->id);
 
         return view('livewire.ev360-resumen-tabla', ['lista_evaluados', 'calificaciones', 'evaluacion', 'competencias_evaluadas', 'lista' => $collection]);
@@ -118,14 +121,15 @@ class Ev360ResumenTabla extends Component
 
     public function obtenerCompetenciasEvaluadasEnLaEvaluacion($evaluacion, $evaluado = 0)
     {
+        $query = EvaluacionRepuesta::where('evaluacion_id', $evaluacion);
+
         if ($evaluado > 0) {
-            $competencias = EvaluacionRepuesta::where('evaluacion_id', $evaluacion)->where('evaluado_id', $evaluado)->pluck('competencia_id')->unique()->toArray();
-        } else {
-            $competencias = EvaluacionRepuesta::where('evaluacion_id', $evaluacion)->pluck('competencia_id')->unique()->toArray();
+            $query->where('evaluado_id', $evaluado);
         }
 
-        return $competencias;
+        return $query->pluck('competencia_id')->unique()->toArray();
     }
+
 
     public function obtenerCantidadMaximaDeObjetivos($evaluados, $evaluacion)
     {
@@ -142,17 +146,28 @@ class Ev360ResumenTabla extends Component
         }
 
         return $max;
-        // $competencias = DB::table('ev360_objetivos_calificaciones')->where('evaluacion_id', $evaluacion);
-        // $agrupar_competencias = $competencias->select(DB::raw('count(id) AS total'))->groupBy('evaluado_id')
+
+        // $evaluadoIds = $evaluados->pluck('id')->toArray();
+
+        // // Fetch all objetivo counts for evaluados in a single query using DB
+        // $objetivosCounts = DB::table('objetivo_respuestas')
+        //     ->select('evaluado_id', DB::raw('count(*) as count'))
+        //     ->where('evaluacion_id', $evaluacion)
+        //     ->whereIn('evaluado_id', $evaluadoIds)
+        //     ->whereIn('evaluador_id', $evaluadoIds)
+        //     ->groupBy('evaluado_id')
         //     ->get();
 
-        // return $agrupar_competencias->max('total');
+        // // Find the maximum count
+        // $max = $objetivosCounts->max('count');
+
+        // dd($max);
     }
 
     public function obtenerInformacionDeLaConsultaPorEvaluado($evaluacion, $evaluado)
     {
         $evaluacion = Evaluacion::find(intval($evaluacion));
-        $evaluado = Empleado::with(['area', 'puestoRelacionado' => function ($q) {
+        $evaluado = Empleado::select('id', 'name', 'area_id', 'puesto_id', 'supervisor_id')->with(['area', 'puestoRelacionado' => function ($q) {
             $q->with('competencias');
         }])->find(intval($evaluado));
         $evaluadores = EvaluadoEvaluador::where('evaluacion_id', $evaluacion->id)
