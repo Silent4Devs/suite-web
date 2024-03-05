@@ -620,6 +620,7 @@ class EV360EvaluacionesController extends Controller
 
     public function saveCalificacionPersepcion(Request $request)
     {
+        // dump($request->all());
         $objetivo = ObjetivoRespuesta::with('evaluacion.rangos')
             ->where('evaluado_id', $request->evaluado)
             ->where('evaluador_id', $request->evaluador)
@@ -629,10 +630,36 @@ class EV360EvaluacionesController extends Controller
 
         $update_objetivo = $objetivo->update([
             'calificacion_persepcion' => $request->calificacion_persepcion,
+            'evaluado' => true,
         ]);
-
+        // dump($objetivo, $update_objetivo);
+        $objetivos = ObjetivoRespuesta::where('evaluado_id', $request->evaluado)
+            ->where('evaluador_id', $request->evaluador)
+            ->where('evaluacion_id', $request->evaluacion)
+            ->count();
+        $objetivos_evaluados = ObjetivoRespuesta::where('evaluado_id', $request->evaluado)
+            ->where('evaluador_id', $request->evaluador)
+            ->where('evaluacion_id', $request->evaluacion)
+            ->where('evaluado', true)
+            ->count();
+        $objetivos_no_evaluados = ObjetivoRespuesta::where('evaluado_id', $request->evaluado)
+            ->where('evaluador_id', $request->evaluador)
+            ->where('evaluacion_id', $request->evaluacion)
+            ->where('evaluado', false)
+            ->count();
+        // dump(
+        //     $objetivos,
+        //     $objetivos_evaluados,
+        //     $objetivos_no_evaluados
+        // );
+        if ($objetivos) {
+            $progreso_objetivos = floatval(number_format((($objetivos_evaluados / $objetivos) * 100)));
+        } else {
+            $progreso_objetivos = 0;
+        }
+        // dd($progreso_objetivos);
         if ($update_objetivo) {
-            return response()->json(['success' => true]);
+            return response()->json(['success' => true, 'progreso' => $progreso_objetivos, 'contestadas' => $objetivos_evaluados, 'sin_contestar' => $objetivos_no_evaluados]);
         } else {
             return response()->json(['error' => true]);
         }
@@ -854,7 +881,7 @@ class EV360EvaluacionesController extends Controller
         $preguntas_contestadas = EvaluacionRepuesta::where('evaluacion_id', $evaluacion)
             ->where('evaluado_id', $evaluado)
             ->where('evaluador_id', $evaluador)
-            ->where('calificacion', '>', 0)->count();
+            ->where('calificacion', '>=', 0)->count();
         $preguntas_contestadas = $preguntas_contestadas > 0 ? $preguntas_contestadas : 1;
         $total_preguntas = $total_preguntas > 0 ? $total_preguntas : 1;
         $progreso = floatval(number_format((($preguntas_contestadas / $total_preguntas) * 100)));

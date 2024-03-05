@@ -116,7 +116,24 @@ class MultiStepForm extends Component
     public $totalEmpleadosSinCompetencias = 0;
 
     public $listaEmpleadosSinCompetencias;
-    // public $listaIDSinCompetencias;
+
+    public $listaIDSinCompetencias;
+
+    public $hayEmpleadosSinObjetivos = false;
+
+    public $totalEmpleadosSinObjetivos = 0;
+
+    public $listaEmpleadosSinObjetivos;
+
+    public $listaIDSinObjetivos;
+
+    public $hayEmpleadosObjetivosPendiente = false;
+
+    public $totalEmpleadosObjetivosPendiente = 0;
+
+    public $listaEmpleadosObjetivosPendiente;
+
+    public $listaIDObjetivosPendiente;
 
     public $totalSteps = 5;
 
@@ -213,19 +230,39 @@ class MultiStepForm extends Component
         $this->currentStep++;
         if ($this->currentStep == 3) {
             $this->listaEvaluados = $this->obtenerEvaluadosConEvaluadores($this->evaluados_objetivo);
+            // dd($this->listaEvaluados[0]['evaluado']['objetivos_asignados']);
         }
         if ($this->currentStep == 4) {
             $this->listaEmpleadosSinCompetencias = collect();
-            // $this->listaIDSinCompetencias = collect();
+            $this->listaIDSinCompetencias = collect();
+            $this->listaEmpleadosSinObjetivos = collect();
+            $this->listaIDSinObjetivos = collect();
+            $this->listaEmpleadosObjetivosPendiente = collect();
+            $this->listaIDObjetivosPendiente = collect();
             $this->totalEmpleadosSinCompetencias = 0;
+            $this->totalEmpleadosSinObjetivos = 0;
+            $this->totalEmpleadosObjetivosPendiente = 0;
             $this->hayEmpleadosSinCompetencias = false;
+            $this->hayEmpleadosSinObjetivos = false;
+            $this->hayEmpleadosObjetivosPendiente = false;
             foreach ($this->listaEvaluados as $evaluadoL) {
+                // dd($evaluadoL['evaluado']);
                 if ($evaluadoL['evaluado']['competencias_asignadas'] == 0) {
                     // dd($evaluadoL['evaluado']['id']);
                     $this->hayEmpleadosSinCompetencias = true;
                     $this->totalEmpleadosSinCompetencias++;
                     $this->listaEmpleadosSinCompetencias->push($evaluadoL['evaluado']['name']);
-                    // $this->listaIDSinCompetencias->push($evaluadoL['evaluado']['id']);
+                    $this->listaIDSinCompetencias->push($evaluadoL['evaluado']['id']);
+                } elseif ($evaluadoL['evaluado']['objetivos_asignados']['cuenta'] == 0) {
+                    $this->hayEmpleadosSinObjetivos = true;
+                    $this->totalEmpleadosSinObjetivos++;
+                    $this->listaEmpleadosSinObjetivos->push($evaluadoL['evaluado']['name']);
+                    $this->listaIDSinObjetivos->push($evaluadoL['evaluado']['id']);
+                } elseif ($evaluadoL['evaluado']['objetivos_asignados']['pendientes'] == true) {
+                    $this->hayEmpleadosObjetivosPendiente = true;
+                    $this->totalEmpleadosObjetivosPendiente++;
+                    $this->listaEmpleadosObjetivosPendiente->push($evaluadoL['evaluado']['name']);
+                    $this->listaIDObjetivosPendiente->push($evaluadoL['evaluado']['id']);
                 }
             }
 
@@ -235,6 +272,28 @@ class MultiStepForm extends Component
                     'timer' => '600000',
                     'toast' => false,
                     'text' => 'Existen colaboradores sin competencias asignadas, no podra crear la evaluación si los colaboradores no tienen competencias para evaluar',
+                    'showConfirmButton' => true,
+                    'onConfirmed' => '',
+                    'confirmButtonText' => 'Confirmar',
+                    'timerProgressBar' => true,
+                ]);
+            } elseif ($this->totalEmpleadosSinObjetivos > 0) {
+                $this->alert('warning', 'Sin Objetivos', [
+                    'position' => 'center',
+                    'timer' => '600000',
+                    'toast' => false,
+                    'text' => 'Existen colaboradores sin objetivos asignados, no podra crear la evaluación si los colaboradores no tienen objetivos para evaluar',
+                    'showConfirmButton' => true,
+                    'onConfirmed' => '',
+                    'confirmButtonText' => 'Confirmar',
+                    'timerProgressBar' => true,
+                ]);
+            } elseif ($this->totalEmpleadosObjetivosPendiente > 0) {
+                $this->alert('warning', 'Objetivos Pendientes', [
+                    'position' => 'center',
+                    'timer' => '600000',
+                    'toast' => false,
+                    'text' => 'Existen colaboradores con objetivos asignados pendientes de revisar, no podra crear la evaluación si los colaboradores tienen objetivos con estatus pendientes.',
                     'showConfirmButton' => true,
                     'onConfirmed' => '',
                     'confirmButtonText' => 'Confirmar',
@@ -534,7 +593,9 @@ class MultiStepForm extends Component
 
         $evaluacion = Evaluacion::create($evaluacionData);
 
-        $evaluados_puesto = Empleado::with('puestoRelacionado')->whereIn('id', $evaluados)->get()->pluck('id', 'puestoRelacionado.id')->toArray();
+        $evaluados_puesto = Empleado::whereIn('id', $evaluados)
+            ->pluck('id')
+            ->toArray();
 
         $evaluacion->evaluados()->sync($evaluados_puesto);
 
@@ -712,10 +773,9 @@ class MultiStepForm extends Component
                 EvaluacionRepuesta::insert($evaluacionRespuestas);
             }
         }
-        // dd($empleado->objetivos);
-        $objetivos = [];
-        // dump($empleado);
+
         if ($includeObjetivos) {
+            $objetivos = [];
             foreach ($empleado->objetivos as $obj) {
                 // dump($obj->objetivo->esta_aprobado);
                 if (intval($obj->objetivo->esta_aprobado) == Objetivo::APROBADO) {
@@ -737,8 +797,8 @@ class MultiStepForm extends Component
                     foreach ($objetivoIds as $objetivoId) {
                         $objetivoRespuestas[] = [
                             'meta_alcanzada' => 'Sin evaluar',
-                            'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
-                            'calificacion' => 0,
+                            'calificacion_persepcion' => null,
+                            'calificacion' => null,
                             'objetivo_id' => $objetivoId,
                             'evaluado_id' => $empleado->id,
                             'evaluador_id' => $evaluador['id'],
@@ -749,7 +809,7 @@ class MultiStepForm extends Component
                 // dd($objetivoRespuestas);
 
                 // Batch insert objetivo respuestas
-                $BATCH = ObjetivoRespuesta::insert($objetivoRespuestas);
+                ObjetivoRespuesta::insert($objetivoRespuestas);
                 // dd($BATCH);
             }
         }
@@ -902,31 +962,110 @@ class MultiStepForm extends Component
         return $evaluadosEvaluadores;
     }
 
-    // public function repetirConsulta()
-    // {
-    //     // dd($this->listaEmpleadosSinCompetencias, $this->listaIDSinCompetencias);
-    //     foreach ($this->listaIDSinCompetencias as $IDsinComp) {
+    public function repetirConsultaCompetencias()
+    {
+        foreach ($this->listaIDSinCompetencias as $IDsinComp) {
 
-    //         $rev_emp_comp = Empleado::select(
-    //             'id',
-    //             'name',
-    //             'area_id',
-    //             'puesto_id',
-    //         )->with(['area:id,area', 'puestoRelacionado:id,puesto'])
-    //             ->where('estatus', 'alta')
-    //             ->whereNull('deleted_at')
-    //             ->where('empleados.id', $IDsinComp)
-    //             ->first();
-    //         // dd($IDsinComp, $rev_emp_comp->competencias_asignadas);
-    //         // dd($this->totalEmpleadosSinCompetencias, $this->listaEmpleadosSinCompetencias);
-    //         if ($rev_emp_comp->competencias_asignadas > 0) {
-    //             dd('entra');
-    //             // Remove $rev_emp_comp from $this->listaEmpleadosSinCompetencias
-    //             $this->listaEmpleadosSinCompetencias = $this->listaEmpleadosSinCompetencias->reject(function ($item) use ($rev_emp_comp) {
-    //                 return $item->id === $rev_emp_comp->name;
-    //             });
-    //             $this->totalEmpleadosSinCompetencias--;
-    //         }
-    //     }
-    // }
+            $rev_emp_comp = Empleado::select(
+                'id',
+                'name',
+                'area_id',
+                'puesto_id',
+            )->with(['area:id,area', 'puestoRelacionado:id,puesto'])
+                ->where('estatus', 'alta')
+                ->whereNull('deleted_at')
+                ->where('empleados.id', $IDsinComp)
+                ->first();
+            if ($rev_emp_comp->competencias_asignadas > 0) {
+                $this->listaEmpleadosSinCompetencias = $this->listaEmpleadosSinCompetencias->filter(function ($item) use ($rev_emp_comp) {
+                    return $item !== $rev_emp_comp->name;
+                });
+            }
+        }
+
+        $this->totalEmpleadosSinCompetencias = $this->listaEmpleadosSinCompetencias->count();
+
+        if ($this->totalEmpleadosSinCompetencias == 0) {
+            $this->hayEmpleadosSinCompetencias = false;
+        }
+
+        if (
+            $this->hayEmpleadosSinCompetencias == false &&
+            $this->hayEmpleadosSinObjetivos == false &&
+            $this->hayEmpleadosObjetivosPendiente == false
+        ) {
+            $this->bloquear_evaluacion = false;
+        }
+    }
+
+    public function repetirConsultaObjetivos()
+    {
+        foreach ($this->listaIDSinObjetivos as $IDsinObj) {
+
+            $rev_emp_obj = Empleado::select(
+                'id',
+                'name',
+                'area_id',
+                'puesto_id',
+            )->with(['area:id,area', 'objetivos:id,objetivo_id,empleado_id'])
+                ->where('estatus', 'alta')
+                ->whereNull('deleted_at')
+                ->where('empleados.id', $IDsinObj)
+                ->first();
+            if ($rev_emp_obj->objetivos_asignados['cuenta'] > 0) {
+                $this->listaEmpleadosSinObjetivos = $this->listaEmpleadosSinObjetivos->filter(function ($item) use ($rev_emp_obj) {
+                    return $item !== $rev_emp_obj->name;
+                });
+            }
+        }
+        $this->totalEmpleadosSinObjetivos = $this->listaEmpleadosSinObjetivos->count();
+
+        if ($this->totalEmpleadosSinObjetivos == 0) {
+            $this->hayEmpleadosSinObjetivos = false;
+        }
+
+        if (
+            $this->hayEmpleadosSinCompetencias == false &&
+            $this->hayEmpleadosSinObjetivos == false &&
+            $this->hayEmpleadosObjetivosPendiente == false
+        ) {
+            $this->bloquear_evaluacion = false;
+        }
+    }
+
+    public function repetirConsultaObjetivosPendientes()
+    {
+        foreach ($this->listaIDObjetivosPendiente as $IDObjPen) {
+
+            $rev_emp_obj_pend = Empleado::select(
+                'id',
+                'name',
+                'area_id',
+                'puesto_id',
+            )->with(['area:id,area', 'objetivos:id,objetivo_id,empleado_id'])
+                ->where('estatus', 'alta')
+                ->whereNull('deleted_at')
+                ->where('empleados.id', $IDObjPen)
+                ->first();
+
+            if ($rev_emp_obj_pend->objetivos_asignados['pendientes'] == false) {
+                $this->listaEmpleadosObjetivosPendiente = $this->listaEmpleadosObjetivosPendiente->filter(function ($item) use ($rev_emp_obj_pend) {
+                    return $item !== $rev_emp_obj_pend->name;
+                });
+            }
+        }
+        $this->totalEmpleadosObjetivosPendiente = $this->listaEmpleadosObjetivosPendiente->count();
+
+        if ($this->totalEmpleadosObjetivosPendiente == 0) {
+            $this->hayEmpleadosObjetivosPendiente = false;
+        }
+
+        if (
+            $this->hayEmpleadosSinCompetencias == false &&
+            $this->hayEmpleadosSinObjetivos == false &&
+            $this->hayEmpleadosObjetivosPendiente == false
+        ) {
+            $this->bloquear_evaluacion = false;
+        }
+    }
 }
