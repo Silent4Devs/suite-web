@@ -11,7 +11,7 @@ class FgPasswordLogin:
         self.driver.get('https://192.168.9.78/')
         self.driver.maximize_window()
         print("------ FORGOT PASSWORD LOGIN - TABANTAJ -----")
-        time.sleep(10)
+        time.sleep(4)
         fg_password_btn= WebDriverWait(self.driver, 5).until(
             EC.element_to_be_clickable((By.XPATH, "//a[@class='btn' and @href='https://192.168.9.78/password/reset']"))
         )

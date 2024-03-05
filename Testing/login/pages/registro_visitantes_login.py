@@ -2,6 +2,7 @@ import time
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.action_chains import ActionChains
 
 
 class RegistroVisitantesLogin:
@@ -12,7 +13,7 @@ class RegistroVisitantesLogin:
         self.driver.get('https://192.168.9.78/')
         self.driver.maximize_window()
         print("------ REGISTRO DE VISITANTES - TABANTAJ -----")
-        time.sleep(7)
+        time.sleep(4)
         registro_visitantes_btn= WebDriverWait(self.driver, 5).until(
             EC.visibility_of_element_located((By.XPATH, "//a[contains(.,'Registro de Visitantes')]"))
         )
@@ -86,11 +87,15 @@ class RegistroVisitantesLogin:
         motivo_input.clear()
         motivo_input.send_keys(motivo)
         time.sleep(1)
+
         siguiente_btn = WebDriverWait(self.driver, 10).until(
             EC.visibility_of_element_located((By.XPATH, "//button[@class='btn btn-primary' and contains(text(), 'Siguiente')]"))
         )
-        siguiente_btn.click()
+        self.click_element_with_js(siguiente_btn)
         print("Botón siguiente presionado")
+
+    def click_element_with_js(self, element):
+        self.driver.execute_script("arguments[0].click();", element)
 
 
 
