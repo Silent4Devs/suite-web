@@ -13,7 +13,6 @@ use App\Models\RH\ObjetivoRespuesta;
 use App\Traits\FuncionesEvaluacion360;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Benchmark;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -129,7 +128,6 @@ class Ev360ResumenTabla extends Component
 
         return $query->pluck('competencia_id')->unique()->toArray();
     }
-
 
     public function obtenerCantidadMaximaDeObjetivos($evaluados, $evaluacion)
     {

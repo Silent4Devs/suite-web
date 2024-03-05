@@ -964,54 +964,54 @@ class EV360EvaluacionesController extends Controller
                 $existeFirmaAuto = false;
                 $firmaAuto = 'img/signature.png';
 
-                if (!empty($informacion_obtenida['lista_autoevaluacion']) && is_array($informacion_obtenida['lista_autoevaluacion'])) {
+                if (! empty($informacion_obtenida['lista_autoevaluacion']) && is_array($informacion_obtenida['lista_autoevaluacion'])) {
                     // Check if the array is not empty and is an array
-                    if (!empty($informacion_obtenida['lista_autoevaluacion'][0]['firma'])) {
-                        $existeFirmaAuto = Storage::exists('/public/' . $informacion_obtenida['lista_autoevaluacion'][0]['firma']);
+                    if (! empty($informacion_obtenida['lista_autoevaluacion'][0]['firma'])) {
+                        $existeFirmaAuto = Storage::exists('/public/'.$informacion_obtenida['lista_autoevaluacion'][0]['firma']);
                     }
                 }
 
                 if ($existeFirmaAuto) {
-                    $firmaAuto = '/storage/' . $informacion_obtenida['lista_autoevaluacion'][0]['firma'];
+                    $firmaAuto = '/storage/'.$informacion_obtenida['lista_autoevaluacion'][0]['firma'];
                 }
 
                 $existeFirmaJefe = false;
                 $firmaJefe = 'img/signature.png';
 
-                if (!empty($informacion_obtenida['lista_jefe_inmediato']) && is_array($informacion_obtenida['lista_jefe_inmediato'])) {
-                    if (!empty($informacion_obtenida['lista_jefe_inmediato'][0]['firma'])) {
-                        $existeFirmaJefe = Storage::exists('/public/' . $informacion_obtenida['lista_jefe_inmediato'][0]['firma']);
+                if (! empty($informacion_obtenida['lista_jefe_inmediato']) && is_array($informacion_obtenida['lista_jefe_inmediato'])) {
+                    if (! empty($informacion_obtenida['lista_jefe_inmediato'][0]['firma'])) {
+                        $existeFirmaJefe = Storage::exists('/public/'.$informacion_obtenida['lista_jefe_inmediato'][0]['firma']);
                     }
                 }
 
                 if ($existeFirmaJefe) {
-                    $firmaJefe = '/storage/' . $informacion_obtenida['lista_jefe_inmediato'][0]['firma'];
+                    $firmaJefe = '/storage/'.$informacion_obtenida['lista_jefe_inmediato'][0]['firma'];
                 }
 
                 $existeFirmaSubordinado = false;
                 $firmaEquipo = 'img/signature.png';
 
-                if (!empty($informacion_obtenida['lista_equipo_a_cargo']) && is_array($informacion_obtenida['lista_equipo_a_cargo'])) {
-                    if (!empty($informacion_obtenida['lista_equipo_a_cargo'][0]['firma'])) {
-                        $existeFirmaSubordinado = Storage::exists('/public/' . $informacion_obtenida['lista_equipo_a_cargo'][0]['firma']);
+                if (! empty($informacion_obtenida['lista_equipo_a_cargo']) && is_array($informacion_obtenida['lista_equipo_a_cargo'])) {
+                    if (! empty($informacion_obtenida['lista_equipo_a_cargo'][0]['firma'])) {
+                        $existeFirmaSubordinado = Storage::exists('/public/'.$informacion_obtenida['lista_equipo_a_cargo'][0]['firma']);
                     }
                 }
 
                 if ($existeFirmaSubordinado) {
-                    $firmaEquipo = '/storage/' . $informacion_obtenida['lista_equipo_a_cargo'][0]['firma'];
+                    $firmaEquipo = '/storage/'.$informacion_obtenida['lista_equipo_a_cargo'][0]['firma'];
                 }
 
                 $existeFirmaPar = false;
                 $firmaPar = 'img/signature.png';
 
-                if (!empty($informacion_obtenida['lista_misma_area']) && is_array($informacion_obtenida['lista_misma_area'])) {
-                    if (!empty($informacion_obtenida['lista_misma_area'][0]['firma'])) {
-                        $existeFirmaPar = Storage::exists('/public/' . $informacion_obtenida['lista_misma_area'][0]['firma']);
+                if (! empty($informacion_obtenida['lista_misma_area']) && is_array($informacion_obtenida['lista_misma_area'])) {
+                    if (! empty($informacion_obtenida['lista_misma_area'][0]['firma'])) {
+                        $existeFirmaPar = Storage::exists('/public/'.$informacion_obtenida['lista_misma_area'][0]['firma']);
                     }
                 }
 
                 if ($existeFirmaPar) {
-                    $firmaPar = '/storage/' . $informacion_obtenida['lista_misma_area'][0]['firma'];
+                    $firmaPar = '/storage/'.$informacion_obtenida['lista_misma_area'][0]['firma'];
                 }
 
                 return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluado', compact(
@@ -1095,54 +1095,54 @@ class EV360EvaluacionesController extends Controller
                 $existeFirmaAuto = false;
                 $firmaAuto = 'img/signature.png';
 
-                if (!empty($informacion_obtenida['lista_autoevaluacion']) && is_array($informacion_obtenida['lista_autoevaluacion'])) {
+                if (! empty($informacion_obtenida['lista_autoevaluacion']) && is_array($informacion_obtenida['lista_autoevaluacion'])) {
                     // Check if the array is not empty and is an array
-                    if (!empty($informacion_obtenida['lista_autoevaluacion'][0]['firma'])) {
-                        $existeFirmaAuto = Storage::exists('/public/' . $informacion_obtenida['lista_autoevaluacion'][0]['firma']);
+                    if (! empty($informacion_obtenida['lista_autoevaluacion'][0]['firma'])) {
+                        $existeFirmaAuto = Storage::exists('/public/'.$informacion_obtenida['lista_autoevaluacion'][0]['firma']);
                     }
                 }
 
                 if ($existeFirmaAuto) {
-                    $firmaAuto = '/storage/' . $informacion_obtenida['lista_autoevaluacion'][0]['firma'];
+                    $firmaAuto = '/storage/'.$informacion_obtenida['lista_autoevaluacion'][0]['firma'];
                 }
 
                 $existeFirmaJefe = false;
                 $firmaJefe = 'img/signature.png';
 
-                if (!empty($informacion_obtenida['lista_jefe_inmediato']) && is_array($informacion_obtenida['lista_jefe_inmediato'])) {
-                    if (!empty($informacion_obtenida['lista_jefe_inmediato'][0]['firma'])) {
-                        $existeFirmaJefe = Storage::exists('/public/' . $informacion_obtenida['lista_jefe_inmediato'][0]['firma']);
+                if (! empty($informacion_obtenida['lista_jefe_inmediato']) && is_array($informacion_obtenida['lista_jefe_inmediato'])) {
+                    if (! empty($informacion_obtenida['lista_jefe_inmediato'][0]['firma'])) {
+                        $existeFirmaJefe = Storage::exists('/public/'.$informacion_obtenida['lista_jefe_inmediato'][0]['firma']);
                     }
                 }
 
                 if ($existeFirmaJefe) {
-                    $firmaJefe = '/storage/' . $informacion_obtenida['lista_jefe_inmediato'][0]['firma'];
+                    $firmaJefe = '/storage/'.$informacion_obtenida['lista_jefe_inmediato'][0]['firma'];
                 }
 
                 $existeFirmaSubordinado = false;
                 $firmaEquipo = 'img/signature.png';
 
-                if (!empty($informacion_obtenida['lista_equipo_a_cargo']) && is_array($informacion_obtenida['lista_equipo_a_cargo'])) {
-                    if (!empty($informacion_obtenida['lista_equipo_a_cargo'][0]['firma'])) {
-                        $existeFirmaSubordinado = Storage::exists('/public/' . $informacion_obtenida['lista_equipo_a_cargo'][0]['firma']);
+                if (! empty($informacion_obtenida['lista_equipo_a_cargo']) && is_array($informacion_obtenida['lista_equipo_a_cargo'])) {
+                    if (! empty($informacion_obtenida['lista_equipo_a_cargo'][0]['firma'])) {
+                        $existeFirmaSubordinado = Storage::exists('/public/'.$informacion_obtenida['lista_equipo_a_cargo'][0]['firma']);
                     }
                 }
 
                 if ($existeFirmaSubordinado) {
-                    $firmaEquipo = '/storage/' . $informacion_obtenida['lista_equipo_a_cargo'][0]['firma'];
+                    $firmaEquipo = '/storage/'.$informacion_obtenida['lista_equipo_a_cargo'][0]['firma'];
                 }
 
                 $existeFirmaPar = false;
                 $firmaPar = 'img/signature.png';
 
-                if (!empty($informacion_obtenida['lista_misma_area']) && is_array($informacion_obtenida['lista_misma_area'])) {
-                    if (!empty($informacion_obtenida['lista_misma_area'][0]['firma'])) {
-                        $existeFirmaPar = Storage::exists('/public/' . $informacion_obtenida['lista_misma_area'][0]['firma']);
+                if (! empty($informacion_obtenida['lista_misma_area']) && is_array($informacion_obtenida['lista_misma_area'])) {
+                    if (! empty($informacion_obtenida['lista_misma_area'][0]['firma'])) {
+                        $existeFirmaPar = Storage::exists('/public/'.$informacion_obtenida['lista_misma_area'][0]['firma']);
                     }
                 }
 
                 if ($existeFirmaPar) {
-                    $firmaPar = '/storage/' . $informacion_obtenida['lista_misma_area'][0]['firma'];
+                    $firmaPar = '/storage/'.$informacion_obtenida['lista_misma_area'][0]['firma'];
                 }
 
                 return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluado', compact(
@@ -1232,54 +1232,54 @@ class EV360EvaluacionesController extends Controller
                 $existeFirmaAuto = false;
                 $firmaAuto = 'img/signature.png';
 
-                if (!empty($informacion_obtenida['lista_autoevaluacion']) && is_array($informacion_obtenida['lista_autoevaluacion'])) {
+                if (! empty($informacion_obtenida['lista_autoevaluacion']) && is_array($informacion_obtenida['lista_autoevaluacion'])) {
                     // Check if the array is not empty and is an array
-                    if (!empty($informacion_obtenida['lista_autoevaluacion'][0]['firma'])) {
-                        $existeFirmaAuto = Storage::exists('/public/' . $informacion_obtenida['lista_autoevaluacion'][0]['firma']);
+                    if (! empty($informacion_obtenida['lista_autoevaluacion'][0]['firma'])) {
+                        $existeFirmaAuto = Storage::exists('/public/'.$informacion_obtenida['lista_autoevaluacion'][0]['firma']);
                     }
                 }
 
                 if ($existeFirmaAuto) {
-                    $firmaAuto = '/storage/' . $informacion_obtenida['lista_autoevaluacion'][0]['firma'];
+                    $firmaAuto = '/storage/'.$informacion_obtenida['lista_autoevaluacion'][0]['firma'];
                 }
 
                 $existeFirmaJefe = false;
                 $firmaJefe = 'img/signature.png';
 
-                if (!empty($informacion_obtenida['lista_jefe_inmediato']) && is_array($informacion_obtenida['lista_jefe_inmediato'])) {
-                    if (!empty($informacion_obtenida['lista_jefe_inmediato'][0]['firma'])) {
-                        $existeFirmaJefe = Storage::exists('/public/' . $informacion_obtenida['lista_jefe_inmediato'][0]['firma']);
+                if (! empty($informacion_obtenida['lista_jefe_inmediato']) && is_array($informacion_obtenida['lista_jefe_inmediato'])) {
+                    if (! empty($informacion_obtenida['lista_jefe_inmediato'][0]['firma'])) {
+                        $existeFirmaJefe = Storage::exists('/public/'.$informacion_obtenida['lista_jefe_inmediato'][0]['firma']);
                     }
                 }
 
                 if ($existeFirmaJefe) {
-                    $firmaJefe = '/storage/' . $informacion_obtenida['lista_jefe_inmediato'][0]['firma'];
+                    $firmaJefe = '/storage/'.$informacion_obtenida['lista_jefe_inmediato'][0]['firma'];
                 }
 
                 $existeFirmaSubordinado = false;
                 $firmaEquipo = 'img/signature.png';
 
-                if (!empty($informacion_obtenida['lista_equipo_a_cargo']) && is_array($informacion_obtenida['lista_equipo_a_cargo'])) {
-                    if (!empty($informacion_obtenida['lista_equipo_a_cargo'][0]['firma'])) {
-                        $existeFirmaSubordinado = Storage::exists('/public/' . $informacion_obtenida['lista_equipo_a_cargo'][0]['firma']);
+                if (! empty($informacion_obtenida['lista_equipo_a_cargo']) && is_array($informacion_obtenida['lista_equipo_a_cargo'])) {
+                    if (! empty($informacion_obtenida['lista_equipo_a_cargo'][0]['firma'])) {
+                        $existeFirmaSubordinado = Storage::exists('/public/'.$informacion_obtenida['lista_equipo_a_cargo'][0]['firma']);
                     }
                 }
 
                 if ($existeFirmaSubordinado) {
-                    $firmaEquipo = '/storage/' . $informacion_obtenida['lista_equipo_a_cargo'][0]['firma'];
+                    $firmaEquipo = '/storage/'.$informacion_obtenida['lista_equipo_a_cargo'][0]['firma'];
                 }
 
                 $existeFirmaPar = false;
                 $firmaPar = 'img/signature.png';
 
-                if (!empty($informacion_obtenida['lista_misma_area']) && is_array($informacion_obtenida['lista_misma_area'])) {
-                    if (!empty($informacion_obtenida['lista_misma_area'][0]['firma'])) {
-                        $existeFirmaPar = Storage::exists('/public/' . $informacion_obtenida['lista_misma_area'][0]['firma']);
+                if (! empty($informacion_obtenida['lista_misma_area']) && is_array($informacion_obtenida['lista_misma_area'])) {
+                    if (! empty($informacion_obtenida['lista_misma_area'][0]['firma'])) {
+                        $existeFirmaPar = Storage::exists('/public/'.$informacion_obtenida['lista_misma_area'][0]['firma']);
                     }
                 }
 
                 if ($existeFirmaPar) {
-                    $firmaPar = '/storage/' . $informacion_obtenida['lista_misma_area'][0]['firma'];
+                    $firmaPar = '/storage/'.$informacion_obtenida['lista_misma_area'][0]['firma'];
                 }
 
                 return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluado', compact(
@@ -1363,54 +1363,54 @@ class EV360EvaluacionesController extends Controller
                 $existeFirmaAuto = false;
                 $firmaAuto = 'img/signature.png';
 
-                if (!empty($informacion_obtenida['lista_autoevaluacion']) && is_array($informacion_obtenida['lista_autoevaluacion'])) {
+                if (! empty($informacion_obtenida['lista_autoevaluacion']) && is_array($informacion_obtenida['lista_autoevaluacion'])) {
                     // Check if the array is not empty and is an array
-                    if (!empty($informacion_obtenida['lista_autoevaluacion'][0]['firma'])) {
-                        $existeFirmaAuto = Storage::exists('/public/' . $informacion_obtenida['lista_autoevaluacion'][0]['firma']);
+                    if (! empty($informacion_obtenida['lista_autoevaluacion'][0]['firma'])) {
+                        $existeFirmaAuto = Storage::exists('/public/'.$informacion_obtenida['lista_autoevaluacion'][0]['firma']);
                     }
                 }
 
                 if ($existeFirmaAuto) {
-                    $firmaAuto = '/storage/' . $informacion_obtenida['lista_autoevaluacion'][0]['firma'];
+                    $firmaAuto = '/storage/'.$informacion_obtenida['lista_autoevaluacion'][0]['firma'];
                 }
 
                 $existeFirmaJefe = false;
                 $firmaJefe = 'img/signature.png';
 
-                if (!empty($informacion_obtenida['lista_jefe_inmediato']) && is_array($informacion_obtenida['lista_jefe_inmediato'])) {
-                    if (!empty($informacion_obtenida['lista_jefe_inmediato'][0]['firma'])) {
-                        $existeFirmaJefe = Storage::exists('/public/' . $informacion_obtenida['lista_jefe_inmediato'][0]['firma']);
+                if (! empty($informacion_obtenida['lista_jefe_inmediato']) && is_array($informacion_obtenida['lista_jefe_inmediato'])) {
+                    if (! empty($informacion_obtenida['lista_jefe_inmediato'][0]['firma'])) {
+                        $existeFirmaJefe = Storage::exists('/public/'.$informacion_obtenida['lista_jefe_inmediato'][0]['firma']);
                     }
                 }
 
                 if ($existeFirmaJefe) {
-                    $firmaJefe = '/storage/' . $informacion_obtenida['lista_jefe_inmediato'][0]['firma'];
+                    $firmaJefe = '/storage/'.$informacion_obtenida['lista_jefe_inmediato'][0]['firma'];
                 }
 
                 $existeFirmaSubordinado = false;
                 $firmaEquipo = 'img/signature.png';
 
-                if (!empty($informacion_obtenida['lista_equipo_a_cargo']) && is_array($informacion_obtenida['lista_equipo_a_cargo'])) {
-                    if (!empty($informacion_obtenida['lista_equipo_a_cargo'][0]['firma'])) {
-                        $existeFirmaSubordinado = Storage::exists('/public/' . $informacion_obtenida['lista_equipo_a_cargo'][0]['firma']);
+                if (! empty($informacion_obtenida['lista_equipo_a_cargo']) && is_array($informacion_obtenida['lista_equipo_a_cargo'])) {
+                    if (! empty($informacion_obtenida['lista_equipo_a_cargo'][0]['firma'])) {
+                        $existeFirmaSubordinado = Storage::exists('/public/'.$informacion_obtenida['lista_equipo_a_cargo'][0]['firma']);
                     }
                 }
 
                 if ($existeFirmaSubordinado) {
-                    $firmaEquipo = '/storage/' . $informacion_obtenida['lista_equipo_a_cargo'][0]['firma'];
+                    $firmaEquipo = '/storage/'.$informacion_obtenida['lista_equipo_a_cargo'][0]['firma'];
                 }
 
                 $existeFirmaPar = false;
                 $firmaPar = 'img/signature.png';
 
-                if (!empty($informacion_obtenida['lista_misma_area']) && is_array($informacion_obtenida['lista_misma_area'])) {
-                    if (!empty($informacion_obtenida['lista_misma_area'][0]['firma'])) {
-                        $existeFirmaPar = Storage::exists('/public/' . $informacion_obtenida['lista_misma_area'][0]['firma']);
+                if (! empty($informacion_obtenida['lista_misma_area']) && is_array($informacion_obtenida['lista_misma_area'])) {
+                    if (! empty($informacion_obtenida['lista_misma_area'][0]['firma'])) {
+                        $existeFirmaPar = Storage::exists('/public/'.$informacion_obtenida['lista_misma_area'][0]['firma']);
                     }
                 }
 
                 if ($existeFirmaPar) {
-                    $firmaPar = '/storage/' . $informacion_obtenida['lista_misma_area'][0]['firma'];
+                    $firmaPar = '/storage/'.$informacion_obtenida['lista_misma_area'][0]['firma'];
                 }
 
                 return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluado', compact(
