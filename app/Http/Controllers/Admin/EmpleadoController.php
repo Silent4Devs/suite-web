@@ -35,6 +35,7 @@ use Barryvdh\DomPDF\Facade as PDF;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -122,7 +123,7 @@ class EmpleadoController extends Controller
         $perfiles_seleccionado = null;
         $puestos_seleccionado = null;
         //$perfiles = PerfilEmpleado::all();
-        $tipoContratoEmpleado = TipoContratoEmpleado::select('id', 'name', 'slug', 'description')->get();
+        $tipoContratoEmpleado = TipoContratoEmpleado::getAll();
         $entidadesCrediticias = EntidadCrediticia::select('id', 'entidad')->get();
         $empleado = new Empleado;
         $idiomas = Language::get();
@@ -944,7 +945,7 @@ class EmpleadoController extends Controller
         $documentos = EvidenciasDocumentosEmpleados::getAll();
         $puestos = Puesto::getAll();
         $perfiles = PerfilEmpleado::getAll();
-        $tipoContratoEmpleado = TipoContratoEmpleado::select('id', 'name', 'description', 'slug')->get();
+        $tipoContratoEmpleado = TipoContratoEmpleado::getAll();
         $entidadesCrediticias = EntidadCrediticia::select('id', 'entidad')->get();
         if (isset($empleado->perfil_empleado_id)) {
             $perfiles_seleccionado = $empleado->perfil_empleado_id;
@@ -1311,28 +1312,22 @@ class EmpleadoController extends Controller
     public function getEmpleados(Request $request)
     {
         if ($request->ajax()) {
-            $nombre = $request->nombre;
-            if ($nombre != null) {
-                $usuarios = Empleado::alta()->with('area')->where('name', 'ILIKE', '%'.$nombre.'%')->take(5)->get();
 
-                // dd(compact('usuarios'));
+            $nombre = $request->nombre;
+
+            if ($nombre != null) {
+                $usuarios = DB::table('empleados')
+                    ->select('empleados.id', 'empleados.name', 'empleados.email', 'empleados.puesto', 'areas.area', 'puestos.puesto as puesto')
+                    ->leftJoin('areas', 'empleados.area_id', '=', 'areas.id')
+                    ->leftJoin('puestos', 'empleados.puesto_id', '=', 'puestos.id')
+                    ->where('empleados.name', 'ILIKE', '%'.$nombre.'%')
+                    ->where('empleados.estatus', 'alta')
+                    ->whereNull('empleados.deleted_at')
+                    ->get();
+
                 return compact('usuarios');
             }
         }
-        /*
-        if ($request->ajax()) {
-            $nombre = $request->nombre;
-            if ($nombre != null) {
-                $usuarios = Empleado::with('area')->where('name', 'ILIKE', '%' . $nombre . '%')->take(5)->get();
-                $lista = "<ul class='list-group' id='empleados-lista'>";
-                foreach ($usuarios as $usuario) {
-                    $lista .= "<button type='button' class='px-2 py-1 text-muted list-group-item list-group-item-action' onClick='seleccionarUsuario(".$usuario.")' > <i class='mr-2 fas fa-user-circle'></i>" . $usuario->name . '</button>';
-                }
-                $lista .= '</ul>';
-                return $lista;
-            }
-        }
-        */
     }
 
     public function getListaEmpleados(Request $request)

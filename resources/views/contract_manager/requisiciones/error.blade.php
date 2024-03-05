@@ -64,7 +64,7 @@
                 Acceso restringido
             </h3>
             <p style="margin-top: 35px;">
-                No tienes permisos para firmar en este momento
+                {!! $mensaje !!}
             </p>
             <a href="{{ route('contract_manager.requisiciones.indexAprobadores') }}" class="btn">Regresar</a>
         </div>
@@ -75,9 +75,10 @@
 </html>
 
 <script>
-     @if(session('mensaje'))
-    <script>
-        alert("{{ session('mensaje') }}");
-    </script>
+    @if (session('mensaje'))
+        <
+        script >
+            alert("{{ session('mensaje') }}"); <
+        />
     @endif
 </script>

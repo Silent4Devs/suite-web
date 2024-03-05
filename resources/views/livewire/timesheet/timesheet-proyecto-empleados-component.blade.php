@@ -12,11 +12,12 @@
             <a href="{{ route('admin.timesheet-proyectos') }}" class="btn btn-info">Pagina Principal de Proyectos</a>
         </div>
     </div>
+    {{-- @dd($empleados) --}}
     <form wire:submit.prevent="addEmpleado" wire:ignore>
         <div class="row mt-4">
             <div class="form-group col-md-7">
                 <label for="">Empleado<sup>*</sup></label>
-                <select wire:model.defer="empleado_añadido" name="" id="" class="select2" required>
+                <select wire:model.lazy="empleado_añadido" name="" id="" class="select2" required>
                     <option value="" selected readonly>Seleccione un empleado</option>
                     @foreach ($empleados as $empleado)
                         @foreach ($areasempleado as $ae)
@@ -70,9 +71,11 @@
             <tbody style="position:relative;">
                 @foreach ($proyecto_empleados as $proyect_empleado)
                     <tr>
-                        <td>{{ $proyect_empleado->empleado->name }} </td>
-                        <td>{{ $proyect_empleado->empleado->area->area }} </td>
-                        <td>{{ $proyect_empleado->empleado->puesto }} </td>
+
+                        {{-- @dd( $proyect_empleado); --}}
+                        <td>{{ $proyect_empleado->name }} </td>
+                        <td>{{ $proyect_empleado->area }} </td>
+                        <td>{{ $proyect_empleado->puesto }} </td>
                         @if ($proyecto->tipo === 'Externo')
                             <td>{{ $proyect_empleado->horas_asignadas ?? '0' }} </td>
                             <td>{{ $proyect_empleado->totales ?? '0' }} </td>
@@ -113,7 +116,7 @@
                                 <i class="fa-solid fa-pen-to-square"
                                     style="color: rgb(62, 86, 246); font-size:60pt;"></i>
                                 <h1 class="my-4" style="font-size:14pt;">Editar empleado:
-                                    <small>{{ $proyect_empleado->empleado->name }}</small>
+                                    <small>{{ $proyect_empleado->name }}</small>
                                 </h1>
                             </div>
                             <form wire:submit.prevent="editEmpleado({{ $proyect_empleado->id }}, Object.fromEntries(new FormData($event.target)))">
@@ -121,8 +124,8 @@
                                     <div class="form-group col-md-8">
                                         <label for="">Empleado<sup>*</sup>(obligatorio)</label>
                                         <select name="empleado_editado" id="" class="select2" required>
-                                            <option value="{{ $proyect_empleado->empleado->id }}" selected>
-                                                {{ $proyect_empleado->empleado->name }}</option>
+                                            <option value="{{ $proyect_empleado->id_empleado }}" selected>
+                                                {{ $proyect_empleado->name }}</option>
                                             @foreach ($empleados as $empleado)
                                                 @foreach ($areasempleado as $ae)
                                                     @if ($empleado->area_id === $ae->area_id)
@@ -185,10 +188,10 @@
                             <div class="text-center">
                                 <i class="fa-solid fa-trash-can" style="color: #E34F4F; font-size:60pt;"></i>
                                 <h1 class="my-4" style="font-size:14pt;">Remover empleado de Proyecto:
-                                    <small>{{ $proyect_empleado->proyecto->proyecto }}</small>
+                                    <small>{{ $proyect_empleado->proyecto }}</small>
                                 </h1>
-                                <p class="parrafo">¿Desea remover a {{ $proyect_empleado->empleado->name }} del
-                                    proyecto {{ $proyect_empleado->proyecto->proyecto }}?</p>
+                                <p class="parrafo">¿Desea remover a {{ $proyect_empleado->name }} del
+                                    proyecto {{ $proyect_empleado->proyecto }}?</p>
                             </div>
                             <div class="mt-4 d-flex justify-content-between">
                                 <button class="btn btn_cancelar" data-dismiss="modal">

@@ -27,7 +27,7 @@ class RegistroVisitantesController extends Controller
             $quote = new VisitanteQuote();
         }
         $logo = asset('img/logo_monocromatico.png');
-        if (Organizacion::select('id', 'logotipo')->first()) {
+        if (Organizacion::getFirst()) {
             $logo = Organizacion::getLogo()->logotipo;
         }
 

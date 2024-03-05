@@ -78,27 +78,47 @@
             font-size: 30px;
         }
     </style>
-    {{ Breadcrumbs::render('EV360-Objetivos-Create', $empleado) }}
+    @can('objetivos_estrategicos_acceder')
+        {{ Breadcrumbs::render('EV360-Objetivos-Create', $empleado) }}
+    @endcan
 
-    <h5 class="titulo_general_funcion">Asignar Objetivos Estratégicos: <span
-            style="font-weight: lighter;">{{ $empleado->name }}</span></h5>
+    <h5 class="titulo_general_funcion">
+        Asignar Objetivos Estratégicos: <span style="font-weight: lighter;">{{ $empleado->name }}</span>
+    </h5>
 
-    <div class="card">
-        <div class="card-body">
-            <form id="formObjetivoCreate" method="POST" action="{{ route('admin.ev360-objetivos.index') }}"
-                enctype="multipart/form-data" class="mt-3 row">
-                @csrf
-                @include('admin.recursos-humanos.evaluacion-360.objetivos._form_by_empleado', [
-                    'editar' => false,
-                ])
+    <div class="card card-body">
+        <div class="d-flex align-items-center" style="gap: 50px;">
+            <div class="d-flex align-items-center" style="gap: 15px;">
+                <div class="img-person" style="width: 100px; height: 100px;">
+                    <img src="{{ $empleado->ruta_avatar }}" alt="">
+                </div>
+                <span style="font-size: 16px;">{{ $empleado->name }}</span>
+            </div>
+            <div class="line-perador-config">
+                <span>{{ $empleado->puesto }}</span> <br><br>
+                <span>{{ $empleado->area->area }}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="">
+        <form id="formObjetivoCreate" method="POST" action="{{ route('admin.ev360-objetivos.index') }}"
+            enctype="multipart/form-data" class="mt-3">
+            @csrf
+            @include('admin.recursos-humanos.evaluacion-360.objetivos._form_by_empleado', [
+                'editar' => false,
+            ])
+            <div class="row pb-5">
+
                 <div class="col-12">
                     <div class="d-flex justify-content-end w-100">
                         <a href="{{ route('admin.ev360-objetivos.index') }}" class="btn_cancelar">Regresar</a>
                     </div>
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
+
     <div class="modal fade" id="objetivoModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
         aria-labelledby="objetivoModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -182,6 +202,7 @@
             let dtButtons = [];
             let empleado = @json($empleado);
             let auth = @json(Auth::user()->empleado);
+            let permiso = @json($permiso);
             let supervisor = @json($empleado->supervisor);
             let dtOverrideGlobals = {
                 buttons: dtButtons,
@@ -244,7 +265,7 @@
                                 </div>
                                 `;
                             if (row.objetivo.esta_aprobado == 0) {
-                                if (auth.id == supervisor.id) {
+                                if (auth.id == supervisor.id || permiso == true) {
                                     botones +=
                                         `<div class="col-12">
                                         <button onclick="event.preventDefault();aprobarObjetivoEstrategico(${row.objetivo_id},${row.empleado_id},true);" class="btn btn-small text-success"><i class="fa-solid fa-thumbs-up"></i></button>

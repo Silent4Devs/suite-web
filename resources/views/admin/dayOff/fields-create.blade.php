@@ -64,7 +64,6 @@
         </div>
     </div>
 
-    <div class="row">
         <div class="form-group col-sm-3 mt-4" x-show="otro">
             <div class="form-floating">
                 <input type="number" class="form-control" id="meses" name="meses"
@@ -73,7 +72,6 @@
                 <label for="meses">Inicio del beneficio en meses:</label>
             </div>
         </div>
-    </div>
 </div><br>
 
 <div class="row">

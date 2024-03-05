@@ -67,7 +67,7 @@
 
     $usuario = User::getCurrentUser();
     @endphp
-    <div class="mt-4 card card-body shadow-sm" style="border-radius:16px;">
+    <div class="mt-4 card card-body shadow-sm" style="border-radius:16px;" wire:ignore>
         <div class="content-limit caja-carrusel">
             <div class="arrow-carrusel-izq" style="margin-right: 10px;">
                 <i class="material-icons-outlined">arrow_back_ios</i>
@@ -129,7 +129,7 @@
             <div class="row">
                 <div class="form-group col-md-3 col-lg-3 col-sm-12 anima-focus">
                     <input class="form-control {{ $errors->has('fecha') ? 'is-invalid' : '' }}" type="text"
-                        id="fecha" min="1945-01-01" disabled wire:model.defer="fecha">
+                        id="fecha" min="1945-01-01" disabled wire:model.lazy="fecha">
                     @if ($errors->has('fecha'))
                         <div class="invalid-feedback">
                             {{ $errors->first('fecha') }}
@@ -142,7 +142,7 @@
             <div class="row">
                 <div class="form-group col-md-6 col-lg-6 col-sm-12 anima-focus">
                     <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text"
-                        name="nombre" id="nombre" value="{{ old('nombre', '') }}" required wire:model.defer="name"
+                        name="nombre" id="nombre" value="{{ old('nombre', '') }}" required wire:model.lazy="name"
                         placeholder="">
                     <label for="nombre">Nombre *</label>
                     @error('name')
@@ -185,7 +185,7 @@
                             {{ $errors->first('estatus') }}
                         </div>
                     @endif --}}
-                    <input class="form-control" type="text" id="norma" disabled wire:model.defer="norma">
+                    <input class="form-control" type="text" id="norma" disabled wire:model.lazy="norma">
 
                     <label for="norma">Norma</label>
                 </div>
@@ -195,7 +195,7 @@
             <div class="row">
                 <div class="form-group col-md-6 col-sm-6 anima-focus">
                     <select class="form-control {{ $errors->has('id_elaboro') ? 'is-invalid' : '' }}" name="id_elaboro"
-                        id="id_elaboro" required wire:model.defer="id_elaboro">
+                        id="id_elaboro" required wire:model.lazy="id_elaboro">
                         <option value disabled {{ old('id_elaboro', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
                         @foreach ($empleados as $key => $label)
@@ -243,7 +243,7 @@
         </form>
     </div>
 
-    <div class="datatable-rds datatable-fix">
+    <div class="datatable-rds datatable-fix" wire:ignore>
         <table id="datatable_analisisbrechas" class="table w-100">
             <thead>
                 <tr>
@@ -391,7 +391,7 @@
                         Swal.fire({
                             title: "Eliminado",
                             text: "El análisis de brechas se elimino con éxito",
-                            icon: "success"
+                            icon: "success",
                         });
                     }
                 });

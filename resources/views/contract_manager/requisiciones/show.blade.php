@@ -230,12 +230,23 @@
                     <div class="row">
                         <div class="col s12 l4">
                             <strong> Fecha Inicio: </strong> <br> <br>
-                            {{ date('d-m-Y', strtotime($proveedor_indistinto->fecha_inicio))  }}
+                            @isset($proveedor_indistinto->fecha_inicio)
+                                {{ date('d-m-Y', strtotime($proveedor_indistinto->fecha_inicio)) }}
+                            @else
+                                La fecha de inicio no está disponible.
+                            @endisset
                         </div>
+
                         <div class="col s12 l4">
                             <strong> Fecha fin: </strong> <br> <br>
-                            {{ date('d-m-Y', strtotime($proveedor_indistinto->fecha_fin))  }}
+                            @isset($proveedor_indistinto->fecha_fin)
+                                {{ date('d-m-Y', strtotime($proveedor_indistinto->fecha_fin)) }}
+                            @else
+                                La fecha fin no está disponible.
+                            @endisset
                         </div>
+                        
+                        
 
                     </div>
                 </div>

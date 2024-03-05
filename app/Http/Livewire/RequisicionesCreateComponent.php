@@ -114,6 +114,7 @@ class RequisicionesCreateComponent extends Component
     public function servicioStore($data)
     {
         $usuario = User::getCurrentUser();
+
         if ($this->nueva_requisicion) {
             $this->nueva_requisicion->update([
                 'fecha' => $data['fecha'],
@@ -222,6 +223,7 @@ class RequisicionesCreateComponent extends Component
 
                         $this->disabled = 'disabled';
                     } else {
+                        dd('saul');
                         $this->provedores_indistinto_catalogo = collect();
                         $this->provedores_indistinto_catalogo = KatbolProveedorIndistinto::create([
                             'requisicion_id' => $this->nueva_requisicion->id,

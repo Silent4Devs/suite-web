@@ -8,7 +8,7 @@
     $aprobados_contador = $times->where('estatus', 'aprobado')->count();
     $rechazos_contador = $times->where('estatus', 'rechazado')->count();
 @endphp
-<div class="d-flex justify-content-between mb-4" style="gap: 10px; width: 95%; margin:auto;">
+<div class="box-caja-cards-times d-flex justify-content-between mb-4" style="gap: 20px; width: 95%; margin:auto;">
     <a href="{{ route('admin.timesheet-mis-registros', 'todos') }}#">
         <div class="card-complement">
             <div class="bg-objet" style="background-color: #DFF7FF;"></div>

@@ -50,6 +50,23 @@ class TimesheetProyecto extends Model implements Auditable
         }
     }
 
+    public static function getAllWithData()
+    {
+        return Cache::remember('TimesheetProyecto:proyectos_with_tasks', 3600 * 4, function () {
+            return self::with('tareas:id,tarea,proyecto_id,area_id,todos')
+                ->select('id', 'proyecto', 'identificador')
+                ->get();
+        });
+    }
+
+    public static function getAllDashboard()
+    {
+        return Cache::remember('TimesheetProyecto:proyectos_dashboard', 3600 * 4, function () {
+            return self::select('id', 'proyecto', 'estatus')
+                ->get();
+        });
+    }
+
     public static function getIdNameAll($proyecto_id = null)
     {
         if (is_null($proyecto_id)) {
@@ -66,21 +83,21 @@ class TimesheetProyecto extends Model implements Auditable
     public static function getAllOrderByIdentificador()
     {
         return Cache::remember('TimesheetProyecto:timesheetproyecto_all_order_by_identificador', 3600, function () {
-            return self::orderBy('identificador', 'asc')->get();
+            return self::orderBy('id', 'desc')->get();
         });
     }
 
     public static function getAllWithCliente()
     {
         return Cache::remember('TimesheetProyecto:timesheetproyecto_all_with_cliente', 3600 * 3, function () {
-            return self::with('cliente')->orderBy('identificador', 'desc')->get();
+            return self::with('cliente')->orderBy('id', 'desc')->get();
         });
     }
 
     public static function getAllByProceso()
     {
         return Cache::remember('TimesheetProyecto:timesheetproyecto_all_order_by_proceso', 3600 * 4, function () {
-            return self::where('estatus', 'proceso')->orderBy('identificador', 'asc')->get();
+            return self::where('estatus', 'proceso')->orderBy('id', 'desc')->get();
         });
     }
 

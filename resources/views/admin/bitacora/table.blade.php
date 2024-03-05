@@ -107,6 +107,11 @@
     }
 </style>
 
+@if (session('mensajeError'))
+<div class="alert alert-danger">
+    {{ session('mensajeError') }}
+</div>
+@endif
 <form method="POST" action="{{ route('contract_manager.contratos-katbol.store') }}" enctype="multipart/form-data">
     @csrf
     <div class="card card-content">
@@ -142,7 +147,7 @@
                         </font>
                     </label>
                     <input class="form-control" {{ $errors->has('no_contrato') ? 'is-invalid' : '' }} type="text"
-                        name="no_contrato" id="no_contrato" value="{{ old('no_contrato', '') }}" maxlength="250">
+                        name="no_contrato" id="no_contrato" value="{{ old('no_contrato', '') }}" maxlength="230">
                     <span id="existCode"></span>
                     {{-- @if ($errors->has('no_contrato'))
                         <span class="text-danger">{{ $errors->first('no_contrato') }}</span>
@@ -209,7 +214,7 @@
                 <label for="nombre_servicio" class="txt-tamaño">
                     Nombre del servicio<font class="asterisco">*</font></label>
                 <div class="form-floating">
-                    <textarea id="textarea1" class="form-control" name="nombre_servicio" required>{{ old('nombre_servicio') }}</textarea>
+                    <textarea id="textarea1" class="form-control" maxlength="550" name="nombre_servicio" required>{{ old('nombre_servicio') }}</textarea>
                 </div>
                 @if ($errors->has('nombre_servicio'))
                     <div class="invalid-feedback red-text">
@@ -342,7 +347,7 @@
             <div class="form-group col-md-12">
                 <label for="objetivo" class="txt-tamaño">
                     Objetivo del servicio<font class="asterisco">*</font></label>
-                <textarea id="textarea1" class="texto-linea form-control" name="objetivo" required>{{ old('objetivo') }}</textarea>
+                <textarea id="textarea1" class="texto-linea form-control" maxlength="500" name="objetivo" required>{{ old('objetivo') }}</textarea>
                 @if ($errors->has('objetivo'))
                     <div class="invalid-feedback red-text">
                         {{ $errors->first('nombre_servicio') }}
@@ -452,8 +457,9 @@
             <div class="form-group col-md-4">
                 <label for="no_contrato" class="txt-tamaño">
                     &nbsp;No. Pagos<font class="asterisco">*</font></label><br>
-                <input type="number" name="no_pagos" id="no_pagos" class="form-control required" min="1"
-                    max="500000">
+                    <input type="number"  name="no_pagos" id="no_pagos" pattern="[0-9]+" title="Por favor, ingrese solo números enteros."
+                    class="model-cantidad browser-default" required>
+
                 {{-- {!! Form::number('no_pagos', null, ['class' => 'form-control', 'required'], ['min' => "1"] ) !!} --}}
                 @if ($errors->has('no_pagos'))
                     <div class="invalid-feedback red-text">

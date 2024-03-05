@@ -148,7 +148,7 @@ class EmpleadoCreateEditComponent extends Component
         $this->sedes = Sede::getAll();
         $this->puestos = Puesto::getAll();
         $this->perfiles = PerfilEmpleado::getAll();
-        $this->tipoContratoEmpleado = TipoContratoEmpleado::select('id', 'name', 'description')->get();
+        $this->tipoContratoEmpleado = TipoContratoEmpleado::getAll();
         $this->entidadesCrediticias = EntidadCrediticia::select('id', 'entidad')->get();
 
         return view('livewire.empleado-create-edit-component');

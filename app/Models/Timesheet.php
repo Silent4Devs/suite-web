@@ -34,13 +34,14 @@ class Timesheet extends Model implements Auditable
         'created_at',
     ];
 
+    public static function getPersonalTimesheetQuery()
+    {
+        return self::where('empleado_id', auth()->user()->empleado->id);
+    }
+
     public static function getPersonalTimesheet()
     {
-        return Cache::remember('Timesheet:timesheet-'.auth()->user()->empleado->id, now()->addHours(3), function () {
-            return self::where('empleado_id', auth()->user()->empleado->id)
-                ->orderBy('created_at', 'desc')
-                ->get();
-        });
+        return self::getPersonalTimesheetQuery()->latest()->get();
     }
 
     public static function getAll()
@@ -52,14 +53,21 @@ class Timesheet extends Model implements Auditable
 
     public static function getreportes()
     {
-        return Cache::remember('timesheet_reportes', now()->addHours(2), function () {
-            return self::select('id', 'estatus', 'empleado_id', 'fecha_dia')->orderBy('created_at', 'desc')->get();
+        return Cache::remember('Timesheet:timesheet_reportes', now()->addHours(2), function () {
+            return self::select('id', 'estatus', 'empleado_id', 'fecha_dia')->get();
+        });
+    }
+
+    public static function getAllEstatus()
+    {
+        return Cache::remember('Timesheet:timesheet_estatus', now()->addHours(2), function () {
+            return self::select('estatus')->get();
         });
     }
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'empleado_id');
+        return $this->belongsTo(Empleado::class, 'empleado_id')->select('id', 'name', 'area_id');
     }
 
     public function aprobador()

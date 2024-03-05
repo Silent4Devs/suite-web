@@ -3,6 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+    {{-- <meta http-equiv="refresh" content="3600"> --}}
 	<title>TABANTAJ</title>
 	<style type="text/css">
 		body{
@@ -32,7 +33,9 @@
 			transform: scale(0.65);
 		}
 		#slider li img, #slider li video{
+            width: 100%;
 			height: 100%;
+            object-fit: contain;
 		}
 		#slider .actual{
 			opacity: 1;
@@ -58,14 +61,14 @@
                         $imagen = 'storage/imagen_comunicado_SGI/' . $carrusel->imagenes_comunicacion->first()->imagen;
                     }
                 } else {
-                    $imagen = 'img/tabantaj_fondo_blanco.png';
+                    $imagen = 'img/tabantaj_fondo_blanco.webp';
                 }
 
                 $tipo_archivo = $carrusel->imagenes_comunicacion->first() ?  $carrusel->imagenes_comunicacion->first()->tipo : '';
             @endphp
 			<li class="" data-tipo="{{ $tipo_archivo }}">
 				@if($tipo_archivo == 'video')
-					<video muted controls src="{{ asset($imagen) }}">
+					<video muted controls>
 						<source src="{{ asset($imagen) }}" type="video">
 					</video>
 				 @else
@@ -73,68 +76,76 @@
 				@endif
 			</li>
 		 @empty
-		 	<li class=""><img src="{{ asset('img/tabantaj_fondo_blanco.png') }}"></li>
+		 	<li class=""><img src="{{ asset('img/tabantaj_fondo_blanco.webp') }}"></li>
 		@endforelse
 	</ul>
-
-	<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 	<script type="text/javascript">
-		$(document).click(function(){
-			document.body.requestFullscreen();
-		});
+		document.addEventListener("click", function() {
+            if (document.body.requestFullscreen) {
+                document.body.requestFullscreen();
+            } else if (document.body.webkitRequestFullscreen) { /* Safari */
+                document.body.webkitRequestFullscreen();
+            } else if (document.body.msRequestFullscreen) { /* IE11 */
+                document.body.msRequestFullscreen();
+            }
+        });
 
-		$(document).ready(function(){
-			let duracion = Number(30000);
-			let video_duracion;
+        document.addEventListener("DOMContentLoaded", function() {
+            let duracion = Number(30000);
+            let video_duration;
 
-			let first = $('#slider li:first-child');
-			let last = $('#slider li:last-child');
+            let first = document.querySelector('#slider li:first-child');
+            let last = document.querySelector('#slider li:last-child');
 
-			first.attr('data-n', 'primero');
-			last.attr('data-n', 'ultimo');
+            first.setAttribute('data-n', 'primero');
+            last.setAttribute('data-n', 'ultimo');
 
-			$('#slider li:last-child').addClass('anterior');
-			$('#slider li:first-child').addClass('actual');
-			$('#slider li:nth-child(2)').addClass('siguiente');
+            document.querySelector('#slider li:last-child').classList.add('anterior');
+            document.querySelector('#slider li:first-child').classList.add('actual');
+            document.querySelector('#slider li:nth-child(2)').classList.add('siguiente');
 
-			let previous = $('#slider li.anterior');;
-			let current = $('#slider li.actual');
-			let next = $('#slider li.siguiente');
+            let previous = document.querySelector('#slider li.anterior');
+            let current = document.querySelector('#slider li.actual');
+            let next = document.querySelector('#slider li.siguiente');
 
-			previous.addClass('anterior');
-			current.addClass('actual');
-			next.addClass('siguiente');
+            previous.classList.add('anterior');
+            current.classList.add('actual');
+            next.classList.add('siguiente');
 
-			function slider()
-			{
-				previous.removeClass('anterior');
-				previous = current;
-				previous.addClass('anterior');
+            function slider() {
+                previous.classList.remove('anterior');
+                previous = current;
+                previous.classList.add('anterior');
 
-				current.removeClass('actual');
-				current = next;
-				current.addClass('actual');
+                current.classList.remove('actual');
+                current = next;
+                current.classList.add('actual');
 
-				if (next.attr('data-n') != 'ultimo') {
-					next = $('#slider li.siguiente + li');
-				}else{
-					next = $('#slider li:first-child');
-				}
-				$('#slider li.siguiente').removeClass('siguiente');
-				next.addClass('siguiente');
+                if (next.getAttribute('data-n') !== 'ultimo') {
+                    next = document.querySelector('#slider li.siguiente + li');
+                } else {
+                    next = document.querySelector('#slider li:first-child');
+                }
+                document.querySelector('#slider li.siguiente').classList.remove('siguiente');
+                next.classList.add('siguiente');
 
-				if (current.attr('data-tipo') === 'video') {
-					document.querySelector('#slider li.actual video').play();
-					video_duration = (Number(document.querySelector('#slider li.actual video').duration)) * 1000;
-					setTimeout(slider, video_duration);
-				}else{
-					setTimeout(slider, duracion);
-				}
-			}
-			if (current.attr('data-n') != 'ultimo') {
-				setTimeout(slider, duracion);
-			}
-		});
-	</script>
+                if (current.getAttribute('data-tipo') === 'video') {
+                    document.querySelector('#slider li.actual video').play();
+                    video_duration = Number(document.querySelector('#slider li.actual video').duration) * 1200;
+                    setTimeout(slider, video_duration);
+                } else {
+                    setTimeout(slider, duracion);
+                }
+            }
+
+            if (current.getAttribute('data-n') !== 'ultimo') {
+                setTimeout(slider, duracion);
+            }
+        });
+
+        // setTimeout(function() {
+        //     location.reload(true);
+        // }, 3600000); // 3600000 milisegundos = 1 hora
+    </script>
 </body>
 </html>

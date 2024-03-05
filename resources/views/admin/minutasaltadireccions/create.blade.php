@@ -253,25 +253,25 @@
                         <p class="font-weight-bold col-12" style="font-size:11pt;">Participantes externos.</p>
                         <hr>
                         <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-6">
-                            <input class="form-control" type="text" id="nombreEXT" placeholder="" />
+                            <input class="form-control" type="text" id="nombreEXT" maxlength="255" placeholder="" />
                             <label for="nombreEXT">Nombre</label>
                         </div>
                         <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-6">
-                            <input class="form-control" type="text" id="emailEXT" placeholder="" />
+                            <input class="form-control" type="text" id="emailEXT" maxlength="255" placeholder="" />
                             <label for="emailEXT">Email</label>
                         </div>
                         <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-6">
-                            <input class="form-control" type="text" id="puestoEXT" placeholder="" />
+                            <input class="form-control" type="text" id="puestoEXT" maxlength="255" placeholder="" />
                             <label for="puestoEXT">Puesto</label>
                         </div>
                         <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-6">
-                            <input class="form-control" type="text" id="empresaEXT" placeholder="" />
+                            <input class="form-control" type="text" id="empresaEXT" maxlength="255" placeholder="" />
                             <label for="empresaEXT">Empresa u
                                 Organización</label>
                         </div>
                         <div class="form-group col-sm-12 col-md-12 col-lg-6">
                             <label for="asistenciaEXT">Asistencia</label>
-                            <select class="form-control" id="asistenciaEXT" name="asistenciaEXT" placeholder="">
+                            <select class="form-control" id="asistenciaEXT" name="asistenciaEXT"  placeholder="">
                                 <option value="Si" default>Sí</option>
                                 <option value="No">No</option>
                                 <option value="Ausencia Justificada">Ausencia Justificada</option>
@@ -485,7 +485,7 @@
                 let searchValue = $(this).val().trim();
                 let currentRequestNumber = ++currentSearchRequest; // Increment the request number
 
-                if (searchValue === "") {
+                if (searchValue === '') {
                     // Clear or hide suggestions when the search input is empty
                     $("#participantes_sugeridos").hide();
                     return;
@@ -499,16 +499,24 @@
                         $("#cargando_participantes").show();
                     },
                     success: function(data) {
-                        // Check if the response corresponds to the latest search query
-                        if (currentRequestNumber === currentSearchRequest) {
+                    // Check if the response corresponds to the latest search query
+                    if (currentRequestNumber === currentSearchRequest) {
+                        if (data.usuarios.length === 0) {
+                            // No se encontraron usuarios, mostrar un mensaje
+                            let mensaje = "<p>No se encontraron usuarios.</p>";
+                            $("#participantes_sugeridos").html(mensaje);
+                            $("#cargando_participantes").hide();
+                            $("#participantes_sugeridos").show();
+                            $("#participantes_search").css("background", "#FFF");
+                        } else {
                             let lista = "<ul class='list-group id=empleados-lista'>";
                             $.each(data.usuarios, function(ind, usuario) {
                                 var result = `{"id":"${usuario.id}",
-                        "name":"${usuario.name}",
-                        "email":"${usuario.email}",
-                        "puesto":"${usuario.puesto}",
-                        "area":"${usuario.area.area}"
-                    }`;
+                                    "name":"${usuario.name}",
+                                    "email":"${usuario.email}",
+                                    "puesto":"${usuario.puesto}",
+                                    "area":"${usuario.area}"
+                                }`;
                                 lista +=
                                     "<button type='button' class='px-2 py-1 text-muted list-group-item list-group-item-action' onClick='seleccionarUsuario(" +
                                     result + ")' >" +
@@ -522,10 +530,10 @@
                             sugeridos.innerHTML = lista;
                             $("#participantes_search").css("background", "#FFF");
                         }
+                }
                     }
                 });
             });
-
 
             document.getElementById('btn-suscribir-participante').addEventListener('click', function(e) {
                 e.preventDefault();

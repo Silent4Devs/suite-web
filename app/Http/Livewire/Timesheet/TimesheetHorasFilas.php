@@ -63,7 +63,7 @@ class TimesheetHorasFilas extends Component
         // } else {
         $proyectos_area = TimesheetProyectoArea::withwhereHas('proyecto', function ($query) {
             return $query->where('estatus', '=', 'proceso');
-        })->where('area_id', $empleado->area_id)->get();
+        })->where('area_id', $empleado->area_id)->orderBy('id', 'desc')->get();
         //Traer todos los proyectos que ya han sido asignados en el area
         // $proyectos_filtro = TimesheetProyectoEmpleado::getAll()->where('area_id', $empleado->area_id);
         //foreach borramos los proyectos del area que ya han sido asignados

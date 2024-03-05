@@ -85,9 +85,9 @@ class ReportesRegistros extends Component
         $this->areas = Area::getIdNameAll();
         //Query para obtener los timesheet y filtrarlo
         if ($this->area_id == 0) {
-            $this->emp = Empleado::getIdNameAll();
+            $this->emp = Empleado::select('id', 'name')->where('estatus', 'alta')->orderBy('id', 'desc')->get();
         } else {
-            $this->emp = Empleado::getIdNameAll()->where('area_id', $this->area_id);
+            $this->emp = Empleado::select('id', 'name')->where('estatus', 'alta')->where('area_id', $this->area_id)->orderBy('id', 'desc')->get();
         }
         $empleados = $this->emp;
 

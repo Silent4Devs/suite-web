@@ -1,4 +1,7 @@
 @extends('layouts.admin')
+@section('css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}{{ config('app.cssVersion') }}">
+@endsection
 @section('content')
     <style type="text/css">
         .btn-transparent {
@@ -7,6 +10,9 @@
         }
     </style>
 
+    {{-- @include('admin.timesheet.complementos.cards') --}}
+    @include('admin.timesheet.complementos.admin-aprob')
+    {{-- @include('admin.timesheet.complementos.blue-card-header') --}}
 
     {{ Breadcrumbs::render('timesheet-clientes-form') }}
 
@@ -14,6 +20,12 @@
     </h5>
 
     <div class="card card-body">
+        <div class="row">
+            <div class="col-12">
+                <h4 class="title-card-time">Cliente</h4>
+                <hr class="my-4">
+            </div>
+        </div>
         <form action="{{ asset('admin/timesheet/clientes/update') }}/{{ $cliente->id }}" method="POST" class="row">
             @csrf
             <div class="form-group col-md-2 anima-focus">
@@ -45,8 +57,8 @@
                 </div>
 
                 <div class="col-md-12 col-sm-12 mt-4">
-                    <div class="card vrd-agua" style="background-color:#345183;">
-                        <p class="mb-1 text-center text-white">DOMICILIO</p>
+                    <div class="card vrd-agua" style="background-color:#fff;">
+                        <p class="mb-1">DOMICILIO</p>
                     </div>
                 </div>
 
@@ -63,51 +75,54 @@
                 </div>
 
                 <div class="form-group col-md-4 anima-focus">
-                    <input type="" placeholder="" name="ciudad" class="form-control" value="{{ $cliente->ciudad }}">
+                    <input type="" placeholder="" name="ciudad" class="form-control"
+                        value="{{ $cliente->ciudad }}">
                     {!! Form::label(
                         'ciudad',
                         ' Ciudad o Municipio/
-                                        País*',
+                                                                                                                                                                                                                            País*',
                         ['class' => 'asterisco'],
                     ) !!}
                 </div>
 
                 <div class="form-group col-md-4 anima-focus">
-                    <input type="" name="codigo_postal" class="form-control"  maxlength="255" value="{{ $cliente->codigo_postal }}">
+                    <input type="" name="codigo_postal" class="form-control" maxlength="255"
+                        value="{{ $cliente->codigo_postal }}">
                     {!! Form::label('codigo_postal', 'Código Postal*', ['class' => 'asterisco']) !!}
                 </div>
 
                 <div class="form-group col-md-4 anima-focus">
-                    <input id="phone" name="telefono" pattern="[0-9]+"  maxlength="12" title="Por favor, introduce solo números"
-                        value="{{ $cliente->telefono }}" class="form-control" size="20" placeholder="">
+                    <input id="phone" name="telefono" pattern="[0-9]+" maxlength="12"
+                        title="Por favor, introduce solo números" value="{{ $cliente->telefono }}" class="form-control"
+                        size="20" placeholder="">
                     {!! Form::label('telefono', 'Teléfono*', ['class' => 'asterisco']) !!}
                 </div>
 
                 <div class="form-group col-md-4 anima-focus">
-                    <input type="" placeholder="" name="pagina_web"  maxlength="255" class="form-control"
+                    <input type="" placeholder="" name="pagina_web" maxlength="255" class="form-control"
                         value="{{ $cliente->pagina_web }}">
                     {!! Form::label('pagina_web', 'Página Web*', ['class' => 'asterisco']) !!}
                 </div>
 
                 <div class="col-md-12 col-sm-12 mt-4">
-                    <div class="card vrd-agua" style="background-color:#345183;">
-                        <p class="mb-1 text-center text-white">DATOS DEL CONTACTO</p>
+                    <div class="card vrd-agua" style="background-color:#fff;">
+                        <p class="mb-1">DATOS DEL CONTACTO</p>
                     </div>
                 </div>
 
                 <div class="form-group col-md-6 anima-focus">
-                    <input type="" placeholder="" name="nombre_contacto"  maxlength="255" class="form-control"
+                    <input type="" placeholder="" name="nombre_contacto" maxlength="255" class="form-control"
                         value="{{ $cliente->nombre_contacto }}">
                     {!! Form::label(
                         'nombre_contacto',
                         'Nombre Completo del
-                                            contacto*',
+                                                                                                                                                                                                                                contacto*',
                         ['class' => 'asterisco'],
                     ) !!}
                 </div>
 
                 <div class="form-group col-md-6 anima-focus">
-                    <input type="" placeholder="" name="puesto_contacto"  maxlength="255" class="form-control"
+                    <input type="" placeholder="" name="puesto_contacto" maxlength="255" class="form-control"
                         value="{{ $cliente->puesto_contacto }}">
                     {!! Form::label('puesto_contacto', 'Puesto*', ['class' => 'asterisco']) !!}
                 </div>
@@ -121,14 +136,15 @@
                 </div>
 
                 <div class="form-group col-md-6 anima-focus">
-                    <input pattern="[0-9]+" title="Por favor, introduce solo números"  maxlength="10" name="celular_contacto"
-                        placeholder="" class="form-control" value="{{ $cliente->celular_contacto }}">
+                    <input pattern="[0-9]+" title="Por favor, introduce solo números" maxlength="10"
+                        name="celular_contacto" placeholder="" class="form-control"
+                        value="{{ $cliente->celular_contacto }}">
                     {!! Form::label('celular_contacto', 'Celular*', ['class' => 'asterisco']) !!}
                 </div>
 
                 <div class="col-md-12 col-sm-12 mt-4">
-                    <div class="card vrd-agua" style="background-color:#345183;">
-                        <p class="mb-1 text-center text-white">PRODUCTOS Y/O SERVICIOS</p>
+                    <div class="card vrd-agua" style="background-color:#fff;">
+                        <p class="mb-1">PRODUCTOS Y/O SERVICIOS</p>
                     </div>
                 </div>
 
@@ -137,7 +153,7 @@
                     {!! Form::label(
                         'objeto_descripcion',
                         'Objeto social / Descripción
-                                            del servicio o producto*',
+                                                                                                                                                                                                                                del servicio o producto*',
                         ['class' => 'asterisco'],
                     ) !!}
                 </div>
@@ -147,7 +163,7 @@
                     {!! Form::label(
                         'cobertura',
                         'Cobertura, Rango geográfico
-                                        en el cual presta los servicios*',
+                                                                                                                                                                                                                            en el cual presta los servicios*',
                         ['class' => 'asterisco'],
                     ) !!}
                 </div>

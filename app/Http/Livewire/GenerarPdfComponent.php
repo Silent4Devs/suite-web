@@ -60,7 +60,7 @@ class GenerarPdfComponent extends Component
         }
 
         $matriz_requisitos_legales = MatrizRequisitoLegale::get();
-        $foda = EntendimientoOrganizacion::first();
+        $foda = EntendimientoOrganizacion::getFirst();
         if (! $foda) {
             $this->emit('showErrorAlert', 'Aún no has realizado en análisis FODA');
 

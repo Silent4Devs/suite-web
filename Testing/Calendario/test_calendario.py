@@ -1,35 +1,48 @@
+import pytest
+import time
 from selenium import webdriver
-import os
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import NoSuchElementException
-from selenium.common.exceptions import TimeoutException
 
-driver.add_argument('--headless')
+@pytest.fixture(scope="module")
+def browser():
+    driver = webdriver.Firefox()
+    yield driver
+    driver.quit()
 
-driver = webdriver.FirefoxOptions()
+def login(driver, username, password):
+    driver.get('https://192.168.9.78/')
+    driver.maximize_window()
+    print("------ LOGIN - TABANTAJ -----")
+    time.sleep(5)
+    username_input = WebDriverWait(driver, 3).until(
+        EC.visibility_of_element_located((By.CSS_SELECTOR, "input[name='email']"))
+    )
+    username_input.clear()
+    username_input.send_keys(username)
+    print("Usario ingresado")
 
-import time
-tiempo_modulos=4
-tiempo_carga=10
-tiempo_espera=2.5
-#driver Firefox
-driver=webdriver.Firefox()
+    password_input = WebDriverWait(driver, 3).until(
+        EC.visibility_of_element_located((By.CSS_SELECTOR, "input[name='password']"))
+    )
+    password_input.clear()
+    password_input.send_keys(password)
+    print("Contraseña ingresada")
 
-#Open URL
-driver.get('https://192.168.9.78/')
+    submit_button = WebDriverWait(driver, 3).until(
+        EC.element_to_be_clickable((By.XPATH, "//button[@type='submit'][contains(text(),'Enviar')]"))
+    )
+    submit_button.click()
+    print("Enviando credenciales de acceso")
 
-#Maximize Window
-driver.maximize_window()
-time.sleep(5)
+    WebDriverWait(driver, 2).until(
+        EC.presence_of_element_located((By.CSS_SELECTOR, "img[alt='Logo Tabantaj']"))
+    )
+    print("Login correcto")
 
-#Login
-usr=driver.find_element(By.XPATH,"//input[contains(@name,'email')]").send_keys("zaid.garcia@becarios.silent4business.com")
-time.sleep(tiempo_modulos)
-pw=driver.find_element(By.XPATH,"//input[contains(@name,'password')]").send_keys("ranas289")
-time.sleep(tiempo_modulos)
-btn=driver.find_element(By.XPATH,"//button[@type='submit'][contains(.,'Enviar')]")
-btn.click()
+def test_login(browser):
+    username = "admin@admin.com"
+    password = "#S3cur3P4$$w0Rd!"
+
+    login(browser, username, password)

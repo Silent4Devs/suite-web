@@ -134,11 +134,11 @@
                 let table = $('#' + id_tabla + cont).DataTable(dtOverrideGlobals);
             });
         }
-        document.addEventListener('DOMContentLoaded', () => {
-            setTimeout(() => {
-                tablaLivewire('tabla_time_proyect_externos');
-            }, 100);
-        });
+        // document.addEventListener('DOMContentLoaded', () => {
+        //     setTimeout(() => {
+        //         tablaLivewire('tabla_time_proyect_externos');
+        //     }, 50);
+        // });
     </script>
 
     <script type="text/javascript">

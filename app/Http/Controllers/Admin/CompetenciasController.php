@@ -319,7 +319,7 @@ class CompetenciasController extends Controller
     public function pdf()
     {
 
-        $competencias = Competencia::with('tipo')->get();
+        $competencias = Competencia::getAllWithtipo();
         $organizacions = Organizacion::getFirst();
         $logo_actual = $organizacions->logo;
 

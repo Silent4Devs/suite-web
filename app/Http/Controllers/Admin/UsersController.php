@@ -50,11 +50,11 @@ class UsersController extends Controller
     {
         abort_if(Gate::denies('usuarios_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $roles = Role::all()->pluck('title', 'id');
+        $roles = Role::getAll()->pluck('title', 'id');
 
         $organizacions = Organizacione::all()->pluck('organizacion', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $areas = Area::all()->pluck('area', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $areas = Area::getAllPluck();
 
         $puestos = Puesto::all()->pluck('puesto', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -83,11 +83,11 @@ class UsersController extends Controller
         try {
             abort_if(Gate::denies('usuarios_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-            $roles = Role::all()->pluck('title', 'id');
+            $roles = Role::getAll()->pluck('title', 'id');
 
             $organizacions = Organizacione::all()->pluck('organizacion', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-            $areas = Area::all()->pluck('area', 'id')->prepend(trans('global.pleaseSelect'), '');
+            $areas = Area::getAllPluck();
 
             $puestos = Puesto::all()->pluck('puesto', 'id')->prepend(trans('global.pleaseSelect'), '');
 

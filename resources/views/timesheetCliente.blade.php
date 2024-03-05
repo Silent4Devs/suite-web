@@ -8,11 +8,13 @@ analisis brecha
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>TimeSheet Clientes</title>
 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/requisiciones_pdf.css{{config('app.cssVersion')}}">
     <style>
 
         body{
             font-size: 7px;
+            text-align: justify;
         }
         table {
             width: 100%;
@@ -55,13 +57,13 @@ analisis brecha
                     @endphp
 
                     @if ($logotipo)
-                    <img style="width:100%; max-width:100px; position: relative; left:2rem;"  src="{{ url($logotipo) }}">
+                    <img style="width:100%; max-width:100px; position: relative; left:2rem;"  src="{{ asset($logotipo) }}">
                     @else
                         <img src="{{ asset('sinLogo.png') }}"  style="width:100%; max-width:150px;">
                     @endif
                 </td>
                 <td class="info-header">
-                    <div style="position: relative; left: 3rem; text-align: justify;">
+                    <div style="position: relative; left: 3rem;">
                         <p style="font-size: 8px;">
                             {{$organizacions->empresa}} <br>
                             RFC:{{$organizacions->rfc}} <br>

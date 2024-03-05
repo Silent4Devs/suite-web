@@ -66,7 +66,7 @@ class Puesto extends Model implements Auditable
     public static function getExists()
     {
         return Cache::remember('Puestos:Puestos_exists', 3600 * 12, function () {
-            return DB::table('puestos')->exists();
+            return DB::table('puestos')->select('id')->exists();
         });
     }
 

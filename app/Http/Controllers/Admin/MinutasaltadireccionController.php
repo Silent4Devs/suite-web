@@ -68,7 +68,7 @@ class MinutasaltadireccionController extends Controller
     public function create()
     {
         abort_if(Gate::denies('revision_por_direccion_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $responsablereunions = Empleado::alta()->select('id', 'name', 'foto')->with('area')->get();
+        $responsablereunions = Empleado::getAltaEmpleadosWithArea();
         $esta_vinculado = User::getCurrentUser()->empleado ? true : false;
 
         return view('admin.minutasaltadireccions.create', compact('responsablereunions', 'esta_vinculado'));
@@ -428,7 +428,7 @@ class MinutasaltadireccionController extends Controller
             // ->select('name', 'area_id', 'foto')
             ->withPivot('asistencia')
             ->get();
-        $responsablereunions = Empleado::alta()->select('id', 'name', 'foto')->with('area')->get();
+        $responsablereunions = Empleado::getAltaEmpleadosWithArea();
 
         return view('admin.minutasaltadireccions.edit', compact(
             'minutasaltadireccion',
@@ -558,7 +558,6 @@ class MinutasaltadireccionController extends Controller
 
     public function revision($id)
     {
-
         abort_if(Gate::denies('revision_por_direccion_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $minutas = Minutasaltadireccion::with('responsable')->find($id);

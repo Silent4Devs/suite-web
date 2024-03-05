@@ -62,5 +62,7 @@ class TimesheetObserver
         Cache::forget('Timesheet:timesheet-'.auth()->user()->empleado->id);
         Cache::forget('Timesheet:timesheet_horas_all');
         Cache::forget('Timesheet:timesheet_all');
+        Cache::forget('Timesheet:timesheet_estatus');
+        Cache::forget('Timesheet:timesheet_reportes');
     }
 }

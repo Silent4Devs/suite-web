@@ -1,12 +1,16 @@
 @extends('layouts.admin')
 @section('content')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}{{config('app.cssVersion')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}{{ config('app.cssVersion') }}">
 
     {{ Breadcrumbs::render('timesheet-create') }}
 
     <h5 class="col-12 titulo_general_funcion">
         TimeSheet: <font style="font-weight:lighter;"> Registrar Jornada Laboral</font>
     </h5>
+
+    @include('admin.timesheet.complementos.cards')
+
+    @include('admin.timesheet.complementos.admin-aprob')
 
     <div class="card card-body">
         <div class="row">
@@ -82,7 +86,8 @@
                     weekdays: {
                         shorthand: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
                         longhand: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes',
-                            'Sábado'],
+                            'Sábado'
+                        ],
                     },
                     months: {
                         shorthand: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Оct',

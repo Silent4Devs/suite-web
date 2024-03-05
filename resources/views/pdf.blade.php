@@ -6,8 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Política del Sistema de Gestión</title>
 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/requisiciones_pdf.css{{config('app.cssVersion')}}">
     <style>
+
+        body{
+                text-align: justify;
+        }
         .quitar{
             font-weight: normal;
             text-align: justify;
@@ -28,11 +33,11 @@
                     $empresa = $organizacion->empresa;
                     @endphp
 
-                   <img style="width: 100%; max-width: 100px; height: auto;" src="{{ url($logotipo) }}">
+                   <img style="width: 100%; max-width: 100px; height: auto;" src="{{ asset($logotipo) }}">
 
                 </td>
                 <td class="info-header">
-                    <div style="position: relative; right: 5rem; text-align: justify;">
+                    <div style="position: relative; right: 5rem;">
                         {{$organizacion->empresa}} <br>
                        RFC:{{$organizacion->rfc}} <br>
                         {{$organizacion->direccion}} <br>

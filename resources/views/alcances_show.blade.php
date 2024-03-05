@@ -7,7 +7,11 @@
     <title>Alcance  SGSIS</title>
 
     <link rel="stylesheet" href="css/requisiciones_pdf.css{{config('app.cssVersion')}}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
+         body{
+            text-align: justify;
+        }
         .quitar{
             font-weight: normal;
             text-align: justify;
@@ -15,7 +19,6 @@
         .textopdf{
             font-size: 11px;
             font-weight: bold;
-            po
         }
 
     </style>
@@ -34,13 +37,13 @@
                     @endphp
 
                     @if ($logotipo)
-                    <img style="width:100%; max-width:100px; position: relative; left:1.5rem;" src="{{ url($logotipo) }}">
+                    <img style="width:100%; max-width:100px; position: relative; left:1.5rem;" src="{{ asset($logotipo) }}">
                     @else
                         <img src="{{ asset('sinLogo.png') }}"  style="width:100%; max-width:150px;">
                     @endif
                 </td>
                 <td class="info-header">
-                    <div style="position: relative; right: 5rem; text-align: justify;">
+                    <div style="position: relative; right: 5rem;">
                         {{$organizacions->empresa}} <br>
                         RFC:{{$organizacions->rfc}} <br>
                         {{$organizacions->direccion}} <br>

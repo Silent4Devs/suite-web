@@ -5,12 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Minuta</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body{
-            font-size: 12px;
-        }
+    body{
+        text-align: justify;
+        font-size: 13px;
+    }
+
     </style>
 </head>
+
 <body>
     <div class="card col-sm-12 col-md-10" style="border-radius: 0px; box-shadow: none; border-color:white; width:750px;">
         <div class="card-body">
@@ -23,19 +27,19 @@
                     $empresa = $organizacion->empresa;
                     @endphp
                     @if ($logotipo)
-                     <img style="width: 100%; max-width: 100px; height: auto;" src="{{ url($logotipo) }}">
+                     <img style="width: 100%; max-width: 100px; height: auto;" src="{{ asset($logotipo) }}">
                     @else
                         <img src="{{ asset('sinLogo.png') }}"  style="width:100%; max-width:150px;">
                     @endif
                 </div>
-                <div class="col-4"  style="position: relative; top: -5rem; left: 9rem;">
-                    <span>
+                <div class="col-4"  style="position: relative; top: -6rem; left: 9rem;">
+                    <p>
                         {{ $empresa_actual }} <br>
                         RFC: {{ $rfc }} <br>
                         Av. Insurgentes Sur 2453 piso 4, <br> Colonia Tizapán San Ángel, <br> Álvaro Obregón, C.P. 01090, CDMX. <br>
-                    </span>
+                    </p>
                 </div>
-                <div class="col-4" style="background:#EEFCFF; width: 100%; height: 8%; position: relative; left: 23rem; top: -10rem;">
+                <div class="col-4" style="background:#EEFCFF; width: 50%; height: 8%; position: relative; left: 25rem; top: -12rem;">
                     <br>
                     <br>
                     <span style="color:#057BE2;"> <strong> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  Minuta Revisión por Dirección</strong></span>

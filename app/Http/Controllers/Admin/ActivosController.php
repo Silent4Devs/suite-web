@@ -138,7 +138,7 @@ class ActivosController extends Controller
     {
         abort_if(Gate::denies('inventario_activos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $tipoactivos = Tipoactivo::all()->pluck('tipo', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $tipoactivos = Tipoactivo::getAll()->pluck('tipo', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $subtipos = SubcategoriaActivo::all()->pluck('subcategoria', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -224,7 +224,7 @@ class ActivosController extends Controller
     {
         abort_if(Gate::denies('inventario_activos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $tipoactivos = Tipoactivo::all()->pluck('tipo', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $tipoactivos = Tipoactivo::getAll()->pluck('tipo', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $subtipos = SubcategoriaActivo::all()->pluck('subcategoria', 'id')->prepend(trans('global.pleaseSelect'), '');
 
