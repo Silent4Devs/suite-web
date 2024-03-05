@@ -105,7 +105,7 @@ class Ev360ResumenTabla extends Component
         $items = $collection->slice($offset, $this->perPage + 1);
         $paginator = new Paginator($items, $this->perPage, $this->page);
 
-        $this->competencias_evaluadas = Competencia::select('id', 'nombre')->find($this->obtenerCompetenciasEvaluadasEnLaEvaluacion($evaluacion->id));
+        $this->competencias_evaluadas = Competencia::find($this->obtenerCompetenciasEvaluadasEnLaEvaluacion($evaluacion->id));
         $this->objetivos_evaluados = $this->obtenerCantidadMaximaDeObjetivos($evaluacion->evaluados, $evaluacion->id);
 
         return view('livewire.ev360-resumen-tabla', ['lista_evaluados', 'calificaciones', 'evaluacion', 'competencias_evaluadas', 'lista' => $collection]);
@@ -131,35 +131,35 @@ class Ev360ResumenTabla extends Component
 
     public function obtenerCantidadMaximaDeObjetivos($evaluados, $evaluacion)
     {
-        $max = 0;
-        foreach ($evaluados as $evaluado) {
-            $objetivos = ObjetivoRespuesta::with('objetivo')
-                ->where('evaluacion_id', $evaluacion)
-                ->where('evaluado_id', $evaluado->id)
-                ->where('evaluador_id', $evaluado->id)
-                ->orderBy('id')->get();
-            if ($objetivos->count() > $max) {
-                $max = $objetivos->count();
-            }
-        }
+        // $max = 0;
+        // foreach ($evaluados as $evaluado) {
+        //   $objetivos = ObjetivoRespuesta::with('objetivo')
+        //         ->where('evaluacion_id', $evaluacion)
+        //         ->where('evaluado_id', $evaluado->id)
+        //         ->where('evaluador_id', $evaluado->id)
+        //         ->orderBy('id')->get();
+        //     if ($objetivos->count() > $max) {
+        //         $max = $objetivos->count();
+        //     }
+        // }
+
+        // return $max;
+
+        $evaluadoIds = $evaluados->pluck('id')->toArray();
+
+        // Fetch all objetivo counts for evaluados in a single query using DB
+        $objetivosCounts = DB::table('ev360_objetivos_calificaciones')
+            ->select('evaluado_id', DB::raw('count(*) as count'))
+            ->where('evaluacion_id', $evaluacion)
+            ->whereIn('evaluado_id', $evaluadoIds)
+            ->whereIn('evaluador_id', $evaluadoIds)
+            ->groupBy('evaluado_id')
+            ->get();
+
+        // Find the maximum count
+        $max = $objetivosCounts->max('count');
 
         return $max;
-
-        // $evaluadoIds = $evaluados->pluck('id')->toArray();
-
-        // // Fetch all objetivo counts for evaluados in a single query using DB
-        // $objetivosCounts = DB::table('objetivo_respuestas')
-        //     ->select('evaluado_id', DB::raw('count(*) as count'))
-        //     ->where('evaluacion_id', $evaluacion)
-        //     ->whereIn('evaluado_id', $evaluadoIds)
-        //     ->whereIn('evaluador_id', $evaluadoIds)
-        //     ->groupBy('evaluado_id')
-        //     ->get();
-
-        // // Find the maximum count
-        // $max = $objetivosCounts->max('count');
-
-        // dd($max);
     }
 
     public function obtenerInformacionDeLaConsultaPorEvaluado($evaluacion, $evaluado)
