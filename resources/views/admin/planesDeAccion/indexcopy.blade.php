@@ -2,7 +2,7 @@
 @section('content')
     {{-- @can('planes_accion_access') --}}
 
-    <h5 class="col-12 titulo_general_funcion">Planes de acción </h5>
+    <h5 class="col-12 titulo_general_funcion">Planes de acción</h5>
 
     <div class="mt-3 card">
 
@@ -142,156 +142,159 @@
                 }
             };
             @can('planes_de_accion_agregar')
-            dtButtons.push(btnAgregar);
+                dtButtons.push(btnAgregar);
             @endcan
             let url = "{{ route('admin.planes-de-accion.index') }}"
             let tblPlanesAccion = $('#tblPlanesAccion').DataTable({
                 buttons: dtButtons,
                 ajax: url,
                 columns: [
-                //     {
-                //     data: 'id',
-                // },
-                {
-                    data: 'parent',
-                }, {
-                    data: 'norma',
-                }, {
-                    data: 'modulo_origen',
-                }, {
-                    data: 'objetivo',
-                }, {
-                    data: 'elaborador',
-                    render: function(data, type, meta, config) {
-                        let elaborador =
-                            '<span class="badge badge-primary">Elaborado por el sistema</span>';
-                        if (data) {
-                            //elaborador = `
+                    //     {
+                    //     data: 'id',
+                    // },
+                    {
+                        data: 'parent',
+                    },
+                    {
+                        data: 'norma',
+                    },
+                    {
+                        data: 'modulo_origen',
+                    }, {
+                        data: 'objetivo',
+                    }, {
+                        data: 'elaborador',
+                        render: function(data, type, meta, config) {
+                            let elaborador =
+                                '<span class="badge badge-primary">Elaborado por el sistema</span>';
+                            if (data) {
+                                //elaborador = `
                             //<img src="{{ asset('storage/empleados/imagenes') }}/${data.avatar}" title="${data.name}" class="rounded-circle" style="clip-path: circle(21px at 50% 50%);height: 42px;" />
                             //`;
-                            elaborador = `<span class="badge badge-primary">${data.name}</span>`;
-                        }
-                        return elaborador;
-                    }
-                }, {
-                    data: 'id',
-                    render: function(data, type, row, meta) {
-                        if (row.tasks) {
-                            let tasks = row.tasks;
-                            let zero_task = tasks.find(t => Number(t.level) == 0);
-                            if (zero_task != undefined) {
-                                let progress = Math.ceil(zero_task.progress);
-                                let html = "";
-                                if (progress >= 90) {
-                                    html =
-                                        `<span class="badge badge-success">${progress} %</span>`;
-                                } else if (progress < 90 && progress >= 60) {
-                                    html =
-                                        `<span class="badge badge-warning">${progress} %</span>`;
-                                } else {
-                                    html =
-                                        `<span class="badge badge-danger">${progress} %</span>`;
-                                }
-                                return html;
+                                elaborador =
+                                `<span class="badge badge-primary">${data.name}</span>`;
                             }
+                            return elaborador;
                         }
-                        return "<span class='badge badge-primary'>Sin progreso calculable</span>"
-                    }
-                }, {
-                    data: 'id',
-                    render: function(data, type, row, meta) {
-                        if (row.tasks) {
-                            let tasks = row.tasks;
-                            let zero_task = tasks.find(t => Number(t.level) == 0);
-                            if (zero_task != undefined) {
-                                return `
+                    }, {
+                        data: 'id',
+                        render: function(data, type, row, meta) {
+                            if (row.tasks) {
+                                let tasks = row.tasks;
+                                let zero_task = tasks.find(t => Number(t.level) == 0);
+                                if (zero_task != undefined) {
+                                    let progress = Math.ceil(zero_task.progress);
+                                    let html = "";
+                                    if (progress >= 90) {
+                                        html =
+                                            `<span class="badge badge-success">${progress} %</span>`;
+                                    } else if (progress < 90 && progress >= 60) {
+                                        html =
+                                            `<span class="badge badge-warning">${progress} %</span>`;
+                                    } else {
+                                        html =
+                                            `<span class="badge badge-danger">${progress} %</span>`;
+                                    }
+                                    return html;
+                                }
+                            }
+                            return "<span class='badge badge-primary'>Sin progreso calculable</span>"
+                        }
+                    }, {
+                        data: 'id',
+                        render: function(data, type, row, meta) {
+                            if (row.tasks) {
+                                let tasks = row.tasks;
+                                let zero_task = tasks.find(t => Number(t.level) == 0);
+                                if (zero_task != undefined) {
+                                    return `
                                     <p>${moment.unix((zero_task.start)/1000).format("DD-MM-YYYY")}</p>
                                 `;
+                                }
                             }
+                            return "<span class='badge badge-primary'>No encontrado</span>";
                         }
-                        return "<span class='badge badge-primary'>No encontrado</span>";
-                    }
-                }, {
-                    data: 'id',
-                    render: function(data, type, row, meta) {
-                        if (row.tasks) {
-                            let tasks = row.tasks;
-                            let zero_task = tasks.find(t => Number(t.level) == 0);
-                            if (zero_task != undefined) {
-                                return `
+                    }, {
+                        data: 'id',
+                        render: function(data, type, row, meta) {
+                            if (row.tasks) {
+                                let tasks = row.tasks;
+                                let zero_task = tasks.find(t => Number(t.level) == 0);
+                                if (zero_task != undefined) {
+                                    return `
                                     <p>${moment.unix((zero_task.end)/1000).format("DD-MM-YYYY")}</p>
                                 `;
+                                }
                             }
+                            return "<span class='badge badge-primary'>No encontrado</span>";
                         }
-                        return "<span class='badge badge-primary'>No encontrado</span>";
-                    }
-                }, {
-                    data: 'id',
-                    render: function(data, type, row, meta) {
-                        if (row.tasks) {
-                            let tasks = row.tasks;
-                            let zero_task = tasks.find(t => Number(t.level) == 0);
-                            if (zero_task != undefined) {
-                                if (zero_task.status == 'STATUS_UNDEFINED') {
-                                    return `
+                    }, {
+                        data: 'id',
+                        render: function(data, type, row, meta) {
+                            if (row.tasks) {
+                                let tasks = row.tasks;
+                                let zero_task = tasks.find(t => Number(t.level) == 0);
+                                if (zero_task != undefined) {
+                                    if (zero_task.status == 'STATUS_UNDEFINED') {
+                                        return `
                                         <span class="badge badge-primary">Sin iniciar</span>
                                     `;
-                                } else if (zero_task.status == 'STATUS_ACTIVE') {
-                                    return `
+                                    } else if (zero_task.status == 'STATUS_ACTIVE') {
+                                        return `
                                         <span class="badge badge-warning">En proceso</span>
                                     `;
 
-                                } else if (zero_task.status == 'STATUS_DONE') {
-                                    return `
+                                    } else if (zero_task.status == 'STATUS_DONE') {
+                                        return `
                                         <span class="badge badge-success">Completado</span>
                                     `;
 
-                                } else if (zero_task.status == 'STATUS_FAILED') {
-                                    return `
+                                    } else if (zero_task.status == 'STATUS_FAILED') {
+                                        return `
                                         <span class="badge badge-danger">Retraso</span>
                                     `;
 
-                                } else if (zero_task.status == 'STATUS_SUSPENDED') {
-                                    return `
+                                    } else if (zero_task.status == 'STATUS_SUSPENDED') {
+                                        return `
                                         <span class="badge badge-secondary">Suspendido</span>
                                     `;
 
-                                } else {
-                                    return `
+                                    } else {
+                                        return `
                                     <p>${zero_task.status}</p>
                                 `;
+                                    }
+
                                 }
-
                             }
+                            return "<span class='badge badge-primary'>No encontrado</span>";
                         }
-                        return "<span class='badge badge-primary'>No encontrado</span>";
-                    }
 
-                }, {
-                    data: 'id',
-                    render: function(data, type, row, meta) {
-                        let urlVerPlanAccion = "";
-                        let urlEditarPlanAccion = `/admin/planes-de-accion/${data}/edit`;
+                    }, {
+                        data: 'id',
+                        render: function(data, type, row, meta) {
+                            let urlVerPlanAccion = "";
+                            let urlEditarPlanAccion = `/admin/planes-de-accion/${data}/edit`;
 
-                        // console.log(row.norma);
-                        if (row.norma == 'ISO 27001') {
-                            let norma = row.norma;
-                            console.log(norma);
-                            urlEditarPlanAccion = `/admin/planes-de-accion/${data}/edit`;
-                        }
-                        // if (row.norma == 'ISO 9001''ISO 27001') {
-                        //     urlEditarPlanAccion = `/admin/planes-de-accion/${data}/edit`;
-                        // }
+                            // console.log(row.norma);
+                            if (row.norma == 'ISO 27001') {
+                                let norma = row.norma;
+                                console.log(norma);
+                                urlEditarPlanAccion = `/admin/planes-de-accion/${data}/edit`;
+                            }
+                            // if (row.norma == 'ISO 9001''ISO 27001') {
+                            //     urlEditarPlanAccion = `/admin/planes-de-accion/${data}/edit`;
+                            // }
 
 
 
-                        let urlEliminarPlanAccion = `/admin/planes-de-accion/${data}`;
-                        if (data == 1) {
-                            urlVerPlanAccion = "{{ route('admin.planTrabajoBase.index') }}";
-                        } else {
-                            urlVerPlanAccion = `/admin/planes-de-accion/${data}`;
-                        }
-                        let botones = `
+                            let urlEliminarPlanAccion = `/admin/planes-de-accion/${data}`;
+                            if (data == 1) {
+                                urlVerPlanAccion = "{{ route('admin.planTrabajoBase.index') }}";
+                            } else {
+                                urlVerPlanAccion = `/admin/planes-de-accion/${data}`;
+                            }
+                            let botones = `
                             <div class="btn-group">
                                 @can('planes_de_accion_editar')
                                 <a class="btn" href="${urlEditarPlanAccion}" title="Editar Plan de Acción"><i class="fas fa-edit"></i></a>
@@ -301,23 +304,24 @@
                                 @endcan
                             `;
 
-                        if (data > 1) {
-                            botones += `
+                            if (data > 1) {
+                                botones += `
                             @can('planes_de_accion_eliminar')
                              <button class="btn" onclick="eliminar('${urlEliminarPlanAccion}','${row.parent}')" title="Eliminar Plan de Acción"><i class="fas fa-trash-alt text-danger"></i></button>
                              </div>
                              @endcan
                              `;
-                        } else {
-                            botones += `
+                            } else {
+                                botones += `
                              </div>
                              `;
+                            }
+
+                            return botones;
+
                         }
-
-                        return botones;
-
                     }
-                }]
+                ]
             });
         });
 
