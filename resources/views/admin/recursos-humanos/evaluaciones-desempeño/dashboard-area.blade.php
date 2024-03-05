@@ -91,7 +91,7 @@
                 </table>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 d-flex">
             <div class="card card-body">
                 <div class="d-flex gap-2">
                     <div class="w-100">
