@@ -122,8 +122,8 @@
                                         <option value="{{ $contrato->id }}" data-no="{{ $contrato->no_proyecto }}"
                                             data-servicio="{{ $contrato->no_contrato }}"
                                             data-proveedor="{{ $contrato->nombre_servicio }}">
-                                            {{ $contrato->no_proyecto }} / {{ $contrato->no_contrato }} -
-                                            {{ $contrato->nombre_servicio }}
+                                            {{ isset($contrato->no_proyecto) }} / {{ isset($contrato->no_contrato) }} -
+                                            {{ isset($contrato->nombre_servicio) }}
                                         </option>
                                     @endforeach
                                 </select>

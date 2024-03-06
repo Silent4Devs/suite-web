@@ -52,7 +52,7 @@
             <tr>
                 <td style="color: white;" >
                     <strong> Proyecto: </strong> <br>
-                    {{ $requisiciones->contrato->no_proyecto }} / {{ $requisiciones->contrato->no_contrato }} - {{ $requisiciones->contrato->nombre_servicio }}
+                    {{ isset($requisiciones->contrato->no_proyecto) }} / {{ isset($requisiciones->contrato->no_contrato) }} - {{ isset($requisiciones->contrato->nombre_servicio) }}
                 </td>
                 <td style="color: white;" >
                     <strong> Comprador: </strong> <br>
@@ -176,7 +176,7 @@
                         @else
                             La fecha de inicio no está disponible.
                         @endisset
-                       
+
                     </td>
                     <td colspan="2">
                         <strong> Fecha Fin: </strong> <br> <br>
@@ -204,7 +204,7 @@
                         @else
                             La fecha de inicio no está disponible.
                         @endisset
-                       
+
                     </td>
                     <td>
                         <strong> Fecha fin: </strong> <br> <br>
