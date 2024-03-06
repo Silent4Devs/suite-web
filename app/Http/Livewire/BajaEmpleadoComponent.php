@@ -113,10 +113,10 @@ class BajaEmpleadoComponent extends Component
     public function obtenerCapacitaciones()
     {
         $empleado = $this->empleado->id;
-        $cacheKeyRecursos = 'Recursos:recursos_'.User::getCurrentUser()->id;
+        $cacheKeyRecursos = 'Recursos:recursos_' . User::getCurrentUser()->id;
         $recursos = Cache::remember($cacheKeyRecursos, 3600 * 8, function () use ($empleado) {
             return Recurso::whereHas('empleados', function ($query) use ($empleado) {
-                $query->where('empleados.id', $empleado->id);
+                $query->where('empleados.id', intval($empleado->id));
             })->get();
         });
 
