@@ -1,5 +1,7 @@
 <p align="center"><img src="public/img/Silent4Business-Logo-Color.png" width="400"></p>
 
+![Build&Test](https://github.com/Silent4Devs/suite-web/blob/develop/.github/workflows/build-test.yml/badge.svg?branch=develop)
+
 # Gestión normativa S4B
 
 El proyecto se tiene que clonar dentro de la carpeta raiz en donde se publiquen las URL
