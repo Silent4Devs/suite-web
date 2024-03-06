@@ -1,7 +1,8 @@
 .kanban-container {
     position: relative;
     box-sizing: border-box;
-    width: auto
+    width: auto;
+    padding-bottom: 25px;
 }
 
 .kanban-container * {
@@ -168,7 +169,8 @@
     transition: .5s ease-in-out
 }
 
-.drag_handler_icon:after, .drag_handler_icon:before {
+.drag_handler_icon:after,
+.drag_handler_icon:before {
     background: #000;
     content: '';
     display: block;
@@ -229,23 +231,23 @@
 }
 
 .UNDEFINED {
-    border-bottom: 6px solid #ECCE7D;
+    border-bottom: 4px solid #ECCE7D;
 }
 
 .DONE {
-    border-bottom: 6px solid #7DEC97;
+    border-bottom: 4px solid #7DEC97;
 }
 
 .FAILED {
-    border-bottom: 6px solid #EC7D94;
+    border-bottom: 4px solid #EC7D94;
 }
 
 .SUSPENDED {
-    border-bottom: 6px solid #D4D4D4;
+    border-bottom: 4px solid #D4D4D4;
 }
 
 .ACTIVE {
-    border-bottom: 6px solid #7DC0EC;
+    border-bottom: 4px solid #7DC0EC;
 }
 
 .tituloCard {
@@ -484,7 +486,8 @@
 }
 
 #task-input::placeholder {
-    color: #006DDB; /* Cambia el color según tus preferencias */
+    color: #006DDB;
+    /* Cambia el color según tus preferencias */
 }
 
 #task-input:focus {
@@ -584,6 +587,7 @@
     border: none;
     border-radius: 5px;
 }
+
 .contentLog {
     padding-top: 10px;
     overflow-y: auto;
@@ -620,7 +624,8 @@
 .contentLog::-webkit-scrollbar-thumb:hover {
     background: #0080FF;
 }
+
 /* se agregan estilos para personas */
 .float-right {
     float: right;
-  }
+}
