@@ -24,6 +24,7 @@ class EvTrimestralConfigCategorias extends Component
                     'id' => $tipo->id,
                     'nombre' => $tipo->nombre,
                     'descripcion' => $tipo->descripcion,
+                    'ocupado' => $tipo->tipo_ocupado,
                 ];
             }
             // dd($this->categoria);
@@ -39,13 +40,17 @@ class EvTrimestralConfigCategorias extends Component
             'id' => null,
             'nombre' => null,
             'descripcion' => null,
+            'ocupado' => false,
         ];
     }
 
-    public function removeCategoria($keyIndex, $id_borrar)
+    public function removeCategoria($keyIndex, $id_borrar = null)
     {
-        TipoObjetivo::find($id_borrar)->tipoObjetivoOcupado($id_borrar);
-        dd($id_borrar);
+        if (!empty($id_borrar)) {
+            $tipo = TipoObjetivo::find($id_borrar);
+            $tipo->delete();
+        }
+
         unset($this->categoria[$keyIndex]);
         $this->categoria = array_values($this->categoria);
     }
@@ -60,10 +65,10 @@ class EvTrimestralConfigCategorias extends Component
         dd($data);
     }
 
-    public function editRegistro($entrada, $campo, $id_edit = null)
+    public function editRegistro($entrada, $campo, $id_edit = null, $key)
     {
-        // dd($entrada, $campo, $id_edit);
-        if (empty($id_edit) && $campo != "nombre") {
+        // dd($entrada, $campo, $id_edit, $key);
+        if ($id_edit == null && $campo != "nombre") {
             $this->alert('warning', '¡Crear Categoría!', [
                 'position' => 'center',
                 'timer' => '5000',
@@ -72,10 +77,23 @@ class EvTrimestralConfigCategorias extends Component
                 'width' => '500',
             ]);
         } else {
-            TipoObjetivo::updateOrCreate(
+            $nuevotipo = TipoObjetivo::updateOrCreate(
                 ['id' => $id_edit],
                 [$campo => $entrada]
             );
+
+            $this->categoria[$key]['id'] = $nuevotipo->id;
+            $this->categoria[$key][$campo] = $entrada;
+
+            $this->alert('success', 'Cambio Guardado', [
+                'position' => 'top-right',
+                'timer' => '3000',
+                'toast' => true,
+                'text' => 'Se guardo correctamente',
+                'width' => '250',
+            ]);
+
+            // dd($nuevotipo, $this->categoria[$key]);
         }
     }
 }

@@ -18,27 +18,28 @@
                                     <input type="text" id="categoria_arreglo_{{ $key }}"
                                         name="categoria_arreglo_{{ $key }}" class="form-control" placeholder=""
                                         maxlength="120" value="{{ $p['nombre'] ?? '' }}"
-                                        wire:change="editRegistro($event.target.value, 'nombre', {{ $p['id'] ?? '' }})">
+                                        wire:change="editRegistro($event.target.value, 'nombre', {{ $p['id'] ?? 'null' }}, {{ $key }})">
                                     <label for="categoria_arreglo_{{ $key }}">Categoria</label>
                                 </div>
                             </div>
-                            <div class="col-1">
-                                {{-- Cada pregunta agregada cuenta con boton de eliminacion, el key indica cual posicion tiene
-                en el arreglo y la elimina  --}}
-                                <div style="text-align: end;">
-                                    <button class="btn trash-button"
-                                        wire:click.prevent="removeCategoria({{ $key }}, {{ $p['id'] }})">
-                                        <i class="fa-regular fa-trash-can" style="color: rgb(0, 0, 0); font-size: 15pt;"
-                                            title="Eliminar"></i>
-                                    </button>
+                            @if (!$p['ocupado'])
+                                <div class="col-1">
+                                    {{-- Cada pregunta agregada cuenta con boton de eliminacion, el key indica cual posicion tiene en el arreglo y la elimina  --}}
+                                    <div style="text-align: end;">
+                                        <button class="btn trash-button"
+                                            wire:click.prevent="removeCategoria({{ $key }}, {{ $p['id'] }})">
+                                            <i class="fa-regular fa-trash-can"
+                                                style="color: rgb(0, 0, 0); font-size: 15pt;" title="Eliminar"></i>
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
+                            @endif
                             <div class="col-11">
                                 <div class="anima-focus mb-3 ">
                                     <textarea id="descripcion_categoria_arreglo_{{ $key }}"
                                         name="descripcion_categoria_arreglo_{{ $key }}" class="form-control" placeholder=""
                                         style="height: 150px !important;"
-                                        wire:change="editRegistro($event.target.value, 'descripcion', {{ $p['id'] ?? '' }})">{{ $p['descripcion'] ?? '' }}</textarea>
+                                        wire:change="editRegistro($event.target.value, 'descripcion', {{ $p['id'] ?? 'null' }}, {{ $key }})">{{ $p['descripcion'] ?? '' }}</textarea>
                                     <label for="descripcion_categoria_arreglo_{{ $key }}">Descripción</label>
                                 </div>
                             </div>

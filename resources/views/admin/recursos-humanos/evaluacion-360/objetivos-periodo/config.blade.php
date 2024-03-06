@@ -49,67 +49,9 @@
         </div>
 
         <div class="tab-pane mb-4 fade" id="nav-config-obj-2" role="tabpanel" aria-labelledby="nav-config-obj-2">
-            <div class="card card-body">
-                <div class="info-first-config">
-                    <h4 class="title-config">Escalas de medición</h4>
-                    <p>Define los Valores y Escalas con los que se medirán los objetivos.</p>
-                    <hr class="my-4">
-                </div>
 
-                <p>
-                    Rango <br>
-                    Especifica el valor mínimo y máximo que tendrá la escala de medición
-                </p>
+            @livewire('definicion-escalas-objetivos')
 
-                <div class="d-flex" style="gap: 10px;">
-                    <div class="form-group anima-focus" style="width: 100px;">
-                        <input type="text" class="form-control" placeholder="">
-                        <label for="">Mínimo*</label>
-                    </div>
-                    <div class="form-group anima-focus" style="width: 100px;">
-                        <input type="text" class="form-control" placeholder="">
-                        <label for="">Máximo*</label>
-                    </div>
-                </div>
-
-                <p class="mt-4">
-                    Escalas <br>
-                    Define las escalas de medición y asigna su Valor y Nombre
-                </p>
-                <div class="caja-items-config-escalas">
-                    <div class="item-config-escala">
-                        <div class="d-flex align-items-center" style="gap: 10px;">
-                            <div class="form-group anima-focus" style="width: 100px;">
-                                <input type="text" class="form-control" placeholder="">
-                                <label for="">Valor*</label>
-                            </div>
-                            <div class="form-group anima-focus" style="width: 300px;">
-                                <input type="text" class="form-control" placeholder="">
-                                <label for="">Nombre de la escala*</label>
-                            </div>
-                            <div class="form-group anima-focus" style="width: 100px;">
-                                <input type="color" class="form-control" placeholder="">
-                                <label for="">Color</label>
-                            </div>
-                            <div class="btn-delete-escala">
-                                <i class="material-symbols-outlined" title="Eliminar"
-                                    onclick="deleteItem('item-config-escala')">delete</i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="d-flex align-items-center mt-4" style="color: #006DDB; gap: 10px; cursor: pointer;"
-                        onclick="addItem('item-config-escala', 'caja-items-config-escalas')">
-                        <span class="material-symbols-outlined">add_circle</span>
-                        Agregar Categoría
-                    </div>
-
-                    <button class="btn btn-primary">
-                        GUARDAR
-                    </button>
-                </div>
-            </div>
         </div>
 
         <div class="tab-pane mb-4 fade" id="nav-config-obj-3" role="tabpanel" aria-labelledby="nav-config-obj-3">

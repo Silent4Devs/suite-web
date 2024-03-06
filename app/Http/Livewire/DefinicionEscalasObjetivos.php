@@ -33,6 +33,10 @@ class DefinicionEscalasObjetivos extends Component
 
     public $parametros = [];
 
+    public $minimo = null;
+
+    public $maximo = null;
+
     public function addParametro1()
     {
         $this->parametros[] = '';
@@ -52,6 +56,19 @@ class DefinicionEscalasObjetivos extends Component
     public function render()
     {
         return view('livewire.definicion-escalas-objetivos');
+    }
+
+    public function definirLimite($limite, $valor)
+    {
+        switch ($limite) {
+            case 'minimo':
+                $this->minimo = $valor;
+                break;
+
+            case 'maximo':
+                $this->maximo = $valor;
+                break;
+        }
     }
 
     public function submitForm($data)
