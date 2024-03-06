@@ -9,6 +9,18 @@ pipeline {
 
 
     stages {
+        stage('Pruebas Test') {
+            steps {
+                script {
+                   sh 'cd  Testing/login'
+                   sh 'pytest'
+                }
+            }
+        }
+    }
+
+
+    stages {
         stage('Git Pull via SSH') {
             steps {
                 script {
