@@ -20,7 +20,7 @@ boton_editar = "//I[@class='fas fa-edit']"
 
 #Temporizadores
 tiempo_modulos = 6
-tiempo_carga = 30
+tiempo_carga = 10
 tiempo_espera = 3
 
 @pytest.fixture(scope="module")
