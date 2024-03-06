@@ -67,7 +67,7 @@ def test_login(browser):
     login(browser)
     
 ################################################## Entrar a Modulos y Submodulos
-
+@pytest.fixture("function")
 def in_modulos(driver):
     
     time.sleep(tiempo_modulos)
