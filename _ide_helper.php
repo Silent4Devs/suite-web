@@ -19698,7 +19698,6 @@ namespace Sentry\Laravel {
          * Calls the given callback passing to it the current scope so that any
          * operation can be run within its context.
          *
-         * @param callable $callback The callback to be executed
          * @static 
          */        public static function configureScope($callback)
         {
@@ -19708,7 +19707,6 @@ namespace Sentry\Laravel {
                     /**
          * Binds the given client to the current scope.
          *
-         * @param \Sentry\ClientInterface $client The client
          * @static 
          */        public static function bindClient($client)
         {
@@ -19718,9 +19716,6 @@ namespace Sentry\Laravel {
                     /**
          * Captures a message event and sends it to Sentry.
          *
-         * @param string $message The message
-         * @param \Sentry\Severity|null $level The severity level of the message
-         * @param \Sentry\EventHint|null $hint Object that can contain additional information about the event
          * @static 
          */        public static function captureMessage($message, $level = null, $hint = null)
         {
@@ -19730,8 +19725,6 @@ namespace Sentry\Laravel {
                     /**
          * Captures an exception event and sends it to Sentry.
          *
-         * @param \Throwable $exception The exception
-         * @param \Sentry\EventHint|null $hint Object that can contain additional information about the event
          * @static 
          */        public static function captureException($exception, $hint = null)
         {
@@ -19741,8 +19734,6 @@ namespace Sentry\Laravel {
                     /**
          * Captures a new event using the provided data.
          *
-         * @param \Event $event The event being captured
-         * @param \Sentry\EventHint|null $hint May contain additional information about the event
          * @static 
          */        public static function captureEvent($event, $hint = null)
         {
@@ -19752,7 +19743,6 @@ namespace Sentry\Laravel {
                     /**
          * Captures an event that logs the last occurred error.
          *
-         * @param \Sentry\EventHint|null $hint Object that can contain additional information about the event
          * @static 
          */        public static function captureLastError($hint = null)
         {
@@ -19760,8 +19750,9 @@ namespace Sentry\Laravel {
                         return $instance->captureLastError($hint);
         }
                     /**
-         * {@inheritdoc}
+         * Captures a check-in.
          *
+         * @param int|float|null $duration
          * @param int|float|null $duration
          * @static 
          */        public static function captureCheckIn($slug, $status, $duration = null, $monitorConfig = null, $checkInId = null)
@@ -19774,8 +19765,6 @@ namespace Sentry\Laravel {
          * will be added to subsequent events to provide more context on user's
          * actions prior to an error or crash.
          *
-         * @param \Sentry\Breadcrumb $breadcrumb The breadcrumb to record
-         * @return bool Whether the breadcrumb was actually added to the current scope
          * @static 
          */        public static function addBreadcrumb($breadcrumb)
         {
@@ -19811,7 +19800,6 @@ namespace Sentry\Laravel {
          * Sentry.
          *
          * @param array<string, mixed> $customSamplingContext Additional context that will be passed to the {@see SamplingContext}
-         * @param \Sentry\Tracing\TransactionContext $context Properties of the new transaction
          * @param array<string, mixed> $customSamplingContext Additional context that will be passed to the {@see SamplingContext}
          * @static 
          */        public static function startTransaction($context, $customSamplingContext = [])
@@ -19831,7 +19819,6 @@ namespace Sentry\Laravel {
                     /**
          * Sets the span on the Hub.
          *
-         * @param \Sentry\Tracing\Span|null $span The span
          * @static 
          */        public static function setSpan($span)
         {
@@ -20711,6 +20698,29 @@ namespace Illuminate\Testing {
             }
     }
 
+namespace Illuminate\Console\Scheduling {
+            /**
+     * 
+     *
+     */        class Event {
+                    /**
+         * 
+         *
+         * @see \Sentry\Laravel\Features\ConsoleIntegration::onBoot()
+         * @param string|null $monitorSlug
+         * @param int|null $checkInMargin
+         * @param int|null $maxRuntime
+         * @param bool $updateMonitorConfig
+         * @param int|null $failureIssueThreshold
+         * @param int|null $recoveryThreshold
+         * @static 
+         */        public static function sentryMonitor($monitorSlug = null, $checkInMargin = null, $maxRuntime = null, $updateMonitorConfig = true, $failureIssueThreshold = null, $recoveryThreshold = null)
+        {
+                        return \Illuminate\Console\Scheduling\Event::sentryMonitor($monitorSlug, $checkInMargin, $maxRuntime, $updateMonitorConfig, $failureIssueThreshold, $recoveryThreshold);
+        }
+            }
+    }
+
 namespace Chelout\RelationshipEvents {
             /**
      * Class BelongsTo.
@@ -20919,27 +20929,6 @@ namespace Illuminate\View {
          */        public static function slot($slot)
         {
                         return \Illuminate\View\View::slot($slot);
-        }
-            }
-    }
-
-namespace Illuminate\Console\Scheduling {
-            /**
-     * 
-     *
-     */        class Event {
-                    /**
-         * 
-         *
-         * @see \Sentry\Laravel\Features\ConsoleIntegration::onBoot()
-         * @param string|null $monitorSlug
-         * @param int|null $checkInMargin
-         * @param int|null $maxRuntime
-         * @param bool $updateMonitorConfig
-         * @static 
-         */        public static function sentryMonitor($monitorSlug = null, $checkInMargin = null, $maxRuntime = null, $updateMonitorConfig = true)
-        {
-                        return \Illuminate\Console\Scheduling\Event::sentryMonitor($monitorSlug, $checkInMargin, $maxRuntime, $updateMonitorConfig);
         }
             }
     }
