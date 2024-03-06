@@ -7,8 +7,10 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 
 #Variables
-element_confirgurar_organizacion = "(//A[@href='#'])[6]"
-element_entrar_submodulo = "//A[@href='https://192.168.9.78/admin/configurar-soporte'][text()='Configurar Soporte']"
+element_entrar_modulo = "//A[@href='https://192.168.9.78/admin/capital-humano']"
+element_entrar_submodulo = "//a[@class='nav-link'][contains(.,'Evaluación 360')"
+element_crear_evaluacion = "//A[@href='https://192.168.9.78/admin/recursos-humanos/evaluacion-360/evaluaciones/create']"
+
 agregar_btn_xpath= "//BUTTON[@class='btn btn-xs btn-outline-success rounded ml-2 pr-3 agregar']"
 save_btn_xpath="//button[@class='btn btn-danger'][contains(.,'Guardar')]"
 campo_buscar_xpath= "(//INPUT[@type='search'])[2]"
@@ -19,8 +21,8 @@ guardar_xpath = "//BUTTON[@class='btn btn-danger'][normalize-space(text())='Guar
 boton_editar = "//I[@class='fas fa-edit']"
 
 #Temporizadores
-tiempo_modulos = 6
-tiempo_carga = 10
+tiempo_modulos = 5
+tiempo_carga = 30
 tiempo_espera = 3
 
 @pytest.fixture(scope="module")
@@ -41,10 +43,10 @@ def login (driver):
     # Ingresar credenciales
     usuario = driver.find_element(By.XPATH, "//input[contains(@name,'email')]").send_keys("admin@admin.com")
     print("Introduciendo Correo")
-    time.sleep(tiempo_modulos)
+    time.sleep(tiempo_espera)
     password = driver.find_element(By.XPATH, "//input[contains(@name,'password')]").send_keys("#S3cur3P4$$w0Rd!")
     print("Introduciendo Contraseña")
-    time.sleep(tiempo_modulos)
+    time.sleep(tiempo_espera)
 
     # Hacer clic en el botón de envío
     btn = driver.find_element(By.XPATH, "//button[@type='submit'][contains(.,'Enviar')]")
@@ -77,27 +79,37 @@ def in_modulos(driver):
     print("Dando clic en Menu Hamburguesa...")
     element.click()
     
-    time.sleep(tiempo_modulos)
+    time.sleep(tiempo_espera)
       
-    # Entrando a Modulo Ajuste de Sistema
-    print("Entrando a Ajuste de Sistema...")
-    element = driver.find_element(By.XPATH, element_confirgurar_organizacion)
+    # Entrando a Gestión Talento 
+    print("Entrando a Gestión Talento...")
+    element = driver.find_element(By.XPATH, element_entrar_modulo)
     driver.execute_script("arguments[0].scrollIntoView(true);", element)
-    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, element_confirgurar_organizacion)))
-    print("Dando clic en Ajuste de Sistema...")
+    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, element_entrar_modulo)))
+    print("Dando clic en Gestión Talento...")
     element.click()
     
-    time.sleep(tiempo_modulos)
+    time.sleep(tiempo_carga)
 
-    # Entrando a Sub Modulo Configurar Soporte
-    print("Entrando a Sub Modulo Configurar Soporte...")
-    entrar = driver.find_element(By.XPATH,element_entrar_submodulo)
+    # Entrando a Sub Modulo Evalución 360
+    print("Entrando a Sub Modulo Evalución 360...")
+    entrar = driver.find_element(By.XPATH, element_entrar_submodulo)
     driver.execute_script("arguments[0].scrollIntoView(true);", element)
-    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH,element_entrar_submodulo)))
-    print("Dando clic en Sub Modulo Configurar Soporte...")
+    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, element_entrar_submodulo)))
+    print("Dando clic en Sub Modulo Evalución 360...")
     entrar.click()
     
-    time.sleep(tiempo_modulos)
+    time.sleep(tiempo_espera)
+    
+    # Entrando a Crear Evaluaciones
+    print("Entrando a Crear Evaluaciones...")
+    entrar = driver.find_element(By.XPATH,element_crear_evaluacion)
+    driver.execute_script("arguments[0].scrollIntoView(true);", element)
+    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH,element_crear_evaluacion)))
+    print("Dando clic en Crear Evaluaciones...")
+    entrar.click()
+    
+    time.sleep(tiempo_espera)
     
     print("URL actual:", driver.current_url)
     
@@ -107,7 +119,9 @@ def test_in_modulos(browser):
 
     
 ##################################################### AGREGAR Y LLENAR REPOSITORIO ######################################
-    
+
+"""
+
 def add_configurar_soporte(driver):
     
     time.sleep(tiempo_carga)
@@ -188,3 +202,4 @@ def test_check_usuarios(browser):
     
     check_usuarios(browser)
     
+"""
