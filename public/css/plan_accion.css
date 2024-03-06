@@ -278,7 +278,7 @@ select::-ms-expand {
 }
 
 .view-button {
-    background-image: url('{{ asset(' img/plan-trabajo/visibility.svg') }}');
+    background-image: url('img/plan-trabajo/visibility.svg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
@@ -287,7 +287,7 @@ select::-ms-expand {
 }
 
 .download-button {
-    background-image: url('{{ asset(' img/plan-trabajo/download.svg') }}');
+    background-image: url('img/plan-trabajo/download.svg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
@@ -305,7 +305,7 @@ select::-ms-expand {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-image: url('{{ asset(' img/plan-trabajo/add.svg') }}');
+    background-image: url('../img/plan-trabajo/add.svg');
     background-size: 20px;
     background-repeat: no-repeat;
     background-position: center;
@@ -527,15 +527,115 @@ input::file-selector-button {
 .cards-top-plan .card strong {
     font-size: 20px;
     overflow: hidden;
+}
 
+.cards-top-plan span {
+    font-size: 11px;
 }
 
 .blue-menu-header-plan {
     background-color: #6F8FB8;
     width: 90%;
-    height: 80px;
+    height: 75px;
     margin: auto;
     border-top-left-radius: 25px;
     border-top-right-radius: 25px;
     color: #fff;
+}
+
+.blue-menu-header-plan .btn {
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.blue-menu-header-plan .btn i {
+    transition: 0.1s;
+}
+
+.blue-menu-header-plan .btn:hover i {
+    transform: scale(1.1);
+}
+
+.blue-menu-header-plan .btn i {
+    font-size: 40px;
+}
+
+.blue-menu-header-plan hr {
+    border: none;
+    border-left: 1px solid #ffffffa8;
+    height: 20px;
+}
+
+.content-sections section {
+    visibility: hidden;
+    position: absolute;
+    z-index: -1;
+    max-width: 0px;
+    max-height: 0px;
+    overflow: hidden;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: 0.4s;
+}
+
+.content-sections section.active {
+    visibility: visible;
+    position: relative;
+    z-index: 5;
+    max-width: unset;
+    max-height: unset;
+    transform: translateY(0px);
+    opacity: 1;
+}
+
+.kanban-title-board {
+    color: #3086AF;
+}
+
+.gdfColHeader {
+    background-color: #BBDDFF !important;
+    border-color: #fff !important;
+    color: #414141 !important;
+}
+
+.ganttHead1 th,
+.ganttHead2 th {
+    border-color: #fff !important;
+    background-color: #BBC4FF !important;
+    color: #414141 !important;
+}
+
+
+.splitElement::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+}
+
+/* Track */
+.splitElement::-webkit-scrollbar-track {
+    background: #fff;
+}
+
+/* Handle */
+.splitElement::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 50px;
+}
+
+/* Handle on hover */
+.splitElement::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.vSplitBar {
+    background-color: #E8E8E8 !important;
+}
+
+#TWGanttArea {
+    border: none !important;
+    overflow: hidden;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
 }

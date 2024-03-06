@@ -18,37 +18,37 @@
     </h5>
 
     <div class="row cards-top-plan">
-        <div class="col-md-2">
+        <div class="col-lg-2">
             <div class="card card-body" style="border-left-color: #83BCFE;">
                 <span>Totales</span>
                 <strong>20</strong>
             </div>
         </div>
-        <div class="col-md-2">
+        <div class="col-lg-2">
             <div class="card card-body" style="border-left-color: #ECCE7D;">
                 <span>Lista de tareas</span>
                 <strong>20</strong>
             </div>
         </div>
-        <div class="col-md-2">
+        <div class="col-lg-2">
             <div class="card card-body" style="border-left-color: #D4D4D4;">
                 <span>Suspendidos</span>
                 <strong>20</strong>
             </div>
         </div>
-        <div class="col-md-2">
+        <div class="col-lg-2">
             <div class="card card-body" style="border-left-color: #7DC0EC;">
                 <span>En proceso </span>
                 <strong>20</strong>
             </div>
         </div>
-        <div class="col-md-2">
+        <div class="col-lg-2">
             <div class="card card-body" style="border-left-color: #EC7D94;">
                 <span>Retrasados</span>
                 <strong>20</strong>
             </div>
         </div>
-        <div class="col-md-2">
+        <div class="col-lg-2">
             <div class="card card-body" style="border-left-color: #AAE29A;">
                 <span>Completados</span>
                 <strong>20</strong>
@@ -56,71 +56,42 @@
         </div>
     </div>
 
-    <div class="blue-menu-header-plan d-flex align-items-center justify-content-between px-5">
-        <h3 id="titlo-tab" class="mb-0">Kanban</h3>
-        <div class="">
-            <button class="btn">
-                <i class="material-symbols-outlined"> view_kanban</i>
-                Kanban
-            </button>
-        </div>
-    </div>
-
-    <div class="mt-5 mb-5">
+    <div class="mt-3 mb-5">
         <div id="bloqueado"></div>
-        <div>
-            <div class="navNew">
-                <div class="botones_vistas_gantt">
-                    <div class="row">
-                        <div class="col-4" style="display: flex; align-items: center; padding-left: 50px;">
-                            <p id="titlo-tab" class="text-capitalize">Kanban</p>
-                        </div>
-                        <div class="text-right col-8 caja_botones_menu">
-                            <a href="#" data-tabs="kanban_gantt" onclick="cambiarTitulo('Kanban');"
-                                class="boton_activo">
-                                <img class="img_nav" src="{{ asset('img/plan-trabajo/kanban.svg') }}" alt="Imagen 3">Kanban
-                            </a>
-
-                            <span class="vertical-line"></span>
-
-                            <a href="#" data-tabs="calendario_gantt"
-                                onclick="renderCaleendar();cambiarTitulo('Calendario');" class="">
-                                <img class="img_nav" src="{{ asset('img/plan-trabajo/calendar.svg') }}"
-                                    alt="Imagen 2">Calendario
-                            </a>
-
-                            <span class="vertical-line"></span>
-
-                            <a href="#" data-tabs="original_gantt" onclick="cambiarTitulo('Diagrama Gantt');"
-                                class="">
-                                <img class="img_nav" src="{{ asset('img/plan-trabajo/gantt.svg') }}">Gantt
-                            </a>
-                        </div>
-                    </div>
-                </div>
+        <div class="blue-menu-header-plan d-flex align-items-center justify-content-between px-5">
+            <h3 id="titlo-tab" class="mb-0" style="font-weight: lighter;">Kanban</h3>
+            <div class="d-flex align-items-center gap-2">
+                <button class="btn" onclick="cambiarTitulo('Kanban'); navSection('kanban_gantt');">
+                    <i class="material-symbols-outlined"> view_kanban</i>
+                    <span>Kanban</span>
+                </button>
+                <hr>
+                <button class="btn"
+                    onclick="renderCaleendar(); cambiarTitulo('Calendario'); navSection('calendario_gantt');">
+                    <i class="material-symbols-outlined"> calendar_today</i>
+                    <span>Calendario</span>
+                </button>
+                <hr>
+                <button class="btn" onclick="cambiarTitulo('Diagrama Gantt'); navSection('original_gantt');">
+                    <i class="material-symbols-outlined">align_horizontal_left</i>
+                    <span>Gantt</span>
+                </button>
             </div>
         </div>
         <div id="plan_trabajo_workspace">
-            <div class="caja_caja_secciones">
-                <div class="caja_secciones">
-                    <section id="kanban_gantt" class="caja_tab_reveldada">
-                        @include('admin.planesDeAccion.diagramas-implementacion.kanban')
-                    </section>
+            <div class="content-sections">
+                <section id="kanban_gantt" class="caja_tab_reveldada active">
+                    @include('admin.planesDeAccion.diagramas-implementacion.kanban')
+                </section>
 
-                    {{-- <section id="tabla_gantt">
-                        @include('admin.planesDeAccion.diagramas-implementacion.tabla')
-                    </section> --}}
+                <section id="calendario_gantt">
+                    @include('admin.planesDeAccion.diagramas-implementacion.calendario')
+                </section>
 
-                    <section id="calendario_gantt">
-                        @include('admin.planesDeAccion.diagramas-implementacion.calendario')
-                    </section>
-
-                    <section id="original_gantt">
-                        @include('admin.planesDeAccion.diagramas-implementacion.gantt')
-                    </section>
-                </div>
+                <section id="original_gantt">
+                    @include('admin.planesDeAccion.diagramas-implementacion.gantt')
+                </section>
             </div>
-            <div id="modales"></div>
         </div>
     </div>
 @endsection
@@ -137,6 +108,11 @@
             setTimeout(() => {
                 document.getElementById('titlo-tab').innerText = titulo;
             }, 500);
+        }
+
+        function navSection(id) {
+            document.querySelector('.content-sections section.active').classList.remove('active');
+            document.getElementById(id).classList.add('active');
         }
     </script>
     <script>
