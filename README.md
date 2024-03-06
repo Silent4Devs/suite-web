@@ -1,6 +1,11 @@
 <p align="center"><img src="public/img/Silent4Business-Logo-Color.png" width="400"></p>
 
-![Build&Test](https://github.com/Silent4Devs/suite-web/blob/develop/.github/workflows/build-test.yml/badge.svg?branch=develop)
+[![Build and Test](https://github.com/Silent4Devs/suite-web/actions/workflows/build-test.yml/badge.svg?branch=develop)](https://github.com/Silent4Devs/suite-web/actions/workflows/build-test.yml)
+[![Check code quality](https://github.com/Silent4Devs/suite-web/actions/workflows/code-style.yml/badge.svg)](https://github.com/Silent4Devs/suite-web/actions/workflows/code-style.yml)
+[![Dependencies Security checks](https://github.com/Silent4Devs/suite-web/actions/workflows/security-check.yml/badge.svg)](https://github.com/Silent4Devs/suite-web/actions/workflows/security-check.yml)
+[![DevSecOps and Docker build](https://github.com/Silent4Devs/suite-web/actions/workflows/devsecops.yml/badge.svg)](https://github.com/Silent4Devs/suite-web/actions/workflows/devsecops.yml)
+[![Docker Compose build and test](https://github.com/Silent4Devs/suite-web/actions/workflows/container-build.yml/badge.svg)](https://github.com/Silent4Devs/suite-web/actions/workflows/container-build.yml)
+
 
 # Gestión normativa S4B
 
