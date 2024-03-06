@@ -496,9 +496,13 @@
                                         {{ $objetivo['meta'] }} {{ $objetivo['metrica'] }}
                                     </div>
                                     <div class="text-center border col-1" style="font-size:10px">
-                                        <span
-                                            data-objetivo-calificacion="{{ $objetivo['objetivo_calificacion_id'] }}">{{ $objetivo['calificacion'] }}</span>
-                                        {{ $objetivo['metrica'] }}
+                                        @if ($objetivo['meta'] == 0 && !empty($maxParam) && $objetivo['meta_alcanzada'] >= $maxParam)
+                                            Cumplido
+                                        @else
+                                            <span
+                                                data-objetivo-calificacion="{{ $objetivo['objetivo_calificacion_id'] }}">{{ $objetivo['calificacion'] }}</span>
+                                            {{ $objetivo['metrica'] }}
+                                        @endif
                                     </div>
                                     <div class="text-center border col-2" style="font-size:10px">
                                         {{ $objetivo['descripcion_meta'] ? $objetivo['descripcion_meta'] : 'N/A' }}
