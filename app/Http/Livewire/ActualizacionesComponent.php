@@ -4,9 +4,9 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use Symfony\Component\Process\Process;
+
 class ActualizacionesComponent extends Component
 {
-
     public function RevisarActualizaciones()
     {
         // Get the base path of your Laravel project
