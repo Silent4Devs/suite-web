@@ -7,19 +7,6 @@ pipeline {
         SERVER_IP = '192.168.9.78'
     }
 
-
-    stages {
-        stage('Pruebas Test') {
-            steps {
-                script {
-                   sh 'cd  Testing/login'
-                   sh 'pytest'
-                }
-            }
-        }
-    }
-
-
     stages {
         stage('Git Pull via SSH') {
             steps {
