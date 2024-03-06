@@ -15,7 +15,6 @@ use Gate;
 use Illuminate\Auth\Access\Gate as AccessGate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use Maatwebsite\Excel\Facades\Excel;
@@ -117,12 +116,6 @@ class AreasController extends Controller
             'id_reporta.required' => 'El área a la que reporta es requerido',
         ]);
 
-        if (! $request->hasFile('foto_area')) {
-            $mensajeError = 'Intentelo de nuevo, Ingrese  el campo foto';
-
-            return Redirect::back()->with('mensajeError', $mensajeError);
-        }
-
         $area = Area::create($request->all());
 
         $image = null;
@@ -139,11 +132,15 @@ class AreasController extends Controller
             });
 
             $image->save($route);
-        }
 
-        $area->update([
-            'foto_area' => $new_name_image,
-        ]);
+            $area->update([
+                'foto_area' => $new_name_image,
+            ]);
+        } else {
+            $area->update([
+                'foto_area' => null,
+            ]);
+        }
 
         return redirect()->route('admin.areas.index')->with('success', 'Guardado con éxito');
     }
@@ -205,10 +202,9 @@ class AreasController extends Controller
 
             $image->save($route);
         } else {
-
-            $mensajeError = 'Intentelo de nuevo, Ingrese  el campo foto';
-
-            return Redirect::back()->with('mensajeError', $mensajeError);
+            $area->update([
+                'foto_area' => null,
+            ]);
         }
 
         $area->update([
@@ -217,7 +213,7 @@ class AreasController extends Controller
             'id_reporta' => $request->id_reporta,
             'descripcion' => $request->descripcion,
             'empleados_id' => $request->empleados_id,
-            'foto_area' => $new_name_image,
+            'foto_area' => $new_name_image ?? null,
 
         ]);
 

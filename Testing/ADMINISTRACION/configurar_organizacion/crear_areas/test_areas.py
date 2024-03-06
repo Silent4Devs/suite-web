@@ -13,7 +13,7 @@ menu_hamburguesa = "//BUTTON[@class='btn-menu-header']"
 element_entrar_submodulo = "//A[@href='https://192.168.9.78/admin/areas'][text()='Crear Áreas']"
 element_confirgurar_organizacion = "(//I[@class='material-symbols-outlined i-direct'][text()='keyboard_arrow_down'])[2]"
 agregar_btn_xpath= "//BUTTON[@class='btn btn-xs btn-outline-success rounded ml-2 pr-3']"
-trespuntos_btn_xpath= "(//I[@class='fa-solid fa-ellipsis-vertical'])[1]"
+trespuntos_btn_xpath= "//I[@class='fa-solid fa-ellipsis-vertical']"
 boton_editar = "//I[@class='fas fa-edit']"
 campo_buscar_xpath= "(//INPUT[@type='search'])[2]"
 
@@ -115,15 +115,17 @@ def add_areas(driver):
     time.sleep(tiempo_modulos)
     
     # Nombre del Area
+    print("Llenando nombre der Area...")
     campo_area = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.XPATH, "//INPUT[@id='area']"))
         )
     campo_area.click()
-    campo_area.send_keys("Area de Prueba 17")
+    campo_area.send_keys("Area de Prueba 000001117")
 
     time.sleep(tiempo_modulos)
     
     # Nombre del Responsable
+    print("Llenando nombre del responsable... ")
     campo_n_responsable = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.XPATH, "//SELECT[@id='nombre_contacto_puesto']"))
         )
@@ -133,6 +135,7 @@ def add_areas(driver):
     time.sleep(tiempo_modulos)
     
     # Nombre del Area a la que Reporta
+    print("Asignando nombre del area a la que reporta... ")
     campo_area_reporta = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.XPATH, "//SELECT[@id='inputGroupSelect01']"))
         )
@@ -145,6 +148,7 @@ def add_areas(driver):
     time.sleep(tiempo_modulos)
     
     # Nombre del Grupo
+    print("Asignando nombre del grupo... ")
     campo_grupo = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.XPATH, "//SELECT[@id='id_grupo']"))
         )
@@ -157,6 +161,7 @@ def add_areas(driver):
     time.sleep(tiempo_modulos)
     
     # Descripcion
+    print("Llenando descripcion del apartado...")
     campo_descripcion = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.XPATH, "//TEXTAREA[@id='descripcion']"))
         )
@@ -166,6 +171,7 @@ def add_areas(driver):
     time.sleep(tiempo_modulos)
     
     # Guardar
+    print("Guardando repositorio creado... ")
     guardar_xpath = "//BUTTON[contains(@class, 'btn') and contains(@class, 'btn-danger') and normalize-space()='Guardar']"
     guardar = WebDriverWait(driver, 20).until(
         EC.element_to_be_clickable((By.XPATH, guardar_xpath))
@@ -176,7 +182,6 @@ def add_areas(driver):
     
     print("URL actual:", driver.current_url)
     
-    driver.back()
 
 def test_add_areas(browser):
     
@@ -186,14 +191,14 @@ def test_add_areas(browser):
 
 def edit_areas(driver):
     
-    time.sleep(tiempo_modulos)
+    time.sleep(tiempo_carga)
     
     # Campo Buscar
     campo_entrada = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, campo_buscar_xpath))
+        EC.element_to_be_clickable((By.XPATH, campo_buscar_xpath))
     )
-    campo_entrada.clear()
-    campo_entrada.send_keys("Area de Prueba 1117")
+    campo_entrada.click()
+    campo_entrada.send_keys("Area de Prueba 000001117")
 
     time.sleep(tiempo_carga)
 

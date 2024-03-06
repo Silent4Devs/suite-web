@@ -94,6 +94,9 @@ class PlanesAccionController extends Controller
                 'startIsMilestone' => false,
                 'progressByWorklog' => false,
                 'assigs' => [],
+                'resources' => [],
+                'subtasks' => [],
+                'historic' => [],
             ],
             [
                 'id' => 'tmp_'.(strtotime(now())).rand(1, 1000),
@@ -115,6 +118,9 @@ class PlanesAccionController extends Controller
                 'startIsMilestone' => false,
                 'progressByWorklog' => false,
                 'assigs' => [],
+                'resources' => [],
+                'subtasks' => [],
+                'historic' => [],
             ],
         ];
 
@@ -164,6 +170,9 @@ class PlanesAccionController extends Controller
                     'startIsMilestone' => false,
                     'progressByWorklog' => false,
                     'assigs' => [],
+                    'resources' => [],
+                    'subtasks' => [],
+                    'historic' => [],
                 ],
                 [
                     'id' => 'tmp_'.(strtotime(now())).rand(1, 1000),
@@ -185,6 +194,9 @@ class PlanesAccionController extends Controller
                     'startIsMilestone' => false,
                     'progressByWorklog' => false,
                     'assigs' => [],
+                    'resources' => [],
+                    'subtasks' => [],
+                    'historic' => [],
                 ],
             ];
 
@@ -370,10 +382,17 @@ class PlanesAccionController extends Controller
                 'id',
                 'title as name'
             )->get();
+        $area = DB::table('areas')
+            ->select(
+                'id',
+                'area',
+                'foto_area'
+            )->get();
 
         $implementacion->resources = $elaborador;
         $implementacion->roles = $roles;
         $implementacion->tasks = $tasks;
+        $implementacion->area = $area;
 
         return $implementacion;
     }

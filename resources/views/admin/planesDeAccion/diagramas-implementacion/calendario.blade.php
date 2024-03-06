@@ -1,38 +1,4 @@
-<style type="text/css">
-    #calendar-container {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-    }
-
-    #calendar {
-        max-width: 1100px;
-        margin: -2px auto;
-    }
-
-    .popover-title {
-        font-weight: bold;
-        background-color: #007bff;
-        color: #fff;
-    }
-
-    .popover-content {
-        color: #333;
-    }
-
-    .popover {
-        max-width: 250px;
-        width: auto;
-        background-color: #fff;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    }
-</style>
-
-<div class="card" style="box-shadow: none; !important">
+<div class="cardCalendario" style="box-shadow: none; !important">
     <div class="card-body" style="height: 658px;">
         <div id='calendar'></div>
     </div>

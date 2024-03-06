@@ -236,6 +236,7 @@
                                 La fecha de inicio no está disponible.
                             @endisset
                         </div>
+
                         <div class="col s12 l4">
                             <strong> Fecha fin: </strong> <br> <br>
                             @isset($proveedor_indistinto->fecha_fin)
@@ -244,6 +245,8 @@
                                 La fecha fin no está disponible.
                             @endisset
                         </div>
+                        
+                        
 
                     </div>
                 </div>

@@ -50,7 +50,11 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <h3 class="title-user-card">{{ $usuario->empleado->area->area }}</h3>
+                        <h3 class="title-user-card">
+                            @if (isset($usuario->empleado->area->area))
+                                {{ $usuario->empleado->area->area }}
+                            @endif
+                        </h3>
                         <span> {{ $usuario->empleado->puesto }}</span>
                         <hr class="my-4">
                         <div class=" caja-info-user-main">
@@ -272,6 +276,24 @@
                         </div>
                     </div>
                 </a>
+            @endif
+
+            @if (isset($mis_evaluaciones->evaluacion))
+                @if ($mis_evaluaciones->evaluacion->estatus == 2 || $mis_evaluaciones->evaluacion->estatus == 3)
+                    <a
+                        href="{{ route('admin.ev360-evaluaciones.autoevaluacion.consulta.evaluado', [$mis_evaluaciones->evaluacion->id, auth()->user()->empleado->id]) }}">
+
+                        <div class="item-ob-ev" style="background-color: #249AB8;">
+                            <div class="img-ob-ev">
+                                <img src="{{ asset('img/inicio_usuario/ev_tri.png') }}" alt="">
+                            </div>
+                            <div class="info-ob-ev">
+                                <h5>Revisar mis resultados Ev360 2024</h5>
+                                <p><small>Ver mis resultados de la evaluacion</small></p>
+                            </div>
+                        </div>
+                    </a>
+                @endif
             @endif
 
         </div>

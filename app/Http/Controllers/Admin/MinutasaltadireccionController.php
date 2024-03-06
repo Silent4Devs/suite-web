@@ -261,6 +261,9 @@ class MinutasaltadireccionController extends Controller
                     'startIsMilestone' => false,
                     'progressByWorklog' => false,
                     'assigs' => [],
+                    'resources' => [],
+                    'subtasks' => [],
+                    'historic' => [],
                 ],
             ];
             $actividades = json_decode($request->actividades);
@@ -351,6 +354,9 @@ class MinutasaltadireccionController extends Controller
                     'startIsMilestone' => false,
                     'progressByWorklog' => false,
                     'assigs' => $assigs,
+                    'resources' => [],
+                    'subtasks' => [],
+                    'historic' => [],
                 ];
             }
             if ($edit) {
