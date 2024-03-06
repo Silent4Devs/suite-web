@@ -1,13 +1,7 @@
 <div class="cardCalendario" style="box-shadow: none; !important">
     <div class="card-body" style="height: 658px;">
         <div id="sistema_gantt">
-            <link rel=stylesheet href="{{ asset('gantt/platform.css') }}" type="text/css">
-            <link rel=stylesheet href="{{ asset('gantt/libs/jquery/dateField/jquery.dateField.css') }}" type="text/css">
 
-            <link rel=stylesheet href="{{ asset('gantt/gantt.css') }}" type="text/css">
-            <link rel=stylesheet href="{{ asset('gantt/ganttPrint.css') }}" type="text/css" media="print">
-            <link rel=stylesheet href="{{ asset('gantt/libs/jquery/valueSlider/mb.slider.css') }}" type="text/css"
-                media="print">
 
             <div id="ndo"
                 style="position:absolute;right:5px;top:5px;width:378px;padding:5px;background-color: #FFF5E6; border:1px solid #F9A22F; font-size:12px; display: none;"
