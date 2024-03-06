@@ -44,7 +44,7 @@ jobs:
       uses: docker://owasp/dependency-check:latest
       with:
         entrypoint: /usr/share/dependency-check/bin/dependency-check.sh
-        args: --scan /path/to/your/project
+        args: --scan /
 
     - name: Run ESLint
       run: |
