@@ -33,7 +33,7 @@
     "pusher/pusher-php-server": "^7.0",
     "realrashid/sweet-alert": "^7.1",
     "renatomarinho/laravel-page-speed": "dev-master",
-    "sentry/sentry-laravel": "^3.8",
+    "sentry/sentry-laravel": "^4.2",
     "simplesoftwareio/simple-qrcode": "^4.2",
     "spatie/calendar-links": "^1.6",
     "spatie/geocoder": "^3.10",
