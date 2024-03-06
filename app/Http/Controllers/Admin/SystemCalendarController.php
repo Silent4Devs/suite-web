@@ -62,7 +62,7 @@ class SystemCalendarController extends Controller
         }
         // $actividades = $actividades->flatten(1);
 
-        $plan_base = PlanBaseActividade::get();
+        $plan_base = PlanBaseActividade::getAll();
         $auditorias_anual = AuditoriaAnual::getAll();
         $auditoria_internas = AuditoriaInterna::get();
         $audits = AuditoriaAnual::select('fechainicio', 'fechafin', 'nombre')->get();

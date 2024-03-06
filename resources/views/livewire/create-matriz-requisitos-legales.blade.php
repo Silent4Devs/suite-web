@@ -116,6 +116,11 @@
                 </div>
             </div>
         </div>
+        @if (session('mensajeError'))
+        <div class="alert alert-danger">
+            {{ session('mensajeError') }}
+        </div>
+        @endif
 
     <form wire:submit.prevent='save'>
         <div class="mt-4 card" style="border-radius: 8px;">

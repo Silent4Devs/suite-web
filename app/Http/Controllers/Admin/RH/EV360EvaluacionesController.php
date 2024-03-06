@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\RH;
 
 use App\Http\Controllers\Controller;
 use App\Http\Livewire\Ev360ResumenTabla;
+use App\Http\Livewire\Ev360ResumenTablaParametros;
 use App\Mail\RH\Evaluaciones\CitaEvaluadorEvaluado;
 use App\Mail\RH\Evaluaciones\RecordatorioEvaluadores;
 use App\Models\Area;
@@ -29,6 +30,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use PDF;
 use Spatie\CalendarLinks\Link;
 
 class EV360EvaluacionesController extends Controller
@@ -37,11 +39,11 @@ class EV360EvaluacionesController extends Controller
     {
         abort_if(Gate::denies('seguimiento_evaluaciones_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // dd($this->obtenerCantidadMaximaDeObjetivos(20));
-        $areas = Area::all();
+        $areas = Area::getAll();
         $empleados = Empleado::getaltaAll();
 
         if ($request->ajax()) {
-            $evaluaciones = Evaluacion::orderByDesc('id')->get();
+            $evaluaciones = Evaluacion::getAll();
 
             return datatables()->of($evaluaciones)->toJson();
         }
@@ -53,7 +55,7 @@ class EV360EvaluacionesController extends Controller
     {
         abort_if(Gate::denies('seguimiento_evaluaciones_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $evaluacion = Evaluacion::getAll();
-        $areas = Area::all();
+        $areas = Area::getAll();
         $empleados = Empleado::getaltaAll();
 
         return view('admin.recursos-humanos.evaluacion-360.evaluaciones.create', compact('evaluacion', 'areas', 'empleados'));
@@ -287,113 +289,145 @@ class EV360EvaluacionesController extends Controller
 
     public function contestarCuestionario($evaluacion, $evaluado, $evaluador)
     {
-        $evaluacion = Evaluacion::find(intval($evaluacion));
-        $evaluado = Empleado::alta()->with(['puestoRelacionado' => function ($q) {
-            $q->with(['competencias' => function ($q) {
-                $q->with('competencia');
-            }]);
-        }, 'objetivos'])->find(intval($evaluado));
+        $usuario = User::getCurrentuser();
+        $evaluacion = Evaluacion::with('rangos')->find(intval($evaluacion));
 
-        $evaluador = Empleado::getAll()->find(intval($evaluador));
-        $isJefeInmediato = EvaluadoEvaluador::select('tipo')
-            ->where('evaluado_id', $evaluado->id)
-            ->where('evaluador_id', $evaluador->id)
-            ->where('evaluacion_id', $evaluacion->id)
-            ->first();
-        if (is_null($isJefeInmediato)) {
-            $isJefeInmediato = false;
-        } else {
-            $isJefeInmediato = $isJefeInmediato->tipo == EvaluadoEvaluador::JEFE_INMEDIATO;
-        }
-        $preguntas = collect();
-        $total_preguntas = 0;
-        $preguntas_contestadas = 0;
-        $preguntas_no_contestadas = 0;
-        $progreso = 0;
-        if ($evaluacion->include_competencias) {
-            $preguntas_sql = EvaluacionRepuesta::with(['competencia' => function ($q) use ($evaluado) {
-                $q->with(['opciones' => function ($qry) {
-                    $qry->orderByDesc('ponderacion');
-                }, 'competencia_puesto' => function ($q) use ($evaluado) {
-                    $q->where('puesto_id', $evaluado->puestoRelacionado->id);
+        // dd($evaluacion);
+        if ($usuario->empleado->id == $evaluador && $evaluacion->estatus == 2) {
+            $evaluado = Empleado::alta()->with(['puestoRelacionado' => function ($q) {
+                $q->with(['competencias' => function ($q) {
+                    $q->with('competencia');
                 }]);
-            }, 'evaluado', 'evaluador', 'evaluacion'])
-                ->where('evaluacion_id', $evaluacion->id)
-                ->where('evaluado_id', $evaluado->id)
-                ->where('evaluador_id', $evaluador->id);
-            $preguntas = $preguntas_sql->orderBy('id')->get();
-            // $total_preguntas = $preguntas_sql->count();
-            $total_preguntas = 0;
-            foreach ($preguntas_sql->get() as $competenciaE) {
-                if (! is_null(Competencia::find($competenciaE->competencia_id))) {
-                    $total_preguntas++;
-                }
-            }
-            $preguntas_contestadas = EvaluacionRepuesta::where('evaluacion_id', $evaluacion->id)
-                ->where('evaluado_id', $evaluado->id)
-                ->where('evaluador_id', $evaluador->id)
-                ->where('calificacion', '>', 0)->count();
-            $preguntas_no_contestadas = EvaluacionRepuesta::where('evaluacion_id', $evaluacion->id)
-                ->where('evaluado_id', $evaluado->id)
-                ->where('evaluador_id', $evaluador->id)
-                ->where('calificacion', '=', 0)->count();
-            if ($total_preguntas > 0) {
-                $progreso = floatval(number_format((($preguntas_contestadas / $total_preguntas) * 100)));
-            }
-        }
+            }, 'objetivos'])->find(intval($evaluado));
 
-        $objetivos = collect();
-        $objetivos_evaluados = 0;
-        $objetivos_no_evaluados = 0;
-        $progreso_objetivos = 0;
-        if ($evaluacion->include_objetivos) {
-            $objetivos = ObjetivoRespuesta::with(['objetivo' => function ($q) {
-                $q->with(['metrica']);
-            }])->where('evaluado_id', $evaluado->id)
+            $evaluador = Empleado::getAll()->find(intval($evaluador));
+            $isJefeInmediato = EvaluadoEvaluador::select('tipo')
+                ->where('evaluado_id', $evaluado->id)
                 ->where('evaluador_id', $evaluador->id)
                 ->where('evaluacion_id', $evaluacion->id)
-                ->get()->sortBy('objetivo.tipo_id');
-            // dd($objetivos);
-            $objetivos_evaluados = ObjetivoRespuesta::where('evaluado_id', $evaluado->id)
-                ->where('evaluador_id', $evaluador->id)
-                ->where('evaluacion_id', $evaluacion->id)
-                ->where('evaluado', true)
-                ->count();
-            $objetivos_no_evaluados = ObjetivoRespuesta::where('evaluado_id', $evaluado->id)
-                ->where('evaluador_id', $evaluador->id)
-                ->where('evaluacion_id', $evaluacion->id)
-                ->where('evaluado', false)
-                ->count();
-            if (count($objetivos)) {
-                $progreso_objetivos = floatval(number_format((($objetivos_evaluados / count($objetivos)) * 100)));
+                ->first();
+            if (is_null($isJefeInmediato)) {
+                $isJefeInmediato = false;
+            } else {
+                $isJefeInmediato = $isJefeInmediato->tipo == EvaluadoEvaluador::JEFE_INMEDIATO;
             }
-        }
-        // dd($objetivos);
-        // dd($objetivos, $objetivos_evaluados, $objetivos_no_evaluados);
-        $esta_evaluado = EvaluadoEvaluador::where('evaluado_id', $evaluado->id)
-            ->where('evaluador_id', $evaluador->id)
-            ->where('evaluacion_id', $evaluacion->id)->first()->evaluado;
-        // dd($esta_evaluado);
-        $finalizo_tiempo = false;
-        if (Carbon::now()->diffInDays(Carbon::parse($evaluacion->fecha_fin), false) + 1 <= 0) {
-            $finalizo_tiempo = true;
-        }
-        $competencias_por_puesto_nivel_esperado = $evaluado->puestoRelacionado;
-        if ($competencias_por_puesto_nivel_esperado) {
-            $competencias_por_puesto_nivel_esperado = $evaluado->puestoRelacionado->competencias;
-            $competencias_evaluadas_en_esta_evaluacion = $preguntas->pluck('competencia_id')->toArray();
-            $competencias_por_puesto_nivel_esperado = $competencias_por_puesto_nivel_esperado->map(function ($competencia) use ($competencias_evaluadas_en_esta_evaluacion) {
-                if (! is_null($competencia->competencia)) {
-                    if (in_array($competencia->competencia->id, $competencias_evaluadas_en_esta_evaluacion)) {
-                        return $competencia;
+            $preguntas = collect();
+            $total_preguntas = 0;
+            $preguntas_contestadas = 0;
+            $preguntas_no_contestadas = 0;
+            $progreso = 0;
+            if ($evaluacion->include_competencias) {
+                $preguntas_sql = EvaluacionRepuesta::with(['competencia' => function ($q) use ($evaluado) {
+                    $q->with(['opciones' => function ($qry) {
+                        $qry->orderByDesc('ponderacion');
+                    }, 'competencia_puesto' => function ($q) use ($evaluado) {
+                        $q->where('puesto_id', $evaluado->puestoRelacionado->id);
+                    }]);
+                }, 'evaluado', 'evaluador', 'evaluacion'])
+                    ->where('evaluacion_id', $evaluacion->id)
+                    ->where('evaluado_id', $evaluado->id)
+                    ->where('evaluador_id', $evaluador->id);
+                $preguntas = $preguntas_sql->orderBy('id')->get();
+                // $total_preguntas = $preguntas_sql->count();
+                $total_preguntas = 0;
+                foreach ($preguntas_sql->get() as $competenciaE) {
+                    if (! is_null(Competencia::find($competenciaE->competencia_id))) {
+                        $total_preguntas++;
                     }
                 }
-            }); //Filtro para obtener solo las competencias evaluadas al momento de la creación de la evaluacion
-        } else {
-            $competencias_por_puesto_nivel_esperado = collect();
-        }
+                $preguntas_contestadas = EvaluacionRepuesta::where('evaluacion_id', $evaluacion->id)
+                    ->where('evaluado_id', $evaluado->id)
+                    ->where('evaluador_id', $evaluador->id)
+                    ->where('calificacion', '>=', 0)->count();
+                $preguntas_no_contestadas = EvaluacionRepuesta::where('evaluacion_id', $evaluacion->id)
+                    ->where('evaluado_id', $evaluado->id)
+                    ->where('evaluador_id', $evaluador->id)
+                    ->where('calificacion', null)->count();
+                if ($total_preguntas > 0) {
+                    $progreso = floatval(number_format((($preguntas_contestadas / $total_preguntas) * 100)));
+                }
+            }
 
-        return view('admin.recursos-humanos.evaluacion-360.evaluaciones.cuestionario', compact('evaluacion', 'preguntas', 'evaluado', 'evaluador', 'total_preguntas', 'preguntas_contestadas', 'preguntas_no_contestadas', 'progreso', 'finalizo_tiempo', 'objetivos', 'progreso_objetivos', 'objetivos_evaluados', 'objetivos_no_evaluados', 'esta_evaluado', 'competencias_por_puesto_nivel_esperado', 'isJefeInmediato'));
+            $objetivos = collect();
+            $objetivos_evaluados = 0;
+            $objetivos_no_evaluados = 0;
+            $progreso_objetivos = 0;
+            if ($evaluacion->include_objetivos) {
+                $objetivos = ObjetivoRespuesta::with(['objetivo' => function ($q) {
+                    $q->with(['metrica']);
+                }])->where('evaluado_id', $evaluado->id)
+                    ->where('evaluador_id', $evaluador->id)
+                    ->where('evaluacion_id', $evaluacion->id)
+                    ->get()->sortBy('objetivo.tipo_id');
+                // dd($objetivos);
+                $objetivos_evaluados = ObjetivoRespuesta::where('evaluado_id', $evaluado->id)
+                    ->where('evaluador_id', $evaluador->id)
+                    ->where('evaluacion_id', $evaluacion->id)
+                    ->where('evaluado', true)
+                    ->count();
+                $objetivos_no_evaluados = ObjetivoRespuesta::where('evaluado_id', $evaluado->id)
+                    ->where('evaluador_id', $evaluador->id)
+                    ->where('evaluacion_id', $evaluacion->id)
+                    ->where('evaluado', false)
+                    ->count();
+                if (count($objetivos)) {
+                    $progreso_objetivos = floatval(number_format((($objetivos_evaluados / count($objetivos)) * 100)));
+                }
+            }
+            // dd($objetivos);
+            // dd($objetivos, $objetivos_evaluados, $objetivos_no_evaluados);
+            $esta_evaluado = EvaluadoEvaluador::where('evaluado_id', $evaluado->id)
+                ->where('evaluador_id', $evaluador->id)
+                ->where('evaluacion_id', $evaluacion->id)->first()->evaluado;
+            // dd($esta_evaluado);
+            $finalizo_tiempo = false;
+            if (Carbon::now()->diffInDays(Carbon::parse($evaluacion->fecha_fin), false) + 1 <= 0) {
+                $finalizo_tiempo = true;
+            }
+            $competencias_por_puesto_nivel_esperado = $evaluado->puestoRelacionado;
+            if ($competencias_por_puesto_nivel_esperado) {
+                $competencias_por_puesto_nivel_esperado = $evaluado->puestoRelacionado->competencias;
+                $competencias_evaluadas_en_esta_evaluacion = $preguntas->pluck('competencia_id')->toArray();
+                $competencias_por_puesto_nivel_esperado = $competencias_por_puesto_nivel_esperado->map(function ($competencia) use ($competencias_evaluadas_en_esta_evaluacion) {
+                    if (! is_null($competencia->competencia)) {
+                        if (in_array($competencia->competencia->id, $competencias_evaluadas_en_esta_evaluacion)) {
+                            return $competencia;
+                        }
+                    }
+                }); //Filtro para obtener solo las competencias evaluadas al momento de la creación de la evaluacion
+            } else {
+                $competencias_por_puesto_nivel_esperado = collect();
+            }
+
+            $evaluaciones_a_realizar = EvaluadoEvaluador::with('empleado_evaluado')->where('evaluacion_id', $evaluacion->id)
+                ->where('evaluador_id', $evaluador->id)->get();
+
+            // dd($evaluaciones_a_realizar);
+            return view(
+                'admin.recursos-humanos.evaluacion-360.evaluaciones.cuestionario',
+                compact(
+                    'evaluacion',
+                    'preguntas',
+                    'evaluado',
+                    'evaluador',
+                    'total_preguntas',
+                    'preguntas_contestadas',
+                    'preguntas_no_contestadas',
+                    'progreso',
+                    'finalizo_tiempo',
+                    'objetivos',
+                    'progreso_objetivos',
+                    'objetivos_evaluados',
+                    'objetivos_no_evaluados',
+                    'esta_evaluado',
+                    'competencias_por_puesto_nivel_esperado',
+                    'isJefeInmediato',
+                    'evaluaciones_a_realizar',
+                )
+            );
+        } else {
+            return redirect(route('admin.inicio-Usuario.index'));
+        }
     }
 
     public function evaluacion(Evaluacion $evaluacion)
@@ -586,15 +620,84 @@ class EV360EvaluacionesController extends Controller
 
     public function saveCalificacionPersepcion(Request $request)
     {
-        $objetivo = ObjetivoRespuesta::where('evaluado_id', $request->evaluado)
+        // dump($request->all());
+        $objetivo = ObjetivoRespuesta::with('evaluacion.rangos')
+            ->where('evaluado_id', $request->evaluado)
             ->where('evaluador_id', $request->evaluador)
             ->where('evaluacion_id', $request->evaluacion)
-            ->where('objetivo_id', $request->objetivo);
+            ->where('objetivo_id', $request->objetivo)
+            ->first();
+
         $update_objetivo = $objetivo->update([
             'calificacion_persepcion' => $request->calificacion_persepcion,
+            'evaluado' => true,
         ]);
+        // dump($objetivo, $update_objetivo);
+        $objetivos = ObjetivoRespuesta::where('evaluado_id', $request->evaluado)
+            ->where('evaluador_id', $request->evaluador)
+            ->where('evaluacion_id', $request->evaluacion)
+            ->count();
+        $objetivos_evaluados = ObjetivoRespuesta::where('evaluado_id', $request->evaluado)
+            ->where('evaluador_id', $request->evaluador)
+            ->where('evaluacion_id', $request->evaluacion)
+            ->where('evaluado', true)
+            ->count();
+        $objetivos_no_evaluados = ObjetivoRespuesta::where('evaluado_id', $request->evaluado)
+            ->where('evaluador_id', $request->evaluador)
+            ->where('evaluacion_id', $request->evaluacion)
+            ->where('evaluado', false)
+            ->count();
+        // dump(
+        //     $objetivos,
+        //     $objetivos_evaluados,
+        //     $objetivos_no_evaluados
+        // );
+        if ($objetivos) {
+            $progreso_objetivos = floatval(number_format((($objetivos_evaluados / $objetivos) * 100)));
+        } else {
+            $progreso_objetivos = 0;
+        }
+        // dd($progreso_objetivos);
         if ($update_objetivo) {
-            return response()->json(['success' => true]);
+            return response()->json(['success' => true, 'progreso' => $progreso_objetivos, 'contestadas' => $objetivos_evaluados, 'sin_contestar' => $objetivos_no_evaluados]);
+        } else {
+            return response()->json(['error' => true]);
+        }
+    }
+
+    public function storeCalificacion($evaluado, $evaluador, $evaluacion, $objetivo, $calificacion)
+    {
+        $objetivo = ObjetivoRespuesta::where('evaluado_id', $evaluado)
+            ->where('evaluador_id', $evaluador)
+            ->where('evaluacion_id', $evaluacion)
+            ->where('objetivo_id', $objetivo);
+        $update_objetivo = $objetivo->update([
+            'calificacion' => intval($calificacion),
+            'evaluado' => true,
+        ]);
+
+        $objetivos = ObjetivoRespuesta::where('evaluado_id', $evaluado)
+            ->where('evaluador_id', $evaluador)
+            ->where('evaluacion_id', $evaluacion)
+            ->count();
+        $objetivos_evaluados = ObjetivoRespuesta::where('evaluado_id', $evaluado)
+            ->where('evaluador_id', $evaluador)
+            ->where('evaluacion_id', $evaluacion)
+            ->where('evaluado', true)
+            ->count();
+        $objetivos_no_evaluados = ObjetivoRespuesta::where('evaluado_id', $evaluado)
+            ->where('evaluador_id', $evaluador)
+            ->where('evaluacion_id', $evaluacion)
+            ->where('evaluado', false)
+            ->count();
+        if ($objetivos) {
+            $progreso_objetivos = floatval(number_format((($objetivos_evaluados / $objetivos) * 100)));
+        } else {
+            $progreso_objetivos = 0;
+        }
+
+        if ($update_objetivo) {
+            return response()->json(['success' => true, 'progreso' => $progreso_objetivos, 'contestadas' => $objetivos_evaluados, 'sin_contestar' => $objetivos_no_evaluados]);
         } else {
             return response()->json(['error' => true]);
         }
@@ -778,7 +881,7 @@ class EV360EvaluacionesController extends Controller
         $preguntas_contestadas = EvaluacionRepuesta::where('evaluacion_id', $evaluacion)
             ->where('evaluado_id', $evaluado)
             ->where('evaluador_id', $evaluador)
-            ->where('calificacion', '>', 0)->count();
+            ->where('calificacion', '>=', 0)->count();
         $preguntas_contestadas = $preguntas_contestadas > 0 ? $preguntas_contestadas : 1;
         $total_preguntas = $total_preguntas > 0 ? $total_preguntas : 1;
         $progreso = floatval(number_format((($preguntas_contestadas / $total_preguntas) * 100)));
@@ -810,107 +913,543 @@ class EV360EvaluacionesController extends Controller
 
     public function consultaPorEvaluado($evaluacion, $evaluado)
     {
-        $ev360ResumenTabla = new Ev360ResumenTabla();
-        $informacion_obtenida = $ev360ResumenTabla->obtenerInformacionDeLaConsultaPorEvaluado($evaluacion, $evaluado);
-        $calificaciones = $this->desglosarCalificaciones($informacion_obtenida);
-        $nombresObjetivos = [];
-        $metaObjetivos = [];
-        $calificacionObjetivos = [];
-        foreach ($informacion_obtenida['evaluadores_objetivos'] as $item) {
-            if ($item['esSupervisor']) {
-                foreach ($item['objetivos'] as $objetivo) {
-                    array_push($nombresObjetivos, $objetivo['nombre']);
-                    array_push($metaObjetivos, $objetivo['meta']);
-                    array_push($calificacionObjetivos, $objetivo['calificacion']);
+        $usuario = User::getCurrentUser()->empleado->id;
+        if ($usuario == $evaluado) {
+            $cons_evaluacion = Evaluacion::with('rangos')->find($evaluacion);
+
+            if (optional($cons_evaluacion->rangos)->isNotEmpty()) {
+                $ev360ResumenTabla = new Ev360ResumenTablaParametros();
+                $informacion_obtenida = $ev360ResumenTabla->obtenerInformacionDeLaConsultaPorEvaluado($evaluacion, $evaluado);
+                // dd($informacion_obtenida);
+                $calificaciones = $this->desglosarCalificaciones($informacion_obtenida);
+                $nombresObjetivos = [];
+                $metaObjetivos = [];
+                $calificacionObjetivos = [];
+                foreach ($informacion_obtenida['evaluadores_objetivos'] as $item) {
+                    if ($item['esSupervisor']) {
+                        foreach ($item['objetivos'] as $objetivo) {
+                            array_push($nombresObjetivos, $objetivo['nombre']);
+                            array_push($metaObjetivos, $objetivo['meta']);
+                            array_push($calificacionObjetivos, $objetivo['calificacion']);
+                        }
+                    }
                 }
+
+                $calificaciones_autoevaluacion_competencias = $calificaciones['calificaciones_autoevaluacion_competencias'];
+                $calificaciones_jefe_competencias = $calificaciones['calificaciones_jefe_competencias'];
+                $calificaciones_equipo_competencias = $calificaciones['calificaciones_equipo_competencias'];
+                $calificaciones_area_competencias = $calificaciones['calificaciones_area_competencias'];
+                $competencias_lista_nombre = $calificaciones['competencias_lista_nombre'];
+                $peso_general_competencias = $informacion_obtenida['peso_general_competencias'];
+                $peso_general_objetivos = $informacion_obtenida['peso_general_objetivos'];
+                $lista_autoevaluacion = $informacion_obtenida['lista_autoevaluacion'];
+                $jefe_evaluador = $informacion_obtenida['jefe_evaluador'];
+                $lista_jefe_inmediato = $informacion_obtenida['lista_jefe_inmediato'];
+                $lista_equipo_a_cargo = $informacion_obtenida['lista_equipo_a_cargo'];
+                $lista_misma_area = $informacion_obtenida['lista_misma_area'];
+                $promedio_competencias = $informacion_obtenida['promedio_competencias'];
+                $promedio_general_competencias = $informacion_obtenida['promedio_general_competencias'];
+                $evaluadores_objetivos = $informacion_obtenida['evaluadores_objetivos'];
+                $promedio_objetivos = $informacion_obtenida['promedio_objetivos'];
+                $promedio_general_objetivos = $informacion_obtenida['promedio_general_objetivos'];
+                $maxParam = $informacion_obtenida['maxParam'];
+                $calificacion_final = $informacion_obtenida['calificacion_final'];
+                $evaluacion = Evaluacion::find(intval($evaluacion));
+                $evaluado = Empleado::with(['area', 'puestoRelacionado' => function ($q) {
+                    $q->with('competencias');
+                }])->find(intval($evaluado));
+                $nivelesEsperadosCompetencias = $evaluado->puestoRelacionado->competencias->map(function ($item) {
+                    return $item->nivel_esperado;
+                })->toArray();
+                $existeFirmaAuto = false;
+                $firmaAuto = 'img/signature.png';
+
+                if (! empty($informacion_obtenida['lista_autoevaluacion']) && is_array($informacion_obtenida['lista_autoevaluacion'])) {
+                    // Check if the array is not empty and is an array
+                    if (! empty($informacion_obtenida['lista_autoevaluacion'][0]['firma'])) {
+                        $existeFirmaAuto = Storage::exists('/public/'.$informacion_obtenida['lista_autoevaluacion'][0]['firma']);
+                    }
+                }
+
+                if ($existeFirmaAuto) {
+                    $firmaAuto = '/storage/'.$informacion_obtenida['lista_autoevaluacion'][0]['firma'];
+                }
+
+                $existeFirmaJefe = false;
+                $firmaJefe = 'img/signature.png';
+
+                if (! empty($informacion_obtenida['lista_jefe_inmediato']) && is_array($informacion_obtenida['lista_jefe_inmediato'])) {
+                    if (! empty($informacion_obtenida['lista_jefe_inmediato'][0]['firma'])) {
+                        $existeFirmaJefe = Storage::exists('/public/'.$informacion_obtenida['lista_jefe_inmediato'][0]['firma']);
+                    }
+                }
+
+                if ($existeFirmaJefe) {
+                    $firmaJefe = '/storage/'.$informacion_obtenida['lista_jefe_inmediato'][0]['firma'];
+                }
+
+                $existeFirmaSubordinado = false;
+                $firmaEquipo = 'img/signature.png';
+
+                if (! empty($informacion_obtenida['lista_equipo_a_cargo']) && is_array($informacion_obtenida['lista_equipo_a_cargo'])) {
+                    if (! empty($informacion_obtenida['lista_equipo_a_cargo'][0]['firma'])) {
+                        $existeFirmaSubordinado = Storage::exists('/public/'.$informacion_obtenida['lista_equipo_a_cargo'][0]['firma']);
+                    }
+                }
+
+                if ($existeFirmaSubordinado) {
+                    $firmaEquipo = '/storage/'.$informacion_obtenida['lista_equipo_a_cargo'][0]['firma'];
+                }
+
+                $existeFirmaPar = false;
+                $firmaPar = 'img/signature.png';
+
+                if (! empty($informacion_obtenida['lista_misma_area']) && is_array($informacion_obtenida['lista_misma_area'])) {
+                    if (! empty($informacion_obtenida['lista_misma_area'][0]['firma'])) {
+                        $existeFirmaPar = Storage::exists('/public/'.$informacion_obtenida['lista_misma_area'][0]['firma']);
+                    }
+                }
+
+                if ($existeFirmaPar) {
+                    $firmaPar = '/storage/'.$informacion_obtenida['lista_misma_area'][0]['firma'];
+                }
+
+                return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluado', compact(
+                    'evaluacion',
+                    'evaluado',
+                    'lista_autoevaluacion',
+                    'jefe_evaluador',
+                    'lista_jefe_inmediato',
+                    'lista_equipo_a_cargo',
+                    'lista_misma_area',
+                    'promedio_competencias',
+                    'promedio_general_competencias',
+                    'evaluadores_objetivos',
+                    'promedio_objetivos',
+                    'promedio_general_objetivos',
+                    'calificacion_final',
+                    'competencias_lista_nombre',
+                    'calificaciones_autoevaluacion_competencias',
+                    'calificaciones_jefe_competencias',
+                    'calificaciones_equipo_competencias',
+                    'calificaciones_area_competencias',
+                    'nivelesEsperadosCompetencias',
+                    'peso_general_competencias',
+                    'peso_general_objetivos',
+                    'firmaAuto',
+                    'firmaJefe',
+                    'firmaEquipo',
+                    'firmaPar',
+                    'existeFirmaAuto',
+                    'existeFirmaJefe',
+                    'existeFirmaSubordinado',
+                    'existeFirmaPar',
+                    'nombresObjetivos',
+                    'metaObjetivos',
+                    'calificacionObjetivos',
+                    'maxParam',
+                ));
+            } else {
+                $ev360ResumenTabla = new Ev360ResumenTabla();
+                $informacion_obtenida = $ev360ResumenTabla->obtenerInformacionDeLaConsultaPorEvaluado($evaluacion, $evaluado);
+                $calificaciones = $this->desglosarCalificaciones($informacion_obtenida);
+                $nombresObjetivos = [];
+                $metaObjetivos = [];
+                $calificacionObjetivos = [];
+                foreach ($informacion_obtenida['evaluadores_objetivos'] as $item) {
+                    if ($item['esSupervisor']) {
+                        foreach ($item['objetivos'] as $objetivo) {
+                            array_push($nombresObjetivos, $objetivo['nombre']);
+                            array_push($metaObjetivos, $objetivo['meta']);
+                            array_push($calificacionObjetivos, $objetivo['calificacion']);
+                        }
+                    }
+                }
+
+                $calificaciones_autoevaluacion_competencias = $calificaciones['calificaciones_autoevaluacion_competencias'];
+                $calificaciones_jefe_competencias = $calificaciones['calificaciones_jefe_competencias'];
+                $calificaciones_equipo_competencias = $calificaciones['calificaciones_equipo_competencias'];
+                $calificaciones_area_competencias = $calificaciones['calificaciones_area_competencias'];
+                $competencias_lista_nombre = $calificaciones['competencias_lista_nombre'];
+                $peso_general_competencias = $informacion_obtenida['peso_general_competencias'];
+                $peso_general_objetivos = $informacion_obtenida['peso_general_objetivos'];
+                $lista_autoevaluacion = $informacion_obtenida['lista_autoevaluacion'];
+                $jefe_evaluador = $informacion_obtenida['jefe_evaluador'];
+                $lista_jefe_inmediato = $informacion_obtenida['lista_jefe_inmediato'];
+                $lista_equipo_a_cargo = $informacion_obtenida['lista_equipo_a_cargo'];
+                $lista_misma_area = $informacion_obtenida['lista_misma_area'];
+                $promedio_competencias = $informacion_obtenida['promedio_competencias'];
+                $promedio_general_competencias = $informacion_obtenida['promedio_general_competencias'];
+                $evaluadores_objetivos = $informacion_obtenida['evaluadores_objetivos'];
+                $promedio_objetivos = $informacion_obtenida['promedio_objetivos'];
+                $promedio_general_objetivos = $informacion_obtenida['promedio_general_objetivos'];
+                $calificacion_final = $informacion_obtenida['calificacion_final'];
+                $maxParam = null;
+                $evaluacion = Evaluacion::find(intval($evaluacion));
+                $evaluado = Empleado::with(['area', 'puestoRelacionado' => function ($q) {
+                    $q->with('competencias');
+                }])->find(intval($evaluado));
+                $nivelesEsperadosCompetencias = $evaluado->puestoRelacionado->competencias->map(function ($item) {
+                    return $item->nivel_esperado;
+                })->toArray();
+                $existeFirmaAuto = false;
+                $firmaAuto = 'img/signature.png';
+
+                if (! empty($informacion_obtenida['lista_autoevaluacion']) && is_array($informacion_obtenida['lista_autoevaluacion'])) {
+                    // Check if the array is not empty and is an array
+                    if (! empty($informacion_obtenida['lista_autoevaluacion'][0]['firma'])) {
+                        $existeFirmaAuto = Storage::exists('/public/'.$informacion_obtenida['lista_autoevaluacion'][0]['firma']);
+                    }
+                }
+
+                if ($existeFirmaAuto) {
+                    $firmaAuto = '/storage/'.$informacion_obtenida['lista_autoevaluacion'][0]['firma'];
+                }
+
+                $existeFirmaJefe = false;
+                $firmaJefe = 'img/signature.png';
+
+                if (! empty($informacion_obtenida['lista_jefe_inmediato']) && is_array($informacion_obtenida['lista_jefe_inmediato'])) {
+                    if (! empty($informacion_obtenida['lista_jefe_inmediato'][0]['firma'])) {
+                        $existeFirmaJefe = Storage::exists('/public/'.$informacion_obtenida['lista_jefe_inmediato'][0]['firma']);
+                    }
+                }
+
+                if ($existeFirmaJefe) {
+                    $firmaJefe = '/storage/'.$informacion_obtenida['lista_jefe_inmediato'][0]['firma'];
+                }
+
+                $existeFirmaSubordinado = false;
+                $firmaEquipo = 'img/signature.png';
+
+                if (! empty($informacion_obtenida['lista_equipo_a_cargo']) && is_array($informacion_obtenida['lista_equipo_a_cargo'])) {
+                    if (! empty($informacion_obtenida['lista_equipo_a_cargo'][0]['firma'])) {
+                        $existeFirmaSubordinado = Storage::exists('/public/'.$informacion_obtenida['lista_equipo_a_cargo'][0]['firma']);
+                    }
+                }
+
+                if ($existeFirmaSubordinado) {
+                    $firmaEquipo = '/storage/'.$informacion_obtenida['lista_equipo_a_cargo'][0]['firma'];
+                }
+
+                $existeFirmaPar = false;
+                $firmaPar = 'img/signature.png';
+
+                if (! empty($informacion_obtenida['lista_misma_area']) && is_array($informacion_obtenida['lista_misma_area'])) {
+                    if (! empty($informacion_obtenida['lista_misma_area'][0]['firma'])) {
+                        $existeFirmaPar = Storage::exists('/public/'.$informacion_obtenida['lista_misma_area'][0]['firma']);
+                    }
+                }
+
+                if ($existeFirmaPar) {
+                    $firmaPar = '/storage/'.$informacion_obtenida['lista_misma_area'][0]['firma'];
+                }
+
+                return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluado', compact(
+                    'evaluacion',
+                    'evaluado',
+                    'lista_autoevaluacion',
+                    'jefe_evaluador',
+                    'lista_jefe_inmediato',
+                    'lista_equipo_a_cargo',
+                    'lista_misma_area',
+                    'promedio_competencias',
+                    'promedio_general_competencias',
+                    'evaluadores_objetivos',
+                    'promedio_objetivos',
+                    'promedio_general_objetivos',
+                    'calificacion_final',
+                    'competencias_lista_nombre',
+                    'calificaciones_autoevaluacion_competencias',
+                    'calificaciones_jefe_competencias',
+                    'calificaciones_equipo_competencias',
+                    'calificaciones_area_competencias',
+                    'nivelesEsperadosCompetencias',
+                    'peso_general_competencias',
+                    'peso_general_objetivos',
+                    'firmaAuto',
+                    'firmaJefe',
+                    'firmaEquipo',
+                    'firmaPar',
+                    'existeFirmaAuto',
+                    'existeFirmaJefe',
+                    'existeFirmaSubordinado',
+                    'existeFirmaPar',
+                    'nombresObjetivos',
+                    'metaObjetivos',
+                    'calificacionObjetivos',
+                    'maxParam',
+                ));
+            }
+        } else {
+            abort_if(Gate::denies('seguimiento_evaluaciones_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            $cons_evaluacion = Evaluacion::with('rangos')->find($evaluacion);
+
+            if (optional($cons_evaluacion->rangos)->isNotEmpty()) {
+                $ev360ResumenTabla = new Ev360ResumenTablaParametros();
+                $informacion_obtenida = $ev360ResumenTabla->obtenerInformacionDeLaConsultaPorEvaluado($evaluacion, $evaluado);
+                // dd($informacion_obtenida);
+                $calificaciones = $this->desglosarCalificaciones($informacion_obtenida);
+                $nombresObjetivos = [];
+                $metaObjetivos = [];
+                $calificacionObjetivos = [];
+                foreach ($informacion_obtenida['evaluadores_objetivos'] as $item) {
+                    if ($item['esSupervisor']) {
+                        foreach ($item['objetivos'] as $objetivo) {
+                            array_push($nombresObjetivos, $objetivo['nombre']);
+                            array_push($metaObjetivos, $objetivo['meta']);
+                            array_push($calificacionObjetivos, $objetivo['calificacion']);
+                        }
+                    }
+                }
+
+                $calificaciones_autoevaluacion_competencias = $calificaciones['calificaciones_autoevaluacion_competencias'];
+                $calificaciones_jefe_competencias = $calificaciones['calificaciones_jefe_competencias'];
+                $calificaciones_equipo_competencias = $calificaciones['calificaciones_equipo_competencias'];
+                $calificaciones_area_competencias = $calificaciones['calificaciones_area_competencias'];
+                $competencias_lista_nombre = $calificaciones['competencias_lista_nombre'];
+                $peso_general_competencias = $informacion_obtenida['peso_general_competencias'];
+                $peso_general_objetivos = $informacion_obtenida['peso_general_objetivos'];
+                $lista_autoevaluacion = $informacion_obtenida['lista_autoevaluacion'];
+                $jefe_evaluador = $informacion_obtenida['jefe_evaluador'];
+                $lista_jefe_inmediato = $informacion_obtenida['lista_jefe_inmediato'];
+                $lista_equipo_a_cargo = $informacion_obtenida['lista_equipo_a_cargo'];
+                $lista_misma_area = $informacion_obtenida['lista_misma_area'];
+                $promedio_competencias = $informacion_obtenida['promedio_competencias'];
+                $promedio_general_competencias = $informacion_obtenida['promedio_general_competencias'];
+                $evaluadores_objetivos = $informacion_obtenida['evaluadores_objetivos'];
+                $promedio_objetivos = $informacion_obtenida['promedio_objetivos'];
+                $promedio_general_objetivos = $informacion_obtenida['promedio_general_objetivos'];
+                $maxParam = $informacion_obtenida['maxParam'];
+                $calificacion_final = $informacion_obtenida['calificacion_final'];
+                $evaluacion = Evaluacion::find(intval($evaluacion));
+                $evaluado = Empleado::with(['area', 'puestoRelacionado' => function ($q) {
+                    $q->with('competencias');
+                }])->find(intval($evaluado));
+                $nivelesEsperadosCompetencias = $evaluado->puestoRelacionado->competencias->map(function ($item) {
+                    return $item->nivel_esperado;
+                })->toArray();
+                $existeFirmaAuto = false;
+                $firmaAuto = 'img/signature.png';
+
+                if (! empty($informacion_obtenida['lista_autoevaluacion']) && is_array($informacion_obtenida['lista_autoevaluacion'])) {
+                    // Check if the array is not empty and is an array
+                    if (! empty($informacion_obtenida['lista_autoevaluacion'][0]['firma'])) {
+                        $existeFirmaAuto = Storage::exists('/public/'.$informacion_obtenida['lista_autoevaluacion'][0]['firma']);
+                    }
+                }
+
+                if ($existeFirmaAuto) {
+                    $firmaAuto = '/storage/'.$informacion_obtenida['lista_autoevaluacion'][0]['firma'];
+                }
+
+                $existeFirmaJefe = false;
+                $firmaJefe = 'img/signature.png';
+
+                if (! empty($informacion_obtenida['lista_jefe_inmediato']) && is_array($informacion_obtenida['lista_jefe_inmediato'])) {
+                    if (! empty($informacion_obtenida['lista_jefe_inmediato'][0]['firma'])) {
+                        $existeFirmaJefe = Storage::exists('/public/'.$informacion_obtenida['lista_jefe_inmediato'][0]['firma']);
+                    }
+                }
+
+                if ($existeFirmaJefe) {
+                    $firmaJefe = '/storage/'.$informacion_obtenida['lista_jefe_inmediato'][0]['firma'];
+                }
+
+                $existeFirmaSubordinado = false;
+                $firmaEquipo = 'img/signature.png';
+
+                if (! empty($informacion_obtenida['lista_equipo_a_cargo']) && is_array($informacion_obtenida['lista_equipo_a_cargo'])) {
+                    if (! empty($informacion_obtenida['lista_equipo_a_cargo'][0]['firma'])) {
+                        $existeFirmaSubordinado = Storage::exists('/public/'.$informacion_obtenida['lista_equipo_a_cargo'][0]['firma']);
+                    }
+                }
+
+                if ($existeFirmaSubordinado) {
+                    $firmaEquipo = '/storage/'.$informacion_obtenida['lista_equipo_a_cargo'][0]['firma'];
+                }
+
+                $existeFirmaPar = false;
+                $firmaPar = 'img/signature.png';
+
+                if (! empty($informacion_obtenida['lista_misma_area']) && is_array($informacion_obtenida['lista_misma_area'])) {
+                    if (! empty($informacion_obtenida['lista_misma_area'][0]['firma'])) {
+                        $existeFirmaPar = Storage::exists('/public/'.$informacion_obtenida['lista_misma_area'][0]['firma']);
+                    }
+                }
+
+                if ($existeFirmaPar) {
+                    $firmaPar = '/storage/'.$informacion_obtenida['lista_misma_area'][0]['firma'];
+                }
+
+                return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluado', compact(
+                    'evaluacion',
+                    'evaluado',
+                    'lista_autoevaluacion',
+                    'jefe_evaluador',
+                    'lista_jefe_inmediato',
+                    'lista_equipo_a_cargo',
+                    'lista_misma_area',
+                    'promedio_competencias',
+                    'promedio_general_competencias',
+                    'evaluadores_objetivos',
+                    'promedio_objetivos',
+                    'promedio_general_objetivos',
+                    'calificacion_final',
+                    'competencias_lista_nombre',
+                    'calificaciones_autoevaluacion_competencias',
+                    'calificaciones_jefe_competencias',
+                    'calificaciones_equipo_competencias',
+                    'calificaciones_area_competencias',
+                    'nivelesEsperadosCompetencias',
+                    'peso_general_competencias',
+                    'peso_general_objetivos',
+                    'firmaAuto',
+                    'firmaJefe',
+                    'firmaEquipo',
+                    'firmaPar',
+                    'existeFirmaAuto',
+                    'existeFirmaJefe',
+                    'existeFirmaSubordinado',
+                    'existeFirmaPar',
+                    'nombresObjetivos',
+                    'metaObjetivos',
+                    'calificacionObjetivos',
+                    'maxParam',
+                ));
+            } else {
+                $ev360ResumenTabla = new Ev360ResumenTabla();
+                $informacion_obtenida = $ev360ResumenTabla->obtenerInformacionDeLaConsultaPorEvaluado($evaluacion, $evaluado);
+                $calificaciones = $this->desglosarCalificaciones($informacion_obtenida);
+                $nombresObjetivos = [];
+                $metaObjetivos = [];
+                $calificacionObjetivos = [];
+                foreach ($informacion_obtenida['evaluadores_objetivos'] as $item) {
+                    if ($item['esSupervisor']) {
+                        foreach ($item['objetivos'] as $objetivo) {
+                            array_push($nombresObjetivos, $objetivo['nombre']);
+                            array_push($metaObjetivos, $objetivo['meta']);
+                            array_push($calificacionObjetivos, $objetivo['calificacion']);
+                        }
+                    }
+                }
+
+                $calificaciones_autoevaluacion_competencias = $calificaciones['calificaciones_autoevaluacion_competencias'];
+                $calificaciones_jefe_competencias = $calificaciones['calificaciones_jefe_competencias'];
+                $calificaciones_equipo_competencias = $calificaciones['calificaciones_equipo_competencias'];
+                $calificaciones_area_competencias = $calificaciones['calificaciones_area_competencias'];
+                $competencias_lista_nombre = $calificaciones['competencias_lista_nombre'];
+                $peso_general_competencias = $informacion_obtenida['peso_general_competencias'];
+                $peso_general_objetivos = $informacion_obtenida['peso_general_objetivos'];
+                $lista_autoevaluacion = $informacion_obtenida['lista_autoevaluacion'];
+                $jefe_evaluador = $informacion_obtenida['jefe_evaluador'];
+                $lista_jefe_inmediato = $informacion_obtenida['lista_jefe_inmediato'];
+                $lista_equipo_a_cargo = $informacion_obtenida['lista_equipo_a_cargo'];
+                $lista_misma_area = $informacion_obtenida['lista_misma_area'];
+                $promedio_competencias = $informacion_obtenida['promedio_competencias'];
+                $promedio_general_competencias = $informacion_obtenida['promedio_general_competencias'];
+                $evaluadores_objetivos = $informacion_obtenida['evaluadores_objetivos'];
+                $promedio_objetivos = $informacion_obtenida['promedio_objetivos'];
+                $promedio_general_objetivos = $informacion_obtenida['promedio_general_objetivos'];
+                $calificacion_final = $informacion_obtenida['calificacion_final'];
+                $maxParam = null;
+                $evaluacion = Evaluacion::find(intval($evaluacion));
+                $evaluado = Empleado::with(['area', 'puestoRelacionado' => function ($q) {
+                    $q->with('competencias');
+                }])->find(intval($evaluado));
+                $nivelesEsperadosCompetencias = $evaluado->puestoRelacionado->competencias->map(function ($item) {
+                    return $item->nivel_esperado;
+                })->toArray();
+                $existeFirmaAuto = false;
+                $firmaAuto = 'img/signature.png';
+
+                if (! empty($informacion_obtenida['lista_autoevaluacion']) && is_array($informacion_obtenida['lista_autoevaluacion'])) {
+                    // Check if the array is not empty and is an array
+                    if (! empty($informacion_obtenida['lista_autoevaluacion'][0]['firma'])) {
+                        $existeFirmaAuto = Storage::exists('/public/'.$informacion_obtenida['lista_autoevaluacion'][0]['firma']);
+                    }
+                }
+
+                if ($existeFirmaAuto) {
+                    $firmaAuto = '/storage/'.$informacion_obtenida['lista_autoevaluacion'][0]['firma'];
+                }
+
+                $existeFirmaJefe = false;
+                $firmaJefe = 'img/signature.png';
+
+                if (! empty($informacion_obtenida['lista_jefe_inmediato']) && is_array($informacion_obtenida['lista_jefe_inmediato'])) {
+                    if (! empty($informacion_obtenida['lista_jefe_inmediato'][0]['firma'])) {
+                        $existeFirmaJefe = Storage::exists('/public/'.$informacion_obtenida['lista_jefe_inmediato'][0]['firma']);
+                    }
+                }
+
+                if ($existeFirmaJefe) {
+                    $firmaJefe = '/storage/'.$informacion_obtenida['lista_jefe_inmediato'][0]['firma'];
+                }
+
+                $existeFirmaSubordinado = false;
+                $firmaEquipo = 'img/signature.png';
+
+                if (! empty($informacion_obtenida['lista_equipo_a_cargo']) && is_array($informacion_obtenida['lista_equipo_a_cargo'])) {
+                    if (! empty($informacion_obtenida['lista_equipo_a_cargo'][0]['firma'])) {
+                        $existeFirmaSubordinado = Storage::exists('/public/'.$informacion_obtenida['lista_equipo_a_cargo'][0]['firma']);
+                    }
+                }
+
+                if ($existeFirmaSubordinado) {
+                    $firmaEquipo = '/storage/'.$informacion_obtenida['lista_equipo_a_cargo'][0]['firma'];
+                }
+
+                $existeFirmaPar = false;
+                $firmaPar = 'img/signature.png';
+
+                if (! empty($informacion_obtenida['lista_misma_area']) && is_array($informacion_obtenida['lista_misma_area'])) {
+                    if (! empty($informacion_obtenida['lista_misma_area'][0]['firma'])) {
+                        $existeFirmaPar = Storage::exists('/public/'.$informacion_obtenida['lista_misma_area'][0]['firma']);
+                    }
+                }
+
+                if ($existeFirmaPar) {
+                    $firmaPar = '/storage/'.$informacion_obtenida['lista_misma_area'][0]['firma'];
+                }
+
+                return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluado', compact(
+                    'evaluacion',
+                    'evaluado',
+                    'lista_autoevaluacion',
+                    'jefe_evaluador',
+                    'lista_jefe_inmediato',
+                    'lista_equipo_a_cargo',
+                    'lista_misma_area',
+                    'promedio_competencias',
+                    'promedio_general_competencias',
+                    'evaluadores_objetivos',
+                    'promedio_objetivos',
+                    'promedio_general_objetivos',
+                    'calificacion_final',
+                    'competencias_lista_nombre',
+                    'calificaciones_autoevaluacion_competencias',
+                    'calificaciones_jefe_competencias',
+                    'calificaciones_equipo_competencias',
+                    'calificaciones_area_competencias',
+                    'nivelesEsperadosCompetencias',
+                    'peso_general_competencias',
+                    'peso_general_objetivos',
+                    'firmaAuto',
+                    'firmaJefe',
+                    'firmaEquipo',
+                    'firmaPar',
+                    'existeFirmaAuto',
+                    'existeFirmaJefe',
+                    'existeFirmaSubordinado',
+                    'existeFirmaPar',
+                    'nombresObjetivos',
+                    'metaObjetivos',
+                    'calificacionObjetivos',
+                    'maxParam',
+                ));
             }
         }
-
-        $calificaciones_autoevaluacion_competencias = $calificaciones['calificaciones_autoevaluacion_competencias'];
-        $calificaciones_jefe_competencias = $calificaciones['calificaciones_jefe_competencias'];
-        $calificaciones_equipo_competencias = $calificaciones['calificaciones_equipo_competencias'];
-        $calificaciones_area_competencias = $calificaciones['calificaciones_area_competencias'];
-        $competencias_lista_nombre = $calificaciones['competencias_lista_nombre'];
-        $peso_general_competencias = $informacion_obtenida['peso_general_competencias'];
-        $peso_general_objetivos = $informacion_obtenida['peso_general_objetivos'];
-        $lista_autoevaluacion = $informacion_obtenida['lista_autoevaluacion'];
-        $jefe_evaluador = $informacion_obtenida['jefe_evaluador'];
-        $lista_jefe_inmediato = $informacion_obtenida['lista_jefe_inmediato'];
-        $lista_equipo_a_cargo = $informacion_obtenida['lista_equipo_a_cargo'];
-        $lista_misma_area = $informacion_obtenida['lista_misma_area'];
-        $promedio_competencias = $informacion_obtenida['promedio_competencias'];
-        $promedio_general_competencias = $informacion_obtenida['promedio_general_competencias'];
-        $evaluadores_objetivos = $informacion_obtenida['evaluadores_objetivos'];
-        $promedio_objetivos = $informacion_obtenida['promedio_objetivos'];
-        $promedio_general_objetivos = $informacion_obtenida['promedio_general_objetivos'];
-        $calificacion_final = $informacion_obtenida['calificacion_final'];
-        $evaluacion = Evaluacion::find(intval($evaluacion));
-        $evaluado = Empleado::with(['area', 'puestoRelacionado' => function ($q) {
-            $q->with('competencias');
-        }])->find(intval($evaluado));
-        $nivelesEsperadosCompetencias = $evaluado->puestoRelacionado->competencias->map(function ($item) {
-            return $item->nivel_esperado;
-        })->toArray();
-        $existeFirmaAuto = Storage::exists('/public/'.$informacion_obtenida['lista_autoevaluacion'][0]['firma']);
-        if ($existeFirmaAuto) {
-            $firmaAuto = '/storage/'.$informacion_obtenida['lista_autoevaluacion'][0]['firma'];
-        } else {
-            $firmaAuto = 'img/signature.png';
-        }
-
-        $existeFirmaJefe = Storage::exists('/public/'.$informacion_obtenida['lista_jefe_inmediato'][0]['firma']);
-        if ($existeFirmaJefe) {
-            $firmaJefe = '/storage/'.$informacion_obtenida['lista_jefe_inmediato'][0]['firma'];
-        } else {
-            $firmaJefe = 'img/signature.png';
-        }
-        $existeFirmaSubordinado = Storage::exists('/public/'.$informacion_obtenida['lista_equipo_a_cargo'][0]['firma']);
-        if ($existeFirmaSubordinado) {
-            $firmaEquipo = '/storage/'.$informacion_obtenida['lista_equipo_a_cargo'][0]['firma'];
-        } else {
-            $firmaEquipo = 'img/signature.png';
-        }
-        $existeFirmaPar = Storage::exists('/public/'.$informacion_obtenida['lista_misma_area'][0]['firma']);
-        if ($existeFirmaPar) {
-            $firmaPar = '/storage/'.$informacion_obtenida['lista_misma_area'][0]['firma'];
-        } else {
-            $firmaPar = 'img/signature.png';
-        }
-
-        return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluado', compact(
-            'evaluacion',
-            'evaluado',
-            'lista_autoevaluacion',
-            'jefe_evaluador',
-            'lista_jefe_inmediato',
-            'lista_equipo_a_cargo',
-            'lista_misma_area',
-            'promedio_competencias',
-            'promedio_general_competencias',
-            'evaluadores_objetivos',
-            'promedio_objetivos',
-            'promedio_general_objetivos',
-            'calificacion_final',
-            'competencias_lista_nombre',
-            'calificaciones_autoevaluacion_competencias',
-            'calificaciones_jefe_competencias',
-            'calificaciones_equipo_competencias',
-            'calificaciones_area_competencias',
-            'nivelesEsperadosCompetencias',
-            'peso_general_competencias',
-            'peso_general_objetivos',
-            'firmaAuto',
-            'firmaJefe',
-            'firmaEquipo',
-            'firmaPar',
-            'existeFirmaAuto',
-            'existeFirmaJefe',
-            'existeFirmaSubordinado',
-            'existeFirmaPar',
-            'nombresObjetivos',
-            'metaObjetivos',
-            'calificacionObjetivos'
-        ));
     }
 
     // public function reactivarPorEvaluado($evaluacion, $evaluado)
@@ -1022,7 +1561,7 @@ class EV360EvaluacionesController extends Controller
 
     public function obtenerInformacionDeLaConsultaPorEvaluado($evaluacion, $evaluado)
     {
-        $evaluacion = Evaluacion::find(intval($evaluacion));
+        $evaluacion = Evaluacion::with('rangos')->find(intval($evaluacion));
         $evaluado = Empleado::with(['area', 'puestoRelacionado' => function ($q) {
             $q->with('competencias');
         }])->find(intval($evaluado));
@@ -1310,57 +1849,110 @@ class EV360EvaluacionesController extends Controller
     public function resumen($evaluacion)
     {
         abort_if(Gate::denies('seguimiento_evaluaciones_grafica'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $evaluacion = Evaluacion::with('evaluados')->find(intval($evaluacion));
-        $evaluados = $evaluacion->evaluados;
-        $lista_evaluados = collect();
-        $calificaciones = collect();
-        $inaceptable = 0;
-        $minimo_aceptable = 0;
-        $aceptable = 0;
-        $sobresaliente = 0;
-        $rangosResultados = RangosResultado::select('inaceptable', 'minimo_aceptable', 'aceptable', 'sobresaliente')->where('evaluacion_id', $evaluacion->id)->count();
-        if ($rangosResultados > 0) {
-            $rangosResultados = RangosResultado::select('inaceptable', 'minimo_aceptable', 'aceptable', 'sobresaliente')->where('evaluacion_id', $evaluacion->id)->first();
-        } else {
-            $rangosResultados = collect();
-            $rangosResultados->put('inaceptable', 60);
-            $rangosResultados->put('minimo_aceptable', 80);
-            $rangosResultados->put('aceptable', 100);
-            $rangosResultados->put('sobresaliente', 100);
-        }
-        $ev360ResumenTabla = new Ev360ResumenTabla();
-        foreach ($evaluados as $evaluado) {
-            $evaluado->load('area', 'supervisorEv360');
-            $lista_evaluados->push([
-                'evaluado' => $evaluado->name,
-                'puesto' => $evaluado->puesto,
-                'area' => $evaluado->area->area,
-                'informacion_evaluacion' => $ev360ResumenTabla->obtenerInformacionDeLaConsultaPorEvaluado($evaluacion->id, $evaluado->id),
-            ]);
-        }
+        $evaluacion = Evaluacion::with('evaluados', 'rangos')->find(intval($evaluacion));
 
-        foreach ($lista_evaluados as $evaluado) {
-            // dump($evaluado['informacion_evaluacion']['calificacion_final']);
-            if ($evaluado['informacion_evaluacion']['calificacion_final'] <= $rangosResultados['inaceptable']) {
-                $inaceptable++;
-            } elseif ($evaluado['informacion_evaluacion']['calificacion_final'] <= $rangosResultados['minimo_aceptable']) {
-                $minimo_aceptable++;
-            } elseif ($evaluado['informacion_evaluacion']['calificacion_final'] <= $rangosResultados['aceptable']) {
-                $aceptable++;
-            } elseif ($evaluado['informacion_evaluacion']['calificacion_final'] > $rangosResultados['sobresaliente']) {
-                $sobresaliente++;
+        if (optional($evaluacion->rangos)->isNotEmpty()) {
+            $evaluados = $evaluacion->evaluados;
+            $lista_evaluados = collect();
+            $calificaciones = collect();
+            $inaceptable = 0;
+            $minimo_aceptable = 0;
+            $aceptable = 0;
+            $sobresaliente = 0;
+            $rangosResultados = optional($evaluacion->rangos)->pluck('valor', 'parametro')->all();
+            $rangosColores = optional($evaluacion->rangos)->pluck('color', 'parametro')->all();
+            // dd($rangosResultados, $rangosColores);
+            $maxValue = max(array_map('intval', $rangosResultados));
+
+            $ev360ResumenTabla = new Ev360ResumenTablaParametros();
+            foreach ($evaluados as $evaluado) {
+                $evaluado->load('area', 'supervisorEv360');
+                $lista_evaluados->push([
+                    'evaluado' => $evaluado->name,
+                    'puesto' => $evaluado->puesto,
+                    'area' => $evaluado->area->area,
+                    'informacion_evaluacion' => $ev360ResumenTabla->obtenerInformacionDeLaConsultaPorEvaluado($evaluacion->id, $evaluado->id),
+                ]);
             }
-        }
-        $calificaciones->push([
-            'Inaceptable' => $inaceptable,
-            'Mínimo Aceptable' => $minimo_aceptable,
-            'Aceptable' => $aceptable,
-            'Sobresaliente' => $sobresaliente,
-        ]);
-        $calificaciones = $calificaciones->first();
 
-        // dd($calificaciones);
-        return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.resumen', compact('evaluacion', 'calificaciones', 'rangosResultados'));
+            $counts = [];
+            // dd($lista_evaluados);
+            foreach ($lista_evaluados as $evaluado) {
+                $calificacionFinal = $evaluado['informacion_evaluacion']['calificacion_final'];
+                $previousValor = null;
+
+                foreach ($rangosResultados as $parametro => $valor) {
+                    if ($calificacionFinal <= $valor) {
+                        $counts[$parametro] = isset($counts[$parametro]) ? $counts[$parametro] + 1 : 1;
+                        break; // Exit the inner loop when a match is found
+                    } elseif ($calificacionFinal > $previousValor && $calificacionFinal <= $valor) {
+                        $counts[$parametro] = isset($counts[$parametro]) ? $counts[$parametro] + 1 : 1;
+                        break; // Exit the inner loop when a match is found
+                    } elseif ($valor == $maxValue && $calificacionFinal > $valor) {
+                        $counts[$parametro] = isset($counts[$parametro]) ? $counts[$parametro] + 1 : 1;
+                        break; // Exit the inner loop when a match is found
+                    }
+
+                    $previousValor = $valor;
+                }
+            }
+
+            $calificaciones->push($counts);
+            $calificaciones = $calificaciones->first();
+
+            // dd($calificaciones);
+            return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.resumen-parametros', compact('evaluacion', 'calificaciones', 'rangosResultados', 'rangosColores'));
+        } else {
+            $evaluados = $evaluacion->evaluados;
+            $lista_evaluados = collect();
+            $calificaciones = collect();
+            $inaceptable = 0;
+            $minimo_aceptable = 0;
+            $aceptable = 0;
+            $sobresaliente = 0;
+            $rangosResultados = RangosResultado::select('inaceptable', 'minimo_aceptable', 'aceptable', 'sobresaliente')->where('evaluacion_id', $evaluacion->id)->count();
+            if ($rangosResultados > 0) {
+                $rangosResultados = RangosResultado::select('inaceptable', 'minimo_aceptable', 'aceptable', 'sobresaliente')->where('evaluacion_id', $evaluacion->id)->first();
+            } else {
+                $rangosResultados = collect();
+                $rangosResultados->put('inaceptable', 60);
+                $rangosResultados->put('minimo_aceptable', 80);
+                $rangosResultados->put('aceptable', 100);
+                $rangosResultados->put('sobresaliente', 100);
+            }
+            $ev360ResumenTabla = new Ev360ResumenTabla();
+            foreach ($evaluados as $evaluado) {
+                $evaluado->load('area', 'supervisorEv360');
+                $lista_evaluados->push([
+                    'evaluado' => $evaluado->name,
+                    'puesto' => $evaluado->puesto,
+                    'area' => $evaluado->area->area,
+                    'informacion_evaluacion' => $ev360ResumenTabla->obtenerInformacionDeLaConsultaPorEvaluado($evaluacion->id, $evaluado->id),
+                ]);
+            }
+
+            foreach ($lista_evaluados as $evaluado) {
+                // dump($evaluado['informacion_evaluacion']['calificacion_final']);
+                if ($evaluado['informacion_evaluacion']['calificacion_final'] <= $rangosResultados['inaceptable']) {
+                    $inaceptable++;
+                } elseif ($evaluado['informacion_evaluacion']['calificacion_final'] <= $rangosResultados['minimo_aceptable']) {
+                    $minimo_aceptable++;
+                } elseif ($evaluado['informacion_evaluacion']['calificacion_final'] <= $rangosResultados['aceptable']) {
+                    $aceptable++;
+                } elseif ($evaluado['informacion_evaluacion']['calificacion_final'] > $rangosResultados['sobresaliente']) {
+                    $sobresaliente++;
+                }
+            }
+            $calificaciones->push([
+                'Inaceptable' => $inaceptable,
+                'Mínimo Aceptable' => $minimo_aceptable,
+                'Aceptable' => $aceptable,
+                'Sobresaliente' => $sobresaliente,
+            ]);
+            $calificaciones = $calificaciones->first();
+
+            return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.resumen', compact('evaluacion', 'calificaciones', 'rangosResultados'));
+        }
     }
 
     public function resumenJefe($evaluacion)
@@ -1535,6 +2127,25 @@ class EV360EvaluacionesController extends Controller
         $evaluacion->delete();
 
         return response()->json(['deleted' => true]);
+    }
+
+    public function vistaevaluador($evaluacion, $evaluador)
+    {
+        $usuario = User::getCurrentUser();
+        // dd($usuario, $evaluador);
+        if ($usuario->empleado->id == $evaluador) {
+            $data_evaluacion = Evaluacion::find($evaluacion);
+            $evaluaciones_a_realizar = EvaluadoEvaluador::with('empleado_evaluado')->where('evaluacion_id', $data_evaluacion->id)
+                ->where('evaluador_id', $evaluador)->get();
+
+            return view('admin.recursos-humanos.evaluacion-360.evaluaciones.vista-evaluador', compact(
+                'data_evaluacion',
+                'evaluaciones_a_realizar',
+                'usuario'
+            ));
+        } else {
+            return redirect(route('admin.inicio-Usuario.index'));
+        }
     }
 
     public function objetivostemporal()
@@ -2545,5 +3156,17 @@ class EV360EvaluacionesController extends Controller
         //             }
         //         }
         //     }
+
+    }
+
+    public function pdf()
+    {
+
+        $evaluadoEvaluador = Evaluacion::get();
+
+        $pdf = PDF::loadView('evaluador', compact('evaluadoEvaluador'));
+        $pdf->setPaper('A4', 'portrait');
+
+        return $pdf->download('evaluadoEvaluador.pdf');
     }
 }

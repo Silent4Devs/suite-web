@@ -21,7 +21,7 @@ class TipoCompetencia extends Model implements Auditable
     //Redis methods
     public static function getAll()
     {
-        return Cache::remember('Tipocompetencias_all', 3600 * 24, function () {
+        return Cache::remember('TipoCompetencia:Tipocompetencias_all', 3600 * 4, function () {
             return self::get();
         });
     }

@@ -68,15 +68,15 @@ class TablaProyectosTimesheet extends Component
         }
 
         if ($this->estatus == 'cancelados') {
-            $this->proyectos = TimesheetProyecto::where('estatus', 'cancelado')->get();
+            $this->proyectos = TimesheetProyecto::where('estatus', 'cancelado')->orderBy('id', 'desc')->get();
         }
 
         if ($this->estatus == 'terminados') {
-            $this->proyectos = TimesheetProyecto::where('estatus', 'terminado')->get();
+            $this->proyectos = TimesheetProyecto::where('estatus', 'terminado')->orderBy('id', 'desc')->get();
         }
 
         if ($this->estatus == 'todos') {
-            $this->proyectos = TimesheetProyecto::get();
+            $this->proyectos = TimesheetProyecto::orderBy('id', 'desc')->get();
         }
 
         $this->emit('cerrarModal');

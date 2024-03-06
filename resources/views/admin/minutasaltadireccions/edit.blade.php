@@ -242,19 +242,19 @@
                             <p class="font-weight-bold col-12" style="font-size:11pt;">Participantes externos.</p>
                             <hr>
                             <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-6">
-                                <input class="form-control" type="text" id="nombreEXT" placeholder="" />
+                                <input class="form-control" type="text" id="nombreEXT" maxlength="255" placeholder="" />
                                 <label for="nombreEXT">Nombre</label>
                             </div>
                             <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-6">
-                                <input class="form-control" type="text" id="emailEXT" placeholder="" />
+                                <input class="form-control" type="text" id="emailEXT" maxlength="255" placeholder="" />
                                 <label for="emailEXT">Email</label>
                             </div>
                             <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-6">
-                                <input class="form-control" type="text" id="puestoEXT" placeholder="" />
+                                <input class="form-control" type="text" id="puestoEXT" maxlength="255" placeholder="" />
                                 <label for="puestoEXT">Puesto</label>
                             </div>
                             <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-6">
-                                <input class="form-control" type="text" id="empresaEXT" placeholder="" />
+                                <input class="form-control" type="text" id="empresaEXT" maxlength="255" placeholder="" />
                                 <label for="empresaEXT">Empresa u
                                     Organización</label>
                             </div>
@@ -458,30 +458,44 @@
                 buttons: []
             })
             $("#cargando_participantes").hide();
+            let currentSearchRequest = 0; // Add a variable to track the current search request
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
+
             let url = "{{ route('admin.empleados.get') }}";
+
             $("#participantes_search").keyup(function() {
+                let searchValue = $(this).val().trim();
+                let currentRequestNumber = ++currentSearchRequest; // Increment the request number
+
+                if (searchValue === "") {
+                    // Clear or hide suggestions when the search input is empty
+                    $("#participantes_sugeridos").hide();
+                    return;
+                }
+
                 $.ajax({
                     type: "POST",
                     url: url,
-                    data: 'nombre=' + $(this).val(),
+                    data: 'nombre=' + searchValue,
                     beforeSend: function() {
                         $("#cargando_participantes").show();
                     },
                     success: function(data) {
-                        if ($("#participantes_search").val().trim() !== "") {
-                            let lista = "<ul class='list-group id=empleados-lista' >";
+                        // Check if the response corresponds to the latest search query
+                        if (currentRequestNumber === currentSearchRequest) {
+                            let lista = "<ul class='list-group id=empleados-lista'>";
                             $.each(data.usuarios, function(ind, usuario) {
                                 var result = `{"id":"${usuario.id}",
-                                "name":"${usuario.name}",
-                                "email":"${usuario.email}",
-                                "puesto":"${usuario.puesto}",
-                                "area":"${usuario.area.area}"
-                                }`;
+                        "name":"${usuario.name}",
+                        "email":"${usuario.email}",
+                        "puesto":"${usuario.puesto}",
+                        "area":"${usuario.area}"
+                    }`;
                                 lista +=
                                     "<button type='button' class='px-2 py-1 text-muted list-group-item list-group-item-action' onClick='seleccionarUsuario(" +
                                     result + ")' >" +
@@ -497,7 +511,6 @@
                         }
                     }
                 });
-
             });
 
             document.getElementById('btn-suscribir-participante').addEventListener('click', function(e) {
@@ -530,7 +543,7 @@
             $("#id_empleado").val(user.id);
             $("#email").val(user.email);
             $("#puesto").val(user.puesto);
-            $("#area").val(user.area.area);
+            $("#area").val(user.area);
             $("#participantes_sugeridos").hide();
         }
 

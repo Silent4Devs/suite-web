@@ -8,6 +8,7 @@ use App\Models\Empleado;
 use App\Models\Visitantes\RegistrarVisitante;
 use App\Models\Visitantes\ResponsableVisitantes;
 use App\Models\Visitantes\VisitantesDispositivo;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
@@ -94,7 +95,9 @@ class RegistroVisitantes extends Component
 
     public function render()
     {
-        $this->empleados = Empleado::getAll();
+
+        $this->empleados = DB::table('empleados')->select('id', 'name', 'foto')->get();
+
         $this->areas = Area::orderBy('area')->get();
 
         return view('livewire.visitantes.registro-visitantes');

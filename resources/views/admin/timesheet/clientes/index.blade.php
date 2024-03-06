@@ -101,7 +101,14 @@
                     <tbody>
                         @foreach ($clientes as $cliente)
                             <tr>
-                                <td>{{ $cliente->identificador }}</td>
+                            <td>
+                                @if ($cliente->identificador)
+                                    {{$cliente->identificador}}
+                                @else
+                                    No hay registro
+                                @endif
+
+                            </td>
                                 <td>{{ $cliente->razon_social }}</td>
                                 <td>{{ $cliente->nombre }}</td>
                                 <td>{{ $cliente->rfc }}</td>
@@ -190,7 +197,13 @@
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar Excel',
                     exportOptions: {
-                        columns: ['th:not(:last-child):visible']
+                        columns: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
+                        format: {
+                            body: function (data, row, column, node) {
+                                // Trunca el texto si es necesario
+                                return typeof data === 'string' && data.length > 50 ? data.substr(0, 50) + '...' : data;
+                            }
+                        }
                     }
                 },
                 {

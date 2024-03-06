@@ -20,8 +20,8 @@ class SucursalController extends Controller
     public function index()
     {
         abort_if(Gate::denies('katbol_sucursales_acceso'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $sucursales = Sucursal::select('id', 'clave', 'descripcion', 'rfc', 'empresa', 'cuenta_contable', 'estado', 'zona', 'archivo', 'direccion', 'mylogo')->where('archivo', false)->get();
-        $sucursales_id = Sucursal::get()->pluck('id');
+        $sucursales = Sucursal::getArchivoFalse();
+        $sucursales_id = Sucursal::getPluckId();
         $ids = [];
 
         foreach ($sucursales_id as $id) {
@@ -33,7 +33,7 @@ class SucursalController extends Controller
 
     public function getSucursalesIndex(Request $request)
     {
-        $query = Sucursal::select('id', 'clave', 'descripcion', 'rfc', 'empresa', 'cuenta_contable', 'estado', 'zona', 'archivo', 'direccion', 'mylogo')->where('archivo', false)->get();
+        $query = Sucursal::getArchivoFalse();
 
         return datatables()->of($query)->toJson();
     }
@@ -176,8 +176,8 @@ class SucursalController extends Controller
 
     public function view_archivados()
     {
-        $sucursales = Sucursal::select('id', 'clave', 'descripcion', 'rfc', 'empresa', 'cuenta_contable', 'estado', 'zona', 'archivo', 'direccion', 'mylogo')->where('archivo', true)->get();
-        $sucursales_id = Sucursal::get()->pluck('id');
+        $sucursales = Sucursal::getArchivoTrue();
+        $sucursales_id = Sucursal::getPluckId();
         $ids = [];
 
         foreach ($sucursales_id as $id) {
@@ -189,7 +189,7 @@ class SucursalController extends Controller
 
     public function getArchivadosIndex(Request $request)
     {
-        $query = Sucursal::select('id', 'clave', 'descripcion', 'rfc', 'empresa', 'cuenta_contable', 'estado', 'zona', 'archivo', 'direccion', 'mylogo')->where('archivo', true)->get();
+        $query = Sucursal::getArchivoTrue();
 
         return datatables()->of($query)->toJson();
     }

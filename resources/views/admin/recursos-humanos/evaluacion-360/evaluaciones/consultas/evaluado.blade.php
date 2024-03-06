@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/print_foda.css') }}{{config('app.cssVersion')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/print_foda.css') }}">
     <style>
         .fs-consulta {
             font-size: 11px;
@@ -41,7 +41,7 @@
                         @php
                             use App\Models\Organizacion;
                             $organizacion = Organizacion::getFirst();
-                            
+
                         @endphp
                         <img src="{{ $organizacion->logotipo }}" class="img-fluid" alt="" width="70">
                     </div>
@@ -162,7 +162,8 @@
                                     </div>
                                     <div class="border col-6">
                                         <p class="m-0">
-                                            {{ round(($promedio_competencias * 100) / $peso_general_competencias) }}%</p>
+                                            {{ round(($promedio_competencias * $peso_general_competencias) / $peso_general_competencias, 2) }}%
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -172,7 +173,8 @@
                                         <p class="m-0 text-white">Objetivos</p>
                                     </div>
                                     <div class="border col-6">
-                                        <p class="m-0">{{ round($promedio_objetivos) }}%
+                                        <p class="m-0">
+                                            {{ round(($promedio_general_objetivos / $peso_general_objetivos) * $peso_general_objetivos, 2) }}%
                                         </p>
                                     </div>
                                 </div>
@@ -200,8 +202,8 @@
                     </div>
                 </div> --}}
                 <div class="mt-2">
-                    <span style="font-size: 11px">{{ $lista_autoevaluacion->first()['tipo'] }}</span>
-                    <span style="font-size: 11px">{{ $lista_autoevaluacion->first()['peso_general'] }}%</span>
+                    <span style="font-size: 11px">{{ $lista_autoevaluacion->first()['tipo'] ?? '' }}</span>
+                    <span style="font-size: 11px">{{ $lista_autoevaluacion->first()['peso_general'] ?? '' }}%</span>
                     <button id="btnExportarAutoevaluacion" class="btn-sm rounded pr-2"
                         style="background-color:#fff; border: #fff">
                         <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"
@@ -300,7 +302,13 @@
                             <div class="row">
                                 <div class="border col-6">% Participación</div>
                                 <div class="border col-6">
-                                    {{ round(($promedio_competencias * 100) / $peso_general_competencias) }}%</div>
+                                    {{ round(($promedio_competencias * 100) / $peso_general_competencias, 2) }}%</div>
+                            </div>
+                            <div class="row">
+                                <div class="border col-6">Promedio total en la evaluación</div>
+                                <div class="border col-6">
+                                    {{ round(($promedio_competencias / $peso_general_competencias) * $peso_general_competencias, 2) }}%
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -488,9 +496,13 @@
                                         {{ $objetivo['meta'] }} {{ $objetivo['metrica'] }}
                                     </div>
                                     <div class="text-center border col-1" style="font-size:10px">
-                                        <span
-                                            data-objetivo-calificacion="{{ $objetivo['objetivo_calificacion_id'] }}">{{ $objetivo['calificacion'] }}</span>
-                                        {{ $objetivo['metrica'] }}
+                                        @if ($objetivo['meta'] == 0 && !empty($maxParam) && $objetivo['meta_alcanzada'] >= $maxParam)
+                                            Cumplido
+                                        @else
+                                            <span
+                                                data-objetivo-calificacion="{{ $objetivo['objetivo_calificacion_id'] }}">{{ $objetivo['calificacion'] }}</span>
+                                            {{ $objetivo['metrica'] }}
+                                        @endif
                                     </div>
                                     <div class="text-center border col-2" style="font-size:10px">
                                         {{ $objetivo['descripcion_meta'] ? $objetivo['descripcion_meta'] : 'N/A' }}
@@ -527,7 +539,13 @@
                             </div>
                             <div class="row">
                                 <div class="border col-6">% Participación</div>
-                                <div class="border col-6">{{ number_format($promedio_objetivos, 2) }}%</div>
+                                <div class="border col-6">{{ round($promedio_objetivos, 2) }}%</div>
+                            </div>
+                            <div class="row">
+                                <div class="border col-6">Promedio total en la evaluación</div>
+                                <div class="border col-6">
+                                    {{ round(($promedio_general_objetivos / $peso_general_objetivos) * $peso_general_objetivos, 2) }}%
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -632,7 +650,7 @@
             let tableExport = new TableExport($tablaauto, {
                 exportButtons: false, // No queremos botones
                 filename: "Evaluacion Competencias de " + nombeva +
-                "-Autoevaluacion", //Nombre del archivo de Excel
+                    "-Autoevaluacion", //Nombre del archivo de Excel
                 sheetname: "Evaluacion Competencias", //Título de la hoja
             });
             let datos = tableExport.getExportData();
@@ -681,7 +699,7 @@
             let tableExport = new TableExport($tablasub, {
                 exportButtons: false, // No queremos botones
                 filename: "Evaluacion Competencias de " + nombeva +
-                "-Subordinado", //Nombre del archivo de Excel
+                    "-Subordinado", //Nombre del archivo de Excel
                 sheetname: "Evaluacion Competencias", //Título de la hoja
             });
             let datos = tableExport.getExportData();
@@ -983,6 +1001,7 @@
                 document.getElementById('barCompetencias'),
                 configBarCompetenciasChart
             );
+
             //OBJETIVOS
             const dataRadarObjetivos = {
                 labels: @json($nombresObjetivos),
@@ -997,7 +1016,7 @@
                     pointHoverBackgroundColor: '#fff',
                     pointHoverBorderColor: 'rgb(51,109,255)'
                 }, {
-                    label: 'Califiación Jefe',
+                    label: 'Calificación Jefe',
                     data: @json($calificacionObjetivos),
                     fill: true,
                     backgroundColor: 'rgba(46, 204, 65, 0.5)',

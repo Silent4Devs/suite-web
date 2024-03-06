@@ -122,7 +122,7 @@ class AuditoriaInternaController extends Controller
             // 'lider_id' => 'required|exists:empleados,id',
             'alcance' => 'required',
             'objetivo' => 'required',
-            'id_auditoria' => 'required',
+            'id_auditoria' => 'required|numeric',
             'nombre_auditoria' => 'required|max:250',
             'criterios_auditoria' => 'required',
             'fecha_inicio' => 'nullable|date',
@@ -178,7 +178,7 @@ class AuditoriaInternaController extends Controller
         $request->validate([
             'alcance' => 'required',
             'objetivo' => 'required',
-            'id_auditoria' => 'required',
+            'id_auditoria' => 'required|numeric',
             'nombre_auditoria' => 'required|max:250',
             'criterios_auditoria' => 'required',
             'fecha_inicio' => 'nullable|date',

@@ -16,7 +16,7 @@ class PerfilController extends Controller
     {
         abort_if(Gate::denies('niveles_jerarquicos_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
-            $query = PerfilEmpleado::get();
+            $query = PerfilEmpleado::getAll();
 
             $table = DataTables::of($query);
 

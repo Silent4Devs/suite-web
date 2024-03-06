@@ -6,6 +6,7 @@ use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class EntendimientoOrganizacion extends Model implements Auditable
@@ -26,6 +27,21 @@ class EntendimientoOrganizacion extends Model implements Auditable
         'id_elabora',
         'estatus',
     ];
+
+    //Redis methods
+    public static function getAllWithEmpleadoParticipantes()
+    {
+        return Cache::remember('EntendimientoOrganizacion:entendimientoorganizacion_with_empleado_participantes', 3600 * 7, function () {
+            return self::with('empleado', 'participantes')->orderByDesc('id')->get();
+        });
+    }
+
+    public static function getFirst()
+    {
+        return Cache::remember('EntendimientoOrganizacion:entendimientoorganizacion_first', 3600 * 7, function () {
+            return self::first();
+        });
+    }
 
     public function empleado()
     {

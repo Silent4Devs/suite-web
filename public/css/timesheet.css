@@ -52,19 +52,35 @@ table {
 
 .caja-calendar-semana label,
 .caja-calendar-semana label i {
-    color: #fff;
+    color: #486489;
 }
 
+.anima-focus label{
+    background-color: #F8FAFC !important;
+}
 .caja-calendar-semana .anima-focus label {
-    background-color: #6F8FB8;
-    color: #fff;
+    background-color: #fff !important;
+    color: #486489 !important;
     font-size: 18px;
 }
 
 .caja-calendar-semana .anima-focus input {
-    color: #fff !important;
+    color: #486489 !important;
     font-size: 18px;
+    background-color: #fff;
 }
+
+
+.caja-calendar-semana .anima-focus .form-control:focus+label,
+.caja-calendar-semana .anima-focus .form-control:not(:placeholder-shown)+label{
+    opacity: 0;
+}
+
+.caja-calendar-semana .anima-focus .form-control:focus,
+.caja-calendar-semana .anima-focus .form-control:not(:placeholder-shown){
+    background-color: #fff !important;
+}
+
 
 .tabla-llenar-horas input,
 .tabla-llenar-horas div.form-control {
@@ -351,6 +367,7 @@ table th i {
 .tabla-fixed tr td {
     background-color: #fff !important;
 }
+
 /*
 .tabla-fixed tr:nth-child(even) td {
     background-color: #eee !important;
@@ -512,9 +529,12 @@ table.dataTable tbody tr.selected td {
 }
 
 /* componentes --------------- */
+.box-caja-cards-times a{
+    width: 100%;
+}
 .card-complement {
     flex-direction: row;
-    width: 220px;
+    width: 100%;
     height: 60px;
     overflow: hidden;
     border-radius: 6px !important;
@@ -558,8 +578,9 @@ table.dataTable tbody tr.selected td {
     left: 0;
     margin-top: -80px;
     z-index: 10;
-    background-color: #fff;
+    background-color: #7195C9;
     border: 1px solid #bdbdbd;
+    color: #fff;
     border-top-right-radius: 18px;
     border-bottom-right-radius: 18px;
     display: flex;
@@ -573,6 +594,8 @@ table.dataTable tbody tr.selected td {
 .option-fixed-admin:hover {
     transform: translateX(0px);
     border: 1px solid #25ACC1;
+    background-color: #fff;
+    color: #656565;
 }
 
 .option-fixed-admin img {
@@ -699,38 +722,44 @@ table.dataTable tbody tr.selected td {
     text-wrap: balance;
 }
 
-.cards-config-config {
+.cards-config-config,
+.cards-config-config-aprob {
     visibility: hidden;
     position: absolute;
     transform: translateY(200px);
-    transition: 0.3s;
+    transition: 0s;
     opacity: 0;
 }
 
-.cards-config-config.active {
+.cards-config-config.active,
+.cards-config-config-aprob.active {
     visibility: visible;
     position: relative;
     transform: translateY(0px);
+    transition: 0.3s;
     opacity: 1;
 }
 
-.cards-reportes-config {
+.cards-reportes-config,
+.cards-reportes-config-aprob {
     visibility: hidden;
     position: absolute;
     transform: translateY(-200px);
-    transition: 0.3s;
+    transition: 0s;
     opacity: 0;
 }
 
-.cards-reportes-config.active {
+.cards-reportes-config.active,
+.cards-reportes-config-aprob.active {
     visibility: visible;
     position: relative;
     transform: translateY(0px);
+    transition: 0.3s;
     opacity: 1;
 }
 
 .caja-calendar-semana {
-    background-color: #6F8FB8;
+    background-color: #3f699f;
     padding: 0px 20px;
     padding-top: 5px;
     border-top-left-radius: 16px;
@@ -790,9 +819,25 @@ div .form-control:not(#form_timesheet .form-control) {
     color: #818181 !important;
     background-color: #E8E8E8;
     border: none !important;
-    padding: 8px 25px !important
+    padding: 8px 18px !important
 }
 
 .btn-secondary:hover {
     background-color: #E8E8E8;
+}
+
+.row {
+    margin-right: 0px !important;
+    margin-left: 0px !important;
+    padding-right: 0px !important;
+    padding-left: 0px !important;
+}
+.btn-secondary:hover {
+    background-color: #E8E8E8;
+}
+
+#form_timesheet .datatable-rds td,
+#form_timesheet .dataTables_scroll td,
+#form_timesheet .datatable-fix td{
+    padding: 15px 10px !important;
 }

@@ -64,6 +64,7 @@ class EvaluacionObserver
 
     private function forgetCache()
     {
-        Cache::forget('Evaluacion_all');
+        Cache::forget('Evaluacion:Evaluacion_all');
+        Cache::forget('Evaluacion:Evaluacion_latest_first');
     }
 }

@@ -1,5 +1,13 @@
 <div>
     <style>
+        .your-custom-alert-class {
+            /* Your custom styles here */
+            /* For example: */
+            font-size: 18px;
+            width: 300px;
+            height: 300px;
+        }
+
         .alerta-error {
             font-size: 13px;
             padding: 5px;
@@ -461,7 +469,7 @@
                                             <input type="text" wire:model.defer="nombre"
                                                 class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}"
                                                 id="nombre" aria-describedby="nombreHelp" name="nombre"
-                                                value="{{ old('nombre') }}">
+                                                maxlength="250" value="{{ old('nombre') }}">
                                             <small id="nombreHelp" class="form-text text-muted">Ingresa el nombre de la
                                                 evaluación</small>
                                             @if ($errors->has('nombre'))
@@ -531,7 +539,9 @@
                                                     style="position: relative;">
                                                     <input style="width: 120px;text-align: center;padding-right: 20px;"
                                                         wire:model.defer="pesoGeneralCompetencias"
-                                                        id="pesoGeneralCompetencias" class="form-control" type="number"
+                                                        id="pesoGeneralCompetencias" class="form-control" type="text"
+                                                        pattern="[0-9]*"
+                                                        oninput="this.value = this.value.replace(/[^0-9]/g, '');"
                                                         min="0" max="100">
                                                     <span style="position: absolute;top: 8px;left: 80px;">%</span>
                                                 </div>
@@ -552,12 +562,31 @@
                                                         </label>
                                                     </div>
                                                 </div>
-                                                <div class="col-7 {{ $showPesoGeneralObjetivos ? '' : 'd-none' }}">
+                                                <div class="col-3 {{ $showPesoGeneralObjetivos ? '' : 'd-none' }}">
                                                     <input style="width: 120px;text-align: center;padding-right: 20px;"
                                                         wire:model.defer="pesoGeneralObjetivos"
-                                                        id="pesoGeneralOnjetivos" class="form-control" type="number"
+                                                        id="pesoGeneralOnjetivos" class="form-control" type="text"
+                                                        pattern="[0-9]*"
+                                                        oninput="this.value = this.value.replace(/[^0-9]/g, '');"
                                                         min="0" max="100">
                                                     <span style="position: absolute;top: 8px;left: 80px;">%</span>
+                                                </div>
+                                                <div class="col-4 {{ $showPesoGeneralObjetivos ? '' : 'd-none' }}">
+                                                    <select class="form-control" name="catalogoObjetivos"
+                                                        id="catalogoObjetivos" wire:model.defer="catalogoObjetivos">
+                                                        <option value="" selected>Seleccione el Catalogo
+                                                            de
+                                                            Parametros que utilizara la Evaluacion</option>
+                                                        @foreach ($catalogo_rangos_objetivos as $c)
+                                                            <option value="{{ $c->id }}">
+                                                                {{ $c->nombre_catalogo }}</option>
+                                                        @endforeach
+                                                        @if ($errors->has('catalogoObjetivos'))
+                                                            <small class="text-danger">
+                                                                ({{ $errors->first('catalogoObjetivos') }})
+                                                            </small>
+                                                        @endif
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
@@ -812,6 +841,8 @@
                                         {{ $errors->first('sumaTotalPeso') }}
                                     </p>
                                 @endif
+
+                                <!-- Evaluators checkboxes and inputs -->
                                 <section class="mt-4 row justify-content-center">
                                     <div class="col-8" wire:loading.class="disableEvents">
                                         <article class="ml-5 feature1">
@@ -946,7 +977,6 @@
                                 <div class="mt-3 text-center">
                                     <h3>
                                         Evaluación <span class="silent-color">{{ $typeEvaluation }}°</span>
-
                                     </h3>
                                 </div>
 
@@ -1175,13 +1205,59 @@
                                 </p> --}}
                                 @if ($hayEmpleadosSinCompetencias)
                                     <div class="alert alert-danger" role="alert">
-                                        Existen {{ $totalEmpleadosSinCompetencias }} empleados que no contienen
+                                        Existen {{ $totalEmpleadosSinCompetencias }} colaboradores que no contienen
                                         competencias
                                         <ul>
                                             @foreach ($listaEmpleadosSinCompetencias as $eSinCompetencias)
                                                 <li>{{ $eSinCompetencias }}</li>
                                             @endforeach
                                         </ul>
+                                        <button type="button" class="btn btn-outline-primary"
+                                            onclick="openNewTabCompetencias()">Asignar
+                                            Competencias
+                                        </button>
+                                        <button type="button" class="btn btn-outline-primary"
+                                            wire:click="repetirConsultaCompetencias">
+                                            Validar Competencias de Colaboradores
+                                        </button>
+                                    </div>
+                                @endif
+                                @if ($hayEmpleadosSinObjetivos)
+                                    <div class="alert alert-danger" role="alert">
+                                        Existen {{ $totalEmpleadosSinObjetivos }} colaboradores que no contienen
+                                        objetivos
+                                        <ul>
+                                            @foreach ($listaEmpleadosSinObjetivos as $eSinObjetivo)
+                                                <li>{{ $eSinObjetivo }}</li>
+                                            @endforeach
+                                        </ul>
+                                        <button type="button" class="btn btn-outline-primary"
+                                            onclick="openNewTabObjetivos()">Asignar
+                                            Objetivos
+                                        </button>
+                                        <button type="button" class="btn btn-outline-primary"
+                                            wire:click="repetirConsultaObjetivos">
+                                            Validar Objetivos de Colaboradores
+                                        </button>
+                                    </div>
+                                @endif
+                                @if ($hayEmpleadosObjetivosPendiente)
+                                    <div class="alert alert-danger" role="alert">
+                                        Existen {{ $totalEmpleadosObjetivosPendiente }} colaboradores que tienen
+                                        objetivos pendientes de revisión.
+                                        <ul>
+                                            @foreach ($listaEmpleadosObjetivosPendiente as $eObjetivoPendiente)
+                                                <li>{{ $eObjetivoPendiente }}</li>
+                                            @endforeach
+                                        </ul>
+                                        <button type="button" class="btn btn-outline-primary"
+                                            onclick="openNewTabObjetivos()">Revisar Objetivos
+                                            Pendientes
+                                        </button>
+                                        <button type="button" class="btn btn-outline-primary"
+                                            wire:click="repetirConsultaObjetivosPendientes">
+                                            Revisar Objetivos de Colaboradores
+                                        </button>
                                     </div>
                                 @endif
                                 <div class="px-1 py-2 mb-3 rounded shadow-sm"
@@ -1295,8 +1371,10 @@
                     @if ($currentStep == 4)
                         {{-- <button type="submit" class="btn btn-md btn-danger"><i
                                 class="mr-2 fab fa-firstdraft"></i>Draft</button> --}}
-                        <button type="button" wire:click="activateEvaluation" class="btn btn-md btn-danger"><i
-                                class="mr-2 fas fa-paper-plane"></i>Activar</button>
+                        @if ($bloquear_evaluacion == false)
+                            <button type="button" wire:click="activateEvaluation" class="btn btn-md btn-danger"><i
+                                    class="mr-2 fas fa-paper-plane"></i>Activar</button>
+                        @endif
                     @endif
                     @if ($currentStep == 5)
                         <a type="button" href="{{ route('admin.ev360-evaluaciones.index') }}"
@@ -1382,6 +1460,8 @@
             Livewire.on('select2', () => {
                 initSelect2();
             });
+
+
             window.livewire.on('increaseStep', () => {
                 if (document.getElementById('btnModalOpen')) {
                     document.getElementById('btnModalOpen').addEventListener('click', function(e) {
@@ -1445,4 +1525,16 @@
         }());
     </script>
 
+    <script>
+        function openNewTabCompetencias() {
+            var url = "{{ route('admin.ev360-competencias-por-puesto.index') }}"; // Replace with the actual route name
+            window.open(url, '_blank');
+        }
+    </script>
+    <script>
+        function openNewTabObjetivos() {
+            var url = "{{ route('admin.ev360-objetivos.index') }}"; // Replace with the actual route name
+            window.open(url, '_blank');
+        }
+    </script>
 </div>

@@ -1,16 +1,16 @@
 <table class="datatable datatable-lista-informativa" id="datatable-lista-informativa">
     <thead>
         <tr>
-            <th>
+            <th style="min-width: 550px;">
                 Módulo
             </th>
-            <th>
+            <th style="min-width: 550px;">
                 Submódulo
             </th>
-            <th>
+            <th style="min-width: 550px;">
                 Participantes
             </th>
-            <th style="min-width: 150px; max-width:150px;">
+            <th style="min-width: 550px;">
 
             </th>
         </tr>

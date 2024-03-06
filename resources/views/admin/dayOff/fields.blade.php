@@ -121,7 +121,11 @@
             {{-- <i class="fa-solid fa-people-line iconos-crear"></i> --}}
             Colaboradores a los que aplica :
         </label>
-
+        @if ($errors->has('custom_areas'))
+            <div class="alert alert-danger">
+                {{ $errors->first('custom_areas') }}
+            </div>
+        @endif
     </div>
     @php
         $visible = $vacacion->afectados == 2 ? true : false;

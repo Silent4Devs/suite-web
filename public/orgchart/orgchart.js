@@ -1781,21 +1781,21 @@ export default class OrgChart {
       //   photo = `${opts.nodeRepositoryImages}/${nodeData[opts.nodePhoto]}`;
       // }else{
       //   photo = `${opts.nodeRepositoryImages}/${opts.nodeNotPhoto}`
-      // } 
+      // }
       let nodeHTML = "";
       if (nodeData.estatus == 'alta') {
         nodeHTML = `
-          <div class="mb-2" style="text-align:center">
-          ${opts.withImage ? `<img class="avatar object-cover w-20 h-20 rounded-full m-auto" src="${photo}" style="position:relative">` : ''}
+          <div class="mb-2 img-person">
+          ${opts.withImage ? `<img  src="${photo}" style="position:relative">` : ''}
           </div>
           <div class="title">${nodeData[opts.nodeTitle]}</div>
           ${opts.nodeContent ? `<div class="content">${nodeData[opts.nodeContent]}</div>` : ''}
         `;
       } else {
         nodeHTML = `
-          <div class="mb-2" style="text-align:center">
-          ${opts.withImage ? `<img class="avatar object-cover w-20 h-20 rounded-full m-auto" src="${opts.nodeRepositoryImages}/candidate.png" style="position:relative">` : ''}
-          </div>       
+          <div class="mb-2 img-person">
+          ${opts.withImage ? `<img  src="${opts.nodeRepositoryImages}/candidate.png" style="position:relative">` : ''}
+          </div>
           ${opts.nodeContent ? `<div class="content"><i class="fas fa-circle text-danger mr-1"></i><span class="title">${nodeData[opts.nodeContent]}</span></div>` : ''}
         `;
       }

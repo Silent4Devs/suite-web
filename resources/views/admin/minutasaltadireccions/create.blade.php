@@ -128,7 +128,7 @@
                         <div class="form-group anima-focus">
                             <input required data-vincular-nombre='true' class="form-control date" type="text"
                                 name="tema_reunion" id="tema_reunion" value="{{ old('tema_reunion') }}" placeholder=""
-                                maxlength="255">
+                                maxlength="250">
                             <label for="tema_reunion">Tema de la reunión<span class="text-danger">*</span></label>
                             @if ($errors->has('tema_reunion'))
                                 <span class="text-danger">
@@ -197,22 +197,22 @@
                         </div>
                         <div class="form-group col-sm-12 col-md-12 col-lg-6">
                             <div class="form-group anima-focus">
-                                <input class="form-control" type="text" id="email"
-                                    placeholder="Correo del participante" readonly style="cursor: not-allowed" />
+                                <input class="form-control" type="text" id="email" placeholder="" readonly
+                                    style="cursor: not-allowed" />
                                 <label for="email">Email</label>
                             </div>
                         </div>
                         <div class="form-group col-sm-12 col-md-12 col-lg-6">
                             <div class="form-group anima-focus">
-                                <input class="form-control" type="text" id="puesto"
-                                    placeholder="Puesto del participante" readonly style="cursor: not-allowed" />
+                                <input class="form-control" type="text" id="puesto" placeholder="" readonly
+                                    style="cursor: not-allowed" />
                                 <label for="puesto">Puesto</label>
                             </div>
                         </div>
                         <div class="form-group col-sm-12 col-md-12 col-lg-6">
                             <div class="form-group anima-focus">
-                                <input class="form-control" type="text" id="area"
-                                    placeholder="Área del participante" readonly style="cursor: not-allowed" />
+                                <input class="form-control" type="text" id="area" placeholder="" readonly
+                                    style="cursor: not-allowed" />
                                 <label for="area">Área</label>
                             </div>
                         </div>
@@ -252,30 +252,26 @@
                     <div class="row" x-show="externo">
                         <p class="font-weight-bold col-12" style="font-size:11pt;">Participantes externos.</p>
                         <hr>
-                        <div class="form-group col-sm-12 col-md-12 col-lg-6">
+                        <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-6">
+                            <input class="form-control" type="text" id="nombreEXT" maxlength="255" placeholder="" />
                             <label for="nombreEXT">Nombre</label>
-                            <input class="form-control" type="text" id="nombreEXT"
-                                placeholder="Nombre del participante" />
                         </div>
-                        <div class="form-group col-sm-12 col-md-12 col-lg-6">
+                        <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-6">
+                            <input class="form-control" type="text" id="emailEXT" maxlength="255" placeholder="" />
                             <label for="emailEXT">Email</label>
-                            <input class="form-control" type="text" id="emailEXT"
-                                placeholder="Correo del participante" />
                         </div>
-                        <div class="form-group col-sm-12 col-md-12 col-lg-6">
+                        <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-6">
+                            <input class="form-control" type="text" id="puestoEXT" maxlength="255" placeholder="" />
                             <label for="puestoEXT">Puesto</label>
-                            <input class="form-control" type="text" id="puestoEXT"
-                                placeholder="Puesto del participante" />
                         </div>
-                        <div class="form-group col-sm-12 col-md-12 col-lg-6">
+                        <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-6">
+                            <input class="form-control" type="text" id="empresaEXT" maxlength="255" placeholder="" />
                             <label for="empresaEXT">Empresa u
                                 Organización</label>
-                            <input class="form-control" type="text" id="empresaEXT"
-                                placeholder="Empresa u Organización del participante" />
                         </div>
                         <div class="form-group col-sm-12 col-md-12 col-lg-6">
                             <label for="asistenciaEXT">Asistencia</label>
-                            <select class="form-control" id="asistenciaEXT" name="asistenciaEXT" placeholder="">
+                            <select class="form-control" id="asistenciaEXT" name="asistenciaEXT"  placeholder="">
                                 <option value="Si" default>Sí</option>
                                 <option value="No">No</option>
                                 <option value="Ausencia Justificada">Ausencia Justificada</option>
@@ -440,7 +436,7 @@
         });
     </script>
 
-    
+
 
 
     <script type="text/javascript">
@@ -475,29 +471,51 @@
             })
 
             $("#cargando_participantes").hide();
+            let currentSearchRequest = 0; // Add a variable to track the current search request
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
+
             let url = "{{ route('admin.empleados.get') }}";
+
             $("#participantes_search").keyup(function() {
+                let searchValue = $(this).val().trim();
+                let currentRequestNumber = ++currentSearchRequest; // Increment the request number
+
+                if (searchValue === '') {
+                    // Clear or hide suggestions when the search input is empty
+                    $("#participantes_sugeridos").hide();
+                    return;
+                }
+
                 $.ajax({
                     type: "POST",
                     url: url,
-                    data: 'nombre=' + $(this).val(),
+                    data: 'nombre=' + searchValue,
                     beforeSend: function() {
                         $("#cargando_participantes").show();
                     },
                     success: function(data) {
-                        if ($("#participantes_search").val().trim() !== "") {
-                            let lista = "<ul class='list-group id=empleados-lista' >";
+                    // Check if the response corresponds to the latest search query
+                    if (currentRequestNumber === currentSearchRequest) {
+                        if (data.usuarios.length === 0) {
+                            // No se encontraron usuarios, mostrar un mensaje
+                            let mensaje = "<p>No se encontraron usuarios.</p>";
+                            $("#participantes_sugeridos").html(mensaje);
+                            $("#cargando_participantes").hide();
+                            $("#participantes_sugeridos").show();
+                            $("#participantes_search").css("background", "#FFF");
+                        } else {
+                            let lista = "<ul class='list-group id=empleados-lista'>";
                             $.each(data.usuarios, function(ind, usuario) {
                                 var result = `{"id":"${usuario.id}",
-                                "name":"${usuario.name}",
-                                "email":"${usuario.email}",
-                                "puesto":"${usuario.puesto}",
-                                "area":"${usuario.area.area}"
+                                    "name":"${usuario.name}",
+                                    "email":"${usuario.email}",
+                                    "puesto":"${usuario.puesto}",
+                                    "area":"${usuario.area}"
                                 }`;
                                 lista +=
                                     "<button type='button' class='px-2 py-1 text-muted list-group-item list-group-item-action' onClick='seleccionarUsuario(" +
@@ -512,9 +530,9 @@
                             sugeridos.innerHTML = lista;
                             $("#participantes_search").css("background", "#FFF");
                         }
+                }
                     }
                 });
-
             });
 
             document.getElementById('btn-suscribir-participante').addEventListener('click', function(e) {

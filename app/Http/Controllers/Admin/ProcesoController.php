@@ -31,7 +31,7 @@ class ProcesoController extends Controller
     public function index(Request $request)
     {
         abort_if(Gate::denies('procesos_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $query = Proceso::getAll();
+        $query = Proceso::with('macroproceso')->get();
 
         // dd($query);
         // if ($request->ajax()) {
@@ -140,14 +140,21 @@ class ProcesoController extends Controller
         return redirect()->route('admin.procesos.index');
     }
 
-    public function destroy($proceso)
+    public function destroy($id)
     {
-        abort_if(Gate::denies('procesos_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $proceso = Proceso::find($proceso);
-        $proceso->delete();
-        Alert::success('éxito', 'Información eliminada con éxito');
+        $proceso = Proceso::find($id);
 
-        return response()->json(['success' => true]);
+        if (! $proceso) {
+            return response()->json(['success' => false, 'message' => 'El proceso no existe.']);
+        }
+
+        try {
+            $proceso->delete();
+
+            return response()->json(['success' => true, 'message' => 'El proceso ha sido eliminado.']);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'No se pudo eliminar el proceso debido a relaciones existentes.']);
+        }
     }
 
     public function mapaProcesos()
@@ -157,7 +164,7 @@ class ProcesoController extends Controller
             $q->with('procesosWithDocumento');
         }])->orderBy('id')->get();
 
-        $macros_mapa = Macroproceso::get();
+        $macros_mapa = Macroproceso::getAll();
         $procesos_mapa = Proceso::getAll();
         $organizacion = Organizacion::getFirst();
         $exist_no_publicado = Proceso::select('estatus')->where('estatus', Proceso::NO_ACTIVO)->exists();

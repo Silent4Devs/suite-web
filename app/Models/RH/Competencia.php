@@ -32,8 +32,15 @@ class Competencia extends Model implements Auditable
     //Redis methods
     public static function getAll()
     {
-        return Cache::remember('Competencias_all', 3600 * 24, function () {
+        return Cache::remember('Competencias:Competencias_all', 3600 * 7, function () {
             return self::get();
+        });
+    }
+
+    public static function getAllWithtipo()
+    {
+        return Cache::remember('Competencias:Competencias_with_tipo', 3600 * 7, function () {
+            return self::with('tipo')->get();
         });
     }
 

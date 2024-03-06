@@ -82,7 +82,7 @@ class MaterialIsoVeinticienteController extends Controller
     {
         abort_if(Gate::denies('material_iso_veinticiente_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $arearesponsables = Area::all()->pluck('area', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $arearesponsables = Area::getAllPluck();
 
         return view('admin.materialIsoVeinticientes.create', compact('arearesponsables'));
     }
@@ -110,7 +110,7 @@ class MaterialIsoVeinticienteController extends Controller
     {
         abort_if(Gate::denies('material_iso_veinticiente_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $arearesponsables = Area::all()->pluck('area', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $arearesponsables = Area::getAllPluck();
 
         $materialIsoVeinticiente->load('arearesponsable', 'team');
 

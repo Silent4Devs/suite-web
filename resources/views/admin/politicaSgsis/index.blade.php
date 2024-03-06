@@ -293,17 +293,17 @@
                                           $logotipo = $organizacion->logotipo;
                                           $empresa = $organizacion->empresa;
                                           @endphp
-                                          
-                                    
+
+
                                         <div class="col-3" style="border-left: 25px solid #2395AA">
                                             <img src="{{ asset($logotipo) }}" style="width:100%; max-width:100px; position: relative; top: 1rem;">
 
                                         </div>
-                                    
+
                                         <div class="col-5 p-2 mt-3">
                                             <br>
                                             <span class=""
-                                                style="color:black; position: relative; top: -1.5rem; right: 3rem;">
+                                                style="position: relative; top: -1.5rem; right: 3rem;">
                                                 {{ $empresa_actual }} <br>
                                                 RFC: {{ $rfc }} <br>
                                                 {{ $direccion }} <br>
@@ -316,13 +316,6 @@
                                             <br>
                                             <span class="textopdf"> <strong> Reporte Política del Sistema de
                                                     Gestión</strong></span>
-                                        </div>
-                                        <br>
-                                        <div class="col-12 " style="background:#EEFCFF; border-right: 25px solid #2395AA;">
-                                            <div style="position: relative; right: 1rem;  margin: 5%"><br>
-                                                <h6 style="color:#306BA9;">Nombre de la política</h6>
-                                                <p>Política del Sistema de Gestión</p>
-                                            </div>
                                         </div>
                                     </div>
                                     @foreach ($politicaSgsis as $politica)

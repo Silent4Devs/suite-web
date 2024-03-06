@@ -22,6 +22,7 @@ use Carbon\Carbon;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
@@ -108,11 +109,22 @@ class RecursosController extends Controller
     public function create()
     {
         abort_if(Gate::denies('capacitaciones_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $categorias = CategoriaCapacitacion::get();
+
+        $categorias = CategoriaCapacitacion::getAll();
+
         $recurso = new Recurso;
-        $areas = Area::with('empleados')->get();
-        $grupos = GruposEvaluado::with('empleados')->get();
-        $empleados = Empleado::getaltaAll();
+
+        $areas = DB::table('areas')
+            ->leftJoin('empleados', 'areas.id', '=', 'empleados.area_id')
+            ->get();
+
+        $grupos = GruposEvaluado::with('empleados:id,name')->get();
+
+        $empleados = DB::table('empleados')
+            ->select('id', 'name')
+            ->orderBy('name')
+            ->where('estatus', 'alta')
+            ->get();
 
         return view('admin.recursos.create', compact('recurso', 'categorias', 'areas', 'grupos', 'empleados'));
     }
@@ -267,9 +279,9 @@ class RecursosController extends Controller
     public function edit(Recurso $recurso)
     {
         abort_if(Gate::denies('capacitaciones_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $categorias = CategoriaCapacitacion::get();
-        $areas = Area::with('empleados')->get();
-        $grupos = GruposEvaluado::with('empleados')->get();
+        $categorias = CategoriaCapacitacion::getAll();
+        $areas = Area::getWithEmpleados();
+        $grupos = GruposEvaluado::getAllWithEmpleado();
         $empleados = Empleado::getaltaAll();
 
         return view('admin.recursos.edit', compact('recurso', 'categorias', 'areas', 'grupos', 'empleados'));

@@ -21,7 +21,7 @@ class EV360CompetenciasController extends Controller
     {
         // abort_if(Gate::denies('capital_humano_competencias_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
-            $competencias = Competencia::with('tipo')->get();
+            $competencias = Competencia::getAllWithtipo();
 
             return datatables()->of($competencias)->toJson();
         }
@@ -58,7 +58,10 @@ class EV360CompetenciasController extends Controller
             $img_intervention = Image::make($request->file('foto'));
             $img_intervention->resize(720, null, function ($constraint) {
                 $constraint->aspectRatio();
-            })->save($route);
+            });
+
+            $img_intervention->encode('png', 70)->save($route);
+
             $competencia->update([
                 'imagen' => $imagen,
             ]);
@@ -120,7 +123,10 @@ class EV360CompetenciasController extends Controller
             $img_intervention = Image::make($request->file('foto'));
             $img_intervention->resize(1080, null, function ($constraint) {
                 $constraint->aspectRatio();
-            })->save($route);
+            });
+
+            $img_intervention->encode('png', 70)->save($route);
+
             $competencia->update([
                 'imagen' => $nombre_imagen,
             ]);
@@ -193,11 +199,12 @@ class EV360CompetenciasController extends Controller
             $sin_contestar = EvaluacionRepuesta::where('evaluacion_id', $request->evaluacion_id)
                 ->where('evaluado_id', $request->evaluado_id)
                 ->where('evaluador_id', $request->evaluador_id)
-                ->where('calificacion', '=', 0)->count();
+                ->where('calificacion', null)
+                ->count();
             $contestadas = EvaluacionRepuesta::where('evaluacion_id', $request->evaluacion_id)
                 ->where('evaluado_id', $request->evaluado_id)
                 ->where('evaluador_id', $request->evaluador_id)
-                ->where('calificacion', '>', 0)->count();
+                ->where('calificacion', '>=', 0)->count();
             $progreso = $progreso = floatval(number_format((($contestadas / $total_preguntas) * 100)));
 
             if ($repuesta_u) {

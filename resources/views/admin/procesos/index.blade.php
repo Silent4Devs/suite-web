@@ -84,7 +84,7 @@
                     if (result.value) {
                         $.ajax({
                             url: url,
-                            type: 'DELETE',
+                            type: 'POST',
                             data: {
                                 _token: '{{ csrf_token() }}'
                             },
@@ -94,8 +94,8 @@
                                         'Eliminado!',
                                         'El proceso ha sido eliminado.',
                                         'success'
-                                    ).then().then(() => {
-                                        table.ajax.reload();
+                                    ).then(() => {
+                                        location.reload(); // Recarga la página después de eliminar
                                     });
                                 }
                             }

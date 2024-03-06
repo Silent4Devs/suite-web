@@ -16,6 +16,7 @@ use App\Models\ContractManager\Sucursal as ContractManagerSucursal;
 use App\Models\Organizacion;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Redirect;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -133,6 +134,13 @@ class RequisicionesEditComponent extends Component
         $this->habilitar_firma = false;
 
         $this->editar_requisicion = ContractManagerRequsicion::find($editrequisicion);
+
+        if (strlen($data['descripcion']) > 255) {
+
+            $mensajeError = 'Intentelo de nuevo, Ingrese  todos los campos';
+
+            return Redirect::back()->with('mensajeError', $mensajeError);
+        }
 
         $this->editar_requisicion->update([
             'fecha' => $data['fecha'],

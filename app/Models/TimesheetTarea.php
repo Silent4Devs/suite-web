@@ -29,14 +29,14 @@ class TimesheetTarea extends Model implements Auditable
     //Redis methods
     public static function getAll()
     {
-        return Cache::remember('timesheettarea_all', 3600 * 24, function () {
+        return Cache::remember('TimesheetTarea:timesheettarea_all', 3600 * 4, function () {
             return self::orderByDesc('id')->get();
         });
     }
 
     public static function getIdTareasAll()
     {
-        return Cache::remember('TimesheetTarea:timesheettarea_all', 3600 * 24, function () {
+        return Cache::remember('TimesheetTarea:getIdTareasAll', 3600 * 4, function () {
             return self::select('id', 'tarea', 'proyecto_id', 'area_id', 'todos')->orderByDesc('id')->get();
         });
     }

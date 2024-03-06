@@ -27,6 +27,7 @@ use Carbon\Carbon;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\Response;
@@ -91,18 +92,18 @@ class ContratosController extends AppBaseController
     {
         $validatedData = $request->validate([
             'no_contrato' => 'required_unless:identificador_privado,1',
-            'nombre_servicio' => 'required',
+            'nombre_servicio' => 'required|max:500',
             'tipo_contrato' => 'required',
             'proveedor_id' => 'required',
             'area_id' => 'required',
-            'objetivo' => 'required',
-            'estatus' => 'required',
+            'objetivo' => 'required|max:500',
+            'estatus' => 'required|max:255',
             'cargo_administrador' => 'max:250',
             'area_administrador' => 'max:250',
             'puesto' => 'max:250',
             'area' => 'max:250',
             'file_contrato' => 'required',
-            'fase' => 'required',
+            'fase' => 'required|max:255',
             'vigencia_contrato' => 'required',
             'fecha_inicio' => 'required',
             'fecha_fin' => 'required|after:fecha_inicio',
@@ -195,26 +196,12 @@ class ContratosController extends AppBaseController
             $num_contrato = $no_contrato_sin_slashes;
         }
 
-        // forma de contrato
-        // $folderPath = storage_path('app/firmas/');
+        if (strlen($num_contrato) > 255) {
+            $mensajeError = 'Intentelo de nuevo, Ingrese  todos los campos con caracteres menores a 255';
 
-        // $image_parts = explode(";base64,", $request->signed);
+            return Redirect::back()->with('mensajeError', $mensajeError);
+        }
 
-        // $image_type_aux = explode("image/", $image_parts[0]);
-
-        // $image_type = $image_type_aux[1];
-
-        // $image_base64 = base64_decode($image_parts[1]);
-
-        // $firma = uniqid() . '.'.$image_type;
-
-        // $file = $folderPath . $firma;
-
-        // file_put_contents($file, $image_base64);
-
-        // dd($firma, $file);
-
-        // dd($this->contratoRepository);
         $contrato = $this->contratoRepository->create([
             'tipo_contrato' => $request->tipo_contrato,
             'identificador_privado' => $request->identificador_privado,
@@ -369,10 +356,8 @@ class ContratosController extends AppBaseController
             $formatoFecha = new FormatearFecha;
             $organizacion = Organizacion::getFirst();
             $areas = Area::getIdNameAll();
-            if (empty($contrato)) {
-                // notify()->error('¡El registro no fue encontrado!');
-
-                return redirect(route('contract_manager.contratos-katbol.index'));
+            if (! $contrato) {
+                return redirect()->route('contract_manager.contratos-katbol.index')->with('error', 'Ocurrio un error.');
             }
             $proveedor_id = $contrato->proveedor_id;
             $contratos = Contrato::with('ampliaciones')->find($id);
@@ -388,7 +373,7 @@ class ContratosController extends AppBaseController
             //dd($descargar_archivo);
             return view('contract_manager.contratos-katbol.show', compact('proveedor_id', 'dolares', 'areas'))->with('contrato', $contrato)->with('proveedores', $proveedores)->with('contratos', $contratos)->with('ids', $id)->with('descargar_archivo', $descargar_archivo)->with('convenios', $convenios)->with('organizacion', $organizacion);
         } catch (\Exception $e) {
-            return redirect()->route('contract_manager.contratos-katbol.index')->with('error', $e->getMessage());
+            return redirect()->route('contract_manager.contratos-katbol.index')->with('error', 'Ocurrio un error.');
         }
     }
 
@@ -406,10 +391,8 @@ class ContratosController extends AppBaseController
             $areas = Area::getAll();
             // dd($areas->count());
             $formatoFecha = new FormatearFecha;
-            if (empty($contrato)) {
-                // toastr()->error('Contratos not found.');
-
-                return redirect(route('contract_manager.contratos-katbol.index'));
+            if (! $contrato) {
+                return redirect()->route('contract_manager.contratos-katbol.index')->with('error', 'Ocurrio un error.');
             }
             $proveedor_id = $contrato->proveedor_id;
             $contratos = Contrato::with('ampliaciones', 'dolares')->find($id);
@@ -453,18 +436,18 @@ class ContratosController extends AppBaseController
         // dd($request->signed);
         $validatedData = $request->validate([
             'no_contrato' => ['required', new NumeroContrato($id)],
-            'nombre_servicio' => 'required',
+            'nombre_servicio' => 'required|max:500',
             'tipo_contrato' => 'required',
             'proveedor_id' => 'required',
-            'objetivo' => 'required',
-            'estatus' => 'required',
+            'objetivo' => 'required|max:500',
+            'estatus' => 'required|max:255',
             //  'file_contrato' => 'required',
             'cargo_administrador' => 'max:250',
             'area_administrador' => 'max:250',
             'puesto' => 'max:250',
             'area' => 'max:250',
             'fase' => 'required',
-            'vigencia_contrato' => 'required',
+            'vigencia_contrato' => 'required|max:255',
             'fecha_inicio' => 'required',
             'fecha_fin' => 'required|after:fecha_inicio',
             'area_id' => 'required',
@@ -538,10 +521,14 @@ class ContratosController extends AppBaseController
 
         $contrato = $this->contratoRepository->find($id);
 
-        if (empty($contrato)) {
-            // notify()->error('¡Contrato not found!');
+        if (! $contrato) {
+            return redirect()->route('contract_manager.contratos-katbol.index')->with('error', 'Ocurrio un error.');
+        }
 
-            return redirect(route('contract_manager.contratos-katbol.index'));
+        if (strlen($request->no_contrato) > 255) {
+            $mensajeError = 'Intentelo de nuevo, Ingrese  todos los campos con caracteres menores a 255';
+
+            return Redirect::back()->with('mensajeError', $mensajeError);
         }
 
         $formatoFecha = new FormatearFecha;

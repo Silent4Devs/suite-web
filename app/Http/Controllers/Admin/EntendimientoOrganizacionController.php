@@ -130,7 +130,8 @@ class EntendimientoOrganizacionController extends Controller
         $foda->update([
             'estatus' => 'Borrador',
         ]);
-        if (!is_null($request->participantes)) {
+
+        if (! is_null($request->participantes)) {
             $this->vincularParticipantes($request->participantes, $foda);
         }
 
@@ -188,7 +189,7 @@ class EntendimientoOrganizacionController extends Controller
         ]);
 
         $entendimientoOrganizacion->update($request->all());
-        if (!is_null($request->participantes)) {
+        if (! is_null($request->participantes)) {
             $this->vincularParticipantes($request->participantes, $entendimientoOrganizacion);
         }
 
@@ -298,7 +299,7 @@ class EntendimientoOrganizacionController extends Controller
     public function cardFoda()
     {
         abort_if(Gate::denies('analisis_foda_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $query = EntendimientoOrganizacion::with('empleado', 'participantes')->orderByDesc('id')->get();
+        $query = EntendimientoOrganizacion::getAllWithEmpleadoParticipantes();
 
         return view('admin.entendimientoOrganizacions.cardFoda', compact('query'));
     }
@@ -326,11 +327,11 @@ class EntendimientoOrganizacionController extends Controller
         abort_if(Gate::denies('analisis_foda_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $modulo = ListaDistribucion::with('participantes.empleado')->where('modelo', '=', $this->modelo)->first();
-        $query = EntendimientoOrganizacion::with('empleado', 'participantes')->orderByDesc('id')->get();
+        $query = EntendimientoOrganizacion::getAllWithEmpleadoParticipantes();
 
         $listavacia = 'cumple';
 
-        if (!isset($modulo)) {
+        if (! isset($modulo)) {
             $listavacia = 'vacia';
         } elseif ($modulo->participantes->isEmpty()) {
             $listavacia = 'vacia';
@@ -616,7 +617,7 @@ class EntendimientoOrganizacionController extends Controller
                 'estatus' => 'Aprobado',
             ]);
 
-            $this->correosAprobacion($proceso->id, $foda);
+            $this->correosAprobacion($proceso, $foda);
         } else {
             $this->siguienteCorreo($proceso, $foda);
         }

@@ -6,9 +6,10 @@
     @endphp
     {{ Breadcrumbs::render('timesheet-create') }}
 
+    {{-- @include('admin.timesheet.complementos.cards') --}}
+    @include('admin.timesheet.complementos.admin-aprob')
+    {{-- @include('admin.timesheet.complementos.blue-card-header') --}}
 
-
-    @include('admin.timesheet.complementos.cards')
     <h5 class="col-12 titulo_general_funcion">Timesheet: <font style="font-weight:lighter;">
             @if (isset($timesheet->semana))
                 {!! $timesheet->semana !!} |
@@ -170,7 +171,7 @@
                                 </tr>
                             @endforeach
                             <tr>
-                                <td colspan="3">Toral horas facturables</td>
+                                <td colspan="3">Total horas facturables</td>
                                 <td><label id="suma_dia_lunes"></label></td>
                                 <td><label id="suma_dia_martes"></label></td>
                                 <td><label id="suma_dia_miercoles"></label></td>
@@ -182,7 +183,7 @@
                                 <td><label id="total_horas_filas"></label></td>
                             </tr>
                             <tr>
-                                <td colspan="3">Toral horas no facturables</td>
+                                <td colspan="3">Total horas no facturables</td>
                                 <td><label id="suma_dia_lunes_no_fact"></label></td>
                                 <td><label id="suma_dia_martes_no_fact"></label></td>
                                 <td><label id="suma_dia_miercoles_no_fact"></label></td>

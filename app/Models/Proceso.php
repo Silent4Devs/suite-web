@@ -60,23 +60,26 @@ class Proceso extends Model implements Auditable
 
     public function getColorAttribute()
     {
-        if (intval($this->proceso_octave_riesgo) <= 5) {
-            return '#0C7000';
-        } elseif (intval($this->proceso_octave_riesgo) <= 20) {
-            return '#2BE015';
-        } elseif (intval($this->proceso_octave_riesgo) <= 50) {
-            return '#FFFF00';
-        } elseif (intval($this->proceso_octave_riesgo) <= 80) {
-            return '#FF7000';
-        } else {
-            return '#FF0000';
+        $riesgo = intval($this->proceso_octave_riesgo);
+
+        switch (true) {
+            case $riesgo <= 5:
+                return '#0C7000';
+            case $riesgo <= 20:
+                return '#2BE015';
+            case $riesgo <= 50:
+                return '#FFFF00';
+            case $riesgo <= 80:
+                return '#FF7000';
+            default:
+                return '#FF0000';
         }
     }
 
     //Redis methods
     public static function getAll($columns = ['id', 'codigo', 'nombre', 'id_macroproceso', 'descripcion'])
     {
-        return Cache::remember('procesos_all', 3600 * 24, function () use ($columns) {
+        return Cache::remember('Procesos:procesos_all', 3600 * 7, function () use ($columns) {
             return self::select($columns)->with('macroproceso')->get();
         });
     }

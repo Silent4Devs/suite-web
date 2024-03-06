@@ -81,29 +81,47 @@ class EV360ObjetivosController extends Controller
 
     public function createByEmpleado(Request $request, $empleado)
     {
-        abort_if(Gate::denies('objetivos_estrategicos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $objetivo = new Objetivo;
-        // dd(intval($empleado));
-        $empleado = Empleado::select('id', 'name', 'foto', 'area_id', 'puesto_id', 'supervisor_id')->find(intval($empleado));
-        // dd($empleado);
-        $empleado->load(['objetivos' => function ($q) {
-            $q->with(['objetivo' => function ($query) {
-                $query->with(['tipo', 'metrica']);
-            }]);
-        }]);
-        if ($request->ajax()) {
-            $objetivos = $empleado->objetivos ? $empleado->objetivos : collect();
+        $user = User::getCurrentUser();
+        if ($user->empleado->id == $empleado) {
+            $objetivo = new Objetivo;
 
-            return datatables()->of($objetivos)->toJson();
+            $empleado = Empleado::getAllDataObjetivosEmpleado()
+                ->find(intval($empleado));
+
+            if ($request->ajax()) {
+                $objetivos = $empleado->objetivos ? $empleado->objetivos : collect();
+
+                return datatables()->of($objetivos)->toJson();
+            }
+            $tipo_seleccionado = null;
+            $metrica_seleccionada = null;
+
+            $empleados = Empleado::getAltaDataColumns();
+
+            $permiso = $user->can('aprobacion_objetivos_estrategicos');
+
+            return view('admin.recursos-humanos.evaluacion-360.objetivos.create-by-empleado', compact('objetivo', 'tipo_seleccionado', 'metrica_seleccionada', 'empleado', 'empleados', 'permiso'));
+        } else {
+            abort_if(Gate::denies('objetivos_estrategicos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            $objetivo = new Objetivo;
+
+            $empleado = Empleado::getAllDataObjetivosEmpleado()
+                ->find(intval($empleado));
+
+            if ($request->ajax()) {
+                $objetivos = $empleado->objetivos ? $empleado->objetivos : collect();
+
+                return datatables()->of($objetivos)->toJson();
+            }
+            $tipo_seleccionado = null;
+            $metrica_seleccionada = null;
+
+            $empleados = Empleado::getAltaDataColumns();
+            $permiso = $user->can('aprobacion_objetivos_estrategicos');
+
+            // dd($permiso);
+            return view('admin.recursos-humanos.evaluacion-360.objetivos.create-by-empleado', compact('objetivo', 'tipo_seleccionado', 'metrica_seleccionada', 'empleado', 'empleados', 'permiso'));
         }
-        $tipo_seleccionado = null;
-        $metrica_seleccionada = null;
-        // if ($request->ajax()) {
-        // }
-
-        $empleados = Empleado::getAltaDataColumns();
-
-        return view('admin.recursos-humanos.evaluacion-360.objetivos.create-by-empleado', compact('objetivo', 'tipo_seleccionado', 'metrica_seleccionada', 'empleado', 'empleados'));
     }
 
     public function storeByEmpleado(Request $request, $empleado)
@@ -121,7 +139,7 @@ class EV360ObjetivosController extends Controller
 
         if ($request->ajax()) {
             $usuario = User::getCurrentUser();
-            if ($empleado->id == $usuario->empleado->id) {
+            if ($empleado->id == $usuario->empleado->id || $usuario->empleado->id != $empleado->supervisor->id) {
                 //add esta_aprobado in $request
                 $request->merge(['esta_aprobado' => Objetivo::SIN_DEFINIR]);
             }
@@ -274,14 +292,13 @@ class EV360ObjetivosController extends Controller
         if (isset($ev->id)) {
             $objres = ObjetivoRespuesta::where('objetivo_id', $objetivo->objetivo_id)
                 ->where('evaluado_id', $objetivo->empleado_id)
-                ->where('evaluacion_id', '=', $ev->id)->first();
+                ->where('evaluacion_id', '=', $ev->id)->delete();
             // $objres->evaluacionActiva(1, 2);
-            // dd($ev->id, $objres, $objetivo->objetivo_id);
-            //Borrar si existe
-            if ($objres != null) {
-                // dd('Entra a borrar');
-                $objres->delete();
-            }
+            // //Borrar si existe
+            // if ($objres != null) {
+            //     // dd('Entra a borrar');
+            //     $objres->delete();
+            // }
             // dd('no borra', $objres, $objetivo, $ev);
         }
         // dd('no entra');

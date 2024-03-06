@@ -81,7 +81,7 @@
     <div class="row" style="margin-left: 10px;margin-right: 10px;">
         <div class="distancia form-group col-md-12">
             <label for="descripcion" class="txt-tamaño">Descripción<font class="asterisco">*</font></label><br>
-            <textarea wire:model.debounce.800ms="descripcion" id="textarea1" style="padding:15px;" class="form-control" required></textarea>
+            <textarea wire:model.debounce.800ms="descripcion" id="textarea1" maxlength="550" style="padding:15px;" class="form-control" required></textarea>
             @error('descripcion')
                 <span class="red-text">{{ $message }}</span>
             @enderror

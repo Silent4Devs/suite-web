@@ -126,6 +126,11 @@ class ReportesProyemp extends Component
                 }
                 // Otras condiciones que ya tenías
             })->where('timesheet_proyectos.estatus', '!=', 'papelera')
+            ->where('timesheet_proyectos.estatus', '!=', 'rechazado')
+            ->where('timesheet_proyectos.estatus', '!=', 'Rechazada')
+            ->where('timesheet.estatus', '!=', 'rechazado')
+            ->where('timesheet.estatus', '!=', 'papelera')
+            ->where('timesheet.estatus', '!=', 'Rechazada')
             ->orderByDesc('fecha_dia');
 
         $this->totalRegistrosMostrando = $query->count();

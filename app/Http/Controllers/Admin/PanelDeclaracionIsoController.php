@@ -19,7 +19,7 @@ class PanelDeclaracionIsoController extends Controller
 
     public function index(Request $request)
     {
-        $empleados = Empleado::select('id', 'name', 'foto', 'genero')->get();
+        $empleados = Empleado::getAltaEmpleados();
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
@@ -71,7 +71,7 @@ class PanelDeclaracionIsoController extends Controller
 
     public function create()
     {
-        $empleados = Empleado::alta()->select('id', 'name', 'genero', 'foto')->get();
+        $empleados = Empleado::getAltaEmpleados();
         // $controles = DeclaracionAplicabilidadConcentradoIso::OrderBy('id')->get();
 
         return view('admin.panelDeclaracion2022.create', compact('empleados', 'controles'));

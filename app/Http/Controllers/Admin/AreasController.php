@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use Maatwebsite\Excel\Facades\Excel;
+use PDF;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -109,7 +110,7 @@ class AreasController extends Controller
             $validateReporta = 'required|exists:areas,id';
         }
         $request->validate([
-            'area' => 'required|string',
+            'area' => 'required|string|max:255',
             'id_reporta' => $validateReporta,
         ], [
             'id_reporta.required' => 'El área a la que reporta es requerido',
@@ -131,11 +132,15 @@ class AreasController extends Controller
             });
 
             $image->save($route);
-        }
 
-        $area->update([
-            'foto_area' => $new_name_image,
-        ]);
+            $area->update([
+                'foto_area' => $new_name_image,
+            ]);
+        } else {
+            $area->update([
+                'foto_area' => null,
+            ]);
+        }
 
         return redirect()->route('admin.areas.index')->with('success', 'Guardado con éxito');
     }
@@ -169,7 +174,7 @@ class AreasController extends Controller
         }
 
         $request->validate([
-            'area' => 'required|string',
+            'area' => 'required|string|max:255',
             'id_reporta' => $validateReporta,
         ], [
             'id_reporta.required' => 'El área a la que reporta es requerido',
@@ -196,6 +201,10 @@ class AreasController extends Controller
             });
 
             $image->save($route);
+        } else {
+            $area->update([
+                'foto_area' => null,
+            ]);
         }
 
         $area->update([
@@ -204,7 +213,7 @@ class AreasController extends Controller
             'id_reporta' => $request->id_reporta,
             'descripcion' => $request->descripcion,
             'empleados_id' => $request->empleados_id,
-            'foto_area' => $new_name_image,
+            'foto_area' => $new_name_image ?? null,
 
         ]);
 
@@ -277,5 +286,14 @@ class AreasController extends Controller
         // abort_if(AccessGate::denies('configuracion_area_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return Excel::download(new AreasExport, 'areas.csv');
+    }
+
+    public function pdf()
+    {
+        $areas = Area::get();
+        $pdf = PDF::loadView('areas', compact('areas'));
+        $pdf->setPaper('A4', 'portrait');
+
+        return $pdf->download('areas.pdf');
     }
 }

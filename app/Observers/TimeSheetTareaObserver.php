@@ -59,6 +59,7 @@ class TimeSheetTareaObserver
 
     private function forgetCache()
     {
-        Cache::forget('timesheettarea_all');
+        Cache::forget('TimesheetTarea:timesheettarea_all');
+        Cache::forget('TimesheetTarea:getIdTareasAll');
     }
 }
