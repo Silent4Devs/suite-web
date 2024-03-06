@@ -25,8 +25,9 @@
     <div class="row">
         <div class="col-12">
             <div class="form-group anima-focus">
-                <input type="text" class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" id="nombre"
-                aria-describedby="nombreHelp" name="nombre" value="{{ old('nombre', $objetivo->nombre) }}" placeholder="">
+                <input type="text" class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}"
+                    id="nombre" aria-describedby="nombreHelp" name="nombre"
+                    value="{{ old('nombre', $objetivo->nombre) }}" placeholder="">
                 <label for="nombre">
                     Objetivo Estratégico
                 </label>
@@ -71,9 +72,9 @@
                 </div>
                 @if (!$editar)
                     <div class="p-0 col" style="margin-top: -26px;height: 28px;margin-left: -10px;">
-                        <button id="btnAgregarTipo" class="text-white btn btn-sm" style="background:#3eb2ad;height: 32px;"
-                            data-toggle="modal" data-target="#tipoObjetivoModal" title="Agregar Tipo"><i
-                                class="fas fa-plus"></i></button>
+                        <button id="btnAgregarTipo" class="text-white btn btn-sm"
+                            style="background:#3eb2ad;height: 32px;" data-toggle="modal"
+                            data-target="#tipoObjetivoModal" title="Agregar Tipo"><i class="fas fa-plus"></i></button>
                         {{-- <button type="button" class="text-white btn btn-sm" style="background:#3eb2ad;height: 32px;"><i class="fas fa-edit"></i></button> --}}
                         {{-- <a href="{{ route('admin.glosarios.edit',$perspectiva->id )}}"><i class="fas fa-edit"></i></a> --}}
                         <a href="{{ route('admin.Perspectiva.index') }}" class="text-white btn btn-sm"
@@ -105,7 +106,7 @@
                 Meta a alcanzar
             </label>
             <input type="number" class="form-control {{ $errors->has('meta') ? 'is-invalid' : '' }}" id="meta"
-            aria-describedby="metaHelp" name="meta" value="{{ old('meta', $objetivo->meta) }}" placeholder="">
+                aria-describedby="metaHelp" name="meta" value="{{ old('meta', $objetivo->meta) }}" placeholder="">
             <small id="metaHelp" class="form-text text-muted">Ingresa la Meta del objetivo estratégico </small>
             @if ($errors->has('meta'))
                 <div class="invalid-feedback">
@@ -189,7 +190,8 @@
                 </div>
             </div>
             <div style="text-align: right">
-                <button class="btn btn-success" id="copiarObjetivos"><i class="fas fa-copy mr-2"></i>Importar Objetivos</button>
+                <button class="btn btn-success" id="copiarObjetivos"><i class="fas fa-copy mr-2"></i>Importar
+                    Objetivos</button>
             </div>
             <table class="table table-bordered w-100 tblObjetivos">
                 <thead class="thead-dark">
@@ -226,7 +228,8 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header" style="background: #345183;color: white;">
-                            <h5 class="modal-title" id="modalCopiarObjetivosLabel"><i class="mr-2 fas fa-copy"></i>Copiar
+                            <h5 class="modal-title" id="modalCopiarObjetivosLabel"><i
+                                    class="mr-2 fas fa-copy"></i>Copiar
                                 Objetivos</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
