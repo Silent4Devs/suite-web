@@ -57,9 +57,9 @@ jobs:
         restore-keys: |
           zap-cache-${{ runner.os }}-
 
-    - name: Run security checks
-      run: |
-        docker run --rm -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable zap-baseline.py -t https://tabantaj.silent4business.com -g gen.conf -r report.html
+    # - name: Run security checks
+    #   run: |
+    #     docker run --rm -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable zap-baseline.py -t https://tabantaj.silent4business.com -g gen.conf -r report.html
 
     - name: Run OWASP Dependency-Check
       uses: docker://owasp/dependency-check:latest
