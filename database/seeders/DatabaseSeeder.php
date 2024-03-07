@@ -117,7 +117,8 @@ class DatabaseSeeder extends Seeder
                 // AdminTemplateAnalisisBrechasIso::class,
 
                 //Lista Informativa
-                ListaInformativaSeeder::class,
+                // ListaInformativaSeeder::class,
+                PermisosCargaObjetivosSeeder::class,
             ]
         );
     }

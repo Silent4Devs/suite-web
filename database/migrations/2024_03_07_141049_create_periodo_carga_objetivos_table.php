@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('permisos_carga_objetivos', function (Blueprint $table) {
+        Schema::create('periodo_carga_objetivos', function (Blueprint $table) {
             $table->id();
-            $table->text('perfil');
-            $table->boolean('permisos_asignacion')->default(false);
-            $table->boolean('permiso_objetivos')->default(false);
-            $table->boolean('permiso_escala')->default(false);
+            $table->date('fecha_inicio');
+            $table->date('fecha_fin');
+            $table->boolean('habilitado');
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('permisos_carga_objetivos');
+        Schema::dropIfExists('periodo_carga_objetivos');
     }
 };

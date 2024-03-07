@@ -32,7 +32,7 @@
                     Define las escalas de medición y asigna su Valor y Nombre
                 </p>
                 <div class="form-row">
-                    <div class="col-4">
+                    <div class="col-1">
                         <div class="anima-focus mb-3 ">
                             <input type="number" id="valor_estatus_1" name="valor_estatus_1"
                                 wire:model.defer="valor_estatus_1" class="form-control" placeholder=""
@@ -40,23 +40,26 @@
                             <label for="valor_estatus_1">Valor<sup>*</sup></label>
                         </div>
                     </div>
-                    <div class="col-6">
+                    <div class="col-3">
                         <div class="anima-focus mb-3 ">
                             <input type="text" id="estatus_1" name="estatus_1" wire:model.defer="estatus_1"
                                 class="form-control" placeholder="" maxlength="120" required>
                             <label for="estatus_1">Nombre de la escala*<sup>*</sup></label>
                         </div>
                     </div>
-                    <div class="col-2 color-picker">
-                        <input type="color" id="color_estatus_1" name="color_estatus_1"
-                            wire:model.defer="color_estatus_1" class="color-input form-control"
-                            title="Seleccione un color">
+                    <div class="col-1 color-picker">
+                        <div class="anima-focus">
+                            <input type="color" id="color_estatus_1" name="color_estatus_1"
+                                wire:model.defer="color_estatus_1" class="color-input form-control"
+                                title="Seleccione un color" placeholder="">
+                            <label for="color_estatus_1">Color*</label>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="col-12">
                 <div class="form-row">
-                    <div class="col-4">
+                    <div class="col-1">
                         <div class="anima-focus mb-3 ">
                             <input type="number" id="valor_estatus_2" name="valor_estatus_2"
                                 wire:model.defer="valor_estatus_2" class="form-control" placeholder=""
@@ -64,32 +67,35 @@
                             <label for="valor_estatus_2">Valor <sup>*</sup></label>
                         </div>
                     </div>
-                    <div class="col-6">
+                    <div class="col-3">
                         <div class="anima-focus mb-3 ">
                             <input type="text" id="estatus_2" name="estatus_2" wire:model.defer="estatus_2"
                                 class="form-control" placeholder="" maxlength="120" required>
                             <label for="estatus_2">Nombre de la escala* <sup>*</sup></label>
                         </div>
                     </div>
-                    <div class="col-2 color-picker">
-                        <input type="color" id="color_estatus_2" name="color_estatus_2"
-                            wire:model.defer="color_estatus_2" class="color-input form-control"
-                            title="Seleccione un color">
+                    <div class="col-1 color-picker">
+                        <div class="anima-focus">
+                            <input type="color" id="color_estatus_2" name="color_estatus_2"
+                                wire:model.defer="color_estatus_2" class="color-input form-control"
+                                title="Seleccione un color" placeholder="">
+                            <label for="color_estatus_2">Color*</label>
+                        </div>
                     </div>
                 </div>
             </div>
             @foreach ($parametros as $key => $p)
                 <div class="col-12">
                     <div class="form-row">
-                        <div class="col-4">
+                        <div class="col-1">
                             <div class="anima-focus mb-3 ">
                                 <input type="number" id="valor_estatus_arreglo_{{ $key }}"
-                                    name="valor_estatus_arreglo_{{ $key }}" class="form-control" placeholder=""
-                                    min="{{ $minimo }}" max="{{ $maximo }}">
+                                    name="valor_estatus_arreglo_{{ $key }}" class="form-control"
+                                    placeholder="" min="{{ $minimo }}" max="{{ $maximo }}">
                                 <label for="valor_estatus_arreglo_{{ $key }}">Valor</label>
                             </div>
                         </div>
-                        <div class="col-5">
+                        <div class="col-3">
                             <div class="anima-focus mb-3 ">
                                 <input type="text" id="estatus_arreglo_{{ $key }}"
                                     name="estatus_arreglo_{{ $key }}" class="form-control" placeholder=""
@@ -97,10 +103,13 @@
                                 <label for="estatus_arreglo_{{ $key }}">Nombre de la escala*</label>
                             </div>
                         </div>
-                        <div class="col-2 color-picker">
-                            <input type="color" id="color_estatus_arreglo_{{ $key }}"
-                                name="color_estatus_arreglo_{{ $key }}" class="color-input form-control"
-                                title="Seleccione un color">
+                        <div class="col-1 color-picker">
+                            <div class="anima-focus">
+                                <input type="color" id="color_estatus_arreglo_{{ $key }}"
+                                    name="color_estatus_arreglo_{{ $key }}" class="color-input form-control"
+                                    title="Seleccione un color" placeholder="">
+                                <label for="color_estatus_{{ $key }}">Color*</label>
+                            </div>
                         </div>
                         <div class="col-1">
                             {{-- Cada pregunta agregada cuenta con boton de eliminacion, el key indica cual posicion tiene
@@ -133,9 +142,9 @@
                 <div class="col-3">
                     <button class="btn btn-primary btn-block" type="submit">Generar Catalogo</button>
                 </div>
+            </div>
         </form>
     </div>
-
 </div>
 {{-- <div class="card card-body">
     <div class="info-first-config">
