@@ -6,9 +6,12 @@ password = "#S3cur3P4$$w0Rd!"
 
 @pytest.mark.usefixtures("browser")
 def test_capacitaciones(browser):
-    login_page = CapacitacionesPage(browser)
-    login_page.login(username, password)
-    login_page.open_menu()
-    login_page.go_to_capacitaciones()
-    login_page.mis_cursos()
+    capacitaciones_page = CapacitacionesPage(browser)
+    capacitaciones_page.login(username, password)
+    capacitaciones_page.open_menu()
+    capacitaciones_page.go_to_capacitaciones()
+    capacitaciones_page.mis_cursos()
+    #capacitaciones_page.course_1()
+    capacitaciones_page.catalogo_cursos()
+
 
