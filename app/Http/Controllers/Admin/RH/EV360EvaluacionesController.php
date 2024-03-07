@@ -1851,6 +1851,7 @@ class EV360EvaluacionesController extends Controller
     {
 
         abort_if(Gate::denies('seguimiento_evaluaciones_grafica'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $evaluacion = Evaluacion::with('evaluados:id,name,area_id,puesto_id,supervisor_id', 'rangos:id,descripcion')->find(intval($evaluacion));
 
         if (optional($evaluacion->rangos)->isNotEmpty()) {
