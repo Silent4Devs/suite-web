@@ -98,7 +98,7 @@ class RegistroVisitantes extends Component
 
         $this->empleados = DB::table('empleados')->select('id', 'name', 'foto')->get();
 
-        $this->areas = Area::orderBy('area')->get();
+        $this->areas = Area::getIdNameAll();
 
         return view('livewire.visitantes.registro-visitantes');
     }

@@ -39,7 +39,7 @@ class EV360EvaluacionesController extends Controller
     {
         abort_if(Gate::denies('seguimiento_evaluaciones_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // dd($this->obtenerCantidadMaximaDeObjetivos(20));
-        $areas = Area::getAll();
+        $areas = Area::select('id', 'area')->get();
         $empleados = Empleado::getaltaAll();
 
         if ($request->ajax()) {
@@ -331,7 +331,7 @@ class EV360EvaluacionesController extends Controller
                 // $total_preguntas = $preguntas_sql->count();
                 $total_preguntas = 0;
                 foreach ($preguntas_sql->get() as $competenciaE) {
-                    if (! is_null(Competencia::find($competenciaE->competencia_id))) {
+                    if (!is_null(Competencia::find($competenciaE->competencia_id))) {
                         $total_preguntas++;
                     }
                 }
@@ -389,7 +389,7 @@ class EV360EvaluacionesController extends Controller
                 $competencias_por_puesto_nivel_esperado = $evaluado->puestoRelacionado->competencias;
                 $competencias_evaluadas_en_esta_evaluacion = $preguntas->pluck('competencia_id')->toArray();
                 $competencias_por_puesto_nivel_esperado = $competencias_por_puesto_nivel_esperado->map(function ($competencia) use ($competencias_evaluadas_en_esta_evaluacion) {
-                    if (! is_null($competencia->competencia)) {
+                    if (!is_null($competencia->competencia)) {
                         if (in_array($competencia->competencia->id, $competencias_evaluadas_en_esta_evaluacion)) {
                             return $competencia;
                         }
@@ -744,18 +744,18 @@ class EV360EvaluacionesController extends Controller
     public function finalizarEvaluacion(Request $request, $evaluacion, $evaluado, $evaluador)
     {
         $evaluacion = Evaluacion::find(intval($evaluacion));
-        $existsFolderFirmasEvaluacion = Storage::exists('public/evaluaciones/firmas/'.preg_replace(['/\s+/i', '/-/i'], '_', $evaluacion->nombre));
-        if (! $existsFolderFirmasEvaluacion) {
-            Storage::makeDirectory('public/evaluaciones/firmas/'.preg_replace(['/\s+/i', '/-/i'], '_', $evaluacion->nombre));
+        $existsFolderFirmasEvaluacion = Storage::exists('public/evaluaciones/firmas/' . preg_replace(['/\s+/i', '/-/i'], '_', $evaluacion->nombre));
+        if (!$existsFolderFirmasEvaluacion) {
+            Storage::makeDirectory('public/evaluaciones/firmas/' . preg_replace(['/\s+/i', '/-/i'], '_', $evaluacion->nombre));
         }
 
         if (isset($request->firma_evaluado)) {
             if (preg_match('/^data:image\/(\w+);base64,/', $request->firma_evaluado)) {
                 $value = substr($request->firma_evaluado, strpos($request->firma_evaluado, ',') + 1);
                 $value = base64_decode($value);
-                $new_name_image = 'FirmaEvaluado'.$evaluacion->id.$evaluado.$evaluador.'.png';
+                $new_name_image = 'FirmaEvaluado' . $evaluacion->id . $evaluado . $evaluador . '.png';
                 $image = $new_name_image;
-                $route = 'public/evaluaciones/firmas/'.preg_replace(['/\s+/i', '/-/i'], '_', $evaluacion->nombre).'/'.$new_name_image;
+                $route = 'public/evaluaciones/firmas/' . preg_replace(['/\s+/i', '/-/i'], '_', $evaluacion->nombre) . '/' . $new_name_image;
                 Storage::put($route, $value);
                 $evaluacion_especifica = EvaluadoEvaluador::where('evaluado_id', $evaluado)
                     ->where('evaluador_id', $evaluador)
@@ -769,9 +769,9 @@ class EV360EvaluacionesController extends Controller
             if (preg_match('/^data:image\/(\w+);base64,/', $request->firma_evaluador)) {
                 $value = substr($request->firma_evaluador, strpos($request->firma_evaluador, ',') + 1);
                 $value = base64_decode($value);
-                $new_name_image = 'FirmaEvaluador'.$evaluacion->id.$evaluador.$evaluado.'.png';
+                $new_name_image = 'FirmaEvaluador' . $evaluacion->id . $evaluador . $evaluado . '.png';
                 $image = $new_name_image;
-                $route = 'public/evaluaciones/firmas/'.preg_replace(['/\s+/i', '/-/i'], '_', $evaluacion->nombre).'/'.$new_name_image;
+                $route = 'public/evaluaciones/firmas/' . preg_replace(['/\s+/i', '/-/i'], '_', $evaluacion->nombre) . '/' . $new_name_image;
                 Storage::put($route, $value);
                 $evaluacion_especifica = EvaluadoEvaluador::where('evaluado_id', $evaluado)
                     ->where('evaluador_id', $evaluador)
@@ -811,7 +811,7 @@ class EV360EvaluacionesController extends Controller
                 return response()->json(['error' => true]);
             }
         }
-        if ($evaluacion->include_competencias && ! $evaluacion->include_objetivos) {
+        if ($evaluacion->include_competencias && !$evaluacion->include_objetivos) {
             $progreso_competencias = $this->progresoCompetencias($evaluado, $evaluador, $evaluacion->id);
             if ($progreso_competencias == 100) {
                 $evaluacion_especifica = EvaluadoEvaluador::where('evaluado_id', $evaluado)
@@ -826,7 +826,7 @@ class EV360EvaluacionesController extends Controller
                 return response()->json(['error' => true]);
             }
         }
-        if (! $evaluacion->include_competencias && $evaluacion->include_objetivos) {
+        if (!$evaluacion->include_competencias && $evaluacion->include_objetivos) {
             $progreso_objetivos = $this->progresoObjetivos($evaluado, $evaluador, $evaluacion->id);
             $progreso_competencias = $this->progresoCompetencias($evaluado, $evaluador, $evaluacion->id);
             if ($progreso_objetivos == 100) {
@@ -873,7 +873,7 @@ class EV360EvaluacionesController extends Controller
             ->where('evaluador_id', $evaluador);
         $total_preguntas = 0;
         foreach ($preguntas_sql->get() as $competenciaE) {
-            if (! is_null(Competencia::find($competenciaE->competencia_id))) {
+            if (!is_null(Competencia::find($competenciaE->competencia_id))) {
                 $total_preguntas++;
             }
         }
@@ -964,54 +964,54 @@ class EV360EvaluacionesController extends Controller
                 $existeFirmaAuto = false;
                 $firmaAuto = 'img/signature.png';
 
-                if (! empty($informacion_obtenida['lista_autoevaluacion']) && is_array($informacion_obtenida['lista_autoevaluacion'])) {
+                if (!empty($informacion_obtenida['lista_autoevaluacion']) && is_array($informacion_obtenida['lista_autoevaluacion'])) {
                     // Check if the array is not empty and is an array
-                    if (! empty($informacion_obtenida['lista_autoevaluacion'][0]['firma'])) {
-                        $existeFirmaAuto = Storage::exists('/public/'.$informacion_obtenida['lista_autoevaluacion'][0]['firma']);
+                    if (!empty($informacion_obtenida['lista_autoevaluacion'][0]['firma'])) {
+                        $existeFirmaAuto = Storage::exists('/public/' . $informacion_obtenida['lista_autoevaluacion'][0]['firma']);
                     }
                 }
 
                 if ($existeFirmaAuto) {
-                    $firmaAuto = '/storage/'.$informacion_obtenida['lista_autoevaluacion'][0]['firma'];
+                    $firmaAuto = '/storage/' . $informacion_obtenida['lista_autoevaluacion'][0]['firma'];
                 }
 
                 $existeFirmaJefe = false;
                 $firmaJefe = 'img/signature.png';
 
-                if (! empty($informacion_obtenida['lista_jefe_inmediato']) && is_array($informacion_obtenida['lista_jefe_inmediato'])) {
-                    if (! empty($informacion_obtenida['lista_jefe_inmediato'][0]['firma'])) {
-                        $existeFirmaJefe = Storage::exists('/public/'.$informacion_obtenida['lista_jefe_inmediato'][0]['firma']);
+                if (!empty($informacion_obtenida['lista_jefe_inmediato']) && is_array($informacion_obtenida['lista_jefe_inmediato'])) {
+                    if (!empty($informacion_obtenida['lista_jefe_inmediato'][0]['firma'])) {
+                        $existeFirmaJefe = Storage::exists('/public/' . $informacion_obtenida['lista_jefe_inmediato'][0]['firma']);
                     }
                 }
 
                 if ($existeFirmaJefe) {
-                    $firmaJefe = '/storage/'.$informacion_obtenida['lista_jefe_inmediato'][0]['firma'];
+                    $firmaJefe = '/storage/' . $informacion_obtenida['lista_jefe_inmediato'][0]['firma'];
                 }
 
                 $existeFirmaSubordinado = false;
                 $firmaEquipo = 'img/signature.png';
 
-                if (! empty($informacion_obtenida['lista_equipo_a_cargo']) && is_array($informacion_obtenida['lista_equipo_a_cargo'])) {
-                    if (! empty($informacion_obtenida['lista_equipo_a_cargo'][0]['firma'])) {
-                        $existeFirmaSubordinado = Storage::exists('/public/'.$informacion_obtenida['lista_equipo_a_cargo'][0]['firma']);
+                if (!empty($informacion_obtenida['lista_equipo_a_cargo']) && is_array($informacion_obtenida['lista_equipo_a_cargo'])) {
+                    if (!empty($informacion_obtenida['lista_equipo_a_cargo'][0]['firma'])) {
+                        $existeFirmaSubordinado = Storage::exists('/public/' . $informacion_obtenida['lista_equipo_a_cargo'][0]['firma']);
                     }
                 }
 
                 if ($existeFirmaSubordinado) {
-                    $firmaEquipo = '/storage/'.$informacion_obtenida['lista_equipo_a_cargo'][0]['firma'];
+                    $firmaEquipo = '/storage/' . $informacion_obtenida['lista_equipo_a_cargo'][0]['firma'];
                 }
 
                 $existeFirmaPar = false;
                 $firmaPar = 'img/signature.png';
 
-                if (! empty($informacion_obtenida['lista_misma_area']) && is_array($informacion_obtenida['lista_misma_area'])) {
-                    if (! empty($informacion_obtenida['lista_misma_area'][0]['firma'])) {
-                        $existeFirmaPar = Storage::exists('/public/'.$informacion_obtenida['lista_misma_area'][0]['firma']);
+                if (!empty($informacion_obtenida['lista_misma_area']) && is_array($informacion_obtenida['lista_misma_area'])) {
+                    if (!empty($informacion_obtenida['lista_misma_area'][0]['firma'])) {
+                        $existeFirmaPar = Storage::exists('/public/' . $informacion_obtenida['lista_misma_area'][0]['firma']);
                     }
                 }
 
                 if ($existeFirmaPar) {
-                    $firmaPar = '/storage/'.$informacion_obtenida['lista_misma_area'][0]['firma'];
+                    $firmaPar = '/storage/' . $informacion_obtenida['lista_misma_area'][0]['firma'];
                 }
 
                 return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluado', compact(
@@ -1095,54 +1095,54 @@ class EV360EvaluacionesController extends Controller
                 $existeFirmaAuto = false;
                 $firmaAuto = 'img/signature.png';
 
-                if (! empty($informacion_obtenida['lista_autoevaluacion']) && is_array($informacion_obtenida['lista_autoevaluacion'])) {
+                if (!empty($informacion_obtenida['lista_autoevaluacion']) && is_array($informacion_obtenida['lista_autoevaluacion'])) {
                     // Check if the array is not empty and is an array
-                    if (! empty($informacion_obtenida['lista_autoevaluacion'][0]['firma'])) {
-                        $existeFirmaAuto = Storage::exists('/public/'.$informacion_obtenida['lista_autoevaluacion'][0]['firma']);
+                    if (!empty($informacion_obtenida['lista_autoevaluacion'][0]['firma'])) {
+                        $existeFirmaAuto = Storage::exists('/public/' . $informacion_obtenida['lista_autoevaluacion'][0]['firma']);
                     }
                 }
 
                 if ($existeFirmaAuto) {
-                    $firmaAuto = '/storage/'.$informacion_obtenida['lista_autoevaluacion'][0]['firma'];
+                    $firmaAuto = '/storage/' . $informacion_obtenida['lista_autoevaluacion'][0]['firma'];
                 }
 
                 $existeFirmaJefe = false;
                 $firmaJefe = 'img/signature.png';
 
-                if (! empty($informacion_obtenida['lista_jefe_inmediato']) && is_array($informacion_obtenida['lista_jefe_inmediato'])) {
-                    if (! empty($informacion_obtenida['lista_jefe_inmediato'][0]['firma'])) {
-                        $existeFirmaJefe = Storage::exists('/public/'.$informacion_obtenida['lista_jefe_inmediato'][0]['firma']);
+                if (!empty($informacion_obtenida['lista_jefe_inmediato']) && is_array($informacion_obtenida['lista_jefe_inmediato'])) {
+                    if (!empty($informacion_obtenida['lista_jefe_inmediato'][0]['firma'])) {
+                        $existeFirmaJefe = Storage::exists('/public/' . $informacion_obtenida['lista_jefe_inmediato'][0]['firma']);
                     }
                 }
 
                 if ($existeFirmaJefe) {
-                    $firmaJefe = '/storage/'.$informacion_obtenida['lista_jefe_inmediato'][0]['firma'];
+                    $firmaJefe = '/storage/' . $informacion_obtenida['lista_jefe_inmediato'][0]['firma'];
                 }
 
                 $existeFirmaSubordinado = false;
                 $firmaEquipo = 'img/signature.png';
 
-                if (! empty($informacion_obtenida['lista_equipo_a_cargo']) && is_array($informacion_obtenida['lista_equipo_a_cargo'])) {
-                    if (! empty($informacion_obtenida['lista_equipo_a_cargo'][0]['firma'])) {
-                        $existeFirmaSubordinado = Storage::exists('/public/'.$informacion_obtenida['lista_equipo_a_cargo'][0]['firma']);
+                if (!empty($informacion_obtenida['lista_equipo_a_cargo']) && is_array($informacion_obtenida['lista_equipo_a_cargo'])) {
+                    if (!empty($informacion_obtenida['lista_equipo_a_cargo'][0]['firma'])) {
+                        $existeFirmaSubordinado = Storage::exists('/public/' . $informacion_obtenida['lista_equipo_a_cargo'][0]['firma']);
                     }
                 }
 
                 if ($existeFirmaSubordinado) {
-                    $firmaEquipo = '/storage/'.$informacion_obtenida['lista_equipo_a_cargo'][0]['firma'];
+                    $firmaEquipo = '/storage/' . $informacion_obtenida['lista_equipo_a_cargo'][0]['firma'];
                 }
 
                 $existeFirmaPar = false;
                 $firmaPar = 'img/signature.png';
 
-                if (! empty($informacion_obtenida['lista_misma_area']) && is_array($informacion_obtenida['lista_misma_area'])) {
-                    if (! empty($informacion_obtenida['lista_misma_area'][0]['firma'])) {
-                        $existeFirmaPar = Storage::exists('/public/'.$informacion_obtenida['lista_misma_area'][0]['firma']);
+                if (!empty($informacion_obtenida['lista_misma_area']) && is_array($informacion_obtenida['lista_misma_area'])) {
+                    if (!empty($informacion_obtenida['lista_misma_area'][0]['firma'])) {
+                        $existeFirmaPar = Storage::exists('/public/' . $informacion_obtenida['lista_misma_area'][0]['firma']);
                     }
                 }
 
                 if ($existeFirmaPar) {
-                    $firmaPar = '/storage/'.$informacion_obtenida['lista_misma_area'][0]['firma'];
+                    $firmaPar = '/storage/' . $informacion_obtenida['lista_misma_area'][0]['firma'];
                 }
 
                 return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluado', compact(
@@ -1232,54 +1232,54 @@ class EV360EvaluacionesController extends Controller
                 $existeFirmaAuto = false;
                 $firmaAuto = 'img/signature.png';
 
-                if (! empty($informacion_obtenida['lista_autoevaluacion']) && is_array($informacion_obtenida['lista_autoevaluacion'])) {
+                if (!empty($informacion_obtenida['lista_autoevaluacion']) && is_array($informacion_obtenida['lista_autoevaluacion'])) {
                     // Check if the array is not empty and is an array
-                    if (! empty($informacion_obtenida['lista_autoevaluacion'][0]['firma'])) {
-                        $existeFirmaAuto = Storage::exists('/public/'.$informacion_obtenida['lista_autoevaluacion'][0]['firma']);
+                    if (!empty($informacion_obtenida['lista_autoevaluacion'][0]['firma'])) {
+                        $existeFirmaAuto = Storage::exists('/public/' . $informacion_obtenida['lista_autoevaluacion'][0]['firma']);
                     }
                 }
 
                 if ($existeFirmaAuto) {
-                    $firmaAuto = '/storage/'.$informacion_obtenida['lista_autoevaluacion'][0]['firma'];
+                    $firmaAuto = '/storage/' . $informacion_obtenida['lista_autoevaluacion'][0]['firma'];
                 }
 
                 $existeFirmaJefe = false;
                 $firmaJefe = 'img/signature.png';
 
-                if (! empty($informacion_obtenida['lista_jefe_inmediato']) && is_array($informacion_obtenida['lista_jefe_inmediato'])) {
-                    if (! empty($informacion_obtenida['lista_jefe_inmediato'][0]['firma'])) {
-                        $existeFirmaJefe = Storage::exists('/public/'.$informacion_obtenida['lista_jefe_inmediato'][0]['firma']);
+                if (!empty($informacion_obtenida['lista_jefe_inmediato']) && is_array($informacion_obtenida['lista_jefe_inmediato'])) {
+                    if (!empty($informacion_obtenida['lista_jefe_inmediato'][0]['firma'])) {
+                        $existeFirmaJefe = Storage::exists('/public/' . $informacion_obtenida['lista_jefe_inmediato'][0]['firma']);
                     }
                 }
 
                 if ($existeFirmaJefe) {
-                    $firmaJefe = '/storage/'.$informacion_obtenida['lista_jefe_inmediato'][0]['firma'];
+                    $firmaJefe = '/storage/' . $informacion_obtenida['lista_jefe_inmediato'][0]['firma'];
                 }
 
                 $existeFirmaSubordinado = false;
                 $firmaEquipo = 'img/signature.png';
 
-                if (! empty($informacion_obtenida['lista_equipo_a_cargo']) && is_array($informacion_obtenida['lista_equipo_a_cargo'])) {
-                    if (! empty($informacion_obtenida['lista_equipo_a_cargo'][0]['firma'])) {
-                        $existeFirmaSubordinado = Storage::exists('/public/'.$informacion_obtenida['lista_equipo_a_cargo'][0]['firma']);
+                if (!empty($informacion_obtenida['lista_equipo_a_cargo']) && is_array($informacion_obtenida['lista_equipo_a_cargo'])) {
+                    if (!empty($informacion_obtenida['lista_equipo_a_cargo'][0]['firma'])) {
+                        $existeFirmaSubordinado = Storage::exists('/public/' . $informacion_obtenida['lista_equipo_a_cargo'][0]['firma']);
                     }
                 }
 
                 if ($existeFirmaSubordinado) {
-                    $firmaEquipo = '/storage/'.$informacion_obtenida['lista_equipo_a_cargo'][0]['firma'];
+                    $firmaEquipo = '/storage/' . $informacion_obtenida['lista_equipo_a_cargo'][0]['firma'];
                 }
 
                 $existeFirmaPar = false;
                 $firmaPar = 'img/signature.png';
 
-                if (! empty($informacion_obtenida['lista_misma_area']) && is_array($informacion_obtenida['lista_misma_area'])) {
-                    if (! empty($informacion_obtenida['lista_misma_area'][0]['firma'])) {
-                        $existeFirmaPar = Storage::exists('/public/'.$informacion_obtenida['lista_misma_area'][0]['firma']);
+                if (!empty($informacion_obtenida['lista_misma_area']) && is_array($informacion_obtenida['lista_misma_area'])) {
+                    if (!empty($informacion_obtenida['lista_misma_area'][0]['firma'])) {
+                        $existeFirmaPar = Storage::exists('/public/' . $informacion_obtenida['lista_misma_area'][0]['firma']);
                     }
                 }
 
                 if ($existeFirmaPar) {
-                    $firmaPar = '/storage/'.$informacion_obtenida['lista_misma_area'][0]['firma'];
+                    $firmaPar = '/storage/' . $informacion_obtenida['lista_misma_area'][0]['firma'];
                 }
 
                 return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluado', compact(
@@ -1363,54 +1363,54 @@ class EV360EvaluacionesController extends Controller
                 $existeFirmaAuto = false;
                 $firmaAuto = 'img/signature.png';
 
-                if (! empty($informacion_obtenida['lista_autoevaluacion']) && is_array($informacion_obtenida['lista_autoevaluacion'])) {
+                if (!empty($informacion_obtenida['lista_autoevaluacion']) && is_array($informacion_obtenida['lista_autoevaluacion'])) {
                     // Check if the array is not empty and is an array
-                    if (! empty($informacion_obtenida['lista_autoevaluacion'][0]['firma'])) {
-                        $existeFirmaAuto = Storage::exists('/public/'.$informacion_obtenida['lista_autoevaluacion'][0]['firma']);
+                    if (!empty($informacion_obtenida['lista_autoevaluacion'][0]['firma'])) {
+                        $existeFirmaAuto = Storage::exists('/public/' . $informacion_obtenida['lista_autoevaluacion'][0]['firma']);
                     }
                 }
 
                 if ($existeFirmaAuto) {
-                    $firmaAuto = '/storage/'.$informacion_obtenida['lista_autoevaluacion'][0]['firma'];
+                    $firmaAuto = '/storage/' . $informacion_obtenida['lista_autoevaluacion'][0]['firma'];
                 }
 
                 $existeFirmaJefe = false;
                 $firmaJefe = 'img/signature.png';
 
-                if (! empty($informacion_obtenida['lista_jefe_inmediato']) && is_array($informacion_obtenida['lista_jefe_inmediato'])) {
-                    if (! empty($informacion_obtenida['lista_jefe_inmediato'][0]['firma'])) {
-                        $existeFirmaJefe = Storage::exists('/public/'.$informacion_obtenida['lista_jefe_inmediato'][0]['firma']);
+                if (!empty($informacion_obtenida['lista_jefe_inmediato']) && is_array($informacion_obtenida['lista_jefe_inmediato'])) {
+                    if (!empty($informacion_obtenida['lista_jefe_inmediato'][0]['firma'])) {
+                        $existeFirmaJefe = Storage::exists('/public/' . $informacion_obtenida['lista_jefe_inmediato'][0]['firma']);
                     }
                 }
 
                 if ($existeFirmaJefe) {
-                    $firmaJefe = '/storage/'.$informacion_obtenida['lista_jefe_inmediato'][0]['firma'];
+                    $firmaJefe = '/storage/' . $informacion_obtenida['lista_jefe_inmediato'][0]['firma'];
                 }
 
                 $existeFirmaSubordinado = false;
                 $firmaEquipo = 'img/signature.png';
 
-                if (! empty($informacion_obtenida['lista_equipo_a_cargo']) && is_array($informacion_obtenida['lista_equipo_a_cargo'])) {
-                    if (! empty($informacion_obtenida['lista_equipo_a_cargo'][0]['firma'])) {
-                        $existeFirmaSubordinado = Storage::exists('/public/'.$informacion_obtenida['lista_equipo_a_cargo'][0]['firma']);
+                if (!empty($informacion_obtenida['lista_equipo_a_cargo']) && is_array($informacion_obtenida['lista_equipo_a_cargo'])) {
+                    if (!empty($informacion_obtenida['lista_equipo_a_cargo'][0]['firma'])) {
+                        $existeFirmaSubordinado = Storage::exists('/public/' . $informacion_obtenida['lista_equipo_a_cargo'][0]['firma']);
                     }
                 }
 
                 if ($existeFirmaSubordinado) {
-                    $firmaEquipo = '/storage/'.$informacion_obtenida['lista_equipo_a_cargo'][0]['firma'];
+                    $firmaEquipo = '/storage/' . $informacion_obtenida['lista_equipo_a_cargo'][0]['firma'];
                 }
 
                 $existeFirmaPar = false;
                 $firmaPar = 'img/signature.png';
 
-                if (! empty($informacion_obtenida['lista_misma_area']) && is_array($informacion_obtenida['lista_misma_area'])) {
-                    if (! empty($informacion_obtenida['lista_misma_area'][0]['firma'])) {
-                        $existeFirmaPar = Storage::exists('/public/'.$informacion_obtenida['lista_misma_area'][0]['firma']);
+                if (!empty($informacion_obtenida['lista_misma_area']) && is_array($informacion_obtenida['lista_misma_area'])) {
+                    if (!empty($informacion_obtenida['lista_misma_area'][0]['firma'])) {
+                        $existeFirmaPar = Storage::exists('/public/' . $informacion_obtenida['lista_misma_area'][0]['firma']);
                     }
                 }
 
                 if ($existeFirmaPar) {
-                    $firmaPar = '/storage/'.$informacion_obtenida['lista_misma_area'][0]['firma'];
+                    $firmaPar = '/storage/' . $informacion_obtenida['lista_misma_area'][0]['firma'];
                 }
 
                 return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluado', compact(
@@ -1488,8 +1488,8 @@ class EV360EvaluacionesController extends Controller
         ]);
 
         return redirect()->back()
-            ->with('success', 'Se ha reactivado al usuario: '.$evaluador->name.
-                ', para evaluar al usuario: '.$evaluado->name);
+            ->with('success', 'Se ha reactivado al usuario: ' . $evaluador->name .
+                ', para evaluar al usuario: ' . $evaluado->name);
     }
 
     public function normalizarCalificacionObjetivo(Request $request)
@@ -1562,9 +1562,10 @@ class EV360EvaluacionesController extends Controller
     public function obtenerInformacionDeLaConsultaPorEvaluado($evaluacion, $evaluado)
     {
         $evaluacion = Evaluacion::with('rangos')->find(intval($evaluacion));
-        $evaluado = Empleado::with(['area', 'puestoRelacionado' => function ($q) {
+        $evaluado = Empleado::select('id', 'name', 'area_id', 'puesto_id')->with(['area:id,area', 'puestoRelacionado:id,puesto' => function ($q) {
             $q->with('competencias');
         }])->find(intval($evaluado));
+
         $evaluadores = EvaluadoEvaluador::where('evaluacion_id', $evaluacion->id)
             ->where('evaluado_id', $evaluado->id)
             ->get();
@@ -1599,10 +1600,10 @@ class EV360EvaluacionesController extends Controller
                 'tipo' => 'Autoevaluación',
                 'peso_general' => $evaluacion->peso_autoevaluacion,
                 'evaluaciones' => $filtro_autoevaluacion->map(function ($evaluador) use ($evaluacion, $evaluado) {
-                    $evaluaciones_competencias = EvaluacionRepuesta::with('competencia', 'evaluador')->where('evaluacion_id', $evaluacion->id)
+                    $evaluaciones_competencias = EvaluacionRepuesta::with('competencia', 'evaluador:id,name')->where('evaluacion_id', $evaluacion->id)
                         ->where('evaluado_id', $evaluado->id)
                         ->where('evaluador_id', $evaluador->evaluador_id)->orderBy('id')->get();
-                    $evaluador_empleado = Empleado::getAll()->find($evaluador->evaluador_id);
+                    $evaluador_empleado = Empleado::select('id', 'name', 'area_id', 'puesto_id')->find($evaluador->evaluador_id);
 
                     return $this->obtenerInformacionDeLaEvaluacionDeCompetencia($evaluador_empleado, $evaluador, $evaluado, $evaluaciones_competencias, $evaluacion);
                 }),
@@ -1629,7 +1630,7 @@ class EV360EvaluacionesController extends Controller
                     $evaluaciones_competencias = EvaluacionRepuesta::with('competencia', 'evaluador')->where('evaluacion_id', $evaluacion->id)
                         ->where('evaluado_id', $evaluado->id)
                         ->where('evaluador_id', $evaluador->evaluador_id)->orderBy('id')->get();
-                    $evaluador_empleado = Empleado::getAll()->find($evaluador->evaluador_id);
+                    $evaluador_empleado = Empleado::select('id', 'name', 'area_id', 'puesto_id')->find($evaluador->evaluador_id);
 
                     return $this->obtenerInformacionDeLaEvaluacionDeCompetencia($evaluador_empleado, $evaluador, $evaluado, $evaluaciones_competencias, $evaluacion);
                 }),
@@ -1655,7 +1656,7 @@ class EV360EvaluacionesController extends Controller
                     $evaluaciones_competencias = EvaluacionRepuesta::with('competencia', 'evaluador')->where('evaluacion_id', $evaluacion->id)
                         ->where('evaluado_id', $evaluado->id)
                         ->where('evaluador_id', $evaluador->evaluador_id)->orderBy('id')->get();
-                    $evaluador_empleado = Empleado::getAll()->find($evaluador->evaluador_id);
+                    $evaluador_empleado = Empleado::select('id', 'name', 'area_id', 'puesto_id')->find($evaluador->evaluador_id);
 
                     return $this->obtenerInformacionDeLaEvaluacionDeCompetencia($evaluador_empleado, $evaluador, $evaluado, $evaluaciones_competencias, $evaluacion);
                 }),
@@ -1681,7 +1682,7 @@ class EV360EvaluacionesController extends Controller
                     $evaluaciones_competencias = EvaluacionRepuesta::with('competencia', 'evaluador')->where('evaluacion_id', $evaluacion->id)
                         ->where('evaluado_id', $evaluado->id)
                         ->where('evaluador_id', $evaluador->evaluador_id)->orderBy('id')->get();
-                    $evaluador_empleado = Empleado::getAll()->find($evaluador->evaluador_id);
+                    $evaluador_empleado = Empleado::select('id', 'name', 'area_id', 'puesto_id')->find($evaluador->evaluador_id);
 
                     return $this->obtenerInformacionDeLaEvaluacionDeCompetencia($evaluador_empleado, $evaluador, $evaluado, $evaluaciones_competencias, $evaluacion);
                 }),
@@ -1806,7 +1807,7 @@ class EV360EvaluacionesController extends Controller
             'promedio_objetivos' => $promedio_objetivos,
             'promedio_general_objetivos' => $promedio_general_objetivos,
             'calificacion_final' => $calificacion_final,
-            'evaluadores' => Empleado::getAll()->find($evaluadores->pluck('evaluador_id')),
+            'evaluadores' => Empleado::select('id', 'name', 'area_id', 'puesto_id')->find($evaluadores->pluck('evaluador_id')),
         ];
     }
 
@@ -1848,8 +1849,9 @@ class EV360EvaluacionesController extends Controller
 
     public function resumen($evaluacion)
     {
+
         abort_if(Gate::denies('seguimiento_evaluaciones_grafica'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $evaluacion = Evaluacion::with('evaluados', 'rangos')->find(intval($evaluacion));
+        $evaluacion = Evaluacion::with('evaluados:id,name,area_id,puesto_id,supervisor_id', 'rangos:id,descripcion')->find(intval($evaluacion));
 
         if (optional($evaluacion->rangos)->isNotEmpty()) {
             $evaluados = $evaluacion->evaluados;
@@ -1861,12 +1863,16 @@ class EV360EvaluacionesController extends Controller
             $sobresaliente = 0;
             $rangosResultados = optional($evaluacion->rangos)->pluck('valor', 'parametro')->all();
             $rangosColores = optional($evaluacion->rangos)->pluck('color', 'parametro')->all();
-            // dd($rangosResultados, $rangosColores);
             $maxValue = max(array_map('intval', $rangosResultados));
 
             $ev360ResumenTabla = new Ev360ResumenTablaParametros();
+
             foreach ($evaluados as $evaluado) {
-                $evaluado->load('area', 'supervisorEv360');
+                $evaluado->load(['area' => function ($query) {
+                    $query->select('id', 'area');
+                }, 'supervisorEv360' => function ($query) {
+                    $query->select('id', 'name');
+                }]);
                 $lista_evaluados->push([
                     'evaluado' => $evaluado->name,
                     'puesto' => $evaluado->puesto,
@@ -1876,7 +1882,6 @@ class EV360EvaluacionesController extends Controller
             }
 
             $counts = [];
-            // dd($lista_evaluados);
             foreach ($lista_evaluados as $evaluado) {
                 $calificacionFinal = $evaluado['informacion_evaluacion']['calificacion_final'];
                 $previousValor = null;
@@ -1900,9 +1905,9 @@ class EV360EvaluacionesController extends Controller
             $calificaciones->push($counts);
             $calificaciones = $calificaciones->first();
 
-            // dd($calificaciones);
             return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.resumen-parametros', compact('evaluacion', 'calificaciones', 'rangosResultados', 'rangosColores'));
         } else {
+
             $evaluados = $evaluacion->evaluados;
             $lista_evaluados = collect();
             $calificaciones = collect();
@@ -1922,7 +1927,12 @@ class EV360EvaluacionesController extends Controller
             }
             $ev360ResumenTabla = new Ev360ResumenTabla();
             foreach ($evaluados as $evaluado) {
-                $evaluado->load('area', 'supervisorEv360');
+                $evaluado->load(['area' => function ($query) {
+                    $query->select('id', 'area');
+                }, 'supervisorEv360' => function ($query) {
+                    $query->select('id', 'name');
+                }]);
+
                 $lista_evaluados->push([
                     'evaluado' => $evaluado->name,
                     'puesto' => $evaluado->puesto,
@@ -1957,7 +1967,7 @@ class EV360EvaluacionesController extends Controller
 
     public function resumenJefe($evaluacion)
     {
-        $evaluacion = Evaluacion::with('evaluados')->find(intval($evaluacion));
+        $evaluacion = Evaluacion::with('evaluados:id,name')->find(intval($evaluacion));
         $evaluados = $evaluacion->evaluados;
 
         return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.resumen', compact('calificaciones', 'evaluacion'));
@@ -1965,7 +1975,7 @@ class EV360EvaluacionesController extends Controller
 
     public function evaluacionesDelEmpleado($empleado)
     {
-        $empleado = Empleado::getAll()->find($empleado);
+        $empleado = Empleado::select('id', 'name', 'area_id', 'puesto_id')->find($empleado);
         $evaluacione = Evaluacion::whereHas('evaluados', function ($q) use ($empleado) {
             $q->where('evaluado_id', $empleado->id);
         })->get();
@@ -1994,7 +2004,7 @@ class EV360EvaluacionesController extends Controller
                 ->pluck('evaluado_id')
                 ->unique()
                 ->toArray();
-            $empleados = Empleado::getAll();
+            $empleados = Empleado::select('id', 'name', 'area_id', 'puesto_id')->get();
             $evaluados = $empleados->find($evaluados);
             $evaluador_model = $empleados->find($evaluador);
             if (count($evaluados)) {
@@ -2024,7 +2034,7 @@ class EV360EvaluacionesController extends Controller
             'descripcion' => 'nullable|string',
         ]);
         $evaluacion = Evaluacion::find(intval($request->evaluacion));
-        $empleados = Empleado::getAll();
+        $empleados = Empleado::select('id', 'name', 'area_id', 'puesto_id')->get();
         $evaluado = $empleados->find(intval($request->evaluado));
         $evaluador = $empleados->find(intval($request->evaluador));
         $fecha_inicio = $request->fecha_inicio;
