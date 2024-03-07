@@ -31,7 +31,6 @@ class RegistroVisitantesController extends Controller
         return view('visitantes.registro-visitantes.presentacion', compact('quote', 'logo'))->with('existsResponsable', $this->existsResponsable);
     }
 
-
     /**
      * Display a listing of the resource.
      *
