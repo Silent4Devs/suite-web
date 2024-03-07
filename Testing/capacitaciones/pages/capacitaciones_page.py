@@ -91,7 +91,7 @@ class CapacitacionesPage:
         tomar_curso1_btn.click()
         print("Tomando curso 1")
         print("URL actual:", self.driver.current_url)
-
+        #VIDEO YT DEL CURSO
     def yt_video(self):
         try:
             video_element = WebDriverWait(self.driver, 10).until(
@@ -100,6 +100,14 @@ class CapacitacionesPage:
             assert video_element.is_displayed(), "El reproductor de video de YouTube no está visible"
         except TimeoutException:
             pytest.fail("El reproductor de video de YouTube no se encontró en la página")
+
+        #SIGUIENTE TEMA
+    def sig_tema(self):
+        siguiente_btn = WebDriverWait(self.driver, 5).until(
+        EC.visibility_of_element_located((By.XPATH, '//a[contains(text(), "Siguiente tema")]'))
+    )
+        self.driver.execute_script("arguments[0].click();", siguiente_btn)
+        time.sleep(5)
 
 
 
