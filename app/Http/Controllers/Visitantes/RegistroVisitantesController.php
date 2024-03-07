@@ -21,18 +21,16 @@ class RegistroVisitantesController extends Controller
     public function presentacion()
     {
         $quote = VisitanteQuote::first();
-        if (VisitanteQuote::count() > 0) {
-            $quote = VisitanteQuote::first();
-        } else {
-            $quote = new VisitanteQuote();
-        }
+
         $logo = asset('img/logo_monocromatico.png');
-        if (Organizacion::getFirst()) {
-            $logo = Organizacion::getLogo()->logotipo;
+        $organizacion = Organizacion::getFirst();
+        if ($organizacion) {
+            $logo = $organizacion->getLogo()->logotipo;
         }
 
         return view('visitantes.registro-visitantes.presentacion', compact('quote', 'logo'))->with('existsResponsable', $this->existsResponsable);
     }
+
 
     /**
      * Display a listing of the resource.

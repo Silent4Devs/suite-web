@@ -222,8 +222,8 @@
                     <td>
                         <strong> Proyecto: </strong> <br>
                         @isset($producto->contrato)
-                            {{ $producto->contrato->no_proyecto }} / {{ $producto->contrato->no_contrato }} -
-                            {{ $producto->contrato->nombre_servicio }}
+                            {{ isset($producto->contrato->no_proyecto) }} / {{ isset($producto->contrato->no_contrato) }} -
+                            {{ isset($producto->contrato->nombre_servicio) }}
                         @endisset
                     </td>
                     <td>
