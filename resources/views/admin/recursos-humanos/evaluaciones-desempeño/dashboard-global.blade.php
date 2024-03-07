@@ -18,10 +18,8 @@
     <div class="card card-body">
         <h6>Resultado mensual</h6>
     </div>
-
 @endsection
 
 @section('scripts')
     @parent
-
 @endsection

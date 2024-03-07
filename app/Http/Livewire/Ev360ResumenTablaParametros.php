@@ -67,7 +67,7 @@ class Ev360ResumenTablaParametros extends Component
         $sobresaliente = 0;
         $ev360EvaluacionesController = new EV360EvaluacionesController();
 
-        $this->maxValue = max(array_map('intval', $this->rangos));
+        $this->maxValue = $this->findClosestValueToMax();
 
         foreach ($evaluados as $evaluado) {
             // $evaluado->load('area');
@@ -85,8 +85,10 @@ class Ev360ResumenTablaParametros extends Component
                 // dd($calificacionFinal, $valor);
                 if ($calificacionFinal <= $valor) {
                     $counts[$parametro] = isset($counts[$parametro]) ? $counts[$parametro] + 1 : 1;
-                } elseif ($valor == $this->maxValue && $calificacionFinal > $valor) {
+                } elseif ($valor == $this->maxValue) {
                     // dd('entra elseif');
+                    $counts[$parametro] = isset($counts[$parametro]) ? $counts[$parametro] + 1 : 1;
+                } elseif ($calificacionFinal > $this->maxValue) {
                     $counts[$parametro] = isset($counts[$parametro]) ? $counts[$parametro] + 1 : 1;
                 }
             }
@@ -186,14 +188,14 @@ class Ev360ResumenTablaParametros extends Component
                 return intval($evaluador->tipo) == EvaluadoEvaluador::MISMA_AREA;
             });
             $promedio_competencias = 0;
-            $locacionFirmas = 'evaluaciones/firmas/' . preg_replace(['/\s+/i', '/-/i'], '_', $evaluacion->nombre) . '/';
+            $locacionFirmas = 'evaluaciones/firmas/'.preg_replace(['/\s+/i', '/-/i'], '_', $evaluacion->nombre).'/';
 
             $promedio_competencias_collect = collect();
             // $cantidad_competencias_evaluadas = $evaluado->puestoRelacionado->competencias->count() ? $evaluado->puestoRelacionado->competencias->count() : 1;
             $cantidad_competencias_evaluadas = count($this->obtenerCompetenciasEvaluadasEnLaEvaluacion($evaluacion->id, $evaluado->id)) ? count($this->obtenerCompetenciasEvaluadasEnLaEvaluacion($evaluacion->id, $evaluado->id)) : 1;
             $lista_autoevaluacion->push([
                 'tipo' => 'Autoevaluación',
-                'firma' => $filtro_autoevaluacion->first() ? $locacionFirmas . $filtro_autoevaluacion->first()->firma_evaluador : null,
+                'firma' => $filtro_autoevaluacion->first() ? $locacionFirmas.$filtro_autoevaluacion->first()->firma_evaluador : null,
                 'peso_general' => $evaluacion->peso_autoevaluacion,
                 'evaluaciones' => $filtro_autoevaluacion->map(function ($evaluador) use ($evaluacion, $evaluado) {
                     $evaluaciones_competencias = EvaluacionRepuesta::with('competencia', 'evaluador')->where('evaluacion_id', $evaluacion->id)
@@ -230,7 +232,7 @@ class Ev360ResumenTablaParametros extends Component
 
             $lista_jefe_inmediato->push([
                 'tipo' => 'Jefe Inmediato',
-                'firma' => $filtro_jefe_inmediato->first() ? $locacionFirmas . $filtro_jefe_inmediato->first()->firma_evaluador : null,
+                'firma' => $filtro_jefe_inmediato->first() ? $locacionFirmas.$filtro_jefe_inmediato->first()->firma_evaluador : null,
                 'peso_general' => $evaluacion->peso_jefe_inmediato,
                 'evaluaciones' => $filtro_jefe_inmediato->map(function ($evaluador) use ($evaluacion, $evaluado) {
                     $evaluaciones_competencias = EvaluacionRepuesta::with('competencia', 'evaluador')->where('evaluacion_id', $evaluacion->id)
@@ -255,7 +257,7 @@ class Ev360ResumenTablaParametros extends Component
 
             $lista_equipo_a_cargo->push([
                 'tipo' => 'Equipo a cargo',
-                'firma' => $filtro_equipo_a_cargo->first() ? $locacionFirmas . $filtro_equipo_a_cargo->first()->firma_evaluador : null,
+                'firma' => $filtro_equipo_a_cargo->first() ? $locacionFirmas.$filtro_equipo_a_cargo->first()->firma_evaluador : null,
                 'peso_general' => $evaluacion->peso_equipo,
                 'evaluaciones' => $filtro_equipo_a_cargo->map(function ($evaluador) use ($evaluacion, $evaluado) {
                     $evaluaciones_competencias = EvaluacionRepuesta::with('competencia', 'evaluador')->where('evaluacion_id', $evaluacion->id)
@@ -279,7 +281,7 @@ class Ev360ResumenTablaParametros extends Component
 
             $lista_misma_area->push([
                 'tipo' => 'Misma área',
-                'firma' => $filtro_misma_area->first() ? $locacionFirmas . $filtro_misma_area->first()->firma_evaluador : null,
+                'firma' => $filtro_misma_area->first() ? $locacionFirmas.$filtro_misma_area->first()->firma_evaluador : null,
                 'peso_general' => $evaluacion->peso_area,
                 'evaluaciones' => $filtro_misma_area->map(function ($evaluador) use ($evaluacion, $evaluado) {
                     $evaluaciones_competencias = EvaluacionRepuesta::with('competencia', 'evaluador')->where('evaluacion_id', $evaluacion->id)
@@ -433,20 +435,82 @@ class Ev360ResumenTablaParametros extends Component
         ];
     }
 
+    public function findClosestValueToMax()
+    {
+        $rangos = $this->rangos;
+
+        // Check if the array is empty
+        if (empty($rangos)) {
+            return null; // or handle the empty case accordingly
+        }
+
+        // Convert array values to integers
+        $rangosInt = array_map('intval', $rangos);
+
+        // Find the maximum value
+        $maxValue = max($rangosInt);
+
+        // Sort the array in ascending order
+        sort($rangosInt);
+
+        // Find the key/index of the maximum value in the sorted array
+        $maxKey = array_search($maxValue, $rangosInt);
+
+        // Find the value previous to the maximum value
+        $previousValue = isset($rangosInt[$maxKey - 1]) ? $rangosInt[$maxKey - 1] : null;
+
+        // Find the value next to the maximum value
+        $nextValue = isset($rangosInt[$maxKey + 1]) ? $rangosInt[$maxKey + 1] : null;
+
+        // Determine which value is closer to the maximum value
+        $closestValue = ($nextValue - $maxValue) < ($maxValue - $previousValue) ? $nextValue : $previousValue;
+
+        return $closestValue;
+    }
+
+    // public function calificacion_con_parametro($calificacion, $meta, $evaluacion)
+    // {
+    //     $ev = Evaluacion::with('rangos')->find($evaluacion);
+
+    //     if (! empty($this->maxValue)) {
+    //         $regla = $meta / $this->maxValue;
+    //         $nv_cal = $regla * $calificacion;
+
+    //         return $nv_cal;
+    //     } else {
+    //         $maximo = $ev->rangos->max('valor');
+
+    //         $regla = $meta / $maximo;
+    //         $nv_cal = $regla * $calificacion;
+
+    //         // dd($calificacion, $meta, $ev, $maximo, $regla);
+    //         return $nv_cal;
+    //     }
+    // }
+
     public function calificacion_con_parametro($calificacion, $meta, $evaluacion)
     {
         $ev = Evaluacion::with('rangos')->find($evaluacion);
 
-        if (!empty($this->maxValue)) {
+        if (! empty($this->maxValue)) {
             $regla = $meta / $this->maxValue;
             $nv_cal = $regla * $calificacion;
+
             return $nv_cal;
         } else {
             $maximo = $ev->rangos->max('valor');
 
-            $regla = $meta / $maximo;
+            // Find the value before the maximum value in the collection
+            $valorAntesDeMaximo = $ev->rangos->where('valor', '<', $maximo)->max('valor');
+
+            if ($valorAntesDeMaximo === null) {
+                // If there is no value before the maximum, use the maximum itself
+                $valorAntesDeMaximo = $maximo;
+            }
+
+            $regla = $meta / $valorAntesDeMaximo;
             $nv_cal = $regla * $calificacion;
-            // dd($calificacion, $meta, $ev, $maximo, $regla);
+
             return $nv_cal;
         }
     }

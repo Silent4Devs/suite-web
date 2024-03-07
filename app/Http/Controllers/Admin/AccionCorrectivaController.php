@@ -266,7 +266,7 @@ class AccionCorrectivaController extends Controller
 
         $accionCorrectiva->load('nombrereporta', 'puestoreporta', 'nombreregistra', 'puestoregistra', 'responsable_accion', 'nombre_autoriza', 'team');
 
-        $empleados = Empleado::with('area')->orderBy('name')->get();
+        $empleados = Empleado::getAltaEmpleadosWithArea();
 
         $areas = Area::getAll();
 

@@ -68,7 +68,7 @@ class MinutasaltadireccionController extends Controller
     public function create()
     {
         abort_if(Gate::denies('revision_por_direccion_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $responsablereunions = Empleado::alta()->select('id', 'name', 'foto')->with('area')->get();
+        $responsablereunions = Empleado::getAltaEmpleadosWithArea();
         $esta_vinculado = User::getCurrentUser()->empleado ? true : false;
 
         return view('admin.minutasaltadireccions.create', compact('responsablereunions', 'esta_vinculado'));
@@ -261,6 +261,9 @@ class MinutasaltadireccionController extends Controller
                     'startIsMilestone' => false,
                     'progressByWorklog' => false,
                     'assigs' => [],
+                    'resources' => [],
+                    'subtasks' => [],
+                    'historic' => [],
                 ],
             ];
             $actividades = json_decode($request->actividades);
@@ -351,6 +354,9 @@ class MinutasaltadireccionController extends Controller
                     'startIsMilestone' => false,
                     'progressByWorklog' => false,
                     'assigs' => $assigs,
+                    'resources' => [],
+                    'subtasks' => [],
+                    'historic' => [],
                 ];
             }
             if ($edit) {
@@ -422,7 +428,7 @@ class MinutasaltadireccionController extends Controller
             // ->select('name', 'area_id', 'foto')
             ->withPivot('asistencia')
             ->get();
-        $responsablereunions = Empleado::alta()->select('id', 'name', 'foto')->with('area')->get();
+        $responsablereunions = Empleado::getAltaEmpleadosWithArea();
 
         return view('admin.minutasaltadireccions.edit', compact(
             'minutasaltadireccion',

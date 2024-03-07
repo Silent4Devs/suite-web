@@ -174,6 +174,10 @@ class AnalisisBrechaIsoController extends Controller
 
         $analisisBrecha = AnalisisBrechasIso::find($id);
 
+        if (! $analisisBrecha) {
+            return redirect()->route('admin.analisisdebrechas-2022.index')->with('error', 'No existe el registro.');
+        }
+
         $gap1porcentaje = GapUnoConcentratoIso::select('id', 'valoracion', 'id_analisis_brechas')->where('id_analisis_brechas', '=', $id)->orderBy('id', 'asc')->get();
         $gap1satisfactorios = GapUnoConcentratoIso::select('id')->where('valoracion', '1')->where('id_analisis_brechas', '=', $id)->count();
         $gap1parcialmente = GapUnoConcentratoIso::select('id')->where('valoracion', '2')->where('id_analisis_brechas', '=', $id)->count();
@@ -232,6 +236,10 @@ class AnalisisBrechaIsoController extends Controller
         ]);
 
         $analisisBrecha = AnalisisBrechasIso::find($id);
+
+        if (! $analisisBrecha) {
+            return redirect()->route('admin.analisisdebrechas-2022.index')->with('error', 'No existe el registro.');
+        }
 
         $analisisBrecha->update([
             'nombre' => $request->nombre,

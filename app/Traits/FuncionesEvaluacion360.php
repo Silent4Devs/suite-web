@@ -12,7 +12,13 @@ trait FuncionesEvaluacion360
     public function obtenerCompetenciasDelPuestoDelEvaluadoEnLaEvaluacion($evaluacion, $evaluado)
     {
         $puesto = Evaluacion::find($evaluacion)->evaluados()->where('evaluado_id', $evaluado)->first();
-        $competencias = Puesto::with('competencias')->find($puesto->pivot->puesto_id)->competencias;
+        $comp = Puesto::with('competencias')->find($puesto->pivot->puesto_id);
+
+        if ($puesto && isset($comp->competencias)) {
+            $competencias = $comp->competencias;
+        } else {
+            $competencias = Puesto::with('competencias')->find($puesto->puesto_id)->competencias;
+        }
 
         return $competencias;
     }

@@ -136,7 +136,7 @@
                         if (response.success) {
                             Swal.fire(
                                 'Bien Hecho',
-                                'Rol creado con éxito',
+                                'Rol actualizado con éxito',
                                 'success'
                             )
                         }

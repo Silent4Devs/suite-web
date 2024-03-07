@@ -7,6 +7,7 @@ use App\Models\Iso27\DeclaracionAplicabilidadResponsableIso;
 use App\Models\RH\BeneficiariosEmpleado;
 use App\Models\RH\ContactosEmergenciaEmpleado;
 use App\Models\RH\DependientesEconomicosEmpleados;
+use App\Models\RH\Objetivo;
 use App\Traits\ClearsResponseCache;
 use Carbon\Carbon;
 use DateTime;
@@ -87,7 +88,7 @@ class Empleado extends Model implements Auditable
     //protected $with = ['children:id,name,foto,puesto as title,area,supervisor_id']; //Se desborda la memoria al entrar en un bucle infinito se opto por utilizar eager loading
     protected $appends = [
         'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
-        'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'es_supervisor', 'fecha_min_timesheet',
+        'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet',
     ];
 
     protected $with = ['area', 'supervisor'];
@@ -212,7 +213,7 @@ class Empleado extends Model implements Auditable
     public static function getEmpleadoCurriculum($id)
     {
         return
-            Cache::remember('Empleados:EmpleadoCurriculum_' . $id, 3600 * 8, function () use ($id) {
+            Cache::remember('Empleados:EmpleadoCurriculum_'.$id, 3600 * 8, function () use ($id) {
                 return self::alta()->with('empleado_certificaciones', 'empleado_cursos', 'empleado_experiencia')->findOrFail($id);
             });
     }
@@ -242,7 +243,7 @@ class Empleado extends Model implements Auditable
     public static function getAltaEmpleadosWithArea()
     {
         return Cache::remember('Empleados:empleados_alta_area', 3600 * 6, function () {
-            return self::with('area')->alta()->get();
+            return self::with('area')->alta()->orderBy('name')->get();
         });
     }
 
@@ -264,6 +265,18 @@ class Empleado extends Model implements Auditable
     {
         return Cache::remember('Empleados:empleados_alta_all', 3600 * 6, function () {
             return self::orderBy('name')->alta()->get();
+        });
+    }
+
+    public static function getAllDataObjetivosEmpleado()
+    {
+        return Cache::remember('Empleados:empleados_all_objetivos_empleado', 3600 * 6, function () {
+            return self::alta()->select('id', 'name', 'foto', 'area_id', 'puesto_id', 'supervisor_id')
+                ->with(['objetivos' => function ($q) {
+                    $q->with(['objetivo' => function ($query) {
+                        $query->with(['tipo', 'metrica']);
+                    }]);
+                }])->get();
         });
     }
 
@@ -291,7 +304,7 @@ class Empleado extends Model implements Auditable
                 'area_id',
                 'supervisor_id',
                 'puesto_id',
-            )->with(['objetivos', 'children', 'supervisor', 'area', 'puestoRelacionado'])->get();
+            )->with(['objetivos.objetivo', 'children', 'supervisor', 'area', 'puestoRelacionado'])->get();
         });
     }
 
@@ -330,14 +343,14 @@ class Empleado extends Model implements Auditable
 
     public function getActualBirdthdayAttribute()
     {
-        $birdthday = date('Y') . '-' . Carbon::parse($this->cumpleaños)->format('m-d');
+        $birdthday = date('Y').'-'.Carbon::parse($this->cumpleaños)->format('m-d');
 
         return $birdthday;
     }
 
     public function getActualAniversaryAttribute()
     {
-        $aniversario = date('Y') . '-' . Carbon::parse($this->antiguedad)->format('m-d');
+        $aniversario = date('Y').'-'.Carbon::parse($this->antiguedad)->format('m-d');
 
         return $aniversario;
     }
@@ -423,7 +436,7 @@ class Empleado extends Model implements Auditable
             }
         }
 
-        return asset('storage/empleados/imagenes/' . $this->foto);
+        return asset('storage/empleados/imagenes/'.$this->foto);
     }
 
     public function area()
@@ -465,7 +478,28 @@ class Empleado extends Model implements Auditable
 
     public function getCompetenciasAsignadasAttribute()
     {
-        return !is_null($this->puestoRelacionado) ? $this->puestoRelacionado->competencias->count() : 0;
+        return ! is_null($this->puestoRelacionado) ? $this->puestoRelacionado->competencias->count() : 0;
+    }
+
+    public function getObjetivosAsignadosAttribute()
+    {
+        $cuenta_objetivos = ! is_null($this->objetivos) ? $this->objetivos->count() : 0;
+        $objetivos = $this->objetivos;
+
+        $objetivo_pendiente = false;
+
+        if ($cuenta_objetivos > 0) {
+            foreach ($objetivos as $obj) {
+                if ($obj->objetivo->esta_aprobado == Objetivo::SIN_DEFINIR) {
+                    $objetivo_pendiente = true;
+                }
+            }
+        }
+
+        return [
+            'cuenta' => $cuenta_objetivos,
+            'pendientes' => $objetivo_pendiente,
+        ];
     }
 
     public function getFechaMinTimesheetAttribute($value)
@@ -519,6 +553,11 @@ class Empleado extends Model implements Auditable
         return $this->belongsTo(self::class)->alta();
     }
 
+    public function supervisorCrearEvaluacion()
+    {
+        return $this->belongsTo(self::class)->alta()->select('id', 'name', 'area_id');
+    }
+
     public function supervisorEv360()
     {
         return $this->belongsTo(self::class, 'supervisor_id', 'id');
@@ -534,6 +573,11 @@ class Empleado extends Model implements Auditable
         return $this->hasMany(self::class, 'supervisor_id', 'id')->with('children', 'supervisor', 'area'); //Eager Loading utilizar solo para construir un arbol si no puede desbordar la pila
     }
 
+    public function childrenCrearEvaluacion()
+    {
+        return $this->hasMany(self::class, 'supervisor_id', 'id')->with('children', 'supervisor', 'area')->select('id', 'name', 'area_id', 'supervisor_id'); //Eager Loading utilizar solo para construir un arbol si no puede desbordar la pila
+    }
+
     public function childrenOrganigrama()
     {
         return $this->hasMany(self::class, 'supervisor_id', 'id')
@@ -543,7 +587,7 @@ class Empleado extends Model implements Auditable
 
     public function scopeAlta($query)
     {
-        return $query->where('estatus', 'alta');
+        return $query->where('estatus', 'alta')->where('deleted_at', null);
     }
 
     public function scopeVacanteActiva($query)

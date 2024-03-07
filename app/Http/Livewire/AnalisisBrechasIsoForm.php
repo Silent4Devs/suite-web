@@ -67,6 +67,7 @@ class AnalisisBrechasIsoForm extends Component
             'name.required' => 'El campo nombre es obligatorio',
             'name.max' => 'El campo nombre no debe ser mayor a 255 caracteres',
         ]);
+
         if ($this->selectedCard) {
 
             $this->evaluacion();
