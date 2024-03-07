@@ -1,7 +1,10 @@
 import time
+import pytest
+import pdb
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
 
 #CLASE PRINCIPAL
 class CapacitacionesPage:
@@ -45,9 +48,10 @@ class CapacitacionesPage:
         menu_btn.click()
     #CAPACITACIONES
     def go_to_capacitaciones(self):
-        capacitaciones_btn = WebDriverWait(self.driver, 5).until(
-            EC.visibility_of_element_located((By.XPATH, "//a[@href='https://192.168.9.78/admin/capacitaciones-inicio']"))
+        capacitaciones_btn = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable((By.XPATH, "//a[@href='https://192.168.9.78/admin/capacitaciones-inicio']"))
         )
+        time.sleep(0.5)
         capacitaciones_btn.click()
         print("Botón de capacitaciones presionado")
         print("URL actual:", self.driver.current_url)
@@ -78,9 +82,24 @@ class CapacitacionesPage:
         print("Entrando a catalogo de cursos")
         print("URL actual:", self.driver.current_url)
 
+        #CONTINUAR CON EL CURSO
+    def tomar_curso1(self):
+        tomar_curso1_btn = WebDriverWait(self.driver, 5).until(
+            EC.visibility_of_element_located((By.XPATH, '//a[@class="mt-4 btn btn-mas-info-c"]'))
+            )
+        time.sleep(2)
+        tomar_curso1_btn.click()
+        print("Tomando curso 1")
+        print("URL actual:", self.driver.current_url)
 
-
-
+    def yt_video(self):
+        try:
+            video_element = WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, '//iframe[contains(@src, "youtube.com")]'))
+        )
+            assert video_element.is_displayed(), "El reproductor de video de YouTube no está visible"
+        except TimeoutException:
+            pytest.fail("El reproductor de video de YouTube no se encontró en la página")
 
 
 

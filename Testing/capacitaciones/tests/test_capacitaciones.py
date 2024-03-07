@@ -13,5 +13,6 @@ def test_capacitaciones(browser):
     capacitaciones_page.mis_cursos()
     #capacitaciones_page.course_1()
     capacitaciones_page.catalogo_cursos()
-
+    capacitaciones_page.tomar_curso1()
+    capacitaciones_page.yt_video()
 
