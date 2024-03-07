@@ -103,11 +103,22 @@ class CapacitacionesPage:
 
         #SIGUIENTE TEMA
     def sig_tema(self):
-        siguiente_btn = WebDriverWait(self.driver, 5).until(
-        EC.visibility_of_element_located((By.XPATH, '//a[contains(text(), "Siguiente tema")]'))
-    )
-        self.driver.execute_script("arguments[0].click();", siguiente_btn)
-        time.sleep(5)
+        for _ in range(5):
+            toggle_button = WebDriverWait(self.driver, 5).until(
+        EC.visibility_of_element_located((By.XPATH, '//i[@class="text-2xl text-gray-600 fas fa-toggle-off"]'))
+        )
+
+            toggle_button.click()
+            time.sleep(1)
+            siguiente_btn = WebDriverWait(self.driver, 5).until(
+            EC.visibility_of_element_located((By.XPATH, '//a[contains(text(), "Siguiente tema")]'))
+        )
+            siguiente_btn.click()
+            time.sleep(2)
+
+
+
+
 
 
 
