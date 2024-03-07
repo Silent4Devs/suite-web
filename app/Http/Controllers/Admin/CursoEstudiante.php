@@ -29,26 +29,21 @@ class CursoEstudiante extends Controller
     public function misCursos()
     {
         $cursos_usuario = UsuariosCursos::with('cursos')->where('user_id', User::getCurrentUser()->id)->get();
-        // dd($cursos_usuario);
-        // $cursos = Course::getAll();
-        // $categories = Category::all();
-        // $levels = Level::all();
-        // $courses = Course::where('status', 3)
-        //     ->category($this->category_id)
-        //     ->level($this->level_id)
-        //     ->latest('id')->paginate(8);
-        // dd($categories, $levels, $courses);
 
         return view('admin.escuela.estudiante.mis-cursos', compact('cursos_usuario'));
     }
 
     public function cursoEstudiante($curso_id)
     {
-        $curso = Course::where('id', $curso_id)->first();
-        // dd($curso_id, $curso);
-        $evaluacionesLeccion = Evaluation::where('course_id', $curso_id)->get();
+        try {
+            $curso = Course::where('id', $curso_id)->first();
 
-        return view('admin.escuela.estudiante.curso-estudiante', compact('curso', 'evaluacionesLeccion'));
+            $evaluacionesLeccion = Evaluation::where('course_id', $curso_id)->get();
+
+            return view('admin.escuela.estudiante.curso-estudiante', compact('curso', 'evaluacionesLeccion'));
+        } catch (\Throwable $th) {
+            abort(404);
+        }
     }
 
     public function evaluacionEstudiante($curso_id, $evaluacion_id)
