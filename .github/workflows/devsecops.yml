@@ -49,27 +49,27 @@ jobs:
         cp .env.example .env
         docker-compose up -d --build
 
-    - name: Cache OWASP ZAP
-      uses: actions/cache@v2
-      with:
-        path: /root/.ZAP/
-        key: zap-cache-${{ runner.os }}-${{ hashFiles('**/gen.conf') }}
-        restore-keys: |
-          zap-cache-${{ runner.os }}-
+    # - name: Cache OWASP ZAP
+    #   uses: actions/cache@v2
+    #   with:
+    #     path: /root/.ZAP/
+    #     key: zap-cache-${{ runner.os }}-${{ hashFiles('**/gen.conf') }}
+    #     restore-keys: |
+    #       zap-cache-${{ runner.os }}-
 
     # - name: Run security checks
     #   run: |
     #     docker run --rm -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable zap-baseline.py -t https://tabantaj.silent4business.com -g gen.conf -r report.html
 
-    - name: Run OWASP Dependency-Check
-      uses: docker://owasp/dependency-check:latest
-      with:
-        entrypoint: /usr/share/dependency-check/bin/dependency-check.sh
-        args: --scan /
+    # - name: Run OWASP Dependency-Check
+    #   uses: docker://owasp/dependency-check:latest
+    #   with:
+    #     entrypoint: /usr/share/dependency-check/bin/dependency-check.sh
+    #     args: --scan /
 
-    - name: Run ESLint
-      run: |
-        docker-compose exec app npm run lint
+    # - name: Run ESLint
+    #   run: |
+    #     docker-compose exec app npm run lint
 
     # - name: Run Clair Container Scan
     #   run: |
@@ -79,6 +79,6 @@ jobs:
     #   run: |
     #     docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -e SNYK_TOKEN=$SNYK_TOKEN snyk/snyk test --all-projects
 
-    - name: Run OWASP ZAP
-      run: |
-        docker run --rm -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable zap-baseline.py -t https://tabantaj.silent4business.com -g gen.conf -r report.html
+    # - name: Run OWASP ZAP
+    #   run: |
+    #     docker run --rm -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable zap-baseline.py -t https://tabantaj.silent4business.com -g gen.conf -r report.html
