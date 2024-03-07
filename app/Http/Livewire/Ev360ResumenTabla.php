@@ -197,7 +197,17 @@ class Ev360ResumenTabla extends Component
                         ->where('evaluador_id', $evaluador->evaluador_id)
                         ->orderBy('id')
                         ->get();
-                    $evaluador_empleado = Empleado::select('id', 'name', 'email', 'foto')->find($evaluador->evaluador_id);
+
+
+                    $evaluador_empleado = DB::table('empleados')
+                        ->select('id', 'name', 'email', 'foto')
+                        ->where('id', $evaluador->evaluador_id)
+                        ->first();
+
+
+
+
+                    // $evaluador_empleado = Empleado::select('id', 'name', 'email', 'foto')->find($evaluador->evaluador_id);
 
                     return $this->obtenerInformacionDeLaEvaluacionDeCompetencia($evaluador_empleado, $evaluador, $evaluado, $evaluaciones_competencias, $evaluacion);
                 }),
