@@ -473,7 +473,7 @@ class Empleado extends Model implements Auditable
 
     public function puestoRelacionado()
     {
-        return $this->belongsTo('App\Models\Puesto', 'puesto_id', 'id');
+        return $this->belongsTo('App\Models\Puesto', 'puesto_id', 'id')->select('id', 'puesto');
     }
 
     public function getCompetenciasAsignadasAttribute()

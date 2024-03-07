@@ -50,7 +50,6 @@ class Ev360ResumenTabla extends Component
 
     public function render()
     {
-        //$evaluacion = Evaluacion::select('id', 'nombre')->with('evaluados')->find(intval($this->evaluacion));
         $evaluacion = Evaluacion::select('id', 'nombre')->with('evaluados:id,name,area_id,puesto_id')->where('id', '=', intval($this->evaluacion))->first();
 
         $evaluados = $evaluacion->evaluados;
