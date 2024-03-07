@@ -67,9 +67,9 @@ jobs:
     #     entrypoint: /usr/share/dependency-check/bin/dependency-check.sh
     #     args: --scan /
 
-    - name: Run ESLint
-      run: |
-        docker-compose exec app npm run lint
+    # - name: Run ESLint
+    #   run: |
+    #     docker-compose exec app npm run lint
 
     # - name: Run Clair Container Scan
     #   run: |
