@@ -1,0 +1,350 @@
+<div>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+    <div class="pasos-create-evaluaciones mb-5">
+        <div class="paso-create-ev">
+            <span>1</span>
+            inicio
+        </div>
+        <hr>
+        <div class="paso-create-ev">
+            <span>2</span>
+            Periodos
+        </div>
+        <hr>
+        <div class="paso-create-ev">
+            <span>3</span>
+            Público
+        </div>
+        <hr>
+        <div class="paso-create-ev">
+            <span>4</span>
+            Evaluadores
+        </div>
+    </div>
+
+    @switch($paso)
+        @case('1')
+            <div class="tab-content" id="nav-create-1" role="tabpanel" aria-labelledby="nav-create-1">
+                <div>
+                    <div class="card card-body">
+                        <div class="info-first-config">
+                            <h4 class="title-config">Nombre de Evaluación</h4>
+                            <p>Asigna un nombre a tu evaluación y coloca una breve descripción.</p>
+                            <hr class="my-4">
+                        </div>
+
+                        <div class="form-group anima-focus">
+                            <input type="text" placeholder="" name="nombre_evaluacion" wire:model="nombre_evaluacion"
+                                class="form-control">
+                            <label for="nombre-evaluacion">Nombre</label>
+                        </div>
+
+                        <div class="form-group anima-focus">
+                            <textarea placeholder="" name="descripcion_evaluacion" wire:model="descripcion_evaluacion" class="form-control"></textarea>
+                            <label for="descripcion-evaluacion">Descripción</label>
+                        </div>
+                    </div>
+
+                    <div class="card card-body">
+                        <div class="info-first-config">
+                            <h4 class="title-config">Alcance de la Evaluación</h4>
+                            <p>
+                                Selecciona los rubros que deseas considerar en tu evaluación. Podrás distribuir el
+                                porcentaje
+                                que prefieras asignar a cada una de ellos, asegurándote de sumar en total el 100%."
+                            </p>
+                            <hr class="my-4">
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <span style="color: #3086AF;">Una ventana de</span>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-4">
+                                <div class="p-4 rounded-lg d-flex align-items-center justify-content-between"
+                                    style="background-color: #8C91D6;">
+                                    <div class="d-flex align-items-center" style="gap: 10px;">
+                                        <input type="checkbox" name="activar_objetivos" wire:model="activar_objetivos">
+                                        <label for="activar_objetivos" style="color: #fff;" class="mb-0"> Objetivos
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <input type="number" wire:model="porcentaje_objetivos" name="porcentaje_objetivos"
+                                            style="width: 90px;">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="p-4 rounded-lg d-flex align-items-center justify-content-between"
+                                    style="background-color: #BB68A8;">
+                                    <div class="d-flex align-items-center" style="gap: 10px;">
+                                        <input type="checkbox" name="activar_competencias" wire:model="activar_competencias">
+                                        <label for="activar_competencias" style="color: #fff;" class="mb-0"> Competencias
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <input type="number" wire:model="porcentaje_competencias"
+                                            name="porcentaje_competencias" style="width: 90px;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-right my-4">
+                        <a wire:click.prevent="retroceder" class="btn btn-outline-primary" style="width: 170px;">ATRÁS</a>
+                        <a wire:click.prevent="primerPaso" class="btn btn-success" style="width: 170px;">SIGUIENTE</a>
+                    </div>
+                </div>
+            </div>
+        @break
+
+        @case('2')
+            <div class="tab-content" id="nav-create-2" role="tabpanel" aria-labelledby="nav-create-2">
+                {{-- <form wire:submit.prevent="segundoPaso(Object.fromEntries(new FormData($event.target)))"> --}}
+                <div class="card card-body">
+                    <div class="info-first-config">
+                        <h4 class="title-config">Periodos de los Objetivos</h4>
+                        <p>Define la periodicidad con la que se medirá la evaluación de tu empresa.</p>
+                        <hr class="my-4">
+                    </div>
+                    <div>
+                        Selecciona la periodicidad
+                    </div>
+                    <div class="d-flex mt-3" style="gap: 20px;">
+                        <div class="form-group">
+                            <input type="checkbox" name="mensual" id="mensual"
+                                wire:change="seleccionPeriodo('mensual', $event.target.checked)"
+                                @if ($mensual) checked @endif>
+                            <label class="mb-0" for="">Mensual</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="checkbox" name="bimestral" id="bimestral"
+                                wire:change="seleccionPeriodo('bimestral', $event.target.checked)"
+                                @if ($bimestral) checked @endif>
+                            <label class="mb-0" for="">Bimestral</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="checkbox" name="trimestral" id="trimestral"
+                                wire:change="seleccionPeriodo('trimestral', $event.target.checked)"
+                                @if ($trimestral) checked @endif>
+                            <label class="mb-0" for="">Trimestral</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="checkbox" name="semestral" id="semestral"
+                                wire:change="seleccionPeriodo('semestral', $event.target.checked)"
+                                @if ($semestral) checked @endif>
+                            <label class="mb-0" for="">Semestral</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="checkbox" name="anual" id="anual"
+                                wire:change="seleccionPeriodo('anual', $event.target.checked)"
+                                @if ($anual) checked @endif>
+                            <label class="mb-0" for="">Anual</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="checkbox" name="abierta" id="abierta"
+                                wire:change="seleccionPeriodo('abierta', $event.target.checked)"
+                                @if ($abierta) checked @endif>
+                            <label class="mb-0" for="">Abierta</label>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <div class="card card-body p-2 " style="background-color: #FFF3F3; color: #3086AF; font-size: 12px;">
+                        <div>
+                            El periodo de carga de objetivos esta corriendo del <strong> 01/01/24 </strong> al <strong>
+                                15/03/24
+                            </strong>
+                            <i class="ml-3">*Al cambiar y habilitar las fechas de los periodos de las evaluaciones se
+                                interrumpirá la carga de objetivos</i>
+                        </div>
+                    </div>
+
+                    <div class="datatable-fix">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Periodicidad: Trimestral</th>
+                                    <th>Fecha de inicio de la evaluación</th>
+                                    <th>Fecha de fin de la evaluación</th>
+                                    <th>Habilitar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($arreglo_periodos as $index => $ap)
+                                    <tr>
+                                        <td>
+                                            <div class="form-group anima-focus">
+                                                <input type="text" name="nombre_evaluacion[]"
+                                                    id="nombre_evaluacion_{{ $index }}"
+                                                    wire:model="arreglo_periodos.{{ $index }}.nombre_evaluacion"
+                                                    class="form-control" value="{{ $ap['nombre_evaluacion'] }}">
+                                                <label for="">Evaluación*</label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group anima-focus">
+                                                <input type="date" placeholder=""
+                                                    wire:model="arreglo_periodos.{{ $index }}.fecha_inicio"
+                                                    class="form-control" value="{{ $ap['fecha_inicio'] }}">
+                                                <label for="">Inicio de la evaluación</label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group anima-focus">
+                                                <input type="date" placeholder=""
+                                                    wire:model="arreglo_periodos.{{ $index }}.fecha_fin"
+                                                    class="form-control" value="{{ $ap['fecha_fin'] }}">
+                                                <label for="">Fin de la evaluación</label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="checkbox" class="form-control"
+                                                    wire:model="arreglo_periodos.{{ $index }}.habilitar">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="text-right my-4">
+                    <a wire:click.prevent="retroceder" class="btn btn-outline-primary" style="width: 170px;">ATRÁS</a>
+                    <a wire:click.prevent="segundoPaso" class="btn btn-success" style="width: 170px;">SIGUIENTE</a>
+                </div>
+                {{-- </form> --}}
+            </div>
+        @break
+
+        @case('3')
+            <div class="tab-content" id="nav-create-3" role="tabpanel" aria-labelledby="nav-create-3">
+                <div class="card card-body">
+                    <div class="info-first-config">
+                        <h4 class="title-config">Público</h4>
+                        <p>Selecciona a quien(es) va dirigida la evaluación o crea un nuevo grupo.</p>
+                        <hr class="my-4">
+                    </div>
+                    <div class="d-flex align-items-center" style="gap: 20px;">
+                        <select name="se" id="se" wire:change="seleccionarEvaluados($event.target.value)";
+                            class="form-control" style="max-width: 350px;">
+                            <option value="toda" selected>Toda la empresa</option>
+                            <option value="areas">Area</option>
+                            <option value="manualmente">Manualmente</option>
+                            <option value="grupo">Grupo</option>
+                        </select>
+
+                        <button class="btn btn-outline-primary">
+                            CREAR&nbsp;GRUPO
+                        </button>
+                    </div>
+
+                    <div class="d-flex align-items-center" style="gap: 20px;">
+                        @switch($select_evaluados)
+                            @case('toda')
+                            @break
+
+                            @case('areas')
+                                <select class="form-control" name="evaluados_areas" id="evaluados_areas"
+                                    wire:model="evaluados_areas">
+                                    @foreach ($areas as $area)
+                                        <option value="{{ $area->id }}">{{ $area->area }}</option>
+                                    @endforeach
+                                </select>
+                            @break
+
+                            @case('manualmente')
+                                <select class="form-control" name="evaluados_manual" id="evaluados_manual"
+                                    wire:model="evaluados_manual" multiple>
+                                    @foreach ($empleados as $empleado)
+                                        <option value="{{ $empleado->id }}">{{ $empleado->name }}</option>
+                                    @endforeach
+                                </select>
+                            @break
+
+                            @case('grupos')
+                                <h4>Select de grupos</h4>
+                            @break
+
+                            @default
+                        @endswitch
+                    </div>
+                </div>
+                <div class="text-right my-4">
+                    <a wire:click.prevent="retroceder" class="btn btn-outline-primary" style="width: 170px;">ATRÁS</a>
+                    <a wire:click.prevent="tercerPaso" class="btn btn-success" style="width: 170px;">SIGUIENTE</a>
+                </div>
+            </div>
+        @break
+
+        @case('4')
+            <div class="tab-content" id="nav-create-4" role="tabpanel" aria-labelledby="nav-create-4">
+                <div class="card card-body">
+                    <div class="info-first-config">
+                        <h4 class="title-config">Evaluador(es) de objetivos: Toda la empresa</h4>
+                        <p>Asigna a los evaluadores y su porcentaje de evaluacións</p>
+                        <hr class="my-4">
+                    </div>
+                    @foreach ($array_evaluados as $key => $evaluado)
+                        <div class="row">
+                            <div class="col-2">
+                                <div class="row">
+                                    {{ $evaluado['name'] }}
+                                </div>
+                                <div class="row">
+                                    {{ $evaluado['area'] }}
+                                </div>
+                            </div>
+                            <div class="col-1">
+                                <div class="row">
+                                    Objetivos
+                                </div>
+                                <div class="row">
+                                    Competencias
+                                </div>
+                            </div>
+                            <div class="9">
+                                <div class="row">
+                                    <div class="anima-focus">
+                                        <select class="form-control" name="evaluador_objetivo_{{ $key }}"
+                                            id="evaluador_objetivo_{{ $key }}">
+                                            @foreach ($array_evaluadores as $evaluador)
+                                                <option value="{{ $evaluador['id'] }}">{{ $evaluador['name'] }}</option>
+                                            @endforeach
+                                        </select>
+                                        <label for="evaluador_objetivo_{{ $key }}">Evaluador</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="anima-focus">
+                                        <select class="form-control" name="evaluador_competencia_{{ $key }}"
+                                            id="evaluador_competencia_{{ $key }}">
+                                            @foreach ($array_evaluadores as $evaluador)
+                                                <option value="{{ $evaluador['id'] }}">{{ $evaluador['name'] }}</option>
+                                            @endforeach
+                                        </select>
+                                        <label for="evaluador_competencia_{{ $key }}">Evaluador</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    @endforeach
+                </div>
+                <div class="text-right my-4">
+                    <a wire:click.prevent="retroceder" class="btn btn-outline-primary" style="width: 170px;">ATRÁS</a>
+                    <a href="" class="btn btn-success" style="width: 170px;">SIGUIENTE</a>
+                </div>
+            </div>
+        @break
+
+        @default
+    @endswitch
+</div>

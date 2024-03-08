@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin\RH;
 
 use App\Http\Controllers\Controller;
+use App\Models\Area;
+use App\Models\Empleado;
 use Illuminate\Http\Request;
 
 class EvaluacionesDesempeñoController extends Controller
@@ -33,7 +35,13 @@ class EvaluacionesDesempeñoController extends Controller
 
     public function createEvaluacion()
     {
-        return view('admin.recursos-humanos.evaluaciones-desempeño.create-evaluacion');
+        $areas = Area::getIdNameAll();
+        $empleados = Empleado::getIDaltaAll();
+        // dd(
+        //     $areas,
+        //     $empleados
+        // );
+        return view('admin.recursos-humanos.evaluaciones-desempeño.create-evaluacion', compact('areas', 'empleados'));
     }
 
     public function dashboardPersonal()
