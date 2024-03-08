@@ -55,7 +55,8 @@ class CapacitacionesPage:
         capacitaciones_btn.click()
         print("Botón de capacitaciones presionado")
         print("URL actual:", self.driver.current_url)
-    #MIS CURSOS
+
+    #MIS CURSOS OPTION
     def mis_cursos(self):
         mis_curso_btn = WebDriverWait(self.driver, 5).until(
             EC.visibility_of_element_located((By.XPATH, '//a[@href="https://192.168.9.78/admin/mis-cursos"]'))
@@ -63,58 +64,25 @@ class CapacitacionesPage:
         mis_curso_btn.click()
         print("Entrando a mis cursos")
         print("URL actual:", self.driver.current_url)
-    #CURSO 1
+
+    #MIS CURSOS SECTION
     def course_1(self):
         course_1_btn = WebDriverWait(self.driver, 5).until(
-            EC.visibility_of_element_located((By.XPATH, '//a[@href="https://192.168.9.78/admin/curso-estudiante/8"]'))
+            EC.visibility_of_element_located((By.XPATH, "//a[contains(.,'ISO 9001:2015 Sistemas de Gestión de Calidad')]"))
+
             )
         course_1_btn.click()
-        print("Entrando a curso 1")
-
-        print("URL actual:", self.driver.current_url)
-    #CATÁLOGO DE CURSOS
-    def catalogo_cursos(self):
-        catalogo_cursos_btn = WebDriverWait(self.driver, 5).until(
-            EC.visibility_of_element_located((By.XPATH, '//a[@href="https://192.168.9.78/admin/courses/test" and contains(text(), "MÁS INFORMACIÓN")]'))
-            )
-        catalogo_cursos_btn.click()
-        time.sleep(5)
-        print("Entrando a catalogo de cursos")
+        print("Entrando al curso 1")
         print("URL actual:", self.driver.current_url)
 
-        #CONTINUAR CON EL CURSO
-    def tomar_curso1(self):
-        tomar_curso1_btn = WebDriverWait(self.driver, 5).until(
-            EC.visibility_of_element_located((By.XPATH, '//a[@class="mt-4 btn btn-mas-info-c"]'))
-            )
-        time.sleep(2)
-        tomar_curso1_btn.click()
-        print("Tomando curso 1")
-        print("URL actual:", self.driver.current_url)
-        #VIDEO YT DEL CURSO
-    def yt_video(self):
-        try:
-            video_element = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, '//iframe[contains(@src, "youtube.com")]'))
-        )
-            assert video_element.is_displayed(), "El reproductor de video de YouTube no está visible"
-        except TimeoutException:
-            pytest.fail("El reproductor de video de YouTube no se encontró en la página")
-
-        #SIGUIENTE TEMA
-    def sig_tema(self):
+    def siguiente_tema(self):
         for _ in range(5):
-            toggle_button = WebDriverWait(self.driver, 5).until(
-        EC.visibility_of_element_located((By.XPATH, '//i[@class="text-2xl text-gray-600 fas fa-toggle-off"]'))
-        )
-
-            toggle_button.click()
-            time.sleep(1)
-            siguiente_btn = WebDriverWait(self.driver, 5).until(
-            EC.visibility_of_element_located((By.XPATH, '//a[contains(text(), "Siguiente tema")]'))
-        )
-            siguiente_btn.click()
-            time.sleep(2)
+            siguiente_tema_btn = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable((By.CSS_SELECTOR, "a.text-primary"))
+            )
+            siguiente_tema_btn.click()
+            print("Haciendo clic en 'Siguiente tema'")
+            print("URL actual:", self.driver.current_url)
 
 
 
