@@ -5,7 +5,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
-
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.support.ui import Select
 #CLASE PRINCIPAL
 class CapacitacionesPage:
     def __init__(self, driver):
@@ -65,24 +66,34 @@ class CapacitacionesPage:
         print("Entrando a mis cursos")
         print("URL actual:", self.driver.current_url)
 
-    #MIS CURSOS SECTION
-    def course_1(self):
-        course_1_btn = WebDriverWait(self.driver, 5).until(
-            EC.visibility_of_element_located((By.XPATH, "//a[contains(.,'ISO 9001:2015 Sistemas de Gestión de Calidad')]"))
+    #CATÁLOGO DE CURSOS
+    def primer_filtro(self):
+        primer_filtro_btn = WebDriverWait(self.driver, 5).until(
+        EC.visibility_of_element_located((By.XPATH, "//select[@name='todo' and @id='todoSelect']"))
+    )
+        primer_filtro_btn.click()
+        time.sleep(1)
+    def segundo_filtro(self):
+        segundo_filtro_btn = WebDriverWait(self.driver, 5).until(
+            EC.visibility_of_element_located((By.XPATH, "//select[@name='category' and @id='categorySelect']"))
+        )
+        select = Select(segundo_filtro_btn)
+        select.select_by_index(2)
 
-            )
-        course_1_btn.click()
-        print("Entrando al curso 1")
-        print("URL actual:", self.driver.current_url)
+    def tercer_filtro(self):
+        tercer_filtro_btn = WebDriverWait(self.driver, 5).until(
+            EC.visibility_of_element_located((By.XPATH, "//select[@name='level' and @id='levelSelect']"))
+        )
+        select = Select(tercer_filtro_btn)
+        select.select_by_index(3)
+        pdb.set_trace()
 
-    def siguiente_tema(self):
-        for _ in range(5):
-            siguiente_tema_btn = WebDriverWait(self.driver, 10).until(
-            EC.element_to_be_clickable((By.CSS_SELECTOR, "a.text-primary"))
-            )
-            siguiente_tema_btn.click()
-            print("Haciendo clic en 'Siguiente tema'")
-            print("URL actual:", self.driver.current_url)
+
+
+
+
+
+
 
 
 
