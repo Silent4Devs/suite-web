@@ -106,8 +106,8 @@
                 </div>
                 <div class="col s12 l6">
                     <strong>Proyecto:</strong> <br>
-                    {{ $requisicion->contrato->no_proyecto }} / {{ $requisicion->contrato->no_contrato }} -
-                    {{ $requisicion->contrato->nombre_servicio }}
+                    {{ isset($requisicion->contrato->no_proyecto) }} / {{ isset($requisicion->contrato->no_contrato) }} -
+                    {{ isset($requisicion->contrato->nombre_servicio) }}
                 </div>
             </div>
         </div>
