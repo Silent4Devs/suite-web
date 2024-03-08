@@ -536,7 +536,7 @@
                 let dataRadio = document.querySelector('input[name=contact]:checked').value;
 
                 const responsables = $(e.target.parentElement.querySelector('select')).select2('data');
-                console.log(dataRadio,'saul');
+               
                 const array_responsables = [];
                 if (responsables) {
                     responsables.forEach(responsable => {

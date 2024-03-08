@@ -7,7 +7,6 @@ pipeline {
         SERVER_IP = '192.168.9.78'
     }
 
-
     stages {
         stage('Git Pull via SSH') {
             steps {

@@ -1,4 +1,4 @@
-name: Build and Tes
+name: Build and Test
 run-name: ${{ github.actor }} run Build and Test
 on:
   push:
