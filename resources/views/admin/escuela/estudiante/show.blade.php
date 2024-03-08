@@ -42,7 +42,7 @@
             text-align: left;
             font: normal normal medium 18px/21px Roboto;
             letter-spacing: 0px;
-            color: #606060;
+            color: black;
             opacity: 1;
         }
 
@@ -52,6 +52,7 @@
             letter-spacing: 0px;
             color: #606060;
             opacity: 1;
+            margin-top: 1px;
         }
 
         .resumen-info{
@@ -115,7 +116,7 @@
           <div class="col-md-4">
             <div class="card" style="min-height: 360px;">
               <div class="card-body" style="padding-top: 15px;">
-                <h5 >{{ $course->title ? $course->title : 'Sin nombre' }}</h5>
+                <h5 style="color: #000000">{{ $course->title ? $course->title : 'Sin nombre' }}</h5>
                 {{-- <h3 class="mb-3 text-4xl">{{ $course->subtitle ? $course->subtitle : 'Sin nombre' }}</h3> --}}
                 @if($instructor)
                     <p class="resumen-info">Instructor: {{ $instructor->name }}</p>
@@ -187,9 +188,7 @@
                         <section class="mb-12 card">
                             <div class="card-body">
                                 <h5 class="title-aprendizaje">
-                                    <strong>
                                         Descripción
-                                    </strong>
                                 </h5>
                                 @if ($course->description)
                                     <p class="subtitle-aprendizaje">
@@ -201,9 +200,7 @@
                                     </p>
                                 @endif
                                 <h5 class="title-aprendizaje">
-                                    <strong>
                                         Lo que aprenderás
-                                    </strong>
                                 </h5>
                                 @if ($course->goals->isNotEmpty())
                                     <ul style="list-style: none;">
@@ -220,9 +217,7 @@
                                 @endif
 
                                 <h5 class="title-aprendizaje">
-                                    <strong>
                                         Requisitos
-                                    </strong>
                                 </h5>
                                 @if($course->requirements->isNotEmpty())
                                     <ul class="list-disc list-inside">

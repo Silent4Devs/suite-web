@@ -1,4 +1,5 @@
-<div class="mis-c-catalogo-cursos">
+
+<div class="container-fluid">
     <h3 class="title-main-cursos" style="margin-top: 40px;">Catálogo de cursos</h3>
     <div class="caja-selects-catalogo">
         <form wire:submit.prevent="resetFilters" id="todo">
@@ -36,12 +37,12 @@
         @endphp
 
             <div class="card card-body mi-curso">
-                <div class="caja-img-mi-curso" style="margin-top: 15px;">
-                    <img src="{{ asset($c->image->url) }}" alt="">
-                </div>
+                {{-- <div class="caja-img-mi-curso" > --}}
+                    <img src="{{ asset($c->image->url) }}" alt="" class="img-card" style="height: 161px; border-radius: 12px 12px 0px 0px;">
+                {{-- </div> --}}
                 <div class="caja-info-card-mc">
 
-                    <p style="font-size: 18px;"><strong>{{ $c->title }}</strong></p>
+                    <p style="font-size: 18px; color:#000000">{{ $c->title }}</p>
                     <p style="margin-top: 0px;">Creado: {{ $c->teacher->name }} </p>
                     @if($instructor)
                         <p style="margin-top: 0px;">Instructor: {{ $instructor->name }}</p>
@@ -81,12 +82,9 @@
                             {{ $c->students_count }}
                         </div>
                     </div>
-                    <div class="text-right mt-4">
-
-                        <button type="button" class="btn btn-mi-course" data-toggle="modal" data-target="#course-{{$c->id}}">
+                        <button type="button" class="btn btn-mi-course" data-toggle="modal" data-target="#course-{{$c->id}}" style="margin-bottom: 20px;">
                             Más información
                         </button>
-                    </div>
                 </div>
             </div>
 
@@ -102,7 +100,7 @@
                                 </span>
                         </button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body" style="padding-left: 41px; padding-right: 41px;">
                     <div>
                         @if ($c && $c->lesson_introduction)
                             <div>
