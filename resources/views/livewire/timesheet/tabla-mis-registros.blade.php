@@ -15,6 +15,7 @@
                 <table id="datatable_timesheet" class="table w-100 datatable_timesheet_registros_reportes">
                     <thead class="w-100">
                         <tr>
+                            <th>ID </th>
                             <th>Semana </th>
                             <th>Estatus</th>
                             <th>Opciones</th>
@@ -24,6 +25,9 @@
                     <tbody>
                         @foreach ($times as $time)
                             <tr class="tr_{{ $time->estatus }}">
+                                <td>
+                                    {{ $time->id }}
+                                </td>
                                 <td>
                                     {!! $time->semana !!}
                                 </td>

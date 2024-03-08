@@ -292,14 +292,13 @@ class EV360ObjetivosController extends Controller
         if (isset($ev->id)) {
             $objres = ObjetivoRespuesta::where('objetivo_id', $objetivo->objetivo_id)
                 ->where('evaluado_id', $objetivo->empleado_id)
-                ->where('evaluacion_id', '=', $ev->id)->first();
+                ->where('evaluacion_id', '=', $ev->id)->delete();
             // $objres->evaluacionActiva(1, 2);
-            // dd($ev->id, $objres, $objetivo->objetivo_id);
-            //Borrar si existe
-            if ($objres != null) {
-                // dd('Entra a borrar');
-                $objres->delete();
-            }
+            // //Borrar si existe
+            // if ($objres != null) {
+            //     // dd('Entra a borrar');
+            //     $objres->delete();
+            // }
             // dd('no borra', $objres, $objetivo, $ev);
         }
         // dd('no entra');
