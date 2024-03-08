@@ -560,7 +560,7 @@ input::file-selector-button {
     max-width: 0px;
     max-height: 0px;
     overflow: hidden;
-    transform: translateY(100px);
+    /* transform: translateY(100px); */
     opacity: 0;
     transition: 0.4s;
 }
@@ -570,7 +570,7 @@ input::file-selector-button {
     position: relative;
     max-width: unset;
     max-height: unset;
-    transform: translateY(0px);
+    /* transform: translateY(0px); */
     opacity: 1;
 }
 
