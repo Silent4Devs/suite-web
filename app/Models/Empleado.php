@@ -560,7 +560,7 @@ class Empleado extends Model implements Auditable
 
     public function supervisorEv360()
     {
-        return $this->belongsTo(self::class, 'supervisor_id', 'id');
+        return $this->belongsTo(self::class, 'supervisor_id', 'id')->select('id', 'name', 'area_id');
     }
 
     public function onlyChildren()
