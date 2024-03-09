@@ -271,13 +271,13 @@
         }
 
         function renderKanban(response) {
-            $.ajax({
-                type: "GET",
-                url: "{{ asset('storage/gantt/status.json') }}",
-                success: function(estatuses) {
-                    renderKanbanNew(response.tasks, response);
-                }
-            });
+            // $.ajax({
+            //     type: "GET",
+            //     url: "{{ asset('storage/gantt/status.json') }}",
+            //     success: function(estatuses) {
+            //         renderKanbanNew(response.tasks, response);
+            //     }
+            // });
         }
         // Obtener el token CSRF una vez
         document.getElementById('fileInput').addEventListener('change', manejarSeleccionArchivos);

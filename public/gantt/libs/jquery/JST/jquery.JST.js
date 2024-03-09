@@ -43,14 +43,14 @@ $.JST = {
           try {
             $.JST._templates[type] = new Function("obj", strFunc);
           } catch (e) {
-            console.error("JST error: "+type, e,strFunc);
+            // console.error("JST error: "+type, e,strFunc);
           }
 
           } else { //plain template   e.g. ##id##
           try {
             $.JST._templates[type] = templateBody;
           } catch (e) {
-            console.error("JST error: "+type, e,templateBody);
+            // console.error("JST error: "+type, e,templateBody);
           }
           }
 

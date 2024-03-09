@@ -145,7 +145,7 @@
     color: #fff !important;
     }
 </style>
-<div>
+<div class="table-plan-acc-index">
     <div style="align-items: end">
         <div class="col-12">
             <div class="planesTrabajoTitle">
@@ -295,11 +295,11 @@
                                 <?php
                                 $urlVerPlanAccion = '';
                                 $urlEditarPlanAccion = route('admin.planes-de-accion.edit', $plan);
-
+                                
                                 if ($plan->norma == 'ISO 27001') {
                                     $urlEditarPlanAccion = route('admin.planes-de-accion.edit', $plan);
                                 }
-
+                                
                                 $urlEliminarPlanAccion = route('admin.planes-de-accion.destroy', $plan->id);
                                 $urlVerPlanAccion = $plan->id == 1 ? route('admin.planTrabajoBase.index') : route('admin.planes-de-accion.show', $plan->id);
                                 ?>
