@@ -303,6 +303,13 @@
                     grupos[estado].push(item);
                 }
             });
+            document.getElementById('totalesStrong').innerHTML = tasks.length;
+            document.getElementById('tareasStrong').innerHTML = grupos.iniciar.length;
+            document.getElementById('suspendidosStrong').innerHTML = grupos.suspendida.length;
+            document.getElementById('procesoStrong').innerHTML = grupos.progreso.length;
+            document.getElementById('retrasadosStrong').innerHTML = grupos.retraso.length;
+            document.getElementById('completadosStrong').innerHTML = grupos.completado.length;
+
             let countIniciar;
             var KanbanTest = new jKanban({
                 element: "#myKanban",

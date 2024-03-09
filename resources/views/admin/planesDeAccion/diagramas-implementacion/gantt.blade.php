@@ -126,10 +126,6 @@
                     },
                     error: function(response) {
                         toastr.error(response);
-                        // setTimeout(() => {
-                        //     toastr.info("Reiniciaremos el diagrama de gantt");
-                        //     window.location.reload();
-                        // }, 1000);
                     }
                 });
                 return ret;
