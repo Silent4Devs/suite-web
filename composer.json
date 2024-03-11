@@ -15,7 +15,7 @@
     "guzzlehttp/guzzle": "^7.2",
     "hammerstone/fast-paginate": "^1.0",
     "intervention/image": "^2.5",
-    "jantinnerezo/livewire-alert": "^2.2",
+    "jantinnerezo/livewire-alert": "^3.0",
     "jenssegers/date": "^4.0",
     "laragear/preload": "^1.1",
     "laravel/framework": "^10.0",
