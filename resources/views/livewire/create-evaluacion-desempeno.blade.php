@@ -1,7 +1,6 @@
 <div>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+    <x-loading-indicator />
 
     <div class="pasos-create-evaluaciones mb-5">
         <div class="paso-create-ev">
@@ -233,8 +232,9 @@
                         <hr class="my-4">
                     </div>
                     <div class="d-flex align-items-center" style="gap: 20px;">
-                        <select name="se" id="se" wire:change="seleccionarEvaluados($event.target.value)";
-                            class="form-control" style="max-width: 350px;">
+                        <select name="se" id="se" class="form-control" style="max-width: 350px;"
+                            wire:change="seleccionarEvaluados($event.target.value)";>
+
                             <option value="toda" selected>Toda la empresa</option>
                             <option value="areas">Area</option>
                             <option value="manualmente">Manualmente</option>
@@ -261,8 +261,8 @@
                             @break
 
                             @case('manualmente')
-                                <select class="form-control" name="evaluados_manual" id="evaluados_manual"
-                                    wire:model="evaluados_manual" multiple>
+                                <select class="form-control select2" name="evaluados_manual" id="evaluados_manual"
+                                    wire:model="evaluados_manual" multiple wire:ignore>
                                     @foreach ($empleados as $empleado)
                                         <option value="{{ $empleado->id }}">{{ $empleado->name }}</option>
                                     @endforeach
@@ -393,11 +393,32 @@
                 </div>
                 <div class="text-right my-4">
                     <a wire:click.prevent="retroceder" class="btn btn-outline-primary" style="width: 170px;">ATRÁS</a>
-                    <a href="" class="btn btn-success" style="width: 170px;">SIGUIENTE</a>
+                    <a href="#" wire:click="fundd()" class="btn btn-success" style="width: 170px;">SIGUIENTE</a>
                 </div>
             </div>
         @break
 
         @default
     @endswitch
+
+    @section('scripts')
+        <script type="text/javascript">
+            document.addEventListener('DOMContentLoaded', () => {
+                Livewire.on('select2', () => {
+                    $('.select2').select2({
+                        'theme': 'bootstrap4',
+                    });
+
+                    $('.select2').select2().on('change', function(e) {
+                        var data = $(this).select2("val");
+                        console.log(data);
+                    });
+                });
+
+                $('.select2').select2().on('change', function(e) {
+                    console.log(data);
+                });
+            });
+        </script>
+    @endsection
 </div>

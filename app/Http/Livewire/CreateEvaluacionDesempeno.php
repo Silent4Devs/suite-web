@@ -41,6 +41,18 @@ class CreateEvaluacionDesempeno extends Component
     public $array_evaluadores;
     public $colaboradores = [];
 
+    public $empleados_seleccionados = [];
+
+    public function fundd()
+    {
+        dd($this->empleados_seleccionados);
+    }
+
+    public function hydrate()
+    {
+        $this->emit('select2');
+    }
+
     public function mount()
     {
         // dd($a, $e);
