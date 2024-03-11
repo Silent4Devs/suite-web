@@ -302,39 +302,92 @@
                                     {{ $evaluado['area'] }}
                                 </div>
                             </div>
-                            <div class="col-1">
-                                <div class="row">
-                                    Objetivos
-                                </div>
-                                <div class="row">
-                                    Competencias
-                                </div>
-                            </div>
-                            <div class="9">
-                                <div class="row">
-                                    <div class="anima-focus">
-                                        <select class="form-control" name="evaluador_objetivo_{{ $key }}"
-                                            id="evaluador_objetivo_{{ $key }}">
-                                            @foreach ($array_evaluadores as $evaluador)
-                                                <option value="{{ $evaluador['id'] }}">{{ $evaluador['name'] }}</option>
-                                            @endforeach
-                                        </select>
-                                        <label for="evaluador_objetivo_{{ $key }}">Evaluador</label>
+                            <div class="col-10">
+                                @if ($activar_objetivos)
+                                    <div class="row">
+                                        <div class="col-2">
+                                            Objetivos
+                                        </div>
+                                        <div class="col-10">
+                                            <div class="row">
+                                                @foreach ($array_evaluadores[$key]['evaluador_objetivos'] as $index_obj => $evldr_obj)
+                                                    <div class="col-3">
+                                                        <div class="anima-focus">
+                                                            <select class="form-control"
+                                                                name="evaluador_objetivo_{{ $key }}"
+                                                                id="evaluador_objetivo_{{ $key }}"
+                                                                wire:model="array_evaluadores.{{ $key }}.evaluador_objetivos.{{ $index_obj }}">
+                                                                <option value="" selected>Seleccione un Evaluador
+                                                                </option>
+                                                                @foreach ($colaboradores as $colaborador)
+                                                                    <option value="{{ $colaborador['id'] }}">
+                                                                        {{ $colaborador['name'] }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                            <label
+                                                                for="evaluador_objetivo_{{ $key }}.evaluador_objetivos.{{ $index_obj }}">Evaluador</label>
+                                                        </div>
+                                                    </div>
+                                                    @if ($index_obj > 0)
+                                                        <div class="col-1">
+                                                            <a wire:click="removerEvaluadorObjetivos({{ $key }}, {{ $index_obj }})"
+                                                                class="btn btn-cancel">Borrar</a>
+                                                        </div>
+                                                    @endif
+                                                @endforeach
+                                                <div class="col-4">
+                                                    <a class="btn btn-primary"
+                                                        wire:click.prevent="agregarEvaluadorObjetivos({{ $key }} )">Agregar
+                                                        Evaluador</a>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="anima-focus">
-                                        <select class="form-control" name="evaluador_competencia_{{ $key }}"
-                                            id="evaluador_competencia_{{ $key }}">
-                                            @foreach ($array_evaluadores as $evaluador)
-                                                <option value="{{ $evaluador['id'] }}">{{ $evaluador['name'] }}</option>
-                                            @endforeach
-                                        </select>
-                                        <label for="evaluador_competencia_{{ $key }}">Evaluador</label>
+                                @endif
+                                @if ($activar_competencias)
+                                    <div class="row">
+                                        <div class="col-2">
+                                            Competencias
+                                        </div>
+                                        <div class="col-10">
+                                            <div class="row">
+                                                @foreach ($array_evaluadores[$key]['evaluador_competencias'] as $index_comp => $evldr_comp)
+                                                    <div class="col-3">
+                                                        <div class="anima-focus">
+                                                            <select class="form-control"
+                                                                name="evaluador_competencia_{{ $key }}"
+                                                                id="evaluador_competencia_{{ $key }}"
+                                                                wire:model="array_evaluadores.{{ $key }}.evaluador_competencias.{{ $index_comp }}">
+                                                                <option value="" selected>Seleccione un Evaluador
+                                                                </option>
+                                                                @foreach ($colaboradores as $colaborador)
+                                                                    <option value="{{ $colaborador['id'] }}">
+                                                                        {{ $colaborador['name'] }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                            <label
+                                                                for="evaluador_competencia_{{ $key }}.evaluador_competencias.{{ $index_comp }}">Evaluador</label>
+                                                        </div>
+                                                    </div>
+                                                    @if ($index_comp > 0)
+                                                        <div class="col-1">
+                                                            <a wire:click="removerEvaluadorCompetencias({{ $key }}, {{ $index_comp }})"
+                                                                class="btn btn-cancel">Borrar</a>
+                                                        </div>
+                                                    @endif
+                                                @endforeach
+                                                <div class="col-4">
+                                                    <a class="btn btn-primary"
+                                                        wire:click.prevent="agregarEvaluadorCompetencias({{ $key }})">Agregar
+                                                        Evaluador</a>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
+                                @endif
                             </div>
-
                         </div>
                     @endforeach
                 </div>

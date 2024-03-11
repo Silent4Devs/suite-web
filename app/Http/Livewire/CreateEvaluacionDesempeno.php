@@ -39,7 +39,7 @@ class CreateEvaluacionDesempeno extends Component
     public $evaluados;
     public $array_evaluados;
     public $array_evaluadores;
-    public $evaluadores = [];
+    public $colaboradores = [];
 
     public function mount()
     {
@@ -107,7 +107,7 @@ class CreateEvaluacionDesempeno extends Component
             case 'areas':
                 $ev_query = Area::with('totalIDEmpleados')->find($this->evaluados_areas);
                 $evld = $ev_query->totalIDEmpleados->pluck('id');
-                dd($evld);
+                // dd($evld);
                 break;
 
             case 'manualmente':
@@ -127,6 +127,11 @@ class CreateEvaluacionDesempeno extends Component
         $this->asignarEvaluadoresAEvaluados($evld);
 
         $this->paso++;
+    }
+
+    public function cuartoPaso()
+    {
+        // dd($this->array_evaluadores);
     }
 
     public function seleccionPeriodo($periodo, $valor)
@@ -308,24 +313,76 @@ class CreateEvaluacionDesempeno extends Component
             'puesto_id',
         )->with(['objetivos', 'children:id,name', 'supervisor:id,name', 'area:id,area', 'puestoRelacionado:id,puesto'])->where('estatus', 'alta')->whereNull('deleted_at')->get();
 
-        foreach ($evaluados as $id_evaluado) {
+        foreach ($evaluados as $key => $id_evaluado) {
+            // dd($key);
             $eva = $emps->find($id_evaluado);
-            $this->array_evaluados[] =
+            $this->array_evaluados[$key] =
                 [
                     'id' => $eva->id,
                     'name' => $eva->name,
                     'area' => $eva->area->area,
                 ];
+
+            if ($this->activar_objetivos == true && $this->activar_competencias == true) {
+
+                $this->array_evaluadores[$key] = [
+                    'evaluador_objetivos' => ['id_evaluador' => ''],
+                    'evaluador_competencias' => ['id_evaluador' => '']
+                ];
+            } elseif ($this->activar_objetivos == true && $this->activar_competencias == false) {
+
+                $this->array_evaluadores[] =
+                    [
+                        'evaluador_objetivos' => ['id_evaluador' => '']
+                    ];
+                // $this->array_evaluadores['evaluador_competencias'];
+            } elseif ($this->activar_objetivos == false && $this->activar_competencias == true) {
+
+                // $this->array_evaluadores['evaluador_objetivos'];
+                $this->array_evaluadores[] =
+                    [
+                        'evaluador_competencias' => ['id_evaluador' => '']
+                    ];
+            }
             // dd($eva);
         }
+        // dd($this->array_evaluadores);
 
         foreach ($emps as $emp) {
-            $this->array_evaluadores[] =                 [
-                'id' => $emp->id,
-                'name' => $emp->name,
-                // 'area' => $emp->area->area,
-            ];
+            $this->colaboradores[] =
+                [
+                    'id' => $emp->id,
+                    'name' => $emp->name,
+                    // 'area' => $emp->area->area,
+                ];
         }
         // dd($emps);
+    }
+
+    public function agregarEvaluadorObjetivos($posicion)
+    {
+        $this->array_evaluadores[$posicion]['evaluador_objetivos'][] = '';
+    }
+
+    public function removerEvaluadorObjetivos($posicion, $subposicion)
+    {
+        // dd($posicion, $subposicion);
+
+        unset($this->array_evaluadores[$posicion]['evaluador_objetivos'][$subposicion]);
+        $this->array_evaluadores = array_values($this->array_evaluadores);
+
+        // $this->array_evaluadores[$posicion]['evaluador_objetivos'][] = '';
+    }
+
+    public function agregarEvaluadorCompetencias($posicion)
+    {
+        $this->array_evaluadores[$posicion]['evaluador_competencias'][] = '';
+    }
+
+    public function removerEvaluadorCompetencias($posicion, $subposicion)
+    {
+        // dd($posicion, $subposicion);
+        unset($this->array_evaluadores[$posicion]['evaluador_competencias'][$subposicion]);
+        $this->array_evaluadores = array_values($this->array_evaluadores);
     }
 }
