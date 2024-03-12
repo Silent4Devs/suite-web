@@ -79,7 +79,7 @@ class ProveedoresOController extends Controller
         } catch (QueryException $e) {
             DB::rollback();
 
-            return 'Error al insertar el proveedor: '.$e->getMessage();
+            return 'Error al insertar el proveedor: ' . $e->getMessage();
         }
     }
 
@@ -102,10 +102,18 @@ class ProveedoresOController extends Controller
      */
     public function edit($id)
     {
-        abort_if(Gate::denies('katbol_proveedores_ordenes_compra_modificar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $proveedores = ProveedorOC::find($id);
+        try {
+            abort_if(Gate::denies('katbol_proveedores_ordenes_compra_modificar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            $proveedores = ProveedorOC::find($id);
 
-        return view('contract_manager.proveedores.edit', compact('proveedores'));
+            if (!$proveedores) {
+                abort(404);
+            }
+
+            return view('contract_manager.proveedores.edit', compact('proveedores'));
+        } catch (\Throwable $th) {
+            abort(404);
+        }
     }
 
     /**
