@@ -74,8 +74,7 @@ class TimesheetController extends Controller
             // 'rechazos_contador',
             // 'todos_contador',
             // 'borrador_contador',
-            // 'pendientes_contador',
-            // 'aprobados_contador',
+            // 'pendientes_contador'
             'logo_actual',
             'empresa_actual',
             'estatus'
@@ -97,8 +96,11 @@ class TimesheetController extends Controller
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
+        $user = auth()->user();
+        $empleado = Empleado::where('id', $user->empleado_id)->first();
+        $empleado_name = $empleado->name;
 
-        return view('admin.timesheet.mis-registros', compact('times', 'rechazos_contador', 'todos_contador', 'borrador_contador', 'pendientes_contador', 'aprobados_contador', 'logo_actual', 'empresa_actual', 'estatus'));
+        return view('admin.timesheet.mis-registros', compact('times', 'rechazos_contador', 'todos_contador', 'borrador_contador', 'pendientes_contador', 'aprobados_contador', 'logo_actual', 'empresa_actual', 'estatus', 'empleado_name'));
     }
 
     public function timesheetInicio()
