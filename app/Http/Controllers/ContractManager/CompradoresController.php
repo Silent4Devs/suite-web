@@ -5,13 +5,13 @@ namespace App\Http\Controllers\ContractManager;
 use App\Http\Controllers\Controller;
 use App\Models\ContractManager\Comprador;
 use App\Models\Empleado;
+use App\Models\Organizacion;
 use Gate;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Symfony\Component\HttpFoundation\Response;
-use App\Models\Organizacion;
 use PDF;
+use Symfony\Component\HttpFoundation\Response;
 
 class CompradoresController extends Controller
 {
@@ -80,7 +80,7 @@ class CompradoresController extends Controller
         } catch (QueryException $e) {
             DB::rollback();
 
-            return 'Error al insertar el producto: ' . $e->getMessage();
+            return 'Error al insertar el producto: '.$e->getMessage();
         }
     }
 
