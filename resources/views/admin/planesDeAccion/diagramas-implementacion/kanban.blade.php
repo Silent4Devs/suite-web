@@ -389,7 +389,7 @@
                     "initialstatus": statusInicial,
                     "finestatus": statusFinal,
                     "fecha": timestamp,
-                    "edito": "asdasd"
+                    "edito": "user"
                 };
 
                 if ('historic' in response) {
@@ -498,6 +498,7 @@
                         `<li class="log-list">Initial Status: ${mapStatusToEstatusText[item.initialstatus]}, Final Status: ${mapStatusToEstatusText[item.finestatus]}  Fecha: ${item.fecha} , Edito: ${item.edito} </li>`
                     ).join("") + "</ul>" :
                     "<span>No tiene historial</span>";
+
                 //funcion mostar los documentos adjuntos
                 const divadjuntos = document.getElementById("adjuntos");
                 const conteinerAdjuntos = document.getElementById('conteiner-adjuntos');
@@ -512,7 +513,6 @@
                     conteinerAdjuntos.innerHTML = '';
                 }
 
-                //mostar las areas de la empresa en areaSelect
                 const areaSelect = document.getElementById('areaSelect');
                 response.area.forEach(area => {
                     const option = document.createElement('option');
@@ -520,7 +520,6 @@
                     option.text = area.area;
                     areaSelect.appendChild(option);
                 });
-                //document.body.appendChild(areaSelect);
 
                 document.getElementById('idTaks').value = task.id;
                 document.getElementById('modal-title').innerHTML = task.name;
@@ -532,7 +531,6 @@
                 document.getElementById('inicio').value = timestampToDateString(task.start);
                 document.getElementById('fin').value = timestampToDateString(task.end);
                 document.getElementById('estatusSelect').value = mapStatusToEstatusText[task.status];
-                //document.getElementById('personasAsignadas').innerHTML = imagenestogle;
                 document.getElementById('logHistorico').innerHTML = htmlContentHistory;
 
                 seleccionarCheckboxes(task.tag);
@@ -687,28 +685,6 @@
                     "effort": 0
                 }));
             }
-        }
-        ///////////////////////////////funciones para agregar, eliminar,mostrar,editar personas agregadas//////////////////
-        const areaSelect = document.getElementById('areaSelect');
-        const agregarSelect = document.getElementById("agregarSelect");
-        const areaFormGroup = document.getElementById("areaForm");
-
-        areaSelect.addEventListener('change', handleAreaChange);
-        agregarSelect.addEventListener('change', handleSelectionChange);
-
-        handleSelectionChange();
-
-        function handleAreaChange() {
-            const id = parseInt(areaSelect.value);
-            const personafiltrada = responseLocal.resources.filter(persona => persona.area_id === id);
-            addOptionsFromArray(personafiltrada, personasAsignadas);
-        }
-
-        function handleSelectionChange() {
-            const seleccion = agregarSelect.value;
-            areaFormGroup.style.display = seleccion === "Por persona" ? "none" : "block";
-            const personafiltrada = seleccion === "Por persona" ? responseLocal.resources : [];
-            addOptionsFromArray(personafiltrada, personasAsignadas);
         }
 
         function saveStatusOnServer(response) {

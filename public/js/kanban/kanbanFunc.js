@@ -471,6 +471,28 @@ function getCircleColor(value) {
 /////////////////////////////////////////////////////////funciones para agregar personas
 let addedArray = [];
 
+const areaSelect = document.getElementById('areaSelect');
+const agregarSelect = document.getElementById("agregarSelect");
+const areaFormGroup = document.getElementById("areaForm");
+
+areaSelect.addEventListener('change', handleAreaChange);
+agregarSelect.addEventListener('change', handleSelectionChange);
+
+handleSelectionChange();
+
+function handleAreaChange() {
+    const id = parseInt(areaSelect.value);
+    const personafiltrada = responseLocal.resources.filter(persona => persona.area_id === id);
+    addOptionsFromArray(personafiltrada, personasAsignadas);
+}
+
+function handleSelectionChange() {
+    const seleccion = agregarSelect.value;
+    areaFormGroup.style.display = seleccion === "Por persona" ? "none" : "block";
+    const personafiltrada = seleccion === "Por persona" ? responseLocal.resources : [];
+    addOptionsFromArray(personafiltrada, personasAsignadas);
+}
+
 function addOptionsFromArray(dataArray, personasAsignadas) {
     if (personasAsignadas && personasAsignadas.length > 0) {
         personasAsignadas.forEach(item => {
