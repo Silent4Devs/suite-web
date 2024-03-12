@@ -21,37 +21,37 @@
         <div class="col-lg-2">
             <div class="card card-body" style="border-left-color: #83BCFE;">
                 <span>Totales</span>
-                <strong>20</strong>
+                <strong id="totalesStrong">20</strong>
             </div>
         </div>
         <div class="col-lg-2">
             <div class="card card-body" style="border-left-color: #ECCE7D;">
                 <span>Lista de tareas</span>
-                <strong>20</strong>
+                <strong id="tareasStrong">20</strong>
             </div>
         </div>
         <div class="col-lg-2">
             <div class="card card-body" style="border-left-color: #D4D4D4;">
                 <span>Suspendidos</span>
-                <strong>20</strong>
+                <strong id="suspendidosStrong">20</strong>
             </div>
         </div>
         <div class="col-lg-2">
             <div class="card card-body" style="border-left-color: #7DC0EC;">
                 <span>En proceso </span>
-                <strong>20</strong>
+                <strong id="procesoStrong">20</strong>
             </div>
         </div>
         <div class="col-lg-2">
             <div class="card card-body" style="border-left-color: #EC7D94;">
                 <span>Retrasados</span>
-                <strong>20</strong>
+                <strong id="retrasadosStrong">20</strong>
             </div>
         </div>
         <div class="col-lg-2">
             <div class="card card-body" style="border-left-color: #AAE29A;">
                 <span>Completados</span>
-                <strong>20</strong>
+                <strong id="completadosStrong">20</strong>
             </div>
         </div>
     </div>
@@ -133,20 +133,14 @@
                 url: "{{ route('admin.planes-de-accion.loadProject', $planImplementacion) }}",
                 success: function(response) {
                     ge.loadProject(response);
-                    // document.getElementById("ultima_modificacion").innerHTML = moment(response.updated_at)
-                    //     .format("DD-MM-YYYY hh:mm:ss A")
                     ge.checkpoint(); //empty the undo stac
                     renderKanban(response);
-                    //renderTable(response);
                     renderCalendar(response);
+                    initProject();
                     $(".ganttButtonBar button.requireWrite").attr("disabled", "true");
                 },
                 error: function(response) {
                     toastr.error(response);
-                    // setTimeout(() => {
-                    //     toastr.info("Reiniciaremos el diagrama de gantt");
-                    //     window.location.reload();
-                    // }, 1000);
                 }
             });
             return ret;
