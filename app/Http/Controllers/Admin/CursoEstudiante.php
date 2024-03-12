@@ -36,7 +36,12 @@ class CursoEstudiante extends Controller
     public function cursoEstudiante($curso_id)
     {
         try {
+
             $curso = Course::where('id', $curso_id)->first();
+
+            if (!$curso) {
+                abort(404);
+            }
 
             $evaluacionesLeccion = Evaluation::where('course_id', $curso_id)->get();
 

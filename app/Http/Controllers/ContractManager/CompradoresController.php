@@ -10,6 +10,8 @@ use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
+use App\Models\Organizacion;
+use PDF;
 
 class CompradoresController extends Controller
 {
@@ -78,7 +80,7 @@ class CompradoresController extends Controller
         } catch (QueryException $e) {
             DB::rollback();
 
-            return 'Error al insertar el producto: '.$e->getMessage();
+            return 'Error al insertar el producto: ' . $e->getMessage();
         }
     }
 
@@ -173,5 +175,19 @@ class CompradoresController extends Controller
         $query = Comprador::select('id', 'clave', 'nombre')->where('archivo', true)->get();
 
         return datatables()->of($query)->toJson();
+    }
+
+    public function pdfCompradores()
+    {
+
+        $compradores = Comprador::get();
+        $organizacions = Organizacion::getFirst();
+        $logo_actual = $organizacions->logo;
+
+        $pdf = PDF::loadView('compradores', compact('compradores', 'organizacions', 'logo_actual'));
+
+        $pdf->setPaper('A4', 'landscape');
+
+        return $pdf->download('compradores.pdf');
     }
 }
