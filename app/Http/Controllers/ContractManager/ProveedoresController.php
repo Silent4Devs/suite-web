@@ -112,10 +112,9 @@ class ProveedoresController extends Controller
             $proveedor = Proveedores::find($id);
             $personas = Fiscale::get();
 
-            if (!$proveedor) {
+            if (! $proveedor) {
                 abort(404);
             }
-
 
             return view('contract_manager.proveedor.edit')->with('proveedores', $proveedor)->with('personas', $personas);
         } catch (\Throwable $th) {
