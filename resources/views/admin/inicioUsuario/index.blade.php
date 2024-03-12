@@ -9,7 +9,7 @@
             <div class="header-card-iu">
                 <div class="d-flex justify-content-between align-items-start">
                     <div class="d-flex align-items-end">
-                        <h4 class="title-name-user">{{ $usuario->empleado->name }}</h4>
+                        <h4 class="title-name-user">{{ $empleado->name }}</h4>
                         <small class="ml-3">
                             <i class="fa-solid fa-location-dot"></i>
                             Torre Murano
@@ -18,65 +18,65 @@
                     <div style="text-align: center;">
                         <span>Estatus</span> <br>
                         <span class="estatus-user"
-                            style="background-color: #D2FDB8; color: #04B716;">{{ strtoupper($usuario->empleado->estatus) }}
+                            style="background-color: #D2FDB8; color: #04B716;">{{ strtoupper($empleado->estatus) }}
                         </span>
                     </div>
                 </div>
                 <div>
-                    Nº de empleado: <span>{{ $usuario->empleado->n_empleado }}</span>
+                    Nº de empleado: <span>{{ $empleado->n_empleado }}</span>
                 </div>
             </div>
             <div class="card overflow-hidden">
                 <div class="d-flex">
                     <div class=" info-blue-user">
                         <div class="img-person" style="width: 205px; height: 205px;">
-                            <img src="{{ asset('storage/empleados/imagenes/' . '/' . $usuario->empleado->avatar) }}"
+                            <img src="{{ asset('storage/empleados/imagenes/' . '/' . $empleado->avatar) }}"
                                 alt="">
                         </div>
                         <div class="mt-4">
-                            <a href="{{ route('admin.miCurriculum', $usuario->empleado->id) }}">Ver perfil profesional</a>
+                            <a href="{{ route('admin.miCurriculum', $empleado->id) }}">Ver perfil profesional</a>
                             <br>
                             <a href="{{ route('admin.inicio-Usuario.perfil-puesto') }}">Ver perfil de puesto</a> <br>
-                            <a href="{{ route('admin.inicio-Usuario.expediente', auth()->user()->empleado->id) }}">Mi
+                            <a href="{{ route('admin.inicio-Usuario.expediente', $empleado->id) }}">Mi
                                 expediente</a>
                         </div>
                         <div class="mt-4">
                             <strong>Email</strong><br>
-                            {{ $usuario->empleado->email }}
+                            {{ $empleado->email }}
                         </div>
                         <div class="mt-4">
                             <strong>Teléfono</strong><br>
-                            {{ $usuario->empleado->telefono }}
+                            {{ $empleado->telefono }}
                         </div>
                     </div>
                     <div class="card-body">
                         <h3 class="title-user-card">
-                            @if (isset($usuario->empleado->area->area))
-                                {{ $usuario->empleado->area->area }}
+                            @if (isset($empleado->area->area))
+                                {{ $empleado->area->area }}
                             @endif
                         </h3>
-                        <span> {{ $usuario->empleado->puesto }}</span>
+                        <span> {{ $empleado->puesto }}</span>
                         <hr class="my-4">
                         <div class=" caja-info-user-main">
                             <div>
                                 <span>Género</span><br>
-                                {{ $usuario->empleado->genero }}
+                                {{ $empleado->genero }}
                             </div>
                             <div>
                                 <span>Perfil</span><br>
-                                {{ $usuario->empleado->puesto }}
+                                {{ $empleado->puesto }}
                             </div>
                             <div>
                                 <span>Fecha de ingreso</span><br>
-                                {{ $usuario->empleado->fecha_ingreso }}
+                                {{ $empleado->fecha_ingreso }}
                             </div>
                             <div>
                                 <span>Jefe inmediato</span><br>
-                                {{ $usuario->empleado->jefe_inmediato }}
+                                {{ $empleado->jefe_inmediato }}
                             </div>
                             <div>
                                 <span>Cumpleaños</span><br>
-                                {{ $usuario->empleado->actual_birdthday }}
+                                {{ $empleado->actual_birdthday }}
                             </div>
                         </div>
                     </div>
@@ -224,7 +224,7 @@
 
         <div class="d-flex flex-wrap mt-4" style="gap: 25px;">
 
-            <a href="{{ route('admin.ev360-objetivos-empleado.show', ['empleado' => auth()->user()->empleado->id]) }}">
+            <a href="{{ route('admin.ev360-objetivos-empleado.show', ['empleado' => $empleado->id]) }}">
                 <div class="item-ob-ev" style="background-color: #2478B8;">
                     <div class="img-ob-ev">
                         <img src="{{ asset('img/inicio_usuario/objetivos.png') }}" alt="">
