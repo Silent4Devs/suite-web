@@ -119,8 +119,8 @@ class SedeController extends Controller
             $file = $request->file('foto_sedes');
             $extension = $file->getClientOriginalExtension();
             $name_image = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-            $new_name_image = 'UID_' . $sede->id . '_' . $name_image . '.' . $extension;
-            $route = storage_path('/app/public/sedes/imagenes/' . $new_name_image);
+            $new_name_image = 'UID_'.$sede->id.'_'.$name_image.'.'.$extension;
+            $route = storage_path('/app/public/sedes/imagenes/'.$new_name_image);
 
             $image = Image::make($file)->resize(256, null, function ($constraint) {
                 $constraint->aspectRatio();
@@ -166,7 +166,7 @@ class SedeController extends Controller
 
         if ($request->hasFile('foto_sedes')) {
             // Check and delete the existing image if it exists
-            $existingImagePath = 'sedes/imagenes/' . $sede->foto_sedes;
+            $existingImagePath = 'sedes/imagenes/'.$sede->foto_sedes;
 
             if ($sede->foto_sedes && Storage::disk('public')->exists($existingImagePath)) {
                 Storage::disk('public')->delete($existingImagePath);
@@ -176,8 +176,8 @@ class SedeController extends Controller
             $file = $request->file('foto_sedes');
             $extension = $file->getClientOriginalExtension();
             $name_image = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-            $new_name_image = 'UID_' . $sede->id . '_' . $name_image . '.' . $extension;
-            $route = storage_path('/app/public/sedes/imagenes/' . $new_name_image);
+            $new_name_image = 'UID_'.$sede->id.'_'.$name_image.'.'.$extension;
+            $route = storage_path('/app/public/sedes/imagenes/'.$new_name_image);
 
             // Enqueue the image processing job, passing the file, route and the desired width
             Queue::push(new ProcessImageCompressor($file, $route, 256));
@@ -243,7 +243,7 @@ class SedeController extends Controller
             abort_if(Gate::denies('sedes_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
             $sede = Sede::find($request);
 
-            if (!$sede) {
+            if (! $sede) {
                 abort(404);
             }
 
@@ -259,7 +259,7 @@ class SedeController extends Controller
             abort_if(Gate::denies('sedes_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
             $sede = Sede::find($request);
 
-            if (!$sede) {
+            if (! $sede) {
                 abort(404);
             }
 
