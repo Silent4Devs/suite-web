@@ -107,12 +107,20 @@ class ProveedoresController extends Controller
      */
     public function edit($id)
     {
-        abort_if(Gate::denies('katbol_proveedores_modificar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $proveedor = Proveedores::find($id);
-        $personas = Fiscale::get();
-        // dd($personas);
+        try {
+            abort_if(Gate::denies('katbol_proveedores_modificar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            $proveedor = Proveedores::find($id);
+            $personas = Fiscale::get();
 
-        return view('contract_manager.proveedor.edit')->with('proveedores', $proveedor)->with('personas', $personas);
+            if (!$proveedor) {
+                abort(404);
+            }
+
+
+            return view('contract_manager.proveedor.edit')->with('proveedores', $proveedor)->with('personas', $personas);
+        } catch (\Throwable $th) {
+            abort(404);
+        }
     }
 
     /**
