@@ -11,6 +11,7 @@ class EvaluacionesDesempeñoController extends Controller
 {
     public function index()
     {
+        return view('admin.recursos-humanos.evaluaciones-desempeño.index');
     }
 
     public function dashboardGeneral()

@@ -233,9 +233,8 @@
                     </div>
                     <div class="d-flex align-items-center" style="gap: 20px;">
                         <select name="se" id="se" class="form-control" style="max-width: 350px;"
-                            wire:change="seleccionarEvaluados($event.target.value)";>
-
-                            <option value="toda" selected>Toda la empresa</option>
+                            wire:change="seleccionarEvaluados($event.target.value)" wire:model="select_evaluados">
+                            <option value="toda">Toda la empresa</option>
                             <option value="areas">Area</option>
                             <option value="manualmente">Manualmente</option>
                             <option value="grupo">Grupo</option>
@@ -292,108 +291,267 @@
                         <p>Asigna a los evaluadores y su porcentaje de evaluacións</p>
                         <hr class="my-4">
                     </div>
-                    @foreach ($array_evaluados as $key => $evaluado)
-                        <div class="row">
-                            <div class="col-2">
-                                <div class="row">
-                                    {{ $evaluado['name'] }}
-                                </div>
-                                <div class="row">
-                                    {{ $evaluado['area'] }}
-                                </div>
-                            </div>
-                            <div class="col-10">
-                                @if ($activar_objetivos)
-                                    <div class="row">
-                                        <div class="col-2">
-                                            Objetivos
-                                        </div>
-                                        <div class="col-10">
-                                            <div class="row">
-                                                @foreach ($array_evaluadores[$key]['evaluador_objetivos'] as $index_obj => $evldr_obj)
-                                                    <div class="col-3">
-                                                        <div class="anima-focus">
-                                                            <select class="form-control"
-                                                                name="evaluador_objetivo_{{ $key }}"
-                                                                id="evaluador_objetivo_{{ $key }}"
-                                                                wire:model="array_evaluadores.{{ $key }}.evaluador_objetivos.{{ $index_obj }}">
-                                                                <option value="" selected>Seleccione un Evaluador
-                                                                </option>
-                                                                @foreach ($colaboradores as $colaborador)
-                                                                    <option value="{{ $colaborador['id'] }}">
-                                                                        {{ $colaborador['name'] }}
-                                                                    </option>
-                                                                @endforeach
-                                                            </select>
-                                                            <label
-                                                                for="evaluador_objetivo_{{ $key }}.evaluador_objetivos.{{ $index_obj }}">Evaluador</label>
-                                                        </div>
-                                                    </div>
-                                                    @if ($index_obj > 0)
-                                                        <div class="col-1">
-                                                            <a wire:click="removerEvaluadorObjetivos({{ $key }}, {{ $index_obj }})"
-                                                                class="btn btn-cancel">Borrar</a>
-                                                        </div>
-                                                    @endif
-                                                @endforeach
-                                                <div class="col-4">
-                                                    <a class="btn btn-primary"
-                                                        wire:click.prevent="agregarEvaluadorObjetivos({{ $key }} )">Agregar
-                                                        Evaluador</a>
-                                                </div>
-                                            </div>
-                                        </div>
+
+                    @if ($hayEmpleadosSinCompetencias)
+                        <div class="alert alert-danger"
+                            style="background: #FFFDE3 0% 0% no-repeat padding-box !important;
+            box-shadow: 0px 2px 3px #00000024 !important;
+            border: 2px solid #FFC400 !important;
+            border-radius: 21px !important;
+            opacity: 1 !important;"
+                            role="alert">
+                            Existen {{ $totalEmpleadosSinCompetencias }} colaboradores que no contienen
+                            competencias
+                            <div class="row mt-2 mb-2 ml-2 mr-2">
+                                @foreach ($listaEmpleadosSinCompetencias as $eSinCompetencias)
+                                    <div><img class="img_empleado"
+                                            src="{{ asset('storage/empleados/imagenes') }}/{{ $eSinCompetencias['avatar'] }}"
+                                            width="20px;" alt="{{ $eSinCompetencias['name'] }}"
+                                            title="{{ $eSinCompetencias['name'] }}">
                                     </div>
-                                @endif
-                                @if ($activar_competencias)
-                                    <div class="row">
-                                        <div class="col-2">
-                                            Competencias
-                                        </div>
-                                        <div class="col-10">
-                                            <div class="row">
-                                                @foreach ($array_evaluadores[$key]['evaluador_competencias'] as $index_comp => $evldr_comp)
-                                                    <div class="col-3">
-                                                        <div class="anima-focus">
-                                                            <select class="form-control"
-                                                                name="evaluador_competencia_{{ $key }}"
-                                                                id="evaluador_competencia_{{ $key }}"
-                                                                wire:model="array_evaluadores.{{ $key }}.evaluador_competencias.{{ $index_comp }}">
-                                                                <option value="" selected>Seleccione un Evaluador
-                                                                </option>
-                                                                @foreach ($colaboradores as $colaborador)
-                                                                    <option value="{{ $colaborador['id'] }}">
-                                                                        {{ $colaborador['name'] }}
-                                                                    </option>
-                                                                @endforeach
-                                                            </select>
-                                                            <label
-                                                                for="evaluador_competencia_{{ $key }}.evaluador_competencias.{{ $index_comp }}">Evaluador</label>
-                                                        </div>
-                                                    </div>
-                                                    @if ($index_comp > 0)
-                                                        <div class="col-1">
-                                                            <a wire:click="removerEvaluadorCompetencias({{ $key }}, {{ $index_comp }})"
-                                                                class="btn btn-cancel">Borrar</a>
-                                                        </div>
-                                                    @endif
-                                                @endforeach
-                                                <div class="col-4">
-                                                    <a class="btn btn-primary"
-                                                        wire:click.prevent="agregarEvaluadorCompetencias({{ $key }})">Agregar
-                                                        Evaluador</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endif
+                                @endforeach
                             </div>
+                            <button type="button" class="btn btn-outline-primary"
+                                style="border: 1px solid var(--unnamed-color-ff9900);
+                            background: #FFFFFF 0% 0% no-repeat padding-box;
+                            border: 1px solid #FF9900;
+                            border-radius: 8px;
+                            opacity: 0.8; text-align: center;
+                            font: normal normal normal 18px/22px Roboto;
+                            letter-spacing: 0px;
+                            color: #FF9900;
+                            opacity: 1;"
+                                onclick="openNewTabCompetencias()">Asignar
+                                Competencias
+                            </button>
+                            <button type="button" class="btn btn-outline-primary"
+                                style="background: #FF9900 0% 0% no-repeat padding-box;
+                            border: 1px solid #FF9900;
+                            border-radius: 8px;
+                            opacity: 0.8; text-align: center;
+                            font: normal normal normal 18px/22px Roboto;
+                            letter-spacing: 0px;
+                            color: #FFFFFF;
+                            opacity: 1;"
+                                wire:click="repetirConsultaCompetencias">
+                                Validar Competencias de Colaboradores
+                            </button>
                         </div>
-                    @endforeach
+                    @endif
+                    @if ($hayEmpleadosSinObjetivos)
+                        <div class="alert alert-danger"
+                            style="background: #FFFDE3 0% 0% no-repeat padding-box !important;
+            box-shadow: 0px 2px 3px #00000024 !important;
+            border: 2px solid #FFC400 !important;
+            border-radius: 21px !important;
+            opacity: 1 !important;"
+                            role="alert">
+                            Existen {{ $totalEmpleadosSinObjetivos }} colaboradores que no contienen
+                            objetivos
+                            <div class="row mt-2 mb-2 ml-2 mr-2">
+                                @foreach ($listaEmpleadosSinObjetivos as $eSinObjetivo)
+                                    <div><img class="img_empleado"
+                                            src="{{ asset('storage/empleados/imagenes') }}/{{ $eSinObjetivo['avatar'] }}"
+                                            width="20px;" alt="{{ $eSinObjetivo['name'] }}"
+                                            title="{{ $eSinObjetivo['name'] }}">
+                                    </div>
+                                @endforeach
+                            </div>
+                            <button type="button" class="btn btn-outline-primary"
+                                style="border: 1px solid var(--unnamed-color-ff9900);
+                            background: #FFFFFF 0% 0% no-repeat padding-box;
+                            border: 1px solid #FF9900;
+                            border-radius: 8px;
+                            opacity: 0.8; text-align: center;
+                            font: normal normal normal 18px/22px Roboto;
+                            letter-spacing: 0px;
+                            color: #FF9900;
+                            opacity: 1;"
+                                onclick="openNewTabObjetivos()">Asignar
+                                Objetivos
+                            </button>
+                            <button type="button" class="btn btn-outline-primary"
+                                style="background: #FF9900 0% 0% no-repeat padding-box;
+                            border: 1px solid #FF9900;
+                            border-radius: 8px;
+                            opacity: 0.8; text-align: center;
+                            font: normal normal normal 18px/22px Roboto;
+                            letter-spacing: 0px;
+                            color: #FFFFFF;
+                            opacity: 1;"
+                                wire:click="repetirConsultaObjetivos">
+                                Validar Objetivos de Colaboradores
+                            </button>
+                        </div>
+                    @endif
+                    @if ($hayEmpleadosObjetivosPendiente)
+                        <div class="alert alert-danger"
+                            style="background: #FFFDE3 0% 0% no-repeat padding-box !important;
+                            box-shadow: 0px 2px 3px #00000024 !important;
+                            border: 2px solid #FFC400 !important;
+                            border-radius: 21px !important;
+                            opacity: 1 !important;"
+                            role="alert">
+                            Existen {{ $totalEmpleadosObjetivosPendiente }} colaboradores que tienen
+                            objetivos pendientes de revisión.
+                            <div class="row mt-2 mb-2 ml-2 mr-2">
+                                @foreach ($listaEmpleadosObjetivosPendiente as $eObjetivoPendiente)
+                                    <div>
+                                        <img class="img_empleado"
+                                            src="{{ asset('storage/empleados/imagenes') }}/{{ $eObjetivoPendiente['avatar'] }}"
+                                            width="20px;" alt="{{ $eObjetivoPendiente['name'] }}"
+                                            title="{{ $eObjetivoPendiente['name'] }}">
+                                    </div>
+                                @endforeach
+                            </div>
+                            <button type="button" class="btn btn-outline-primary"
+                                style="border: 1px solid var(--unnamed-color-ff9900);
+                            background: #FFFFFF 0% 0% no-repeat padding-box;
+                            border: 1px solid #FF9900;
+                            border-radius: 8px;
+                            opacity: 0.8; text-align: center;
+                            font: normal normal normal 18px/22px Roboto;
+                            letter-spacing: 0px;
+                            color: #FF9900;
+                            opacity: 1;"
+                                onclick="openNewTabObjetivos()">Revisar
+                                Objetivos
+                                Pendientes
+                            </button>
+                            <button type="button" class="btn btn-outline-primary"
+                                style="background: #FF9900 0% 0% no-repeat padding-box;
+                            border: 1px solid #FF9900;
+                            border-radius: 8px;
+                            opacity: 0.8; text-align: center;
+                            font: normal normal normal 18px/22px Roboto;
+                            letter-spacing: 0px;
+                            color: #FFFFFF;
+                            opacity: 1;"
+                                wire:click="repetirConsultaObjetivosPendientes">
+                                Revisar Objetivos de Colaboradores
+                            </button>
+                        </div>
+                    @endif
+
+                    <div class="mt-3">
+                        @foreach ($array_evaluados as $key => $evaluado)
+                            <div class="row">
+                                <div class="col-2">
+                                    <div class="row">
+                                        {{ $evaluado['name'] }}
+                                    </div>
+                                    <div class="row">
+                                        {{ $evaluado['area'] }}
+                                    </div>
+                                </div>
+                                <div class="col-10">
+                                    @if ($activar_objetivos)
+                                        <div class="row">
+                                            <div class="col-2">
+                                                Objetivos
+                                            </div>
+                                            <div class="col-10">
+                                                <div class="row">
+                                                    @foreach ($array_evaluadores[$key]['evaluador_objetivos'] as $index_obj => $evldr_obj)
+                                                        <div class="col-2">
+                                                            <div class="anima-focus">
+                                                                <select class="form-control"
+                                                                    name="evaluador_objetivo_{{ $key }}"
+                                                                    id="evaluador_objetivo_{{ $key }}"
+                                                                    wire:model="array_evaluadores.{{ $key }}.evaluador_objetivos.{{ $index_obj }}">
+                                                                    <option value="" selected>Seleccione un Evaluador
+                                                                    </option>
+                                                                    @foreach ($colaboradores as $colaborador)
+                                                                        <option value="{{ $colaborador['id'] }}">
+                                                                            {{ $colaborador['name'] }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
+                                                                <label
+                                                                    for="evaluador_objetivo_{{ $key }}.evaluador_objetivos.{{ $index_obj }}">Evaluador</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-1">
+                                                            <input type="number" min="0" max="100"
+                                                                wire:model="array_porcentaje_evaluadores.{{ $key }}.porcentaje_evaluador_objetivos.{{ $index_obj }}">
+                                                        </div>
+                                                        @if ($index_obj > 0)
+                                                            <div class="col-1">
+                                                                <button class="btn trash-button"
+                                                                    wire:click="removerEvaluadorObjetivos({{ $key }}, {{ $index_obj }})"
+                                                                    class="btn btn-cancel"><i class="fa-regular fa-trash-can"
+                                                                        style="color: rgb(0, 0, 0); font-size: 15pt;"
+                                                                        title="Eliminar"></i></button>
+                                                            </div>
+                                                        @endif
+                                                    @endforeach
+                                                    <div class="col-4">
+                                                        <a class="btn btn-link" style="color: #3490dc;"
+                                                            wire:click.prevent="agregarEvaluadorObjetivos({{ $key }} )">+
+                                                            Agregar</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
+                                    @if ($activar_competencias)
+                                        <div class="row">
+                                            <div class="col-2">
+                                                Competencias
+                                            </div>
+                                            <div class="col-10">
+                                                <div class="row">
+                                                    @foreach ($array_evaluadores[$key]['evaluador_competencias'] as $index_comp => $evldr_comp)
+                                                        <div class="col-2">
+                                                            <div class="anima-focus">
+                                                                <select class="form-control"
+                                                                    name="evaluador_competencia_{{ $key }}"
+                                                                    id="evaluador_competencia_{{ $key }}"
+                                                                    wire:model="array_evaluadores.{{ $key }}.evaluador_competencias.{{ $index_comp }}">
+                                                                    <option value="" selected>Seleccione un Evaluador
+                                                                    </option>
+                                                                    @foreach ($colaboradores as $colaborador)
+                                                                        <option value="{{ $colaborador['id'] }}">
+                                                                            {{ $colaborador['name'] }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
+                                                                <label
+                                                                    for="evaluador_competencia_{{ $key }}.evaluador_competencias.{{ $index_comp }}">Evaluador</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-1">
+                                                            <input type="number" min="0" max="100"
+                                                                wire:model="array_porcentaje_evaluadores.{{ $key }}.porcentaje_evaluador_competencias.{{ $index_comp }}">
+                                                        </div>
+                                                        @if ($index_comp > 0)
+                                                            <div class="col-1">
+                                                                <button class="btn trash-button"
+                                                                    wire:click="removerEvaluadorCompetencias({{ $key }}, {{ $index_comp }})"
+                                                                    class="btn btn-cancel"> <i class="fa-regular fa-trash-can"
+                                                                        style="color: rgb(0, 0, 0); font-size: 15pt;"
+                                                                        title="Eliminar"></i></button>
+                                                            </div>
+                                                        @endif
+                                                    @endforeach
+                                                    <div class="col-4">
+                                                        <a class="btn-link" style="color: #3490dc;"
+                                                            wire:click.prevent="agregarEvaluadorCompetencias({{ $key }})">+
+                                                            Agregar
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
                 <div class="text-right my-4">
                     <a wire:click.prevent="retroceder" class="btn btn-outline-primary" style="width: 170px;">ATRÁS</a>
-                    <a href="#" wire:click="fundd()" class="btn btn-success" style="width: 170px;">SIGUIENTE</a>
+                    <a wire:click.prevent="cuartoPaso" class="btn btn-success" style="width: 170px;">SIGUIENTE</a>
                 </div>
             </div>
         @break

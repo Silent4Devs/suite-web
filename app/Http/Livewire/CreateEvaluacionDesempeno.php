@@ -5,9 +5,13 @@ namespace App\Http\Livewire;
 use App\Models\Area;
 use App\Models\Empleado;
 use Livewire\Component;
+use Illuminate\Validation\Rule;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class CreateEvaluacionDesempeno extends Component
 {
+    use LivewireAlert;
+
     public $paso = 1;
 
     //Variables primer paso
@@ -33,18 +37,37 @@ class CreateEvaluacionDesempeno extends Component
     public $areas;
     public $empleados;
     public $evaluados_areas;
-    public $evaluados_manual = [];
+    public $evaluados_manual;
+    public $empleados_seleccionados;
+
+    //verificacion objetivos y competencias
+    public $hayEmpleadosSinCompetencias = false;
+    public $totalEmpleadosSinCompetencias = 0;
+    public $listaEmpleadosSinCompetencias;
+    public $listaIDSinCompetencias;
+
+    public $hayEmpleadosSinObjetivos = false;
+    public $totalEmpleadosSinObjetivos = 0;
+    public $listaEmpleadosSinObjetivos;
+    public $listaIDSinObjetivos;
+
+    public $hayEmpleadosObjetivosPendiente = false;
+    public $totalEmpleadosObjetivosPendiente = 0;
+    public $listaEmpleadosObjetivosPendiente;
+    public $listaIDObjetivosPendiente;
+
+    public $bloquear_evaluacion = true;
 
     //Variables paso 4
     public $evaluados;
     public $array_evaluados;
     public $array_evaluadores;
+    public $array_porcentaje_evaluadores;
     public $colaboradores = [];
-
-    public $empleados_seleccionados;
 
     public function updatedEmpleadosSeleccionados($value)
     {
+        // dd($value);
         $this->empleados_seleccionados = $value;
         $this->tercerPaso();
     }
@@ -78,6 +101,21 @@ class CreateEvaluacionDesempeno extends Component
 
     public function primerPaso()
     {
+        $this->validate([
+            'nombre_evaluacion' => 'required|max:250',
+            'descripcion_evaluacion' => 'nullable',
+            'activar_objetivos' => [
+                'required_without_all:activar_competencias',
+                Rule::in([true]),
+            ],
+            'porcentaje_objetivos' => 'required_if:activar_objetivos,true',
+            'activar_competencias' => [
+                'required_without_all:activar_objetivos',
+                Rule::in([true]),
+            ],
+            'porcentaje_competencias' => 'required_if:activar_competencias,true',
+        ]);
+
         $datosPaso1 = [
             'nombre' => $this->nombre_evaluacion,
             'descripcion' => $this->descripcion_evaluacion,
@@ -110,12 +148,13 @@ class CreateEvaluacionDesempeno extends Component
 
     public function tercerPaso()
     {
-        dd($this->empleados_seleccionados);
+        // dd($this->empleados_seleccionados);
         $evld = [];
         switch ($this->select_evaluados) {
             case 'toda':
                 $ev_query = Empleado::getIDaltaAll();
                 $evld = $ev_query->pluck('id');
+                // dd($evld);
                 break;
 
             case 'areas':
@@ -125,11 +164,14 @@ class CreateEvaluacionDesempeno extends Component
                 break;
 
             case 'manualmente':
-                // $this->empleados = Empleado::getIDaltaAll()->sortBy('name');
-                // $this->areas = null;
-                // $this->select_evaluados = $valor;
+                // $ev_query = Empleado::getIDaltaAll()->sortBy('name');
 
-                // dd($this->empleados);
+                // foreach ($this->empleados_seleccionados as $id_emp_sel) {
+                //     $evld = $ev_query->find($id_emp_sel)->pluck('id');
+                // }
+                $evld = collect($this->empleados_seleccionados);
+
+                // dd($evld);
                 break;
 
             case 'grupos':
@@ -145,7 +187,7 @@ class CreateEvaluacionDesempeno extends Component
 
     public function cuartoPaso()
     {
-        // dd($this->array_evaluadores);
+        dd($this->array_evaluadores, $this->array_porcentaje_evaluadores);
     }
 
     public function seleccionPeriodo($periodo, $valor)
@@ -294,13 +336,14 @@ class CreateEvaluacionDesempeno extends Component
                 $this->select_evaluados = $valor;
                 $this->areas = null;
                 $this->empleados = null;
+
                 break;
 
             case 'areas':
                 $this->areas = Area::getIdNameAll()->sortBy('area');
                 $this->empleados = null;
                 $this->select_evaluados = $valor;
-                // dd($this->areas);
+
                 break;
 
             case 'manualmente':
@@ -308,7 +351,6 @@ class CreateEvaluacionDesempeno extends Component
                 $this->areas = null;
                 $this->select_evaluados = $valor;
 
-                // dd($this->empleados);
                 break;
 
             case 'grupos':
@@ -319,48 +361,16 @@ class CreateEvaluacionDesempeno extends Component
 
     public function asignarEvaluadoresAEvaluados($evaluados)
     {
+        $this->array_evaluados = [];
+
         $emps = Empleado::select(
             'id',
             'name',
             'area_id',
             'supervisor_id',
             'puesto_id',
+            'foto'
         )->with(['objetivos', 'children:id,name', 'supervisor:id,name', 'area:id,area', 'puestoRelacionado:id,puesto'])->where('estatus', 'alta')->whereNull('deleted_at')->get();
-
-        foreach ($evaluados as $key => $id_evaluado) {
-            // dd($key);
-            $eva = $emps->find($id_evaluado);
-            $this->array_evaluados[$key] =
-                [
-                    'id' => $eva->id,
-                    'name' => $eva->name,
-                    'area' => $eva->area->area,
-                ];
-
-            if ($this->activar_objetivos == true && $this->activar_competencias == true) {
-
-                $this->array_evaluadores[$key] = [
-                    'evaluador_objetivos' => ['id_evaluador' => ''],
-                    'evaluador_competencias' => ['id_evaluador' => '']
-                ];
-            } elseif ($this->activar_objetivos == true && $this->activar_competencias == false) {
-
-                $this->array_evaluadores[] =
-                    [
-                        'evaluador_objetivos' => ['id_evaluador' => '']
-                    ];
-                // $this->array_evaluadores['evaluador_competencias'];
-            } elseif ($this->activar_objetivos == false && $this->activar_competencias == true) {
-
-                // $this->array_evaluadores['evaluador_objetivos'];
-                $this->array_evaluadores[] =
-                    [
-                        'evaluador_competencias' => ['id_evaluador' => '']
-                    ];
-            }
-            // dd($eva);
-        }
-        // dd($this->array_evaluadores);
 
         foreach ($emps as $emp) {
             $this->colaboradores[] =
@@ -370,33 +380,155 @@ class CreateEvaluacionDesempeno extends Component
                     // 'area' => $emp->area->area,
                 ];
         }
-        // dd($emps);
+
+        foreach ($evaluados as $key => $id_evaluado) {
+            $eva = $emps->find($id_evaluado);
+            $this->array_evaluados[$key] =
+                [
+                    'id' => $eva->id,
+                    'name' => $eva->name,
+                    'avatar' => $eva->avatar,
+                    'area' => $eva->area->area,
+                    'competencias' => $eva->competencias_asignadas,
+                    'objetivos' => $eva->objetivos_asignados
+                ];
+
+            $this->listaEmpleadosSinCompetencias = collect();
+            $this->listaIDSinCompetencias = collect();
+            $this->listaEmpleadosSinObjetivos = collect();
+            $this->listaIDSinObjetivos = collect();
+            $this->listaEmpleadosObjetivosPendiente = collect();
+            $this->listaIDObjetivosPendiente = collect();
+            $this->totalEmpleadosSinCompetencias = 0;
+            $this->totalEmpleadosSinObjetivos = 0;
+            $this->totalEmpleadosObjetivosPendiente = 0;
+            $this->hayEmpleadosSinCompetencias = false;
+            $this->hayEmpleadosSinObjetivos = false;
+            $this->hayEmpleadosObjetivosPendiente = false;
+            // dd($this->array_evaluados);
+            foreach ($this->array_evaluados as $evaluadoL) {
+                // dd($evaluadoL['competencias']);
+                if ($evaluadoL['competencias'] == 0) {
+                    $this->hayEmpleadosSinCompetencias = true;
+                    $this->totalEmpleadosSinCompetencias++;
+                    $this->listaEmpleadosSinCompetencias->push(['name' => $evaluadoL['name'], 'avatar' => $evaluadoL['avatar']]);
+                    $this->listaIDSinCompetencias->push($evaluadoL['id']);
+                    // dd($this->listaEmpleadosSinCompetencias);
+                } elseif ($evaluadoL['objetivos']['cuenta'] == 0) {
+                    $this->hayEmpleadosSinObjetivos = true;
+                    $this->totalEmpleadosSinObjetivos++;
+                    $this->listaEmpleadosSinObjetivos->push(['name' => $evaluadoL['name'], 'avatar' => $evaluadoL['avatar']]);
+                    $this->listaIDSinObjetivos->push($evaluadoL['id']);
+                    // dd($this->listaEmpleadosSinObjetivos);
+                } elseif ($evaluadoL['objetivos']['pendientes'] == true) {
+                    $this->hayEmpleadosObjetivosPendiente = true;
+                    $this->totalEmpleadosObjetivosPendiente++;
+                    $this->listaEmpleadosObjetivosPendiente->push(['name' => $evaluadoL['name'], 'avatar' => $evaluadoL['avatar']]);
+                    $this->listaIDObjetivosPendiente->push($evaluadoL['id']);
+                    // dd($this->listaEmpleadosObjetivosPendiente);
+                }
+            }
+
+            if ($this->totalEmpleadosSinCompetencias > 0) {
+                $this->alert('warning', 'Sin Competencias', [
+                    'position' => 'center',
+                    'timer' => '600000',
+                    'toast' => false,
+                    'text' => 'Existen colaboradores sin competencias asignadas, no podra crear la evaluación si los colaboradores no tienen competencias para evaluar',
+                    'showConfirmButton' => true,
+                    'onConfirmed' => '',
+                    'confirmButtonText' => 'Confirmar',
+                    'timerProgressBar' => true,
+                ]);
+            } elseif ($this->totalEmpleadosSinObjetivos > 0) {
+                $this->alert('warning', 'Sin Objetivos', [
+                    'position' => 'center',
+                    'timer' => '600000',
+                    'toast' => false,
+                    'text' => 'Existen colaboradores sin objetivos asignados, no podra crear la evaluación si los colaboradores no tienen objetivos para evaluar',
+                    'showConfirmButton' => true,
+                    'onConfirmed' => '',
+                    'confirmButtonText' => 'Confirmar',
+                    'timerProgressBar' => true,
+                ]);
+            } elseif ($this->totalEmpleadosObjetivosPendiente > 0) {
+                $this->alert('warning', 'Objetivos Pendientes', [
+                    'position' => 'center',
+                    'timer' => '600000',
+                    'toast' => false,
+                    'text' => 'Existen colaboradores con objetivos asignados pendientes de revisar, no podra crear la evaluación si los colaboradores tienen objetivos con estatus pendientes.',
+                    'showConfirmButton' => true,
+                    'onConfirmed' => '',
+                    'confirmButtonText' => 'Confirmar',
+                    'timerProgressBar' => true,
+                ]);
+            } else {
+                $this->bloquear_evaluacion = false;
+            }
+
+            if ($this->activar_objetivos == true && $this->activar_competencias == true) {
+
+                $this->array_evaluadores[$key] = [
+                    'evaluador_objetivos' => [''],
+                    'evaluador_competencias' => ['']
+                ];
+
+                $this->array_porcentaje_evaluadores[$key] =
+                    [
+                        'porcentaje_evaluador_objetivos' => [''],
+                        'porcentaje_evaluador_competencias' => ['']
+                    ];
+            } elseif ($this->activar_objetivos == true && $this->activar_competencias == false) {
+
+                $this->array_evaluadores[] =
+                    [
+                        'evaluador_objetivos' => ['']
+                    ];
+
+                $this->array_porcentaje_evaluadores =  [
+                    'porcentaje_evaluador_objetivos' => [''],
+                ];
+            } elseif ($this->activar_objetivos == false && $this->activar_competencias == true) {
+
+                $this->array_evaluadores[] =
+                    [
+                        'evaluador_competencias' => ['']
+                    ];
+
+                $this->array_porcentaje_evaluadores =  [
+                    'porcentaje_evaluador_competencias' => ['']
+                ];
+            }
+        }
     }
 
     public function agregarEvaluadorObjetivos($posicion)
     {
         $this->array_evaluadores[$posicion]['evaluador_objetivos'][] = '';
+        $this->array_porcentaje_evaluadores[$posicion]['porcentaje_evaluador_objetivos'][] = '';
     }
 
     public function removerEvaluadorObjetivos($posicion, $subposicion)
     {
-        // dd($posicion, $subposicion);
-
         unset($this->array_evaluadores[$posicion]['evaluador_objetivos'][$subposicion]);
         $this->array_evaluadores = array_values($this->array_evaluadores);
 
-        // $this->array_evaluadores[$posicion]['evaluador_objetivos'][] = '';
+        unset($this->array_porcentaje_evaluadores[$posicion]['porcentaje_evaluador_objetivos'][$subposicion]);
+        $this->array_porcentaje_evaluadores = array_values($this->array_porcentaje_evaluadores);
     }
 
     public function agregarEvaluadorCompetencias($posicion)
     {
         $this->array_evaluadores[$posicion]['evaluador_competencias'][] = '';
+        $this->array_porcentaje_evaluadores[$posicion]['porcentaje_evaluador_competencias'][] = '';
     }
 
     public function removerEvaluadorCompetencias($posicion, $subposicion)
     {
-        // dd($posicion, $subposicion);
         unset($this->array_evaluadores[$posicion]['evaluador_competencias'][$subposicion]);
         $this->array_evaluadores = array_values($this->array_evaluadores);
+
+        unset($this->array_porcentaje_evaluadores[$posicion]['porcentaje_evaluador_competencias'][$subposicion]);
+        $this->array_porcentaje_evaluadores = array_values($this->array_porcentaje_evaluadores);
     }
 }

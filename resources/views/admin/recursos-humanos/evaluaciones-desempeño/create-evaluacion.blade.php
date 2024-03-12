@@ -1,6 +1,16 @@
 @extends('layouts.admin')
 @section('css')
     <link rel="stylesheet" href="{{ asset('css/evaluaciones.css') }}{{ config('app.cssVersion') }}">
+
+    <style>
+        .alert-danger {
+            background: #FFFDE3 0% 0% no-repeat padding-box !important;
+            box-shadow: 0px 2px 3px #00000024 !important;
+            border: 2px solid #FFC400 !important;
+            border-radius: 21px !important;
+            opacity: 1 !important;
+        }
+    </style>
 @endsection
 @section('content')
     {{-- {{ Breadcrumbs::render('capital-humano') }} --}}
