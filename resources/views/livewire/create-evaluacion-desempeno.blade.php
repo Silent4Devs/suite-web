@@ -279,7 +279,7 @@
                 </div>
                 <div class="text-right my-4">
                     <a wire:click.prevent="retroceder" class="btn btn-outline-primary" style="width: 170px;">ATRÁS</a>
-                    <a wire:click.prevent="tercerPaso" class="btn btn-success" style="width: 170px;">SIGUIENTE</a>
+                    <button id="btn-paso3" class="btn btn-success" style="width: 170px;">SIGUIENTE</button>
                 </div>
             </div>
         @break
@@ -404,6 +404,8 @@
     @section('scripts')
         <script type="text/javascript">
             document.addEventListener('DOMContentLoaded', () => {
+                let dataEmpleados = []; // Declarada fuera de la función para que sea accesible en todo el ámbito
+
                 Livewire.on('select2', () => {
                     $('.select2').select2({
                         'theme': 'bootstrap4',
@@ -411,12 +413,22 @@
 
                     $('.select2').select2().on('change', function(e) {
                         var data = $(this).select2("val");
-                        console.log(data);
+                        dataEmpleados = data;
+                        console.log(dataEmpleados);
                     });
                 });
 
                 $('.select2').select2().on('change', function(e) {
-                    console.log(data);
+                    var data = $(this).select2("val");
+                    dataEmpleados = data;
+                });
+
+                document.addEventListener('click', (e) => {
+                    if (e.target && e.target.id == 'btn-paso3') {
+                        e.preventDefault();
+                        console.log(dataEmpleados);
+                        @this.set('empleados_seleccionados', dataEmpleados);
+                    }
                 });
             });
         </script>

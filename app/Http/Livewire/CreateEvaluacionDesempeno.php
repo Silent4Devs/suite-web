@@ -41,11 +41,12 @@ class CreateEvaluacionDesempeno extends Component
     public $array_evaluadores;
     public $colaboradores = [];
 
-    public $empleados_seleccionados = [];
+    public $empleados_seleccionados;
 
-    public function fundd()
+    public function updatedEmpleadosSeleccionados($value)
     {
-        dd($this->empleados_seleccionados);
+        $this->empleados_seleccionados = $value;
+        $this->tercerPaso();
     }
 
     public function hydrate()
@@ -109,6 +110,7 @@ class CreateEvaluacionDesempeno extends Component
 
     public function tercerPaso()
     {
+        dd($this->empleados_seleccionados);
         $evld = [];
         switch ($this->select_evaluados) {
             case 'toda':
