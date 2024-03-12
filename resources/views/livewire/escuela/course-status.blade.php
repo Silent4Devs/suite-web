@@ -30,8 +30,6 @@
 
         <div style="width: 100%; ">
             <div style="position: sticky; top:80px;">
-                {{-- <h5 class="col-12 titulo_general_funcion">Mis Cursos</h5> --}}
-                <!--Para que me traiga correctamente el video hay que agregar -->
                 <div>
                     @if ($current && $current->iframe)
                         <div>
@@ -60,10 +58,7 @@
                                             <a href="#" id="test" class="text-muted">
                                                 < Tema anterior</a>
                                 @endif
-                                <div wire:loading wire:target="changeLesson({{ $this->previous }})">
-                                    <div class="spinner-border text-primary" role="status">
-                                        <span class="visually-hidden"></span>
-                                    </div>
+                                <div wire:target="changeLesson({{ $this->previous }})">
                                 </div>
                             </div>
                             <div class="col-6 d-flex justify-content-end">
@@ -75,17 +70,12 @@
                                 @else
                                     <a href="#" id="test" class="text-muted"> Siguiente tema > </a>
                                 @endif
-                                <div wire:loading wire:target="changeLesson({{ $this->next }})">
-                                    <div class="spinner-border text-success" role="status">
-                                        <span class="visually-hidden"></span>
-                                    </div>
+                                <div wire:target="changeLesson({{ $this->next }})">
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                {{-- <div class="card card-body d-flex justify-space-between">
-                </div> --}}
 
                 <div>
                     <div class="mt-4 cursor-pointer d-flex justify-content-end align-items-center" wire:click="completed"
