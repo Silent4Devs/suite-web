@@ -8,9 +8,20 @@
         .table tr td:nth-child(4) {
             min-width: 200px !important;
         }
+        #form_id {
+            display: none;
+        }
     </style>
 
     @include('partials.flashMessages')
+
+    <form method="POST" id="form_id" style="position: relative; left: 10rem; "
+    action="{{ route('contract_manager.compradores.pdf') }}">
+    @csrf
+    <button class="boton-transparentev2" type="submit" style="color: #306BA9;">
+        IMPRIMIR <img src="{{ asset('imprimir.svg') }}" alt="Importar" class="icon">
+    </button>
+    </form>
     <h5 class="col-12 titulo_general_funcion">Compradores</h5>
 
     <div class="text-right">
@@ -77,6 +88,11 @@
                     orientation: 'landscape',
                     exportOptions: {
                         columns: ['th:not(:last-child):visible']
+                    },
+                    action: function(e, dt, button, config) {
+                        // Aquí ejecutas la acción del formulario al presionar el botón
+                        var form = document.getElementById('form_id');
+                        form.submit();
                     },
                     customize: function(doc) {
                         doc.pageMargins = [5, 20, 5, 20];
