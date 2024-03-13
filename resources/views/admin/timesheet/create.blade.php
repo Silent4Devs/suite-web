@@ -13,7 +13,9 @@
     @include('admin.timesheet.complementos.admin-aprob')
 
     <x-loading-indicator />
+
     @livewire('timesheet.timesheet-horas-filas', ['origen' => 'create', 'timesheet_id' => null])
+
 @endsection
 
 
