@@ -57,9 +57,24 @@ class Contratos:
             )
         time.sleep(0.2)
         contratos_btn.click()
-    def agregar_contrato(self):
-        agregar_contrato_btn = WebDriverWait(self.driver, 5).until(
-            EC.element_to_be_clickable((By.XPATH, "//a[@class='btn btn-success'][contains(.,'Agregar Contrato +')]"))
-            )
-        time.sleep(0.2)
-        agregar_contrato_btn.click()
+    def contratos_del_area(self):
+        contratos_del_area_btn = WebDriverWait(self.driver, 5).until(
+            EC.element_to_be_clickable((By.XPATH, "//a[@class='nav-link active'][contains(.,'Contratos del Área')]"))
+    )
+        contratos_del_area_btn.click()
+        print("Botón de Contratos del Área presionado")
+        #CSV
+        csv_btn = WebDriverWait(self.driver, 5).until(
+            EC.element_to_be_clickable((By.XPATH, "(//i[contains(@class,'fas fa-file-csv')])[1]"))
+        )
+        csv_btn.click()
+        #EXCEL
+        excel_btn = WebDriverWait(self.driver, 5).until(
+            EC.element_to_be_clickable((By.XPATH, "(//button[@title='Exportar Excel'])[1]"))
+        )
+        excel_btn.click()
+        #PDF
+        pdf_btn = WebDriverWait(self.driver, 5).until(
+            EC.element_to_be_clickable((By.XPATH, "(//i[@class='fa fa-file-pdf-o'])[1]"))
+        )
+        pdf_btn.click()

@@ -9,4 +9,4 @@ def test_contratos(browser):
     contratos_page.open_menu()
     contratos_page.go_to_gestion_contractual()
     contratos_page.go_to_contratos()
-    contratos_page.agregar_contrato()
+    contratos_page.contratos_del_area()
