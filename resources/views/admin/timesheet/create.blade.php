@@ -36,7 +36,7 @@
             }
 
             $("#fecha_dia").flatpickr({
-                "minDate": "{{ auth()->user()->empleado->fecha_min_timesheet }}",
+                "minDate": "{{ $empleado->fecha_min_timesheet }}",
                 "maxDate": "{{ now()->addWeeks($organizacion->semanas_adicionales)->endOfWeek()->format('Y-m-d') }}",
                 "disable": [
                     function(date) {
