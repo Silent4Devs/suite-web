@@ -4,6 +4,10 @@ namespace App\Http\Livewire;
 
 use App\Models\Area;
 use App\Models\Empleado;
+use App\Models\EvaluacionDesempeno;
+use App\Models\EvaluadoresEvaluacionObjetivosDesempeno;
+use App\Models\EvaluadosEvaluacionDesempeno;
+use App\Models\PeriodosEvaluacionDesempeno;
 use Livewire\Component;
 use Illuminate\Validation\Rule;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
@@ -21,6 +25,7 @@ class CreateEvaluacionDesempeno extends Component
     public $porcentaje_objetivos = 50;
     public $activar_competencias = false;
     public $porcentaje_competencias = 50;
+    public $datosPaso1;
 
     //Variables segundo paso
     public $mensual = false;
@@ -31,6 +36,7 @@ class CreateEvaluacionDesempeno extends Component
     public $abierta = false;
     //Arreglo para recopilar periodos
     public $arreglo_periodos = [];
+    public $datosPaso2;
 
     //Variables paso 3
     public $select_evaluados = 'toda';
@@ -101,22 +107,22 @@ class CreateEvaluacionDesempeno extends Component
 
     public function primerPaso()
     {
-        $this->validate([
-            'nombre_evaluacion' => 'required|max:250',
-            'descripcion_evaluacion' => 'nullable',
-            'activar_objetivos' => [
-                'required_without_all:activar_competencias',
-                Rule::in([true]),
-            ],
-            'porcentaje_objetivos' => 'required_if:activar_objetivos,true',
-            'activar_competencias' => [
-                'required_without_all:activar_objetivos',
-                Rule::in([true]),
-            ],
-            'porcentaje_competencias' => 'required_if:activar_competencias,true',
-        ]);
+        // $this->validate([
+        //     'nombre_evaluacion' => 'required|max:250',
+        //     'descripcion_evaluacion' => 'nullable',
+        //     'activar_objetivos' => [
+        //         'required_without_all:activar_competencias',
+        //         Rule::in([true]),
+        //     ],
+        //     'porcentaje_objetivos' => 'required_if:activar_objetivos,true',
+        //     'activar_competencias' => [
+        //         'required_without_all:activar_objetivos',
+        //         Rule::in([true]),
+        //     ],
+        //     'porcentaje_competencias' => 'required_if:activar_competencias,true',
+        // ]);
 
-        $datosPaso1 = [
+        $this->datosPaso1 = [
             'nombre' => $this->nombre_evaluacion,
             'descripcion' => $this->descripcion_evaluacion,
             'activar_objetivos' => $this->activar_objetivos,
@@ -131,10 +137,10 @@ class CreateEvaluacionDesempeno extends Component
     public function segundoPaso()
     {
         // dd('2', $this->arreglo_periodos);
-        $datosPaso2 = [];
+        $this->datosPaso2 = [];
 
         foreach ($this->arreglo_periodos as $key => $ap) {
-            $datosPaso2[] =
+            $this->datosPaso2[] =
                 [
                     'nombre_evaluacion' => $ap['nombre_evaluacion'],
                     'fecha_inicio' => $ap['fecha_inicio'],
@@ -142,7 +148,7 @@ class CreateEvaluacionDesempeno extends Component
                     'habilitar' => $ap['habilitar']
                 ];
         }
-        // dd('datos', $datosPaso2);
+        // dd('datos', $this->datosPaso2);
         $this->paso++;
     }
 
@@ -179,7 +185,7 @@ class CreateEvaluacionDesempeno extends Component
                 break;
         }
         // dd($ev);
-        // dd($this->evaluados = $evld);
+        // dd($evld);
         $this->asignarEvaluadoresAEvaluados($evld);
 
         $this->paso++;
@@ -187,7 +193,60 @@ class CreateEvaluacionDesempeno extends Component
 
     public function cuartoPaso()
     {
-        dd($this->array_evaluadores, $this->array_porcentaje_evaluadores);
+        // dd($this->datosPaso1);
+        // dd($this->datosPaso2);
+        // dd($this->array_evaluados, $this->array_evaluadores, $this->array_porcentaje_evaluadores);
+
+        $evaluacion = EvaluacionDesempeno::create([
+            'nombre' => $this->datosPaso1['nombre'],
+            'descripcion' => $this->datosPaso1['descripcion'],
+            'activar_objetivos' => $this->datosPaso1['activar_objetivos'],
+            'porcentaje_objetivos' => $this->datosPaso1['porcentaje_objetivos'],
+            'activar_competencias' => $this->datosPaso1['activar_competencias'],
+            'porcentaje_competencias' => $this->datosPaso1['porcentaje_competencias'],
+            'estatus' => 1,
+        ]);
+
+        foreach ($this->datosPaso2 as $key => $p) {
+            // dd();
+            if ($key == 0) {
+                // dd('entra');
+                PeriodosEvaluacionDesempeno::create([
+                    'evaluacion_desempeno_id' => $evaluacion->id,
+                    'nombre_evaluacion' => $p['nombre_evaluacion'],
+                    'fecha_inicio' => $p['fecha_inicio'],
+                    'fecha_fin' => $p['fecha_fin'],
+                    'habilitado' => $p['habilitado'],
+                ]);
+            }
+        }
+
+        foreach ($this->array_evaluados as $key => $evaluado) {
+            // dd($evaluado);
+            $evaluado = EvaluadosEvaluacionDesempeno::create(
+                [
+                    'evaluacion_desempeno_id' => $evaluacion->id,
+                    'evaluado_desempeno_id' => $evaluado['id'],
+                ]
+            );
+
+            foreach ($this->array_evaluadores[$key]['evaluador_objetivos'] as $subkey => $evaluador) {
+                // dd($this->array_porcentaje_evaluadores[$key]['porcentaje_evaluador_objetivos'][$subkey]);
+                EvaluadoresEvaluacionObjetivosDesempeno::create([
+                    'evaluado_desempeno_id' => $evaluado->id,
+                    'evaluador_desempeno_id' => $evaluador,
+                    'porcentaje_objetivos' => $this->array_porcentaje_evaluadores[$key]['porcentaje_evaluador_objetivos'][$subkey],
+                ]);
+            }
+            foreach ($this->array_evaluadores[$key]['evaluador_competencias'] as $subkey => $evaluador) {
+                // dd($evaluador);
+                EvaluadoresEvaluacionObjetivosDesempeno::create([
+                    'evaluado_desempeno_id' => $evaluado->id,
+                    'evaluador_desempeno_id' => $evaluador,
+                    'porcentaje_objetivos' => $this->array_porcentaje_evaluadores[$key]['porcentaje_evaluador_competencias'][$subkey],
+                ]);
+            }
+        }
     }
 
     public function seleccionPeriodo($periodo, $valor)
@@ -500,6 +559,7 @@ class CreateEvaluacionDesempeno extends Component
                 ];
             }
         }
+        // dd($this->array_evaluados, $this->array_evaluadores);
     }
 
     public function agregarEvaluadorObjetivos($posicion)
