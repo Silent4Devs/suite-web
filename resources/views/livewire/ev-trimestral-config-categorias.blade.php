@@ -23,7 +23,7 @@
                                 </div>
                             </div>
                             {{-- Cada pregunta agregada cuenta con boton de eliminacion, el key indica cual posicion tiene en el arreglo y la elimina  --}}
-                            {{-- @if (!$p['ocupado'])
+                            @if (!$p['ocupado'])
                                 <div class="col-1">
                                     <div style="text-align: end;">
                                         <button class="btn trash-button"
@@ -33,7 +33,7 @@
                                         </button>
                                     </div>
                                 </div>
-                            @endif --}}
+                            @endif
                             <div class="col-11">
                                 <div class="anima-focus mb-3 ">
                                     <textarea id="descripcion_categoria_arreglo_{{ $key }}"

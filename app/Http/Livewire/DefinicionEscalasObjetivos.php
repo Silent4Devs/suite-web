@@ -2,18 +2,13 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\RH\CatalogoRangosObjetivos;
-use App\Models\RH\RangosObjetivos as RHRangosObjetivos;
+use App\Models\EscalasMedicionObjetivos;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
 class DefinicionEscalasObjetivos extends Component
 {
     use LivewireAlert;
-
-    public $nombre = null;
-
-    public $descripcion = null;
 
     public $color_estatus_1 = '#34B990';
 
@@ -22,14 +17,6 @@ class DefinicionEscalasObjetivos extends Component
     public $estatus_1;
 
     public $estatus_2;
-
-    public $valor_estatus_1;
-
-    public $valor_estatus_2;
-
-    public $descripcion_parametros_1;
-
-    public $descripcion_parametros_2;
 
     public $parametros = [];
 
@@ -55,68 +42,73 @@ class DefinicionEscalasObjetivos extends Component
 
     public function render()
     {
+        $escalas = EscalasMedicionObjetivos::get();
+
+        if (isset($escalas[0]->parametro)) {
+            $this->estatus_1 = $escalas[0]->parametro;
+            $this->color_estatus_1 = $escalas[0]->color;
+
+            $this->estatus_2 = $escalas[1]->parametro;
+            $this->color_estatus_2 = $escalas[1]->color;
+
+            foreach ($escalas as $key => $esc) {
+                if ($key > 1) {
+                    $this->parametros[$key] =
+                        [
+                            'parametro' => $esc->parametro,
+                            'color_estatus' => $esc->color,
+                        ];
+                }
+            }
+        }
+
         return view('livewire.definicion-escalas-objetivos');
     }
 
-    public function definirLimite($limite, $valor)
-    {
-        switch ($limite) {
-            case 'minimo':
-                $this->minimo = $valor;
-                break;
+    // public function definirLimite($limite, $valor)
+    // {
+    //     switch ($limite) {
+    //         case 'minimo':
+    //             $this->minimo = $valor;
+    //             break;
 
-            case 'maximo':
-                $this->maximo = $valor;
-                break;
-        }
-    }
+    //         case 'maximo':
+    //             $this->maximo = $valor;
+    //             break;
+    //     }
+    // }
 
     public function submitForm($data)
     {
         // dd($data);
-        $catalogo = CatalogoRangosObjetivos::create([
-            'nombre_catalogo' => $data['nombre'],
-            'descripcion' => $data['descripcion'],
-        ]);
 
-        RHRangosObjetivos::create([
-            'catalogo_rangos_id' => $catalogo->id,
+        EscalasMedicionObjetivos::create([
             'parametro' => $data['estatus_1'],
-            'valor' => $data['valor_estatus_1'],
             'color' => $data['color_estatus_1'],
-            'descripcion' => $data['descripcion_parametros_1'],
         ]);
 
-        RHRangosObjetivos::create([
-            'catalogo_rangos_id' => $catalogo->id,
+        EscalasMedicionObjetivos::create([
             'parametro' => $data['estatus_2'],
-            'valor' => $data['valor_estatus_2'],
             'color' => $data['color_estatus_2'],
-            'descripcion' => $data['descripcion_parametros_2'],
         ]);
 
         $param_extra = $this->groupValues($data);
 
         if (!empty($param_extra)) {
             foreach ($param_extra as $key => $p) {
-                RHRangosObjetivos::create([
-                    'catalogo_rangos_id' => $catalogo->id,
+                EscalasMedicionObjetivos::create([
                     'parametro' => $p['estatus'],
-                    'valor' => $p['valor'],
                     'color' => $p['color'],
-                    'descripcion' => $p['descripcion'],
                 ]);
             }
         }
 
-        $this->alert('success', '¡El Catalogo ha sido creado con éxito!', [
+        $this->alert('success', '¡Las escalas han sido definidas con éxito!', [
             'position' => 'center',
             'timer' => 5000,
             'toast' => true,
             'text' => 'Se ha generado el catalogo, lo puedes consultar y editar cuando lo necesites.',
         ]);
-
-        return redirect(route('admin.rangos.index'));
     }
 
     public function groupValues($values)
@@ -125,18 +117,12 @@ class DefinicionEscalasObjetivos extends Component
 
         foreach ($this->parametros as $key => $parametro) {
             $estatusKey = "estatus_arreglo_{$key}";
-            $valorKey = "valor_estatus_arreglo_{$key}";
-            $descripcionKey = "descripcion_parametros_arreglo_{$key}";
 
-            if (
-                isset($values[$estatusKey]) && isset($values[$valorKey]) &&
-                !empty($values[$estatusKey]) && !empty($values[$valorKey])
-            ) {
+            if (isset($values[$estatusKey]) && !empty($values[$estatusKey])) {
+
                 $groupedValues["group_{$key}"] = [
                     'estatus' => $values[$estatusKey],
-                    'valor' => $values[$valorKey],
                     'color' => $values["color_estatus_arreglo_{$key}"] ?? null,
-                    'descripcion' => $values[$descripcionKey],
                 ];
             }
         }

@@ -40,7 +40,7 @@
                             placeholder="">
                             <option value="">Seleccione Unidad</option>
                             @foreach ($unidades as $unidad)
-                                <option value="{{ $unidad->id }}">{{ $unidad->nombre }}</option>
+                                <option value="{{ $unidad->id }}">{{ $unidad->definicion }}</option>
                             @endforeach
                         </select>
                         <label for="unidad-medida">Unidad de medida</label>
@@ -234,14 +234,27 @@
         </div>
 
     </div>
-    {{-- Success is as dangerous as failure. --}}
+
     <div class="card card-body">
         <div class="info-first-config">
-            <h4 class="title-config">Escalas del objetivo</h4>
+            <div class="col-6">
+                <h4 class="title-config">Objetivos Estrategicos del Colaborador</h4>
+            </div>
+            <div class="col-2">
+
+            </div>
+            <div class="col-2">
+                <a href="{{ route('admin.rh.evaluaciones-desempeño.objetivos-papelera', $id_emp) }}">
+                    Papelera
+                </a>
+            </div>
+            <div class="col-2">
+
+            </div>
             <hr class="my-4">
         </div>
 
-        <div class="datatable-fix">
+        <div class="datatable-rds">
             <table class="table datatable">
                 <thead>
                     <tr>
@@ -256,14 +269,33 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        @foreach ($objetivos as $obj)
-                            <td>{{ $obj->categoria->nombre }}</td>
-                            <td>{{ $obj->objetivo }}</td>
-                            <td>{{ $obj->KPI }}</td>
-                            <td>{{ $obj->descripcion }}</td>
-                            <td>Estatus</td>
-                            <td>{{ $obj->unidad->nombre }}</td>
+                    @foreach ($objetivos as $obj)
+                        <tr>
+                            <td>{{ $obj->objetivo->tipo->nombre }}</td>
+                            <td>{{ $obj->objetivo->nombre }}</td>
+                            <td>{{ $obj->objetivo->KPI }}</td>
+                            <td>{{ $obj->objetivo->descripcion_meta }}</td>
+                            <td>
+                                @switch($obj->objetivo->esta_aprobado)
+                                    @case(0)
+                                        <span class="badge badge-warning">Pendiente</span>
+                                    @break
+
+                                    @case(1)
+                                        <span class="badge badge-success">Aprobado</span>
+                                    @break
+
+                                    @case(2)
+                                        <span class="badge badge-danger">Rechazado
+                                            <i class="fas fa-comment ml-1" title="${row.objetivo.comentarios_aprobacion}"></i>
+                                        </span>
+                                    @break
+
+                                    @default
+                                        <span class="badge badge-warning">Pendiente</span>
+                                @endswitch
+                            </td>
+                            <td>{{ $obj->objetivo->meta }}</td>
                             <td>Periodo</td>
                             <td>
                                 <div class="dropdown">
@@ -281,8 +313,8 @@
                                     </div>
                                 </div>
                             </td>
-                        @endforeach
-                    </tr>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>

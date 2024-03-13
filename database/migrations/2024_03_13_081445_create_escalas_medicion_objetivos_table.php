@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('unidad_objetivos_desempenos', function (Blueprint $table) {
+        Schema::create('escalas_medicion_objetivos', function (Blueprint $table) {
             $table->id();
-            $table->text('nombre');
-            $table->float('valor_minimo');
-            $table->float('valor_maximo');
-
+            $table->string('parametro');
+            // $table->float('valor');
+            $table->string('color');
+            // $table->longText('descripcion');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('unidad_objetivos_desempenos');
+        Schema::dropIfExists('escalas_medicion_objetivos');
     }
 };

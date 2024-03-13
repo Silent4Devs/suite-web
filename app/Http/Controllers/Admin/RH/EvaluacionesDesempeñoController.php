@@ -38,10 +38,7 @@ class EvaluacionesDesempeñoController extends Controller
     {
         $areas = Area::getIdNameAll();
         $empleados = Empleado::getIDaltaAll();
-        // dd(
-        //     $areas,
-        //     $empleados
-        // );
+
         return view('admin.recursos-humanos.evaluaciones-desempeño.create-evaluacion', compact('areas', 'empleados'));
     }
 
@@ -58,7 +55,7 @@ class EvaluacionesDesempeñoController extends Controller
     public function cargaObjetivosEmpleado($id_empleado)
     {
         $empleado = Empleado::getaltaAllWithAreaObjetivoPerfil()->find($id_empleado);
-        // dd($id_empleado);
+
         return view('admin.recursos-humanos.evaluaciones-desempeño.carga-objetivos-empleado', compact('empleado'));
     }
 
@@ -67,9 +64,11 @@ class EvaluacionesDesempeñoController extends Controller
         return view('admin.recursos-humanos.evaluaciones-desempeño.objetivos-importar');
     }
 
-    public function objetivosPapelera()
+    public function objetivosPapelera($id_empleado)
     {
-        return view('admin.recursos-humanos.evaluaciones-desempeño.objetivos-papelera');
+        $empleado = Empleado::getaltaAllWithAreaObjetivoPerfil()->find($id_empleado);
+
+        return view('admin.recursos-humanos.evaluaciones-desempeño.objetivos-papelera', compact('empleado'));
     }
 
     public function objetivosExportar()

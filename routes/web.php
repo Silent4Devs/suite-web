@@ -477,7 +477,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
         Route::get('recursos-humanos/evaluacion-desempeño/objetivos-importar', 'RH\EvaluacionesDesempeñoController@objetivosImportar')->name('rh.evaluaciones-desempeño.objetivos-importar');
 
-        Route::get('recursos-humanos/evaluacion-desempeño/objetivos-papelera', 'RH\EvaluacionesDesempeñoController@objetivosPapelera')->name('rh.evaluaciones-desempeño.objetivos-papelera');
+        Route::get('recursos-humanos/evaluacion-desempeño/{empleado}/objetivos-papelera', 'RH\EvaluacionesDesempeñoController@objetivosPapelera')->name('rh.evaluaciones-desempeño.objetivos-papelera');
 
         Route::get('recursos-humanos/evaluacion-desempeño/objetivos-exportar', 'RH\EvaluacionesDesempeñoController@objetivosExportar')->name('rh.evaluaciones-desempeño.objetivos-exportar');
 

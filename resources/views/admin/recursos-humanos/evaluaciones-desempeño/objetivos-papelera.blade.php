@@ -11,30 +11,11 @@
 
     <div class="card card-body">
         <div class="info-first-config">
-            <h4 class="title-config">Objetivos de: [Zaid Arath García Hernández]</h4>
+            <h4 class="title-config">Objetivos de: [{{ $empleado->name }}]</h4>
             <hr class="my-4">
         </div>
 
-        <div class="datatable-fix">
-            <table class="table datatable">
-                <thead>
-                    <tr>
-                        <th>Categoría</th>
-                        <th>Objetivos Estratégicos</th>
-                        <th>Descripción</th>
-                        <th>Opciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Categoría</td>
-                        <td>Objetivos Estratégicos</td>
-                        <td>Descripción</td>
-                        <td>Opciones</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        @livewire('papelera-objetivos-desempeno')
     </div>
 @endsection
 

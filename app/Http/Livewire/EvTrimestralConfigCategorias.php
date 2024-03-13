@@ -2,8 +2,7 @@
 
 namespace App\Http\Livewire;
 
-// use App\Models\RH\TipoObjetivo;
-use App\Models\CategoriaObjetivosDesempeno;
+use App\Models\RH\TipoObjetivo;
 use Livewire\Component;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
@@ -17,7 +16,7 @@ class EvTrimestralConfigCategorias extends Component
 
     public function mount()
     {
-        $this->tipos = CategoriaObjetivosDesempeno::get();
+        $this->tipos = TipoObjetivo::get();
         // dd($this->tipos);
         if (isset($this->tipos[0]->nombre)) {
             foreach ($this->tipos as $tipo) {
@@ -48,7 +47,7 @@ class EvTrimestralConfigCategorias extends Component
     public function removeCategoria($keyIndex, $id_borrar = null)
     {
         if (!empty($id_borrar)) {
-            $tipo = CategoriaObjetivosDesempeno::find($id_borrar);
+            $tipo = TipoObjetivo::find($id_borrar);
             $tipo->delete();
         }
 
@@ -78,7 +77,7 @@ class EvTrimestralConfigCategorias extends Component
                 'width' => '500',
             ]);
         } else {
-            $nuevotipo = CategoriaObjetivosDesempeno::updateOrCreate(
+            $nuevotipo = TipoObjetivo::updateOrCreate(
                 ['id' => $id_edit],
                 [$campo => $entrada]
             );
