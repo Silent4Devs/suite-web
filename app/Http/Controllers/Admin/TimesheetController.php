@@ -1000,7 +1000,7 @@ class TimesheetController extends Controller
     {
         $request->validate(
             [
-                'identificador' => 'required|unique:timesheet_clientes,identificador',
+                'identificador' => 'required|max:255|unique:timesheet_clientes,identificador',
                 'razon_social' => 'required|string|max:255',
                 'nombre' => 'required|string|max:255',
                 'rfc' => 'max:15',
@@ -1039,7 +1039,7 @@ class TimesheetController extends Controller
     {
         $request->validate(
             [
-                'identificador' => 'required|unique:timesheet_clientes,identificador',
+                'identificador' => 'required|max:255|unique:timesheet_clientes,identificador',
                 'razon_social' => 'required|string|max:255',
                 'nombre' => 'required|string|max:255',
                 'rfc' => 'max:15',
