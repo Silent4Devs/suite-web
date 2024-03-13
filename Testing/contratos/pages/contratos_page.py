@@ -63,6 +63,7 @@ class Contratos:
     )
         contratos_del_area_btn.click()
         print("Botón de Contratos del Área presionado")
+    def exportar(self):
         #CSV
         csv_btn = WebDriverWait(self.driver, 5).until(
             EC.element_to_be_clickable((By.XPATH, "(//i[contains(@class,'fas fa-file-csv')])[1]"))

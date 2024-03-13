@@ -10,3 +10,4 @@ def test_contratos(browser):
     contratos_page.go_to_gestion_contractual()
     contratos_page.go_to_contratos()
     contratos_page.contratos_del_area()
+    contratos_page.exportar()
