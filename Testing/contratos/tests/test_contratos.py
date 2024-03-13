@@ -1,10 +1,12 @@
 import pytest
 from selenium import webdriver
-from pages.contratos_page import GestionContractual
+from pages.contratos_page import Contratos
 
 
 def test_contratos(browser):
-    gestion_contractual = GestionContractual(browser)
-    gestion_contractual.login("admin@admin.com","#S3cur3P4$$w0Rd!")
-    gestion_contractual.open_menu()
-    gestion_contractual.go_to_gestion_contractual()
+    contratos_page = Contratos(browser)
+    contratos_page.login("admin@admin.com","#S3cur3P4$$w0Rd!")
+    contratos_page.open_menu()
+    contratos_page.go_to_gestion_contractual()
+    contratos_page.go_to_contratos()
+    contratos_page.agregar_contrato()

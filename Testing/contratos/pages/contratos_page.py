@@ -3,7 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-class GestionContractual:
+class Contratos:
     def __init__(self, driver):
         self.driver = driver
 
@@ -44,10 +44,22 @@ class GestionContractual:
         menu_btn.click()
 
     def go_to_gestion_contractual(self):
-        gestion_contractual_btn = WebDriverWait(self.driver, 10).until(
+        gestion_contractual_btn = WebDriverWait(self.driver, 5).until(
             EC.element_to_be_clickable((By.XPATH, "//a[@href='https://192.168.9.78/contract_manager/katbol']"))
         )
-        time.sleep(0.5)
+        time.sleep(0.2)
         gestion_contractual_btn.click()
         print("Botón de Gestion Contractual presionado")
         print("URL actual:", self.driver.current_url)
+    def go_to_contratos(self):
+        contratos_btn = WebDriverWait(self.driver, 5).until(
+            EC.element_to_be_clickable((By.XPATH, "(//a[contains(.,'Contratos')])[3]"))
+            )
+        time.sleep(0.2)
+        contratos_btn.click()
+    def agregar_contrato(self):
+        agregar_contrato_btn = WebDriverWait(self.driver, 5).until(
+            EC.element_to_be_clickable((By.XPATH, "//a[@class='btn btn-success'][contains(.,'Agregar Contrato +')]"))
+            )
+        time.sleep(0.2)
+        agregar_contrato_btn.click()
