@@ -72,7 +72,7 @@
                     <span>Calendario</span>
                 </button>
                 <hr>
-                <button class="btn" onclick="cambiarTitulo('Diagrama Gantt'); navSection('original_gantt');">
+                <button class="btn" onclick="initProject();cambiarTitulo('Diagrama Gantt'); navSection('original_gantt');">
                     <i class="material-symbols-outlined">align_horizontal_left</i>
                     <span>Gantt</span>
                 </button>
@@ -124,7 +124,7 @@
         function initail(taskId, callback) {
 
             //this is a simulation: load data from the local storage if you have already played with the demo or a textarea with starting demo data
-            var ret = loadFromLocalStorage();
+
             $.ajax({
                 type: "POST",
                 headers: {
@@ -136,14 +136,14 @@
                     ge.checkpoint(); //empty the undo stac
                     renderKanban(response);
                     renderCalendar(response);
-                    initProject();
-                    $(".ganttButtonBar button.requireWrite").attr("disabled", "true");
+                    //initProject();
+                    // $(".ganttButtonBar button.requireWrite").attr("disabled", "true");
                 },
                 error: function(response) {
                     toastr.error(response);
                 }
             });
-            return ret;
+
         }
         //funciones globales para gantt y kamba
 
