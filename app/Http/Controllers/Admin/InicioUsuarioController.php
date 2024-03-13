@@ -65,12 +65,15 @@ class InicioUsuarioController extends Controller
         $hoy->toDateString();
 
         $usuario = User::getCurrentUser();
+
+        $empleado = Empleado::where('id', $usuario->empleado_id)->first();
+
         $usuarioVinculadoConEmpleado = false;
-        if ($usuario->empleado) {
+        if ($empleado) {
             $usuarioVinculadoConEmpleado = true;
         }
-        // dd($usuarioVinculadoConEmpleado);
-        $empleado_id = $usuario->empleado ? $usuario->empleado->id : 0;
+
+        $empleado_id = $empleado ? $empleado->id : 0;
         $actividades = [];
         // Check if the result is already cached
         $implementaciones = PlanImplementacion::getAll();
@@ -134,7 +137,6 @@ class InicioUsuarioController extends Controller
 
         $auditorias_anual = AuditoriaAnual::getAll();
         $auditoria_internas = new AuditoriaInterna;
-        $empleado = $usuario->empleado;
         $recursos = collect();
         $eventos = Calendario::getAll();
         $oficiales = CalendarioOficial::getAll();
@@ -152,11 +154,11 @@ class InicioUsuarioController extends Controller
         $solicitud_permiso = 0;
         $solicitudes_pendientes = 0;
         $cacheKey = 'AuditoriaInterna:auditoria_internas_'.$usuario->id;
-        $auditoria_internas = Cache::remember($cacheKey, 3600 * 8, function () use ($usuario, $empleado) {
-            return AuditoriaInterna::where(function ($query) use ($usuario, $empleado) {
+        $auditoria_internas = Cache::remember($cacheKey, 3600 * 8, function () use ($empleado) {
+            return AuditoriaInterna::where(function ($query) use ($empleado) {
                 $query->whereHas('equipo', function ($subquery) use ($empleado) {
                     $subquery->where('auditoria_interno_empleado.empleado_id', $empleado->id);
-                })->orWhere('lider_id', $usuario->empleado->id);
+                })->orWhere('lider_id', $empleado->id);
             })->distinct()->get();
         });
 
@@ -184,11 +186,11 @@ class InicioUsuarioController extends Controller
         $supervisor = null;
         $mis_objetivos = collect();
 
-        if ($usuario->empleado) {
-            $revisiones = RevisionDocumento::getAllWithDocumento();
+        if ($empleado) {
+            $revisiones = RevisionDocumento::with('documento')->where('empleado_id', $empleado->id)->where('archivado', 0)->get();
 
             $contador_revisiones = $revisiones->where('estatus', Documento::SOLICITUD_REVISION)->count();
-            $mis_documentos = Documento::getWithMacroproceso($usuario->empleado->id);
+            $mis_documentos = Documento::getWithMacroproceso($empleado->id);
             //Evaluaciones
             $last_evaluacion = Evaluacion::getAllLatestFirst();
             if ($last_evaluacion) {
@@ -197,8 +199,8 @@ class InicioUsuarioController extends Controller
                         ->where('fecha_inicio', '<=', Carbon::now())
                         ->where('fecha_fin', '>', Carbon::now())
                         ->where('id', $last_evaluacion->id);
-                })->with('empleado_evaluado', 'evaluador')->where('evaluador_id', $usuario->empleado->id)
-                    ->where('evaluado_id', '!=', $usuario->empleado->id)
+                })->with('empleado_evaluado', 'evaluador')->where('evaluador_id', $empleado->id)
+                    ->where('evaluado_id', '!=', $empleado->id)
                     ->where('evaluado', false)
                     ->get();
                 $mis_evaluaciones = EvaluadoEvaluador::whereHas('evaluacion', function ($q) use ($last_evaluacion) {
@@ -206,8 +208,8 @@ class InicioUsuarioController extends Controller
                         ->where('fecha_inicio', '<=', Carbon::now())
                         ->where('fecha_fin', '>', Carbon::now())
                         ->where('id', $last_evaluacion->id);
-                })->with('empleado_evaluado', 'evaluador')->where('evaluador_id', $usuario->empleado->id)
-                    ->where('evaluado_id', $usuario->empleado->id)
+                })->with('empleado_evaluado', 'evaluador')->where('evaluador_id', $empleado->id)
+                    ->where('evaluado_id', $empleado->id)
                     ->first();
             }
 
@@ -217,8 +219,8 @@ class InicioUsuarioController extends Controller
                         ->where('fecha_inicio', '<=', Carbon::now())
                         ->where('fecha_fin', '>', Carbon::now())
                         ->where('id', $last_evaluacion->id);
-                })->with('empleado_evaluado', 'evaluador')->where('evaluador_id', $usuario->empleado->id)
-                    ->where('evaluado_id', '!=', $usuario->empleado->id)
+                })->with('empleado_evaluado', 'evaluador')->where('evaluador_id', $empleado->id)
+                    ->where('evaluado_id', '!=', $empleado->id)
                     ->where('evaluado', false)
                     ->get();
                 $como_evaluador = EvaluadoEvaluador::whereHas('evaluacion', function ($q) use ($last_evaluacion) {
@@ -226,36 +228,36 @@ class InicioUsuarioController extends Controller
                         ->where('fecha_inicio', '<=', Carbon::now())
                         ->where('fecha_fin', '>', Carbon::now())
                         ->where('id', $last_evaluacion->id);
-                })->with('empleado_evaluado', 'evaluador')->where('evaluador_id', $usuario->empleado->id)
-                    ->where('evaluado_id', '!=', $usuario->empleado->id)
+                })->with('empleado_evaluado', 'evaluador')->where('evaluador_id', $empleado->id)
+                    ->where('evaluado_id', '!=', $empleado->id)
                     ->first();
             }
             // dd($como_evaluador->evaluacion, $mis_evaluaciones);
-            $mis_objetivos = $usuario->empleado->objetivos;
+            $mis_objetivos = $empleado->objetivos;
 
             // SECCION MIS DATOS
-            if ($usuario->empleado->children->count()) {
+            if ($empleado->children->count()) {
                 $esLider = true;
-                $equipo_a_cargo = $this->obtenerEquipo($usuario->empleado->children);
+                $equipo_a_cargo = $this->obtenerEquipo($empleado->children);
                 $equipo_a_cargo = Empleado::getaltaAll()->find($equipo_a_cargo);
             } else {
-                $equipo_trabajo = $usuario->empleado->empleados_misma_area;
+                $equipo_trabajo = $empleado->empleados_misma_area;
                 $equipo_trabajo = Empleado::getaltaAll()->find($equipo_trabajo);
             }
-            $supervisor = $usuario->empleado->supervisor;
+            $supervisor = $empleado->supervisor;
         }
 
         $panel_rules = PanelInicioRule::getAll();
 
-        if (! is_null($usuario->empleado)) {
-            $activos = Activo::select('*')->where('id_responsable', '=', $usuario->empleado->id)->get();
-            if ($usuario->empleado->cumpleaños) {
-                $cumpleaños_usuario = Carbon::parse($usuario->empleado->cumpleaños)->format('d-m');
+        if (! is_null($empleado)) {
+            $activos = Activo::select('*')->where('id_responsable', '=', $empleado->id)->get();
+            if ($empleado->cumpleaños) {
+                $cumpleaños_usuario = Carbon::parse($empleado->cumpleaños)->format('d-m');
             } else {
                 $cumpleaños_usuario = null;
             }
 
-            $felicitar = FelicitarCumpleaños::getAllWhereYear($usuario->empleado->id, $hoy->format('Y'));
+            $felicitar = FelicitarCumpleaños::getAllWhereYear($empleado->id, $hoy->format('Y'));
 
             $cumpleaños_felicitados_like_contador = $felicitar->where('like', true)->count();
 
@@ -273,22 +275,22 @@ class InicioUsuarioController extends Controller
         $organizacion = Organizacion::getFirst();
         $competencias = collect();
 
-        if ($usuario->empleado) {
+        if ($empleado) {
             $competencias = Empleado::with(
                 ['puestoRelacionado' => function ($q) {
                     $q->with(['competencias' => function ($q) {
                         $q->with('competencia');
                     }]);
                 }]
-            )->find($usuario->empleado->id)->puestoRelacionado;
+            )->find($empleado->id)->puestoRelacionado;
             $competencias = ! is_null($competencias) ? $competencias->competencias : collect();
 
-            $quejas = Quejas::getAll()->where('empleado_quejo_id', $usuario->empleado->id);
-            $denuncias = Denuncias::getAll()->where('empleado_denuncio_id', $usuario->empleado->id);
-            $mejoras = Mejoras::getAll()->where('empleado_mejoro_id', $usuario->empleado->id);
-            $sugerencias = Sugerencias::getAll()->where('empleado_sugirio_id', $usuario->empleado->id);
+            $quejas = Quejas::getAll()->where('empleado_quejo_id', $empleado->id);
+            $denuncias = Denuncias::getAll()->where('empleado_denuncio_id', $empleado->id);
+            $mejoras = Mejoras::getAll()->where('empleado_mejoro_id', $empleado->id);
+            $sugerencias = Sugerencias::getAll()->where('empleado_sugirio_id', $empleado->id);
 
-            $mis_quejas = $quejas->where('empleado_quejo_id', $usuario->empleado->id);
+            $mis_quejas = $quejas->where('empleado_quejo_id', $empleado->id);
             $mis_quejas_count = $quejas->count();
             $mis_denuncias = $denuncias;
             $mis_denuncias_count = $denuncias->count();
@@ -297,9 +299,9 @@ class InicioUsuarioController extends Controller
             $mis_sugerencias = $sugerencias;
             $mis_sugerencias_count = $sugerencias->count();
 
-            $solicitud_vacacion = SolicitudVacaciones::where('autoriza', $usuario->empleado->id)->where('aprobacion', 1)->count();
-            $solicitud_dayoff = SolicitudDayOff::where('autoriza', $usuario->empleado->id)->where('aprobacion', 1)->count();
-            $solicitud_permiso = SolicitudPermisoGoceSueldo::where('autoriza', $usuario->empleado->id)->where('aprobacion', 1)->count();
+            $solicitud_vacacion = SolicitudVacaciones::where('autoriza', $empleado->id)->where('aprobacion', 1)->count();
+            $solicitud_dayoff = SolicitudDayOff::where('autoriza', $empleado->id)->where('aprobacion', 1)->count();
+            $solicitud_permiso = SolicitudPermisoGoceSueldo::where('autoriza', $empleado->id)->where('aprobacion', 1)->count();
             $solicitudes_pendientes = $solicitud_vacacion + $solicitud_dayoff + $solicitud_permiso;
             // $solicitudes_pendientes = 1;
         }
@@ -311,6 +313,7 @@ class InicioUsuarioController extends Controller
         $existsVinculoEmpleadoAdmin = User::getExists();
 
         return view('admin.inicioUsuario.index', compact(
+            'empleado',
             'solicitudes_pendientes',
             'usuario',
             'competencias',
