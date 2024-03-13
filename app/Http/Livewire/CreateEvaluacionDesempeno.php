@@ -216,7 +216,7 @@ class CreateEvaluacionDesempeno extends Component
                     'nombre_evaluacion' => $p['nombre_evaluacion'],
                     'fecha_inicio' => $p['fecha_inicio'],
                     'fecha_fin' => $p['fecha_fin'],
-                    'habilitado' => $p['habilitado'],
+                    'habilitado' => $p['habilitar'],
                 ]);
             }
         }
