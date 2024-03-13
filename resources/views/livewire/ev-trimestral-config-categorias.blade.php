@@ -22,9 +22,9 @@
                                     <label for="categoria_arreglo_{{ $key }}">Categoria</label>
                                 </div>
                             </div>
-                            @if (!$p['ocupado'])
+                            {{-- Cada pregunta agregada cuenta con boton de eliminacion, el key indica cual posicion tiene en el arreglo y la elimina  --}}
+                            {{-- @if (!$p['ocupado'])
                                 <div class="col-1">
-                                    {{-- Cada pregunta agregada cuenta con boton de eliminacion, el key indica cual posicion tiene en el arreglo y la elimina  --}}
                                     <div style="text-align: end;">
                                         <button class="btn trash-button"
                                             wire:click.prevent="removeCategoria({{ $key }}, {{ $p['id'] }})">
@@ -33,7 +33,7 @@
                                         </button>
                                     </div>
                                 </div>
-                            @endif
+                            @endif --}}
                             <div class="col-11">
                                 <div class="anima-focus mb-3 ">
                                     <textarea id="descripcion_categoria_arreglo_{{ $key }}"

@@ -55,9 +55,11 @@ class EvaluacionesDesempeñoController extends Controller
         return view('admin.recursos-humanos.evaluaciones-desempeño.mis-evaluaciones');
     }
 
-    public function cargaObjetivosEmpleado()
+    public function cargaObjetivosEmpleado($id_empleado)
     {
-        return view('admin.recursos-humanos.evaluaciones-desempeño.carga-objetivos-empleado');
+        $empleado = Empleado::getaltaAllWithAreaObjetivoPerfil()->find($id_empleado);
+        // dd($id_empleado);
+        return view('admin.recursos-humanos.evaluaciones-desempeño.carga-objetivos-empleado', compact('empleado'));
     }
 
     public function objetivosImportar()

@@ -1,31 +1,5 @@
-@extends('layouts.admin')
-@section('css')
-    <link rel="stylesheet" href="{{ asset('css/evaluaciones.css') }}{{ config('app.cssVersion') }}">
-@endsection
-@section('content')
-    {{-- {{ Breadcrumbs::render('capital-humano') }} --}}
-
-    <h5 class="titulo_general_funcion"> Carga de Objetivos: [{{ $empleado->name }}] </h5>
-
-    <div class="card card-body" style="color: #464646;">
-        <div class="d-flex align-items-center justify-content-between">
-            <div class="d-flex align-items-center" style="gap: 30px;">
-                <div class="img-person" style="width: 80px; height: 80px;">
-                    <img src="{{ asset('storage/empleados/imagenes/') . '/' . $empleado->avatar }}" alt="">
-                </div>
-                <span>{{ $empleado->name }}</span>
-                <hr class="line-vertical mx-2">
-                <di class="d-flex flex-column">
-                    <span> {{ $empleado->puestoRelacionado->puesto }} </span>
-                    <span class="mt-3"> {{ $empleado->area->area }}</span>
-                </di>
-            </div>
-            <img src="https://picsum.photos/200/300" alt="" style="height: 90px;">
-        </div>
-    </div>
-
-    @livewire('formulario-objetivos-desempeno-empleados', ['id_empleado' => $empleado->id])
-    {{-- <div class="card card-body">
+<div>
+    <div class="card card-body">
         <div class="info-first-config">
             <h4 class="title-config">Nuevo Objetivo</h4>
             <p>Define los Valores y Escalas con los que se medirán los objetivos.</p>
@@ -33,37 +7,94 @@
         </div>
         <div class="row">
             <div class="col-12 form-group anima-focus">
-                <input id="objetivo-estrategico" type="text" class="form-control" placeholder="">
-                <label for="objetivo-estrategico">Objetivo Estratégico</label>
+                <input wire:model="objetivo_estrategico" id="objetivo_estrategico" type="text" class="form-control"
+                    placeholder="">
+                <label for="objetivo_estrategico">Objetivo Estratégico</label>
             </div>
         </div>
         <div class="row">
             <div class="col-12 form-group anima-focus">
-                <textarea name="" id="descripcion" cols="30" rows="10" placeholder="" class="form-control"></textarea>
+                <textarea wire:model="descripcion" name="descripcion" id="descripcion" cols="30" rows="10" placeholder=""
+                    class="form-control"></textarea>
                 <label for="descripcion">Descripción</label>
             </div>
         </div>
         <div class="row">
             <div class="col-md-3 form-group anima-focus">
-                <input id="categoria" type="text" class="form-control" placeholder="">
+                <select wire:model="select_categoria" id="categoria" type="text" class="form-control" placeholder="">
+                    <option value="">Seleccione Categoria</option>
+                    @foreach ($categorias as $categoria)
+                        <option value="{{ $categoria->id }}">{{ $categoria->nombre }}</option>
+                    @endforeach
+                </select>
                 <label for="categoria">Categoría</label>
             </div>
             <div class="col-md-3 form-group anima-focus">
-                <input id="KPI" type="text" class="form-control" placeholder="">
+                <input wire:model="KPI" id="KPI" type="text" class="form-control" placeholder="">
                 <label for="KPI">KPI</label>
             </div>
             <div class="col-md-6">
                 <div class="d-flex" style="gap: 10px;">
                     <div class="form-group anima-focus w-100">
-                        <input id="unidad-medida" type="text" class="form-control" placeholder="">
+                        <select wire:model="select_unidad" id="unidad-medida" type="text" class="form-control"
+                            placeholder="">
+                            <option value="">Seleccione Unidad</option>
+                            @foreach ($unidades as $unidad)
+                                <option value="{{ $unidad->id }}">{{ $unidad->nombre }}</option>
+                            @endforeach
+                        </select>
                         <label for="unidad-medida">Unidad de medida</label>
                     </div>
-                    <button class="btn btn-primary" style="height: 45px;">
+                    <button class="btn btn-primary" style="height: 45px;" data-toggle="modal"
+                        data-target="#modalUnidad">
                         <i class="fa-solid fa-plus"></i>
                     </button>
                     <button class="btn btn-primary" style="height: 45px;">
                         <i class="fa-solid fa-plus"></i>
                     </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalUnidad" tabindex="-1" role="dialog" aria-labelledby="modalUnidadLabel"
+            aria-hidden="true" wire:ignore>
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalUnidadLabel">Crear Unidad de Medición para Objetivos
+                            Estrategicos</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Modal content goes here -->
+                        {{-- This is the content of the modal. --}}
+                        <div class="row">
+                            <div class="col-12 form-group anima-focus">
+                                <input wire:model="nombre_unidad" id="nombre_unidad" type="text" class="form-control"
+                                    placeholder="">
+                                <label for="nombre_unidad">Unidad</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6 form-group anima-focus">
+                                <input wire:model="minimo_unidad" id="minimo_unidad" type="number" class="form-control"
+                                    placeholder="">
+                                <label for="minimo_unidad">Valor Minimo</label>
+                            </div>
+                            <div class="col-6 form-group anima-focus">
+                                <input wire:model="maximo_unidad" id="maximo_unidad" type="number" class="form-control"
+                                    placeholder="">
+                                <label for="maximo_unidad">Valor Maximo</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <a wire:click.prevent="crearUnidad" type="button" class="btn btn-primary"
+                            data-dismiss="modal">Crear Unidad</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -196,96 +227,64 @@
             </table>
         </div>
         <div class="text-right">
-            <button class="btn btn-outline-primary"
+            <a wire:click.prevent="crearObjetivo" class="btn btn-outline-primary"
                 style="background-color: #ECFBFF; color: #006DDB; border-radius: 100px !important;">
                 Agregar objetivo a la tabla <i class="fa-solid fa-arrow-down"></i>
-            </button>
+            </a>
         </div>
 
-    </div> --}}
-@endsection
+    </div>
+    {{-- Success is as dangerous as failure. --}}
+    <div class="card card-body">
+        <div class="info-first-config">
+            <h4 class="title-config">Escalas del objetivo</h4>
+            <hr class="my-4">
+        </div>
 
-@section('scripts')
-    @parent
-
-    <script>
-        $(function() {
-            let dtButtons = [{
-                    extend: 'csvHtml5',
-                    title: `Sedes - Ubicación ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Exportar CSV',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    }
-                },
-                {
-                    extend: 'excelHtml5',
-                    title: `Sedes - Ubicación ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Exportar Excel',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    }
-                },
-                {
-                    extend: 'pdfHtml5',
-                    title: `Sedes - Ubicación ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Exportar PDF',
-                    orientation: 'portrait',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    },
-                    customize: function(doc) {
-                        doc.pageMargins = [20, 60, 20, 30];
-                        // doc.styles.tableHeader.fontSize = 7.5;
-                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
-                    }
-                },
-                {
-                    extend: 'print',
-                    title: `Sedes - Ubicación ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Imprimir',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    }
-                },
-                {
-                    extend: 'colvis',
-                    text: '<i class="fas fa-filter" style="font-size: 1.1rem;"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Seleccionar Columnas',
-                },
-                {
-                    extend: 'colvisGroup',
-                    text: '<i class="fas fa-eye" style="font-size: 1.1rem;"></i>',
-                    className: "btn-sm rounded pr-2",
-                    show: ':hidden',
-                    titleAttr: 'Ver todo',
-                },
-                {
-                    extend: 'colvisRestore',
-                    text: '<i class="fas fa-undo" style="font-size: 1.1rem;"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Restaurar a estado anterior',
-                }
-
-            ];
-
-
-            let dtOverrideGlobals = {
-                buttons: dtButtons,
-                order: [
-                    [0, 'desc']
-                ],
-            };
-            let table = $('.table').DataTable(dtOverrideGlobals);
-        });
-    </script>
-@endsection
+        <div class="datatable-fix">
+            <table class="table datatable">
+                <thead>
+                    <tr>
+                        <th>Categoría</th>
+                        <th>Objetivos Estratégicos</th>
+                        <th>KPI</th>
+                        <th>Descripción</th>
+                        <th>Estatus</th>
+                        <th>Meta</th>
+                        <th>Periodo</th>
+                        <th>Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        @foreach ($objetivos as $obj)
+                            <td>{{ $obj->categoria->nombre }}</td>
+                            <td>{{ $obj->objetivo }}</td>
+                            <td>{{ $obj->KPI }}</td>
+                            <td>{{ $obj->descripcion }}</td>
+                            <td>Estatus</td>
+                            <td>{{ $obj->unidad->nombre }}</td>
+                            <td>Periodo</td>
+                            <td>
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button"
+                                        id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false">
+                                        Dropdown button
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        {{-- <a class="dropdown-item" href="#">Action</a>
+                                        <a class="dropdown-item" href="#">Another action</a> --}}
+                                        <a class="dropdown-item"
+                                            wire:click.prevent="enviarPapelera({{ $obj->id }})">Enviar a la
+                                            Papelera</a>
+                                    </div>
+                                </div>
+                            </td>
+                        @endforeach
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
