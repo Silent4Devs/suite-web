@@ -106,10 +106,19 @@ class OrdenCompraController extends Controller
     public function show($id)
     {
 
-        $requisicion = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->find($id);
-        $organizacion = Organizacion::getLogo();
+        try {
 
-        return view('contract_manager.ordenes-compra.show', compact('requisicion', 'organizacion'));
+            $requisicion = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->find($id);
+            $organizacion = Organizacion::getLogo();
+
+            if (! $requisicion) {
+                abort(404);
+            }
+
+            return view('contract_manager.ordenes-compra.show', compact('requisicion', 'organizacion'));
+        } catch (\Throwable $th) {
+            abort(404);
+        }
     }
 
     /**
@@ -120,16 +129,25 @@ class OrdenCompraController extends Controller
      */
     public function edit($id)
     {
-        abort_if(Gate::denies('katbol_ordenes_compra_modificar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $requisicion = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->find($id);
-        $proveedores = KatbolProveedorOC::get();
-        $proveedor = $proveedores->where('id', $requisicion->proveedor_id)->first();
-        $contratos = KatbolContrato::getAll();
-        $centro_costos = KatbolCentroCosto::get();
-        $monedas = KatbolMoneda::get();
-        $contrato = $contratos->where('id', $requisicion->contrato_id)->first();
 
-        return view('contract_manager.ordenes-compra.edit', compact('requisicion', 'proveedores', 'contratos', 'centro_costos', 'monedas', 'contrato'));
+        try {
+
+            abort_if(Gate::denies('katbol_ordenes_compra_modificar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            $requisicion = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->find($id);
+            if (! $requisicion) {
+                abort(404);
+            }
+            $proveedores = KatbolProveedorOC::get();
+            $proveedor = $proveedores->where('id', $requisicion->proveedor_id)->first();
+            $contratos = KatbolContrato::getAll();
+            $centro_costos = KatbolCentroCosto::get();
+            $monedas = KatbolMoneda::get();
+            $contrato = $contratos->where('id', $requisicion->contrato_id)->first();
+
+            return view('contract_manager.ordenes-compra.edit', compact('requisicion', 'proveedores', 'contratos', 'centro_costos', 'monedas', 'contrato'));
+        } catch (\Throwable $th) {
+            abort(404);
+        }
     }
 
     /**
