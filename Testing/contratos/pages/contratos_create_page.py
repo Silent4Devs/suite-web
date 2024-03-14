@@ -211,6 +211,12 @@ class Contratos_Create:
         )
         puesto_supervisor_1_input.clear()
         puesto_supervisor_1_input.send_keys(puesto_supervisor_1)
+    def area_supervisor_1(self,area_supervior_1):
+        area_supervisor_1_input = WebDriverWait(self.driver, 5).until(
+            EC.visibility_of_element_located((By.XPATH, "//input[@name='area']"))
+        )
+        area_supervisor_1_input.clear()
+        area_supervisor_1_input.send_keys(area_supervior_1)
 
     def supervisor_2(self,supervisor_2):
         supervisor_2_input = WebDriverWait(self.driver, 5).until(
@@ -218,5 +224,24 @@ class Contratos_Create:
         )
         supervisor_2_input.clear()
         supervisor_2_input.send_keys(supervisor_2)
-        pdb.set_trace()
 
+    def puesto_supervisor_2(self,puesto_supervisor_2):
+        puesto_supervisor_2_input = WebDriverWait(self.driver, 5).until(
+            EC.visibility_of_element_located((By.NAME, "cargo_administrador"))
+        )
+        puesto_supervisor_2_input.clear()
+        puesto_supervisor_2_input.send_keys(puesto_supervisor_2)
+
+    def area_supervisor_2(self,area_supervisor_2):
+        area_supervisor_2_input = WebDriverWait(self.driver, 5).until(
+            EC.visibility_of_element_located((By.NAME, "area_administrador"))
+        )
+        area_supervisor_2_input.clear()
+        area_supervisor_2_input.send_keys(area_supervisor_2)
+
+    def guardar(self):
+        guardar_btn = WebDriverWait(self.driver, 5).until(
+            EC.element_to_be_clickable((By.XPATH, "//input[@id='btnGuardar']"))
+        )
+        guardar_btn.click()
+        print("Contrato guardado")

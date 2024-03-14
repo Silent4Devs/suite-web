@@ -72,6 +72,17 @@ def test_contratos(browser):
     #PUESTO SUPERVISOR 1
     puesto_supervisor_1 = "Puesto Supervisor 1"
     contratos_create_page.puesto_supervisor_1(puesto_supervisor_1)
+    #AREA SUPERVISOR 1
+    area_supervisor_1 = "Area Supervisor 1"
+    contratos_create_page.area_supervisor_1(area_supervisor_1)
     #SUPERVISOR 2
     supervisor_2 = "Supervisor 2"
     contratos_create_page.supervisor_2(supervisor_2)
+    #PUESTO SUPERVISOR 2
+    puesto_supervisor_2 = "Puesto Supervisor 2"
+    contratos_create_page.puesto_supervisor_2(puesto_supervisor_2)
+    #AREA SUPERVISOR 2
+    area_supervisor_2 = "Area Supervisor 2"
+    contratos_create_page.area_supervisor_2(area_supervisor_2)
+    #GUARDAR BOTÓN
+    contratos_create_page.guardar()
