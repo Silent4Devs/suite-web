@@ -148,86 +148,37 @@ class Evaluaciones_360_create_page:
         
         print("URL actual:", self.driver.current_url)
         
-    def create_publico_objetivo(self):
-        
-        # Publico Objetivo
+    # Seleccionar empleados a evaluar de publico objetivo
     
-        campo_objetivo = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//SELECT[@id='evaluados_objetivo']"))
-            )
-        print("Dando click en campo publico objetivo")
-        campo_objetivo.click()
-        time.sleep(tiempo_llenado)
-        print("Llenando campo nombre")
-        campo_objetivo.send_keys("Manualmente")
-        print("Dando click en campo objetivo")
-        time.sleep(tiempo_llenado)
-        campo_objetivo.click()
-        
-        time.sleep(tiempo_espera)
-        
-        opciones_a_seleccionar = ["Cesar Ernesto Escobar Hernández","Zaid Arath García Hernández","Marti David Tendilla Gonzalez"]
-        
-        for opciones in opciones_a_seleccionar:
-                input_chip = WebDriverWait(self.driver, 10).until(
-                EC.presence_of_element_located((By.XPATH, "//li[contains(@class,'select2-search select2-search--inline')]"))
-            )
-                input_chip.click()
-                xpath_opcion = f"//li[contains(text(), '{opciones}')]"
-                opcion_elemento = WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable((By.XPATH, xpath_opcion))
-            )
-                opcion_elemento.click()
-
-
-            
-        
-        
-        
-        
-        
-        
-    """ 
-        # Seleccionar empleados a evaluar de publico objetivo
-    def select_empleado (self):
+    def select_publico_objetivo (self):
        empleado_evaular_btn=WebDriverWait(self.driver,10).until(
-           EC.visibility_of_all_elements_located((By.XPATH, "//li[contains(@class,'select2-search select2-search--inline')]"))
+           EC.element_to_be_clickable((By.XPATH, "//SELECT[@id='evaluados_objetivo']"))
        )
        empleado_evaular_btn.click()
        select = Select(empleado_evaular_btn)
-       select.select_by_index(2)
-       time.sleep(tiempo_modulos)
+       select.select_by_index(4) #Aqui se cambia la opcion que deseas en el boton publico objetivo
        
-        
-        
+       time.sleep(tiempo_modulos)
+         
+    # Seleccionar empleados a evaluar de publico objetivo
+    
+    print("Seleccionando primer empleado a evaluar")
+    def select_empleado_evaluar_1(self,input_chip_xpath, opcion_deseada_1):
+        try:
+            opcion_elemento = WebDriverWait(self.driver, 10).until(
+                EC.element_to_be_clickable((By.XPATH, input_chip_xpath))
+            )
+            opcion_elemento.click()
 
-        campo_empleados_2 = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//LI[@class='select2-search select2-search--inline']"))
+            xpath_opcion = f"//li[contains(text(), '{opcion_deseada_1}')]"
+            opcion_seleccionar = WebDriverWait(self.driver, 10).until(
+                EC.element_to_be_clickable((By.XPATH, xpath_opcion))
             )
-        print("Dando click en campo selecciona empleados a evaluar")
-        campo_empleados_2.click()
+            opcion_seleccionar.click()
+        except Exception as e:
+            print(f"Error al seleccionar la opción: {e}") 
+            
         time.sleep(tiempo_modulos)
-        print("Llenando campo selecciona empleados a evaluar")
-        campo_empleados_2.send_keys("Marti David Tendilla Gonzalez")
-        print("Dando click en campo selecciona empleados a evaluar")
-        time.sleep(tiempo_modulos)
-        campo_empleados_2.click()
-        
-        time.sleep(tiempo_espera)
-        
-        campo_empleados_3 = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//LI[@class='select2-search select2-search--inline']"))
-            )
-        print("Dando click en campo selecciona empleados a evaluar")
-        campo_empleados_3.click()
-        time.sleep(tiempo_modulos)
-        print("Llenando campo selecciona empleados a evaluar")
-        campo_empleados_3.click("Zaid Arath García Hernández")
-        print("Dando click en campo selecciona empleados a evaluar")
-        time.sleep(tiempo_modulos)
-        campo_empleados_3.click()
-        
-        time.sleep(tiempo_espera)
         
         # Boton Siguiente
         
@@ -240,5 +191,39 @@ class Evaluaciones_360_create_page:
         time.sleep(tiempo_espera)
         
         print("URL actual:", self.driver.current_url)
-        """
-
+        
+    def create_evaluadores(self):
+        
+        # Pares primera opcion
+        
+        empleado_pares=WebDriverWait(self.driver,10).until(
+            EC.presence_of_element_located((By.XPATH, "(//SELECT[@name=''])[3]"))
+        )
+        empleado_pares.click()
+        select = Select(empleado_pares)
+        select.select_by_index(5) #Aqui se cambia la opcion que deseas en el boton publico objetivo
+            
+        time.sleep(tiempo_espera)
+        
+        # Boton Siguiente
+        
+        btn_siguiente = WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, "(//BUTTON[@type='button'])[2]"))
+            )
+        print("Dando click en siguiente")
+        btn_siguiente.click()
+        
+        time.sleep(tiempo_espera)
+        
+        print("URL actual:", self.driver.current_url)   
+        
+    def create_periodos(self):
+        
+        print("Dando click en Añadir Periodo...")
+        btn_hmaburguesa = WebDriverWait(self.driver, 3).until(
+            EC.visibility_of_element_located((By.XPATH, "//BUTTON[@id='addPeriodo']"))
+        )
+        btn_hmaburguesa.click()
+            
+        
+        
