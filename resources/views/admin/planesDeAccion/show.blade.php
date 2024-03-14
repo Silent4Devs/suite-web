@@ -107,7 +107,7 @@
         function cambiarTitulo(titulo) {
             setTimeout(() => {
                 document.getElementById('titlo-tab').innerText = titulo;
-            }, 500);
+            }, 100);
         }
 
         function navSection(id) {
@@ -132,8 +132,8 @@
                 },
                 url: "{{ route('admin.planes-de-accion.loadProject', $planImplementacion) }}",
                 success: function(response) {
-                    ge.loadProject(response);
-                    ge.checkpoint(); //empty the undo stac
+                    //ge.loadProject(response);
+                    //ge.checkpoint(); //empty the undo stac
                     renderKanban(response);
                     renderCalendar(response);
                     //initProject();

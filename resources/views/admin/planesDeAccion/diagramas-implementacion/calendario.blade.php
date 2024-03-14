@@ -1,5 +1,5 @@
 <div class="cardCalendario" style="box-shadow: none; !important">
-    <div class="card-body" style="height: 658px;">
+    <div class="card-body" style="height: 550px;">
         <div id='calendar'></div>
     </div>
 </div>
