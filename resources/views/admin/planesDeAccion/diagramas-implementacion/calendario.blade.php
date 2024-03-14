@@ -31,19 +31,19 @@
 
         function renderCalendar(response) {
             const mapStatusToColor = {
-                "STATUS_ACTIVE": "#ecde00",
-                "STATUS_DONE": "#17d300",
-                "STATUS_FAILED": "#e10000",
-                "STATUS_SUSPENDED": "#e7e7e7",
-                "STATUS_UNDEFINED": "#00b1e1"
+                "STATUS_ACTIVE": "#DEEFFF",
+                "STATUS_DONE": "#DEFFE6",
+                "STATUS_FAILED": "#FFDFDF",
+                "STATUS_SUSPENDED": "#EEEEEE",
+                "STATUS_UNDEFINED": "#FFECAF"
             };
 
             const mapStatusToEstatus = {
-                "STATUS_ACTIVE": "En progreso",
+                "STATUS_ACTIVE": "En proceso",
                 "STATUS_DONE": "Completado",
-                "STATUS_FAILED": "Con retraso",
-                "STATUS_SUSPENDED": "Suspendida",
-                "STATUS_UNDEFINED": "Sin iniciar"
+                "STATUS_FAILED": "Retrasado",
+                "STATUS_SUSPENDED": "Suspendido",
+                "STATUS_UNDEFINED": "Lista de tareas"
             };
 
             response.tasks.forEach(item => {
