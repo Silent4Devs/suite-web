@@ -67,11 +67,7 @@
             <tr>
                 <td>
                     <strong> Proyecto: </strong> <br>
-                    @if ($requisiciones->contrato->no_contrato)
-                        {{ $requisiciones->contrato->no_contrato }}
-                    @else
-                        <small class="not-register">Sin registro</small>
-                    @endif
+                        {{ isset($requisiciones->contrato->no_contrato) }}
                 </td>
                 <td>
                     <strong> Comprador: </strong> <br>
