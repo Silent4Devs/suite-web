@@ -13,7 +13,9 @@
     @include('admin.timesheet.complementos.admin-aprob')
 
     <x-loading-indicator />
+
     @livewire('timesheet.timesheet-horas-filas', ['origen' => 'create', 'timesheet_id' => null])
+
 @endsection
 
 
@@ -36,7 +38,7 @@
             }
 
             $("#fecha_dia").flatpickr({
-                "minDate": "{{ auth()->user()->empleado->fecha_min_timesheet }}",
+                "minDate": "{{ $empleado->fecha_min_timesheet }}",
                 "maxDate": "{{ now()->addWeeks($organizacion->semanas_adicionales)->endOfWeek()->format('Y-m-d') }}",
                 "disable": [
                     function(date) {

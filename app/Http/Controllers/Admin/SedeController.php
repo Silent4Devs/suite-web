@@ -239,18 +239,34 @@ class SedeController extends Controller
 
     public function ubicacion($request)
     {
-        abort_if(Gate::denies('sedes_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $sede = Sede::find($request);
+        try {
+            abort_if(Gate::denies('sedes_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            $sede = Sede::find($request);
 
-        return view('admin.sedes.ubicacion', compact('sede'));
+            if (! $sede) {
+                abort(404);
+            }
+
+            return view('admin.sedes.ubicacion', compact('sede'));
+        } catch (\Throwable $th) {
+            abort(404);
+        }
     }
 
     public function ubicacionorg($request)
     {
-        abort_if(Gate::denies('sedes_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $sede = Sede::find($request);
+        try {
+            abort_if(Gate::denies('sedes_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            $sede = Sede::find($request);
 
-        //dd($sede);
-        return view('admin.sedes.ubicacion', compact('sede'));
+            if (! $sede) {
+                abort(404);
+            }
+
+            //dd($sede);
+            return view('admin.sedes.ubicacion', compact('sede'));
+        } catch (\Throwable $th) {
+            abort(404);
+        }
     }
 }

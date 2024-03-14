@@ -29,9 +29,6 @@
                             RFC
                         </th>
                         <th style="vertical-align: top">
-                            Contacto
-                        </th>
-                        <th style="vertical-align: top">
                             Fecha Inicio
                         </th>
                         <th style="vertical-align: top">
@@ -190,10 +187,6 @@
                     {
                         data: 'rfc',
                         name: 'rfc'
-                    },
-                    {
-                        data: 'contacto',
-                        name: 'contacto'
                     },
                     {
                         data: 'fecha_inicio',

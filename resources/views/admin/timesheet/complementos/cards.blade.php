@@ -1,6 +1,7 @@
 @php
     use App\Models\Timesheet;
-    $times = Timesheet::where('empleado_id', auth()->user()->empleado->id)->get();
+    $user = auth()->user();
+    $times = Timesheet::where('empleado_id', $user->empleado_id)->get();
 
     $totales = $times->count();
     $borrador_contador = $times->where('estatus', 'papelera')->count();
