@@ -60,3 +60,12 @@ def test_contratos(browser):
     #MONTO DE PAGO
     monto_de_pago = "1000"
     contratos_create_page.monto_de_pago(monto_de_pago)
+    #MONTO MAXIMO
+    monto_maximo = "1000000"
+    contratos_create_page.monto_maximo(monto_maximo)
+    #MONTO MÍNIMO
+    monto_minimo = "100"
+    contratos_create_page.monto_minimo(monto_minimo)
+    #SUPERVISOR 1
+    supervisor_1 = "Supervisor 1"
+    contratos_create_page.supervisor_1(supervisor_1)

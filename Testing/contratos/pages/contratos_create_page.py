@@ -182,4 +182,26 @@ class Contratos_Create:
         )
         monto_de_pago_input.clear()
         monto_de_pago_input.send_keys(monto_de_pago)
+
+
+    def monto_maximo(self,monto_maximo):
+        monto_maximo_btn = WebDriverWait(self.driver, 5).until(
+            EC.visibility_of_element_located((By.XPATH, "//input[@id='este' and @name='maximo']"))
+        )
+        monto_maximo_btn.clear()
+        monto_maximo_btn.send_keys(monto_maximo)
+
+    def monto_minimo(self,monto_minimo):
+        monto_minimo_btn = WebDriverWait(self.driver, 5).until(
+            EC.visibility_of_element_located((By.XPATH, "//input[@id='prueba' and @name='minimo']"))
+        )
+        monto_minimo_btn.clear()
+        monto_minimo_btn.send_keys(monto_minimo)
+
+    def supervisor_1(self,supervisor_1):
+        supervisor_1_input = WebDriverWait(self.driver, 5).until(
+            EC.visibility_of_element_located((By.XPATH, "//input[@name='pmp_asignado']"))
+        )
+        supervisor_1_input.clear()
+        supervisor_1_input.send_keys(supervisor_1)
         pdb.set_trace()
