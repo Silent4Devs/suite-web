@@ -54,26 +54,11 @@
 
             <div id="registro_completo" class="d-none w-100 row" style="margin:0 !important;">
                 <div class="form-group col-md-6 anima-focus">
-                    <input name="rfc" placeholder=""
+                    <input name="rfc" placeholder="" maxlength="255"
                         pattern="^[A-Z&Ñ]{3,4}[0-9]{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])[A-Z0-9]{2}[0-9A]$"
                         class="form-control" value="{{ old('rfc') }}">
                     {!! Form::label('rfc', 'RFC*', ['class' => 'asterisco']) !!}
                 </div>
-
-                {{-- <div class="form-group col-md-6">
-                    <label class="form-label"><i class="fas fa-file-alt iconos-crear"></i>Persona Fiscal</label>
-                    <select name="id_fiscale" id="" class="form-control">
-                        @if (!$personas->isEmpty())
-                            <option value="" disabled selected>Seleccione una opción</option>
-                            @foreach ($personas as $persona)
-                                <option value="{{ $persona->id }}">{{ $persona->persona_fiscal }}</option>
-                            @endforeach
-                        @else
-                            <option value="" disabled>No hay proveedores registrados</option>
-                        @endif
-                    </select>
-                </div> --}}
-
                 <div class="col-md-12 col-sm-12 mt-4">
                     <div class="card vrd-agua" style="background-color:#fff;">
                         <p class="mb-1">DOMICILIO</p>
