@@ -118,20 +118,18 @@
                                         </form>
                                     </div>
                                 </div>
-
-
-
-
-
-
-
-
-
-
-
                             </div>
                         </div>
                     </div>
+
+                    @php
+
+                    use App\Models\User;
+                    use App\Models\Empleado;
+                    $usuario = User::getCurrentUser();
+                    $empleado = Empleado::where('id', $usuario->empleado_id)->first();
+
+                   @endphp
 
                     <div class="col-sm-7 col-lg-7 col-7">
                         <div class="row">
@@ -150,7 +148,7 @@
                                                 <input
                                                     class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
                                                     type="text" name="name" id="name"
-                                                    value="{{ old('name', auth()->user()->empleado->name) }}" required
+                                                    value="{{ old('name', $empleado->name) }}" required
                                                     readonly disabled>
                                                 @if ($errors->has('name'))
                                                     <div class="invalid-feedback">
@@ -164,7 +162,7 @@
                                                 <input
                                                     class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}"
                                                     type="text" name="email" id="email" readonly disabled
-                                                    value="{{ old('email', auth()->user()->empleado->email) }}">
+                                                    value="{{ old('email', $empleado->email) }}">
                                                 @if ($errors->has('email'))
                                                     <div class="invalid-feedback">
                                                         {{ $errors->first('email') }}
@@ -176,7 +174,7 @@
                                                 <input
                                                     class=" form-control {{ $errors->has('cumpleaños') ? 'is-invalid' : '' }}"
                                                     type="date" name="cumpleaños" id="cumpleaños"
-                                                    value="{{ old('cumpleaños', auth()->user()->empleado->cumpleaños) }}">
+                                                    value="{{ old('cumpleaños', $empleado->cumpleaños) }}">
                                                 @if ($errors->has('cumpleaños'))
                                                     <div class="invalid-feedback">
                                                         {{ $errors->first('cumpleaños') }}
@@ -188,7 +186,7 @@
                                                 <input
                                                     class="form-control {{ $errors->has('telefono_movil') ? 'is-invalid' : '' }}"
                                                     type="tel" name="telefono_movil" id="telefono_movil"
-                                                    value="{{ old('telefono_movil', auth()->user()->empleado->telefono_movil) }}">
+                                                    value="{{ old('telefono_movil', $empleado->telefono_movil) }}">
                                                 @if ($errors->has('telefono_movil'))
                                                     <div class="invalid-feedback">
                                                         {{ $errors->first('telefono_movil') }}
@@ -199,7 +197,7 @@
                                                 style="display:flex; justify-content:space-between; padding-left: 42px;">
                                                 <input type="checkbox" class="form-check-input" id="ValidacionNumero"
                                                     name="mostrar_telefono"
-                                                    {{ auth()->user()->empleado->mostrar_telefono ? 'checked' : '' }}>
+                                                    {{ $empleado->mostrar_telefono ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="exampleCheck1"
                                                     style="font-size:12px; margin-top: 3px;">Mostrar mi telefono en directorio
                                                     organizacional</label>
@@ -276,7 +274,7 @@
                                     method="POST">
                                     @csrf
                                     @include('admin.empleados.components.contactos-emergencia',[
-                                    'empleado'=>auth()->user()->empleado
+                                    'empleado'=>$empleado
                                     ])
                                     <div class="form-group" style="text-align: end">
                                         <button class="btn btn-danger" type="submit">

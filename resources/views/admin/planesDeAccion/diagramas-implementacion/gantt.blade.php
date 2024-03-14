@@ -1,8 +1,6 @@
 <div class="cardCalendario" style="box-shadow: none; !important">
     <div class="card-body" style="height: 658px;">
         <div id="sistema_gantt">
-
-
             <div id="ndo"
                 style="position:absolute;right:5px;top:5px;width:378px;padding:5px;background-color: #FFF5E6; border:1px solid #F9A22F; font-size:12px; display: none;"
                 class="noprint">
@@ -77,13 +75,11 @@
                 //in order to force compute the best-fitting zoom level
                 delete ge.gantt.zoom;
 
-                //var project = loadGanttFromServer();
+                var project = loadGanttFromServer();
 
-                // if (!project.canWrite)
-                //     $(".ganttButtonBar button.requireWrite").attr("disabled", "true");
+                if (!project.canWrite)
+                    $(".ganttButtonBar button.requireWrite").attr("disabled", "true");
             }
-
-
 
             function getDemoProject() {
                 //console.debug("getDemoProject")
@@ -120,8 +116,6 @@
                     url: "{{ route('admin.planes-de-accion.loadProject', $planImplementacion) }}",
                     success: function(response) {
                         ge.loadProject(response);
-                        document.getElementById("ultima_modificacion").innerHTML = moment(response.updated_at)
-                            .format("DD-MM-YYYY hh:mm:ss A")
                         ge.checkpoint(); //empty the undo stac
                     },
                     error: function(response) {
@@ -239,7 +233,7 @@
                                         loadGanttFromServer();
                                         break;
                                 }
-                                // loadGanttFromServer();
+                                loadGanttFromServer();
                             } else {
                                 loadGanttFromServer();
                             }
@@ -659,16 +653,14 @@
 
 
             <div class="__template__" type="ASSIGNMENT_ROW">
-                {{-- <!-- --}}
-                <tr taskId="(#=obj.task.id#)" assId="(#=obj.assig.id#)" class="assigEditRow">
-                    <td><select name="resourceId" class="formElements"
-                            (#=obj.assig.id.indexOf("tmp_")==0?"":"disabled"#)></select></td>
-                    <td><select type="select" name="roleId" class="formElements"></select></td>
-                    <td><input type="text" name="effort" value="(#=getMillisInHoursMinutes(obj.assig.effort)#)"
-                            size="5" class="formElements"></td>
-                    <td align="center"><span class="teamworkIcon delAssig del" style="cursor: pointer">d</span></td>
-                </tr>
-                {{-- --> --}}
+                <!--
+                            <tr taskId="(#=obj.task.id#)" assId="(#=obj.assig.id#)" class="assigEditRow" >
+                            <td ><select name="resourceId"  class="formElements" (#=obj.assig.id.indexOf("tmp_")==0?"":"disabled"#) ></select></td>
+                            <td ><select type="select" name="roleId"  class="formElements"></select></td>
+                            <td ><input type="text" name="effort" value="(#=getMillisInHoursMinutes(obj.assig.effort)#)" size="5" class="formElements"></td>
+                            <td align="center"><span class="teamworkIcon delAssig del" style="cursor: pointer">d</span></td>
+                            </tr>
+                            -->
             </div>
 
 

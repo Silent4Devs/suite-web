@@ -156,8 +156,11 @@ class TimesheetController extends Controller
 
         $organizacion = Organizacion::getFirst();
 
+        $user = User::getCurrentUser();
+        $empleado = Empleado::where('id', $user->empleado_id)->first();
+
         // Si la fecha no está registrada, continúa con la vista de creación.
-        return view('admin.timesheet.create', compact('fechasRegistradas', 'organizacion'));
+        return view('admin.timesheet.create', compact('fechasRegistradas', 'organizacion', 'empleado'));
     }
 
     public function createCopia($id)
@@ -1000,7 +1003,7 @@ class TimesheetController extends Controller
     {
         $request->validate(
             [
-                'identificador' => 'required|unique:timesheet_clientes,identificador',
+                'identificador' => 'required|max:255|unique:timesheet_clientes,identificador',
                 'razon_social' => 'required|string|max:255',
                 'nombre' => 'required|string|max:255',
                 'rfc' => 'max:15',
@@ -1039,7 +1042,7 @@ class TimesheetController extends Controller
     {
         $request->validate(
             [
-                'identificador' => 'required|unique:timesheet_clientes,identificador',
+                'identificador' => 'required|max:255|unique:timesheet_clientes,identificador',
                 'razon_social' => 'required|string|max:255',
                 'nombre' => 'required|string|max:255',
                 'rfc' => 'max:15',

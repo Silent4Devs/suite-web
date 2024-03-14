@@ -131,8 +131,9 @@ class CompradoresController extends Controller
             'nombre' => 'required',
             'estado' => 'required',
         ]);
+
         $comprador = Comprador::find($id);
-        $empledo = Empleado::where('id', $request->nombre)->first();
+        $empledo = Empleado::where('name', $request->nombre)->first();
 
         $comprador->update([
             'nombre' => $empledo->name,
