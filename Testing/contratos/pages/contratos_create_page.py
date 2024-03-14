@@ -204,4 +204,19 @@ class Contratos_Create:
         )
         supervisor_1_input.clear()
         supervisor_1_input.send_keys(supervisor_1)
+
+    def puesto_supervisor_1(self,puesto_supervisor_1):
+        puesto_supervisor_1_input = WebDriverWait(self.driver, 5).until(
+            EC.visibility_of_element_located((By.XPATH, "//input[@name='puesto']"))
+        )
+        puesto_supervisor_1_input.clear()
+        puesto_supervisor_1_input.send_keys(puesto_supervisor_1)
+
+    def supervisor_2(self,supervisor_2):
+        supervisor_2_input = WebDriverWait(self.driver, 5).until(
+            EC.visibility_of_element_located((By.XPATH, "//input[@name='administrador_contrato']"))
+        )
+        supervisor_2_input.clear()
+        supervisor_2_input.send_keys(supervisor_2)
         pdb.set_trace()
+
