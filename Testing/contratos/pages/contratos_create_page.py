@@ -120,6 +120,7 @@ class Contratos_Create:
         )
         select = Select(estatus_btn)
         select.select_by_index(2)
+
     def objetivo_servicio(self, objetivo_servicio):
         objetivo_servicio_input = WebDriverWait(self.driver, 5).until(
             EC.visibility_of_element_located((By.XPATH, "//textarea[@name='objetivo']"))
@@ -127,5 +128,37 @@ class Contratos_Create:
         objetivo_servicio_input.clear()
         objetivo_servicio_input.send_keys(objetivo_servicio)
 
+    def adjuntar_contrato(self):
+        adjuntar_contrato_btn = WebDriverWait(self.driver, 5).until(
+            EC.visibility_of_element_located((By.XPATH, "//input[@name='file_contrato']"))
+        )
+        adjuntar_contrato_btn.send_keys("/Users/imzzaidd/Desktop/S4B/tabantaj/testing/contratos/tests_files/CorruptedPDF.pdf")
+    def vigencia(self):
+        vigencia_btn = WebDriverWait(self.driver, 5).until(
+            EC.visibility_of_element_located((By.XPATH, "//input[@name='vigencia_contrato']"))
+        )
+        vigencia_btn.click()
+        vigencia_btn.send_keys("2021-12-31")
 
+    def fecha_inicio(self,fecha_inicio):
+        fecha_inicio_btn = WebDriverWait(self.driver, 5).until(
+            EC.visibility_of_element_located((By.XPATH, "//input[@name='fecha_inicio']"))
+        )
+        fecha_inicio_btn.click()
+        fecha_inicio_btn.send_keys(fecha_inicio)
+
+    def fecha_fin(self,fecha_fin):
+        fecha_fin_btn = WebDriverWait(self.driver, 5).until(
+            EC.visibility_of_element_located((By.XPATH, "//input[@name='fecha_fin']"))
+        )
+        fecha_fin_btn.click()
+        fecha_fin_btn.send_keys(fecha_fin)
+
+    def fecha_firma(self,fecha_firma):
+        fecha_firma_btn = WebDriverWait(self.driver, 5).until(
+            EC.visibility_of_element_located((By.XPATH, "//input[@name='fecha_firma']"))
+        )
+        fecha_firma_btn.click()
+        fecha_firma_btn.send_keys(fecha_firma)
+        pdb.set_trace()
 

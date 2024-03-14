@@ -39,4 +39,16 @@ def test_contratos(browser):
     #OBJETIVO DEL SERVICIO
     objetivo_servicio = "Objetivo de Prueba"
     contratos_create_page.objetivo_servicio(objetivo_servicio)
-
+    #ADJUNTAR ARCHIVO
+    contratos_create_page.adjuntar_contrato()
+    #VIGENCIA
+    contratos_create_page.vigencia()
+    #FECHA INICIO
+    fecha_inicio = "2022-05-01"
+    contratos_create_page.fecha_inicio(fecha_inicio)
+    #FECHA FIN
+    fecha_fin = "2023-05-07"
+    contratos_create_page.fecha_fin(fecha_fin)
+    #FECHA FIRMA
+    fecha_firma = "2022-05-04"
+    contratos_create_page.fecha_firma(fecha_firma)
