@@ -1,7 +1,9 @@
 import time
+import pdb
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+
 
 class Contratos:
     def __init__(self, driver):
@@ -63,19 +65,19 @@ class Contratos:
     )
         contratos_del_area_btn.click()
         print("Botón de Contratos del Área presionado")
-    def exportar(self):
-        #CSV
-        csv_btn = WebDriverWait(self.driver, 5).until(
-            EC.element_to_be_clickable((By.XPATH, "(//i[contains(@class,'fas fa-file-csv')])[1]"))
+
+    def search_bar(self, search):
+        search_bar = WebDriverWait(self.driver, 5).until(
+            EC.visibility_of_element_located((By.XPATH, "//input[@type='search' and @aria-controls='contratos-table']"))
         )
-        csv_btn.click()
-        #EXCEL
-        excel_btn = WebDriverWait(self.driver, 5).until(
-            EC.element_to_be_clickable((By.XPATH, "(//button[@title='Exportar Excel'])[1]"))
+        search_bar.clear()
+        search_bar.send_keys(search)
+
+    def visualizar(self):
+        visualizar_btn = WebDriverWait(self.driver, 5).until(
+            EC.element_to_be_clickable((By.XPATH, "//i[@class='fa-solid fa-eye' and @title='Mostrar']"))
         )
-        excel_btn.click()
-        #PDF
-        pdf_btn = WebDriverWait(self.driver, 5).until(
-            EC.element_to_be_clickable((By.XPATH, "(//i[@class='fa fa-file-pdf-o'])[1]"))
-        )
-        pdf_btn.click()
+
+        visualizar_btn.click()
+
+
