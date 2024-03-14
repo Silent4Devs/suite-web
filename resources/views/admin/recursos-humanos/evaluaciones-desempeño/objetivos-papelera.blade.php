@@ -11,11 +11,11 @@
 
     <div class="card card-body">
         <div class="info-first-config">
-            <h4 class="title-config">Objetivos de: [{{ $empleado->name }}]</h4>
+            <h4 class="title-config">Objetivos de: {{ $empleado->name }}</h4>
             <hr class="my-4">
         </div>
 
-        @livewire('papelera-objetivos-desempeno')
+        @livewire('papelera-objetivos-desempeno', ['id_empleado' => $empleado->id])
     </div>
 @endsection
 

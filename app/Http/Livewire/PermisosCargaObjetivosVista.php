@@ -12,7 +12,7 @@ class PermisosCargaObjetivosVista extends Component
     public function render()
     {
         $this->permisos = PermisosCargaObjetivos::select('id', 'perfil', 'permisos_asignacion', 'permiso_objetivos', 'permiso_escala')->orderBy('id')->get();
-        // dd($permisos);
+        // dd($this->permisos);
         return view('livewire.permisos-carga-objetivos-vista');
     }
 

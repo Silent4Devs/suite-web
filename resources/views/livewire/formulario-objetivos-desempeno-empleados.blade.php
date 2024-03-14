@@ -298,18 +298,18 @@
                             <td>{{ $obj->objetivo->meta }}</td>
                             <td>Periodo</td>
                             <td>
-                                <div class="dropdown">
-                                    <button class="btn btn-secondary dropdown-toggle" type="button"
-                                        id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                <div class="dropdown btn-options-foda-card">
+                                    <button class="btn dropdown-toggle" type="button" data-toggle="dropdown"
                                         aria-expanded="false">
-                                        Dropdown button
+                                        <i class="fa-solid fa-ellipsis-vertical"></i>
                                     </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        {{-- <a class="dropdown-item" href="#">Action</a>
-                                        <a class="dropdown-item" href="#">Another action</a> --}}
+                                    <div class="dropdown-menu">
                                         <a class="dropdown-item"
                                             wire:click.prevent="enviarPapelera({{ $obj->id }})">Enviar a la
                                             Papelera</a>
+                                        <a class="dropdown-item delete-item"
+                                            wire:click.prevent="eliminarObjetivo({{ $obj->id }})">
+                                            <i class="fa-solid fa-trash"></i>&nbsp;Eliminar</a>
                                     </div>
                                 </div>
                             </td>

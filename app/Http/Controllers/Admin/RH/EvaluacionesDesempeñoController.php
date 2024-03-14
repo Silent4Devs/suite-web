@@ -65,7 +65,7 @@ class EvaluacionesDesempeñoController extends Controller
     public function cargaObjetivosEmpleado($id_empleado)
     {
         $empleado = Empleado::getaltaAllWithAreaObjetivoPerfil()->find($id_empleado);
-
+        // dd($empleado);
         return view('admin.recursos-humanos.evaluaciones-desempeño.carga-objetivos-empleado', compact('empleado'));
     }
 
@@ -77,7 +77,7 @@ class EvaluacionesDesempeñoController extends Controller
     public function objetivosPapelera($id_empleado)
     {
         $empleado = Empleado::getaltaAllWithAreaObjetivoPerfil()->find($id_empleado);
-
+        // dd($empleado);
         return view('admin.recursos-humanos.evaluaciones-desempeño.objetivos-papelera', compact('empleado'));
     }
 

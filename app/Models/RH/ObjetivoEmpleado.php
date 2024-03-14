@@ -15,7 +15,20 @@ class ObjetivoEmpleado extends Model implements Auditable
 
     protected $table = 'ev360_objetivo_empleados';
 
-    protected $fillable = ['empleado_id', 'objetivo_id', 'completado', 'en_curso'];
+    protected $fillable = [
+        'empleado_id',
+        'objetivo_id',
+        'completado',
+        'en_curso',
+        'papelera',
+        '360',
+        'mensual',
+        'bimestral',
+        'trimestral',
+        'semestral',
+        'anual',
+        'abierta',
+    ];
 
     public static function getAllwithObjetivo()
     {

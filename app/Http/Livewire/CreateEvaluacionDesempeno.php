@@ -33,7 +33,7 @@ class CreateEvaluacionDesempeno extends Component
     public $bimestral = false;
     public $trimestral = false;
     public $semestral = false;
-    public $anual = false;
+    public $anualmente = false;
     public $abierta = false;
     //Arreglo para recopilar periodos
     public $arreglo_periodos = [];
@@ -249,7 +249,7 @@ class CreateEvaluacionDesempeno extends Component
                 $this->bimestral = false;
                 $this->trimestral = false;
                 $this->semestral = false;
-                $this->anual = false;
+                $this->anualmente = false;
                 $this->abierta = false;
 
                 if ($valor) {
@@ -270,7 +270,7 @@ class CreateEvaluacionDesempeno extends Component
                 $this->bimestral = $valor;
                 $this->trimestral = false;
                 $this->semestral = false;
-                $this->anual = false;
+                $this->anualmente = false;
                 $this->abierta = false;
 
                 if ($valor) {
@@ -291,7 +291,7 @@ class CreateEvaluacionDesempeno extends Component
                 $this->bimestral = false;
                 $this->trimestral = $valor;
                 $this->semestral = false;
-                $this->anual = false;
+                $this->anualmente = false;
                 $this->abierta = false;
 
                 if ($valor) {
@@ -312,7 +312,7 @@ class CreateEvaluacionDesempeno extends Component
                 $this->bimestral = false;
                 $this->trimestral = false;
                 $this->semestral = $valor;
-                $this->anual = false;
+                $this->anualmente = false;
                 $this->abierta = false;
 
                 if ($valor) {
@@ -328,12 +328,12 @@ class CreateEvaluacionDesempeno extends Component
                 //dd($this->arreglo_periodos);
                 break;
 
-            case 'anual':
+            case 'anualmente':
                 $this->mensual = false;
                 $this->bimestral = false;
                 $this->trimestral = false;
                 $this->semestral = false;
-                $this->anual = $valor;
+                $this->anualmente = $valor;
                 $this->abierta = false;
 
                 if ($valor) {
@@ -354,7 +354,7 @@ class CreateEvaluacionDesempeno extends Component
                 $this->bimestral = false;
                 $this->trimestral = false;
                 $this->semestral = false;
-                $this->anual = false;
+                $this->anualmente = false;
                 $this->abierta = $valor;
 
                 if ($valor) {

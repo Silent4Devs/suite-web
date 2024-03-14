@@ -2,27 +2,32 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\ObjetivosDesempenoEmpleados;
+use App\Models\RH\ObjetivoEmpleado;
 use Livewire\Component;
 
 class PapeleraObjetivosDesempeno extends Component
 {
+    public $id_emp;
     public $objetivos;
+
+    public function mount($id_empleado)
+    {
+        $this->id_emp = $id_empleado;
+    }
 
     public function render()
     {
-        $this->objetivos = ObjetivosDesempenoEmpleados::with('categoria', 'unidad')
-            ->where('empleado_id', $this->id_emp)
-            ->where('papelera', true)
-            ->get();
+        $this->objetivos = ObjetivoEmpleado::getAllwithObjetivo()
+            ->where('empleado_id', '=', $this->id_emp)
+            ->where('papelera', true);
 
         return view('livewire.papelera-objetivos-desempeno');
     }
 
     public function restaurarPapelera($id_obj)
     {
-        $objetivo = ObjetivosDesempenoEmpleados::find($id_obj);
-
+        $objetivo = ObjetivoEmpleado::find($id_obj);
+        // dd($objetivo);
         $objetivo->update([
             'papelera' => false
         ]);
@@ -30,7 +35,7 @@ class PapeleraObjetivosDesempeno extends Component
 
     public function eliminarObjetivo($id_obj)
     {
-        $objetivo = ObjetivosDesempenoEmpleados::find($id_obj);
+        $objetivo = ObjetivoEmpleado::find($id_obj);
 
         $objetivo->delete();
     }

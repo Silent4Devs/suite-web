@@ -43,7 +43,9 @@ class FormularioObjetivosDesempenoEmpleados extends Component
 
     public function render()
     {
-        $this->objetivos = ObjetivoEmpleado::getAllwithObjetivo()->where('empleado_id', '=', $this->id_emp);
+        $this->objetivos = ObjetivoEmpleado::getAllwithObjetivo()
+            ->where('empleado_id', '=', $this->id_emp)
+            ->where('papelera', false);
         // dd($this->objetivos);
         return view('livewire.formulario-objetivos-desempeno-empleados');
     }
@@ -92,12 +94,12 @@ class FormularioObjetivosDesempenoEmpleados extends Component
         $this->select_unidad = '';
     }
 
-    // public function enviarPapelera($id_obj)
-    // {
-    //     $objetivo = ObjetivosDesempenoEmpleados::find($id_obj);
+    public function enviarPapelera($id_obj)
+    {
+        $objetivo = ObjetivoEmpleado::find($id_obj);
 
-    //     $objetivo->update([
-    //         'papelera' => true
-    //     ]);
-    // }
+        $objetivo->update([
+            'papelera' => true
+        ]);
+    }
 }

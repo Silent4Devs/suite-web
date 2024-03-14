@@ -5,7 +5,7 @@
 @section('content')
     {{-- {{ Breadcrumbs::render('capital-humano') }} --}}
 
-    <h5 class="titulo_general_funcion"> Carga de Objetivos: [{{ $empleado->name }}] </h5>
+    <h5 class="titulo_general_funcion"> Carga de Objetivos: {{ $empleado->name }} </h5>
 
     <div class="card card-body" style="color: #464646;">
         <div class="d-flex align-items-center justify-content-between">
