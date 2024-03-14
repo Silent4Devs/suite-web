@@ -160,5 +160,11 @@ class Contratos_Create:
         )
         fecha_firma_btn.click()
         fecha_firma_btn.send_keys(fecha_firma)
-        pdb.set_trace()
 
+    def numero_pagos(self,numero_pagos):
+        numero_pagos_input = WebDriverWait(self.driver, 5).until(
+            EC.visibility_of_element_located((By.XPATH, "//input[@name='no_pagos']"))
+        )
+        numero_pagos_input.clear()
+        numero_pagos_input.send_keys(numero_pagos)
+        pdb.set_trace()
