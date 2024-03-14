@@ -5,9 +5,7 @@ namespace App\Http\Livewire\Timesheet;
 use App\Models\Empleado;
 use App\Models\Timesheet;
 use App\Models\TimesheetHoras;
-use App\Models\TimesheetProyecto;
 use App\Models\TimesheetProyectoArea;
-use App\Models\TimesheetProyectoEmpleado;
 use App\Models\User;
 use Livewire\Component;
 
@@ -37,7 +35,7 @@ class TimesheetHorasFilas extends Component
     public function mount($origen, $timesheet_id)
     {
         $user = User::getCurrentUser();
-        $empleado = Empleado::where('id',  $user->empleado_id)->first();
+        $empleado = Empleado::where('id', $user->empleado_id)->first();
 
         $proyectos_array = collect();
 
@@ -45,13 +43,11 @@ class TimesheetHorasFilas extends Component
             return $query->where('estatus', '=', 'proceso');
         })->where('area_id', $empleado->area_id)->orderBy('id', 'desc')->get();
 
-
         foreach ($proyectos_area as $pa) {
             $proyectos_array->push(
                 $pa->proyecto
             );
         }
-
 
         $this->proyectos = $proyectos_array->unique();
 

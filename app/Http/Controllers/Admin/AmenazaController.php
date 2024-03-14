@@ -7,6 +7,8 @@ use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\CreateAmenazaRequest;
 use App\Http\Requests\UpdateAmenazaRequest;
 use App\Models\Amenaza;
+use App\Models\Empleado;
+use App\Models\User;
 use App\Repositories\AmenazaRepository;
 use App\Traits\ObtenerOrganizacion;
 use Illuminate\Http\Request;
@@ -73,8 +75,10 @@ class AmenazaController extends AppBaseController
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
+        $usuario = User::getCurrentUser();
+        $empleado = Empleado::where('id', $usuario->empleado_id)->first();
 
-        return view('admin.amenazas.index', compact('logo_actual', 'empresa_actual'));
+        return view('admin.amenazas.index', compact('logo_actual', 'empresa_actual', 'empleado'));
     }
 
     /**
