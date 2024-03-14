@@ -167,4 +167,19 @@ class Contratos_Create:
         )
         numero_pagos_input.clear()
         numero_pagos_input.send_keys(numero_pagos)
+
+    def tipo_cambio(self):
+        tipo_cambio_btn = WebDriverWait(self.driver, 5).until(
+            EC.visibility_of_element_located((By.XPATH, "//select[@name='tipo_cambio']"))
+        )
+        select = Select(tipo_cambio_btn)
+        select.select_by_index(1)
+
+
+    def monto_de_pago(self,monto_de_pago):
+        monto_de_pago_input = WebDriverWait(self.driver, 5).until(
+            EC.visibility_of_element_located((By.XPATH, "//input[@id='teste']"))
+        )
+        monto_de_pago_input.clear()
+        monto_de_pago_input.send_keys(monto_de_pago)
         pdb.set_trace()

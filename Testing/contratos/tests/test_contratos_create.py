@@ -55,3 +55,8 @@ def test_contratos(browser):
     #NUMERO DE PAGOS
     numero_pagos = "1"
     contratos_create_page.numero_pagos(numero_pagos)
+    #TIPO DE CAMBIO
+    contratos_create_page.tipo_cambio()
+    #MONTO DE PAGO
+    monto_de_pago = "1000"
+    contratos_create_page.monto_de_pago(monto_de_pago)
