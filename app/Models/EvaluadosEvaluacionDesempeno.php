@@ -15,4 +15,19 @@ class EvaluadosEvaluacionDesempeno extends Model
         'evaluacion_desempeno_id',
         'evaluado_desempeno_id',
     ];
+
+    public function evaluacion()
+    {
+        return $this->belongsTo(EvaluacionDesempeno::class, 'evaluacion_desempeno_id', 'id');
+    }
+
+    public function evaluadoresObjetivos()
+    {
+        return $this->hasMany(EvaluadoresEvaluacionObjetivosDesempeno::class, 'evaluado_desempeno_id', 'id');
+    }
+
+    public function evaluadoresCompetencias()
+    {
+        return $this->hasMany(EvaluadoresEvaluacionCompetenciasDesempeno::class, 'evaluado_desempeno_id', 'id');
+    }
 }

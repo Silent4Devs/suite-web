@@ -35,6 +35,7 @@ use App\Models\EnvioDocumentosAjustes;
 use App\Models\Escuela\Course;
 use App\Models\Escuela\Lesson;
 use App\Models\Escuela\Section;
+use App\Models\EvaluacionDesempeno;
 use App\Models\EvidenciasDocumentosEmpleados;
 use App\Models\ExperienciaEmpleados;
 use App\Models\IncidentesDayoff;
@@ -106,6 +107,7 @@ use App\Observers\DenunciasObserver;
 use App\Observers\DocumentoObserver;
 use App\Observers\EntendimientoOrganizacionObserver;
 use App\Observers\EnvioDocumentosAjustesObserver;
+use App\Observers\EvaluacionesDesempenoObserver;
 use App\Observers\EvaluacionObserver;
 use App\Observers\EvidenciasDocumentosEmpleadosObserver;
 use App\Observers\ExperienciaEmpleadosObserver;
@@ -282,5 +284,6 @@ class EventServiceProvider extends ServiceProvider
         Sucursal::observe(SucursalObserver::class);
         CatalogoRangosObjetivos::observe(CatalogoRangosObjetivosObserver::class);
         Vulnerabilidad::observe(VulnerabilidadObserver::class);
+        EvaluacionDesempeno::observe(EvaluacionesDesempenoObserver::class);
     }
 }

@@ -459,6 +459,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::get('recursos-humanos/evaluacion-360/objetivos-periodo/configuracion', 'RH\ObjetivosPeriodoController@config')->name('ev360-objetivos-periodo.config');
 
         // evaluaciones desempeño
+        Route::get('recursos-humanos/evaluacion-desempeño/index', 'RH\EvaluacionesDesempeñoController@index')->name('rh.evaluaciones-desempeño.index');
+        Route::get('recursos-humanos/evaluacion-desempeño/{evaluacion}/editBorrador', 'RH\EvaluacionesDesempeñoController@editBorrador')->name('rh.evaluaciones-desempeño.editBorrador');
+
         Route::get('recursos-humanos/evaluacion-desempeño/dashboard-general', 'RH\EvaluacionesDesempeñoController@dashboardGeneral')->name('rh.evaluaciones-desempeño.dashboard-general');
 
         Route::get('recursos-humanos/evaluacion-desempeño/dashboard-area', 'RH\EvaluacionesDesempeñoController@dashboardArea')->name('rh.evaluaciones-desempeño.dashboard-area');

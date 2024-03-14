@@ -5,13 +5,23 @@ namespace App\Http\Controllers\Admin\RH;
 use App\Http\Controllers\Controller;
 use App\Models\Area;
 use App\Models\Empleado;
+use App\Models\EvaluacionDesempeno;
 use Illuminate\Http\Request;
 
 class EvaluacionesDesempeñoController extends Controller
 {
     public function index()
     {
-        return view('admin.recursos-humanos.evaluaciones-desempeño.index');
+        $evaluaciones = EvaluacionDesempeno::getAll();
+        // dd($evaluaciones);
+        return view('admin.recursos-humanos.evaluaciones-desempeño.index', compact('evaluaciones'));
+    }
+
+    public function editBorrador($id_evaluacion)
+    {
+        $evaluaciones = EvaluacionDesempeno::with('periodos', 'evaluados')->find($id_evaluacion);
+        dd($evaluaciones);
+        return view('admin.recursos-humanos.evaluaciones-desempeño.index', compact('evaluaciones'));
     }
 
     public function dashboardGeneral()

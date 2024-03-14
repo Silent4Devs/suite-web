@@ -19,6 +19,8 @@ return new class extends Migration
             $table->float('porcentaje_objetivos');
             $table->boolean('activar_competencias');
             $table->float('porcentaje_competencias');
+
+            $table->string('tipo_periodo')->nullable();
             $table->integer('estatus');
 
             $table->timestamps();
