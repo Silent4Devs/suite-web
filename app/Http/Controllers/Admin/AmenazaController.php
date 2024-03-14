@@ -7,6 +7,8 @@ use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\CreateAmenazaRequest;
 use App\Http\Requests\UpdateAmenazaRequest;
 use App\Models\Amenaza;
+use App\Models\Empleado;
+use App\Models\User;
 use App\Repositories\AmenazaRepository;
 use App\Traits\ObtenerOrganizacion;
 use Illuminate\Http\Request;
@@ -14,8 +16,6 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use RealRashid\SweetAlert\Facades\Alert;
 use Yajra\DataTables\Facades\DataTables;
-use App\Models\User;
-use App\Models\Empleado;
 
 class AmenazaController extends AppBaseController
 {
