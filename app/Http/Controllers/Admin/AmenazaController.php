@@ -14,6 +14,8 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use RealRashid\SweetAlert\Facades\Alert;
 use Yajra\DataTables\Facades\DataTables;
+use App\Models\User;
+use App\Models\Empleado;
 
 class AmenazaController extends AppBaseController
 {
@@ -73,8 +75,10 @@ class AmenazaController extends AppBaseController
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
+        $usuario = User::getCurrentUser();
+        $empleado = Empleado::where('id', $usuario->empleado_id)->first();
 
-        return view('admin.amenazas.index', compact('logo_actual', 'empresa_actual'));
+        return view('admin.amenazas.index', compact('logo_actual', 'empresa_actual', 'empleado'));
     }
 
     /**
