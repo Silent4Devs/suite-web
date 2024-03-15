@@ -67,8 +67,6 @@ class InicioUsuarioController extends Controller
 
         $usuario = Auth::user();
 
-        dd($usuario);
-
         $empleado = Empleado::where('id', $usuario->empleado_id)->first();
 
         $usuarioVinculadoConEmpleado = false;
