@@ -76,7 +76,7 @@ class AmenazaController extends AppBaseController
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
         $usuario = User::getCurrentUser();
-        $empleado = Empleado::where('id', $usuario->empleado_id)->first();
+        $empleado = Empleado::where('id', $usuario->empleado->id)->first();
 
         return view('admin.amenazas.index', compact('logo_actual', 'empresa_actual', 'empleado'));
     }
