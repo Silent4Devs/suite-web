@@ -103,11 +103,20 @@ class CompradoresController extends Controller
      */
     public function edit($id)
     {
-        abort_if(Gate::denies('katbol_producto_modificar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $compradores = Comprador::find($id);
-        $users = Empleado::where('estatus', 'alta')->orderBy('name')->get();
+        try {
+            abort_if(Gate::denies('katbol_producto_modificar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            $compradores = Comprador::find($id);
 
-        return view('contract_manager.compradores.edit', compact('compradores', 'users'));
+            if (! $compradores) {
+                abort(404);
+            }
+
+            $users = Empleado::where('estatus', 'alta')->orderBy('name')->get();
+
+            return view('contract_manager.compradores.edit', compact('compradores', 'users'));
+        } catch (\Throwable $th) {
+            abort(404);
+        }
     }
 
     /**
@@ -122,8 +131,9 @@ class CompradoresController extends Controller
             'nombre' => 'required',
             'estado' => 'required',
         ]);
+
         $comprador = Comprador::find($id);
-        $empledo = Empleado::where('id', $request->nombre)->first();
+        $empledo = Empleado::where('name', $request->nombre)->first();
 
         $comprador->update([
             'nombre' => $empledo->name,

@@ -187,7 +187,15 @@
                     },
                     {
                         data: 'contrato.nombre_servicio',
-                        name: 'contrato.nombre_servicio'
+                        name: 'contrato.nombre_servicio',
+                        render: function(data, type, row) {
+                            // Verifica si 'data' es null o una cadena vacía
+                            if (data == null || data == "") {
+                                return '<span class="error">Campo Vacío</span>'; // Mensaje de error o cómo deseas mostrar la validación
+                            } else {
+                                return data; // Valor no es null ni vacío
+                            }
+                        }
                     },
                     {
                         data: 'area',
