@@ -65,7 +65,7 @@ class InicioUsuarioController extends Controller
         $hoy = Carbon::now();
         $hoy->toDateString();
 
-        $usuario = Auth::user();
+        $usuario = User::getCurrentUser();
 
         $empleado = Empleado::where('id', $usuario->empleado->id)->first();
 
