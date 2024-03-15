@@ -19,3 +19,5 @@ def test_contratos(browser):
     requisiciones_index_page.requisiciones_download_excel()
     #PDF
     requisiciones_index_page.requisiciones_download_pdf()
+    #PRINT
+    requisiciones_index_page.requisiciones_print()
