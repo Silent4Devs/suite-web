@@ -86,6 +86,13 @@ class Requisiciones_index:
         print("Botón de Aprobadores presionado y nueva pestaña abierta en segundo plano")
         print("URL actual:", url_ventana_principal)
 
+    def requisiciones_archivados(self):
+        url_archivados=self.driver.current_url
+        url_archivados = "https://192.168.9.78/contract_manager/requisiciones/archivo"
+        self.driver.execute_script(f"window.open('{url_archivados}','_blank');")
+        print("URL actual:", url_archivados)
+
+
 
     def requisiciones_download_csv(self):
         export_csv_btn = WebDriverWait(self.driver, 5).until(
