@@ -16,8 +16,9 @@
                     @php
                     use App\Models\User;
                     use App\Models\Empleado;
+                    use Illuminate\Support\Facades\Auth;
 
-                    $user = User::getCurrentUser();
+                    $user = Auth::user();
                     $empleado = Empleado::where('id', $user->empleado_id)->first();
                    @endphp
 
