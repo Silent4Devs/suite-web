@@ -93,7 +93,6 @@ class Requisiciones_index:
         print("URL actual:", url_archivados)
 
 
-
     def requisiciones_download_csv(self):
         export_csv_btn = WebDriverWait(self.driver, 5).until(
             EC.element_to_be_clickable((By.XPATH, "//i[contains(@class,'fas fa-file-csv')]"))
