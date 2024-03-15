@@ -5,7 +5,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 10.48.1.
+ * Generated for Laravel 10.48.3.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -16806,6 +16806,7 @@ namespace Barryvdh\DomPDF\Facade {
                     /**
          * Replace all the Options from DomPDF
          *
+         * @deprecated Use setOption to override individual options.
          * @param array<string, mixed> $options
          * @static 
          */        public static function setOptions($options)
@@ -16965,6 +16966,7 @@ namespace Barryvdh\DomPDF\Facade {
                     /**
          * Replace all the Options from DomPDF
          *
+         * @deprecated Use setOption to override individual options.
          * @param array<string, mixed> $options
          * @static 
          */        public static function setOptions($options)
@@ -18865,6 +18867,21 @@ namespace RealRashid\SweetAlert\Facades {
         {
                         /** @var \RealRashid\SweetAlert\Toaster $instance */
                         return $instance->html($title, $code, $icon);
+        }
+                    /**
+         * Display an html typed alert message which is generated from a view
+         *
+         * @param string $title
+         * @param string $view
+         * @param array $data
+         * @param array $mergeData
+         * @param string $icon
+         * @author Keller Martin <kellerjmrtn@gmail.com>
+         * @static 
+         */        public static function view($title, $view, $data = [], $mergeData = [], $icon = '')
+        {
+                        /** @var \RealRashid\SweetAlert\Toaster $instance */
+                        return $instance->view($title, $view, $data, $mergeData, $icon);
         }
                     /**
          * Display a toast message

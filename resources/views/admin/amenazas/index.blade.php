@@ -100,7 +100,7 @@
                     customize: function(doc) {
                         let logo_actual = @json($logo_actual);
                         let empresa_actual = @json($empresa_actual);
-                        let empleado = @json(auth()->user()->empleado->name);
+                        let empleado = @json($empleado->name);
 
                         var now = new Date();
                         var jsDate = now.getDate() + '-' + (now.getMonth() + 1) + '-' + now.getFullYear();

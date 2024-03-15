@@ -1,5 +1,5 @@
 <div class="cardCalendario" style="box-shadow: none; !important">
-    <div class="card-body" style="height: 658px;">
+    <div class="card-body" style="height: 550px;">
         <div id="sistema_gantt">
             <div id="ndo"
                 style="position:absolute;right:5px;top:5px;width:378px;padding:5px;background-color: #FFF5E6; border:1px solid #F9A22F; font-size:12px; display: none;"
@@ -55,30 +55,37 @@
 
         <script type="text/javascript">
             $(function() {
-                initProject();
+                //initProject();
             });
 
+            var projectInitialized = false; // Variable para rastrear si el proyecto ya se ha inicializado
+
             function initProject() {
-                var canWrite = true; //this is the default for test purposes
-                var urlSaveGanttOnServer = document.getElementById('workSpace').getAttribute('data-url-save');
-                var urlFolderAssigs = document.getElementById('workSpace').getAttribute('data-url-assigs');
+                // Verifica si el proyecto ya se ha inicializado antes
+                if (!projectInitialized) {
+                    var canWrite = true; //this is the default for test purposes
+                    var urlSaveGanttOnServer = document.getElementById('workSpace').getAttribute('data-url-save');
+                    var urlFolderAssigs = document.getElementById('workSpace').getAttribute('data-url-assigs');
 
-                // here starts gantt initialization
-                window.ge = new GanttMaster(urlSaveGanttOnServer, urlFolderAssigs);
-                ge.set100OnClose = true;
+                    // aquí comienza la inicialización de Gantt
+                    window.ge = new GanttMaster(urlSaveGanttOnServer, urlFolderAssigs);
+                    ge.set100OnClose = true;
+                    ge.shrinkParent = true;
+                    ge.init($("#workSpace"));
+                    loadI18n(); // sobrescribe con los archivos localizados
 
-                ge.shrinkParent = true;
+                    // para forzar el cálculo del mejor nivel de zoom
+                    delete ge.gantt.zoom;
 
-                ge.init($("#workSpace"));
-                loadI18n(); //overwrite with localized ones
+                    var project = loadGanttFromServer();
 
-                //in order to force compute the best-fitting zoom level
-                delete ge.gantt.zoom;
+                    if (!project.canWrite)
+                        $(".ganttButtonBar button.requireWrite").attr("disabled", "true");
 
-                var project = loadGanttFromServer();
-
-                if (!project.canWrite)
-                    $(".ganttButtonBar button.requireWrite").attr("disabled", "true");
+                    projectInitialized = true; // marca el proyecto como inicializado
+                } else {
+                    console.log("El proyecto ya ha sido inicializado.");
+                }
             }
 
             function getDemoProject() {
@@ -654,13 +661,13 @@
 
             <div class="__template__" type="ASSIGNMENT_ROW">
                 <!--
-                            <tr taskId="(#=obj.task.id#)" assId="(#=obj.assig.id#)" class="assigEditRow" >
-                            <td ><select name="resourceId"  class="formElements" (#=obj.assig.id.indexOf("tmp_")==0?"":"disabled"#) ></select></td>
-                            <td ><select type="select" name="roleId"  class="formElements"></select></td>
-                            <td ><input type="text" name="effort" value="(#=getMillisInHoursMinutes(obj.assig.effort)#)" size="5" class="formElements"></td>
-                            <td align="center"><span class="teamworkIcon delAssig del" style="cursor: pointer">d</span></td>
-                            </tr>
-                            -->
+                                                        <tr taskId="(#=obj.task.id#)" assId="(#=obj.assig.id#)" class="assigEditRow" >
+                                                        <td ><select name="resourceId"  class="formElements" (#=obj.assig.id.indexOf("tmp_")==0?"":"disabled"#) ></select></td>
+                                                        <td ><select type="select" name="roleId"  class="formElements"></select></td>
+                                                        <td ><input type="text" name="effort" value="(#=getMillisInHoursMinutes(obj.assig.effort)#)" size="5" class="formElements"></td>
+                                                        <td align="center"><span class="teamworkIcon delAssig del" style="cursor: pointer">d</span></td>
+                                                        </tr>
+                                                        -->
             </div>
 
 

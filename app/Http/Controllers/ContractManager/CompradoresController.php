@@ -80,7 +80,7 @@ class CompradoresController extends Controller
         } catch (QueryException $e) {
             DB::rollback();
 
-            return 'Error al insertar el producto: ' . $e->getMessage();
+            return 'Error al insertar el producto: '.$e->getMessage();
         }
     }
 
@@ -107,7 +107,7 @@ class CompradoresController extends Controller
             abort_if(Gate::denies('katbol_producto_modificar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
             $compradores = Comprador::find($id);
 
-            if (!$compradores) {
+            if (! $compradores) {
                 abort(404);
             }
 
