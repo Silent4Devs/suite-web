@@ -1,3 +1,35 @@
+<style>
+    .addCard {
+        background-color: transparent;
+        border: none;
+        color: #0080FF;
+        margin: 10px;
+        text-align: center;
+        font-size: 16px;
+        width: -webkit-fill-available;
+        display: inline-block;
+    }
+
+    .addBtn {
+        background-color: #DEEFFF;
+        color: #0080FF;
+        border: none;
+        border-radius: 5px;
+        padding: 6px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .cancelBtn {
+        background-color: #FFDFDF;
+        color: #FF5C3A;
+        border: none;
+        border-radius: 5px;
+        padding: 6px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+</style>
 <div class="cardKanban" style="box-shadow: none; !important;margin-top: 30px;">
     <div id="myKanban"></div>
 </div>
@@ -152,7 +184,8 @@
                                 </div>
                                 <div class="contenedorSelect">
                                     <div class="form-group anima-focus">
-                                        <select required class="form-control" name="agregarSelect" id="agregarSelect">
+                                        <select required class="form-control" name="agregarSelect"
+                                            id="agregarSelect">
                                             <option selected>Área</option>
                                             <option>Por persona</option>
                                         </select>
@@ -249,6 +282,7 @@
     <script src="{{ asset('../js/kanban/jkanban.js') }}"></script>
     <script src="{{ asset('../js/kanban/kanbanFunc.js') }}"></script>
     <script>
+        var Kanban
         const imagePath = '{{ asset('img/plan-trabajo/documento.svg') }}';
         const imagePathEye = '{{ asset('img/plan-trabajo/visibility.svg') }}';
         const imageTrash = '{{ asset('img/plan-trabajo/delete.svg') }}';
@@ -287,32 +321,16 @@
         let tasksModel = [];
         let personasAsignadas = [];
         let responseLocal = {};
+        let grupos = [];
 
         function renderKanbanNew(tasks, response) {
             let progreso = [];
-            let grupos = [];
             responseLocal = response;
             tasksModel = tasks;
             const modal = new bootstrap.Modal(document.getElementById('myModal'));
-
-            for (const estado in mapStatusToEstatus) {
-                grupos[mapStatusToEstatus[estado]] = [];
-            }
-            tasks.forEach(item => {
-                const estado = mapStatusToEstatus[item.status];
-                if (estado) {
-                    grupos[estado].push(item);
-                }
-            });
-            document.getElementById('totalesStrong').innerHTML = tasks.length;
-            document.getElementById('tareasStrong').innerHTML = grupos.iniciar.length;
-            document.getElementById('suspendidosStrong').innerHTML = grupos.suspendida.length;
-            document.getElementById('procesoStrong').innerHTML = grupos.progreso.length;
-            document.getElementById('retrasadosStrong').innerHTML = grupos.retraso.length;
-            document.getElementById('completadosStrong').innerHTML = grupos.completado.length;
-
+            agruparTaks();
             let countIniciar;
-            var KanbanTest = new jKanban({
+            Kanban = new jKanban({
                 element: "#myKanban",
                 gutter: '3px',
                 widthBoard: '300px',
@@ -323,18 +341,74 @@
                     abrirModalConDatos(el.dataset.eid, tasks, response);
                 },
                 context: function(el, e) {},
-                dragEl: function(el, source) {
-                    // console.log("START DRAG: " + el.dataset.eid);
-                    // console.log("donde biene: " + source.offsetParent.dataset.id);
-                    // console.log("END DRAG: " + el);
-                },
+                dragEl: function(el, source) {},
                 dragendEl: function(el) {},
                 dropEl: function(el, target, source, sibling) {
                     pintar(el.dataset.eid, el.offsetParent.dataset.id);
-                    guardarStatus(el.dataset.eid, source.offsetParent.dataset.id, target.offsetParent.dataset
+                    guardarStatus(el.dataset.eid, source.offsetParent.dataset.id, target.offsetParent
+                        .dataset
                         .id);
                 },
-                buttonClick: function(el, boardId) {},
+                buttonClick: function(el, boardId) {
+                    var formItem = document.createElement("form");
+                    formItem.setAttribute("class", "itemform");
+                    formItem.innerHTML = `
+                    <div class="form-group">
+                          <textarea class="form-control" rows="1" autofocus style="min-height: 34px !important;"></textarea>
+                        </div>
+                        <div class="form-group">
+                          <button type="submit" class="addBtn">Aceptar</button>
+                          <button type="button" id="CancelBtn" class="cancelBtn">Cancelar</button>
+                        </div>
+                    `;
+                    Kanban.addForm(boardId, formItem);
+                    formItem.addEventListener("submit", function(e) {
+                        e.preventDefault();
+                        var text = e.target[0].value;
+                        insertTask(text, boardId);
+                        let cardpulseClass = "";
+                        if (status === "STATUS_FAILED") {
+                            cardpulseClass = "pulse";
+                        }
+                        const timestamp = Date.now();
+                        let id = "tmp_" + timestamp;
+                        var newElementHTML = `
+                            <div id="id" class="cardContenido ${cardpulseClass}">
+                              <div class="tituloCard">${text}</div>
+                              <div class="contenido">
+                                <div class="etiquetaContenido">
+                                  <div class="etiquetaTitulo">Etiqueta</div>
+                                  <div class="etiquetaColor"></div>
+                                </div>
+                                <div class="estatusContenido">
+                                  <div class="estatusTitulo">Estatus</div>
+                                  <div id="estatusColor" class="${boardId}-estatusColor">${mapStatusToEstatusText[boardId]}</div>
+                                </div>
+                              </div>
+                              <div class="contenido">
+                                <div id="taskContenido">
+                                  <div id="taskText">0/0</div>
+                                </div>
+                                <div class="resourceContenido">
+                                  <img class="addSVG" src="{{ asset('img/plan-trabajo/attach.svg') }}">
+                                  <div id="resourceText">0</div>
+                                </div>
+                              </div>`;
+                        Kanban.addElement(boardId, {
+                            title: newElementHTML
+                        });
+                        formItem.parentNode.removeChild(formItem);
+                    });
+                    document.getElementById("CancelBtn").onclick = function() {
+                        formItem.parentNode.removeChild(formItem);
+                    };
+                },
+                itemAddOptions: {
+                    enabled: true,
+                    content: '+ Añada una tarjeta',
+                    class: 'addCard',
+                    footer: true
+                },
                 boards: [{
                         id: "STATUS_UNDEFINED",
                         title: "Lista de tareas",
@@ -416,62 +490,6 @@
                 }
             }
 
-            function items(array) {
-                const cards = [];
-                array.forEach(item => {
-                    const {
-                        id,
-                        name,
-                        progress,
-                        status,
-                        statusC = mapStatusToEstatusText[status],
-                        start,
-                        duration,
-                        end,
-                        color,
-                        subtasks,
-                        resources
-                    } = item;
-
-                    const resourcesCount = resources ? resources.length : 0;
-                    const subtasksCount = subtasks ? subtasks.length : 0;
-                    const subtasksReady = subtasks ? subtasks.filter(subtask => subtask.selected).length : 0;
-
-                    let cardpulseClass = "";
-                    if (status === "STATUS_FAILED") {
-                        cardpulseClass = "pulse";
-                    }
-
-                    const jsonEvents = {
-                        id: id,
-                        title: `
-                            <div id="${id}" class="cardContenido ${cardpulseClass}">
-                              <div class="tituloCard">${name}</div>
-                              <div class="contenido">
-                                <div class="etiquetaContenido">
-                                  <div class="etiquetaTitulo">Etiqueta</div>
-                                  <div class="etiquetaColor"></div>
-                                </div>
-                                <div class="estatusContenido">
-                                  <div class="estatusTitulo">Estatus</div>
-                                  <div id="estatusColor" class="${status}-estatusColor">${statusC}</div>
-                                </div>
-                              </div>
-                              <div class="contenido">
-                                <div id="taskContenido">
-                                  <div id="taskText">${subtasksCount}/${subtasksReady}</div>
-                                </div>
-                                <div class="resourceContenido">
-                                  <img class="addSVG" src="{{ asset('img/plan-trabajo/attach.svg') }}">
-                                  <div id="resourceText">${resourcesCount}</div>
-                                </div>
-                              </div>`,
-                    };
-                    cards.push(jsonEvents);
-                });
-                return cards
-            }
-
             function abrirModalConDatos(id, array, response) {
                 const task = array.find(item => item.id === id);
 
@@ -532,14 +550,90 @@
                 document.getElementById('fin').value = timestampToDateString(task.end);
                 document.getElementById('estatusSelect').value = mapStatusToEstatusText[task.status];
                 document.getElementById('logHistorico').innerHTML = htmlContentHistory;
-
+                clearTasks();
+                updateProgressBar();
                 seleccionarCheckboxes(task.tag);
                 insertTasksFromService(task.subtasks);
                 addOptionsFromArray([], personasAsignadas);
 
                 modal.show();
-            }
 
+            }
+        }
+
+        function items(array) {
+            const cards = [];
+            array.forEach(item => {
+                const {
+                    id,
+                    name,
+                    progress,
+                    status,
+                    statusC = mapStatusToEstatusText[status],
+                    start,
+                    duration,
+                    end,
+                    color,
+                    subtasks,
+                    resources
+                } = item;
+
+                const resourcesCount = resources ? resources.length : 0;
+                const subtasksCount = subtasks ? subtasks.length : 0;
+                const subtasksReady = subtasks ? subtasks.filter(subtask => subtask.selected).length : 0;
+
+                let cardpulseClass = "";
+                if (status === "STATUS_FAILED") {
+                    cardpulseClass = "pulse";
+                }
+
+                const jsonEvents = {
+                    id: id,
+                    title: `
+                            <div id="${id}" class="cardContenido ${cardpulseClass}">
+                              <div class="tituloCard">${name}</div>
+                              <div class="contenido">
+                                <div class="etiquetaContenido">
+                                  <div class="etiquetaTitulo">Etiqueta</div>
+                                  <div class="etiquetaColor"></div>
+                                </div>
+                                <div class="estatusContenido">
+                                  <div class="estatusTitulo">Estatus</div>
+                                  <div id="estatusColor" class="${status}-estatusColor">${statusC}</div>
+                                </div>
+                              </div>
+                              <div class="contenido">
+                                <div id="taskContenido">
+                                  <div id="taskText">${subtasksCount}/${subtasksReady}</div>
+                                </div>
+                                <div class="resourceContenido">
+                                  <img class="addSVG" src="{{ asset('img/plan-trabajo/attach.svg') }}">
+                                  <div id="resourceText">${resourcesCount}</div>
+                                </div>
+                              </div>`,
+                };
+                cards.push(jsonEvents);
+            });
+            return cards
+        }
+
+        function agruparTaks() {
+            for (const estado in mapStatusToEstatus) {
+                grupos[mapStatusToEstatus[estado]] = [];
+            }
+            responseLocal.tasks.forEach(item => {
+                const estado = mapStatusToEstatus[item.status];
+                if (estado) {
+                    grupos[estado].push(item);
+                }
+            });
+
+            document.getElementById('totalesStrong').innerHTML = responseLocal.tasks.length;
+            document.getElementById('tareasStrong').innerHTML = grupos.iniciar.length;
+            document.getElementById('suspendidosStrong').innerHTML = grupos.suspendida.length;
+            document.getElementById('procesoStrong').innerHTML = grupos.progreso.length;
+            document.getElementById('retrasadosStrong').innerHTML = grupos.retraso.length;
+            document.getElementById('completadosStrong').innerHTML = grupos.completado.length;
         }
 
         function guardarDatosmodal(id, nombre, descripcion, inicio, fin, dias, estatus, progreso) {
@@ -575,7 +669,7 @@
                 console.log('No se encontró ningún objeto con el ID dado.');
             }
         }
-        //////////////////////////insericion de modulos faltantes en el js/////////////////////////////////////////////////
+
         function insertTag(value, tag) {
             if (!value || value.length === 0) {
                 tag.tag = []; // Si value está vacío, borramos todas las etiquetas
@@ -663,7 +757,8 @@
 
             if ('assigs' in responseLocal.tasks) {
                 value.forEach(element => {
-                    const existingAssigsIndex = personas.assigs.findIndex(existingAssigs => existingAssigs.resourceId === element.id);
+                    const existingAssigsIndex = personas.assigs.findIndex(existingAssigs => existingAssigs
+                        .resourceId === element.id);
                     if (existingAssigsIndex !== -1) {
                         // Si la etiqueta ya existe, no hacemos nada
                         return;
@@ -685,6 +780,40 @@
                     "effort": 0
                 }));
             }
+        }
+
+        function insertTask(value, status, id) {
+            if (!value || value.length === 0) {
+                return;
+            }
+            const timestamp = Date.now();
+            responseLocal.tasks.push({
+                "id": id,
+                "name": value,
+                "progress": 0,
+                "progressByWorklog": false,
+                "relevance": 0,
+                "type": "",
+                "typeId": "",
+                "description": "",
+                "code": "",
+                "level": 1,
+                "status": status,
+                "depends": "",
+                "start": timestamp,
+                "duration": 1,
+                "end": timestamp,
+                "startIsMilestone": false,
+                "endIsMilestone": false,
+                "canWrite": true,
+                "canAdd": true,
+                "canDelete": true,
+                "canAddIssue": true,
+                "assigs": []
+            });
+            agruparTaks();
+            location.reload();
+            saveOnServer(responseLocal);
         }
 
         function saveStatusOnServer(response) {
