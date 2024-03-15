@@ -3,7 +3,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import Select
-import pdb
+from selenium.webdriver.common.keys import Keys
+
 
 #Temporizadores
 tiempo_modulos = 5
@@ -11,6 +12,7 @@ tiempo_carga = 10
 tiempo_espera = 3
 tiempo_llenado = 2
 tiempo_diez = 10
+tiempo_largo = 120
 
 #----------------------------------------------------INICIO DE CLASE--------------------------------------------------------------------------
 
@@ -130,7 +132,7 @@ class Evaluaciones_360_create_page:
         
         # Boton Competencias
         btn_competencias = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "(//SPAN[@class='checkmark'])[1]"))
+            EC.presence_of_element_located((By.XPATH, "(//SPAN[@class='checkmark'])[1]")) #Unicamente cambiar el numero 1 a 2 en el xpath en caso de querer agregar Ojetivos
             )
         print("Dando click en boton competencias")
         btn_competencias.click()
@@ -150,16 +152,33 @@ class Evaluaciones_360_create_page:
         
     # Seleccionar empleados a evaluar de publico objetivo
     
+    print("Seleccionando publico Objetivo ...")
     def select_publico_objetivo (self):
        empleado_evaular_btn=WebDriverWait(self.driver,10).until(
            EC.element_to_be_clickable((By.XPATH, "//SELECT[@id='evaluados_objetivo']"))
        )
        empleado_evaular_btn.click()
        select = Select(empleado_evaular_btn)
-       select.select_by_index(4) #Aqui se cambia la opcion que deseas en el boton publico objetivo
+       select.select_by_index(2) #Aqui se cambia la opcion que deseas en el boton publico objetivo
        
        time.sleep(tiempo_modulos)
-         
+       
+    # Seleccionar Área a Evaluar   
+       
+    print("Seleccionando Área a Evaluar ...")
+    def select_area_evaluar (self):
+       area_evaular_btn=WebDriverWait(self.driver,10).until(
+           EC.element_to_be_clickable((By.XPATH, "//SELECT[@id='by_area']"))
+       )
+       area_evaular_btn.click()
+       select = Select(area_evaular_btn)
+       select.select_by_index(20) #Aqui se cambia la opcion que deseas en el boton Area a Evaluar
+       
+       time.sleep(tiempo_modulos)
+       
+       
+    #Para que la siguiente función funcione de forma correcta, la funcion select_publico_objetivo debe de ser Manualmente opcion (4)  
+    """  
     # Seleccionar empleados a evaluar de publico objetivo
     
     print("Seleccionando primer empleado a evaluar")
@@ -179,7 +198,9 @@ class Evaluaciones_360_create_page:
             print(f"Error al seleccionar la opción: {e}") 
             
         time.sleep(tiempo_modulos)
+        """     
         
+    def select_boton_sig(self):    
         # Boton Siguiente
         
         btn_siguiente = WebDriverWait(self.driver, 10).until(
@@ -188,7 +209,7 @@ class Evaluaciones_360_create_page:
         print("Dando click en siguiente")
         btn_siguiente.click()
         
-        time.sleep(tiempo_espera)
+        time.sleep(tiempo_modulos) #Aqui tiene que ir el tiempo largo en caso de que se seleccione la opcion, Toda la empresa
         
         print("URL actual:", self.driver.current_url)
         
@@ -205,10 +226,28 @@ class Evaluaciones_360_create_page:
             
         time.sleep(tiempo_espera)
         
+        #Cambiar procentajes de evaluadores
+        
+        porcentaje_eva=WebDriverWait(self.driver,10).until(
+            EC.presence_of_element_located((By.XPATH, "(//INPUT[@class='ml-4'])[2]"))
+        )
+        porcentaje_eva.clear()
+        porcentaje_eva.send_keys(20)
+            
+        time.sleep(tiempo_espera)
+        
+        porcentaje_eva=WebDriverWait(self.driver,10).until(
+            EC.presence_of_element_located((By.XPATH, "(//INPUT[@class='ml-4'])[3]"))
+        )
+        porcentaje_eva.clear()
+        porcentaje_eva.send_keys(30)
+            
+        time.sleep(tiempo_espera)
+        
         # Boton Siguiente
         
         btn_siguiente = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "(//BUTTON[@type='button'])[2]"))
+            EC.presence_of_element_located((By.XPATH, "//I[@class='mr-2 fas fa-arrow-circle-right']"))
             )
         print("Dando click en siguiente")
         btn_siguiente.click()
@@ -220,10 +259,55 @@ class Evaluaciones_360_create_page:
     def create_periodos(self):
         
         print("Dando click en Añadir Periodo...")
-        btn_hmaburguesa = WebDriverWait(self.driver, 3).until(
+        btn_new_periodo = WebDriverWait(self.driver, 3).until(
             EC.visibility_of_element_located((By.XPATH, "//BUTTON[@id='addPeriodo']"))
         )
-        btn_hmaburguesa.click()
+        btn_new_periodo.click()
+        
+        time.sleep(tiempo_modulos)
+        
+    def select_fecha_inicio(self):
+        """
+        print("Seleccionando input fecha de inicio ...")
+        campo_fecha = WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, "(//INPUT[@class='form-control'])[1]"))
+        )
+        
+        campo_fecha.clear()
+        time.sleep(tiempo_modulos)
+        campo_fecha.click()
+        time.sleep(tiempo_modulos)
+        campo_fecha.send_keys("20")
+        """
+        print("Borrando periodo agregado ...")
+        campo_fecha_del = WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, "//I[@class='fas fa-trash']"))
+        )
+        campo_fecha_del.click()
+        
+        time.sleep(tiempo_modulos)
+        
+        print("Activando proceso ...")
+        btn_activar = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable((By.XPATH, "(//BUTTON[@type='button'])[2]"))
+        )
+        btn_activar.click()
+        
+        time.sleep(tiempo_modulos)
+        
+        print("Activando proceso ...")
+        btn_activar = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable((By.XPATH, "(//BUTTON[@type='button'])[2]"))
+        )
+        btn_activar.click()
+        
+        time.sleep(tiempo_modulos)
+        
+
+
+
+        
+        
             
         
         
