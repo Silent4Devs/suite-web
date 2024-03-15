@@ -77,3 +77,11 @@ class Requisiciones_index:
         export_excel_btn.click()
         print("Botón de Exportar Excel presionado")
         print("URL actual:", self.driver.current_url)
+
+    def requisiciones_download_pdf(self):
+        export_pdf_btn = WebDriverWait(self.driver, 5).until(
+            EC.element_to_be_clickable((By.XPATH, "//i[contains(@class,'fas fa-file-pdf')]"))
+        )
+        export_pdf_btn.click()
+        print("Botón de Exportar PDF presionado")
+        print("URL actual:", self.driver.current_url)
