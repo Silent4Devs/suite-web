@@ -14,13 +14,12 @@
                     </div>
 
                     @php
-                    use App\Models\User;
-                    use App\Models\Empleado;
-                    use Illuminate\Support\Facades\Auth;
+                        use App\Models\User;
+                        use App\Models\Empleado;
 
-                    $user = Auth::user();
-                    $empleado = Empleado::where('id', $user->empleado_id)->first();
-                   @endphp
+                        $user = User::getCurrentUser();
+                        $empleado = Empleado::where('id', $user->empleado->id)->first();
+                    @endphp
 
 
 
