@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Notifications\MyResetPassword;
 use App\Traits\ClearsResponseCache;
+use Auth;
 use Carbon\Carbon;
 use DateTimeInterface;
 use Hash;
@@ -99,7 +100,7 @@ class User extends Authenticatable implements Auditable
         $cacheKey = 'Auth_user:user'.auth()->user()->id;
 
         return Cache::remember($cacheKey, now()->addMinutes(60), function () {
-            return auth()->user();
+            return Auth::user();
         });
     }
 

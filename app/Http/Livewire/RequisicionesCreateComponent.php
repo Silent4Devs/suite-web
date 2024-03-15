@@ -223,7 +223,6 @@ class RequisicionesCreateComponent extends Component
 
                         $this->disabled = 'disabled';
                     } else {
-                        dd('saul');
                         $this->provedores_indistinto_catalogo = collect();
                         $this->provedores_indistinto_catalogo = KatbolProveedorIndistinto::create([
                             'requisicion_id' => $this->nueva_requisicion->id,

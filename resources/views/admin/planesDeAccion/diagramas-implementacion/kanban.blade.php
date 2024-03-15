@@ -1,3 +1,35 @@
+<style>
+    .addCard {
+        background-color: transparent;
+        border: none;
+        color: #0080FF;
+        margin: 10px;
+        text-align: center;
+        font-size: 16px;
+        width: -webkit-fill-available;
+        display: inline-block;
+    }
+
+    .addBtn {
+        background-color: #DEEFFF;
+        color: #0080FF;
+        border: none;
+        border-radius: 5px;
+        padding: 6px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .cancelBtn {
+        background-color: #FFDFDF;
+        color: #FF5C3A;
+        border: none;
+        border-radius: 5px;
+        padding: 6px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+</style>
 <div class="cardKanban" style="box-shadow: none; !important;margin-top: 30px;">
     <div id="myKanban"></div>
 </div>
@@ -146,14 +178,14 @@
                                 <img class="addSVG" src="{{ asset('img/plan-trabajo/account.svg') }}">
                                 <span>Participantes</span>
                             </button>
-                            <div id="drop-Personas" class="dropdownBtn-content" style="height: 700px;">
+                            <div id="drop-Personas" class="dropdownBtn-content" style="height: 542px;">
                                 <div class="texto-Etiquetas">
                                     <p>Participantes</p>
                                 </div>
                                 <div class="contenedorSelect">
                                     <div class="form-group anima-focus">
-                                        <select required class="form-control" name="agregarSelect" id="agregarSelect"
-                                            onchange="manejarSeleccion()">
+                                        <select required class="form-control" name="agregarSelect"
+                                            id="agregarSelect">
                                             <option selected>Área</option>
                                             <option>Por persona</option>
                                         </select>
@@ -187,7 +219,8 @@
                                     </div>
                                 </div>
                                 <p class="txtSub">Participantes agregados</p>
-                                <div class="assigned-to" id="personasAsignadas"></div>
+                                <div class="assigned-to" id="personasAsignadas"
+                                    style="display: block;overflow-y: auto;height: 250px;"></div>
                             </div>
                         </div>
                         <div class="dropdownBtn">
@@ -249,8 +282,10 @@
     <script src="{{ asset('../js/kanban/jkanban.js') }}"></script>
     <script src="{{ asset('../js/kanban/kanbanFunc.js') }}"></script>
     <script>
+        var Kanban
         const imagePath = '{{ asset('img/plan-trabajo/documento.svg') }}';
         const imagePathEye = '{{ asset('img/plan-trabajo/visibility.svg') }}';
+        const imageTrash = '{{ asset('img/plan-trabajo/delete.svg') }}';
 
         function initKanban() {
             $.ajax({
@@ -284,27 +319,18 @@
         var csrfToken = $('meta[name="csrf-token"]').attr('content');
 
         let tasksModel = [];
-        let taskSelection = [];
+        let personasAsignadas = [];
         let responseLocal = {};
+        let grupos = [];
 
         function renderKanbanNew(tasks, response) {
             let progreso = [];
-            let grupos = [];
             responseLocal = response;
             tasksModel = tasks;
             const modal = new bootstrap.Modal(document.getElementById('myModal'));
-
-            for (const estado in mapStatusToEstatus) {
-                grupos[mapStatusToEstatus[estado]] = [];
-            }
-            tasks.forEach(item => {
-                const estado = mapStatusToEstatus[item.status];
-                if (estado) {
-                    grupos[estado].push(item);
-                }
-            });
+            agruparTaks();
             let countIniciar;
-            var KanbanTest = new jKanban({
+            Kanban = new jKanban({
                 element: "#myKanban",
                 gutter: '3px',
                 widthBoard: '300px',
@@ -315,18 +341,74 @@
                     abrirModalConDatos(el.dataset.eid, tasks, response);
                 },
                 context: function(el, e) {},
-                dragEl: function(el, source) {
-                    console.log("START DRAG: " + el.dataset.eid);
-                    console.log("donde biene: " + source.offsetParent.dataset.id);
-                    console.log("END DRAG: " + el);
-                },
+                dragEl: function(el, source) {},
                 dragendEl: function(el) {},
                 dropEl: function(el, target, source, sibling) {
                     pintar(el.dataset.eid, el.offsetParent.dataset.id);
-                    guardarStatus(el.dataset.eid, source.offsetParent.dataset.id, target.offsetParent.dataset
+                    guardarStatus(el.dataset.eid, source.offsetParent.dataset.id, target.offsetParent
+                        .dataset
                         .id);
                 },
-                buttonClick: function(el, boardId) {},
+                buttonClick: function(el, boardId) {
+                    var formItem = document.createElement("form");
+                    formItem.setAttribute("class", "itemform");
+                    formItem.innerHTML = `
+                    <div class="form-group">
+                          <textarea class="form-control" rows="1" autofocus style="min-height: 34px !important;"></textarea>
+                        </div>
+                        <div class="form-group">
+                          <button type="submit" class="addBtn">Aceptar</button>
+                          <button type="button" id="CancelBtn" class="cancelBtn">Cancelar</button>
+                        </div>
+                    `;
+                    Kanban.addForm(boardId, formItem);
+                    formItem.addEventListener("submit", function(e) {
+                        e.preventDefault();
+                        var text = e.target[0].value;
+                        insertTask(text, boardId);
+                        let cardpulseClass = "";
+                        if (status === "STATUS_FAILED") {
+                            cardpulseClass = "pulse";
+                        }
+                        const timestamp = Date.now();
+                        let id = "tmp_" + timestamp;
+                        var newElementHTML = `
+                            <div id="id" class="cardContenido ${cardpulseClass}">
+                              <div class="tituloCard">${text}</div>
+                              <div class="contenido">
+                                <div class="etiquetaContenido">
+                                  <div class="etiquetaTitulo">Etiqueta</div>
+                                  <div class="etiquetaColor"></div>
+                                </div>
+                                <div class="estatusContenido">
+                                  <div class="estatusTitulo">Estatus</div>
+                                  <div id="estatusColor" class="${boardId}-estatusColor">${mapStatusToEstatusText[boardId]}</div>
+                                </div>
+                              </div>
+                              <div class="contenido">
+                                <div id="taskContenido">
+                                  <div id="taskText">0/0</div>
+                                </div>
+                                <div class="resourceContenido">
+                                  <img class="addSVG" src="{{ asset('img/plan-trabajo/attach.svg') }}">
+                                  <div id="resourceText">0</div>
+                                </div>
+                              </div>`;
+                        Kanban.addElement(boardId, {
+                            title: newElementHTML
+                        });
+                        formItem.parentNode.removeChild(formItem);
+                    });
+                    document.getElementById("CancelBtn").onclick = function() {
+                        formItem.parentNode.removeChild(formItem);
+                    };
+                },
+                itemAddOptions: {
+                    enabled: true,
+                    content: '+ Añada una tarjeta',
+                    class: 'addCard',
+                    footer: true
+                },
                 boards: [{
                         id: "STATUS_UNDEFINED",
                         title: "Lista de tareas",
@@ -381,7 +463,7 @@
                     "initialstatus": statusInicial,
                     "finestatus": statusFinal,
                     "fecha": timestamp,
-                    "edito": "asdasd"
+                    "edito": "user"
                 };
 
                 if ('historic' in response) {
@@ -408,35 +490,106 @@
                 }
             }
 
-            function items(array) {
-                const cards = [];
-                array.forEach(item => {
-                    const {
-                        id,
-                        name,
-                        progress,
-                        status,
-                        statusC = mapStatusToEstatusText[status],
-                        start,
-                        duration,
-                        end,
-                        color,
-                        subtasks,
-                        resources
-                    } = item;
+            function abrirModalConDatos(id, array, response) {
+                const task = array.find(item => item.id === id);
 
-                    const resourcesCount = resources ? resources.length : 0;
-                    const subtasksCount = subtasks ? subtasks.length : 0;
-                    const subtasksReady = subtasks ? subtasks.filter(subtask => subtask.selected).length : 0;
+                if (!task) {
+                    console.log('No se encontró ningún objeto con el ID dado.');
+                    return;
+                }
 
-                    let cardpulseClass = "";
-                    if (status === "STATUS_FAILED") {
-                        cardpulseClass = "pulse";
-                    }
+                //lista de participantes en el detalle
+                const assigs = task.assigs ? task.assigs.map(asignado => response.resources.find(r => Number(r.id) ===
+                    Number(asignado.resourceId))).filter(Boolean) : [];
+                personasAsignadas = assigs;
+                const divparticipantes = document.getElementById("participantes");
+                const imagenes = assigs.slice(0, 8).map(asignado => {
+                    const foto = asignado.foto || (asignado.genero === 'M' ? 'woman.png' :
+                        'usuario_no_cargado.png');
+                    return `<div class="person"><img class="person-img" title="${asignado.name}" src="{{ asset('storage/empleados/imagenes') }}/${foto}" /></div>`;
+                }).join("");
+                divparticipantes.style.display = assigs.length > 0 ? "block" : "none";
 
-                    const jsonEvents = {
-                        id: id,
-                        title: `
+                //mostrar el historial
+                const htmlContentHistory = task.historic && task.historic.length > 0 ?
+                    "<ul>" + task.historic.map(item =>
+                        `<li class="log-list">Initial Status: ${mapStatusToEstatusText[item.initialstatus]}, Final Status: ${mapStatusToEstatusText[item.finestatus]}  Fecha: ${item.fecha} , Edito: ${item.edito} </li>`
+                    ).join("") + "</ul>" :
+                    "<span>No tiene historial</span>";
+
+                //funcion mostar los documentos adjuntos
+                const divadjuntos = document.getElementById("adjuntos");
+                const conteinerAdjuntos = document.getElementById('conteiner-adjuntos');
+                if (task.resources && task.resources.length > 0) {
+                    divadjuntos.style.display = "block";
+                    conteinerAdjuntos.innerHTML = '';
+                    task.resources.forEach(item => {
+                        base64Aarchivo(item.archivo, item.name);
+                    });
+                } else {
+                    divadjuntos.style.display = "none";
+                    conteinerAdjuntos.innerHTML = '';
+                }
+
+                const areaSelect = document.getElementById('areaSelect');
+                response.area.forEach(area => {
+                    const option = document.createElement('option');
+                    option.value = area.id;
+                    option.text = area.area;
+                    areaSelect.appendChild(option);
+                });
+
+                document.getElementById('idTaks').value = task.id;
+                document.getElementById('modal-title').innerHTML = task.name;
+                document.getElementById('imagenesParticipantes').innerHTML = imagenes;
+                document.getElementById('nombreLabel').value = task.name;
+                document.getElementById('descriptionLabel').value = task.description;
+                document.getElementById('progresoLabel').value = task.progress + "%";
+                document.getElementById('diasLabel').value = task.duration;
+                document.getElementById('inicio').value = timestampToDateString(task.start);
+                document.getElementById('fin').value = timestampToDateString(task.end);
+                document.getElementById('estatusSelect').value = mapStatusToEstatusText[task.status];
+                document.getElementById('logHistorico').innerHTML = htmlContentHistory;
+                clearTasks();
+                updateProgressBar();
+                seleccionarCheckboxes(task.tag);
+                insertTasksFromService(task.subtasks);
+                addOptionsFromArray([], personasAsignadas);
+
+                modal.show();
+
+            }
+        }
+
+        function items(array) {
+            const cards = [];
+            array.forEach(item => {
+                const {
+                    id,
+                    name,
+                    progress,
+                    status,
+                    statusC = mapStatusToEstatusText[status],
+                    start,
+                    duration,
+                    end,
+                    color,
+                    subtasks,
+                    resources
+                } = item;
+
+                const resourcesCount = resources ? resources.length : 0;
+                const subtasksCount = subtasks ? subtasks.length : 0;
+                const subtasksReady = subtasks ? subtasks.filter(subtask => subtask.selected).length : 0;
+
+                let cardpulseClass = "";
+                if (status === "STATUS_FAILED") {
+                    cardpulseClass = "pulse";
+                }
+
+                const jsonEvents = {
+                    id: id,
+                    title: `
                             <div id="${id}" class="cardContenido ${cardpulseClass}">
                               <div class="tituloCard">${name}</div>
                               <div class="contenido">
@@ -458,90 +611,29 @@
                                   <div id="resourceText">${resourcesCount}</div>
                                 </div>
                               </div>`,
-                    };
-                    cards.push(jsonEvents);
-                });
-                return cards
+                };
+                cards.push(jsonEvents);
+            });
+            return cards
+        }
+
+        function agruparTaks() {
+            for (const estado in mapStatusToEstatus) {
+                grupos[mapStatusToEstatus[estado]] = [];
             }
-
-            function abrirModalConDatos(id, array, response) {
-                const task = array.find(item => item.id === id);
-
-                if (!task) {
-                    console.log('No se encontró ningún objeto con el ID dado.');
-                    return;
+            responseLocal.tasks.forEach(item => {
+                const estado = mapStatusToEstatus[item.status];
+                if (estado) {
+                    grupos[estado].push(item);
                 }
+            });
 
-                //lista de participantes en el detalle
-                const assigs = task.assigs ? task.assigs.map(asignado => response.resources.find(r => Number(r.id) ===
-                    Number(asignado.resourceId))).filter(Boolean) : [];
-                taskSelection = assigs;
-                const divparticipantes = document.getElementById("participantes");
-                const imagenes = assigs.slice(0, 4).map(asignado => {
-                    const foto = asignado.foto || (asignado.genero === 'M' ? 'woman.png' :
-                        'usuario_no_cargado.png');
-                    return `<div class="person"><img class="person-img" title="${asignado.name}" src="{{ asset('storage/empleados/imagenes') }}/${foto}" /></div>`;
-                }).join("");
-
-                divparticipantes.style.display = assigs.length > 0 ? "block" : "none";
-                //mostar lista de participantes en el down
-                const imagenestogle = assigs.slice(0, 4).map(asignado => {
-                    if (asignado.name) {
-                        const initials = asignado.name.trim().split(' ').map(word => word.charAt(0)).join('')
-                            .toUpperCase();
-                        const color = asignado.genero === 'M' ? 'blue' : 'pink';
-                        return `<div class="person" style="display: flex; align-items: center; margin-bottom: 5px; margin-left: 20px;"><div class="initials" style="background-color: ${color}; color: white; border-radius: 50%; width: 45px; height: 45px; display: flex; justify-content: center; align-items: center; margin-right: 5px;">${initials}</div><div style="margin-left: 5px; margin-right: auto;">${asignado.name}</div></div>`;
-                    }
-                }).join("");
-                //mostrar el historial
-                const htmlContentHistory = task.historic && task.historic.length > 0 ?
-                    "<ul>" + task.historic.map(item =>
-                        `<li class="log-list">Initial Status: ${mapStatusToEstatusText[item.initialstatus]}, Final Status: ${mapStatusToEstatusText[item.finestatus]}  Fecha: ${item.fecha} , Edito: ${item.edito} </li>`
-                    ).join("") + "</ul>" :
-                    "<span>No tiene historial</span>";
-                //funcion mostar los documentos adjuntos
-                const divadjuntos = document.getElementById("adjuntos");
-                const conteinerAdjuntos = document.getElementById('conteiner-adjuntos');
-                if (task.resources && task.resources.length > 0) {
-                    divadjuntos.style.display = "block";
-                    conteinerAdjuntos.innerHTML = '';
-                    task.resources.forEach(item => {
-                        base64Aarchivo(item.archivo, item.name);
-                    });
-                } else {
-                    divadjuntos.style.display = "none";
-                    conteinerAdjuntos.innerHTML = '';
-                }
-
-                //mostar las areas de la empresa en areaSelect
-                const areaSelect = document.getElementById('areaSelect');
-                response.area.forEach(area => {
-                    const option = document.createElement('option');
-                    option.value = area.id;
-                    option.text = area.area;
-                    areaSelect.appendChild(option);
-                });
-                //document.body.appendChild(areaSelect);
-
-                document.getElementById('idTaks').value = task.id;
-                document.getElementById('modal-title').innerHTML = task.name;
-                document.getElementById('imagenesParticipantes').innerHTML = imagenes;
-                document.getElementById('nombreLabel').value = task.name;
-                document.getElementById('descriptionLabel').value = task.description;
-                document.getElementById('progresoLabel').value = task.progress + "%";
-                document.getElementById('diasLabel').value = task.duration;
-                document.getElementById('inicio').value = timestampToDateString(task.start);
-                document.getElementById('fin').value = timestampToDateString(task.end);
-                document.getElementById('estatusSelect').value = mapStatusToEstatusText[task.status];
-                //document.getElementById('personasAsignadas').innerHTML = imagenestogle;
-                document.getElementById('logHistorico').innerHTML = htmlContentHistory;
-
-                seleccionarCheckboxes(task.tag);
-                insertTasksFromService(task.subtasks);
-
-                modal.show();
-            }
-
+            document.getElementById('totalesStrong').innerHTML = responseLocal.tasks.length;
+            document.getElementById('tareasStrong').innerHTML = grupos.iniciar.length;
+            document.getElementById('suspendidosStrong').innerHTML = grupos.suspendida.length;
+            document.getElementById('procesoStrong').innerHTML = grupos.progreso.length;
+            document.getElementById('retrasadosStrong').innerHTML = grupos.retraso.length;
+            document.getElementById('completadosStrong').innerHTML = grupos.completado.length;
         }
 
         function guardarDatosmodal(id, nombre, descripcion, inicio, fin, dias, estatus, progreso) {
@@ -569,13 +661,15 @@
                 insertTag(listArrayP1, updatedTask);
                 insertSubTasks(subTasks, updatedTask);
 
+                insertPersonas(addedArray, updatedTask)
+
                 saveOnServer(responseLocal);
                 location.reload();
             } else {
                 console.log('No se encontró ningún objeto con el ID dado.');
             }
         }
-        //////////////////////////insericion de modulos faltantes en el js/////////////////////////////////////////////////
+
         function insertTag(value, tag) {
             if (!value || value.length === 0) {
                 tag.tag = []; // Si value está vacío, borramos todas las etiquetas
@@ -655,353 +749,71 @@
             }
         }
 
-        // function insertResources(idTasks,idResourse,resources) {
-
-        // }
-        ///////////////////////////////funciones para agregar, eliminar,mostrar,editar personas agregadas//////////////////
-        const areaSelect = document.getElementById('areaSelect');
-        areaSelect.addEventListener('change', function() {
-            const id = parseInt(areaSelect.value);
-            const personafiltrada = responseLocal.resources.filter(persona => persona.area_id === id);
-            addOptionsFromArray(personafiltrada, taskSelection);
-        });
-
-        function manejarSeleccion() {
-            var seleccion = document.getElementById("agregarSelect").value;
-            var areaFormGroup = document.getElementById("areaForm");
-
-            if (seleccion === "Por persona") {
-                areaFormGroup.style.display = "none"; // Ocultar el formulario de área
-                addOptionsFromArray(personafiltrada, taskSelection);
-            } else {
-                areaFormGroup.style.display = "block";
-            }
-        }
-        //////////////////////////////////////////////////no es mio///////////////////////////////////
-        function renderActividad(actividad, response) {
-            let imagenes = "";
-            let assigs = [];
-
-            if (actividad.assigs) {
-                assigs = actividad.assigs.map(asignado => response.resources.find(r => Number(r.id) === Number(asignado
-                    .resourceId)));
-            }
-
-            let filteredAssigs = assigs.filter(a => a != null);
-
-            filteredAssigs.slice(0, 4).forEach(asignado => {
-                let foto = asignado.foto || (asignado.genero === 'M' ? 'woman.png' : 'usuario_no_cargado.png');
-                imagenes +=
-                    `<div class="person"><img class="person-img" title="${asignado.name}" src="{{ asset('storage/empleados/imagenes') }}/${foto}" /></div>`;
-            });
-
-            if (filteredAssigs.length > 4) {
-                imagenes +=
-                    `<span class="btn_empleados" onmouseover="renderCard(this, '${encodeURIComponent(JSON.stringify(assigs))}')">+${assigs.length - 4}</span>`;
-            }
-
-            return `
-            <li actividad-id="${actividad.id}" class="card">
-                <div class="content">
-                     ${actividad.name}
-                </div>
-                <div class="status-text">Asignados</div>
-                <div class="assigned-to">
-                    ${imagenes}
-                    <button class="add-person-button"><i class="fas fa-plus"></i></button>
-                </div>
-                <div class="status">
-                    <div class="status-text">Status:</div>
-                    <div class="${actividad.status} td_estatus_select">
-                        <select class="estatus_select">
-                         ${renderEstatusOptions(actividad.status)}
-                        </select>
-                     </div>
-                </div>
-            </li>
-    `;
-        }
-
-        function renderEstatusOptions(selectedStatus) {
-            const statuses = ['STATUS_ACTIVE', 'STATUS_DONE', 'STATUS_FAILED', 'STATUS_SUSPENDED', 'STATUS_UNDEFINED'];
-            return statuses.map(status =>
-                `<option class="${status}" value="${status}" ${selectedStatus === status ? 'selected' : ''}>${getStatusText(status)}</option>`
-            ).join('');
-        }
-
-        function getStatusText(status) {
-            switch (status) {
-                case 'STATUS_ACTIVE':
-                    return 'En proceso';
-                case 'STATUS_DONE':
-                    return 'Completado';
-                case 'STATUS_FAILED':
-                    return 'Retraso';
-                case 'STATUS_SUSPENDED':
-                    return 'Suspendida';
-                case 'STATUS_UNDEFINED':
-                    return 'Sin iniciar';
-                default:
-                    return '';
-            }
-        }
-
-        function attachEventListeners(response) {
-            $('.estatus_select').change(function() {
-                let id_row = $(this).closest('li').attr('actividad-id');
-                let valor_nuevo = $(this).val();
-                let actividad_correspondiente = response.tasks.find(t => t.id === id_row);
-                changeStatusInKanban(actividad_correspondiente, response, valor_nuevo, $(this));
-            });
-
-            $('.add-person-button').click(function() {
-                let id_row = $(this).closest('li').attr('actividad-id');
-                let actividad_correspondiente = response.tasks.find(t => t.id === id_row);
-                renderModal(id_row, actividad_correspondiente, response);
-            });
-        }
-
-        function renderModal(id_row, actividad_correspondiente, response) {
-            let contenedor = $('#modales');
-
-            let modalHtml = `
-        <div class="modal fade" id="${id_row}-modal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="${id_row}-modalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header" style="background-color: #00A8AF !important; color:#fff">
-                        <h5 class="modal-title" id="${id_row}-modalLabel">Recursos</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="mb-3 input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
-                            </div>
-                            <input type="text" class="form-control search_resources" placeholder="Nombre empleado" aria-label="Username" aria-describedby="basic-addon1">
-                        </div>
-                        <ul class="list-group">
-                            <div class="contenedor_lista">
-                                ${renderResources(response, actividad_correspondiente)}
-                            </div>
-                        </ul>
-                    </div>
-                    <div class="pagination-container mt-3">
-                        <button class="btn btn-sm btn-outline-primary prev-page">&laquo; Anterior</button>
-                        <button class="btn btn-sm btn-outline-primary next-page">Siguiente &raquo;</button>
-                        <span class="page-indicator ml-2 mr-2"></span>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    `;
-
-            contenedor.html(modalHtml);
-
-            // Función para mostrar los recursos correspondientes a la página actual
-            function showPage(pageNumber) {
-                var startIndex = (pageNumber - 1) * 5;
-                var endIndex = startIndex + 5;
-                $('.contenedor_lista .list-group-item').hide().slice(startIndex, endIndex).show();
-                $('.page-indicator').text("Página " + pageNumber + " de " + Math.ceil($(
-                    '.contenedor_lista .list-group-item').length / 5));
-            }
-
-            // Función para inicializar la paginación y mostrar la primera página
-            function initializePagination() {
-                // Ocultar todos los recursos y mostrar los primeros 5
-                $('.contenedor_lista .list-group-item').hide().slice(0, 5).show();
-                // Mostrar la primera página
-                showPage(1);
-            }
-
-            // Ejecutar la paginación al cargar el modal
-            initializePagination();
-
-            // Evento para avanzar a la página siguiente
-            $('.next-page').click(function() {
-                var currentPage = parseInt($('.page-indicator').text().split(' ')[1]);
-                var totalPages = Math.ceil($('.contenedor_lista .list-group-item').length / 5);
-                if (currentPage < totalPages) {
-                    showPage(currentPage + 1);
-                }
-            });
-
-            // Evento para retroceder a la página anterior
-            $('.prev-page').click(function() {
-                var currentPage = parseInt($('.page-indicator').text().split(' ')[1]);
-                if (currentPage > 1) {
-                    showPage(currentPage - 1);
-                }
-            });
-
-            var listaOriginal;
-
-            $('.search_resources').keyup(function() {
-                var query = $(this).val().trim().toLowerCase();
-                let contenedor_lista = $('.contenedor_lista');
-
-                if (query !== '') {
-                    // Si hay un término de búsqueda, renderizar los recursos que coinciden
-                    contenedor_lista.html(renderResources(response, actividad_correspondiente, query));
-                    renderListEvent(response, actividad_correspondiente, id_row, renderKanban);
-                } else {
-                    // Si el campo de búsqueda está vacío, restablecer la lista original y volver a inicializar la paginación
-                    contenedor_lista.html(listaOriginal);
-                    initializePagination();
-                }
-            });
-
-            $(`#${id_row}-modal`).modal('show');
-            renderListEvent(response, actividad_correspondiente, id_row, renderKanban);
-        }
-
-        function initializeSortable(response) {
-            const statuses = ['STATUS_DONE', 'STATUS_ACTIVE', 'STATUS_FAILED', 'STATUS_SUSPENDED', 'STATUS_UNDEFINED'];
-
-            statuses.forEach(status => {
-                Sortable.create(document.getElementById(status), {
-                    group: {
-                        name: status,
-                        put: statuses.filter(s => s !== status)
-                    },
-                    animation: 100,
-                    ghostClass: "sortable-ghost",
-                    sort: false,
-                    onEnd: function(evt) {
-                        let id_row = evt.item.getAttribute('actividad-id');
-                        let valor_nuevo = evt.to.id;
-                        let actividad_correspondiente = response.tasks.find(t => t.id === id_row);
-                        changeStatusInKanban(actividad_correspondiente, response, valor_nuevo);
-                    },
-                });
-            });
-
-            Sortable.create(document.getElementById('c_kanban'), {
-                group: "sorting",
-                sort: true,
-                onSort: function(evt) {
-                    let orden_ul = Array.from(evt.target.getElementsByTagName('ul'));
-                    let estatuses = orden_ul.map(ul => ({
-                        [ul.classList]: ul.querySelector('h4').innerText.split('/')[0].trim()
-                    }));
-                    saveStatusOnServer(estatuses);
-                },
-            });
-        }
-
-        function changeStatusInKanban(tarea_correspondiente, response, valor_nuevo, element = null) {
-            function updateTask(status, progress) {
-                tarea_correspondiente.isSuspended = false;
-                tarea_correspondiente.isFailed = false;
-                tarea_correspondiente.status = status;
-                tarea_correspondiente.progress = progress;
-                calculateAverageOnNodes(response.tasks);
-                calculateStatus(response.tasks);
-                saveOnServer(response);
-                renderKanban(response);
-            }
-
-            if (isParent(tarea_correspondiente, response.tasks)) {
-                if (element) {
-                    element.value = tarea_correspondiente.status;
-                }
-                renderKanban(response);
-                toastr.info('No puedes editar una actividad padre');
+        function insertPersonas(value, personas) {
+            if (!value || value.length === 0) {
+                personas.assigs = []; // Si value está vacío, borramos todas las etiquetas
                 return;
             }
 
-            switch (valor_nuevo) {
-                case 'STATUS_DONE':
-                    tarea_correspondiente.isSuspended = false;
-                    tarea_correspondiente.isFailed = false;
-                    tarea_correspondiente.status = valor_nuevo;
-                    tarea_correspondiente.progress = 100;
-                    updateTask(valor_nuevo, 100);
-                    break;
-
-                case 'STATUS_UNDEFINED':
-                    Swal.fire({
-                        title: '¿Estás seguro de reinicializar la actividad?',
-                        text: "No podrás revertir esto!",
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Sí',
-                        cancelButtonText: 'No'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            updateTask(valor_nuevo, 0);
-                        } else {
-                            renderKanban(response);
-                        }
-                    });
-                    break;
-
-                case 'STATUS_SUSPENDED':
-                    tarea_correspondiente.isSuspended = true;
-                    tarea_correspondiente.isFailed = false;
-                    updateTask(valor_nuevo, null);
-                    break;
-
-                case 'STATUS_FAILED':
-                    if (tarea_correspondiente.end - Date.now() >= 0) {
-                        toastr.info('Esta actividad no puede ser puesta en retraso');
-                        renderKanban(response);
-                        if (element) {
-                            element.value = tarea_correspondiente.status;
-                        }
+            if ('assigs' in responseLocal.tasks) {
+                value.forEach(element => {
+                    const existingAssigsIndex = personas.assigs.findIndex(existingAssigs => existingAssigs
+                        .resourceId === element.id);
+                    if (existingAssigsIndex !== -1) {
+                        // Si la etiqueta ya existe, no hacemos nada
+                        return;
                     } else {
-                        tarea_correspondiente.isSuspended = false;
-                        tarea_correspondiente.isFailed = true;
-                        updateTask(valor_nuevo, null);
+                        // Si la etiqueta no existe, la agregamos
+                        personas.assigs.push({
+                            "id": `${personas.id}_${element.id}_${element.id}`,
+                            "resourceId": element.id,
+                            "roleId": "tmp_1",
+                            "effort": 0
+                        });
                     }
-                    break;
-
-                default:
-                    Swal.fire({
-                        title: 'Ingresa el progreso, en un rango de 1-99',
-                        input: 'number',
-                        icon: 'question',
-                        inputAttributes: {
-                            autocapitalize: 'off'
-                        },
-                        showCancelButton: true,
-                        confirmButtonText: 'Cambiar Estatus',
-                        cancelButtonText: 'Cancelar',
-                        showLoaderOnConfirm: true,
-                        inputValidator: (progress) => {
-                            if (Number(progress) >= 1 && Number(progress) <= 99) {
-                                return null;
-                            } else {
-                                return 'Debes de ingresar un número en el rango de 1 a 99';
-                            }
-                        },
-                        preConfirm: (progress) => {
-                            if (Number(progress) >= 1 && Number(progress) <= 99) {
-                                updateTask(valor_nuevo, Number(progress));
-                            } else {
-                                if (element) {
-                                    element.value = tarea_correspondiente.status;
-                                }
-                            }
-                        },
-                        allowOutsideClick: () => !Swal.isLoading()
-                    }).then((result) => {
-                        if (result.isDismissed) {
-                            if (element) {
-                                element.value = tarea_correspondiente.status;
-                            }
-                            renderKanban(response);
-                        }
-                    });
-                    break;
+                });
+            } else {
+                personas.assigs = value.map(element => ({
+                    "id": `${personas.id}_${element.id}_${element.id}`,
+                    "resourceId": element.id,
+                    "roleId": "tmp_1",
+                    "effort": 0
+                }));
             }
+        }
+
+        function insertTask(value, status, id) {
+            if (!value || value.length === 0) {
+                return;
+            }
+            const timestamp = Date.now();
+            responseLocal.tasks.push({
+                "id": id,
+                "name": value,
+                "progress": 0,
+                "progressByWorklog": false,
+                "relevance": 0,
+                "type": "",
+                "typeId": "",
+                "description": "",
+                "code": "",
+                "level": 1,
+                "status": status,
+                "depends": "",
+                "start": timestamp,
+                "duration": 1,
+                "end": timestamp,
+                "startIsMilestone": false,
+                "endIsMilestone": false,
+                "canWrite": true,
+                "canAdd": true,
+                "canDelete": true,
+                "canAddIssue": true,
+                "assigs": []
+            });
+            agruparTaks();
+            location.reload();
+            saveOnServer(responseLocal);
         }
 
         function saveStatusOnServer(response) {
@@ -1020,14 +832,3 @@
         }
     </script>
 @endsection
-
-
-{{-- 'resources' =>  [],
-'subtasks' => [],
-'historic' => [], --}}
-
-{{-- // if (!confirm("¿Estás seguro de mover esta tarjeta?")) {
-    //   return false; // Cancela el movimiento
-    // }
-    // console.log("entrooooo");
-    // return true; --}}

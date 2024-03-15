@@ -39,7 +39,7 @@ class EV360EvaluacionesController extends Controller
     {
         abort_if(Gate::denies('seguimiento_evaluaciones_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // dd($this->obtenerCantidadMaximaDeObjetivos(20));
-        $areas = Area::getAll();
+        $areas = Area::select('id', 'area')->get();
         $empleados = Empleado::getaltaAll();
 
         if ($request->ajax()) {
@@ -1562,9 +1562,10 @@ class EV360EvaluacionesController extends Controller
     public function obtenerInformacionDeLaConsultaPorEvaluado($evaluacion, $evaluado)
     {
         $evaluacion = Evaluacion::with('rangos')->find(intval($evaluacion));
-        $evaluado = Empleado::with(['area', 'puestoRelacionado' => function ($q) {
+        $evaluado = Empleado::select('id', 'name', 'area_id', 'puesto_id')->with(['area:id,area', 'puestoRelacionado:id,puesto' => function ($q) {
             $q->with('competencias');
         }])->find(intval($evaluado));
+
         $evaluadores = EvaluadoEvaluador::where('evaluacion_id', $evaluacion->id)
             ->where('evaluado_id', $evaluado->id)
             ->get();
@@ -1599,10 +1600,10 @@ class EV360EvaluacionesController extends Controller
                 'tipo' => 'Autoevaluación',
                 'peso_general' => $evaluacion->peso_autoevaluacion,
                 'evaluaciones' => $filtro_autoevaluacion->map(function ($evaluador) use ($evaluacion, $evaluado) {
-                    $evaluaciones_competencias = EvaluacionRepuesta::with('competencia', 'evaluador')->where('evaluacion_id', $evaluacion->id)
+                    $evaluaciones_competencias = EvaluacionRepuesta::with('competencia', 'evaluador:id,name')->where('evaluacion_id', $evaluacion->id)
                         ->where('evaluado_id', $evaluado->id)
                         ->where('evaluador_id', $evaluador->evaluador_id)->orderBy('id')->get();
-                    $evaluador_empleado = Empleado::getAll()->find($evaluador->evaluador_id);
+                    $evaluador_empleado = Empleado::select('id', 'name', 'area_id', 'puesto_id')->find($evaluador->evaluador_id);
 
                     return $this->obtenerInformacionDeLaEvaluacionDeCompetencia($evaluador_empleado, $evaluador, $evaluado, $evaluaciones_competencias, $evaluacion);
                 }),
@@ -1629,7 +1630,7 @@ class EV360EvaluacionesController extends Controller
                     $evaluaciones_competencias = EvaluacionRepuesta::with('competencia', 'evaluador')->where('evaluacion_id', $evaluacion->id)
                         ->where('evaluado_id', $evaluado->id)
                         ->where('evaluador_id', $evaluador->evaluador_id)->orderBy('id')->get();
-                    $evaluador_empleado = Empleado::getAll()->find($evaluador->evaluador_id);
+                    $evaluador_empleado = Empleado::select('id', 'name', 'area_id', 'puesto_id')->find($evaluador->evaluador_id);
 
                     return $this->obtenerInformacionDeLaEvaluacionDeCompetencia($evaluador_empleado, $evaluador, $evaluado, $evaluaciones_competencias, $evaluacion);
                 }),
@@ -1655,7 +1656,7 @@ class EV360EvaluacionesController extends Controller
                     $evaluaciones_competencias = EvaluacionRepuesta::with('competencia', 'evaluador')->where('evaluacion_id', $evaluacion->id)
                         ->where('evaluado_id', $evaluado->id)
                         ->where('evaluador_id', $evaluador->evaluador_id)->orderBy('id')->get();
-                    $evaluador_empleado = Empleado::getAll()->find($evaluador->evaluador_id);
+                    $evaluador_empleado = Empleado::select('id', 'name', 'area_id', 'puesto_id')->find($evaluador->evaluador_id);
 
                     return $this->obtenerInformacionDeLaEvaluacionDeCompetencia($evaluador_empleado, $evaluador, $evaluado, $evaluaciones_competencias, $evaluacion);
                 }),
@@ -1681,7 +1682,7 @@ class EV360EvaluacionesController extends Controller
                     $evaluaciones_competencias = EvaluacionRepuesta::with('competencia', 'evaluador')->where('evaluacion_id', $evaluacion->id)
                         ->where('evaluado_id', $evaluado->id)
                         ->where('evaluador_id', $evaluador->evaluador_id)->orderBy('id')->get();
-                    $evaluador_empleado = Empleado::getAll()->find($evaluador->evaluador_id);
+                    $evaluador_empleado = Empleado::select('id', 'name', 'area_id', 'puesto_id')->find($evaluador->evaluador_id);
 
                     return $this->obtenerInformacionDeLaEvaluacionDeCompetencia($evaluador_empleado, $evaluador, $evaluado, $evaluaciones_competencias, $evaluacion);
                 }),
@@ -1806,7 +1807,7 @@ class EV360EvaluacionesController extends Controller
             'promedio_objetivos' => $promedio_objetivos,
             'promedio_general_objetivos' => $promedio_general_objetivos,
             'calificacion_final' => $calificacion_final,
-            'evaluadores' => Empleado::getAll()->find($evaluadores->pluck('evaluador_id')),
+            'evaluadores' => Empleado::select('id', 'name', 'area_id', 'puesto_id')->find($evaluadores->pluck('evaluador_id')),
         ];
     }
 
@@ -1848,8 +1849,10 @@ class EV360EvaluacionesController extends Controller
 
     public function resumen($evaluacion)
     {
+
         abort_if(Gate::denies('seguimiento_evaluaciones_grafica'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $evaluacion = Evaluacion::with('evaluados', 'rangos')->find(intval($evaluacion));
+
+        $evaluacion = Evaluacion::with('evaluados:id,name,area_id,puesto_id,supervisor_id', 'rangos:id,descripcion')->find(intval($evaluacion));
 
         if (optional($evaluacion->rangos)->isNotEmpty()) {
             $evaluados = $evaluacion->evaluados;
@@ -1861,12 +1864,16 @@ class EV360EvaluacionesController extends Controller
             $sobresaliente = 0;
             $rangosResultados = optional($evaluacion->rangos)->pluck('valor', 'parametro')->all();
             $rangosColores = optional($evaluacion->rangos)->pluck('color', 'parametro')->all();
-            // dd($rangosResultados, $rangosColores);
             $maxValue = max(array_map('intval', $rangosResultados));
 
             $ev360ResumenTabla = new Ev360ResumenTablaParametros();
+
             foreach ($evaluados as $evaluado) {
-                $evaluado->load('area', 'supervisorEv360');
+                $evaluado->load(['area' => function ($query) {
+                    $query->select('id', 'area');
+                }, 'supervisorEv360' => function ($query) {
+                    $query->select('id', 'name');
+                }]);
                 $lista_evaluados->push([
                     'evaluado' => $evaluado->name,
                     'puesto' => $evaluado->puesto,
@@ -1876,7 +1883,6 @@ class EV360EvaluacionesController extends Controller
             }
 
             $counts = [];
-            // dd($lista_evaluados);
             foreach ($lista_evaluados as $evaluado) {
                 $calificacionFinal = $evaluado['informacion_evaluacion']['calificacion_final'];
                 $previousValor = null;
@@ -1900,9 +1906,9 @@ class EV360EvaluacionesController extends Controller
             $calificaciones->push($counts);
             $calificaciones = $calificaciones->first();
 
-            // dd($calificaciones);
             return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.resumen-parametros', compact('evaluacion', 'calificaciones', 'rangosResultados', 'rangosColores'));
         } else {
+
             $evaluados = $evaluacion->evaluados;
             $lista_evaluados = collect();
             $calificaciones = collect();
@@ -1922,7 +1928,12 @@ class EV360EvaluacionesController extends Controller
             }
             $ev360ResumenTabla = new Ev360ResumenTabla();
             foreach ($evaluados as $evaluado) {
-                $evaluado->load('area', 'supervisorEv360');
+                $evaluado->load(['area' => function ($query) {
+                    $query->select('id', 'area');
+                }, 'supervisorEv360' => function ($query) {
+                    $query->select('id', 'name');
+                }]);
+
                 $lista_evaluados->push([
                     'evaluado' => $evaluado->name,
                     'puesto' => $evaluado->puesto,
@@ -1957,7 +1968,7 @@ class EV360EvaluacionesController extends Controller
 
     public function resumenJefe($evaluacion)
     {
-        $evaluacion = Evaluacion::with('evaluados')->find(intval($evaluacion));
+        $evaluacion = Evaluacion::with('evaluados:id,name')->find(intval($evaluacion));
         $evaluados = $evaluacion->evaluados;
 
         return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.resumen', compact('calificaciones', 'evaluacion'));
@@ -1965,7 +1976,7 @@ class EV360EvaluacionesController extends Controller
 
     public function evaluacionesDelEmpleado($empleado)
     {
-        $empleado = Empleado::getAll()->find($empleado);
+        $empleado = Empleado::select('id', 'name', 'area_id', 'puesto_id')->find($empleado);
         $evaluacione = Evaluacion::whereHas('evaluados', function ($q) use ($empleado) {
             $q->where('evaluado_id', $empleado->id);
         })->get();
@@ -1994,7 +2005,7 @@ class EV360EvaluacionesController extends Controller
                 ->pluck('evaluado_id')
                 ->unique()
                 ->toArray();
-            $empleados = Empleado::getAll();
+            $empleados = Empleado::select('id', 'name', 'area_id', 'puesto_id')->get();
             $evaluados = $empleados->find($evaluados);
             $evaluador_model = $empleados->find($evaluador);
             if (count($evaluados)) {
@@ -2024,7 +2035,7 @@ class EV360EvaluacionesController extends Controller
             'descripcion' => 'nullable|string',
         ]);
         $evaluacion = Evaluacion::find(intval($request->evaluacion));
-        $empleados = Empleado::getAll();
+        $empleados = Empleado::select('id', 'name', 'area_id', 'puesto_id')->get();
         $evaluado = $empleados->find(intval($request->evaluado));
         $evaluador = $empleados->find(intval($request->evaluador));
         $fecha_inicio = $request->fecha_inicio;

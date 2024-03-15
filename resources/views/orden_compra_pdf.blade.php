@@ -67,11 +67,7 @@
             <tr>
                 <td>
                     <strong> Proyecto: </strong> <br>
-                    @if ($requisiciones->contrato->no_contrato)
-                        {{ $requisiciones->contrato->no_contrato }}
-                    @else
-                        <small class="not-register">Sin registro</small>
-                    @endif
+                        {{ isset($requisiciones->contrato->no_contrato) }}
                 </td>
                 <td>
                     <strong> Comprador: </strong> <br>
@@ -222,8 +218,8 @@
                     <td>
                         <strong> Proyecto: </strong> <br>
                         @isset($producto->contrato)
-                            {{ $producto->contrato->no_proyecto }} / {{ $producto->contrato->no_contrato }} -
-                            {{ $producto->contrato->nombre_servicio }}
+                            {{ isset($producto->contrato->no_proyecto) }} / {{ isset($producto->contrato->no_contrato) }} -
+                            {{ isset($producto->contrato->nombre_servicio) }}
                         @endisset
                     </td>
                     <td>

@@ -473,7 +473,7 @@ class Empleado extends Model implements Auditable
 
     public function puestoRelacionado()
     {
-        return $this->belongsTo('App\Models\Puesto', 'puesto_id', 'id');
+        return $this->belongsTo('App\Models\Puesto', 'puesto_id', 'id')->select('id', 'puesto');
     }
 
     public function getCompetenciasAsignadasAttribute()
@@ -550,7 +550,7 @@ class Empleado extends Model implements Auditable
 
     public function supervisor()
     {
-        return $this->belongsTo(self::class)->alta();
+        return $this->belongsTo(self::class)->alta()->select('id', 'name');
     }
 
     public function supervisorCrearEvaluacion()
@@ -560,7 +560,7 @@ class Empleado extends Model implements Auditable
 
     public function supervisorEv360()
     {
-        return $this->belongsTo(self::class, 'supervisor_id', 'id');
+        return $this->belongsTo(self::class, 'supervisor_id', 'id')->select('id', 'name', 'area_id');
     }
 
     public function onlyChildren()

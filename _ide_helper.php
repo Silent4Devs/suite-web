@@ -5,7 +5,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 10.47.0.
+ * Generated for Laravel 10.48.3.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -6273,12 +6273,12 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $target
          * @param string $link
-         * @return void 
+         * @return bool|null 
          * @static 
          */        public static function link($target, $link)
         {
                         /** @var \Illuminate\Filesystem\Filesystem $instance */
-                        $instance->link($target, $link);
+                        return $instance->link($target, $link);
         }
                     /**
          * Create a relative symlink to the target file or directory.
@@ -9331,84 +9331,179 @@ namespace Illuminate\Support\Facades {
                         return $instance->setConnectionName($name);
         }
                     /**
-         * Migrate the delayed jobs that are ready to the regular queue.
+         * 
          *
-         * @param string $from
-         * @param string $to
-         * @param int $limit
-         * @return array 
+         * @throws AMQPProtocolChannelException
          * @static 
-         */        public static function migrateExpiredJobs($from, $to)
+         */        public static function laterRaw($delay, $payload, $queue = null, $attempts = 0)
         {
-                        /** @var \Illuminate\Queue\RedisQueue $instance */
-                        return $instance->migrateExpiredJobs($from, $to);
+                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
+                        return $instance->laterRaw($delay, $payload, $queue, $attempts);
         }
                     /**
-         * Delete a reserved job from the queue.
+         * 
          *
-         * @param string $queue
-         * @param \Illuminate\Queue\Jobs\RedisJob $job
-         * @return void 
+         * @throws AMQPProtocolChannelException
          * @static 
-         */        public static function deleteReserved($queue, $job)
+         */        public static function bulkRaw($payload, $queue = null, $options = [])
         {
-                        /** @var \Illuminate\Queue\RedisQueue $instance */
-                        $instance->deleteReserved($queue, $job);
+                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
+                        return $instance->bulkRaw($payload, $queue, $options);
         }
                     /**
-         * Delete a reserved job from the reserved queue and release it.
+         * 
          *
-         * @param string $queue
-         * @param \Illuminate\Queue\Jobs\RedisJob $job
-         * @param int $delay
-         * @return void 
-         * @static 
-         */        public static function deleteAndRelease($queue, $job, $delay)
-        {
-                        /** @var \Illuminate\Queue\RedisQueue $instance */
-                        $instance->deleteAndRelease($queue, $job, $delay);
-        }
-                    /**
-         * Delete all of the jobs from the queue.
-         *
-         * @param string $queue
-         * @return int 
-         * @static 
-         */        public static function clear($queue)
-        {
-                        /** @var \Illuminate\Queue\RedisQueue $instance */
-                        return $instance->clear($queue);
-        }
-                    /**
-         * Get the queue or return the default.
-         *
-         * @param string|null $queue
-         * @return string 
-         * @static 
-         */        public static function getQueue($queue)
-        {
-                        /** @var \Illuminate\Queue\RedisQueue $instance */
-                        return $instance->getQueue($queue);
-        }
-                    /**
-         * Get the connection for the queue.
-         *
-         * @return \Illuminate\Redis\Connections\Connection 
+         * @throws RuntimeException
          * @static 
          */        public static function getConnection()
         {
-                        /** @var \Illuminate\Queue\RedisQueue $instance */
+                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
                         return $instance->getConnection();
         }
                     /**
-         * Get the underlying Redis instance.
+         * 
          *
-         * @return \Illuminate\Contracts\Redis\Factory 
          * @static 
-         */        public static function getRedis()
+         */        public static function setConnection($connection)
         {
-                        /** @var \Illuminate\Queue\RedisQueue $instance */
-                        return $instance->getRedis();
+                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
+                        return $instance->setConnection($connection);
+        }
+                    /**
+         * Job class to use.
+         *
+         * @throws Throwable
+         * @static 
+         */        public static function getJobClass()
+        {
+                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
+                        return $instance->getJobClass();
+        }
+                    /**
+         * Gets a queue/destination, by default the queue option set on the connection.
+         *
+         * @static 
+         */        public static function getQueue($queue = null)
+        {
+                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
+                        return $instance->getQueue($queue);
+        }
+                    /**
+         * Checks if the given exchange already present/defined in RabbitMQ.
+         * 
+         * Returns false when the exchange is missing.
+         *
+         * @throws AMQPProtocolChannelException
+         * @static 
+         */        public static function isExchangeExists($exchange)
+        {
+                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
+                        return $instance->isExchangeExists($exchange);
+        }
+                    /**
+         * Declare an exchange in rabbitMQ, when not already declared.
+         *
+         * @static 
+         */        public static function declareExchange($name, $type = 'direct', $durable = true, $autoDelete = false, $arguments = [])
+        {
+                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
+                        return $instance->declareExchange($name, $type, $durable, $autoDelete, $arguments);
+        }
+                    /**
+         * Delete an exchange from rabbitMQ, only when present in RabbitMQ.
+         *
+         * @throws AMQPProtocolChannelException
+         * @static 
+         */        public static function deleteExchange($name, $unused = false)
+        {
+                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
+                        return $instance->deleteExchange($name, $unused);
+        }
+                    /**
+         * Checks if the given queue already present/defined in RabbitMQ.
+         * 
+         * Returns false when the queue is missing.
+         *
+         * @throws AMQPProtocolChannelException
+         * @static 
+         */        public static function isQueueExists($name = null)
+        {
+                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
+                        return $instance->isQueueExists($name);
+        }
+                    /**
+         * Declare a queue in rabbitMQ, when not already declared.
+         *
+         * @static 
+         */        public static function declareQueue($name, $durable = true, $autoDelete = false, $arguments = [])
+        {
+                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
+                        return $instance->declareQueue($name, $durable, $autoDelete, $arguments);
+        }
+                    /**
+         * Delete a queue from rabbitMQ, only when present in RabbitMQ.
+         *
+         * @throws AMQPProtocolChannelException
+         * @static 
+         */        public static function deleteQueue($name, $if_unused = false, $if_empty = false)
+        {
+                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
+                        return $instance->deleteQueue($name, $if_unused, $if_empty);
+        }
+                    /**
+         * Bind a queue to an exchange.
+         *
+         * @static 
+         */        public static function bindQueue($queue, $exchange, $routingKey = '')
+        {
+                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
+                        return $instance->bindQueue($queue, $exchange, $routingKey);
+        }
+                    /**
+         * Purge the queue of messages.
+         *
+         * @static 
+         */        public static function purge($queue = null)
+        {
+                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
+                        return $instance->purge($queue);
+        }
+                    /**
+         * Acknowledge the message.
+         *
+         * @static 
+         */        public static function ack($job)
+        {
+                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
+                        return $instance->ack($job);
+        }
+                    /**
+         * Reject the message.
+         *
+         * @static 
+         */        public static function reject($job, $requeue = false)
+        {
+                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
+                        return $instance->reject($job, $requeue);
+        }
+                    /**
+         * Close the connection to RabbitMQ.
+         *
+         * @throws Exception
+         * @static 
+         */        public static function close()
+        {
+                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
+                        return $instance->close();
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */        public static function getChannel($forceNew = false)
+        {
+                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
+                        return $instance->getChannel($forceNew);
         }
                     /**
          * Get the maximum number of attempts for an object-based queue handler.
@@ -9418,7 +9513,7 @@ namespace Illuminate\Support\Facades {
          * @static 
          */        public static function getJobTries($job)
         {            //Method inherited from \Illuminate\Queue\Queue         
-                        /** @var \Illuminate\Queue\RedisQueue $instance */
+                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
                         return $instance->getJobTries($job);
         }
                     /**
@@ -9429,7 +9524,7 @@ namespace Illuminate\Support\Facades {
          * @static 
          */        public static function getJobBackoff($job)
         {            //Method inherited from \Illuminate\Queue\Queue         
-                        /** @var \Illuminate\Queue\RedisQueue $instance */
+                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
                         return $instance->getJobBackoff($job);
         }
                     /**
@@ -9440,7 +9535,7 @@ namespace Illuminate\Support\Facades {
          * @static 
          */        public static function getJobExpiration($job)
         {            //Method inherited from \Illuminate\Queue\Queue         
-                        /** @var \Illuminate\Queue\RedisQueue $instance */
+                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
                         return $instance->getJobExpiration($job);
         }
                     /**
@@ -9451,7 +9546,7 @@ namespace Illuminate\Support\Facades {
          * @static 
          */        public static function createPayloadUsing($callback)
         {            //Method inherited from \Illuminate\Queue\Queue         
-                        \Illuminate\Queue\RedisQueue::createPayloadUsing($callback);
+                        \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue::createPayloadUsing($callback);
         }
                     /**
          * Get the container instance being used by the connection.
@@ -9460,7 +9555,7 @@ namespace Illuminate\Support\Facades {
          * @static 
          */        public static function getContainer()
         {            //Method inherited from \Illuminate\Queue\Queue         
-                        /** @var \Illuminate\Queue\RedisQueue $instance */
+                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
                         return $instance->getContainer();
         }
                     /**
@@ -9471,7 +9566,7 @@ namespace Illuminate\Support\Facades {
          * @static 
          */        public static function setContainer($container)
         {            //Method inherited from \Illuminate\Queue\Queue         
-                        /** @var \Illuminate\Queue\RedisQueue $instance */
+                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
                         $instance->setContainer($container);
         }
             }
@@ -16625,16 +16720,22 @@ namespace Barryvdh\DomPDF\Facade {
             /**
      * 
      *
-     * @method static \Barryvdh\DomPDF\PDF setPaper($paper, $orientation = 'portrait')
-     * @method static \Barryvdh\DomPDF\PDF setBaseHost(string $baseHost)
-     * @method static \Barryvdh\DomPDF\PDF setProtocol(string $protocol)
-     * @method static \Barryvdh\DomPDF\PDF setHttpContext($httpContext)
-     * @method static \Barryvdh\DomPDF\PDF setCallbacks(array $callbacks)
+     * @method static BasePDF setBaseHost(string $baseHost)
+     * @method static BasePDF setBasePath(string $basePath)
+     * @method static BasePDF setCanvas(\Dompdf\Canvas $canvas)
+     * @method static BasePDF setCallbacks(array $callbacks)
+     * @method static BasePDF setCss(\Dompdf\Css\Stylesheet $css)
+     * @method static BasePDF setDefaultView(string $defaultView, array $options)
+     * @method static BasePDF setDom(\DOMDocument $dom)
+     * @method static BasePDF setFontMetrics(\Dompdf\FontMetrics $fontMetrics)
+     * @method static BasePDF setHttpContext(resource|array $httpContext)
+     * @method static BasePDF setPaper(string|float[] $paper, string $orientation = 'portrait')
+     * @method static BasePDF setProtocol(string $protocol)
+     * @method static BasePDF setTree(\Dompdf\Frame\FrameTree $tree)
      */        class Pdf {
                     /**
          * Get the DomPDF instance
          *
-         * @return \Dompdf\Dompdf 
          * @static 
          */        public static function getDomPDF()
         {
@@ -16673,7 +16774,6 @@ namespace Barryvdh\DomPDF\Facade {
          * Add metadata info
          *
          * @param array<string, string> $info
-         * @return static 
          * @static 
          */        public static function addInfo($info)
         {
@@ -16697,7 +16797,6 @@ namespace Barryvdh\DomPDF\Facade {
          *
          * @param array<string, mixed>|string $attribute
          * @param null|mixed $value
-         * @return \Barryvdh\DomPDF\PDF 
          * @static 
          */        public static function setOption($attribute, $value = null)
         {
@@ -16781,16 +16880,22 @@ namespace Barryvdh\DomPDF\Facade {
             /**
      * 
      *
-     * @method static \Barryvdh\DomPDF\PDF setPaper($paper, $orientation = 'portrait')
-     * @method static \Barryvdh\DomPDF\PDF setBaseHost(string $baseHost)
-     * @method static \Barryvdh\DomPDF\PDF setProtocol(string $protocol)
-     * @method static \Barryvdh\DomPDF\PDF setHttpContext($httpContext)
-     * @method static \Barryvdh\DomPDF\PDF setCallbacks(array $callbacks)
+     * @method static BasePDF setBaseHost(string $baseHost)
+     * @method static BasePDF setBasePath(string $basePath)
+     * @method static BasePDF setCanvas(\Dompdf\Canvas $canvas)
+     * @method static BasePDF setCallbacks(array $callbacks)
+     * @method static BasePDF setCss(\Dompdf\Css\Stylesheet $css)
+     * @method static BasePDF setDefaultView(string $defaultView, array $options)
+     * @method static BasePDF setDom(\DOMDocument $dom)
+     * @method static BasePDF setFontMetrics(\Dompdf\FontMetrics $fontMetrics)
+     * @method static BasePDF setHttpContext(resource|array $httpContext)
+     * @method static BasePDF setPaper(string|float[] $paper, string $orientation = 'portrait')
+     * @method static BasePDF setProtocol(string $protocol)
+     * @method static BasePDF setTree(\Dompdf\Frame\FrameTree $tree)
      */        class Pdf {
                     /**
          * Get the DomPDF instance
          *
-         * @return \Dompdf\Dompdf 
          * @static 
          */        public static function getDomPDF()
         {
@@ -16829,7 +16934,6 @@ namespace Barryvdh\DomPDF\Facade {
          * Add metadata info
          *
          * @param array<string, string> $info
-         * @return static 
          * @static 
          */        public static function addInfo($info)
         {
@@ -16853,7 +16957,6 @@ namespace Barryvdh\DomPDF\Facade {
          *
          * @param array<string, mixed>|string $attribute
          * @param null|mixed $value
-         * @return \Barryvdh\DomPDF\PDF 
          * @static 
          */        public static function setOption($attribute, $value = null)
         {
@@ -18764,6 +18867,21 @@ namespace RealRashid\SweetAlert\Facades {
         {
                         /** @var \RealRashid\SweetAlert\Toaster $instance */
                         return $instance->html($title, $code, $icon);
+        }
+                    /**
+         * Display an html typed alert message which is generated from a view
+         *
+         * @param string $title
+         * @param string $view
+         * @param array $data
+         * @param array $mergeData
+         * @param string $icon
+         * @author Keller Martin <kellerjmrtn@gmail.com>
+         * @static 
+         */        public static function view($title, $view, $data = [], $mergeData = [], $icon = '')
+        {
+                        /** @var \RealRashid\SweetAlert\Toaster $instance */
+                        return $instance->view($title, $view, $data, $mergeData, $icon);
         }
                     /**
          * Display a toast message
@@ -22596,7 +22714,7 @@ namespace  {
              * Add a join clause to the query.
              *
              * @param \Illuminate\Contracts\Database\Query\Expression|string $table
-             * @param \Closure|string $first
+             * @param \Closure|\Illuminate\Contracts\Database\Query\Expression|string $first
              * @param string|null $operator
              * @param \Illuminate\Contracts\Database\Query\Expression|string|null $second
              * @param string $type
@@ -22612,7 +22730,7 @@ namespace  {
              * Add a "join where" clause to the query.
              *
              * @param \Illuminate\Contracts\Database\Query\Expression|string $table
-             * @param \Closure|string $first
+             * @param \Closure|\Illuminate\Contracts\Database\Query\Expression|string $first
              * @param string $operator
              * @param \Illuminate\Contracts\Database\Query\Expression|string $second
              * @param string $type
@@ -22628,7 +22746,7 @@ namespace  {
              *
              * @param \Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder|string $query
              * @param string $as
-             * @param \Closure|string $first
+             * @param \Closure|\Illuminate\Contracts\Database\Query\Expression|string $first
              * @param string|null $operator
              * @param \Illuminate\Contracts\Database\Query\Expression|string|null $second
              * @param string $type
@@ -22670,7 +22788,7 @@ namespace  {
              * Add a left join to the query.
              *
              * @param \Illuminate\Contracts\Database\Query\Expression|string $table
-             * @param \Closure|string $first
+             * @param \Closure|\Illuminate\Contracts\Database\Query\Expression|string $first
              * @param string|null $operator
              * @param \Illuminate\Contracts\Database\Query\Expression|string|null $second
              * @return \Illuminate\Database\Query\Builder 
@@ -22684,7 +22802,7 @@ namespace  {
              * Add a "join where" clause to the query.
              *
              * @param \Illuminate\Contracts\Database\Query\Expression|string $table
-             * @param \Closure|string $first
+             * @param \Closure|\Illuminate\Contracts\Database\Query\Expression|string $first
              * @param string $operator
              * @param \Illuminate\Contracts\Database\Query\Expression|string|null $second
              * @return \Illuminate\Database\Query\Builder 
@@ -22699,7 +22817,7 @@ namespace  {
              *
              * @param \Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder|string $query
              * @param string $as
-             * @param \Closure|string $first
+             * @param \Closure|\Illuminate\Contracts\Database\Query\Expression|string $first
              * @param string|null $operator
              * @param \Illuminate\Contracts\Database\Query\Expression|string|null $second
              * @return \Illuminate\Database\Query\Builder 
@@ -22727,7 +22845,7 @@ namespace  {
              * Add a "right join where" clause to the query.
              *
              * @param \Illuminate\Contracts\Database\Query\Expression|string $table
-             * @param \Closure|string $first
+             * @param \Closure|\Illuminate\Contracts\Database\Query\Expression|string $first
              * @param string $operator
              * @param \Illuminate\Contracts\Database\Query\Expression|string $second
              * @return \Illuminate\Database\Query\Builder 
@@ -22742,7 +22860,7 @@ namespace  {
              *
              * @param \Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder|string $query
              * @param string $as
-             * @param \Closure|string $first
+             * @param \Closure|\Illuminate\Contracts\Database\Query\Expression|string $first
              * @param string|null $operator
              * @param \Illuminate\Contracts\Database\Query\Expression|string|null $second
              * @return \Illuminate\Database\Query\Builder 
@@ -22756,7 +22874,7 @@ namespace  {
              * Add a "cross join" clause to the query.
              *
              * @param \Illuminate\Contracts\Database\Query\Expression|string $table
-             * @param \Closure|string|null $first
+             * @param \Closure|\Illuminate\Contracts\Database\Query\Expression|string|null $first
              * @param string|null $operator
              * @param \Illuminate\Contracts\Database\Query\Expression|string|null $second
              * @return \Illuminate\Database\Query\Builder 
@@ -22807,7 +22925,7 @@ namespace  {
                             /**
              * Add a "where" clause comparing two columns to the query.
              *
-             * @param string|array $first
+             * @param \Illuminate\Contracts\Database\Query\Expression|string|array $first
              * @param string|null $operator
              * @param string|null $second
              * @param string|null $boolean
@@ -22821,7 +22939,7 @@ namespace  {
                             /**
              * Add an "or where" clause comparing two columns to the query.
              *
-             * @param string|array $first
+             * @param \Illuminate\Contracts\Database\Query\Expression|string|array $first
              * @param string|null $operator
              * @param string|null $second
              * @return \Illuminate\Database\Query\Builder 
