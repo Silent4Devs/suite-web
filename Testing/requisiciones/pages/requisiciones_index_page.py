@@ -3,7 +3,7 @@ import pdb
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-
+from selenium.webdriver.support.ui import Select
 
 class Requisiciones_index:
     def __init__(self, driver):
@@ -62,6 +62,14 @@ class Requisiciones_index:
         print("Botón de Requisiciones presionado")
         print("URL actual:", self.driver.current_url)
 
+    def requisiciones_filtro(self):
+        requisiciones_filtro_btn = WebDriverWait(self.driver, 5).until(
+            EC.visibility_of_element_located((By.XPATH, "//select[@name='dom_length']"))
+        )
+        select = Select(requisiciones_filtro_btn)
+        select.select_by_index(2)
+
+
     def requisiciones_download_csv(self):
         export_csv_btn = WebDriverWait(self.driver, 5).until(
             EC.element_to_be_clickable((By.XPATH, "//i[contains(@class,'fas fa-file-csv')]"))
@@ -93,4 +101,5 @@ class Requisiciones_index:
         print_btn.click()
         print("Botón de Imprimir presionado")
         print("URL actual:", self.driver.current_url)
+
 
