@@ -159,8 +159,8 @@ class TimesheetController extends Controller
 
 
 
-        $user = Auth::user();
-        $empleado = Empleado::where('id', $user->empleado_id)->first();
+        $user = User::getCurrentUser()->empleado->id;
+        $empleado = Empleado::where('id', $user)->first();
 
         // Si la fecha no está registrada, continúa con la vista de creación.
         return view('admin.timesheet.create', compact('fechasRegistradas', 'organizacion', 'empleado'));
