@@ -18,6 +18,8 @@ def test_contratos(browser):
     #BARRA DE BÚSQUEDA
     search="TEST"
     requisiciones_index_page.requisiciones_searchbar(search)
+    #APROBADORES BTN
+    requisiciones_index_page.requisiciones_aprobadores()
     #CSV
     requisiciones_index_page.requisiciones_download_csv()
     #EXCEL

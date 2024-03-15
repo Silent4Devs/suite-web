@@ -4,7 +4,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import Select
-
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.action_chains import ActionChains
 class Requisiciones_index:
     def __init__(self, driver):
         self.driver = driver
@@ -76,6 +77,15 @@ class Requisiciones_index:
         search_bar.clear()
         search_bar.send_keys(search)
         print("Búsqueda realizada")
+
+    def requisiciones_aprobadores(self):
+        url_ventana_principal = self.driver.current_url
+        url_aprobadores = "https://192.168.9.78/contract_manager/requisiciones/aprobadores?_method=GET"
+
+        self.driver.execute_script(f"window.open('{url_aprobadores}','_blank');")
+        print("Botón de Aprobadores presionado y nueva pestaña abierta en segundo plano")
+        print("URL actual:", url_ventana_principal)
+
 
     def requisiciones_download_csv(self):
         export_csv_btn = WebDriverWait(self.driver, 5).until(
