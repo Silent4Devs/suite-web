@@ -1,4 +1,4 @@
- @extends('layouts.admin')
+@extends('layouts.admin')
 @section('css')
     <link rel="stylesheet" href="{{ asset('css/portal_comunicacion.css') }}{{ config('app.cssVersion') }}">
 @endsection
@@ -26,17 +26,12 @@
 
         <div class="mt-5">
             <div class="row">
-                <div class="col-md-5 d-flex" style="flex-direction: column;">
+                <div class="col-xl-5 d-flex" style="flex-direction: column;">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="card card-gadgets">
                                 <div class="d-flex justify-content-center align-items-center" style="gap: 13px;">
-                                    <i class="material-symbols-outlined" style="font-size: 70px;">rainy</i>
-                                    <span style="font-size: 26px;">26&nbsp;<font style="font-size: 16px;">°C</font></span>
-                                    <div style="font-size: 12px;">
-                                        Nublado <br>
-                                        26º/26º Temp 27ºC
-                                    </div>
+                                    <div id="clima" class="mt-3"></div>
                                 </div>
                             </div>
                         </div>
@@ -76,22 +71,23 @@
                     </div>
                 </div>
 
-                <div class="col-md-7" style="">
+                <div class="col-xl-7" style="">
                     <div class="card carrusel-vertical-boletin" style="background-color: #F8E1E1;">
                         <div class="card-body">
                             <h4 class="title-card-portal-c">Boletín</h4>
                             <div class="caja-img-carrusel-vertical">
                                 <img id="comunicado-carrusel-primer-item" src="{{ asset('img/Carrusel_inicio.png') }}"
-                                    class="item-main-carrusel">
+                                    class="item-main-carrusel active">
                                 @foreach ($comunicacionSgis_carrusel as $idx => $carrusel)
                                     @if ($carrusel->imagenes_comunicacion->first()->tipo == 'video')
                                         <video id="comunicado-carrusel-{{ $carrusel->id }}" muted controls
                                             src="{{ asset('storage/imagen_comunicado_SGI/' . $carrusel->imagenes_comunicacion->first()->imagen) }}"
-                                            width="100%" class="d-none item-main-carrusel"></video>
+                                            width="100%" class=" item-main-carrusel"></video>
                                     @else
                                         <img id="comunicado-carrusel-{{ $carrusel->id }}"
                                             src="{{ asset('storage/imagen_comunicado_SGI/' . $carrusel->imagenes_comunicacion->first()->imagen) }}"
-                                            class="d-none item-main-carrusel">
+                                            class=" item-main-carrusel"
+                                            onerror="this.src='{{ asset('img/Carrusel_inicio.png') }}'; this.onerror=null;">
                                     @endif
                                 @endforeach
                             </div>
@@ -103,14 +99,18 @@
                             @foreach ($comunicacionSgis_carrusel as $idx => $carrusel)
                                 @if ($carrusel->imagenes_comunicacion->first()->tipo == 'video')
                                     <div class="caja-img-menu-crr-vertical"
-                                        onclick="boletin('comunicado-carrusel-{{ $carrusel->id }}')">
-                                        <img src="{{ asset('img/example-remove/play_video.png') }}" alt="">
+                                        onclick="boletin('comunicado-carrusel-{{ $carrusel->id }}')"
+                                        data-id="comunicado-carrusel-{{ $carrusel->id }}">
+                                        <img src="{{ asset('img/example-remove/play_video.png') }}" alt=""
+                                            onerror="this.src='{{ asset('img/Carrusel_inicio.png') }}'; this.onerror=null;">
                                     </div>
                                 @else
                                     <div class="caja-img-menu-crr-vertical"
-                                        onclick="boletin('comunicado-carrusel-{{ $carrusel->id }}')">
+                                        onclick="boletin('comunicado-carrusel-{{ $carrusel->id }}')"
+                                        data-id="comunicado-carrusel-{{ $carrusel->id }}">
                                         <img src="{{ asset('storage/imagen_comunicado_SGI/' . $carrusel->imagenes_comunicacion->first()->imagen) }}"
-                                            alt="">
+                                            alt=""
+                                            onerror="this.src='{{ asset('img/Carrusel_inicio.png') }}'; this.onerror=null;">
                                     </div>
                                 @endif
                             @endforeach
@@ -120,7 +120,7 @@
             </div>
 
             <div class="row">
-                <div class="col-md-5">
+                <div class="col-xl-5">
                     <div class="row">
                         <div class="col-12">
                             <div class=" card card-body">
@@ -161,93 +161,93 @@
 
                                         <div class="menu-portal">
                                             {{-- @can('mi_organizacion_acceder')
-                                                <a href="{{ route('admin.organizacions.index') }}">
-                                                    <div class="item-menu-portal">
-                                                        <i class="material-symbols-outlined">corporate_fare</i>
-                                                        <span>Organización</span>
-                                                    </div>
-                                                </a>
-                                            @endcan
-                                            @can('documentos_publicados_acceder')
-                                                <a href="{{ route('admin.documentos.publicados') }}">
-                                                    <div class="item-menu-portal">
-                                                        <i class="material-symbols-outlined">description</i>
-                                                        <span>Documentos Publicados</span>
-                                                    </div>
-                                                </a>
-                                            @endcan
-                                            @can('sedes_acceder')
-                                                <a href="{{ route('admin.sedes.index') }}">
-                                                    <div class="item-menu-portal">
-                                                        <i class="material-symbols-outlined">home_pin</i>
-                                                        <span>Sedes</span>
-                                                    </div>
-                                                </a>
-                                            @endcan
-                                            @can('politica_sistema_gestion_acceder')
-                                                <a href="{{ route('admin.politica-sgsis/visualizacion') }}">
-                                                    <div class="item-menu-portal">
-                                                        <i class="material-symbols-outlined">local_library</i>
-                                                        <span>Políticas</span>
-                                                    </div>
-                                                </a>
-                                            @endcan
-                                            @can('crear_area_acceder')
-                                                <a href="{{ route('admin.areas.index') }}">
-                                                    <div class="item-menu-portal">
-                                                        <i class="material-symbols-outlined">mitre</i>
-                                                        <span>Áreas</span>
-                                                    </div>
-                                                </a>
-                                            @endcan
-                                            @can('comformacion_comite_seguridad_acceder')
-                                                <a href="{{ route('admin.comiteseguridads.index') }}">
-                                                    <div class="item-menu-portal">
-                                                        <i class="material-symbols-outlined">partner_exchange</i>
-                                                        <span>Comités</span>
-                                                    </div>
-                                                </a>
-                                            @endcan
-                                            @can('portal_comunicacion_mostrar_mapa_de_procesos')
-                                                <a href="{{ route('admin.procesos.mapa') }}">
-                                                    <div class="item-menu-portal">
-                                                        <i class="material-symbols-outlined">flowsheet</i>
-                                                        <span>Mapa de procesos</span>
-                                                    </div>
-                                                </a>
-                                            @endcan
-                                            @can('organigrama_acceder')
-                                                <a href="{{ route('admin.organigrama.index') }}">
-                                                    <div class="item-menu-portal">
-                                                        <i class="material-symbols-outlined">schema</i>
-                                                        <span>Organigrama</span>
-                                                    </div>
-                                                </a>
-                                            @endcan
-                                            @can('analisis_foda_acceder')
-                                                <a href="{{ route('admin.foda-organizacions') }}">
-                                                    <div class="item-menu-portal">
-                                                        <i class="material-symbols-outlined">border_all</i>
-                                                        <span>FODA</span>
-                                                    </div>
-                                                </a>
-                                            @endcan
-                                            @can('portal_comunicacion_mostrar_directorio')
-                                                <a href="{{ route('admin.directorio.index') }}">
-                                                    <div class="item-menu-portal">
-                                                        <i class="material-symbols-outlined">person_book</i>
-                                                        <span>Directorio</span>
-                                                    </div>
-                                                </a>
-                                            @endcan
-                                            @can('determinacion_alcance_acceder')
-                                                <a href="{{ route('admin.alcance-sgsis/visualizacion') }}">
-                                                    <div class="item-menu-portal">
-                                                        <i class="material-symbols-outlined">table_chart_view</i>
-                                                        <span>Alcances</span>
-                                                    </div>
-                                                </a>
-                                            @endcan --}}
+                                            <a href="{{ route('admin.organizacions.index') }}">
+                                                <div class="item-menu-portal">
+                                                    <i class="material-symbols-outlined">corporate_fare</i>
+                                                    <span>Organización</span>
+                                                </div>
+                                            </a>
+                                        @endcan
+                                        @can('documentos_publicados_acceder')
+                                            <a href="{{ route('admin.documentos.publicados') }}">
+                                                <div class="item-menu-portal">
+                                                    <i class="material-symbols-outlined">description</i>
+                                                    <span>Documentos Publicados</span>
+                                                </div>
+                                            </a>
+                                        @endcan
+                                        @can('sedes_acceder')
+                                            <a href="{{ route('admin.sedes.index') }}">
+                                                <div class="item-menu-portal">
+                                                    <i class="material-symbols-outlined">home_pin</i>
+                                                    <span>Sedes</span>
+                                                </div>
+                                            </a>
+                                        @endcan
+                                        @can('politica_sistema_gestion_acceder')
+                                            <a href="{{ route('admin.politica-sgsis/visualizacion') }}">
+                                                <div class="item-menu-portal">
+                                                    <i class="material-symbols-outlined">local_library</i>
+                                                    <span>Políticas</span>
+                                                </div>
+                                            </a>
+                                        @endcan
+                                        @can('crear_area_acceder')
+                                            <a href="{{ route('admin.areas.index') }}">
+                                                <div class="item-menu-portal">
+                                                    <i class="material-symbols-outlined">mitre</i>
+                                                    <span>Áreas</span>
+                                                </div>
+                                            </a>
+                                        @endcan
+                                        @can('comformacion_comite_seguridad_acceder')
+                                            <a href="{{ route('admin.comiteseguridads.index') }}">
+                                                <div class="item-menu-portal">
+                                                    <i class="material-symbols-outlined">partner_exchange</i>
+                                                    <span>Comités</span>
+                                                </div>
+                                            </a>
+                                        @endcan
+                                        @can('portal_comunicacion_mostrar_mapa_de_procesos')
+                                            <a href="{{ route('admin.procesos.mapa') }}">
+                                                <div class="item-menu-portal">
+                                                    <i class="material-symbols-outlined">flowsheet</i>
+                                                    <span>Mapa de procesos</span>
+                                                </div>
+                                            </a>
+                                        @endcan
+                                        @can('organigrama_acceder')
+                                            <a href="{{ route('admin.organigrama.index') }}">
+                                                <div class="item-menu-portal">
+                                                    <i class="material-symbols-outlined">schema</i>
+                                                    <span>Organigrama</span>
+                                                </div>
+                                            </a>
+                                        @endcan
+                                        @can('analisis_foda_acceder')
+                                            <a href="{{ route('admin.foda-organizacions') }}">
+                                                <div class="item-menu-portal">
+                                                    <i class="material-symbols-outlined">border_all</i>
+                                                    <span>FODA</span>
+                                                </div>
+                                            </a>
+                                        @endcan
+                                        @can('portal_comunicacion_mostrar_directorio')
+                                            <a href="{{ route('admin.directorio.index') }}">
+                                                <div class="item-menu-portal">
+                                                    <i class="material-symbols-outlined">person_book</i>
+                                                    <span>Directorio</span>
+                                                </div>
+                                            </a>
+                                        @endcan
+                                        @can('determinacion_alcance_acceder')
+                                            <a href="{{ route('admin.alcance-sgsis/visualizacion') }}">
+                                                <div class="item-menu-portal">
+                                                    <i class="material-symbols-outlined">table_chart_view</i>
+                                                    <span>Alcances</span>
+                                                </div>
+                                            </a>
+                                        @endcan --}}
                                             @can('escuela_estudiante')
                                                 <a href="{{ asset('/admin/mis-cursos') }}">
                                                     <div class="item-menu-portal">
@@ -265,13 +265,13 @@
                                                 </a>
                                             @endcan
                                             {{-- @can('portal_de_comunicaccion_acceder')
-                                                <a href="{{ route('admin.portal-comunicacion.index') }}">
-                                                    <div class="item-menu-portal active">
-                                                        <i class="material-symbols-outlined">home</i>
-                                                        <span>Inicio</span>
-                                                    </div>
-                                                </a>
-                                            @endcan --}}
+                                            <a href="{{ route('admin.portal-comunicacion.index') }}">
+                                                <div class="item-menu-portal active">
+                                                    <i class="material-symbols-outlined">home</i>
+                                                    <span>Inicio</span>
+                                                </div>
+                                            </a>
+                                        @endcan --}}
                                             @can('mi_perfil_acceder')
                                                 <a href="{{ route('admin.inicio-Usuario.index') }}">
                                                     <div class="item-menu-portal">
@@ -327,14 +327,16 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-7 d-flex" style="flex-direction: column;">
-                    <div class="card card-body" style="flex-grow: 1;">
+                <div class="col-xl-7 d-flex" style="flex-direction: column;">
+                    <div class="card card-body scroll_estilo" style="flex-grow: 1; height: 500px; overflow: auto;">
                         <h4 class="title-card-portal-c"> Comunicados</h4>
                         @forelse($comunicacionSgis as $comunicacionSgi)
                             @php
                                 if ($comunicacionSgi->first()->count()) {
                                     if ($comunicacionSgi->imagenes_comunicacion->first()) {
-                                        $imagen = 'storage/imagen_comunicado_SGI/' . $comunicacionSgi->imagenes_comunicacion->first()->imagen;
+                                        $imagen =
+                                            'storage/imagen_comunicado_SGI/' .
+                                            $comunicacionSgi->imagenes_comunicacion->first()->imagen;
                                     }
                                 } else {
                                     $imagen = 'img/portal_404.png';
@@ -418,92 +420,109 @@
         </div>
 
         @if (isset($nuevos))
-            <div class="card-body">
-                <h3 class="title-card-portal-c">Nuevos ingresos</h3>
+            @if ($nuevos->count() != 0)
+                <div class="card-body">
+                    <h3 class="title-card-portal-c">Nuevos ingresos</h3>
 
-                <div class="carrusel-portal carr-port-nuevo">
-                    <button onclick="carruselPortal('retreat');">
-                        <i class="material-symbols-outlined">arrow_back_ios</i>
-                    </button>
-                    <div class="caja-items-carrusel-portal">
-                        @foreach ($nuevos as $nuv)
-                            <div class="item-carrusel-portal">
-                                <div class="img-person" style="width: 80px; height: 80px;">
-                                    <img src="{{ $nuv->avatar_ruta }}" alt="">
-                                </div>
-                                <div>
-                                    <span class="title-item-carr-port">{{ $nuv->name }} </span> <br>
-                                    <p>
-                                        {{ $nuv->puesto }} <br>
-                                        {{ $nuv->area->area }}
-                                    </p>
-                                </div>
-                                <hr>
-                                {{-- @php
+                    <div class="carrusel-portal carr-port-nuevo">
+                        <button onclick="carruselPortal('retreat');">
+                            <i class="material-symbols-outlined">arrow_back_ios</i>
+                        </button>
+                        <div class="caja-items-carrusel-portal">
+                            @foreach ($nuevos as $nuv)
+                                <div class="item-carrusel-portal">
+                                    <div class="img-person" style="width: 80px; height: 80px;">
+                                        <img src="{{ $nuv->avatar_ruta }}" alt="">
+                                    </div>
+                                    <div>
+                                        <span class="title-item-carr-port">{{ $nuv->name }} </span> <br>
+                                        <p>
+                                            {{ $nuv->puesto }} <br>
+                                            {{ $nuv->area->area }}
+                                        </p>
+                                    </div>
+                                    <hr>
+                                    {{-- @php
                                     $meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
                                     $fecha = \Carbon\Carbon::createFromFormat('Y-m-d', $nuv->cumpleaños);
                                     $mes = $meses[$fecha->format('n') - 1];
                                     $inputs['Fecha'] = $fecha->format('d') . ' de ' . $mes;
                                 @endphp --}}
-                                <div>
-                                    <strong> Fecha de ingreso </strong> <br>
-                                    {{ \Carbon\Carbon::parse($nuv->antiguedad)->format('d/m/Y') }}
+                                    <div>
+                                        <strong> Fecha de ingreso </strong> <br>
+                                        {{ \Carbon\Carbon::parse($nuv->antiguedad)->format('d/m/Y') }}
+                                    </div>
                                 </div>
-                            </div>
-                        @endforeach
+                            @endforeach
+                        </div>
+                        <button onclick="carruselPortal('advance');">
+                            <i class="material-symbols-outlined">arrow_forward_ios</i>
+                        </button>
                     </div>
-                    <button onclick="carruselPortal('advance');">
-                        <i class="material-symbols-outlined">arrow_forward_ios</i>
-                    </button>
                 </div>
-            </div>
+            @endif
         @endif
 
         @if (isset($cumpleaños))
-            <div class="card-body">
-                <h3 class="title-card-portal-c mt-5">Cumpleaños</h3>
+            @if ($cumpleaños->count() != 0)
+                <div class="card-body">
+                    <h3 class="title-card-portal-c mt-5">Cumpleaños</h3>
 
-                <div class="carrusel-portal carr-port-cumple">
-                    <button onclick="carruselPortal('retreat');">
-                        <i class="material-symbols-outlined">arrow_back_ios</i>
-                    </button>
-                    <div class="caja-items-carrusel-portal">
-                        @forelse($cumpleaños as $cumple)
-                            <div class="item-carrusel-portal">
-                                <div class="img-person ml-3" style="width: 80px; min-width: 80px; height: 80px;">
-                                    <img src="{{ $cumple->avatar_ruta }}" alt="">
+                    <div class="carrusel-portal carr-port-cumple">
+                        <button onclick="carruselPortal('retreat');">
+                            <i class="material-symbols-outlined">arrow_back_ios</i>
+                        </button>
+                        <div class="caja-items-carrusel-portal">
+                            @forelse($cumpleaños as $cumple)
+                                <div class="item-carrusel-portal">
+                                    <div class="img-person ml-3" style="width: 80px; min-width: 80px; height: 80px;">
+                                        <img src="{{ $cumple->avatar_ruta }}" alt="">
+                                    </div>
+                                    <div style="width: 100%">
+                                        <span class="title-item-carr-port">{{ $cumple->name }} </span> <br>
+                                        <p>
+                                            {{ $cumple->puesto }} <br>
+                                            {{ $cumple->area->area }}
+                                            <br>
+                                            <br>
+                                            @php
+                                                $meses = [
+                                                    'Enero',
+                                                    'Febrero',
+                                                    'Marzo',
+                                                    'Abril',
+                                                    'Mayo',
+                                                    'Junio',
+                                                    'Julio',
+                                                    'Agosto',
+                                                    'Septiembre',
+                                                    'Octubre',
+                                                    'Noviembre',
+                                                    'Diciembre',
+                                                ];
+                                                $fecha = \Carbon\Carbon::createFromFormat('Y-m-d', $cumple->cumpleaños);
+                                                $mes = $meses[$fecha->format('n') - 1];
+                                                $inputs['Fecha'] = $fecha->format('d') . ' de ' . $mes;
+                                            @endphp
+                                            <strong> Fecha de cumpleaños </strong> <br>
+                                            {{ $inputs['Fecha'] }}
+                                        </p>
+                                    </div>
+                                    <div>
+                                        {{-- <i class="material-symbols-outlined" style="font-size: 50px;">thumb_up</i> --}}
+                                    </div>
+                                    <img src="{{ asset('img/example-remove/cumple_portal.png') }}" alt=""
+                                        class="cumple-img-portal">
                                 </div>
-                                <div style="width: 100%">
-                                    <span class="title-item-carr-port">{{ $cumple->name }} </span> <br>
-                                    <p>
-                                        {{ $cumple->puesto }} <br>
-                                        {{ $cumple->area->area }}
-                                        <br>
-                                        <br>
-                                        @php
-                                            $meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-                                            $fecha = \Carbon\Carbon::createFromFormat('Y-m-d', $cumple->cumpleaños);
-                                            $mes = $meses[$fecha->format('n') - 1];
-                                            $inputs['Fecha'] = $fecha->format('d') . ' de ' . $mes;
-                                        @endphp
-                                        <strong> Fecha de cumpleaños </strong> <br>
-                                        {{ $inputs['Fecha'] }}
-                                    </p>
-                                </div>
-                                <div>
-                                    {{-- <i class="material-symbols-outlined" style="font-size: 50px;">thumb_up</i> --}}
-                                </div>
-                                <img src="{{ asset('img/example-remove/cumple_portal.png') }}" alt=""
-                                    class="cumple-img-portal">
-                            </div>
 
-                        @endforeach
+                            @endforeach
+                        </div>
+                        <button onclick="carruselPortal('advance');">
+                            <i class="material-symbols-outlined">arrow_forward_ios</i>
+                        </button>
                     </div>
-                    <button onclick="carruselPortal('advance');">
-                        <i class="material-symbols-outlined">arrow_forward_ios</i>
-                    </button>
                 </div>
-            </div>
+            @endif
         @endif
     </div>
     <div style="height: 100px;"></div>
@@ -512,6 +531,38 @@
     <script src="{{ asset('js/calendar-comunicado.js') }}"></script>
     <script src="{{ asset('js/calendario-comunicacion.js') }}"></script>
 
+    <script>
+        function boletin(id) {
+            $('.caja-img-carrusel-vertical .item-main-carrusel').removeClass('active');
+            $('#' + id).addClass('active');
+        }
+
+        function commuteBoletin() {
+            let activeItem = document.querySelector('.caja-img-carrusel-vertical .item-main-carrusel.active');
+            let nextItem = activeItem.nextElementSibling;
+            $('.caja-img-carrusel-vertical .item-main-carrusel').removeClass('active');
+            if (nextItem != null) {
+                nextItem.classList.add('active');
+            } else {
+                document.querySelector('.caja-img-carrusel-vertical').firstElementChild.classList.add('active');
+            }
+            let itemMenuTop = document.querySelector('[data-id="' + nextItem.id + '"]').offsetTop;
+            console.log(itemMenuTop)
+            document.querySelector('.menu-carrusel-vertical').offsetTop = itemMenuTop;
+        }
+
+        function intervalBoletin() {
+            setInterval(() => {
+                commuteBoletin();
+            }, 15000);
+        }
+        commuteBoletin();
+
+
+        document.addEventListener("DOMContentLoaded", () => {
+            intervalBoletin();
+        });
+    </script>
     <script>
         let currentTime = new Date();
         let options = {
@@ -538,11 +589,6 @@
 
         // Mostrar la fecha en la consola
         document.getElementById('fecha-completa').innerHTML = fechaHumana;
-
-        function boletin(id) {
-            $('.caja-img-carrusel-vertical .item-main-carrusel').addClass('d-none');
-            $('#' + id).removeClass('d-none');
-        }
 
         function carruselPortal(tipo) {
             if (tipo == 'advance') {
@@ -581,5 +627,42 @@
                 }
             });
         });
+    </script>
+    <script>
+        /*SEARCH BY USING A CITY NAME (e.g. athens) OR A COMMA-SEPARATED CITY NAME ALONG WITH THE COUNTRY CODE (e.g. athens,gr)*/
+        /*SUBSCRIBE HERE FOR API KEY: https://home.openweathermap.org/users/sign_up*/
+        const apiKey = "4d8fb5b93d4af21d66a2948710284366";
+        let city = 'Mexico';
+        const url =
+            `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric&lang=es`;
+
+        obtenerClima(url);
+
+        async function obtenerClima(url) {
+            let api = await fetch(url);
+            let response = await api.json();
+            let climaContenedor = document.getElementById('clima');
+            const icon = `https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/${response.weather[0]["icon"]}.svg`;
+            climaContenedor.innerHTML = `
+            <p class="" style="text-align:left; margin:0;">
+                <i class="fas fa-globe-americas" style="font-size:;"></i>
+                ${response.name}
+            </p>
+            <div style="text-align:left; margin:0 ; display:inline-block;">
+                <div style="font-size:7pt; width:100px; text-align:left; float:left;">
+                    <img src="${icon}" style="width:40px; margin-top:-13px;">
+                    <strong style="font-size: 27px;">${Math.ceil(response.main.temp)}</strong>
+                    <span style="font-size:12px">°C</span>
+                </div>
+                <div style="font-size:7pt; width:90px; text-align:left; margin-top: 5px; float:left; text-transform: capitalize;">
+                    <strong>${response.weather[0]["description"]}</strong> <br>
+                    ${Math.ceil(response.main.temp_max)}<sup>°</sup>/
+                    ${Math.ceil(response.main.temp_min)}<sup>°</sup>
+                    Temp.${Math.ceil(response.main.feels_like)}<sup>°C</sup>
+                </div>
+            </div>
+        `;
+            console.log(response);
+        }
     </script>
 @endsection
