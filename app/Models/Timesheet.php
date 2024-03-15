@@ -36,7 +36,9 @@ class Timesheet extends Model implements Auditable
 
     public static function getPersonalTimesheetQuery()
     {
-        return self::where('empleado_id', auth()->user()->empleado->id);
+        $user = auth()->user();
+
+        return self::orderBy('id', 'desc')->where('empleado_id', $user->empleado_id);
     }
 
     public static function getPersonalTimesheet()
@@ -47,7 +49,7 @@ class Timesheet extends Model implements Auditable
     public static function getAll()
     {
         return Cache::remember('Timesheet:timesheet_all', now()->addHours(4), function () {
-            return self::orderBy('created_at', 'desc')->get();
+            return self::orderBy('id', 'desc')->get();
         });
     }
 

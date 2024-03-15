@@ -5,7 +5,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 10.45.1.
+ * Generated for Laravel 10.48.2.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -6273,12 +6273,12 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $target
          * @param string $link
-         * @return void 
+         * @return bool|null 
          * @static 
          */        public static function link($target, $link)
         {
                         /** @var \Illuminate\Filesystem\Filesystem $instance */
-                        $instance->link($target, $link);
+                        return $instance->link($target, $link);
         }
                     /**
          * Create a relative symlink to the target file or directory.
@@ -16720,16 +16720,22 @@ namespace Barryvdh\DomPDF\Facade {
             /**
      * 
      *
-     * @method static \Barryvdh\DomPDF\PDF setPaper($paper, $orientation = 'portrait')
-     * @method static \Barryvdh\DomPDF\PDF setBaseHost(string $baseHost)
-     * @method static \Barryvdh\DomPDF\PDF setProtocol(string $protocol)
-     * @method static \Barryvdh\DomPDF\PDF setHttpContext($httpContext)
-     * @method static \Barryvdh\DomPDF\PDF setCallbacks(array $callbacks)
+     * @method static BasePDF setBaseHost(string $baseHost)
+     * @method static BasePDF setBasePath(string $basePath)
+     * @method static BasePDF setCanvas(\Dompdf\Canvas $canvas)
+     * @method static BasePDF setCallbacks(array $callbacks)
+     * @method static BasePDF setCss(\Dompdf\Css\Stylesheet $css)
+     * @method static BasePDF setDefaultView(string $defaultView, array $options)
+     * @method static BasePDF setDom(\DOMDocument $dom)
+     * @method static BasePDF setFontMetrics(\Dompdf\FontMetrics $fontMetrics)
+     * @method static BasePDF setHttpContext(resource|array $httpContext)
+     * @method static BasePDF setPaper(string|float[] $paper, string $orientation = 'portrait')
+     * @method static BasePDF setProtocol(string $protocol)
+     * @method static BasePDF setTree(\Dompdf\Frame\FrameTree $tree)
      */        class Pdf {
                     /**
          * Get the DomPDF instance
          *
-         * @return \Dompdf\Dompdf 
          * @static 
          */        public static function getDomPDF()
         {
@@ -16768,7 +16774,6 @@ namespace Barryvdh\DomPDF\Facade {
          * Add metadata info
          *
          * @param array<string, string> $info
-         * @return static 
          * @static 
          */        public static function addInfo($info)
         {
@@ -16792,7 +16797,6 @@ namespace Barryvdh\DomPDF\Facade {
          *
          * @param array<string, mixed>|string $attribute
          * @param null|mixed $value
-         * @return \Barryvdh\DomPDF\PDF 
          * @static 
          */        public static function setOption($attribute, $value = null)
         {
@@ -16802,7 +16806,6 @@ namespace Barryvdh\DomPDF\Facade {
                     /**
          * Replace all the Options from DomPDF
          *
-         * @deprecated Use setOption to override individual options.
          * @param array<string, mixed> $options
          * @static 
          */        public static function setOptions($options)
@@ -16876,16 +16879,22 @@ namespace Barryvdh\DomPDF\Facade {
             /**
      * 
      *
-     * @method static \Barryvdh\DomPDF\PDF setPaper($paper, $orientation = 'portrait')
-     * @method static \Barryvdh\DomPDF\PDF setBaseHost(string $baseHost)
-     * @method static \Barryvdh\DomPDF\PDF setProtocol(string $protocol)
-     * @method static \Barryvdh\DomPDF\PDF setHttpContext($httpContext)
-     * @method static \Barryvdh\DomPDF\PDF setCallbacks(array $callbacks)
+     * @method static BasePDF setBaseHost(string $baseHost)
+     * @method static BasePDF setBasePath(string $basePath)
+     * @method static BasePDF setCanvas(\Dompdf\Canvas $canvas)
+     * @method static BasePDF setCallbacks(array $callbacks)
+     * @method static BasePDF setCss(\Dompdf\Css\Stylesheet $css)
+     * @method static BasePDF setDefaultView(string $defaultView, array $options)
+     * @method static BasePDF setDom(\DOMDocument $dom)
+     * @method static BasePDF setFontMetrics(\Dompdf\FontMetrics $fontMetrics)
+     * @method static BasePDF setHttpContext(resource|array $httpContext)
+     * @method static BasePDF setPaper(string|float[] $paper, string $orientation = 'portrait')
+     * @method static BasePDF setProtocol(string $protocol)
+     * @method static BasePDF setTree(\Dompdf\Frame\FrameTree $tree)
      */        class Pdf {
                     /**
          * Get the DomPDF instance
          *
-         * @return \Dompdf\Dompdf 
          * @static 
          */        public static function getDomPDF()
         {
@@ -16924,7 +16933,6 @@ namespace Barryvdh\DomPDF\Facade {
          * Add metadata info
          *
          * @param array<string, string> $info
-         * @return static 
          * @static 
          */        public static function addInfo($info)
         {
@@ -16948,7 +16956,6 @@ namespace Barryvdh\DomPDF\Facade {
          *
          * @param array<string, mixed>|string $attribute
          * @param null|mixed $value
-         * @return \Barryvdh\DomPDF\PDF 
          * @static 
          */        public static function setOption($attribute, $value = null)
         {
@@ -16958,7 +16965,6 @@ namespace Barryvdh\DomPDF\Facade {
                     /**
          * Replace all the Options from DomPDF
          *
-         * @deprecated Use setOption to override individual options.
          * @param array<string, mixed> $options
          * @static 
          */        public static function setOptions($options)
@@ -18861,6 +18867,21 @@ namespace RealRashid\SweetAlert\Facades {
                         return $instance->html($title, $code, $icon);
         }
                     /**
+         * Display an html typed alert message which is generated from a view
+         *
+         * @param string $title
+         * @param string $view
+         * @param array $data
+         * @param array $mergeData
+         * @param string $icon
+         * @author Keller Martin <kellerjmrtn@gmail.com>
+         * @static 
+         */        public static function view($title, $view, $data = [], $mergeData = [], $icon = '')
+        {
+                        /** @var \RealRashid\SweetAlert\Toaster $instance */
+                        return $instance->view($title, $view, $data, $mergeData, $icon);
+        }
+                    /**
          * Display a toast message
          *
          * @param string $title
@@ -19793,7 +19814,6 @@ namespace Sentry\Laravel {
          * Calls the given callback passing to it the current scope so that any
          * operation can be run within its context.
          *
-         * @param callable $callback The callback to be executed
          * @static 
          */        public static function configureScope($callback)
         {
@@ -19803,7 +19823,6 @@ namespace Sentry\Laravel {
                     /**
          * Binds the given client to the current scope.
          *
-         * @param \Sentry\ClientInterface $client The client
          * @static 
          */        public static function bindClient($client)
         {
@@ -19813,9 +19832,6 @@ namespace Sentry\Laravel {
                     /**
          * Captures a message event and sends it to Sentry.
          *
-         * @param string $message The message
-         * @param \Sentry\Severity|null $level The severity level of the message
-         * @param \Sentry\EventHint|null $hint Object that can contain additional information about the event
          * @static 
          */        public static function captureMessage($message, $level = null, $hint = null)
         {
@@ -19825,8 +19841,6 @@ namespace Sentry\Laravel {
                     /**
          * Captures an exception event and sends it to Sentry.
          *
-         * @param \Throwable $exception The exception
-         * @param \Sentry\EventHint|null $hint Object that can contain additional information about the event
          * @static 
          */        public static function captureException($exception, $hint = null)
         {
@@ -19836,8 +19850,6 @@ namespace Sentry\Laravel {
                     /**
          * Captures a new event using the provided data.
          *
-         * @param \Event $event The event being captured
-         * @param \Sentry\EventHint|null $hint May contain additional information about the event
          * @static 
          */        public static function captureEvent($event, $hint = null)
         {
@@ -19847,7 +19859,6 @@ namespace Sentry\Laravel {
                     /**
          * Captures an event that logs the last occurred error.
          *
-         * @param \Sentry\EventHint|null $hint Object that can contain additional information about the event
          * @static 
          */        public static function captureLastError($hint = null)
         {
@@ -19855,8 +19866,9 @@ namespace Sentry\Laravel {
                         return $instance->captureLastError($hint);
         }
                     /**
-         * {@inheritdoc}
+         * Captures a check-in.
          *
+         * @param int|float|null $duration
          * @param int|float|null $duration
          * @static 
          */        public static function captureCheckIn($slug, $status, $duration = null, $monitorConfig = null, $checkInId = null)
@@ -19869,8 +19881,6 @@ namespace Sentry\Laravel {
          * will be added to subsequent events to provide more context on user's
          * actions prior to an error or crash.
          *
-         * @param \Sentry\Breadcrumb $breadcrumb The breadcrumb to record
-         * @return bool Whether the breadcrumb was actually added to the current scope
          * @static 
          */        public static function addBreadcrumb($breadcrumb)
         {
@@ -19906,7 +19916,6 @@ namespace Sentry\Laravel {
          * Sentry.
          *
          * @param array<string, mixed> $customSamplingContext Additional context that will be passed to the {@see SamplingContext}
-         * @param \Sentry\Tracing\TransactionContext $context Properties of the new transaction
          * @param array<string, mixed> $customSamplingContext Additional context that will be passed to the {@see SamplingContext}
          * @static 
          */        public static function startTransaction($context, $customSamplingContext = [])
@@ -19926,7 +19935,6 @@ namespace Sentry\Laravel {
                     /**
          * Sets the span on the Hub.
          *
-         * @param \Sentry\Tracing\Span|null $span The span
          * @static 
          */        public static function setSpan($span)
         {
@@ -20806,6 +20814,29 @@ namespace Illuminate\Testing {
             }
     }
 
+namespace Illuminate\Console\Scheduling {
+            /**
+     * 
+     *
+     */        class Event {
+                    /**
+         * 
+         *
+         * @see \Sentry\Laravel\Features\ConsoleIntegration::onBoot()
+         * @param string|null $monitorSlug
+         * @param int|null $checkInMargin
+         * @param int|null $maxRuntime
+         * @param bool $updateMonitorConfig
+         * @param int|null $failureIssueThreshold
+         * @param int|null $recoveryThreshold
+         * @static 
+         */        public static function sentryMonitor($monitorSlug = null, $checkInMargin = null, $maxRuntime = null, $updateMonitorConfig = true, $failureIssueThreshold = null, $recoveryThreshold = null)
+        {
+                        return \Illuminate\Console\Scheduling\Event::sentryMonitor($monitorSlug, $checkInMargin, $maxRuntime, $updateMonitorConfig, $failureIssueThreshold, $recoveryThreshold);
+        }
+            }
+    }
+
 namespace Chelout\RelationshipEvents {
             /**
      * Class BelongsTo.
@@ -21014,27 +21045,6 @@ namespace Illuminate\View {
          */        public static function slot($slot)
         {
                         return \Illuminate\View\View::slot($slot);
-        }
-            }
-    }
-
-namespace Illuminate\Console\Scheduling {
-            /**
-     * 
-     *
-     */        class Event {
-                    /**
-         * 
-         *
-         * @see \Sentry\Laravel\Features\ConsoleIntegration::onBoot()
-         * @param string|null $monitorSlug
-         * @param int|null $checkInMargin
-         * @param int|null $maxRuntime
-         * @param bool $updateMonitorConfig
-         * @static 
-         */        public static function sentryMonitor($monitorSlug = null, $checkInMargin = null, $maxRuntime = null, $updateMonitorConfig = true)
-        {
-                        return \Illuminate\Console\Scheduling\Event::sentryMonitor($monitorSlug, $checkInMargin, $maxRuntime, $updateMonitorConfig);
         }
             }
     }
@@ -22702,7 +22712,7 @@ namespace  {
              * Add a join clause to the query.
              *
              * @param \Illuminate\Contracts\Database\Query\Expression|string $table
-             * @param \Closure|string $first
+             * @param \Closure|\Illuminate\Contracts\Database\Query\Expression|string $first
              * @param string|null $operator
              * @param \Illuminate\Contracts\Database\Query\Expression|string|null $second
              * @param string $type
@@ -22718,7 +22728,7 @@ namespace  {
              * Add a "join where" clause to the query.
              *
              * @param \Illuminate\Contracts\Database\Query\Expression|string $table
-             * @param \Closure|string $first
+             * @param \Closure|\Illuminate\Contracts\Database\Query\Expression|string $first
              * @param string $operator
              * @param \Illuminate\Contracts\Database\Query\Expression|string $second
              * @param string $type
@@ -22734,7 +22744,7 @@ namespace  {
              *
              * @param \Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder|string $query
              * @param string $as
-             * @param \Closure|string $first
+             * @param \Closure|\Illuminate\Contracts\Database\Query\Expression|string $first
              * @param string|null $operator
              * @param \Illuminate\Contracts\Database\Query\Expression|string|null $second
              * @param string $type
@@ -22748,10 +22758,35 @@ namespace  {
                                 return $instance->joinSub($query, $as, $first, $operator, $second, $type, $where);
             }
                             /**
+             * Add a lateral join clause to the query.
+             *
+             * @param \Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder|string $query
+             * @param string $as
+             * @param string $type
+             * @return \Illuminate\Database\Query\Builder 
+             * @static 
+             */            public static function joinLateral($query, $as, $type = 'inner')
+            {
+                                /** @var \Illuminate\Database\Query\Builder $instance */
+                                return $instance->joinLateral($query, $as, $type);
+            }
+                            /**
+             * Add a lateral left join to the query.
+             *
+             * @param \Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder|string $query
+             * @param string $as
+             * @return \Illuminate\Database\Query\Builder 
+             * @static 
+             */            public static function leftJoinLateral($query, $as)
+            {
+                                /** @var \Illuminate\Database\Query\Builder $instance */
+                                return $instance->leftJoinLateral($query, $as);
+            }
+                            /**
              * Add a left join to the query.
              *
              * @param \Illuminate\Contracts\Database\Query\Expression|string $table
-             * @param \Closure|string $first
+             * @param \Closure|\Illuminate\Contracts\Database\Query\Expression|string $first
              * @param string|null $operator
              * @param \Illuminate\Contracts\Database\Query\Expression|string|null $second
              * @return \Illuminate\Database\Query\Builder 
@@ -22765,7 +22800,7 @@ namespace  {
              * Add a "join where" clause to the query.
              *
              * @param \Illuminate\Contracts\Database\Query\Expression|string $table
-             * @param \Closure|string $first
+             * @param \Closure|\Illuminate\Contracts\Database\Query\Expression|string $first
              * @param string $operator
              * @param \Illuminate\Contracts\Database\Query\Expression|string|null $second
              * @return \Illuminate\Database\Query\Builder 
@@ -22780,7 +22815,7 @@ namespace  {
              *
              * @param \Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder|string $query
              * @param string $as
-             * @param \Closure|string $first
+             * @param \Closure|\Illuminate\Contracts\Database\Query\Expression|string $first
              * @param string|null $operator
              * @param \Illuminate\Contracts\Database\Query\Expression|string|null $second
              * @return \Illuminate\Database\Query\Builder 
@@ -22808,7 +22843,7 @@ namespace  {
              * Add a "right join where" clause to the query.
              *
              * @param \Illuminate\Contracts\Database\Query\Expression|string $table
-             * @param \Closure|string $first
+             * @param \Closure|\Illuminate\Contracts\Database\Query\Expression|string $first
              * @param string $operator
              * @param \Illuminate\Contracts\Database\Query\Expression|string $second
              * @return \Illuminate\Database\Query\Builder 
@@ -22823,7 +22858,7 @@ namespace  {
              *
              * @param \Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder|string $query
              * @param string $as
-             * @param \Closure|string $first
+             * @param \Closure|\Illuminate\Contracts\Database\Query\Expression|string $first
              * @param string|null $operator
              * @param \Illuminate\Contracts\Database\Query\Expression|string|null $second
              * @return \Illuminate\Database\Query\Builder 
@@ -22837,7 +22872,7 @@ namespace  {
              * Add a "cross join" clause to the query.
              *
              * @param \Illuminate\Contracts\Database\Query\Expression|string $table
-             * @param \Closure|string|null $first
+             * @param \Closure|\Illuminate\Contracts\Database\Query\Expression|string|null $first
              * @param string|null $operator
              * @param \Illuminate\Contracts\Database\Query\Expression|string|null $second
              * @return \Illuminate\Database\Query\Builder 
@@ -22888,7 +22923,7 @@ namespace  {
                             /**
              * Add a "where" clause comparing two columns to the query.
              *
-             * @param string|array $first
+             * @param \Illuminate\Contracts\Database\Query\Expression|string|array $first
              * @param string|null $operator
              * @param string|null $second
              * @param string|null $boolean
@@ -22902,7 +22937,7 @@ namespace  {
                             /**
              * Add an "or where" clause comparing two columns to the query.
              *
-             * @param string|array $first
+             * @param \Illuminate\Contracts\Database\Query\Expression|string|array $first
              * @param string|null $operator
              * @param string|null $second
              * @return \Illuminate\Database\Query\Builder 
@@ -23607,6 +23642,60 @@ namespace  {
             {
                                 /** @var \Illuminate\Database\Query\Builder $instance */
                                 return $instance->orWhereFullText($columns, $value, $options);
+            }
+                            /**
+             * Add a "where" clause to the query for multiple columns with "and" conditions between them.
+             *
+             * @param string[] $columns
+             * @param mixed $operator
+             * @param mixed $value
+             * @param string $boolean
+             * @return \Illuminate\Database\Query\Builder 
+             * @static 
+             */            public static function whereAll($columns, $operator = null, $value = null, $boolean = 'and')
+            {
+                                /** @var \Illuminate\Database\Query\Builder $instance */
+                                return $instance->whereAll($columns, $operator, $value, $boolean);
+            }
+                            /**
+             * Add an "or where" clause to the query for multiple columns with "and" conditions between them.
+             *
+             * @param string[] $columns
+             * @param string $operator
+             * @param mixed $value
+             * @return \Illuminate\Database\Query\Builder 
+             * @static 
+             */            public static function orWhereAll($columns, $operator = null, $value = null)
+            {
+                                /** @var \Illuminate\Database\Query\Builder $instance */
+                                return $instance->orWhereAll($columns, $operator, $value);
+            }
+                            /**
+             * Add an "where" clause to the query for multiple columns with "or" conditions between them.
+             *
+             * @param string[] $columns
+             * @param string $operator
+             * @param mixed $value
+             * @param string $boolean
+             * @return \Illuminate\Database\Query\Builder 
+             * @static 
+             */            public static function whereAny($columns, $operator = null, $value = null, $boolean = 'and')
+            {
+                                /** @var \Illuminate\Database\Query\Builder $instance */
+                                return $instance->whereAny($columns, $operator, $value, $boolean);
+            }
+                            /**
+             * Add an "or where" clause to the query for multiple columns with "or" conditions between them.
+             *
+             * @param string[] $columns
+             * @param string $operator
+             * @param mixed $value
+             * @return \Illuminate\Database\Query\Builder 
+             * @static 
+             */            public static function orWhereAny($columns, $operator = null, $value = null)
+            {
+                                /** @var \Illuminate\Database\Query\Builder $instance */
+                                return $instance->orWhereAny($columns, $operator, $value);
             }
                             /**
              * Add a "group by" clause to the query.

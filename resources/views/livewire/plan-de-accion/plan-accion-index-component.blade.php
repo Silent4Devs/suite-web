@@ -21,6 +21,40 @@
         vertical-align: middle !important;
     }
 
+    .dataTables_length select {
+        width: auto !important;
+        padding: 4px !important;
+        border-radius: 4px !important;
+        border: 1px solid var(--unnamed-color-b5b5b5) !important;
+        border: 1px solid #B5B5B5 !important;
+        border-radius: 5px !important;
+        opacity: 1 !important;
+    }
+
+    /* Estilos personalizados para el paginado */
+    .dataTables_wrapper .dataTables_paginate .paginate_button {
+        padding: 0px 1px !important;
+        margin: 0px !important;
+        background-color: none !important;
+        color: #AAAAAA !important;
+        border: none !important;
+        border-radius: 4px !important;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+        background-color: #0056b3 !important;
+        color: #fff !important;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+        background-color: #0056b3 !important;
+        color: #fff !important;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .ellipsis {
+        display: none !important;
+    }
+
     .planesTrabajoTitle {
         justify-content: left;
         color: #5A5A5A;
@@ -145,28 +179,12 @@
     color: #fff !important;
     }
 </style>
-<div>
+<div class="table-plan-acc-index">
     <div style="align-items: end">
         <div class="col-12">
             <div class="planesTrabajoTitle">
                 <p class="m-0">Planes de trabajo</p>
             </div>
-            {{-- <div class="row">
-                <div class="col-4">
-                    <div class="rowMostrado">
-                        <form class="form-inline">
-                            <label class="my-1 mr-2" for="perPageSelect">Mostrando</label>
-                            <select class="custom-select my-1 mr-sm-2" id="perPageSelectPer" wire:model.lazy="perPage">
-                                <option selected>selecione una opcion</option>
-                                <option value="10">10</option>
-                                <option value="25">25</option>
-                                <option value="50">50</option>
-                                <option value="100">100</option>
-                            </select>
-                        </form>
-                    </div>
-                </div>
-            </div> --}}
         </div>
     </div>
     <div class="card-body datatable-fix">
@@ -175,14 +193,13 @@
                 <thead class="thead-dark">
                     <tr>
                         <th style="min-width:150px;">Nombre</th>
-                        {{-- <th style="min-width:100px;">Norma</th> --}}
-                        <th style="min-width:200px;">Módulo de Origen </th>
+                        <th style="min-width:145px;">Módulo de Origen </th>
                         <th style="min-width:200px;">Objetivo</th>
                         <th style="min-width:20px; text-align: center;">Elaboró</th>
-                        <th style="min-width:70px; text-align: center;">%Avance</th>
+                        <th style="min-width:70px; text-align: center;">% Avance</th>
                         <th style="min-width:100px; text-align: center;">Fecha de Inicio</th>
                         <th style="min-width:80px; text-align: center;">Fecha de Fin</th>
-                        <th style="min-width:150px; text-align: center;">Estatus</th>
+                        {{-- <th style="min-width:150px; text-align: center;">Estatus</th> --}}
                         <th>Opciones</th>
                     </tr>
                 </thead>
@@ -190,9 +207,8 @@
                     @foreach ($planImplementacions as $plan)
                         <tr class="tablebody">
                             <td>{{ $plan->parent }}</td>
-                            {{-- <td>{{ $plan->norma }}</td> --}}
                             <td>{{ $plan->modulo_origen }}</td>
-                            <td>{{ $plan->objetivo }}</td>
+                            <td style="text-align: justify;">{{ $plan->objetivo }}</td>
                             <td>
                                 @if ($plan->elaboro_id)
                                     <div class="person">
@@ -202,7 +218,6 @@
                                 @else
                                     <span class="badge badge-primary">Elaborado por el sistema</span>
                                 @endif
-
                             </td>
                             <td>
                                 @if (isset($plan->tasks) && count($plan->tasks) > 0)
@@ -220,11 +235,13 @@
                                             echo '<div class="bageDiv"><div class="danger">' . $progress . '%</div></div>';
                                         }
                                     } else {
-                                        echo '<span class="badge badge-primary">Sin progreso calculable</span>';
+                                        echo '<div class="bageDiv"><div class="danger">' . 0 . '%</div></div>';
                                     }
                                     ?>
                                 @else
-                                    <span class="badge badge-primary">Sin progreso calculable</span>
+                                    <div class="bageDiv">
+                                        <div class="danger">0%</div>
+                                    </div>
                                 @endif
                             </td>
                             <td>
@@ -234,13 +251,13 @@
                                         return $task->level == 0;
                                     });
                                     if ($zero_task) {
-                                        echo date('d-m-Y', $zero_task->start / 1000);
+                                        echo '<div style="display: flex;justify-content: center;">' . date('d-m-Y', $zero_task->start / 1000) . '</div>';
                                     } else {
                                         echo date('d-m-Y');
                                     }
                                     ?>
                                 @else
-                                    <span class="badge badge-primary">No encontrado</span>
+                                    <span style="display: flex;justify-content: center;">S/N</span>
                                 @endif
                             </td>
                             <td>
@@ -250,16 +267,16 @@
                                         return $task->level == 0;
                                     });
                                     if ($zero_task) {
-                                        echo date('d-m-Y', $zero_task->end / 1000);
+                                        echo '<div style="display: flex;justify-content: center;">' . date('d-m-Y', $zero_task->start / 1000) . '</div>';
                                     } else {
                                         echo '<span class="badge badge-primary">No encontrado</span>';
                                     }
                                     ?>
                                 @else
-                                    <span class="badge badge-primary">No encontrado</span>
+                                    <span style="display: flex;justify-content: center;">S/N</span>
                                 @endif
                             </td>
-                            <td>
+                            {{-- <td>
                                 @if (isset($plan->tasks) && count($plan->tasks) > 0)
                                     <?php
                                     $zero_task = collect($plan->tasks)->first(function ($task) {
@@ -290,7 +307,7 @@
                                         <div class="STATUS_SUSPENDED-estatusColor">Desconocido</div>
                                     </div>
                                 @endif
-                            </td>
+                            </td> --}}
                             <td>
                                 <?php
                                 $urlVerPlanAccion = '';
@@ -304,7 +321,8 @@
                                 $urlVerPlanAccion = $plan->id == 1 ? route('admin.planTrabajoBase.index') : route('admin.planes-de-accion.show', $plan->id);
                                 ?>
 
-                                <div class="dropdown">
+                                <div class="dropdown"
+                                    style="display: flex;justify-content: center;justify-items: center;">
                                     <button class="btn btn-option" type="button" id="dropdownMenuButton"
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="fas fa-ellipsis-v"></i>
@@ -352,6 +370,7 @@
         </div>
     </div>
 </div>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
@@ -359,12 +378,7 @@
         var table = $('#tblPlanesAccion').DataTable({
             // Personaliza la paginación
             "language": {
-                "paginate": {
-                    "first": "Primero",
-                    "last": "Último",
-                    "next": "Siguiente",
-                    "previous": "Anterior"
-                }
+                "url": "{{ asset('js/Spanish.json') }}"
             }
         });
         $('#perPageSelectPer').change(function() {

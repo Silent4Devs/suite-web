@@ -1705,6 +1705,7 @@ Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'name
     Route::resource('compradores', 'CompradoresController');
     Route::post('compradores/archivar/{id}', 'CompradoresController@archivar')->name('compradores.archivar');
     Route::post('compradores/list/get', 'CompradoresController@getCompradoresIndex')->name('compradores.getCompradoresIndex');
+    Route::post('compradores/pdf', 'CompradoresController@pdfCompradores')->name('compradores.pdf');
 
     Route::get('centro-costos/archivados', 'CentroCostosController@view_archivados')->name('centro-costos.view_archivados');
     Route::post('centro-costos/list/get/archivados', 'CentroCostosController@getArchivadosIndex')->name('centro-costos.getArchivadosIndex');
