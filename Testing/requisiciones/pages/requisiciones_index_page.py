@@ -69,6 +69,13 @@ class Requisiciones_index:
         select = Select(requisiciones_filtro_btn)
         select.select_by_index(2)
 
+    def requisiciones_searchbar(self, search):
+        search_bar = WebDriverWait(self.driver, 5).until(
+            EC.visibility_of_element_located((By.XPATH, "//input[@type='search' and contains(@class, 'form-control')]"))
+        )
+        search_bar.clear()
+        search_bar.send_keys(search)
+        print("Búsqueda realizada")
 
     def requisiciones_download_csv(self):
         export_csv_btn = WebDriverWait(self.driver, 5).until(

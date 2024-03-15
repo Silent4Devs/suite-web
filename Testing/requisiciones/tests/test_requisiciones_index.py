@@ -15,6 +15,9 @@ def test_contratos(browser):
     requisiciones_index_page.requisiciones_module()
     #FILTRO
     requisiciones_index_page.requisiciones_filtro()
+    #BARRA DE BÚSQUEDA
+    search="TEST"
+    requisiciones_index_page.requisiciones_searchbar(search)
     #CSV
     requisiciones_index_page.requisiciones_download_csv()
     #EXCEL
