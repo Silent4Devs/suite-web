@@ -76,3 +76,10 @@ class Requisiciones_create:
         )
         fecha_solicitud_btn.click()
         fecha_solicitud_btn.send_keys(fecha_solicitud)
+
+    def razon_social(self):
+        razon_social_btn = WebDriverWait(self.driver, 5).until(
+            EC.visibility_of_element_located((By.XPATH, "//select[contains(@name,'sucursal_id')]"))
+        )
+        select = Select(razon_social_btn)
+        select.select_by_index(2)

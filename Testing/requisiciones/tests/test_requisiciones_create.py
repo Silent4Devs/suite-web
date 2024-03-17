@@ -18,3 +18,5 @@ def test_requisiciones_create(browser):
     #FECHA INICIO
     fecha_solicitud = "2022-05-01"
     requisiciones_create_page.fecha_solicitud(fecha_solicitud)
+    #RAZÓN SOCIAL
+    requisiciones_create_page.razon_social()
