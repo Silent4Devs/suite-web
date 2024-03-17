@@ -13,3 +13,5 @@ def test_requisiciones_create(browser):
     requisiciones_create_page.go_to_gestion_contractual()
     #REQUISICIONES
     requisiciones_create_page.requisiciones_module()
+    #REQUSICIONES CREATE
+    requisiciones_create_page.requisiciones_create()

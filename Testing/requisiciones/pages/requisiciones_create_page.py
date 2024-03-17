@@ -62,3 +62,10 @@ class Requisiciones_create:
         requisiciones_btn.click()
         print("Botón de Requisiciones presionado")
         print("URL actual:", self.driver.current_url)
+    def requisiciones_create(self):
+        create_btn = WebDriverWait(self.driver, 5).until(
+            EC.element_to_be_clickable((By.XPATH, "//button[contains(.,'Agregar')]"))
+            )
+        create_btn.click()
+        print("Botón de Crear Requisición presionado")
+        print("URL actual:", self.driver.current_url)
