@@ -83,3 +83,9 @@ class Requisiciones_create:
         )
         select = Select(razon_social_btn)
         select.select_by_index(2)
+
+    def titulo_requisicion(self,titulo_requisicion):
+        titulo_requisicion_btn = WebDriverWait(self.driver, 5).until(
+            EC.visibility_of_element_located((By.XPATH, "//input[@name='descripcion']"))
+        )
+        titulo_requisicion_btn.send_keys(titulo_requisicion)

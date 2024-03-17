@@ -20,3 +20,6 @@ def test_requisiciones_create(browser):
     requisiciones_create_page.fecha_solicitud(fecha_solicitud)
     #RAZÓN SOCIAL
     requisiciones_create_page.razon_social()
+    #TITULO REQUISICIÓN
+    titulo_requisicion = "TEST"
+    requisiciones_create_page.titulo_requisicion(titulo_requisicion)
