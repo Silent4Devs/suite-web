@@ -23,3 +23,5 @@ def test_requisiciones_create(browser):
     #TITULO REQUISICIÓN
     titulo_requisicion = "TEST"
     requisiciones_create_page.titulo_requisicion(titulo_requisicion)
+    #COMPRADOR
+    requisiciones_create_page.comprador()

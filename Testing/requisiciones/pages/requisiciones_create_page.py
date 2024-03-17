@@ -89,3 +89,9 @@ class Requisiciones_create:
             EC.visibility_of_element_located((By.XPATH, "//input[@name='descripcion']"))
         )
         titulo_requisicion_btn.send_keys(titulo_requisicion)
+    def comprador(self):
+        comprador_btn = WebDriverWait(self.driver, 5).until(
+            EC.visibility_of_element_located((By.XPATH, "//select[contains(@name,'comprador_id')]"))
+        )
+        select = Select(comprador_btn)
+        select.select_by_index(1)
