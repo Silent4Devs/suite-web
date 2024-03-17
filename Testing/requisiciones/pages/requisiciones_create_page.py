@@ -69,3 +69,10 @@ class Requisiciones_create:
         create_btn.click()
         print("Botón de Crear Requisición presionado")
         print("URL actual:", self.driver.current_url)
+
+    def fecha_solicitud(self,fecha_solicitud):
+        fecha_solicitud_btn = WebDriverWait(self.driver, 5).until(
+            EC.visibility_of_element_located((By.XPATH, "//input[@name='fecha']"))
+        )
+        fecha_solicitud_btn.click()
+        fecha_solicitud_btn.send_keys(fecha_solicitud)

@@ -15,3 +15,6 @@ def test_requisiciones_create(browser):
     requisiciones_create_page.requisiciones_module()
     #REQUSICIONES CREATE
     requisiciones_create_page.requisiciones_create()
+    #FECHA INICIO
+    fecha_solicitud = "2022-05-01"
+    requisiciones_create_page.fecha_solicitud(fecha_solicitud)
