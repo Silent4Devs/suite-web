@@ -19,7 +19,7 @@
     "jenssegers/date": "^4.0",
     "laragear/preload": "^1.1",
     "laravel/framework": "^10.0",
-    "laravel/passport": "^11.0",
+    "laravel/passport": "^12.0",
     "laravel/sanctum": "^3.3",
     "laravel/ui": "^4.0",
     "laravelcollective/html": "^6.2",
