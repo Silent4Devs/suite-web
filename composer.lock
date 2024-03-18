@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "edb1fc124e7cd5402a74486163ee0ce2",
+    "content-hash": "75d39e1662b7704fceee28c8dc641944",
     "packages": [
         {
             "name": "alexusmai/laravel-file-manager",
@@ -2625,34 +2625,33 @@
         },
         {
             "name": "laragear/preload",
-            "version": "v1.1.0",
+            "version": "v2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Laragear/Preload.git",
-                "reference": "b0fab320793d30e95a748aa07d92991204481190"
+                "reference": "7fb08a4f3db7c77c8af2c5588f1d61bc9d1b79e7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Laragear/Preload/zipball/b0fab320793d30e95a748aa07d92991204481190",
-                "reference": "b0fab320793d30e95a748aa07d92991204481190",
+                "url": "https://api.github.com/repos/Laragear/Preload/zipball/7fb08a4f3db7c77c8af2c5588f1d61bc9d1b79e7",
+                "reference": "7fb08a4f3db7c77c8af2c5588f1d61bc9d1b79e7",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "illuminate/config": "9.*|10.*",
-                "illuminate/console": "9.*|10.*",
-                "illuminate/contracts": "9.*|10.*",
-                "illuminate/events": "9.*|10.*",
-                "illuminate/http": "9.*|10.*",
-                "illuminate/pipeline": "9.*|10.*",
-                "illuminate/queue": "9.*|10.*",
-                "illuminate/support": "9.*|10.*",
-                "php": "8.*",
-                "symfony/finder": "6.*"
+                "illuminate/config": "10.*|11.*",
+                "illuminate/console": "10.*|11.*",
+                "illuminate/contracts": "10.*|11.*",
+                "illuminate/events": "10.*|11.*",
+                "illuminate/http": "10.*|11.*",
+                "illuminate/pipeline": "10.*|11.*",
+                "illuminate/queue": "10.*|11.*",
+                "illuminate/support": "10.*|11.*",
+                "php": "^8.1",
+                "symfony/finder": "6.*|7.*"
             },
             "require-dev": {
-                "jetbrains/phpstorm-attributes": "*",
-                "orchestra/testbench": "^7.22|8.*"
+                "orchestra/testbench": "8.*|9.*"
             },
             "type": "library",
             "extra": {
@@ -2692,7 +2691,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Laragear/Preload/issues",
-                "source": "https://github.com/Laragear/Preload/tree/v1.1.0"
+                "source": "https://github.com/Laragear/Preload/tree/v2.0.0"
             },
             "funding": [
                 {
@@ -2704,7 +2703,7 @@
                     "type": "Paypal"
                 }
             ],
-            "time": "2023-02-21T00:41:22+00:00"
+            "time": "2024-03-06T20:44:20+00:00"
         },
         {
             "name": "laravel/framework",
@@ -3734,16 +3733,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "3.25.0",
+            "version": "3.25.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "4c44347133618cccd9b3df1729647a1577b4ad99"
+                "reference": "abbd664eb4381102c559d358420989f835208f18"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/4c44347133618cccd9b3df1729647a1577b4ad99",
-                "reference": "4c44347133618cccd9b3df1729647a1577b4ad99",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/abbd664eb4381102c559d358420989f835208f18",
+                "reference": "abbd664eb4381102c559d358420989f835208f18",
                 "shasum": ""
             },
             "require": {
@@ -3808,7 +3807,7 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/flysystem/issues",
-                "source": "https://github.com/thephpleague/flysystem/tree/3.25.0"
+                "source": "https://github.com/thephpleague/flysystem/tree/3.25.1"
             },
             "funding": [
                 {
@@ -3820,20 +3819,20 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-03-09T17:06:45+00:00"
+            "time": "2024-03-16T12:53:19+00:00"
         },
         {
             "name": "league/flysystem-local",
-            "version": "3.23.1",
+            "version": "3.25.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem-local.git",
-                "reference": "b884d2bf9b53bb4804a56d2df4902bb51e253f00"
+                "reference": "61a6a90d6e999e4ddd9ce5adb356de0939060b92"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem-local/zipball/b884d2bf9b53bb4804a56d2df4902bb51e253f00",
-                "reference": "b884d2bf9b53bb4804a56d2df4902bb51e253f00",
+                "url": "https://api.github.com/repos/thephpleague/flysystem-local/zipball/61a6a90d6e999e4ddd9ce5adb356de0939060b92",
+                "reference": "61a6a90d6e999e4ddd9ce5adb356de0939060b92",
                 "shasum": ""
             },
             "require": {
@@ -3867,8 +3866,7 @@
                 "local"
             ],
             "support": {
-                "issues": "https://github.com/thephpleague/flysystem-local/issues",
-                "source": "https://github.com/thephpleague/flysystem-local/tree/3.23.1"
+                "source": "https://github.com/thephpleague/flysystem-local/tree/3.25.1"
             },
             "funding": [
                 {
@@ -3880,7 +3878,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-01-26T18:25:23+00:00"
+            "time": "2024-03-15T19:58:44+00:00"
         },
         {
             "name": "league/glide",
@@ -15033,5 +15031,5 @@
         "php": "^8.1"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }
