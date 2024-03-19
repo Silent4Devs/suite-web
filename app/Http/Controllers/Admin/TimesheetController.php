@@ -67,15 +67,20 @@ class TimesheetController extends Controller
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
+        $user = User::getCurrentUser();
+        $empleado = Empleado::where('id', $user->empleado->id)->first();
+        $empleado_name = $empleado->name;
+
         return view('admin.timesheet.mis-registros', compact(
             // 'times',
             // 'rechazos_contador',
             // 'todos_contador',
             // 'borrador_contador',
             // 'pendientes_contador'
+            'empleado_name',
             'logo_actual',
             'empresa_actual',
-            'estatus'
+            'estatus',
         ));
     }
 
