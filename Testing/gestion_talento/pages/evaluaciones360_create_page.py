@@ -132,11 +132,22 @@ class Evaluaciones_360_create_page:
         
         # Boton Competencias
         btn_competencias = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "(//SPAN[@class='checkmark'])[1]")) #Unicamente cambiar el numero 1 a 2 en el xpath en caso de querer agregar Ojetivos
-            )
+            EC.presence_of_element_located((By.XPATH, "(//SPAN[@class='checkmark'])[2]")) #Unicamente cambiar el numero 1 a 2 en el xpath en caso de querer cambiar valor
+            )                                                                             # 1 = Competencias / 2 = Objetivos
         print("Dando click en boton competencias")
         btn_competencias.click()
         
+        time.sleep(tiempo_espera)
+        
+        #En caso de que Boton competencias tenga seleccionado la opcion: Obejtivos / Quitar comentarios de la funcion 
+        #Seleccionar Catalago de Parametros
+        catalogo_parametros=WebDriverWait(self.driver,10).until(
+            EC.presence_of_element_located((By.XPATH, "//SELECT[@id='catalogoObjetivos']"))
+        )
+        catalogo_parametros.click()
+        select = Select(catalogo_parametros)
+        select.select_by_index(1)
+            
         time.sleep(tiempo_espera)
         
         # Boton Siguiente
