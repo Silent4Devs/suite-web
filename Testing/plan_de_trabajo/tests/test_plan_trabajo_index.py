@@ -9,3 +9,5 @@ def test_plan_de_trabajo_index(browser):
     plan_trabajo_index.login("zaid.garcia@becarios.silent4business.com","Administrador2")
     #MENÚ HAMBURGUESA
     plan_trabajo_index.open_menu()
+    #OPCION PLAN DE TRABAJO
+    plan_trabajo_index.plan_trabajo()

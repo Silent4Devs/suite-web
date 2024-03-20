@@ -47,3 +47,8 @@ class PlanTrabajo_index:
         )
         menu_btn.click()
 
+    def plan_trabajo(self):
+        plan_trabajo_btn= WebDriverWait(self.driver, 3).until(
+            EC.element_to_be_clickable((By.XPATH, "//a[contains(.,'Planes de acción')]"))
+        )
+        plan_trabajo_btn.click()
