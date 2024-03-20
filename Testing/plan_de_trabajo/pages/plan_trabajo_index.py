@@ -78,13 +78,19 @@ class PlanTrabajo_index:
         )
         paginado2.click()
 
-
     def plan_trabajo_opciones(self):
         opciones_btn = WebDriverWait(self.driver, 3).until(
             EC.visibility_of_element_located((By.XPATH, "(//button[contains(@class,'btn btn-option')])[1]"))
         )
         opciones_btn.click()
 
+    def plan_trabajo_editar(self):
+        url_ventana_principal = self.driver.current_url
+        url_editar = "https://192.168.9.78/admin/planes-de-accion/11/edit"
+
+        self.driver.execute_script(f"window.open('{url_editar}','_blank');")
+        print("Botón de editar presionado y nueva pestaña abierta en segundo plano")
+        print("URL actual:", url_ventana_principal)
 
 
 
