@@ -245,10 +245,11 @@
                 </div>
                 <div id="sub-tareas">
                     <h6 class="textcomplement"
-                        style="border-bottom: 1px dashed #0000001C;font-size: 18px;padding-top: 20px;">Sub tareas</h6>
+                        style="border-bottom: 1px dashed #0000001C;font-size: 18px;padding-top: 20px;">Subtareas</h6>
                     <div>
                         <div id="task-container">
                             <div class="progress-container">
+                                <div class="progress-label">Progreso: 0%</div>
                                 <div class="progress-bar"></div>
                             </div>
                             <ul id="task-list"></ul>
@@ -575,7 +576,8 @@
                     end,
                     color,
                     subtasks,
-                    resources
+                    resources,
+                    tag
                 } = item;
 
                 const resourcesCount = resources ? resources.length : 0;
