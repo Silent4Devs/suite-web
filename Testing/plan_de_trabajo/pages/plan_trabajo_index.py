@@ -60,3 +60,10 @@ class PlanTrabajo_index:
         select = Select(plan_trabajo_filtro_btn)
         select.select_by_index(1)
 
+    def plan_trabajo_searchbar(self, search):
+        plan_trabajo_searchbar = WebDriverWait(self.driver, 3).until(
+            EC.visibility_of_element_located((By.XPATH, "//input[contains(@class,'form-control form-control-sm')]"))
+        )
+        plan_trabajo_searchbar.clear()
+        plan_trabajo_searchbar.send_keys(search)
+

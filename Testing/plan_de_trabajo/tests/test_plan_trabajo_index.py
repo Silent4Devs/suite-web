@@ -13,3 +13,6 @@ def test_plan_de_trabajo_index(browser):
     plan_trabajo_index.plan_trabajo()
     #FILTRO
     plan_trabajo_index.plan_trabajo_filtro()
+    #BARRA DE BUSQUEDA
+    search="Prueba"
+    plan_trabajo_index.plan_trabajo_searchbar(search)
