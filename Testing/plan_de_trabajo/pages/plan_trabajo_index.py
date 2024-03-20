@@ -67,3 +67,16 @@ class PlanTrabajo_index:
         plan_trabajo_searchbar.clear()
         plan_trabajo_searchbar.send_keys(search)
 
+    def plan_trabajo_paginador(self):
+        paginado1 = WebDriverWait(self.driver, 3).until(
+            EC.visibility_of_element_located((By.XPATH, "//a[contains(.,'1')]"))
+        )
+        paginado1.click()
+
+        paginado2 = WebDriverWait(self.driver, 3).until(
+            EC.visibility_of_element_located((By.XPATH, "//a[contains(.,'2')]"))
+        )
+        paginado2.click()
+        pdb.set_trace()
+
+

@@ -14,5 +14,7 @@ def test_plan_de_trabajo_index(browser):
     #FILTRO
     plan_trabajo_index.plan_trabajo_filtro()
     #BARRA DE BUSQUEDA
-    search="Prueba"
+    search=""
     plan_trabajo_index.plan_trabajo_searchbar(search)
+    #PAGINADO
+    plan_trabajo_index.plan_trabajo_paginador()
