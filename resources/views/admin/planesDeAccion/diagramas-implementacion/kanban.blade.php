@@ -245,10 +245,11 @@
                 </div>
                 <div id="sub-tareas">
                     <h6 class="textcomplement"
-                        style="border-bottom: 1px dashed #0000001C;font-size: 18px;padding-top: 20px;">Sub tareas</h6>
+                        style="border-bottom: 1px dashed #0000001C;font-size: 18px;padding-top: 20px;">Subtareas</h6>
                     <div>
                         <div id="task-container">
                             <div class="progress-container">
+                                <div class="progress-label">Progreso: 0%</div>
                                 <div class="progress-bar"></div>
                             </div>
                             <ul id="task-list"></ul>
@@ -575,7 +576,8 @@
                     end,
                     color,
                     subtasks,
-                    resources
+                    resources,
+                    tag
                 } = item;
 
                 const resourcesCount = resources ? resources.length : 0;
@@ -634,6 +636,40 @@
             document.getElementById('procesoStrong').innerHTML = grupos.progreso.length;
             document.getElementById('retrasadosStrong').innerHTML = grupos.retraso.length;
             document.getElementById('completadosStrong').innerHTML = grupos.completado.length;
+        }
+
+        function guardarDatosmodal(id, nombre, descripcion, inicio, fin, dias, estatus, progreso) {
+            const taskIndex = tasksModel.findIndex(objeto => objeto.id === id);
+            if (taskIndex !== -1) {
+                const updatedTask = {
+                    ...tasksModel[taskIndex],
+                    name: nombre,
+                    progress: progreso.replace('%', ''),
+                    description: descripcion,
+                    status: estatus,
+                    start: inicio,
+                    end: fin,
+                    duration: dias
+                };
+
+                tasksModel[taskIndex] = updatedTask;
+
+                const updatedTasks = [...responseLocal.tasks];
+                updatedTasks[taskIndex] = updatedTask;
+
+                responseLocal.tasks = updatedTasks;
+
+                insertResources(archivosArray, updatedTask);
+                insertTag(listArrayP1, updatedTask);
+                insertSubTasks(subTasks, updatedTask);
+
+                insertPersonas(addedArray, updatedTask)
+
+                saveOnServer(responseLocal);
+                location.reload();
+            } else {
+                console.log('No se encontró ningún objeto con el ID dado.');
+            }
         }
 
         function insertTag(value, tag) {
@@ -780,40 +816,6 @@
             agruparTaks();
             location.reload();
             saveOnServer(responseLocal);
-        }
-
-        function guardarDatosmodal(id, nombre, descripcion, inicio, fin, dias, estatus, progreso) {
-            const taskIndex = tasksModel.findIndex(objeto => objeto.id === id);
-            if (taskIndex !== -1) {
-                const updatedTask = {
-                    ...tasksModel[taskIndex],
-                    name: nombre,
-                    progress: progreso.replace('%', ''),
-                    description: descripcion,
-                    status: estatus,
-                    start: inicio,
-                    end: fin,
-                    duration: dias
-                };
-
-                tasksModel[taskIndex] = updatedTask;
-
-                const updatedTasks = [...responseLocal.tasks];
-                updatedTasks[taskIndex] = updatedTask;
-
-                responseLocal.tasks = updatedTasks;
-
-                insertResources(archivosArray, updatedTask);
-                insertTag(listArrayP1, updatedTask);
-                insertSubTasks(subTasks, updatedTask);
-
-                insertPersonas(addedArray, updatedTask)
-
-                saveOnServer(responseLocal);
-                location.reload();
-            } else {
-                console.log('No se encontró ningún objeto con el ID dado.');
-            }
         }
 
         function saveStatusOnServer(response) {
