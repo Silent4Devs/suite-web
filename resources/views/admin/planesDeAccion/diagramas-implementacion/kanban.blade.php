@@ -636,40 +636,6 @@
             document.getElementById('completadosStrong').innerHTML = grupos.completado.length;
         }
 
-        function guardarDatosmodal(id, nombre, descripcion, inicio, fin, dias, estatus, progreso) {
-            const taskIndex = tasksModel.findIndex(objeto => objeto.id === id);
-            if (taskIndex !== -1) {
-                const updatedTask = {
-                    ...tasksModel[taskIndex],
-                    name: nombre,
-                    progress: progreso.replace('%', ''),
-                    description: descripcion,
-                    status: estatus,
-                    start: inicio,
-                    end: fin,
-                    duration: dias
-                };
-
-                tasksModel[taskIndex] = updatedTask;
-
-                const updatedTasks = [...responseLocal.tasks];
-                updatedTasks[taskIndex] = updatedTask;
-
-                responseLocal.tasks = updatedTasks;
-
-                insertResources(archivosArray, updatedTask);
-                insertTag(listArrayP1, updatedTask);
-                insertSubTasks(subTasks, updatedTask);
-
-                insertPersonas(addedArray, updatedTask)
-
-                saveOnServer(responseLocal);
-                location.reload();
-            } else {
-                console.log('No se encontró ningún objeto con el ID dado.');
-            }
-        }
-
         function insertTag(value, tag) {
             if (!value || value.length === 0) {
                 tag.tag = []; // Si value está vacío, borramos todas las etiquetas
@@ -814,6 +780,40 @@
             agruparTaks();
             location.reload();
             saveOnServer(responseLocal);
+        }
+
+        function guardarDatosmodal(id, nombre, descripcion, inicio, fin, dias, estatus, progreso) {
+            const taskIndex = tasksModel.findIndex(objeto => objeto.id === id);
+            if (taskIndex !== -1) {
+                const updatedTask = {
+                    ...tasksModel[taskIndex],
+                    name: nombre,
+                    progress: progreso.replace('%', ''),
+                    description: descripcion,
+                    status: estatus,
+                    start: inicio,
+                    end: fin,
+                    duration: dias
+                };
+
+                tasksModel[taskIndex] = updatedTask;
+
+                const updatedTasks = [...responseLocal.tasks];
+                updatedTasks[taskIndex] = updatedTask;
+
+                responseLocal.tasks = updatedTasks;
+
+                insertResources(archivosArray, updatedTask);
+                insertTag(listArrayP1, updatedTask);
+                insertSubTasks(subTasks, updatedTask);
+
+                insertPersonas(addedArray, updatedTask)
+
+                saveOnServer(responseLocal);
+                location.reload();
+            } else {
+                console.log('No se encontró ningún objeto con el ID dado.');
+            }
         }
 
         function saveStatusOnServer(response) {
