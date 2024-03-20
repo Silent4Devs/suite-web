@@ -35,7 +35,7 @@ class TimesheetHorasFilas extends Component
     public function mount($origen, $timesheet_id)
     {
         $user = User::getCurrentUser();
-        $empleado = Empleado::where('id', $user->empleado_id)->first();
+        $empleado = Empleado::where('id', $user->empleado->id)->first();
 
         $proyectos_array = collect();
 

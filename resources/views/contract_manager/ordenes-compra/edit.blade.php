@@ -81,7 +81,7 @@
                             Proyecto <font class="asterisco">*</font>
                         </label>
                         <input class="browser-default" disabled
-                            value="{{ $requisicion->contrato->no_proyecto }} / {{ $requisicion->contrato->no_contrato }} - {{ $requisicion->contrato->nombre_servicio }}">
+                            value="{{ isset($requisicion->contrato->no_proyecto) }} / {{ isset($requisicion->contrato->no_contrato) }} - {{ isset($requisicion->contrato->nombre_servicio )}}">
                     </div>
                 </div>
                 <div class="row">

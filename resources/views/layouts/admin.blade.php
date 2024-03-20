@@ -73,7 +73,7 @@
         use App\Models\User;
         use App\Models\Empleado;
         $usuario = User::getCurrentUser();
-        $empleado = Empleado::where('id', $usuario->empleado_id)->first();
+        $empleado = Empleado::where('id', $usuario->empleado->id)->first();
         $organizacion = Organizacion::getLogo();
         if (!is_null($organizacion)) {
             $logotipo = $organizacion->logotipo;

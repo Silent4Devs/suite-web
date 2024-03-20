@@ -14,12 +14,12 @@
                     </div>
 
                     @php
-                    use App\Models\User;
-                    use App\Models\Empleado;
+                        use App\Models\User;
+                        use App\Models\Empleado;
 
-                    $user = User::getCurrentUser();
-                    $empleado = Empleado::where('id', $user->empleado_id)->first();
-                   @endphp
+                        $user = User::getCurrentUser();
+                        $empleado = Empleado::where('id', $user->empleado->id)->first();
+                    @endphp
 
 
 
