@@ -263,7 +263,7 @@ select::-ms-expand {
 }
 
 .view-button {
-    background-image: url('img/plan-trabajo/visibility.svg');
+    background-image: url('../img/plan-trabajo/visibility.svg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
@@ -272,7 +272,7 @@ select::-ms-expand {
 }
 
 .download-button {
-    background-image: url('img/plan-trabajo/download.svg');
+    background-image: url('../img/plan-trabajo/download.svg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
