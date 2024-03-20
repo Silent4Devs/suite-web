@@ -41,11 +41,11 @@ class TimesheetProyecto extends Model implements Auditable
     {
         if (is_null($proyecto_id)) {
             return Cache::remember('TimesheetProyecto:timesheetproyecto_all', 3600 * 4, function () {
-                return self::orderBy('proyecto')->get();
+                return self::orderBy('identificador', 'ASC')->get();
             });
         } else {
-            return Cache::remember('TimesheetProyecto:timesheetproyecto_show_'.$proyecto_id, 3600, function () {
-                return self::orderBy('proyecto')->get();
+            return Cache::remember('TimesheetProyecto:timesheetproyecto_show_' . $proyecto_id, 3600, function () {
+                return self::orderBy('identificador', 'ASC')->get();
             });
         }
     }
@@ -55,6 +55,7 @@ class TimesheetProyecto extends Model implements Auditable
         return Cache::remember('TimesheetProyecto:proyectos_with_tasks', 3600 * 4, function () {
             return self::with('tareas:id,tarea,proyecto_id,area_id,todos')
                 ->select('id', 'proyecto', 'identificador')
+                ->orderBy('identificador', 'ASC')
                 ->get();
         });
     }
@@ -62,8 +63,7 @@ class TimesheetProyecto extends Model implements Auditable
     public static function getAllDashboard()
     {
         return Cache::remember('TimesheetProyecto:proyectos_dashboard', 3600 * 4, function () {
-            return self::select('id', 'proyecto', 'estatus')
-                ->get();
+            return self::select('id', 'proyecto', 'estatus')->get();
         });
     }
 
@@ -71,11 +71,11 @@ class TimesheetProyecto extends Model implements Auditable
     {
         if (is_null($proyecto_id)) {
             return Cache::remember('TimesheetProyecto:timesheetproyecto_all', 3600 * 4, function () {
-                return self::select('id', 'identificador', 'proyecto', 'cliente_id', 'tipo')->orderBy('proyecto')->get();
+                return self::select('id', 'identificador', 'proyecto', 'cliente_id', 'tipo')->orderBy('identificador', 'ASC')->get();
             });
         } else {
-            return Cache::remember('TimesheetProyecto:timesheetproyecto_show_'.$proyecto_id, 3600, function () {
-                return self::select('id', 'identificador', 'proyecto', 'cliente_id', 'tipo')->orderBy('proyecto')->get();
+            return Cache::remember('TimesheetProyecto:timesheetproyecto_show_' . $proyecto_id, 3600, function () {
+                return self::select('id', 'identificador', 'proyecto', 'cliente_id', 'tipo')->orderBy('identificador', 'ASC')->get();
             });
         }
     }
@@ -83,21 +83,21 @@ class TimesheetProyecto extends Model implements Auditable
     public static function getAllOrderByIdentificador()
     {
         return Cache::remember('TimesheetProyecto:timesheetproyecto_all_order_by_identificador', 3600, function () {
-            return self::orderBy('id', 'desc')->get();
+            return self::orderBy('identificador', 'ASC')->get();
         });
     }
 
     public static function getAllWithCliente()
     {
         return Cache::remember('TimesheetProyecto:timesheetproyecto_all_with_cliente', 3600 * 3, function () {
-            return self::with('cliente')->orderBy('id', 'desc')->get();
+            return self::with('cliente')->orderBy('identificador', 'ASC')->get();
         });
     }
 
     public static function getAllByProceso()
     {
         return Cache::remember('TimesheetProyecto:timesheetproyecto_all_order_by_proceso', 3600 * 4, function () {
-            return self::where('estatus', 'proceso')->orderBy('id', 'desc')->get();
+            return self::where('estatus', 'proceso')->orderBy('identificador', 'ASC')->get();
         });
     }
 
@@ -123,6 +123,18 @@ class TimesheetProyecto extends Model implements Auditable
         }
 
         return $emps;
+    }
+
+    public function getIsNumAttribute()
+    {
+        if (is_numeric($this->identificador[0])) {
+            preg_match('/^\d+/', $this->identificador, $matches);
+
+            return $matches[0];
+        }
+        if (ctype_alpha($this->identificador[0])) {
+            return 0;
+        }
     }
 
     public function sede()

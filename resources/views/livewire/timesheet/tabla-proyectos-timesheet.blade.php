@@ -216,7 +216,9 @@
                 <tbody style="position:relative;">
                     @foreach ($proyectos as $proyecto)
                         <tr>
-                            <td>{{ $proyecto->identificador }} </td>
+                            <td>
+                                <strong> {{ $proyecto->identificador }} </strong>
+                            </td>
                             <td>{{ $proyecto->proyecto }} </td>
                             <td>{{ $proyecto->fecha_inicio }} </td>
                             <td>{{ $proyecto->fecha_fin }} </td>
