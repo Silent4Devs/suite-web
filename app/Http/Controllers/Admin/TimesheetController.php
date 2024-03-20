@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Exceptions\MiExcepcionTimeshetClientes;
 use App\Http\Controllers\Controller;
 use App\Jobs\NuevoProyectoJob;
 use App\Mail\TimesheetHorasSobrepasadas;
@@ -30,7 +29,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use PDF;
 use Throwable;
@@ -158,8 +156,11 @@ class TimesheetController extends Controller
 
         $organizacion = Organizacion::getFirst();
 
+        $user = User::getCurrentUser();
+        $empleado = Empleado::where('id', $user->empleado_id)->first();
+
         // Si la fecha no está registrada, continúa con la vista de creación.
-        return view('admin.timesheet.create', compact('fechasRegistradas', 'organizacion'));
+        return view('admin.timesheet.create', compact('fechasRegistradas', 'organizacion', 'empleado'));
     }
 
     public function createCopia($id)
@@ -989,15 +990,12 @@ class TimesheetController extends Controller
             $cliente = TimesheetCliente::find($id);
 
             if (! $cliente) {
-                return redirect()->route('admin.timesheet-clientes')->with('error', 'El registro fue eliminado ');
+                abort(404);
             }
 
             return view('admin.timesheet.clientes.edit', compact('cliente'));
-        } catch (MiExcepcionTimeshetClientes $excepcionPersonalizada) {
-
-            Log::error('Ocurrió una excepción personalizada: '.$excepcionPersonalizada->getMessage());
-
-            return response()->json(['error' => $excepcionPersonalizada->getMessage()], 400);
+        } catch (\Throwable $th) {
+            abort(404);
         }
     }
 
@@ -1005,7 +1003,7 @@ class TimesheetController extends Controller
     {
         $request->validate(
             [
-                'identificador' => 'required|unique:timesheet_clientes,identificador',
+                'identificador' => 'required|max:255|unique:timesheet_clientes,identificador',
                 'razon_social' => 'required|string|max:255',
                 'nombre' => 'required|string|max:255',
                 'rfc' => 'max:15',
@@ -1044,7 +1042,7 @@ class TimesheetController extends Controller
     {
         $request->validate(
             [
-                'identificador' => 'required|unique:timesheet_clientes,identificador',
+                'identificador' => 'required|max:255|unique:timesheet_clientes,identificador',
                 'razon_social' => 'required|string|max:255',
                 'nombre' => 'required|string|max:255',
                 'rfc' => 'max:15',

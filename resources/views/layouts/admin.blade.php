@@ -71,7 +71,9 @@
     @php
         use App\Models\Organizacion;
         use App\Models\User;
+        use App\Models\Empleado;
         $usuario = User::getCurrentUser();
+        $empleado = Empleado::where('id', $usuario->empleado_id)->first();
         $organizacion = Organizacion::getLogo();
         if (!is_null($organizacion)) {
             $logotipo = $organizacion->logotipo;
@@ -93,21 +95,21 @@
                         alt="Logo Tabantaj" style="height: 40px;"></a>
                 @livewire('global-search-component', ['lugar' => 'header'])
             </div>
-            @if ($usuario->empleado)
+            @if ($empleado)
                 <ul class="ml-auto c-header-nav">
                     <li class="c-header-nav-item dropdown show">
                         <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button"
                             aria-haspopup="true" aria-expanded="false">
                             <div style="width:100%; display: flex; align-items: center;">
-                                @if ($usuario->empleado)
+                                @if ($empleado)
                                     <div style="width: 40px; overflow:hidden;" class="mr-2">
                                         <img class="img_empleado" style=""
-                                            src="{{ asset('storage/empleados/imagenes/' . '/' . $usuario->empleado->avatar) }}"
-                                            alt="{{ $usuario->empleado->name }}">
+                                            src="{{ asset('storage/empleados/imagenes/' . '/' . $empleado->avatar) }}"
+                                            alt="{{ $empleado->name }}">
                                     </div>
                                     <div class="d-mobile-none">
                                         <span class="mr-2" style="font-weight: bold;">
-                                            {{ $usuario->empleado ? explode(' ', $usuario->empleado->name)[0] : '' }}
+                                            {{ $empleado ? explode(' ', $empleado->name)[0] : '' }}
                                         </span>
                                         {{-- <p class="m-0" style="font-size: 8px">
                                             {{ $usuario->empleado ? Str::limit($usuario->empleado->puesto, 30, '...') : '' }}
@@ -119,7 +121,7 @@
                             </div>
                         </a>
 
-                        @if ($usuario->empleado === null)
+                        @if ($empleado === null)
                             <div class="p-3 mt-3 text-center dropdown-menu dropdown-menu-right hide"
                                 style="width:100px; box-shadow: 0px 3px 6px 1px #00000029; border-radius: 4px; border:none;">
                                 <div class="px-3 mt-1 d-flex justify-content-center">
@@ -134,7 +136,7 @@
                                 style="width:300px; box-shadow: 0px 3px 6px 1px #00000029; border-radius: 4px; border:none;">
                                 <div class="p-2">
                                     <p class="m-0 mt-2 text-muted" style="font-size:14px">Hola,
-                                        <strong>{{ $usuario->empleado->name }}</strong>
+                                        <strong>{{ $empleado->name }}</strong>
                                     </p>
                                 </div>
                                 <div class="px-3 mt-1 d-flex justify-content-center">

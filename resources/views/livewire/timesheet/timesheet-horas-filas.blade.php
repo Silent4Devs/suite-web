@@ -13,11 +13,21 @@
                         <small class="fecha_dia errores text-danger" style="margin-left: 15px;"></small>
                     </div>
 
+                    @php
+                    use App\Models\User;
+                    use App\Models\Empleado;
+
+                    $user = User::getCurrentUser();
+                    $empleado = Empleado::where('id', $user->empleado_id)->first();
+                   @endphp
+
+
+
                     <div class="semanas-tras-time-text">
                         <small>
                             <i class="fa-solid fa-circle mr-2" style="color: #D2FDB8;"></i>
                             Tiene permitido registrar
-                            <strong>{{ auth()->user()->empleado->semanas_min_timesheet }} </strong>
+                            <strong>{{ $empleado->semanas_min_timesheet }} </strong>
                             semanas atras
                         </small>
                     </div>
