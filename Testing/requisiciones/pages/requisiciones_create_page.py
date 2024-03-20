@@ -6,6 +6,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
+
 class Requisiciones_create:
     def __init__(self, driver):
         self.driver = driver
@@ -89,9 +91,19 @@ class Requisiciones_create:
             EC.visibility_of_element_located((By.XPATH, "//input[@name='descripcion']"))
         )
         titulo_requisicion_btn.send_keys(titulo_requisicion)
+
     def comprador(self):
         comprador_btn = WebDriverWait(self.driver, 5).until(
             EC.visibility_of_element_located((By.XPATH, "//select[contains(@name,'comprador_id')]"))
         )
         select = Select(comprador_btn)
         select.select_by_index(1)
+
+    def proyecto(self,proyecto):
+        proyecto_btn = WebDriverWait(self.driver, 5).until(
+            EC.visibility_of_element_located((By.XPATH, "//span[@class='select2-selection__arrow']"))
+            )
+        proyecto_btn.click()
+        time.sleep(0.5)
+        pdb.set_trace()
+        proyecto_btn.send_keys(Keys.ENTER)

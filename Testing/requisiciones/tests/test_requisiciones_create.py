@@ -25,3 +25,6 @@ def test_requisiciones_create(browser):
     requisiciones_create_page.titulo_requisicion(titulo_requisicion)
     #COMPRADOR
     requisiciones_create_page.comprador()
+    #PROYECTO
+    proyecto = "/ KONFIO_PENTEST_001_21 - Servicios de Pruebas de Penetración"
+    requisiciones_create_page.proyecto(proyecto)
