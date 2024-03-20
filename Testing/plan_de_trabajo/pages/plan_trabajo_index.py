@@ -52,3 +52,11 @@ class PlanTrabajo_index:
             EC.element_to_be_clickable((By.XPATH, "//a[contains(.,'Planes de acción')]"))
         )
         plan_trabajo_btn.click()
+
+    def plan_trabajo_filtro(self):
+        plan_trabajo_filtro_btn = WebDriverWait(self.driver, 5).until(
+            EC.visibility_of_element_located((By.XPATH, "//select[contains(@name,'tblPlanesAccion_length')]"))
+        )
+        select = Select(plan_trabajo_filtro_btn)
+        select.select_by_index(1)
+

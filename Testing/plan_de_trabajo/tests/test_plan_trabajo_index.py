@@ -11,3 +11,5 @@ def test_plan_de_trabajo_index(browser):
     plan_trabajo_index.open_menu()
     #OPCION PLAN DE TRABAJO
     plan_trabajo_index.plan_trabajo()
+    #FILTRO
+    plan_trabajo_index.plan_trabajo_filtro()
