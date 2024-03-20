@@ -21,6 +21,11 @@ class EvaluadosEvaluacionDesempeno extends Model
         return $this->belongsTo(EvaluacionDesempeno::class, 'evaluacion_desempeno_id', 'id');
     }
 
+    public function empleado()
+    {
+        return $this->belongsTo(Empleado::class, 'evaluado_desempeno_id', 'id')->select('id', 'name', 'area_id', 'puesto_id', 'foto');
+    }
+
     public function evaluadoresObjetivos()
     {
         return $this->hasMany(EvaluadoresEvaluacionObjetivosDesempeno::class, 'evaluado_desempeno_id', 'id');

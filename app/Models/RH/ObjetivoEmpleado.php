@@ -21,12 +21,12 @@ class ObjetivoEmpleado extends Model implements Auditable
         'completado',
         'en_curso',
         'papelera',
-        '360',
+        'ev360',
         'mensual',
         'bimestral',
         'trimestral',
         'semestral',
-        'anual',
+        'anualmente',
         'abierta',
     ];
 

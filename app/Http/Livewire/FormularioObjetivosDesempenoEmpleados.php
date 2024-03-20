@@ -3,12 +3,16 @@
 namespace App\Http\Livewire;
 
 // use App\Models\CategoriaObjetivosDesempeno;
+
+use App\Models\EscalasMedicionObjetivos;
+use App\Models\EscalasObjetivosDesempeno;
 use App\Models\ObjetivosDesempenoEmpleados;
 use App\Models\PeriodoCargaObjetivos;
 use App\Models\RH\MetricasObjetivo;
 use App\Models\RH\Objetivo;
 use App\Models\RH\ObjetivoEmpleado;
 use App\Models\RH\TipoObjetivo;
+use Carbon\Carbon;
 use Livewire\Component;
 
 class FormularioObjetivosDesempenoEmpleados extends Component
@@ -19,8 +23,10 @@ class FormularioObjetivosDesempenoEmpleados extends Component
 
     public $categorias;
     public $unidades;
+    public $escalas;
+    public $array_escalas_objetivos = [];
 
-    public $periodo;
+    public $permiso_carga = false;
 
     public $objetivo_estrategico = '';
     public $descripcion = '';
@@ -32,13 +38,41 @@ class FormularioObjetivosDesempenoEmpleados extends Component
     public $minimo_unidad;
     public $maximo_unidad;
 
+    public $ev360 = false;
+    public $mensual = false;
+    public $bimestral = false;
+    public $trimestral = false;
+    public $semestral = false;
+    public $anualmente = false;
+    public $abierta = false;
+
     public function mount($id_empleado)
     {
-        $this->categorias = TipoObjetivo::get();
-        $this->periodo = PeriodoCargaObjetivos::get();
-        $this->unidades = MetricasObjetivo::getAll();
-
         $this->id_emp = $id_empleado;
+
+        $this->categorias = TipoObjetivo::get();
+        $this->unidades = MetricasObjetivo::getAll();
+        $this->escalas = EscalasMedicionObjetivos::get();
+        foreach ($this->escalas as $key => $e) {
+            $this->array_escalas_objetivos[$key] =
+                [
+                    'color' => $e->color,
+                    'condicional' => 1,
+                    'valor' => 0,
+                    'parametro_id' => $e->id,
+                ];
+        }
+        // dd($this->array_escalas_objetivos);
+
+        $periodo = PeriodoCargaObjetivos::first();
+        $hoy = Carbon::today();
+
+        if (isset($periodo->fecha_inicio) && isset($periodo->fecha_fin)) {
+            $fecha_inicio = Carbon::parse($periodo->fecha_inicio);
+            $fecha_fin = Carbon::parse($periodo->fecha_fin);
+
+            $this->permiso_carga = $hoy->between($fecha_inicio, $fecha_fin);
+        }
     }
 
     public function render()
@@ -52,17 +86,43 @@ class FormularioObjetivosDesempenoEmpleados extends Component
 
     public function crearObjetivo()
     {
-        Objetivo::create([
-            'objetivo' => $this->objetivo_estrategico,
+        $objetivo = Objetivo::create([
+            'nombre' => $this->objetivo_estrategico,
             'descripcion' => $this->descripcion,
-            'categoria_objetivo_id' => $this->select_categoria,
+            'tipo_id' => $this->select_categoria,
             'KPI' => $this->KPI,
-            'unidad_objetivo_id' => $this->select_unidad,
+            'metrica_id' => $this->select_unidad,
             'empleado_id' => $this->id_emp,
             'estatus' => 0,
         ]);
+        // dd($this->mensual);
+        ObjetivoEmpleado::create([
+            'empleado_id' => $this->id_emp,
+            'objetivo_id' => $objetivo->id,
+            'completado' => false,
+            'en_curso' => false,
+            'papelera' => false,
+            'ev360' => $this->ev360,
+            'mensual' => $this->mensual,
+            'bimestral' => $this->bimestral,
+            'trimestral' => $this->trimestral,
+            'semestral' => $this->semestral,
+            'anualmente' => $this->anualmente,
+            'abierta' => $this->abierta,
+        ]);
+        foreach ($this->array_escalas_objetivos as $key => $esc_obj) {
+            // dd($this->array_escalas_objetivos[$key]['parametro_id']);
+            EscalasObjetivosDesempeno::create([
+                'id_objetivo_desempeno' => $objetivo->id,
+                'condicion' => $this->array_escalas_objetivos[$key]['condicional'],
+                'valor' => $this->array_escalas_objetivos[$key]['valor'],
+                'parametro_id' => $this->array_escalas_objetivos[$key]['parametro_id'],
+            ]);
+        }
 
         $this->resetInputsObjetivo();
+        $this->resetInputsPeriodos();
+        $this->resetInputsEscalas();
     }
 
     public function crearUnidad()
@@ -92,6 +152,28 @@ class FormularioObjetivosDesempenoEmpleados extends Component
         $this->KPI = '';
         $this->select_categoria = '';
         $this->select_unidad = '';
+    }
+
+    public function resetInputsPeriodos()
+    {
+        // $this->ev360 = false;
+        // $this->mensual = false;
+        // $this->bimestral = false;
+        // $this->trimestral = false;
+        // $this->semestral = false;
+        // $this->anualmente = false;
+        // $this->abierta = false;
+    }
+
+    public function resetInputsEscalas()
+    {
+        $this->ev360 = false;
+        $this->mensual = false;
+        $this->bimestral = false;
+        $this->trimestral = false;
+        $this->semestral = false;
+        $this->anualmente = false;
+        $this->abierta = false;
     }
 
     public function enviarPapelera($id_obj)

@@ -471,6 +471,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::get('recursos-humanos/evaluacion-desempeño/config-evaluaciones', 'RH\EvaluacionesDesempeñoController@configEvaluaciones')->name('rh.evaluaciones-desempeño.config-evaluaciones');
 
         Route::get('recursos-humanos/evaluacion-desempeño/create-evaluacion', 'RH\EvaluacionesDesempeñoController@createEvaluacion')->name('rh.evaluaciones-desempeño.create-evaluacion');
+        Route::get('recursos-humanos/evaluacion-desempeño/evaluacion/{evaluacion}/cuestionario/{evaluado}', 'RH\EvaluacionesDesempeñoController@cuestionarioEvaluacionDesempeno')->name('rh.evaluaciones-desempeño.cuestionario');
 
         Route::get('recursos-humanos/evaluacion-desempeño/dashboard-personal', 'RH\EvaluacionesDesempeñoController@dashboardPersonal')->name('rh.evaluaciones-desempeño.dashboard-personal');
 

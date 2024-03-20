@@ -146,9 +146,9 @@
                             <label class="mb-0" for="">Semestral</label>
                         </div>
                         <div class="form-group">
-                            <input type="checkbox" name="anual" id="anual"
-                                wire:change="seleccionPeriodo('anual', $event.target.checked)"
-                                @if ($anual) checked @endif>
+                            <input type="checkbox" name="anualmente" id="anualmente"
+                                wire:change="seleccionPeriodo('anualmente', $event.target.checked)"
+                                @if ($anualmente) checked @endif>
                             <label class="mb-0" for="">Anual</label>
                         </div>
                         <div class="form-group">

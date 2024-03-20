@@ -52,6 +52,12 @@ class EvaluacionesDesempeñoController extends Controller
         return view('admin.recursos-humanos.evaluaciones-desempeño.create-evaluacion', compact('areas', 'empleados'));
     }
 
+    public function cuestionarioEvaluacionDesempeno($evaluacion, $evaluado)
+    {
+        // dd($evaluacion, $evaluado);
+        return view('admin.recursos-humanos.evaluaciones-desempeño.cuestionario', compact('evaluacion', 'evaluado'));
+    }
+
     public function dashboardPersonal()
     {
         return view('admin.recursos-humanos.evaluaciones-desempeño.dashboard-personal');

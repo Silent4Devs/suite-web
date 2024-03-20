@@ -47,7 +47,7 @@ class CargaObjetivos extends Component
 
     public function render()
     {
-        $this->empleados = Empleado::getaltaAllWithAreaObjetivoPerfil()->sortBy('name');
+        $this->empleados = Empleado::getaltaAllObjetivosGenerales()->sortBy('name');
 
         if ($this->select_area != 0) {
             $this->empleados = $this->empleados->where('area_id', $this->select_area)->sortBy('name');

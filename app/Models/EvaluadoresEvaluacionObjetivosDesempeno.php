@@ -16,4 +16,9 @@ class EvaluadoresEvaluacionObjetivosDesempeno extends Model
         'evaluador_desempeno_id',
         'porcentaje_objetivos',
     ];
+
+    public function preguntasCuestionario()
+    {
+        return $this->hasMany(CuestionarioObjetivoEvDesempeno::class, 'evaluador_desempeno_id', 'id');
+    }
 }

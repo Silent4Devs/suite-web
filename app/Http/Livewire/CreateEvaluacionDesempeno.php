@@ -3,8 +3,11 @@
 namespace App\Http\Livewire;
 
 use App\Models\Area;
+use App\Models\CuestionarioCompetenciaEvDesempeno;
+use App\Models\CuestionarioObjetivoEvDesempeno;
 use App\Models\Empleado;
 use App\Models\EvaluacionDesempeno;
+use App\Models\EvaluadoresEvaluacionCompetenciasDesempeno;
 use App\Models\EvaluadoresEvaluacionObjetivosDesempeno;
 use App\Models\EvaluadosEvaluacionDesempeno;
 use App\Models\PeriodosEvaluacionDesempeno;
@@ -108,6 +111,13 @@ class CreateEvaluacionDesempeno extends Component
 
     public function primerPaso()
     {
+        if ($this->activar_objetivos == false) {
+            $this->porcentaje_objetivos = 0;
+        }
+        if ($this->activar_competencias == false) {
+            $this->porcentaje_competencias = 0;
+        }
+
         $this->datosPaso1 = [
             'nombre' => $this->nombre_evaluacion,
             'descripcion' => $this->descripcion_evaluacion,
@@ -216,26 +226,87 @@ class CreateEvaluacionDesempeno extends Component
                     'evaluado_desempeno_id' => $evaluado['id'],
                 ]
             );
-
-            foreach ($this->array_evaluadores[$key]['evaluador_objetivos'] as $subkey => $evaluador) {
-                // dd($this->array_porcentaje_evaluadores[$key]['porcentaje_evaluador_objetivos'][$subkey]);
-                EvaluadoresEvaluacionObjetivosDesempeno::create([
-                    'evaluado_desempeno_id' => $evaluado->id,
-                    'evaluador_desempeno_id' => $evaluador,
-                    'porcentaje_objetivos' => $this->array_porcentaje_evaluadores[$key]['porcentaje_evaluador_objetivos'][$subkey],
-                ]);
+            if ($evaluacion->activar_objetivos) {
+                foreach ($this->array_evaluadores[$key]['evaluador_objetivos'] as $subkey => $evaluador) {
+                    // dd($this->array_porcentaje_evaluadores[$key]['porcentaje_evaluador_objetivos'][$subkey]);
+                    EvaluadoresEvaluacionObjetivosDesempeno::create([
+                        'evaluado_desempeno_id' => $evaluado->id,
+                        'evaluador_desempeno_id' => $evaluador,
+                        'porcentaje_objetivos' => $this->array_porcentaje_evaluadores[$key]['porcentaje_evaluador_objetivos'][$subkey],
+                    ]);
+                }
             }
-            foreach ($this->array_evaluadores[$key]['evaluador_competencias'] as $subkey => $evaluador) {
-                // dd($evaluador);
-                EvaluadoresEvaluacionObjetivosDesempeno::create([
-                    'evaluado_desempeno_id' => $evaluado->id,
-                    'evaluador_desempeno_id' => $evaluador,
-                    'porcentaje_objetivos' => $this->array_porcentaje_evaluadores[$key]['porcentaje_evaluador_competencias'][$subkey],
-                ]);
+            if ($evaluacion->activar_competencias) {
+                foreach ($this->array_evaluadores[$key]['evaluador_competencias'] as $subkey => $evaluador) {
+                    // dd($evaluador);
+                    EvaluadoresEvaluacionCompetenciasDesempeno::create([
+                        'evaluado_desempeno_id' => $evaluado->id,
+                        'evaluador_desempeno_id' => $evaluador,
+                        'porcentaje_competencias' => $this->array_porcentaje_evaluadores[$key]['porcentaje_evaluador_competencias'][$subkey],
+                    ]);
+                }
             }
         }
 
+        $this->crearCuestionario($evaluacion);
+
         return redirect(route('admin.rh.evaluaciones-desempeño.index'));
+    }
+
+    public function crearCuestionario($evaluacion)
+    {
+        // dd($evaluacion);
+        $empleados = Empleado::getIDaltaAll();
+
+        foreach ($evaluacion->evaluados as $evaluado) {
+            if ($evaluacion->activar_objetivos) {
+                $obj_per = $empleados->find($evaluado->evaluado_desempeno_id)->objetivosPeriodo($this->periodo_evaluacion);
+                foreach ($evaluado->evaluadoresObjetivos as $key => $evlr_obj) {
+                    $batch_objetivo = [];
+                    foreach ($obj_per as $obj) {
+                        $batch_objetivo[] =
+                            [
+                                'objetivo' => $obj->objetivo->nombre,
+                                'descripcion_objetivo' => $obj->objetivo->descripcion_meta,
+                                'KPI' => $obj->objetivo->KPI,
+                                'tipo_objetivo' => $obj->objetivo->tipo->nombre,
+                                'unidad_objetivo' => $obj->objetivo->metrica->definicion,
+                                'valor_minimo_unidad_objetivo' => $obj->objetivo->metrica->valor_minimo,
+                                'valor_maximo_unidad_objetivo' => $obj->objetivo->metrica->valor_maximo,
+                                'evaluacion_desempeno_id' => $evaluado->evaluacion_desempeno_id,
+                                'evaluado_desempeno_id' => $evaluado->id,
+                                'evaluador_desempeno_id' => $evlr_obj->id,
+                                'calificacion_objetivo' => null,
+                                'estatus_calificado' => false,
+                            ];
+                    }
+                    CuestionarioObjetivoEvDesempeno::insert($batch_objetivo);
+                }
+            }
+
+            if ($evaluacion->activar_competencias) {
+                $comp_per = $empleados->find($evaluado->evaluado_desempeno_id)->puestoRelacionado->competencias;
+                foreach ($evaluado->evaluadoresCompetencias as $key => $evlr_comp) {
+                    $batch_competencia = [];
+                    foreach ($comp_per as $comp) {
+                        // dd($comp->nivel_esperado, $comp->competencia, $comp->competencia->tipo);
+                        $batch_competencia[] =
+                            [
+                                'competencia' => $comp->competencia->nombre,
+                                'descripcion_competencia' => $comp->competencia->descripcion,
+                                'tipo_competencia' => $comp->competencia->tipo->nombre,
+                                'nivel_esperado' => $comp->nivel_esperado,
+                                'evaluacion_desempeno_id' => $evaluado->evaluacion_desempeno_id,
+                                'evaluado_desempeno_id' => $evaluado->id,
+                                'evaluador_desempeno_id' => $evlr_comp->id,
+                                'calificacion_competencia' => null,
+                                'estatus_calificado' => false,
+                            ];
+                    }
+                    CuestionarioCompetenciaEvDesempeno::insert($batch_competencia);
+                }
+            }
+        }
     }
 
     public function seleccionPeriodo($periodo, $valor)
