@@ -40,4 +40,9 @@ class CuestionarioObjetivoEvDesempeno extends Model
     {
         return $this->belongsTo(EvaluadoresEvaluacionObjetivosDesempeno::class, 'evaluador_desempeno_id', 'id');
     }
+
+    public function escalas()
+    {
+        return $this->hasMany(EscalasObjCuestionarioEvDesempeno::class, 'pregunta_cuest_obj_ev_des_id', 'id');
+    }
 }

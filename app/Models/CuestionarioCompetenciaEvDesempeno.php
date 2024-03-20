@@ -38,4 +38,9 @@ class CuestionarioCompetenciaEvDesempeno extends Model
     {
         return $this->belongsTo(EvaluadoresEvaluacionCompetenciasDesempeno::class, 'evaluador_desempeno_id', 'id');
     }
+
+    public  function ponderaciones()
+    {
+        return $this->hasMany(ConductasCompCuestionarioEvDesempenos::class, 'pregunta_cuest_comp_ev_des_id', 'id');
+    }
 }

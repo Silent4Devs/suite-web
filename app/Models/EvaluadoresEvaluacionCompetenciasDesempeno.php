@@ -16,4 +16,9 @@ class EvaluadoresEvaluacionCompetenciasDesempeno extends Model
         'evaluador_desempeno_id',
         'porcentaje_competencias',
     ];
+
+    public function preguntasCuestionario()
+    {
+        return $this->hasMany(CuestionarioCompetenciaEvDesempeno::class, 'evaluador_desempeno_id', 'id');
+    }
 }

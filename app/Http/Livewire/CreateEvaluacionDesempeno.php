@@ -3,9 +3,11 @@
 namespace App\Http\Livewire;
 
 use App\Models\Area;
+use App\Models\ConductasCompCuestionarioEvDesempenos;
 use App\Models\CuestionarioCompetenciaEvDesempeno;
 use App\Models\CuestionarioObjetivoEvDesempeno;
 use App\Models\Empleado;
+use App\Models\EscalasObjCuestionarioEvDesempeno;
 use App\Models\EvaluacionDesempeno;
 use App\Models\EvaluadoresEvaluacionCompetenciasDesempeno;
 use App\Models\EvaluadoresEvaluacionObjetivosDesempeno;
@@ -262,9 +264,9 @@ class CreateEvaluacionDesempeno extends Component
             if ($evaluacion->activar_objetivos) {
                 $obj_per = $empleados->find($evaluado->evaluado_desempeno_id)->objetivosPeriodo($this->periodo_evaluacion);
                 foreach ($evaluado->evaluadoresObjetivos as $key => $evlr_obj) {
-                    $batch_objetivo = [];
+                    // $batch_objetivo = []; Inhabilitado para crear la relacion
                     foreach ($obj_per as $obj) {
-                        $batch_objetivo[] =
+                        $new_objetivo = CuestionarioObjetivoEvDesempeno::create(
                             [
                                 'objetivo' => $obj->objetivo->nombre,
                                 'descripcion_objetivo' => $obj->objetivo->descripcion_meta,
@@ -278,32 +280,49 @@ class CreateEvaluacionDesempeno extends Component
                                 'evaluador_desempeno_id' => $evlr_obj->id,
                                 'calificacion_objetivo' => null,
                                 'estatus_calificado' => false,
-                            ];
+                            ]
+                        );
+
+                        foreach ($obj->objetivo->escalas as $escala) {
+                            EscalasObjCuestionarioEvDesempeno::create(
+                                [
+                                    'pregunta_cuest_obj_ev_des_id' => $new_objetivo->id,
+                                    'condicion' => $escala->condicion,
+                                    'parametro' => $escala->parametro->parametro,
+                                    'valor' => $escala->valor,
+                                    'color' => $escala->parametro->color,
+                                ]
+                            );
+                        }
                     }
-                    CuestionarioObjetivoEvDesempeno::insert($batch_objetivo);
                 }
             }
 
             if ($evaluacion->activar_competencias) {
                 $comp_per = $empleados->find($evaluado->evaluado_desempeno_id)->puestoRelacionado->competencias;
                 foreach ($evaluado->evaluadoresCompetencias as $key => $evlr_comp) {
-                    $batch_competencia = [];
+                    // $batch_competencia = [];
                     foreach ($comp_per as $comp) {
-                        // dd($comp->nivel_esperado, $comp->competencia, $comp->competencia->tipo);
-                        $batch_competencia[] =
-                            [
-                                'competencia' => $comp->competencia->nombre,
-                                'descripcion_competencia' => $comp->competencia->descripcion,
-                                'tipo_competencia' => $comp->competencia->tipo->nombre,
-                                'nivel_esperado' => $comp->nivel_esperado,
-                                'evaluacion_desempeno_id' => $evaluado->evaluacion_desempeno_id,
-                                'evaluado_desempeno_id' => $evaluado->id,
-                                'evaluador_desempeno_id' => $evlr_comp->id,
-                                'calificacion_competencia' => null,
-                                'estatus_calificado' => false,
-                            ];
+                        $new_competencia = CuestionarioCompetenciaEvDesempeno::create([
+                            'competencia' => $comp->competencia->nombre,
+                            'descripcion_competencia' => $comp->competencia->descripcion,
+                            'tipo_competencia' => $comp->competencia->tipo->nombre,
+                            'nivel_esperado' => $comp->nivel_esperado,
+                            'evaluacion_desempeno_id' => $evaluado->evaluacion_desempeno_id,
+                            'evaluado_desempeno_id' => $evaluado->id,
+                            'evaluador_desempeno_id' => $evlr_comp->id,
+                            'calificacion_competencia' => null,
+                            'estatus_calificado' => false,
+                        ]);
+
+                        foreach ($comp->competencia->opciones as $opciones) {
+                            ConductasCompCuestionarioEvDesempenos::create([
+                                'pregunta_cuest_comp_ev_des_id' => $new_competencia->id,
+                                'definicion' => $opciones->definicion,
+                                'ponderacion' => $opciones->ponderacion,
+                            ]);
+                        }
                     }
-                    CuestionarioCompetenciaEvDesempeno::insert($batch_competencia);
                 }
             }
         }

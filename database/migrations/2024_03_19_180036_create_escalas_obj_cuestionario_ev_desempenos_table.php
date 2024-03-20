@@ -13,9 +13,16 @@ return new class extends Migration
     {
         Schema::create('escalas_obj_cuestionario_ev_desempenos', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('pregunta_cuest_obj_ev_des_id');
+            $table->integer('condicion');
             $table->text('parametro');
             $table->double('valor');
+            $table->string('color');
+
+            $table->foreign('pregunta_cuest_obj_ev_des_id')->references('id')->on('cuestionario_objetivo_ev_desempenos')->onUpdate('cascade')->onDelete('cascade');
+
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
