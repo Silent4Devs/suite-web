@@ -18,3 +18,7 @@ def test_plan_de_trabajo_index(browser):
     plan_trabajo_index.plan_trabajo_searchbar(search)
     #PAGINADO
     plan_trabajo_index.plan_trabajo_paginador()
+    #OPCIONES
+    plan_trabajo_index.plan_trabajo_opciones()
+    #EDITAR
+    #plan_trabajo_index.plan_trabajo_editar()

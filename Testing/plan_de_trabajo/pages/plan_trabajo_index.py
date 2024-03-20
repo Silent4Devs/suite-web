@@ -77,6 +77,15 @@ class PlanTrabajo_index:
             EC.visibility_of_element_located((By.XPATH, "//a[contains(.,'2')]"))
         )
         paginado2.click()
-        pdb.set_trace()
+
+
+    def plan_trabajo_opciones(self):
+        opciones_btn = WebDriverWait(self.driver, 3).until(
+            EC.visibility_of_element_located((By.XPATH, "(//button[contains(@class,'btn btn-option')])[1]"))
+        )
+        opciones_btn.click()
+
+
+
 
 
