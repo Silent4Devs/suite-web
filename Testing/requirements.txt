@@ -7,7 +7,7 @@ pytest-xdist==3.5.0                 # Ejecución de pruebas en paralelo con pyte
 
 # Herramientas de desarrollo
 flake8==4.0.1                       # Herramienta de análisis de código estático
-black==22.1.0                       # Formateador de código Python
+black==24.3.0                       # Formateador de código Python
 mypy==0.910                         # Comprobador estático de tipos
 pytest-cov==3.0.0                   # Informes de cobertura para pruebas
 pytest-timeout==1.5.1               # Manejo de tiempo de espera en pruebas
