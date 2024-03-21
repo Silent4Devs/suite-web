@@ -22,3 +22,5 @@ def test_plan_de_trabajo_index(browser):
     plan_trabajo_index.plan_trabajo_opciones()
     #EDITAR
     plan_trabajo_index.plan_trabajo_editar()
+    #VER PLAN
+    plan_trabajo_index.plan_trabajo_ver_plan()

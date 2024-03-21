@@ -90,8 +90,16 @@ class PlanTrabajo_index:
 
         self.driver.execute_script(f"window.open('{url_editar}','_blank');")
         print("Botón de editar presionado y nueva pestaña abierta en segundo plano")
-        print("URL actual:", url_ventana_principal)
+        print("URL de Editar:", url_ventana_principal)
 
+    def plan_trabajo_ver_plan(self):
+        url_ventana_principal2 = self.driver.current_url
+        url_ver = "https://192.168.9.78/admin/planes-de-accion/11"
+
+        self.driver.execute_script(f"window.open('{url_ver}','_blank');")
+        print("Botón de ver plan presionado y nueva pestaña abierta en segundo plano")
+        print("URL de Ver plan:", url_ventana_principal2)
+        pdb.set_trace()
 
 
 
