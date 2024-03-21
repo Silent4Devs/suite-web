@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Area;
 use App\Models\Empleado;
 use App\Models\EvaluacionDesempeno;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class EvaluacionesDesempeñoController extends Controller
@@ -54,7 +55,22 @@ class EvaluacionesDesempeñoController extends Controller
 
     public function cuestionarioEvaluacionDesempeno($evaluacion, $evaluado)
     {
-        // dd($evaluacion, $evaluado);
+        $currentUser = User::getCurrentUser()->empleado;
+
+        $evaluacionDesempeno = EvaluacionDesempeno::findOrFail($evaluacion);
+        $evaluado = $evaluacionDesempeno->evaluados()->find($evaluado);
+
+        if (empty($evaluacionDesempeno) || empty($evaluado)) {
+            return redirect()->route('admin.inicio-Usuario.index');
+        }
+
+        $evaluadoresObjetivos = $evaluado->evaluadoresObjetivos()->pluck('evaluador_desempeno_id')->toArray();
+        $evaluadoresCompetencias = $evaluado->evaluadoresCompetencias()->pluck('evaluador_desempeno_id')->toArray();
+
+        if (!in_array($currentUser->id, $evaluadoresObjetivos) && !in_array($currentUser->id, $evaluadoresCompetencias)) {
+            return redirect()->route('admin.inicio-Usuario.index');
+        }
+
         return view('admin.recursos-humanos.evaluaciones-desempeño.cuestionario', compact('evaluacion', 'evaluado'));
     }
 

@@ -3,16 +3,12 @@
 namespace App\Http\Livewire;
 
 use App\Models\CuestionarioCompetenciaEvDesempeno;
-use App\Models\CuestionarioObjetivoEvDesempeno;
-use App\Models\EscalasMedicionObjetivos;
 use App\Models\EvaluacionDesempeno;
-use App\Models\RH\Conducta;
 use App\Models\User;
 use Livewire\Component;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
-
-class CuestionarioEvaluacionDesempeno extends Component
+class CuestionarioEvaluacionDesempenoCompetencias extends Component
 {
     use LivewireAlert;
 
@@ -24,11 +20,9 @@ class CuestionarioEvaluacionDesempeno extends Component
     //Traer datos de la evaluación
     public $evaluacion;
     public $evaluado;
-    public $objetivos_evaluado;
     public $competencias_evaluado;
 
     //Campos para validación dependiendo de lo que el evaluador vaya a evaluar
-    public $validacion_objetivos_evaluador;
     public $validacion_competencias_evaluador;
 
     public $escalas;
@@ -37,51 +31,21 @@ class CuestionarioEvaluacionDesempeno extends Component
     public function mount($id_evaluacion, $id_evaluado)
     {
         $this->evaluador = User::getCurrentUser()->empleado;
+
+        $this->id_evaluacion = $id_evaluacion;
+        $this->id_evaluado = $id_evaluado;
     }
 
     public function render()
     {
         $this->evaluacion = EvaluacionDesempeno::find($this->id_evaluacion);
         $this->evaluado = $this->evaluacion->evaluados->find($this->id_evaluado);
-        if ($this->evaluacion->activar_competencias == true && $this->evaluacion->activar_objetivos == true) {
-            //Comprobacion de que el evaluador si sea uno de los seleccionados
-            $this->buscarObjetivos();
+        if ($this->evaluacion->activar_competencias == true) {
 
             $this->buscarCompetencias();
-
-            $this->comprobacion();
-        } elseif ($this->evaluacion->activar_competencias == true && $this->evaluacion->activar_objetivos == false) {
-
-            $this->buscarCompetencias();
-
-            $this->comprobacion();
-        } elseif ($this->evaluacion->activar_competencias == false && $this->evaluacion->activar_objetivos == true) {
-
-            $this->buscarObjetivos();
-
-            $this->comprobacion();
-        } else {
-            return redirect()->route('admin.inicio-Usuario.index');
         }
 
-        return view('livewire.cuestionario-evaluacion-desempeno');
-    }
-
-    public function buscarObjetivos()
-    {
-        $this->escalas = EscalasMedicionObjetivos::get();
-
-        $this->validacion_objetivos_evaluador = false;
-
-        foreach ($this->evaluado->evaluadoresObjetivos as $key => $evlr) {
-            if ($evlr->evaluador_desempeno_id == $this->evaluador->id) {
-                $this->validacion_objetivos_evaluador = true;
-
-                $this->objetivos_evaluado = $evlr->preguntasCuestionario->sortBy('id');
-
-                break;
-            }
-        }
+        return view('livewire.cuestionario-evaluacion-desempeno-competencias');
     }
 
     public function buscarCompetencias()
@@ -94,30 +58,6 @@ class CuestionarioEvaluacionDesempeno extends Component
                 $this->competencias_evaluado = $evlr->preguntasCuestionario->sortBy('id');
                 break;
             }
-        }
-    }
-
-    public function comprobacion()
-    {
-        if ($this->validacion_competencias_evaluador == false &&  $this->validacion_objetivos_evaluador == false) {
-            return redirect()->route('admin.inicio-Usuario.index');
-        }
-    }
-
-    public function evaluarObjetivo($id_objetivo, $valor)
-    {
-        try {
-            $objetivo = CuestionarioObjetivoEvDesempeno::find($id_objetivo);
-            $objetivo->update([
-                'calificacion_objetivo' => $valor,
-                'estatus_calificado' => true,
-            ]);
-
-            $this->alertaGuardadoCorrecto();
-            $this->buscarObjetivos();
-        } catch (\Throwable $th) {
-            $this->alertaGuardadoIncorrecto();
-            $this->buscarObjetivos();
         }
     }
 
