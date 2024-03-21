@@ -66,7 +66,7 @@ class InicioUsuarioController extends Controller
 
         $usuario = User::getCurrentUser();
 
-        $empleado = Empleado::where('id', $usuario->empleado_id)->first();
+        $empleado = Empleado::where('id', $usuario->empleado->id)->first();
 
         $usuarioVinculadoConEmpleado = false;
         if ($empleado) {

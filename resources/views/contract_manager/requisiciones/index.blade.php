@@ -18,6 +18,8 @@
         <div class="card-body datatable-fix">
             <form class="text-right" action="{{ route('contract_manager.requisiciones.indexAprobadores') }}" method="GET">
                 @method('GET')
+                <a style="color: white;" class="btn btn-primary"
+                href="{{ route('contract_manager.requisiciones.create') }}">Agregar</a>
                 <button class="btn btn-primary" type="submit" title="Aprobadores">
                     Aprobadores
                 </button>
@@ -334,20 +336,20 @@
                 }
 
             ];
-            let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar empleado',
-                url: "{{ route('contract_manager.requisiciones.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config) {
-                    let {
-                        url
-                    } = config;
-                    window.location.href = url;
-                }
-            };
+            // let btnAgregar = {
+            //     text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+            //     titleAttr: 'Agregar empleado',
+            //     url: "{{ route('contract_manager.requisiciones.create') }}",
+            //     className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+            //     action: function(e, dt, node, config) {
+            //         let {
+            //             url
+            //         } = config;
+            //         window.location.href = url;
+            //     }
+            // };
 
-            dtButtons.push(btnAgregar);
+            // dtButtons.push(btnAgregar);
 
             var table = $('#dom').DataTable({
                 buttons: dtButtons,

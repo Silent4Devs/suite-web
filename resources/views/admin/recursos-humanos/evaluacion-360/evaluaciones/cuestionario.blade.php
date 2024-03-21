@@ -732,7 +732,7 @@
                     type: "GET",
                     url: url,
                     beforeSend: function() {
-                        toastr.info('Obteninedo información, espere un momento...');
+                        toastr.info('Obteniendo información, espere un momento...');
                     },
                     success: function({
                         competencia

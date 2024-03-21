@@ -1,5 +1,6 @@
 // Laravel Echo
-require("./bootstrap");
+import "./bootstrap";
+import Echo from "laravel-echo";
 
 Echo.channel("notificaciones-campana").listen(
     ".IncidentesDeSeguridadEvent",
