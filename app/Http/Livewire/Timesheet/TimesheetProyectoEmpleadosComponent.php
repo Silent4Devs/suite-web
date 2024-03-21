@@ -29,6 +29,8 @@ class TimesheetProyectoEmpleadosComponent extends Component
 
     public $areasempleado;
 
+    public $todos_empleados;
+
     public function mount($proyecto_id)
     {
         $this->proyecto_id = $proyecto_id;
@@ -91,9 +93,15 @@ class TimesheetProyectoEmpleadosComponent extends Component
     public function addEmpleado()
     {
 
-        $empleado_add_proyecto = Empleado::where('estatus', 'alta')->where('id', intval($this->empleado_añadido))->first();
+        if ($this->todos_empleados) {
+        }
+    }
 
-        if (! $empleado_add_proyecto) {
+    public function addEmpleadoIndivudual($empleado_añadido_id)
+    {
+        $empleado_add_proyecto = Empleado::where('estatus', 'alta')->where('id', intval($empleado_añadido_id))->first();
+
+        if (!$empleado_add_proyecto) {
             return redirect()->route('admin.timesheet-proyecto-empleados', ['proyecto_id' => intval($this->proyecto_id)])
                 ->with('error', 'El registro fue eliminado');
         }
