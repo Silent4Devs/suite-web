@@ -14,7 +14,7 @@ pytest-timeout==1.5.1               # Manejo de tiempo de espera en pruebas
 pytest-selenium==2.0.0              # Extensiones de Selenium para pytest
 
 # Utilidades adicionales
-requests==2.26.0                    # Biblioteca HTTP para pruebas de API
+requests==2.31.0                    # Biblioteca HTTP para pruebas de API
 beautifulsoup4==4.10.0              # Análisis HTML y XML
 allure-pytest==2.13.2               # Plugin para generación de informes Allure
 
