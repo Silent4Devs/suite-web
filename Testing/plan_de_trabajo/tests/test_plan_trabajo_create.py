@@ -13,3 +13,7 @@ def test_plan_de_trabajo_index(browser):
     plan_trabajo_create.plan_trabajo()
     #CREATE PLAN DE TRABAJO
     plan_trabajo_create.plan_trabajo_create()
+    #INPUT NOMBRE
+    nombre="TEST1"
+    plan_trabajo_create.input_nombre_create(nombre)
+
