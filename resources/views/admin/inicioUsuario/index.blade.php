@@ -30,8 +30,7 @@
                 <div class="d-flex">
                     <div class=" info-blue-user">
                         <div class="img-person" style="width: 205px; height: 205px;">
-                            <img src="{{ asset('storage/empleados/imagenes/' . '/' . $empleado->avatar) }}"
-                                alt="">
+                            <img src="{{ asset('storage/empleados/imagenes/' . '/' . $empleado->avatar) }}" alt="">
                         </div>
                         <div class="mt-4">
                             <a href="{{ route('admin.miCurriculum', $empleado->id) }}">Ver perfil profesional</a>
@@ -278,7 +277,8 @@
                 </a>
             @endif
 
-            @if (isset($mis_evaluaciones->evaluacion))
+            {{-- Inhabilitado temporalmente --}}
+            {{-- @if (isset($mis_evaluaciones->evaluacion))
                 @if ($mis_evaluaciones->evaluacion->estatus == 2 || $mis_evaluaciones->evaluacion->estatus == 3)
                     <a
                         href="{{ route('admin.ev360-evaluaciones.autoevaluacion.consulta.evaluado', [$mis_evaluaciones->evaluacion->id, auth()->user()->empleado->id]) }}">
@@ -294,7 +294,7 @@
                         </div>
                     </a>
                 @endif
-            @endif
+            @endif --}}
 
         </div>
     </div>
