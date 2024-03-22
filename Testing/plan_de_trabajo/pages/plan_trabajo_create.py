@@ -87,4 +87,13 @@ class PlanTrabajo_create:
         objetivo_input.clear()
         objetivo_input.send_keys(objetivo)
         print("Objetivo ingresado")
+
+    def guardar_btn(self):
+        guardar_btn = WebDriverWait(self.driver, 3).until(
+            EC.element_to_be_clickable((By.XPATH, "//button[contains(.,'Guardar')]"))
+        )
+        guardar_btn.click()
+        print("Guardando Plan de trabajo")
+        time.sleep(0.2)
+        print("URL actual: ", self.driver.current_url)
         pdb.set_trace()

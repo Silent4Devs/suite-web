@@ -21,3 +21,5 @@ def test_plan_de_trabajo_index(browser):
     #INPUT OBJETIVO
     objetivo="OBJETIVO DE PRUEBA"
     plan_trabajo_create.input_objetivo_create(objetivo)
+    #GUARDAR BTN
+    plan_trabajo_create.guardar_btn()
