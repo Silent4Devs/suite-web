@@ -227,7 +227,7 @@ class Evaluaciones_360_create_page:
     
     # Seleccionar empleados a evaluar de publico objetivo
     
-    """
+    
     def select_empleados_evaluar(self, input_chip_xpath, opciones_deseadas):
         try:
             for opcion_deseada in opciones_deseadas:
@@ -243,8 +243,9 @@ class Evaluaciones_360_create_page:
                 opcion_seleccionar.click()
                 time.sleep(tiempo_modulos)
         except Exception as e:
-            print(f"Error al seleccionar la opción: {e}") """
-    
+            print(f"Error al seleccionar la opción: {e}") 
+            
+    """
     print("Seleccionando primer empleado a evaluar")
     def select_empleado_evaluar_1(self,input_chip_xpath, opcion_deseada_1):
         try:
@@ -279,7 +280,7 @@ class Evaluaciones_360_create_page:
             except Exception as e:
                 print(f"Error al seleccionar la opción: {e}") 
                 
-            time.sleep(tiempo_modulos)
+            time.sleep(tiempo_modulos)"""
         
     def select_boton_sig(self):    
         # Boton Siguiente
@@ -336,57 +337,61 @@ class Evaluaciones_360_create_page:
         time.sleep(tiempo_espera)
         
         print("URL actual:", self.driver.current_url)  
-
+        
         
     def create_periodos(self):
         
-            input_element = self.driver.find_element(By.XPATH, "//input[@class='form-control']")
-
-            value_attribute = input_element.get_attribute("value")
-
-            value_attribute == "2024-03-20"
-            
-            print("Dando click en Añadir Periodo...")
-            btn_new_periodo = WebDriverWait(self.driver, 3).until(
-                EC.visibility_of_element_located((By.XPATH, "//BUTTON[@id='addPeriodo']"))
-            )
-            btn_new_periodo.click()
-            
-            time.sleep(tiempo_modulos)
+        print("Dando click en Añadir Periodo ...")
+        input_fecha_inicio = WebDriverWait(self.driver, 3).until(
+            EC.visibility_of_element_located((By.XPATH, "//input[contains(@class, 'form-control') and contains(@wire:model.defer, 'periodos.0.fecha_inicio')]"))
+        )
+        input_fecha_inicio.clear()
+        input_fecha_inicio.send_keys("14/06/ 2024")
         
-            
-            print("Borrando periodo agregado ...")
-            campo_fecha_del = WebDriverWait(self.driver, 10).until(
-                EC.presence_of_element_located((By.XPATH, "//I[@class='fas fa-trash']"))
-            )
-            campo_fecha_del.click()
-            
-            time.sleep(tiempo_modulos)
-            
-            print("Activando proceso ...")
-            btn_activar = WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable((By.XPATH, "(//BUTTON[@type='button'])[2]"))
-            )
-            btn_activar.click()
-            
-            time.sleep(tiempo_modulos)
-            
-            print("Activando proceso ...")
-            btn_activar = WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable((By.XPATH, "(//BUTTON[@type='button'])[2]"))
-            )
-            btn_activar.click()
-            
-            time.sleep(tiempo_modulos)
-            
-            print("Activando proceso ...")
-            btn_activar = WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable((By.XPATH, "(//BUTTON[@type='button'])[2]"))
-            )
-            btn_activar.click()
-            
-            time.sleep(tiempo_modulos)
-            
+        time.sleep(tiempo_modulos)
+        
+
+        print("Dando click en Añadir Periodo...")
+        btn_new_periodo = WebDriverWait(self.driver, 3).until(
+            EC.visibility_of_element_located((By.XPATH, "//BUTTON[@id='addPeriodo']"))
+        )
+        btn_new_periodo.click()
+        
+        time.sleep(tiempo_modulos)
+    
+        
+        print("Borrando periodo agregado ...")
+        campo_fecha_del = WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, "//I[@class='fas fa-trash']"))
+        )
+        campo_fecha_del.click()
+        
+        time.sleep(tiempo_modulos)
+        
+        print("Activando proceso ...")
+        btn_activar = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable((By.XPATH, "(//BUTTON[@type='button'])[2]"))
+        )
+        btn_activar.click()
+        
+        time.sleep(tiempo_modulos)
+        
+        print("Activando proceso ...")
+        btn_activar = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable((By.XPATH, "(//BUTTON[@type='button'])[2]"))
+        )
+        btn_activar.click()
+        
+        time.sleep(tiempo_modulos)
+        
+        print("Activando proceso ...")
+        btn_activar = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable((By.XPATH, "(//BUTTON[@type='button'])[2]"))
+        )
+        btn_activar.click()
+        
+        time.sleep(tiempo_modulos)
+        
 
 
 
