@@ -15,3 +15,6 @@ def test_plan_de_trabajo_edit(browser):
     plan_trabajo_edit.plan_trabajo_opciones()
     #EDITAR
     plan_trabajo_edit.plan_trabajo_editar()
+    #EDITAR NOMBRE
+    nombre_edit="EDITAR NOMBRE PLAN DE TRABAJO"
+    plan_trabajo_edit.input_edit_nombre(nombre_edit)

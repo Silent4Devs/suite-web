@@ -70,3 +70,11 @@ class PlanTrabajo_edit:
         print("Editando Plan de trabajo")
         print("URL actual: ", self.driver.current_url)
 
+    def input_edit_nombre(self, nombre_edit):
+        nombre_input = WebDriverWait(self.driver, 3).until(
+            EC.visibility_of_element_located((By.XPATH, "//input[contains(@aria-describedby,'parent')]"))
+        )
+        nombre_input.clear()
+        nombre_input.send_keys(nombre_edit)
+
+
