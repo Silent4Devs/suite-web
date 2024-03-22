@@ -174,4 +174,9 @@ class AnalisisdeRiesgosController extends Controller
 
         return response()->json(['puesto' => $empleados->puesto, 'area' => $areas->area]);
     }
+
+    public function inicioRiesgos()
+    {
+        return view('admin.analisis-riesgos.inicio-riesgos');
+    }
 }
