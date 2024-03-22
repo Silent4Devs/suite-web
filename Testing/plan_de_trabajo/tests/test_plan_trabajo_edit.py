@@ -11,3 +11,7 @@ def test_plan_de_trabajo_edit(browser):
     plan_trabajo_edit.open_menu()
     #OPCION PLAN DE TRABAJO
     plan_trabajo_edit.plan_trabajo()
+    #OPCIONES
+    plan_trabajo_edit.plan_trabajo_opciones()
+    #EDITAR
+    plan_trabajo_edit.plan_trabajo_editar()

@@ -55,3 +55,18 @@ class PlanTrabajo_edit:
         plan_trabajo_btn.click()
         print("Ingresando a Plan de trabajo")
         print("URL actual: ", self.driver.current_url)
+
+    def plan_trabajo_opciones(self):
+        opciones_btn = WebDriverWait(self.driver, 3).until(
+            EC.visibility_of_element_located((By.XPATH, "(//button[contains(@class,'btn btn-option')])[1]"))
+        )
+        opciones_btn.click()
+
+    def plan_trabajo_editar(self):
+        editar_btn = WebDriverWait(self.driver, 3).until(
+            EC.visibility_of_element_located((By.XPATH, "//a[@href='https://192.168.9.78/admin/planes-de-accion/11/edit']"))
+        )
+        editar_btn.click()
+        print("Editando Plan de trabajo")
+        print("URL actual: ", self.driver.current_url)
+
