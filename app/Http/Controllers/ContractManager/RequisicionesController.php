@@ -311,6 +311,7 @@ class RequisicionesController extends Controller
             if (removeUnicodeCharacters($supervisor_email) === removeUnicodeCharacters($user->email)) {
                 $tipo_firma = 'firma_jefe';
             } else {
+                dd($supervisor_email, $user->email, $requisicion->firma_jefe);
                 return view('contract_manager.requisiciones.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del jefe directo: <br> <strong>'.$supervisor.'</strong>');
             }
         } elseif ($requisicion->firma_finanzas === null) {
