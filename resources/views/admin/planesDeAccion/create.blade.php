@@ -11,7 +11,7 @@
                         <div class="col-sm-12 col-lg-6">
                             <div class="form-group">
                                 <label for="parent">Nombre:</label>
-                                <input type="text" class="form-control {{ $errors->has('parent') ? 'is-invalid' : '' }}"
+                                <input type="text" maxlength="255" class="form-control {{ $errors->has('parent') ? 'is-invalid' : '' }}"
                                     id="parent" aria-describedby="parent" name="parent"
                                     value="{{ $referencia ? $referencia : old('parent', $planImplementacion->parent) }}"
                                     autocomplete="off" required>
@@ -57,7 +57,7 @@
                         <div class="col-sm-12 col-lg-6">
                             <div class="form-group">
                                 <label for="objetivo">Objetivo:</label>
-                                <textarea class="form-control {{ $errors->has('objetivo') ? 'is-invalid' : '' }}" id="objetivo" name="objetivo"
+                                <textarea maxlength="550" class="form-control {{ $errors->has('objetivo') ? 'is-invalid' : '' }}" id="objetivo" name="objetivo"
                                     required>{{ old('objetivo', $planImplementacion->objetivo) }}</textarea>
                                 @if ($errors->has('objetivo'))
                                     <div class="invalid-feedback">{{ $errors->first('objetivo') }}</div>
