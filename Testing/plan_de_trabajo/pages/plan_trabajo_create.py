@@ -54,4 +54,11 @@ class PlanTrabajo_create:
         )
         plan_trabajo_btn.click()
         print("Ingresando a Plan de trabajo")
+        print("URL actual: ", self.driver.current_url)
 
+    def plan_trabajo_create(self):
+        plan_trabajo_create_btn= WebDriverWait(self.driver, 3).until(
+            EC.element_to_be_clickable((By.XPATH, "//a[@href='https://192.168.9.78/admin/planes-de-accion/create']"))
+        )
+        plan_trabajo_create_btn.click()
+        print("Ingresando a Crear Plan de trabajo")
