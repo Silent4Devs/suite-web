@@ -71,4 +71,11 @@ class PlanTrabajo_create:
         nombre_input.clear()
         nombre_input.send_keys(nombre)
         print("Nombre ingresado")
-        pdb.set_trace()
+
+    def select_norma_create(self):
+        norma_select = WebDriverWait(self.driver, 5).until(
+            EC.visibility_of_element_located((By.XPATH, "//select[contains(@id,'norma')]"))
+        )
+        select = Select(norma_select)
+        select.select_by_index(2)
+        print("Norma seleccionada")

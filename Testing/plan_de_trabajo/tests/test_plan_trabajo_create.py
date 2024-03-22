@@ -16,4 +16,6 @@ def test_plan_de_trabajo_index(browser):
     #INPUT NOMBRE
     nombre="TEST1"
     plan_trabajo_create.input_nombre_create(nombre)
+    #SELECT NORMA
+    plan_trabajo_create.select_norma_create()
 
