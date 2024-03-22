@@ -149,14 +149,6 @@ services:
       com.datadoghq.tags.service: "tabantaj"
       com.datadoghq.tags.version: "1"
 
-  goservices:
-    image: ghcr.io/silent4devs/goservices:latest
-    container_name: goservices
-    restart: unless-stopped
-    tty: true
-    networks:
-      - tabantajnetwork
-
   rdadmin-tabantaj:
     image: erikdubbelboer/phpredisadmin:latest
     container_name: rdadmin-tabantaj

@@ -11,10 +11,12 @@ use App\Models\Empleado;
 use App\Models\Grupo;
 use App\Models\Organizacion;
 use App\Models\Team;
+use App\Services\ImageService;
 use Gate;
 use Illuminate\Auth\Access\Gate as AccessGate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use Maatwebsite\Excel\Facades\Excel;
@@ -122,20 +124,28 @@ class AreasController extends Controller
 
         if ($request->hasFile('foto_area')) {
             $file = $request->file('foto_area');
-            $extension = $file->getClientOriginalExtension();
-            $name_image = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-            $new_name_image = 'UID_'.$area->id.'_'.$name_image.'.'.$extension;
-            $route = storage_path('/app/public/areas/'.$new_name_image);
+            //$name_image = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+            $hash_name = pathinfo($file->hashName(), PATHINFO_FILENAME);
+            $new_name_image = 'UID_'.$area->id.'_'.$hash_name.'.png';
 
-            $image = Image::make($file)->encode('png', 70)->resize(256, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
+            // Call the ImageService to consume the external API
+            $apiResponse = ImageService::consumeImageCompresorApi($file);
 
-            $image->save($route);
+            // Compress and save the image
+            if ($apiResponse['status'] == 200) {
+                $rutaGuardada = '/app/public/areas/'.$new_name_image;
+                file_put_contents(storage_path($rutaGuardada), $apiResponse['body']);
 
-            $area->update([
-                'foto_area' => $new_name_image,
-            ]);
+                $area->update([
+                    'foto_area' => $new_name_image,
+                ]);
+
+            } else {
+                $mensajeError = 'Error al recibir la imagen de la API externa: '.$apiResponse['body'];
+
+                return Redirect::back()->with('error', $mensajeError);
+            }
+
         } else {
             $area->update([
                 'foto_area' => null,
@@ -187,20 +197,30 @@ class AreasController extends Controller
             $file = $request->file('foto_area');
 
             $filePath = '/app/public/areas/'.$area->foto_area;
+            $hash_name = pathinfo($file->hashName(), PATHINFO_FILENAME);
+            $new_name_image = 'UID_'.$area->id.'_'.$hash_name.'.png';
 
             if (Storage::disk('public')->exists($filePath)) {
                 Storage::disk('public')->delete($filePath);
             }
 
-            $extension = $file->getClientOriginalExtension();
-            $name_image = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-            $new_name_image = 'UID_'.$area->id.'_'.$name_image.'.'.$extension;
-            $route = storage_path('/app/public/areas/'.$new_name_image);
-            $image = Image::make($file)->encode('png', 70)->resize(256, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
+            // Call the ImageService to consume the external API
+            $apiResponse = ImageService::consumeImageCompresorApi($file);
 
-            $image->save($route);
+            // Compress and save the image
+            if ($apiResponse['status'] == 200) {
+                $rutaGuardada = '/app/public/areas/'.$new_name_image;
+                file_put_contents(storage_path($rutaGuardada), $apiResponse['body']);
+
+                $area->update([
+                    'foto_area' => $new_name_image,
+                ]);
+
+            } else {
+                $mensajeError = 'Error al recibir la imagen de la API externa: '.$apiResponse['body'];
+
+                return Redirect::back()->with('error', $mensajeError);
+            }
         } else {
             $area->update([
                 'foto_area' => null,
