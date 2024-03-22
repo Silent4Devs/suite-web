@@ -152,6 +152,8 @@ services:
   goservices:
     image: ghcr.io/silent4devs/goservices:latest
     container_name: goservices
+    ports:
+      - 3300:3300
     restart: unless-stopped
     tty: true
     networks:
