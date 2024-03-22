@@ -403,7 +403,11 @@
                                             {{ $objetivo['meta'] }} {{ $objetivo['metrica'] }}
                                         </td>
                                         <td>
-                                            {{ $objetivo['calificacion'] }} {{ $objetivo['metrica'] }}
+                                            @foreach ($escalas as $escala)
+                                                @if ($objetivo['calificacion_percepcion'] == $escala->valor)
+                                                    {{ $escala->parametro }}
+                                                @endif
+                                            @endforeach
                                         </td>
                                         <td>
                                             {{ $objetivo['descripcion_meta'] ? $objetivo['descripcion_meta'] : 'N/A' }}
@@ -496,7 +500,12 @@
                                         {{ $objetivo['meta'] }} {{ $objetivo['metrica'] }}
                                     </div>
                                     <div class="text-center border col-1" style="font-size:10px">
-                                        @if ($objetivo['meta'] == 0 && !empty($maxParam) && $objetivo['calificacion'] >= $maxParam)
+                                        @foreach ($escalas as $escala)
+                                            @if ($objetivo['calificacion_percepcion'] == $escala->valor)
+                                                {{ $escala->parametro }}
+                                            @endif
+                                        @endforeach
+                                        {{-- @if ($objetivo['meta'] == 0 && !empty($maxParam) && $objetivo['calificacion'] >= $maxParam)
                                             Cumplido
                                         @elseif ($objetivo['meta'] == 0 && !empty($maxParam) && $objetivo['calificacion'] < $maxParam)
                                             No Cumplido
@@ -504,7 +513,7 @@
                                             <span
                                                 data-objetivo-calificacion="{{ $objetivo['objetivo_calificacion_id'] }}">{{ $objetivo['calificacion'] }}</span>
                                             {{ $objetivo['metrica'] }}
-                                        @endif
+                                        @endif --}}
                                     </div>
                                     <div class="text-center border col-2" style="font-size:10px">
                                         {{ $objetivo['descripcion_meta'] ? $objetivo['descripcion_meta'] : 'N/A' }}

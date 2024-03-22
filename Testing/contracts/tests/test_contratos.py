@@ -6,7 +6,7 @@ from pages.contratos_page import Contratos
 def test_contratos(browser):
     #LOGIN
     contratos_page = Contratos(browser)
-    contratos_page.login("admin@admin.com","#S3cur3P4$$w0Rd!")
+    contratos_page.login("zaid.garcia@becarios.silent4business.com","Administrador2")
     #MENÚ HAMBURGUESA
     contratos_page.open_menu()
     #GESTION CONTRACTUAL
@@ -16,7 +16,8 @@ def test_contratos(browser):
     #CONTRATOS DEL ÁREA
     contratos_page.contratos_del_area()
     #BARRA DE BUSQUEDA
-    contratos_page.search_bar()
+    search=""
+    contratos_page.search_bar(search)
     #VISUALIZAR
     contratos_page.visualizar()
     #EXPORTAR

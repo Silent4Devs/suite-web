@@ -162,7 +162,7 @@ class Ev360ResumenTablaParametros extends Component
 
         if (isset($evaluacion->rangos)) {
             $rangos = $evaluacion->rangos->pluck('valor')->toArray();
-
+            $escalas = $evaluacion->rangos;
             if (!empty($rangos)) {
                 $maxValue = max($rangos);
 
@@ -396,6 +396,7 @@ class Ev360ResumenTablaParametros extends Component
                             'metrica' => $objetivo->objetivo->metrica->definicion,
                             'meta_alcanzada' => $objetivo->meta_alcanzada,
                             'calificacion' => $this->calificacion_con_parametro($objetivo->calificacion_persepcion, $objetivo->objetivo->meta, $objetivo->evaluacion_id),
+                            'calificacion_percepcion' => $objetivo->calificacion_persepcion,
                         ];
                     }),
                 ]);
@@ -433,6 +434,7 @@ class Ev360ResumenTablaParametros extends Component
                         'metrica' => $objetivo->objetivo->metrica->definicion,
                         'meta_alcanzada' => $objetivo->meta_alcanzada,
                         'calificacion' => $this->calificacion_con_parametro($objetivo->calificacion_persepcion, $objetivo->objetivo->meta, $objetivo->evaluacion_id),
+                        'calificacion_percepcion' => $objetivo->calificacion_persepcion,
                     ];
                 }),
             ]);
@@ -467,6 +469,7 @@ class Ev360ResumenTablaParametros extends Component
             'calificacion_final' => $calificacion_final,
             'evaluadores' => Empleado::getAll()->find($evaluadores->pluck('evaluador_id')),
             'maxParam' => $closestValue,
+            'escalas' => $escalas,
         ];
     }
 
