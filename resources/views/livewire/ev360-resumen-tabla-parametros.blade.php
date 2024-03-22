@@ -260,7 +260,7 @@
                                                 ][$i];
                                             $avance_porcentaje = number_format(
                                                 ($objetivo_info['calificacion'] * 100) /
-                                                    ($objetivo_info['meta'] > 0 ? $objetivo_info['meta'] : 1),
+                                                    ($objetivo_info['meta'] > 0 ? $objetivo_info['meta'] : $maxValue),
                                                 2,
                                             );
                                         @endphp

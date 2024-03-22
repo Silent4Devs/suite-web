@@ -55,7 +55,6 @@ class Ev360ResumenTablaParametros extends Component
 
     public function render()
     {
-        // dd($this->rangos);
         $evaluacion = Evaluacion::select('id', 'nombre')->with('evaluados')->find(intval($this->evaluacion));
 
         $evaluados = $evaluacion->evaluados;
@@ -232,7 +231,7 @@ class Ev360ResumenTablaParametros extends Component
                     $evaluaciones_competencias = EvaluacionRepuesta::with('competencia', 'evaluador')->where('evaluacion_id', $evaluacion->id)
                         ->where('evaluado_id', $evaluado->id)
                         ->where('evaluador_id', $evaluador->evaluador_id)->orderBy('id')->get();
-                    $evaluador_empleado = Empleado::getAll()->find($evaluador->evaluador_id);
+                    $evaluador_empleado = Empleado::getAllDataObjetivosEmpleado()->find($evaluador->evaluador_id);
 
                     return $this->obtenerInformacionDeLaEvaluacionDeCompetencia($evaluador_empleado, $evaluador, $evaluado, $evaluaciones_competencias, $evaluacion);
                 }),
@@ -258,7 +257,7 @@ class Ev360ResumenTablaParametros extends Component
             if ($jefe_evaluador_id == null) {
                 $jefe_evaluador = '-';
             } else {
-                $jefe_evaluador = Empleado::getAll()->find($jefe_evaluador_id->evaluador_id);
+                $jefe_evaluador = Empleado::getAllDataObjetivosEmpleado()->find($jefe_evaluador_id->evaluador_id);
             }
 
             $lista_jefe_inmediato->push([
@@ -269,7 +268,7 @@ class Ev360ResumenTablaParametros extends Component
                     $evaluaciones_competencias = EvaluacionRepuesta::with('competencia', 'evaluador')->where('evaluacion_id', $evaluacion->id)
                         ->where('evaluado_id', $evaluado->id)
                         ->where('evaluador_id', $evaluador->evaluador_id)->orderBy('id')->get();
-                    $evaluador_empleado = Empleado::getAll()->find($evaluador->evaluador_id);
+                    $evaluador_empleado = Empleado::getAllDataObjetivosEmpleado()->find($evaluador->evaluador_id);
 
                     return $this->obtenerInformacionDeLaEvaluacionDeCompetencia($evaluador_empleado, $evaluador, $evaluado, $evaluaciones_competencias, $evaluacion);
                 }),
@@ -294,7 +293,7 @@ class Ev360ResumenTablaParametros extends Component
                     $evaluaciones_competencias = EvaluacionRepuesta::with('competencia', 'evaluador')->where('evaluacion_id', $evaluacion->id)
                         ->where('evaluado_id', $evaluado->id)
                         ->where('evaluador_id', $evaluador->evaluador_id)->orderBy('id')->get();
-                    $evaluador_empleado = Empleado::getAll()->find($evaluador->evaluador_id);
+                    $evaluador_empleado = Empleado::getAllDataObjetivosEmpleado()->find($evaluador->evaluador_id);
 
                     return $this->obtenerInformacionDeLaEvaluacionDeCompetencia($evaluador_empleado, $evaluador, $evaluado, $evaluaciones_competencias, $evaluacion);
                 }),
@@ -318,7 +317,7 @@ class Ev360ResumenTablaParametros extends Component
                     $evaluaciones_competencias = EvaluacionRepuesta::with('competencia', 'evaluador')->where('evaluacion_id', $evaluacion->id)
                         ->where('evaluado_id', $evaluado->id)
                         ->where('evaluador_id', $evaluador->evaluador_id)->orderBy('id')->get();
-                    $evaluador_empleado = Empleado::getAll()->find($evaluador->evaluador_id);
+                    $evaluador_empleado = Empleado::getAllDataObjetivosEmpleado()->find($evaluador->evaluador_id);
 
                     return $this->obtenerInformacionDeLaEvaluacionDeCompetencia($evaluador_empleado, $evaluador, $evaluado, $evaluaciones_competencias, $evaluacion);
                 }),
@@ -371,7 +370,7 @@ class Ev360ResumenTablaParametros extends Component
             if ($jefe_evaluador_id == null) {
                 $jefe_evaluador = '-';
             } else {
-                $jefe_evaluador = Empleado::getAll()->find($jefe_evaluador_id->evaluador_id);
+                $jefe_evaluador = Empleado::getAllDataObjetivosEmpleado()->find($jefe_evaluador_id->evaluador_id);
             }
 
             if ($supervisorObjetivos) {
@@ -467,7 +466,7 @@ class Ev360ResumenTablaParametros extends Component
             'promedio_objetivos' => $promedio_objetivos,
             'promedio_general_objetivos' => $promedio_general_objetivos,
             'calificacion_final' => $calificacion_final,
-            'evaluadores' => Empleado::getAll()->find($evaluadores->pluck('evaluador_id')),
+            'evaluadores' => Empleado::getAllDataObjetivosEmpleado()->find($evaluadores->pluck('evaluador_id')),
             'maxParam' => $closestValue,
             'escalas' => $escalas,
         ];
@@ -475,7 +474,10 @@ class Ev360ResumenTablaParametros extends Component
 
     public function findClosestValueToMax()
     {
-        $rangos = $this->rangos;
+        $rangos = [];
+        foreach ($this->rangos as $r) {
+            $rangos[] = $r;
+        }
 
         // Check if the array is empty
         if (empty($rangos)) {
@@ -496,13 +498,20 @@ class Ev360ResumenTablaParametros extends Component
 
         // Find the value previous to the maximum value
         $previousValue = isset($rangosInt[$maxKey - 1]) ? $rangosInt[$maxKey - 1] : null;
-
         // Find the value next to the maximum value
         $nextValue = isset($rangosInt[$maxKey + 1]) ? $rangosInt[$maxKey + 1] : null;
 
         // Determine which value is closer to the maximum value
         $closestValue = ($nextValue - $maxValue) < ($maxValue - $previousValue) ? $nextValue : $previousValue;
+        if ($nextValue === null) {
+            $closestValue = $previousValue;
+        } elseif ($previousValue === null) {
+            $closestValue = $nextValue;
+        } else {
+            $closestValue = ($nextValue - $maxValue) < ($maxValue - $previousValue) ? $nextValue : $previousValue;
+        }
 
+        // dd($previousValue, $nextValue, $maxValue, $closestValue);
         return $closestValue;
     }
 
