@@ -301,9 +301,8 @@ class RequisicionesController extends Controller
         $requisicion = KatbolRequsicion::where('id', $id)->first();
 
         $user = User::getCurrentUser();
-        //$supervisor = User::find($requisicion->id_user)->empleado->supervisor->name;
-        $supervisor = User::with('empleado')->find($requisicion->id_user);
-        $supervisor_email = User::find($requisicion->id_user)->empleado->supervisor->email;
+        $supervisor = User::with('empleado')->find($requisicion->id_user)->supervisor->name;
+        $supervisor_email = User::find($supervisor->id)->email;
         $comprador = KatbolComprador::with('user')->where('id', $requisicion->comprador_id)->first();
         dd($user, $supervisor, $supervisor_email, $comprador);
 
