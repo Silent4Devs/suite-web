@@ -90,13 +90,13 @@
                     <i class="material-symbols-outlined">zoom_out</i>
                 </span>
             </button>
-            <span class="ganttButtonSeparator"></span>
+            {{-- <span class="ganttButtonSeparator"></span>
             <button onclick="$('#workSpace').trigger('print.gantt');return false;" class="button textual icon "
                 title="Imprimir">
                 <span class="teamworkIcon">
                     <i class="material-symbols-outlined">print</i>
                 </span>
-            </button>
+            </button> --}}
             <span class="ganttButtonSeparator"></span>
             <button onclick="ge.gantt.showCriticalPath=!ge.gantt.showCriticalPath; ge.redraw();return false;"
                 class="button textual icon requireCanSeeCriticalPath" title="Ruta crítica">
@@ -113,7 +113,7 @@
                 <span class="teamworkIcon">R</span>
             </button>
             <span class="ganttButtonSeparator"></span>
-            <button onclick="ge.element.toggleClass('colorByStatus' );return false;" class="button textual icon">
+            {{-- <button onclick="ge.element.toggleClass('colorByStatus' );return false;" class="button textual icon">
                 <span class="teamworkIcon">
                     <i class="material-symbols-outlined">palette</i>
                 </span>
@@ -122,7 +122,7 @@
                 <a href="{{ route('admin.empleados.index') }}">
                     <span class="teamworkIcon">M</span>
                 </a>
-            </button>
+            </button> --}}
 
             <button onclick="saveGanttOnServer();"
                 class="btn btn-outline-primary textual icon icons_propios_gantt guardar ml-5" title="Guardar"
