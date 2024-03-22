@@ -9,6 +9,7 @@ use App\Models\RH\Competencia;
 use App\Models\RH\CompetenciaPuesto;
 use App\Models\RH\Conducta;
 use App\Models\RH\EvaluacionRepuesta;
+use App\Services\ImageService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
@@ -51,16 +52,17 @@ class EV360CompetenciasController extends Controller
         if ($request->hasFile('foto')) {
             Storage::makeDirectory('public/competencias/img'); //Crear si no existe
             $extension = pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_EXTENSION);
-            $nombre_imagen = 'COMPETENCIA_'.$competencia->id.'_'.$competencia->nombre.'.'.$extension;
+            $nombre_imagen = 'COMPETENCIA_'.$competencia->id.'_'.$competencia->nombre.'.png';
             $route = storage_path().'/app/public/competencias/img/'.$nombre_imagen;
             $imagen = $nombre_imagen;
-            //Usamos image_intervention para disminuir el peso de la imagen
-            $img_intervention = Image::make($request->file('foto'));
-            $img_intervention->resize(720, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
 
-            $img_intervention->encode('png', 70)->save($route);
+            // Call the ImageService to consume the external API
+            $apiResponse = ImageService::consumeImageCompresorApi($request->file('foto'));
+
+            // Compress and save the image
+            if ($apiResponse['status'] == 200) {
+                file_put_contents($route, $apiResponse['body']);
+            }
 
             $competencia->update([
                 'imagen' => $imagen,
@@ -119,13 +121,13 @@ class EV360CompetenciasController extends Controller
             $nombre_imagen = 'COMPETENCIA_'.$competencia->id.'_'.$competencia->nombre.'.'.$extension;
             $route = storage_path().'/app/public/competencias/img/'.$nombre_imagen;
 
-            //Usamos image_intervention para disminuir el peso de la imagen
-            $img_intervention = Image::make($request->file('foto'));
-            $img_intervention->resize(1080, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
+            // Call the ImageService to consume the external API
+            $apiResponse = ImageService::consumeImageCompresorApi($request->file('foto'));
 
-            $img_intervention->encode('png', 70)->save($route);
+            // Compress and save the image
+            if ($apiResponse['status'] == 200) {
+                file_put_contents($route, $apiResponse['body']);
+            }
 
             $competencia->update([
                 'imagen' => $nombre_imagen,
