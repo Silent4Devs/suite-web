@@ -78,7 +78,7 @@ class PortalComunicacionController extends Controller
 
         $getAlta = Empleado::alta();
 
-        $cumpleaños = Cache::remember('Portal_cumpleaños_' . $authId, 3600, function () use ($hoy, $getAlta) {
+        $cumpleaños = Cache::remember('Portal_cumpleaños_'.$authId, 3600, function () use ($hoy, $getAlta) {
             return $getAlta->whereMonth('cumpleaños', '=', $hoy->format('m'))->get();
         });
 
