@@ -18,4 +18,6 @@ def test_plan_de_trabajo_index(browser):
     plan_trabajo_create.input_nombre_create(nombre)
     #SELECT NORMA
     plan_trabajo_create.select_norma_create()
-
+    #INPUT OBJETIVO
+    objetivo="OBJETIVO DE PRUEBA"
+    plan_trabajo_create.input_objetivo_create(objetivo)

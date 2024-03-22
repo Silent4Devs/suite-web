@@ -79,3 +79,12 @@ class PlanTrabajo_create:
         select = Select(norma_select)
         select.select_by_index(2)
         print("Norma seleccionada")
+
+    def input_objetivo_create(self, objetivo):
+        objetivo_input = WebDriverWait(self.driver, 3).until(
+            EC.visibility_of_element_located((By.XPATH, "//textarea[contains(@class,'form-control ')]"))
+        )
+        objetivo_input.clear()
+        objetivo_input.send_keys(objetivo)
+        print("Objetivo ingresado")
+        pdb.set_trace()
