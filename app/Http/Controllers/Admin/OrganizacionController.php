@@ -10,9 +10,11 @@ use App\Models\Empleado;
 use App\Models\Organizacion;
 use App\Models\PanelOrganizacion;
 use App\Models\Schedule;
+use App\Services\ImageService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -118,14 +120,29 @@ class OrganizacionController extends Controller
             ]);
 
             $file = $request->file('logotipo');
-            $fileName = 'UID_'.$organizacions->id.'_'.$file->getClientOriginalName();
+            //$name_image = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+            $hash_name = pathinfo($file->hashName(), PATHINFO_FILENAME);
+            //$fileName = 'UID_'.$organizacions->id.'_'.$file->getClientOriginalName();
+            $new_name_image = 'UID_'.$organizacions->id.'_'.$hash_name.'.png';
+
+            // Call the ImageService to consume the external API
+            $apiResponse = ImageService::consumeImageCompresorApi($file);
 
             // Compress and save the image
-            $image = Image::make($file)->encode('png', 70); // Adjust quality as needed
+            if ($apiResponse['status'] == 200) {
+                $rutaGuardada = '/public/images/'.$new_name_image;
+                //file_put_contents(storage_path('app/public/'.$rutaGuardada), $apiResponse['body']);
 
-            Storage::put("public/images/$fileName", $image->__toString());
+                Storage::put($rutaGuardada, $apiResponse['body']);
 
-            $organizacions->update(['logotipo' => $fileName]);
+                $organizacions->update(['logotipo' => $new_name_image]);
+
+            } else {
+                $mensajeError = 'Error al recibir la imagen de la API externa: '.$apiResponse['body'];
+
+                return Redirect::back()->with('error', $mensajeError);
+            }
+
         }
 
         if ($media = $request->input('ck-media', false)) {
@@ -171,15 +188,30 @@ class OrganizacionController extends Controller
             ]);
 
             $file = $request->file('logotipo');
-            $fileName = 'UID_'.$organizacion->id.'_'.$file->getClientOriginalName();
+            //$name_image = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+            $hash_name = pathinfo($file->hashName(), PATHINFO_FILENAME);
+            //$fileName = 'UID_'.$organizacion->id.'_'.$file->getClientOriginalName();
+            $new_name_image = 'UID_'.$organizacion->id.'_'.$hash_name.'.png';
+
+            // Call the ImageService to consume the external API
+            $apiResponse = ImageService::consumeImageCompresorApi($file);
 
             // Compress and save the image
-            $image = Image::make($file)->encode('png', 70); // Adjust quality as needed
+            if ($apiResponse['status'] == 200) {
+                $rutaGuardada = '/public/images/'.$new_name_image;
+                //file_put_contents(storage_path('app/public/'.$rutaGuardada), $apiResponse['body']);
 
-            Storage::put("public/images/$fileName", $image->__toString());
+                Storage::put($rutaGuardada, $apiResponse['body']);
 
-            $organizacion->logotipo = $fileName;
-            $organizacion->save();
+                $organizacion->logotipo = $new_name_image;
+                $organizacion->save();
+
+            } else {
+                $mensajeError = 'Error al recibir la imagen de la API externa: '.$apiResponse['body'];
+
+                return Redirect::back()->with('error', $mensajeError);
+            }
+
         }
 
         $this->saveOrUpdateSchedule($request, $organizacion);
