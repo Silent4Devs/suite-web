@@ -77,4 +77,11 @@ class PlanTrabajo_edit:
         nombre_input.clear()
         nombre_input.send_keys(nombre_edit)
 
-
+    def select_norma_edit(self):
+        norma_edit = WebDriverWait(self.driver, 5).until(
+            EC.visibility_of_element_located((By.XPATH, "//select[contains(@id,'norma')]"))
+        )
+        select = Select(norma_edit)
+        select.select_by_index(2)
+        print("Norma editada")
+        pdb.set_trace()

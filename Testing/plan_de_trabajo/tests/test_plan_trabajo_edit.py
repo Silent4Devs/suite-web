@@ -18,3 +18,5 @@ def test_plan_de_trabajo_edit(browser):
     #EDITAR NOMBRE
     nombre_edit="EDITAR NOMBRE PLAN DE TRABAJO"
     plan_trabajo_edit.input_edit_nombre(nombre_edit)
+    #SELECT NORMA
+    plan_trabajo_edit.select_norma_edit()
