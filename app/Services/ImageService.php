@@ -16,7 +16,7 @@ class ImageService
         $rutaArchivo = $file->path();
 
         // Verifica si el archivo existe
-        if (!file_exists($rutaArchivo)) {
+        if (! file_exists($rutaArchivo)) {
             return response()->json(['error' => 'El archivo de imagen no existe'], 404);
         }
 
@@ -32,14 +32,14 @@ class ImageService
             return [
                 'status' => $response->status(),
                 'response' => $response->json(),
-                'body' => $response->body()
-                ];
+                'body' => $response->body(),
+            ];
         } else {
             return [
                 'status' => $response->status(),
                 'response' => $response->json(),
-                'body' => $response->body()
-                ];
+                'body' => $response->body(),
+            ];
         }
     }
 }

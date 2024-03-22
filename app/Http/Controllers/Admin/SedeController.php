@@ -2,25 +2,21 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\CsvImportTrait;
+use App\Http\Requests\MassDestroySedeRequest;
+use App\Http\Requests\StoreSedeRequest;
+use App\Models\Organizacion;
 use App\Models\Sede;
 use App\Models\Team;
-use App\Models\Organizacion;
-use Illuminate\Http\Request;
 use App\Services\ImageService;
-use App\Http\Controllers\Controller;
-use App\Jobs\ProcessImageCompressor;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Queue;
-use Intervention\Image\Facades\Image;
-use App\Http\Requests\StoreSedeRequest;
-use Illuminate\Support\Facades\Storage;
+use Gate;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
-use Yajra\DataTables\Facades\DataTables;
-use App\Http\Requests\MassDestroySedeRequest;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 use Symfony\Component\HttpFoundation\Response;
-use App\Http\Controllers\Traits\CsvImportTrait;
-
+use Yajra\DataTables\Facades\DataTables;
 
 class SedeController extends Controller
 {
@@ -130,7 +126,7 @@ class SedeController extends Controller
             // Verificar si la solicitud fue exitosa
             if ($apiResponse['status'] == 200) {
                 $rutaGuardada = '/sedes/imagenes/'.$new_name_image;
-                file_put_contents(storage_path('app/public/' . $rutaGuardada), $apiResponse['body']);
+                file_put_contents(storage_path('app/public/'.$rutaGuardada), $apiResponse['body']);
 
                 $sede->update([
                     'foto_sedes' => $new_name_image,
@@ -139,7 +135,7 @@ class SedeController extends Controller
                 return redirect()->route('admin.sedes.index')->with('success', 'Guardado con éxito');
 
             } else {
-                $mensajeError = 'Error al recibir la imagen de la API externa: '. $apiResponse['body'];
+                $mensajeError = 'Error al recibir la imagen de la API externa: '.$apiResponse['body'];
 
                 return Redirect::back()->with('mensajeError', $mensajeError);
             }
@@ -195,7 +191,7 @@ class SedeController extends Controller
             // Verificar si la solicitud fue exitosa
             if ($apiResponse['status'] == 200) {
                 $rutaGuardada = '/sedes/imagenes/'.$new_name_image;
-                file_put_contents(storage_path('app/public/' . $rutaGuardada), $apiResponse['body']);
+                file_put_contents(storage_path('app/public/'.$rutaGuardada), $apiResponse['body']);
 
                 $sede->update([
                     'sede' => $request->sede,
@@ -207,7 +203,7 @@ class SedeController extends Controller
 
                 return redirect()->route('admin.sedes.index')->with('success', 'Editado con éxito');
             } else {
-                $mensajeError = 'Error al recibir la imagen de la API externa: '. $apiResponse['body'];
+                $mensajeError = 'Error al recibir la imagen de la API externa: '.$apiResponse['body'];
 
                 return Redirect::back()->with('mensajeError', $mensajeError);
             }
