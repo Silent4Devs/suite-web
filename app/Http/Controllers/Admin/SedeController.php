@@ -121,7 +121,7 @@ class SedeController extends Controller
             $new_name_image = 'UID_'.$sede->id.'_'.$name_image.'.jpeg';
 
             // Call the ImageService to consume the external API
-            $apiResponse = ImageService::consumeExternalApi($request->file('foto_sedes'));
+            $apiResponse = ImageService::consumeExternalApi($file);
 
             // Verificar si la solicitud fue exitosa
             if ($apiResponse['status'] == 200) {
@@ -186,7 +186,7 @@ class SedeController extends Controller
             $new_name_image = 'UID_'.$sede->id.'_'.$name_image.'.jpeg';
 
             // Call the ImageService to consume the external API
-            $apiResponse = ImageService::consumeExternalApi($request->file('foto_sedes'));
+            $apiResponse = ImageService::consumeExternalApi($file);
 
             // Verificar si la solicitud fue exitosa
             if ($apiResponse['status'] == 200) {
