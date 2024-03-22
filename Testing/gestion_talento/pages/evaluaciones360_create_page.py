@@ -3,7 +3,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import Select
-from selenium.webdriver.common.keys import Keys
+import pdb
+
 
 
 #Temporizadores
@@ -132,14 +133,22 @@ class Evaluaciones_360_create_page:
         
         # Boton Competencias
         btn_competencias = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "(//SPAN[@class='checkmark'])[1]")) #Unicamente cambiar el numero 1 a 2 en el xpath en caso de querer cambiar valor
-            )                                                                             # 1 = Competencias / 2 = Objetivos
+            EC.presence_of_element_located((By.XPATH, "(//SPAN[@class='checkmark'])[1]")) 
+            )                                                                            
         print("Dando click en boton competencias")
         btn_competencias.click()
         
         time.sleep(tiempo_espera)
-        """ 
-        #En caso de que Boton competencias tenga seleccionado la opcion: Obejtivos / Quitar comentarios de la funcion Seleccionar Parametros
+        
+        # Boton Objetivos
+        btn_competencias = WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, "(//SPAN[@class='checkmark'])[2]")) 
+            )                                                                            
+        print("Dando click en boton competencias")
+        btn_competencias.click()
+        
+        time.sleep(tiempo_espera)
+        
         #Seleccionar Catalago de Parametros
         catalogo_parametros=WebDriverWait(self.driver,10).until(
             EC.presence_of_element_located((By.XPATH, "//SELECT[@id='catalogoObjetivos']"))
@@ -148,7 +157,7 @@ class Evaluaciones_360_create_page:
         select = Select(catalogo_parametros)
         select.select_by_index(1)
             
-        time.sleep(tiempo_espera)  """ 
+        time.sleep(tiempo_espera)  
         
         # Boton Siguiente
         btn_siguiente = WebDriverWait(self.driver, 10).until(
@@ -162,7 +171,7 @@ class Evaluaciones_360_create_page:
         print("URL actual:", self.driver.current_url)
         
     # Seleccionar Boton Crear Grupo
-    def create_grupo(self):
+    """def create_grupo(self):
         
         crear_grupo = WebDriverWait(self.driver, 10).until(
             EC.element_to_be_clickable((By.XPATH, "//BUTTON[@id='btnModalOpen']"))
@@ -184,7 +193,7 @@ class Evaluaciones_360_create_page:
             )
         btn_guardar.click()
         
-        time.sleep(tiempo_diez)
+        time.sleep(tiempo_diez)"""
         
     # Seleccionar empleados a evaluar de publico objetivo
     
@@ -195,7 +204,7 @@ class Evaluaciones_360_create_page:
        )
        empleado_evaular_btn.click()
        select = Select(empleado_evaular_btn)
-       select.select_by_index(5) #Aqui se cambia la opcion que deseas en el boton publico objetivo
+       select.select_by_index(9) #Aqui se cambia la opcion que deseas en el boton publico objetivo
        
        time.sleep(tiempo_modulos)
     
@@ -294,7 +303,7 @@ class Evaluaciones_360_create_page:
         )
         empleado_pares.click()
         select = Select(empleado_pares)
-        select.select_by_index(5) #Aqui se cambia la opcion que deseas en el boton publico objetivo
+        select.select_by_index(9) #Aqui se cambia la opcion que deseas en el boton publico objetivo
             
         time.sleep(tiempo_espera)
         
@@ -326,75 +335,63 @@ class Evaluaciones_360_create_page:
         
         time.sleep(tiempo_espera)
         
-        print("URL actual:", self.driver.current_url)   
+        print("URL actual:", self.driver.current_url)  
 
         
-    def create_periodos(self, fecha_deseada):
+    def create_periodos(self):
         
-        fecha_solicitud_btn = WebDriverWait(self.driver, 5).until(
-            EC.visibility_of_element_located((By.XPATH, "//input[@name='fecha']"))
-        )
-        fecha_solicitud_btn.click()
-        fecha_solicitud_btn.send_keys(fecha_deseada)
-        
-        
-        print("Dando click en Añadir Periodo...")
-        btn_new_periodo = WebDriverWait(self.driver, 3).until(
-            EC.visibility_of_element_located((By.XPATH, "//BUTTON[@id='addPeriodo']"))
-        )
-        btn_new_periodo.click()
-        
-        time.sleep(tiempo_modulos)
-        
-        print("Seleccionando fecha inicio ...")
-        # Localizar el input de fecha inicio 
-        input_fecha = WebDriverWait(self.driver, 10).until(
-            EC.element_to_be_clickable((By.XPATH, "(//input[@type='date'])[1]"))
-        )
-        # Limpiar el input
-        input_fecha.click()
-        time.sleep(tiempo_carga)
-        #input_fecha.clear()
-        # Ingresar la fecha deseada
-        input_fecha.send_keys(fecha_deseada)
-        
-        print("Borrando periodo agregado ...")
-        campo_fecha_del = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//I[@class='fas fa-trash']"))
-        )
-        campo_fecha_del.click()
-        
-        time.sleep(tiempo_modulos)
-        
-        print("Activando proceso ...")
-        btn_activar = WebDriverWait(self.driver, 10).until(
-            EC.element_to_be_clickable((By.XPATH, "(//BUTTON[@type='button'])[2]"))
-        )
-        btn_activar.click()
-        
-        time.sleep(tiempo_modulos)
-        
-        print("Activando proceso ...")
-        btn_activar = WebDriverWait(self.driver, 10).until(
-            EC.element_to_be_clickable((By.XPATH, "(//BUTTON[@type='button'])[2]"))
-        )
-        btn_activar.click()
-        
-        time.sleep(tiempo_modulos)
-        
-        print("Activando proceso ...")
-        btn_activar = WebDriverWait(self.driver, 10).until(
-            EC.element_to_be_clickable((By.XPATH, "(//BUTTON[@type='button'])[2]"))
-        )
-        btn_activar.click()
-        
-        time.sleep(tiempo_modulos)
-        
+            input_element = self.driver.find_element(By.XPATH, "//input[@class='form-control']")
 
+            value_attribute = input_element.get_attribute("value")
 
-
-        
+            value_attribute == "2024-03-20"
+            
+            print("Dando click en Añadir Periodo...")
+            btn_new_periodo = WebDriverWait(self.driver, 3).until(
+                EC.visibility_of_element_located((By.XPATH, "//BUTTON[@id='addPeriodo']"))
+            )
+            btn_new_periodo.click()
+            
+            time.sleep(tiempo_modulos)
         
             
-        
-        
+            print("Borrando periodo agregado ...")
+            campo_fecha_del = WebDriverWait(self.driver, 10).until(
+                EC.presence_of_element_located((By.XPATH, "//I[@class='fas fa-trash']"))
+            )
+            campo_fecha_del.click()
+            
+            time.sleep(tiempo_modulos)
+            
+            print("Activando proceso ...")
+            btn_activar = WebDriverWait(self.driver, 10).until(
+                EC.element_to_be_clickable((By.XPATH, "(//BUTTON[@type='button'])[2]"))
+            )
+            btn_activar.click()
+            
+            time.sleep(tiempo_modulos)
+            
+            print("Activando proceso ...")
+            btn_activar = WebDriverWait(self.driver, 10).until(
+                EC.element_to_be_clickable((By.XPATH, "(//BUTTON[@type='button'])[2]"))
+            )
+            btn_activar.click()
+            
+            time.sleep(tiempo_modulos)
+            
+            print("Activando proceso ...")
+            btn_activar = WebDriverWait(self.driver, 10).until(
+                EC.element_to_be_clickable((By.XPATH, "(//BUTTON[@type='button'])[2]"))
+            )
+            btn_activar.click()
+            
+            time.sleep(tiempo_modulos)
+            
+
+
+
+            
+            
+                
+            
+            
