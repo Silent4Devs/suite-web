@@ -152,6 +152,11 @@ services:
   goservices:
     image: ghcr.io/silent4devs/goservices:latest
     container_name: goservices
+    depends_on:
+      - php
+      - postgres-tabantaj
+    ports:
+      - 3300:3300
     restart: unless-stopped
     tty: true
     networks:
