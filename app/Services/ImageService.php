@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Http;
 
 class ImageService
 {
-    public static function consumeExternalApi($file)
+    public static function consumeImageCompresorApi($file)
     {
         $api = env('GOSERVICES_API');
         // Endpoint where you want to send the file

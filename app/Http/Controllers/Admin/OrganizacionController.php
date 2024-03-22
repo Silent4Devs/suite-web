@@ -2,24 +2,24 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Carbon\Carbon;
-use App\Models\Empleado;
-use App\Models\Schedule;
-use App\Models\Organizacion;
-use Illuminate\Http\Request;
-use App\Services\ImageService;
-use App\Models\PanelOrganizacion;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Gate;
-use Intervention\Image\Facades\Image;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Redirect;
-use RealRashid\SweetAlert\Facades\Alert;
-use Symfony\Component\HttpFoundation\Response;
-use App\Http\Requests\UpdateOrganizacionRequest;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyOrganizacionRequest;
+use App\Http\Requests\UpdateOrganizacionRequest;
+use App\Models\Empleado;
+use App\Models\Organizacion;
+use App\Models\PanelOrganizacion;
+use App\Models\Schedule;
+use App\Services\ImageService;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
+use RealRashid\SweetAlert\Facades\Alert;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Symfony\Component\HttpFoundation\Response;
 
 class OrganizacionController extends Controller
 {
@@ -120,12 +120,13 @@ class OrganizacionController extends Controller
             ]);
 
             $file = $request->file('logotipo');
-            $name_image = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-            $fileName = 'UID_'.$organizacions->id.'_'.$file->getClientOriginalName();
-            $new_name_image = 'UID_'.$organizacions->id.'_'.$name_image.'.jpeg';
+            //$name_image = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+            $hash_name = pathinfo($file->hashName(), PATHINFO_FILENAME);
+            //$fileName = 'UID_'.$organizacions->id.'_'.$file->getClientOriginalName();
+            $new_name_image = 'UID_'.$organizacions->id.'_'.$hash_name.'.png';
 
             // Call the ImageService to consume the external API
-            $apiResponse = ImageService::consumeExternalApi($file);
+            $apiResponse = ImageService::consumeImageCompresorApi($file);
 
             // Compress and save the image
             if ($apiResponse['status'] == 200) {
@@ -187,12 +188,13 @@ class OrganizacionController extends Controller
             ]);
 
             $file = $request->file('logotipo');
-            $name_image = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-            $fileName = 'UID_'.$organizacion->id.'_'.$file->getClientOriginalName();
-            $new_name_image = 'UID_'.$organizacion->id.'_'.$name_image.'.jpeg';
+            //$name_image = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+            $hash_name = pathinfo($file->hashName(), PATHINFO_FILENAME);
+            //$fileName = 'UID_'.$organizacion->id.'_'.$file->getClientOriginalName();
+            $new_name_image = 'UID_'.$organizacion->id.'_'.$hash_name.'.png';
 
             // Call the ImageService to consume the external API
-            $apiResponse = ImageService::consumeExternalApi($file);
+            $apiResponse = ImageService::consumeImageCompresorApi($file);
 
             // Compress and save the image
             if ($apiResponse['status'] == 200) {
