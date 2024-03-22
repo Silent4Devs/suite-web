@@ -301,10 +301,10 @@ class RequisicionesController extends Controller
         $requisicion = KatbolRequsicion::where('id', $id)->first();
 
         $user = User::getCurrentUser();
-        $supervisor = User::with('empleado')->find($requisicion->id_user)->supervisor->name;
-        $supervisor_email = User::where('name', '=', $supervisor->name)->email;
+        $supervisor = User::find($requisicion->id_user)->empleado->supervisor->name;
+        $supervisor_email = User::find($requisicion->id_user)->empleado->supervisor->email;
         $comprador = KatbolComprador::with('user')->where('id', $requisicion->comprador_id)->first();
-        dd($user, $supervisor, $supervisor_email, $comprador);
+        dd($supervisor, $supervisor_email);
 
         if ($requisicion->firma_solicitante === null) {
             $tipo_firma = 'firma_solicitante';
@@ -312,6 +312,7 @@ class RequisicionesController extends Controller
             if (removeUnicodeCharacters($supervisor_email) === removeUnicodeCharacters($user->email)) {
                 $tipo_firma = 'firma_jefe';
             } else {
+                dd($supervisor_email, $user->email, $requisicion->firma_jefe);
                 return view('contract_manager.requisiciones.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del jefe directo: <br> <strong>'.$supervisor.'</strong>');
             }
         } elseif ($requisicion->firma_finanzas === null) {
