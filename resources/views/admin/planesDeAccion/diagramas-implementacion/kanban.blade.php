@@ -44,7 +44,7 @@
                 <p id="idTaks" style="display: none;">
                     Contenido del div invisible
                 </p>
-                <button type="button" class="close" data-dismiss="modal">×</button>
+                <button type="button" class="close" data-dismiss="modal">X</button>
             </div>
             <!-- Modal body -->
             <div class="modal-body">
@@ -285,7 +285,7 @@
         var Kanban
         const imagePath = '{{ asset('img/plan-trabajo/documento.svg') }}';
         const imagePathEye = '{{ asset('img/plan-trabajo/visibility.svg') }}';
-        const imageTrash = '{{ asset('img/plan-trabajo/delete.svg') }}';
+        const imageTrash = '{{ asset('img/plan-trabajo/deleteX.svg') }}';
 
         function initKanban() {
             $.ajax({
@@ -479,7 +479,7 @@
             function pintar(id, status) {
                 var intro = document.getElementById(id);
                 var elementos = intro.querySelectorAll('*');
-                var elementoColorEstatus = elementos[7];
+                var elementoColorEstatus = intro.querySelector('#estatusColor');
                 elementoColorEstatus.style.backgroundColor = mapStatusToColor[status];
                 elementoColorEstatus.style.color = mapStatusToColorText[status];
                 elementoColorEstatus.textContent = mapStatusToEstatusText[status];
@@ -581,6 +581,7 @@
                 const resourcesCount = resources ? resources.length : 0;
                 const subtasksCount = subtasks ? subtasks.length : 0;
                 const subtasksReady = subtasks ? subtasks.filter(subtask => subtask.selected).length : 0;
+                const etiquetaColorHTML = tag ? tag.map(tagItem => `<div class="etiquetaColor ${etiquetaColors[tagItem.etiqueta]}"></div>`).join('') : '';
 
                 let cardpulseClass = "";
                 if (status === "STATUS_FAILED") {
@@ -595,7 +596,7 @@
                               <div class="contenido">
                                 <div class="etiquetaContenido">
                                   <div class="etiquetaTitulo">Etiqueta</div>
-                                  <div class="etiquetaColor"></div>
+                                  ${etiquetaColorHTML}
                                 </div>
                                 <div class="estatusContenido">
                                   <div class="estatusTitulo">Estatus</div>
