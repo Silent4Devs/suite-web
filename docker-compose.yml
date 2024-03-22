@@ -33,7 +33,7 @@ services:
         max-size: "30m"
         max-file: "1"
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:80" ]
+      test: ["CMD", "curl", "-f", "http://localhost:80"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -66,22 +66,6 @@ services:
       com.datadoghq.tags.env: "prod"
       com.datadoghq.tags.service: "tabantaj"
       com.datadoghq.tags.version: "1"
-
-  pgadmin-tabantaj:
-    depends_on:
-      - postgres-tabantaj
-    image: dpage/pgadmin4:latest
-    ports:
-      - "5480:80"
-    environment:
-      - PGADMIN_DEFAULT_PASSWORD=VnRE!Jib7W9@qeBN
-      - PGADMIN_DEFAULT_EMAIL=soporte.desarrollo@silent4business.com
-    restart: unless-stopped
-    tty: true
-    volumes:
-      - pgadmin-data:/var/lib/pgadmin
-    networks:
-      - tabantajnetwork
 
   php:
     #uncomment this if you will use only docker compose
@@ -176,6 +160,22 @@ services:
       - REDIS_1_HOST=redis-tabantaj # Replace with your Redis container name
       - REDIS_1_PORT=6379 # Replace with your Redis container port
       #- REDIS_1_AUTH=silent11!
+    networks:
+      - tabantajnetwork
+
+  pgadmin-tabantaj:
+    depends_on:
+      - postgres-tabantaj
+    image: dpage/pgadmin4:latest
+    ports:
+      - "5480:80"
+    environment:
+      - PGADMIN_DEFAULT_PASSWORD=VnRE!Jib7W9@qeBN
+      - PGADMIN_DEFAULT_EMAIL=soporte.desarrollo@silent4business.com
+    restart: unless-stopped
+    tty: true
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
     networks:
       - tabantajnetwork
 
@@ -391,4 +391,3 @@ networks:
   #     - 8081:8080
   #   networks:
   #     - tabantajnetwork
-

@@ -1,0 +1,22 @@
+# Paquetes principales
+selenium==3.141.0                   # Automatización del navegador web
+pytest==8.0.2                       # Marco de prueba
+pluggy==1.4.0                       # Plugin manager for pytest
+pytest-html==2.0.1                  # Generador de informes HTML para pytest
+pytest-xdist==3.5.0                 # Ejecución de pruebas en paralelo con pytest
+
+# Herramientas de desarrollo
+flake8==4.0.1                       # Herramienta de análisis de código estático
+black==22.1.0                       # Formateador de código Python
+mypy==0.910                         # Comprobador estático de tipos
+pytest-cov==3.0.0                   # Informes de cobertura para pruebas
+pytest-timeout==1.5.1               # Manejo de tiempo de espera en pruebas
+pytest-selenium==2.0.0              # Extensiones de Selenium para pytest
+
+# Utilidades adicionales
+requests==2.26.0                    # Biblioteca HTTP para pruebas de API
+beautifulsoup4==4.10.0              # Análisis HTML y XML
+allure-pytest==2.13.2               # Plugin para generación de informes Allure
+
+# Configuración de plataforma
+platform-darwin==3.11.7             # Plataforma macOS con Python 3.11.7
