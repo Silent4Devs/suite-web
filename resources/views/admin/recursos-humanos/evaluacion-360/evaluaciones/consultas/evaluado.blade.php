@@ -496,8 +496,10 @@
                                         {{ $objetivo['meta'] }} {{ $objetivo['metrica'] }}
                                     </div>
                                     <div class="text-center border col-1" style="font-size:10px">
-                                        @if ($objetivo['meta'] == 0 && !empty($maxParam) && $objetivo['meta_alcanzada'] >= $maxParam)
+                                        @if ($objetivo['meta'] == 0 && !empty($maxParam) && $objetivo['calificacion'] >= $maxParam)
                                             Cumplido
+                                        @elseif ($objetivo['meta'] == 0 && !empty($maxParam) && $objetivo['calificacion'] < $maxParam)
+                                            No Cumplido
                                         @else
                                             <span
                                                 data-objetivo-calificacion="{{ $objetivo['objetivo_calificacion_id'] }}">{{ $objetivo['calificacion'] }}</span>
