@@ -304,7 +304,7 @@ const addTaskToDOM = (taskElement) => {
 const updateProgressBar = () => {
     const checkboxes = document.querySelectorAll("#task-list input[type='checkbox']");
     const completedTasks = Array.from(checkboxes).filter(({ checked }) => checked).length;
-    const progressBarWidth = (completedTasks / checkboxes.length) * 100;
+    const progressBarWidth = (completedTasks / checkboxes.length) * 100 || 0;
     const progressBar = document.querySelector(".progress-bar");
     progressBar.style.width = `${progressBarWidth}%`;
 

@@ -178,6 +178,7 @@
     background-color: #057BE2 !important;
     color: #fff !important;
     }
+
 </style>
 <div class="table-plan-acc-index">
     <div style="align-items: end">
@@ -250,6 +251,7 @@
                                     $zero_task = collect($plan->tasks)->first(function ($task) {
                                         return $task->level == 0;
                                     });
+                                    echo '<div id="zero-task-value" style="display: none;">' . json_encode($zero_task) . '</div>';
                                     if ($zero_task) {
                                         echo '<div style="display: flex;justify-content: center;">' . date('d-m-Y', $zero_task->start / 1000) . '</div>';
                                     } else {
@@ -267,7 +269,7 @@
                                         return $task->level == 0;
                                     });
                                     if ($zero_task) {
-                                        echo '<div style="display: flex;justify-content: center;">' . date('d-m-Y', $zero_task->start / 1000) . '</div>';
+                                        echo '<div style="display: flex;justify-content: center;">' . date('d-m-Y', $zero_task->end / 1000) . '</div>';
                                     } else {
                                         echo '<span class="badge badge-primary">No encontrado</span>';
                                     }
