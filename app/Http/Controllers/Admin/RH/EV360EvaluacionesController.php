@@ -2124,13 +2124,12 @@ class EV360EvaluacionesController extends Controller
         ];
     }
 
-    public function resumen($evaluacion)
+    public function resumen($id_evaluacion)
     {
 
         abort_if(Gate::denies('seguimiento_evaluaciones_grafica'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $evaluacion = Evaluacion::with('evaluados:id,name,area_id,puesto_id,supervisor_id', 'rangos:id,descripcion')->find(intval($evaluacion));
-
+        $evaluacion = Evaluacion::with('evaluados:id,name,area_id,puesto_id,supervisor_id', 'rangos')->find(intval($id_evaluacion));
+        // dd($evaluacion->rangos);
         if (optional($evaluacion->rangos)->isNotEmpty()) {
             $evaluados = $evaluacion->evaluados;
             $lista_evaluados = collect();
@@ -2141,7 +2140,7 @@ class EV360EvaluacionesController extends Controller
             $sobresaliente = 0;
             $rangosResultados = optional($evaluacion->rangos)->pluck('valor', 'parametro')->all();
             $rangosColores = optional($evaluacion->rangos)->pluck('color', 'parametro')->all();
-            $maxValue = max(array_map('intval', $rangosResultados));
+            $maxValue = $this->findClosestValueToMax($rangosResultados);
 
             $ev360ResumenTabla = new Ev360ResumenTablaParametros();
 
@@ -2160,18 +2159,19 @@ class EV360EvaluacionesController extends Controller
             }
 
             $counts = [];
+            $val_porc = 100 / $maxValue;
             foreach ($lista_evaluados as $evaluado) {
                 $calificacionFinal = $evaluado['informacion_evaluacion']['calificacion_final'];
                 $previousValor = null;
 
                 foreach ($rangosResultados as $parametro => $valor) {
-                    if ($calificacionFinal <= $valor) {
+                    if ($calificacionFinal <= ($val_porc * $valor)) {
                         $counts[$parametro] = isset($counts[$parametro]) ? $counts[$parametro] + 1 : 1;
                         break; // Exit the inner loop when a match is found
-                    } elseif ($calificacionFinal > $previousValor && $calificacionFinal <= $valor) {
+                    } elseif ($calificacionFinal > ($val_porc * $previousValor) && $calificacionFinal <= ($val_porc * $valor)) {
                         $counts[$parametro] = isset($counts[$parametro]) ? $counts[$parametro] + 1 : 1;
                         break; // Exit the inner loop when a match is found
-                    } elseif ($valor == $maxValue && $calificacionFinal > $valor) {
+                    } elseif ($valor == $maxValue && $calificacionFinal > ($val_porc * $valor)) {
                         $counts[$parametro] = isset($counts[$parametro]) ? $counts[$parametro] + 1 : 1;
                         break; // Exit the inner loop when a match is found
                     }
@@ -2241,6 +2241,49 @@ class EV360EvaluacionesController extends Controller
 
             return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.resumen', compact('evaluacion', 'calificaciones', 'rangosResultados'));
         }
+    }
+
+    public function findClosestValueToMax($rangosResultados)
+    {
+        $rangos = [];
+        foreach ($rangosResultados as $r) {
+            $rangos[] = $r;
+        }
+        // dd($rangos);
+        // Check if the array is empty
+        if (empty($rangos)) {
+            return null; // or handle the empty case accordingly
+        }
+
+        // Convert array values to integers
+        $rangosInt = array_map('intval', $rangos);
+
+        // Find the maximum value
+        $maxValue = max($rangosInt);
+
+        // Sort the array in ascending order
+        sort($rangosInt);
+
+        // Find the key/index of the maximum value in the sorted array
+        $maxKey = array_search($maxValue, $rangosInt);
+
+        // Find the value previous to the maximum value
+        $previousValue = isset($rangosInt[$maxKey - 1]) ? $rangosInt[$maxKey - 1] : null;
+        // Find the value next to the maximum value
+        $nextValue = isset($rangosInt[$maxKey + 1]) ? $rangosInt[$maxKey + 1] : null;
+
+        // Determine which value is closer to the maximum value
+        $closestValue = ($nextValue - $maxValue) < ($maxValue - $previousValue) ? $nextValue : $previousValue;
+        if ($nextValue === null) {
+            $closestValue = $previousValue;
+        } elseif ($previousValue === null) {
+            $closestValue = $nextValue;
+        } else {
+            $closestValue = ($nextValue - $maxValue) < ($maxValue - $previousValue) ? $nextValue : $previousValue;
+        }
+
+        // dd($previousValue, $nextValue, $maxValue, $closestValue);
+        return $closestValue;
     }
 
     public function resumenJefe($evaluacion)
