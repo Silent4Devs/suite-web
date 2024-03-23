@@ -124,6 +124,7 @@ class PlanesAccionController extends Controller
             ],
         ];
 
+
         $planImplementacion = PlanImplementacion::create([ // Necesario se carga inicialmente el Diagrama Universal de Gantt
             'tasks' => $tasks,
             'canAdd' => true,
