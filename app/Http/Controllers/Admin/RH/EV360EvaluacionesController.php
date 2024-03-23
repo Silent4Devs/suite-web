@@ -1188,7 +1188,7 @@ class EV360EvaluacionesController extends Controller
             if (optional($cons_evaluacion->rangos)->isNotEmpty()) {
                 $ev360ResumenTabla = new Ev360ResumenTablaParametros();
                 $informacion_obtenida = $ev360ResumenTabla->obtenerInformacionDeLaConsultaPorEvaluado($evaluacion, $evaluado);
-                // dd($informacion_obtenida);
+
                 $calificaciones = $this->desglosarCalificaciones($informacion_obtenida);
                 $nombresObjetivos = [];
                 $metaObjetivos = [];
@@ -1231,7 +1231,6 @@ class EV360EvaluacionesController extends Controller
                 })->toArray();
                 $existeFirmaAuto = false;
                 $firmaAuto = 'img/signature.png';
-
                 if (! empty($informacion_obtenida['lista_autoevaluacion']) && is_array($informacion_obtenida['lista_autoevaluacion'])) {
                     // Check if the array is not empty and is an array
                     if (! empty($informacion_obtenida['lista_autoevaluacion'][0]['firma'])) {
