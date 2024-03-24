@@ -84,4 +84,3 @@ class PlanTrabajo_edit:
         select = Select(norma_edit)
         select.select_by_index(2)
         print("Norma editada")
-        pdb.set_trace()
