@@ -44,7 +44,7 @@
                 <p id="idTaks" style="display: none;">
                     Contenido del div invisible
                 </p>
-                <button type="button" class="close" data-dismiss="modal">×</button>
+                <button type="button" class="close" data-dismiss="modal">X</button>
             </div>
             <!-- Modal body -->
             <div class="modal-body">
@@ -245,18 +245,17 @@
                 </div>
                 <div id="sub-tareas">
                     <h6 class="textcomplement"
-                        style="border-bottom: 1px dashed #0000001C;font-size: 18px;padding-top: 20px;">Subtareas</h6>
+                        style="border-bottom: 1px dashed #0000001C;font-size: 18px;padding-top: 20px;">Sub tareas</h6>
                     <div>
                         <div id="task-container">
                             <div class="progress-container">
-                                <div class="progress-label">Progreso: 0%</div>
                                 <div class="progress-bar"></div>
                             </div>
                             <ul id="task-list"></ul>
                         </div>
                         <div id="task-add">
                             <button id="add-task-btn"></button>
-                            <input type="text" id="task-input" placeholder="Agregar sub tarea">
+                            <input type="text" id="task-input" placeholder="Agregar subtarea">
                         </div>
                     </div>
                 </div>
@@ -276,7 +275,11 @@
         </div>
     </div>
 </div>
+@php
+    use App\Models\User;
 
+    $usuario = User::getCurrentUser();
+@endphp
 
 @section('scripts')
     @parent
@@ -286,7 +289,7 @@
         var Kanban
         const imagePath = '{{ asset('img/plan-trabajo/documento.svg') }}';
         const imagePathEye = '{{ asset('img/plan-trabajo/visibility.svg') }}';
-        const imageTrash = '{{ asset('img/plan-trabajo/delete.svg') }}';
+        const imageTrash = '{{ asset('img/plan-trabajo/deleteX.svg') }}';
 
         function initKanban() {
             $.ajax({
@@ -379,7 +382,6 @@
                               <div class="contenido">
                                 <div class="etiquetaContenido">
                                   <div class="etiquetaTitulo">Etiqueta</div>
-                                  <div class="etiquetaColor"></div>
                                 </div>
                                 <div class="estatusContenido">
                                   <div class="estatusTitulo">Estatus</div>
@@ -450,7 +452,9 @@
                     const objet = tasks;
                     objet[objetoEncontrado].status = statusFinal;
                     response.tasks = objet;
-                    insertHistorico(statusInicial, statusFinal, objet[objetoEncontrado])
+                    const detalle = "ha movido esta tarjeta de " + mapStatusToEstatusText[statusInicial] + " a " +
+                        mapStatusToEstatusText[statusFinal];
+                    insertHistorico(detalle, objet[objetoEncontrado]);
                     saveOnServer(response);
                 } else {
                     console.log('No se encontró ningún objeto con el ID dado.');
@@ -458,13 +462,13 @@
 
             }
 
-            function insertHistorico(statusInicial, statusFinal, history) {
+            function insertHistorico(detalle, history) {
                 const timestamp = new Date().getTime();
+                var usuario = <?php echo json_encode($usuario); ?>;
                 const historicoNuevo = {
-                    "initialstatus": statusInicial,
-                    "finestatus": statusFinal,
+                    "detalle": detalle,
                     "fecha": timestamp,
-                    "edito": "user"
+                    "edito": usuario.empleado_id
                 };
 
                 if ('historic' in response) {
@@ -480,7 +484,7 @@
             function pintar(id, status) {
                 var intro = document.getElementById(id);
                 var elementos = intro.querySelectorAll('*');
-                var elementoColorEstatus = elementos[7];
+                var elementoColorEstatus = intro.querySelector('#estatusColor');
                 elementoColorEstatus.style.backgroundColor = mapStatusToColor[status];
                 elementoColorEstatus.style.color = mapStatusToColorText[status];
                 elementoColorEstatus.textContent = mapStatusToEstatusText[status];
@@ -513,9 +517,18 @@
 
                 //mostrar el historial
                 const htmlContentHistory = task.historic && task.historic.length > 0 ?
-                    "<ul>" + task.historic.map(item =>
-                        `<li class="log-list">Initial Status: ${mapStatusToEstatusText[item.initialstatus]}, Final Status: ${mapStatusToEstatusText[item.finestatus]}  Fecha: ${item.fecha} , Edito: ${item.edito} </li>`
-                    ).join("") + "</ul>" :
+                    task.historic.map(item => {
+                        const editedResource = response.resources.find(resource => resource.id === item.edito);
+                        const initials = editedResource.name.trim().split(' ').map(word => word.charAt(0)).join('')
+                            .toUpperCase();
+                        const color = editedResource && (editedResource.genero === 'H' ? '#7DC0EC' : '#EC7D94');
+                        const fecha = new Date(item.fecha);
+                        const fechaFormateada = fecha.toLocaleString();
+                        return `<div class="person" style="display: flex; align-items: center; margin-bottom: 5px; margin-left: 20px;">
+                        <div class="initials" style="background-color: ${color}; color: white; border-radius: 50%; width: 35px; height: 35px; display: flex; justify-content: center; align-items: center; margin-right: 5px;font-size: 10px;">${initials}</div>
+                        <div style="margin-left: 5px; margin-right: auto;"><a style="color: #818181;font-size: 14px; font-weight: bold;">${editedResource.name}</a> <a style="color: #818181;font-size: 12px;">${item.detalle}</a> <div>${fechaFormateada}</div></div>
+                    </div>`
+                    }).join(""):
                     "<span>No tiene historial</span>";
 
                 //funcion mostar los documentos adjuntos
@@ -576,13 +589,14 @@
                     end,
                     color,
                     subtasks,
-                    resources,
-                    tag
+                    resources
                 } = item;
 
                 const resourcesCount = resources ? resources.length : 0;
                 const subtasksCount = subtasks ? subtasks.length : 0;
                 const subtasksReady = subtasks ? subtasks.filter(subtask => subtask.selected).length : 0;
+                const etiquetaColorHTML = tag ? tag.map(tagItem =>
+                    `<div class="etiquetaColor ${etiquetaColors[tagItem.etiqueta]}"></div>`).join('') : '';
 
                 let cardpulseClass = "";
                 if (status === "STATUS_FAILED") {
@@ -597,7 +611,7 @@
                               <div class="contenido">
                                 <div class="etiquetaContenido">
                                   <div class="etiquetaTitulo">Etiqueta</div>
-                                  <div class="etiquetaColor"></div>
+                                  ${etiquetaColorHTML}
                                 </div>
                                 <div class="estatusContenido">
                                   <div class="estatusTitulo">Estatus</div>

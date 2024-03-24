@@ -304,13 +304,9 @@ const addTaskToDOM = (taskElement) => {
 const updateProgressBar = () => {
     const checkboxes = document.querySelectorAll("#task-list input[type='checkbox']");
     const completedTasks = Array.from(checkboxes).filter(({ checked }) => checked).length;
-    const progressBarWidth = (completedTasks / checkboxes.length) * 100;
+    const progressBarWidth = (completedTasks / checkboxes.length) * 100 || 0;
     const progressBar = document.querySelector(".progress-bar");
     progressBar.style.width = `${progressBarWidth}%`;
-
-    // Actualizar la etiqueta de progreso
-    const progressLabel = document.querySelector(".progress-label");
-    progressLabel.textContent = `Progreso: ${progressBarWidth.toFixed(2)}%`;
 };
 
 const clearTasks = () => {
@@ -374,11 +370,6 @@ const editTaskName = (event) => {
 };
 
 document.getElementById("add-task-btn").addEventListener("click", addTask);
-document.getElementById("task-input").addEventListener("keypress", function(event) {
-    if (event.key === "Enter") {
-        addTask();
-    }
-  });
 /// se agrega logica para etiquetas etiquetas ////////////////
 var circleContainer = document.getElementById('circle-container');
 var listArrayP1 = [];
@@ -402,15 +393,6 @@ var tagss = [
     { etiqueta: "etiqueta5" },
     { etiqueta: "etiqueta6" }
 ];
-
-const etiquetaColors = {
-    "etiqueta1": "color1",
-    "etiqueta2": "color2",
-    "etiqueta3": "color3",
-    "etiqueta4": "color4",
-    "etiqueta5": "color5",
-    "etiqueta6": "color6"
-};
 var tagCheckboxesMap = {};
 
 // Mapeo de etiquetas a checkboxes ///////////////////////////////
@@ -598,24 +580,3 @@ function addOptionsFromArray(dataArray, personasAsignadas) {
         }
     });
 }
-/// funcion para calcular dias entre fecha
-function calcularDiferenciaFechas(inicio, fin) {
-    var fechaInicio = new Date(inicio);
-    var fechaFin = new Date(fin);
-    var diferencia = fechaFin.getTime() - fechaInicio.getTime();
-    var dias = Math.ceil(diferencia / (1000 * 3600 * 24));
-    return dias;
-}
-
-// Función para actualizar el campo de días al cambiar las fechas
-function actualizarDias() {
-    var inicio = $("#inicio").val();
-    var fin = $("#fin").val();
-    if (inicio && fin) {
-        var dias = calcularDiferenciaFechas(inicio, fin);
-        $("#diasLabel").val(dias);
-    }
-}
-
-// Asignar el evento de cambio a los campos de fecha
-$("#inicio, #fin").change(actualizarDias);
