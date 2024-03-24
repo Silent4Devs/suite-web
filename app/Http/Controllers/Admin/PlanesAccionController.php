@@ -397,9 +397,7 @@ class PlanesAccionController extends Controller
                 'entidad_crediticias_id',
                 'semanas_min_timesheet',
                 'vacante_activa'
-            )
-            ->where('estatus', 'alta') // Filtrar por estatus activo
-            ->get();
+            )->get();
         $roles = DB::table('roles')
             ->select(
                 'id',

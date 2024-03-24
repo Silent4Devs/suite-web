@@ -405,7 +405,7 @@ class Ev360ResumenTablaParametros extends Component
                 if (count($evaluadores_objetivos->first()['objetivos'])) {
                     // dd($evaluadores_objetivos->first()['objetivos']);
                     foreach ($evaluadores_objetivos->first()['objetivos'] as $objetivo) {
-                        $calificacion_objetivos += $objetivo['calificacion'] / ($objetivo['meta'] > 0 ? $objetivo['meta'] : $closestValue);
+                        $calificacion_objetivos += $objetivo['calificacion'] / ($objetivo['meta'] > 0 ? $objetivo['meta'] : 1);
                         // dd($calificacion_objetivos);
                     }
                 }
