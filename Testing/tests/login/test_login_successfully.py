@@ -6,5 +6,5 @@ from testing.pages.login.login_successfully import LoginPage
 def test_login(browser):
     username = "zaid.garcia@becarios.silent4business.com"
     password = "Administrador2"
-    login_page = LoginPage(browser)
-    login_page.login(username, password)
+    login_successfully = LoginPage(browser)
+    login_successfully.login(username, password)
