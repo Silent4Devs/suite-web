@@ -3734,16 +3734,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "3.25.1",
+            "version": "3.26.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "abbd664eb4381102c559d358420989f835208f18"
+                "reference": "072735c56cc0da00e10716dd90d5a7f7b40b36be"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/abbd664eb4381102c559d358420989f835208f18",
-                "reference": "abbd664eb4381102c559d358420989f835208f18",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/072735c56cc0da00e10716dd90d5a7f7b40b36be",
+                "reference": "072735c56cc0da00e10716dd90d5a7f7b40b36be",
                 "shasum": ""
             },
             "require": {
@@ -3808,7 +3808,7 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/flysystem/issues",
-                "source": "https://github.com/thephpleague/flysystem/tree/3.25.1"
+                "source": "https://github.com/thephpleague/flysystem/tree/3.26.0"
             },
             "funding": [
                 {
@@ -3820,7 +3820,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-03-16T12:53:19+00:00"
+            "time": "2024-03-25T11:49:53+00:00"
         },
         {
             "name": "league/flysystem-local",
@@ -8137,16 +8137,16 @@
         },
         {
             "name": "spatie/laravel-responsecache",
-            "version": "7.5.0",
+            "version": "7.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-responsecache.git",
-                "reference": "c6880344402b53fbf32d4f8dd5df8bff9f725c36"
+                "reference": "c7a173858088e95046faf785c4b69cea8cfa4f40"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-responsecache/zipball/c6880344402b53fbf32d4f8dd5df8bff9f725c36",
-                "reference": "c6880344402b53fbf32d4f8dd5df8bff9f725c36",
+                "url": "https://api.github.com/repos/spatie/laravel-responsecache/zipball/c7a173858088e95046faf785c4b69cea8cfa4f40",
+                "reference": "c7a173858088e95046faf785c4b69cea8cfa4f40",
                 "shasum": ""
             },
             "require": {
@@ -8155,7 +8155,7 @@
                 "illuminate/container": "^10.0|^11.0",
                 "illuminate/http": "^10.0|^11.0",
                 "illuminate/support": "^10.0|^11.0",
-                "nesbot/carbon": "^2.63",
+                "nesbot/carbon": "^2.63|^3.0",
                 "php": "^8.2",
                 "spatie/laravel-package-tools": "^1.9"
             },
@@ -8204,7 +8204,7 @@
                 "spatie"
             ],
             "support": {
-                "source": "https://github.com/spatie/laravel-responsecache/tree/7.5.0"
+                "source": "https://github.com/spatie/laravel-responsecache/tree/7.5.1"
             },
             "funding": [
                 {
@@ -8216,7 +8216,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-03-11T23:35:58+00:00"
+            "time": "2024-03-23T06:44:45+00:00"
         },
         {
             "name": "spatie/macroable",
@@ -15032,5 +15032,5 @@
         "php": "^8.1"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }
