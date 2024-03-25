@@ -22,9 +22,12 @@
                         <tr>
                             <td>{{ $obj_evld->objetivo }}</td>
                             <td>
-                                <select name="aplica" id="aplica">
-                                    <option value="true">Aplica</option>
-                                    <option value="false">No Aplica</option>
+                                <select name="aplica" id="aplica"
+                                    wire:change="aplicaObjetivo({{ $obj_evld->id }}, $event.target.value)">
+                                    <option value="true" @if ($obj_evld->aplicabilidad == true) selected @endif>Aplica
+                                    </option>
+                                    <option value="false" @if ($obj_evld->aplicabilidad == false) selected @endif>No Aplica
+                                    </option>
                                 </select>
                             </td>
                             @foreach ($obj_evld->escalas as $obj_esc)
@@ -40,7 +43,7 @@
                                 </button>
 
                                 <!-- Modal -->
-                                <div wire:ignore class="modal fade" id="evidenciaObjetivo{{ $obj_evld->id }}"
+                                <div wire:ignore.self class="modal fade" id="evidenciaObjetivo{{ $obj_evld->id }}"
                                     tabindex="-1" aria-labelledby="evidenciaObjetivo{{ $obj_evld->id }}Label"
                                     aria-hidden="true">
                                     <div class="modal-dialog">
@@ -54,8 +57,25 @@
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                <input type="file" wire:model="file"
-                                                    wire:change="asignarObjArchivo({{ $obj_evld->id }})">
+                                                <div class="row">
+                                                    <input type="file" id="file" name="file"
+                                                        wire:model="file"
+                                                        wire:change="asignarObjArchivo({{ $obj_evld->id }})">
+                                                </div>
+
+                                                @foreach ($obj_evidencias[$key] as $key_evidencia => $evidencia)
+                                                    <div class="row">
+                                                        <div class="col-3">
+                                                            <a class="btn-link" data-toggle="modal"
+                                                                data-target="#modalArchivo"
+                                                                wire:click="mostrarArchivo({{ $obj_evld->id }},{{ $evidencia['id'] }})">{{ $evidencia['nombre_archivo'] }}</a>
+                                                        </div>
+                                                        <div class="col-9">
+                                                            <textarea name="comentario_{{ $key_evidencia }}" id="comentario_{{ $key_evidencia }}" style="min-width: 100%"
+                                                                wire:change="comentarioObjetivo({{ $evidencia['id'] }}, $event.target.value)">{{ $evidencia->comentarios ?? null }}</textarea>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"
@@ -67,10 +87,15 @@
                                 </div>
                             </td>
                             <td>
-                                <input id="pregunta_n{{ $key }}"
-                                    value="{{ $obj_evld->calificacion_objetivo ?? null }}"
-                                    wire:change="evaluarObjetivo({{ $obj_evld->id }}, $event.target.value)"
-                                    type="number">
+                                <div class="row">
+                                    <input id="pregunta_n{{ $key }}"
+                                        value="{{ $obj_evld->calificacion_objetivo ?? null }}"
+                                        wire:change="evaluarObjetivo({{ $obj_evld->id }}, $event.target.value)"
+                                        type="number">
+                                </div>
+                                <div class="row">
+                                    {{ $calificacion_escala[$obj_evld->id] }}
+                                </div>
                             </td>
                             <td></td>
                         </tr>
@@ -82,4 +107,50 @@
         <h1>No tiene permitido evaluar Objetivos</h1>
     @endif
 
+    <div wire:ignore.self class="modal fade" id="modalArchivo" tabindex="-1" aria-labelledby="modalArchivoLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalArchivoLabel">
+                        Evidencias</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @switch ($extension_arch)
+                        @case ('pdf')
+                            <embed src="{{ asset($archivo_mostrado) }}" type="application/pdf" width="100%" height="600px" />
+                        @break;
+                        @case ('jpg')
+                            <img src="{{ asset($archivo_mostrado) }}" type="image/jpeg" width="100%" height="600px" />
+                        @break;
+                        @case ('jpeg')
+                            <img src="{{ asset($archivo_mostrado) }}" type="image/jpeg" width="100%" height="600px" />
+                        @break;
+                        @case ('png')
+                            <img src="{{ asset($archivo_mostrado) }}" type="image/png" width="100%" height="600px" />
+                        @break;
+                        @case ('xls')
+                            <embed src="{{ asset($archivo_mostrado) }}" type="application/vnd.ms-excel" width="100%"
+                                height="600px" />
+                        @break;
+                        @case ('xlsx')
+                            <embed src="{{ asset($archivo_mostrado) }}" type="application/vnd.ms-excel" width="100%"
+                                height="600px" />
+                        @break;
+                        @case ('docx')
+                            <embed src="{{ asset($archivo_mostrado) }}" type="application/msword" width="100%"
+                                height="600px" />
+                        @break;
+
+                        @default
+                            <h1>Error al cargar archivo</h1>
+                        @break;
+                    @endswitch
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

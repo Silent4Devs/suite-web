@@ -24,6 +24,7 @@ class CuestionarioObjetivoEvDesempeno extends Model
         'evaluador_desempeno_id',
         'calificacion_objetivo',
         'estatus_calificado',
+        'aplicabilidad',
     ];
 
     public function evaluacionDesempeno()
@@ -44,5 +45,10 @@ class CuestionarioObjetivoEvDesempeno extends Model
     public function escalas()
     {
         return $this->hasMany(EscalasObjCuestionarioEvDesempeno::class, 'pregunta_cuest_obj_ev_des_id', 'id');
+    }
+
+    public function evidencias()
+    {
+        return $this->hasMany(EvidenciaObjCuestionarioEvDesempeno::class, 'pregunta_cuest_obj_ev_des_id', 'id');
     }
 }

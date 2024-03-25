@@ -2,8 +2,6 @@
 
 namespace App\Http\Livewire;
 
-// use App\Models\CategoriaObjetivosDesempeno;
-
 use App\Models\EscalasMedicionObjetivos;
 use App\Models\EscalasObjetivosDesempeno;
 use App\Models\ObjetivosDesempenoEmpleados;
@@ -12,6 +10,7 @@ use App\Models\RH\MetricasObjetivo;
 use App\Models\RH\Objetivo;
 use App\Models\RH\ObjetivoEmpleado;
 use App\Models\RH\TipoObjetivo;
+use App\Models\User;
 use Carbon\Carbon;
 use Livewire\Component;
 
@@ -62,7 +61,6 @@ class FormularioObjetivosDesempenoEmpleados extends Component
                     'parametro_id' => $e->id,
                 ];
         }
-        // dd($this->array_escalas_objetivos);
 
         $periodo = PeriodoCargaObjetivos::first();
         $hoy = Carbon::today();
@@ -86,6 +84,18 @@ class FormularioObjetivosDesempenoEmpleados extends Component
 
     public function crearObjetivo()
     {
+        $usuario = User::getCurrentUser();
+
+        // dd($usuario->can('objetivos_estrategicos_agregar'));
+
+        if ($usuario->can('objetivos_estrategicos_agregar')) {
+            $estatus = 1;
+        } elseif ($usuario->empleado->es_supervisor) {
+            $estatus = 1;
+        } else {
+            $estatus = 0;
+        }
+
         $objetivo = Objetivo::create([
             'nombre' => $this->objetivo_estrategico,
             'descripcion' => $this->descripcion,
@@ -93,7 +103,7 @@ class FormularioObjetivosDesempenoEmpleados extends Component
             'KPI' => $this->KPI,
             'metrica_id' => $this->select_unidad,
             'empleado_id' => $this->id_emp,
-            'estatus' => 0,
+            'estatus' => $estatus,
         ]);
         // dd($this->mensual);
         ObjetivoEmpleado::create([
@@ -110,6 +120,7 @@ class FormularioObjetivosDesempenoEmpleados extends Component
             'anualmente' => $this->anualmente,
             'abierta' => $this->abierta,
         ]);
+
         foreach ($this->array_escalas_objetivos as $key => $esc_obj) {
             // dd($this->array_escalas_objetivos[$key]['parametro_id']);
             EscalasObjetivosDesempeno::create([

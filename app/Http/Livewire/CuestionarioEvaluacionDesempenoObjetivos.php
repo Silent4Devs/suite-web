@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Models\CuestionarioObjetivoEvDesempeno;
 use App\Models\EscalasMedicionObjetivos;
 use App\Models\EvaluacionDesempeno;
+use App\Models\EvidenciaObjCuestionarioEvDesempeno;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
@@ -25,6 +26,8 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
     public $evaluacion;
     public $evaluado;
     public $objetivos_evaluado;
+    public $obj_evidencias;
+    public $calificacion_escala = [];
 
     //Campos para validación dependiendo de lo que el evaluador vaya a evaluar
     public $validacion_objetivos_evaluador;
@@ -32,8 +35,10 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
     public $escalas;
     public $conducta;
 
-    public $file;
+    public $file = null;
     public $id_obj_arch;
+    public $extension_arch;
+    public $archivo_mostrado;
 
 
     public function mount($id_evaluacion, $id_evaluado)
@@ -59,7 +64,7 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
     public function buscarObjetivos()
     {
         $this->escalas = EscalasMedicionObjetivos::get();
-        // dd($this->escalas);
+
         $this->validacion_objetivos_evaluador = false;
 
         foreach ($this->evaluado->evaluadoresObjetivos as $key => $evlr) {
@@ -70,6 +75,68 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
 
                 break;
             }
+        }
+
+        foreach ($this->objetivos_evaluado as $key_objetivo => $obj_evld) {
+            foreach ($obj_evld->evidencias as $key_evidencia => $evid) {
+                $this->obj_evidencias[$key_objetivo][$key_evidencia] = [
+                    "id" => $evid->id,
+                    "pregunta_cuest_obj_ev_des_id" => $evid->pregunta_cuest_obj_ev_des_id,
+                    "nombre_archivo" => $evid->nombre_archivo,
+                    "comentarios" => $evid->comentarios,
+                ];
+            }
+
+            foreach ($this->objetivos_evaluado as $key_objetivo => $obj_evld) {
+                foreach ($obj_evld->escalas as $obj_esc) {
+                    switch ($obj_esc->condicion) {
+                        case '1':
+                            if (
+                                $obj_evld->calificacion_objetivo <
+                                $obj_esc->valor
+                            ) {
+                                $this->calificacion_escala[$obj_evld->id] = $obj_esc->parametro;
+                            }
+                            break;
+                        case '2':
+                            if (
+                                $obj_evld->calificacion_objetivo <=
+                                $obj_esc->valor
+                            ) {
+                                $this->calificacion_escala[$obj_evld->id] = $obj_esc->parametro;
+                            }
+                            break;
+                        case '3':
+                            if (
+                                $obj_evld->calificacion_objetivo ==
+                                $obj_esc->valor
+                            ) {
+                                $this->calificacion_escala[$obj_evld->id] = $obj_esc->parametro;
+                            }
+                            break;
+                        case '4':
+                            if (
+                                $obj_evld->calificacion_objetivo >
+                                $obj_esc->valor
+                            ) {
+                                $this->calificacion_escala[$obj_evld->id] = $obj_esc->parametro;
+                            }
+                            break;
+                        case '5':
+                            if (
+                                $obj_evld->calificacion_objetivo >=
+                                $obj_esc->valor
+                            ) {
+                                $this->calificacion_escala[$obj_evld->id] = $obj_esc->parametro;
+                            }
+                            break;
+                        default:
+                            return '=';
+                            break;
+                    }
+                }
+            }
+            // dd($calificacion_escala[4]);
         }
     }
 
@@ -82,7 +149,7 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
                 'estatus_calificado' => true,
             ]);
 
-            $this->alertaGuardadoCorrecto();
+            $this->alertaGuardadoCorrecto('Respuesta');
             $this->buscarObjetivos();
         } catch (\Throwable $th) {
             $this->alertaGuardadoIncorrecto();
@@ -92,20 +159,83 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
 
     public function updatedFile()
     {
-        // dd($this->id_obj_arch, $this->file);
+        try {
+            $ruta_evidencias = 'public/evaluaciones_desempeno/evaluacion/' . $this->evaluacion->id . '/evidencia/objetivo/' . $this->id_obj_arch . '/evaluado' . '/' . $this->evaluado->id;
 
-        $ruta_evidencias = 'public/evaluaciones_desempeno/evaluacion/' . $this->evaluacion->id . '/evidencia/objetivo/' . $this->id_obj_arch . '/evaluado' . '/' . $this->evaluado->id;
+            if (!Storage::exists($ruta_evidencias)) {
+                Storage::makeDirectory($ruta_evidencias, 0775, true);
+            }
 
-        if (!Storage::exists($ruta_evidencias)) {
-            Storage::makeDirectory($ruta_evidencias, 0775, true);
+            $originalFilename = $this->file->getClientOriginalName();
+
+            $this->file->storeAs($ruta_evidencias, $originalFilename);
+
+            EvidenciaObjCuestionarioEvDesempeno::create([
+                'pregunta_cuest_obj_ev_des_id' => $this->id_obj_arch,
+                'nombre_archivo' => $originalFilename,
+            ]);
+
+            $this->file = null;
+
+            $this->alertaGuardadoCorrecto('Evidencia');
+            $this->buscarObjetivos();
+        } catch (\Throwable $th) {
+            $this->alertaGuardadoIncorrecto();
+            $this->buscarObjetivos();
         }
+    }
 
-        $path = $this->file->store($ruta_evidencias);
-        // Storage::put($ruta_evidencias . '/' . $this->file->getClientOriginalName(), file_get_contents($this->file));
+    public function comentarioObjetivo($evidencia_id, $valor)
+    {
+        try {
+            $obj_com = EvidenciaObjCuestionarioEvDesempeno::findOrFail($evidencia_id);
 
-        // if(){
+            $obj_com->update([
+                'comentarios' => $valor,
+            ]);
+            $this->alertaGuardadoCorrecto('Comentario');
+        } catch (\Throwable $th) {
+            $this->alertaGuardadoIncorrecto();
+        }
+    }
 
-        // }
+    public function mostrarArchivo($id_archivo_obj, $id_archivo_mostrar)
+    {
+        $archivo = EvidenciaObjCuestionarioEvDesempeno::findOrFail($id_archivo_mostrar);
+
+        $ruta_evidencias =
+            'storage/evaluaciones_desempeno/evaluacion/' . $this->evaluacion->id . '/evidencia/objetivo/' . $id_archivo_obj . '/evaluado' . '/' . $this->evaluado->id . '/' . $archivo->nombre_archivo;
+
+        $extension = pathinfo($ruta_evidencias, PATHINFO_EXTENSION);
+
+        $this->archivo_mostrado = $ruta_evidencias;
+
+        switch ($extension) {
+            case 'pdf':
+                $this->extension_arch = $extension;
+                break;
+            case 'jpg':
+                $this->extension_arch = $extension;
+                break;
+            case 'jpeg':
+                $this->extension_arch = $extension;
+                break;
+            case 'png':
+                $this->extension_arch = $extension;
+                break;
+            case 'xls':
+                $this->extension_arch = $extension;
+                break;
+            case 'xlsx':
+                $this->extension_arch = $extension;
+                break;
+            case 'docx':
+                $this->extension_arch = $extension;
+                break;
+            default:
+                $this->extension_arch = 'Desconocido';
+                break;
+        }
     }
 
     public function asignarObjArchivo($id_obj)
@@ -113,13 +243,29 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
         $this->id_obj_arch = $id_obj;
     }
 
-    public function alertaGuardadoCorrecto()
+    public function aplicaObjetivo($obj_apl_id, $valor)
     {
-        $this->alert('success', 'Respuesta Guardada', [
+        try {
+            $objetivo = CuestionarioObjetivoEvDesempeno::find($obj_apl_id);
+            $objetivo->update([
+                'aplicabilidad' => $valor,
+            ]);
+
+            $this->alertaGuardadoCorrecto('Estatus');
+            $this->buscarObjetivos();
+        } catch (\Throwable $th) {
+            $this->alertaGuardadoIncorrecto();
+            $this->buscarObjetivos();
+        }
+    }
+
+    public function alertaGuardadoCorrecto($alerta)
+    {
+        $this->alert('success', $alerta . ' Guardada', [
             'position' => 'top-end',
             'timer' => '4000',
             'toast' => true,
-            'text' => 'La respuesta se ha guardado correctamente.',
+            'text' => 'La ' . $alerta . ' se ha guardado correctamente.',
         ]);
     }
 
@@ -129,7 +275,7 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
             'position' => 'top-end',
             'timer' => '4000',
             'toast' => true,
-            'text' => 'Ha ocurrido un error al guardar la respuesta.',
+            'text' => 'Ha ocurrido un error al guardar.',
         ]);
     }
 }

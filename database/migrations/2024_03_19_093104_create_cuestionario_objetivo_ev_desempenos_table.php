@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('unidad_objetivo');
             $table->double('valor_maximo_unidad_objetivo');
             $table->double('valor_minimo_unidad_objetivo');
+            $table->boolean('aplicabilidad')->default(true);
 
             $table->unsignedBigInteger('evaluacion_desempeno_id');
             $table->unsignedBigInteger('evaluado_desempeno_id');

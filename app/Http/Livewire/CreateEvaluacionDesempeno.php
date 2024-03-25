@@ -263,6 +263,39 @@ class CreateEvaluacionDesempeno extends Component
         foreach ($evaluacion->evaluados as $evaluado) {
             if ($evaluacion->activar_objetivos) {
                 $obj_per = $empleados->find($evaluado->evaluado_desempeno_id)->objetivosPeriodo($this->periodo_evaluacion);
+
+                //Autoevaluacion
+                foreach ($obj_per as $obj) {
+                    $new_objetivo = CuestionarioObjetivoEvDesempeno::create(
+                        [
+                            'objetivo' => $obj->objetivo->nombre,
+                            'descripcion_objetivo' => $obj->objetivo->descripcion_meta,
+                            'KPI' => $obj->objetivo->KPI,
+                            'tipo_objetivo' => $obj->objetivo->tipo->nombre,
+                            'unidad_objetivo' => $obj->objetivo->metrica->definicion,
+                            'valor_minimo_unidad_objetivo' => $obj->objetivo->metrica->valor_minimo,
+                            'valor_maximo_unidad_objetivo' => $obj->objetivo->metrica->valor_maximo,
+                            'evaluacion_desempeno_id' => $evaluado->evaluacion_desempeno_id,
+                            'evaluado_desempeno_id' => $evaluado->id,
+                            'evaluador_desempeno_id' => $evaluado->id,
+                            'calificacion_objetivo' => null,
+                            'estatus_calificado' => false,
+                        ]
+                    );
+
+                    foreach ($obj->objetivo->escalas as $escala) {
+                        EscalasObjCuestionarioEvDesempeno::create(
+                            [
+                                'pregunta_cuest_obj_ev_des_id' => $new_objetivo->id,
+                                'condicion' => $escala->condicion,
+                                'parametro' => $escala->parametro->parametro,
+                                'valor' => $escala->valor,
+                                'color' => $escala->parametro->color,
+                            ]
+                        );
+                    }
+                }
+
                 foreach ($evaluado->evaluadoresObjetivos as $key => $evlr_obj) {
                     // $batch_objetivo = []; Inhabilitado para crear la relacion
                     foreach ($obj_per as $obj) {
@@ -300,6 +333,31 @@ class CreateEvaluacionDesempeno extends Component
 
             if ($evaluacion->activar_competencias) {
                 $comp_per = $empleados->find($evaluado->evaluado_desempeno_id)->puestoRelacionado->competencias;
+
+                //Autoevaluacion
+
+                foreach ($comp_per as $comp) {
+                    $new_competencia = CuestionarioCompetenciaEvDesempeno::create([
+                        'competencia' => $comp->competencia->nombre,
+                        'descripcion_competencia' => $comp->competencia->descripcion,
+                        'tipo_competencia' => $comp->competencia->tipo->nombre,
+                        'nivel_esperado' => $comp->nivel_esperado,
+                        'evaluacion_desempeno_id' => $evaluado->evaluacion_desempeno_id,
+                        'evaluado_desempeno_id' => $evaluado->id,
+                        'evaluador_desempeno_id' => $evaluado->id,
+                        'calificacion_competencia' => null,
+                        'estatus_calificado' => false,
+                    ]);
+
+                    foreach ($comp->competencia->opciones as $opciones) {
+                        ConductasCompCuestionarioEvDesempenos::create([
+                            'pregunta_cuest_comp_ev_des_id' => $new_competencia->id,
+                            'definicion' => $opciones->definicion,
+                            'ponderacion' => $opciones->ponderacion,
+                        ]);
+                    }
+                }
+
                 foreach ($evaluado->evaluadoresCompetencias as $key => $evlr_comp) {
                     // $batch_competencia = [];
                     foreach ($comp_per as $comp) {
