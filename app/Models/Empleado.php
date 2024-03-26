@@ -213,7 +213,7 @@ class Empleado extends Model implements Auditable
     public static function getEmpleadoCurriculum($id)
     {
         return
-            Cache::remember('Empleados:EmpleadoCurriculum_'.$id, 3600 * 8, function () use ($id) {
+            Cache::remember('Empleados:EmpleadoCurriculum_' . $id, 3600 * 8, function () use ($id) {
                 return self::alta()->with('empleado_certificaciones', 'empleado_cursos', 'empleado_experiencia')->findOrFail($id);
             });
     }
@@ -275,6 +275,15 @@ class Empleado extends Model implements Auditable
                 ->get();
         });
     }
+
+    // public static function getAllEvaluaciones()
+    // {
+    //     return Cache::remember('Empleados:empleados_all_evaluaciones', 3600 * 6, function () {
+    //         return DB::table('empleados')
+    //             ->select('id', 'name', 'foto', 'area_id', 'puesto_id', 'supervisor_id')
+    //             ->get();
+    //     });
+    // }
 
     public static function getAllDataObjetivosEmpleado()
     {
@@ -351,14 +360,14 @@ class Empleado extends Model implements Auditable
 
     public function getActualBirdthdayAttribute()
     {
-        $birdthday = date('Y').'-'.Carbon::parse($this->cumpleaños)->format('m-d');
+        $birdthday = date('Y') . '-' . Carbon::parse($this->cumpleaños)->format('m-d');
 
         return $birdthday;
     }
 
     public function getActualAniversaryAttribute()
     {
-        $aniversario = date('Y').'-'.Carbon::parse($this->antiguedad)->format('m-d');
+        $aniversario = date('Y') . '-' . Carbon::parse($this->antiguedad)->format('m-d');
 
         return $aniversario;
     }
@@ -444,7 +453,7 @@ class Empleado extends Model implements Auditable
             }
         }
 
-        return asset('storage/empleados/imagenes/'.$this->foto);
+        return asset('storage/empleados/imagenes/' . $this->foto);
     }
 
     public function area()
@@ -486,12 +495,12 @@ class Empleado extends Model implements Auditable
 
     public function getCompetenciasAsignadasAttribute()
     {
-        return ! is_null($this->puestoRelacionado) ? $this->puestoRelacionado->competencias->count() : 0;
+        return !is_null($this->puestoRelacionado) ? $this->puestoRelacionado->competencias->count() : 0;
     }
 
     public function getObjetivosAsignadosAttribute()
     {
-        $cuenta_objetivos = ! is_null($this->objetivos) ? $this->objetivos->count() : 0;
+        $cuenta_objetivos = !is_null($this->objetivos) ? $this->objetivos->count() : 0;
         $objetivos = $this->objetivos;
 
         $objetivo_pendiente = false;
