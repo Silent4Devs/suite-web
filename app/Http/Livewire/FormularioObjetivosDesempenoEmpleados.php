@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire;
 
+use App\Mail\CorreoObjetivoAprobado;
+use App\Mail\CorreoObjetivoRechazado;
 use App\Mail\CorreoObjetivosPendientes;
 use App\Models\Empleado;
 use App\Models\EscalasMedicionObjetivos;
@@ -115,13 +117,37 @@ class FormularioObjetivosDesempenoEmpleados extends Component
 
     public function enviarCorreo()
     {
-        $usuario = User::getCurrentUser();
-        $empleado = Empleado::getaltaAllObjetivoSupervisorChildren()->find($this->id_emp);
-
-        $mail_supervisor = $usuario->empleado->supervisor->email;
-
         try {
+            $usuario = User::getCurrentUser();
+            $empleado = Empleado::getaltaAllObjetivoSupervisorChildren()->find($this->id_emp);
+
+            $mail_supervisor = $usuario->empleado->supervisor->email;
+
             Mail::to(removeUnicodeCharacters($mail_supervisor))->queue(new CorreoObjetivosPendientes($empleado, $this->cuentaObjPend));
+        } catch (\Throwable $th) {
+            dd($th);
+        }
+    }
+
+    public function revision($id_obj, $estado)
+    {
+        try {
+            $est_obj = Objetivo::find($id_obj);
+            $empleado = Empleado::getAltaDataColumns()->find($this->id_emp);
+
+            if ($estado == "aprobar") {
+                $est_obj->update([
+                    'esta_aprobado' => 1
+                ]);
+                Mail::to(removeUnicodeCharacters($empleado->email))->queue(new CorreoObjetivoAprobado($empleado, $est_obj));
+                $this->render();
+            } elseif ($estado == "rechazar") {
+                $est_obj->update([
+                    'esta_aprobado' => 2
+                ]);
+                Mail::to(removeUnicodeCharacters($empleado->email))->queue(new CorreoObjetivoRechazado($empleado, $est_obj));
+                $this->render();
+            }
         } catch (\Throwable $th) {
             dd($th);
         }

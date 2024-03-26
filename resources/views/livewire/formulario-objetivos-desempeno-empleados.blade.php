@@ -270,6 +270,7 @@
                         <th>Estatus</th>
                         <th>Meta</th>
                         <th>Periodo</th>
+                        <th>Revisión</th>
                         <th>Opciones</th>
                     </tr>
                 </thead>
@@ -302,6 +303,14 @@
                             </td>
                             <td>{{ $obj->objetivo->meta }}</td>
                             <td>Periodo</td>
+                            <td>
+                                @if ($obj->objetivo->esta_aprobado == 0)
+                                    <a wire:click.prevent="revision({{ $obj->objetivo->id }}, 'aprobar')">Aprobar</a>
+                                    <a
+                                        wire:click.prevent="revision({{ $obj->objetivo->id }}, 'rechazar')">Rechazar</a>
+                                @endif
+
+                            </td>
                             <td>
                                 <div class="dropdown btn-options-foda-card">
                                     <button class="btn dropdown-toggle" type="button" data-toggle="dropdown"
