@@ -11,7 +11,7 @@ import pdb
 tiempo_modulos = 5
 tiempo_carga = 10
 tiempo_espera = 3
-tiempo_llenado = 2
+tiempo_llenado = 1
 tiempo_diez = 10
 tiempo_largo = 120
 
@@ -62,7 +62,7 @@ class Evaluaciones_360_create_page:
         
         print("URL actual:", self.driver.current_url)
         
-        time.sleep(tiempo_modulos)
+        time.sleep(tiempo_llenado)
         
     def in_modulos(self):
         
@@ -73,7 +73,7 @@ class Evaluaciones_360_create_page:
         )
         btn_hmaburguesa.click()
         
-        time.sleep(tiempo_espera)
+        time.sleep(tiempo_llenado)
         
         # Entrando a Gestión Talento 
         print("Entrando a Gestión Talento...")
@@ -82,7 +82,7 @@ class Evaluaciones_360_create_page:
         )
         btn_gt.click()
         
-        time.sleep(tiempo_espera)
+        time.sleep(tiempo_llenado)
 
         # Entrando a Sub Modulo Evalución 360
         print("Entrando a Sub Modulo Evalución 360...")
@@ -91,7 +91,7 @@ class Evaluaciones_360_create_page:
         )
         btn_evaluaciones.click()
         
-        time.sleep(tiempo_espera)
+        time.sleep(tiempo_llenado)
         
         # Entrando a Crear Evaluaciones
         print("Entrando a Crear Evaluaciones...")
@@ -100,7 +100,7 @@ class Evaluaciones_360_create_page:
         )
         btn_crear_evaluaciones.click()
         
-        time.sleep(tiempo_espera)
+        time.sleep(tiempo_llenado)
         
         print("URL actual:", self.driver.current_url)
     
@@ -116,7 +116,7 @@ class Evaluaciones_360_create_page:
         print("Llenando campo nombre")
         campo_nombre.send_keys("Cesar Ernesto Escobar Hernandez")
         
-        time.sleep(tiempo_espera)
+        time.sleep(tiempo_llenado)
         
         # Descripcion
         campo_descripcion = WebDriverWait(self.driver, 10).until(
@@ -129,7 +129,7 @@ class Evaluaciones_360_create_page:
         campo_descripcion.clear()
         campo_descripcion.send_keys("Prueba de descripcion para pruebas modulos evaluaciones360")
         
-        time.sleep(tiempo_espera)
+        time.sleep(tiempo_llenado)
         
         # Boton Competencias
         btn_competencias = WebDriverWait(self.driver, 10).until(
@@ -138,7 +138,7 @@ class Evaluaciones_360_create_page:
         print("Dando click en boton competencias")
         btn_competencias.click()
         
-        time.sleep(tiempo_espera)
+        time.sleep(tiempo_llenado)
         
         # Boton Objetivos
         btn_competencias = WebDriverWait(self.driver, 10).until(
@@ -147,7 +147,7 @@ class Evaluaciones_360_create_page:
         print("Dando click en boton competencias")
         btn_competencias.click()
         
-        time.sleep(tiempo_espera)
+        time.sleep(tiempo_llenado)
         
         #Seleccionar Catalago de Parametros
         catalogo_parametros=WebDriverWait(self.driver,10).until(
@@ -157,7 +157,7 @@ class Evaluaciones_360_create_page:
         select = Select(catalogo_parametros)
         select.select_by_index(1)
             
-        time.sleep(tiempo_espera)  
+        time.sleep(tiempo_llenado)  
         
         # Boton Siguiente
         btn_siguiente = WebDriverWait(self.driver, 10).until(
@@ -166,7 +166,7 @@ class Evaluaciones_360_create_page:
         print("Dando click en siguiente")
         btn_siguiente.click()
         
-        time.sleep(tiempo_espera)
+        time.sleep(tiempo_llenado)
         
         print("URL actual:", self.driver.current_url)
         
@@ -206,7 +206,7 @@ class Evaluaciones_360_create_page:
        select = Select(empleado_evaular_btn)
        select.select_by_index(9) #Aqui se cambia la opcion que deseas en el boton publico objetivo
        
-       time.sleep(tiempo_modulos)
+       time.sleep(tiempo_llenado)
     
     #Esta función, se habilitara unicamente cuando la opción publico obejtivo sea por Area (2)
     """
@@ -241,7 +241,7 @@ class Evaluaciones_360_create_page:
                     EC.element_to_be_clickable((By.XPATH, xpath_opcion))
                 )
                 opcion_seleccionar.click()
-                time.sleep(tiempo_modulos)
+                time.sleep(tiempo_llenado)
         except Exception as e:
             print(f"Error al seleccionar la opción: {e}") 
             
@@ -291,7 +291,7 @@ class Evaluaciones_360_create_page:
         print("Dando click en siguiente")
         btn_siguiente.click()
         
-        time.sleep(tiempo_modulos) #Aqui tiene que ir el tiempo largo en caso de que se seleccione la opcion, Toda la empresa
+        time.sleep(tiempo_llenado) #Aqui tiene que ir el tiempo largo en caso de que se seleccione la opcion, Toda la empresa
         
         print("URL actual:", self.driver.current_url)
         
@@ -306,7 +306,7 @@ class Evaluaciones_360_create_page:
         select = Select(empleado_pares)
         select.select_by_index(9) #Aqui se cambia la opcion que deseas en el boton publico objetivo
             
-        time.sleep(tiempo_espera)
+        time.sleep(tiempo_llenado)
         
         #Cambiar procentajes de evaluadores
         
@@ -316,7 +316,7 @@ class Evaluaciones_360_create_page:
         porcentaje_eva.clear()
         porcentaje_eva.send_keys(20)
             
-        time.sleep(tiempo_espera)
+        time.sleep(tiempo_llenado)
         
         porcentaje_eva=WebDriverWait(self.driver,10).until(
             EC.presence_of_element_located((By.XPATH, "(//INPUT[@class='ml-4'])[3]"))
@@ -324,7 +324,7 @@ class Evaluaciones_360_create_page:
         porcentaje_eva.clear()
         porcentaje_eva.send_keys(30)
             
-        time.sleep(tiempo_espera)
+        time.sleep(tiempo_llenado)
         
         # Boton Siguiente
         
@@ -334,7 +334,7 @@ class Evaluaciones_360_create_page:
         print("Dando click en siguiente")
         btn_siguiente.click()
         
-        time.sleep(tiempo_espera)
+        time.sleep(tiempo_llenado)
         
         print("URL actual:", self.driver.current_url)  
         
@@ -348,7 +348,7 @@ class Evaluaciones_360_create_page:
         input_fecha_inicio.clear()
         input_fecha_inicio.send_keys("14/06/ 2024")
         
-        time.sleep(tiempo_modulos)
+        time.sleep(tiempo_llenado)
         
 
         print("Dando click en Añadir Periodo...")
@@ -357,7 +357,7 @@ class Evaluaciones_360_create_page:
         )
         btn_new_periodo.click()
         
-        time.sleep(tiempo_modulos)
+        time.sleep(tiempo_llenado)
     
         
         print("Borrando periodo agregado ...")
@@ -366,7 +366,7 @@ class Evaluaciones_360_create_page:
         )
         campo_fecha_del.click()
         
-        time.sleep(tiempo_modulos)
+        time.sleep(tiempo_llenado)
         
         print("Activando proceso ...")
         btn_activar = WebDriverWait(self.driver, 10).until(
@@ -374,7 +374,7 @@ class Evaluaciones_360_create_page:
         )
         btn_activar.click()
         
-        time.sleep(tiempo_modulos)
+        time.sleep(tiempo_llenado)
         
         print("Activando proceso ...")
         btn_activar = WebDriverWait(self.driver, 10).until(
@@ -382,7 +382,7 @@ class Evaluaciones_360_create_page:
         )
         btn_activar.click()
         
-        time.sleep(tiempo_modulos)
+        time.sleep(tiempo_llenado)
         
         print("Activando proceso ...")
         btn_activar = WebDriverWait(self.driver, 10).until(
@@ -390,7 +390,7 @@ class Evaluaciones_360_create_page:
         )
         btn_activar.click()
         
-        time.sleep(tiempo_modulos)
+        time.sleep(tiempo_llenado)
         
 
 
