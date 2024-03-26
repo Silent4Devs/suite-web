@@ -52,14 +52,40 @@ class CentroAtencion_Index:
         centro_atencion_btn.click()
 
     def mostrar_filtro(self):
-        # Esperar hasta que el elemento esté presente en el DOM y sea interactuable
         select_element = WebDriverWait(self.driver, 10).until(
             EC.element_to_be_clickable((By.XPATH, "//select[contains(@name,'tabla-procesos_length')]"))
         )
         select_element.click()
         select=Select(select_element)
         select.select_by_value("10")
-        pdb.set_trace()
+
+    def csv(self):
+        export_csv_btn = WebDriverWait(self.driver, 5).until(
+            EC.element_to_be_clickable((By.XPATH, "(//i[contains(@class,'fas fa-file-csv')])[4]"))
+        )
+        export_csv_btn.click()
+        print("Botón de Exportar CSV presionado")
+        print("URL actual:", self.driver.current_url)
+
+    def excel(self):
+
+        export_excel_btn = WebDriverWait(self.driver, 5).until(
+            EC.element_to_be_clickable((By.XPATH, "(//i[contains(@class,'fas fa-file-excel')])[4]"))
+        )
+        export_excel_btn.click()
+        print("Botón de Exportar Excel presionado")
+        print("URL actual:", self.driver.current_url)
+
+    def imprimir(self):
+
+        imprimir_btn = WebDriverWait(self.driver, 5).until(
+            EC.element_to_be_clickable((By.XPATH, "(//i[contains(@class,'fas fa-print')])[4]"))
+        )
+        imprimir_btn.click()
+        print("Botón de Imprimir presionado")
+        print("URL actual:", self.driver.current_url)
+
+
 
 
     #def centro_index(self):

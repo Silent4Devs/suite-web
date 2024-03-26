@@ -13,6 +13,9 @@ def test_centro_atencion_index(browser):
     centro_atencion_index.centro_atencion()
     #MOSTRAR FILTRO
     centro_atencion_index.mostrar_filtro()
-
-    #INDEX
-    #centro_atencion_index.centro_index()
+    #CSV
+    centro_atencion_index.csv()
+    #EXCEL
+    centro_atencion_index.excel()
+    #IMPRIMIR
+    centro_atencion_index.imprimir()
