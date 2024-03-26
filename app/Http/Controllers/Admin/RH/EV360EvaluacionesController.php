@@ -1283,7 +1283,6 @@ class EV360EvaluacionesController extends Controller
                 $firmaPar = '/storage/'.$informacion_obtenida['lista_misma_area'][0]['firma'];
             }
 
-            // dd($escalas);
             return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluado', compact(
                 'evaluacion',
                 'evaluado',

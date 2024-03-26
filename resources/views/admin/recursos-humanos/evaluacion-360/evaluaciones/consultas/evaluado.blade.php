@@ -391,7 +391,11 @@
                                             <td>{{ $evaluador['nombre'] }}</td>
                                         @endif
                                         @if ($evaluador['esSupervisor'])
-                                            <td>{{ $jefe_evaluador->name }}</td>
+                                            @if (isset($jefe_evaluador->name))
+                                                <td>{{ $jefe_evaluador->name }}</td>
+                                            @else
+                                                <td>{{ $jefe_evaluador[0] }}</td>
+                                            @endif
                                         @endif
                                         <td>
                                             {{ $objetivo['nombre'] }}
@@ -402,13 +406,19 @@
                                         <td>
                                             {{ $objetivo['meta'] }} {{ $objetivo['metrica'] }}
                                         </td>
-                                        <td>
-                                            @foreach ($escalas as $escala)
-                                                @if ($objetivo['calificacion_percepcion'] == $escala->valor)
-                                                    {{ $escala->parametro }}
-                                                @endif
-                                            @endforeach
-                                        </td>
+                                        @if (!empty($escalas))
+                                            <td>
+                                                @foreach ($escalas as $escala)
+                                                    @if ($objetivo['calificacion_percepcion'] == $escala->valor)
+                                                        {{ $escala->parametro }}
+                                                    @endif
+                                                @endforeach
+                                            </td>
+                                        @else
+                                            <td>
+                                                {{ $objetivo['calificacion'] }}
+                                            </td>
+                                        @endif
                                         <td>
                                             {{ $objetivo['descripcion_meta'] ? $objetivo['descripcion_meta'] : 'N/A' }}
                                         </td>
@@ -457,7 +467,11 @@
                                         <span class="badge badge-primary">Autoevaluación</span>
                                     @endif
                                     @if ($evaluador['esSupervisor'])
-                                        <strong> {{ $jefe_evaluador->name }}</strong>
+                                        @if (isset($jefe_evaluador->name))
+                                            <strong>{{ $jefe_evaluador->name }}</strong>
+                                        @else
+                                            <strong>{{ $jefe_evaluador[0]->name }}</strong>
+                                        @endif
                                         <span class="badge badge-success">Evaluador</span>
                                     @endif
                                 </div>
@@ -500,11 +514,15 @@
                                         {{ $objetivo['meta'] }} {{ $objetivo['metrica'] }}
                                     </div>
                                     <div class="text-center border col-1" style="font-size:10px">
-                                        @foreach ($escalas as $escala)
-                                            @if ($objetivo['calificacion_percepcion'] == $escala->valor)
-                                                {{ $escala->parametro }}
-                                            @endif
-                                        @endforeach
+                                        @if (!empty($escalas))
+                                            @foreach ($escalas as $escala)
+                                                @if ($objetivo['calificacion_percepcion'] == $escala->valor)
+                                                    {{ $escala->parametro }}
+                                                @endif
+                                            @endforeach
+                                        @else
+                                            {{ $objetivo['calificacion'] }}
+                                        @endif
                                         {{-- @if ($objetivo['meta'] == 0 && !empty($maxParam) && $objetivo['calificacion'] >= $maxParam)
                                             Cumplido
                                         @else
