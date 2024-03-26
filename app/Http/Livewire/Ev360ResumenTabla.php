@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire;
 
-use App\Http\Controllers\Admin\RH\EV360EvaluacionesController;
 use App\Models\Empleado;
 use App\Models\RH\Competencia;
 use App\Models\RH\CompetenciaPuesto;
@@ -15,7 +14,6 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -52,15 +50,14 @@ class Ev360ResumenTabla extends Component
     {
         $evaluacion = Evaluacion::select('id', 'nombre')->with('evaluados:id,name,area_id,puesto_id')->where('id', '=', intval($this->evaluacion))->first();
 
-        $evaluados = $evaluacion->evaluados;
-        $this->lista_evaluados = collect();
+        $lista_evaluados = collect();
         $calificaciones = collect();
         $inaceptable = 0;
         $minimo_aceptable = 0;
         $aceptable = 0;
         $sobresaliente = 0;
-        $ev360EvaluacionesController = new EV360EvaluacionesController();
-        $this->lista_evaluados = $evaluacion->evaluados->map(function ($evaluado) use ($evaluacion) {
+
+        $lista_evaluados = $evaluacion->evaluados->map(function ($evaluado) use ($evaluacion) {
             $informacion = $this->obtenerInformacionDeLaConsultaPorEvaluado($evaluacion->id, $evaluado->id);
 
             return [
@@ -71,7 +68,7 @@ class Ev360ResumenTabla extends Component
             ];
         });
 
-        foreach ($this->lista_evaluados as $evaluado) {
+        foreach ($lista_evaluados as $evaluado) {
             if ($evaluado['informacion_evaluacion']['calificacion_final'] <= $this->rangos['inaceptable']) {
                 $inaceptable++;
             } elseif ($evaluado['informacion_evaluacion']['calificacion_final'] <= $this->rangos['minimo_aceptable']) {
@@ -91,23 +88,12 @@ class Ev360ResumenTabla extends Component
         ]);
         $calificaciones = $calificaciones->first();
 
-        if ($this->search != '') {
-            $collection = $this->lista_evaluados->filter(function ($item) {
-                return Str::contains(strtolower($item['evaluado']), strtolower($this->search));
-            });
-        } else {
-            $collection = $this->lista_evaluados;
-        }
-        $offset = max(0, ($this->page - 1) * $this->perPage);
-        // need one more here so the simple paginatior knows
-        // if there are more pages left
-        $items = $collection->slice($offset, $this->perPage + 1);
-        $paginator = new Paginator($items, $this->perPage, $this->page);
+        $collection = $lista_evaluados;
 
         $this->competencias_evaluadas = Competencia::find($this->obtenerCompetenciasEvaluadasEnLaEvaluacion($evaluacion->id));
         $this->objetivos_evaluados = $this->obtenerCantidadMaximaDeObjetivos($evaluacion->evaluados, $evaluacion->id);
 
-        return view('livewire.ev360-resumen-tabla', ['lista_evaluados', 'calificaciones', 'evaluacion', 'competencias_evaluadas', 'lista' => $collection]);
+        return view('livewire.ev360-resumen-tabla', ['calificaciones', 'evaluacion', 'lista' => $collection]);
     }
 
     // public function paginate($items, $perPage = 5, $page = null, $options = [])
@@ -345,7 +331,7 @@ class Ev360ResumenTabla extends Component
                 ->first();
 
             $jefe_evaluador = $jefe_evaluador_id ? Empleado::select('id', 'name', 'email', 'foto')->find($jefe_evaluador_id) : '-';
-
+            // dd('2', $jefe_evaluador);
             if ($supervisorObjetivos) {
                 $objetivos_calificaciones = ObjetivoRespuesta::with(['objetivo' => function ($q) {
                     return $q->with('metrica');

@@ -276,6 +276,15 @@ class Empleado extends Model implements Auditable
         });
     }
 
+    // public static function getAllEvaluaciones()
+    // {
+    //     return Cache::remember('Empleados:empleados_all_evaluaciones', 3600 * 6, function () {
+    //         return DB::table('empleados')
+    //             ->select('id', 'name', 'foto', 'area_id', 'puesto_id', 'supervisor_id')
+    //             ->get();
+    //     });
+    // }
+
     public static function getAllDataObjetivosEmpleado()
     {
         return Cache::remember('Empleados:empleados_all_objetivos_empleado', 3600 * 6, function () {
