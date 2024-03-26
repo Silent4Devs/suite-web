@@ -8,7 +8,7 @@ from selenium.webdriver.support.ui import Select
 tiempo_modulos = 5
 tiempo_carga = 10
 tiempo_espera = 3
-tiempo_llenado = 2
+tiempo_llenado = 1
 tiempo_largo = 120
 
 #----------------------------------------------------INICIO DE CLASE--------------------------------------------------------------------------
@@ -58,7 +58,7 @@ class Evaluaciones_360_edit_page:
         
         print("URL actual:", self.driver.current_url)
         
-        time.sleep(tiempo_modulos)
+        time.sleep(tiempo_llenado)
         
     def in_modulos(self):
         
@@ -69,7 +69,7 @@ class Evaluaciones_360_edit_page:
         )
         btn_hmaburguesa.click()
         
-        time.sleep(tiempo_espera)
+        time.sleep(tiempo_llenado)
         
         # Entrando a Gestión Talento 
         print("Entrando a Gestión Talento ...")
@@ -78,7 +78,7 @@ class Evaluaciones_360_edit_page:
         )
         btn_gt.click()
         
-        time.sleep(tiempo_espera)
+        time.sleep(tiempo_llenado)
 
         # Entrando a Sub Modulo Evalución 360
         print("Entrando a Sub Modulo Evalución 360 ...")
@@ -87,7 +87,7 @@ class Evaluaciones_360_edit_page:
         )
         btn_evaluaciones.click()
         
-        time.sleep(tiempo_espera)
+        time.sleep(tiempo_llenado)
         
         # Entrando a Seguimiento Evaluaciones
         print("Entrando a Seguimiento Evaluaciones ...")
@@ -96,7 +96,7 @@ class Evaluaciones_360_edit_page:
         )
         btn_crear_evaluaciones.click()
         
-        time.sleep(tiempo_espera)
+        time.sleep(tiempo_llenado)
         
         print("URL actual:", self.driver.current_url)
         
@@ -110,7 +110,7 @@ class Evaluaciones_360_edit_page:
         btn_buscar.click()
         btn_buscar.send_keys("PRUEBA-1")
         
-        time.sleep(tiempo_espera)
+        time.sleep(tiempo_llenado)
         
         # Entrar a boton evaluacion
         print("Dando clic en boton evaluacion (editar) ...")
@@ -119,7 +119,7 @@ class Evaluaciones_360_edit_page:
         )
         btn_edit.click()
 
-        time.sleep(tiempo_espera)
+        time.sleep(tiempo_llenado)
         
     def send_reminder(self):
         
@@ -130,7 +130,7 @@ class Evaluaciones_360_edit_page:
         )
         btn_send_reminder.click()
 
-        time.sleep(tiempo_carga)
+        time.sleep(tiempo_llenado)
         
         # Boton enviar 
         print("Dando clic en boton enviar ...")
@@ -139,7 +139,7 @@ class Evaluaciones_360_edit_page:
         )
         btn_send.click()
 
-        time.sleep(tiempo_carga)
+        time.sleep(tiempo_llenado)
         
     def view_evaluacion360 (self):
         
@@ -150,7 +150,7 @@ class Evaluaciones_360_edit_page:
         )
         btn_view_evaluacion.click()
 
-        time.sleep(tiempo_espera)
+        time.sleep(tiempo_llenado)
         
         
         
