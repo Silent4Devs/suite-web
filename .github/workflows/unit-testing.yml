@@ -1,0 +1,65 @@
+name: Run Unit Test via Pytest
+run-name: ${{ github.actor }} run Run Unit Test via Pytest
+on:
+  push:
+    branches:
+      - develop
+      - stagging
+  pull_request:
+    branches:
+      - develop
+      - feature/*
+      - hotfix/*
+      - release/*
+      - fix/*
+      - refactor/*
+      - testing/*
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11"]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Navigate to Testing directory
+        run: cd Testing
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: Lint with Ruff
+        run: |
+          pip install ruff
+          ruff --format=github --target-version=py311 .
+        continue-on-error: true
+
+      - name: Navigate to Testing calendar directory
+        run: cd ./Testing/calendar
+
+      - name: Test calendar with pytest
+        run: |
+          coverage run -m pytest -v -s
+
+      - name: Generate Coverage calendar Report
+        run: |
+          coverage report -m
+
+      - name: Navigate to Testing capacitacion directory
+        run: cd ./Testing/capacitacion
+
+      - name: Test capacitacion with pytest
+        run: |
+          coverage run -m pytest -v -s
+
+      - name: Generate Coverage capacitacion Report
+        run: |
+          coverage report -m

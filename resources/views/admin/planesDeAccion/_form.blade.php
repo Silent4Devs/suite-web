@@ -5,7 +5,7 @@
     <div class="col-sm-12 col-lg-6">
         <div class="form-group">
             <label for="parent" class="required">Nombre:</label>
-            <input type="text" class="form-control {{ $errors->has('parent') ? 'is-invalid' : '' }}" id="parent"
+            <input type="text" maxlength="255" class="form-control {{ $errors->has('parent') ? 'is-invalid' : '' }}" id="parent"
                 aria-describedby="parent" name="parent"
                 value="{{ $referencia ? $referencia : old('parent', $planImplementacion->parent) }}"
                 autocomplete="off" required>
@@ -38,7 +38,7 @@
     <div class="col-sm-12 col-lg-6">
         <div class="form-group">
             <label for="modulo_origen">Modulo de Origen:</label>
-            <input type="text" class="form-control {{ $errors->has('modulo_origen') ? 'is-invalid' : '' }}"
+            <input type="text" maxlength="255" class="form-control {{ $errors->has('modulo_origen') ? 'is-invalid' : '' }}"
                 id="modulo_origen" aria-describedby="modulo_origen" name="modulo_origen"
                 value="{{ $edit ? $planImplementacion->modulo_origen : str_replace('-', ' ', Str::title($modulo_name)) }}"
                 autocomplete="off" required readonly>
@@ -51,7 +51,7 @@
     <div class="col-sm-12 col-lg-6">
         <div class="form-group">
             <label for="objetivo" class="required">Objetivo:</label>
-            <textarea class="form-control {{ $errors->has('objetivo') ? 'is-invalid' : '' }}" id="objetivo" name="objetivo"
+            <textarea maxlength="550" class="form-control {{ $errors->has('objetivo') ? 'is-invalid' : '' }}" id="objetivo" name="objetivo"
                 required>{{ old('objetivo', $planImplementacion->objetivo) }}</textarea>
             @if ($errors->has('objetivo'))
                 <div class="invalid-feedback">{{ $errors->first('objetivo') }}</div>

@@ -7,9 +7,8 @@
             ...</span>
     </div>
     <div class="container">
-        <div wire:ignore class="container pl-0 datatable-fix">
-            <table class="table table-bordered w-100 datatable-Activo tabla-fija" id="tblResumen"
-                style="font-size: 10px;">
+        <div wire:ignore class="container pl-0">
+            <table class="table table-bordered w-100" id="tblResumen" style="font-size: 10px;">
                 <thead class="thead-dark">
                     <tr>
                         <th class="text-center" colspan="9">
@@ -92,54 +91,6 @@
                                     style="position: absolute;margin-left: auto;margin-right: auto;top: 13px;left: 6px;">{{ round($evaluado['informacion_evaluacion']['calificacion_final']) }}%</span>
                             </td>
 
-                            {{-- @php
-                                $calificacionFinal = $evaluado['informacion_evaluacion']['calificacion_final'];
-                                $previousValor = null;
-                            @endphp
-
-                            @foreach ($rangos as $parametro => $valor)
-                                @if ($calificacionFinal <= $valor)
-                                    <td
-                                        style="background-color:{{ $colores[$parametro] }};color:white;text-align: center !important">
-                                        <i class="mr-1 fas fa-exclamation-triangle"></i>{{ $parametro }}
-                                    </td>
-                                @break
-
-                            @elseif ($calificacionFinal > $previousValor && $calificacionFinal <= $valor)
-                                <td
-                                    style="background-color:{{ $colores[$parametro] }};color:white;text-align: center !important">
-                                    <i class="mr-1 fas fa-exclamation-triangle"></i>{{ $parametro }}
-                                </td>
-                            @break
-
-                        @elseif ($valor >= $maxValue)
-                            <td
-                                style="background-color:{{ $colores[$parametro] }};color:white;text-align: center !important">
-                                <i class="mr-1 fas fa-exclamation-triangle"></i>{{ $parametro }}
-                            </td>
-                        @endif
-
-                            @php
-                                $previousValor = $valor;
-                            @endphp
-                    @endforeach --}}
-
-                            {{-- @if ($evaluado['informacion_evaluacion']['calificacion_final'] <= $rangos['inaceptable'])
-                                    <td style="background-color:#ff4747;color:white;text-align: center !important"><i
-                                            class="mr-1 fas fa-exclamation-triangle"></i>Inaceptable</td>
-                                @elseif ($evaluado['informacion_evaluacion']['calificacion_final'] <= $rangos['minimo_aceptable'])
-                                    <td style="background-color:#e89036;color:white;text-align: center !important"><i
-                                            class="mr-1 fas fa-exclamation-triangle"></i>Mínimo Aceptable</td>
-                                @elseif ($evaluado['informacion_evaluacion']['calificacion_final'] <= $rangos['aceptable'])
-                                    <td style="background-color:#3e6cd2;color:white;text-align: center !important"><i
-                                            class="mr-1 fas fa-check-circle"></i>Aceptable
-                                    </td>
-                                @elseif($evaluado['informacion_evaluacion']['calificacion_final'] > $rangos['sobresaliente'])
-                                    <td style="background-color:#5AFF94;color:white;text-align: center !important">
-                                        <i class="mr-1 fas fa-check-circle"></i>
-                                        Sobresaliente
-                                    </td>
-                                @endif --}}
                             </td>
                             @foreach ($competencias_evaluadas as $competencia)
                                 @php
@@ -260,7 +211,7 @@
                                                 ][$i];
                                             $avance_porcentaje = number_format(
                                                 ($objetivo_info['calificacion'] * 100) /
-                                                    ($objetivo_info['meta'] > 0 ? $objetivo_info['meta'] : 1),
+                                                    ($objetivo_info['meta'] > 0 ? $objetivo_info['meta'] : $maxValue),
                                                 2,
                                             );
                                         @endphp
@@ -284,7 +235,6 @@
                     @endforelse
                 </tbody>
             </table>
-            {{-- {{ $lista->links() }} --}}
         </div>
     </div>
 </div>
