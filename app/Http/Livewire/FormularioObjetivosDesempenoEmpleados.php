@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire;
 
+use App\Mail\CorreoObjetivosPendientes;
+use App\Models\Empleado;
 use App\Models\EscalasMedicionObjetivos;
 use App\Models\EscalasObjetivosDesempeno;
 use App\Models\ObjetivosDesempenoEmpleados;
@@ -12,13 +14,17 @@ use App\Models\RH\ObjetivoEmpleado;
 use App\Models\RH\TipoObjetivo;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 
 class FormularioObjetivosDesempenoEmpleados extends Component
 {
     public $id_emp;
+    public $front_usuario;
+    public $front_empleado;
 
     public $objetivos;
+    public $cuentaObjPend = 0;
 
     public $categorias;
     public $unidades;
@@ -26,6 +32,7 @@ class FormularioObjetivosDesempenoEmpleados extends Component
     public $array_escalas_objetivos = [];
 
     public $permiso_carga = false;
+    public $mostrar = false;
 
     public $objetivo_estrategico = '';
     public $descripcion = '';
@@ -75,18 +82,54 @@ class FormularioObjetivosDesempenoEmpleados extends Component
 
     public function render()
     {
+        // $this->front_usuario = User::getCurrentUser();
+        // $this->front_empleado = Empleado::getaltaAllObjetivoSupervisorChildren()->find($this->id_emp);
+
         $this->objetivos = ObjetivoEmpleado::getAllwithObjetivo()
             ->where('empleado_id', '=', $this->id_emp)
             ->where('papelera', false);
-        // dd($this->objetivos);
+
+        $this->cuentaObjetivosPendientes();
+
         return view('livewire.formulario-objetivos-desempeno-empleados');
+    }
+
+    public function formularioMostraOcultar()
+    {
+        if ($this->mostrar == false) {
+            $this->mostrar = true;
+        } else {
+            $this->mostrar = false;
+        }
+    }
+
+    public function cuentaObjetivosPendientes()
+    {
+        $this->cuentaObjPend = ObjetivoEmpleado::with(['objetivo' => function ($query) {
+            $query->with(['tipo', 'metrica']);
+        }])->whereHas('objetivo', function ($query) {
+            $query->where('esta_aprobado', '=', 0);
+        })->count();
+        // dd($cuentaObjPend);
+    }
+
+    public function enviarCorreo()
+    {
+        $usuario = User::getCurrentUser();
+        $empleado = Empleado::getaltaAllObjetivoSupervisorChildren()->find($this->id_emp);
+
+        $mail_supervisor = $usuario->empleado->supervisor->email;
+
+        try {
+            Mail::to(removeUnicodeCharacters($mail_supervisor))->queue(new CorreoObjetivosPendientes($empleado, $this->cuentaObjPend));
+        } catch (\Throwable $th) {
+            dd($th);
+        }
     }
 
     public function crearObjetivo()
     {
         $usuario = User::getCurrentUser();
-
-        // dd($usuario->can('objetivos_estrategicos_agregar'));
 
         if ($usuario->can('objetivos_estrategicos_agregar')) {
             $estatus = 1;

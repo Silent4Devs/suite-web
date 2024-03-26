@@ -26,8 +26,10 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
     public $evaluacion;
     public $evaluado;
     public $objetivos_evaluado;
-    public $obj_evidencias;
+    public $objetivos_autoevaluado;
+    public $obj_evidencias = [];
     public $calificacion_escala = [];
+    public $calificacion_autoescala = [];
 
     //Campos para validación dependiendo de lo que el evaluador vaya a evaluar
     public $validacion_objetivos_evaluador;
@@ -72,10 +74,13 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
                 $this->validacion_objetivos_evaluador = true;
 
                 $this->objetivos_evaluado = $evlr->preguntasCuestionario->sortBy('id');
+            }
 
-                break;
+            if ($evlr->evaluador_desempeno_id == $this->id_evaluado->evaluado_desempeno_id) {
+                $this->objetivos_autoevaluado = $evlr->preguntasCuestionario->sortBy('id');
             }
         }
+        // dd($this->objetivos_autoevaluado);
 
         foreach ($this->objetivos_evaluado as $key_objetivo => $obj_evld) {
             foreach ($obj_evld->evidencias as $key_evidencia => $evid) {
@@ -136,7 +141,56 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
                     }
                 }
             }
-            // dd($calificacion_escala[4]);
+
+            foreach ($this->objetivos_autoevaluado as $key_objetivo => $obj_evld) {
+                foreach ($obj_evld->escalas as $obj_esc) {
+                    switch ($obj_esc->condicion) {
+                        case '1':
+                            if (
+                                $obj_evld->calificacion_objetivo <
+                                $obj_esc->valor
+                            ) {
+                                $this->calificacion_autoescala[$obj_evld->id] = $obj_esc->parametro;
+                            }
+                            break;
+                        case '2':
+                            if (
+                                $obj_evld->calificacion_objetivo <=
+                                $obj_esc->valor
+                            ) {
+                                $this->calificacion_autoescala[$obj_evld->id] = $obj_esc->parametro;
+                            }
+                            break;
+                        case '3':
+                            if (
+                                $obj_evld->calificacion_objetivo ==
+                                $obj_esc->valor
+                            ) {
+                                $this->calificacion_autoescala[$obj_evld->id] = $obj_esc->parametro;
+                            }
+                            break;
+                        case '4':
+                            if (
+                                $obj_evld->calificacion_objetivo >
+                                $obj_esc->valor
+                            ) {
+                                $this->calificacion_autoescala[$obj_evld->id] = $obj_esc->parametro;
+                            }
+                            break;
+                        case '5':
+                            if (
+                                $obj_evld->calificacion_objetivo >=
+                                $obj_esc->valor
+                            ) {
+                                $this->calificacion_autoescala[$obj_evld->id] = $obj_esc->parametro;
+                            }
+                            break;
+                        default:
+                            return '=';
+                            break;
+                    }
+                }
+            }
         }
     }
 

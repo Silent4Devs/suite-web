@@ -12,7 +12,9 @@
                             {{ $escala->parametro }}
                         </th>
                     @endforeach
-                    <th>AutoEvaluación</th>
+                    @if ($evaluador->id != $id_evaluado->evaluador_desempeno_id)
+                        <th>Autoevaluación</th>
+                    @endif
                     <th>Cargar Evidencias</th>
                     <th>Evaluación</th>
                     <th>Opciones</th>
@@ -35,7 +37,21 @@
                                     {{ $obj_esc->condicion_signo }}{{ $obj_esc->valor }}&nbsp;{{ $obj_evld->unidad_objetivo }}
                                 </td>
                             @endforeach
-                            <td>Sin Evaluar</td>
+                            @if ($evaluador->id != $id_evaluado->evaluador_desempeno_id)
+                                @if ($objetivos_autoevaluado[$key]->estatus_calificado)
+                                    <td>
+                                        <div class="row">
+                                            {{ $objetivos_autoevaluado[$key]->calificacion_objetivo ?? null }}
+                                        </div>
+                                        <div class="row">
+                                            {{ $calificacion_autoescala[$objetivos_autoevaluado[$key]->id] }}
+                                        </div>
+                                    </td>
+                                @else
+                                    <td>Sin Evaluar</td>
+                                @endif
+                            @endif
+
                             <td>
                                 <button type="button" class="btn btn-primary" data-toggle="modal"
                                     data-target="#evidenciaObjetivo{{ $obj_evld->id }}">
@@ -63,24 +79,27 @@
                                                         wire:change="asignarObjArchivo({{ $obj_evld->id }})">
                                                 </div>
 
-                                                @foreach ($obj_evidencias[$key] as $key_evidencia => $evidencia)
-                                                    <div class="row">
-                                                        <div class="col-3">
-                                                            <a class="btn-link" data-toggle="modal"
-                                                                data-target="#modalArchivo"
-                                                                wire:click="mostrarArchivo({{ $obj_evld->id }},{{ $evidencia['id'] }})">{{ $evidencia['nombre_archivo'] }}</a>
+                                                @if (!empty($obj_evidencias[0]))
+                                                    @foreach ($obj_evidencias[$key] as $key_evidencia => $evidencia)
+                                                        <div class="row">
+                                                            <div class="col-3">
+                                                                <a class="btn-link" data-toggle="modal"
+                                                                    data-target="#modalArchivo"
+                                                                    wire:click="mostrarArchivo({{ $obj_evld->id }},{{ $evidencia['id'] }})">{{ $evidencia['nombre_archivo'] }}</a>
+                                                            </div>
+                                                            <div class="col-9">
+                                                                <textarea name="comentario_{{ $key_evidencia }}" id="comentario_{{ $key_evidencia }}" style="min-width: 100%"
+                                                                    wire:change="comentarioObjetivo({{ $evidencia['id'] }}, $event.target.value)">{{ $evidencia->comentarios ?? null }}</textarea>
+                                                            </div>
                                                         </div>
-                                                        <div class="col-9">
-                                                            <textarea name="comentario_{{ $key_evidencia }}" id="comentario_{{ $key_evidencia }}" style="min-width: 100%"
-                                                                wire:change="comentarioObjetivo({{ $evidencia['id'] }}, $event.target.value)">{{ $evidencia->comentarios ?? null }}</textarea>
-                                                        </div>
-                                                    </div>
-                                                @endforeach
+                                                    @endforeach
+                                                @endif
+
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"
                                                     data-dismiss="modal">Close</button>
-                                                <button type="button" class="btn btn-primary">Save changes</button>
+                                                {{-- <button type="button" class="btn btn-primary">Save changes</button> --}}
                                             </div>
                                         </div>
                                     </div>

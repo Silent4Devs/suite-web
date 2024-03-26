@@ -21,6 +21,7 @@ class CuestionarioEvaluacionDesempenoCompetencias extends Component
     public $evaluacion;
     public $evaluado;
     public $competencias_evaluado;
+    public $competencias_autoevaluado;
 
     //Campos para validación dependiendo de lo que el evaluador vaya a evaluar
     public $validacion_competencias_evaluador;
@@ -56,7 +57,10 @@ class CuestionarioEvaluacionDesempenoCompetencias extends Component
                 $this->validacion_competencias_evaluador = true;
 
                 $this->competencias_evaluado = $evlr->preguntasCuestionario->sortBy('id');
-                break;
+            }
+
+            if ($evlr->evaluador_desempeno_id == $this->id_evaluado->evaluado_desempeno_id) {
+                $this->competencias_autoevaluado = $evlr->preguntasCuestionario->sortBy('id');
             }
         }
     }
@@ -66,15 +70,15 @@ class CuestionarioEvaluacionDesempenoCompetencias extends Component
         try {
             $competencia = CuestionarioCompetenciaEvDesempeno::find($id_competencia);
             $competencia->update([
-                'calificacion_competencia' => $valor,
+                'calificacion_competencia' => intval($valor),
                 'estatus_calificado' => true,
             ]);
 
+            $this->buscarCompetencias();
             $this->alertaGuardadoCorrecto();
-            $this->buscarCompetencias();
         } catch (\Throwable $th) {
-            $this->alertaGuardadoIncorrecto();
             $this->buscarCompetencias();
+            $this->alertaGuardadoIncorrecto();
         }
     }
 
