@@ -8,7 +8,7 @@ from selenium.webdriver.support.ui import Select
 tiempo_modulos = 5
 tiempo_carga = 10
 tiempo_espera = 3
-tiempo_llenado = 2
+tiempo_llenado = 1
 tiempo_diez = 10
 
 #----------------------------------------------------Prueba Login Y Entrar a Modulo Evaluaciones 360--------------------------------------------------------------------------
@@ -58,7 +58,7 @@ class Evaluaciones_360_log_in_modulo:
         
         print("URL actual:", self.driver.current_url)
         
-        time.sleep(tiempo_modulos)
+        time.sleep(tiempo_llenado)
         
     def in_modulos(self):
         
@@ -69,7 +69,7 @@ class Evaluaciones_360_log_in_modulo:
         )
         btn_hmaburguesa.click()
         
-        time.sleep(tiempo_espera)
+        time.sleep(tiempo_llenado)
         
         # Entrando a Gestión Talento 
         print("Entrando a Gestión Talento...")
@@ -78,7 +78,7 @@ class Evaluaciones_360_log_in_modulo:
         )
         btn_gt.click()
         
-        time.sleep(tiempo_espera)
+        time.sleep(tiempo_llenado)
 
         # Entrando a Sub Modulo Evalución 360
         print("Entrando a Sub Modulo Evalución 360...")
@@ -87,5 +87,5 @@ class Evaluaciones_360_log_in_modulo:
         )
         btn_evaluaciones.click()
         
-        time.sleep(tiempo_espera)
+        time.sleep(tiempo_llenado)
         
