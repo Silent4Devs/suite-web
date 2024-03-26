@@ -589,7 +589,8 @@
                     end,
                     color,
                     subtasks,
-                    resources
+                    resources,
+                    tag
                 } = item;
 
                 const resourcesCount = resources ? resources.length : 0;
