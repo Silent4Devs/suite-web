@@ -1,6 +1,6 @@
 import pytest
 from selenium import webdriver
-from testing.pages.plan_trabajo.index import PlanTrabajo_index
+from testing.pages.plan_trabajo.index.plan_trabajo_index import PlanTrabajo_index
 
 
 def test_plan_de_trabajo_index(browser):

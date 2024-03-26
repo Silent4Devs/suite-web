@@ -99,7 +99,7 @@ class PlanTrabajo_index:
         self.driver.execute_script(f"window.open('{url_ver}','_blank');")
         print("Botón de ver plan presionado y nueva pestaña abierta en segundo plano")
         print("URL de Ver plan:", url_ventana_principal2)
-        pdb.set_trace()
+
 
 
 

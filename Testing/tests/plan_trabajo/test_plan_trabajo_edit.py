@@ -1,6 +1,6 @@
 import pytest
 from selenium import webdriver
-from pages.plan_trabajo_edit import PlanTrabajo_edit
+from testing.pages.plan_trabajo.edit.plan_trabajo_edit import PlanTrabajo_edit
 
 
 def test_plan_de_trabajo_edit(browser):
