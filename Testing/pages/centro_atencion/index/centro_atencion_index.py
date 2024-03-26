@@ -3,6 +3,7 @@ import pdb
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import Select
 
 
 class CentroAtencion_Index:
@@ -49,4 +50,18 @@ class CentroAtencion_Index:
             EC.visibility_of_element_located((By.XPATH, "//a[@href='https://192.168.9.78/admin/desk' and normalize-space()='Centro de atención']"))
         )
         centro_atencion_btn.click()
+
+    def mostrar_filtro(self):
+        # Esperar hasta que el elemento esté presente en el DOM y sea interactuable
+        select_element = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable((By.XPATH, "//select[contains(@name,'tabla-procesos_length')]"))
+        )
+        select_element.click()
+        select=Select(select_element)
+        select.select_by_value("10")
+        pdb.set_trace()
+
+
+    #def centro_index(self):
+        #self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
 

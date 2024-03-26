@@ -11,3 +11,8 @@ def test_centro_atencion_index(browser):
     centro_atencion_index.open_menu()
     #CENTRO DE ATENCIÓN
     centro_atencion_index.centro_atencion()
+    #MOSTRAR FILTRO
+    centro_atencion_index.mostrar_filtro()
+
+    #INDEX
+    #centro_atencion_index.centro_index()
