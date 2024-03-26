@@ -507,8 +507,6 @@
                                         @endforeach
                                         {{-- @if ($objetivo['meta'] == 0 && !empty($maxParam) && $objetivo['calificacion'] >= $maxParam)
                                             Cumplido
-                                        @elseif ($objetivo['meta'] == 0 && !empty($maxParam) && $objetivo['calificacion'] < $maxParam)
-                                            No Cumplido
                                         @else
                                             <span
                                                 data-objetivo-calificacion="{{ $objetivo['objetivo_calificacion_id'] }}">{{ $objetivo['calificacion'] }}</span>
