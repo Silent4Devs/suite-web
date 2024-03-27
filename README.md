@@ -83,10 +83,10 @@ sudo docker exec -i fa63d8e7e87b bash -c "PGPASSWORD='secret' pg_dump -U homeste
 <ol>
 <li>Ensure that you have the PostgreSQL 14 container up and running.</li>
 <li>Locate the local dump file (backup.sql) and copy it into the container using the docker cp command:</li>
-docker cp backup.sql <container_id>:/backup.sql
-<li>Access the PostgreSQL 14 container using docker exec:</li>
-<li>docker exec -it <container_id> bash</li>
+docker cp backup.sql container_id:/backup.sql
+<li>Access the PostgreSQL 16 container using docker exec:</li>
+<li>docker exec -it container_id bash</li>
 <li>cd /</li>
-<li>createdb -U postgres <database_name></li>
-<li>psql -U postgres -d <database_name> -f /backup.sql</li>
+<li>createdb -U postgres database_name</li>
+<li>psql -U postgres -d database_name -f /backup.sql</li>
 </ol>

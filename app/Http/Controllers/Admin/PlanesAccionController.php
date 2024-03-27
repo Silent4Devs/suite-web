@@ -65,7 +65,7 @@ class PlanesAccionController extends Controller
         $request->validate([
             'parent' => 'required|string',
             'inicio' => 'required|string',
-            'fin'    => 'required|string',
+            'fin' => 'required|string',
             // 'norma' => 'required|string',
             // 'modulo_origen' => 'required|string',
             'objetivo' => 'required|string|max:550',
@@ -77,9 +77,9 @@ class PlanesAccionController extends Controller
         ]);
         $tasks = [
             [
-                'id' => 'tmp_' . (strtotime(now())) . '_1',
+                'id' => 'tmp_'.(strtotime(now())).'_1',
                 'end' => strtotime($request->fin) * 1000,
-                'name' => 'Plan de Accion - ' . $request->norma,
+                'name' => 'Plan de Accion - '.$request->norma,
                 'level' => 0,
                 'start' => strtotime($request->inicio) * 1000,
                 'canAdd' => true,
@@ -101,7 +101,7 @@ class PlanesAccionController extends Controller
                 'historic' => [],
             ],
             [
-                'id' => 'tmp_' . (strtotime(now())) . rand(1, 1000),
+                'id' => 'tmp_'.(strtotime(now())).rand(1, 1000),
                 'end' => strtotime($request->fin) * 1000,
                 'name' => $request->norma,
                 'level' => 1,

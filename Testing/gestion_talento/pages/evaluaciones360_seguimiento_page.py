@@ -7,7 +7,7 @@ from selenium.webdriver.support import expected_conditions as EC
 tiempo_modulos = 5
 tiempo_carga = 10
 tiempo_espera = 3
-tiempo_llenado = 2
+tiempo_llenado = 1
 tiempo_largo = 120
 
 #----------------------------------------------------INICIO DE CLASE--------------------------------------------------------------------------
@@ -57,7 +57,7 @@ class Evaluaciones_360_seguimiento_page:
         
         print("URL actual:", self.driver.current_url)
         
-        time.sleep(tiempo_modulos)
+        time.sleep(tiempo_llenado)
         
     def in_modulos(self):
         
@@ -68,7 +68,7 @@ class Evaluaciones_360_seguimiento_page:
         )
         btn_hmaburguesa.click()
         
-        time.sleep(tiempo_espera)
+        time.sleep(tiempo_llenado)
         
         # Entrando a Gestión Talento 
         print("Entrando a Gestión Talento...")
@@ -77,7 +77,7 @@ class Evaluaciones_360_seguimiento_page:
         )
         btn_gt.click()
         
-        time.sleep(tiempo_espera)
+        time.sleep(tiempo_llenado)
 
         # Entrando a Sub Modulo Evalución 360
         print("Entrando a Sub Modulo Evalución 360...")
@@ -86,7 +86,7 @@ class Evaluaciones_360_seguimiento_page:
         )
         btn_evaluaciones.click()
         
-        time.sleep(tiempo_espera)
+        time.sleep(tiempo_llenado)
         
         # Entrando a Seguimiento de Evaluaciones
         print("Entrando a Crear Evaluaciones...")
