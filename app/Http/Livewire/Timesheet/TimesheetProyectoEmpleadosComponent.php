@@ -51,6 +51,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
             ->select('empleados.id', 'empleados.area_id', 'empleados.name', 'empleados.puesto_id', 'puestos.puesto as puesto')
             ->join('puestos', 'empleados.puesto_id', '=', 'puestos.id')
             ->where('empleados.estatus', 'alta')
+            ->where('empleados.deleted_at', '=', null)
             ->get();
 
         $this->proyecto_empleados = DB::table('timesheet_proyectos_empleados')
@@ -93,13 +94,24 @@ class TimesheetProyectoEmpleadosComponent extends Component
     public function addEmpleado()
     {
 
-        if ($this->todos_empleados) {
+        if ($this->empleado_añadido == 'todos_empleados_seleccionados') {
+            foreach ($this->empleados as $empleado) {
+                foreach ($this->areasempleado as $ae) {
+                    if(isset($ae['area_id'])){
+                        if ($empleado['area_id'] == $ae['area_id']) {
+                            $this->addEmpleadoIndivudual($empleado['id']);
+                        }
+                    }
+                }
+            }
+        }else{
+            $this->addEmpleadoIndivudual($this->empleado_añadido);
         }
     }
 
     public function addEmpleadoIndivudual($empleado_añadido_id)
     {
-        $empleado_add_proyecto = Empleado::where('estatus', 'alta')->where('id', intval($empleado_añadido_id))->first();
+        $empleado_add_proyecto = Empleado::find($empleado_añadido_id);
 
         if (!$empleado_add_proyecto) {
             return redirect()->route('admin.timesheet-proyecto-empleados', ['proyecto_id' => intval($this->proyecto_id)])

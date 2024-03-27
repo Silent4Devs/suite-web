@@ -20,7 +20,8 @@
             <div class="form-group col-md-7">
                 <label for="">Empleado<sup>*</sup></label>
                 <select wire:model.lazy="empleado_añadido" name="" id="" class="select2" required>
-                    <option value="" selected readonly>Seleccione un empleado</option>
+                    <option value="" selected readonly></option>
+                    <option value="todos_empleados_seleccionados"> Seleccionar Todos </option>
                     @foreach ($empleados as $empleado)
                         @foreach ($areasempleado as $ae)
                             @if ($empleado->area_id === $ae->area_id)
@@ -29,11 +30,6 @@
                         @endforeach
                     @endforeach
                 </select>
-            </div>
-            <div class="form-group col-md-5">
-                <label for="">Seleccionar a todos los colaboradores</label>
-                <input type="checkbox" name="" id="" class="form-control"
-                    wire:model.lazy="todos_empleados">
             </div>
         </div>
         <div class="row">
