@@ -278,7 +278,7 @@
             @endif
 
             {{-- Inhabilitado temporalmente --}}
-            {{-- @if (isset($mis_evaluaciones->evaluacion))
+            @if (isset($mis_evaluaciones->evaluacion))
                 @if ($mis_evaluaciones->evaluacion->estatus == 2 || $mis_evaluaciones->evaluacion->estatus == 3)
                     <a
                         href="{{ route('admin.ev360-evaluaciones.autoevaluacion.consulta.evaluado', [$mis_evaluaciones->evaluacion->id, auth()->user()->empleado->id]) }}">
@@ -294,7 +294,7 @@
                         </div>
                     </a>
                 @endif
-            @endif --}}
+            @endif
 
         </div>
     </div>
