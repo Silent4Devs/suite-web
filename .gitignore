@@ -62,3 +62,5 @@ public/js/app.js
 storage/app/katbol-contratos-tmp/
 dump.sql
 preload.php
+
+infra/nginx/ssl/
