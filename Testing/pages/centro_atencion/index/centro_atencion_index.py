@@ -3,8 +3,10 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.support.ui import Select
 import pdb
 from config import username, password
+
 
 class CentroAtencionIndex:
     def __init__(self, driver):
@@ -57,6 +59,11 @@ class CentroAtencionIndex:
         self._wait_and_click("//a[@data-tabs='quejas']")
         print("Módulo de quejas seleccionado.")
 
+    def click_quejas_clientes_module(self):
+        print("Haciendo clic en el módulo de quejas de clientes...")
+        self._wait_and_click("//a[contains(@data-tabs,'quejasClientes')]")
+        print("Módulo de quejas de clientes seleccionado.")
+
 
     def click_denuncias_module(self):
         print("Haciendo clic en el módulo de denuncias...")
@@ -73,32 +80,40 @@ class CentroAtencionIndex:
         print("Haciendo clic en el módulo de sugerencias...")
         self._wait_and_click("//a[contains(@data-tabs,'sugerencias')]")
         print("Módulo de sugerencias seleccionado.")
-        pdb.set_trace()
 
 
-    def mostrar_filtro(self):
-        print("Mostrando filtro...")
-        select_element = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//select[contains(@name,'tabla-procesos_length')]")))
-        select_element.click()
-        print("Filtro mostrado.")
+    def mostrar_filtro(self, value):
+        print("Seleccionando filtro...")
+        select_element = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//SELECT[@name='tabla_mejoras_length']")))
+        select = Select(select_element)
+        select.select_by_value(value)
+        print(f"Filtro seleccionado: {value}")
+
 
     def export_csv(self):
         print("Exportando a CSV...")
-        export_csv_btn = self.wait.until(EC.element_to_be_clickable((By.XPATH, "(//i[contains(@class,'fas fa-file-csv')])[4]")))
+        export_csv_btn = self.wait.until(EC.element_to_be_clickable((By.XPATH, "(//i[contains(@class,'fas fa-file-csv')])[3]")))
         export_csv_btn.click()
         print("Exportación a CSV completada.")
 
     def export_excel(self):
         print("Exportando a Excel...")
-        export_excel_btn = self.wait.until(EC.element_to_be_clickable((By.XPATH, "(//i[contains(@class,'fas fa-file-excel')])[4]")))
+        export_excel_btn = self.wait.until(EC.element_to_be_clickable((By.XPATH, "(//i[contains(@class,'fas fa-file-excel')])[3]")))
         export_excel_btn.click()
         print("Exportación a Excel completada.")
 
     def imprimir(self):
         print("Imprimiendo...")
-        imprimir_btn = self.wait.until(EC.element_to_be_clickable((By.XPATH, "(//i[contains(@class,'fas fa-print')])[4]")))
+        imprimir_btn = self.wait.until(EC.element_to_be_clickable((By.XPATH, "(//i[contains(@class,'fas fa-print')])[3]")))
         imprimir_btn.click()
         print("Impresión completada.")
+
+    def pdf(self):
+        print("Generando PDF...")
+        pdf_btn = self.wait.until(EC.element_to_be_clickable((By.XPATH, "(//i[contains(@class,'fas fa-file-pdf')])[3]")))
+        pdf_btn.click()
+        print("PDF generado.")
+        pdb.set_trace()
 
     def _wait_and_click(self, xpath):
         try:
