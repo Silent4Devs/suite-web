@@ -63,23 +63,25 @@ class PlanesAccionController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'parent' => 'required|string|max:255',
-            'norma' => 'required|string|max:255',
+            'parent' => 'required|string',
+            'inicio' => 'required|string',
+            'fin' => 'required|string',
+            // 'norma' => 'required|string',
             // 'modulo_origen' => 'required|string',
             'objetivo' => 'required|string|max:550',
         ], [
             'parent.required' => 'Debes de definir un nombre para el plan de acción',
-            'norma.required' => 'Debes de definir una norma para el plan de acción',
+            // 'norma.required' => 'Debes de definir una norma para el plan de acción',
             // 'modulo_origen.required' => 'Debes de definir un módulo de origen para el plan de acción',
             'objetivo.required' => 'Debes de definir un objetivo para el plan de acción',
         ]);
         $tasks = [
             [
                 'id' => 'tmp_'.(strtotime(now())).'_1',
-                'end' => strtotime(now()) * 1000,
+                'end' => strtotime($request->fin) * 1000,
                 'name' => 'Plan de Accion - '.$request->norma,
                 'level' => 0,
-                'start' => strtotime(now()) * 1000,
+                'start' => strtotime($request->inicio) * 1000,
                 'canAdd' => true,
                 'status' => 'STATUS_UNDEFINED',
                 'canWrite' => true,
@@ -100,10 +102,10 @@ class PlanesAccionController extends Controller
             ],
             [
                 'id' => 'tmp_'.(strtotime(now())).rand(1, 1000),
-                'end' => strtotime(now()) * 1000,
+                'end' => strtotime($request->fin) * 1000,
                 'name' => $request->norma,
                 'level' => 1,
-                'start' => strtotime(now()) * 1000,
+                'start' => strtotime($request->inicio) * 1000,
                 'canAdd' => true,
                 'status' => 'STATUS_UNDEFINED',
                 'canWrite' => true,
@@ -395,9 +397,7 @@ class PlanesAccionController extends Controller
                 'entidad_crediticias_id',
                 'semanas_min_timesheet',
                 'vacante_activa'
-            )
-            ->where('estatus', 'alta') // Filtrar por estatus activo
-            ->get();
+            )->get();
         $roles = DB::table('roles')
             ->select(
                 'id',

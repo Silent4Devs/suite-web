@@ -567,7 +567,7 @@ class Empleado extends Model implements Auditable
 
     public function supervisor()
     {
-        return $this->belongsTo(self::class)->alta()->select('id', 'name');
+        return $this->belongsTo(self::class)->alta();
     }
 
     public function supervisorCrearEvaluacion()

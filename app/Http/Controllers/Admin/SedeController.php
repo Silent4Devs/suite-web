@@ -9,7 +9,6 @@ use App\Http\Requests\StoreSedeRequest;
 use App\Models\Organizacion;
 use App\Models\Sede;
 use App\Models\Team;
-use App\Services\ImageService;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -145,6 +144,11 @@ class SedeController extends Controller
             return Redirect::back()->with('mensajeError', $mensajeError);
         }
 
+        $sede->update([
+            'foto_sedes' => $new_name_image,
+        ]);
+
+        return redirect()->route('admin.sedes.index')->with('success', 'Guardado con éxito');
     }
 
     public function edit(Sede $sede)
@@ -215,6 +219,16 @@ class SedeController extends Controller
             return Redirect::back()->with('mensajeError', $mensajeError);
         }
 
+        $sede->update([
+
+            'sede' => $request->sede,
+            'foto_sedes' => $request->foto_sede,
+            'direccion' => $request->direccion,
+            'descripcion' => $request->descripcion,
+            'foto_sedes' => $new_name_image,
+        ]);
+
+        return redirect()->route('admin.sedes.index')->with('success', 'Editado con éxito');
     }
 
     public function show(Sede $sede)
