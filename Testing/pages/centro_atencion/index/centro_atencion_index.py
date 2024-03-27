@@ -1,93 +1,112 @@
 import time
-import pdb
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.ui import Select
+from selenium.common.exceptions import TimeoutException
+import pdb
+from config import username, password
 
-
-class CentroAtencion_Index:
+class CentroAtencionIndex:
     def __init__(self, driver):
         self.driver = driver
+        self.wait = WebDriverWait(self.driver, 10)
 
-    def login(self, username, password):
+    def login(self):
         self.driver.get('https://192.168.9.78/')
         self.driver.maximize_window()
-        print("------ LOGIN - TABANTAJ -----")
+        print("Iniciando sesión en el sistema...")
         time.sleep(4)
-        username_input = WebDriverWait(self.driver, 3).until(
-            EC.visibility_of_element_located((By.CSS_SELECTOR, "input[name='email']"))
-        )
-        username_input.clear()
-        username_input.send_keys(username)
-        print("Usario ingresado")
+        self._fill_input_field("input[name='email']", username)
+        self._fill_input_field("input[name='password']", password)
+        self._click_element("//button[@type='submit'][contains(text(),'Enviar')]")
+        print("¡Sesión iniciada con éxito!")
+        self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "img[alt='Logo Tabantaj']")))
+        print("Login correcto.")
 
-        password_input = WebDriverWait(self.driver, 3).until(
-            EC.visibility_of_element_located((By.CSS_SELECTOR, "input[name='password']"))
-        )
-        password_input.clear()
-        password_input.send_keys(password)
-        print("Contraseña ingresada")
+    def _fill_input_field(self, locator, value):
+        input_field = self.wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, locator)))
+        input_field.clear()
+        input_field.send_keys(value)
 
-        submit_button = WebDriverWait(self.driver, 3).until(
-            EC.element_to_be_clickable((By.XPATH, "//button[@type='submit'][contains(text(),'Enviar')]"))
-        )
-        submit_button.click()
-        print("Enviando credenciales de acceso")
-
-        WebDriverWait(self.driver, 2).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, "img[alt='Logo Tabantaj']"))
-        )
-        print("Login correcto")
+    def _click_element(self, xpath):
+        element = self.wait.until(EC.element_to_be_clickable((By.XPATH, xpath)))
+        element.click()
 
     def open_menu(self):
-        menu_btn = WebDriverWait(self.driver, 3).until(
-            EC.visibility_of_element_located((By.XPATH, "//button[@class='btn-menu-header']"))
-        )
-        menu_btn.click()
-    def centro_atencion(self):
-        centro_atencion_btn = WebDriverWait(self.driver, 3).until(
-            EC.visibility_of_element_located((By.XPATH, "//a[@href='https://192.168.9.78/admin/desk' and normalize-space()='Centro de atención']"))
-        )
-        centro_atencion_btn.click()
+        print("Abriendo menú...")
+        self._click_element("//button[@class='btn-menu-header']")
+        print("Menú abierto.")
+
+    def navigate_to_centro_atencion(self):
+        print("Navegando al Centro de Atención...")
+        self._click_element("//a[@href='https://192.168.9.78/admin/desk' and normalize-space()='Centro de atención']")
+        print("Página del Centro de Atención cargada.")
+
+    def click_incidentes_module(self):
+        print("Haciendo clic en el módulo de incidentes...")
+        self._wait_and_click("//a[contains(@data-tabs,'incidentes')]")
+        print("Módulo de incidentes seleccionado.")
+
+    def click_riesgos_module(self):
+        print("Haciendo clic en el módulo de riesgos...")
+        self._wait_and_click("//a[contains(@data-tabs,'riesgos')]")
+        print("Módulo de riesgos seleccionado.")
+
+    def click_quejas_module(self):
+        print("Haciendo clic en el módulo de quejas...")
+        self._wait_and_click("//a[@data-tabs='quejas']")
+        print("Módulo de quejas seleccionado.")
+
+
+    def click_denuncias_module(self):
+        print("Haciendo clic en el módulo de denuncias...")
+        self._wait_and_click("//a[contains(@data-tabs,'denuncias')]")
+        print("Módulo de denuncias seleccionado.")
+
+
+    def click_mejoras_module(self):
+        print("Haciendo clic en el módulo de mejoras...")
+        self._wait_and_click("//a[contains(@data-tabs,'mejoras')]")
+        print("Módulo de mejoras seleccionado.")
+
+    def click_sugerencias_module(self):
+        print("Haciendo clic en el módulo de sugerencias...")
+        self._wait_and_click("//a[contains(@data-tabs,'sugerencias')]")
+        print("Módulo de sugerencias seleccionado.")
+        pdb.set_trace()
+
 
     def mostrar_filtro(self):
-        select_element = WebDriverWait(self.driver, 10).until(
-            EC.element_to_be_clickable((By.XPATH, "//select[contains(@name,'tabla-procesos_length')]"))
-        )
+        print("Mostrando filtro...")
+        select_element = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//select[contains(@name,'tabla-procesos_length')]")))
         select_element.click()
-        select=Select(select_element)
-        select.select_by_value("10")
+        print("Filtro mostrado.")
 
-    def csv(self):
-        export_csv_btn = WebDriverWait(self.driver, 5).until(
-            EC.element_to_be_clickable((By.XPATH, "(//i[contains(@class,'fas fa-file-csv')])[4]"))
-        )
+    def export_csv(self):
+        print("Exportando a CSV...")
+        export_csv_btn = self.wait.until(EC.element_to_be_clickable((By.XPATH, "(//i[contains(@class,'fas fa-file-csv')])[4]")))
         export_csv_btn.click()
-        print("Botón de Exportar CSV presionado")
-        print("URL actual:", self.driver.current_url)
+        print("Exportación a CSV completada.")
 
-    def excel(self):
-
-        export_excel_btn = WebDriverWait(self.driver, 5).until(
-            EC.element_to_be_clickable((By.XPATH, "(//i[contains(@class,'fas fa-file-excel')])[4]"))
-        )
+    def export_excel(self):
+        print("Exportando a Excel...")
+        export_excel_btn = self.wait.until(EC.element_to_be_clickable((By.XPATH, "(//i[contains(@class,'fas fa-file-excel')])[4]")))
         export_excel_btn.click()
-        print("Botón de Exportar Excel presionado")
-        print("URL actual:", self.driver.current_url)
+        print("Exportación a Excel completada.")
 
     def imprimir(self):
-
-        imprimir_btn = WebDriverWait(self.driver, 5).until(
-            EC.element_to_be_clickable((By.XPATH, "(//i[contains(@class,'fas fa-print')])[4]"))
-        )
+        print("Imprimiendo...")
+        imprimir_btn = self.wait.until(EC.element_to_be_clickable((By.XPATH, "(//i[contains(@class,'fas fa-print')])[4]")))
         imprimir_btn.click()
-        print("Botón de Imprimir presionado")
-        print("URL actual:", self.driver.current_url)
+        print("Impresión completada.")
+
+    def _wait_and_click(self, xpath):
+        try:
+            element = self.wait.until(EC.visibility_of_element_located((By.XPATH, xpath)))
+            element.click()
+        except TimeoutException:
+            raise TimeoutError(f"Elemento no encontrado en {xpath}")
 
 
 
-
-    #def centro_index(self):
-        #self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
 
