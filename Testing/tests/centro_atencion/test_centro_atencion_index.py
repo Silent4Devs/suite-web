@@ -23,9 +23,9 @@ def test_centro_atencion_index(browser):
 
     centro_atencion_index.click_quejas_module()
 
-
     #centro_atencion_index.mostrar_filtro("10")
     centro_atencion_index.export_csv()
     centro_atencion_index.export_excel()
     centro_atencion_index.imprimir()
     centro_atencion_index.pdf()
+

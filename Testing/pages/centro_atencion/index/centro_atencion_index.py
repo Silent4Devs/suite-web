@@ -81,13 +81,14 @@ class CentroAtencionIndex:
         self._wait_and_click("//a[contains(@data-tabs,'sugerencias')]")
         print("Módulo de sugerencias seleccionado.")
 
-
+    '''
     def mostrar_filtro(self, value):
         print("Seleccionando filtro...")
         select_element = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//SELECT[@name='tabla_mejoras_length']")))
         select = Select(select_element)
         select.select_by_value(value)
         print(f"Filtro seleccionado: {value}")
+    '''
 
 
     def export_csv(self):
