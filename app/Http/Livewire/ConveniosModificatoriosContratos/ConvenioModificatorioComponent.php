@@ -35,6 +35,7 @@ class ConvenioModificatorioComponent extends Component
     public $deductiva_penalizacion;
 
     public $convenios_file;
+    public $file_convenio;
 
     public $show_contrato; // En formulario de edit se está en vista de consulta entonces es true
 
