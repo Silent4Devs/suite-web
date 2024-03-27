@@ -18,5 +18,6 @@ class PeriodosEvaluacionDesempeno extends Model
         'fecha_inicio',
         'fecha_fin',
         'habilitado',
+        'finalizado',
     ];
 }

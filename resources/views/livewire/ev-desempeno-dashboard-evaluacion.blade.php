@@ -88,14 +88,16 @@
                     <div class="">
                         <span>Evaluaciones contestadas</span>
                         <div class="progress">
-                            <div class="progress-bar bg-warning" role="progressbar" style="width: 75%"
-                                aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div class="progress-bar bg-warning" role="progressbar"
+                                style="width: {{ $evaluacion->porcentaje_evaluaciones_completadas }}%"
+                                aria-valuenow="{{ $evaluacion->total_evaluaciones_completadas }}" aria-valuemin="0"
+                                aria-valuemax="{{ $evaluacion->total_evaluaciones }}"></div>
                         </div>
                     </div>
                     <div class="">
                         <span>Total</span>
                         <p>
-                            54/{{ $evaluacion->total_evaluaciones }}
+                            {{ $evaluacion->total_evaluaciones_completadas }}/{{ $evaluacion->total_evaluaciones }}
                         </p>
                     </div>
                 </div>
@@ -198,8 +200,12 @@
 
     <div class="card card-body" style="background-color: #BF9CC4;">
         <div class="form-group">
-            <select name="" id="area-select" class="form-control" style="background-color: #fff;">
+            <select name="" id="area-select" wire:model="area_select" class="form-control"
+                style="background-color: #fff;">
                 <option value="" selected disabled>Área</option>
+                @foreach ($areas as $area)
+                    <option value="{{ $area->id }}">{{ $area->area }}</option>
+                @endforeach
             </select>
         </div>
     </div>

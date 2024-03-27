@@ -27,13 +27,15 @@ class EvaluacionDesempeno extends Model
     protected $appends =
     [
         'estatus_palabra',
-        'total_evaluaciones'
+        'total_evaluaciones',
+        'total_evaluaciones_completadas',
+        'porcentaje_evaluaciones_completadas',
     ];
 
-    const BORRADOR = 1;
-    const ACTIVO = 2;
-    const CERRADO = 3;
-    const PAUSADO = 4;
+    const BORRADOR = 0;
+    const ACTIVO = 1;
+    const CERRADO = 2;
+    const PAUSADO = 3;
 
     public static function getAll()
     {
@@ -63,7 +65,28 @@ class EvaluacionDesempeno extends Model
 
         $periodos = $evaluacion->periodos->count();
 
-        dd($periodos);
+        return $periodos;
+    }
+
+    public function getTotalEvaluacionesCompletadasAttribute()
+    {
+        $evaluacion = EvaluacionDesempeno::find($this->id);
+
+        $periodos = $evaluacion->periodos->where('finalizado', true)->count();
+
+        return $periodos;
+    }
+
+    public function getPorcentajeEvaluacionesCompletadasAttribute()
+    {
+        $evaluacion = EvaluacionDesempeno::find($this->id);
+
+        $periodos = $evaluacion->periodos->count();
+        $periodos_completados = $evaluacion->periodos->where('finalizado', true)->count();
+
+        $porcentaje = ($periodos_completados / $periodos) * 100;
+
+        return $porcentaje;
     }
 
     public function getEstatusPalabraAttribute()
