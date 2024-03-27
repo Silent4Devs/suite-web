@@ -459,6 +459,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::get('recursos-humanos/evaluacion-360/objetivos-periodo/configuracion', 'RH\ObjetivosPeriodoController@config')->name('ev360-objetivos-periodo.config');
 
         // evaluaciones desempeño
+        Route::get('recursos-humanos/evaluacion-desempeño/index', 'RH\EvaluacionesDesempeñoController@index')->name('rh.evaluaciones-desempeño.index');
+        Route::get('recursos-humanos/evaluacion-desempeño/{evaluacion}/editBorrador', 'RH\EvaluacionesDesempeñoController@editBorrador')->name('rh.evaluaciones-desempeño.editBorrador');
+
+        Route::get('recursos-humanos/evaluacion-desempeño/{evaluacion}/dashboard-evaluacion', 'RH\EvaluacionesDesempeñoController@dashboardEvaluacion')->name('rh.evaluaciones-desempeño.dashboard-evaluacion');
         Route::get('recursos-humanos/evaluacion-desempeño/dashboard-general', 'RH\EvaluacionesDesempeñoController@dashboardGeneral')->name('rh.evaluaciones-desempeño.dashboard-general');
 
         Route::get('recursos-humanos/evaluacion-desempeño/dashboard-area', 'RH\EvaluacionesDesempeñoController@dashboardArea')->name('rh.evaluaciones-desempeño.dashboard-area');
@@ -468,16 +472,17 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::get('recursos-humanos/evaluacion-desempeño/config-evaluaciones', 'RH\EvaluacionesDesempeñoController@configEvaluaciones')->name('rh.evaluaciones-desempeño.config-evaluaciones');
 
         Route::get('recursos-humanos/evaluacion-desempeño/create-evaluacion', 'RH\EvaluacionesDesempeñoController@createEvaluacion')->name('rh.evaluaciones-desempeño.create-evaluacion');
+        Route::get('recursos-humanos/evaluacion-desempeño/evaluacion/{evaluacion}/cuestionario/{evaluado}', 'RH\EvaluacionesDesempeñoController@cuestionarioEvaluacionDesempeno')->name('rh.evaluaciones-desempeño.cuestionario');
 
         Route::get('recursos-humanos/evaluacion-desempeño/dashboard-personal', 'RH\EvaluacionesDesempeñoController@dashboardPersonal')->name('rh.evaluaciones-desempeño.dashboard-personal');
 
         Route::get('recursos-humanos/evaluacion-desempeño/mis-evaluaciones', 'RH\EvaluacionesDesempeñoController@misEvaluaciones')->name('rh.evaluaciones-desempeño.mis-evaluaciones');
 
-        Route::get('recursos-humanos/evaluacion-desempeño/carga-objetivos-empleado', 'RH\EvaluacionesDesempeñoController@cargaObjetivosEmpleado')->name('rh.evaluaciones-desempeño.carga-objetivos-empleado');
+        Route::get('recursos-humanos/evaluacion-desempeño/{empleado}/carga-objetivos-empleado', 'RH\EvaluacionesDesempeñoController@cargaObjetivosEmpleado')->name('rh.evaluaciones-desempeño.carga-objetivos-empleado');
 
         Route::get('recursos-humanos/evaluacion-desempeño/objetivos-importar', 'RH\EvaluacionesDesempeñoController@objetivosImportar')->name('rh.evaluaciones-desempeño.objetivos-importar');
 
-        Route::get('recursos-humanos/evaluacion-desempeño/objetivos-papelera', 'RH\EvaluacionesDesempeñoController@objetivosPapelera')->name('rh.evaluaciones-desempeño.objetivos-papelera');
+        Route::get('recursos-humanos/evaluacion-desempeño/{empleado}/objetivos-papelera', 'RH\EvaluacionesDesempeñoController@objetivosPapelera')->name('rh.evaluaciones-desempeño.objetivos-papelera');
 
         Route::get('recursos-humanos/evaluacion-desempeño/objetivos-exportar', 'RH\EvaluacionesDesempeñoController@objetivosExportar')->name('rh.evaluaciones-desempeño.objetivos-exportar');
 

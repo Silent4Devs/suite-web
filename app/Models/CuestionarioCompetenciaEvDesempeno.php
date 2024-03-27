@@ -1,0 +1,46 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class CuestionarioCompetenciaEvDesempeno extends Model
+{
+    use HasFactory;
+
+    protected $table = 'cuestionario_competencia_ev_desempenos';
+
+    protected $fillable =
+    [
+        'competencia',
+        'descripcion_competencia',
+        'tipo_competencia',
+        'nivel_esperado',
+        'evaluacion_desempeno_id',
+        'evaluado_desempeno_id',
+        'evaluador_desempeno_id',
+        'calificacion_competencia',
+        'estatus_calificado',
+    ];
+
+    public function evaluacionDesempeno()
+    {
+        return $this->belongsTo(EvaluacionDesempeno::class, 'evaluacion_desempeno_id', 'id');
+    }
+
+    public function evaluadoDesempeno()
+    {
+        return $this->belongsTo(EvaluadosEvaluacionDesempeno::class, 'evaluado_desempeno_id', 'id');
+    }
+
+    public function evaluadorDesempeno()
+    {
+        return $this->belongsTo(EvaluadoresEvaluacionCompetenciasDesempeno::class, 'evaluador_desempeno_id', 'id');
+    }
+
+    public  function ponderaciones()
+    {
+        return $this->hasMany(ConductasCompCuestionarioEvDesempenos::class, 'pregunta_cuest_comp_ev_des_id', 'id');
+    }
+}

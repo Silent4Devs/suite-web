@@ -16,9 +16,9 @@ class EvTrimestralConfigCategorias extends Component
 
     public function mount()
     {
-        $this->tipos = TipoObjetivo::getAll();
+        $this->tipos = TipoObjetivo::get();
         // dd($this->tipos);
-        if (!empty($this->tipos)) {
+        if (isset($this->tipos[0]->nombre)) {
             foreach ($this->tipos as $tipo) {
                 $this->categoria[] = [
                     'id' => $tipo->id,
@@ -81,7 +81,7 @@ class EvTrimestralConfigCategorias extends Component
                 ['id' => $id_edit],
                 [$campo => $entrada]
             );
-
+            // dd($nuevotipo);
             $this->categoria[$key]['id'] = $nuevotipo->id;
             $this->categoria[$key][$campo] = $entrada;
 

@@ -54,6 +54,7 @@ class ObjetivoEmpleadoObserver
 
     private function forgetCache()
     {
+        Cache::forget('ObjetivoEmpleado:get_all_with_objetivo');
         Cache::forget('Empleados:empleados_alta_all_area');
         Cache::forget('Empleados:empleados_alta_all_evaluaciones');
         Cache::forget('Empleados:empleados_all_objetivos_empleado');

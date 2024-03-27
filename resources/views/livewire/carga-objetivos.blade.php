@@ -20,9 +20,9 @@
             </div>
             <div class="col-md-3 form-group">
                 <br>
-                <button class="btn btn-success">
+                <a class="btn btn-success" wire:click.prevent="notificarCarga">
                     Notificar carga de objetivos
-                </button>
+                </a>
             </div>
         </div>
     </div>
@@ -116,7 +116,7 @@
                             <td>
                                 <div class="d-flex">
                                     @can('objetivos_estrategicos_agregar')
-                                        <a href="{{ url('/admin/recursos-humanos/evaluacion-360/' . $empleado->id . '/objetivos') }}"
+                                        <a href="{{ route('admin.rh.evaluaciones-desempeño.carga-objetivos-empleado', $empleado->id) }}"
                                             title="Editar" class="btn btn-sm btn-primary">
                                             <i class="fas fa-user-tag"></i> Objetivos
                                         </a>

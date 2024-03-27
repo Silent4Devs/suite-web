@@ -2,12 +2,14 @@
 
 namespace App\Http\Livewire;
 
+use App\Mail\CorreoCargaObjetivos;
 use App\Models\Area;
 use App\Models\Empleado;
 use App\Models\PerfilEmpleado;
 use App\Models\PeriodoCargaObjetivos;
 use App\Models\Puesto;
 use App\Models\RH\Objetivo;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
@@ -47,7 +49,7 @@ class CargaObjetivos extends Component
 
     public function render()
     {
-        $this->empleados = Empleado::getaltaAllWithAreaObjetivoPerfil()->sortBy('name');
+        $this->empleados = Empleado::getaltaAllObjetivosGenerales()->sortBy('name');
 
         if ($this->select_area != 0) {
             $this->empleados = $this->empleados->where('area_id', $this->select_area)->sortBy('name');
@@ -91,6 +93,15 @@ class CargaObjetivos extends Component
         }
 
         return view('livewire.carga-objetivos');
+    }
+
+    public function notificarCarga()
+    {
+        $empleados = Empleado::getAltaDataColumns();
+
+        foreach ($empleados as $emp) {
+            Mail::to(removeUnicodeCharacters($emp->email))->queue(new CorreoCargaObjetivos($this->fecha_inicio, $this->fecha_fin));
+        }
     }
 
     public function habilitarCargaObjetivos($valor)
