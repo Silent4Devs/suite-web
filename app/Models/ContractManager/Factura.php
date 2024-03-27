@@ -85,7 +85,7 @@ class Factura extends Model implements Auditable
 
     public function facturas_files()
     {
-        return $this->hasMany(FacturasFile::class, 'factura_id');
+        return $this->hasMany(FacturaFile::class, 'factura_id');
     }
 
     public function entregables_files()
@@ -128,8 +128,8 @@ class Factura extends Model implements Auditable
     {
         $archivo = FacturaFile::where('factura_id', $this->id)->first();
         $archivo = $archivo ? $archivo->pdf : '';
-        $ruta = asset('storage/contratos/'.$this->contrato->id.'_contrato_'.$this->contrato->no_contrato.'/facturas/pdf');
-        $ruta = $ruta.'/'.$archivo;
+        $ruta = asset('storage/contratos/' . $this->contrato->id . '_contrato_' . $this->contrato->no_contrato . '/facturas/pdf');
+        $ruta = $ruta . '/' . $archivo;
 
         return $ruta;
     }
