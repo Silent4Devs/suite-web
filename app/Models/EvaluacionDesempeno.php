@@ -21,7 +21,19 @@ class EvaluacionDesempeno extends Model
         'porcentaje_competencias',
         'tipo_periodo',
         'estatus',
+        'autor_id',
     ];
+
+    protected $appends =
+    [
+        'estatus_palabra',
+        'total_evaluaciones'
+    ];
+
+    const BORRADOR = 1;
+    const ACTIVO = 2;
+    const CERRADO = 3;
+    const PAUSADO = 4;
 
     public static function getAll()
     {
@@ -38,5 +50,40 @@ class EvaluacionDesempeno extends Model
     public function evaluados()
     {
         return $this->hasMany(EvaluadosEvaluacionDesempeno::class, 'evaluacion_desempeno_id', 'id');
+    }
+
+    public function autor()
+    {
+        return $this->belongsTo(Empleado::class, 'autor_id', 'id');
+    }
+
+    public function getTotalEvaluacionesAttribute()
+    {
+        $evaluacion = EvaluacionDesempeno::find($this->id);
+
+        $periodos = $evaluacion->periodos->count();
+
+        dd($periodos);
+    }
+
+    public function getEstatusPalabraAttribute()
+    {
+        switch ($this->estatus) {
+            case strval($this::BORRADOR):
+                return 'Borrador';
+                break;
+            case strval($this::ACTIVO):
+                return 'En curso';
+                break;
+            case strval($this::CERRADO):
+                return 'Cerrada';
+                break;
+            case strval($this::PAUSADO):
+                return 'Pausada';
+                break;
+            default:
+                return '=';
+                break;
+        }
     }
 }

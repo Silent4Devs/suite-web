@@ -25,6 +25,13 @@ class EvaluacionesDesempeñoController extends Controller
         return view('admin.recursos-humanos.evaluaciones-desempeño.index', compact('evaluaciones'));
     }
 
+    public function dashboardEvaluacion($id_evaluacion)
+    {
+        // EvaluacionDesempeno::find();
+
+        return view('admin.recursos-humanos.evaluaciones-desempeño.dashboard-evaluacion', compact('id_evaluacion'));
+    }
+
     public function dashboardGeneral()
     {
         return view('admin.recursos-humanos.evaluaciones-desempeño.dashboard-general');

@@ -9,9 +9,9 @@ use App\Models\PerfilEmpleado;
 use App\Models\PeriodoCargaObjetivos;
 use App\Models\Puesto;
 use App\Models\RH\Objetivo;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
-use Mail;
 
 class CargaObjetivos extends Component
 {
@@ -98,10 +98,10 @@ class CargaObjetivos extends Component
     public function notificarCarga()
     {
         $empleados = Empleado::getAltaDataColumns();
-        Mail::to(removeUnicodeCharacters($empleados[0]->email))->queue(new CorreoCargaObjetivos($this->fecha_inicio, $this->fecha_fin));
-        // foreach ($empleados as $emp) {
-        //     Mail::to(removeUnicodeCharacters($emp->email))->queue(new CorreoCargaObjetivos($this->fecha_inicio, $this->fecha_fin));
-        // }
+
+        foreach ($empleados as $emp) {
+            Mail::to(removeUnicodeCharacters($emp->email))->queue(new CorreoCargaObjetivos($this->fecha_inicio, $this->fecha_fin));
+        }
     }
 
     public function habilitarCargaObjetivos($valor)

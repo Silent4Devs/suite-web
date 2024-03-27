@@ -22,6 +22,9 @@ return new class extends Migration
 
             $table->string('tipo_periodo')->nullable();
             $table->integer('estatus');
+            $table->unsignedBigInteger('autor_id');
+
+            $table->foreign('autor_id')->references('id')->on('empleados')->onUpdate('cascade')->onDelete('cascade');
 
             $table->timestamps();
             $table->softDeletes();
