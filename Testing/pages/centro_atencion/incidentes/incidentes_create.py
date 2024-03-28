@@ -48,3 +48,17 @@ class IncidentesCreate:
         print("Haciendo clic en el módulo de incidentes...")
         self._wait_and_click("//a[contains(@data-tabs,'incidentes')]")
         print("Módulo de incidentes seleccionado.")
+
+    def crear_reporte(self):
+        print("Navegando a la creación de reporte...")
+        self._click_element("//a[@href='https://192.168.9.78/admin/inicioUsuario/reportes/seguridad']")
+        print("Página de creación de reporte cargada.")
+        pdb.set_trace()
+
+    def _wait_and_click(self, xpath):
+        try:
+            element = self.wait.until(EC.visibility_of_element_located((By.XPATH, xpath)))
+            element.click()
+        except TimeoutException:
+            raise TimeoutError(f"Elemento no encontrado en {xpath}")
+

@@ -1,16 +1,18 @@
 import pytest
 from selenium import webdriver
-from testing.pages.centro_atencion.incidentes.incidentes_create import IncidentesCreate
+from pages.centro_atencion.incidentes.incidentes_create import IncidentesCreate
 
 
 def test_centro_atencion_index(browser):
     #INITIALIZE PAGE OBJECT
-    centro_atencion_index = IncidentesCreate(browser)
+    incidentes_create= IncidentesCreate(browser)
     #LOGIN
-    centro_atencion_index.login()
+    incidentes_create.login()
     #OPEN MENU
-    centro_atencion_index.open_menu()
+    incidentes_create.open_menu()
     #NAVIGATE TO CENTRO DE ATENCION
-    centro_atencion_index.navigate_to_centro_atencion()
+    incidentes_create.navigate_to_centro_atencion()
     #CLICK MODULES
-    centro_atencion_index.click_incidentes_module()
+    incidentes_create.click_incidentes_module()
+    #CREAR REPORTE
+    incidentes_create.crear_reporte()
