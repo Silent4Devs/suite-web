@@ -139,9 +139,9 @@ class Entregablecomponent extends Component
         $deductiva_penalizacion = preg_replace('([$,])', '', $this->deductiva_penalizacion);
 
         // $formatoFecha = new FormatearFecha;
-        $fecha_inicial_formateada = $this->plazo_entrega_inicio;
-        $fecha_final_formateada = $this->plazo_entrega_termina;
-        $fecha_real_formateada = $this->entrega_real;
+        $fecha_inicial_formateada = $this->plazo_entrega_inicio ?: null;
+        $fecha_final_formateada = $this->plazo_entrega_termina ?: null;
+        $fecha_real_formateada = $this->entrega_real ?: null;
         //  dd(EntregaMensual::all()->where('contrato_id', $this->contrato_id)->count());
         $ultimo_numero_entregable = EntregaMensual::all()->where('contrato_id', $this->contrato_id)->count() > 0 ? EntregaMensual::select('no')->where('contrato_id', $this->contrato_id)->orderBy('id', 'desc')->first()->no : 0;
         $numero_entregable = !is_null($ultimo_numero_entregable) ? $ultimo_numero_entregable + 1 : null;
@@ -162,9 +162,11 @@ class Entregablecomponent extends Component
             'deductiva_factura_id' => $this->deductiva_factura_id,
             'nota_credito' => $this->nota_credito,
             'justificacion_deductiva_penalizacion' => $this->justificacion_deductiva_penalizacion,
-            'created_by' => User::getCurrentUser()->empleado->id,
-            'updated_by' => User::getCurrentUser()->empleado->id,
+            'created_by' => optional(User::getCurrentUser()->empleado)->id,
+            'updated_by' => optional(User::getCurrentUser()->empleado)->id,
         ]);
+
+        $this->alert('success', 'Registro añadido!');
 
         $contrato = Contrato::select('id', 'no_contrato')->where('id', '=', $this->contrato_id)->first();
         if (!Storage::exists('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato)) {
@@ -195,13 +197,11 @@ class Entregablecomponent extends Component
         $this->emit('recargar-cumplimiento');
         $this->dispatchBrowserEvent('contentChanged');
         $this->default();
-        $this->alert('success', 'Registro añadido!');
     }
 
     public function edit($id)
     {
         $entM = EntregaMensual::find($id);
-        dd($id, EntregaMensual::find($id));
         if ($entM->id != null) {
             $this->entregable_file_edit = EntregableFile::where('entregable_id', $id)->first();
             $this->entregable = $entM;
