@@ -20,6 +20,7 @@
     "laragear/preload": "^1.1",
     "laravel/framework": "^10.0",
     "laravel/passport": "^11.0",
+    "laravel/reverb": "dev-main",
     "laravel/sanctum": "^3.3",
     "laravel/ui": "^4.0",
     "laravelcollective/html": "^6.2",
