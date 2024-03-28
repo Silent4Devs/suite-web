@@ -16,3 +16,9 @@ def test_centro_atencion_index(browser):
     incidentes_create.click_incidentes_module()
     #CREAR REPORTE
     incidentes_create.crear_reporte()
+    #TITLE
+    titulo = "Incidente de Prueba"
+    incidentes_create.titulo_incidente(titulo)
+    #FECHA
+    fecha = "2024-03-28T12:00"
+    incidentes_create.seleccionar_fecha(fecha)

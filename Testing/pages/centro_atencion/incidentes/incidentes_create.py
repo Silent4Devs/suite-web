@@ -53,6 +53,17 @@ class IncidentesCreate:
         print("Navegando a la creación de reporte...")
         self._click_element("//a[@href='https://192.168.9.78/admin/inicioUsuario/reportes/seguridad']")
         print("Página de creación de reporte cargada.")
+
+
+    def titulo_incidente(self, titulo):
+        print("Ingresando título del incidente...")
+        self._fill_input_field("input[name='titulo']", titulo)
+        print("Título del incidente ingresado.")
+
+    def seleccionar_fecha(self, fecha):
+        print("Seleccionando fecha...")
+        self._wait_and_fill("//input[@type='datetime-local' and @name='fecha']", fecha)
+        print("Fecha seleccionada.")
         pdb.set_trace()
 
     def _wait_and_click(self, xpath):
@@ -62,3 +73,10 @@ class IncidentesCreate:
         except TimeoutException:
             raise TimeoutError(f"Elemento no encontrado en {xpath}")
 
+    def _wait_and_fill(self, xpath, value):
+        try:
+            element = self.wait.until(EC.visibility_of_element_located((By.XPATH, xpath)))
+            element.clear()
+            element.send_keys(value)
+        except TimeoutException:
+            raise TimeoutError(f"Elemento no encontrado en {xpath}")
