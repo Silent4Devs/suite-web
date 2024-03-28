@@ -152,7 +152,7 @@ class CreateEvaluacionDesempeno extends Component
 
     public function tercerPaso()
     {
-        // dd($this->empleados_seleccionados);
+        // dd($this->evaluados_manual);
         $evld = [];
         switch ($this->select_evaluados) {
             case 'toda':
@@ -174,7 +174,7 @@ class CreateEvaluacionDesempeno extends Component
                 //     $evld = $ev_query->find($id_emp_sel)->pluck('id');
                 // }
                 $evld = collect($this->empleados_seleccionados);
-
+                $this->select_evaluados = 'toda';
                 // dd($evld);
                 break;
 
@@ -183,7 +183,7 @@ class CreateEvaluacionDesempeno extends Component
                 break;
         }
         // dd($ev);
-        // dd($evld);
+
         $this->asignarEvaluadoresAEvaluados($evld);
 
         $this->paso++;
@@ -516,6 +516,7 @@ class CreateEvaluacionDesempeno extends Component
 
     public function asignarEvaluadoresAEvaluados($evaluados)
     {
+        // dump($evaluados);
         $this->array_evaluados = [];
 
         $emps = Empleado::select(
@@ -526,7 +527,7 @@ class CreateEvaluacionDesempeno extends Component
             'puesto_id',
             'foto'
         )->with(['objetivos', 'children:id,name', 'supervisor:id,name', 'area:id,area', 'puestoRelacionado:id,puesto'])->where('estatus', 'alta')->whereNull('deleted_at')->get();
-
+        // dump($emps);
         foreach ($emps as $emp) {
             $this->colaboradores[] =
                 [
@@ -535,7 +536,7 @@ class CreateEvaluacionDesempeno extends Component
                     // 'area' => $emp->area->area,
                 ];
         }
-
+        // dump('colaboradores');
         foreach ($evaluados as $key => $id_evaluado) {
             $eva = $emps->find($id_evaluado);
             $this->array_evaluados[$key] =

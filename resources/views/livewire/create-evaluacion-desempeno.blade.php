@@ -1,6 +1,6 @@
 <div>
 
-    <x-loading-indicator />
+    {{-- <x-loading-indicator /> --}}
 
     <div class="pasos-create-evaluaciones mb-5">
         <div class="paso-create-ev">
@@ -586,36 +586,38 @@
         @default
     @endswitch
 
-    @section('scripts')
-        <script type="text/javascript">
-            document.addEventListener('DOMContentLoaded', () => {
-                let dataEmpleados = []; // Declarada fuera de la función para que sea accesible en todo el ámbito
+    @if ($this->select_evaluados == 'manualmente')
+        @section('scripts')
+            <script type="text/javascript">
+                document.addEventListener('DOMContentLoaded', () => {
+                    let dataEmpleados = []; // Declarada fuera de la función para que sea accesible en todo el ámbito
 
-                Livewire.on('select2', () => {
-                    $('.select2').select2({
-                        'theme': 'bootstrap4',
+                    Livewire.on('select2', () => {
+                        $('.select2').select2({
+                            'theme': 'bootstrap4',
+                        });
+
+                        $('.select2').select2().on('change', function(e) {
+                            var data = $(this).select2("val");
+                            dataEmpleados = data;
+                            console.log(dataEmpleados);
+                        });
                     });
 
                     $('.select2').select2().on('change', function(e) {
                         var data = $(this).select2("val");
                         dataEmpleados = data;
-                        console.log(dataEmpleados);
+                    });
+
+                    document.addEventListener('click', (e) => {
+                        if (e.target && e.target.id == 'btn-paso3') {
+                            e.preventDefault();
+                            console.log(dataEmpleados);
+                            @this.set('empleados_seleccionados', dataEmpleados);
+                        }
                     });
                 });
-
-                $('.select2').select2().on('change', function(e) {
-                    var data = $(this).select2("val");
-                    dataEmpleados = data;
-                });
-
-                document.addEventListener('click', (e) => {
-                    if (e.target && e.target.id == 'btn-paso3') {
-                        e.preventDefault();
-                        console.log(dataEmpleados);
-                        @this.set('empleados_seleccionados', dataEmpleados);
-                    }
-                });
-            });
-        </script>
-    @endsection
+            </script>
+        @endsection
+    @endif
 </div>

@@ -16,6 +16,8 @@ class EvaluadosEvaluacionDesempeno extends Model
         'evaluado_desempeno_id',
     ];
 
+    protected $appends = ['cuenta_evaluaciones'];
+
     public function evaluacion()
     {
         return $this->belongsTo(EvaluacionDesempeno::class, 'evaluacion_desempeno_id', 'id');
@@ -34,5 +36,30 @@ class EvaluadosEvaluacionDesempeno extends Model
     public function evaluadoresCompetencias()
     {
         return $this->hasMany(EvaluadoresEvaluacionCompetenciasDesempeno::class, 'evaluado_desempeno_id', 'id');
+    }
+
+    public function getCuentaEvaluacionesAttribute()
+    {
+        $total = 0;
+
+        if ($this->evaluacion->activar_competencias && $this->evaluacion->activar_objetivos) {
+            $evaluadoresCompetenciasIds = $this->evaluadoresCompetencias->pluck('evaluador_desempeno_id')->toArray();
+            $evaluadoresObjetivosIds = $this->evaluadoresObjetivos->pluck('evaluador_desempeno_id')->toArray();
+
+            // Calculate the distinct count of evaluador_desempeno_id that match in both relations
+            $matchingCount = count(array_intersect($evaluadoresCompetenciasIds, $evaluadoresObjetivosIds));
+
+            // Calculate the count of evaluador_desempeno_id that don't match in both relations
+            $distinctCount = count(array_diff($evaluadoresCompetenciasIds, $evaluadoresObjetivosIds))
+                + count(array_diff($evaluadoresObjetivosIds, $evaluadoresCompetenciasIds));
+
+            $total = $matchingCount + $distinctCount;
+        } elseif ($this->evaluacion->activar_competencias && $this->evaluacion->activar_objetivos == false) {
+            $total = $this->evaluadoresCompetencias->count();
+        } elseif ($this->evaluacion->activar_competencias == false && $this->evaluacion->activar_objetivos) {
+            $total = $this->evaluadoresObjetivos->count();
+        }
+
+        return $total;
     }
 }

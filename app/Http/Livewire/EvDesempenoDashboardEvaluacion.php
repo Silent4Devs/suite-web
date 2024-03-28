@@ -22,8 +22,13 @@ class EvDesempenoDashboardEvaluacion extends Component
     public function render()
     {
         $this->evaluacion = EvaluacionDesempeno::find($this->id_evaluacion);
-        // dd($this->evaluacion->total_evaluaciones);
+        // dd($this->evaluacion->cuenta_evaluados_evaluaciones_totales);
         return view('livewire.ev-desempeno-dashboard-evaluacion');
+    }
+
+    public function enviarRecordatorio()
+    {
+        dd($this->evaluacion->evaluados);
     }
 
     public function cerrarEvaluacion()

@@ -30,6 +30,7 @@ class EvaluacionDesempeno extends Model
         'total_evaluaciones',
         'total_evaluaciones_completadas',
         'porcentaje_evaluaciones_completadas',
+        'cuenta_evaluados_evaluaciones_totales',
     ];
 
     const BORRADOR = 0;
@@ -108,5 +109,10 @@ class EvaluacionDesempeno extends Model
                 return '=';
                 break;
         }
+    }
+
+    public function getCuentaEvaluadosEvaluacionesTotalesAttribute()
+    {
+        return $this->evaluados->sum('cuenta_evaluaciones');
     }
 }

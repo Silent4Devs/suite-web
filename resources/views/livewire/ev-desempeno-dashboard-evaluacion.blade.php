@@ -10,9 +10,11 @@
 
     <div class="row mt-4">
         <div class="col-md-3">
-            <div class="w-100 p-3 text-center text-white rounded-lg" style="background-color: #2C9E7F;">
-                Enviar recordatorio de Evaluación
-            </div>
+            <a wire:click.prevent="enviarRecordatorio">
+                <div class="w-100 p-3 text-center text-white rounded-lg" style="background-color: #2C9E7F;">
+                    Enviar recordatorio de Evaluación
+                </div>
+            </a>
         </div>
         <div class="col-md-3">
             <a wire:click.prevent="cerrarEvaluacion">
@@ -73,8 +75,8 @@
                             </td>
                             <td>
                                 <div class="img-person">
-                                    <img src="{{ $evaluacion->autor->avatar_ruta }}"
-                                        alt="{{ $evaluacion->autor->name }}" title="{{ $evaluacion->autor->name }}">
+                                    <img src="{{ $evaluacion->autor->avatar }}" alt="{{ $evaluacion->autor->name }}"
+                                        title="{{ $evaluacion->autor->name }}">
                                 </div>
                             </td>
                         </tr>
@@ -282,7 +284,7 @@
             <div class="">
                 <span>Total</span>
                 <p>
-                    54/100
+                    54/{{ $evaluacion->cuenta_evaluados_evaluaciones_totales }}
                 </p>
             </div>
         </div>
