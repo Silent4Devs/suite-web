@@ -22,3 +22,5 @@ def test_centro_atencion_index(browser):
     #FECHA
     fecha = "2024-03-28T12:00"
     incidentes_create.seleccionar_fecha(fecha)
+    #sede
+    incidentes_create.sede("Torre Murano")
