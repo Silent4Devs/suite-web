@@ -73,7 +73,13 @@ class IncidentesCreate:
         print("Ingresando ubicación...")
         self._fill_input_field("input[name='ubicacion']",ubicacion)
         print("Ubicación ingresada.")
+
+    def descripcion(self,descripcion):
+        print("Ingresando descripción...")
+        self._fill_input_field("//textarea[contains(@name,'descripcion')]",descripcion)
+        print("Descripción ingresada.")
         pdb.set_trace()
+
     def _wait_and_select(self, selector, opcion):
         try:
             select_element = self.wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, selector)))

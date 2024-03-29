@@ -27,3 +27,6 @@ def test_centro_atencion_index(browser):
     #UBICACION
     ubicacion = "Piso 4"
     incidentes_create.ubicacion(ubicacion)
+    #DESCRIPCION
+    descripcion = "Descripción de prueba"
+    incidentes_create.descripcion(descripcion)
