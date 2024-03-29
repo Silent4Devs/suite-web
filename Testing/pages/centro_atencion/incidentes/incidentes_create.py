@@ -54,7 +54,6 @@ class IncidentesCreate:
         self._click_element("//a[@href='https://192.168.9.78/admin/inicioUsuario/reportes/seguridad']")
         print("Página de creación de reporte cargada.")
 
-
     def titulo_incidente(self, titulo):
         print("Ingresando título del incidente...")
         self._fill_input_field("input[name='titulo']", titulo)
@@ -65,18 +64,20 @@ class IncidentesCreate:
         self._wait_and_fill("//input[@type='datetime-local' and @name='fecha']", fecha)
         print("Fecha seleccionada.")
 
-
     def sede(self, opcion):
         print(f"Seleccionando opción '{opcion}' en el select...")
         self._wait_and_select("select[name='sede']", opcion)
         print("Opción seleccionada.")
+
+    def ubicacion(self,ubicacion):
+        print("Ingresando ubicación...")
+        self._fill_input_field("input[name='ubicacion']",ubicacion)
+        print("Ubicación ingresada.")
         pdb.set_trace()
     def _wait_and_select(self, selector, opcion):
         try:
             select_element = self.wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, selector)))
-            select_element.click()  # Hacer clic en el select para abrir las opciones
-
-            # Esperar a que la opción esté disponible y seleccionarla
+            select_element.click()
             option_xpath = f"//select[@name='sede']/option[text()='{opcion}']"
             option = self.wait.until(EC.visibility_of_element_located((By.XPATH, option_xpath)))
             option.click()

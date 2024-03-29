@@ -24,3 +24,6 @@ def test_centro_atencion_index(browser):
     incidentes_create.seleccionar_fecha(fecha)
     #sede
     incidentes_create.sede("Torre Murano")
+    #UBICACION
+    ubicacion = "Piso 4"
+    incidentes_create.ubicacion(ubicacion)
