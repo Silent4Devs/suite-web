@@ -61,6 +61,8 @@
     <link rel="stylesheet" href="{{ asset('css/rds.css') }}{{ config('app.cssVersion') }}">
     @yield('styles')
     @livewireStyles
+    @vite(['resources/js/app.js'])
+    {{--  @vite(['resources/sass/app.scss', 'resources/js/app.js'])  --}}
 </head>
 
 <body style="zoom: 100%">
@@ -167,15 +169,6 @@
         <div class="menu-hedare-window">
             <div class="item-content-menu-header" style="background-color: #EEF6FF; min-width: 280px;">
                 <div class="logo-org-header">
-                    @php
-                        $organizacion = Organizacion::getLogo();
-                        if (!is_null($organizacion)) {
-                            $logotipo = $organizacion->logotipo;
-                        } else {
-                            $logotipo = 'img/logo_monocromatico.png';
-                        }
-                    @endphp
-
                     <img src="{{ asset($logotipo) }}">
                 </div>
 
@@ -520,128 +513,6 @@
 
     {{-- @include('partials.menu') --}}
     <div class="c-wrapper" id="contenido_body_general_wrapper">
-        {{-- <header class="px-3 c-header c-header-fixed" style="border: none;">
-            <button class="c-header-toggler c-class-toggler d-lg-none" type="button" data-target="#sidebar"
-                data-class="c-sidebar-show">
-                <i class="fas fa-fw fa-bars iconos_cabecera" style="color:#fff;"></i>
-            </button>
-            <button id="btnMenu" style="all:unset; color: #fff; cursor:pointer;" class="d-md-down-none">
-                <i class="fas fa-fw fa-bars" style=""></i>
-            </button>
-            <script>
-                const btnMenu = document.querySelector('#btnMenu');
-                btnMenu.addEventListener('click', () => {
-                    document.body.classList.toggle('c-sidebar-lg-show');
-
-                    if (document.body.classList.contains('c-sidebar-lg-show')) {
-                        localStorage.setItem('menu-mode', 'true');
-                    } else {
-                        localStorage.setItem('menu-mode', 'false');
-                    }
-                });
-
-                if (localStorage.getItem('menu-mode') === 'true') {
-                    document.body.classList.add('c-sidebar-lg-show');
-                } else {
-                    document.body.classList.remove('c-sidebar-lg-show');
-                }
-            </script>
-
-            <form class="form-inline col-sm-3 d-mobile-none" style="position: relative;">
-                <input class="buscador-global" type="search" id="buscador_global" placeholder="Buscador..."
-                    autocomplete="off" />
-                <i class="fas fa-spinner fa-pulse d-none" id="buscando" style="margin-left:-45px"></i>
-                <div id="resultados_sugeridos"
-                    style="background-color: #fff; width:150%; position: absolute;top:50px;left:0">
-                </div>
-            </form>
-            <ul class="ml-auto c-header-nav">
-                @if (count(config('panel.available_languages', [])) > 1)
-                    <li class="c-header-nav-item dropdown d-md-down-none">
-                        <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button"
-                            aria-haspopup="true" aria-expanded="false">
-                            {{ strtoupper(app()->getLocale()) }}
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            @foreach (config('panel.available_languages') as $langLocale => $langName)
-                                <a class="dropdown-item"
-                                    href="{{ url()->current() }}?change_language={{ $langLocale }}">{{ strtoupper($langLocale) }}
-                                    ({{ $langName }})
-                                </a>
-                            @endforeach
-                        </div>
-                    </li>
-                @endif
-
-                <ul class="ml-auto c-header-nav">
-                    <li class="c-header-nav-item dropdown show">
-                        <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button"
-                            aria-haspopup="true" aria-expanded="false">
-                            <div style="width:100%; display: flex; align-items: center;">
-                                @if ($usuario->empleado)
-                                    <div style="width: 40px; overflow:hidden;" class="mr-2">
-                                        <img class="img_empleado" style=""
-                                            src="{{ asset('storage/empleados/imagenes/' . '/' . $usuario->empleado->avatar) }}"
-                                            alt="{{ $usuario->empleado->name }}">
-                                    </div>
-                                    <div class="d-mobile-none">
-                                        <span class="mr-2" style="font-weight: bold;">
-                                            {{ $usuario->empleado ? explode(' ', $usuario->empleado->name)[0] : '' }}
-                                        </span>
-                                        <p class="m-0" style="font-size: 8px">
-                                            {{ $usuario->empleado ? Str::limit($usuario->empleado->puesto, 30, '...') : '' }}
-                                        </p>
-                                    </div>
-                                @else
-                                    <i class="fas fa-user-circle iconos_cabecera" style="font-size: 33px;"></i>
-                                @endif
-                            </div>
-                        </a>
-
-                        @if ($usuario->empleado === null)
-                            <div class="p-3 mt-3 text-center dropdown-menu dropdown-menu-right hide"
-                                style="width:100px; box-shadow: 0px 3px 6px 1px #00000029; border-radius: 4px; border:none;">
-                                <div class="px-3 mt-1 d-flex justify-content-center">
-                                    <a style="all: unset; color: #747474; cursor: pointer;"
-                                        onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
-                                        <i class="bi bi-box-arrow-right"></i> Salir
-                                    </a>
-                                </div>
-                            </div>
-                        @else
-                            <div class="p-3 mt-3 text-center dropdown-menu dropdown-menu-right hide"
-                                style="width:300px; box-shadow: 0px 3px 6px 1px #00000029; border-radius: 4px; border:none;">
-                                <div class="p-2">
-                                    <p class="m-0 mt-2 text-muted" style="font-size:14px">Hola,
-                                        <strong>{{ $usuario->empleado->name }}</strong>
-                                    </p>
-                                </div>
-                                <div class="px-3 mt-1 d-flex justify-content-center">
-                                    @if (file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
-                                        @can('profile_password_edit')
-                                            <a style="all: unset; color: #747474; cursor: pointer;"
-                                                class=" {{ request()->is('profile/password') || request()->is('profile/password/*') ? 'active' : '' }}"
-                                                href="{{ route('profile.password.edit') }}">
-                                                <i class="bi bi-gear"></i>
-                                                Configurar Perfil
-                                            </a>
-                                        @endcan
-                                    @endif
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <font style="color: #747474;">|</font>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <a style="all: unset; color: #747474; cursor: pointer;"
-                                        onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
-                                        <i class="bi bi-box-arrow-right"></i> Salir
-                                    </a>
-                                </div>
-                            </div>
-                        @endif
-                    </li>
-                </ul>
-            </ul>
-        </header> --}}
-
         <div class="c-body">
             <main class="c-main" style="zoom: 90%;">
                 <div class="container-fluid" id="app">
@@ -668,19 +539,6 @@
             </main>
         </div>
 
-        {{-- @include('partials.footer') --}}
-        {{-- <footer class="app-footer">
-            <div>
-                TABANTAJ
-                <font style="margin: 0px 20px;"> | </font>
-                SILENT4BUSINESS
-            </div>
-            <div>
-                2023
-                <font style="margin: 0px 20px;"> | </font>
-                Version: 4.34.10
-            </div>
-        </footer> --}}
     </div>
     <form id="logoutform" action="{{ route('logout') }}" method="POST" style="display: none;">
         {{ csrf_field() }}
@@ -796,20 +654,20 @@
         @endif
     </script>
 
-    <script src="https://js.pusher.com/7.6.0/pusher.min.js"></script>
+    {{-- Notificaciones push desktop --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/push.js/1.0.8/push.min.js"
+        integrity="sha512-eiqtDDb4GUVCSqOSOTz/s/eiU4B31GrdSb17aPAA4Lv/Cjc8o+hnDvuNkgXhSI5yHuDvYkuojMaQmrB5JB31XQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-        // Enable pusher logging - don't include this in production
-        Pusher.logToConsole = true;
-
-        var pusher = new Pusher('e2eb23f0f55bcbd3ee2f', {
-            cluster: 'us2'
-        });
-
-        var channel = pusher.subscribe('my-channel');
-        channel.bind('my-event', function(data) {
-            alert(JSON.stringify(data));
-        });
+        window.onload = function() {
+            // Check if the browser supports notifications
+            if (!("Notification" in window)) {
+                console.error("This browser does not support desktop notifications.");
+            }
+        };
     </script>
+    {{-- Notificaciones push desktop --}}
+
     {{-- Librerías para visualizar en campo el dolar --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/autonumeric/4.1.0/autoNumeric.min.js"></script> --}}
