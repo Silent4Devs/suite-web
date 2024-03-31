@@ -113,7 +113,7 @@ class ComiteseguridadController extends Controller
 
         foreach ($miembros as $miembro) {
 
-            $empleado = Empleado::where('id', $miembro->id_asignada)->first();
+            $empleado = Empleado::getMyEmpleadodata($miembro->id_asignada);
 
             if ($empleado) {
                 Mail::to($empleado->email)->queue(new MemberEmail($empleado->name, $comiteseguridad->nombre_comite));

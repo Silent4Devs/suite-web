@@ -75,13 +75,14 @@
         use App\Models\User;
         use App\Models\Empleado;
         $usuario = User::getCurrentUser();
-        $empleado = Empleado::where('id', $usuario->empleado->id)->first();
+        $empleado = Empleado::getMyEmpleadodata($usuario->empleado->id);
         $organizacion = Organizacion::getLogo();
         if (!is_null($organizacion)) {
             $logotipo = $organizacion->logotipo;
         } else {
             $logotipo = 'logotipo-tabantaj.png';
         }
+
         $hoy_format_global = \Carbon\Carbon::now()->format('d/m/Y');
     @endphp
 
@@ -729,8 +730,6 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/index.js"></script>
 
-    {{--  https://www.udemy.com/course/kubernetes-sencillo-para-desarrolladores/learn/lecture/14674434#overview  --}}
-    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css"> --}}
     <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
     <script src="//unpkg.com/alpinejs" defer></script>
     <script src="{{ asset('js/main.js') }}"></script>
