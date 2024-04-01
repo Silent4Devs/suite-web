@@ -2,21 +2,20 @@ import time
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from config import password_c, username_c
 from selenium.common.exceptions import TimeoutException
+from config import password_c, username_c
 
 #Temporizadores
 tiempo_modulos = 2
 
-class Edit_clasificacion:
+class Edit_lista_de_distribucion:
 
     def __init__(self, driver):
         self.driver = driver
         self.wait = WebDriverWait(self.driver, 10)
-        
-    def login(self):
-        
 
+    def login(self):
+                
         self.driver.get('https://192.168.9.78/')
         self.driver.maximize_window()
         print("Iniciando sesión en el sistema...")
@@ -31,7 +30,7 @@ class Edit_clasificacion:
         print("URL actual:", self.driver.current_url)
         
         time.sleep(tiempo_modulos)
-        
+            
     def _fill_input_field(self, locator, value):
         input_field = self.wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, locator)))
         input_field.clear()
@@ -58,7 +57,7 @@ class Edit_clasificacion:
             option.click()
         except TimeoutException:
             raise TimeoutError(f"Elemento no encontrado en {selector}")
- 
+
     def _wait_and_click(self, xpath):
         try:
             element = self.wait.until(EC.visibility_of_element_located((By.XPATH, xpath)))
@@ -69,9 +68,10 @@ class Edit_clasificacion:
         
         print("URL actual:", self.driver.current_url)
 
+
     ##########################################Entrar a Modulo y Submodulo
 
-    def in_submodulo(self, menu_hamburguesa,element_confirgurar_organizacion,element_entrar_submodulo):
+    def in_submodulo(self, menu_hamburguesa, element_confirgurar_organizacion, element_entrar_submodulo):
         
         #Menu Hamburguesa
         print("Ingresando a Menu Hamburguesa")
@@ -84,39 +84,28 @@ class Edit_clasificacion:
         
         #Modulo Ajustes SG
         print("Ingresando a Moldulo Ajustes SG")
-        menu_sg = WebDriverWait(self.driver, 3).until(
+        modulo = WebDriverWait(self.driver, 3).until(
             EC.element_to_be_clickable((By.XPATH, element_confirgurar_organizacion))
         )
-        menu_sg.click()
+        modulo.click()
         
         time.sleep(tiempo_modulos)
         
-        #Submodulo Clasificacion
-        print("Ingresando a Submenu Clasificacion")
-        sub_clasif= WebDriverWait(self.driver, 3).until(
+        #Submodulo Lista de Distribucion 
+        print("Ingresando a Submenu Clausula")
+        sub_modulo= WebDriverWait(self.driver, 3).until(
             EC.element_to_be_clickable((By.XPATH, element_entrar_submodulo))
         )
-        sub_clasif.click()
+        sub_modulo.click()
         
         time.sleep(tiempo_modulos)
         
         print("URL actual:", self.driver.current_url)
 
     ########################################## Agregar Clasificacion y llenar repositorio
-
-    def update_clasificacion(self,campo_buscar_xpath,trespuntos_btn_xpath,boton_editar):
+    
+    def update_lista_de_distribucion(self, trespuntos_btn_xpath, boton_editar):
         
-        time.sleep(tiempo_modulos)
-        
-        # Campo Buscar
-        campo_entrada = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, campo_buscar_xpath))
-        )
-        campo_entrada.clear()
-        campo_entrada.send_keys("Clasificacion de Prueba")
-        
-        time.sleep(tiempo_modulos)
-
         # Boton 3 puntos
         print("Dando clic al botón 3 puntos...")
         wait = WebDriverWait(self.driver, 10)
@@ -137,19 +126,21 @@ class Edit_clasificacion:
 
         time.sleep(tiempo_modulos)  
         
-        # Descripcion
-        campo_descripcion = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//TEXTAREA[@id='descripcion']"))
+        # Super Aprobadores
+        campo_aprobadores = WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, "(//SPAN[@class='select2-selection select2-selection--multiple'])[1]"))
             )
-        campo_descripcion.click()
-        campo_descripcion.clear()
-        campo_descripcion.send_keys("Descripcion de Prueba Actualizado")
+        campo_aprobadores.click()
+        time.sleep(5)
+        campo_aprobadores.send_keys("Cesar Ernesto Escobar hernandez")
+        time.sleep(5)
+        campo_aprobadores.click()
 
         time.sleep(tiempo_modulos)
 
         # Guardar actualización
         print("Dando clic al botón Guardar para guardar actualización...")
-        guardar_xpath = "//button[@class='btn btn-danger' and normalize-space()='Guardar']"
+        guardar_xpath = "//BUTTON[@type='submit'][text()='Editar']"
         guardar = WebDriverWait(self.driver, 20).until(
             EC.element_to_be_clickable((By.XPATH, guardar_xpath))
         )
@@ -158,4 +149,3 @@ class Edit_clasificacion:
         time.sleep(tiempo_modulos)
         
         print("URL actual:", self.driver.current_url)
-        

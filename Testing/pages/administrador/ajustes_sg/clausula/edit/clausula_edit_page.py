@@ -8,15 +8,14 @@ from selenium.common.exceptions import TimeoutException
 #Temporizadores
 tiempo_modulos = 2
 
-class Edit_clasificacion:
+class Edit_clausula:
 
     def __init__(self, driver):
         self.driver = driver
         self.wait = WebDriverWait(self.driver, 10)
-        
-    def login(self):
-        
 
+    def login(self):
+                
         self.driver.get('https://192.168.9.78/')
         self.driver.maximize_window()
         print("Iniciando sesión en el sistema...")
@@ -31,7 +30,7 @@ class Edit_clasificacion:
         print("URL actual:", self.driver.current_url)
         
         time.sleep(tiempo_modulos)
-        
+            
     def _fill_input_field(self, locator, value):
         input_field = self.wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, locator)))
         input_field.clear()
@@ -58,7 +57,7 @@ class Edit_clasificacion:
             option.click()
         except TimeoutException:
             raise TimeoutError(f"Elemento no encontrado en {selector}")
- 
+
     def _wait_and_click(self, xpath):
         try:
             element = self.wait.until(EC.visibility_of_element_located((By.XPATH, xpath)))
@@ -69,9 +68,10 @@ class Edit_clasificacion:
         
         print("URL actual:", self.driver.current_url)
 
+
     ##########################################Entrar a Modulo y Submodulo
 
-    def in_submodulo(self, menu_hamburguesa,element_confirgurar_organizacion,element_entrar_submodulo):
+    def in_submodulo(self, menu_hamburguesa, element_confirgurar_organizacion, element_entrar_submodulo):
         
         #Menu Hamburguesa
         print("Ingresando a Menu Hamburguesa")
@@ -91,8 +91,8 @@ class Edit_clasificacion:
         
         time.sleep(tiempo_modulos)
         
-        #Submodulo Clasificacion
-        print("Ingresando a Submenu Clasificacion")
+        #Submodulo Clausula
+        print("Ingresando a Submenu Clausula")
         sub_clasif= WebDriverWait(self.driver, 3).until(
             EC.element_to_be_clickable((By.XPATH, element_entrar_submodulo))
         )
@@ -103,18 +103,17 @@ class Edit_clasificacion:
         print("URL actual:", self.driver.current_url)
 
     ########################################## Agregar Clasificacion y llenar repositorio
-
-    def update_clasificacion(self,campo_buscar_xpath,trespuntos_btn_xpath,boton_editar):
+    
+    def update_clausula(self, campo_buscar_xpath, trespuntos_btn_xpath, boton_editar):
         
         time.sleep(tiempo_modulos)
-        
         # Campo Buscar
         campo_entrada = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located((By.XPATH, campo_buscar_xpath))
         )
         campo_entrada.clear()
-        campo_entrada.send_keys("Clasificacion de Prueba")
-        
+        campo_entrada.send_keys("Clausula de Prueba")
+
         time.sleep(tiempo_modulos)
 
         # Boton 3 puntos
@@ -158,4 +157,4 @@ class Edit_clasificacion:
         time.sleep(tiempo_modulos)
         
         print("URL actual:", self.driver.current_url)
-        
+    
