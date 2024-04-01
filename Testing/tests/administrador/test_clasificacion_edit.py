@@ -2,6 +2,8 @@ import pytest
 from pages.administrador.ajustes_sg.clasificacion.ediit.clasifiacion_edit_page import Edit_clasificacion
 
 #Usuario y Contraseña
+#Hola
+
 
 username = "cesar.escobar@silent4business.com"
 password = "password"   
