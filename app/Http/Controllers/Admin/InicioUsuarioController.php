@@ -66,7 +66,7 @@ class InicioUsuarioController extends Controller
 
         $usuario = User::getCurrentUser();
 
-        $empleado = Empleado::where('id', $usuario->empleado->id)->first();
+        $empleado = Empleado::getMyEmpleadodata($usuario->empleado->id);
 
         $usuarioVinculadoConEmpleado = false;
         if ($empleado) {
@@ -195,18 +195,24 @@ class InicioUsuarioController extends Controller
             $last_evaluacion = Evaluacion::getAllLatestFirst();
             if ($last_evaluacion) {
                 $evaluaciones = EvaluadoEvaluador::whereHas('evaluacion', function ($q) use ($last_evaluacion) {
-                    $q->where('estatus', Evaluacion::ACTIVE)
+                    $q->where(function ($query) {
+                        $query->where('estatus', Evaluacion::ACTIVE)
+                            ->orWhere('estatus', Evaluacion::CLOSED);
+                    })
                         ->where('fecha_inicio', '<=', Carbon::now())
-                        ->where('fecha_fin', '>', Carbon::now())
+                        // ->where('fecha_fin', '>', Carbon::now())
                         ->where('id', $last_evaluacion->id);
                 })->with('empleado_evaluado', 'evaluador')->where('evaluador_id', $empleado->id)
                     ->where('evaluado_id', '!=', $empleado->id)
                     ->where('evaluado', false)
                     ->get();
                 $mis_evaluaciones = EvaluadoEvaluador::whereHas('evaluacion', function ($q) use ($last_evaluacion) {
-                    $q->where('estatus', Evaluacion::ACTIVE)
+                    $q->where(function ($query) {
+                        $query->where('estatus', Evaluacion::ACTIVE)
+                            ->orWhere('estatus', Evaluacion::CLOSED);
+                    })
                         ->where('fecha_inicio', '<=', Carbon::now())
-                        ->where('fecha_fin', '>', Carbon::now())
+                        // ->where('fecha_fin', '>', Carbon::now())
                         ->where('id', $last_evaluacion->id);
                 })->with('empleado_evaluado', 'evaluador')->where('evaluador_id', $empleado->id)
                     ->where('evaluado_id', $empleado->id)
@@ -215,7 +221,7 @@ class InicioUsuarioController extends Controller
 
             if ($last_evaluacion) {
                 $evaluaciones = EvaluadoEvaluador::whereHas('evaluacion', function ($q) use ($last_evaluacion) {
-                    $q->where('estatus', Evaluacion::ACTIVE)
+                    $q->where('estatus', Evaluacion::CLOSED)
                         ->where('fecha_inicio', '<=', Carbon::now())
                         ->where('fecha_fin', '>', Carbon::now())
                         ->where('id', $last_evaluacion->id);
@@ -224,7 +230,7 @@ class InicioUsuarioController extends Controller
                     ->where('evaluado', false)
                     ->get();
                 $como_evaluador = EvaluadoEvaluador::whereHas('evaluacion', function ($q) use ($last_evaluacion) {
-                    $q->where('estatus', Evaluacion::ACTIVE)
+                    $q->where('estatus', Evaluacion::CLOSED)
                         ->where('fecha_inicio', '<=', Carbon::now())
                         ->where('fecha_fin', '>', Carbon::now())
                         ->where('id', $last_evaluacion->id);
