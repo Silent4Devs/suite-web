@@ -3,7 +3,7 @@ from selenium import webdriver
 from pages.centro_atencion.incidentes.incidentes_create import IncidentesCreate
 
 
-def test_centro_atencion_index(browser):
+def test_incidentes_create(browser):
     #INITIALIZE PAGE OBJECT
     incidentes_create= IncidentesCreate(browser)
     #LOGIN
@@ -30,6 +30,11 @@ def test_centro_atencion_index(browser):
     #DESCRIPCION
     descripcion = "Descripción de prueba"
     incidentes_create.descripcion(descripcion)
-    #AREAS AFECTADAS
-    areas = "Desarrollo"
-    incidentes_create.areas_afectadas(areas)
+    # Seleccionar el área afectada en el índice 2
+    indice_area = 2
+    incidentes_create.areas_afectadas(indice_area)
+
+# Seleccionar el proceso afectado en el índice 3
+    indice_proceso = 3
+    incidentes_create.procesos_afectados(indice_proceso)
+

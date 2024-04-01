@@ -80,21 +80,29 @@ class IncidentesCreate:
         print("Descripción ingresada.")
         self.driver.execute_script("window.scrollBy(0, 500);")
 
-    def areas_afectadas(self, areas):
-        print(f"Seleccionando áreas afectadas: {areas}...")
-        self._wait_and_select_("//select[@class='form-control' and @id='activos']")
-        print("Áreas afectadas seleccionadas.")
+    def areas_afectadas(self, indice):
+        print(f"Seleccionando área afectada en el índice: {indice}...")
+        self._wait_and_select_by_index("//select[@class='form-control' and @id='activos']", indice)
+        print("Área afectada seleccionada.")
+
+    def procesos_afectados(self, indice):
+        print(f"Seleccionando proceso afectado en el índice: {indice}...")
+        self._wait_and_select_by_index("//select[@class='form-control' and @id='activos']", indice)
+        print("Proceso afectado seleccionado.")
         pdb.set_trace()
 
-    def _wait_and_select_(self, selector):
+    def _wait_and_select_by_index(self, selector, indice):
         try:
             select_element = self.wait.until(EC.visibility_of_element_located((By.XPATH, selector)))
             select_element.click()
-            first_option_xpath = f"({selector}/option)[2]"  #EL [] es el ID del select
-            first_option = self.wait.until(EC.visibility_of_element_located((By.XPATH, first_option_xpath)))
-            first_option.click()
+            # Esperamos un momento para que se carguen las opciones
+            self.wait.until(EC.visibility_of_element_located((By.XPATH, f"{selector}/option")))
+            option_xpath = f"({selector}/option)[{indice + 1}]"  # Sumamos 1 porque los índices en XPath comienzan en 1
+            option = self.wait.until(EC.visibility_of_element_located((By.XPATH, option_xpath)))
+            option.click()
         except TimeoutException:
             raise TimeoutError(f"No se pudo encontrar el elemento en {selector}")
+
 
     def _wait_and_select(self, selector, opcion):
         try:
