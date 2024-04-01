@@ -53,7 +53,6 @@ class TimesheetController extends Controller
      */
     public function index($estatus = 'todos')
     {
-        $cacheKey = 'timesheet-'.User::getCurrentUser()->empleado->id;
 
         // $times = Timesheet::getPersonalTimesheet()->sortBy('fecha_dia');
         // dd($times);
@@ -62,6 +61,8 @@ class TimesheetController extends Controller
         // $pendientes_contador = $times->where('estatus', 'pendiente')->count();
         // $aprobados_contador = $times->where('estatus', 'aprobado')->count();
         // $rechazos_contador = $times->where('estatus', 'rechazado')->count();
+
+        $empleado_name = User::getCurrentUser()->empleado->name;
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -75,7 +76,8 @@ class TimesheetController extends Controller
             // 'pendientes_contador'
             'logo_actual',
             'empresa_actual',
-            'estatus'
+            'estatus',
+            'empleado_name'
         ));
     }
 
