@@ -1,5 +1,5 @@
 import pytest
-from pages.evaluaciones360_seguimiento_page import Evaluaciones_360_seguimiento_page
+from pages.gestion_talento.seguimiento.evaluaciones360_seguimiento_page import Evaluaciones_360_seguimiento_page
 
 username = "cesar.escobar@silent4business.com"
 password = "password"

@@ -1,5 +1,5 @@
 import pytest
-from pages.evaluaciones360_edit_page import Evaluaciones_360_edit_page
+from pages.gestion_talento.edit.evaluaciones360_edit_page import Evaluaciones_360_edit_page
 
 #Usuario y Contraseña
 

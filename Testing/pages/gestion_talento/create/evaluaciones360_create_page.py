@@ -5,7 +5,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import Select
 import pdb
 
-
+#hola
 
 #Temporizadores
 tiempo_modulos = 5
@@ -17,7 +17,7 @@ tiempo_largo = 120
 
 #----------------------------------------------------INICIO DE CLASE--------------------------------------------------------------------------
 
-class Evaluaciones_360_create_page:
+class Evaluaciones360_create_page:
     
     def __init__(self, driver):
         self.driver = driver

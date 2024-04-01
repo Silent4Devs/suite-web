@@ -1,5 +1,5 @@
 import pytest
-from pages.evaluaciones360_index_page import Evaluaciones_360_log_in_modulo
+from pages.gestion_talento.index.evaluaciones360_index_page import Evaluaciones_360_log_in_modulo
 
 #Usuario y Contraseña
 
