@@ -30,3 +30,6 @@ def test_centro_atencion_index(browser):
     #DESCRIPCION
     descripcion = "Descripción de prueba"
     incidentes_create.descripcion(descripcion)
+    #AREAS AFECTADAS
+    areas = "Desarrollo"
+    incidentes_create.areas_afectadas(areas)

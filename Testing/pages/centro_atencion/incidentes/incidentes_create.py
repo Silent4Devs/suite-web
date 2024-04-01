@@ -76,9 +76,25 @@ class IncidentesCreate:
 
     def descripcion(self,descripcion):
         print("Ingresando descripción...")
-        self._fill_input_field("//textarea[contains(@name,'descripcion')]",descripcion)
+        self._wait_and_fill("//textarea[@name='descripcion']",descripcion)
         print("Descripción ingresada.")
+        self.driver.execute_script("window.scrollBy(0, 500);")
+
+    def areas_afectadas(self, areas):
+        print(f"Seleccionando áreas afectadas: {areas}...")
+        self._wait_and_select_("//select[@class='form-control' and @id='activos']")
+        print("Áreas afectadas seleccionadas.")
         pdb.set_trace()
+
+    def _wait_and_select_(self, selector):
+        try:
+            select_element = self.wait.until(EC.visibility_of_element_located((By.XPATH, selector)))
+            select_element.click()
+            first_option_xpath = f"({selector}/option)[2]"  #EL [] es el ID del select
+            first_option = self.wait.until(EC.visibility_of_element_located((By.XPATH, first_option_xpath)))
+            first_option.click()
+        except TimeoutException:
+            raise TimeoutError(f"No se pudo encontrar el elemento en {selector}")
 
     def _wait_and_select(self, selector, opcion):
         try:
