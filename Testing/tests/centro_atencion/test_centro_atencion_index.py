@@ -1,6 +1,6 @@
 import pytest
 from selenium import webdriver
-from testing.pages.centro_atencion.index.centro_atencion_index import CentroAtencionIndex
+from pages.centro_atencion.index.centro_atencion_index import CentroAtencionIndex
 
 
 def test_centro_atencion_index(browser):
