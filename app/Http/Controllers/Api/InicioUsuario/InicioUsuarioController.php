@@ -29,13 +29,10 @@ use App\Models\SolicitudVacaciones;
 use App\Models\Sugerencias;
 use App\Models\User;
 use Carbon\Carbon;
-use Essa\APIToolKit\Api\ApiResponse;
 use Illuminate\Support\Facades\Cache;
 
 class InicioUsuarioController extends Controller
 {
-    use ApiResponse;
-
     public function index()
     {
         $hoy = Carbon::now();
