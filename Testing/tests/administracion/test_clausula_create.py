@@ -1,6 +1,6 @@
 from pages.administracion.ajustes_sg.clausula.create.clausula_create_page import Create_clausula
  
-def test_clasificacion_create(browser):
+def test_clausula_create(browser):
     
  clasifiacion_create = Create_clausula(browser)
  clasifiacion_create.login()
