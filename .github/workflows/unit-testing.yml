@@ -50,7 +50,7 @@ jobs:
 
       - name: Run Unit Tests
         run: |
-          coverage run -m pytest -v -s tests/
+          coverage run -m pytest -v -s testing/tests/
 
       - name: Generate Coverage Report
         run: coverage report -m
