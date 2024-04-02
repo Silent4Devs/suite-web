@@ -7,21 +7,19 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 
 #Variables
-element_confirgurar_organizacion = "(//A[@href='#'])[6]"
-element_entrar_submodulo = "//A[@href='https://192.168.9.78/admin/configurar-soporte'][text()='Configurar Soporte']"
-agregar_btn_xpath= "//BUTTON[@class='btn btn-xs btn-outline-success rounded ml-2 pr-3 agregar']"
-save_btn_xpath="//button[@class='btn btn-danger'][contains(.,'Guardar')]"
-campo_buscar_xpath= "(//INPUT[@type='search'])[2]"
-btn2_editar = "(//I[@class='fas fa-edit'])[1]"
-trespuntos_btn_xpath= "(//BUTTON[@class='btn btn-action-show-datatables-global d-none'])[1]"
+
+element_confirgurar_organizacion = "(//A[@href='#'])[2]"
 menu_hamburguesa = "//BUTTON[@class='btn-menu-header']"
-guardar_xpath = "//BUTTON[@class='btn btn-danger'][normalize-space(text())='Guardar']"
-boton_editar = "//I[@class='fas fa-edit']"
+element_entrar_submodulo = "//A[@href='https://192.168.9.78/admin/tipoactivos'][text()='Categorias de Activos']"
+agregar_btn_xpath= "//BUTTON[@class='btn btn-xs btn-outline-success rounded ml-2 pr-3']"
+campo_buscar_xpath= "(//INPUT[@type='search'])[2]"
+trespuntos_btn_xpath= "(//BUTTON[@class='btn btn-action-show-datatables-global d-none'])[1]"
+btn2_editar = "(//A[@class='mr-2 rounded btn btn-sm'])[2]"
 
 #Temporizadores
-tiempo_modulos = 6
+tiempo_modulos = 4
 tiempo_carga = 10
-tiempo_espera = 3
+tiempo_espera = 2.5
 
 @pytest.fixture(scope="module")
 def browser():
@@ -76,25 +74,25 @@ def in_modulos(driver):
     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, menu_hamburguesa)))
     print("Dando clic en Menu Hamburguesa...")
     element.click()
-    
+
     time.sleep(tiempo_modulos)
-      
-    # Entrando a Modulo Ajuste de Sistema
-    print("Entrando a Ajuste de Sistema...")
+    
+    # Entrando a Modulo Configurar Organizacion
+    print("Entrando a Configurar Organizacion...")
     element = driver.find_element(By.XPATH, element_confirgurar_organizacion)
     driver.execute_script("arguments[0].scrollIntoView(true);", element)
     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, element_confirgurar_organizacion)))
-    print("Dando clic en Ajuste de Sistema...")
+    print("Dando clic en Configurar Organizacion...")
     element.click()
     
     time.sleep(tiempo_modulos)
 
-    # Entrando a Sub Modulo Configurar Soporte
-    print("Entrando a Sub Modulo Configurar Soporte...")
+    # Entrando a Sub Modulo Categoria de Activos
+    print("Entrando a Sub Modulo Categoria de Activos...")
     entrar = driver.find_element(By.XPATH,element_entrar_submodulo)
     driver.execute_script("arguments[0].scrollIntoView(true);", element)
     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH,element_entrar_submodulo)))
-    print("Dando clic en Sub Modulo Configurar Soporte...")
+    print("Dando clic en Sub Modulo Categoria de Activos...")
     entrar.click()
     
     time.sleep(tiempo_modulos)
@@ -105,86 +103,111 @@ def test_in_modulos(browser):
     
     in_modulos(browser)
 
+##################################################### AGREGAR Y LLENAR REPOSITORIO ####################################
+
+def add_categoria_d_activos(driver):
     
-##################################################### AGREGAR Y LLENAR REPOSITORIO ######################################
-    
-def add_configurar_soporte(driver):
-    
-    time.sleep(tiempo_carga)
-    
-    # Dando clic en Boton Agregar Configurar soporte
-    print("Dando clic al botón Agregar ...")
+    time.sleep(tiempo_modulos)
+
+    # Dando clic en Boton Agregar Categoria de Activos
+    print("Dando clic al botón Agregar Categoria de Activos...")
     wait = WebDriverWait(driver, 10)
     agregar_btn = wait.until(EC.presence_of_element_located((By.XPATH, agregar_btn_xpath)))
     agregar_btn.click()
     
     time.sleep(tiempo_modulos)
     
-    # Rol
-    
-    campo_rol = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, "//SELECT[@id='rol']"))
+    # Nombre de la Categoria
+    campo_categoria = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, "//INPUT[@id='tipo']"))
         )
-    campo_rol.click()
-    time.sleep(tiempo_espera)
-    campo_rol.send_keys("Soporte técnico")
-    time.sleep(tiempo_espera)
-    campo_rol.click()
-    print("Asignando Rol")
-    
-    time.sleep(tiempo_espera)
-    
-    # Empleado
-    
-    campo_empleado = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, "//SELECT[@id='id_elaboro']"))
-        )
-    campo_empleado.click()
-    time.sleep(tiempo_espera)
-    campo_empleado.send_keys("Benito López Mejía")
-    time.sleep(tiempo_espera)
-    campo_empleado.click()
-    print("Asignando Empleado")
-    
-    time.sleep(tiempo_espera)
+    campo_categoria.click()
+    campo_categoria.send_keys("Nombre de Categoria de Prueba 00117")
+    print("Escribiendo campo nombre de la categoria")
 
-    # Guardar Repositorio
-    print("Dando clic al botón Guardar...")
+    time.sleep(tiempo_modulos)
+    
+     # Guardar
+
+    guardar_xpath = "//BUTTON[contains(@class, 'btn') and contains(@class, 'btn-danger') and normalize-space()='Guardar']"
     guardar = WebDriverWait(driver, 20).until(
         EC.element_to_be_clickable((By.XPATH, guardar_xpath))
     )
     guardar.click()
-    
-    time.sleep(tiempo_espera)
+    print("Dando clic boton guardar")
+
+    time.sleep(tiempo_modulos)
     
     print("URL actual:", driver.current_url)
-      
-def test_add_configurar_soporte(browser):
     
-    add_configurar_soporte(browser)
+def test_add_categoria_d_activos(browser):
     
-############################## ENTRANDO DE NUEVO AL SUBMODULO PARA COMPROBAR CAMBIOS 
+    add_categoria_d_activos(browser)
+    
+#################################BUSCAR REPOSITORIO Y ENTRAR A BOTONES DE EDICION###################################
 
-def check_usuarios(driver):
+def update_categoria_d_activos(driver):
     
     time.sleep(tiempo_carga)
-    
+
     # Campo Buscar
     campo_entrada = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.XPATH, campo_buscar_xpath))
     )
     campo_entrada.clear()
-    campo_entrada.send_keys("Soporte técnico")
+    campo_entrada.send_keys("Nombre de Categoria de Prueba 00117")
+    print("Dando clic en campo buscar")
 
     time.sleep(tiempo_carga)
 
+    # Boton 3 puntos
+    print("Dando clic al botón 3 puntos...")
+    wait = WebDriverWait(driver, 10)
+    # Esperar a que el elemento esté presente en el DOM
+    puntos_btn = wait.until(EC.presence_of_element_located((By.XPATH, trespuntos_btn_xpath)))
+    # Ahora intenta hacer clic en el elemento
+    puntos_btn.click()
+
+    time.sleep(tiempo_modulos)
+
+    # Boton editar
+    print("Dando clic al botón editar...")
+    wait = WebDriverWait(driver, 10)
+    # Esperar a que el elemento esté presente en el DOM
+    btn_editar = wait.until(EC.presence_of_element_located((By.XPATH, btn2_editar)))
+    # Ahora intenta hacer clic en el elemento
+    btn_editar.click()
+
+    time.sleep(tiempo_modulos)  
+    
+    # Nombre de la Categoria
+    campo_puestos = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, "//INPUT[@id='tipo']"))
+        )
+    campo_puestos.click()
+    campo_puestos.clear()
+    campo_puestos.send_keys("Nombre de Categoria de Prueba Actualizado 00117")
+    print("Actualizando campo nombre de la categoria")
+
+    time.sleep(tiempo_modulos)
+
+    # Guardar actualización
+    print("Dando clic al botón Guardar para guardar actualización...")
+    guardar_xpath = "//BUTTON[contains(@class, 'btn') and contains(@class, 'btn-danger') and normalize-space()='Guardar']"
+    guardar = WebDriverWait(driver, 20).until(
+        EC.element_to_be_clickable((By.XPATH, guardar_xpath))
+    )
+    guardar.click()
+
+    time.sleep(tiempo_modulos)  
     
     print("URL actual:", driver.current_url)
 
-    time.sleep(tiempo_modulos)  
+def test_update_categoria_d_activos(browser):
+    
+    update_categoria_d_activos(browser)
+    
 
     
-def test_check_usuarios(browser):
-    
-    check_usuarios(browser)
-    
+
+ 
