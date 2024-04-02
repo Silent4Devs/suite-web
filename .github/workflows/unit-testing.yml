@@ -1,5 +1,5 @@
-name: Run Login Tests via Pytest
-run-name: ${{ github.actor }} run Login Tests via Pytest
+name: Run All Tests via Pytest
+run-name: ${{ github.actor }} run All Tests via Pytest
 on:
   push:
     branches:
@@ -23,18 +23,21 @@ jobs:
         python-version: ["3.11"]
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Install dependencies
+
+      - name: Navigate to Testing directory
+        run: cd Testing
+
+      - name: Install dependencies from requirements.txt
         run: |
           python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-
-      - name: Install coverage
-        run: pip install coverage
+          pip install -r requirements.txt
 
       - name: Lint with Ruff
         run: |
@@ -42,16 +45,10 @@ jobs:
           ruff --format=github --target-version=py311 .
         continue-on-error: true
 
-
-      - name: Navigate back to root directory
-        run: cd ..
-
-
-      - name: Test Login with pytest
+      - name: Test with pytest
         run: |
-          coverage run -m pytest -v -s tests/login/login_successfully.py
+          coverage run -m pytest -v -s tests/
 
       - name: Generate Coverage Report
         run: coverage report -m
-
 
