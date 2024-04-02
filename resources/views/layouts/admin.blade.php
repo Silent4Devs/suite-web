@@ -60,7 +60,13 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
         onload="this.onload=null;this.removeAttribute('media');">
     <link href="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.css"
+        integrity="sha512-MQXduO8IQnJVq1qmySpN87QQkiR1bZHtorbJBD0tzy7/0U9+YIC93QWHeGTEoojMVHWWNkoCp8V6OzVSYrX0oQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/plugins/monthSelect/style.min.css"
+        integrity="sha512-V7B1IY1DE/QzU/pIChM690dnl44vAMXBidRNgpw0mD+hhgcgbxHAycRpOCoLQVayXGyrbC+HdAONVsF+4DgrZA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- End Extra Styles -->
 
     @livewireStyles
@@ -69,7 +75,7 @@
         onload="this.onload=null;this.removeAttribute('media');">
 </head>
 
-<body style="zoom: 100%">
+<body style="zoom: 99%">
     <div id="loading">
         <img id="loading-image" src="https://i.pinimg.com/originals/07/24/88/0724884440e8ddd0896ff557b75a222a.gif"
             alt="Loading...">
@@ -603,9 +609,9 @@
     </div>
 
     <!-- inicia sección de script -->
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr" defer></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-
+    {{-- Librerías para visualizar en campo el dolar --}}
+    <script async src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     {{-- Notificaciones push desktop --}}
     <script async src="https://cdnjs.cloudflare.com/ajax/libs/push.js/1.0.8/push.min.js"
         integrity="sha512-eiqtDDb4GUVCSqOSOTz/s/eiU4B31GrdSb17aPAA4Lv/Cjc8o+hnDvuNkgXhSI5yHuDvYkuojMaQmrB5JB31XQ=="
@@ -618,32 +624,24 @@
             }
         };
     </script>
-
     {{-- Notificaciones push desktop --}}
-
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @include('sweetalert::alert')
     @livewireScripts
-
     <x-livewire-alert::scripts />
     {{-- Laravel vite --}}
     @vite(['resources/js/app.js'])
     {{-- Laravel vite --}}
-
-    {{-- Librerías para visualizar en campo el dolar --}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-
-    <!-- js para validaciones globales sadas werwer-->
+    <script defer src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <!-- js para validaciones globales -->
     <!--<script src="{{ asset('js/validations.js') }}"></script>-->
     <script src="{{ asset('js/app.js') }}"></script>
     @yield('js')
     <script defer src="https://unpkg.com/@coreui/coreui@3.4.0/dist/js/coreui.bundle.min.js"></script>
     <script defer src="https://unpkg.com/@popperjs/core@2"></script>
-
     <script async src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous">
     </script>
-
     <script async src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
@@ -657,12 +655,8 @@
     <script
         src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.18/af-2.3.0/b-1.5.2/b-colvis-1.5.2/b-html5-1.5.2/b-print-1.5.2/cr-1.5.0/fc-3.2.5/fh-3.1.4/kt-2.4.0/r-2.2.2/rg-1.0.3/rr-1.2.4/sc-1.5.0/sl-1.2.6/datatables.min.js"
         defer></script> {{-- quitar script en el glosario --}}
-    <script src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
-
     <script src="{{ asset('js/buttons.print.js') }}"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
@@ -670,25 +664,15 @@
     <script src="{{ asset('js/yearpicker.js') }}"></script>
     <script src="//cdn.ckeditor.com/4.16.0/full/ckeditor.js"></script>
     <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.css"
-        integrity="sha512-MQXduO8IQnJVq1qmySpN87QQkiR1bZHtorbJBD0tzy7/0U9+YIC93QWHeGTEoojMVHWWNkoCp8V6OzVSYrX0oQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/plugins/monthSelect/style.min.css"
-        integrity="sha512-V7B1IY1DE/QzU/pIChM690dnl44vAMXBidRNgpw0mD+hhgcgbxHAycRpOCoLQVayXGyrbC+HdAONVsF+4DgrZA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/index.js"></script>
-
     <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
     <script src="//unpkg.com/alpinejs" defer></script>
     <script src="{{ asset('js/main.js') }}"></script>
-
     <!-- x editable -->
-    <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js">
+    <script defer src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js">
     </script>
     <!-- termina sección de script -->
+
 
     <script async>
         document.onreadystatechange = function() {
@@ -1032,7 +1016,7 @@
         }
     </script>
 
-    <script>
+    <script defer>
         var inputs = document.querySelectorAll('input[type="text"]');
         var inputTextarea = document.querySelectorAll('textarea');
         // Agregar un event listener a cada elemento input
