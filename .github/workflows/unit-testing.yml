@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - develop
-      - staging
+      - stagging
   pull_request:
     branches:
       - develop
@@ -33,22 +33,25 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
+      - name: Install coverage
+        run: pip install coverage
+
       - name: Lint with Ruff
         run: |
           pip install ruff
           ruff --format=github --target-version=py311 .
         continue-on-error: true
 
-      # Navigate back to root directory
+
       - name: Navigate back to root directory
         run: cd ..
 
-      # Run tests for login with pytest
+
       - name: Test Login with pytest
         run: |
           coverage run -m pytest -v -s tests/login/login_successfully.py
 
-      # Generate Coverage Report
       - name: Generate Coverage Report
         run: coverage report -m
+
 
