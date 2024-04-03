@@ -20,7 +20,7 @@ class ProveedoresOController extends Controller
     public function index()
     {
         abort_if(Gate::denies('katbol_proveedores_ordenes_compra_acceso'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $proveedores = ProveedorOC::select('id', 'nombre', 'razon_social', 'rfc', 'contacto', 'estado', 'facturacion', 'direccion', 'envio', 'credito', 'fecha_inicio', 'fecha_fin')->where('estado', false)->get();
+        $proveedores = ProveedorOC::where('estado', false)->get();
         $proveedores_id = ProveedorOC::get()->pluck('id');
         $ids = [];
 
@@ -33,7 +33,7 @@ class ProveedoresOController extends Controller
 
     public function getproveedoresIndex(Request $request)
     {
-        $query = ProveedorOC::select('id', 'nombre', 'razon_social', 'rfc', 'contacto', 'estado', 'facturacion', 'direccion', 'envio', 'credito', 'fecha_inicio', 'fecha_fin')->where('estado', false)->get();
+        $query = ProveedorOC::where('estado', false)->get();
 
         return datatables()->of($query)->toJson();
     }
@@ -79,7 +79,7 @@ class ProveedoresOController extends Controller
         } catch (QueryException $e) {
             DB::rollback();
 
-            return 'Error al insertar el proveedor: '.$e->getMessage();
+            return 'Error al insertar el proveedor: ' . $e->getMessage();
         }
     }
 
@@ -106,7 +106,7 @@ class ProveedoresOController extends Controller
             abort_if(Gate::denies('katbol_proveedores_ordenes_compra_modificar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
             $proveedores = ProveedorOC::find($id);
 
-            if (! $proveedores) {
+            if (!$proveedores) {
                 abort(404);
             }
 

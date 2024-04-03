@@ -139,7 +139,7 @@
                     <div class="mt-2 form-group col-md-8">
                         <label class="form-label"><i class="fas fa-text-width iconos-crear"></i> Título corto de la
                             queja<sup>*</sup></label>
-                        <input type="" name="titulo" class="form-control" required>
+                        <input type="" name="titulo" maxlength="255" class="form-control" required>
                     </div>
 
                     <div class="mt-2 form-group col-md-4">
@@ -160,14 +160,14 @@
 
                     <div class="mt-2 form-group col-md-8">
                         <label class="form-label"><i class="fas fa-map iconos-crear"></i> Ubicación exacta</label>
-                        <input type="" name="ubicacion" class="form-control">
+                        <input type="" name="ubicacion" maxlength="255" class="form-control">
                     </div>
 
                     <div class="mt-4 form-group col-12">
                         <label class="form-label"><i class="fas fa-file-alt iconos-crear"></i>Descripción detallada de la
                             queja<sup>*</sup></label><i class="fas fa-info-circle" style="font-size:12pt; float: right;"
                             title="Detallar lo sucedido, es muy importante ser lo más objetivo posible y plasmar únicamente hechos evitando juicios de percepción o desvirtuar la información. Asegúrese de que su relato pueda responder a las siguientes preguntas: ¿Qué?. ¿Quién?, ¿Cómo?,¿Cuándo?, ¿Dónde?."></i>
-                        <textarea type="text" name="descripcion" class="form-control" required></textarea>
+                        <textarea type="text" name="descripcion" class="form-control" maxlength="550" required></textarea>
                     </div>
 
                     <div class="mt-4 form-group col-12">
@@ -192,35 +192,65 @@
 @section('scripts')
 
     <script type="text/javascript">
-        document.addEventListener('DOMContentLoaded', function() {
+       document.addEventListener('DOMContentLoaded', function() {
+        let select = document.querySelector('.multiselect_areas select');
+        let textarea = document.querySelector('.multiselect_areas textarea');
 
-            document.querySelector('.multiselect_areas select').addEventListener('change', function(e) {
-                e.preventDefault();
+        select.addEventListener('change', function(e) {
+            e.preventDefault();
 
-                (document.querySelector('.multiselect_areas textarea')).value += `${this.value}, `;
-
-            });
+            // Verificar si el valor ya está presente en el área de texto
+            if (!textarea.value.includes(this.value)) {
+                textarea.value += `${this.value}, `;
+            } else {
+                // Mostrar mensaje de advertencia si el valor ya está presente
+                alert('Este elemento ya está seleccionado.');
+                // Deseleccionar la opción
+                this.value = '';
+            }
         });
+    });
 
-        document.addEventListener('DOMContentLoaded', function() {
 
-            document.querySelector('.multiselect_empleados select').addEventListener('change', function(e) {
-                e.preventDefault();
+    document.addEventListener('DOMContentLoaded', function() {
+    let select = document.querySelector('.multiselect_empleados select');
+    let textarea = document.querySelector('.multiselect_empleados textarea');
 
-                (document.querySelector('.multiselect_empleados textarea')).value += `${this.value}, `;
+    select.addEventListener('change', function(e) {
+        e.preventDefault();
 
-            });
-        });
+        // Verificar si el valor ya está presente en el área de texto
+        if (!textarea.value.includes(this.value)) {
+            textarea.value += `${this.value}, `;
+        } else {
+            // Mostrar mensaje de advertencia si el valor ya está presente
+            alert('Este empleado ya está seleccionado.');
+            // Deseleccionar la opción
+            this.value = '';
+        }
+    });
+});
 
-        document.addEventListener('DOMContentLoaded', function() {
 
-            document.querySelector('.multiselect_procesos select').addEventListener('change', function(e) {
-                e.preventDefault();
+document.addEventListener('DOMContentLoaded', function() {
+    let select = document.querySelector('.multiselect_procesos select');
+    let textarea = document.querySelector('.multiselect_procesos textarea');
 
-                (document.querySelector('.multiselect_procesos textarea')).value += `${this.value}, `;
+    select.addEventListener('change', function(e) {
+        e.preventDefault();
 
-            });
-        });
+        // Verificar si el valor ya está presente en el área de texto
+        if (!textarea.value.includes(this.value)) {
+            textarea.value += `${this.value}, `;
+        } else {
+            // Mostrar mensaje de advertencia si el valor ya está presente
+            alert('Este proceso ya está seleccionado.');
+            // Deseleccionar la opción
+            this.value = '';
+        }
+    });
+});
+
     </script>
 
     <script type="text/javascript">
