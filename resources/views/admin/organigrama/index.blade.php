@@ -500,7 +500,7 @@
 
 @endsection
 @section('scripts')
-    <script async type="module">
+    <script type="module">
         import OrgChart from "{{ asset('orgchart/orgchart.js') }}"; // Se importan funcionalidades de OrgChart
 
         document.addEventListener('DOMContentLoaded', function() {
