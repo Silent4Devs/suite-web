@@ -202,7 +202,7 @@
 
     <div class="card card-body" style="background-color: #BF9CC4;">
         <div class="form-group">
-            <select name="" id="area-select" wire:model="area_select" class="form-control"
+            <select name="area_select" id="area_select" wire:model="area_select" class="form-control"
                 style="background-color: #fff;">
                 <option value="" selected disabled>Área</option>
                 @foreach ($areas as $area)
@@ -277,14 +277,16 @@
             <div class="">
                 <span>Evaluaciones contestadas</span>
                 <div class="progress">
-                    <div class="progress-bar bg-warning" role="progressbar" style="width: 75%" aria-valuenow="75"
+                    <div class="progress-bar bg-warning" role="progressbar"
+                        style="width: {{ ($evaluacion->cuenta_evaluados_evaluaciones_completadas_totales / $evaluacion->cuenta_evaluados_evaluaciones_totales) * 100 }}%"
+                        aria-valuenow="{{ ($evaluacion->cuenta_evaluados_evaluaciones_completadas_totales / $evaluacion->cuenta_evaluados_evaluaciones_totales) * 100 }}"
                         aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
             </div>
             <div class="">
                 <span>Total</span>
                 <p>
-                    54/{{ $evaluacion->cuenta_evaluados_evaluaciones_totales }}
+                    {{ $evaluacion->cuenta_evaluados_evaluaciones_completadas_totales }}/{{ $evaluacion->cuenta_evaluados_evaluaciones_totales }}
                 </p>
             </div>
         </div>

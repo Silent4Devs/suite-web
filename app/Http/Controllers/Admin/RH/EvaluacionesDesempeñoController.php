@@ -27,8 +27,8 @@ class EvaluacionesDesempeñoController extends Controller
 
     public function dashboardEvaluacion($id_evaluacion)
     {
-        // EvaluacionDesempeno::find();
-
+        // // EvaluacionDesempeno::find();
+        // dd($id_evaluacion);
         return view('admin.recursos-humanos.evaluaciones-desempeño.dashboard-evaluacion', compact('id_evaluacion'));
     }
 
@@ -77,7 +77,7 @@ class EvaluacionesDesempeñoController extends Controller
         if (!in_array($currentUser->id, $evaluadoresObjetivos) && !in_array($currentUser->id, $evaluadoresCompetencias)) {
             return redirect()->route('admin.inicio-Usuario.index');
         }
-
+        // dd($evaluacion, $evaluado);
         return view('admin.recursos-humanos.evaluaciones-desempeño.cuestionario', compact('evaluacion', 'evaluado'));
     }
 

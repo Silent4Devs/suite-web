@@ -586,38 +586,36 @@
         @default
     @endswitch
 
-    @if ($this->select_evaluados == 'manualmente')
-        @section('scripts')
-            <script type="text/javascript">
-                document.addEventListener('DOMContentLoaded', () => {
-                    let dataEmpleados = []; // Declarada fuera de la función para que sea accesible en todo el ámbito
+    @section('scripts')
+        <script type="text/javascript">
+            document.addEventListener('DOMContentLoaded', () => {
+                let dataEmpleados = []; // Declarada fuera de la función para que sea accesible en todo el ámbito
 
-                    Livewire.on('select2', () => {
-                        $('.select2').select2({
-                            'theme': 'bootstrap4',
-                        });
-
-                        $('.select2').select2().on('change', function(e) {
-                            var data = $(this).select2("val");
-                            dataEmpleados = data;
-                            console.log(dataEmpleados);
-                        });
+                Livewire.on('select2', () => {
+                    $('.select2').select2({
+                        'theme': 'bootstrap4',
                     });
 
                     $('.select2').select2().on('change', function(e) {
                         var data = $(this).select2("val");
                         dataEmpleados = data;
-                    });
-
-                    document.addEventListener('click', (e) => {
-                        if (e.target && e.target.id == 'btn-paso3') {
-                            e.preventDefault();
-                            console.log(dataEmpleados);
-                            @this.set('empleados_seleccionados', dataEmpleados);
-                        }
+                        console.log(dataEmpleados);
                     });
                 });
-            </script>
-        @endsection
-    @endif
+
+                $('.select2').select2().on('change', function(e) {
+                    var data = $(this).select2("val");
+                    dataEmpleados = data;
+                });
+
+                document.addEventListener('click', (e) => {
+                    if (e.target && e.target.id == 'btn-paso3') {
+                        e.preventDefault();
+                        console.log(dataEmpleados);
+                        @this.set('empleados_seleccionados', dataEmpleados);
+                    }
+                });
+            });
+        </script>
+    @endsection
 </div>

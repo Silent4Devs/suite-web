@@ -15,6 +15,8 @@ class EvaluadoresEvaluacionCompetenciasDesempeno extends Model
         'evaluado_desempeno_id',
         'evaluador_desempeno_id',
         'porcentaje_competencias',
+        'finalizada',
+        'firma_evaluacion',
     ];
 
     public function preguntasCuestionario()

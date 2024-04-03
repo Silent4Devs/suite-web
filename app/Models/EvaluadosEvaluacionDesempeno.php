@@ -16,7 +16,7 @@ class EvaluadosEvaluacionDesempeno extends Model
         'evaluado_desempeno_id',
     ];
 
-    protected $appends = ['cuenta_evaluaciones'];
+    protected $appends = ['cuenta_evaluaciones', 'cuenta_evaluaciones_completadas'];
 
     public function evaluacion()
     {
@@ -58,6 +58,31 @@ class EvaluadosEvaluacionDesempeno extends Model
             $total = $this->evaluadoresCompetencias->count();
         } elseif ($this->evaluacion->activar_competencias == false && $this->evaluacion->activar_objetivos) {
             $total = $this->evaluadoresObjetivos->count();
+        }
+
+        return $total;
+    }
+
+    public function getCuentaEvaluacionesCompletadasAttribute()
+    {
+        $total = 0;
+
+        if ($this->evaluacion->activar_competencias && $this->evaluacion->activar_objetivos) {
+            $evaluadoresCompetenciasIds = $this->evaluadoresCompetencias->where('finalizada', true)->pluck('evaluador_desempeno_id')->toArray();
+            $evaluadoresObjetivosIds = $this->evaluadoresObjetivos->where('finalizada', true)->pluck('evaluador_desempeno_id')->toArray();
+
+            // Calculate the distinct count of evaluador_desempeno_id that match in both relations
+            $matchingCount = count(array_intersect($evaluadoresCompetenciasIds, $evaluadoresObjetivosIds));
+
+            // Calculate the count of evaluador_desempeno_id that don't match in both relations
+            $distinctCount = count(array_diff($evaluadoresCompetenciasIds, $evaluadoresObjetivosIds))
+                + count(array_diff($evaluadoresObjetivosIds, $evaluadoresCompetenciasIds));
+
+            $total = $matchingCount + $distinctCount;
+        } elseif ($this->evaluacion->activar_competencias && $this->evaluacion->activar_objetivos == false) {
+            $total = $this->evaluadoresCompetencias->where('finalizada', true)->count();
+        } elseif ($this->evaluacion->activar_competencias == false && $this->evaluacion->activar_objetivos) {
+            $total = $this->evaluadoresObjetivos->where('finalizada', true)->count();
         }
 
         return $total;

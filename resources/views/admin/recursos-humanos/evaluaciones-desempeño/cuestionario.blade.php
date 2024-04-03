@@ -20,7 +20,7 @@
                 @livewire('cuestionario-evaluacion-desempeno-objetivos', ['id_evaluacion' => $evaluacion, 'id_evaluado' => $evaluado])
             </div>
             <div class="tab-pane mb-4 fade" id="nav-empleados" role="tabpanel" aria-labelledby="nav-empleados-tab">
-                @livewire('cuestionario-evaluacion-desempeno-competencias', ['id_evaluacion' => $evaluacion, 'id_evaluado' => $evaluado])
+                {{-- @livewire('cuestionario-evaluacion-desempeno-competencias', ['id_evaluacion' => $evaluacion, 'id_evaluado' => $evaluado]) --}}
             </div>
         </div>
     </div>

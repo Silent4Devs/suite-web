@@ -13,6 +13,7 @@ use App\Models\EvaluadoresEvaluacionCompetenciasDesempeno;
 use App\Models\EvaluadoresEvaluacionObjetivosDesempeno;
 use App\Models\EvaluadosEvaluacionDesempeno;
 use App\Models\PeriodosEvaluacionDesempeno;
+use App\Models\User;
 use Livewire\Component;
 use Illuminate\Validation\Rule;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
@@ -129,7 +130,7 @@ class CreateEvaluacionDesempeno extends Component
             'porcentaje_competencias' => $this->porcentaje_competencias,
         ];
 
-        $this->paso++;
+        $this->paso = 2;
     }
 
     public function segundoPaso()
@@ -147,7 +148,7 @@ class CreateEvaluacionDesempeno extends Component
                 ];
         }
         // dd('datos', $this->datosPaso2);
-        $this->paso++;
+        $this->paso = 3;
     }
 
     public function tercerPaso()
@@ -174,7 +175,7 @@ class CreateEvaluacionDesempeno extends Component
                 //     $evld = $ev_query->find($id_emp_sel)->pluck('id');
                 // }
                 $evld = collect($this->empleados_seleccionados);
-                $this->select_evaluados = 'toda';
+
                 // dd($evld);
                 break;
 
@@ -186,7 +187,7 @@ class CreateEvaluacionDesempeno extends Component
 
         $this->asignarEvaluadoresAEvaluados($evld);
 
-        $this->paso++;
+        $this->paso = 4;
     }
 
     public function cuartoPaso()
@@ -204,6 +205,7 @@ class CreateEvaluacionDesempeno extends Component
             'porcentaje_competencias' => $this->datosPaso1['porcentaje_competencias'],
             'tipo_periodo' => $this->periodo_evaluacion,
             'estatus' => 1,
+            'autor_id' => User::getCurrentUser()->empleado->id,
         ]);
 
         foreach ($this->datosPaso2 as $key => $p) {
