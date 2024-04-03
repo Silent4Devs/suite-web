@@ -441,7 +441,6 @@
                         id: "STATUS_DONE",
                         title: "Completado",
                         class: "DONE",
-                        dragTo: [],
                         item: items(grupos.completado)
                     }
                 ]

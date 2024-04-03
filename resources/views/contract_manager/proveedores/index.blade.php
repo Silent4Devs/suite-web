@@ -27,22 +27,16 @@
             <table class="table table-bordered w-100 datatable-Proveedores">
                 <thead class="thead-dark">
                     <tr>
-                        <th style="vertical-align: top">
+                        <th style="max-width: 30%;">
                             Nombre
                         </th>
-                        <th style="vertical-align: top">
+                        <th style="max-width: 30%;">
                             Razon Social
                         </th>
-                        <th style="vertical-align: top">
+                        <th style="max-width: 30%;">
                             RFC
                         </th>
-                        <th style="vertical-align: top">
-                            Fecha Inicio
-                        </th>
-                        <th style="vertical-align: top">
-                            Fecha Fin
-                        </th>
-                        <th style="vertical-align: top">
+                        <th style="max-width: 30%;">
                             Opciones
                         </th>
                     </tr>
@@ -213,14 +207,6 @@
                     {
                         data: 'rfc',
                         name: 'rfc'
-                    },
-                    {
-                        data: 'fecha_inicio',
-                        name: 'fecha_inicio'
-                    },
-                    {
-                        data: 'fecha_fin',
-                        name: 'fecha_fin'
                     },
                     {
                         data: 'id',

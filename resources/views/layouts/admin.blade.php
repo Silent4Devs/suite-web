@@ -7,65 +7,75 @@
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link href="{{ asset('css/app.css') }}{{ config('app.cssVersion') }}" rel="stylesheet">
-    <link href="{{ asset('css/style.css') }}{{ config('app.cssVersion') }}" rel="stylesheet">
-
-
     <title>{{ trans('panel.site_title') }}</title>
-    @yield('css')
-    <!-- Font Awesome -->
+
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined" rel="stylesheet">
+    <link rel="stylesheet" href="https://storage.googleapis.com/non-spec-apps/mio-icons/latest/outline.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
         integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    {{-- boostrap icons --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
-    <!-- Google Fonts -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
-
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined" rel="stylesheet" />
     <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css">
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,300,0,0" />
+    <!-- End Fonts -->
+
+    <!-- Principal Styles -->
+    <link rel="stylesheet" href="{{ asset('css/loader.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}{{ config('app.cssVersion') }}">
+    <link rel="stylesheet" href="{{ asset('css/rds.css') }}{{ config('app.cssVersion') }}">
+    <link href="{{ asset('css/app.css') }}{{ config('app.cssVersion') }}" rel="stylesheet">
+    <link href="{{ asset('css/style.css') }}{{ config('app.cssVersion') }}" rel="stylesheet">
     <link href="{{ asset('css/custom.css') }}{{ config('app.cssVersion') }}" rel="stylesheet" />
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/favicon_tabantaj_v2.png') }}">
     <link rel="stylesheet" href="{{ asset('vendor/file-manager/css/file-manager.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/dark_mode.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/yearpicker.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
+    @yield('css')
+    @yield('styles')
+    <!-- End Principal Styles -->
+
+    <!-- Extra Styles -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"
+        onload="this.onload=null;this.removeAttribute('media');" />
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css"
+        onload="this.onload=null;this.removeAttribute('media');">
     <!-- x-editable -->
     <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css"
-        rel="stylesheet" />
+        rel="stylesheet" onload="this.onload=null;this.removeAttribute('media');" />
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/jquery-editable/jquery-ui-datepicker/css/redmond/jquery-ui-1.10.3.custom.min.css"
         integrity="sha512-4E8WH1J08+TC3LLRtjJdA8OlggQvj5LN+TciGGwJWaQtFXj0BoZPKT9gIHol283GiUfpKPVk54LJfur5jfiRxA=="
         crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.css"
         integrity="sha512-oe8OpYjBaDWPt2VmSFR+qYOdnTjeV9QPLJUeqZyprDEQvQLJ9C5PCFclxwNuvb/GQgQngdCXzKSFltuHD3eCxA=="
-        crossorigin="anonymous" />
-    {{-- <link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
-    <link rel="preconnect" href="https://fonts.gstatic.com"> --}}
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    {{-- <link rel="stylesheet" type="text/css" href=" https://printjs-4de6.kxcdn.com/print.min.css"> --}}
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined" rel="stylesheet" />
-    <link rel="stylesheet" href="https://storage.googleapis.com/non-spec-apps/mio-icons/latest/outline.css">
+        crossorigin="anonymous" onload="this.onload=null;this.removeAttribute('media');" />
+
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/4.1.0/css/fixedColumns.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr" defer></script>
-    <link rel="stylesheet" href="{{ asset('css/loader.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
+        onload="this.onload=null;this.removeAttribute('media');">
     <link href="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.css"
+        integrity="sha512-MQXduO8IQnJVq1qmySpN87QQkiR1bZHtorbJBD0tzy7/0U9+YIC93QWHeGTEoojMVHWWNkoCp8V6OzVSYrX0oQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,300,0,0" />
-    <link rel="stylesheet" href="{{ asset('css/admin.css') }}{{ config('app.cssVersion') }}">
-    <link rel="stylesheet" href="{{ asset('css/rds.css') }}{{ config('app.cssVersion') }}">
-    @yield('styles')
+        href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/plugins/monthSelect/style.min.css"
+        integrity="sha512-V7B1IY1DE/QzU/pIChM690dnl44vAMXBidRNgpw0mD+hhgcgbxHAycRpOCoLQVayXGyrbC+HdAONVsF+4DgrZA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- End Extra Styles -->
+
     @livewireStyles
-    @vite(['resources/js/app.js'])
-    {{--  @vite(['resources/sass/app.scss', 'resources/js/app.js'])  --}}
+
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/favicon_tabantaj_v2.png') }}"
+        onload="this.onload=null;this.removeAttribute('media');">
 </head>
 
-<body style="zoom: 100%">
+<body style="zoom: 99%">
     <div id="loading">
         <img id="loading-image" src="https://i.pinimg.com/originals/07/24/88/0724884440e8ddd0896ff557b75a222a.gif"
             alt="Loading...">
@@ -597,7 +607,74 @@
             <p>Comunicación</p>
         </a>
     </div>
-    <script>
+
+    <!-- inicia sección de script -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    {{-- Librerías para visualizar en campo el dolar --}}
+    <script async src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    {{-- Notificaciones push desktop --}}
+    <script async src="https://cdnjs.cloudflare.com/ajax/libs/push.js/1.0.8/push.min.js"
+        integrity="sha512-eiqtDDb4GUVCSqOSOTz/s/eiU4B31GrdSb17aPAA4Lv/Cjc8o+hnDvuNkgXhSI5yHuDvYkuojMaQmrB5JB31XQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script async>
+        window.onload = function() {
+            // Check if the browser supports notifications
+            if (!("Notification" in window)) {
+                console.error("This browser does not support desktop notifications.");
+            }
+        };
+    </script>
+    {{-- Notificaciones push desktop --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @include('sweetalert::alert')
+    @livewireScripts
+    <x-livewire-alert::scripts />
+    {{-- Laravel vite --}}
+    @vite(['resources/js/app.js'])
+    {{-- Laravel vite --}}
+    <script defer src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <!-- js para validaciones globales -->
+    <!--<script src="{{ asset('js/validations.js') }}"></script>-->
+    <script src="{{ asset('js/app.js') }}"></script>
+    @yield('js')
+    <script defer src="https://unpkg.com/@coreui/coreui@3.4.0/dist/js/coreui.bundle.min.js"></script>
+    <script defer src="https://unpkg.com/@popperjs/core@2"></script>
+    <script async src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous">
+    </script>
+    <script async src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script async src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.0/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.colVis.min.js"></script>
+    <script
+        src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.18/af-2.3.0/b-1.5.2/b-colvis-1.5.2/b-html5-1.5.2/b-print-1.5.2/cr-1.5.0/fc-3.2.5/fh-3.1.4/kt-2.4.0/r-2.2.2/rg-1.0.3/rr-1.2.4/sc-1.5.0/sl-1.2.6/datatables.min.js"
+        defer></script> {{-- quitar script en el glosario --}}
+    <script src="{{ asset('js/buttons.print.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+    <script src="{{ asset('vendor/file-manager/js/file-manager.js') }}"></script>
+    <script defer src="{{ asset('js/yearpicker.js') }}"></script>
+    <script src="//cdn.ckeditor.com/4.16.0/full/ckeditor.js"></script>
+    <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
+    <script defer src="//unpkg.com/alpinejs" defer></script>
+    <script src="{{ asset('js/main.js') }}"></script>
+    <!-- x editable -->
+    <script defer src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js">
+    </script>
+    <!-- termina sección de script -->
+
+
+    <script async>
         document.onreadystatechange = function() {
             if (document.readyState !== "complete") {
                 document.querySelector(
@@ -612,7 +689,7 @@
             }
         };
     </script>
-    <script>
+    <script defer>
         function imprimirElemento(elemento) {
             let elemento_seleccionado = document.getElementById(elemento);
             let contenido_imprimir = document.getElementById('contenido_imprimir').innerHTML = elemento_seleccionado
@@ -647,7 +724,7 @@
     </script>
 
     {{-- daterangepicker --}}
-    <script>
+    <script defer>
         @if ($usuario->empleado)
             window.NotificationUser = {!! json_encode(['user' => auth()->check() ? $usuario->empleado->id : null]) !!};
         @else
@@ -655,88 +732,6 @@
         @endif
     </script>
 
-    {{-- Notificaciones push desktop --}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/push.js/1.0.8/push.min.js"
-        integrity="sha512-eiqtDDb4GUVCSqOSOTz/s/eiU4B31GrdSb17aPAA4Lv/Cjc8o+hnDvuNkgXhSI5yHuDvYkuojMaQmrB5JB31XQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script>
-        window.onload = function() {
-            // Check if the browser supports notifications
-            if (!("Notification" in window)) {
-                console.error("This browser does not support desktop notifications.");
-            }
-        };
-    </script>
-    {{-- Notificaciones push desktop --}}
-
-    {{-- Librerías para visualizar en campo el dolar --}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/autonumeric/4.1.0/autoNumeric.min.js"></script> --}}
-
-    <!-- js para validaciones globales sadas werwer-->
-    <!--<script src="{{ asset('js/validations.js') }}"></script>-->
-    <script src="{{ asset('js/app.js') }}"></script>
-    @yield('js')
-    <script src="https://unpkg.com/@coreui/coreui@3.4.0/dist/js/coreui.bundle.min.js"></script>
-    {{-- #lazyload --}}
-    {{--  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazy/1.7.9/jquery.lazy.min.js"></script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazy/1.7.9/jquery.lazy.plugins.min.js">  --}}
-    <script src="https://unpkg.com/@popperjs/core@2"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous">
-    </script>
-
-    {{-- <script src="{{ asset('tabantaj/push/bin/push.min.js') }}"></script> --}}
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.0/perfect-scrollbar.min.js">
-    </script> --}}
-    {{-- <script src="https://unpkg.com/@coreui/coreui@3.2/dist/js/coreui.min.js"></script> --}}
-    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.bootstrap.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.7.0/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.html5.min.js"></script>
-
-    {{-- <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.print.min.js"></script> --}}
-    <script src="{{ asset('js/buttons.print.js') }}"></script>
-    <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.colVis.min.js"></script>
-    <script
-        src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.18/af-2.3.0/b-1.5.2/b-colvis-1.5.2/b-html5-1.5.2/b-print-1.5.2/cr-1.5.0/fc-3.2.5/fh-3.1.4/kt-2.4.0/r-2.2.2/rg-1.0.3/rr-1.2.4/sc-1.5.0/sl-1.2.6/datatables.min.js"
-        defer></script> {{-- quitar script en el glosario --}}
-    <script src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
-    {{-- <script src="https://cdn.ckeditor.com/ckeditor5/16.0.0/classic/ckeditor.js"></script> --}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.es.min.js">
-    </script> --}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.full.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
-    <script src="{{ asset('vendor/file-manager/js/file-manager.js') }}"></script>
-    <script src="{{ asset('js/yearpicker.js') }}"></script>
-    <script src="//cdn.ckeditor.com/4.16.0/full/ckeditor.js"></script>
-    <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.css"
-        integrity="sha512-MQXduO8IQnJVq1qmySpN87QQkiR1bZHtorbJBD0tzy7/0U9+YIC93QWHeGTEoojMVHWWNkoCp8V6OzVSYrX0oQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/plugins/monthSelect/style.min.css"
-        integrity="sha512-V7B1IY1DE/QzU/pIChM690dnl44vAMXBidRNgpw0mD+hhgcgbxHAycRpOCoLQVayXGyrbC+HdAONVsF+4DgrZA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/index.js"></script>
-
-    <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
-    <script src="//unpkg.com/alpinejs" defer></script>
-    <script src="{{ asset('js/main.js') }}"></script>
-
-    <!-- x editable -->
-    <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js">
-    </script>
     <script>
         $(document).ready(function() {
             $('.c-sidebar-nav').animate({
@@ -752,18 +747,13 @@
             $('.c-sidebar-nav').delay(1000).scrollTop(900);
         });
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    @include('sweetalert::alert')
-    @livewireScripts
 
-    <x-livewire-alert::scripts />
-    <script>
+    <script defer>
         $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
     </script>
 
-    <script src="https://cdn.jsdelivr.net/gh/livewire/vue@v0.3.x/dist/livewire-vue.js"></script>
     <!-- x-editable -->
-    <script>
+    <script defer>
         $.fn.editable.defaults.mode = 'inline';
         $.fn.editable.defaults.ajaxOptions = {
             type: 'PUT'
@@ -964,147 +954,6 @@
             });
         });
     </script>
-    <script>
-        $(document).ready(function() {
-            let url = "{{ route('admin.globalStructureSearch') }}";
-            $("#buscador_global").click(function(e) {
-                e.preventDefault();
-                let sugeridos = document.querySelector(
-                    "#resultados_sugeridos");
-                sugeridos.innerHTML = "";
-                this.value = "";
-                $("#buscando").removeClass('d-block');
-                $("#buscando").addClass('d-none');
-            });
-            $("#buscador_global").keyup(function() {
-                $.ajax({
-                    type: "POST",
-                    url: url,
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    data: {
-                        term: $(this).val().toLowerCase()
-                    },
-                    beforeSend: function() {
-                        $("#buscando").removeClass('d-none');
-                        $("#buscando").addClass('d-block');
-                    },
-                    success: function(data) {
-                        if (data.length == undefined) {
-                            console.log(data);
-                            let filtro = "<ul class='list-group'>";
-                            for (const [key, value] of Object.entries(data)) {
-                                filtro += `
-                                <a class="list-group-item list-group-item-action" href="${value}">
-                                    <i class="mr-2 fas fa-search-location"></i>${key}
-                                </a>
-                            `;
-                            }
-                            filtro += "</ul>";
-                            $("#buscando").removeClass('d-block');
-                            $("#buscando").addClass('d-none');
-                            // $("#resultados_sugeridos").show();
-                            let sugeridos = document.querySelector(
-                                "#resultados_sugeridos");
-                            sugeridos.innerHTML = filtro;
-                        } else if (data.length == 0) {
-                            $("#buscando").removeClass('d-block');
-                            $("#buscando").addClass('d-none');
-                            let sugeridos = document.querySelector(
-                                "#resultados_sugeridos");
-                            sugeridos.innerHTML =
-                                `<ul class='list-group'><li class="list-group-item">
-                                    <i class="mr-2 fas fa-times-circle"></i>Sin resultados encontrados...
-                                    </li>
-                                </ul>`;
-                        } else {
-                            $("#buscando").removeClass('d-block');
-                            $("#buscando").addClass('d-none');
-                            let sugeridos = document.querySelector(
-                                "#resultados_sugeridos");
-                            sugeridos.innerHTML = "";
-                        }
-
-                        // $("#participantes_search").css("background", "#FFF");
-                    }
-                });
-            });
-            $('.searchable-field').select2({
-                minimumInputLength: 3,
-                ajax: {
-                    url: '{{ route('admin.globalSearch') }}',
-                    dataType: 'json',
-                    type: 'GET',
-                    delay: 200,
-                    data: function(term) {
-                        return {
-                            search: term
-                        };
-                    },
-                    results: function(data) {
-                        console.log(data);
-                        return {
-                            data
-                        };
-                    }
-                },
-                escapeMarkup: function(markup) {
-                    return markup;
-                },
-                templateResult: formatItem,
-                templateSelection: formatItemSelection,
-                placeholder: '{{ trans('global.search') }}...',
-                language: {
-                    inputTooShort: function(args) {
-                        var remainingChars = args.minimum - args.input.length;
-                        var translation = '{{ trans('global.search_input_too_short') }}';
-
-                        return translation.replace(':count', remainingChars);
-                    },
-                    errorLoading: function() {
-                        return '{{ trans('global.results_could_not_be_loaded') }}';
-                    },
-                    searching: function() {
-                        return '{{ trans('global.searching') }}';
-                    },
-                    noResults: function() {
-                        return '{{ trans('global.no_results') }}';
-                    },
-                }
-
-            });
-
-            function formatItem(item) {
-                if (item.loading) {
-                    return '{{ trans('global.searching') }}...';
-                }
-                var markup = "<div class='searchable-link' href='" + item.url + "'>";
-                markup += "<div class='searchable-title'>" + item.model + "</div>";
-                $.each(item.fields, function(key, field) {
-                    markup += "<div class='searchable-field'>" + item.fields_formated[field] +
-                        " : " +
-                        item[field] + "</div>";
-                });
-                markup += "</div>";
-
-                return markup;
-            }
-
-            function formatItemSelection(item) {
-                if (!item.model) {
-                    console.log(item.model);
-                    return '{{ trans('global.search') }}...';
-                }
-                return item.model;
-            }
-
-            $(document).delegate('.searchable-link', 'click', function() {
-                var url = $(this).attr('href');
-                window.location = url;
-            });
-        });
-    </script>
 
     <script type="text/javascript">
         $(".caja_botones_menu a").click(function() {
@@ -1142,32 +991,12 @@
         });
     </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
-    {{--  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="http://keith-wood.name/js/jquery.signature.js"></script>  --}}
+    <script defer src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
     @yield('scripts')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-idletimer/1.0.0/idle-timer.min.js"
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery-idletimer/1.0.0/idle-timer.min.js"
         integrity="sha512-hh4Bnn1GtJOoCXufO1cvrBF6BzRWBp7rFiQCEdSRwwxJVdCIlrp6AWeD8GJVbnLO9V1XovnJSylI5/tZGOzVAg=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-    {{-- <script>
-        $(function() {
-            let idleTime = Number(@json(env('SESSION_LIFETIME')))*60*1000; // in milliseconds
-            if (idleTime == 0) {
-                idleTime = 120*60*1000;
-            }
-            console.log(idleTime);
-            // Set idle time
-            $(document).idleTimer(idleTime); // in milliseconds
-        });
-
-        $(function() {
-            $(document).on("idle.idleTimer", function(event, elem, obj) {
-                console.log('idle');
-                window.location.href = "/login"
-            });
-        });
-    </script> --}}
     <script>
         $(".animated-over .form-control").change(function(e) {
             console.log(e.target);
@@ -1187,7 +1016,7 @@
         }
     </script>
 
-    <script>
+    <script defer>
         var inputs = document.querySelectorAll('input[type="text"]');
         var inputTextarea = document.querySelectorAll('textarea');
         // Agregar un event listener a cada elemento input
