@@ -89,7 +89,7 @@ class IncidentesCreate:
         print(f"Seleccionando proceso afectado en el índice: {indice}...")
         self._wait_and_select_by_index("//select[@class='form-control' and @id='activos']", indice)
         print("Proceso afectado seleccionado.")
-        pdb.set_trace()
+
 
     def _wait_and_select_by_index(self, selector, indice):
         try:
