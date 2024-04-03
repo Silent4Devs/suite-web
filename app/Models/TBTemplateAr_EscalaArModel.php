@@ -27,7 +27,7 @@ class TBTemplateAr_EscalaArModel extends Model
 
     public function getEscalas(){
         {
-            return $this->hasMany(TBEscalaAnalisisRiesgoModel::class, 'min_max_id','id');
+            return $this->hasMany(TBEscalaAnalisisRiesgoModel::class, 'min_max_id','id')->orderBy('id', 'asc');;
         }
     }
 

@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('nombre');
             $table->unsignedBigInteger('norma_id')->nullable();
             $table->longText('descripcion');
+            $table->boolean('status')->default(false);
+            $table->boolean('top')->default(false);
             $table->foreign('norma_id')->references('id')->on('normas')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();

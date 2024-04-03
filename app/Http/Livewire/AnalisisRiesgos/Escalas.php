@@ -26,12 +26,22 @@ class Escalas extends Component
     public $min;
     public $max;
 
-    public function rules()
-    {
-        return [
-                    'min' => 'required|max:2',
-                ];
-    }
+    public $send = false;
+
+    protected $rules = [
+        'min' => 'required|int|min:0',
+        'max' => 'required|int|min:0',
+        'escalas.*.nombre' => 'required|string',
+
+    ];
+
+    protected $messages = [
+        'min.required' => 'El campo minimo es requerido',
+        'max.required' => 'El campo máximo es requerido',
+        'min.min' => 'El campo minimo no debe ser menor a 0',
+        'min.max' => 'El campo máximo no debe ser menor a 0',
+        'escalas.*.nombre.required' => "El campo es requerido",
+    ];
 
     public function mount($template_id)
     {
@@ -84,6 +94,10 @@ class Escalas extends Component
 
     public function save()
     {
+        $this->send = false;
+        $this->validate($this->rules, $this->messages);
+
+
         DB::beginTransaction();
 
         $templateAr_Es = TBTemplateAr_EscalaArModel::find($this->min_max_id)->update([
@@ -124,6 +138,7 @@ class Escalas extends Component
                     }
                 }
                 DB::commit();
+                $this->send = true;
             } catch (\Throwable $th) {
                 //throw $th;
                 DB::rollback();
@@ -140,11 +155,15 @@ class Escalas extends Component
                     ]);
                 }
                 DB::commit();
+                $this->send = true;
             } catch (\Throwable $th) {
                 //throw $th;
                 DB::rollback();
             }
         }
+
+        $this->emit('validateEscala', $this->send);
+
     }
 
     public function removeInput($key)

@@ -31,6 +31,8 @@ class TBTemplateAnalisisRiesgosController extends Controller
                 'nombre' => 'Sin nombre',
                 'norma_id' => null,
                 'descripcion' => 'Sin descripcion',
+                'status' => false,
+                'top' => false,
             ]);
 
             TBTemplateAr_EscalaArModel::create([

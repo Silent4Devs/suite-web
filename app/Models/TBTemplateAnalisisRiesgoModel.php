@@ -18,6 +18,8 @@ class TBTemplateAnalisisRiesgoModel extends Model
         'nombre',
         'norma_id',
         'descripcion',
+        'status',
+        'top',
     ];
 
     //Relations

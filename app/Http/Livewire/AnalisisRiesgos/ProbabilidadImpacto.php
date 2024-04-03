@@ -22,6 +22,16 @@ class ProbabilidadImpacto extends Component
     ];
     public $min;
     public $max;
+    public $send = false;
+
+    protected $rules = [
+        'min' => 'required|int|max:2',
+    ];
+
+    protected $messages = [
+        'min.required' => 'El campo minimo es requerido',
+        'min.max' => 'El campo minimo no debe ser menor a 0',
+    ];
 
     public function mount($template_id)
     {
@@ -76,6 +86,9 @@ class ProbabilidadImpacto extends Component
 
     public function save()
     {
+        $this->send = false;
+        $this->validate($this->rules, $this->messages);
+
         DB::beginTransaction();
 
         $templateAr_Es = TBTemplateArProbImpArModel::find($this->min_max_id)->update([
@@ -114,6 +127,7 @@ class ProbabilidadImpacto extends Component
                     }
                 }
                 DB::commit();
+                $this->send = true;
             } catch (\Throwable $th) {
                 //throw $th;
                 DB::rollback();
@@ -129,11 +143,14 @@ class ProbabilidadImpacto extends Component
                     ]);
                 }
                 DB::commit();
+                $this->send = true;
             } catch (\Throwable $th) {
                 //throw $th;
                 DB::rollback();
             }
         }
+
+        $this->emit('validateProb_Imp', $this->send);
     }
 
     public function removeInput($key)

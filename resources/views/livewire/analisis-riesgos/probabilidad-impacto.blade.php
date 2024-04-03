@@ -8,11 +8,11 @@
                     </h5>
                 </div>
             </div>
-            <hr style="margin-top: 0px; margin-bottom:0px;">
+            <hr style="margin-top: 0px; margin-bottom:38px;">
             <div class="row m-0 p-0">
                 <div class="col-8" style="margin-bottom:49px;">
-                    <h6>Rango</h6>
-                    <p>Especifica el valor mínimo y máximo que tendrá la Probabilidad e Impacto</p>
+                    <h6 class="title-rango">Rango</h6>
+                    <p class="subtitle-rango">Especifica el valor mínimo y máximo que tendrá la Probabilidad e Impacto</p>
 
                     <div class="row">
                         <div class="col-3">
@@ -33,86 +33,85 @@
                                 {{-- @error('name') <span class="text-danger">{{ $message }}</span> @enderror --}}
                             </div>
                         </div>
-                        <div class="col-1">
+                        <div class="col-1" style="padding-top: 10px;">
                             <i wire:click="resetMinMax()" class="text-sm text-red-500 fas fa-trash-alt"></i>
                         </div>
                     </div>
 
-                    <h6>Escalas</h6>
-                    <p>Define las escalas de medición, asigna su Color, Valor y Nombre para indetificarlos</p>
+                    <h6 class="title-rango">Escalas</h6>
+                    <p class="subtitle-rango">Define las escalas de medición, asigna su Color, Valor y Nombre para indetificarlos</p>
 
                     @if (!$edit)
-
-                    @foreach ($prob_imp as $key => $probImp)
-                        <div class="row">
-                            <div class="col-1" style="padding-left:0px; padding-right:0px;">
-                                <div class="color-picker" style="width: 100%;">
-                                    <input type="color" wire:model.defer="prob_imp.{{ $key }}.color"
-                                        class="color-input form-control" title="Seleccione un color">
+                        @foreach ($prob_imp as $key => $probImp)
+                            <div class="row m-0 p-0">
+                                <div class="col-1" style="padding-left:0px; padding-right:0px;">
+                                    <div class="color-picker" style="width: 100%;">
+                                        <input type="color" wire:model.defer="prob_imp.{{ $key }}.color"
+                                            class="color-input form-control" title="Seleccione un color">
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="form-group pl-0 anima-focus">
+                                        <input type="number" wire:model="prob_imp.{{ $key }}.valor"
+                                            class="form-control" placeholder="">
+                                        <label for="valor">Valor</label>
+                                        {{-- @error('name') <span class="text-danger">{{ $message }}</span> @enderror --}}
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group pl-0 anima-focus">
+                                        <input wire:model="prob_imp.{{ $key }}.nombre" class="form-control"
+                                            placeholder="">
+                                        <label for="name">Nombre de la escala</label>
+                                        {{-- @error('name') <span class="text-danger">{{ $message }}</span> @enderror --}}
+                                    </div>
+                                </div>
+                                <div class="col-1"></div>
+                                <div class="col-1" style="padding-top: 10px;">
+                                    @if ($key>1)
+                                    <i wire:click="removeInput({{ $key }})" class="text-sm text-red-500 fas fa-trash-alt"></i>
+                                    @endif
                                 </div>
                             </div>
-                            <div class="col-4">
-                                <div class="form-group pl-0 anima-focus">
-                                    <input wire:model="prob_imp.{{ $key }}.nombre" class="form-control"
-                                        placeholder="">
-                                    <label for="name">Nombre de la escala</label>
-                                    {{-- @error('name') <span class="text-danger">{{ $message }}</span> @enderror --}}
+                        @endforeach
+                    @else
+                        @foreach ($prob_imp as $key => $probImp)
+                            <div class="row m-0 p-0">
+                                <div class="col-1" style="padding-left:0px; padding-right:0px;">
+                                    <div class="color-picker" style="width: 100%;">
+                                        <input type="color" wire:model.defer="prob_imp.{{ $key }}.color"
+                                            class="color-input form-control" title="Seleccione un color">
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="form-group pl-0 anima-focus">
+                                        <input type="number" wire:model="prob_imp.{{ $key }}.valor"
+                                            class="form-control" placeholder="">
+                                        <label for="valor">Valor</label>
+                                        {{-- @error('name') <span class="text-danger">{{ $message }}</span> @enderror --}}
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group pl-0 anima-focus">
+                                        <input wire:model="prob_imp.{{ $key }}.nombre" name="prob_imp[1][nombre]"
+                                            class="form-control" placeholder="" value="test">
+                                        <label for="name">Nombre de la escala</label>
+                                        {{-- @error('name') <span class="text-danger">{{ $message }}</span> @enderror --}}
+                                    </div>
+                                </div>
+                                <div class="col-1"></div>
+                                <div class="col-1" style="padding-top: 10px;">
+                                    @if ($key > 1 && $probImp['id'] !== 0)
+                                        <i wire:click="$emit('delete',{{ $probImp['id'] }},{{ $key }})"
+                                            class="text-sm text-red-500 fas fa-trash-alt"></i>
+                                    @elseif ($key > 1 && $probImp['id'] === 0)
+                                        <i wire:click="removeInput({{ $key }})"
+                                            class="text-sm text-red-500 fas fa-trash-alt"></i>
+                                    @endif
                                 </div>
                             </div>
-                            <div class="col-3">
-                                <div class="form-group pl-0 anima-focus">
-                                    <input type="number" wire:model="prob_imp.{{ $key }}.valor"
-                                        class="form-control" placeholder="">
-                                    <label for="valor">Valor</label>
-                                    {{-- @error('name') <span class="text-danger">{{ $message }}</span> @enderror --}}
-                                </div>
-                            </div>
-                            <div class="col-2 flex-column"></div>
-                            <div class="col-1">
-                                @if ($key>1)
-                                <i wire:click="removeInput({{ $key }})" class="text-sm text-red-500 fas fa-trash-alt"></i>
-                                @endif
-                            </div>
-                        </div>
-                    @endforeach
-                @else
-                    @foreach ($prob_imp as $key => $probImp)
-                        <div class="row">
-                            <div class="col-1" style="padding-left:0px; padding-right:0px;">
-                                <div class="color-picker" style="width: 100%;">
-                                    <input type="color" wire:model.defer="prob_imp.{{ $key }}.color"
-                                        class="color-input form-control" title="Seleccione un color">
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="form-group pl-0 anima-focus">
-                                    <input wire:model="prob_imp.{{ $key }}.nombre" name="prob_imp[1][nombre]"
-                                        class="form-control" placeholder="" value="test">
-                                    <label for="name">Nombre de la escala</label>
-                                    {{-- @error('name') <span class="text-danger">{{ $message }}</span> @enderror --}}
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="form-group pl-0 anima-focus">
-                                    <input type="number" wire:model="prob_imp.{{ $key }}.valor"
-                                        class="form-control" placeholder="">
-                                    <label for="valor">Valor</label>
-                                    {{-- @error('name') <span class="text-danger">{{ $message }}</span> @enderror --}}
-                                </div>
-                            </div>
-                            <div class="col-2 flex-column"></div>
-                            <div class="col-1">
-                                @if ($key > 1 && $probImp['id'] !== 0)
-                                    <i wire:click="$emit('delete',{{ $probImp['id'] }},{{ $key }})"
-                                        class="text-sm text-red-500 fas fa-trash-alt"></i>
-                                @elseif ($key > 1 && $probImp['id'] === 0)
-                                    <i wire:click="removeInput({{ $key }})"
-                                        class="text-sm text-red-500 fas fa-trash-alt"></i>
-                                @endif
-                            </div>
-                        </div>
-                    @endforeach
-                @endif
+                        @endforeach
+                    @endif
 
                     <a class="btn btn-link" wire:click.prevent="addInput" style="cursor: pointer; color: #006DDB;">
                         Agregar valor <i class="fas fa-plus"></i>
@@ -125,7 +124,7 @@
                             Ejemplo</h5>
                     </div>
                     <div>
-                        mapa calor
+                        @include('admin.analisis-riesgos.components.tbHeaderMap')
                     </div>
                 </div>
             </div>
