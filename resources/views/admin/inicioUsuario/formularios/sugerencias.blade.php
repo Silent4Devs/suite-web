@@ -138,27 +138,44 @@
 
 @section('scripts')
     <script type="text/javascript">
-        document.addEventListener('DOMContentLoaded', function() {
-            let select_activos = document.querySelector('.multiselect_areas select');
-            select_activos.addEventListener('change', function(e) {
-                e.preventDefault();
-                let texto_activos = document.querySelector('.multiselect_areas textarea');
 
-                texto_activos.value += `${this.value}, `;
+       document.addEventListener('DOMContentLoaded', function() {
+        let select = document.querySelector('.multiselect_areas select');
+        let textarea = document.querySelector('.multiselect_areas textarea');
 
-            });
+        select.addEventListener('change', function(e) {
+            e.preventDefault();
+
+            // Verificar si el valor ya está presente en el área de texto
+            if (!textarea.value.includes(this.value)) {
+                textarea.value += `${this.value}, `;
+            } else {
+                // Mostrar mensaje de advertencia si el valor ya está presente
+                alert('Este elemento ya está seleccionado.');
+                // Deseleccionar la opción
+                this.value = '';
+            }
         });
+     });
 
+     document.addEventListener('DOMContentLoaded', function() {
+        let select = document.querySelector('.multiselect_procesos select');
+        let textarea = document.querySelector('.multiselect_procesos textarea');
 
-        document.addEventListener('DOMContentLoaded', function() {
-            let select_activos = document.querySelector('.multiselect_procesos select');
-            select_activos.addEventListener('change', function(e) {
-                e.preventDefault();
-                let texto_activos = document.querySelector('.multiselect_procesos textarea');
+        select.addEventListener('change', function(e) {
+            e.preventDefault();
 
-                texto_activos.value += `${this.value}, `;
-
-            });
+            // Verificar si el valor ya está presente en el área de texto
+            if (!textarea.value.includes(this.value)) {
+                textarea.value += `${this.value}, `;
+            } else {
+                // Mostrar mensaje de advertencia si el valor ya está presente
+                alert('Este proceso ya está seleccionado.');
+                // Deseleccionar la opción
+                this.value = '';
+            }
         });
+    });
+
     </script>
 @endsection

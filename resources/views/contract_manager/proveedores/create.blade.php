@@ -7,7 +7,7 @@
                 @csrf
                 <div class="row">
                     <div class="form-group col-md-6 col-sm-6 anima-focus">
-                        <input class="form-control  {{ $errors->has('clave') ? 'is-invalid' : '' }}" placeholder="" type="number"
+                        <input class="form-control  {{ $errors->has('clave') ? 'is-invalid' : '' }}" placeholder="" maxlength="250" type="number"
                             name="clave" id="clave" value="{{ old('clave') }}" required>
                             {!! Form::label('clave', 'Clave del Registro*', ['class' => 'asterisco']) !!}
                         @if ($errors->has('clave'))
@@ -18,7 +18,7 @@
                         <span class="help-block"></span>
                     </div>
                     <div class="form-group col-md-6 col-sm-6 anima-focus">
-                        <input class="form-control  {{ $errors->has('nombre') ? 'is-invalid' : '' }}" placeholder="" type="text"
+                        <input class="form-control  {{ $errors->has('nombre') ? 'is-invalid' : '' }}" maxlength="250" placeholder="" type="text"
                             name="nombre" id="nombre" value="{{ old('nombre') }}" required>
                             {!! Form::label('nombre', 'Nombre*', ['class' => 'asterisco']) !!}
                         @if ($errors->has('nombre'))
@@ -29,7 +29,7 @@
                         <span class="help-block"></span>
                     </div>
                     <div class="form-group col-md-6 col-sm-6 anima-focus">
-                        <input class="form-control {{ $errors->has('razon_social') ? 'is-invalid' : '' }}" placeholder="" type="text"
+                        <input class="form-control {{ $errors->has('razon_social') ? 'is-invalid' : '' }}" maxlength="250" placeholder="" type="text"
                             name="razon_social" id="razon_social" required>
                             {!! Form::label('razon_social', 'Razón Social*', ['class' => 'asterisco']) !!}
                         @if ($errors->has('razon_social'))
@@ -40,7 +40,7 @@
                         <span class="help-block"></span>
                     </div>
                     <div class="form-group col-md-6 col-sm-6 anima-focus">
-                        <input class="form-control {{ $errors->has('rfc') ? 'is-invalid' : '' }}" placeholder="" type="text"
+                        <input class="form-control {{ $errors->has('rfc') ? 'is-invalid' : '' }}"  maxlength="250" placeholder="" type="text"
                             name="rfc" id="rfc" required>
                             {!! Form::label('rfc', 'RFC*', ['class' => 'asterisco']) !!}
                         @if ($errors->has('rfc'))

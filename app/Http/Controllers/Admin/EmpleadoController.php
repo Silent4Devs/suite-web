@@ -1357,11 +1357,11 @@ class EmpleadoController extends Controller
             $nombre = $request->nombre;
             if ($nombre != null) {
                 $usuarios = DB::table('empleados')
-                ->where('name', 'ILIKE', '%'.$nombre.'%')
-                ->join('areas', 'empleados.area_id', '=', 'areas.id')
-                ->where('empleados.estado', 'alta')
-                ->take(5)
-                ->get();
+                    ->where('name', 'ILIKE', '%'.$nombre.'%')
+                    ->join('areas', 'empleados.area_id', '=', 'areas.id')
+                    ->where('empleados.estado', 'alta')
+                    ->take(5)
+                    ->get();
 
                 return json_encode($usuarios);
             }
