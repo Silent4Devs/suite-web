@@ -99,7 +99,8 @@ jobs:
           DB_USERNAME: postgres
           DB_PASSWORD: secret
 
-        run: php artisan migrate:fresh --seed
+        run: php artisan migrate:fresh --seed --class=VersionIsoHistoricoSeeder
+
 
       - name: Show dir
         run: pwd
