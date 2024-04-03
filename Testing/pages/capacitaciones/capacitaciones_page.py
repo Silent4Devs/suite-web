@@ -13,7 +13,7 @@ from config import username, password
 class CapacitacionesPage:
     def __init__(self, driver):
         self.driver = driver
-        self.wait = WebDriverWait(self.driver, 30)
+        self.wait = WebDriverWait(self.driver, 20)
 
     def login(self):
         try:
