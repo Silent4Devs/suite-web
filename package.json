@@ -14,7 +14,7 @@
     "lodash": "^4.17.19",
     "popper.js": "^1.16.1",
     "pusher-js": "^8.4.0-rc2",
-    "vite": "^5.1.6"
+    "vite": "^5.1.7"
   },
   "dependencies": {
     "bs-stepper": "^1.7.0",
