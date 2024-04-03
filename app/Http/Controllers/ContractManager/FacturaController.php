@@ -119,12 +119,16 @@ class FacturaController extends Controller
 
     public function ContratoInsert($id)
     {
-        abort_if(Gate::denies('katbol_contratos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        // dd($id);
-        $contrato = Contrato::find($id);
+        try {
+            abort_if(Gate::denies('katbol_contratos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.facturas.index')
-            ->with('ids', $id)
-            ->with('contratos', $contrato);
+            $contrato = Contrato::find($id);
+
+            return view('admin.facturas.index')
+                ->with('ids', $id)
+                ->with('contratos', $contrato);
+        } catch (\Throwable $th) {
+            abort(404);
+        }
     }
 }
