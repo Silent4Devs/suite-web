@@ -1,3 +1,10 @@
+<style>
+    table{
+        width: auto;
+        height: auto;
+    }
+</style>
+
 <div class="row">
     <div class="col-6 col-md-2">
         <div class="tarjetas_seguridad_indicadores cdr-celeste">
@@ -44,6 +51,7 @@
 </div>
 @endcan
 
+
     @include('partials.flashMessages')
     <div class="datatable-fix datatable-rds">
         <table class="datatable tabla_sugerencias">
@@ -63,8 +71,6 @@
                     <th>Opciones</th>
                 </tr>
             </thead>
-            <tbody>
-            </tbody>
     </table>
 </div>
 
