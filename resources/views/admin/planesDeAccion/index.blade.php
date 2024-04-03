@@ -31,8 +31,8 @@
                 </div>
                 <div class="modal-body">
                     <!-- Aquí carga el contenido del formulario -->
-                    <div class="mt-4 card">
-                        <div class="card-body">
+                    <div class="mt-4">
+                        <div class="">
                             @can('planes_de_accion_agregar')
                                 <form method="POST" action="{{ route('admin.planes-de-accion.store') }}"
                                     enctype="multipart/form-data">
@@ -86,7 +86,7 @@
                                     </div>
                             </div>
                             <div class="text-right form-group col-12" style="margin-left:-5px;">
-                                <button class="btn btn-danger" type="submit">
+                                <button class="btn btn-xs btn-primary" type="submit">
                                     {{ trans('global.save') }}
                                 </button>
                             </div>
