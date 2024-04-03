@@ -101,7 +101,6 @@ jobs:
 
         run: php artisan migrate:fresh --seed --class=VersionIsoHistoricoSeeder
 
-
       - name: Show dir
         run: pwd
       - name: PHP Version
