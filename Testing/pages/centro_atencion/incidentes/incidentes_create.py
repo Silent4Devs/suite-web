@@ -25,14 +25,6 @@ class IncidentesCreate:
         self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "img[alt='Logo Tabantaj']")))
         print("Login correcto.")
 
-    def _fill_input_field(self, locator, value):
-        input_field = self.wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, locator)))
-        input_field.clear()
-        input_field.send_keys(value)
-
-    def _click_element(self, xpath):
-        element = self.wait.until(EC.element_to_be_clickable((By.XPATH, xpath)))
-        element.click()
 
     def open_menu(self):
         print("Abriendo menú...")
@@ -103,6 +95,14 @@ class IncidentesCreate:
         except TimeoutException:
             raise TimeoutError(f"No se pudo encontrar el elemento en {selector}")
 
+    def _fill_input_field(self, locator, value):
+        input_field = self.wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, locator)))
+        input_field.clear()
+        input_field.send_keys(value)
+
+    def _click_element(self, xpath):
+        element = self.wait.until(EC.element_to_be_clickable((By.XPATH, xpath)))
+        element.click()
 
     def _wait_and_select(self, selector, opcion):
         try:
