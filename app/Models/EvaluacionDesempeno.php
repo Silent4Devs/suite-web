@@ -63,7 +63,7 @@ class EvaluacionDesempeno extends Model
 
     public function getTotalEvaluacionesAttribute()
     {
-        $evaluacion = EvaluacionDesempeno::find($this->id);
+        $evaluacion = self::find($this->id);
 
         $periodos = $evaluacion->periodos->count();
 
@@ -72,7 +72,7 @@ class EvaluacionDesempeno extends Model
 
     public function getTotalEvaluacionesCompletadasAttribute()
     {
-        $evaluacion = EvaluacionDesempeno::find($this->id);
+        $evaluacion = self::find($this->id);
 
         $periodos = $evaluacion->periodos->where('finalizado', true)->count();
 
@@ -81,7 +81,7 @@ class EvaluacionDesempeno extends Model
 
     public function getPorcentajeEvaluacionesCompletadasAttribute()
     {
-        $evaluacion = EvaluacionDesempeno::find($this->id);
+        $evaluacion = self::find($this->id);
 
         $periodos = $evaluacion->periodos->count();
         $periodos_completados = $evaluacion->periodos->where('finalizado', true)->count();
@@ -114,13 +114,13 @@ class EvaluacionDesempeno extends Model
 
     public function getCuentaEvaluadosEvaluacionesTotalesAttribute()
     {
-        $evaluacion = EvaluacionDesempeno::find($this->id);
+        $evaluacion = self::find($this->id);
         return $evaluacion->evaluados->sum('cuenta_evaluaciones');
     }
 
     public function getCuentaEvaluadosEvaluacionesCompletadasTotalesAttribute()
     {
-        $evaluacion = EvaluacionDesempeno::find($this->id);
+        $evaluacion = self::find($this->id);
         return $evaluacion->evaluados->sum('cuenta_evaluaciones_completadas');
     }
 }

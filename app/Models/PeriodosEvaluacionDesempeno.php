@@ -20,4 +20,9 @@ class PeriodosEvaluacionDesempeno extends Model
         'habilitado',
         'finalizado',
     ];
+
+    public function evaluacion()
+    {
+        return $this->belongsTo(EvaluacionDesempeno::class, 'evaluacion_desempeno_id', 'id');
+    }
 }

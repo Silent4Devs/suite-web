@@ -42,7 +42,9 @@ class EvaluadosEvaluacionDesempeno extends Model
     {
         $total = 0;
 
-        if ($this->evaluacion->activar_competencias && $this->evaluacion->activar_objetivos) {
+        $evaluado = self::find($this->id);
+
+        if ($evaluado->evaluacion->activar_competencias && $this->evaluacion->activar_objetivos) {
             $evaluadoresCompetenciasIds = $this->evaluadoresCompetencias->pluck('evaluador_desempeno_id')->toArray();
             $evaluadoresObjetivosIds = $this->evaluadoresObjetivos->pluck('evaluador_desempeno_id')->toArray();
 
@@ -54,10 +56,10 @@ class EvaluadosEvaluacionDesempeno extends Model
                 + count(array_diff($evaluadoresObjetivosIds, $evaluadoresCompetenciasIds));
 
             $total = $matchingCount + $distinctCount;
-        } elseif ($this->evaluacion->activar_competencias && $this->evaluacion->activar_objetivos == false) {
-            $total = $this->evaluadoresCompetencias->count();
-        } elseif ($this->evaluacion->activar_competencias == false && $this->evaluacion->activar_objetivos) {
-            $total = $this->evaluadoresObjetivos->count();
+        } elseif ($evaluado->evaluacion->activar_competencias && $evaluado->evaluacion->activar_objetivos == false) {
+            $total = $evaluado->evaluadoresCompetencias->count();
+        } elseif ($evaluado->evaluacion->activar_competencias == false && $evaluado->evaluacion->activar_objetivos) {
+            $total = $evaluado->evaluadoresObjetivos->count();
         }
 
         return $total;
@@ -67,9 +69,11 @@ class EvaluadosEvaluacionDesempeno extends Model
     {
         $total = 0;
 
-        if ($this->evaluacion->activar_competencias && $this->evaluacion->activar_objetivos) {
-            $evaluadoresCompetenciasIds = $this->evaluadoresCompetencias->where('finalizada', true)->pluck('evaluador_desempeno_id')->toArray();
-            $evaluadoresObjetivosIds = $this->evaluadoresObjetivos->where('finalizada', true)->pluck('evaluador_desempeno_id')->toArray();
+        $evaluado = self::find($this->id);
+
+        if ($evaluado->evaluacion->activar_competencias && $evaluado->evaluacion->activar_objetivos) {
+            $evaluadoresCompetenciasIds = $evaluado->evaluadoresCompetencias->where('finalizada', true)->pluck('evaluador_desempeno_id')->toArray();
+            $evaluadoresObjetivosIds = $evaluado->evaluadoresObjetivos->where('finalizada', true)->pluck('evaluador_desempeno_id')->toArray();
 
             // Calculate the distinct count of evaluador_desempeno_id that match in both relations
             $matchingCount = count(array_intersect($evaluadoresCompetenciasIds, $evaluadoresObjetivosIds));
@@ -79,10 +83,10 @@ class EvaluadosEvaluacionDesempeno extends Model
                 + count(array_diff($evaluadoresObjetivosIds, $evaluadoresCompetenciasIds));
 
             $total = $matchingCount + $distinctCount;
-        } elseif ($this->evaluacion->activar_competencias && $this->evaluacion->activar_objetivos == false) {
-            $total = $this->evaluadoresCompetencias->where('finalizada', true)->count();
-        } elseif ($this->evaluacion->activar_competencias == false && $this->evaluacion->activar_objetivos) {
-            $total = $this->evaluadoresObjetivos->where('finalizada', true)->count();
+        } elseif ($evaluado->evaluacion->activar_competencias && $evaluado->evaluacion->activar_objetivos == false) {
+            $total = $evaluado->evaluadoresCompetencias->where('finalizada', true)->count();
+        } elseif ($evaluado->evaluacion->activar_competencias == false && $evaluado->evaluacion->activar_objetivos) {
+            $total = $evaluado->evaluadoresObjetivos->where('finalizada', true)->count();
         }
 
         return $total;

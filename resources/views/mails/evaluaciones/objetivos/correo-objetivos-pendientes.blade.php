@@ -127,7 +127,7 @@
                                             <br>
                                             <div style="text-align:center;">
                                                 De click en la siguiente liga para revisarlos y aprobarlos
-                                                <a href="{{ route('admin.rh.evaluaciones-desempeño.carga-objetivos-empleado', $empleado->id) }}"
+                                                <a href="{{ route('admin.rh.evaluaciones-desempeno.carga-objetivos-empleado', $empleado->id) }}"
                                                     style="text-decoration:none;padding-top:15px; border-radius:4px; display:inline-block; min-width:300px; height:35px ;color:#fff; font-size:11pt; background-color:#345183">
                                                     Revisar Objetivos
                                                 </a>

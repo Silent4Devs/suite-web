@@ -269,7 +269,7 @@ class CreateEvaluacionDesempeno extends Component
 
         $this->crearCuestionario($evaluacion);
 
-        return redirect(route('admin.rh.evaluaciones-desempeño.index'));
+        return redirect(route('admin.rh.evaluaciones-desempeno.index'));
     }
 
     public function crearCuestionario($evaluacion)
@@ -712,7 +712,7 @@ class CreateEvaluacionDesempeno extends Component
                     //alerta
                     dd('alerta');
                 }
-                return redirect(route('admin.rh.evaluaciones-desempeño.index'));
+                return redirect(route('admin.rh.evaluaciones-desempeno.index'));
                 break;
 
             case 2:
@@ -748,7 +748,7 @@ class CreateEvaluacionDesempeno extends Component
                         }
                     }
                 }
-                return redirect(route('admin.rh.evaluaciones-desempeño.index'));
+                return redirect(route('admin.rh.evaluaciones-desempeno.index'));
                 break;
 
             case 3:
@@ -785,7 +785,7 @@ class CreateEvaluacionDesempeno extends Component
                     }
                 }
 
-                return redirect(route('admin.rh.evaluaciones-desempeño.index'));
+                return redirect(route('admin.rh.evaluaciones-desempeno.index'));
                 break;
 
             case 4:
@@ -851,11 +851,11 @@ class CreateEvaluacionDesempeno extends Component
                     }
                 }
 
-                return redirect(route('admin.rh.evaluaciones-desempeño.index'));
+                return redirect(route('admin.rh.evaluaciones-desempeno.index'));
                 break;
 
             default:
-                return redirect(route('admin.rh.evaluaciones-desempeño.index'));
+                return redirect(route('admin.rh.evaluaciones-desempeno.index'));
                 break;
         }
     }
