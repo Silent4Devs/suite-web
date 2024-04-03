@@ -167,7 +167,7 @@ class DeskController extends Controller
     {
         abort_if(Gate::denies('centro_atencion_incidentes_de_seguridad_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $incidentes_seguridad = IncidentesSeguridad::where('archivado', false)->first();
+        $incidentes_seguridad = IncidentesSeguridad::where('archivado', false)->get();
 
         return datatables()->of($incidentes_seguridad)->toJson();
     }
