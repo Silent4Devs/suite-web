@@ -46,7 +46,6 @@ use App\Models\Sugerencias;
 use App\Models\User;
 use App\Models\VersionesIso;
 use Carbon\Carbon;
-use Essa\APIToolKit\Api\ApiResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
@@ -55,8 +54,6 @@ use Illuminate\Support\Str;
 
 class InicioUsuarioController extends Controller
 {
-    use ApiResponse;
-
     public function index()
     {
         abort_if(Gate::denies('mi_perfil_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
