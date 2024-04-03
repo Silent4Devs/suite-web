@@ -1,14 +1,32 @@
 import pytest
 from selenium import webdriver
-from testing.pages.contratos.create.contratos_create_page import Contratos_Create
+from selenium.webdriver.chrome.options import Options as ChromeOptions
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
+from pages.contratos.create.contratos_create_page import ContratosCreate
 
+@pytest.fixture(scope="session")
+def browser():
+    options = FirefoxOptions()
+    # options = ChromeOptions()
+    options.add_argument('--headless')
+    options.add_argument('--disable-gpu')
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-dev-shm-usage')
+    options.add_argument('--disable-extensions')
+    options.add_argument('--disable-dev-shm-usage')
+    options.add_argument('--disable-browser-side-navigation')
+    options.add_argument('--disable-gpu')
+    options.add_argument('--no-sandbox')
+    options.add_argument('--log-level=3')
+
+    #driver = webdriver.Chrome(options=options)
+    driver = webdriver.Firefox(options=options)
+    yield driver
+    driver.quit()
 
 def test_contratos(browser):
-    contratos_create_page = Contratos_Create(browser)
-    #LOGIN
-    username = "admin@admin.com"
-    password = "#S3cur3P4$$w0Rd!"
-    contratos_create_page.login(username, password)
+    contratos_create_page = ContratosCreate(browser)
+    contratos_create_page.login()
     #MENÚ HAMBURGUESA
     contratos_create_page.open_menu()
     #GESTIÓN CONTRACTUAL
