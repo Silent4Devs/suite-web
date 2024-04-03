@@ -126,7 +126,7 @@
                         use App\Models\User;
                         use App\Models\Empleado;
                         $usuario = User::getCurrentUser();
-                        $empleado = Empleado::where('id', $usuario->empleado->id)->first();
+                        $empleado = Empleado::getMyEmpleadodata($usuario->empleado->id);
 
                     @endphp
 

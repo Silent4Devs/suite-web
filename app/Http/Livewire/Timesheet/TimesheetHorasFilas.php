@@ -34,23 +34,6 @@ class TimesheetHorasFilas extends Component
 
     public function mount($origen, $timesheet_id)
     {
-        $user = User::getCurrentUser();
-        $empleado = Empleado::where('id', $user->empleado->id)->first();
-
-        $proyectos_array = collect();
-
-        $proyectos_area = TimesheetProyectoArea::withwhereHas('proyecto', function ($query) {
-            return $query->where('estatus', '=', 'proceso');
-        })->where('area_id', $empleado->area_id)->orderBy('id', 'desc')->get();
-
-        foreach ($proyectos_area as $pa) {
-            $proyectos_array->push(
-                $pa->proyecto
-            );
-        }
-
-        $this->proyectos = $proyectos_array->unique();
-
         $this->tareas = collect();
         $this->origen = $origen;
         $this->timesheet_id = $timesheet_id;
@@ -69,6 +52,23 @@ class TimesheetHorasFilas extends Component
 
     public function render()
     {
+        $user = User::getCurrentUser();
+        $empleado = Empleado::getMyEmpleadodata($user->empleado->id);
+
+        $proyectos_array = collect();
+
+        $proyectos_area = TimesheetProyectoArea::withwhereHas('proyecto', function ($query) {
+            return $query->where('estatus', '=', 'proceso');
+        })->where('area_id', $empleado->area_id)->orderBy('id', 'desc')->get();
+
+        foreach ($proyectos_area as $pa) {
+            $proyectos_array->push(
+                $pa->proyecto
+            );
+        }
+
+        $this->proyectos = $proyectos_array->unique();
+
         if ($this->origen == 'edit') {
             $this->contador = 2;
             $this->horas = TimesheetHoras::getData()->where('timesheet_id', $this->timesheet_id);

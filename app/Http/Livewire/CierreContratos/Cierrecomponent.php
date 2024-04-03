@@ -46,7 +46,7 @@ class Cierrecomponent extends Component
                     ->orWhere('observaciones', 'like', '%'.$this->search.'%');
             })
             ->orderBy($this->sort, $this->direction)
-            ->fastPaginate($this->pagination);
+            ->fastPaginate(intval($this->pagination));
 
         $this->dispatchBrowserEvent('paginador-cierre-contrato');
 

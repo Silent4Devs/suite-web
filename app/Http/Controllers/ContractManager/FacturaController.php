@@ -4,8 +4,8 @@ namespace App\Http\Controllers\ContractManager;
 
 use App\Http\Controllers\Controller;
 use App\Models\ContractManager\Contrato;
-use App\Models\Factura;
-use App\Models\FacturaFile;
+use App\Models\ContractManager\Factura;
+use App\Models\ContractManager\FacturaFile;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;

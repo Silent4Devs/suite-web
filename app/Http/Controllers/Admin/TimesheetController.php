@@ -53,7 +53,6 @@ class TimesheetController extends Controller
      */
     public function index($estatus = 'todos')
     {
-        $cacheKey = 'timesheet-'.User::getCurrentUser()->empleado->id;
 
         // $times = Timesheet::getPersonalTimesheet()->sortBy('fecha_dia');
         // dd($times);
@@ -62,6 +61,8 @@ class TimesheetController extends Controller
         // $pendientes_contador = $times->where('estatus', 'pendiente')->count();
         // $aprobados_contador = $times->where('estatus', 'aprobado')->count();
         // $rechazos_contador = $times->where('estatus', 'rechazado')->count();
+
+        $empleado_name = User::getCurrentUser()->empleado->name;
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -75,7 +76,8 @@ class TimesheetController extends Controller
             // 'pendientes_contador'
             'logo_actual',
             'empresa_actual',
-            'estatus'
+            'estatus',
+            'empleado_name'
         ));
     }
 
@@ -95,7 +97,7 @@ class TimesheetController extends Controller
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
         $user = User::getCurrentUser();
-        $empleado = Empleado::where('id', $user->empleado->id)->first();
+        $empleado = Empleado::getMyEmpleadodata($user->empleado->id);
         $empleado_name = $empleado->name;
 
         return view('admin.timesheet.mis-registros', compact('times', 'rechazos_contador', 'todos_contador', 'borrador_contador', 'pendientes_contador', 'aprobados_contador', 'logo_actual', 'empresa_actual', 'estatus', 'empleado_name'));
@@ -157,7 +159,7 @@ class TimesheetController extends Controller
         $organizacion = Organizacion::getFirst();
 
         $user = User::getCurrentUser()->empleado->id;
-        $empleado = Empleado::where('id', $user)->first();
+        $empleado = Empleado::getMyEmpleadodata($user);
 
         // Si la fecha no está registrada, continúa con la vista de creación.
         return view('admin.timesheet.create', compact('fechasRegistradas', 'organizacion', 'empleado'));
