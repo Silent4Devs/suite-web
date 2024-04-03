@@ -71,6 +71,10 @@
 
     @livewireStyles
 
+    {{-- Laravel vite --}}
+    @vite(['resources/js/app.js'])
+    {{-- Laravel vite --}}
+
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/favicon_tabantaj_v2.png') }}"
         onload="this.onload=null;this.removeAttribute('media');">
 </head>
@@ -613,8 +617,8 @@
     {{-- Librerías para visualizar en campo el dolar --}}
     <script async src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     {{-- Notificaciones push desktop --}}
-    <script async src="https://cdnjs.cloudflare.com/ajax/libs/push.js/1.0.8/push.min.js"
-        integrity="sha512-eiqtDDb4GUVCSqOSOTz/s/eiU4B31GrdSb17aPAA4Lv/Cjc8o+hnDvuNkgXhSI5yHuDvYkuojMaQmrB5JB31XQ=="
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/push.js/1.0.12/push.min.js"
+        integrity="sha512-DjIQO7OxE8rKQrBLpVCk60Zu0mcFfNx2nVduB96yk5HS/poYZAkYu5fxpwXj3iet91Ezqq2TNN6cJh9Y5NtfWg=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script async>
         window.onload = function() {
@@ -629,9 +633,7 @@
     @include('sweetalert::alert')
     @livewireScripts
     <x-livewire-alert::scripts />
-    {{-- Laravel vite --}}
-    @vite(['resources/js/app.js'])
-    {{-- Laravel vite --}}
+
     <script defer src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <!-- js para validaciones globales -->
     <!--<script src="{{ asset('js/validations.js') }}"></script>-->
