@@ -44,6 +44,8 @@
     "npm": "^7.24.1",
     "orgchart": "^3.1.1",
     "perfect-scrollbar": "^1.5.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "select2": "^4.0.13",
     "signature_pad": "^4.1.6",
     "sweetalert2": "^10.16.9",

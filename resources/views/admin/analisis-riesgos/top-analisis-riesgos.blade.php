@@ -41,6 +41,29 @@
             border-radius: 14px;
             width: 410px;
         }
+
+        .publicado {
+            text-align: center;
+            font: normal normal normal 10px/20px Roboto;
+            letter-spacing: 0px;
+            color: #039C55;
+            opacity: 1;
+            background: #E9FFE8 0% 0% no-repeat padding-box;
+            border-radius: 7px;
+            width: 50px;
+        }
+
+        .borrador{
+            text-align: center;
+            font: normal normal normal 10px/20px Roboto;
+            letter-spacing: 0px;
+            color: #FF9900;
+            opacity: 1;
+            background: #FFECAF 0% 0% no-repeat padding-box;
+            border-radius: 7px;
+            width: 80px;
+
+        }
     </style>
 
 @livewire('template-top-analisis-riesgos')

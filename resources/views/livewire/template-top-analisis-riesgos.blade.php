@@ -11,75 +11,78 @@
                 <table id="datatable_analisisbrechas" class="table w-100" style="width:100%">
                     <thead>
                         <tr>
-                            <th style="max-width:300px !important;background-color:rgb(255, 255, 255); color:#414141;">ID
-                            </th>
                             <th style="min-width:200px; background-color:rgb(255, 255, 255); color:#414141;">Nombre del
                                 template
                             </th>
                             <th style="max-width:80px;background-color:rgb(255, 255, 255); color:#414141;">
                                 Fecha de creación</th>
                             <th style="background-color:rgb(255, 255, 255); color:#414141;">No de preguntas</th>
+                            <th style="background-color:rgb(255, 255, 255); color:#414141;">Status</th>
                             <th style="background-color:rgb(255, 255, 255); color:#414141;">Top 8</th>
                             <th style="background-color:rgb(255, 255, 255); color:#414141;"></th>
                         </tr>
                     </thead>
                     <tbody>
-                        {{-- @foreach ($top_analisis as $key => $analisis)
+                        @foreach ($templates as $key => $template)
                             <tr>
                                 <td>
-                                    {{ $analisis->id }}
+                                    {{ $template->nombre }}
                                 </td>
                                 <td>
-                                    {{ $analisis->nombre_template }}
+                                    {{ $template->fecha }}
                                 </td>
                                 <td>
-                                    {{ $analisis->created_at }}
                                 </td>
                                 <td>
-
+                                    @if ($template->status)
+                                        <p class="publicado">
+                                            Creada
+                                        </p>
+                                    @else
+                                    <p class="borrador">
+                                        En borrador
+                                    </p>
+                                    @endif
                                 </td>
                                 <td>
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" value=""
-                                            id="flexCheckDefault{{ $analisis->id }}"
-                                            {{ $analisis->top ? 'checked' : '' }}
-                                            {{ $registrosactivos >= $limit_registros && !$analisis->top ? 'disabled' : '' }}
-                                            wire:click = 'top({{ $analisis->id }})'>
+                                            id="flexCheckDefault{{ $template->id }}"
+                                            {{ $template->top ? 'checked' : '' }}
+                                            {{ $registrosactivos >= $limit_registros && !$template->top ? 'disabled' : '' }}
+                                            wire:click = 'top({{ $template->id }})'>
                                         <label class="form-check-label" for="flexCheckDefault">
                                         </label>
                                     </div>
                                 </td>
                                 <td>
-                                    @if (!$analisis->innamovible)
-                                        <div class="dropdown">
-                                            <button class="btn dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-expanded="false">
-                                                <i class="fa-solid fa-ellipsis-vertical"></i>
-                                            </button>
-                                            <div class="dropdown-menu">
-                                                <a class="dropdown-item"
-                                                    href="{{ route('admin.templates.edit', $analisis->id) }}">
-                                                    <div class="d-flex align-items-start">
-                                                        <i class="material-icons-outlined"
-                                                            style="width: 24px;font-size:18px;">edit_outline</i>
-                                                        Editar
-                                                    </div>
-                                                </a>
-                                                <a class="dropdown-item"
-                                                    wire:click="$emit('delete',{{ $analisis->id }})">
-                                                    <div class="d-flex align-items-start">
-                                                        <i class="material-icons-outlined"
-                                                            style="width: 24px;font-size:18px;">delete_outlined</i>
-                                                        Eliminar
-                                                    </div>
-                                                </a>
-                                            </div>
+                                    <div class="dropdown">
+                                        <button class="btn dropdown-toggle" type="button" data-toggle="dropdown"
+                                            aria-expanded="false">
+                                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item"
+                                                href="{{ route('admin.template-analisis-riesgo.edit', $template->id) }}">
+                                                <div class="d-flex align-items-start">
+                                                    <i class="material-icons-outlined"
+                                                        style="width: 24px;font-size:18px;">edit_outline</i>
+                                                    Editar
+                                                </div>
+                                            </a>
+                                            <a class="dropdown-item"
+                                                wire:click="$emit('delete',{{ $template->id }})">
+                                                <div class="d-flex align-items-start">
+                                                    <i class="material-icons-outlined"
+                                                        style="width: 24px;font-size:18px;">delete_outlined</i>
+                                                    Eliminar
+                                                </div>
+                                            </a>
                                         </div>
-                                    @else
-                                    @endif
+                                    </div>
                                 </td>
                             </tr>
-                        @endforeach --}}
+                        @endforeach
                     </tbody>
 
                 </table>
@@ -100,7 +103,7 @@
         document.addEventListener("DOMContentLoaded", function() {
             Livewire.on("delete", id => {
                 Swal.fire({
-                    title: "Eliminar Template de brechas",
+                    title: "Eliminar Registro",
                     text: "¿Esta seguro que desea eliminar?",
                     icon: "warning",
                     showCancelButton: true,
@@ -110,10 +113,10 @@
                     cancelButtonText: "Cancelar",
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        Livewire.emitTo('template-top', 'destroy', id);
+                        Livewire.emitTo('template-top-analisis-riesgos', 'destroy', id);
                         Swal.fire({
                             title: "Eliminado",
-                            text: "El análisis de brechas se elimino con éxito",
+                            text: "El reistro se elimino con éxito",
                             icon: "success"
                         });
                     }
