@@ -117,12 +117,45 @@ class TimesheetProyecto extends Model implements Auditable
     {
         $ids_emp = TimesheetProyectoEmpleado::where('proyecto_id', $this->id)->get();
 
-        $emps = collect();
+        $emps = [];
         foreach ($ids_emp as $key => $emp_p) {
-            $emps->push(Empleado::select('id')->find($emp_p->empleado_id));
+            $horas = TimesheetHoras::where('proyecto_id', $this->id)->where('empleado_id', $emp_p->id)->get();
+            $horas_totales = 0;
+            foreach ($horas as $hora) {
+                $horas_totales += $hora->horas_lunes;
+                $horas_totales += $hora->horas_martes;
+                $horas_totales += $hora->horas_miercoles;
+                $horas_totales += $hora->horas_jueves;
+                $horas_totales += $hora->horas_viernes;
+                $horas_totales += $hora->horas_sabado;
+                $horas_totales += $hora->horas_domingo;
+            }
+            $empItem = Empleado::select('id', 'name')->find($emp_p->empleado_id);
+            array_push($emps, [
+                'id' => $empItem->id,
+                'name' => $empItem->name,
+                'horas' => $horas_totales,
+            ]);
         }
 
         return $emps;
+    }
+
+    public function getHorasTotalesLlenasAttribute()
+    {
+        $horas = TimesheetHoras::where('proyecto_id', $this->id)->get();
+        $horas_totales = 0;
+        foreach ($horas as $hora) {
+            $horas_totales += $hora->horas_lunes;
+            $horas_totales += $hora->horas_martes;
+            $horas_totales += $hora->horas_miercoles;
+            $horas_totales += $hora->horas_jueves;
+            $horas_totales += $hora->horas_viernes;
+            $horas_totales += $hora->horas_sabado;
+            $horas_totales += $hora->horas_domingo;
+        }
+
+        return $horas_totales;
     }
 
     public function getIsNumAttribute()

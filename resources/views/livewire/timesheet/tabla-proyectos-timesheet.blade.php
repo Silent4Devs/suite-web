@@ -206,9 +206,11 @@
                         <th>Fecha termino</th>
                         <th>Cliente</th>
                         <th style="max-width: 250px !important;">Área(s)</th>
+                        <th style="max-width: 250px !important;">Empleados participantes</th>
                         <th>Sede</th>
                         <th>Estatus</th>
                         <th>Tipo</th>
+                        <th>Horas totales</th>
                         <th style="max-width:150px !important; width:150px ;">Opciones</th>
                     </tr>
                 </thead>
@@ -230,9 +232,17 @@
                                     @endforeach
                                 </ul>
                             </td>
+                            <td>
+                                <ul style="padding-left:10px; ">
+                                    @foreach ($proyecto->empleados as $empleado)
+                                        <li>{{ $empleado->name }}</li>
+                                    @endforeach
+                                </ul>
+                            </td>
                             <td>{{ $proyecto->sede_id ? $proyecto->sede->sede : '' }} </td>
                             <td>{{ $proyecto->estatus }} </td>
                             <td>{{ $proyecto->tipo ?? 'No Definido' }} </td>
+                            <td>{{ $proyecto->horas_totales_registradas }}</td>
                             <td>
                                 @can('timesheet_administrador_proyectos_delete')
                                     @php

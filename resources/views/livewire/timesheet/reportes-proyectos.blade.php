@@ -221,15 +221,17 @@
                             ID-Proyecto
                         </th>
                         <th style="min-width:250px; text-align: right;">Áreas participantes</th>
+                        <th style="min-width:250px; text-align: right;">Empleados participantes</th>
                         <th style="min-width:250px; text-align: right;">Cliente</th>
                         @foreach ($calendario_tabla as $calendar)
                             <th colspan="{{ $calendar['total_weeks'] }}" class="th-calendario th-año">
                                 <small>{{ $calendar['year'] }}</small>
                             </th>
                         @endforeach
-                        <th></th>
+                        <th>Total horas</th>
                     </tr>
                     <tr>
+                        <th></th>
                         <th></th>
                         <th></th>
                         <th></th>
@@ -287,6 +289,7 @@
                         <th></th>
                         <th></th>
                         <th></th>
+                        <th></th>
                         @foreach ($calendario_tabla as $calendar)
                             @foreach ($calendar['months'] as $key => $mes)
                                 @foreach ($mes['weeks'] as $week)
@@ -317,13 +320,20 @@
                                     @endforeach
                                 </ul>
                             </td>
+                            <td>
+                                <ul style="padding-left: 10px;">
+                                    @foreach ($proyecto['empleados'] as $empleado)
+                                        <li>{{ $empleado->name }}</li>
+                                    @endforeach
+                                </ul>
+                            </td>
                             <td>{{ $proyecto['cliente'] }} </td>
                             @foreach ($proyecto['calendario'] as $index => $horas_calendar)
                                 <td style="font-size: 10px !important; text-align: center !important;">
                                     {!! $horas_calendar !!}</td>
                             @endforeach
                             <td>
-
+                                {{ $proyecto['horas_totales'] }} h
                             </td>
                         </tr>
                     @endforeach
