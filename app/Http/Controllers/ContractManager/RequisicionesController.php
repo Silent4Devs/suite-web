@@ -104,7 +104,7 @@ class RequisicionesController extends Controller
 
             $requisicion = KatbolRequsicion::with('sucursal', 'comprador.user', 'contrato')->find($id);
 
-            if (! $requisicion) {
+            if (!$requisicion) {
                 abort(404);
             }
 
@@ -311,10 +311,10 @@ class RequisicionesController extends Controller
             if (removeUnicodeCharacters($supervisor_email) === removeUnicodeCharacters($user->email)) {
                 $tipo_firma = 'firma_jefe';
             } else {
-                return view('contract_manager.requisiciones.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del jefe directo: <br> <strong>'.$supervisor.'</strong>');
+                return view('contract_manager.requisiciones.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del jefe directo: <br> <strong>' . $supervisor . '</strong>');
             }
         } elseif ($requisicion->firma_finanzas === null) {
-            if (removeUnicodeCharacters($user->email) === 'lourdes.abadia@silent4business.com' || removeUnicodeCharacters($user->email) === 'ldelgadillo@silent4business.com') {
+            if (removeUnicodeCharacters($user->email) === 'lourdes.abadia@silent4business.com' || removeUnicodeCharacters($user->email) === 'ldelgadillo@silent4business.com' || removeUnicodeCharacters($user->email) === 'aurora.soriano@silent4business.com') {
                 $tipo_firma = 'firma_finanzas';
             } else {
                 return view('contract_manager.requisiciones.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera de finanzas');
@@ -323,7 +323,7 @@ class RequisicionesController extends Controller
             if (removeUnicodeCharacters($comprador->user->email) === removeUnicodeCharacters($user->email)) {
                 $tipo_firma = 'firma_compras';
             } else {
-                return view('contract_manager.requisiciones.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>'.$comprador->user->name.'</strong>');
+                return view('contract_manager.requisiciones.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>' . $comprador->user->name . '</strong>');
             }
         } else {
             $tipo_firma = 'firma_final_aprobadores';
@@ -416,5 +416,12 @@ class RequisicionesController extends Controller
         $pdf->setPaper('A4', 'portrait');
 
         return $pdf->download('requisicion.pdf');
+    }
+
+
+    public function filtrarPorEstado()
+    {
+        $requisiciones = KatbolRequsicion::where('firma_solicitante', null)->where('firma_finanzas', null)->where('firma_jefe', null)->where('firma_compras', null)->get();
+        return view('contract_manager.requisiciones.index', compact('requisiciones'));
     }
 }
