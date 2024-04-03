@@ -39,6 +39,10 @@
         width: 100%;
         display: flex;
     }
+    table{
+        width: auto;
+        height: auto;
+    }
 </style>
 
 
@@ -111,8 +115,6 @@
                     <th>Opciones</th>
                 </tr>
             </thead>
-            <tbody>
-            </tbody>
         </table>
     </div>
 
