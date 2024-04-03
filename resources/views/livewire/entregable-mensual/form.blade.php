@@ -84,10 +84,9 @@
                 <label for="" class="txt-tamaño">Factura Relacionada
                     <font class="asterisco">*</font>
                 </label>
-                <select name="factura_id" id="factura_id" class="form-control" wire:model.defer="factura_id" required>
-                    <option value="">Sin factura</option>
+                <select name="factura_id" id="factura_id" class="form-control" wire:model.defer="factura_id">
+                    <option value="" selected>Sin factura</option>
                     @foreach ($facturas_entregables as $facturas)
-                        }
                         <option value="{{ $facturas->id }}">{{ $facturas->no_factura }}</option>
                     @endforeach
                 </select>
