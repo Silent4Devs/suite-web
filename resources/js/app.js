@@ -1,6 +1,5 @@
 // Laravel Echo
 import "./bootstrap";
-import Echo from "laravel-echo";
 
 Echo.private("user-notifications").listen("UserSessionChanged", e => {
   Push.create("TABANTAJ", {
