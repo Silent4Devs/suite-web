@@ -22,6 +22,8 @@
             </button>
             <a style="color: white;" class="btn btn-primary"
                 href="{{ route('contract_manager.requisiciones.archivo') }}">Archivados</a>
+
+            <button type="button" class="btn btn-primary" id="filtrarBtn">Filtrar Requisiciones</button>
         </form>
         <div class="card-body datatable-fix">
             <table id="dom" class="table table-bordered w-100 datatable-perspectiva" style="width: 100%">
@@ -354,4 +356,12 @@
             });
         });
     </script>
+
+<script>
+    $(document).ready(function() {
+     $('#filtrarBtn').click(function() {
+         window.location.href = "{{ route('contract_manager.requisiciones.filtrarPorEstado') }}";
+     });
+ });
+ </script>
 @endsection
