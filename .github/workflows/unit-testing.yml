@@ -32,9 +32,17 @@ jobs:
         run: cd Testing
 
       - name: Install dependencies
+        id: cache-dependencies
         run: |
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: ${{ runner.os }}-pip-
 
       - name: Lint with Ruff
         run: |
@@ -53,7 +61,11 @@ jobs:
 
       - name: Run Unit Tests
         run: |
+<<<<<<< HEAD
           coverage run -m pytest -v -s tests
+=======
+          coverage run -m pytest -v -s Testing/tests/login/test_login_successfully.py
+>>>>>>> develop
 
       - name: Generate Coverage Report
         run: coverage report -m

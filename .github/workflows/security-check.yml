@@ -45,7 +45,6 @@ jobs:
           path: vendor
           key: ${{ runner.OS }}-build-${{ hashFiles('**/composer.lock') }}
 
-
       - name: Check out repository code
         uses: actions/checkout@v3
 

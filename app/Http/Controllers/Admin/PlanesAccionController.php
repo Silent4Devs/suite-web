@@ -263,20 +263,39 @@ class PlanesAccionController extends Controller
      */
     public function update(Request $request, $planImplementacion)
     {
-        $request->validate([
-            'parent' => 'required|string|max:255',
-            'norma' => 'required|string|max:255',
-            'modulo_origen' => 'required|string|max:255',
-            'objetivo' => 'required|string|max:550',
-        ], [
-            'parent.required' => 'Debes de definir un nombre para el plan de acción',
-            'norma.required' => 'Debes de definir una norma para el plan de acción',
-            'modulo_origen.required' => 'Debes de definir un módulo de origen para el plan de acción',
-            'objetivo.required' => 'Debes de definir un objetivo para el plan de acción',
-        ]);
-        $planImplementacion = PlanImplementacion::find($planImplementacion);
+        try {
+            $request->validate([
+                'parent' => 'required|string',
+                'inicio' => 'required|string',
+                'fin' => 'required|string',
+                // 'norma' => 'required|string',
+                // 'modulo_origen' => 'required|string',
+                'objetivo' => 'required|string|max:550',
+            ], [
+                'parent.required' => 'Debes de definir un nombre para el plan de acción',
+                'inicio' => 'Debes de definir una fecha para el plan de acción',
+                'fin' => 'Debes de definir una fecha para el plan de acción',
+                // 'norma.required' => 'Debes de definir una norma para el plan de acción',
+                // 'modulo_origen.required' => 'Debes de definir un módulo de origen para el plan de acción',
+                'objetivo.required' => 'Debes de definir un objetivo para el plan de acción',
+            ]);
+            $planImplementacion = PlanImplementacion::find($planImplementacion);
 
-        if (! $planImplementacion) {
+            if (! $planImplementacion) {
+                abort(404);
+            }
+
+            $planImplementacion->update([ // Necesario se carga inicialmente el Diagrama Universal de Gantt
+                'parent' => $request->parent,
+                'norma' => $request->norma,
+                'modulo_origen' => $request->modulo_origen,
+                'objetivo' => $request->objetivo,
+            ]);
+            $route = $planImplementacion->es_plan_trabajo_base ? 'admin.planTrabajoBase.index' : 'admin.planes-de-accion.index';
+            $mensaje = $planImplementacion->es_plan_trabajo_base ? 'Plan de Trabajo Base Actualizado' : 'Plan de Acción Actualizado';
+
+            return redirect()->route($route)->with('success', $mensaje);
+        } catch (\Throwable $th) {
             abort(404);
         }
 

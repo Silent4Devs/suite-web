@@ -12,7 +12,7 @@ class AuthGates
 {
     public function handle($request, Closure $next)
     {
-        $user = User::getCurrentUser();
+        $user = \Auth::user();
 
         if ($user) {
             // Cache roles and permissions to minimize database queries
