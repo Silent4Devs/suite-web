@@ -70,7 +70,7 @@ class PlanTrabajo_create:
         print("Fecha seleccionada.")
     def descripcion(self, descripcion):
         print("Ingresando descripción...")
-        self._fill_input_field("//textarea[@id='objetivo']", descripcion)
+        self._fill_input_field1("//textarea[contains(@class,'form-control')]", descripcion)
         print("Descripción ingresada.")
 
     def guardar_btn(self):
@@ -81,10 +81,15 @@ class PlanTrabajo_create:
         print("Guardando Plan de trabajo")
         time.sleep(0.2)
         print("URL actual: ", self.driver.current_url)
-        pdb.set_trace()
+
 
     def _fill_input_field(self, locator, value):
         input_field = self.wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, locator)))
+        input_field.clear()
+        input_field.send_keys(value)
+
+    def _fill_input_field1(self, locator, value):
+        input_field = self.wait.until(EC.visibility_of_element_located((By.XPATH, locator)))
         input_field.clear()
         input_field.send_keys(value)
 
