@@ -15,6 +15,18 @@ Echo.private("user-notifications").listen("UserSessionChanged", e => {
   });
 });
 
+Echo.private("user-notifications").listen("UserSessionChanged", e => {
+  // Mostrar el toast con SweetAlert2
+  Swal.fire({
+    title: e.message,
+    icon: "info",
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 4000 // Duración del toast en milisegundos (3 segundos)
+  });
+});
+
 // Echo.channel(
 //     "notificaciones-campana"
 //   ).listen(".IncidentesDeSeguridadEvent", e => {
