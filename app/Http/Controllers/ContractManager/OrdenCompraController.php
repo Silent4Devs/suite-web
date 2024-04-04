@@ -41,21 +41,15 @@ class OrdenCompraController extends Controller
 
         $proveedor_indistinto = KatbolProveedorIndistinto::getFirst()->pluck('requisicion_id');
 
-        $id = $user->id;
-        $roles = User::find($id)->roles()->get();
-        foreach ($roles as $rol) {
-            if ($rol->title === 'Admin' || $rol->title === 'Compras') {
-                $requisiciones = KatbolRequsicion::where([
-                    ['firma_solicitante', '!=', null],
-                    ['firma_jefe', '!=', null],
-                    ['firma_finanzas', '!=', null],
-                    ['firma_compras', '!=', null],
-                ])->where('archivo', false)->orderByDesc('id')
-                    ->get();
+        $requisiciones = KatbolRequsicion::where([
+            ['firma_solicitante', '!=', null],
+            ['firma_jefe', '!=', null],
+            ['firma_finanzas', '!=', null],
+            ['firma_compras', '!=', null],
+        ])->where('archivo', false)->orderByDesc('id')
+            ->get();
 
-                return view('contract_manager.ordenes-compra.index', compact('requisiciones', 'empresa_actual', 'logo_actual', 'proveedor_indistinto'));
-            }
-        }
+        return view('contract_manager.ordenes-compra.index', compact('requisiciones', 'empresa_actual', 'logo_actual', 'proveedor_indistinto'));
     }
 
     public function getRequisicionIndex(Request $request)
