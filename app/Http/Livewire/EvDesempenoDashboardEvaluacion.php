@@ -2,8 +2,10 @@
 
 namespace App\Http\Livewire;
 
+use App\Mail\CorreoRecordatorioEvDesempeno;
 use App\Models\Area;
 use App\Models\EvaluacionDesempeno;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 
 class EvDesempenoDashboardEvaluacion extends Component
@@ -22,13 +24,28 @@ class EvDesempenoDashboardEvaluacion extends Component
     public function render()
     {
         $this->evaluacion = EvaluacionDesempeno::find($this->id_evaluacion);
-        // dd($this->evaluacion->cuenta_evaluados_evaluaciones_totales);
+        // dd($this->evaluacion->evaluados[0]->calificaciones_competencias_evaluado);
         return view('livewire.ev-desempeno-dashboard-evaluacion');
     }
 
     public function enviarRecordatorio()
     {
-        dd($this->evaluacion->evaluados);
+        dump($this->evaluacion->evaluados);
+        foreach ($this->evaluacion->evaluados as $evaluado) {
+            if ($evaluado->estatus_evaluado == false) {
+                dd($evaluado);
+                if ($this->evaluacion->activar_competencias) {
+                    # code...
+                    dd($evaluado->evaluadoresCompetencias);
+                }
+
+                if ($this->evaluacion->activar_objetivos) {
+                    # code...
+                    dd($evaluado->evaluadoresObjetivos);
+                }
+            }
+            // dd($evaluado->empleado->email);
+        }
     }
 
     public function cerrarEvaluacion()

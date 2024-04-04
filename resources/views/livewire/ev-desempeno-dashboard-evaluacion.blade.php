@@ -11,7 +11,8 @@
     <div class="row mt-4">
         <div class="col-md-3">
             <a wire:click.prevent="enviarRecordatorio">
-                <div class="w-100 p-3 text-center text-white rounded-lg" style="background-color: #2C9E7F;">
+                <div class="w-100 p-3 text-center text-white rounded-lg"
+                    style="background-color: #2C9E7F;cursor: pointer;">
                     Enviar recordatorio de Evaluación
                 </div>
             </a>
@@ -421,59 +422,74 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td></td>
-                                <td>Nombre</td>
-                                <td>Puesto y Área</td>
-                                <td>Evaluadores</td>
-                                <td>Competencias</td>
-                                <td>Objetivos</td>
-                                <td>Calificación</td>
-                                <td>Nivel</td>
+                            @foreach ($evaluacion->evaluados as $evaluado)
+                                <tr>
+                                    <td></td>
+                                    <td>{{ $evaluado->empleado->name }}</td>
+                                    <td>{{ $evaluado->empleado->puestoRelacionado->puesto }}/{{ $evaluado->empleado->area->area }}
+                                    </td>
+                                    <td>Evaluadores</td>
+                                    <td>{{ $evaluado->calificaciones_competencias_evaluado['promedio_total'] * ($evaluacion->porcentaje_competencias / 100) }}
+                                    </td>
+                                    <td>{{ $evaluado->calificaciones_objetivos_evaluado['promedio_total'] * ($evaluacion->porcentaje_objetivos / 100) }}
+                                    </td>
+                                    <td>{{ $evaluado->calificaciones_competencias_evaluado['promedio_total'] * ($evaluacion->porcentaje_competencias / 100) + $evaluado->calificaciones_objetivos_evaluado['promedio_total'] * ($evaluacion->porcentaje_objetivos / 100) }}
+                                    </td>
+                                    <td>Nivel</td>
+                                    @if ($evaluacion->activar_competencias)
+                                        @foreach ($evaluado->calificaciones_competencias_evaluado['calif_total'] as $calif_comp)
+                                            <td>{{ $calif_comp['calificacion_total'] }}</td>
+                                        @endforeach
+                                    @endif
+                                    @if ($evaluacion->activar_objetivos)
+                                        @foreach ($evaluado->calificaciones_objetivos_evaluado['calif_total'] as $calif_obj)
+                                            <td>{{ $calif_obj['calificacion_total'] }}</td>
+                                        @endforeach
+                                    @endif
+                                    {{-- <td>Apego a procesos</td>
+                                    <td>Innovación y creatividad</td>
+                                    <td>Comunicación efectiva</td>
+                                    <td>Enfocque al cliente</td>
+                                    <td>Trabajo en equipo</td>
+                                    <td>Adaptabilidad al cambio</td>
+                                    <td>Solución de problemas y toma de desiciones</td>
+                                    <td>Liderazgo e influencia</td>
+                                    <td>Pensamiento estratégico</td>
+                                    <td>Planificación y organización</td>
+                                    <td>Negociación comercial</td>
+                                    <td>Analisis de negocio</td>
+                                    <td>Visión de negocio</td>
+                                    <td>Enfoque a resultados</td>
+                                    <td>Mejora continua</td>
+                                    <td>Búsqueda de información</td>
+                                    <td>Análisis y síntesis</td>
+                                    <td>Efectividad interpersonal (Empatía)</td>
+                                    <td>Negociación</td>
+                                    <td>Trabajo bajo presión</td>
+                                    <td>Impacto e influencia</td> --}}
 
-                                <td>Apego a procesos</td>
-                                <td>Innovación y creatividad</td>
-                                <td>Comunicación efectiva</td>
-                                <td>Enfocque al cliente</td>
-                                <td>Trabajo en equipo</td>
-                                <td>Adaptabilidad al cambio</td>
-                                <td>Solución de problemas y toma de desiciones</td>
-                                <td>Liderazgo e influencia</td>
-                                <td>Pensamiento estratégico</td>
-                                <td>Planificación y organización</td>
-                                <td>Negociación comercial</td>
-                                <td>Analisis de negocio</td>
-                                <td>Visión de negocio</td>
-                                <td>Enfoque a resultados</td>
-                                <td>Mejora continua</td>
-                                <td>Búsqueda de información</td>
-                                <td>Análisis y síntesis</td>
-                                <td>Efectividad interpersonal (Empatía)</td>
-                                <td>Negociación</td>
-                                <td>Trabajo bajo presión</td>
-                                <td>Impacto e influencia</td>
-
-                                <td>Objetivo 1</td>
-                                <td>%</td>
-                                <td>Objetivo 2</td>
-                                <td>%</td>
-                                <td>Objetivo 3</td>
-                                <td>%</td>
-                                <td>Objetivo 4</td>
-                                <td>%</td>
-                                <td>Objetivo 5</td>
-                                <td>%</td>
-                                <td>Objetivo 6</td>
-                                <td>%</td>
-                                <td>Objetivo 7</td>
-                                <td>%</td>
-                                <td>Objetivo 8</td>
-                                <td>%</td>
-                                <td>Objetivo 9</td>
-                                <td>%</td>
-                                <td>Objetivo 10</td>
-                                <td>%</td>
-                            </tr>
+                                    {{-- <td>Objetivo 1</td>
+                                    <td>%</td>
+                                    <td>Objetivo 2</td>
+                                    <td>%</td>
+                                    <td>Objetivo 3</td>
+                                    <td>%</td>
+                                    <td>Objetivo 4</td>
+                                    <td>%</td>
+                                    <td>Objetivo 5</td>
+                                    <td>%</td>
+                                    <td>Objetivo 6</td>
+                                    <td>%</td>
+                                    <td>Objetivo 7</td>
+                                    <td>%</td>
+                                    <td>Objetivo 8</td>
+                                    <td>%</td>
+                                    <td>Objetivo 9</td>
+                                    <td>%</td>
+                                    <td>Objetivo 10</td>
+                                    <td>%</td> --}}
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

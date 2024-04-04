@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('evaluacion_desempeno_id');
             $table->unsignedBigInteger('evaluado_desempeno_id');
+            $table->boolean('estatus_evaluado')->default(false);
 
             $table->foreign('evaluacion_desempeno_id')->references('id')->on('evaluacion_desempenos')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('evaluado_desempeno_id')->references('id')->on('empleados')->onUpdate('cascade')->onDelete('cascade');

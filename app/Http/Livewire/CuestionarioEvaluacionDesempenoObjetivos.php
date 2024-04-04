@@ -93,14 +93,14 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
             }
 
             foreach ($this->objetivos_evaluado as $key_objetivo => $obj_evld) {
-                foreach ($obj_evld->escalas as $obj_esc) {
+                foreach ($obj_evld->infoObjetivo->escalas as $obj_esc) {
                     switch ($obj_esc->condicion) {
                         case '1':
                             if (
                                 $obj_evld->calificacion_objetivo <
                                 $obj_esc->valor
                             ) {
-                                $this->calificacion_escala[$obj_evld->id] = $obj_esc->parametro;
+                                $this->calificacion_escala[$obj_evld->infoObjetivo->id] = $obj_esc->parametro;
                             }
                             break;
                         case '2':
@@ -108,7 +108,7 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
                                 $obj_evld->calificacion_objetivo <=
                                 $obj_esc->valor
                             ) {
-                                $this->calificacion_escala[$obj_evld->id] = $obj_esc->parametro;
+                                $this->calificacion_escala[$obj_evld->infoObjetivo->id] = $obj_esc->parametro;
                             }
                             break;
                         case '3':
@@ -116,7 +116,7 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
                                 $obj_evld->calificacion_objetivo ==
                                 $obj_esc->valor
                             ) {
-                                $this->calificacion_escala[$obj_evld->id] = $obj_esc->parametro;
+                                $this->calificacion_escala[$obj_evld->infoObjetivo->id] = $obj_esc->parametro;
                             }
                             break;
                         case '4':
@@ -124,7 +124,7 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
                                 $obj_evld->calificacion_objetivo >
                                 $obj_esc->valor
                             ) {
-                                $this->calificacion_escala[$obj_evld->id] = $obj_esc->parametro;
+                                $this->calificacion_escala[$obj_evld->infoObjetivo->id] = $obj_esc->parametro;
                             }
                             break;
                         case '5':
@@ -132,7 +132,7 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
                                 $obj_evld->calificacion_objetivo >=
                                 $obj_esc->valor
                             ) {
-                                $this->calificacion_escala[$obj_evld->id] = $obj_esc->parametro;
+                                $this->calificacion_escala[$obj_evld->infoObjetivo->id] = $obj_esc->parametro;
                             }
                             break;
                         default:
@@ -141,9 +141,9 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
                     }
                 }
             }
-
+            // dd($this->objetivos_evaluado, $this->calificacion_escala);
             foreach ($this->objetivos_autoevaluado as $key_objetivo => $obj_evld) {
-                foreach ($obj_evld->escalas as $obj_esc) {
+                foreach ($obj_evld->infoObjetivo->escalas as $obj_esc) {
                     switch ($obj_esc->condicion) {
                         case '1':
                             if (

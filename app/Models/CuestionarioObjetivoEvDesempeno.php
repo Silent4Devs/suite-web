@@ -12,13 +12,7 @@ class CuestionarioObjetivoEvDesempeno extends Model
     protected $table = 'cuestionario_objetivo_ev_desempenos';
 
     protected $fillable = [
-        'objetivo',
-        'descripcion_objetivo',
-        'KPI',
-        'tipo_objetivo',
-        'unidad_objetivo',
-        'valor_maximo_unidad_objetivo',
-        'valor_minimo_unidad_objetivo',
+        'objetivo_id',
         'evaluacion_desempeno_id',
         'evaluado_desempeno_id',
         'evaluador_desempeno_id',
@@ -26,6 +20,11 @@ class CuestionarioObjetivoEvDesempeno extends Model
         'estatus_calificado',
         'aplicabilidad',
     ];
+
+    public function infoObjetivo()
+    {
+        return $this->belongsTo(CatalogoObjetivosEvDesempeno::class, 'objetivo_id', 'id');
+    }
 
     public function evaluacionDesempeno()
     {
@@ -40,11 +39,6 @@ class CuestionarioObjetivoEvDesempeno extends Model
     public function evaluadorDesempeno()
     {
         return $this->belongsTo(EvaluadoresEvaluacionObjetivosDesempeno::class, 'evaluador_desempeno_id', 'id');
-    }
-
-    public function escalas()
-    {
-        return $this->hasMany(EscalasObjCuestionarioEvDesempeno::class, 'pregunta_cuest_obj_ev_des_id', 'id');
     }
 
     public function evidencias()

@@ -13,10 +13,7 @@ return new class extends Migration
     {
         Schema::create('cuestionario_competencia_ev_desempenos', function (Blueprint $table) {
             $table->id();
-            $table->text('competencia');
-            $table->longText('descripcion_competencia')->nullable();
-            $table->text('tipo_competencia');
-            $table->text('nivel_esperado');
+            $table->unsignedBigInteger('competencia_id');
 
             $table->unsignedBigInteger('evaluacion_desempeno_id');
             $table->unsignedBigInteger('evaluado_desempeno_id');
@@ -28,6 +25,7 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
 
+            $table->foreign('competencia_id')->references('id')->on('catalogo_competencias_ev_desempenos')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('evaluacion_desempeno_id')->references('id')->on('evaluacion_desempenos')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('evaluado_desempeno_id')->references('id')->on('evaluados_evaluacion_desempenos')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('evaluador_desempeno_id')->references('id')->on('evaluadores_evaluacion_competencias_desempenos')->onUpdate('cascade')->onDelete('cascade');
