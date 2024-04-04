@@ -14,6 +14,7 @@
         }
     </style>
     <h5 class="col-12 titulo_general_funcion">Requisiciónes</h5>
+    <button type="button" class="btn btn-primary" id="filtrarBtn" style="position: relative; left: 75rem;">Filtrar Requisiciones</button>
     <div class="mt-5 card">
         <div class="card-body datatable-fix">
             <table id="dom" class="table table-bordered w-100 datatable-perspectiva" style="width: 100%">
@@ -285,4 +286,11 @@
             });
         });
     </script>
+<script>
+    $(document).ready(function() {
+     $('#filtrarBtn').click(function() {
+         window.location.href = "{{ route('contract_manager.requisiciones.filtrarPorEstado') }}";
+     });
+ });
+ </script>
 @endsection
