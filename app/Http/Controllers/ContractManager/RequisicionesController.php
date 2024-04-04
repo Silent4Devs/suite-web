@@ -431,7 +431,8 @@ class RequisicionesController extends Controller
 
     public function filtrarPorEstado()
     {
-        $requisiciones = KatbolRequsicion::where('firma_finanzas', null)->get();
-        return view('contract_manager.requisiciones.index', compact('requisiciones'));
+        $requisiciones = KatbolRequsicion::whereNotNull('firma_solicitante')
+            ->whereNotNull('firma_jefe')->where('firma_finanzas', null)->get();
+        return view('contract_manager.requisiciones.aprobadores', compact('requisiciones'));
     }
 }
