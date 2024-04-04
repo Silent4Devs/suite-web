@@ -247,7 +247,7 @@
             <td align="center">
                 @if ($requisiciones->firma_finanzas)
                     <img src="{{$requisiciones->firma_finanzas}}" class="img-firma"> <br>
-                    <small> Lourdes del Pilar Abadía Velasco | {{ $requisiciones->fecha_firma_finanzas_requi }} </small>
+                    <small> Layla Esperanza Delgadillo Aguila | {{ $requisiciones->fecha_firma_finanzas_requi }} </small>
                 @else
                     <div style="height: 185px;"></div>
                 @endif
