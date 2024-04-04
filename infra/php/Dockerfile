@@ -16,9 +16,9 @@ RUN apk add --no-cache \
     libc-dev \
     libzip-dev \
     make \
-    mysql-client \
-    # nodejs \
-    # npm \
+    #mysql-client \
+    nodejs \
+    npm \
     oniguruma-dev \
     yarn \
     openssh-client \
@@ -43,7 +43,7 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
     exif \
     gd \
     intl \
-    pdo_mysql \
+    #pdo_mysql \
     pdo_pgsql \
     pcntl \
     soap \
@@ -67,6 +67,9 @@ COPY www.conf /usr/local/etc/php-fpm.d/www.conf
 
 RUN chown -R www-data:www-data /var/www \
     && chmod 755 -R /var/www
+
+# Install npm
+RUN npm install -g npm@latest
 
 # Healthcheck
 HEALTHCHECK --interval=15m --timeout=3s \

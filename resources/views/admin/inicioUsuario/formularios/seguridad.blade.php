@@ -130,7 +130,7 @@
 
 
                     <div class="mt-2 form-group col-4 areas_multiselect">
-                        <label class="form-label"><i class="fas fa-puzzle-piece iconos-crear"></i>Áreas afectadas</label>
+                        <label class="form-label"><i class="fas fa-puzzle-piece iconos-crear"></i>Áreas afectadas 1</label>
                         <select class="form-control" id="activos">
                             <option disabled selected>Seleccionar áreas</option>
                             @foreach ($areas as $area)
@@ -302,40 +302,64 @@
 
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function() {
-            let select_activos = document.querySelector('.areas_multiselect #activos');
-            select_activos.addEventListener('change', function(e) {
-                e.preventDefault();
-                console.log('hola');
-                let texto_activos = document.querySelector('.areas_multiselect #texto_activos');
+        let select_activos = document.querySelector('.areas_multiselect #activos');
+        let texto_activos = document.querySelector('.areas_multiselect #texto_activos');
 
+        select_activos.addEventListener('change', function(e) {
+            e.preventDefault();
+
+            // Verificar si el valor ya está presente en el área de texto
+            if (!texto_activos.value.includes(this.value)) {
                 texto_activos.value += `${this.value}, `;
-
+            } else {
+                // Mostrar mensaje de advertencia si el valor ya está presente
+                alert('Esta área ya está seleccionada.');
+                // Deseleccionar la opción
+                this.value = '';
+                }
             });
         });
+
 
 
         document.addEventListener('DOMContentLoaded', function() {
-            let select_activos = document.querySelector('.procesos_multiselect #activos');
-            select_activos.addEventListener('change', function(e) {
-                e.preventDefault();
-                let texto_activos = document.querySelector('.procesos_multiselect #texto_activos');
+        let select_activos = document.querySelector('.procesos_multiselect #activos');
+        let texto_activos = document.querySelector('.procesos_multiselect #texto_activos');
 
+        select_activos.addEventListener('change', function(e) {
+            e.preventDefault();
+
+            // Verificar si el valor ya está presente en el área de texto
+            if (!texto_activos.value.includes(this.value)) {
                 texto_activos.value += `${this.value}, `;
-
-            });
+            } else {
+                // Mostrar mensaje de advertencia si el valor ya está presente
+                alert('Este proceso ya está seleccionado.');
+                // Deseleccionar la opción
+                this.value = '';
+            }
         });
+    });
 
 
-        document.addEventListener('DOMContentLoaded', function() {
-            let select_activos = document.querySelector('.activos_multiselect #activos');
-            select_activos.addEventListener('change', function(e) {
-                e.preventDefault();
-                let texto_activos = document.querySelector('.activos_multiselect #texto_activos');
+    document.addEventListener('DOMContentLoaded', function() {
+    let select_activos = document.querySelector('.activos_multiselect #activos');
+    let texto_activos = document.querySelector('.activos_multiselect #texto_activos');
 
-                texto_activos.value += `${this.value}, `;
+    select_activos.addEventListener('change', function(e) {
+        e.preventDefault();
 
-            });
-        });
+        // Verificar si el valor ya está presente en el área de texto
+        if (!texto_activos.value.includes(this.value)) {
+            texto_activos.value += `${this.value}, `;
+        } else {
+            // Mostrar mensaje de advertencia si el valor ya está presente
+            alert('Este elemento ya está seleccionado.');
+            // Deseleccionar la opción
+            this.value = '';
+        }
+    });
+});
 
         $(document).ready(function() {
             let incidente=@json($incidentes_seguridad);

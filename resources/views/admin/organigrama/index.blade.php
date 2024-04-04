@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('styles')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/colores.css') }}{{config('app.cssVersion')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/colores.css') }}{{ config('app.cssVersion') }}">
     <link rel="stylesheet" href="{{ asset('orgchart/orgchart.css') }}">
     {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.0-canary.13/tailwind.min.css"
         integrity="sha512-0mXZvQboEKApqdohlHGMJ/OZ09yeQa6UgZRkgG+b3t3JlcyIqvDnUMgpUm5CvlHT9HNtRm9xbRAJPlKaFCXzdQ=="
@@ -365,9 +365,9 @@
             height: 80px !important;
         }
 
-        #chart-container .img-person{
-          width: 150px;
-          height: 150px;
+        #chart-container .img-person {
+            width: 150px;
+            height: 150px;
         }
     </style>
 @endsection
@@ -460,8 +460,8 @@
                                     </div>
                                     <div class="col-3">
                                         <div class="mt-2 d-flex justify-content-center">
-                                            <img src="{{ asset('orgchart/orientation_assests/top.png') }}"
-                                                alt="Orientacion" id="orientacion" style="cursor:pointer; width:20px;"
+                                            <img src="{{ asset('orgchart/orientation_assests/top.png') }}" alt="Orientacion"
+                                                id="orientacion" style="cursor:pointer; width:20px;"
                                                 title="Cambiar orientación del diagrama">
                                         </div>
                                     </div>

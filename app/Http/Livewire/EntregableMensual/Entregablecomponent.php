@@ -71,6 +71,7 @@ class Entregablecomponent extends Component
     public $organizacion;
 
     public $entregable;
+
     public $entregable_file_edit;
 
     public $document_entregable;
@@ -102,17 +103,17 @@ class Entregablecomponent extends Component
 
         $entregable_mensual =
             EntregaMensual::where('contrato_id', $this->contrato_id)
-            ->join('entregables_files', 'entregas_mensuales.id', '=', 'entregables_files.entregable_id')
-            ->where(function ($query) {
-                $query->where('nombre_entregable', 'like', '%' . $this->search . '%')
-                    ->orWhere('descripcion', 'like', '%' . $this->search . '%');
-            })
-            ->orderBy($this->sort, $this->direction)
-            ->paginate(intval($this->pagination));
+                ->join('entregables_files', 'entregas_mensuales.id', '=', 'entregables_files.entregable_id')
+                ->where(function ($query) {
+                    $query->where('nombre_entregable', 'like', '%'.$this->search.'%')
+                        ->orWhere('descripcion', 'like', '%'.$this->search.'%');
+                })
+                ->orderBy($this->sort, $this->direction)
+                ->paginate(intval($this->pagination));
 
         $this->dispatchBrowserEvent('paginador-entregables');
 
-        $this->facturas_entregables = Factura::where('contrato_id', $this->contrato_id)->get();
+        $this->facturas_entregables = Factura::where('contrato_id', $this->contrato->id)->get();
 
         return view('livewire.entregable-mensual.entregablecomponent', [
             'entregamensuales' => $entregable_mensual,
@@ -122,29 +123,29 @@ class Entregablecomponent extends Component
 
     public function store()
     {
-        $this->validate([
-            'nombre_entregable' => 'required|max:255',
-            'descripcion' => 'required',
-            'plazo_entrega_inicio' => 'required|before_or_equal:plazo_entrega_termina',
-            'plazo_entrega_termina' => 'required|after_or_equal:plazo_entrega_inicio',
-            'entrega_real' => 'required|after_or_equal:plazo_entrega_inicio|before_or_equal:plazo_entrega_termina',
-            'observaciones' => 'required',
-            'entrega_real' => 'required',
-            'factura_id' => 'required',
-            'aplica_deductiva' => 'required',
-            'deductiva_penalizacion' => 'numeric|max:100000000000',
-            'nota_credito' => 'max:255',
-        ]);
+        // $this->validate([
+        //     'nombre_entregable' => 'required|max:255',
+        //     'descripcion' => 'required',
+        //     'plazo_entrega_inicio' => 'required|before_or_equal:plazo_entrega_termina',
+        //     'plazo_entrega_termina' => 'required|after_or_equal:plazo_entrega_inicio',
+        //     'entrega_real' => 'required|after_or_equal:plazo_entrega_inicio|before_or_equal:plazo_entrega_termina',
+        //     'observaciones' => 'required',
+        //     'entrega_real' => 'required',
+        //     'factura_id' => 'required',
+        //     'aplica_deductiva' => 'required',
+        //     'deductiva_penalizacion' => 'numeric|max:100000000000',
+        //     'nota_credito' => 'max:255',
+        // ]);
 
         $deductiva_penalizacion = preg_replace('([$,])', '', $this->deductiva_penalizacion);
 
         // $formatoFecha = new FormatearFecha;
-        $fecha_inicial_formateada = $this->plazo_entrega_inicio;
-        $fecha_final_formateada = $this->plazo_entrega_termina;
-        $fecha_real_formateada = $this->entrega_real;
+        $fecha_inicial_formateada = $this->plazo_entrega_inicio ?: null;
+        $fecha_final_formateada = $this->plazo_entrega_termina ?: null;
+        $fecha_real_formateada = $this->entrega_real ?: null;
         //  dd(EntregaMensual::all()->where('contrato_id', $this->contrato_id)->count());
         $ultimo_numero_entregable = EntregaMensual::all()->where('contrato_id', $this->contrato_id)->count() > 0 ? EntregaMensual::select('no')->where('contrato_id', $this->contrato_id)->orderBy('id', 'desc')->first()->no : 0;
-        $numero_entregable = !is_null($ultimo_numero_entregable) ? $ultimo_numero_entregable + 1 : null;
+        $numero_entregable = ! is_null($ultimo_numero_entregable) ? $ultimo_numero_entregable + 1 : null;
 
         $entM = EntregaMensual::create([
             'contrato_id' => $this->contrato_id,
@@ -162,13 +163,15 @@ class Entregablecomponent extends Component
             'deductiva_factura_id' => $this->deductiva_factura_id,
             'nota_credito' => $this->nota_credito,
             'justificacion_deductiva_penalizacion' => $this->justificacion_deductiva_penalizacion,
-            'created_by' => User::getCurrentUser()->empleado->id,
-            'updated_by' => User::getCurrentUser()->empleado->id,
+            'created_by' => optional(User::getCurrentUser()->empleado)->id,
+            'updated_by' => optional(User::getCurrentUser()->empleado)->id,
         ]);
 
+        $this->alert('success', 'Registro añadido!');
+
         $contrato = Contrato::select('id', 'no_contrato')->where('id', '=', $this->contrato_id)->first();
-        if (!Storage::exists('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato)) {
-            Storage::makeDirectory('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato);
+        if (! Storage::exists('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato)) {
+            Storage::makeDirectory('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato);
         }
 
         $entregableFile = EntregableFile::create([
@@ -179,9 +182,9 @@ class Entregablecomponent extends Component
             $entregables_filename = $this->pdf->getClientOriginalName();
 
             $entregableFile->update([
-                'pdf' => $entregableFile->id . $entregables_filename,
+                'pdf' => $entregableFile->id.$entregables_filename,
             ]);
-            $this->pdf->storeAs('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/entregables/pdf', $entregableFile->id . $entregables_filename);
+            $this->pdf->storeAs('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/entregables/pdf', $entregableFile->id.$entregables_filename);
         }
         // dd($entregables_filename);
         // if (isset($this->pdf)) {
@@ -195,13 +198,11 @@ class Entregablecomponent extends Component
         $this->emit('recargar-cumplimiento');
         $this->dispatchBrowserEvent('contentChanged');
         $this->default();
-        $this->alert('success', 'Registro añadido!');
     }
 
     public function edit($id)
     {
         $entM = EntregaMensual::find($id);
-        dd($id, EntregaMensual::find($id));
         if ($entM->id != null) {
             $this->entregable_file_edit = EntregableFile::where('entregable_id', $id)->first();
             $this->entregable = $entM;
@@ -223,9 +224,9 @@ class Entregablecomponent extends Component
         // dd($this->document_entregable);
 
         // $formatoFecha = new FormatearFecha;
-        $fecha_inicial_formateada = !is_null($entM->plazo_entrega_inicio) ? $entM->plazo_entrega_inicio : null;
-        $fecha_final_formateada = !is_null($entM->plazo_entrega_termina) ? $entM->plazo_entrega_termina : null;
-        $fecha_real_formateada = !is_null($entM->entrega_real) ? $entM->entrega_real : null;
+        $fecha_inicial_formateada = ! is_null($entM->plazo_entrega_inicio) ? $entM->plazo_entrega_inicio : null;
+        $fecha_final_formateada = ! is_null($entM->plazo_entrega_termina) ? $entM->plazo_entrega_termina : null;
+        $fecha_real_formateada = ! is_null($entM->entrega_real) ? $entM->entrega_real : null;
         $this->entregable_id = $entM->id;
         $this->nombre_entregable = $entM->nombre_entregable;
         $this->descripcion = $entM->descripcion;
@@ -269,7 +270,7 @@ class Entregablecomponent extends Component
                 $mines = str_replace('.', '', $organizacion->formatos);
                 $tamaño_limite = ($organizacion->config_megas_permitido_docs) * 1024 * 1024;
                 if ($this->pdf->getSize() >= $tamaño_limite) {
-                    $this->alert('warning', 'El archivo file no debe pesar más de ' . $organizacion->config_megas_permitido_docs . 'M');
+                    $this->alert('warning', 'El archivo file no debe pesar más de '.$organizacion->config_megas_permitido_docs.'M');
 
                     return 'error';
                 }
@@ -320,8 +321,8 @@ class Entregablecomponent extends Component
 
         // dd($entregableFile->get());
         $contrato = Contrato::select('id', 'no_contrato')->where('id', '=', $this->contrato_id)->first();
-        if (!Storage::exists('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato)) {
-            Storage::makeDirectory('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato);
+        if (! Storage::exists('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato)) {
+            Storage::makeDirectory('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato);
         }
 
         if ($this->pdf != null) {
@@ -330,16 +331,16 @@ class Entregablecomponent extends Component
                 $mines = str_replace('.', '', $organizacion->formatos);
                 $tamaño_limite = ($organizacion->config_megas_permitido_docs) * 1024 * 1024;
                 if ($this->pdf->getSize() >= $tamaño_limite) {
-                    $this->alert('warning', 'El archivo file no debe pesar más de ' . $organizacion->config_megas_permitido_docs . 'M');
+                    $this->alert('warning', 'El archivo file no debe pesar más de '.$organizacion->config_megas_permitido_docs.'M');
 
                     return 'error';
                 }
 
                 $entregables_filename = $this->pdf->getClientOriginalName();
-                $this->pdf->storeAs('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/entregables/pdf', $entM->id . $entregables_filename);
+                $this->pdf->storeAs('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/entregables/pdf', $entM->id.$entregables_filename);
 
                 $entregableFile->update([
-                    'pdf' => $entM->id . $entregables_filename,
+                    'pdf' => $entM->id.$entregables_filename,
                 ]);
                 //   dd($entregableFile);
             }
@@ -404,8 +405,8 @@ class Entregablecomponent extends Component
             $this->alert('info', 'No se encontro ningun PDF cargado!');
         } else {
             $contrato = Contrato::select('id', 'no_contrato')->where('id', '=', $this->contrato_id)->first();
-            if (is_file(storage_path('app/public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/entregables/pdf/' . $pdf->pdf))) {
-                return response()->download(storage_path('app/public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/entregables/pdf/' . $pdf->pdf));
+            if (is_file(storage_path('app/public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/entregables/pdf/'.$pdf->pdf))) {
+                return response()->download(storage_path('app/public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/entregables/pdf/'.$pdf->pdf));
             } else {
                 $this->alert('info', 'No se encontro el archivo!');
             }

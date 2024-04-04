@@ -545,7 +545,7 @@ class MinutasaltadireccionController extends Controller
         abort_if(Gate::denies('revision_por_direccion_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $minutas = Minutasaltadireccion::with('responsable')->find($id);
-        $responsable = Empleado::where('id', $minutas->responsable_id)->first();
+        $responsable = Empleado::getMyEmpleadodata($minutas->responsable_id);
         $revision = RevisionMinuta::where('id', $minutas->id)->first();
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -561,7 +561,7 @@ class MinutasaltadireccionController extends Controller
         abort_if(Gate::denies('revision_por_direccion_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $minutas = Minutasaltadireccion::with('responsable')->find($id);
-        $responsable = Empleado::where('id', $minutas->responsable_id)->first();
+        $responsable = Empleado::getMyEmpleadodata($minutas->responsable_id);
         $revision = RevisionMinuta::where('id', $minutas->id)->first();
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -753,7 +753,7 @@ class MinutasaltadireccionController extends Controller
     {
         $minutas = Minutasaltadireccion::where('id', $id)->first();
         $organizacions = Organizacion::getFirst();
-        $responsable = Empleado::where('id', $minutas->responsable_id)->first();
+        $responsable = Empleado::getMyEmpleadodata($minutas->responsable_id);
         $revision = RevisionMinuta::where('id', $minutas->id)->first();
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;

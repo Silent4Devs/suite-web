@@ -171,6 +171,13 @@ class Empleado extends Model implements Auditable
         });
     }
 
+    public static function getMyEmpleadodata($id)
+    {
+        return Cache::remember('Empleados:empleados_my_empleado_data_'.$id, 3600, function () use ($id) {
+            return self::where('id', $id)->first();
+        });
+    }
+
     public static function getAll(array $options = [])
     {
         return Cache::remember('Empleados:empleados_all', 3600 * 8, function () use ($options) {
