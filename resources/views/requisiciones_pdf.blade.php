@@ -52,7 +52,7 @@
             <tr>
                 <td style="color: white;" >
                     <strong> Proyecto: </strong> <br>
-                    {{ isset($requisiciones->contrato->no_proyecto) }} / {{ isset($requisiciones->contrato->no_contrato) }} - {{ isset($requisiciones->contrato->nombre_servicio) }}
+                    {{ optional($requisiciones->contrato)->no_proyecto }} / {{ optional($requisiciones->contrato)->no_contrato }} - {{ optional($requisiciones->contrato)->nombre_servicio }}
                 </td>
                 <td style="color: white;" >
                     <strong> Comprador: </strong> <br>
