@@ -48,8 +48,8 @@
                 <strong>Referencia:</strong><br>
                 {{ $requisicion->referencia }}<br><br>
                 <strong>Proyecto:</strong><br>
-                {{ isset($requisicion->contrato->no_proyecto) }} / {{ isset($requisicion->contrato->no_contrato) }} -
-                {{ isset($requisicion->contrato->nombre_servicio) }}
+                {{ optional($requisicion->contrato)->no_proyecto }} / {{ optional($requisicion->contrato)->no_contrato }} -
+                {{ optional($requisicion->contrato)->nombre_servicio }}
             </div>
             <div class="flex-item">
                 <strong>Área que solicita:</strong><br>

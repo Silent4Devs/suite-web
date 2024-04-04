@@ -72,7 +72,7 @@
                         {{$requisicion->referencia }}
                         <br><br>
                         <strong>Proyecto:</strong><br>
-                        {{isset($requisicion->contrato->no_contrato) }} - {{isset($requisicion->contrato->nombre_servicio) }} - {{isset($requisicion->contrato->proveedor->nombre_comercial) }}
+                        {{optional($requisicion->contrato)->no_contrato }} - {{optional($requisicion->contrato)->nombre_servicio }} - {{optional($requisicion->contrato)->proveedor->nombre_comercial }}
                     </div>
                     <div class="flex-item">
                         <strong>Área que solicita:</strong><br>

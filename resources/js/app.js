@@ -1,6 +1,5 @@
 // Laravel Echo
 import "./bootstrap";
-import Echo from "laravel-echo";
 
 Echo.private("user-notifications").listen("UserSessionChanged", e => {
   Push.create("TABANTAJ", {
@@ -13,6 +12,18 @@ Echo.private("user-notifications").listen("UserSessionChanged", e => {
       window.focus();
       this.close();
     }
+  });
+});
+
+Echo.private("user-notifications").listen("UserSessionChanged", e => {
+  // Mostrar el toast con SweetAlert2
+  Swal.fire({
+    title: e.message,
+    icon: "info",
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 4000 // Duración del toast en milisegundos (3 segundos)
   });
 });
 
