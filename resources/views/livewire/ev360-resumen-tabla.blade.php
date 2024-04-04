@@ -62,7 +62,7 @@
                             </td>
                             @php
                                 $promedio_competencias =
-                                    ($evaluado['informacion_evaluacion']['promedio_competencias'] * 100) /
+                                    ($evaluado['informacion_evaluacion']['promedio_general_competencias'] * 100) /
                                     $evaluado['informacion_evaluacion']['peso_general_competencias'];
                                 $promedio_objetivos =
                                     ($evaluado['informacion_evaluacion']['promedio_general_objetivos'] * 100) /
@@ -75,7 +75,7 @@
                                     style="width: {{ round($promedio_competencias) }}%;max-width: 100%;height: 100%;background: #5AFF94;">
                                 </div>
                                 <span
-                                    style="position: absolute;margin-left: auto;margin-right: auto;top: 13px;left: 6px;">{{ round($evaluado['informacion_evaluacion']['promedio_competencias']) }}%
+                                    style="position: absolute;margin-left: auto;margin-right: auto;top: 13px;left: 6px;">{{ round($evaluado['informacion_evaluacion']['promedio_general_competencias']) }}%
                                 </span>
                             </td>
                             <td class="p-0" style="position: relative;">

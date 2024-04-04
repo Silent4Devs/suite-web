@@ -29,6 +29,7 @@ use App\Models\Role;
 use App\Models\Sede;
 use App\Models\User;
 use App\Rules\MonthAfterOrEqual;
+use App\Services\ImageService;
 use App\Traits\GeneratePassword;
 use App\Traits\ObtenerOrganizacion;
 use Barryvdh\DomPDF\Facade as PDF;
@@ -176,11 +177,16 @@ class EmpleadoController extends Controller
 
                     $new_name_image = 'UID_'.$empleado->id.'_'.$empleado->name.'.png';
                     $image = $new_name_image;
+
                     $route = storage_path().'/app/public/empleados/imagenes/'.$new_name_image;
-                    $img_intervention = Image::make($request->snap_foto);
-                    $img_intervention->resize(480, null, function ($constraint) {
-                        $constraint->aspectRatio();
-                    })->encode('png', 70)->save($route);
+
+                    // Call the ImageService to consume the external API
+                    $apiResponse = ImageService::consumeImageCompresorApi($request->file('foto'));
+
+                    // Compress and save the image
+                    if ($apiResponse['status'] == 200) {
+                        file_put_contents($route, $apiResponse['body']);
+                    }
                 }
             }
         } elseif ($request->snap_foto && ! $request->file('foto')) {
@@ -192,10 +198,14 @@ class EmpleadoController extends Controller
                     $new_name_image = 'UID_'.$empleado->id.'_'.$empleado->name.'.png';
                     $image = $new_name_image;
                     $route = storage_path().'/app/public/empleados/imagenes/'.$new_name_image;
-                    $img_intervention = Image::make($request->snap_foto);
-                    $img_intervention->resize(480, null, function ($constraint) {
-                        $constraint->aspectRatio();
-                    })->encode('png', 70)->save($route);
+
+                    // Call the ImageService to consume the external API
+                    $apiResponse = ImageService::consumeImageCompresorApi($request->file('foto'));
+
+                    // Compress and save the image
+                    if ($apiResponse['status'] == 200) {
+                        file_put_contents($route, $apiResponse['body']);
+                    }
                 }
             }
         } else {
@@ -205,11 +215,14 @@ class EmpleadoController extends Controller
                 $new_name_image = 'UID_'.$empleado->id.'_'.$empleado->name.'.'.$extension;
                 $route = storage_path().'/app/public/empleados/imagenes/'.$new_name_image;
                 $image = $new_name_image;
-                //Usamos image_intervention para disminuir el peso de la imagen
-                $img_intervention = Image::make($request->file('foto'));
-                $img_intervention->resize(480, null, function ($constraint) {
-                    $constraint->aspectRatio();
-                })->encode('png', 70)->save($route);
+
+                // Call the ImageService to consume the external API
+                $apiResponse = ImageService::consumeImageCompresorApi($request->file('foto'));
+
+                // Compress and save the image
+                if ($apiResponse['status'] == 200) {
+                    file_put_contents($route, $apiResponse['body']);
+                }
             }
         }
 
@@ -1102,10 +1115,13 @@ class EmpleadoController extends Controller
                     $new_name_image = 'UID_'.$empleado->id.'_'.$empleado->name.'.png';
                     $image = $new_name_image;
                     $route = storage_path().'/app/public/empleados/imagenes/'.$new_name_image;
-                    $img_intervention = Image::make($request->snap_foto);
-                    $img_intervention->resize(480, null, function ($constraint) {
-                        $constraint->aspectRatio();
-                    })->encode('png', 70)->save($route);
+                    // Call the ImageService to consume the external API
+                    $apiResponse = ImageService::consumeImageCompresorApi($request->file('foto'));
+
+                    // Compress and save the image
+                    if ($apiResponse['status'] == 200) {
+                        file_put_contents($route, $apiResponse['body']);
+                    }
                 }
             }
         } elseif ($request->snap_foto && ! $request->file('foto')) {
@@ -1117,10 +1133,13 @@ class EmpleadoController extends Controller
                     $new_name_image = 'UID_'.$empleado->id.'_'.$empleado->name.'.png';
                     $image = $new_name_image;
                     $route = storage_path().'/app/public/empleados/imagenes/'.$new_name_image;
-                    $img_intervention = Image::make($request->snap_foto);
-                    $img_intervention->resize(480, null, function ($constraint) {
-                        $constraint->aspectRatio();
-                    })->encode('png', 70)->save($route);
+                    // Call the ImageService to consume the external API
+                    $apiResponse = ImageService::consumeImageCompresorApi($request->file('foto'));
+
+                    // Compress and save the image
+                    if ($apiResponse['status'] == 200) {
+                        file_put_contents($route, $apiResponse['body']);
+                    }
                 }
             }
         } else {
@@ -1130,11 +1149,13 @@ class EmpleadoController extends Controller
                 $new_name_image = 'UID_'.$empleado->id.'_'.$empleado->name.'.'.$extension;
                 $route = storage_path().'/app/public/empleados/imagenes/'.$new_name_image;
                 $image = $new_name_image;
-                //Usamos image_intervention para disminuir el peso de la imagen
-                $img_intervention = Image::make($request->file('foto'));
-                $img_intervention->resize(480, null, function ($constraint) {
-                    $constraint->aspectRatio();
-                })->encode('png', 70)->save($route);
+                // Call the ImageService to consume the external API
+                $apiResponse = ImageService::consumeImageCompresorApi($request->file('foto'));
+
+                // Compress and save the image
+                if ($apiResponse['status'] == 200) {
+                    file_put_contents($route, $apiResponse['body']);
+                }
             }
         }
 
@@ -1364,11 +1385,14 @@ class EmpleadoController extends Controller
 
             $route = storage_path().'/app/public/empleados/imagenes/'.$new_name_image;
 
-            $img_intervention = Image::make($request->image)->encode('png', 70)->resize(1280, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
+            // Call the ImageService to consume the external API
+            $apiResponse = ImageService::consumeImageCompresorApi($request->file('foto'));
 
-            $img_intervention->encode('png', 70)->save($route);
+            // Compress and save the image
+            if ($apiResponse['status'] == 200) {
+                file_put_contents($route, $apiResponse['body']);
+            }
+
             $empleado->update([
                 'foto' => $new_name_image,
             ]);

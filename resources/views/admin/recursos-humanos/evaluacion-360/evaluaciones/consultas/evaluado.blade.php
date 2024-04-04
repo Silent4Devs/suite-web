@@ -347,263 +347,262 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12">
-                <div class="mt-4 row">
-                    <div class="mt-2 text-center form-group col-12"
-                        style="background-color:#345183; border-radius: 100px; color: white; text-transform: uppercase;">
-                        Resultado de la evaluación por objetivos
+            @can('seguimiento_evaluaciones_acceder')
+                <div class="col-12">
+                    <div class="mt-4 row">
+                        <div class="mt-2 text-center form-group col-12"
+                            style="background-color:#345183; border-radius: 100px; color: white; text-transform: uppercase;">
+                            Resultado de la evaluación por objetivos
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-12">
-                <small><i class="fas fa-info mr-1"></i> Para editar la columna "logrado" se debe posicionar sobre el
-                    número y dar doble clic, se habilitará un input y podrá realizar la edición.
-                    Una vez que termine de editar recargue la página para que se vean reflejados los cambios. </small>
+                <div class="col-12">
+                    <small><i class="fas fa-info mr-1"></i> Para editar la columna "logrado" se debe posicionar sobre el
+                        número y dar doble clic, se habilitará un input y podrá realizar la edición.
+                        Una vez que termine de editar recargue la página para que se vean reflejados los cambios. </small>
 
-                <table id="tblobjetivos" hidden>
-                    <thead>
-                        <th>Evaluador</th>
-                        <th>
-                            Objetivo
-                        </th>
-                        <th>
-                            KPI
-                        </th>
-                        <th>
-                            Puesto
-                        </th>
-                        <th>
-                            Logrado
-                        </th>
-                        <th>
-                            <small>Descripción</small>
-                        </th>
-                        <th>
-                            Comentarios
-                        </th>
-                    </thead>
+                    <table id="tblobjetivos" hidden>
+                        <thead>
+                            <th>Evaluador</th>
+                            <th>
+                                Objetivo
+                            </th>
+                            <th>
+                                KPI
+                            </th>
+                            <th>
+                                Puesto
+                            </th>
+                            <th>
+                                Logrado
+                            </th>
+                            <th>
+                                <small>Descripción</small>
+                            </th>
+                            <th>
+                                Comentarios
+                            </th>
+                        </thead>
+                        @forelse ($evaluadores_objetivos as $evaluador)
+                            <tbody>
+                                <div class="col-12" id="tblObjetivosSupervisor">
+                                    @forelse ($evaluador['objetivos'] as $idx => $objetivo)
+                                        <tr>
+                                            @if ($evaluador['esAutoevaluacion'])
+                                                <td>{{ $evaluador['nombre'] }}</td>
+                                            @endif
+                                            @if ($evaluador['esSupervisor'])
+                                                @if (isset($jefe_evaluador->name))
+                                                    <td>{{ $jefe_evaluador->name }}</td>
+                                                @else
+                                                    <td>{{ $jefe_evaluador[0] }}</td>
+                                                @endif
+                                            @endif
+                                            <td>
+                                                {{ $objetivo['nombre'] }}
+                                            </td>
+                                            <td>
+                                                {{ $objetivo['KPI'] }}
+                                            </td>
+                                            <td>
+                                                {{ $objetivo['meta'] }} {{ $objetivo['metrica'] }}
+                                            </td>
+                                            @if (!empty($escalas))
+                                                <td>
+                                                    @foreach ($escalas as $escala)
+                                                        @if ($objetivo['calificacion_percepcion'] == $escala->valor)
+                                                            {{ $escala->parametro }}
+                                                        @endif
+                                                    @endforeach
+                                                </td>
+                                            @else
+                                                <td>
+                                                    {{ $objetivo['calificacion'] }}
+                                                </td>
+                                            @endif
+                                            <td>
+                                                {{ $objetivo['descripcion_meta'] ? $objetivo['descripcion_meta'] : 'N/A' }}
+                                            </td>
+                                            <td>
+                                                {{ $objetivo['meta_alcanzada'] }}
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <strong class="text-muted">
+                                                <i class="fas fa-info-circle"></i>
+                                                Sin objetivos a evaluar
+                                            </strong>
+                                        </tr>
+                                    @endforelse
+                                @empty
+                                    <tr>Sin objetivos a evaluar</tr>
+                        @endforelse
+                        </tbody>
+                    </table>
+                    <div class="text-center">
+                        <button id="btnExportar" class="btn-sm rounded pr-2" style="background-color:#fff; border: #fff">
+                            <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935" title="Exportar Excel"></i>
+                        </button>
+                    </div>
                     @forelse ($evaluadores_objetivos as $evaluador)
-                        <tbody>
-                            <div class="col-12" id="tblObjetivosSupervisor">
-                                @forelse ($evaluador['objetivos'] as $idx => $objetivo)
-                                    <tr>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="mt-2 row">
+                                    <div class="col-12" style="font-size: 12px">
+                                        Evaluación realizada por:
                                         @if ($evaluador['esAutoevaluacion'])
-                                            <td>{{ $evaluador['nombre'] }}</td>
+                                            <strong> {{ $evaluador['nombre'] }}</strong>
+                                            <span class="badge badge-primary">Autoevaluación</span>
                                         @endif
                                         @if ($evaluador['esSupervisor'])
-                                            <td>{{ $jefe_evaluador->name }}</td>
+                                            @if (isset($jefe_evaluador->name))
+                                                <strong>{{ $jefe_evaluador->name }}</strong>
+                                            @else
+                                                <strong>{{ $jefe_evaluador[0]->name }}</strong>
+                                            @endif
+                                            <span class="badge badge-success">Evaluador</span>
                                         @endif
-                                        <td>
+                                    </div>
+                                    <div class="text-center text-white col-2"
+                                        style="background: #3e3e3e; border: 1px solid #fff; font-size:11px">
+                                        <small>Objetivo</small>
+                                    </div>
+                                    <div class="text-center text-white col-3"
+                                        style="background: #3e3e3e; border: 1px solid #fff; font-size:11px"><small>KPI</small>
+                                    </div>
+                                    <div class="text-center text-white col-1"
+                                        style="background: #3e3e3e; border: 1px solid #fff; font-size:11px">
+                                        <small>Puesto</small>
+                                    </div>
+                                    <div class="text-center text-white col-1"
+                                        style="background: #3e3e3e; border: 1px solid #fff; font-size:11px">
+                                        <small>Logrado</small>
+                                    </div>
+                                    <div class="text-center text-white col-2"
+                                        style="background: #3e3e3e; border: 1px solid #fff; font-size:11px">
+                                        <small>Descripción</small>
+                                    </div>
+                                    <div class="text-center text-white col-3"
+                                        style="background: #3e3e3e; border: 1px solid #fff; font-size:11px">
+                                        <small>Comentarios</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12" id="tblObjetivosSupervisor">
+                                @forelse ($evaluador['objetivos'] as $idx => $objetivo)
+                                    <div class="row">
+                                        <div class="text-white col-2"
+                                            style="background: #3e3e3e; border: 1px solid #fff; font-size:10px">
                                             {{ $objetivo['nombre'] }}
-                                        </td>
-                                        <td>
+                                        </div>
+                                        <div class="text-center border col-3" style="font-size:10px">
                                             {{ $objetivo['KPI'] }}
-                                        </td>
-                                        <td>
+                                        </div>
+                                        <div class="text-center border col-1" style="font-size:10px">
                                             {{ $objetivo['meta'] }} {{ $objetivo['metrica'] }}
-                                        </td>
-                                        <td>
-                                            {{ $objetivo['calificacion'] }} {{ $objetivo['metrica'] }}
-                                        </td>
-                                        <td>
+                                        </div>
+                                        <div class="text-center border col-1" style="font-size:10px">
+                                            @if (!empty($escalas))
+                                                @foreach ($escalas as $escala)
+                                                    @if ($objetivo['calificacion_percepcion'] == $escala->valor)
+                                                        {{ $escala->parametro }}
+                                                    @endif
+                                                @endforeach
+                                            @else
+                                                {{ $objetivo['calificacion'] }}
+                                            @endif
+                                        </div>
+                                        <div class="text-center border col-2" style="font-size:10px">
                                             {{ $objetivo['descripcion_meta'] ? $objetivo['descripcion_meta'] : 'N/A' }}
-                                        </td>
-                                        <td>
+                                        </div>
+                                        <div class="text-center border col-3" style="font-size:10px">
                                             {{ $objetivo['meta_alcanzada'] }}
-                                        </td>
-                                    </tr>
+                                        </div>
+                                    </div>
                                 @empty
-                                    <tr>
+                                    <div>
                                         <strong class="text-muted">
                                             <i class="fas fa-info-circle"></i>
                                             Sin objetivos a evaluar
                                         </strong>
-                                    </tr>
+                                    </div>
                                 @endforelse
-                            @empty
-                                <tr>Sin objetivos a evaluar</tr>
+                            </div>
+                        </div>
+                    @empty
+                        <div>Sin objetivos a evaluar</div>
                     @endforelse
-                    {{-- <tr></tr>
-                <tr>
-                    <td>Objetivo</td>
-                </tr>
-                <tr>
-                <td>Promedio</td>
-                <td>{{ number_format($promedio_objetivos / 100, 2) }}</td>
-                </tr>
-            <tr>
-                <td>% Participación</td>
-                <td>{{ number_format($promedio_objetivos, 2) }}%<td>
-                </tr> --}}
-                    </tbody>
-                </table>
-                <div class="text-center">
-                    <button id="btnExportar" class="btn-sm rounded pr-2" style="background-color:#fff; border: #fff">
-                        <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935" title="Exportar Excel"></i>
-                    </button>
                 </div>
-                @forelse ($evaluadores_objetivos as $evaluador)
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="mt-2 row">
-                                <div class="col-12" style="font-size: 12px">
-                                    Evaluación realizada por:
-                                    @if ($evaluador['esAutoevaluacion'])
-                                        <strong> {{ $evaluador['nombre'] }}</strong>
-                                        <span class="badge badge-primary">Autoevaluación</span>
-                                    @endif
-                                    @if ($evaluador['esSupervisor'])
-                                        <strong> {{ $jefe_evaluador->name }}</strong>
-                                        <span class="badge badge-success">Evaluador</span>
-                                    @endif
-                                </div>
-                                <div class="text-center text-white col-2"
-                                    style="background: #3e3e3e; border: 1px solid #fff; font-size:11px">
-                                    <small>Objetivo</small>
-                                </div>
-                                <div class="text-center text-white col-3"
-                                    style="background: #3e3e3e; border: 1px solid #fff; font-size:11px"><small>KPI</small>
-                                </div>
-                                <div class="text-center text-white col-1"
-                                    style="background: #3e3e3e; border: 1px solid #fff; font-size:11px">
-                                    <small>Puesto</small>
-                                </div>
-                                <div class="text-center text-white col-1"
-                                    style="background: #3e3e3e; border: 1px solid #fff; font-size:11px">
-                                    <small>Logrado</small>
-                                </div>
-                                <div class="text-center text-white col-2"
-                                    style="background: #3e3e3e; border: 1px solid #fff; font-size:11px">
-                                    <small>Descripción</small>
-                                </div>
-                                <div class="text-center text-white col-3"
-                                    style="background: #3e3e3e; border: 1px solid #fff; font-size:11px">
-                                    <small>Comentarios</small>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12" id="tblObjetivosSupervisor">
-                            @forelse ($evaluador['objetivos'] as $idx => $objetivo)
+                <div class="col-12">
+                    <div class="mt-3 row" style="font-size:11px">
+                        <div class="col-8"></div>
+                        <div class="col-4">
+                            <p class="m-0 text-center text-white" style="background: #3e3e3e; border: 1px solid #fff">
+                                Objetivos
+                            </p>
+                            <div class="col-12">
                                 <div class="row">
-                                    <div class="text-white col-2"
-                                        style="background: #3e3e3e; border: 1px solid #fff; font-size:10px">
-                                        {{ $objetivo['nombre'] }}
-                                    </div>
-                                    <div class="text-center border col-3" style="font-size:10px">
-                                        {{ $objetivo['KPI'] }}
-                                    </div>
-                                    <div class="text-center border col-1" style="font-size:10px">
-                                        {{ $objetivo['meta'] }} {{ $objetivo['metrica'] }}
-                                    </div>
-                                    <div class="text-center border col-1" style="font-size:10px">
-                                        @if ($objetivo['meta'] == 0 && !empty($maxParam) && $objetivo['meta_alcanzada'] >= $maxParam)
-                                            Cumplido
-                                        @else
-                                            <span
-                                                data-objetivo-calificacion="{{ $objetivo['objetivo_calificacion_id'] }}">{{ $objetivo['calificacion'] }}</span>
-                                            {{ $objetivo['metrica'] }}
-                                        @endif
-                                    </div>
-                                    <div class="text-center border col-2" style="font-size:10px">
-                                        {{ $objetivo['descripcion_meta'] ? $objetivo['descripcion_meta'] : 'N/A' }}
-                                    </div>
-                                    <div class="text-center border col-3" style="font-size:10px">
-                                        {{ $objetivo['meta_alcanzada'] }}
-                                    </div>
+                                    <div class="border col-6">Promedio</div>
+                                    <div class="border col-6">{{ number_format($promedio_objetivos / 100, 2) }}</div>
                                 </div>
-                            @empty
-                                <div>
-                                    <strong class="text-muted">
-                                        <i class="fas fa-info-circle"></i>
-                                        Sin objetivos a evaluar
-                                    </strong>
+                                <div class="row">
+                                    <div class="border col-6">% Participación</div>
+                                    <div class="border col-6">{{ round($promedio_objetivos, 2) }}%</div>
                                 </div>
-                            @endforelse
-                        </div>
-                    </div>
-                @empty
-                    <div>Sin objetivos a evaluar</div>
-                @endforelse
-            </div>
-            <div class="col-12">
-                <div class="mt-3 row" style="font-size:11px">
-                    <div class="col-8"></div>
-                    <div class="col-4">
-                        <p class="m-0 text-center text-white" style="background: #3e3e3e; border: 1px solid #fff">
-                            Objetivos
-                        </p>
-                        <div class="col-12">
-                            <div class="row">
-                                <div class="border col-6">Promedio</div>
-                                <div class="border col-6">{{ number_format($promedio_objetivos / 100, 2) }}</div>
-                            </div>
-                            <div class="row">
-                                <div class="border col-6">% Participación</div>
-                                <div class="border col-6">{{ round($promedio_objetivos, 2) }}%</div>
-                            </div>
-                            <div class="row">
-                                <div class="border col-6">Promedio total en la evaluación</div>
-                                <div class="border col-6">
-                                    {{ round(($promedio_general_objetivos / $peso_general_objetivos) * $peso_general_objetivos, 2) }}%
+                                <div class="row">
+                                    <div class="border col-6">Promedio total en la evaluación</div>
+                                    <div class="border col-6">
+                                        {{ round(($promedio_general_objetivos / $peso_general_objetivos) * $peso_general_objetivos, 2) }}%
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="mt-2 text-center form-group col-12"
-                style="background-color:#345183; border-radius: 100px; color: white; text-transform: uppercase;">
-                Gráficas Objetivos
-            </div>
-            <div id="graficasObjetivos">
-                <div class="row">
-                    <div class="col-12" x-data="{ show: false }">
-                        <div style="display: flex;justify-content: end">
-                            <button title="Gráfica Radar" @click="show=true" class="btn btn-sm"
-                                x-bind:style="show ? 'background:blue;color:white' : 'backgrond:white'"><i
-                                    class="fas fa-chart-area"></i></button>
-                            <button title="Gráfica de Barras" @click="show=false" class="btn btn-sm"
-                                x-bind:style="!show ? 'background:blue;color:white' : 'backgrond:white'"><i
-                                    class="fas fa-chart-bar"></i></button>
-                        </div>
-                        <div x-show="show" x-transition>
-                            <canvas id="objetivosGrafica" height="500"></canvas>
-                        </div>
-                        <div x-show="!show" x-transition>
-                            <canvas id="barObjetivos" width="400" height="400"></canvas>
+                <div class="mt-2 text-center form-group col-12"
+                    style="background-color:#345183; border-radius: 100px; color: white; text-transform: uppercase;">
+                    Gráficas Objetivos
+                </div>
+                <div id="graficasObjetivos">
+                    <div class="row">
+                        <div class="col-12" x-data="{ show: false }">
+                            <div style="display: flex;justify-content: end">
+                                <button title="Gráfica Radar" @click="show=true" class="btn btn-sm"
+                                    x-bind:style="show ? 'background:blue;color:white' : 'backgrond:white'"><i
+                                        class="fas fa-chart-area"></i></button>
+                                <button title="Gráfica de Barras" @click="show=false" class="btn btn-sm"
+                                    x-bind:style="!show ? 'background:blue;color:white' : 'backgrond:white'"><i
+                                        class="fas fa-chart-bar"></i></button>
+                            </div>
+                            <div x-show="show" x-transition>
+                                <canvas id="objetivosGrafica" height="500"></canvas>
+                            </div>
+                            <div x-show="!show" x-transition>
+                                <canvas id="barObjetivos" width="400" height="400"></canvas>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="mt-2 text-center form-group col-12"
-                style="background-color:#345183; border-radius: 100px; color: white; text-transform: uppercase;">
-                Sección de Firmas
-            </div>
-            <div class="col-12">
-                <div class="row">
-                    <div class="col-6 border text-center">
-                        <img class="img-fluid" src="{{ asset($firmaAuto) }}"
-                            style="{{ !$existeFirmaAuto ? 'max-width:97px' : '' }}" />
-                        <h6 class="my-2">Firma Autoevaluación</h6>
-                    </div>
-                    <div class="col-6 border text-center">
-                        <img class="img-fluid" src="{{ asset($firmaJefe) }}"
-                            style="{{ !$existeFirmaJefe ? 'max-width:97px' : '' }}" />
-                        <h6 class="my-2">Firma Jefe Inmediato</h6>
-                    </div>
-                    {{-- <div class="col-3 border text-center">
-                        <img class="img-fluid" src="{{ asset($firmaEquipo) }}"
-                            style="{{ !$existeFirmaSubordinado ? 'max-width:97px' : '' }}" />
-                        <h6 class="my-2">Firma Subordinado</h6>
-                    </div>
-                    <div class="col-3 border text-center">
-                        <img class="img-fluid" src="{{ asset($firmaPar) }}"
-                            style="{{ !$existeFirmaPar ? 'max-width:97px' : '' }}" />
-                        <h6 class="my-2">Firma Par</h6>
-                    </div> --}}
+                <div class="mt-2 text-center form-group col-12"
+                    style="background-color:#345183; border-radius: 100px; color: white; text-transform: uppercase;">
+                    Sección de Firmas
                 </div>
-
-            </div>
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-6 border text-center">
+                            <img class="img-fluid" src="{{ asset($firmaAuto) }}"
+                                style="{{ !$existeFirmaAuto ? 'max-width:97px' : '' }}" />
+                            <h6 class="my-2">Firma Autoevaluación</h6>
+                        </div>
+                        <div class="col-6 border text-center">
+                            <img class="img-fluid" src="{{ asset($firmaJefe) }}"
+                                style="{{ !$existeFirmaJefe ? 'max-width:97px' : '' }}" />
+                            <h6 class="my-2">Firma Jefe Inmediato</h6>
+                        </div>
+                    </div>
+                </div>
+            @endcan
         </div>
     </div>
 @endsection

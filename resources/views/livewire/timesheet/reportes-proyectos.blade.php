@@ -323,7 +323,7 @@
                             <td>
                                 <ul style="padding-left: 10px;">
                                     @foreach ($proyecto['empleados'] as $empleado)
-                                        <li>{{ $empleado->name }}</li>
+                                        <li>{{ $empleado['name'] }}</li>
                                     @endforeach
                                 </ul>
                             </td>

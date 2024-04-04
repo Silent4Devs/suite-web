@@ -10,6 +10,7 @@ use App\Events\RegistroMejoraEvent;
 use App\Events\TaskRecursosEvent;
 use App\Listeners\AccionCorrectivaListener;
 use App\Listeners\AuditoriaAnualListener;
+use App\Listeners\BroadcastUserLoginNotification;
 use App\Listeners\IncidentesDeSeguridadListener;
 use App\Listeners\RecursosListener;
 use App\Listeners\RegistroMejoraListener;
@@ -162,6 +163,7 @@ use App\Observers\tipoObjetivoObserver;
 use App\Observers\UsersObserver;
 use App\Observers\VersionesIsoObserver;
 use App\Observers\VulnerabilidadObserver;
+use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -178,24 +180,27 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-        IncidentesDeSeguridadEvent::class => [
-            IncidentesDeSeguridadListener::class,
+        Login::class => [
+            BroadcastUserLoginNotification::class,
         ],
-        AuditoriaAnualEvent::class => [
-            AuditoriaAnualListener::class,
-        ],
-        AccionCorrectivaEvent::class => [
-            AccionCorrectivaListener::class,
-        ],
-        RegistroMejoraEvent::class => [
-            RegistroMejoraListener::class,
-        ],
-        RecursosEvent::class => [
-            RecursosListener::class,
-        ],
-        TaskRecursosEvent::class => [
-            TaskRecursosListener::class,
-        ],
+        // IncidentesDeSeguridadEvent::class => [
+        //     IncidentesDeSeguridadListener::class,
+        // ],
+        // AuditoriaAnualEvent::class => [
+        //     AuditoriaAnualListener::class,
+        // ],
+        // AccionCorrectivaEvent::class => [
+        //     AccionCorrectivaListener::class,
+        // ],
+        // RegistroMejoraEvent::class => [
+        //     RegistroMejoraListener::class,
+        // ],
+        // RecursosEvent::class => [
+        //     RecursosListener::class,
+        // ],
+        // TaskRecursosEvent::class => [
+        //     TaskRecursosListener::class,
+        // ],
     ];
 
     /**

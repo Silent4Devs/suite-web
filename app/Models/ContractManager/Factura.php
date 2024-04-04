@@ -85,7 +85,7 @@ class Factura extends Model implements Auditable
 
     public function facturas_files()
     {
-        return $this->hasMany(FacturasFile::class, 'factura_id');
+        return $this->hasMany(FacturaFile::class, 'factura_id');
     }
 
     public function entregables_files()

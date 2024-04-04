@@ -122,15 +122,15 @@ class TimesheetProyecto extends Model implements Auditable
             $horas = TimesheetHoras::where('proyecto_id', $this->id)->where('empleado_id', $emp_p->id)->get();
             $horas_totales = 0;
             foreach ($horas as $hora) {
-                $horas_totales += $hora->horas_lunes;
-                $horas_totales += $hora->horas_martes;
-                $horas_totales += $hora->horas_miercoles;
-                $horas_totales += $hora->horas_jueves;
-                $horas_totales += $hora->horas_viernes;
-                $horas_totales += $hora->horas_sabado;
-                $horas_totales += $hora->horas_domingo;
+                $horas_totales += is_numeric($hora->horas_lunes) ? $hora->horas_lunes : 0;
+                $horas_totales += is_numeric($hora->horas_martes) ? $hora->horas_martes : 0;
+                $horas_totales += is_numeric($hora->horas_miercoles) ? $hora->horas_miercoles : 0;
+                $horas_totales += is_numeric($hora->horas_jueves) ? $hora->horas_jueves : 0;
+                $horas_totales += is_numeric($hora->horas_viernes) ? $hora->horas_viernes : 0;
+                $horas_totales += is_numeric($hora->horas_sabado) ? $hora->horas_sabado : 0;
+                $horas_totales += is_numeric($hora->horas_domingo) ? $hora->horas_domingo : 0;
             }
-            $empItem = Empleado::select('id', 'name')->find($emp_p->empleado_id);
+            $empItem = Empleado::select('id', 'name')->where('id', $emp_p->empleado_id)->first();
             array_push($emps, [
                 'id' => $empItem->id,
                 'name' => $empItem->name,
@@ -146,13 +146,13 @@ class TimesheetProyecto extends Model implements Auditable
         $horas = TimesheetHoras::where('proyecto_id', $this->id)->get();
         $horas_totales = 0;
         foreach ($horas as $hora) {
-            $horas_totales += $hora->horas_lunes;
-            $horas_totales += $hora->horas_martes;
-            $horas_totales += $hora->horas_miercoles;
-            $horas_totales += $hora->horas_jueves;
-            $horas_totales += $hora->horas_viernes;
-            $horas_totales += $hora->horas_sabado;
-            $horas_totales += $hora->horas_domingo;
+            $horas_totales += is_numeric($hora->horas_lunes) ? $hora->horas_lunes : 0;
+            $horas_totales += is_numeric($hora->horas_martes) ? $hora->horas_martes : 0;
+            $horas_totales += is_numeric($hora->horas_miercoles) ? $hora->horas_miercoles : 0;
+            $horas_totales += is_numeric($hora->horas_jueves) ? $hora->horas_jueves : 0;
+            $horas_totales += is_numeric($hora->horas_viernes) ? $hora->horas_viernes : 0;
+            $horas_totales += is_numeric($hora->horas_sabado) ? $hora->horas_sabado : 0;
+            $horas_totales += is_numeric($hora->horas_domingo) ? $hora->horas_domingo : 0;
         }
 
         return $horas_totales;

@@ -235,14 +235,16 @@
                             <td>
                                 <ul style="padding-left:10px; ">
                                     @foreach ($proyecto->empleados as $empleado)
-                                        <li>{{ $empleado->name }}</li>
+                                        <li>
+                                            {{ $empleado['name'] }} - {{ $empleado['horas'] }} h
+                                        </li>
                                     @endforeach
                                 </ul>
                             </td>
                             <td>{{ $proyecto->sede_id ? $proyecto->sede->sede : '' }} </td>
                             <td>{{ $proyecto->estatus }} </td>
                             <td>{{ $proyecto->tipo ?? 'No Definido' }} </td>
-                            <td>{{ $proyecto->horas_totales_registradas }}</td>
+                            <td>{{ $proyecto->horas_totales_llenas }}</td>
                             <td>
                                 @can('timesheet_administrador_proyectos_delete')
                                     @php

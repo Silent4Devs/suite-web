@@ -15,6 +15,7 @@ use App\Models\RH\Objetivo;
 use App\Models\RH\ObjetivoEmpleado;
 use App\Models\RH\ObjetivoRespuesta;
 use App\Models\User;
+use App\Services\ImageService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
@@ -156,11 +157,15 @@ class EV360ObjetivosController extends Controller
                 $extension = pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_EXTENSION);
                 $nombre_imagen = 'OBJETIVO_'.$objetivo->id.'_'.$objetivo->nombre.'EMPLEADO_'.$empleado->id.'.'.$extension;
                 $route = storage_path().'/app/public/objetivos/img/'.$nombre_imagen;
-                //Usamos image_intervention para disminuir el peso de la imagen
-                $img_intervention = Image::make($request->file('foto'));
-                $img_intervention->resize(720, null, function ($constraint) {
-                    $constraint->aspectRatio();
-                })->save($route);
+
+                // Call the ImageService to consume the external API
+                $apiResponse = ImageService::consumeImageCompresorApi($request->file('foto'));
+
+                // Compress and save the image
+                if ($apiResponse['status'] == 200) {
+                    file_put_contents($route, $apiResponse['body']);
+                }
+
                 $objetivo->update([
                     'imagen' => $nombre_imagen,
                 ]);
@@ -358,11 +363,15 @@ class EV360ObjetivosController extends Controller
             $extension = pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_EXTENSION);
             $nombre_imagen = 'OBJETIVO_'.$objetivo->id.'_'.$objetivo->nombre.'EMPLEADO_'.$objetivo->empleado_id.'.'.$extension;
             $route = storage_path().'/app/public/objetivos/img/'.$nombre_imagen;
-            //Usamos image_intervention para disminuir el peso de la imagen
-            $img_intervention = Image::make($request->file('foto'));
-            $img_intervention->resize(720, null, function ($constraint) {
-                $constraint->aspectRatio();
-            })->save($route);
+
+            // Call the ImageService to consume the external API
+            $apiResponse = ImageService::consumeImageCompresorApi($request->file('foto'));
+
+            // Compress and save the image
+            if ($apiResponse['status'] == 200) {
+                file_put_contents($route, $apiResponse['body']);
+            }
+
             $objetivo->update([
                 'imagen' => $nombre_imagen,
             ]);
