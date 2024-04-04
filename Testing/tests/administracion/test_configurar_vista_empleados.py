@@ -1,4 +1,4 @@
-from pages.administracion.configurar_c_humano.categoria_de_capacitaciones.edit.categoria_de_c_edit_page import Edit_Categoria_de_Capacitaciones
+from pages.administracion.configurar_c_humano.empleados.view.configurar_vista_empledados import Configurar_vista_empleados
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium import webdriver
@@ -25,21 +25,14 @@ def browser():
     yield driver
     driver.quit()
 
-def test_edit_categoria_de_capacitaciones(browser) :
+def test_configurar_vista_empleados(browser):
     
-    edit_categoria_capacitaciones = Edit_Categoria_de_Capacitaciones(browser)
-    edit_categoria_capacitaciones.login()
-    edit_categoria_capacitaciones.in_submodulo(menu_hamburguesa, element_entrar_modulo, element_entrar_submodulo)
-    edit_categoria_capacitaciones.update_categoria_de_capacitaciones(campo_buscar_xpath, trespuntos_btn_xpath, btn2_editar, guardar_xpath)
+    view_configurar_datos = Configurar_vista_empleados(browser)
+    view_configurar_datos.login()
+    view_configurar_datos.in_submodulo(menu_hamburguesa, element_entrar_modulo, element_entrar_submodulo)
+    view_configurar_datos.configurar_vista_datos()
     
 #Variables
 menu_hamburguesa = "//BUTTON[@class='btn-menu-header']"
 element_entrar_modulo = "(//A[@href='#'])[4]"
-element_entrar_submodulo = "//a[@href='https://192.168.9.78/admin/categoria-capacitacion'][normalize-space()='Categorías de Capacitaciones']"
-
-campo_buscar_xpath= "(//INPUT[@type='search'])[2]"
-trespuntos_btn_xpath= "(//BUTTON[@class='btn btn-action-show-datatables-global d-none'])[1]"
-btn2_editar = "(//I[@class='fas fa-edit'])[1]"
-guardar_xpath = "//BUTTON[@class='btn btn-primary' and normalize-space()='Guardar']"
-
-
+element_entrar_submodulo = "//A[@href='https://192.168.9.78/admin/empleados'][text()='Empleados']"

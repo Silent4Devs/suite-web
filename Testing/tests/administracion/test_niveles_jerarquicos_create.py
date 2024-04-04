@@ -1,4 +1,4 @@
-from pages.administracion.configurar_c_humano.categoria_de_capacitaciones.edit.categoria_de_c_edit_page import Edit_Categoria_de_Capacitaciones
+from pages.administracion.configurar_c_humano.niveles_jerarquicos.create.niveles_jerarquicos_create_page import Create_Niveles_Jerarquicos
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium import webdriver
@@ -25,21 +25,20 @@ def browser():
     yield driver
     driver.quit()
 
-def test_edit_categoria_de_capacitaciones(browser) :
+
+def test_create_niveles_jerarquicos(browser) :
     
-    edit_categoria_capacitaciones = Edit_Categoria_de_Capacitaciones(browser)
-    edit_categoria_capacitaciones.login()
-    edit_categoria_capacitaciones.in_submodulo(menu_hamburguesa, element_entrar_modulo, element_entrar_submodulo)
-    edit_categoria_capacitaciones.update_categoria_de_capacitaciones(campo_buscar_xpath, trespuntos_btn_xpath, btn2_editar, guardar_xpath)
+    niveles_jerarquicos_create = Create_Niveles_Jerarquicos(browser)
+    niveles_jerarquicos_create.login()
+    niveles_jerarquicos_create.in_submodulo(menu_hamburguesa, element_entrar_modulo, element_entrar_submodulo)
+    niveles_jerarquicos_create.add_niveles_jerarquicos(agregar_btn_xpath, guardar_xpath)
     
 #Variables
 menu_hamburguesa = "//BUTTON[@class='btn-menu-header']"
 element_entrar_modulo = "(//A[@href='#'])[4]"
-element_entrar_submodulo = "//a[@href='https://192.168.9.78/admin/categoria-capacitacion'][normalize-space()='Categorías de Capacitaciones']"
+element_entrar_submodulo = "//A[@href='https://192.168.9.78/admin/perfiles'][text()='Niveles Jerárquicos']"
 
-campo_buscar_xpath= "(//INPUT[@type='search'])[2]"
-trespuntos_btn_xpath= "(//BUTTON[@class='btn btn-action-show-datatables-global d-none'])[1]"
-btn2_editar = "(//I[@class='fas fa-edit'])[1]"
+agregar_btn_xpath= "//A[@href='https://192.168.9.78/admin/perfiles/create'][text()='Registrar Nivel Jerárquico']"
 guardar_xpath = "//BUTTON[@class='btn btn-primary' and normalize-space()='Guardar']"
 
 
