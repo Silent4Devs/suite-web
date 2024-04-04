@@ -232,6 +232,16 @@ class RequisicionesController extends Controller
             $tipo_firma => $request->firma,
         ]);
 
+        if ($tipo_firma == 'firma_solicitante') {
+            $fecha = date('d-m-Y');
+            $requisicion->fecha_firma_solicitante_requi = $fecha;
+            $requisicion->save();
+            $user =  User::find($requisicion->id_user);
+            $userEmail = $user->email;
+
+            $organizacion = Organizacion::getFirst();
+        }
+
         if ($tipo_firma == 'firma_jefe') {
             $fecha = date('d-m-Y');
             $requisicion->fecha_firma_jefe_requi = $fecha;
@@ -240,7 +250,7 @@ class RequisicionesController extends Controller
 
             $organizacion = Organizacion::getFirst();
 
-            Mail::to('ldelgadillo@silent4business.com')->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
+            Mail::to('ldelgadillo@silent4business.com')->cc('aurora.soriano@silent4business.com')->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
         }
         if ($tipo_firma == 'firma_finanzas') {
             $fecha = date('d-m-Y');
