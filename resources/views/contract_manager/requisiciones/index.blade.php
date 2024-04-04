@@ -25,6 +25,7 @@
                 </button>
                 <a style="color: white;" class="btn btn-primary"
                     href="{{ route('contract_manager.requisiciones.archivo') }}">Archivados</a>
+
                 <button type="button" class="btn btn-primary" id="filtrarBtn">Filtrar Requisiciones</button>
             </form>
             <table id="dom" class="table table-bordered w-100 datatable-perspectiva" style="width: 100%">
