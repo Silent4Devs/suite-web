@@ -6,23 +6,23 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 
-#TEST GRUPO INVENTARIO DE ACTIVOS
-
 #Variables
-menu_hamburguesa = "//BUTTON[@class='btn-menu-header']"
-element_entrar_submodulo = "//A[@href='https://192.168.9.78/admin/activos'][text()='Inventario de Activos']"
-element_confirgurar_organizacion = "(//I[@class='material-symbols-outlined i-direct'][text()='keyboard_arrow_down'])[2]"
-agregar_btn_xpath= "//BUTTON[@class='btn btn-xs btn-outline-success rounded ml-2 pr-3 agregar']"
-trespuntos_btn_xpath= "//I[@class='fa-solid fa-ellipsis-vertical']"
-boton_editar = "//I[@class='fas fa-edit']"
+element_confirgurar_organizacion = "(//A[@href='#'])[3]"
+element_entrar_submodulo = "//A[@href='https://192.168.9.78/admin/perfiles'][text()='Niveles Jerárquicos']"
+agregar_btn_xpath= "//BUTTON[@class='btn btn-xs btn-outline-success rounded ml-2 pr-3']"
+save_btn_xpath="//button[@class='btn btn-danger'][contains(.,'Guardar')]"
 campo_buscar_xpath= "(//INPUT[@type='search'])[2]"
-guardar_xpath = "//BUTTON[contains(@class, 'btn') and contains(@class, 'btn-danger') and normalize-space()='Guardar']"
+btn2_editar = "(//I[@class='fas fa-edit'])[1]"
+trespuntos_btn_xpath= "(//BUTTON[@class='btn btn-action-show-datatables-global d-none'])[1]"
+menu_hamburguesa = "//BUTTON[@class='btn-menu-header']"
+guardar_xpath = "//BUTTON[@class='btn btn-primary' and normalize-space()='Guardar']"
+guardar_act_xpath = "//BUTTON[contains(@class, 'btn') and contains(@class, 'btn-danger') and normalize-space()='Guardar']"
+
 
 #Temporizadores
-tiempo_modulos = 4
+tiempo_modulos = 6
 tiempo_carga = 10
 tiempo_espera = 2.5
-tiempo_tres = 3
 
 @pytest.fixture(scope="module")
 def browser():
@@ -67,8 +67,6 @@ def test_login(browser):
 
 def in_modulos(driver):
     
-    time.sleep(tiempo_modulos)
-    
     # Entrando a Menu Hamburguesa
     print("URL actual:", driver.current_url)
     print("Entrando a Menu Hamburguesa...")
@@ -77,25 +75,25 @@ def in_modulos(driver):
     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, menu_hamburguesa)))
     print("Dando clic en Menu Hamburguesa...")
     element.click()
-
-    time.sleep(tiempo_modulos)
     
-    # Entrando a Modulo Configurar Organizacion
-    print("Entrando a Configurar Organizacion...")
+    time.sleep(tiempo_modulos)
+      
+    # Entrando a Modulo Configurar Capital Humano
+    print("Entrando a Capital Humano...")
     element = driver.find_element(By.XPATH, element_confirgurar_organizacion)
     driver.execute_script("arguments[0].scrollIntoView(true);", element)
     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, element_confirgurar_organizacion)))
-    print("Dando clic en Configurar Organizacion...")
+    print("Dando clic en Capital Humano...")
     element.click()
     
     time.sleep(tiempo_modulos)
 
-    # Entrando a Sub Modulo Inventario de Activos   
-    print("Entrando a Sub Modulo Inventario de Activos  ...")
+    # Entrando a Sub Modulo Niveles Jerarquicos
+    print("Entrando a Sub Modulo Niveles Jerarquicos...")
     entrar = driver.find_element(By.XPATH,element_entrar_submodulo)
     driver.execute_script("arguments[0].scrollIntoView(true);", element)
     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH,element_entrar_submodulo)))
-    print("Dando clic en Sub Modulo Inventario de Activos  ...")
+    print("Dando clic en Sub Modulo Niveles Jerarquicos...")
     entrar.click()
     
     time.sleep(tiempo_modulos)
@@ -105,106 +103,76 @@ def in_modulos(driver):
 def test_in_modulos(browser):
     
     in_modulos(browser)
+    
+##################################################### AGREGAR Y LLENAR REPOSITORIO ######################################
 
-##################################################### AGREGAR Y LLENAR REPOSITORIO ####################################
-
-def add_inventario_de_activos(driver):
+def add_niveles_jerarquicos(driver):
     
     time.sleep(tiempo_modulos)
     
-    # Dando clic en Boton Agregar Area
-    print("Dando clic al botón Agregar Inventario de Activos...")
+    # Dando clic en Boton Agregar Nivel Jerarquico
+    print("Dando clic al botón Agregar...")
     wait = WebDriverWait(driver, 10)
     agregar_btn = wait.until(EC.presence_of_element_located((By.XPATH, agregar_btn_xpath)))
     agregar_btn.click()
     
     time.sleep(tiempo_modulos)
+
+    # Nombre del Nivel
     
-    # ID
-    campo_id = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, "//INPUT[@id='identificador']"))
+    campo_n_nivel = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, "//INPUT[@id='nombre']"))
         )
-    campo_id.click()
-    campo_id.send_keys("00117")
-    print("Llenando campo ID")
+    campo_n_nivel.click()
+    campo_n_nivel.send_keys("Nombre del Nivel de Prueba 117")
+    print("Dando clic en Campo Nombre de Nivel...")
 
     time.sleep(tiempo_modulos)
+
+    # Descripcion
     
-    # Nombre del Activo
-    campo_nombre_activo = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, "//INPUT[@id='nombre_activo']"))
-        )
-    campo_nombre_activo.click()
-    campo_nombre_activo.send_keys("Nombre del activo de prueba 117")
-    print("Llenando campo nombre del activo")
+    campo_descripcion = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, "//TEXTAREA[@id='descripcion']"))
+    )
+    campo_descripcion.click()
+    campo_descripcion.send_keys("Descripcion de prueba")
+    print("Dando clic en Campo Descripcion...")
 
     time.sleep(tiempo_modulos)
-    
-    # Nombre de la Categoria
-    campo_n_categoria = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, "(//SPAN[@class='select2-selection select2-selection--single'])[1]"))
-        )
-    campo_n_categoria.click()
-    time.sleep(tiempo_espera)
-    campo_n_categoria.send_keys("Site")
-    time.sleep(tiempo_espera)
-    campo_n_categoria.click()
-    print("Llenando campo Nombre de la categoria")
 
-    time.sleep(tiempo_modulos)
-    
-    # Nombre Subcategoria
-    campo_n_subcategoria = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, "(//SPAN[@class='select2-selection select2-selection--single'])[2]"))
-        )
-    campo_n_subcategoria.click()
-    time.sleep(tiempo_espera)
-    campo_n_subcategoria.send_keys("Servidores")
-    time.sleep(tiempo_espera)
-    campo_n_subcategoria.click()
-    print("Llenando campo Nombre de Subcategoria")
-    
-    # Sede
-    campo_sede = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, "//SELECT[@id='ubicacion_id']"))
-        )
-    campo_sede.click()
-    time.sleep(tiempo_espera)
-    campo_sede.send_keys("Torre Murano")
-    time.sleep(tiempo_espera)
-    campo_sede.click()
-    print("Llenando campo Sede")
-    
-    time.sleep(tiempo_modulos)
-    
-    # Guardar Repositorio
-    print("Dando clic al botón Guardar...")
+    # Guardar
+
     guardar = WebDriverWait(driver, 20).until(
         EC.element_to_be_clickable((By.XPATH, guardar_xpath))
     )
     guardar.click()
+    print("Dando clic en boton Guardar...")
+
+    time.sleep(tiempo_modulos)
     
     print("URL actual:", driver.current_url)
     
-def test_add_inventario_de_activos(browser):
+def test_add_niveles_jerarquicos(browser):
     
-    add_inventario_de_activos(browser)
+    add_niveles_jerarquicos(browser)
     
     
 #################################BUSCAR REPOSITORIO Y ENTRAR A BOTONES DE EDICION###################################
 
-def update_inventario_de_activos(driver):
+def update_niveles_jeraquicos(driver):
     
+    time.sleep(tiempo_espera)
+
     # Campo Buscar
     campo_entrada = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.XPATH, campo_buscar_xpath))
     )
     campo_entrada.clear()
-    campo_entrada.send_keys("Nombre del activo de prueba 117")
-    print("Campo Buscar llenado")
+    campo_entrada.send_keys("Nombre del Nivel de Prueba 117")
+    print("Dando clic en campo buscar...")
 
     time.sleep(tiempo_carga)
-    
+
     # Boton 3 puntos
     print("Dando clic al botón 3 puntos...")
     wait = WebDriverWait(driver, 10)
@@ -219,36 +187,37 @@ def update_inventario_de_activos(driver):
     print("Dando clic al botón editar...")
     wait = WebDriverWait(driver, 10)
     # Esperar a que el elemento esté presente en el DOM
-    btn_editar = wait.until(EC.presence_of_element_located((By.XPATH,boton_editar)))
+    btn_editar = wait.until(EC.presence_of_element_located((By.XPATH, btn2_editar)))
     # Ahora intenta hacer clic en el elemento
     btn_editar.click()
 
     time.sleep(tiempo_modulos)  
     
-    # Nombre de la Descripcion
-    campo_descripcion = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, "//TEXTAREA[@id='descripcion']"))
-        )
-    campo_descripcion.click()
-    campo_descripcion.send_keys("Descripcion de Prueba Actualizado")
-    print("Campo Descripcion Actualizado")
+    # Descripcion
     
+    campo_descripcion = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, "//INPUT[@id='nombre']"))
+    )
+    campo_descripcion.clear()
+    campo_descripcion.click()
+    campo_descripcion.send_keys("Descripcion de prueba actualizado")
+    print("Dando clic en campo descripcion...")
+
     time.sleep(tiempo_modulos)
 
     # Guardar actualización
     print("Dando clic al botón Guardar para guardar actualización...")
     guardar = WebDriverWait(driver, 20).until(
-        EC.element_to_be_clickable((By.XPATH, guardar_xpath))
+        EC.element_to_be_clickable((By.XPATH, guardar_act_xpath))
     )
     guardar.click()
 
-    time.sleep(tiempo_modulos)
+    time.sleep(tiempo_modulos)  
     
     print("URL actual:", driver.current_url)
     
-def test_update_inventario_de_activos(browser):
+def test_update_niveles_jerarquicos(browser):
     
-    update_inventario_de_activos(browser)
+    update_niveles_jeraquicos(browser)
     
-
 
