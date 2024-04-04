@@ -6,7 +6,6 @@
 [![DevSecOps and Docker build](https://github.com/Silent4Devs/suite-web/actions/workflows/devsecops.yml/badge.svg)](https://github.com/Silent4Devs/suite-web/actions/workflows/devsecops.yml)
 [![Docker Compose build and test](https://github.com/Silent4Devs/suite-web/actions/workflows/container-build.yml/badge.svg)](https://github.com/Silent4Devs/suite-web/actions/workflows/container-build.yml)
 
-
 # Gestión normativa S4B
 
 El proyecto se tiene que clonar dentro de la carpeta raiz en donde se publiquen las URL
@@ -53,7 +52,9 @@ Instalación:
 4. docker compose exec php php artisan migrate
 5. docker compose exec php chmod 777 -R storage
 6. docker compose exec php php artisan preload:placeholder
-7. docker compose exec php php artisan optimize:clear
+7. docker compose exec php npm install
+8. docker compose exec php npm run build
+9. docker compose exec php php artisan optimize:clear
 
 Ojo: si te sale algún error es porque no tienes permisos root en las carpetas de tu proyecto o que no existen las carpetas de caché, para esto tengo 2 comandos para ti.
 
@@ -73,6 +74,7 @@ mkdir storage/framework/{views, testing, sessions, cache/data}
 docker compose exec postgres-tabantaj /bin/bash
 
 #Backup
+
 <ul>
 <li>
 sudo docker exec -i fa63d8e7e87b bash -c "PGPASSWORD='secret' pg_dump -U homestead -h localhost -d homestead" > dump.sql
@@ -80,6 +82,7 @@ sudo docker exec -i fa63d8e7e87b bash -c "PGPASSWORD='secret' pg_dump -U homeste
 </ul>
 
 #Restore
+
 <ol>
 <li>Ensure that you have the PostgreSQL 14 container up and running.</li>
 <li>Locate the local dump file (backup.sql) and copy it into the container using the docker cp command:</li>

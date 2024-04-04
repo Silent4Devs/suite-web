@@ -9,7 +9,7 @@
         margin-bottom: 0px;
     }
 
-</style>>
+</style>
 
     @if(asset('admin/inicioUsuario') == redirect()->getUrlGenerator()->previous())
         {{ Breadcrumbs::render('riesgos-create-perfil') }}
@@ -86,7 +86,7 @@
                     <div class="mt-2 form-group col-md-6">
                         <label class="form-label"><i class="fas fa-text-width iconos-crear"></i>Título corto del
                             riesgo<sup>*</sup></label>
-                        <input class="form-control" name="titulo" required>
+                        <input class="form-control" maxlength="250" name="titulo" required>
                     </div>
 
                     <div class="mt-2 form-group col-md-6">
@@ -107,13 +107,13 @@
 
                     <div class="mt-2 form-group col-md-8">
                         <label class="form-label"><i class="fas fa-map iconos-crear"></i> Ubicación exacta</label>
-                        <input type="" name="ubicacion" class="form-control">
+                        <input type="" name="ubicacion" maxlength="250" class="form-control">
                     </div>
 
                     <div class="mt-2 form-group col-12">
                         <label class="form-label"><i class="fas fa-file-alt iconos-crear"></i>Describa detalladamente el
                             riesgo identificado<sup>*</sup></label>
-                        <textarea name="descripcion" class="form-control" required></textarea>
+                        <textarea name="descripcion" maxlength="550" class="form-control" required></textarea>
                     </div>
 
                     <div class="mt-2 form-group col-4 areas_multiselect">
@@ -125,7 +125,7 @@
                                 </option>
                             @endforeach
                         </select>
-                        <textarea name="areas_afectados" class="form-control" id="texto_activos"></textarea>
+                        <textarea name="areas_afectados" maxlength="550" class="form-control" id="texto_activos"></textarea>
                     </div>
 
                     <div class="mt-2 form-group col-4 procesos_multiselect">
@@ -137,7 +137,7 @@
                                 </option>
                             @endforeach
                         </select>
-                        <textarea name="procesos_afectados" class="form-control" id="texto_activos"></textarea>
+                        <textarea name="procesos_afectados" maxlength="550" class="form-control" id="texto_activos"></textarea>
                     </div>
 
                     <div class="mt-2 form-group col-4 activos_multiselect">
@@ -149,7 +149,7 @@
                                 </option>
                             @endforeach
                         </select>
-                        <textarea name="activos_afectados" class="form-control" id="texto_activos"></textarea>
+                        <textarea name="activos_afectados" class="form-control" maxlength="550" id="texto_activos"></textarea>
                     </div>
 
                     <div class="mt-4 form-group col-12">
@@ -174,40 +174,68 @@
 @section('scripts')
 
     <script type="text/javascript">
-        document.addEventListener('DOMContentLoaded', function() {
-            let select_activos = document.querySelector('.areas_multiselect #activos');
-            select_activos.addEventListener('change', function(e) {
-                e.preventDefault();
-                let texto_activos = document.querySelector('.areas_multiselect #texto_activos');
+       document.addEventListener('DOMContentLoaded', function() {
+        let select = document.querySelector('.areas_multiselect #activos');
+        let textarea = document.querySelector('.areas_multiselect #texto_activos');
 
-                texto_activos.value += `${this.value}, `;
+        select.addEventListener('change', function(e) {
+            e.preventDefault();
 
-            });
+            // Verificar si el valor ya está presente en el área de texto
+            if (!textarea.value.includes(this.value)) {
+                textarea.value += `${this.value}, `;
+            } else {
+                // Mostrar mensaje de advertencia si el valor ya está presente
+                alert('Este elemento ya está seleccionado.');
+                // Deseleccionar la opción
+                this.value = '';
+            }
         });
+    });
 
 
-        document.addEventListener('DOMContentLoaded', function() {
-            let select_activos = document.querySelector('.procesos_multiselect #activos');
-            select_activos.addEventListener('change', function(e) {
-                e.preventDefault();
-                let texto_activos = document.querySelector('.procesos_multiselect #texto_activos');
 
-                texto_activos.value += `${this.value}, `;
+    document.addEventListener('DOMContentLoaded', function() {
+    let select = document.querySelector('.procesos_multiselect #activos');
+    let textarea = document.querySelector('.procesos_multiselect #texto_activos');
 
-            });
-        });
+    select.addEventListener('change', function(e) {
+        e.preventDefault();
+
+        // Verificar si el valor ya está presente en el área de texto
+        if (!textarea.value.includes(this.value)) {
+            textarea.value += `${this.value}, `;
+        } else {
+            // Mostrar mensaje de advertencia si el valor ya está presente
+            alert('Este elemento ya está seleccionado.');
+            // Deseleccionar la opción
+            this.value = '';
+        }
+    });
+});
 
 
-        document.addEventListener('DOMContentLoaded', function() {
-            let select_activos = document.querySelector('.activos_multiselect #activos');
-            select_activos.addEventListener('change', function(e) {
-                e.preventDefault();
-                let texto_activos = document.querySelector('.activos_multiselect #texto_activos');
+document.addEventListener('DOMContentLoaded', function() {
+    let select = document.querySelector('.activos_multiselect #activos');
+    let textarea = document.querySelector('.activos_multiselect #texto_activos');
 
-                texto_activos.value += `${this.value}, `;
+    select.addEventListener('change', function(e) {
+        e.preventDefault();
 
-            });
-        });
+        // Verificar si el valor ya está presente en el área de texto
+        if (!textarea.value.includes(this.value)) {
+            textarea.value += `${this.value}, `;
+        } else {
+            // Mostrar mensaje de advertencia si el valor ya está presente
+            alert('Este elemento ya está seleccionado.');
+            // Deseleccionar la opción
+            this.value = '';
+        }
+    });
+});
+
+
+
     </script>
 
 @endsection
