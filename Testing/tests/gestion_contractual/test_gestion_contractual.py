@@ -25,7 +25,7 @@ def browser():
     driver = webdriver.Firefox(options=options)
     yield driver
     driver.quit()
-
+#TEST
 @pytest.mark.usefixtures("browser")
 def test_gestion_contractual(browser):
     #LOGIN

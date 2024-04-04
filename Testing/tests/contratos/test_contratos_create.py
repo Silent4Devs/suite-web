@@ -68,7 +68,7 @@ def test_contratos(browser):
     fecha_fin = "2023-05-07"
     contratos_create_page.fecha_fin(fecha_fin)
     #FECHA FIRMA
-    fecha_firma = "2022-05-04"
+    fecha_firma = "2022-05-05"
     contratos_create_page.fecha_firma(fecha_firma)
     #NUMERO DE PAGOS
     numero_pagos = "1"
