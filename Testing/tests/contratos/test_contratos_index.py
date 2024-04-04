@@ -2,17 +2,16 @@ import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
-from pages.plan_trabajo.edit.plan_trabajo_edit import PlanTrabajo_edit
+from pages.contratos.index.contratos_page import ContratosIndex
 
 @pytest.fixture(scope="session")
 def browser():
     options = FirefoxOptions()
+    # options = ChromeOptions()
     options.add_argument('--headless')
     options.add_argument('--disable-gpu')
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
-
-
     options.add_argument('--disable-extensions')
     options.add_argument('--disable-dev-shm-usage')
     options.add_argument('--disable-browser-side-navigation')
@@ -25,29 +24,24 @@ def browser():
     yield driver
     driver.quit()
 
-def test_plan_de_trabajo_edit(browser):
+def test_contratos_index(browser):
     #LOGIN
-    plan_trabajo_edit= PlanTrabajo_edit(browser)
-    plan_trabajo_edit.login()
+    contratos_index = ContratosIndex(browser)
+    contratos_index.login()
+
     #MENÚ HAMBURGUESA
-    plan_trabajo_edit.open_menu()
-    #OPCION PLAN DE TRABAJO
-    plan_trabajo_edit.plan_trabajo()
-    #OPCIONES
-    plan_trabajo_edit.plan_trabajo_opciones()
-    #EDITAR
-    plan_trabajo_edit.plan_trabajo_editar()
-    #EDITAR NOMBRE
-    nombre_edit="EDITAR NOMBRE PLAN DE TRABAJO"
-    plan_trabajo_edit.input_edit_nombre(nombre_edit)
-    #FECHA INICIO
-    fecha = "2024-03-04"
-    plan_trabajo_edit.seleccionar_fecha_inicio(fecha)
-    #FECHA FIN
-    fecha = "2024-03-04"
-    plan_trabajo_edit.seleccionar_fecha_fin(fecha)
-    #DESCRIPCIÓN
-    descripcion="TEST1"
-    plan_trabajo_edit.descripcion(descripcion)
-    #GUARDAR BTN
-    plan_trabajo_edit.guardar_btn()
+    contratos_index.open_menu()
+    #GESTION CONTRACTUAL
+    contratos_index.go_to_gestion_contractual()
+    #CONTRATOS
+    contratos_index.go_to_contratos()
+    #CONTRATOS DEL ÁREA
+    contratos_index.contratos_del_area()
+    #BARRA DE BUSQUEDA
+    search=""
+    contratos_index.search_bar(search)
+    #VISUALIZAR
+    contratos_index.visualizar()
+    #EXPORTAR
+    #contratos_page.exportar()
+
