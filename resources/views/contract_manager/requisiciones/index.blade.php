@@ -76,22 +76,14 @@
                             <td>
                                 @if (is_null($requisicion->firma_solicitante))
                                     <p>Solicitante</p>
-                                @endif
-                                @if (is_null($requisicion->firma_jefe))
+                                @elseif (is_null($requisicion->firma_jefe))
                                     <p>Jefe directo:</p>
-                                @endif
-                                @if (is_null($requisicion->firma_finanzas))
+                                @elseif (is_null($requisicion->firma_finanzas))
                                     <p>Finanzas</p>
-                                @endif
-                                @if (is_null($requisicion->firma_compras))
+                                @elseif (is_null($requisicion->firma_compras))
                                     <p>Comprador</p>
-                                @endif
-                                @if (
-                                    !is_null($requisicion->firma_solicitante) &&
-                                        !is_null($requisicion->firma_jefe) &&
-                                        !is_null($requisicion->firma_finanzas) &&
-                                        !is_null($requisicion->firma_compras))
-                                    <p>Completado</p>
+                                @else
+                                    <h5><span class="badge badge-pill badge-success">Completado</span></h5>
                                 @endif
                             </td>
                             <td>{{ $requisicion->contrato->nombre_servicio ?? 'Sin servicio disponible' }}</td>
