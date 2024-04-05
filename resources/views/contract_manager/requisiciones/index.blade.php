@@ -74,23 +74,23 @@
 
                             </td>
                             <td>
-                                @if ($requisicion->firma_solicitante)
+                                @if (is_null($requisicion->firma_solicitante))
                                     <p>Solicitante</p>
                                 @endif
-                                @if ($requisicion->firma_jefe)
+                                @if (is_null($requisicion->firma_jefe))
                                     <p>Jefe directo:</p>
                                 @endif
-                                @if ($requisicion->firma_finanzas)
+                                @if (is_null($requisicion->firma_finanzas))
                                     <p>Finanzas</p>
                                 @endif
-                                @if ($requisicion->firma_compras)
+                                @if (is_null($requisicion->firma_compras))
                                     <p>Comprador</p>
                                 @endif
                                 @if (
-                                    $requisicion->firma_solicitante &&
-                                        $requisicion->firma_jefe &&
-                                        $requisicion->firma_finanzas &&
-                                        $requisicion->firma_compras)
+                                    !is_null($requisicion->firma_solicitante) &&
+                                        !is_null($requisicion->firma_jefe) &&
+                                        !is_null($requisicion->firma_finanzas) &&
+                                        !is_null($requisicion->firma_compras))
                                     <p>Completado</p>
                                 @endif
                             </td>
