@@ -76,7 +76,6 @@
                                     @case(is_null($requisicion->firma_solicitante))
                                         <p>Solicitante: {{$user->name ?? ''}}</p>
                                     @break
-
                                     @case(is_null($requisicion->firma_jefe))
                                     @php
                                     $employee = App\Models\User::find($requisicion->id_user)->empleado;
