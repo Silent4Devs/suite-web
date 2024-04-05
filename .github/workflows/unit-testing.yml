@@ -61,7 +61,9 @@ jobs:
 
       - name: Run Unit Tests
         run: |
-          coverage run -m pytest -v -s Testing/tests/login/test_login_successfully.py
+          coverage run -m pytest -v -s Testing/tests
 
       - name: Generate Coverage Report
         run: coverage report -m
+
+# This workflow will run only on pushes to the develop branch
