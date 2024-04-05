@@ -51,16 +51,16 @@
                             <td>{{ $requisicion->proveedor_catalogo }}</td>
                             <td>
                                 @if ($requisicion->estado == 'curso')
-                                    <p class="text-info">En curso</p>
+                                    <p class="badge badge-pill badge-primary">En curso</p>
                                 @endif
                                 @if ($requisicion->estado == 'aprobado')
-                                    <p class="text-success">Aprobado</p>
+                                    <p class="badge badge-pill badge-success">Aprobado</p>
                                 @endif
                                 @if ($requisicion->estado == 'rechazado')
-                                    <p class="text-danger">Rechazado</p>
+                                    <p class="badge badge-pill badge-danger">Rechazado</p>
                                 @endif
                                 @if ($requisicion->estado == 'firmada' || $requisicion->estado == 'firmada_final')
-                                    <p class="text-success">Firmada</p>
+                                    <p class="badge badge-pill badge-success">Firmada</p>
                                 @endif
                             </td>
                             <td>
