@@ -74,17 +74,26 @@
 
                             </td>
                             <td>
-                                @if (is_null($requisicion->firma_solicitante))
-                                    <p>Solicitante</p>
-                                @elseif (is_null($requisicion->firma_jefe))
-                                    <p>Jefe directo</p>
-                                @elseif (is_null($requisicion->firma_finanzas))
-                                    <p>Finanzas</p>
-                                @elseif (is_null($requisicion->firma_compras))
-                                    <p>Comprador</p>
-                                @else
-                                    <h5><span class="badge badge-pill badge-success">Completado</span></h5>
-                                @endif
+                                @switch(true)
+                                    @case(is_null($requisicion->firma_solicitante))
+                                        <p>Solicitante</p>
+                                    @break
+
+                                    @case(is_null($requisicion->firma_jefe))
+                                        <p>Jefe directo</p>
+                                    @break
+
+                                    @case(is_null($requisicion->firma_finanzas))
+                                        <p>Finanzas</p>
+                                    @break
+
+                                    @case(is_null($requisicion->firma_compras))
+                                        <p>Comprador</p>
+                                    @break
+
+                                    @default
+                                        <h5><span class="badge badge-pill badge-success">Completado</span></h5>
+                                @endswitch
                             </td>
                             <td>{{ $requisicion->contrato->nombre_servicio ?? 'Sin servicio disponible' }}</td>
                             <td>{{ $requisicion->area }}</td>
