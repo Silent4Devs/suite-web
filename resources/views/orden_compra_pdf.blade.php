@@ -67,7 +67,9 @@
             <tr>
                 <td>
                     <strong> Proyecto: </strong> <br>
-                        {{ isset($requisiciones->contrato->no_contrato) }}
+                        {{ optional($requisiciones->contrato)->no_proyecto }}-
+                        {{ optional($requisiciones->contrato)->no_contrato }}-
+                        {{ optional($requisiciones->contrato)->nombre_servicio }}
                 </td>
                 <td>
                     <strong> Comprador: </strong> <br>
@@ -217,10 +219,8 @@
                     </td>
                     <td>
                         <strong> Proyecto: </strong> <br>
-                        @isset($producto->contrato)
-                            {{ isset($producto->contrato->no_proyecto) }} / {{ isset($producto->contrato->no_contrato) }} -
-                            {{ isset($producto->contrato->nombre_servicio) }}
-                        @endisset
+                            {{ optional($producto->contrato)->no_proyecto }} / {{ optional($producto->contrato)->no_contrato }} -
+                            {{ optional($producto->contrato)->nombre_servicio }}
                     </td>
                     <td>
                         <strong> No. de Personas: </strong> <br>
@@ -355,7 +355,7 @@
                 <td align="center">
                     @if ($requisiciones->fecha_firma_finanzas_orden)
                         <img src="{{ $requisiciones->firma_finanzas_orden }}" class="img-firma"> <br>
-                        <small> Lourdes del Pilar Abadía Velasco | {{ $requisiciones->fecha_firma_finanzas_orden }}
+                        <small> Layla Esperanza Delgadillo Aguila  | {{ $requisiciones->fecha_firma_finanzas_orden }}
                         </small>
                     @else
                         <div style="height: 185px;"></div>

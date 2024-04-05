@@ -11,7 +11,7 @@ from config import username, password
 class CentroAtencionIndex:
     def __init__(self, driver):
         self.driver = driver
-        self.wait = WebDriverWait(self.driver, 10)
+        self.wait = WebDriverWait(self.driver, 20)
 
     def login(self):
         self.driver.get('https://192.168.9.78/')
@@ -25,14 +25,6 @@ class CentroAtencionIndex:
         self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "img[alt='Logo Tabantaj']")))
         print("Login correcto.")
 
-    def _fill_input_field(self, locator, value):
-        input_field = self.wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, locator)))
-        input_field.clear()
-        input_field.send_keys(value)
-
-    def _click_element(self, xpath):
-        element = self.wait.until(EC.element_to_be_clickable((By.XPATH, xpath)))
-        element.click()
 
     def open_menu(self):
         print("Abriendo menú...")
@@ -114,7 +106,7 @@ class CentroAtencionIndex:
         pdf_btn = self.wait.until(EC.element_to_be_clickable((By.XPATH, "(//i[contains(@class,'fas fa-file-pdf')])[3]")))
         pdf_btn.click()
         print("PDF generado.")
-        pdb.set_trace()
+
 
     def _wait_and_click(self, xpath):
         try:
@@ -123,6 +115,13 @@ class CentroAtencionIndex:
         except TimeoutException:
             raise TimeoutError(f"Elemento no encontrado en {xpath}")
 
+    def _fill_input_field(self, locator, value):
+        input_field = self.wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, locator)))
+        input_field.clear()
+        input_field.send_keys(value)
 
+    def _click_element(self, xpath):
+        element = self.wait.until(EC.element_to_be_clickable((By.XPATH, xpath)))
+        element.click()
 
 

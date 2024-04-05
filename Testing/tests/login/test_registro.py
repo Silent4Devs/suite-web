@@ -1,5 +1,5 @@
 import pytest
-from testing.pages.login.registro.registro_visitantes_login import RegistroVisitantesLogin
+from pages.login.registro.registro_visitantes_login import RegistroVisitantesLogin
 
 @pytest.mark.usefixtures("browser")
 def test_registro_visitantes_login(browser):

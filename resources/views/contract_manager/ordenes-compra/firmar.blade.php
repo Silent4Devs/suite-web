@@ -106,8 +106,8 @@
                 </div>
                 <div class="col s12 l6">
                     <strong>Proyecto:</strong> <br>
-                    {{ isset($requisicion->contrato->no_proyecto) }} / {{ isset($requisicion->contrato->no_contrato) }} -
-                    {{ isset($requisicion->contrato->nombre_servicio) }}
+                    {{ optional($requisicion->contrato)->no_proyecto }} / {{ optional($requisicion->contrato)->no_contrato }} -
+                    {{ optional($requisicion->contrato)->nombre_servicio }}
                 </div>
             </div>
         </div>
@@ -315,7 +315,7 @@
                     <div class="flex-item">
                         @if ($requisicion->firma_finanzas_orden)
                             <img src="{{ $requisicion->firma_finanzas_orden }}" class="img-firma">
-                            <p>Lourdes del Pilar Abadía Velasco </p>
+                            <p>Layla Esperanza Delgadillo Aguila  </p>
                             <p>{{ $requisicion->fecha_firma_finanzas_orden }}</p>
                         @else
                             <div style="height: 137px;"></div>

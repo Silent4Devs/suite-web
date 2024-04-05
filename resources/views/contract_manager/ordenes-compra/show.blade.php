@@ -72,7 +72,7 @@
                         {{$requisicion->referencia }}
                         <br><br>
                         <strong>Proyecto:</strong><br>
-                        {{isset($requisicion->contrato->no_contrato) }} - {{isset($requisicion->contrato->nombre_servicio) }} - {{isset($requisicion->contrato->proveedor->nombre_comercial) }}
+                        {{optional($requisicion->contrato)->no_contrato }} - {{optional($requisicion->contrato)->nombre_servicio }} - {{optional($requisicion->contrato)->proveedor->nombre_comercial }}
                     </div>
                     <div class="flex-item">
                         <strong>Área que solicita:</strong><br>
@@ -252,7 +252,7 @@
                         <div class="flex-item">
                             @if ($requisicion->firma_finanzas_orden)
                                 <img src="{{$requisicion->firma_finanzas_orden}}" class="img-firma">
-                                <p>Lourdes del Pilar Abadía Velasco </p>
+                                <p>Layla Esperanza Delgadillo Aguila  </p>
                                 <p>{{ $requisicion->fecha_firma_finanzas_orden }}</p>
                             @else
                                 <div style="height: 137px;"></div>
