@@ -10,11 +10,11 @@
     <title>{{ trans('panel.site_title') }}</title>
 
     <!-- Principal Styles -->
+    <link href="{{ asset('css/app.css') }}{{ config('app.cssVersion') }}" rel="stylesheet">
+    <link href="{{ asset('css/style.css') }}{{ config('app.cssVersion') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/loader.css') }}">
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}{{ config('app.cssVersion') }}">
     <link rel="stylesheet" href="{{ asset('css/rds.css') }}{{ config('app.cssVersion') }}">
-    <link href="{{ asset('css/app.css') }}{{ config('app.cssVersion') }}" rel="stylesheet">
-    <link href="{{ asset('css/style.css') }}{{ config('app.cssVersion') }}" rel="stylesheet">
     <link href="{{ asset('css/custom.css') }}{{ config('app.cssVersion') }}" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('vendor/file-manager/css/file-manager.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/dark_mode.css') }}">
