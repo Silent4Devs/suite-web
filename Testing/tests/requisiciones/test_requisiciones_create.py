@@ -1,6 +1,6 @@
 import pytest
 from selenium import webdriver
-from testing.pages.requisiciones.create.requisiciones_create_page import Requisiciones_create
+from pages.requisiciones.create.requisiciones_create_page import Requisiciones_create
 
 
 def test_requisiciones_create(browser):

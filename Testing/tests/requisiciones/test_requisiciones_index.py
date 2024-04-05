@@ -1,6 +1,6 @@
 import pytest
 from selenium import webdriver
-from testing.pages.requisiciones.index.requisiciones_index_page import Requisiciones_index
+from pages.requisiciones.index.requisiciones_index_page import Requisiciones_index
 
 
 def test_requisiciones_index(browser):
