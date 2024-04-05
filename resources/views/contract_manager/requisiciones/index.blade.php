@@ -50,18 +50,28 @@
                             <td>{{ $requisicion->referencia }}</td>
                             <td>{{ $requisicion->proveedor_catalogo }}</td>
                             <td>
-                                @if ($requisicion->estado == 'curso')
-                                    <p class="badge badge-pill badge-primary">En curso</p>
-                                @endif
-                                @if ($requisicion->estado == 'aprobado')
-                                    <p class="badge badge-pill badge-success">Aprobado</p>
-                                @endif
-                                @if ($requisicion->estado == 'rechazado')
-                                    <p class="badge badge-pill badge-danger">Rechazado</p>
-                                @endif
-                                @if ($requisicion->estado == 'firmada' || $requisicion->estado == 'firmada_final')
-                                    <p class="badge badge-pill badge-success">Firmada</p>
-                                @endif
+                                @switch($requisicion->estado)
+                                    @case('curso')
+                                        <h5 class="badge badge-pill badge-primary">En curso</h5>
+                                    @break
+
+                                    @case('aprobado')
+                                        <h5 class="badge badge-pill badge-success">Aprobado</h5>
+                                    @break
+
+                                    @case('rechazado')
+                                        <h5 class="badge badge-pill badge-danger">Rechazado</h5>
+                                    @break
+
+                                    @case('firmada')
+                                    @case('firmada_final')
+                                        <h5 class="badge badge-pill badge-success">Firmada</h5>
+                                    @break
+
+                                    @default
+                                        <h5 class="badge badge-pill badge-info">Por iniciar</h5>
+                                @endswitch
+
                             </td>
                             <td>
                                 @if ($requisicion->firma_solicitante)
