@@ -58,6 +58,7 @@ class TablaTareasTimesheet extends Component
         if ($this->origen == 'tareas') {
             // Eager load projects with their tasks
             $this->proyectos = TimesheetProyecto::getAllWithData();
+            $this->proyectos = $this->proyectos->sortByDesc('is_num');
 
             if ($this->proyecto_filtro) {
                 // Filter tasks by project if a project filter is applied
