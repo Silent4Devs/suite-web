@@ -6,7 +6,7 @@ import laravel from 'laravel-vite-plugin';export default defineConfig({
         laravel({
             input: [
                 'resources/css/app.css',
-                'public/js/home.jsx',
+                'public/js/pages/index/template-analisis-riesgos.jsx',
             ],
             refresh: true,
         }),

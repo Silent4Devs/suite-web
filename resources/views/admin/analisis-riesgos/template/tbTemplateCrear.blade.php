@@ -97,7 +97,9 @@
         <div class="select-option">
             @include('admin.analisis-riesgos.components.tbEscalasPrincipal',['template_id' => $id])
         </div>
-        <div class="select-option">Hola para Review</div>
+        <div class="select-option">
+            @include('admin.analisis-riesgos.components.tbGenerateTemplate')
+        </div>
         <div class="select-option">Hola para Payment</div>
         <div class="select-option">Hola para Success</div>
     </div>
