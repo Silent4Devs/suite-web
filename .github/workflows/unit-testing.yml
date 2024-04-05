@@ -24,10 +24,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
+
       - name: Navigate to Testing directory
         run: cd Testing
 
@@ -56,6 +58,11 @@ jobs:
       - name: Install Selenium
         run: python -m pip install selenium
 
+      - name: Setup GeckoDriver
+        uses: browser-actions/setup-geckodriver@latest
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Install coverage
         run: python -m pip install coverage
 
@@ -66,4 +73,3 @@ jobs:
       - name: Generate Coverage Report
         run: coverage report -m
 
-# This workflow will run only on pushes to the develop branch
