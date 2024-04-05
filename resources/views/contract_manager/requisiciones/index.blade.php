@@ -73,14 +73,30 @@
                                 @endswitch
 
                             </td>
+                            @php
+                            $user = Illuminate\Support\Facades\DB::table('users')
+                              ->select('id', 'name')
+                              ->where('id', $requisicion->id_user)
+                              ->first();
+                            @endphp
                             <td>
                                 @switch(true)
                                     @case(is_null($requisicion->firma_solicitante))
-                                        <p>Solicitante</p>
+                                        <p>Solicitante: {{$user->name ?? ''}}</p>
                                     @break
 
                                     @case(is_null($requisicion->firma_jefe))
-                                        <p>Jefe directo</p>
+
+                                    @php
+                                    $employee = App\Models\User::find($requisicion->id_user)->empleado;
+
+                                    if ($employee !== null && $employee->supervisor !== null) {
+                                        $supervisorName = $employee->supervisor->name;
+                                    } else {
+                                        $supervisorName = "N/A"; // Or any default value you prefer
+                                    }
+                                    @endphp
+                                        <p>Jefe: {{$supervisorName ?? ''}} </p>
                                     @break
 
                                     @case(is_null($requisicion->firma_finanzas))
@@ -88,7 +104,11 @@
                                     @break
 
                                     @case(is_null($requisicion->firma_compras))
-                                        <p>Comprador</p>
+
+                                    @php
+                                     $comprador = App\Models\ContractManager\Comprador::with('user')->where('id', $requisicion->comprador_id)->first();
+                                    @endphp
+                                    <p>Comprador: {{  $comprador->name }}</p>
                                     @break
 
                                     @default
