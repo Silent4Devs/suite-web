@@ -19,7 +19,7 @@
             <form class="text-right" action="{{ route('contract_manager.requisiciones.indexAprobadores') }}" method="GET">
                 @method('GET')
                 <a style="color: white;" class="btn btn-primary"
-                href="{{ route('contract_manager.requisiciones.create') }}">Agregar</a>
+                    href="{{ route('contract_manager.requisiciones.create') }}">Agregar</a>
                 <button class="btn btn-primary" type="submit" title="Aprobadores">
                     Aprobadores
                 </button>
@@ -34,7 +34,7 @@
                         <th style="vertical-align: top">Referencia</th>
                         <th style="vertical-align: top">Proveedor</th>
                         <th style="vertical-align: top">Estatus</th>
-                        <th style="vertical-align: top">Turno</th>
+                        <th style="vertical-align: top">Turno en firmar</th>
                         <th style="vertical-align: top">Proyecto</th>
                         <th style="vertical-align: top">Área que Solicita</th>
                         <th style="vertical-align: top">Solicitante</th>
@@ -49,22 +49,39 @@
                             <td>{{ $requisicion->fecha }}</td>
                             <td>{{ $requisicion->referencia }}</td>
                             <td>{{ $requisicion->proveedor_catalogo }}</td>
-                            <td>{{ $requisicion->estado }}</td>
                             <td>
-                                @if(!$requisicion->firma_solicitante)
-                                   <p>firma solicitante</p>
+                                @if ($requisicion->estado == 'curso')
+                                    <p class="text-info">En curso</p>
                                 @endif
-                                @if(!$requisicion->firma_jefe)
-                                   <p>firma jefe</p>
+                                @if ($requisicion->estado == 'aprobado')
+                                    <p class="text-success">Aprobado</p>
                                 @endif
-                                @if(!$requisicion->firma_finanzas)
-                                   <p>firma finanzas</p>
+                                @if ($requisicion->estado == 'rechazado')
+                                    <p class="text-danger">Rechazado</p>
                                 @endif
-                                @if(!$requisicion->firma_compras)
-                                   <p>firma comprador</p>
+                                @if ($requisicion->estado == 'firmada' || $requisicion->estado == 'firmada_final')
+                                    <p class="text-success">Firmada</p>
                                 @endif
-                                @if($requisicion->firma_solicitante && $requisicion->firma_jefe && $requisicion->firma_finanzas && $requisicion->firma_compras)
-                                   <p>firmas cumplidas</p>
+                            </td>
+                            <td>
+                                @if (!$requisicion->firma_solicitante)
+                                    <p>Solicitante</p>
+                                @endif
+                                @if (!$requisicion->firma_jefe)
+                                    <p>Jefe directo:</p>
+                                @endif
+                                @if (!$requisicion->firma_finanzas)
+                                    <p>Finanzas</p>
+                                @endif
+                                @if (!$requisicion->firma_compras)
+                                    <p>Comprador</p>
+                                @endif
+                                @if (
+                                    $requisicion->firma_solicitante &&
+                                        $requisicion->firma_jefe &&
+                                        $requisicion->firma_finanzas &&
+                                        $requisicion->firma_compras)
+                                    <p>Completado</p>
                                 @endif
                             </td>
                             <td>{{ $requisicion->contrato->nombre_servicio ?? 'Sin servicio disponible' }}</td>
