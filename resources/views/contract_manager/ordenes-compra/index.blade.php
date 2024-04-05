@@ -183,7 +183,23 @@
                     },
                     {
                         data: 'estado',
-                        name: 'estado'
+                        name: 'estado',
+                        render: function(data, type, row) {
+                            // Verifica el valor de 'estado' y devuelve la etiqueta correspondiente
+                            switch (data) {
+                                case 'curso':
+                                    return '<h5><span class="badge badge-pill badge-primary">En curso</span></h5>';
+                                case 'aprobado':
+                                    return '<h5><span class="badge badge-pill badge-success">Aprobado</span></h5>';
+                                case 'rechazado':
+                                    return '<h5><span class="badge badge-pill badge-danger">Rechazado</span></h5>';
+                                case 'firmada':
+                                case 'firmada_final':
+                                    return '<h5><span class="badge badge-pill badge-success">Firmada</span></h5>';
+                                default:
+                                    return data; // En caso de cualquier otro estado, devuelve el valor original
+                            }
+                        }
                     },
                     {
                         data: 'contrato.nombre_servicio',

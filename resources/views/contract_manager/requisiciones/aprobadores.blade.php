@@ -14,7 +14,8 @@
         }
     </style>
     <h5 class="col-12 titulo_general_funcion">Requisiciónes</h5>
-    <button type="button" class="btn btn-primary" id="filtrarBtn" style="position: relative; left: 70rem;">Filtrar requisiciones pendientes</button>
+    <button type="button" class="btn btn-primary" id="filtrarBtn" style="position: relative; left: 70rem;">Filtrar
+        requisiciones pendientes</button>
     <div class="mt-5 card">
         <div class="card-body datatable-fix">
             <table id="dom" class="table table-bordered w-100 datatable-perspectiva" style="width: 100%">
@@ -25,7 +26,7 @@
                         <th style="vertical-align: top">Referencia</th>
                         <th style="vertical-align: top">Proveedor</th>
                         <th style="vertical-align: top">Estatus</th>
-                        <th style="vertical-align: top">Turno</th>
+                        <th style="vertical-align: top">Turno en firmar</th>
                         <th style="vertical-align: top">Proyecto</th>
                         <th style="vertical-align: top">Área que Solicita</th>
                         <th style="vertical-align: top">Solicitante</th>
@@ -40,23 +41,69 @@
                             <td>{{ $requisicion->fecha }}</td>
                             <td>{{ $requisicion->referencia }}</td>
                             <td>{{ $requisicion->proveedor_catalogo }}</td>
-                            <td>{{ $requisicion->estado }}</td>
                             <td>
-                                @if(!$requisicion->firma_solicitante)
-                                   <p>firma solicitante</p>
-                                @endif
-                                @if(!$requisicion->firma_jefe)
-                                   <p>firma jefe</p>
-                                @endif
-                                @if(!$requisicion->firma_finanzas)
-                                   <p>firma finanzas</p>
-                                @endif
-                                @if(!$requisicion->firma_compras)
-                                   <p>firma comprador</p>
-                                @endif
-                                @if($requisicion->firma_solicitante && $requisicion->firma_jefe && $requisicion->firma_finanzas && $requisicion->firma_compras)
-                                   <p>firmas cumplidas</p>
-                                @endif
+                                @switch($requisicion->estado)
+                                    @case('curso')
+                                        <h5><span class="badge badge-pill badge-primary">En curso</span></h5>
+                                    @break
+
+                                    @case('aprobado')
+                                        <h5><span class="badge badge-pill badge-success">Aprobado</span></h5>
+                                    @break
+
+                                    @case('rechazado')
+                                        <h5><span class="badge badge-pill badge-danger">Rechazado</span></h5>
+                                    @break
+
+                                    @case('firmada')
+                                    @case('firmada_final')
+                                        <h5><span class="badge badge-pill badge-success">Firmada</span></h5>
+                                    @break
+
+                                    @default
+                                        <h5><span class="badge badge-pill badge-info">Por iniciar</span></h5>
+                                @endswitch
+
+                            </td>
+                            @php
+                            $user = Illuminate\Support\Facades\DB::table('users')
+                              ->select('id', 'name')
+                              ->where('id', $requisicion->id_user)
+                              ->first();
+                            @endphp
+                            <td>
+                                @switch(true)
+                                    @case(is_null($requisicion->firma_solicitante))
+                                        <p>Solicitante: {{$user->name ?? ''}}</p>
+                                    @break
+                                    @case(is_null($requisicion->firma_jefe))
+                                    @php
+                                    $employee = App\Models\User::find($requisicion->id_user)->empleado;
+
+                                    if ($employee !== null && $employee->supervisor !== null) {
+                                        $supervisorName = $employee->supervisor->name;
+                                    } else {
+                                        $supervisorName = "N/A"; // Or any default value you prefer
+                                    }
+                                    @endphp
+                                        <p>Jefe: {{$supervisorName ?? ''}} </p>
+                                    @break
+
+                                    @case(is_null($requisicion->firma_finanzas))
+                                        <p>Finanzas</p>
+                                    @break
+
+                                    @case(is_null($requisicion->firma_compras))
+
+                                    @php
+                                     $comprador = App\Models\ContractManager\Comprador::with('user')->where('id', $requisicion->comprador_id)->first();
+                                    @endphp
+                                    <p>Comprador: {{  $comprador->name }}</p>
+                                    @break
+
+                                    @default
+                                        <h5><span class="badge badge-pill badge-success">Completado</span></h5>
+                                @endswitch
                             </td>
                             <td>{{ $requisicion->contrato->nombre_servicio ?? 'Sin servicio disponible' }}</td>
                             <td>{{ $requisicion->area }}</td>
@@ -304,11 +351,11 @@
             });
         });
     </script>
-<script>
-    $(document).ready(function() {
-     $('#filtrarBtn').click(function() {
-         window.location.href = "{{ route('contract_manager.requisiciones.filtrarPorEstado') }}";
-     });
- });
- </script>
+    <script>
+        $(document).ready(function() {
+            $('#filtrarBtn').click(function() {
+                window.location.href = "{{ route('contract_manager.requisiciones.filtrarPorEstado') }}";
+            });
+        });
+    </script>
 @endsection

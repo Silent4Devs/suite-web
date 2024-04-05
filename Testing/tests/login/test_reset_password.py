@@ -1,5 +1,5 @@
 import pytest
-from testing.pages.login.reset_password.fg_password_login import FgPasswordLogin
+from pages.login.reset_password.fg_password_login import FgPasswordLogin
 
 def test_reset_password(browser):
     # Inicializar la página de recuperación de contraseña

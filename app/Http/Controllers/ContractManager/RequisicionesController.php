@@ -314,9 +314,14 @@ class RequisicionesController extends Controller
         $supervisor = User::find($requisicion->id_user)->empleado->supervisor->name;
         $supervisor_email = User::find($requisicion->id_user)->empleado->supervisor->email;
         $comprador = KatbolComprador::with('user')->where('id', $requisicion->comprador_id)->first();
+        $solicitante = User::find($requisicion->id_user);
 
         if ($requisicion->firma_solicitante === null) {
-            $tipo_firma = 'firma_solicitante';
+            if (removeUnicodeCharacters($user->email) === removeUnicodeCharacters($solicitante->email)) {
+                $tipo_firma = 'firma_solicitante';
+            } else {
+                return view('contract_manager.requisiciones.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del solicitante directo: <br> <strong>' . $solicitante->name . '</strong>');
+            }
         } elseif ($requisicion->firma_jefe === null) {
             if (removeUnicodeCharacters($supervisor_email) === removeUnicodeCharacters($user->email)) {
                 $tipo_firma = 'firma_jefe';
