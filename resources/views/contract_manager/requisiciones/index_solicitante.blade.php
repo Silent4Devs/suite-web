@@ -47,22 +47,41 @@
                             <td>{{ $requisicion->fecha }}</td>
                             <td>{{ $requisicion->referencia }}</td>
                             <td>{{ $requisicion->proveedor_catalogo }}</td>
-                            <td>{{ $requisicion->estado }}</td>
                             <td>
-                                @if(!$requisicion->firma_solicitante)
-                                   <p>firma solicitante</p>
-                                @endif
-                                @if(!$requisicion->firma_jefe)
-                                   <p>firma jefe</p>
-                                @endif
-                                @if(!$requisicion->firma_finanzas)
-                                   <p>firma finanzas</p>
-                                @endif
-                                @if(!$requisicion->firma_compras)
-                                   <p>firma comprador</p>
-                                @endif
-                                @if($requisicion->firma_solicitante && $requisicion->firma_jefe && $requisicion->firma_finanzas && $requisicion->firma_compras)
-                                   <p>firmas cumplidas</p>
+                                @switch($requisicion->estado)
+                                    @case('curso')
+                                        <h6><span class="badge badge-pill badge-primary">En curso</span></h6>
+                                    @break
+
+                                    @case('aprobado')
+                                        <h6><span class="badge badge-pill badge-success">Aprobado</span></h6>
+                                    @break
+
+                                    @case('rechazado')
+                                        <h6><span class="badge badge-pill badge-danger">Rechazado</span></h6>
+                                    @break
+
+                                    @case('firmada')
+                                    @case('firmada_final')
+                                        <h6><span class="badge badge-pill badge-success">Firmada</span></h6>
+                                    @break
+
+                                    @default
+                                        <h6><span class="badge badge-pill badge-info">Por iniciar</span></h6>
+                                @endswitch
+
+                            </td>
+                            <td>
+                                @if (is_null($requisicion->firma_solicitante))
+                                    <p>Solicitante</p>
+                                @elseif (is_null($requisicion->firma_jefe))
+                                    <p>Jefe directo</p>
+                                @elseif (is_null($requisicion->firma_finanzas))
+                                    <p>Finanzas</p>
+                                @elseif (is_null($requisicion->firma_compras))
+                                    <p>Comprador</p>
+                                @else
+                                    <h6><span class="badge badge-pill badge-success">Completado</span></h6>
                                 @endif
                             </td>
                             <td>{{ $requisicion->contrato->nombre_servicio ?? 'Sin servicio disponible' }}</td>
