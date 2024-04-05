@@ -52,24 +52,24 @@
                             <td>
                                 @switch($requisicion->estado)
                                     @case('curso')
-                                        <h5 class="badge badge-pill badge-primary">En curso</h5>
+                                        <h6><span class="badge badge-pill badge-primary">En curso</span></h6>
                                     @break
 
                                     @case('aprobado')
-                                        <h5 class="badge badge-pill badge-success">Aprobado</h5>
+                                        <h6><span class="badge badge-pill badge-success">Aprobado</span></h6>
                                     @break
 
                                     @case('rechazado')
-                                        <h5 class="badge badge-pill badge-danger">Rechazado</h5>
+                                        <h6><span class="badge badge-pill badge-danger">Rechazado</span></h6>
                                     @break
 
                                     @case('firmada')
                                     @case('firmada_final')
-                                        <h5 class="badge badge-pill badge-success">Firmada</h5>
+                                        <h6><span class="badge badge-pill badge-success">Firmada</span></h6>
                                     @break
 
                                     @default
-                                        <h5 class="badge badge-pill badge-info">Por iniciar</h5>
+                                        <h6><span class="badge badge-pill badge-info">Por iniciar</span></h6>
                                 @endswitch
 
                             </td>
@@ -77,13 +77,13 @@
                                 @if (is_null($requisicion->firma_solicitante))
                                     <p>Solicitante</p>
                                 @elseif (is_null($requisicion->firma_jefe))
-                                    <p>Jefe directo:</p>
+                                    <p>Jefe directo</p>
                                 @elseif (is_null($requisicion->firma_finanzas))
                                     <p>Finanzas</p>
                                 @elseif (is_null($requisicion->firma_compras))
                                     <p>Comprador</p>
                                 @else
-                                    <h5><span class="badge badge-pill badge-success">Completado</span></h5>
+                                    <h6><span class="badge badge-pill badge-success">Completado</span></h6>
                                 @endif
                             </td>
                             <td>{{ $requisicion->contrato->nombre_servicio ?? 'Sin servicio disponible' }}</td>
