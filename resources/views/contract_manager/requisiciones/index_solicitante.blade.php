@@ -32,7 +32,7 @@
                         <th style="vertical-align: top">Referencia</th>
                         <th style="vertical-align: top">Proveedor</th>
                         <th style="vertical-align: top">Estatus</th>
-                        <th style="vertical-align: top">Turno</th>
+                        <th style="vertical-align: top">Turno en firmar</th>
                         <th style="vertical-align: top">Proyecto</th>
                         <th style="vertical-align: top">Área que Solicita</th>
                         <th style="vertical-align: top">Solicitante</th>
@@ -47,23 +47,51 @@
                             <td>{{ $requisicion->fecha }}</td>
                             <td>{{ $requisicion->referencia }}</td>
                             <td>{{ $requisicion->proveedor_catalogo }}</td>
-                            <td>{{ $requisicion->estado }}</td>
                             <td>
-                                @if(!$requisicion->firma_solicitante)
-                                   <p>firma solicitante</p>
-                                @endif
-                                @if(!$requisicion->firma_jefe)
-                                   <p>firma jefe</p>
-                                @endif
-                                @if(!$requisicion->firma_finanzas)
-                                   <p>firma finanzas</p>
-                                @endif
-                                @if(!$requisicion->firma_compras)
-                                   <p>firma comprador</p>
-                                @endif
-                                @if($requisicion->firma_solicitante && $requisicion->firma_jefe && $requisicion->firma_finanzas && $requisicion->firma_compras)
-                                   <p>firmas cumplidas</p>
-                                @endif
+                                @switch($requisicion->estado)
+                                    @case('curso')
+                                        <h5><span class="badge badge-pill badge-primary">En curso</span></h5>
+                                    @break
+
+                                    @case('aprobado')
+                                        <h5><span class="badge badge-pill badge-success">Aprobado</span></h5>
+                                    @break
+
+                                    @case('rechazado')
+                                        <h5><span class="badge badge-pill badge-danger">Rechazado</span></h5>
+                                    @break
+
+                                    @case('firmada')
+                                    @case('firmada_final')
+                                        <h5><span class="badge badge-pill badge-success">Firmada</span></h5>
+                                    @break
+
+                                    @default
+                                        <h5><span class="badge badge-pill badge-info">Por iniciar</span></h5>
+                                @endswitch
+
+                            </td>
+                            <td>
+                                @switch(true)
+                                    @case(is_null($requisicion->firma_solicitante))
+                                        <p>Solicitante</p>
+                                    @break
+
+                                    @case(is_null($requisicion->firma_jefe))
+                                        <p>Jefe directo</p>
+                                    @break
+
+                                    @case(is_null($requisicion->firma_finanzas))
+                                        <p>Finanzas</p>
+                                    @break
+
+                                    @case(is_null($requisicion->firma_compras))
+                                        <p>Comprador</p>
+                                    @break
+
+                                    @default
+                                        <h5><span class="badge badge-pill badge-success">Completado</span></h5>
+                                @endswitch
                             </td>
                             <td>{{ $requisicion->contrato->nombre_servicio ?? 'Sin servicio disponible' }}</td>
                             <td>{{ $requisicion->area }}</td>
