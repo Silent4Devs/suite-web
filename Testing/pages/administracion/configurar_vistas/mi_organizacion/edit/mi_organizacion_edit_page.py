@@ -9,7 +9,7 @@ from config import password_c, username_c
 #Temporizadores
 tiempo_modulos = 2
 
-class Create_Puestos:
+class Check_Mi_Organizacion:
     
     def __init__(self, driver):
         self.driver = driver
@@ -82,8 +82,8 @@ class Create_Puestos:
 
         time.sleep(5)
         
-        #Modulo Configurar C.Humano
-        print("Ingresando a Modulo Configurar C.Humano ...")
+        #Modulo Configurar Vistas
+        print("Ingresando a Modulo Configurar Vistas ...")
         in_modulo = WebDriverWait(self.driver, 3).until(
             EC.visibility_of_element_located((By.XPATH, element_entrar_modulo))
         )
@@ -91,8 +91,8 @@ class Create_Puestos:
         
         time.sleep(tiempo_modulos)
         
-        #Submodulo Puestos
-        print("Ingresando a Submenu Puestos ...")
+        #Submodulo Mi Organizacion
+        print("Ingresando a Submenu Mi Organizacion ...")
         sub_modulo= WebDriverWait(self.driver, 10).until(
             EC.visibility_of_element_located((By.XPATH, element_entrar_submodulo))
         )
@@ -104,100 +104,35 @@ class Create_Puestos:
 
     ########################################## Agregar
 
-    def add_puetos(self, agregar_btn_xpath, guardar_xpath):
+    def edit_mi_organizacion(self):
         
-        # Dando clic en Boton Agregar Puesto
-        print("Dando clic al botón Agregar...")
-        wait = WebDriverWait(self.driver, 10)
-        agregar_btn = wait.until(EC.presence_of_element_located((By.XPATH, agregar_btn_xpath)))
-        agregar_btn.click()
-        
-        time.sleep(tiempo_modulos)
-
-        # Nombre del Puesto
-        print("Campo nombre del puesto llenado ...")
-        campo_puestos = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//INPUT[@id='puesto']"))
+        # Logo
+        print("Dando clic en campo Logo")
+        campo_logo = WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, "(//SPAN[@class='c-switch-slider'])[1]"))
             )
-        campo_puestos.click()
-        campo_puestos.send_keys("Nombre de Puesto de Prueba 000117")
-
-        time.sleep(tiempo_modulos)
-
-        # Area
-        print("Campo area llenado ...")
-        campo_area = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//SELECT[@id='id_area']"))
-            )
-        campo_area.click()
-        time.sleep(tiempo_modulos)
-        campo_area.send_keys("Arquitectura")
-        time.sleep(tiempo_modulos)
-        campo_area.click()
-
-        time.sleep(tiempo_modulos)
-        
-        # Reportará a
-        print("Campo reportara a llenado ...")
-        campo_reportara_a = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//SELECT[@id='reporta_puesto_id']"))
-        )
-        campo_reportara_a.click()
-        time.sleep(tiempo_modulos)
-        campo_reportara_a.send_keys("Consultor jr")
-        time.sleep(tiempo_modulos)
-        campo_reportara_a.click()
-
-        time.sleep(tiempo_modulos)
-
-        # No. de personas a su cargo Internas
-        print("Campo No. de personas a su cargo Internas llenado ...")
-        campo_n_de_personas_internas = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "(//INPUT[@class='form-control '])[2]"))
-        )
-        campo_n_de_personas_internas.click()
-        campo_n_de_personas_internas.send_keys("5")
-
-        time.sleep(tiempo_modulos)
-        
-        # No. de personas a su cargo Externas
-        print("Campo No. de personas a su cargo Externas llenado ...")
-        campo_n_de_personas_externas = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "(//INPUT[@class='form-control '])[3]"))
-        )
-        campo_n_de_personas_externas.click()
-        campo_n_de_personas_externas.send_keys("5")
-
-        time.sleep(tiempo_modulos)
-
-        # Actividad
-        print("Campo actividad llenado ...")
-        campo_actividad = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//INPUT[@id='actividad_responsabilidades']"))
-        )
-        campo_actividad.clear()
-        campo_actividad.send_keys("Actividad de Prueba")
+        campo_logo.click()
     
         time.sleep(tiempo_modulos)
 
-        # Resultado Esperado
-        print("Campo resultado esperado llenado ...")
-        campo_esperado = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//TEXTAREA[@id='resultado_certificado_responsabilidades']"))
+        # Telefono
+        print("Dando clic en campo Telefono")
+        campo_telefono = WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, "(//SPAN[@class='c-switch-slider'])[6]"))
         )
-        campo_esperado.clear()
-        campo_esperado.send_keys("Resultado esperado de prueba")
-    
-        time.sleep(tiempo_modulos)
-
-        # Guardar
-        
-        guardar = WebDriverWait(self.driver, 20).until(
-            EC.element_to_be_clickable((By.XPATH, guardar_xpath))
-        )
-        guardar.click()
+        campo_telefono.click()
 
         time.sleep(tiempo_modulos)
         
-        print("URL actual:", self.driver.current_url)
-                            
+        # Correo
+        print("Dando clic en campo Correo")
+        campo_correo = WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, "(//SPAN[@class='c-switch-slider'])[7]"))
+        )
+        campo_correo.click()
+
+        time.sleep(tiempo_modulos)
+       
+        print("Regresando a pantalla de inicio") 
+        self.driver.back()
+       
