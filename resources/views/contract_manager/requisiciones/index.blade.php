@@ -64,16 +64,16 @@
                                 @endif
                             </td>
                             <td>
-                                @if (!$requisicion->firma_solicitante)
+                                @if ($requisicion->firma_solicitante)
                                     <p>Solicitante</p>
                                 @endif
-                                @if (!$requisicion->firma_jefe)
+                                @if ($requisicion->firma_jefe)
                                     <p>Jefe directo:</p>
                                 @endif
-                                @if (!$requisicion->firma_finanzas)
+                                @if ($requisicion->firma_finanzas)
                                     <p>Finanzas</p>
                                 @endif
-                                @if (!$requisicion->firma_compras)
+                                @if ($requisicion->firma_compras)
                                     <p>Comprador</p>
                                 @endif
                                 @if (
