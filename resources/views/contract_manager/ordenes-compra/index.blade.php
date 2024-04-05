@@ -188,14 +188,14 @@
                             // Verifica el valor de 'estado' y devuelve la etiqueta correspondiente
                             switch (data) {
                                 case 'curso':
-                                    return '<span class="badge badge-pill badge-primary">En curso</span>';
+                                    return '<h5><span class="badge badge-pill badge-primary">En curso</span></h5>';
                                 case 'aprobado':
-                                    return '<span class="badge badge-pill badge-success">Aprobado</span>';
+                                    return '<h5><span class="badge badge-pill badge-success">Aprobado</span></h5>';
                                 case 'rechazado':
-                                    return '<span class="badge badge-pill badge-danger">Rechazado</span>';
+                                    return '<h5><span class="badge badge-pill badge-danger">Rechazado</span></h5>';
                                 case 'firmada':
                                 case 'firmada_final':
-                                    return '<span class="badge badge-pill badge-success">Firmada</span>';
+                                    return '<h5><span class="badge badge-pill badge-success">Firmada</span></h5>';
                                 default:
                                     return data; // En caso de cualquier otro estado, devuelve el valor original
                             }
