@@ -52,24 +52,24 @@
                             <td>
                                 @switch($requisicion->estado)
                                     @case('curso')
-                                        <h6><span class="badge badge-pill badge-primary">En curso</span></h6>
+                                        <h5><span class="badge badge-pill badge-primary">En curso</span></h5>
                                     @break
 
                                     @case('aprobado')
-                                        <h6><span class="badge badge-pill badge-success">Aprobado</span></h6>
+                                        <h5><span class="badge badge-pill badge-success">Aprobado</span></h5>
                                     @break
 
                                     @case('rechazado')
-                                        <h6><span class="badge badge-pill badge-danger">Rechazado</span></h6>
+                                        <h5><span class="badge badge-pill badge-danger">Rechazado</span></h5>
                                     @break
 
                                     @case('firmada')
                                     @case('firmada_final')
-                                        <h6><span class="badge badge-pill badge-success">Firmada</span></h6>
+                                        <h5><span class="badge badge-pill badge-success">Firmada</span></h5>
                                     @break
 
                                     @default
-                                        <h6><span class="badge badge-pill badge-info">Por iniciar</span></h6>
+                                        <h5><span class="badge badge-pill badge-info">Por iniciar</span></h5>
                                 @endswitch
 
                             </td>
@@ -83,7 +83,7 @@
                                 @elseif (is_null($requisicion->firma_compras))
                                     <p>Comprador</p>
                                 @else
-                                    <h6><span class="badge badge-pill badge-success">Completado</span></h6>
+                                    <h5><span class="badge badge-pill badge-success">Completado</span></h5>
                                 @endif
                             </td>
                             <td>{{ $requisicion->contrato->nombre_servicio ?? 'Sin servicio disponible' }}</td>
