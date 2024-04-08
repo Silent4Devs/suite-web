@@ -49,7 +49,7 @@
                     </tr>
                 </thead>
 
-                <tbody style="position:relative;">
+                <tbody>
                     @foreach ($proyectos as $proyecto)
                         <tr>
                             <td>
@@ -80,11 +80,15 @@
                                 @php
                                     $suma_costo = 0;
                                 @endphp
-                                @foreach ($proyectos->empleados as $empleado)
-                                    @php
-                                        $suma_costo += $empleado['costo_horas'];
-                                    @endphp
-                                @endforeach
+                                @if (isset($proyectos->empleados))
+                                    @foreach ($proyectos->empleados as $empleado)
+                                        @php
+                                            $suma_costo += $empleado['costo_horas'];
+                                        @endphp
+                                    @endforeach
+                                @endif
+
+                                ${{ $suma_costo }}
                             </td>
                         </tr>
                     @endforeach

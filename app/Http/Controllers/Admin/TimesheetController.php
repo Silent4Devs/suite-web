@@ -1096,10 +1096,12 @@ class TimesheetController extends Controller
         $areas_array = $this->timesheetService->totalRegisterByAreas();
         $proyectos = $this->timesheetService->getRegistersByProyects();
 
+        $proyectos_array = TimesheetProyecto::get();
+
         return view(
             // 'admin.timesheet.dashboard'
             'admin.timesheet.dashboard',
-            compact('counters', 'areas_array', 'proyectos')
+            compact('counters', 'areas_array', 'proyectos', 'proyectos_array')
         );
     }
 
