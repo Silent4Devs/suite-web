@@ -1096,10 +1096,12 @@ class TimesheetController extends Controller
         $areas_array = $this->timesheetService->totalRegisterByAreas();
         $proyectos = $this->timesheetService->getRegistersByProyects();
 
+        $proyectos_array = TimesheetProyecto::get();
+
         return view(
             // 'admin.timesheet.dashboard'
             'admin.timesheet.dashboard',
-            compact('counters', 'areas_array', 'proyectos')
+            compact('counters', 'areas_array', 'proyectos', 'proyectos_array')
         );
     }
 
@@ -1158,6 +1160,17 @@ class TimesheetController extends Controller
         $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.timesheet.reportes.reportes-proyemp', compact('proyectos', 'logo_actual', 'empresa_actual'));
+    }
+
+    public function reportesFinanciero()
+    {
+        $proyectos = TimesheetProyecto::getAll();
+
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
+        $empresa_actual = $organizacion_actual->empresa;
+
+        return view('admin.timesheet.reportes.reportes-financiero', compact('proyectos', 'logo_actual', 'empresa_actual'));
     }
 
     public function obtenerTareas(Request $request)
