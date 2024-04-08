@@ -2,24 +2,25 @@
 
 namespace App\Http\Controllers\ContractManager;
 
-use App\Http\Controllers\Controller;
-use App\Mail\RequisicionesEmail;
-use App\Models\ContractManager\Comprador as KatbolComprador;
-use App\Models\ContractManager\Contrato as KatbolContrato;
-use App\Models\ContractManager\ProvedorRequisicionCatalogo as KatbolProvedorRequisicionCatalogo;
-use App\Models\ContractManager\ProveedorIndistinto as KatbolProveedorIndistinto;
-use App\Models\ContractManager\ProveedorOC as KatbolProveedorOC;
-use App\Models\ContractManager\Requsicion as KatbolRequsicion;
-use App\Models\ContractManager\Sucursal as KatbolSucursal;
-use App\Models\Organizacion;
+use PDF;
+use Gate;
 use App\Models\User;
+use App\Models\Organizacion;
+use Illuminate\Http\Request;
+use App\Mail\RequisicionesEmail;
 use App\Models\User as ModelsUser;
 use App\Traits\ObtenerOrganizacion;
-use Gate;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
-use PDF;
+use RealRashid\SweetAlert\Facades\Alert;
 use Symfony\Component\HttpFoundation\Response;
+use App\Models\ContractManager\Contrato as KatbolContrato;
+use App\Models\ContractManager\Sucursal as KatbolSucursal;
+use App\Models\ContractManager\Comprador as KatbolComprador;
+use App\Models\ContractManager\Requsicion as KatbolRequsicion;
+use App\Models\ContractManager\ProveedorOC as KatbolProveedorOC;
+use App\Models\ContractManager\ProveedorIndistinto as KatbolProveedorIndistinto;
+use App\Models\ContractManager\ProvedorRequisicionCatalogo as KatbolProvedorRequisicionCatalogo;
 
 class RequisicionesController extends Controller
 {
@@ -445,6 +446,7 @@ class RequisicionesController extends Controller
         $buttonJefe = false;
         $buttonFinanzas = true;
         $buttonCompras = false;
+        Alert::success('Éxito', 'Filtro solicitantes aplicado');
 
         return view('contract_manager.requisiciones.aprobadores', compact('requisiciones', 'buttonSolicitante', 'buttonJefe', 'buttonFinanzas', 'buttonCompras'));
     }
@@ -456,6 +458,7 @@ class RequisicionesController extends Controller
         $buttonJefe = true;
         $buttonFinanzas = false;
         $buttonCompras = false;
+        Alert::success('Éxito', 'Filtro jefe aplicado');
 
         return view('contract_manager.requisiciones.aprobadores', compact('requisiciones', 'buttonJefe', 'buttonSolicitante', 'buttonFinanzas', 'buttonCompras'));
     }
@@ -467,6 +470,7 @@ class RequisicionesController extends Controller
         $buttonJefe = false;
         $buttonFinanzas = false;
         $buttonCompras = false;
+        Alert::success('Éxito', 'Filtro finanzas aplicado');
 
         return view('contract_manager.requisiciones.aprobadores', compact('requisiciones', 'buttonFinanzas', 'buttonSolicitante', 'buttonJefe', 'buttonCompras'));
     }
@@ -478,6 +482,7 @@ class RequisicionesController extends Controller
         $buttonJefe = false;
         $buttonFinanzas = false;
         $buttonCompras = true;
+        Alert::success('Éxito', 'Filtro compras correctamente');
 
         return view('contract_manager.requisiciones.aprobadores', compact('requisiciones', 'buttonCompras', 'buttonSolicitante', 'buttonJefe', 'buttonFinanzas'));
     }
