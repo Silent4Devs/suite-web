@@ -51,6 +51,11 @@ class EvaluacionDesempeno extends Model
         return $this->hasMany(PeriodosEvaluacionDesempeno::class, 'evaluacion_desempeno_id', 'id');
     }
 
+    public function escalas()
+    {
+        return $this->hasMany(EscalasEvaluacionDesempeno::class, 'evaluacion_desempeno_id', 'id');
+    }
+
     public function evaluados()
     {
         return $this->hasMany(EvaluadosEvaluacionDesempeno::class, 'evaluacion_desempeno_id', 'id');
