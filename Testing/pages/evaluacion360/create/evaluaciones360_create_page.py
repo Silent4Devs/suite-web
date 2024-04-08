@@ -1,4 +1,5 @@
 import time
+from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -53,6 +54,37 @@ class Evaluaciones360Create:
             print("Nombre de la evaluación ingresado.")
         except Exception as e:
             print("Error al ingresar el nombre de la evaluación:", e)
+        self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+    def descripcion_evaluacion(self, descripcion):
+        try:
+            self._fill_input_field_xpath("//textarea[@class='form-control ' and @name='descripcion']", descripcion)
+            print("Descripción de la evaluación ingresada.")
+        except Exception as e:
+            print("Error al ingresar la descripción de la evaluación:", e)
+    def check_evaluacion(self):
+        try:
+            self._click_element("//span[@class='checkmark']")
+            print("Check de la evaluación seleccionado.")
+        except Exception as e:
+            print("Error al seleccionar el check de la evaluación:", e)
+
+    def siguiente(self):
+        try:
+            self._click_element("//button[contains(text(), 'Siguiente')]")
+            print("Siguiente paso.")
+        except Exception as e:
+            print("Error al pasar al siguiente paso:", e)
+    def publico_objetivo_select(self):
+        try:
+            self._select_option_by_text("//select[@id='evaluados_objetivo']", "Toda la empresa")
+            print("Público objetivo seleccionado.")
+            time.sleep(2)
+        except Exception as e:
+            print("Error al seleccionar el público objetivo:", e)
+
+    def _select_option_by_text(self, locator, text):
+        select = Select(self.driver.find_element(By.XPATH, locator))
+        select.select_by_visible_text(text)
 
     def _fill_input_field_xpath(self, locator, value):
         input_field = self.wait.until(EC.visibility_of_element_located((By.XPATH, locator)))

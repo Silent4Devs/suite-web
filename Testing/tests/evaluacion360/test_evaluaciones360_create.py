@@ -35,5 +35,9 @@ def test_evaluaciones360_create(browser):
     evaluaciones360_create.crear_ev360()
     nombre = "Evaluación 360"
     evaluaciones360_create.nombre_evaluacion(nombre)
-
+    descripcion = "Evaluación 360 para empleados"
+    evaluaciones360_create.descripcion_evaluacion(descripcion)
+    evaluaciones360_create.check_evaluacion()
+    evaluaciones360_create.siguiente()
+    evaluaciones360_create.publico_objetivo_select()
 
