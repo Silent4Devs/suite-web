@@ -1,36 +1,34 @@
 import pytest
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options as ChromeOptions
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from pages.gestion_talento.create.evaluaciones360_create_page import Evaluaciones360_create_page
+from config import username, password
+'''
+@pytest.fixture(scope="session")
+def browser():
+    options = FirefoxOptions()
+    # options = ChromeOptions()
+    options.add_argument('--headless')
+    options.add_argument('--disable-gpu')
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-dev-shm-usage')
 
-#Usuario y Contraseña
+    options.add_argument('--disable-extensions')
+    options.add_argument('--disable-dev-shm-usage')
+    options.add_argument('--disable-browser-side-navigation')
+    options.add_argument('--disable-gpu')
+    options.add_argument('--no-sandbox')
+    options.add_argument('--log-level=3')
 
-username = "cesar.escobar@silent4business.com"
-password = "password"   
-
-input_chip_xpath = "//li[contains(@class,'select2-search select2-search--inline')]"
-input_chip_xpath_2 = "//li[contains(@class,'select2-search select2-search--inline')]"
-opcion_deseada_1 = "Cesar Ernesto Escobar Hernández"  
-opcion_deseada_2 = "Marti David Tendilla Gonzalez"
-opciones_deseadas = ["", "Cesar Ernesto Escobar Hernández", "Diego Flores Madrigal"]
-input_xpath = "//input[@class='form-control' and @type='date']"
-
-
-
-@pytest.mark.usefixtures("browser")
+    #driver = webdriver.Chrome(options=options)
+    driver = webdriver.Firefox(options=options)
+    yield driver
+    driver.quit()
+'''
 def test_evaluaciones360_manualmente(browser):
-    
     evaluaciones360_create = Evaluaciones360_create_page(browser)
-    evaluaciones360_create.login(username, password)
-    evaluaciones360_create.in_modulos()
-    evaluaciones360_create.create_configuracion()
-    #evaluaciones360_create.create_grupo()
-    evaluaciones360_create.select_publico_objetivo()
-    #evaluaciones360_create.select_area_evaluar()
-    evaluaciones360_create.select_empleados_evaluar(input_chip_xpath, opciones_deseadas)
-    #evaluaciones360_create.select_empleado_evaluar_1(input_chip_xpath, opcion_deseada_1)
-    #evaluaciones360_create.select_empleado_evaluar_2(input_chip_xpath_2, opcion_deseada_2)
-    evaluaciones360_create.select_boton_sig()
-    evaluaciones360_create.create_evaluadores()
-    evaluaciones360_create.create_periodos()
+    evaluaciones360_create.login()
 
-    
+
 
