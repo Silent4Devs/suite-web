@@ -1160,6 +1160,17 @@ class TimesheetController extends Controller
         return view('admin.timesheet.reportes.reportes-proyemp', compact('proyectos', 'logo_actual', 'empresa_actual'));
     }
 
+    public function reportesFinanciero()
+    {
+        $proyectos = TimesheetProyecto::getAll();
+
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
+        $empresa_actual = $organizacion_actual->empresa;
+
+        return view('admin.timesheet.reportes.reportes-financiero', compact('proyectos', 'logo_actual', 'empresa_actual'));
+    }
+
     public function obtenerTareas(Request $request)
     {
         $proyecto_id = $request->proyecto_id;
