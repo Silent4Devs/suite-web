@@ -4,7 +4,7 @@ from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from pages.evaluacion360.create.evaluaciones360_create_page import Evaluaciones360Create
 from config import username, password
-
+'''
 @pytest.fixture(scope="session")
 def browser():
     options = FirefoxOptions()
@@ -25,11 +25,15 @@ def browser():
     driver = webdriver.Firefox(options=options)
     yield driver
     driver.quit()
-
-def test_evaluaciones360_manualmente(browser):
+'''
+def test_evaluaciones360_create(browser):
     evaluaciones360_create = Evaluaciones360Create(browser)
     evaluaciones360_create.login()
     index_cap_humano = "https://192.168.9.78/admin/capital-humano"
     evaluaciones360_create.cap_humano_index(index_cap_humano)
+    evaluaciones360_create.ev360_options()
+    evaluaciones360_create.crear_ev360()
+    nombre = "Evaluación 360"
+    evaluaciones360_create.nombre_evaluacion(nombre)
 
 

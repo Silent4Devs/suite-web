@@ -17,8 +17,8 @@ class Evaluaciones360Create:
             self.driver.maximize_window()
             print("Iniciando sesión en el sistema...")
             time.sleep(4)
-            self._fill_input_field("input[name='email']", username)
-            self._fill_input_field("input[name='password']", password)
+            self._fill_input_field_css("input[name='email']", username)
+            self._fill_input_field_css("input[name='password']", password)
             self._click_element("//button[@type='submit'][contains(text(),'Enviar')]")
             print("¡Sesión iniciada con éxito!")
             self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "img[alt='Logo Tabantaj']")))
@@ -33,7 +33,33 @@ class Evaluaciones360Create:
         except Exception as e:
             print("Error al cargar el index de evaluaciones 360:", e)
 
-    def _fill_input_field(self, locator, value):
+    def ev360_options(self):
+        try:
+            self._click_element("//a[contains(.,'Evaluación 360')]")
+            print("Opciones de evaluaciones 360 cargadas.")
+        except Exception as e:
+            print("Error al cargar las opciones de evaluaciones 360:", e)
+
+    def crear_ev360(self):
+        try:
+            self._click_element("//a[@href='https://192.168.9.78/admin/recursos-humanos/evaluacion-360/evaluaciones/create']")
+            print("Formulario de creación de evaluación 360 cargado.")
+        except Exception as e:
+            print("Error al cargar el formulario de creación de evaluación 360:", e)
+
+    def nombre_evaluacion(self, nombre):
+        try:
+            self._fill_input_field_xpath("//input[@id='nombre']", nombre)
+            print("Nombre de la evaluación ingresado.")
+        except Exception as e:
+            print("Error al ingresar el nombre de la evaluación:", e)
+
+    def _fill_input_field_xpath(self, locator, value):
+        input_field = self.wait.until(EC.visibility_of_element_located((By.XPATH, locator)))
+        input_field.clear()
+        input_field.send_keys(value)
+
+    def _fill_input_field_css(self, locator, value):
             input_field = self.wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, locator)))
             input_field.clear()
             input_field.send_keys(value)
