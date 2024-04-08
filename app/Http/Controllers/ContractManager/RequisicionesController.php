@@ -294,8 +294,12 @@ class RequisicionesController extends Controller
     {
         $requisiciones = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->orderByDesc('id')->get();
         $proveedor_indistinto = KatbolProveedorIndistinto::pluck('requisicion_id')->first();
+        $buttonSolicitante = false;
+        $buttonJefe = false;
+        $buttonFinanzas = false;
+        $buttonCompras = false;
 
-        return view('contract_manager.requisiciones.aprobadores', compact('requisiciones', 'proveedor_indistinto'));
+        return view('contract_manager.requisiciones.aprobadores', compact('requisiciones', 'proveedor_indistinto', 'buttonSolicitante', 'buttonJefe', 'buttonFinanzas', 'buttonCompras'));
     }
 
     public function getRequisicionIndexAprobador()
@@ -433,29 +437,48 @@ class RequisicionesController extends Controller
         return $pdf->download('requisicion.pdf');
     }
 
-
     public function filtrarPorEstado()
     {
         $requisiciones = KatbolRequsicion::whereNotNull('firma_solicitante')
             ->whereNotNull('firma_jefe')->where('firma_finanzas', null)->get();
-        return view('contract_manager.requisiciones.aprobadores', compact('requisiciones'));
+        $buttonSolicitante = true;
+        $buttonJefe = false;
+        $buttonFinanzas = false;
+        $buttonCompras = false;
+
+        return view('contract_manager.requisiciones.aprobadores', compact('requisiciones', 'buttonSolicitante', 'buttonJefe', 'buttonFinanzas', 'buttonCompras'));
     }
 
     public function filtrarPorEstado1()
     {
         $requisiciones = KatbolRequsicion::where('firma_jefe', null)->get();
-        return view('contract_manager.requisiciones.aprobadores', compact('requisiciones'));
+        $buttonSolicitante = false;
+        $buttonJefe = true;
+        $buttonFinanzas = false;
+        $buttonCompras = false;
+
+        return view('contract_manager.requisiciones.aprobadores', compact('requisiciones', 'buttonJefe', 'buttonSolicitante', 'buttonFinanzas', 'buttonCompras'));
     }
 
     public function filtrarPorEstado2()
     {
         $requisiciones = KatbolRequsicion::where('firma_solicitante', null)->get();
-        return view('contract_manager.requisiciones.aprobadores', compact('requisiciones'));
+        $buttonSolicitante = false;
+        $buttonJefe = false;
+        $buttonFinanzas = true;
+        $buttonCompras = false;
+
+        return view('contract_manager.requisiciones.aprobadores', compact('requisiciones', 'buttonFinanzas', 'buttonSolicitante', 'buttonJefe', 'buttonCompras'));
     }
 
     public function filtrarPorEstado3()
     {
         $requisiciones = KatbolRequsicion::where('firma_compras', null)->get();
-        return view('contract_manager.requisiciones.aprobadores', compact('requisiciones'));
+        $buttonSolicitante = false;
+        $buttonJefe = false;
+        $buttonFinanzas = false;
+        $buttonCompras = true;
+
+        return view('contract_manager.requisiciones.aprobadores', compact('requisiciones', 'buttonCompras', 'buttonSolicitante', 'buttonJefe', 'buttonFinanzas'));
     }
 }
