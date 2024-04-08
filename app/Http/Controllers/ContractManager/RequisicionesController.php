@@ -446,7 +446,7 @@ class RequisicionesController extends Controller
         $buttonJefe = false;
         $buttonFinanzas = true;
         $buttonCompras = false;
-        Alert::success('Éxito', 'Filtro solicitantes aplicado');
+        toast('Filtro solicitantes aplicado!','success');
 
         return view('contract_manager.requisiciones.aprobadores', compact('requisiciones', 'buttonSolicitante', 'buttonJefe', 'buttonFinanzas', 'buttonCompras'));
     }
@@ -458,7 +458,7 @@ class RequisicionesController extends Controller
         $buttonJefe = true;
         $buttonFinanzas = false;
         $buttonCompras = false;
-        Alert::success('Éxito', 'Filtro jefe aplicado');
+        Alert::success('Éxito', 'Filtro por jefe aplicado');
 
         return view('contract_manager.requisiciones.aprobadores', compact('requisiciones', 'buttonJefe', 'buttonSolicitante', 'buttonFinanzas', 'buttonCompras'));
     }
@@ -470,7 +470,7 @@ class RequisicionesController extends Controller
         $buttonJefe = false;
         $buttonFinanzas = false;
         $buttonCompras = false;
-        Alert::success('Éxito', 'Filtro finanzas aplicado');
+        Alert::success('Éxito', 'Filtro por finanzas aplicado');
 
         return view('contract_manager.requisiciones.aprobadores', compact('requisiciones', 'buttonFinanzas', 'buttonSolicitante', 'buttonJefe', 'buttonCompras'));
     }
@@ -482,7 +482,7 @@ class RequisicionesController extends Controller
         $buttonJefe = false;
         $buttonFinanzas = false;
         $buttonCompras = true;
-        Alert::success('Éxito', 'Filtro compras aplicado');
+        Alert::success('Éxito', 'Filtro por compras aplicado');
 
         return view('contract_manager.requisiciones.aprobadores', compact('requisiciones', 'buttonCompras', 'buttonSolicitante', 'buttonJefe', 'buttonFinanzas'));
     }
