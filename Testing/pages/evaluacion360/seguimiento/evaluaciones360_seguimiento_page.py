@@ -6,7 +6,7 @@ from selenium.webdriver.support.ui import Select
 import pdb
 from config import username, password
 
-class Evaluaciones360_create_page:
+class Evaluaciones360Seguimiento:
     def __init__(self, driver):
         self.driver = driver
         self.wait = WebDriverWait(self.driver, 20)
