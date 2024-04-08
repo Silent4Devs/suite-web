@@ -127,6 +127,12 @@
                         Proyectos
                     </a>
                 @endcan
+                @can('timesheet_administrador_dashboard_financiero_access')
+                    <a class="nav-link" id="nav-financiero-tab" data-type="financiero" data-toggle="tab" href="#nav-financiero"
+                        role="tab" aria-controls="nav-financiero" aria-selected="false">
+                        Finanzas
+                    </a>
+                @endcan
             </div>
         </nav>
 
@@ -145,6 +151,11 @@
             @can('visualizar_registros_dashboard_proyectos_timesheet')
                 <div class="tab-pane mb-4 fade" id="nav-proyectos" role="tabpanel" aria-labelledby="nav-proyectos-tab">
                     @include('admin.timesheet.dashboard.proyectos')
+                </div>
+            @endcan
+            @can('visualizar_registros_dashboard_proyectos_timesheet')
+                <div class="tab-pane mb-4 fade" id="nav-financiero" role="tabpanel" aria-labelledby="nav-financiero-tab">
+                    @include('admin.timesheet.dashboard.financiero')
                 </div>
             @endcan
         </div>
