@@ -7,7 +7,6 @@ import pdb
 from config import username, password
 
 class Evaluaciones360_create_page:
-
     def __init__(self, driver):
         self.driver = driver
         self.wait = WebDriverWait(self.driver, 20)
@@ -27,6 +26,12 @@ class Evaluaciones360_create_page:
         except Exception as e:
             print("Error durante el inicio de sesión:", e)
 
+    def cap_humano_index(self, index_cap_humano):
+        try:
+            self.driver.get(index_cap_humano)
+            print("Index de evaluaciones 360 cargado.")
+        except Exception as e:
+            print("Error al cargar el index de evaluaciones 360:", e)
 
     def _fill_input_field(self, locator, value):
             input_field = self.wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, locator)))
