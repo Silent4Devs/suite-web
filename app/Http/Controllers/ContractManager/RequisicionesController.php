@@ -441,9 +441,9 @@ class RequisicionesController extends Controller
     {
         $requisiciones = KatbolRequsicion::whereNotNull('firma_solicitante')
             ->whereNotNull('firma_jefe')->where('firma_finanzas', null)->get();
-        $buttonSolicitante = true;
+        $buttonSolicitante = false;
         $buttonJefe = false;
-        $buttonFinanzas = false;
+        $buttonFinanzas = true;
         $buttonCompras = false;
 
         return view('contract_manager.requisiciones.aprobadores', compact('requisiciones', 'buttonSolicitante', 'buttonJefe', 'buttonFinanzas', 'buttonCompras'));
@@ -463,9 +463,9 @@ class RequisicionesController extends Controller
     public function filtrarPorEstado2()
     {
         $requisiciones = KatbolRequsicion::where('firma_solicitante', null)->get();
-        $buttonSolicitante = false;
+        $buttonSolicitante = true;
         $buttonJefe = false;
-        $buttonFinanzas = true;
+        $buttonFinanzas = false;
         $buttonCompras = false;
 
         return view('contract_manager.requisiciones.aprobadores', compact('requisiciones', 'buttonFinanzas', 'buttonSolicitante', 'buttonJefe', 'buttonCompras'));
