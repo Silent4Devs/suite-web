@@ -482,7 +482,7 @@ class RequisicionesController extends Controller
         $buttonJefe = false;
         $buttonFinanzas = false;
         $buttonCompras = true;
-        Alert::success('Éxito', 'Filtro compras correctamente');
+        Alert::success('Éxito', 'Filtro compras aplicado');
 
         return view('contract_manager.requisiciones.aprobadores', compact('requisiciones', 'buttonCompras', 'buttonSolicitante', 'buttonJefe', 'buttonFinanzas'));
     }
