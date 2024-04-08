@@ -1,13 +1,34 @@
 import pytest
-from pages.gestion_talento.seguimiento.evaluaciones360_seguimiento_page import Evaluaciones_360_seguimiento_page
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options as ChromeOptions
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
+from pages.evaluacion360.seguimiento.evaluaciones360_seguimiento_page import Evaluaciones360Seguimiento
+from config import username, password
 
-username = "cesar.escobar@silent4business.com"
-password = "password"
+@pytest.fixture(scope="session")
+def browser():
+    options = FirefoxOptions()
+    # options = ChromeOptions()
+    options.add_argument('--headless')
+    options.add_argument('--disable-gpu')
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-dev-shm-usage')
 
-@pytest.mark.usefixtures("browser")
-def test_evaluaciones360(browser):
-    
-    evaluaciones360_create = Evaluaciones_360_seguimiento_page(browser)
-    evaluaciones360_create.login(username, password)
-    evaluaciones360_create.in_modulos()
+    options.add_argument('--disable-extensions')
+    options.add_argument('--disable-dev-shm-usage')
+    options.add_argument('--disable-browser-side-navigation')
+    options.add_argument('--disable-gpu')
+    options.add_argument('--no-sandbox')
+    options.add_argument('--log-level=3')
+
+    #driver = webdriver.Chrome(options=options)
+    driver = webdriver.Firefox(options=options)
+    yield driver
+    driver.quit()
+
+def test_evaluaciones360_seguimiento(browser):
+    evaluaciones360_seguimiento = Evaluaciones360Seguimiento(browser)
+    evaluaciones360_seguimiento.login()
+    index_cap_humano = "https://192.168.9.78/admin/capital-humano"
+    evaluaciones360_seguimiento.cap_humano_index(index_cap_humano)
 

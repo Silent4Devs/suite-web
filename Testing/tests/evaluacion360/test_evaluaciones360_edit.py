@@ -26,11 +26,11 @@ def browser():
     yield driver
     driver.quit()
 
-def test_evaluaciones360_manualmente(browser):
-    evaluaciones360_create = Evaluaciones360Edit(browser)
-    evaluaciones360_create.login()
+def test_evaluaciones360_edit(browser):
+    evaluaciones360_edit = Evaluaciones360Edit(browser)
+    evaluaciones360_edit.login()
     index_cap_humano = "https://192.168.9.78/admin/capital-humano"
-    evaluaciones360_create.cap_humano_index(index_cap_humano)
+    evaluaciones360_edit.cap_humano_index(index_cap_humano)
 
 
 

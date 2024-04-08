@@ -26,8 +26,8 @@ def browser():
     yield driver
     driver.quit()
 
-def test_evaluaciones360_manualmente(browser):
-    evaluaciones360_create = GestionTalentoIndex(browser)
-    evaluaciones360_create.login()
+def test_gestiontalento_index(browser):
+    gestion_talento_index = GestionTalentoIndex(browser)
+    gestion_talento_index.login()
     index_cap_humano = "https://192.168.9.78/admin/capital-humano"
-    evaluaciones360_create.cap_humano_index(index_cap_humano)
+    gestion_talento_index.cap_humano_index(index_cap_humano)

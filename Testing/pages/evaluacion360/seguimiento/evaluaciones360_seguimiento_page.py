@@ -1,4 +1,3 @@
-
 import time
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -7,7 +6,7 @@ from selenium.webdriver.support.ui import Select
 import pdb
 from config import username, password
 
-class Evaluaciones360Edit:
+class Evaluaciones360Seguimiento:
     def __init__(self, driver):
         self.driver = driver
         self.wait = WebDriverWait(self.driver, 20)
