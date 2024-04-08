@@ -2,7 +2,7 @@ import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
-from pages.gestion_talento.create.evaluaciones360_create_page import Evaluaciones360_create_page
+from pages.gestion_talento.index.evaluaciones360_index_page import Evaluaciones360Index
 from config import username, password
 
 @pytest.fixture(scope="session")
@@ -27,7 +27,7 @@ def browser():
     driver.quit()
 
 def test_evaluaciones360_manualmente(browser):
-    evaluaciones360_create = Evaluaciones360_create_page(browser)
+    evaluaciones360_create = Evaluaciones360Index(browser)
     evaluaciones360_create.login()
     index_cap_humano = "https://192.168.9.78/admin/capital-humano"
     evaluaciones360_create.cap_humano_index(index_cap_humano)

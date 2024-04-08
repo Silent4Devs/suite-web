@@ -3,89 +3,41 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import Select
+import pdb
+from config import username, password
 
-#Temporizadores
-tiempo_modulos = 5
-tiempo_carga = 10
-tiempo_espera = 3
-tiempo_llenado = 1
-tiempo_diez = 10
-
-#----------------------------------------------------Prueba Login Y Entrar a Modulo Evaluaciones 360--------------------------------------------------------------------------
-
-class Evaluaciones_360_log_in_modulo:
-    
+class Evaluaciones360Index:
     def __init__(self, driver):
         self.driver = driver
+        self.wait = WebDriverWait(self.driver, 20)
 
+    def login(self):
+        try:
+            self.driver.get('https://192.168.9.78/')
+            self.driver.maximize_window()
+            print("Iniciando sesión en el sistema...")
+            time.sleep(4)
+            self._fill_input_field("input[name='email']", username)
+            self._fill_input_field("input[name='password']", password)
+            self._click_element("//button[@type='submit'][contains(text(),'Enviar')]")
+            print("¡Sesión iniciada con éxito!")
+            self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "img[alt='Logo Tabantaj']")))
+            print("Login correcto.")
+        except Exception as e:
+            print("Error durante el inicio de sesión:", e)
 
-    def login(self, username, password):
-        
-        #Entrando URL
-        self.driver.get('https://192.168.9.78/')
-        self.driver.maximize_window()
-        print("------ LOGIN - TABANTAJ -----")
-        time.sleep(5)
-        
-        #Ingresando Correo
-        username_input = WebDriverWait(self.driver, 3).until(
-            EC.visibility_of_element_located((By.CSS_SELECTOR, "input[name='email']"))
-        )
-        username_input.clear()
-        username_input.send_keys(username)
-        print("Usario ingresado")
+    def cap_humano_index(self, index_cap_humano):
+        try:
+            self.driver.get(index_cap_humano)
+            print("Index de evaluaciones 360 cargado.")
+        except Exception as e:
+            print("Error al cargar el index de evaluaciones 360:", e)
 
-        #Ingresando Contraseña
-        password_input = WebDriverWait(self.driver, 3).until(
-            EC.visibility_of_element_located((By.CSS_SELECTOR, "input[name='password']"))
-        )
-        password_input.clear()
-        password_input.send_keys(password)
-        print("Contraseña ingresada")
+    def _fill_input_field(self, locator, value):
+            input_field = self.wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, locator)))
+            input_field.clear()
+            input_field.send_keys(value)
 
-        #Dando clic botón Enviar
-        submit_button = WebDriverWait(self.driver, 3).until(
-            EC.element_to_be_clickable((By.XPATH, "//button[@type='submit'][contains(text(),'Enviar')]"))
-        )
-        submit_button.click()
-        print("Enviando credenciales de acceso")
-        
-        #Encontrando imagen de Incio de Sesión
-        WebDriverWait(self.driver, 2).until(
-            EC.presence_of_element_located((By.XPATH, "//IMG[@src='https://192.168.9.78/img/logo-ltr.png']"))
-        )
-        print("Login correcto")
-        
-        print("URL actual:", self.driver.current_url)
-        
-        time.sleep(tiempo_llenado)
-        
-    def in_modulos(self):
-        
-        # Entrando a Menu Hamburguesa
-        print("Entrando a Menu Hamburguesa...")
-        btn_hmaburguesa = WebDriverWait(self.driver, 3).until(
-            EC.visibility_of_element_located((By.XPATH, "//BUTTON[@class='btn-menu-header']"))
-        )
-        btn_hmaburguesa.click()
-        
-        time.sleep(tiempo_llenado)
-        
-        # Entrando a Gestión Talento 
-        print("Entrando a Gestión Talento...")
-        btn_gt = WebDriverWait(self.driver, 3).until(
-            EC.visibility_of_element_located((By.XPATH, "//A[@href='https://192.168.9.78/admin/capital-humano']"))
-        )
-        btn_gt.click()
-        
-        time.sleep(tiempo_llenado)
-
-        # Entrando a Sub Modulo Evalución 360
-        print("Entrando a Sub Modulo Evalución 360...")
-        btn_evaluaciones = WebDriverWait(self.driver, 3).until(
-            EC.visibility_of_element_located((By.XPATH, "//a[contains(.,'Evaluación 360')]"))
-        )
-        btn_evaluaciones.click()
-        
-        time.sleep(tiempo_llenado)
-        
+    def _click_element(self, xpath):
+        element = self.wait.until(EC.element_to_be_clickable((By.XPATH, xpath)))
+        element.click()
