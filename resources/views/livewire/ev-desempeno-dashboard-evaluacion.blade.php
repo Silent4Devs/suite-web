@@ -550,7 +550,7 @@
                 data: {
                     labels: @json($areas_prueba),
                     datasets: [{
-                        label: '# of Votes',
+                        label: 'Porcentaje de cumplimiento',
                         data: @json($datos_prueba),
                         borderWidth: 1
                     }]
@@ -573,7 +573,7 @@
                 data: {
                     labels: @json($listaObjetivos),
                     datasets: [{
-                        label: '# of Votes',
+                        label: 'Porcentaje de Cumplimiento',
                         data: @json($datos_prueba),
                         borderWidth: 1
                     }]
@@ -596,7 +596,7 @@
                 data: {
                     labels: @json($escalas['nombres']),
                     datasets: [{
-                        label: '# of Votes',
+                        label: 'Nivel',
                         data: [12, 43, 2, 2],
                         backgroundColor: @json($escalas['colores']),
                         borderWidth: 1
@@ -620,7 +620,7 @@
                 data: {
                     labels: @json($listaCompetencias),
                     datasets: [{
-                        label: '# of Votes',
+                        label: 'Porcentaje Cumplido',
                         // data: @json($datos_prueba),
                         data: [89, 34, 55, 86, 75, 89, 34, 55, 86, 75, 89, 34, 55, 86],
                         borderWidth: 1
