@@ -24,6 +24,10 @@
             </div>
         </div>
     </div>
+
+    <div class="card card-body">
+        @livewire('cierre-cuestionario', ['id_evaluacion' => $evaluacion, 'id_evaluado' => $evaluado])
+    </div>
 @endsection
 
 @section('scripts')

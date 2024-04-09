@@ -12,8 +12,8 @@
                 <tbody>
                     @foreach ($competencias_evaluado as $key => $comp_evld)
                         <tr>
-                            <td>{{ $comp_evld->competencia }}</td>
-                            <td>{{ $comp_evld->nivel_esperado }}</td>
+                            <td>{{ $comp_evld->infoCompetencia->competencia }}</td>
+                            <td>{{ $comp_evld->infoCompetencia->nivel_esperado }}</td>
                             @if ($evaluador->id != $id_evaluado->evaluador_desempeno_id)
                                 @if ($competencias_autoevaluado[$key]->estatus_calificado)
                                     <td>
@@ -31,7 +31,7 @@
                                     <option value="" disabled @if ($comp_evld->calificacion_competencia === null) selected @endif>
                                         Seleccione una Ponderación
                                     </option>
-                                    @foreach ($comp_evld->ponderaciones as $ponderacion)
+                                    @foreach ($comp_evld->infoCompetencia->ponderaciones as $ponderacion)
                                         <option value="{{ $ponderacion->ponderacion }}"
                                             @if (intval($comp_evld->calificacion_competencia) === $ponderacion->ponderacion &&
                                                     $comp_evld->calificacion_competencia !== null) selected @endif>

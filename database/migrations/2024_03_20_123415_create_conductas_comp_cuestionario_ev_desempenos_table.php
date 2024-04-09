@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('conductas_comp_cuestionario_ev_desempenos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('pregunta_cuest_comp_ev_des_id');
+            $table->unsignedBigInteger('competencia_id');
             $table->longText('definicion');
             $table->integer('ponderacion');
 
-            $table->foreign('pregunta_cuest_comp_ev_des_id')->references('id')->on('cuestionario_competencia_ev_desempenos')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('competencia_id')->references('id')->on('catalogo_competencias_ev_desempenos')->onUpdate('cascade')->onDelete('cascade');
 
             $table->timestamps();
             $table->softDeletes();

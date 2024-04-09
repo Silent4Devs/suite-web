@@ -15,10 +15,18 @@ class EvaluadoresEvaluacionObjetivosDesempeno extends Model
         'evaluado_desempeno_id',
         'evaluador_desempeno_id',
         'porcentaje_objetivos',
+        'finalizada',
+        'firma_evaluacion',
     ];
 
     public function preguntasCuestionario()
     {
         return $this->hasMany(CuestionarioObjetivoEvDesempeno::class, 'evaluador_desempeno_id', 'id');
+    }
+
+    public function preguntasCuestionarioAplican()
+    {
+        return $this->hasMany(CuestionarioObjetivoEvDesempeno::class, 'evaluador_desempeno_id', 'id')
+            ->where('aplicabilidad', true);
     }
 }

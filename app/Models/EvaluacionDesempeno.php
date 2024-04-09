@@ -26,14 +26,19 @@ class EvaluacionDesempeno extends Model
 
     protected $appends =
     [
+        'areas_evaluacion',
         'estatus_palabra',
-        'total_evaluaciones'
+        'total_evaluaciones',
+        'total_evaluaciones_completadas',
+        'porcentaje_evaluaciones_completadas',
+        'cuenta_evaluados_evaluaciones_totales',
+        'cuenta_evaluados_evaluaciones_completadas_totales',
     ];
 
-    const BORRADOR = 1;
-    const ACTIVO = 2;
-    const CERRADO = 3;
-    const PAUSADO = 4;
+    const BORRADOR = 0;
+    const ACTIVO = 1;
+    const CERRADO = 2;
+    const PAUSADO = 3;
 
     public static function getAll()
     {
@@ -45,6 +50,11 @@ class EvaluacionDesempeno extends Model
     public function periodos()
     {
         return $this->hasMany(PeriodosEvaluacionDesempeno::class, 'evaluacion_desempeno_id', 'id');
+    }
+
+    public function escalas()
+    {
+        return $this->hasMany(EscalasEvaluacionDesempeno::class, 'evaluacion_desempeno_id', 'id');
     }
 
     public function evaluados()
@@ -59,11 +69,48 @@ class EvaluacionDesempeno extends Model
 
     public function getTotalEvaluacionesAttribute()
     {
-        $evaluacion = EvaluacionDesempeno::find($this->id);
+        $evaluacion = self::find($this->id);
 
         $periodos = $evaluacion->periodos->count();
 
-        dd($periodos);
+        return $periodos;
+    }
+
+    public function getTotalEvaluacionesCompletadasAttribute()
+    {
+        $evaluacion = self::find($this->id);
+
+        $periodos = $evaluacion->periodos->where('finalizado', true)->count();
+
+        return $periodos;
+    }
+
+    public function getAreasEvaluacionAttribute()
+    {
+        $evaluacion = self::find($this->id);
+
+        $ids_areas = [];
+
+        foreach ($evaluacion->evaluados as $evaluado) {
+            $ids_areas[] = $evaluado->empleado->area_id;
+        }
+
+        $unique_ids = array_unique($ids_areas);
+
+        return $unique_ids;
+    }
+
+
+    public function getPorcentajeEvaluacionesCompletadasAttribute()
+    {
+        $evaluacion = self::find($this->id);
+
+        $periodos = $evaluacion->periodos->count();
+        $periodos_completados = $evaluacion->periodos->where('finalizado', true)->count();
+
+        $porcentaje = ($periodos_completados / $periodos) * 100;
+
+        return $porcentaje;
     }
 
     public function getEstatusPalabraAttribute()
@@ -85,5 +132,17 @@ class EvaluacionDesempeno extends Model
                 return '=';
                 break;
         }
+    }
+
+    public function getCuentaEvaluadosEvaluacionesTotalesAttribute()
+    {
+        $evaluacion = self::find($this->id);
+        return $evaluacion->evaluados->sum('cuenta_evaluaciones');
+    }
+
+    public function getCuentaEvaluadosEvaluacionesCompletadasTotalesAttribute()
+    {
+        $evaluacion = self::find($this->id);
+        return $evaluacion->evaluados->sum('cuenta_evaluaciones_completadas');
     }
 }

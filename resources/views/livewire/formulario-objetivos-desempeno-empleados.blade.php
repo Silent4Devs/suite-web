@@ -249,7 +249,7 @@
                 @endif
             </div>
             <div class="col-2">
-                <a href="{{ route('admin.rh.evaluaciones-desempeño.objetivos-papelera', $id_emp) }}">
+                <a href="{{ route('admin.rh.evaluaciones-desempeno.objetivos-papelera', $id_emp) }}">
                     Papelera
                 </a>
             </div>

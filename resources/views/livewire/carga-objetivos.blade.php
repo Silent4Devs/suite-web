@@ -116,7 +116,7 @@
                             <td>
                                 <div class="d-flex">
                                     @can('objetivos_estrategicos_agregar')
-                                        <a href="{{ route('admin.rh.evaluaciones-desempeño.carga-objetivos-empleado', $empleado->id) }}"
+                                        <a href="{{ route('admin.rh.evaluaciones-desempeno.carga-objetivos-empleado', $empleado->id) }}"
                                             title="Editar" class="btn btn-sm btn-primary">
                                             <i class="fas fa-user-tag"></i> Objetivos
                                         </a>

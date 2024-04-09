@@ -3,16 +3,21 @@
 namespace App\Http\Livewire;
 
 use App\Models\Area;
+use App\Models\CatalogoCompetenciasEvDesempeno;
+use App\Models\CatalogoObjetivosEvDesempeno;
 use App\Models\ConductasCompCuestionarioEvDesempenos;
 use App\Models\CuestionarioCompetenciaEvDesempeno;
 use App\Models\CuestionarioObjetivoEvDesempeno;
 use App\Models\Empleado;
+use App\Models\EscalasEvaluacionDesempeno;
+use App\Models\EscalasMedicionObjetivos;
 use App\Models\EscalasObjCuestionarioEvDesempeno;
 use App\Models\EvaluacionDesempeno;
 use App\Models\EvaluadoresEvaluacionCompetenciasDesempeno;
 use App\Models\EvaluadoresEvaluacionObjetivosDesempeno;
 use App\Models\EvaluadosEvaluacionDesempeno;
 use App\Models\PeriodosEvaluacionDesempeno;
+use App\Models\User;
 use Livewire\Component;
 use Illuminate\Validation\Rule;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
@@ -129,7 +134,7 @@ class CreateEvaluacionDesempeno extends Component
             'porcentaje_competencias' => $this->porcentaje_competencias,
         ];
 
-        $this->paso++;
+        $this->paso = 2;
     }
 
     public function segundoPaso()
@@ -147,12 +152,12 @@ class CreateEvaluacionDesempeno extends Component
                 ];
         }
         // dd('datos', $this->datosPaso2);
-        $this->paso++;
+        $this->paso = 3;
     }
 
     public function tercerPaso()
     {
-        // dd($this->empleados_seleccionados);
+        // dd($this->evaluados_manual);
         $evld = [];
         switch ($this->select_evaluados) {
             case 'toda':
@@ -183,10 +188,10 @@ class CreateEvaluacionDesempeno extends Component
                 break;
         }
         // dd($ev);
-        // dd($evld);
+
         $this->asignarEvaluadoresAEvaluados($evld);
 
-        $this->paso++;
+        $this->paso = 4;
     }
 
     public function cuartoPaso()
@@ -204,12 +209,23 @@ class CreateEvaluacionDesempeno extends Component
             'porcentaje_competencias' => $this->datosPaso1['porcentaje_competencias'],
             'tipo_periodo' => $this->periodo_evaluacion,
             'estatus' => 1,
+            'autor_id' => User::getCurrentUser()->empleado->id,
         ]);
 
+        $escalas = EscalasMedicionObjetivos::get();
+
+        foreach ($escalas as $escala) {
+            EscalasEvaluacionDesempeno::create([
+                'evaluacion_desempeno_id' => $evaluacion->id,
+                'parametro' => $escala->parametro,
+                // 'valor',
+                'color' => $escala->color,
+                // 'descripcion',
+            ]);
+        }
+
         foreach ($this->datosPaso2 as $key => $p) {
-            // dd();
             if (!empty($p['nombre_evaluacion'])) {
-                // dd('entra');
                 PeriodosEvaluacionDesempeno::create([
                     'evaluacion_desempeno_id' => $evaluacion->id,
                     'nombre_evaluacion' => $p['nombre_evaluacion'],
@@ -267,7 +283,7 @@ class CreateEvaluacionDesempeno extends Component
 
         $this->crearCuestionario($evaluacion);
 
-        return redirect(route('admin.rh.evaluaciones-desempeño.index'));
+        return redirect(route('admin.rh.evaluaciones-desempeno.index'));
     }
 
     public function crearCuestionario($evaluacion)
@@ -275,33 +291,27 @@ class CreateEvaluacionDesempeno extends Component
         // dd($evaluacion);
         $empleados = Empleado::getIDaltaAll();
 
-        foreach ($evaluacion->evaluados as $evaluado) {
-            if ($evaluacion->activar_objetivos) {
-                $obj_per = $empleados->find($evaluado->evaluado_desempeno_id)->objetivosPeriodo($this->periodo_evaluacion);
+        foreach ($evaluacion->periodos as $periodo) {
+            foreach ($evaluacion->evaluados as $evaluado) {
+                if ($evaluacion->activar_objetivos) {
+                    $obj_per = $empleados->find($evaluado->evaluado_desempeno_id)->objetivosPeriodo($this->periodo_evaluacion);
 
-                foreach ($evaluado->evaluadoresObjetivos as $key => $evlr_obj) {
                     foreach ($obj_per as $obj) {
-                        $new_objetivo = CuestionarioObjetivoEvDesempeno::create(
-                            [
-                                'objetivo' => $obj->objetivo->nombre,
-                                'descripcion_objetivo' => $obj->objetivo->descripcion_meta,
-                                'KPI' => $obj->objetivo->KPI,
-                                'tipo_objetivo' => $obj->objetivo->tipo->nombre,
-                                'unidad_objetivo' => $obj->objetivo->metrica->definicion,
-                                'valor_minimo_unidad_objetivo' => $obj->objetivo->metrica->valor_minimo,
-                                'valor_maximo_unidad_objetivo' => $obj->objetivo->metrica->valor_maximo,
-                                'evaluacion_desempeno_id' => $evaluado->evaluacion_desempeno_id,
-                                'evaluado_desempeno_id' => $evaluado->id,
-                                'evaluador_desempeno_id' => $evlr_obj->id,
-                                'calificacion_objetivo' => null,
-                                'estatus_calificado' => false,
-                            ]
-                        );
+
+                        $cat_obj = CatalogoObjetivosEvDesempeno::create([
+                            'objetivo' => $obj->objetivo->nombre,
+                            'descripcion_objetivo' => $obj->objetivo->descripcion_meta,
+                            'KPI' => $obj->objetivo->KPI,
+                            'tipo_objetivo' => $obj->objetivo->tipo->nombre,
+                            'unidad_objetivo' => $obj->objetivo->metrica->definicion,
+                            'valor_minimo_unidad_objetivo' => $obj->objetivo->metrica->valor_minimo,
+                            'valor_maximo_unidad_objetivo' => $obj->objetivo->metrica->valor_maximo,
+                        ]);
 
                         foreach ($obj->objetivo->escalas as $escala) {
                             EscalasObjCuestionarioEvDesempeno::create(
                                 [
-                                    'pregunta_cuest_obj_ev_des_id' => $new_objetivo->id,
+                                    'objetivo_id' => $cat_obj->id,
                                     'condicion' => $escala->condicion,
                                     'parametro' => $escala->parametro->parametro,
                                     'valor' => $escala->valor,
@@ -309,33 +319,51 @@ class CreateEvaluacionDesempeno extends Component
                                 ]
                             );
                         }
+
+                        foreach ($evaluado->evaluadoresObjetivos as $key => $evlr_obj) {
+                            $new_objetivo = CuestionarioObjetivoEvDesempeno::create(
+                                [
+                                    'objetivo_id' => $cat_obj->id,
+                                    'periodo_id' => $periodo->id,
+                                    'evaluacion_desempeno_id' => $evaluado->evaluacion_desempeno_id,
+                                    'evaluado_desempeno_id' => $evaluado->id,
+                                    'evaluador_desempeno_id' => $evlr_obj->id,
+                                    'calificacion_objetivo' => null,
+                                    'estatus_calificado' => false,
+                                ]
+                            );
+                        }
                     }
                 }
-            }
 
-            if ($evaluacion->activar_competencias) {
-                $comp_per = $empleados->find($evaluado->evaluado_desempeno_id)->puestoRelacionado->competencias;
+                if ($evaluacion->activar_competencias) {
+                    $comp_per = $empleados->find($evaluado->evaluado_desempeno_id)->puestoRelacionado->competencias;
 
-                foreach ($evaluado->evaluadoresCompetencias as $key => $evlr_comp) {
-                    // $batch_competencia = [];
                     foreach ($comp_per as $comp) {
-                        $new_competencia = CuestionarioCompetenciaEvDesempeno::create([
+
+                        $cat_comp = CatalogoCompetenciasEvDesempeno::create([
                             'competencia' => $comp->competencia->nombre,
                             'descripcion_competencia' => $comp->competencia->descripcion,
                             'tipo_competencia' => $comp->competencia->tipo->nombre,
                             'nivel_esperado' => $comp->nivel_esperado,
-                            'evaluacion_desempeno_id' => $evaluado->evaluacion_desempeno_id,
-                            'evaluado_desempeno_id' => $evaluado->id,
-                            'evaluador_desempeno_id' => $evlr_comp->id,
-                            'calificacion_competencia' => null,
-                            'estatus_calificado' => false,
                         ]);
 
                         foreach ($comp->competencia->opciones as $opciones) {
                             ConductasCompCuestionarioEvDesempenos::create([
-                                'pregunta_cuest_comp_ev_des_id' => $new_competencia->id,
+                                'competencia_id' => $cat_comp->id,
                                 'definicion' => $opciones->definicion,
                                 'ponderacion' => $opciones->ponderacion,
+                            ]);
+                        }
+                        foreach ($evaluado->evaluadoresCompetencias as $key => $evlr_comp) {
+                            $new_competencia = CuestionarioCompetenciaEvDesempeno::create([
+                                'competencia_id' => $cat_comp->id,
+                                'periodo_id' => $periodo->id,
+                                'evaluacion_desempeno_id' => $evaluado->evaluacion_desempeno_id,
+                                'evaluado_desempeno_id' => $evaluado->id,
+                                'evaluador_desempeno_id' => $evlr_comp->id,
+                                'calificacion_competencia' => null,
+                                'estatus_calificado' => false,
                             ]);
                         }
                     }
@@ -361,7 +389,7 @@ class CreateEvaluacionDesempeno extends Component
                 if ($valor) {
                     for ($i = 1; $i <= 12; $i++) {
                         $this->arreglo_periodos[] = [
-                            'nombre_evaluacion' => null,
+                            'nombre_evaluacion' => 'T' . $i,
                             'fecha_inicio' => null,
                             'fecha_fin' => null,
                             'habilitar' => false
@@ -382,7 +410,7 @@ class CreateEvaluacionDesempeno extends Component
                 if ($valor) {
                     for ($i = 1; $i <= 6; $i++) {
                         $this->arreglo_periodos[] = [
-                            'nombre_evaluacion' => null,
+                            'nombre_evaluacion' => 'T' . $i,
                             'fecha_inicio' => null,
                             'fecha_fin' => null,
                             'habilitar' => false
@@ -403,7 +431,7 @@ class CreateEvaluacionDesempeno extends Component
                 if ($valor) {
                     for ($i = 1; $i <= 4; $i++) {
                         $this->arreglo_periodos[] = [
-                            'nombre_evaluacion' => null,
+                            'nombre_evaluacion' => 'T' . $i,
                             'fecha_inicio' => null,
                             'fecha_fin' => null,
                             'habilitar' => false
@@ -424,7 +452,7 @@ class CreateEvaluacionDesempeno extends Component
                 if ($valor) {
                     for ($i = 1; $i <= 2; $i++) {
                         $this->arreglo_periodos[] = [
-                            'nombre_evaluacion' => null,
+                            'nombre_evaluacion' => 'T' . $i,
                             'fecha_inicio' => null,
                             'fecha_fin' => null,
                             'habilitar' => false
@@ -445,7 +473,7 @@ class CreateEvaluacionDesempeno extends Component
                 if ($valor) {
                     for ($i = 1; $i <= 1; $i++) {
                         $this->arreglo_periodos[] = [
-                            'nombre_evaluacion' => null,
+                            'nombre_evaluacion' => 'T' . $i,
                             'fecha_inicio' => null,
                             'fecha_fin' => null,
                             'habilitar' => false
@@ -466,7 +494,7 @@ class CreateEvaluacionDesempeno extends Component
                 if ($valor) {
                     for ($i = 1; $i <= 1; $i++) {
                         $this->arreglo_periodos[] = [
-                            'nombre_evaluacion' => null,
+                            'nombre_evaluacion' => 'T' . $i,
                             'fecha_inicio' => null,
                             'fecha_fin' => null,
                             'habilitar' => false
@@ -516,6 +544,7 @@ class CreateEvaluacionDesempeno extends Component
 
     public function asignarEvaluadoresAEvaluados($evaluados)
     {
+        // dump($evaluados);
         $this->array_evaluados = [];
 
         $emps = Empleado::select(
@@ -526,7 +555,7 @@ class CreateEvaluacionDesempeno extends Component
             'puesto_id',
             'foto'
         )->with(['objetivos', 'children:id,name', 'supervisor:id,name', 'area:id,area', 'puestoRelacionado:id,puesto'])->where('estatus', 'alta')->whereNull('deleted_at')->get();
-
+        // dump($emps);
         foreach ($emps as $emp) {
             $this->colaboradores[] =
                 [
@@ -535,7 +564,7 @@ class CreateEvaluacionDesempeno extends Component
                     // 'area' => $emp->area->area,
                 ];
         }
-
+        // dump('colaboradores');
         foreach ($evaluados as $key => $id_evaluado) {
             $eva = $emps->find($id_evaluado);
             $this->array_evaluados[$key] =
@@ -709,7 +738,7 @@ class CreateEvaluacionDesempeno extends Component
                     //alerta
                     dd('alerta');
                 }
-                return redirect(route('admin.rh.evaluaciones-desempeño.index'));
+                return redirect(route('admin.rh.evaluaciones-desempeno.index'));
                 break;
 
             case 2:
@@ -745,7 +774,7 @@ class CreateEvaluacionDesempeno extends Component
                         }
                     }
                 }
-                return redirect(route('admin.rh.evaluaciones-desempeño.index'));
+                return redirect(route('admin.rh.evaluaciones-desempeno.index'));
                 break;
 
             case 3:
@@ -782,7 +811,7 @@ class CreateEvaluacionDesempeno extends Component
                     }
                 }
 
-                return redirect(route('admin.rh.evaluaciones-desempeño.index'));
+                return redirect(route('admin.rh.evaluaciones-desempeno.index'));
                 break;
 
             case 4:
@@ -848,11 +877,11 @@ class CreateEvaluacionDesempeno extends Component
                     }
                 }
 
-                return redirect(route('admin.rh.evaluaciones-desempeño.index'));
+                return redirect(route('admin.rh.evaluaciones-desempeno.index'));
                 break;
 
             default:
-                return redirect(route('admin.rh.evaluaciones-desempeño.index'));
+                return redirect(route('admin.rh.evaluaciones-desempeno.index'));
                 break;
         }
     }

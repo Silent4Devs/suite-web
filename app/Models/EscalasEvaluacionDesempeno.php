@@ -5,20 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PeriodosEvaluacionDesempeno extends Model
+class EscalasEvaluacionDesempeno extends Model
 {
     use HasFactory;
 
-    protected $table = 'periodos_evaluacion_desempenos';
+    protected $table = 'escalas_evaluacion_desempenos';
 
-    protected $fillable =
-    [
+    protected $fillable = [
         'evaluacion_desempeno_id',
-        'nombre_evaluacion',
-        'fecha_inicio',
-        'fecha_fin',
-        'habilitado',
-        'finalizado',
+        'parametro',
+        // 'valor',
+        'color',
+        // 'descripcion',
     ];
 
     public function evaluacion()

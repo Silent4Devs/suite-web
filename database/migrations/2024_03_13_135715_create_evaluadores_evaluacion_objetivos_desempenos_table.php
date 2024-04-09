@@ -16,6 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('evaluado_desempeno_id');
             $table->unsignedBigInteger('evaluador_desempeno_id');
             $table->double('porcentaje_objetivos');
+            $table->boolean('finalizada')->default('false');
+            $table->text('firma_evaluacion')->nullable();
 
             $table->foreign('evaluado_desempeno_id')->references('id')->on('evaluados_evaluacion_desempenos')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('evaluador_desempeno_id')->references('id')->on('empleados')->onUpdate('cascade')->onDelete('cascade');

@@ -22,7 +22,7 @@
                 <tbody>
                     @foreach ($objetivos_evaluado as $key => $obj_evld)
                         <tr>
-                            <td>{{ $obj_evld->objetivo }}</td>
+                            <td>{{ $obj_evld->infoObjetivo->objetivo }}</td>
                             <td>
                                 <select name="aplica" id="aplica"
                                     wire:change="aplicaObjetivo({{ $obj_evld->id }}, $event.target.value)">
@@ -32,7 +32,7 @@
                                     </option>
                                 </select>
                             </td>
-                            @foreach ($obj_evld->escalas as $obj_esc)
+                            @foreach ($obj_evld->infoObjetivo->escalas as $obj_esc)
                                 <td>
                                     {{ $obj_esc->condicion_signo }}{{ $obj_esc->valor }}&nbsp;{{ $obj_evld->unidad_objetivo }}
                                 </td>
@@ -113,7 +113,7 @@
                                         type="number">
                                 </div>
                                 <div class="row">
-                                    {{ $calificacion_escala[$obj_evld->id] }}
+                                    {{ $calificacion_escala[$obj_evld->infoObjetivo->id] }}
                                 </div>
                             </td>
                             <td></td>

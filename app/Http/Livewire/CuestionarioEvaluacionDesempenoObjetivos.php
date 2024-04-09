@@ -93,14 +93,16 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
             }
 
             foreach ($this->objetivos_evaluado as $key_objetivo => $obj_evld) {
-                foreach ($obj_evld->escalas as $obj_esc) {
+                $this->calificacion_escala[$obj_evld->infoObjetivo->id] = 'Sin evaluar';
+                foreach ($obj_evld->infoObjetivo->escalas as $obj_esc) {
+                    //Se inicializa con el valor inicial para que todos los objetivos tengan su campo correspondiente
                     switch ($obj_esc->condicion) {
                         case '1':
                             if (
                                 $obj_evld->calificacion_objetivo <
                                 $obj_esc->valor
                             ) {
-                                $this->calificacion_escala[$obj_evld->id] = $obj_esc->parametro;
+                                $this->calificacion_escala[$obj_evld->infoObjetivo->id] = $obj_esc->parametro;
                             }
                             break;
                         case '2':
@@ -108,7 +110,7 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
                                 $obj_evld->calificacion_objetivo <=
                                 $obj_esc->valor
                             ) {
-                                $this->calificacion_escala[$obj_evld->id] = $obj_esc->parametro;
+                                $this->calificacion_escala[$obj_evld->infoObjetivo->id] = $obj_esc->parametro;
                             }
                             break;
                         case '3':
@@ -116,7 +118,7 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
                                 $obj_evld->calificacion_objetivo ==
                                 $obj_esc->valor
                             ) {
-                                $this->calificacion_escala[$obj_evld->id] = $obj_esc->parametro;
+                                $this->calificacion_escala[$obj_evld->infoObjetivo->id] = $obj_esc->parametro;
                             }
                             break;
                         case '4':
@@ -124,7 +126,7 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
                                 $obj_evld->calificacion_objetivo >
                                 $obj_esc->valor
                             ) {
-                                $this->calificacion_escala[$obj_evld->id] = $obj_esc->parametro;
+                                $this->calificacion_escala[$obj_evld->infoObjetivo->id] = $obj_esc->parametro;
                             }
                             break;
                         case '5':
@@ -132,18 +134,19 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
                                 $obj_evld->calificacion_objetivo >=
                                 $obj_esc->valor
                             ) {
-                                $this->calificacion_escala[$obj_evld->id] = $obj_esc->parametro;
+                                $this->calificacion_escala[$obj_evld->infoObjetivo->id] = $obj_esc->parametro;
                             }
                             break;
                         default:
-                            return '=';
+                            $this->calificacion_escala[$obj_evld->infoObjetivo->id] = $obj_evld->infoObjetivo->escalas[0]->parametro;
                             break;
                     }
                 }
             }
 
             foreach ($this->objetivos_autoevaluado as $key_objetivo => $obj_evld) {
-                foreach ($obj_evld->escalas as $obj_esc) {
+                $this->calificacion_autoescala[$obj_evld->infoObjetivo->id] = 'Sin evaluar';
+                foreach ($obj_evld->infoObjetivo->escalas as $obj_esc) {
                     switch ($obj_esc->condicion) {
                         case '1':
                             if (
@@ -186,7 +189,7 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
                             }
                             break;
                         default:
-                            return '=';
+                            $this->calificacion_autoescala[$obj_evld->infoObjetivo->id] = $obj_evld->infoObjetivo->escalas[0]->parametro;
                             break;
                     }
                 }

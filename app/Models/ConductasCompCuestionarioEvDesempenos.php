@@ -12,13 +12,13 @@ class ConductasCompCuestionarioEvDesempenos extends Model
     protected $table = 'conductas_comp_cuestionario_ev_desempenos';
 
     protected $fillable = [
-        'pregunta_cuest_comp_ev_des_id',
+        'competencia_id',
         'definicion',
         'ponderacion',
     ];
 
     public function pregunta()
     {
-        return $this->belongsTo(CuestionarioCompetenciaEvDesempeno::class, 'pregunta_cuest_comp_ev_des_id', 'id');
+        return $this->belongsTo(CatalogoCompetenciasEvDesempeno::class, 'competencia_id', 'id');
     }
 }

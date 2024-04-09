@@ -50,29 +50,21 @@ class CargaObjetivos extends Component
     public function render()
     {
         $this->empleados = Empleado::getaltaAllObjetivosGenerales()->sortBy('name');
+        $this->cuentasCero();
 
         if ($this->select_area != 0) {
             $this->empleados = $this->empleados->where('area_id', $this->select_area)->sortBy('name');
-            $this->total_colaboradores = 0;
-            $this->total_con_objetivos = 0;
-            $this->total_sin_objetivos = 0;
-            $this->total_obj_pend = 0;
+            $this->cuentasCero();
         }
 
         if ($this->select_puesto != 0) {
             $this->empleados = $this->empleados->where('puesto_id', $this->select_puesto)->sortBy('name');
-            $this->total_colaboradores = 0;
-            $this->total_con_objetivos = 0;
-            $this->total_sin_objetivos = 0;
-            $this->total_obj_pend = 0;
+            $this->cuentasCero();
         }
 
         if ($this->select_perfil != 0) {
             $this->empleados = $this->empleados->where('perfil_empleado_id', $this->select_perfil)->sortBy('name');
-            $this->total_colaboradores = 0;
-            $this->total_con_objetivos = 0;
-            $this->total_sin_objetivos = 0;
-            $this->total_obj_pend = 0;
+            $this->cuentasCero();
         }
 
         $this->total_colaboradores = $this->empleados->count();
@@ -93,6 +85,14 @@ class CargaObjetivos extends Component
         }
 
         return view('livewire.carga-objetivos');
+    }
+
+    public function cuentasCero()
+    {
+        $this->total_colaboradores = 0;
+        $this->total_con_objetivos = 0;
+        $this->total_sin_objetivos = 0;
+        $this->total_obj_pend = 0;
     }
 
     public function notificarCarga()

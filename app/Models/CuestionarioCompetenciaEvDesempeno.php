@@ -13,16 +13,24 @@ class CuestionarioCompetenciaEvDesempeno extends Model
 
     protected $fillable =
     [
-        'competencia',
-        'descripcion_competencia',
-        'tipo_competencia',
-        'nivel_esperado',
+        'competencia_id',
+        'periodo_id',
         'evaluacion_desempeno_id',
         'evaluado_desempeno_id',
         'evaluador_desempeno_id',
         'calificacion_competencia',
         'estatus_calificado',
     ];
+
+    public function infoCompetencia()
+    {
+        return $this->belongsTo(CatalogoCompetenciasEvDesempeno::class, 'competencia_id', 'id');
+    }
+
+    public function periodo()
+    {
+        return $this->belongsTo(PeriodosEvaluacionDesempeno::class, 'periodo_id', 'id');
+    }
 
     public function evaluacionDesempeno()
     {
@@ -37,10 +45,5 @@ class CuestionarioCompetenciaEvDesempeno extends Model
     public function evaluadorDesempeno()
     {
         return $this->belongsTo(EvaluadoresEvaluacionCompetenciasDesempeno::class, 'evaluador_desempeno_id', 'id');
-    }
-
-    public  function ponderaciones()
-    {
-        return $this->hasMany(ConductasCompCuestionarioEvDesempenos::class, 'pregunta_cuest_comp_ev_des_id', 'id');
     }
 }

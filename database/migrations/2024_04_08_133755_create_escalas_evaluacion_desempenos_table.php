@@ -11,14 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('periodos_evaluacion_desempenos', function (Blueprint $table) {
+        Schema::create('escalas_evaluacion_desempenos', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('evaluacion_desempeno_id');
-            $table->string('nombre_evaluacion')->nullable();
-            $table->date('fecha_inicio')->nullable();
-            $table->date('fecha_fin')->nullable();
-            $table->boolean('habilitado')->default(false);
-            $table->boolean('finalizado')->default(false);
+            $table->string('parametro');
+            // $table->float('valor');
+            $table->string('color');
+            // $table->longText('descripcion');
 
             $table->foreign('evaluacion_desempeno_id')->references('id')->on('evaluacion_desempenos')->onUpdate('cascade')->onDelete('cascade');
 
@@ -32,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('periodos_evaluacion_desempenos');
+        Schema::dropIfExists('escalas_evaluacion_desempenos');
     }
 };

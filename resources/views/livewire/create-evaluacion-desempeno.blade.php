@@ -1,6 +1,6 @@
 <div>
 
-    <x-loading-indicator />
+    {{-- <x-loading-indicator /> --}}
 
     <div class="pasos-create-evaluaciones mb-5">
         <div class="paso-create-ev">

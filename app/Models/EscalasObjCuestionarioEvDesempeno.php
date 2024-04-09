@@ -25,7 +25,7 @@ class EscalasObjCuestionarioEvDesempeno extends Model
 
     protected $fillable =
     [
-        'pregunta_cuest_obj_ev_des_id',
+        'objetivo_id',
         'condicion',
         'parametro',
         'valor',
@@ -34,7 +34,7 @@ class EscalasObjCuestionarioEvDesempeno extends Model
 
     public function pregunta()
     {
-        return $this->belongsTo(CuestionarioObjetivoEvDesempeno::class, 'pregunta_cuest_obj_ev_des', 'id');
+        return $this->belongsTo(CatalogoObjetivosEvDesempeno::class, 'objetivo_id', 'id');
     }
 
     public function getCondicionPalabraAttribute()
