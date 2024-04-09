@@ -130,11 +130,22 @@ class TimesheetProyecto extends Model implements Auditable
                 $horas_totales += is_numeric($hora->horas_sabado) ? $hora->horas_sabado : 0;
                 $horas_totales += is_numeric($hora->horas_domingo) ? $hora->horas_domingo : 0;
             }
+            if(isset($emp_p->empleado->salario_base_mensual)){
+                $costo_hora = ($emp_p->empleado->salario_base_mensual / 20) / 7;
+            }else{
+                if(isset($emp_p->empleado->salario_diario)){
+                    $costo_hora = $emp_p->empleado->salario_diario / 7;
+                }else{
+                    $costo_hora = 0;
+                }
+            }
+            $costo_horas =  $costo_hora * $horas_totales;
             $empItem = Empleado::select('id', 'name')->where('id', $emp_p->empleado_id)->first();
             array_push($emps, [
                 'id' => $empItem->id,
                 'name' => $empItem->name,
                 'horas' => $horas_totales,
+                'costo_horas' => $costo_horas,
             ]);
         }
 

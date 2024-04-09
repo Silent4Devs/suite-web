@@ -861,6 +861,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::get('timesheet/proyectos/reporte/proyemp', 'TimesheetController@reportesProyemp')->name('timesheet-reportes-proyemp');
         Route::get('timesheet/proyectos/reporte/empleados', 'TimesheetController@reportesEmpleados')->name('timesheet-reportes-empleados');
         Route::get('timesheet/proyectos/reporte/proyectos', 'TimesheetController@reportesProyectos')->name('timesheet-reportes-proyectos');
+        Route::get('timesheet/proyectos/reporte/financiero', 'TimesheetController@reportesFinanciero')->name('timesheet-reportes-financiero');
 
         Route::get('timesheet/proyecto-empleados/{proyecto_id}', 'TimesheetController@proyectosEmpleados')->name('timesheet-proyecto-empleados');
         Route::get('timesheet/proyecto-externos/{proyecto_id}', 'TimesheetController@proyectosExternos')->name('timesheet-proyecto-externos');

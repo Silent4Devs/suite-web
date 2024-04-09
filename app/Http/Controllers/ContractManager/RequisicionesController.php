@@ -2,24 +2,25 @@
 
 namespace App\Http\Controllers\ContractManager;
 
-use App\Http\Controllers\Controller;
-use App\Mail\RequisicionesEmail;
-use App\Models\ContractManager\Comprador as KatbolComprador;
-use App\Models\ContractManager\Contrato as KatbolContrato;
-use App\Models\ContractManager\ProvedorRequisicionCatalogo as KatbolProvedorRequisicionCatalogo;
-use App\Models\ContractManager\ProveedorIndistinto as KatbolProveedorIndistinto;
-use App\Models\ContractManager\ProveedorOC as KatbolProveedorOC;
-use App\Models\ContractManager\Requsicion as KatbolRequsicion;
-use App\Models\ContractManager\Sucursal as KatbolSucursal;
-use App\Models\Organizacion;
+use PDF;
+use Gate;
 use App\Models\User;
+use App\Models\Organizacion;
+use Illuminate\Http\Request;
+use App\Mail\RequisicionesEmail;
 use App\Models\User as ModelsUser;
 use App\Traits\ObtenerOrganizacion;
-use Gate;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
-use PDF;
+use RealRashid\SweetAlert\Facades\Alert;
 use Symfony\Component\HttpFoundation\Response;
+use App\Models\ContractManager\Contrato as KatbolContrato;
+use App\Models\ContractManager\Sucursal as KatbolSucursal;
+use App\Models\ContractManager\Comprador as KatbolComprador;
+use App\Models\ContractManager\Requsicion as KatbolRequsicion;
+use App\Models\ContractManager\ProveedorOC as KatbolProveedorOC;
+use App\Models\ContractManager\ProveedorIndistinto as KatbolProveedorIndistinto;
+use App\Models\ContractManager\ProvedorRequisicionCatalogo as KatbolProvedorRequisicionCatalogo;
 
 class RequisicionesController extends Controller
 {
@@ -294,8 +295,12 @@ class RequisicionesController extends Controller
     {
         $requisiciones = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->orderByDesc('id')->get();
         $proveedor_indistinto = KatbolProveedorIndistinto::pluck('requisicion_id')->first();
+        $buttonSolicitante = false;
+        $buttonJefe = false;
+        $buttonFinanzas = false;
+        $buttonCompras = false;
 
-        return view('contract_manager.requisiciones.aprobadores', compact('requisiciones', 'proveedor_indistinto'));
+        return view('contract_manager.requisiciones.aprobadores', compact('requisiciones', 'proveedor_indistinto', 'buttonSolicitante', 'buttonJefe', 'buttonFinanzas', 'buttonCompras'));
     }
 
     public function getRequisicionIndexAprobador()
@@ -433,29 +438,54 @@ class RequisicionesController extends Controller
         return $pdf->download('requisicion.pdf');
     }
 
-
-    public function filtrarPorEstado()
-    {
-        $requisiciones = KatbolRequsicion::whereNotNull('firma_solicitante')
-            ->whereNotNull('firma_jefe')->where('firma_finanzas', null)->get();
-        return view('contract_manager.requisiciones.aprobadores', compact('requisiciones'));
-    }
-
-    public function filtrarPorEstado1()
-    {
-        $requisiciones = KatbolRequsicion::where('firma_jefe', null)->get();
-        return view('contract_manager.requisiciones.aprobadores', compact('requisiciones'));
-    }
-
     public function filtrarPorEstado2()
     {
         $requisiciones = KatbolRequsicion::where('firma_solicitante', null)->get();
-        return view('contract_manager.requisiciones.aprobadores', compact('requisiciones'));
+        $buttonSolicitante = true;
+        $buttonJefe = false;
+        $buttonFinanzas = false;
+        $buttonCompras = false;
+        toast('Filtro por solicitante aplicado!','success');
+
+        return view('contract_manager.requisiciones.aprobadores', compact('requisiciones', 'buttonFinanzas', 'buttonSolicitante', 'buttonJefe', 'buttonCompras'));
     }
+
+
+    public function filtrarPorEstado1()
+    {
+        $requisiciones = KatbolRequsicion::whereNotNull('firma_solicitante')->where('firma_jefe', null)->get();
+        $buttonSolicitante = false;
+        $buttonJefe = true;
+        $buttonFinanzas = false;
+        $buttonCompras = false;
+        toast('Filtro por jefe aplicado!','success');
+
+        return view('contract_manager.requisiciones.aprobadores', compact('requisiciones', 'buttonJefe', 'buttonSolicitante', 'buttonFinanzas', 'buttonCompras'));
+    }
+
+
+    public function filtrarPorEstado()
+    {
+        $requisiciones = KatbolRequsicion::whereNotNull('firma_solicitante')->whereNotNull('firma_jefe')->where('firma_finanzas', null)->get();
+        $buttonSolicitante = false;
+        $buttonJefe = false;
+        $buttonFinanzas = true;
+        $buttonCompras = false;
+        toast('Filtro por finanzas aplicado!','success');
+
+        return view('contract_manager.requisiciones.aprobadores', compact('requisiciones', 'buttonSolicitante', 'buttonJefe', 'buttonFinanzas', 'buttonCompras'));
+    }
+
 
     public function filtrarPorEstado3()
     {
-        $requisiciones = KatbolRequsicion::where('firma_compras', null)->get();
-        return view('contract_manager.requisiciones.aprobadores', compact('requisiciones'));
+        $requisiciones = KatbolRequsicion::whereNotNull('firma_solicitante')->whereNotNull('firma_jefe')->whereNotNull('firma_finanzas')->where('firma_compras', null)->get();
+        $buttonSolicitante = false;
+        $buttonJefe = false;
+        $buttonFinanzas = false;
+        $buttonCompras = true;
+        toast('Filtro por compras aplicado!','success');
+
+        return view('contract_manager.requisiciones.aprobadores', compact('requisiciones', 'buttonCompras', 'buttonSolicitante', 'buttonJefe', 'buttonFinanzas'));
     }
 }
