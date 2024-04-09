@@ -30,6 +30,8 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
     public $obj_evidencias = [];
     public $calificacion_escala = [];
     public $calificacion_autoescala = [];
+    public $autoevaluacion_colors = [];
+    public $evaluacion_colors = [];
 
     //Campos para validación dependiendo de lo que el evaluador vaya a evaluar
     public $validacion_objetivos_evaluador;
@@ -53,12 +55,16 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
 
     public function render()
     {
+        $this->cuestionarioSecciones();
         $this->evaluacion = EvaluacionDesempeno::find($this->id_evaluacion);
         $this->evaluado = $this->evaluacion->evaluados->find($this->id_evaluado);
         if ($this->evaluacion->activar_objetivos == true) {
 
             $this->buscarObjetivos();
         }
+        // dd($this->obj_evidencias[1]);
+
+
 
         return view('livewire.cuestionario-evaluacion-desempeno-objetivos');
     }
@@ -103,6 +109,7 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
                                 $obj_esc->valor
                             ) {
                                 $this->calificacion_escala[$obj_evld->infoObjetivo->id] = $obj_esc->parametro;
+                                $this->evaluacion_colors[$obj_evld->id . '-tx-color']= $obj_esc->color;
                             }
                             break;
                         case '2':
@@ -111,6 +118,9 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
                                 $obj_esc->valor
                             ) {
                                 $this->calificacion_escala[$obj_evld->infoObjetivo->id] = $obj_esc->parametro;
+                                $this->evaluacion_colors[$obj_evld->infoObjetivo->id . '-tx-color']= $obj_esc->color;
+                                // dd($this->evaluacion_colors);
+
                             }
                             break;
                         case '3':
@@ -119,6 +129,8 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
                                 $obj_esc->valor
                             ) {
                                 $this->calificacion_escala[$obj_evld->infoObjetivo->id] = $obj_esc->parametro;
+                                $this->evaluacion_colors[$obj_evld->id . '-tx-color']= $obj_esc->color;
+
                             }
                             break;
                         case '4':
@@ -127,6 +139,8 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
                                 $obj_esc->valor
                             ) {
                                 $this->calificacion_escala[$obj_evld->infoObjetivo->id] = $obj_esc->parametro;
+                                $this->evaluacion_colors[$obj_evld->infoObjetivo->id . '-tx-color']= $obj_esc->color;
+
                             }
                             break;
                         case '5':
@@ -135,6 +149,8 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
                                 $obj_esc->valor
                             ) {
                                 $this->calificacion_escala[$obj_evld->infoObjetivo->id] = $obj_esc->parametro;
+                                $this->evaluacion_colors[$obj_evld->infoObjetivo->id . '-tx-color']= $obj_esc->color;
+
                             }
                             break;
                         default:
@@ -154,6 +170,9 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
                                 $obj_esc->valor
                             ) {
                                 $this->calificacion_autoescala[$obj_evld->id] = $obj_esc->parametro;
+                                $this->autoevaluacion_colors[$obj_evld->id . '-bg-color']= $this->hexToRgba($obj_esc->color);
+                                $this->autoevaluacion_colors[$obj_evld->id . '-tx-color']= $obj_esc->color;
+
                             }
                             break;
                         case '2':
@@ -162,6 +181,9 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
                                 $obj_esc->valor
                             ) {
                                 $this->calificacion_autoescala[$obj_evld->id] = $obj_esc->parametro;
+                                $this->autoevaluacion_colors[$obj_evld->id . '-bg-color']= $this->hexToRgba($obj_esc->color);
+                                $this->autoevaluacion_colors[$obj_evld->id . '-tx-color']= $obj_esc->color;
+                                // dd($this->calificacion_autoescala);
                             }
                             break;
                         case '3':
@@ -170,6 +192,8 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
                                 $obj_esc->valor
                             ) {
                                 $this->calificacion_autoescala[$obj_evld->id] = $obj_esc->parametro;
+                                $this->autoevaluacion_colors[$obj_evld->id . '-bg-color']= $this->hexToRgba($obj_esc->color);
+                                $this->autoevaluacion_colors[$obj_evld->id . '-tx-color']= $obj_esc->color;
                             }
                             break;
                         case '4':
@@ -178,6 +202,8 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
                                 $obj_esc->valor
                             ) {
                                 $this->calificacion_autoescala[$obj_evld->id] = $obj_esc->parametro;
+                                $this->autoevaluacion_colors[$obj_evld->id . '-bg-color']= $this->hexToRgba($obj_esc->color);
+                                $this->autoevaluacion_colors[$obj_evld->id . '-tx-color']= $obj_esc->color;
                             }
                             break;
                         case '5':
@@ -186,6 +212,8 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
                                 $obj_esc->valor
                             ) {
                                 $this->calificacion_autoescala[$obj_evld->id] = $obj_esc->parametro;
+                                $this->autoevaluacion_colors[$obj_evld->id . '-bg-color']= $this->hexToRgba($obj_esc->color);
+                                $this->autoevaluacion_colors[$obj_evld->id . '-tx-color']= $obj_esc->color;
                             }
                             break;
                         default:
@@ -334,5 +362,24 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
             'toast' => true,
             'text' => 'Ha ocurrido un error al guardar.',
         ]);
+    }
+
+    public function hexToRgba($hex){
+        $hex = str_replace('#', '', $hex);
+
+        $red = hexdec(substr($hex, 0, 2));
+        $green = hexdec(substr($hex, 2, 2));
+        $blue = hexdec(substr($hex, 4, 2));
+
+        return "rgba($red, $green, $blue, 0.2)";
+    }
+
+    public function cuestionarioSecciones(){
+        // $secciones = CuestionarioObjetivoEvDesempeno::with('infoObjetivo')->where('evaluacion_desempeno_id', $this->id_evaluacion)->get();
+        // foreach($secciones as $seccion){
+        //     $arrSections[] = $seccion->infoObjetivo->tipo_objetivo;
+        // }
+        // $variablesec = $arrSections->unique();
+        // dd($variablesec);
     }
 }
