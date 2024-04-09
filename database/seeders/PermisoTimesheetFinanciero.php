@@ -20,7 +20,7 @@ class PermisoTimesheetFinanciero extends Seeder
             [
                 'title' => 'timesheet_administrador_dashboard_financiero_access',
                 'name' => 'Este permiso permite al administrador acceder al modulo dashboard financiero de Timesheet',
-            ]
+            ],
         ];
 
         Permission::insert($permissions);

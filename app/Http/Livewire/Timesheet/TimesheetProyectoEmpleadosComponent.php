@@ -97,14 +97,14 @@ class TimesheetProyectoEmpleadosComponent extends Component
         if ($this->empleado_añadido == 'todos_empleados_seleccionados') {
             foreach ($this->empleados as $empleado) {
                 foreach ($this->areasempleado as $ae) {
-                    if(isset($ae['area_id'])){
+                    if (isset($ae['area_id'])) {
                         if ($empleado['area_id'] == $ae['area_id']) {
                             $this->addEmpleadoIndivudual($empleado['id']);
                         }
                     }
                 }
             }
-        }else{
+        } else {
             $this->addEmpleadoIndivudual($this->empleado_añadido);
         }
     }
@@ -113,7 +113,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
     {
         $empleado_add_proyecto = Empleado::find($empleado_añadido_id);
 
-        if (!$empleado_add_proyecto) {
+        if (! $empleado_add_proyecto) {
             return redirect()->route('admin.timesheet-proyecto-empleados', ['proyecto_id' => intval($this->proyecto_id)])
                 ->with('error', 'El registro fue eliminado');
         }
