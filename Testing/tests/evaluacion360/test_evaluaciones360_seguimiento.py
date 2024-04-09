@@ -4,7 +4,7 @@ from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from pages.evaluacion360.seguimiento.evaluaciones360_seguimiento_page import Evaluaciones360Seguimiento
 from config import username, password
-
+'''
 @pytest.fixture(scope="session")
 def browser():
     options = FirefoxOptions()
@@ -25,10 +25,15 @@ def browser():
     driver = webdriver.Firefox(options=options)
     yield driver
     driver.quit()
-
+'''
 def test_evaluaciones360_seguimiento(browser):
     evaluaciones360_seguimiento = Evaluaciones360Seguimiento(browser)
-    evaluaciones360_seguimiento.login()
-    index_cap_humano = "https://192.168.9.78/admin/capital-humano"
-    evaluaciones360_seguimiento.cap_humano_index(index_cap_humano)
+
+    username_input = "input[name='email']"
+    password_input = "input[name='password']"
+    btn_enviar = "//button[@type='submit'][contains(text(),'Enviar')]"
+    logo="img[alt='Logo Tabantaj']"
+    evaluaciones360_seguimiento.login(logo,btn_enviar,username_input,password_input)
+    seguimiento_index = "https://192.168.9.78/admin/recursos-humanos/evaluacion-360/evaluaciones"
+    evaluaciones360_seguimiento.cap_humano_index(seguimiento_index)
 

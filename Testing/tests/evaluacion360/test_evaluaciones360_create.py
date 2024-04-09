@@ -4,7 +4,7 @@ from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from pages.evaluacion360.create.evaluaciones360_create_page import Evaluaciones360Create
 from config import username, password
-'''
+
 @pytest.fixture(scope="session")
 def browser():
     options = FirefoxOptions()
@@ -25,7 +25,7 @@ def browser():
     driver = webdriver.Firefox(options=options)
     yield driver
     driver.quit()
-'''
+
 
 def test_evaluaciones360_create(browser):
 
