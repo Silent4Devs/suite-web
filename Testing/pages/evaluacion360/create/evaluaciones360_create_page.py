@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import Select
+from selenium.common.exceptions import TimeoutException
 import pdb
 from config import username, password
 
@@ -74,6 +75,7 @@ class Evaluaciones360Create:
             print("Siguiente paso.")
         except Exception as e:
             print("Error al pasar al siguiente paso:", e)
+
     def publico_objetivo_select(self):
         try:
             self._select_option_by_text("//select[@id='evaluados_objetivo']", "Toda la empresa")
@@ -81,6 +83,41 @@ class Evaluaciones360Create:
             time.sleep(2)
         except Exception as e:
             print("Error al seleccionar el público objetivo:", e)
+
+    def publico_objetivo_select_area(self):
+        try:
+            self._select_option_by_text("//select[@id='evaluados_objetivo']", "Área")
+            print("Público objetivo seleccionado.")
+            time.sleep(2)
+        except Exception as e:
+            print("Error al seleccionar el público objetivo:", e)
+
+    def siguiente_2(self):
+        try:
+            self._click_element("//button[contains(text(), 'Siguiente')]")
+            print("Siguiente paso.")
+
+        except Exception as e:
+            print("Error al pasar al siguiente paso:", e)
+
+    def siguiente_3(self,xpath):
+        try:
+            self ._click_element(xpath)
+            print("Siguiente paso.")
+        except Exception as e:
+            print("Error al pasar al siguiente paso:", e)
+
+
+    def wait_until_element_available(self, xpath, timeout=10):
+        try:
+            element = WebDriverWait(self.driver, timeout).until(
+                EC.presence_of_element_located((By.XPATH, xpath))
+            )
+            element.click()
+            return element
+        except TimeoutException:
+            print(f"Elemento con XPath '{xpath}' no encontrado después de {timeout} segundos.")
+            return None
 
     def _select_option_by_text(self, locator, text):
         select = Select(self.driver.find_element(By.XPATH, locator))

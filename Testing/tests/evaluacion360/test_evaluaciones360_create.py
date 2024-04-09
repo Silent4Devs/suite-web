@@ -26,7 +26,9 @@ def browser():
     yield driver
     driver.quit()
 '''
+
 def test_evaluaciones360_create(browser):
+
     evaluaciones360_create = Evaluaciones360Create(browser)
     evaluaciones360_create.login()
     index_cap_humano = "https://192.168.9.78/admin/capital-humano"
@@ -40,4 +42,6 @@ def test_evaluaciones360_create(browser):
     evaluaciones360_create.check_evaluacion()
     evaluaciones360_create.siguiente()
     evaluaciones360_create.publico_objetivo_select()
-
+    evaluaciones360_create.siguiente_2()
+    xpath=("//button[contains(@class, 'btn-success') and contains(@class, 'btn-md') and contains(@class, 'btn') and contains(@class, 'mr-2') and contains(@class, 'fas') and contains(@class, 'fa-arrow-circle-right') and contains(@class, 'Siguiente')]")
+    evaluaciones360_create.siguiente_3(xpath)
