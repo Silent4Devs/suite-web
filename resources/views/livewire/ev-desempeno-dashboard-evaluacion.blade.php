@@ -428,12 +428,18 @@
                                     <td>{{ $evaluado->empleado->name }}</td>
                                     <td>{{ $evaluado->empleado->puestoRelacionado->puesto }}/{{ $evaluado->empleado->area->area }}
                                     </td>
-                                    <td>Evaluadores</td>
-                                    <td>{{ $evaluado->calificaciones_competencias_evaluado['promedio_total'] * ($evaluacion->porcentaje_competencias / 100) }}
+                                    <td>
+                                        <ul>
+                                            @foreach ($this->evaluadores_evaluado[$evaluado->id] as $evaluador)
+                                                <li>{{ $evaluador['nombre'] }}</li>
+                                            @endforeach
+                                        </ul>
                                     </td>
-                                    <td>{{ $evaluado->calificaciones_objetivos_evaluado['promedio_total'] * ($evaluacion->porcentaje_objetivos / 100) }}
+                                    <td>{{ $totales_evaluado[$evaluado->id]['competencias'] }}
                                     </td>
-                                    <td>{{ $evaluado->calificaciones_competencias_evaluado['promedio_total'] * ($evaluacion->porcentaje_competencias / 100) + $evaluado->calificaciones_objetivos_evaluado['promedio_total'] * ($evaluacion->porcentaje_objetivos / 100) }}
+                                    <td>{{ $totales_evaluado[$evaluado->id]['objetivos'] }}
+                                    </td>
+                                    <td>{{ $totales_evaluado[$evaluado->id]['final'] }}
                                     </td>
                                     <td>Nivel</td>
                                     @if ($evaluacion->activar_competencias)

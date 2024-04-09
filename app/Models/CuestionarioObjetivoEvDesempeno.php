@@ -13,6 +13,7 @@ class CuestionarioObjetivoEvDesempeno extends Model
 
     protected $fillable = [
         'objetivo_id',
+        'periodo_id',
         'evaluacion_desempeno_id',
         'evaluado_desempeno_id',
         'evaluador_desempeno_id',
@@ -24,6 +25,11 @@ class CuestionarioObjetivoEvDesempeno extends Model
     public function infoObjetivo()
     {
         return $this->belongsTo(CatalogoObjetivosEvDesempeno::class, 'objetivo_id', 'id');
+    }
+
+    public function periodo()
+    {
+        return $this->belongsTo(PeriodosEvaluacionDesempeno::class, 'periodo_id', 'id');
     }
 
     public function evaluacionDesempeno()

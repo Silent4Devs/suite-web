@@ -17,7 +17,7 @@ class EvaluadosEvaluacionDesempeno extends Model
         'estatus_evaluado',
     ];
 
-    protected $appends = ['cuenta_evaluaciones', 'cuenta_evaluaciones_completadas', 'calificaciones_objetivos_evaluado', 'calificaciones_competencias_evaluado'];
+    protected $appends = ['nombres_evaluadores', 'cuenta_evaluaciones', 'cuenta_evaluaciones_completadas', 'calificaciones_objetivos_evaluado', 'calificaciones_competencias_evaluado'];
 
     public function evaluacion()
     {
@@ -37,6 +37,33 @@ class EvaluadosEvaluacionDesempeno extends Model
     public function evaluadoresCompetencias()
     {
         return $this->hasMany(EvaluadoresEvaluacionCompetenciasDesempeno::class, 'evaluado_desempeno_id', 'id');
+    }
+
+    public function getNombresEvaluadoresAttribute()
+    {
+        $total = 0;
+
+        $evaluado = self::find($this->id);
+
+        if ($evaluado->evaluacion->activar_competencias && $this->evaluacion->activar_objetivos) {
+            $evaluadoresCompetenciasIds = $this->evaluadoresCompetencias->pluck('evaluador_desempeno_id')->toArray();
+            $evaluadoresObjetivosIds = $this->evaluadoresObjetivos->pluck('evaluador_desempeno_id')->toArray();
+
+            // Calculate the distinct count of evaluador_desempeno_id that match in both relations
+            $matchingCount = array_intersect($evaluadoresCompetenciasIds, $evaluadoresObjetivosIds);
+
+            // Calculate the count of evaluador_desempeno_id that don't match in both relations
+            $distinctCount = array_diff($evaluadoresCompetenciasIds, $evaluadoresObjetivosIds)
+                + array_diff($evaluadoresObjetivosIds, $evaluadoresCompetenciasIds);
+
+            $nombres = $matchingCount + $distinctCount;
+        } elseif ($evaluado->evaluacion->activar_competencias && $evaluado->evaluacion->activar_objetivos == false) {
+            $nombres = $evaluado->evaluadoresCompetencias;
+        } elseif ($evaluado->evaluacion->activar_competencias == false && $evaluado->evaluacion->activar_objetivos) {
+            $nombres = $evaluado->evaluadoresObjetivos;
+        }
+
+        return $nombres;
     }
 
     public function getCuentaEvaluacionesAttribute()
@@ -106,7 +133,7 @@ class EvaluadosEvaluacionDesempeno extends Model
                 $calificacion = [
                     'objetivo_id' => $pregunta->objetivo_id,
                     'calificacion_objetivo' => $pregunta->calificacion_objetivo,
-                    'calificacion_total' => ($pregunta->calificacion_objetivo / $pregunta->infoObjetivo->valor_maximo_unidad_objetivo) * $evlrs->porcentaje_objetivos,
+                    'calificacion_total' => round((($pregunta->calificacion_objetivo / $pregunta->infoObjetivo->valor_maximo_unidad_objetivo) * $evlrs->porcentaje_objetivos), 2),
                 ];
 
                 // Agrupar por objetivo_id
@@ -162,7 +189,7 @@ class EvaluadosEvaluacionDesempeno extends Model
                 $calificacion = [
                     'competencia_id' => $pregunta->competencia_id,
                     'calificacion_competencia' => $pregunta->calificacion_competencia,
-                    'calificacion_total' => ($pregunta->calificacion_competencia / $pregunta->infoCompetencia->nivel_esperado) * $evlrs->porcentaje_competencias,
+                    'calificacion_total' => round((($pregunta->calificacion_competencia / $pregunta->infoCompetencia->nivel_esperado) * $evlrs->porcentaje_competencias), 2),
                 ];
 
                 if (!isset($calificacionesAgrupadas[$pregunta->competencia_id])) {

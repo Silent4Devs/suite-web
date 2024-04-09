@@ -26,6 +26,7 @@ class EvaluacionDesempeno extends Model
 
     protected $appends =
     [
+        'areas_evaluacion',
         'estatus_palabra',
         'total_evaluaciones',
         'total_evaluaciones_completadas',
@@ -78,6 +79,22 @@ class EvaluacionDesempeno extends Model
 
         return $periodos;
     }
+
+    public function getAreasEvaluacionAttribute()
+    {
+        $evaluacion = self::find($this->id);
+
+        $ids_areas = [];
+
+        foreach ($evaluacion->evaluados as $evaluado) {
+            $ids_areas[] = $evaluado->empleado->area_id;
+        }
+
+        $unique_ids = array_unique($ids_areas);
+
+        return $unique_ids;
+    }
+
 
     public function getPorcentajeEvaluacionesCompletadasAttribute()
     {

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('cuestionario_objetivo_ev_desempenos', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('objetivo_id');
+            $table->unsignedBigInteger('periodo_id');
             $table->boolean('aplicabilidad')->default(true);
 
             $table->unsignedBigInteger('evaluacion_desempeno_id');
@@ -27,6 +28,7 @@ return new class extends Migration
             $table->softDeletes();
 
             $table->foreign('objetivo_id')->references('id')->on('catalogo_objetivos_ev_desempenos')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('periodo_id')->references('id')->on('periodos_evaluacion_desempenos')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('evaluacion_desempeno_id')->references('id')->on('evaluacion_desempenos')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('evaluado_desempeno_id')->references('id')->on('evaluados_evaluacion_desempenos')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('evaluador_desempeno_id')->references('id')->on('evaluadores_evaluacion_objetivos_desempenos')->onUpdate('cascade')->onDelete('cascade');

@@ -93,7 +93,9 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
             }
 
             foreach ($this->objetivos_evaluado as $key_objetivo => $obj_evld) {
+                $this->calificacion_escala[$obj_evld->infoObjetivo->id] = 'Sin evaluar';
                 foreach ($obj_evld->infoObjetivo->escalas as $obj_esc) {
+                    //Se inicializa con el valor inicial para que todos los objetivos tengan su campo correspondiente
                     switch ($obj_esc->condicion) {
                         case '1':
                             if (
@@ -136,13 +138,14 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
                             }
                             break;
                         default:
-                            return '=';
+                            $this->calificacion_escala[$obj_evld->infoObjetivo->id] = $obj_evld->infoObjetivo->escalas[0]->parametro;
                             break;
                     }
                 }
             }
-            // dd($this->objetivos_evaluado, $this->calificacion_escala);
+
             foreach ($this->objetivos_autoevaluado as $key_objetivo => $obj_evld) {
+                $this->calificacion_autoescala[$obj_evld->infoObjetivo->id] = 'Sin evaluar';
                 foreach ($obj_evld->infoObjetivo->escalas as $obj_esc) {
                     switch ($obj_esc->condicion) {
                         case '1':
@@ -186,7 +189,7 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
                             }
                             break;
                         default:
-                            return '=';
+                            $this->calificacion_autoescala[$obj_evld->infoObjetivo->id] = $obj_evld->infoObjetivo->escalas[0]->parametro;
                             break;
                     }
                 }

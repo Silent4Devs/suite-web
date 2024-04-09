@@ -14,6 +14,7 @@ class CuestionarioCompetenciaEvDesempeno extends Model
     protected $fillable =
     [
         'competencia_id',
+        'periodo_id',
         'evaluacion_desempeno_id',
         'evaluado_desempeno_id',
         'evaluador_desempeno_id',
@@ -24,6 +25,11 @@ class CuestionarioCompetenciaEvDesempeno extends Model
     public function infoCompetencia()
     {
         return $this->belongsTo(CatalogoCompetenciasEvDesempeno::class, 'competencia_id', 'id');
+    }
+
+    public function periodo()
+    {
+        return $this->belongsTo(PeriodosEvaluacionDesempeno::class, 'periodo_id', 'id');
     }
 
     public function evaluacionDesempeno()
