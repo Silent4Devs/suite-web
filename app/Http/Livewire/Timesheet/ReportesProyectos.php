@@ -178,7 +178,7 @@ class ReportesProyectos extends Component
                 $previous_month = Carbon::create()->day(1)->month(intval($previous_month))->format('F');
                 $year = $fecha->format('Y');
                 $month = $fecha->format('F');
-                if (! ($this->buscarKeyEnArray($year, $calendario_array))) {
+                if (!($this->buscarKeyEnArray($year, $calendario_array))) {
                     $calendario_array["{$year}"] = [
                         'year' => $year,
                         'total_weeks' => 0,
@@ -193,19 +193,19 @@ class ReportesProyectos extends Component
                     if ($month == 'January') {
                         $previous_year = $year - 1;
                         if (array_key_exists($previous_year, $calendario_array)) {
-                            if (! ($this->existsWeeksInMonth($semana, $calendario_array["{$previous_year}"]['months']['December']['weeks']))) {
+                            if (!($this->existsWeeksInMonth($semana, $calendario_array["{$previous_year}"]['months']['December']['weeks']))) {
                                 $calendario_array["{$year}"]['months']["{$month}"]['weeks'][] = $semana;
                             }
                         }
                     }
                 } else {
                     if (array_key_exists($month, $calendario_array["{$year}"]['months'])) {
-                        if (! in_array($semana, $calendario_array["{$year}"]['months']["{$month}"]['weeks'])) {
+                        if (!in_array($semana, $calendario_array["{$year}"]['months']["{$month}"]['weeks'])) {
                             $calendario_array["{$year}"]['months']["{$month}"]['weeks'][] = $semana;
                         }
                     } else {
                         if (array_key_exists($previous_month, $calendario_array["{$year}"]['months'])) {
-                            if (! ($this->existsWeeksInMonth($semana, $calendario_array["{$year}"]['months']["{$previous_month}"]['weeks']))) {
+                            if (!($this->existsWeeksInMonth($semana, $calendario_array["{$year}"]['months']["{$previous_month}"]['weeks']))) {
                                 $calendario_array["{$year}"]['months']["{$month}"]['weeks'][] = $semana;
                             }
                         } else {
@@ -231,17 +231,19 @@ class ReportesProyectos extends Component
         }
 
         $proyectos_array = collect();
-        if ($this->area_id && ! $this->proyecto_id) {
+        if ($this->area_id && !$this->proyecto_id) {
             $this->proyectos = TimesheetProyecto::getIdNameAll()->filter(function ($item) {
                 return $item->areas->contains(Area::getIdNameAll()->find($this->area_id));
             });
             $this->proyectos_select = $this->proyectos;
         } elseif ($this->proyecto_id) {
             $this->proyectos = TimesheetProyecto::getIdNameAll()->where('id', $this->proyecto_id);
-        } elseif (! $this->area_id && ! $this->proyecto_id) {
+        } elseif (!$this->area_id && !$this->proyecto_id) {
             $this->proyectos = TimesheetProyecto::getIdNameAll();
             $this->proyectos_select = $this->proyectos;
         }
+        $this->proyectos = $this->proyectos->sortByDesc('is_num');
+        $this->proyectos_select = $this->proyectos_select->sortByDesc('is_num');
 
         foreach ($this->proyectos as $proyecto) {
             // registros existenetes horas a la semana
@@ -264,6 +266,7 @@ class ReportesProyectos extends Component
             // registro de horas en calendario
             $times_registro_horas_array = collect();
             $calendario_tabla_proyectos = [];
+            $horas_totales_proyecto = 0;
             foreach ($calendario_array as $key => $año) {
                 foreach ($año['months'] as $key => $mes) {
                     foreach ($mes['weeks'] as $key => $semana) {
@@ -289,6 +292,7 @@ class ReportesProyectos extends Component
 
                         if ($horas_proyecto_times > 0) {
                             array_push($calendario_tabla_proyectos, $horas_proyecto_times);
+                            $horas_totales_proyecto += $horas_proyecto_times;
                         } else {
                             array_push($calendario_tabla_proyectos, '<span class="p-1" style="background-color:#FFF2CC;">Sin&nbsp;Registro</span>');
                         }
@@ -301,8 +305,10 @@ class ReportesProyectos extends Component
                 'identificador' => $proyecto->identificador,
                 'proyecto' => $proyecto->proyecto,
                 'areas' => $proyecto->areas,
+                'empleados' => $proyecto->empleados,
                 'cliente' => $proyecto->cliente ? $proyecto->cliente->nombre : '',
                 'calendario' => $calendario_tabla_proyectos,
+                'horas_totales' => $horas_totales_proyecto,
             ]);
         }
         if ($this->search) {
@@ -372,7 +378,7 @@ class ReportesProyectos extends Component
 
                 $empleado = Empleado::find($hora->timesheet->empleado_id);
 
-                if (! $empleados->contains('id', $empleado->id)) {
+                if (!$empleados->contains('id', $empleado->id)) {
                     $empleados->push([
                         'id' => $empleado->id,
                         'name' => $empleado->name,
@@ -405,7 +411,7 @@ class ReportesProyectos extends Component
 
         foreach ($this->tareas_array as $key => $tarea_em) {
             foreach ($tarea_em['empleados'] as $key => $emp_array) {
-                if (! ($this->empleados_proyecto->contains('id', $emp_array['id']))) {
+                if (!($this->empleados_proyecto->contains('id', $emp_array['id']))) {
                     $this->empleados_proyecto->push($emp_array);
                 } else {
                     $this->empleados_proyecto = $this->empleados_proyecto->map(function ($emp_item) use ($emp_array) {

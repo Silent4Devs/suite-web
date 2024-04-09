@@ -12,10 +12,36 @@
             width: 130px;
             word-wrap: break-word
         }
+
+        .btn-success-custom {
+            background-color: #28a745;
+            color: #fff;
+        }
+
+        .btn-primary-custom {
+            background-color: #007bff;
+            color: #fff;
+        }
     </style>
-    <h5 class="col-12 titulo_general_funcion">Requisiciónes</h5>
-    <button type="button" class="btn btn-primary" id="filtrarBtn" style="position: relative; left: 70rem;">Filtrar
-        requisiciones pendientes</button>
+    <h5 class="col-12 titulo_general_funcion">Requisiciones</h5>
+
+    <!-- Botón 1 -->
+    <button type="button" class="btn @if ($buttonSolicitante) btn-success-custom @else btn-primary-custom @endif"
+        id="filtrarBtn2" style="position: relative; left: 1rem;">Filtrar Requisiciones pendientes solicitantes</button>
+
+    <!-- Botón 2 -->
+    <button type="button" class="btn @if ($buttonJefe) btn-success-custom @else btn-primary-custom @endif"
+        id="filtrarBtn1" style="position: relative; left: 2rem;">Filtrar requisiciones pendientes jefes</button>
+
+    <!-- Botón 3 -->
+    <button type="button" class="btn @if ($buttonFinanzas) btn-success-custom @else btn-primary-custom @endif"
+        id="filtrarBtn" style="position: relative; left: 4rem;">Filtrar requisiciones pendientes finanzas</button>
+
+    <!-- Botón 4 -->
+    <button type="button" class="btn @if ($buttonCompras) btn-success-custom @else btn-primary-custom @endif"
+        id="filtrarBtn3" style="position: relative; left: 6rem;">Filtrar requisiciones pendientes compradores</button>
+
+
     <div class="mt-5 card">
         <div class="card-body datatable-fix">
             <table id="dom" class="table table-bordered w-100 datatable-perspectiva" style="width: 100%">
@@ -66,27 +92,39 @@
 
                             </td>
                             @php
-                            $user = Illuminate\Support\Facades\DB::table('users')
-                              ->select('id', 'name')
-                              ->where('id', $requisicion->id_user)
-                              ->first();
+
+                                $user = Illuminate\Support\Facades\DB::table('users')
+                                    ->select('id', 'name')
+                                    ->where('id', $requisicion->id_user)
+                                    ->first();
+
                             @endphp
                             <td>
                                 @switch(true)
                                     @case(is_null($requisicion->firma_solicitante))
-                                        <p>Solicitante: {{$user->name ?? ''}}</p>
+                                        <p>Solicitante: {{ $user->name ?? '' }}</p>
                                     @break
-                                    @case(is_null($requisicion->firma_jefe))
-                                    @php
-                                    $employee = App\Models\User::find($requisicion->id_user)->empleado;
 
-                                    if ($employee !== null && $employee->supervisor !== null) {
-                                        $supervisorName = $employee->supervisor->name;
-                                    } else {
-                                        $supervisorName = "N/A"; // Or any default value you prefer
-                                    }
-                                    @endphp
-                                        <p>Jefe: {{$supervisorName ?? ''}} </p>
+                                    @case(is_null($requisicion->firma_jefe))
+                                        @php
+                                            $employee = App\Models\User::find($requisicion->id_user);
+                                            if ($employee !== null) {
+                                                // El usuario existe, ahora verifica si tiene la propiedad 'empleado'
+                                                if (
+                                                    $employee->empleado !== null &&
+                                                    $employee->empleado->supervisor !== null
+                                                ) {
+                                                    $supervisorName = $employee->empleado->supervisor->name;
+                                                } else {
+                                                    $supervisorName = 'N/A'; // O cualquier valor predeterminado que prefieras
+                                                }
+                                            } else {
+                                                // El usuario no existe
+                                                $supervisorName = 'N/A'; // O cualquier valor predeterminado que prefieras
+                                            }
+
+                                        @endphp
+                                        <p>Jefe: {{ $supervisorName ?? '' }} </p>
                                     @break
 
                                     @case(is_null($requisicion->firma_finanzas))
@@ -94,11 +132,12 @@
                                     @break
 
                                     @case(is_null($requisicion->firma_compras))
-
-                                    @php
-                                     $comprador = App\Models\ContractManager\Comprador::with('user')->where('id', $requisicion->comprador_id)->first();
-                                    @endphp
-                                    <p>Comprador: {{  $comprador->name }}</p>
+                                        @php
+                                            $comprador = App\Models\ContractManager\Comprador::with('user')
+                                                ->where('id', $requisicion->comprador_id)
+                                                ->first();
+                                        @endphp
+                                        <p>Comprador: {{ $comprador->user->name }}</p>
                                     @break
 
                                     @default
@@ -355,6 +394,27 @@
         $(document).ready(function() {
             $('#filtrarBtn').click(function() {
                 window.location.href = "{{ route('contract_manager.requisiciones.filtrarPorEstado') }}";
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#filtrarBtn1').click(function() {
+                window.location.href = "{{ route('contract_manager.requisiciones.filtrarPorEstado1') }}";
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#filtrarBtn2').click(function() {
+                window.location.href = "{{ route('contract_manager.requisiciones.filtrarPorEstado2') }}";
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#filtrarBtn3').click(function() {
+                window.location.href = "{{ route('contract_manager.requisiciones.filtrarPorEstado3') }}";
             });
         });
     </script>
