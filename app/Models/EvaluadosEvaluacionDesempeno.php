@@ -130,8 +130,10 @@ class EvaluadosEvaluacionDesempeno extends Model
 
         foreach ($evaluadores as $evlrs) {
             foreach ($evlrs->preguntasCuestionarioAplican as $pregunta) {
+                dd($pregunta);
                 $calificacion = [
                     'objetivo_id' => $pregunta->objetivo_id,
+                    'tipo' => $pregunta->infoObjetivo->tipo_objetivo,
                     'calificacion_objetivo' => $pregunta->calificacion_objetivo,
                     'calificacion_total' => round((($pregunta->calificacion_objetivo / $pregunta->infoObjetivo->valor_maximo_unidad_objetivo) * $evlrs->porcentaje_objetivos), 2),
                 ];
@@ -156,6 +158,7 @@ class EvaluadosEvaluacionDesempeno extends Model
 
             $calificacionesSumadas[] = [
                 'objetivo_id' => $objetivo_id,
+                'tipo' => $calificacion['tipo'],
                 'calificacion_total' => $suma,
             ];
         }
@@ -188,6 +191,7 @@ class EvaluadosEvaluacionDesempeno extends Model
             foreach ($evlrs->preguntasCuestionario as $pregunta) {
                 $calificacion = [
                     'competencia_id' => $pregunta->competencia_id,
+                    'competencia' => $pregunta->infoCompetencia->competencia,
                     'calificacion_competencia' => $pregunta->calificacion_competencia,
                     'calificacion_total' => round((($pregunta->calificacion_competencia / $pregunta->infoCompetencia->nivel_esperado) * $evlrs->porcentaje_competencias), 2),
                 ];
@@ -211,6 +215,7 @@ class EvaluadosEvaluacionDesempeno extends Model
 
             $calificacionesSumadas[] = [
                 'competencia_id' => $competencia_id,
+                'competencia' => $calificacion['competencia'],
                 'calificacion_total' => $suma,
             ];
         }

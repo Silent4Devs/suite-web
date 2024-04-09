@@ -116,32 +116,36 @@
                     <span>Promedio General</span>
                 </div>
                 <div>
-                    <small>Resultado</small> <strong>75%</strong>
+                    <small>Resultado</small> <strong>{{ $promedio_total }}%</strong>
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="text-white d-flex align-items-center justify-content-between p-4 rounded-lg"
-                style="background-color: #984F96;">
-                <div>
-                    <span>Objetivos</span>
-                </div>
-                <div>
-                    <small>Resultado</small> <strong>75%</strong>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="text-white d-flex align-items-center justify-content-between p-4 rounded-lg"
-                style="background-color: #984F96;">
-                <div>
-                    <span>Competencias</span>
-                </div>
-                <div>
-                    <small>Resultado</small> <strong>75%</strong>
+        @if ($evaluacion->activar_objetivos)
+            <div class="col-md-4">
+                <div class="text-white d-flex align-items-center justify-content-between p-4 rounded-lg"
+                    style="background-color: #984F96;">
+                    <div>
+                        <span>Objetivos</span>
+                    </div>
+                    <div>
+                        <small>Resultado</small> <strong>{{ $promedio_competencias }}%</strong>
+                    </div>
                 </div>
             </div>
-        </div>
+        @endif
+        @if ($evaluacion->activar_competencias)
+            <div class="col-md-4">
+                <div class="text-white d-flex align-items-center justify-content-between p-4 rounded-lg"
+                    style="background-color: #984F96;">
+                    <div>
+                        <span>Competencias</span>
+                    </div>
+                    <div>
+                        <small>Resultado</small> <strong>{{ $promedio_objetivos }}%</strong>
+                    </div>
+                </div>
+            </div>
+        @endif
 
     </div>
 
@@ -227,8 +231,8 @@
             <select name="area_select" id="area_select" wire:model="area_select" class="form-control"
                 style="background-color: #fff;">
                 <option value="" selected disabled>Área</option>
-                @foreach ($areas as $area)
-                    <option value="{{ $area->id }}">{{ $area->area }}</option>
+                @foreach ($opciones_area_select as $key => $opas)
+                    <option value="{{ $opas['id'] }}">{{ $opas['area'] }}</option>
                 @endforeach
             </select>
         </div>
@@ -337,6 +341,9 @@
             <div class="col-md-3 form-group">
                 <select name="" id="" class="form-control">
                     <option value="" selected disabled>Área</option>
+                    @foreach ($opciones_area_select as $key => $opas)
+                        <option value="{{ $opas['id'] }}">{{ $opas['area'] }}</option>
+                    @endforeach
                 </select>
             </div>
             <div class="col-md-3 form-group">
@@ -348,8 +355,11 @@
                 </select>
             </div>
             <div class="col-md-3 form-group">
-                <select name="" id="" disabled select class="form-control">
+                <select name="" id="" class="form-control">
                     <option value="">Evaluador</option>
+                    @foreach ($opciones_evaluadores_select as $op)
+                        <option value="{{ $op['id'] }}">{{ $op['nombre'] }}</option>
+                    @endforeach
                 </select>
             </div>
             <div class="form-group">
@@ -554,10 +564,10 @@
             new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: @json($areas_prueba),
+                    labels: {!! json_encode($grafica_area['nombres']) !!},
                     datasets: [{
                         label: 'Porcentaje de cumplimiento',
-                        data: @json($datos_prueba),
+                        data: {!! json_encode($grafica_area['resultados']) !!},
                         borderWidth: 1
                     }]
                 },
@@ -577,10 +587,10 @@
             new Chart(ctx2, {
                 type: 'bar',
                 data: {
-                    labels: @json($listaObjetivos),
+                    labels: {!! json_encode($grafica_objetivos['nombres']) !!},
                     datasets: [{
                         label: 'Porcentaje de Cumplimiento',
-                        data: @json($datos_prueba),
+                        data: {!! json_encode($grafica_objetivos['resultados']) !!},
                         borderWidth: 1
                     }]
                 },
@@ -602,7 +612,7 @@
                 data: {
                     labels: @json($escalas['nombres']),
                     datasets: [{
-                        label: 'Nivel',
+                        label: 'Colaboradores',
                         data: [12, 43, 2, 2],
                         backgroundColor: @json($escalas['colores']),
                         borderWidth: 1
@@ -624,11 +634,11 @@
             new Chart(ctx4, {
                 type: 'bar',
                 data: {
-                    labels: @json($listaCompetencias),
+                    labels: {!! json_encode($grafica_competencias['nombres']) !!},
                     datasets: [{
                         label: 'Porcentaje Cumplido',
-                        // data: @json($datos_prueba),
-                        data: [89, 34, 55, 86, 75, 89, 34, 55, 86, 75, 89, 34, 55, 86],
+                        data: {!! json_encode($grafica_competencias['resultados']) !!},
+                        // data: [89, 34, 55, 86, 75, 89, 34, 55, 86, 75, 89, 34, 55, 86],
                         borderWidth: 1
                     }]
                 },
