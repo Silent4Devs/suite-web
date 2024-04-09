@@ -1,6 +1,6 @@
 <div>
     {{-- A good traveler has no fixed plans and is not intent upon arriving. --}}
-    <h5 class="titulo_general_funcion"> Evaluación Dashboard {{ $evaluacion->nombre }}</h5>
+    <h5 class="titulo_general_funcion"> Evaluación Dashboard: {{ $evaluacion->nombre }}</h5>
 
     <p>
         <small>
@@ -146,7 +146,22 @@
     </div>
 
     <div class="row mt-4" style="font-size: 15px; color: #006DDB;">
-        <div class="col-md-3">
+        @foreach ($evaluacion->periodos as $periodo)
+            <div class="col-md-3">
+                <div class="p-3 rounded-lg" style="background-color: #fff; box-shadow: 0px 1px 4px #0000000F;">
+                    <div class="d-flex align-items-center justify-content-between color-primary">
+                        <div>
+                            {{-- Trimestre 1 --}}
+                            {{ $periodo->nombre_evaluacion }}
+                        </div>
+                        <div>
+                            <small>Promedio</small> <strong>67%</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+        {{-- <div class="col-md-3">
             <div class="p-3 rounded-lg" style="background-color: #fff; box-shadow: 0px 1px 4px #0000000F;">
                 <div class="d-flex align-items-center justify-content-between color-primary">
                     <div>
@@ -193,12 +208,18 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
 
     <div class="card card-body mt-3">
         <h5>Resultado por área</h5>
-        grahp
+        <div class="row">
+            <div class="col-12">
+                <div style="height:600px;">
+                    <canvas id="resultadosxarea"></canvas>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="card card-body" style="background-color: #BF9CC4;">
@@ -256,21 +277,38 @@
         <div class="col-md-6">
             <div class="card card-body">
                 <h5>Cumplimiento de Objetivos</h5>
-                grahp
+                <div class="row">
+                    <div class="col-12">
+                        <div style="height:300px;">
+                            <canvas id="cumplimientoObjetivos"></canvas>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="col-md-6">
             <div class="card card-body">
                 <h5>Resultado de evaluación por escalas</h5>
-
-                grahp
+                <div class="row">
+                    <div class="col-12">
+                        <div style="height:300px;">
+                            <canvas id="escalas"></canvas>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <div class="card card-body">
         <h5>Cumplimiento de Competencias</h5>
-        graph
+        <div class="row">
+            <div class="col-12">
+                <div style="height:600px;">
+                    <canvas id="cumplimientoCompetencias"></canvas>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="card card-body">
@@ -304,6 +342,9 @@
             <div class="col-md-3 form-group">
                 <select name="" id="" class="form-control">
                     <option disabled selected value="">Colaborador</option>
+                    @foreach ($evaluacion->evaluados as $evaluado)
+                        <option value="{{ $evaluado->id }}">{{ $evaluado->empleado->name }}</option>
+                    @endforeach
                 </select>
             </div>
             <div class="col-md-3 form-group">
@@ -321,11 +362,11 @@
         <div class="nav nav-tabs" role="tablist" style="margin-bottom: 0px !important;">
             <a class="nav-link active" id="" data-type="empleados" data-toggle="tab"
                 href="#nav-config-obj-1" role="tab" aria-controls="nav-empleados" aria-selected="true">
-                Definir Categorías
+                Evaluados
             </a>
             <a class="nav-link" id="" data-type="calendario-comunicacion" data-toggle="tab"
                 href="#nav-config-obj-2" role="tab" aria-controls="nav-config-obj-2" aria-selected="false">
-                Definir Escalas
+                Resultados de la evaluacion
             </a>
         </div>
     </nav>
@@ -339,17 +380,19 @@
                     <thead class="thead-dark">
                         <tr>
                             <th>Nombre</th>
-                            <th>Evaluadores</th>
-                            <th>Avance</th>
-                            <th>Actividad</th>
+                            <th>Área</th>
+                            <th>Meta</th>
+                            <th>Estatus</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Nombre</td>
-                            <td>Evaluadores</td>
-                            <td>Avance</td>
-                            <td>Actividad</td>
+                            @foreach ($evaluacion->evaluados as $evaluado)
+                                <td>{{ $evaluado->empleado->name }}</td>
+                                <td>{{ $evaluado->empleado->area->area }}</td>
+                                <td>Avance</td>
+                                <td>Actividad</td>
+                            @endforeach
                         </tr>
                     </tbody>
                 </table>
@@ -502,4 +545,101 @@
             </div>
         </div>
     </div>
+    @section('scripts')
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        <script>
+            const ctx = document.getElementById('resultadosxarea');
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: @json($areas_prueba),
+                    datasets: [{
+                        label: 'Porcentaje de cumplimiento',
+                        data: @json($datos_prueba),
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        </script>
+
+        <script>
+            const ctx2 = document.getElementById('cumplimientoObjetivos');
+
+            new Chart(ctx2, {
+                type: 'bar',
+                data: {
+                    labels: @json($listaObjetivos),
+                    datasets: [{
+                        label: 'Porcentaje de Cumplimiento',
+                        data: @json($datos_prueba),
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        </script>
+
+        <script>
+            const ctx3 = document.getElementById('escalas');
+
+            new Chart(ctx3, {
+                type: 'bar',
+                data: {
+                    labels: @json($escalas['nombres']),
+                    datasets: [{
+                        label: 'Nivel',
+                        data: [12, 43, 2, 2],
+                        backgroundColor: @json($escalas['colores']),
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        </script>
+
+        <script>
+            const ctx4 = document.getElementById('cumplimientoCompetencias');
+
+            new Chart(ctx4, {
+                type: 'bar',
+                data: {
+                    labels: @json($listaCompetencias),
+                    datasets: [{
+                        label: 'Porcentaje Cumplido',
+                        // data: @json($datos_prueba),
+                        data: [89, 34, 55, 86, 75, 89, 34, 55, 86, 75, 89, 34, 55, 86],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        </script>
+    @endsection
 </div>

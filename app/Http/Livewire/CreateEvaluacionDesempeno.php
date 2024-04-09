@@ -9,6 +9,8 @@ use App\Models\ConductasCompCuestionarioEvDesempenos;
 use App\Models\CuestionarioCompetenciaEvDesempeno;
 use App\Models\CuestionarioObjetivoEvDesempeno;
 use App\Models\Empleado;
+use App\Models\EscalasEvaluacionDesempeno;
+use App\Models\EscalasMedicionObjetivos;
 use App\Models\EscalasObjCuestionarioEvDesempeno;
 use App\Models\EvaluacionDesempeno;
 use App\Models\EvaluadoresEvaluacionCompetenciasDesempeno;
@@ -210,10 +212,20 @@ class CreateEvaluacionDesempeno extends Component
             'autor_id' => User::getCurrentUser()->empleado->id,
         ]);
 
+        $escalas = EscalasMedicionObjetivos::get();
+
+        foreach ($escalas as $escala) {
+            EscalasEvaluacionDesempeno::create([
+                'evaluacion_desempeno_id' => $evaluacion->id,
+                'parametro' => $escala->parametro,
+                // 'valor',
+                'color' => $escala->color,
+                // 'descripcion',
+            ]);
+        }
+
         foreach ($this->datosPaso2 as $key => $p) {
-            // dd();
             if (!empty($p['nombre_evaluacion'])) {
-                // dd('entra');
                 PeriodosEvaluacionDesempeno::create([
                     'evaluacion_desempeno_id' => $evaluacion->id,
                     'nombre_evaluacion' => $p['nombre_evaluacion'],
