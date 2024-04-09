@@ -313,9 +313,9 @@ class CreateEvaluacionDesempeno extends Component
                                 [
                                     'objetivo_id' => $cat_obj->id,
                                     'condicion' => $escala->condicion,
-                                    'parametro' => $escala->parametro->parametro,
+                                    'parametro' => $escala->parametro,
                                     'valor' => $escala->valor,
-                                    'color' => $escala->parametro->color,
+                                    'color' => $escala->color,
                                 ]
                             );
                         }

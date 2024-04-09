@@ -38,10 +38,6 @@ class DefinicionEscalasObjetivos extends Component
 
     public function mount()
     {
-    }
-
-    public function render()
-    {
         $escalas = EscalasMedicionObjetivos::get();
 
         if (isset($escalas[0]->parametro)) {
@@ -50,7 +46,7 @@ class DefinicionEscalasObjetivos extends Component
 
             $this->estatus_2 = $escalas[1]->parametro;
             $this->color_estatus_2 = $escalas[1]->color;
-
+            // dd($escalas);
             foreach ($escalas as $key => $esc) {
                 if ($key > 1) {
                     $this->parametros[$key] =
@@ -61,7 +57,10 @@ class DefinicionEscalasObjetivos extends Component
                 }
             }
         }
+    }
 
+    public function render()
+    {
         return view('livewire.definicion-escalas-objetivos');
     }
 
@@ -81,6 +80,11 @@ class DefinicionEscalasObjetivos extends Component
     public function submitForm($data)
     {
         // dd($data);
+        $borrar = EscalasMedicionObjetivos::get();
+
+        foreach ($borrar as $borra) {
+            $borra->delete();
+        }
 
         EscalasMedicionObjetivos::create([
             'parametro' => $data['estatus_1'],
