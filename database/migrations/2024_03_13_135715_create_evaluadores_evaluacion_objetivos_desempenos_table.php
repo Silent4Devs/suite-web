@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('evaluadores_evaluacion_desempenos');
+        Schema::dropIfExists('evaluadores_evaluacion_objetivos_desempenos');
     }
 };
