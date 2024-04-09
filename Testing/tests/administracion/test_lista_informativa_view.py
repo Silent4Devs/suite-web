@@ -1,5 +1,28 @@
 from pages.administracion.configurar_organizacion.lista_informativa.view.lista_informativa_view_page import Lista_Informativa
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
+from selenium import webdriver
+import pytest
+
+@pytest.fixture(scope="session")
+def browser():
+    options = FirefoxOptions()
+    options.add_argument('--headless')
+    options.add_argument('--disable-gpu')
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-dev-shm-usage')
  
+ 
+    options.add_argument('--disable-extensions')
+    options.add_argument('--disable-dev-shm-usage')
+    options.add_argument('--disable-browser-side-navigation')
+    options.add_argument('--disable-gpu')
+    options.add_argument('--no-sandbox')
+    options.add_argument('--log-level=3')
+    
+    driver = webdriver.Firefox(options=options)
+    yield driver
+    driver.quit()  
+    
 def test_view_lista_informativa(browser):
     
  view_ListaInformativa = Lista_Informativa(browser)

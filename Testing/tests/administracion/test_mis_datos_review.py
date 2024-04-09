@@ -3,7 +3,6 @@ from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium import webdriver
 import pytest
 
-
 @pytest.fixture(scope="session")
 def browser():
     options = FirefoxOptions()
@@ -24,7 +23,7 @@ def browser():
     yield driver
     driver.quit()
 
-def test_edit_mis_datos(browser) :
+def test_review_mis_datos(browser) :
     
     mis_datos_review = Review_Mis_Datos(browser)
     mis_datos_review.login()

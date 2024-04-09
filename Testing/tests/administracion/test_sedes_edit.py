@@ -1,11 +1,34 @@
 from pages.administracion.configurar_organizacion.sedes.edit.sedes_edit_page import Edit_sedes
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
+from selenium import webdriver
+import pytest
+
+@pytest.fixture(scope="session")
+def browser():
+    options = FirefoxOptions()
+    options.add_argument('--headless')
+    options.add_argument('--disable-gpu')
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-dev-shm-usage')
  
+ 
+    options.add_argument('--disable-extensions')
+    options.add_argument('--disable-dev-shm-usage')
+    options.add_argument('--disable-browser-side-navigation')
+    options.add_argument('--disable-gpu')
+    options.add_argument('--no-sandbox')
+    options.add_argument('--log-level=3')
+    
+    driver = webdriver.Firefox(options=options)
+    yield driver
+    driver.quit()  
+    
 def test_edit_sedes(browser):
     
- create_edit = Edit_sedes(browser)
- create_edit.login()
- create_edit.in_submodulo(menu_hamburguesa, element_entrar_modulo, element_entrar_submodulo)
- create_edit.adit_sedes( campo_buscar_xpath, trespuntos_btn_xpath, boton_editar, guardar_xpath)
+ sedes_edit = Edit_sedes(browser)
+ sedes_edit.login()
+ sedes_edit.in_submodulo(menu_hamburguesa, element_entrar_modulo, element_entrar_submodulo)
+ sedes_edit.adit_sedes( campo_buscar_xpath, trespuntos_btn_xpath, boton_editar, guardar_xpath)
  
 #Variables
 menu_hamburguesa = "//BUTTON[@class='btn-menu-header']"

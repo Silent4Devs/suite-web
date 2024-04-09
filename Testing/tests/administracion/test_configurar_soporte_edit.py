@@ -1,12 +1,34 @@
 from pages.administracion.ajustes_de_sistema.configurar_soporte.edit.configurar_soporte_edit_page import Edit_configurar_soporte
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
+from selenium import webdriver
+import pytest
+
+@pytest.fixture(scope="session")
+def browser():
+    options = FirefoxOptions()
+    options.add_argument('--headless')
+    options.add_argument('--disable-gpu')
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-dev-shm-usage')
  
-def test_clasificacion_create(browser):
+ 
+    options.add_argument('--disable-extensions')
+    options.add_argument('--disable-dev-shm-usage')
+    options.add_argument('--disable-browser-side-navigation')
+    options.add_argument('--disable-gpu')
+    options.add_argument('--no-sandbox')
+    options.add_argument('--log-level=3')
     
- clasifiacion_edit = Edit_configurar_soporte(browser)
- clasifiacion_edit.login()
- clasifiacion_edit.in_submodulo(menu_hamburguesa, element_entrar_modulo, element_entrar_submodulo)
- clasifiacion_edit.edit_configurarsoporte(btn_serch, btn_3Puntos, guardar_xpath)
- 
+    driver = webdriver.Firefox(options=options)
+    yield driver
+    driver.quit()  
+    
+def test_configurar_soporte_edit(browser):
+    
+ configurar_soporte_edit = Edit_configurar_soporte(browser)
+ configurar_soporte_edit.login()
+ configurar_soporte_edit.in_submodulo(menu_hamburguesa, element_entrar_modulo, element_entrar_submodulo)
+ configurar_soporte_edit.edit_configurarsoporte(btn_serch, btn_3Puntos, guardar_xpath)
 
 #Variables
 menu_hamburguesa = "//BUTTON[@class='btn-menu-header']"

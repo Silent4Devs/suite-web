@@ -84,7 +84,7 @@ class Edit_Categoria_Activos:
         
         #Modulo Configurar Organizacion
         print("Ingresando a Modulo Configurar Organizacion ...")
-        in_modulo = WebDriverWait(self.driver, 3).until(
+        in_modulo = WebDriverWait(self.driver, 10).until(
             EC.element_to_be_clickable((By.XPATH, element_entrar_modulo))
         )
         in_modulo.click()
@@ -93,7 +93,7 @@ class Edit_Categoria_Activos:
         
         #Submodulo Categoria de Activos
         print("Ingresando a Submenu Categoria de Activos ...")
-        sub_modulo= WebDriverWait(self.driver, 3).until(
+        sub_modulo= WebDriverWait(self.driver, 10).until(
             EC.element_to_be_clickable((By.XPATH, element_entrar_submodulo))
         )
         sub_modulo.click()
