@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - silent/master
-  pull_request:
-    branches:
-      - silent/master
 
 env:
   REGISTRY: ghcr.io
