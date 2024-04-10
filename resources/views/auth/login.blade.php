@@ -2,7 +2,7 @@
 @section('content')
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/favicon_tabantaj.png') }}">
 @section('styles')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/login.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/auth/TBlogin.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
 @endsection
 
@@ -10,8 +10,8 @@
 <div id="login" class="fondo clase_animacion">
     <div class="caja_marca">
         <div class="marca">
-            <img class="d-mobile tabantaj-logo-mobile-login" src="{{ asset('img/isotipo_tabantaj.png') }}"><br>
-            <img class="d-mobile-none" src="{{ asset('img/logo_policromatico.png') }}"><br>
+            <img class="d-mobile tabantaj-logo-mobile-login" src="{{ asset('img/auth/TBlogoLoginMobile.png') }}"><br>
+            <img class="d-mobile-none" src="{{ asset('img/auth/TBlogoLogin.png') }}"><br>
             <p class="by d-mobile-none">By <strong>Silent</strong>for<strong>Business</strong></p>
             <p class="bienvenidos d-mobile-none"><strong>Bienvenidos al</strong> Sistema Integral de Gestión Empresarial</p>
         </div>
@@ -33,7 +33,7 @@
                 if (!is_null($organizacion)) {
                     $logotipo = $organizacion->logotipo;
                 } else {
-                    $logotipo = 'img/logo_monocromatico.png';
+                    $logotipo = 'img/auth/TBlogoLogin.png';
                 }
             @endphp
 
@@ -74,9 +74,6 @@
                 <a class="btn" href="{{ route('password.request') }}"
                     style="margin-top:20px; color: #006DDB; font-size: 12px;">¿Olvidó su contraseña?</a>
             @endif
-            {{-- <div class=" mt-2">
-                <a class="btn_registrate" href="{{ route('register') }}" style="margin-top:52px;">Crear Cuenta</a>
-            </div> --}}
             <a class="btn" href="#" style="margin-top: 20px; color: #006DDB; font-size: 12px;"
                 id="btn_modal_aviso">Aviso de privacidad </a>
             <a class="btn" href="{{ route('visitantes.presentacion') }}"
