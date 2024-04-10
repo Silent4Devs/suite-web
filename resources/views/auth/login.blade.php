@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/favicon_tabantaj.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/auth/TBIconTabantaj.png') }}">
 @section('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/auth/TBlogin.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
