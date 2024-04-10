@@ -1743,7 +1743,6 @@ Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'name
     Route::get('requisiciones/filtrar_solicitante', 'RequisicionesController@filtrarPorEstado2')->name('requisiciones.filtrarPorEstado2');
     Route::get('requisiciones/filtrar_compras', 'RequisicionesController@filtrarPorEstado3')->name('requisiciones.filtrarPorEstado3');
 
-
     // ordenes de compra
     Route::get('orden-compra', 'OrdenCompraController@index')->name('orden-compra');
     Route::post('orden-compra/list/get', 'OrdenCompraController@getRequisicionIndex')->name('orden-compra.getRequisicionIndex');
@@ -1755,4 +1754,9 @@ Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'name
     Route::post('orden-compra/rechazada/{id}', 'OrdenCompraController@rechazada')->name('orden-compra.rechazada');
     Route::get('orden-compra/firmar/{tipo_firma}/{id}', 'OrdenCompraController@firmar')->name('orden-compra.firmar');
     Route::post('orden-compra/firma-update/{tipo_firma}/{id}', 'OrdenCompraController@FirmarUpdate')->name('orden-compra.firmar-update');
+    Route::get('orden-compra/filtrar', 'OrdenCompraController@filtrarPorEstado')->name('orden-compra.filtrarPorEstado');
+    Route::get('orden-compra/filtrar_solicitante', 'OrdenCompraController@filtrarPorEstado2')->name('orden-compra.filtrarPorEstado2');
+    Route::get('orden-compra/filtrar_compras', 'OrdenCompraController@filtrarPorEstado3')->name('orden-compra.filtrarPorEstado3');
+    Route::get('orden-compra/aprobadores', 'OrdenCompraController@indexAprobadores')->name('orden-compra.indexAprobadores');
+    Route::get('orden-compra/aprobados/{id}', 'OrdenCompraController@firmarAprobadores')->name('orden-compra.firmarAprobadores');
 });

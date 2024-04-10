@@ -2,25 +2,24 @@
 
 namespace App\Http\Controllers\ContractManager;
 
-use PDF;
-use Gate;
-use App\Models\User;
-use App\Models\Organizacion;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Mail\RequisicionesEmail;
+use App\Models\ContractManager\Comprador as KatbolComprador;
+use App\Models\ContractManager\Contrato as KatbolContrato;
+use App\Models\ContractManager\ProvedorRequisicionCatalogo as KatbolProvedorRequisicionCatalogo;
+use App\Models\ContractManager\ProveedorIndistinto as KatbolProveedorIndistinto;
+use App\Models\ContractManager\ProveedorOC as KatbolProveedorOC;
+use App\Models\ContractManager\Requsicion as KatbolRequsicion;
+use App\Models\ContractManager\Sucursal as KatbolSucursal;
+use App\Models\Organizacion;
+use App\Models\User;
 use App\Models\User as ModelsUser;
 use App\Traits\ObtenerOrganizacion;
-use App\Http\Controllers\Controller;
+use Gate;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
-use RealRashid\SweetAlert\Facades\Alert;
+use PDF;
 use Symfony\Component\HttpFoundation\Response;
-use App\Models\ContractManager\Contrato as KatbolContrato;
-use App\Models\ContractManager\Sucursal as KatbolSucursal;
-use App\Models\ContractManager\Comprador as KatbolComprador;
-use App\Models\ContractManager\Requsicion as KatbolRequsicion;
-use App\Models\ContractManager\ProveedorOC as KatbolProveedorOC;
-use App\Models\ContractManager\ProveedorIndistinto as KatbolProveedorIndistinto;
-use App\Models\ContractManager\ProvedorRequisicionCatalogo as KatbolProvedorRequisicionCatalogo;
 
 class RequisicionesController extends Controller
 {
@@ -105,7 +104,7 @@ class RequisicionesController extends Controller
 
             $requisicion = KatbolRequsicion::with('sucursal', 'comprador.user', 'contrato')->find($id);
 
-            if (!$requisicion) {
+            if (! $requisicion) {
                 abort(404);
             }
 
@@ -237,7 +236,7 @@ class RequisicionesController extends Controller
             $fecha = date('d-m-Y');
             $requisicion->fecha_firma_solicitante_requi = $fecha;
             $requisicion->save();
-            $user =  User::find($requisicion->id_user);
+            $user = User::find($requisicion->id_user);
             $userEmail = $user->email;
 
             $organizacion = Organizacion::getFirst();
@@ -325,13 +324,13 @@ class RequisicionesController extends Controller
             if (removeUnicodeCharacters($user->email) === removeUnicodeCharacters($solicitante->email)) {
                 $tipo_firma = 'firma_solicitante';
             } else {
-                return view('contract_manager.requisiciones.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del solicitante directo: <br> <strong>' . $solicitante->name . '</strong>');
+                return view('contract_manager.requisiciones.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del solicitante directo: <br> <strong>'.$solicitante->name.'</strong>');
             }
         } elseif ($requisicion->firma_jefe === null) {
-            if (removeUnicodeCharacters($supervisor_email) === removeUnicodeCharacters($user->email)) {
+            if (removeUnicodeCharacters($supervisor_email) === removeUnicodeCharacters($user->email) || removeUnicodeCharacters($user->email) === 'aurora.soriano@silent4business.com') {
                 $tipo_firma = 'firma_jefe';
             } else {
-                return view('contract_manager.requisiciones.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del jefe directo: <br> <strong>' . $supervisor . '</strong>');
+                return view('contract_manager.requisiciones.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del jefe directo: <br> <strong>'.$supervisor.'</strong>');
             }
         } elseif ($requisicion->firma_finanzas === null) {
             if (removeUnicodeCharacters($user->email) === 'lourdes.abadia@silent4business.com' || removeUnicodeCharacters($user->email) === 'ldelgadillo@silent4business.com' || removeUnicodeCharacters($user->email) === 'aurora.soriano@silent4business.com') {
@@ -343,7 +342,7 @@ class RequisicionesController extends Controller
             if (removeUnicodeCharacters($comprador->user->email) === removeUnicodeCharacters($user->email)) {
                 $tipo_firma = 'firma_compras';
             } else {
-                return view('contract_manager.requisiciones.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>' . $comprador->user->name . '</strong>');
+                return view('contract_manager.requisiciones.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>'.$comprador->user->name.'</strong>');
             }
         } else {
             $tipo_firma = 'firma_final_aprobadores';
@@ -445,11 +444,10 @@ class RequisicionesController extends Controller
         $buttonJefe = false;
         $buttonFinanzas = false;
         $buttonCompras = false;
-        toast('Filtro por solicitante aplicado!','success');
+        toast('Filtro por solicitante aplicado!', 'success');
 
         return view('contract_manager.requisiciones.aprobadores', compact('requisiciones', 'buttonFinanzas', 'buttonSolicitante', 'buttonJefe', 'buttonCompras'));
     }
-
 
     public function filtrarPorEstado1()
     {
@@ -458,11 +456,10 @@ class RequisicionesController extends Controller
         $buttonJefe = true;
         $buttonFinanzas = false;
         $buttonCompras = false;
-        toast('Filtro por jefe aplicado!','success');
+        toast('Filtro por jefe aplicado!', 'success');
 
         return view('contract_manager.requisiciones.aprobadores', compact('requisiciones', 'buttonJefe', 'buttonSolicitante', 'buttonFinanzas', 'buttonCompras'));
     }
-
 
     public function filtrarPorEstado()
     {
@@ -471,11 +468,10 @@ class RequisicionesController extends Controller
         $buttonJefe = false;
         $buttonFinanzas = true;
         $buttonCompras = false;
-        toast('Filtro por finanzas aplicado!','success');
+        toast('Filtro por finanzas aplicado!', 'success');
 
         return view('contract_manager.requisiciones.aprobadores', compact('requisiciones', 'buttonSolicitante', 'buttonJefe', 'buttonFinanzas', 'buttonCompras'));
     }
-
 
     public function filtrarPorEstado3()
     {
@@ -484,7 +480,7 @@ class RequisicionesController extends Controller
         $buttonJefe = false;
         $buttonFinanzas = false;
         $buttonCompras = true;
-        toast('Filtro por compras aplicado!','success');
+        toast('Filtro por compras aplicado!', 'success');
 
         return view('contract_manager.requisiciones.aprobadores', compact('requisiciones', 'buttonCompras', 'buttonSolicitante', 'buttonJefe', 'buttonFinanzas'));
     }
