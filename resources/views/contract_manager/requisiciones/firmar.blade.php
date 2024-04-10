@@ -48,8 +48,11 @@
                 <strong>Referencia:</strong><br>
                 {{ $requisicion->referencia }}<br><br>
                 <strong>Proyecto:</strong><br>
-                {{ optional($requisicion->contrato)->no_proyecto }} / {{ optional($requisicion->contrato)->no_contrato }} -
-                {{ optional($requisicion->contrato)->nombre_servicio }}
+                @if($requisicion->contrato === null)
+                <strong>Contrato Eliminado!</strong>
+                @else
+                {{ optional($requisicion->contrato)->no_proyecto }} - {{ optional($requisicion->contrato)->no_contrato }} - {{ optional($requisicion->contrato)->nombre_servicio }}
+                @endif
             </div>
             <div class="flex-item">
                 <strong>Área que solicita:</strong><br>
