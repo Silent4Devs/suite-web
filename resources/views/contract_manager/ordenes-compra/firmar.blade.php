@@ -106,7 +106,7 @@
                 </div>
                 <div class="col s12 l6">
                     <strong>Proyecto:</strong> <br>
-                    {{ optional($requisicion->contrato)->no_proyecto }} / {{ optional($requisicion->contrato)->no_contrato }} -
+                    {{ optional($requisicion->contrato)->no_proyecto }} - {{ optional($requisicion->contrato)->no_contrato }} -
                     {{ optional($requisicion->contrato)->nombre_servicio }}
                 </div>
             </div>
