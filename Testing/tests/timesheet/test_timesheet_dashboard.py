@@ -33,3 +33,6 @@ def test_timesheet_dashboard(browser):
     btn_enviar = "//button[@type='submit'][contains(text(),'Enviar')]"
     logo="img[alt='Logo Tabantaj']"
     timesheet_dashboard.login(logo,btn_enviar,username_input,password_input)
+
+    dashboard_route = "https://192.168.9.78/admin/timesheet/dashboard"
+    timesheet_dashboard.timesheet_dashboard_index(dashboard_route)

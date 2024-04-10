@@ -24,3 +24,24 @@ class TimesheetDashboard:
             self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, logo)))
         except Exception as e:
             print("Error durante el inicio de sesión:", e)
+
+    def timesheet_dashboard_index(self, dashboard_route):
+        try:
+            self.driver.get(dashboard_route)
+            print("Index de timesheet cargado.")
+        except Exception as e:
+            print("Error al cargar el index de timesheet:", e)
+
+    def _fill_input_field_xpath(self, locator, value):
+        input_field = self.wait.until(EC.visibility_of_element_located((By.XPATH, locator)))
+        input_field.clear()
+        input_field.send_keys(value)
+
+    def _fill_input_field_css(self, locator, value):
+            input_field = self.wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, locator)))
+            input_field.clear()
+            input_field.send_keys(value)
+
+    def _click_element(self, xpath):
+        element = self.wait.until(EC.element_to_be_clickable((By.XPATH, xpath)))
+        element.click()
