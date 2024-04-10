@@ -48,16 +48,6 @@ services:
       - tabantajnetwork
     mem_limit: 6g
 
-  goservices:
-    image: ghcr.io/silent4devs/goservices:latest
-    container_name: goservices
-    ports:
-      - 3300:3300
-    restart: unless-stopped
-    tty: true
-    networks:
-      - tabantajnetwork
-
   pgadmin-tabantaj:
     depends_on:
       - postgres-tabantaj
@@ -89,12 +79,12 @@ services:
     restart: unless-stopped
     # labels:
     #   ofelia.enabled: "true"
-    # ofelia.job-exec.schedulecron.schedule: "@hourly"
-    # ofelia.job-exec.schedulecron.command: "/infra/ofelia/run_schedules_worker.sh"
-    # ofelia.job-exec.run_queues_worker.schedule: "*/15 * * * *"
-    # ofelia.job-exec.run_queues_worker.command: "php artisan queue:work --daemon --tries=4 --sleep=5"
-    # ofelia.job-exec.run_schedules_worker.schedule: "@hourly"
-    # ofelia.job-exec.run_schedules_worker.command: "php artisan schedule:work"
+      # ofelia.job-exec.schedulecron.schedule: "@hourly"
+      # ofelia.job-exec.schedulecron.command: "/infra/ofelia/run_schedules_worker.sh"
+      # ofelia.job-exec.run_queues_worker.schedule: "*/15 * * * *"
+      # ofelia.job-exec.run_queues_worker.command: "php artisan queue:work --daemon --tries=4 --sleep=5"
+      # ofelia.job-exec.run_schedules_worker.schedule: "@hourly"
+      # ofelia.job-exec.run_schedules_worker.command: "php artisan schedule:work"
     tty: true
     volumes:
       - .:/var/www/html
