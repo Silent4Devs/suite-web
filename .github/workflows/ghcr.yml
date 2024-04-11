@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - silent/master
-  pull_request:
-    branches:
-      - silent/master
 
 env:
   REGISTRY: ghcr.io
@@ -38,7 +35,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
-          context: .
+          context: infra/php
           push: true
           # tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: ${{ env.REGISTRY }}/silent4devs/suite-web:latest
