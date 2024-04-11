@@ -31,6 +31,24 @@ class TimesheetDashboard:
             print("Index de timesheet cargado.")
         except Exception as e:
             print("Error al cargar el index de timesheet:", e)
+    def finazas_option(self,finanzas):
+        try:
+            self._click_element(finanzas)
+            print("Opción Finanzas seleccionada.")
+        except Exception as e:
+            print("Error al seleccionar la opción Finanzas:", e)
+    def scroll(self):
+        try:
+            self.driver.execute_script("window.scrollTo(0, 600)")
+            print("Scroll realizado.")
+            time.sleep(4)
+            pdb.set_trace()
+        except Exception as e:
+            print("Error al realizar scroll:", e)
+
+    def _select_option_by_text(self, locator, text):
+        select = Select(self.driver.find_element(By.XPATH, locator))
+        select.select_by_visible_text(text)
 
     def _fill_input_field_xpath(self, locator, value):
         input_field = self.wait.until(EC.visibility_of_element_located((By.XPATH, locator)))
