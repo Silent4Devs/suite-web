@@ -4,7 +4,7 @@ from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from pages.timesheet.admin.dashboard.timesheet_dashboard import TimesheetDashboard
 from config import username, password
-'''
+
 @pytest.fixture(scope="session")
 def browser():
     options = FirefoxOptions()
@@ -25,7 +25,7 @@ def browser():
     driver = webdriver.Firefox(options=options)
     yield driver
     driver.quit()
-'''
+
 def test_timesheet_dashboard(browser):
     timesheet_dashboard = TimesheetDashboard(browser)
     username_input = "input[name='email']"
@@ -36,3 +36,8 @@ def test_timesheet_dashboard(browser):
 
     dashboard_route = "https://192.168.9.78/admin/timesheet/dashboard"
     timesheet_dashboard.timesheet_dashboard_index(dashboard_route)
+
+    finanzas = "//a[@class='nav-link'][contains(.,'Finanzas')]"
+    timesheet_dashboard.finazas_option(finanzas)
+
+    timesheet_dashboard.scroll()
