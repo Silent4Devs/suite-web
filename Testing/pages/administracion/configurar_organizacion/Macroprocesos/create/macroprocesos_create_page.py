@@ -9,7 +9,7 @@ from config import password_c, username_c
 #Temporizadores
 tiempo_modulos = 2
 
-class Macroprocesos_Crear_Areas:
+class Macroprocesos_Create:
     
     def __init__(self, driver):
         self.driver = driver
@@ -69,12 +69,12 @@ class Macroprocesos_Crear_Areas:
 
     ##########################################Entrar a Modulo y Submodulo
 
-    def in_submodulo(self, menu_hamburguesa, element_entrar_modulo, element_entrar_submodulo):
+    def in_submodulo(self, menu_hamburguesa, element_entrar_submodulo):
     
         time.sleep(tiempo_modulos)
         
         #Menu Hamburguesa
-        print("Ingresando a Menu Hamburguesa")
+        print("Ingresando a Menu Hamburguesa ...")
         menu_hamb = WebDriverWait(self.driver, 3).until(
             EC.element_to_be_clickable((By.XPATH, menu_hamburguesa))
         )
@@ -84,15 +84,16 @@ class Macroprocesos_Crear_Areas:
         
         #Modulo Configurar Organizacion
         print("Ingresando a Modulo Configurar Organizacion ...")
-        in_modulo = WebDriverWait(self.driver, 3).until(
-            EC.element_to_be_clickable((By.XPATH, element_entrar_modulo))
+        in_modulo = WebDriverWait(self.driver, 15).until(
+            EC.visibility_of_element_located((By.XPATH, "(//I[@class='material-symbols-outlined i-direct'][text()='keyboard_arrow_down'])[2]"))
         )
+        time.sleep(5)
         in_modulo.click()
         
         time.sleep(tiempo_modulos)
         
-        #Submodulo Grupo de Areas
-        print("Ingresando a Submenu Grupo de Areas ...")
+        #Submodulo Macroprocesos
+        print("Ingresando a Submenu Macroprocesos ...")
         sub_modulo= WebDriverWait(self.driver, 3).until(
             EC.element_to_be_clickable((By.XPATH, element_entrar_submodulo))
         )
@@ -116,27 +117,29 @@ class Macroprocesos_Crear_Areas:
         
         time.sleep(tiempo_modulos)
         
+        
         # Codigo
+        print("Escribiendo Campo Codigo ...")
         campo_codigo = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located((By.XPATH, "//INPUT[@id='codigo']"))
             )
         campo_codigo.click()
         campo_codigo.send_keys("00117")
-        print("Escribiendo Campo Codigo")
 
         time.sleep(tiempo_modulos)
         
         # Nombre 
+        print("Escribiendo Campo Nombre del activo ...")
         campo_nombre = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located((By.XPATH, "//INPUT[@id='nombre']"))
             )
         campo_nombre.click()
         campo_nombre.send_keys("Nombre del activo de prueba")
-        print("Escribiendo Campo Nombre del activo")
 
         time.sleep(tiempo_modulos)
         
         # Grupo
+        print("Escribiendo Campo Grupo ...")
         campo_grupo = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located((By.XPATH, "//SELECT[@id='id_grupo']"))
             )
@@ -145,22 +148,21 @@ class Macroprocesos_Crear_Areas:
         campo_grupo.send_keys("Grupo Soporte")
         time.sleep(tiempo_modulos)
         campo_grupo.click()
-        print("Escribiendo Campo Grupo")
-
+        
         time.sleep(tiempo_modulos)
         
         # Descripcion
+        print("Escribiendo Campo Descripcion ...")
         campo_nombre = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located((By.XPATH, "//TEXTAREA[@id='descripcion']"))
             )
         campo_nombre.click()
         campo_nombre.send_keys("Descripcion del macroproceso de prueba")
-        print("Escribiendo Campo Descripcion")
 
         time.sleep(tiempo_modulos)
         
         # Guardar Repositorio
-        print("Dando clic al botón Guardar...")
+        print("Dando clic al botón Guardar ...")
         guardar = WebDriverWait(self.driver, 20).until(
             EC.element_to_be_clickable((By.XPATH, guardar_xpath))
         )

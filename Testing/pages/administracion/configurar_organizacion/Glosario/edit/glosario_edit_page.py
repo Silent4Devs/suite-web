@@ -69,40 +69,41 @@ class Edit_Gloario:
 
     ##########################################Entrar a Modulo y Submodulo
 
-    def in_submodulo(self, menu_hamburguesa, element_entrar_modulo, element_entrar_submodulo):
+    def in_submodulo(self, menu_hamburguesa, element_entrar_submodulo):
     
         time.sleep(tiempo_modulos)
         
         #Menu Hamburguesa
         print("Ingresando a Menu Hamburguesa")
-        menu_hamb = WebDriverWait(self.driver, 3).until(
+        menu_hamb = WebDriverWait(self.driver, 10).until(
             EC.element_to_be_clickable((By.XPATH, menu_hamburguesa))
         )
         menu_hamb.click()
 
-        time.sleep(5)
+        time.sleep(tiempo_modulos)
         
         #Modulo Configurar Organizacion
         print("Ingresando a Modulo Configurar Organizacion ...")
-        in_modulo = WebDriverWait(self.driver, 3).until(
-            EC.element_to_be_clickable((By.XPATH, element_entrar_modulo))
+        in_modulo = WebDriverWait(self.driver, 15).until(
+            EC.visibility_of_element_located((By.XPATH,"(//A[@href='#'])[3]"))
         )
+        time.sleep(tiempo_modulos)
         in_modulo.click()
         
         time.sleep(tiempo_modulos)
         
         #Submodulo Glosario
+        
         print("Ingresando a Submenu Glosario ...")
-        sub_modulo= WebDriverWait(self.driver, 3).until(
-            EC.visibility_of_element_located((By.XPATH, element_entrar_submodulo))
+        sub_modulo= WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable((By.XPATH, element_entrar_submodulo))
         )
+        time.sleep(tiempo_modulos)
         sub_modulo.click()
         
         time.sleep(tiempo_modulos)
         
         print("URL actual:", self.driver.current_url)
-
-
 
     ########################################## Editar
 
@@ -113,7 +114,7 @@ class Edit_Gloario:
             EC.presence_of_element_located((By.XPATH, campo_buscar_xpath))
         )
         campo_entrada.clear()
-        campo_entrada.send_keys("00117")
+        campo_entrada.send_keys("3.5")
         print("Campo Buscar llenado")
 
         time.sleep(tiempo_modulos)
@@ -134,7 +135,7 @@ class Edit_Gloario:
             )
         campo_definicion.click()
         campo_definicion.send_keys("Definicion de prueba Actualizado")
-        print("Campo Definicion Actualizado")
+        print("Campo Definicion Actualizado2")
     
         time.sleep(tiempo_modulos)
 

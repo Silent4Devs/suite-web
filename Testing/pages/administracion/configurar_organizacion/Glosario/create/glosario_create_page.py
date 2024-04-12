@@ -69,33 +69,36 @@ class Create_Glosario:
 
     ##########################################Entrar a Modulo y Submodulo
 
-    def in_submodulo(self, menu_hamburguesa, element_entrar_modulo, element_entrar_submodulo):
+    def in_submodulo(self, menu_hamburguesa, element_entrar_submodulo):
     
         time.sleep(tiempo_modulos)
         
         #Menu Hamburguesa
         print("Ingresando a Menu Hamburguesa")
-        menu_hamb = WebDriverWait(self.driver, 3).until(
+        menu_hamb = WebDriverWait(self.driver, 10).until(
             EC.element_to_be_clickable((By.XPATH, menu_hamburguesa))
         )
         menu_hamb.click()
 
-        time.sleep(5)
+        time.sleep(tiempo_modulos)
         
         #Modulo Configurar Organizacion
         print("Ingresando a Modulo Configurar Organizacion ...")
-        in_modulo = WebDriverWait(self.driver, 3).until(
-            EC.element_to_be_clickable((By.XPATH, element_entrar_modulo))
+        in_modulo = WebDriverWait(self.driver, 15).until(
+            EC.visibility_of_element_located((By.XPATH, "(//A[@href='#'])[3]"))
         )
+        time.sleep(tiempo_modulos)
         in_modulo.click()
         
         time.sleep(tiempo_modulos)
         
         #Submodulo Glosario
+        
         print("Ingresando a Submenu Glosario ...")
-        sub_modulo= WebDriverWait(self.driver, 3).until(
-            EC.visibility_of_element_located((By.XPATH, element_entrar_submodulo))
+        sub_modulo= WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable((By.XPATH, element_entrar_submodulo))
         )
+        time.sleep(tiempo_modulos)
         sub_modulo.click()
         
         time.sleep(tiempo_modulos)
@@ -123,7 +126,7 @@ class Create_Glosario:
             EC.presence_of_element_located((By.XPATH, "//INPUT[@id='numero']"))
             )
         campo_inciso.click()
-        campo_inciso.send_keys("00117")
+        campo_inciso.send_keys("01011712")
         print("Campo Inciso llenado")
 
         time.sleep(tiempo_modulos)
@@ -133,7 +136,7 @@ class Create_Glosario:
             EC.presence_of_element_located((By.XPATH, "//INPUT[@id='norma']"))
             )
         campo_norma.click()
-        campo_norma.send_keys("Norma de Prueba")
+        campo_norma.send_keys("Norma de Prueba Carpetas")
         print("Campo Norma llenado")
 
         time.sleep(tiempo_modulos)
@@ -143,7 +146,7 @@ class Create_Glosario:
             EC.presence_of_element_located((By.XPATH, "//INPUT[@id='concepto']"))
             )
         campo_concepto.click()  
-        campo_concepto.send_keys("Concepto de Prueba")
+        campo_concepto.send_keys("Concepto de Prueba Carpetas")
         print("Campo Concepto llenado")
 
         time.sleep(tiempo_modulos)
@@ -153,7 +156,7 @@ class Create_Glosario:
             EC.presence_of_element_located((By.XPATH, "//TEXTAREA[@id='definicion']"))
             )
         campo_definicion.click()
-        campo_definicion.send_keys("Definicion de prueba")
+        campo_definicion.send_keys("Definicion de prueba Carpetas")
         print("Campo Definicion llenado")
     
         time.sleep(tiempo_modulos)
@@ -163,7 +166,7 @@ class Create_Glosario:
             EC.presence_of_element_located((By.XPATH, "//TEXTAREA[@id='explicacion']"))
             )
         campo_explicacion.click()
-        campo_explicacion.send_keys("Explicacion de prueba")
+        campo_explicacion.send_keys("Explicacion de prueba carpetas")
         print("Campo Explicacion llenado")
         
         time.sleep(tiempo_modulos)
@@ -174,6 +177,8 @@ class Create_Glosario:
             EC.element_to_be_clickable((By.XPATH, guardar_xpath))
         )
         guardar.click()
+        
+        time.sleep(10)
         
         print("URL actual:", self.driver.current_url)
                     

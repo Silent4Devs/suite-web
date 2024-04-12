@@ -69,7 +69,7 @@ class Macroprocesos_Edit_Areas:
 
     ##########################################Entrar a Modulo y Submodulo
 
-    def in_submodulo(self, menu_hamburguesa, element_entrar_modulo, element_entrar_submodulo):
+    def in_submodulo(self, menu_hamburguesa,element_entrar_submodulo):
     
         time.sleep(tiempo_modulos)
         
@@ -84,9 +84,10 @@ class Macroprocesos_Edit_Areas:
         
         #Modulo Configurar Organizacion
         print("Ingresando a Modulo Configurar Organizacion ...")
-        in_modulo = WebDriverWait(self.driver, 3).until(
-            EC.element_to_be_clickable((By.XPATH, element_entrar_modulo))
+        in_modulo = WebDriverWait(self.driver, 15).until(
+            EC.visibility_of_element_located((By.XPATH, "(//I[@class='material-symbols-outlined i-direct'][text()='keyboard_arrow_down'])[2]"))
         )
+        time.sleep(5)
         in_modulo.click()
         
         time.sleep(tiempo_modulos)

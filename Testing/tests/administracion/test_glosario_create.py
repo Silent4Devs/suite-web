@@ -3,7 +3,6 @@ from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium import webdriver
 import pytest
 
-
 @pytest.fixture(scope="session")
 def browser():
     options = FirefoxOptions()
@@ -28,7 +27,7 @@ def test_create_glosario(browser):
     
     create_glosario = Create_Glosario(browser)
     create_glosario.login()
-    create_glosario.in_submodulo(menu_hamburguesa, element_entrar_modulo, element_entrar_submodulo)
+    create_glosario.in_submodulo(menu_hamburguesa,element_entrar_submodulo)
     create_glosario.add_glosario(agregar_btn_xpath, guardar_xpath)
  
 #Variables

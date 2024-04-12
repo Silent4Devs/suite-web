@@ -2,7 +2,7 @@ from pages.administracion.configurar_organizacion.glosario.edit.glosario_edit_pa
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium import webdriver
 import pytest
-
+"""
 @pytest.fixture(scope="session")
 def browser():
     options = FirefoxOptions()
@@ -21,20 +21,19 @@ def browser():
     
     driver = webdriver.Firefox(options=options)
     yield driver
-    driver.quit() 
+    driver.quit() """
     
 def test_edit_glosario(browser):
     
     edit_glosario = Edit_Gloario(browser)
     edit_glosario.login()
-    edit_glosario.in_submodulo(menu_hamburguesa, element_entrar_modulo, element_entrar_submodulo)
+    edit_glosario.in_submodulo(menu_hamburguesa,element_entrar_submodulo)
     edit_glosario.edit_glosario(campo_buscar_xpath, boton_editar, guardar_xpath)
  
 #Variables
 menu_hamburguesa = "//BUTTON[@class='btn-menu-header']"
-element_entrar_modulo = "(//I[@class='material-symbols-outlined i-direct'][text()='keyboard_arrow_down'])[2]"
 element_entrar_submodulo = "//A[@href='https://192.168.9.78/admin/glosarios'][text()='Glosario']"
 
 campo_buscar_xpath= "(//INPUT[@type='search'])[2]"
-boton_editar = "//I[@class='fas fa-edit']"
+boton_editar = "(//I[@class='fas fa-edit'])[1]"
 guardar_xpath = "//button[contains(@class, 'btn-danger') and normalize-space(text())='Guardar']"
