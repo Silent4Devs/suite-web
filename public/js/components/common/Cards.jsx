@@ -28,7 +28,7 @@ export const CardTemplateAnalisisRiesgos = () => {
     }
 
   return (
-        <div className="col-12">
+        // <div className="col-12" >
             <div className="card">
 
                 <div className="card-body">
@@ -46,6 +46,6 @@ export const CardTemplateAnalisisRiesgos = () => {
 
                 </div>
             </div>
-        </div>
+        // </div>
   )
 }
