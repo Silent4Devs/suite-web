@@ -186,7 +186,7 @@
                         @endforeach
                     </div>
                     <div class="my-4" style="display:flex; justify-content: space-between;">
-                        <div class="btn btn-add-card" onclick="addCard('servicio')">
+                        <div class="btn btn-add-card" onclick="addCardProductos('servicio')">
                             <i class="fa-regular fa-square-plus"></i> AGREGAR SERVICIOS Y PRODUCTOS
                         </div>
 
