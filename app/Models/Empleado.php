@@ -718,7 +718,7 @@ class Empleado extends Model implements Auditable
     public function objetivosPeriodo($periodo)
     {
         return $this->hasMany('App\Models\RH\ObjetivoEmpleado', 'empleado_id', 'id')
-            ->with('objetivo.tipo', 'objetivo.metrica', 'objetivo.escalas.parametro')
+            ->with('objetivo.tipo', 'objetivo.metrica', 'objetivo.escalas')
             ->where($periodo, true)
             ->where('papelera', false)
             ->get();

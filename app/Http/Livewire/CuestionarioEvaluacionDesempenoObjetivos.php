@@ -21,6 +21,8 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
     public $evaluador;
     public $id_evaluacion;
     public $id_evaluado;
+    public $periodo_seleccionado = 0;
+    public $array_periodos;
 
     //Traer datos de la evaluación
     public $evaluacion;
@@ -55,11 +57,10 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
 
     public function render()
     {
-        $this->cuestionarioSecciones();
         $this->evaluacion = EvaluacionDesempeno::find($this->id_evaluacion);
         $this->evaluado = $this->evaluacion->evaluados->find($this->id_evaluado);
+        $this->cuestionarioSecciones();
         if ($this->evaluacion->activar_objetivos == true) {
-
             $this->buscarObjetivos();
         }
 
@@ -75,15 +76,13 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
         foreach ($this->evaluado->evaluadoresObjetivos as $key => $evlr) {
             if ($evlr->evaluador_desempeno_id == $this->evaluador->id) {
                 $this->validacion_objetivos_evaluador = true;
-
-                $this->objetivos_evaluado = $evlr->preguntasCuestionario->sortBy('id');
+                $this->objetivos_evaluado = $evlr->preguntasCuestionario->where('periodo_id', $this->array_periodos[$this->periodo_seleccionado]["id_periodo"])->sortBy('id');
             }
 
             if ($evlr->evaluador_desempeno_id == $this->id_evaluado->evaluado_desempeno_id) {
-                $this->objetivos_autoevaluado = $evlr->preguntasCuestionario->sortBy('id');
+                $this->objetivos_autoevaluado = $evlr->preguntasCuestionario->where('periodo_id', $this->array_periodos[$this->periodo_seleccionado]["id_periodo"])->sortBy('id');
             }
         }
-        // dd($this->objetivos_autoevaluado);
 
         foreach ($this->objetivos_evaluado as $key_objetivo => $obj_evld) {
             foreach ($obj_evld->evidencias as $key_evidencia => $evid) {
@@ -420,11 +419,20 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
 
     public function cuestionarioSecciones()
     {
-        // $secciones = CuestionarioObjetivoEvDesempeno::with('infoObjetivo')->where('evaluacion_desempeno_id', $this->id_evaluacion)->get();
-        // foreach($secciones as $seccion){
-        //     $arrSections[] = $seccion->infoObjetivo->tipo_objetivo;
-        // }
-        // $variablesec = $arrSections->unique();
-        // dd($variablesec);
+        foreach ($this->evaluacion->periodos as $key => $periodo) {
+            $this->array_periodos[$key] = [
+                "id_periodo" => $periodo->id,
+                "nombre_evaluacion" => $periodo->nombre_evaluacion,
+                "fecha_inicio" => $periodo->fecha_inicio,
+                "fecha_fin" => $periodo->fecha_fin,
+                "habilitado" => $periodo->habilitado,
+                "finalizado" => $periodo->finalizado,
+            ];
+        }
+    }
+
+    public function cambiarSeccion($llave)
+    {
+        $this->periodo_seleccionado = $llave;
     }
 }

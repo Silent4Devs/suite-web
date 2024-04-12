@@ -35,6 +35,10 @@
             </a>
             <a class="nav-link" id="" data-type="ev360" data-toggle="tab" href="#nav-config-obj-4" role="tab"
                 aria-controls="nav-ev360" aria-selected="false">
+                Definir Unidades
+            </a>
+            <a class="nav-link" id="" data-type="ev360" data-toggle="tab" href="#nav-config-obj-5" role="tab"
+                aria-controls="nav-ev360" aria-selected="false">
                 Cargar objetivos
             </a>
         </div>
@@ -61,6 +65,12 @@
         </div>
 
         <div class="tab-pane mb-4 fade" id="nav-config-obj-4" role="tabpanel" aria-labelledby="nav-config-obj-4">
+
+            @livewire('definicion-unidades-objetivos')
+
+        </div>
+
+        <div class="tab-pane mb-4 fade" id="nav-config-obj-5" role="tabpanel" aria-labelledby="nav-config-obj-5">
 
             @livewire('carga-objetivos')
 

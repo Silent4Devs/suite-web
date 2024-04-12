@@ -8,6 +8,7 @@ use App\Models\Empleado;
 use App\Models\CuestionarioCompetenciaEvDesempeno;
 use App\Models\CuestionarioObjetivoEvDesempeno;
 use App\Models\EvaluacionDesempeno;
+use App\Models\EvaluadosEvaluacionDesempeno;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 
@@ -15,9 +16,16 @@ class EvDesempenoDashboardEvaluacion extends Component
 {
     public $id_evaluacion;
     public $evaluacion;
+    public $evaluados_tabla;
+
+    public $array_periodos;
+    public $periodo_seleccionado = 0;
 
     public $areas;
     public $area_select;
+    public $select_area_tabla = "todos";
+    public $select_colaborador_tabla = "todos";
+    public $select_evaluadores_tabla = "todos";
 
     public $opciones_area_select;
     public $opciones_evaluadores_select;
@@ -25,6 +33,7 @@ class EvDesempenoDashboardEvaluacion extends Component
     public $evaluadores_evaluado = [];
     public $totales_evaluado = [];
 
+    public $chartData;
     public $grafica_area = [];
     public $grafica_objetivos = [];
     public $grafica_competencias = [];
@@ -47,19 +56,112 @@ class EvDesempenoDashboardEvaluacion extends Component
     {
         $this->evaluacion = EvaluacionDesempeno::find($this->id_evaluacion);
 
+        //Datos generales
+        $this->secciones();
         $this->evaluadoTotales();
         $this->evaluadores();
+        $this->recopilarAreas();
 
-        $this->obtenerEscalas();
-        // $this->obtenerObjetivos();
-        // $this->obtenerCompetencias();
+        if ($this->evaluacion->activar_objetivos) {
+            $this->obtenerEscalas();
+            $this->resultadoPorArea();
+            $this->resultadoObjetivos();
+        }
 
-        $this->resultadoPorArea();
-        $this->resultadoObjetivos();
-        $this->resultadoCompetencias();
+        if ($this->evaluacion->activar_competencias) {
+            $this->resultadoCompetencias();
+        }
+
         $this->porcentajesTotales();
 
+        $this->evaluados_tabla = EvaluacionDesempeno::with('evaluados');
+
+        if ($this->select_area_tabla != "todos") {
+            $this->evaluados_tabla->whereHas('evaluados.empleado', function ($query) {
+                $query->where('area_id', $this->select_area_tabla);
+            });
+        }
+
+        if ($this->select_colaborador_tabla != "todos") {
+            $this->evaluados_tabla->whereHas('evaluados', function ($query) {
+                $query->where('id', $this->select_colaborador_tabla);
+            });
+        }
+
+        if ($this->select_evaluadores_tabla != "todos") {
+            if ($this->evaluacion->activar_competencias) {
+                $this->evaluados_tabla->whereHas('evaluados.evaluadoresCompetencias', function ($query) {
+                    $query->where('evaluador_desempeno_id', $this->select_evaluadores_tabla);
+                });
+            }
+
+            if ($this->evaluacion->activar_competencias) {
+                $this->evaluados_tabla->whereHas('evaluados.evaluadoresObjetivos', function ($query) {
+                    $query->where('evaluador_desempeno_id', $this->select_evaluadores_tabla);
+                });
+            }
+        }
+
+        $this->evaluados_tabla = $this->evaluados_tabla->find($this->id_evaluacion);
+
+        $this->chartData = [
+            "labels" => $this->grafica_area["nombres"],
+            "data" => $this->grafica_area["resultados"],
+        ];
+
+        $this->emit('chartDataUpdated', $this->chartData);
+
         return view('livewire.ev-desempeno-dashboard-evaluacion');
+    }
+
+    public function cambiarSeccion($llave)
+    {
+        $this->periodo_seleccionado = $llave;
+    }
+
+    public function secciones()
+    {
+        foreach ($this->evaluacion->periodos as $key => $periodo) {
+            $this->array_periodos[$key] = [
+                "id_periodo" => $periodo->id,
+                "nombre_evaluacion" => $periodo->nombre_evaluacion,
+                "fecha_inicio" => $periodo->fecha_inicio,
+                "fecha_fin" => $periodo->fecha_fin,
+                "habilitado" => $periodo->habilitado,
+                "finalizado" => $periodo->finalizado,
+            ];
+        }
+    }
+
+    public function evaluadoTotales()
+    {
+
+
+        //Calificaciones Generales (todos los periodos)
+        // foreach ($this->evaluacion->evaluados as $evaluado) {
+        //     $this->totales_evaluado[$evaluado->id] =
+        //         [
+        //             'competencias' => $evaluado->calificaciones_competencias_evaluado['promedio_total'] * ($this->evaluacion->porcentaje_competencias / 100),
+        //             'objetivos' => $evaluado->calificaciones_objetivos_evaluado['promedio_total'] * ($this->evaluacion->porcentaje_objetivos / 100),
+        //             'final' => $evaluado->calificaciones_competencias_evaluado['promedio_total'] * ($this->evaluacion->porcentaje_competencias / 100) + $evaluado->calificaciones_objetivos_evaluado['promedio_total'] * ($this->evaluacion->porcentaje_objetivos / 100),
+        //         ];
+
+        //     $this->promedio_evaluados_area[$evaluado->empleado->area_id]["promedioEvdsObjs"][] = $this->totales_evaluado[$evaluado->id]["objetivos"];
+        // }
+        foreach ($this->evaluacion->evaluados as $evaluado) {
+            // dd(
+            //     $evaluado->calificacionesCompetenciasEvaluadoPeriodo($this->array_periodos[$this->periodo_seleccionado]["id_periodo"]),
+            //     $evaluado->calificacionesObjetivosEvaluadoPeriodo($this->array_periodos[$this->periodo_seleccionado]["id_periodo"])
+            // );
+            $this->totales_evaluado[$evaluado->id] =
+                [
+                    'competencias' => $evaluado->calificacionesCompetenciasEvaluadoPeriodo($this->array_periodos[$this->periodo_seleccionado]["id_periodo"])['promedio_total'] * ($this->evaluacion->porcentaje_competencias / 100),
+                    'objetivos' => $evaluado->calificacionesObjetivosEvaluadoPeriodo($this->array_periodos[$this->periodo_seleccionado]["id_periodo"])['promedio_total'] * ($this->evaluacion->porcentaje_objetivos / 100),
+                    'final' => $evaluado->calificacionesCompetenciasEvaluadoPeriodo($this->array_periodos[$this->periodo_seleccionado]["id_periodo"])['promedio_total'] * ($this->evaluacion->porcentaje_competencias / 100) + $evaluado->calificacionesObjetivosEvaluadoPeriodo($this->array_periodos[$this->periodo_seleccionado]["id_periodo"])['promedio_total'] * ($this->evaluacion->porcentaje_objetivos / 100),
+                ];
+
+            $this->promedio_evaluados_area[$evaluado->empleado->area_id]["promedioEvdsObjs"][] = $this->totales_evaluado[$evaluado->id]["objetivos"];
+        }
     }
 
     public function obtenerEscalas()
@@ -104,11 +206,11 @@ class EvDesempenoDashboardEvaluacion extends Component
         $empleados = Empleado::getAllDataColumns();
 
         foreach ($this->evaluacion->evaluados as $evaluado) {
-            foreach ($evaluado->nombres_evaluadores as $key => $id_evaluador) {
-                $evaluador = $empleados->find($id_evaluador);
+            foreach ($evaluado->nombres_evaluadores as $key => $evdr) {
 
+                $evaluador = $empleados->find($evdr->evaluador_desempeno_id);
                 $this->evaluadores_evaluado[$evaluado->id][] = [
-                    'id' => $evaluador->id,
+                    'id' => $evaluador->evaluador_desempeno_id,
                     'nombre' => $evaluador->name,
                     // 'email' => $evaluador->email, //No necesario
                     'foto' => $evaluador->foto,
@@ -127,23 +229,7 @@ class EvDesempenoDashboardEvaluacion extends Component
         $this->opciones_evaluadores_select = $uniqueEvaluators;
     }
 
-    public function evaluadoTotales()
-    {
-        foreach ($this->evaluacion->evaluados as $evaluado) {
-            $this->totales_evaluado[$evaluado->id] =
-                [
-                    'competencias' => $evaluado->calificaciones_competencias_evaluado['promedio_total'] * ($this->evaluacion->porcentaje_competencias / 100),
-                    'objetivos' => $evaluado->calificaciones_objetivos_evaluado['promedio_total'] * ($this->evaluacion->porcentaje_objetivos / 100),
-                    'final' => $evaluado->calificaciones_competencias_evaluado['promedio_total'] * ($this->evaluacion->porcentaje_competencias / 100) + $evaluado->calificaciones_objetivos_evaluado['promedio_total'] * ($this->evaluacion->porcentaje_objetivos / 100),
-                ];
-
-            // $this->promedio_evaluados_area[$evaluado->empleado->area_id]["promedioEvdsComps"] = $this->totales_evaluado[$evaluado->id]["competencias"];
-            $this->promedio_evaluados_area[$evaluado->empleado->area_id]["promedioEvdsObjs"][] = $this->totales_evaluado[$evaluado->id]["objetivos"];
-            // $promedio_evaluados_area[$evaluado->area_id]["promedioEvdsComps"] = $this->totales_evaluado[$evaluado->id]["competencias"];
-        }
-    }
-
-    public function resultadoPorArea()
+    public function recopilarAreas()
     {
         $areas = Area::getIdNameAll();
 
@@ -156,6 +242,17 @@ class EvDesempenoDashboardEvaluacion extends Component
                 "id" => $area->id,
                 "area" => $area->area
             ];
+        }
+    }
+
+    public function resultadoPorArea()
+    {
+        $areas = Area::getIdNameAll();
+
+        $ids_areas = $this->evaluacion->areas_evaluacion;
+
+        foreach ($ids_areas as $key => $area_id) {
+            $area = $areas->find($area_id);
 
             $promedioEvdsObjsArray = $this->promedio_evaluados_area[$area_id]["promedioEvdsObjs"];
 
@@ -191,7 +288,7 @@ class EvDesempenoDashboardEvaluacion extends Component
         foreach ($this->grafica_objetivos["nombres"] as $key => $tipo) {
             // Map evaluados to their respective "calificacion_total" values for the current tipo
             $calificacionTotals = $evaluadosCollection->flatMap(function ($evaluado) use ($tipo) {
-                return collect($evaluado->calificaciones_objetivos_evaluado["calif_total"])
+                return collect($evaluado->calificacionesObjetivosEvaluadoPeriodo($this->array_periodos[$this->periodo_seleccionado]["id_periodo"])["calif_total"])
                     ->filter(function ($objetivo) use ($tipo) {
                         return $objetivo['tipo'] == $tipo;
                     })
@@ -257,24 +354,9 @@ class EvDesempenoDashboardEvaluacion extends Component
 
             $n_competencias = count($this->grafica_competencias["resultados"]);
 
-            $this->promedio_competencias = round((($suma_competencias / $n_competencias) * $this->evaluacion->porcentaje_objetivos / 100), 2);
+            $this->promedio_competencias = round((($suma_competencias / $n_competencias) * $this->evaluacion->porcentaje_competencias / 100), 2);
         }
 
         $this->promedio_total = $this->promedio_competencias + $this->promedio_objetivos;
     }
-
-    //Codigo alternativo resultadoObjetivos
-    // dd($this->grafica_objetivos);
-    // foreach ($this->grafica_objetivos as $key => $tipo) {
-    //     foreach ($this->evaluacion->evaluados as $evaluado) {
-    //         // dd($tipo, $evaluado->calificaciones_objetivos_evaluado);
-    //         foreach ($evaluado->calificaciones_objetivos_evaluado["calif_total"] as $key => $objEvl) {
-    //             if ($objEvl["tipo"] == $tipo) {
-    //                 // dd("Test", $obj);
-    //                 $promedios_tipo_objetivo[$tipo] = $objEvl["calificacion_total"];
-    //             }
-    //         }
-    //     }
-    // }
-    // dd($promedios_tipo_objetivo);
 }

@@ -128,7 +128,7 @@
                         <span>Objetivos</span>
                     </div>
                     <div>
-                        <small>Resultado</small> <strong>{{ $promedio_competencias }}%</strong>
+                        <small>Resultado</small> <strong>{{ $promedio_objetivos }}%</strong>
                     </div>
                 </div>
             </div>
@@ -141,7 +141,7 @@
                         <span>Competencias</span>
                     </div>
                     <div>
-                        <small>Resultado</small> <strong>{{ $promedio_objetivos }}%</strong>
+                        <small>Resultado</small> <strong>{{ $promedio_competencias }}%</strong>
                     </div>
                 </div>
             </div>
@@ -150,19 +150,21 @@
     </div>
 
     <div class="row mt-4" style="font-size: 15px; color: #006DDB;">
-        @foreach ($evaluacion->periodos as $periodo)
+        @foreach ($evaluacion->periodos as $key => $periodo)
             <div class="col-md-3">
-                <div class="p-3 rounded-lg" style="background-color: #fff; box-shadow: 0px 1px 4px #0000000F;">
-                    <div class="d-flex align-items-center justify-content-between color-primary">
-                        <div>
-                            {{-- Trimestre 1 --}}
-                            {{ $periodo->nombre_evaluacion }}
-                        </div>
-                        <div>
-                            <small>Promedio</small> <strong>67%</strong>
+                <a wire:click="cambiarSeccion({{ $key }})">
+                    <div class="p-3 rounded-lg"
+                        style="background-color: #fff; box-shadow: 0px 1px 4px #0000000F; cursor: pointer;">
+                        <div class="d-flex align-items-center justify-content-between color-primary">
+                            <div>
+                                {{ $periodo->nombre_evaluacion }}
+                            </div>
+                            <div>
+                                <small>Promedio</small> <strong>67%</strong>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </a>
             </div>
         @endforeach
         {{-- <div class="col-md-3">
@@ -215,28 +217,30 @@
         </div> --}}
     </div>
 
-    <div class="card card-body mt-3">
-        <h5>Resultado por área</h5>
-        <div class="row">
-            <div class="col-12">
-                <div style="height:600px;">
-                    <canvas id="resultadosxarea"></canvas>
+    @if ($evaluacion->activar_objetivos)
+        <div class="card card-body mt-3">
+            <h5>Resultado por área</h5>
+            <div class="row">
+                <div class="col-12">
+                    <div id="contenedor-principal" style="height:600px;">
+                        <canvas id="resultadosxarea"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="card card-body" style="background-color: #BF9CC4;">
-        <div class="form-group">
-            <select name="area_select" id="area_select" wire:model="area_select" class="form-control"
-                style="background-color: #fff;">
-                <option value="" selected disabled>Área</option>
-                @foreach ($opciones_area_select as $key => $opas)
-                    <option value="{{ $opas['id'] }}">{{ $opas['area'] }}</option>
-                @endforeach
-            </select>
+        <div class="card card-body" style="background-color: #BF9CC4;">
+            <div class="form-group">
+                <select name="area_select" id="area_select" wire:model="area_select" class="form-control"
+                    style="background-color: #fff;">
+                    <option value="" selected disabled>Área</option>
+                    @foreach ($opciones_area_select as $key => $opas)
+                        <option value="{{ $opas['id'] }}">{{ $opas['area'] }}</option>
+                    @endforeach
+                </select>
+            </div>
         </div>
-    </div>
+    @endif
 
     <div class="row mt-4" style="font-size: 15px; color: #9E50AA;">
         <div class="col-md-4">
@@ -246,74 +250,82 @@
                         Promedio General
                     </div>
                     <div>
-                        <small>Resultado</small> <strong>67%</strong>
+                        <small>Resultado</small> <strong>{{ $promedio_total }}%</strong>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="p-3 rounded-lg" style="background-color: #fff; box-shadow: 0px 1px 4px #0000000F;">
-                <div class="d-flex align-items-center justify-content-between color-primary">
-                    <div>
-                        Objetivos
-                    </div>
-                    <div>
-                        <small>Resultado</small> <strong>67%</strong>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="p-3 rounded-lg" style="background-color: #fff; box-shadow: 0px 1px 4px #0000000F;">
-                <div class="d-flex align-items-center justify-content-between color-primary">
-                    <div>
-                        Competencias
-                    </div>
-                    <div>
-                        <small>Resultado</small> <strong>67%</strong>
+        @if ($evaluacion->activar_objetivos)
+            <div class="col-md-4">
+                <div class="p-3 rounded-lg" style="background-color: #fff; box-shadow: 0px 1px 4px #0000000F;">
+                    <div class="d-flex align-items-center justify-content-between color-primary">
+                        <div>
+                            Objetivos
+                        </div>
+                        <div>
+                            <small>Resultado</small> <strong>{{ $promedio_objetivos }}%</strong>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        @endif
+        @if ($evaluacion->activar_competencias)
+            <div class="col-md-4">
+                <div class="p-3 rounded-lg" style="background-color: #fff; box-shadow: 0px 1px 4px #0000000F;">
+                    <div class="d-flex align-items-center justify-content-between color-primary">
+                        <div>
+                            Competencias
+                        </div>
+                        <div>
+                            <small>Resultado</small> <strong>{{ $promedio_competencias }}%</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
     </div>
 
-    <div class="row mt-4">
-        <div class="col-md-6">
-            <div class="card card-body">
-                <h5>Cumplimiento de Objetivos</h5>
-                <div class="row">
-                    <div class="col-12">
-                        <div style="height:300px;">
-                            <canvas id="cumplimientoObjetivos"></canvas>
+    @if ($evaluacion->activar_objetivos)
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="card card-body">
+                    <h5>Cumplimiento de Objetivos</h5>
+                    <div class="row">
+                        <div class="col-12">
+                            <div style="height:300px;">
+                                <canvas id="cumplimientoObjetivos"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card card-body">
+                    <h5>Resultado de evaluación por escalas</h5>
+                    <div class="row">
+                        <div class="col-12">
+                            <div style="height:300px;">
+                                <canvas id="escalas"></canvas>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="card card-body">
-                <h5>Resultado de evaluación por escalas</h5>
-                <div class="row">
-                    <div class="col-12">
-                        <div style="height:300px;">
-                            <canvas id="escalas"></canvas>
-                        </div>
+    @endif
+
+    @if ($evaluacion->activar_competencias)
+        <div class="card card-body mt-3">
+            <h5>Cumplimiento de Competencias</h5>
+            <div class="row">
+                <div class="col-12">
+                    <div style="height:600px;">
+                        <canvas id="cumplimientoCompetencias"></canvas>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="card card-body">
-        <h5>Cumplimiento de Competencias</h5>
-        <div class="row">
-            <div class="col-12">
-                <div style="height:600px;">
-                    <canvas id="cumplimientoCompetencias"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
+    @endif
 
     <div class="card card-body">
         <div class="d-flex w-100">
@@ -339,16 +351,17 @@
 
         <div class="row">
             <div class="col-md-3 form-group">
-                <select name="" id="" class="form-control">
-                    <option value="" selected disabled>Área</option>
+                <select name="area_tabla" id="area_tabla" wire:model.defer="select_area_tabla" class="form-control">
+                    <option value="todos">Área</option>
                     @foreach ($opciones_area_select as $key => $opas)
                         <option value="{{ $opas['id'] }}">{{ $opas['area'] }}</option>
                     @endforeach
                 </select>
             </div>
             <div class="col-md-3 form-group">
-                <select name="" id="" class="form-control">
-                    <option disabled selected value="">Colaborador</option>
+                <select name="colaborador_tabla" id="colaborador_tabla" wire:model.defer="select_colaborador_tabla"
+                    class="form-control">
+                    <option value="todos">Colaborador</option>
                     @foreach ($evaluacion->evaluados as $evaluado)
                         <option value="{{ $evaluado->id }}">{{ $evaluado->empleado->name }}</option>
                     @endforeach
@@ -397,7 +410,7 @@
                     </thead>
                     <tbody>
                         <tr>
-                            @foreach ($evaluacion->evaluados as $evaluado)
+                            @foreach ($evaluados_tabla->evaluados as $evaluado)
                                 <td>{{ $evaluado->empleado->name }}</td>
                                 <td>{{ $evaluado->empleado->area->area }}</td>
                                 <td>Avance</td>
@@ -425,8 +438,12 @@
                                 <th>Nombre</th>
                                 <th>Puesto y Área</th>
                                 <th>Evaluadores</th>
+                                {{-- @if ($evaluacion->activar_competencias) --}}
                                 <th>Competencias</th>
+                                {{-- @endif --}}
+                                {{-- @if ($evaluacion->activar_objetivos) --}}
                                 <th>Objetivos</th>
+                                {{-- @endif --}}
                                 <th>Calificación</th>
                                 <th>Nivel</th>
 
@@ -475,7 +492,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($evaluacion->evaluados as $evaluado)
+                            @foreach ($evaluados_tabla->evaluados as $evaluado)
                                 <tr>
                                     <td></td>
                                     <td>{{ $evaluado->empleado->name }}</td>
@@ -496,15 +513,59 @@
                                     </td>
                                     <td>Nivel</td>
                                     @if ($evaluacion->activar_competencias)
-                                        @foreach ($evaluado->calificaciones_competencias_evaluado['calif_total'] as $calif_comp)
-                                            <td>{{ $calif_comp['calificacion_total'] }}</td>
-                                        @endforeach
+                                        @php
+                                            $calif_total_competencias = $evaluado->calificacionesCompetenciasEvaluadoPeriodo(
+                                                $this->array_periodos[$this->periodo_seleccionado]['id_periodo'],
+                                            )['calif_total'];
+                                        @endphp
+
+                                        <td>
+                                            <table>
+                                                <thead>
+                                                    <tr>
+                                                        @foreach ($calif_total_competencias as $calif_comp)
+                                                            <th>{{ $calif_comp['competencia'] }}</th>
+                                                        @endforeach
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        @foreach ($calif_total_competencias as $calif_comp)
+                                                            <td>{{ $calif_comp['calificacion_total'] }}</td>
+                                                        @endforeach
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
                                     @endif
                                     @if ($evaluacion->activar_objetivos)
-                                        @foreach ($evaluado->calificaciones_objetivos_evaluado['calif_total'] as $calif_obj)
-                                            <td>{{ $calif_obj['calificacion_total'] }}</td>
-                                        @endforeach
+                                        @php
+                                            $calif_total_objetivos = $evaluado->calificacionesObjetivosEvaluadoPeriodo(
+                                                $this->array_periodos[$this->periodo_seleccionado]['id_periodo'],
+                                            )['calif_total'];
+                                        @endphp
+
+                                        <td>
+                                            <table>
+                                                <thead>
+                                                    <tr>
+                                                        @foreach ($calif_total_objetivos as $calif_obj)
+                                                            <th>{{ $calif_obj['nombre'] }}</th>
+                                                        @endforeach
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        @foreach ($calif_total_objetivos as $calif_obj)
+                                                            <td>{{ $calif_obj['calificacion_total'] }}</td>
+                                                        @endforeach
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
                                     @endif
+
+
                                     {{-- <td>Apego a procesos</td>
                                     <td>Innovación y creatividad</td>
                                     <td>Comunicación efectiva</td>
@@ -558,98 +619,162 @@
     @section('scripts')
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-        <script>
-            const ctx = document.getElementById('resultadosxarea');
+        @if ($evaluacion->activar_objetivos)
+            <script>
+                document.addEventListener('livewire:load', function() {
+                    const ctx = document.getElementById('resultadosxarea');
 
-            new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: {!! json_encode($grafica_area['nombres']) !!},
-                    datasets: [{
-                        label: 'Porcentaje de cumplimiento',
-                        data: {!! json_encode($grafica_area['resultados']) !!},
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
+                    var myChart;
+
+                    Livewire.on('chartDataUpdated', function(chartData) {
+                        if (myChart) {
+                            myChart.data.labels = chartData.labels;
+                            myChart.data.datasets[0].data = chartData.data;
+                            myChart.update();
+                        } else {
+                            myChart = new Chart(ctx, {
+                                type: 'bar',
+                                data: {
+                                    labels: chartData.labels,
+                                    datasets: [{
+                                        label: 'Porcentaje de cumplimiento',
+                                        data: chartData.data,
+                                        borderWidth: 1
+                                    }]
+                                },
+                                options: {
+                                    scales: {
+                                        y: {
+                                            beginAtZero: true
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                    });
+                });
+            </script>
+
+            <script>
+                document.addEventListener('livewire:load', function() {
+
+                    var ctx = document.getElementById('resultadosxarea').getContext('2d');
+                    var barChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: {!! json_encode($grafica_area['nombres']) !!},
+                            datasets: [{
+                                label: 'Porcentaje de cumplimiento',
+                                data: {!! json_encode($grafica_area['resultados']) !!},
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                });
+            </script>
+
+            {{-- <script>
+                const ctx = document.getElementById('resultadosxarea');
+
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: {!! json_encode($grafica_area['nombres']) !!},
+                        datasets: [{
+                            label: 'Porcentaje de cumplimiento',
+                            data: {!! json_encode($grafica_area['resultados']) !!},
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
                         }
                     }
-                }
-            });
-        </script>
+                });
+            </script> --}}
 
-        <script>
-            const ctx2 = document.getElementById('cumplimientoObjetivos');
+            <script>
+                const ctx2 = document.getElementById('cumplimientoObjetivos');
 
-            new Chart(ctx2, {
-                type: 'bar',
-                data: {
-                    labels: {!! json_encode($grafica_objetivos['nombres']) !!},
-                    datasets: [{
-                        label: 'Porcentaje de Cumplimiento',
-                        data: {!! json_encode($grafica_objetivos['resultados']) !!},
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
+                new Chart(ctx2, {
+                    type: 'bar',
+                    data: {
+                        labels: {!! json_encode($grafica_objetivos['nombres']) !!},
+                        datasets: [{
+                            label: 'Porcentaje de Cumplimiento',
+                            data: {!! json_encode($grafica_objetivos['resultados']) !!},
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
                         }
                     }
-                }
-            });
-        </script>
+                });
+            </script>
 
-        <script>
-            const ctx3 = document.getElementById('escalas');
+            <script>
+                const ctx3 = document.getElementById('escalas');
 
-            new Chart(ctx3, {
-                type: 'bar',
-                data: {
-                    labels: @json($escalas['nombres']),
-                    datasets: [{
-                        label: 'Colaboradores',
-                        data: [12, 43, 2, 2],
-                        backgroundColor: @json($escalas['colores']),
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
+                new Chart(ctx3, {
+                    type: 'bar',
+                    data: {
+                        labels: @json($escalas['nombres']),
+                        datasets: [{
+                            label: 'Colaboradores',
+                            data: [12, 43, 2, 2],
+                            backgroundColor: @json($escalas['colores']),
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
                         }
                     }
-                }
-            });
-        </script>
+                });
+            </script>
+        @endif
 
-        <script>
-            const ctx4 = document.getElementById('cumplimientoCompetencias');
+        @if ($evaluacion->activar_competencias)
+            <script>
+                const ctx4 = document.getElementById('cumplimientoCompetencias');
 
-            new Chart(ctx4, {
-                type: 'bar',
-                data: {
-                    labels: {!! json_encode($grafica_competencias['nombres']) !!},
-                    datasets: [{
-                        label: 'Porcentaje Cumplido',
-                        data: {!! json_encode($grafica_competencias['resultados']) !!},
-                        // data: [89, 34, 55, 86, 75, 89, 34, 55, 86, 75, 89, 34, 55, 86],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
+                new Chart(ctx4, {
+                    type: 'bar',
+                    data: {
+                        labels: {!! json_encode($grafica_competencias['nombres']) !!},
+                        datasets: [{
+                            label: 'Porcentaje Cumplido',
+                            data: {!! json_encode($grafica_competencias['resultados']) !!},
+                            // data: [89, 34, 55, 86, 75, 89, 34, 55, 86, 75, 89, 34, 55, 86],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
                         }
                     }
-                }
-            });
-        </script>
+                });
+            </script>
+        @endif
     @endsection
 </div>
