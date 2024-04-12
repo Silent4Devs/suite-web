@@ -198,9 +198,10 @@ services:
 
   newrelic-agent:
     container_name: newrelic-infra
-    build:
-      context: "./infra/newrelic/"
-      dockerfile: newrelic-infra.dockerfile
+    # build:
+    #   context: "./infra/newrelic/"
+    #   dockerfile: newrelic-infra.dockerfile
+    image: newrelic/infrastructure:latest
     cap_add:
       - SYS_PTRACE
     pid: host
@@ -208,6 +209,8 @@ services:
     volumes:
       - "/:/host:ro"
       - "/var/run/docker.sock:/var/run/docker.sock"
+    environment:
+      NRIA_LICENSE_KEY: "4125e930d3e3d4e0ee11b9017af9447dFFFFNRAL"
     restart: unless-stopped
     networks:
       - tabantajnetwork
