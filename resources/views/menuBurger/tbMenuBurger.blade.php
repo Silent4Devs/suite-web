@@ -348,6 +348,6 @@
     @endif
     <div class="item-content-menu-header caja-img-escritorio-header"
         style="background-color: #e7ecef; padding: 0px;">
-        <img src="{{ asset('img/escritorio-header.webp') }}" alt="" class="img-escritorio-header">
+        <img src="{{ asset('img/menuBurger/TBescritorio.webp') }}" alt="" class="img-escritorio-header">
     </div>
 </div>
