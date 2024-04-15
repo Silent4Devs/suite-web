@@ -259,7 +259,7 @@ class QueueCorreo extends Controller
             }
         }
 
-        dd('Proceso finalizado');
+        dd('Proceso finalizado', 'total: ' . count($datos));
     }
 
     /**
