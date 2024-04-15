@@ -74,3 +74,15 @@ RUN npm install -g npm@latest
 # Healthcheck
 HEALTHCHECK --interval=15m --timeout=3s \
     CMD curl --fail http://localhost/ || exit 1
+
+RUN curl -L https://download.newrelic.com/php_agent/archive/10.10.0.1/newrelic-php5-10.10.0.1-linux.tar.gz | tar -C /tmp -zx \
+    && export NR_INSTALL_USE_CP_NOT_LN=1 \
+    && export NR_INSTALL_SILENT=1 \
+    && /tmp/newrelic-php5-10.10.0.1-linux/newrelic-install install \
+    && rm -rf /tmp/newrelic-php5-* /tmp/nrinstall*
+
+RUN find /etc /opt/etc /usr/local/etc -type f -name newrelic.ini \
+    -exec sed -i \
+    -e "s/newrelic.license[[:space:]]=[[:space:]].*/newrelic.license = 4125e930d3e3d4e0ee11b9017af9447dFFFFNRAL/" \
+    -e "s/newrelic.appname[[:space:]]=[[:space:]].*/newrelic.appname = \"TabantajProd\"/" \
+    -e '$anewrelic.daemon.address="newrelic-php-daemon:31339"' {} \; 2>/dev/null
