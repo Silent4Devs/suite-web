@@ -209,6 +209,8 @@ services:
     volumes:
       - "/:/host:ro"
       - "/var/run/docker.sock:/var/run/docker.sock"
+    environment:
+      NRIA_LICENSE_KEY: "4125e930d3e3d4e0ee11b9017af9447dFFFFNRAL"
     restart: unless-stopped
     networks:
       - tabantajnetwork
@@ -217,6 +219,15 @@ services:
     image: newrelic/php-daemon
     container_name: newrelic-php-daemon
     tty: true
+    volumes:
+      - "/:/host:ro"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    cap_add:
+      - SYS_PTRACE
+    pid: host
+    privileged: true
+    environment:
+      NRIA_LICENSE_KEY: "4125e930d3e3d4e0ee11b9017af9447dFFFFNRAL"
     restart: unless-stopped
     networks:
       - tabantajnetwork
