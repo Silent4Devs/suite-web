@@ -891,13 +891,13 @@
         });
     </script>
 
-    <script>
+    {{-- <script>
         function menuHeader() {
             document.querySelector('header').classList.toggle('mostrar-menu');
             document.querySelector('.btn-menu-header').classList.toggle('active');
             document.querySelector('.bg-black-header-menu').classList.toggle('active');
         }
-    </script>
+    </script> --}}
 
     <script>
         var inputs = document.querySelectorAll('input[type="text"]');

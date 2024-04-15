@@ -81,4 +81,5 @@
     </div>
     @include('menuBurger.tbMenuBurger')
     <div class="bg-black-header-menu" onclick="menuHeader();"></div>
+    <script src="{{asset('js/appBar/appBar.js')}}"></script>
 </header>
