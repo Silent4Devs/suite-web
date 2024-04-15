@@ -285,7 +285,7 @@
                 <div class="flex-item">
                     @if ($requisicion->firma_finanzas)
                         <img src="{{ $requisicion->firma_finanzas }}" class="img-firma">
-                        <p>Layla Esperanza Delgadillo Aguila </p>
+                        <p>{{$firma_finanzas_name ?? ''}} </p>
                         <p>{{ $requisicion->fecha_firma_finanzas_requi }}</p>
                     @else
                         <div style="height: 137px;"></div>

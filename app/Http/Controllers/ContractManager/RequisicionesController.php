@@ -104,7 +104,7 @@ class RequisicionesController extends Controller
 
             $requisicion = KatbolRequsicion::with('sucursal', 'comprador.user', 'contrato')->find($id);
 
-            if (! $requisicion) {
+            if (!$requisicion) {
                 abort(404);
             }
 
@@ -112,13 +112,21 @@ class RequisicionesController extends Controller
 
             $supervisor = User::find($requisicion->id_user)->empleado->supervisor->name;
 
+            $user = User::find($requisicion->id_finanzas);
+
+            if ($user) {
+                $firma_finanzas = $user->name;
+            } else {
+                $firma_finanzas = null;
+            }
+
             $proveedores_show = KatbolProvedorRequisicionCatalogo::where('requisicion_id', $requisicion->id)->pluck('proveedor_id')->toArray();
 
             $proveedores_catalogo = KatbolProveedorOC::whereIn('id', $proveedores_show)->get();
 
             $proveedor_indistinto = KatbolProveedorIndistinto::where('requisicion_id', $requisicion->id)->first();
 
-            return view('contract_manager.requisiciones.show', compact('requisicion', 'organizacion', 'supervisor', 'proveedores_catalogo', 'proveedor_indistinto'));
+            return view('contract_manager.requisiciones.show', compact('requisicion', 'organizacion', 'supervisor', 'proveedores_catalogo', 'proveedor_indistinto', 'firma_finanzas'));
         } catch (\Exception $e) {
             abort(404);
         }
@@ -198,13 +206,21 @@ class RequisicionesController extends Controller
 
             $supervisor = User::find($requisicion->id_user)->empleado->supervisor->name;
 
+            $user = User::find($requisicion->id_finanzas);
+
+            if ($user) {
+                $firma_finanzas_name = $user->name;
+            } else {
+                $firma_finanzas_name = null;
+            }
+
             $proveedores_show = KatbolProvedorRequisicionCatalogo::where('requisicion_id', $requisicion->id)->pluck('proveedor_id')->toArray();
 
             $proveedor_indistinto = KatbolProveedorIndistinto::where('requisicion_id', $requisicion->id)->first();
 
             $proveedores_catalogo = KatbolProveedorOC::whereIn('id', $proveedores_show)->get();
 
-            return view('contract_manager.requisiciones.firmar', compact('requisicion', 'organizacion', 'contrato', 'comprador', 'tipo_firma', 'supervisor', 'proveedores_catalogo', 'proveedor_indistinto'));
+            return view('contract_manager.requisiciones.firmar', compact('requisicion', 'organizacion', 'contrato', 'comprador', 'tipo_firma', 'supervisor', 'proveedores_catalogo', 'proveedor_indistinto', 'firma_finanzas_name'));
         } catch (\Exception $e) {
             return view('contract_manager.requisiciones.error');
         }
@@ -255,6 +271,8 @@ class RequisicionesController extends Controller
         if ($tipo_firma == 'firma_finanzas') {
             $fecha = date('d-m-Y');
             $requisicion->fecha_firma_finanzas_requi = $fecha;
+            $user = User::getCurrentUser();
+            $requisicion->id_finanzas = $user->id;
             $requisicion->save();
             $comprador = KatbolComprador::with('user')->where('id', $requisicion->comprador_id)->first();
             $userEmail = trim($this->removeUnicodeCharacters($comprador->user->email));
@@ -313,7 +331,13 @@ class RequisicionesController extends Controller
     {
         $bandera = true;
         $requisicion = KatbolRequsicion::where('id', $id)->first();
+        $user = User::find($requisicion->id_finanzas);
 
+        if ($user) {
+            $firma_finanzas_name = $user->name;
+        } else {
+            $firma_finanzas_name = null;
+        }
         $user = User::getCurrentUser();
         $supervisor = User::find($requisicion->id_user)->empleado->supervisor->name;
         $supervisor_email = User::find($requisicion->id_user)->empleado->supervisor->email;
@@ -324,13 +348,13 @@ class RequisicionesController extends Controller
             if (removeUnicodeCharacters($user->email) === removeUnicodeCharacters($solicitante->email)) {
                 $tipo_firma = 'firma_solicitante';
             } else {
-                return view('contract_manager.requisiciones.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del solicitante directo: <br> <strong>'.$solicitante->name.'</strong>');
+                return view('contract_manager.requisiciones.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del solicitante directo: <br> <strong>' . $solicitante->name . '</strong>');
             }
         } elseif ($requisicion->firma_jefe === null) {
             if (removeUnicodeCharacters($supervisor_email) === removeUnicodeCharacters($user->email) || removeUnicodeCharacters($user->email) === 'aurora.soriano@silent4business.com') {
                 $tipo_firma = 'firma_jefe';
             } else {
-                return view('contract_manager.requisiciones.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del jefe directo: <br> <strong>'.$supervisor.'</strong>');
+                return view('contract_manager.requisiciones.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del jefe directo: <br> <strong>' . $supervisor . '</strong>');
             }
         } elseif ($requisicion->firma_finanzas === null) {
             if (removeUnicodeCharacters($user->email) === 'lourdes.abadia@silent4business.com' || removeUnicodeCharacters($user->email) === 'ldelgadillo@silent4business.com' || removeUnicodeCharacters($user->email) === 'aurora.soriano@silent4business.com') {
@@ -342,7 +366,7 @@ class RequisicionesController extends Controller
             if (removeUnicodeCharacters($comprador->user->email) === removeUnicodeCharacters($user->email)) {
                 $tipo_firma = 'firma_compras';
             } else {
-                return view('contract_manager.requisiciones.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>'.$comprador->user->name.'</strong>');
+                return view('contract_manager.requisiciones.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>' . $comprador->user->name . '</strong>');
             }
         } else {
             $tipo_firma = 'firma_final_aprobadores';
@@ -358,7 +382,7 @@ class RequisicionesController extends Controller
 
         $proveedores_catalogo = KatbolProveedorOC::whereIn('id', $proveedores_show)->get();
 
-        return view('contract_manager.requisiciones.firmar', compact('requisicion', 'organizacion', 'bandera', 'contrato', 'comprador', 'tipo_firma', 'supervisor', 'proveedores_catalogo', 'proveedor_indistinto'));
+        return view('contract_manager.requisiciones.firmar', compact('firma_finanzas_name', 'requisicion', 'organizacion', 'bandera', 'contrato', 'comprador', 'tipo_firma', 'supervisor', 'proveedores_catalogo', 'proveedor_indistinto'));
     }
 
     /**
@@ -422,6 +446,14 @@ class RequisicionesController extends Controller
     public function pdf($id)
     {
         $requisiciones = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->find($id);
+        $user = User::find($requisiciones->id_finanzas);
+
+        if ($user) {
+            $firma_finanzas_name = $user->name;
+        } else {
+            $firma_finanzas_name = null;
+        }
+
         $organizacion = Organizacion::getLogo();
         $proveedores_show = KatbolProvedorRequisicionCatalogo::where('requisicion_id', $requisiciones->id)->pluck('proveedor_id')->toArray();
 
