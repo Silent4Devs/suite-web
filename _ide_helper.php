@@ -19390,6 +19390,127 @@ namespace DaveJamesMiller\Breadcrumbs\Facades {
             }
     }
 
+namespace JackWH\LaravelNewRelic\Facades {
+            /**
+     * 
+     *
+     * @see \JackWH\LaravelNewRelic\NewRelicTransaction
+     */        class NewRelicTransaction {
+                    /**
+         * Run a Closure when the facade has been resolved.
+         *
+         * @param \Closure $callback
+         * @return void 
+         * @static 
+         */        public static function resolved($callback)
+        {            //Method inherited from \Illuminate\Support\Facades\Facade         
+                        \JackWH\LaravelNewRelic\Facades\NewRelicTransaction::resolved($callback);
+        }
+                    /**
+         * Convert the facade into a Mockery spy.
+         *
+         * @return \Mockery\MockInterface 
+         * @static 
+         */        public static function spy()
+        {            //Method inherited from \Illuminate\Support\Facades\Facade         
+                        return \JackWH\LaravelNewRelic\Facades\NewRelicTransaction::spy();
+        }
+                    /**
+         * Initiate a partial mock on the facade.
+         *
+         * @return \Mockery\MockInterface 
+         * @static 
+         */        public static function partialMock()
+        {            //Method inherited from \Illuminate\Support\Facades\Facade         
+                        return \JackWH\LaravelNewRelic\Facades\NewRelicTransaction::partialMock();
+        }
+                    /**
+         * Initiate a mock expectation on the facade.
+         *
+         * @return \Mockery\Expectation 
+         * @static 
+         */        public static function shouldReceive()
+        {            //Method inherited from \Illuminate\Support\Facades\Facade         
+                        return \JackWH\LaravelNewRelic\Facades\NewRelicTransaction::shouldReceive();
+        }
+                    /**
+         * Initiate a mock expectation on the facade.
+         *
+         * @return \Mockery\Expectation 
+         * @static 
+         */        public static function expects()
+        {            //Method inherited from \Illuminate\Support\Facades\Facade         
+                        return \JackWH\LaravelNewRelic\Facades\NewRelicTransaction::expects();
+        }
+                    /**
+         * Hotswap the underlying instance behind the facade.
+         *
+         * @param mixed $instance
+         * @return void 
+         * @static 
+         */        public static function swap($instance)
+        {            //Method inherited from \Illuminate\Support\Facades\Facade         
+                        \JackWH\LaravelNewRelic\Facades\NewRelicTransaction::swap($instance);
+        }
+                    /**
+         * Get the root object behind the facade.
+         *
+         * @return mixed 
+         * @static 
+         */        public static function getFacadeRoot()
+        {            //Method inherited from \Illuminate\Support\Facades\Facade         
+                        return \JackWH\LaravelNewRelic\Facades\NewRelicTransaction::getFacadeRoot();
+        }
+                    /**
+         * Clear a resolved facade instance.
+         *
+         * @param string $name
+         * @return void 
+         * @static 
+         */        public static function clearResolvedInstance($name)
+        {            //Method inherited from \Illuminate\Support\Facades\Facade         
+                        \JackWH\LaravelNewRelic\Facades\NewRelicTransaction::clearResolvedInstance($name);
+        }
+                    /**
+         * Clear all of the resolved instances.
+         *
+         * @return void 
+         * @static 
+         */        public static function clearResolvedInstances()
+        {            //Method inherited from \Illuminate\Support\Facades\Facade         
+                        \JackWH\LaravelNewRelic\Facades\NewRelicTransaction::clearResolvedInstances();
+        }
+                    /**
+         * Get the application default aliases.
+         *
+         * @return \Illuminate\Support\Collection 
+         * @static 
+         */        public static function defaultAliases()
+        {            //Method inherited from \Illuminate\Support\Facades\Facade         
+                        return \JackWH\LaravelNewRelic\Facades\NewRelicTransaction::defaultAliases();
+        }
+                    /**
+         * Get the application instance behind the facade.
+         *
+         * @return \Illuminate\Contracts\Foundation\Application|null 
+         * @static 
+         */        public static function getFacadeApplication()
+        {            //Method inherited from \Illuminate\Support\Facades\Facade         
+                        return \JackWH\LaravelNewRelic\Facades\NewRelicTransaction::getFacadeApplication();
+        }
+                    /**
+         * Set the application instance.
+         *
+         * @param \Illuminate\Contracts\Foundation\Application|null $app
+         * @return void 
+         * @static 
+         */        public static function setFacadeApplication($app)
+        {            //Method inherited from \Illuminate\Support\Facades\Facade         
+                        \JackWH\LaravelNewRelic\Facades\NewRelicTransaction::setFacadeApplication($app);
+        }
+            }
+    }
+
 namespace Laragear\Preload\Facades {
             /**
      * 
@@ -24663,6 +24784,7 @@ namespace  {
             class Alert extends \RealRashid\SweetAlert\Facades\Alert {}
             class Pdf extends \Barryvdh\DomPDF\Facade\Pdf {}
             class Breadcrumbs extends \DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs {}
+            class NewRelicTransaction extends \JackWH\LaravelNewRelic\Facades\NewRelicTransaction {}
             class Preload extends \Laragear\Preload\Facades\Preload {}
             class Livewire extends \Livewire\Livewire {}
             class Sentry extends \Sentry\Laravel\Facade {}
