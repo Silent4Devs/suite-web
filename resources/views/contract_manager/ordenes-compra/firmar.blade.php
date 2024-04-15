@@ -116,7 +116,7 @@
         </div>
 
         <hr style="width: 80%; margin:auto;">
-        @foreach ($proveedores as $proveedor)
+        @foreach ($proveedores_catalogo as $proveedor)
             <div class="proveedores-doc" style="">
                 <div class="flex header-proveedor-doc">
                     <div class="flex-item">
@@ -262,11 +262,7 @@
                 <div class="col s12 l4">
 
                     <strong> Centro de costo: </strong><br><br>
-                    @if ($producto->centro_costo->descripcion)
-                        {{ $producto->centro_costo->descripcion }}
-                    @else
-                        <small class="not-register">Sin registro</small>
-                    @endif
+                        {{ isset($producto->centro_costo->descripcion) }}
                 </div>
                 <div class="col s12 l4">
 
@@ -423,7 +419,7 @@
                 @else
                     <div>&nbsp;</div>
                 @endif
-                <div onclick="validar();" style="" class="btn btn-primary">Guardar</div>
+                <div onclick="validar();" style="" class="btn btn-primary">Firmar</div>
             </div>
         </form>
     </div>
