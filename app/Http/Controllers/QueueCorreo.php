@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Mail\TestMail;
-use App\Models\PlanImplementacion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Benchmark;
+use App\Models\PlanImplementacion;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use App\Models\ContractManager\Requsicion;
 
 class QueueCorreo extends Controller
 {
@@ -128,6 +129,25 @@ class QueueCorreo extends Controller
             array('requisicion_id' => 253, 'id_usuario' => $lou),
             array('requisicion_id' => 256, 'id_usuario' => $lou),
         );
+
+        foreach ($datos as $dato) {
+            $id_tabla = $dato['requisicion_id'];
+            $id_usuario = $dato['id_usuario'];
+
+            // Actualizar el registro usando Eloquent
+            $requisicion = Requsicion::find($id_tabla);
+
+            if ($requisicion) {
+                $requisicion->id_finanzas = $id_usuario;
+                $requisicion->save();
+
+                echo "Actualización exitosa para el ID de tabla: $id_tabla<br>";
+            } else {
+                echo "No se encontró la requisición con el ID de tabla: $id_tabla<br>";
+            }
+        }
+
+        dd('Proceso finalizado');
     }
 
     /**
