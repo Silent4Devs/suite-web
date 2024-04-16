@@ -106,6 +106,7 @@ class OrdenCompraController extends Controller
 
             $requisicion = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->find($id);
             $user = User::find($requisicion->id_finanzas_oc);
+            $proveedores = KatbolProveedorOC::where('id', $requisicion->proveedor_id)->first();
 
             if ($user) {
                 $firma_finanzas_name = $user->name;
@@ -119,7 +120,7 @@ class OrdenCompraController extends Controller
                 abort(404);
             }
 
-            return view('contract_manager.ordenes-compra.show', compact('firma_finanzas_name', 'requisicion', 'organizacion'));
+            return view('contract_manager.ordenes-compra.show', compact('firma_finanzas_name', 'requisicion', 'organizacion', 'proveedores'));
         } catch (\Throwable $th) {
             abort(404);
         }
