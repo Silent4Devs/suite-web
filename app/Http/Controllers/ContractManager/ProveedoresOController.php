@@ -89,7 +89,7 @@ class ProveedoresOController extends Controller
         } catch (QueryException $e) {
             DB::rollback();
 
-            return 'Error al insertar el proveedor: ' . $e->getMessage();
+            return 'Error al insertar el proveedor: '.$e->getMessage();
         }
     }
 
@@ -116,7 +116,7 @@ class ProveedoresOController extends Controller
             abort_if(Gate::denies('katbol_proveedores_ordenes_compra_modificar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
             $proveedores = ProveedorOC::find($id);
 
-            if (!$proveedores) {
+            if (! $proveedores) {
                 abort(404);
             }
 

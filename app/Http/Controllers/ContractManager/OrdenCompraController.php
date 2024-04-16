@@ -116,7 +116,7 @@ class OrdenCompraController extends Controller
 
             $organizacion = Organizacion::getLogo();
 
-            if (!$requisicion) {
+            if (! $requisicion) {
                 abort(404);
             }
 
@@ -139,7 +139,7 @@ class OrdenCompraController extends Controller
 
             abort_if(Gate::denies('katbol_ordenes_compra_modificar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
             $requisicion = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->find($id);
-            if (!$requisicion) {
+            if (! $requisicion) {
                 abort(404);
             }
             $proveedores = KatbolProveedorOC::get();
@@ -190,21 +190,21 @@ class OrdenCompraController extends Controller
         $data = $request->all();
         for ($i = 1; $i <= $request->count_productos; $i++) {
             $producto_nuevo = KatbolProductoRequisicion::create([
-                'cantidad' => $data['cantidad' . $i],
-                'producto_id' => $data['producto' . $i],
-                'centro_costo_id' => $data['centro_costo' . $i],
-                'espesificaciones' => $data['especificaciones' . $i],
-                'contrato_id' => $data['contrato' . $i],
+                'cantidad' => $data['cantidad'.$i],
+                'producto_id' => $data['producto'.$i],
+                'centro_costo_id' => $data['centro_costo'.$i],
+                'espesificaciones' => $data['especificaciones'.$i],
+                'contrato_id' => $data['contrato'.$i],
                 'requisiciones_id' => $requisicion->id,
-                'no_personas' => $data['no_personas' . $i],
-                'porcentaje_involucramiento' => $data['porcentaje_involucramiento' . $i],
-                'sub_total' => $data['sub_total' . $i],
-                'iva' => $data['iva' . $i],
-                'iva_retenido' => $data['iva_retenido' . $i],
-                'descuento' => $data['descuento' . $i],
-                'otro_impuesto' => $data['otro_impuesto' . $i],
-                'isr_retenido' => $data['isr_retenido' . $i],
-                'total' => $data['total' . $i],
+                'no_personas' => $data['no_personas'.$i],
+                'porcentaje_involucramiento' => $data['porcentaje_involucramiento'.$i],
+                'sub_total' => $data['sub_total'.$i],
+                'iva' => $data['iva'.$i],
+                'iva_retenido' => $data['iva_retenido'.$i],
+                'descuento' => $data['descuento'.$i],
+                'otro_impuesto' => $data['otro_impuesto'.$i],
+                'isr_retenido' => $data['isr_retenido'.$i],
+                'total' => $data['total'.$i],
             ]);
         }
 
@@ -294,7 +294,7 @@ class OrdenCompraController extends Controller
             $fecha = date('d-m-Y');
             $requisicion->fecha_firma_finanzas_orden = $fecha;
             $user = User::getCurrentUser();
-            $requisicion->id_finanzas_oc =  $user->id;
+            $requisicion->id_finanzas_oc = $user->id;
             $requisicion->save();
 
             $requisicion->update([
@@ -447,7 +447,7 @@ class OrdenCompraController extends Controller
             if (removeUnicodeCharacters($user->email) === removeUnicodeCharacters($solicitante->email)) {
                 $tipo_firma = 'firma_solicitante_orden';
             } else {
-                return view('contract_manager.ordenes-compra.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del solicitante directo: <br> <strong>' . $solicitante->name . '</strong>');
+                return view('contract_manager.ordenes-compra.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del solicitante directo: <br> <strong>'.$solicitante->name.'</strong>');
             }
         } elseif ($requisicion->firma_finanzas_orden === null) {
             if (removeUnicodeCharacters($user->email) === 'lourdes.abadia@silent4business.com' || removeUnicodeCharacters($user->email) === 'ldelgadillo@silent4business.com' || removeUnicodeCharacters($user->email) === 'aurora.soriano@silent4business.com') {
@@ -459,7 +459,7 @@ class OrdenCompraController extends Controller
             if (removeUnicodeCharacters($comprador->user->email) === removeUnicodeCharacters($user->email)) {
                 $tipo_firma = 'firma_comprador_orden';
             } else {
-                return view('contract_manager.ordenes-compra.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>' . $comprador->user->name . '</strong>');
+                return view('contract_manager.ordenes-compra.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>'.$comprador->user->name.'</strong>');
             }
         } else {
             $tipo_firma = 'firma_final_aprobadores';

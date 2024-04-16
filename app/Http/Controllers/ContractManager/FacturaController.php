@@ -124,7 +124,7 @@ class FacturaController extends Controller
 
             $contrato = Contrato::find($id);
 
-            if (!$contrato) {
+            if (! $contrato) {
                 abort(404);
             }
 
