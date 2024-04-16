@@ -198,9 +198,10 @@ services:
 
   newrelic-agent:
     container_name: newrelic-infra
-    build:
-      context: "./infra/newrelic/"
-      dockerfile: newrelic-infra.dockerfile
+    # build:
+    #   context: "./infra/newrelic/"
+    #   dockerfile: newrelic-infra.dockerfile
+    image: newrelic/infrastructure:latest
     cap_add:
       - SYS_PTRACE
     pid: host
