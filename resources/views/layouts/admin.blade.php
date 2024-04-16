@@ -114,6 +114,9 @@
                         <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button"
                             aria-haspopup="true" aria-expanded="false">
                             <div style="width:100%; display: flex; align-items: center;">
+                                {{-- <li style="position: relative; right:2rem;">
+                                    @livewire('campana-notificaciones-component')
+                                </li> --}}
                                 @if ($empleado)
                                     <div style="width: 40px; overflow:hidden;" class="mr-2">
                                         <img class="img_empleado" style=""
@@ -222,7 +225,7 @@
                         <li>
                             <a href="{{ route('admin.planes-de-accion.index') }}">
                                 <i class="bi bi-file-earmark-check"></i>
-                                Planes de acción
+                                Planes de Trabajo
                             </a>
                         </li>
                     @endcan
