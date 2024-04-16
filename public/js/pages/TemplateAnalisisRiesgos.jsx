@@ -5,39 +5,29 @@ import { Container } from '../components/custom/analisis-riesgos/Containers';
 import { Section } from '../components/custom/analisis-riesgos/Section';
 import { createPortal } from 'react-dom';
 import Item from '../components/custom/analisis-riesgos/Item';
+import { CardTemplateAnalisisRiesgos } from '../components/common/Cards';
 
 const TemplateAnalisisRiesgos = () => {
     const [sections, setSections] = useState([
         {id:"sec-1", section: "Seccion 1", title:"Sin nombre 1"},
-        // {id:"sec-2", section: "Seccion 2", title:"Sin nombre 2"},
-
-
-
     ]);
 
     const [questions, setQuestions] = useState([
-        { id: 1, columnId: "sec-1", title:"Question 1", size:3 },
-        { id: 2, columnId: "sec-1", title:"Question 2", size:6 },
-        { id: 3, columnId: "sec-1", title:"Question 3", size:3 },
-        { id: 4, columnId: "sec-1", title:"Question 4", size:3 },
-        { id: 5, columnId: "sec-1", title:"Question 5", size:3 },
-        { id: 6, columnId: "sec-1", title:"Question 6", size:6 },
-        { id: 7, columnId: "sec-1", title:"Question 7", size:3 },
-        { id: 8, columnId: "sec-1", title:"Question 8", size:3 },
-        // { id: 5, columnId: "sec-2", title:"Question 4", size:12 },
-
-
-
-
-
+        { id: 1, columnId: "sec-1", size:12, type:"1", data:{} },
     ]);
+
+    const chanceQuestionSize = (id, newSize) => {
+    setQuestions((questions) => (
+        questions.map(item => (item.id === id ? {...item, size : newSize} : item))
+    ))
+    }
 
     const [activeSection, setActiveSection] = useState(null);
     const [activeQuestion, setActiveQuestion] = useState(null);
 
     const handleDragStart = (event) => {
         if(event.active.data.current?.type === "Section"){
-            console.log(event.active)
+            // console.log(event.active.data.current)
             setActiveSection(event.active.data.current);
             return;
         }
@@ -77,6 +67,7 @@ const TemplateAnalisisRiesgos = () => {
 
     const handleDragOver = (event) => {
         const { active, over } = event;
+        // console.log(active)
         if (!over) return;
 
         const activeId = active.id;
@@ -106,16 +97,12 @@ const TemplateAnalisisRiesgos = () => {
         }
 
         const isOverASection = over.data.current?.type === "Section";
-        if(isOverASection){
-            console.log("sobre section")
-
-        }
 
         // Im dropping a Task over a column
         if (isActiveAQuestion && isOverASection) {
           setQuestions((questions) => {
+            console.log(questions)
             const activeIndex = questions.findIndex((item) => item.id === activeId);
-
             questions[activeIndex].columnId = overId;
             // console.log("DROPPING TASK OVER COLUMN", { activeIndex });
             return arrayMove(questions, activeIndex, activeIndex);
@@ -135,8 +122,7 @@ const TemplateAnalisisRiesgos = () => {
     const addQuestion = () => {
         let lastSection = sections.length;
         let nextQuestion = questions.length +1;
-        setQuestions((questions) => [...questions, {id: nextQuestion, columnId:`sec-${lastSection}`, size:3, title:`Question ${nextQuestion}`}])
-        console.log(questions)
+        setQuestions((questions) => [...questions, {id: nextQuestion, columnId:`sec-${lastSection}`, size:12, type:"1", data:{}}])
     }
 
 
@@ -160,24 +146,21 @@ const TemplateAnalisisRiesgos = () => {
 
         <DndContext sensors={sensors} collisionDetection={closestCorners} onDragEnd={handleDragEnd} onDragStart={handleDragStart} onDragOver={handleDragOver}>
             {/* <div className="row"> */}
-                <Container sections={sections} questions={questions} />
+                <Container sections={sections} questions={questions} setQuestions={setQuestions} chanceQuestionSize={chanceQuestionSize}/>
             {/* </div> */}
             {createPortal(
                 <DragOverlay>
-                    {activeSection && (
+                    {/* {activeSection && (
                     <Section
                         id={activeSection.id}
                         title={activeSection.title}
-                        questions={questions.filter(
-                        (item) => item.columnId === activeSection.id
-                        )}
+                        questions={activeSection.questions}
                     />
-                    )}
+                    )} */}
                     {activeQuestion && (
-                    <Item
+                    <CardTemplateAnalisisRiesgos
                         id={activeQuestion.id}
-                        title={activeQuestion.title}
-                        size={12}
+                        question={questions.find(item => item.id === activeQuestion.id) || null}
                     />
                     )}
                 </DragOverlay>,

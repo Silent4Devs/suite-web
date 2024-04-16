@@ -4,7 +4,9 @@ import { SelectAnalisisRiesgo } from './Selects'
 import { useGenerateTemplateAnalisisRiesgo } from '../../hooks/AnalisisRiesgo';
 import TemplateARComponentFactory from '../custom/factory/TemplateARComponentFactory';
 import { HrSimple } from './Hr';
-export const CardTemplateAnalisisRiesgos = () => {
+import { CSS } from "@dnd-kit/utilities";
+
+export const CardTemplateAnalisisRiesgos = ({id, question}) => {
 
     const options = [
         {id:"1" , title:'Respuesta corta'},
@@ -19,7 +21,11 @@ export const CardTemplateAnalisisRiesgos = () => {
         {id:"10", title:'Imagen'},
 
     ];
-    const {option, handleChangeOption} = useGenerateTemplateAnalisisRiesgo();
+    const {option, handleChangeOption,attributes, listeners, setNodeRef, transform, transition, isDragging} = useGenerateTemplateAnalisisRiesgo(question);
+    const style = {
+        transform: CSS.Transform.toString(transform),
+        transition,
+      };
 
     const templateARComponentFactory = new TemplateARComponentFactory();
     let templateComponent = ""
@@ -28,9 +34,9 @@ export const CardTemplateAnalisisRiesgos = () => {
     }
 
   return (
-        // <div className="col-12" >
+    // ref={setNodeRef} style={style} {...attributes} {...listeners}
+        <div className="col-6" ref={setNodeRef} style={style} {...attributes} {...listeners} >
             <div className="card">
-
                 <div className="card-body">
                     <div className="d-flex flex-row-reverse">
                         <SelectAnalisisRiesgo options={options} name="options" size={4} handleChangeOption={handleChangeOption} />
@@ -38,14 +44,14 @@ export const CardTemplateAnalisisRiesgos = () => {
                             {templateComponent}
                         </div>
                     </div>
-                    <HrSimple styles={{width:"100%", borderWidth: "1px", borderColor:"#C5C5C5"}} />
+                    <HrSimple styles={{width:"100%", borderWidth: "1px", borderColor:"#C5C5C5", marginTop:"40px"}} />
 
-                    {/* <div className="d-flex flex-row-reverse">
+                    <div className="d-flex flex-row-reverse">
                         <i onClick={()=>clickDelete(id)} className="text-sm text-red-500 fas fa-trash-alt"/>
-                    </div> */}
+                    </div>
 
                 </div>
             </div>
-        // </div>
+        </div>
   )
 }
