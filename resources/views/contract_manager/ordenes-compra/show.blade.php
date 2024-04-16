@@ -94,6 +94,59 @@
                     </div>
                 </div>
 
+                @foreach ($requisicion->productos_requisiciones as $producto )
+                <div class="flex">
+                    <div class="flex-item">
+                        <strong> Producto o servicio:</strong>
+                    </div>
+                </div>
+                    <div class="row">
+                        <div class="col s12 l4">
+                            <strong> Cantidad:</strong><br><br>
+                            {{ $producto->cantidad }}
+                        </div>
+                        <div class="col s12 l4">
+                            <strong> Producto o servicio:</strong><br><br>
+                           {{ $producto->producto->descripcion }}
+                        </div>
+                        <div class="col s12 l4">
+                            <strong> Especificaciones del producto o servicio: </strong><br><br>
+                           {{ $producto->espesificaciones }}
+                        </div>
+                        <div class="col s12 l4">
+                            <strong> SubTotal:</strong><br><br>
+                            {{ $producto->sub_total }}
+                        </div>
+                        <div class="col s12 l4">
+                            <strong> Descuento:</strong><br><br>
+                           {{ $producto->descuento }}
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col s12 l4">
+                            <strong> Otro Impuesto: </strong><br><br>
+                           {{ $producto->otro_impuesto }}
+                        </div>
+                        <div class="col s12 l4">
+                            <strong> IVA: </strong><br><br>
+                           {{ $producto->iva }}
+                        </div>
+                        <div class="col s12 l4">
+                            <strong> IVA retenido: </strong><br><br>
+                           {{ $producto->iva_retenido }}
+                        </div>
+                        <div class="col s12 l4">
+                            <strong> ISR retenido: </strong><br><br>
+                           {{ $producto->isr_retenido }}
+                        </div>
+                        <div class="col s12 l4">
+                            <strong> Total: </strong><br><br>
+                           {{ $producto->total }}
+                        </div>
+                    </div>
+                @endforeach
+
 
                 @foreach ($requisicion->provedores_requisiciones as $provedores )
                 <div class="proveedores-doc" style="background-color: #EEEEEE;">
@@ -151,126 +204,78 @@
                         </div>
                     </div>
                 </div>
-            @endforeach
-
-
-            <div class="proveedores-doc" style="background-color: #EEEEEE;">
-                <div class="flex">
-                    <div class="flex-item">
-                        <strong> Proveedor:</strong>
-                    </div>
-                </div>
-                <table class="table-proveedor">
-                    <tr>
-                        <td>
-                            <strong> Proveedor: </strong> <br>
-                            @isset($proveedores)
-                                {{ $proveedores->razon_social }}
-                            @endisset
-                        </td>
-                        <td>
-                            <strong> Nombre Comercial: </strong> <br>
-                            @isset($proveedores)
-                                {{ $proveedores->nombre }}
-                            @endisset
-                        </td>
-                        <td colspan="2">
-                            <strong> RFC: </strong> <br>
-                            @isset($proveedores)
-                                {{ $proveedores->rfc }}
-                            @endisset
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <strong> Nombre de Contacto: </strong> <br>
-                            @isset($proveedores)
-                                {{ $proveedores->contacto }}
-                            @endisset
-                        </td>
-                        <td colspan="3">
-                            <strong> Dirección: </strong> <br>
-                            @isset($proveedores)
-                                {{ $proveedores->direccion }}
-                            @endisset
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <strong> Envio a: </strong> <br>
-                            @isset($proveedores)
-                                {{ $proveedores->envio }}
-                            @endisset
-                        </td>
-                        <td>
-                            <strong> Facturación: </strong> <br>
-                            @isset($proveedores)
-                                {{ $proveedores->facturacion }}
-                            @endisset
-                        </td>
-                        <td>
-                            <strong> Crédito Disponible: </strong> <br>
-                            @isset($proveedores)
-                                {{ $proveedores->credito }}
-                            @endisset
-                        </td>
-                    </tr>
-                </table>
-            </div>
-
-
-                @foreach ($requisicion->productos_requisiciones as $producto )
-                <div class="flex">
-                    <div class="flex-item">
-                        <strong> Producto o servicio:</strong>
-                    </div>
-                </div>
-                    <div class="row">
-                        <div class="col s12 l4">
-                            <strong> Cantidad:</strong><br><br>
-                            {{ $producto->cantidad }}
-                        </div>
-                        <div class="col s12 l4">
-                            <strong> Producto o servicio:</strong><br><br>
-                           {{ $producto->producto->descripcion }}
-                        </div>
-                        <div class="col s12 l4">
-                            <strong> Especificaciones del producto o servicio: </strong><br><br>
-                           {{ $producto->espesificaciones }}
-                        </div>
-                        <div class="col s12 l4">
-                            <strong> SubTotal:</strong><br><br>
-                            {{ $producto->sub_total }}
-                        </div>
-                        <div class="col s12 l4">
-                            <strong> Descuento:</strong><br><br>
-                           {{ $producto->descuento }}
-                        </div>
-                    </div>
-                    <br>
-                    <div class="row">
-                        <div class="col s12 l4">
-                            <strong> Otro Impuesto: </strong><br><br>
-                           {{ $producto->otro_impuesto }}
-                        </div>
-                        <div class="col s12 l4">
-                            <strong> IVA: </strong><br><br>
-                           {{ $producto->iva }}
-                        </div>
-                        <div class="col s12 l4">
-                            <strong> IVA retenido: </strong><br><br>
-                           {{ $producto->iva_retenido }}
-                        </div>
-                        <div class="col s12 l4">
-                            <strong> ISR retenido: </strong><br><br>
-                           {{ $producto->isr_retenido }}
-                        </div>
-                        <div class="col s12 l4">
-                            <strong> Total: </strong><br><br>
-                           {{ $producto->total }}
-                        </div>
-                    </div>
                 @endforeach
+
+
+                <div class="proveedores-doc" style="background-color: #EEEEEE;">
+                    <div class="header-proveedor-doc">
+                        <div class="flex-item">
+                            <strong>Proveedor</strong>
+                        </div>
+                    </div>
+                    <div >
+                        <div>
+                            <small> -Provea contexto detallado de su necesidad de adquisición, es importante mencionar si es que la solicitud está ligada a algún proyecto en particular. <br> -En caso de que no se brinde detalle suficiente que sustente la compra, esto no procedera </small>
+                        </div>
+                    </div>
+                    <table class="table-proveedor">
+                        <tr>
+                            <td>
+                                <strong> Proveedor: </strong> <br>
+                                @isset($proveedores)
+                                    {{ $proveedores->razon_social }}
+                                @endisset
+                            </td>
+                            <td>
+                                <strong> Nombre Comercial: </strong> <br>
+                                @isset($proveedores)
+                                    {{ $proveedores->nombre }}
+                                @endisset
+                            </td>
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            <td colspan="2">
+                                <strong> RFC: </strong> <br>
+                                @isset($proveedores)
+                                    {{ $proveedores->rfc }}
+                                @endisset
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong> Nombre de Contacto: </strong> <br>
+                                @isset($proveedores)
+                                    {{ $proveedores->contacto }}
+                                @endisset
+                            </td>
+                            <td colspan="3">
+                                <strong> Dirección: </strong> <br>
+                                @isset($proveedores)
+                                    {{ $proveedores->direccion }}
+                                @endisset
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <strong> Envio a: </strong> <br>
+                                @isset($proveedores)
+                                    {{ $proveedores->envio }}
+                                @endisset
+                            </td>
+                            <td>
+                                <strong> Facturación: </strong> <br>
+                                @isset($proveedores)
+                                    {{ $proveedores->facturacion }}
+                                @endisset
+                            </td>
+                            <td>
+                                <strong> Crédito Disponible: </strong> <br>
+                                @isset($proveedores)
+                                    {{ $proveedores->credito }}
+                                @endisset
+                            </td>
+                        </tr>
+                    </table>
+                </div>
 
                 <div class="proveedores-doc" style="background-color: #EEEEEE;">
                     <div class="flex header-proveedor-doc">
