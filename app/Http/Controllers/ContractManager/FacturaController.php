@@ -124,6 +124,10 @@ class FacturaController extends Controller
 
             $contrato = Contrato::find($id);
 
+            if (!$contrato) {
+                abort(404);
+            }
+
             return view('admin.facturas.index')
                 ->with('ids', $id)
                 ->with('contratos', $contrato);
