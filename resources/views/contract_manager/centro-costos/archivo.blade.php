@@ -206,13 +206,13 @@
 
             window.Archivar = function(url, clave) {
                 Swal.fire({
-                    title: `¿Estás seguro de archivar el siguiente registro?`,
+                    title: `¿Estás seguro de desarchivar el siguiente registro?`,
                     html: `<strong><i class="mr-2 fas fa-exclamation-triangle"></i>${clave}</strong>`,
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: '¡Sí, archivar!',
+                    confirmButtonText: '¡Sí, desarchivar!',
                     cancelButtonText: 'Cancelar'
                 }).then((result) => {
                     console.log(result);
@@ -225,17 +225,20 @@
                             url: url,
                             beforeSend: function() {
                                 Swal.fire(
-                                    '¡Estamos Archivando!',
-                                    `El centro-costos: ${clave} está siendo archivado`,
+                                    '¡Estamos Desarchivando!',
+                                    `El centro-costos: ${clave} está siendo desarchivado`,
                                     'info'
                                 )
                             },
                             success: function(response) {
                                 Swal.fire(
-                                    'Archivando!',
-                                    `El centro-costos: ${clave} ha sido archivado`,
+                                    'Desarchivando!',
+                                    `El centro-costos: ${clave} ha sido desarchivado`,
                                     'success'
-                                )
+                                ).then(() => {
+                                    window.location.href = '/contract_manager/centro-costos'; // Replace '/index' with your actual index page URL
+                                });
+
                                 table.ajax.reload();
                             },
                             error: function(error) {
@@ -244,7 +247,7 @@
                                     'Ocurrió un error',
                                     `Error: ${error.responseJSON.message}`,
                                     'error'
-                                )
+                                ) 
                             }
                         });
                     }

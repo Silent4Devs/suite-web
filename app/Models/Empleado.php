@@ -171,6 +171,13 @@ class Empleado extends Model implements Auditable
         });
     }
 
+    public static function getMyEmpleadodata($id)
+    {
+        return Cache::remember('Empleados:empleados_my_empleado_data_'.$id, 3600, function () use ($id) {
+            return self::where('id', $id)->first();
+        });
+    }
+
     public static function getAll(array $options = [])
     {
         return Cache::remember('Empleados:empleados_all', 3600 * 8, function () use ($options) {
@@ -275,6 +282,15 @@ class Empleado extends Model implements Auditable
                 ->get();
         });
     }
+
+    // public static function getAllEvaluaciones()
+    // {
+    //     return Cache::remember('Empleados:empleados_all_evaluaciones', 3600 * 6, function () {
+    //         return DB::table('empleados')
+    //             ->select('id', 'name', 'foto', 'area_id', 'puesto_id', 'supervisor_id')
+    //             ->get();
+    //     });
+    // }
 
     public static function getAllDataObjetivosEmpleado()
     {
@@ -558,7 +574,7 @@ class Empleado extends Model implements Auditable
 
     public function supervisor()
     {
-        return $this->belongsTo(self::class)->alta()->select('id', 'name');
+        return $this->belongsTo(self::class)->alta();
     }
 
     public function supervisorCrearEvaluacion()

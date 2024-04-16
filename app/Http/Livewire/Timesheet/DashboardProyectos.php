@@ -61,6 +61,8 @@ class DashboardProyectos extends Component
         $this->datos_areas = collect();
 
         $time_getall = TimesheetProyecto::getAll();
+        $time_getall = $time_getall->sortByDesc('is_num');
+
         $time_area = TimesheetProyectoArea::with('area')->get();
 
         if ($this->estatus === 'todos') {

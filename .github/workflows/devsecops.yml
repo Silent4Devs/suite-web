@@ -1,5 +1,4 @@
 name: DevSecOps and Docker build
-run-name: ${{ github.actor }} run DevSecOps
 on:
   push:
     branches:
@@ -7,15 +6,19 @@ on:
   pull_request:
     branches:
       - develop
-      - feature/*
-      - hotfix/*
-      - release/*
-      - fix/*
-      - refactor/*
+      - "feature/*"
+      - "hotfix/*"
+      - "release/*"
+      - "fix/*"
+      - "refactor/*"
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
 
     services:
       docker:
@@ -27,27 +30,29 @@ jobs:
           - /var/lib/docker:/var/lib/docker
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Cache Docker Compose
-      uses: actions/cache@v2
-      with:
-        path: /usr/local/bin/docker-compose
-        key: docker-compose-${{ runner.os }}-${{ hashFiles('**/docker-compose.yml') }}
-        restore-keys: |
-          docker-compose-${{ runner.os }}-
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            /usr/local/bin/docker-compose
+            # Add other paths for caching dependencies if needed
+          key: dependencies-${{ runner.os }}-${{ hashFiles('**/docker-compose.yml') }}
+          restore-keys: |
+            dependencies-${{ runner.os }}-
 
-    - name: Install Docker Compose
-      if: steps.cache.outputs.cache-hit != 'true'  # Install only if cache is not found
-      run: |
-        sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-        sudo chmod +x /usr/local/bin/docker-compose
+      - name: Install Docker Compose
+        if: steps.cache.outputs.cache-hit != 'true' # Install only if cache is not found
+        run: |
+          sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          sudo chmod +x /usr/local/bin/docker-compose
 
-    - name: Build and start services
-      run: |
-        cp .env.example .env
-        docker-compose up -d --build
+      - name: Build and start services
+        run: |
+          cp .env.example .env
+          docker-compose up -d --build
 
     # - name: Cache OWASP ZAP
     #   uses: actions/cache@v2

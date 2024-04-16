@@ -1,11 +1,9 @@
-{{-- <style>
-         .table tr td:nth-child(5) {
-
-        text-align:left !important;
-        }
-
-
-</style> --}}
+<style>
+    table{
+        width: auto;
+        height: auto;
+    }
+</style>
 
 
 <style>
@@ -88,9 +86,6 @@
                                 <th>Opciones</th>
                             </tr>
                         </thead>
-                        <tbody>
-
-                        </tbody>
                 </table>
             </div>
 

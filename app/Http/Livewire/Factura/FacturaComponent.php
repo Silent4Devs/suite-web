@@ -132,7 +132,7 @@ class FacturaComponent extends Component
             ->where('no_factura', 'like', '%'.$this->search.'%')
             ->where('contrato_id', '=', $this->contrato_id)
             ->orderBy($this->sort, $this->direction)
-            ->paginate($this->pagination);
+            ->paginate(intval($this->pagination));
         $this->dispatchBrowserEvent('paginadorFacturas');
         //   ->orWhere('fecha_recepcion', 'like', '%' . $this->search . '%')
         // ->orWhere('fecha_liberacion', 'like', '%' . $this->search . '%')

@@ -71,7 +71,7 @@ class NivelesComponent extends Component
                     ->orWhere('area', 'like', '%'.$this->search.'%');
             })
             ->orderBy($this->sort, $this->direction)
-            ->paginate($this->pagination);
+            ->paginate(intval($this->pagination));
 
         $this->dispatchBrowserEvent('paginador-niveles');
 

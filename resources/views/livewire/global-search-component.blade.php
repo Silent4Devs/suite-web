@@ -15,11 +15,14 @@
             <ul class="list-group">
                 @foreach ($result as $route)
                     @php
-                        $cleanedUri = str_replace('admin/', '', $route['uri']);
+                        $cleanedUri = preg_replace('/^(admin|Contract_manager)\/?/', '', $route['uri']);
+                        $cleanedUri = str_replace('-', ' ', $cleanedUri);
                     @endphp
-                    <li class="list-group-item text-black"><a style="color: black"
-                            href="{{ url($route['uri']) }}">{{ ucfirst(str_replace('-', ' ', $cleanedUri)) }}</a>
-                    </li>
+                    @if (strpos($cleanedUri, 'File manager') === false)
+                        <li class="list-group-item text-black">
+                            <a style="color: black" href="{{ url($route['uri']) }}">{{ ucfirst($cleanedUri) }}</a>
+                        </li>
+                    @endif
                 @endforeach
             </ul>
         </div>
@@ -32,11 +35,14 @@
             <ul class="list-group">
                 @foreach ($result as $route)
                     @php
-                        $cleanedUri = str_replace('admin/', '', $route['uri']);
+                        $cleanedUri = preg_replace('/^(admin|Contract_manager|)\/?/', '', $route['uri']);
+                        $cleanedUri = str_replace('-', ' ', $cleanedUri);
                     @endphp
-                    <li class="list-group-item text-black"><a style="color: black"
-                            href="{{ url($route['uri']) }}">{{ ucfirst(str_replace('-', ' ', $cleanedUri)) }}</a>
-                    </li>
+                    @if (strpos($cleanedUri, 'File manager') === false)
+                        <li class="list-group-item text-black">
+                            <a style="color: black" href="{{ url($route['uri']) }}">{{ ucfirst($cleanedUri) }}</a>
+                        </li>
+                    @endif
                 @endforeach
             </ul>
         </div>
