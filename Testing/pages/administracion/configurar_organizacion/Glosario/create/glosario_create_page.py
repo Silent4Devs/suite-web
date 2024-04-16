@@ -69,7 +69,7 @@ class Create_Glosario:
 
     ##########################################Entrar a Modulo y Submodulo
 
-    def in_submodulo(self, menu_hamburguesa, element_entrar_submodulo):
+    def in_menu_h(self, menu_hamburguesa):
     
         time.sleep(tiempo_modulos)
         
@@ -82,21 +82,22 @@ class Create_Glosario:
 
         time.sleep(tiempo_modulos)
         
-        #Modulo Configurar Organizacion
-        print("Ingresando a Modulo Configurar Organizacion ...")
-        in_modulo = WebDriverWait(self.driver, 15).until(
-            EC.visibility_of_element_located((By.XPATH, "(//A[@href='#'])[3]"))
-        )
-        time.sleep(tiempo_modulos)
-        in_modulo.click()
+    def in_modulo(self, modulo, modulo_css):
+        try:
+            elemento = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH, modulo)))
+            elemento.click()
+        except:
+            elemento = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, modulo_css)))
+            elemento.click()
         
-        time.sleep(tiempo_modulos)
+        
+    def in_submodulo(self,submodulo):
         
         #Submodulo Glosario
         
         print("Ingresando a Submenu Glosario ...")
         sub_modulo= WebDriverWait(self.driver, 10).until(
-            EC.element_to_be_clickable((By.XPATH, element_entrar_submodulo))
+            EC.element_to_be_clickable((By.XPATH, submodulo))
         )
         time.sleep(tiempo_modulos)
         sub_modulo.click()

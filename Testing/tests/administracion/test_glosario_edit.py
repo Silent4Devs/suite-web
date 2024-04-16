@@ -27,12 +27,17 @@ def test_edit_glosario(browser):
     
     edit_glosario = Edit_Gloario(browser)
     edit_glosario.login()
-    edit_glosario.in_submodulo(menu_hamburguesa,element_entrar_submodulo)
+    edit_glosario.in_menu_h(menu_hamburguesa)
+
+    edit_glosario.in_modulo(modulo, modulo_css)
+    edit_glosario.in_submodulo(submodulo)
     edit_glosario.edit_glosario(campo_buscar_xpath, boton_editar, guardar_xpath)
  
 #Variables
 menu_hamburguesa = "//BUTTON[@class='btn-menu-header']"
-element_entrar_submodulo = "//A[@href='https://192.168.9.78/admin/glosarios'][text()='Glosario']"
+modulo = "(//A[@href='#'])[3]"
+modulo_css = "a[href='#']:nth-of-type(3)"
+submodulo = "//A[@href='https://192.168.9.78/admin/glosarios'][text()='Glosario']"
 
 campo_buscar_xpath= "(//INPUT[@type='search'])[2]"
 boton_editar = "(//I[@class='fas fa-edit'])[1]"
