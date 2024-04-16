@@ -225,7 +225,7 @@
                         <li>
                             <a href="{{ route('admin.planes-de-accion.index') }}">
                                 <i class="bi bi-file-earmark-check"></i>
-                                Planes de acción
+                                Planes de Trabajo
                             </a>
                         </li>
                     @endcan
