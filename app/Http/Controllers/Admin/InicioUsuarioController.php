@@ -667,6 +667,16 @@ class InicioUsuarioController extends Controller
     {
         abort_if(Gate::denies('mi_perfil_mis_reportes_realizar_reporte_de_queja'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $request->validate([
+            'titulo' => 'required|max:255',
+            'ubicacion' => 'required|max:255',
+            'descripcion' => 'required|max:550',
+        ], [
+            'titulo.max' => 'El campo título no puede exceder los 255 caracteres.',
+            'ubicacion.max' => 'El campo ubicación no puede exceder los 255 caracteres.',
+            'descripcion.max' => 'El campo descripción no puede exceder los 550 caracteres.',
+        ]);
+
         $quejas = Quejas::create([
             'anonimo' => $request->anonimo,
             'empleado_quejo_id' => User::getCurrentUser()->empleado->id,
