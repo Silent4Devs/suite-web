@@ -61,6 +61,16 @@ class ProveedoresOController extends Controller
         try {
             DB::beginTransaction();
 
+            $request->validate([
+                'nombre' => 'required|max:255',
+                'razon_social' => 'required|max:255',
+                'rfc' => 'required|max:15',
+            ], [
+                'nombre.max' => 'El campo nombre no puede exceder los 255 caracteres.',
+                'razon_social.max' => 'El campo razon_social no puede exceder los 255 caracteres.',
+                'rfc.max' => 'El campo rfc no puede exceder los 255 caracteres.',
+            ]);
+
             $proveedores = new ProveedorOC();
             $proveedores->nombre = $request->nombre;
             $proveedores->razon_social = $request->razon_social;
@@ -125,13 +135,15 @@ class ProveedoresOController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nombre' => 'required',
-            'razon_social' => 'required',
-            'rfc' => 'required',
-            'contacto' => 'required',
-            'fecha_inicio' => 'required',
-            'fecha_fin' => 'required',
+            'nombre' => 'required|max:255',
+            'razon_social' => 'required|max:255',
+            'rfc' => 'required|max:15',
+        ], [
+            'nombre.max' => 'El campo nombre no puede exceder los 255 caracteres.',
+            'razon_social.max' => 'El campo razon_social no puede exceder los 255 caracteres.',
+            'rfc.max' => 'El campo rfc no puede exceder los 255 caracteres.',
         ]);
+
         $proveedores = ProveedorOC::find($id);
 
         $proveedores->update([

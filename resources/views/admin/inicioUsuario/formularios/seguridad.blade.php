@@ -125,7 +125,7 @@
                             incidente<sup>*</sup></label>
                             <i class="fas fa-info-circle" style="font-size:12pt; float: right;"
                                 title="Detallar lo sucedido, es muy importante ser lo más objetivo posible y plasmar únicamente hechos evitando juicios de percepción o desvirtuar la información. Asegúrese de que su relato pueda responder a las siguientes preguntas: ¿Qué?. ¿Quién?, ¿Cómo?,¿Cuándo?, ¿Dónde?."></i>
-                        <textarea name="descripcion" class="form-control" required></textarea>
+                        <textarea name="descripcion" class="form-control" maxlength="550" required></textarea>
                     </div>
 
 
