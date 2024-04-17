@@ -19,6 +19,11 @@ class EvaluadoresEvaluacionObjetivosDesempeno extends Model
         'firma_evaluacion',
     ];
 
+    public function empleado()
+    {
+        return $this->belongsTo(Empleado::class, 'evaluador_desempeno_id', 'id')->select('id', 'name', 'email', 'area_id', 'puesto_id', 'foto');
+    }
+
     public function preguntasCuestionario()
     {
         return $this->hasMany(CuestionarioObjetivoEvDesempeno::class, 'evaluador_desempeno_id', 'id');

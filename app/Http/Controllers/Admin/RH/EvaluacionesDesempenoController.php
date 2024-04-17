@@ -112,4 +112,11 @@ class EvaluacionesDesempenoController extends Controller
     {
         return view('admin.recursos-humanos.evaluaciones-desempeno.objetivos-exportar');
     }
+
+    public function destroy($id_evaluacion)
+    {
+        // dd($id_evaluacion);
+        $evBorrar = EvaluacionDesempeno::find($id_evaluacion);
+        $evBorrar->delete();
+    }
 }

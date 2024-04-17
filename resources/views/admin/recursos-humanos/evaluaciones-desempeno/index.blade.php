@@ -62,20 +62,14 @@
                             <i class="fa-solid fa-ellipsis-vertical"></i>
                         </button>
                         <div class="dropdown-menu">
-                            @can('analisis_foda_ver')
-                                <a class="dropdown-item"
-                                    href="{{ asset('admin/entendimiento-organizacions') }}/{{ $evaluacion->id }}">
-                                    <i class="fa-solid fa-eye"></i>&nbsp;Ver</a>
-                            @endcan
-                            @can('analisis_foda_editar')
-                                <a class="dropdown-item"
-                                    href="{{ asset('admin/entendimiento-organizacions-foda-edit') }}/{{ $evaluacion->id }}">
-                                    <i class="fa-solid fa-pencil"></i>&nbsp;Editar</a>
-                            @endcan
-                            @can('analisis_foda_eliminar')
-                                <a class="dropdown-item delete-item" onclick="deleteItem({{ $evaluacion->id }})">
-                                    <i class="fa-solid fa-trash"></i>&nbsp;Eliminar</a>
-                            @endcan
+                            <a class="dropdown-item"
+                                href="{{ route('admin.rh.evaluaciones-desempeno.dashboard-evaluacion', $evaluacion->id) }}">
+                                <i class="fa-solid fa-eye"></i>&nbsp;Dashboard</a>
+                            {{-- <a class="dropdown-item"
+                                href="{{ asset('admin/entendimiento-organizacions-foda-edit') }}/{{ $evaluacion->id }}">
+                                <i class="fa-solid fa-pencil"></i>&nbsp;Editar</a> --}}
+                            <a class="dropdown-item delete-item" onclick="deleteItem({{ $evaluacion->id }})">
+                                <i class="fa-solid fa-trash"></i>&nbsp;Eliminar</a>
                             {{-- <a class="dropdown-item disabled" href=#>
                                         <i class="fa-solid fa-trash"></i>&nbsp;Eliminar (En uso)</a> --}}
                         </div>
@@ -183,13 +177,23 @@
 
     // Funcion para borrar el Análisis FODA
 
-    @can('analisis_foda_eliminar')
-        function deleteItem(itemId) {
-            let deleteUrl = "{{ route('admin.entendimiento-organizacions.destroy', 'id') }}";
-            //sE RECIBE EL ID Y SE REEMPLAZA en la ruta
-            deleteUrl = deleteUrl.replace('id', itemId);
-            //Mensaje de confirmacion
-            if (confirm('¿Seguro que deseas eliminar el Análisis FODA?')) {
+    function deleteItem(itemId) {
+        let deleteUrl = "{{ route('admin.rh.evaluaciones-desempeno.borrar', 'id') }}";
+        //sE RECIBE EL ID Y SE REEMPLAZA en la ruta
+        deleteUrl = deleteUrl.replace('id', itemId);
+
+        // Using SweetAlert for confirmation
+        Swal.fire({
+            title: '¿Seguro que deseas eliminar la Evaluación?',
+            text: "Esta acción no se puede deshacer",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': '{{ csrf_token() }}'
@@ -202,6 +206,11 @@
                     },
                     success: function(data) {
                         console.log('Item deleted successfully');
+                        Swal.fire({
+                            title: 'Evaluación Eliminada',
+                            icon: 'success',
+                            button: "Entendido",
+                        });
                         //Se recarga la pagina
                         location.reload();
                     },
@@ -210,6 +219,6 @@
                     }
                 });
             }
-        }
-    @endcan
+        });
+    }
 </script>

@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Mail\CorreoRecordatorioEvDesempeno;
 use App\Models\Area;
+use App\Models\CatalogoObjetivosEvDesempeno;
 use App\Models\Empleado;
 use App\Models\CuestionarioCompetenciaEvDesempeno;
 use App\Models\CuestionarioObjetivoEvDesempeno;
@@ -53,7 +54,9 @@ class EvDesempenoDashboardPersonal extends Component
 
     public $resultadoPeriodos;
 
-    public $grafica_radar = false;
+    public $calificacion_escala;
+
+    public $evldInfo;
 
     public function mount($id_evaluacion, $id_evaluado)
     {
@@ -61,6 +64,7 @@ class EvDesempenoDashboardPersonal extends Component
         $this->id_evaluado = $id_evaluado;
         $this->areas = Area::getIdNameAll();
         $this->evaluacion = EvaluacionDesempeno::find($this->id_evaluacion);
+        $this->evldInfo = $this->evaluacion->evaluados->find($this->id_evaluado);
 
         $this->secciones();
         $this->evaluadoTotales();
@@ -68,9 +72,9 @@ class EvDesempenoDashboardPersonal extends Component
         // $this->recopilarAreas();
 
         if ($this->evaluacion->activar_objetivos) {
-            $this->obtenerEscalas();
             // $this->resultadoPorArea();
             $this->resultadoObjetivos();
+            $this->obtenerEscalas();
         }
 
         if ($this->evaluacion->activar_competencias) {
@@ -126,6 +130,7 @@ class EvDesempenoDashboardPersonal extends Component
             $escObj = [
                 "labels" => $this->escalas["nombres"],
                 "colores" => $this->escalas["colores"],
+                "data" => $this->escalas['resultados'][$this->periodo_seleccionado],
             ];
 
             $this->emit("escalasObj", $escObj);
@@ -165,6 +170,7 @@ class EvDesempenoDashboardPersonal extends Component
             $escObj = [
                 "labels" => $this->escalas["nombres"],
                 "colores" => $this->escalas["colores"],
+                "data" => $this->escalas['resultados'][$this->periodo_seleccionado],
             ];
 
             $this->emit("escalasObj", $escObj);
@@ -220,18 +226,15 @@ class EvDesempenoDashboardPersonal extends Component
         foreach ($this->array_periodos as $key => $periodo) {
             $evaluado = $this->evaluacion->evaluados->find($this->id_evaluado);
             $this->info_evaluado = $evaluado;
-            // foreach ($this->evaluacion->evaluados as $evaluado) {
             $this->totales_evaluado[$key][$evaluado->id] =
                 [
                     'competencias' => $evaluado->calificacionesCompetenciasEvaluadoPeriodo($periodo["id_periodo"])['promedio_total'] * ($this->evaluacion->porcentaje_competencias / 100),
                     'objetivos' => $evaluado->calificacionesObjetivosEvaluadoPeriodo($periodo["id_periodo"])['promedio_total'] * ($this->evaluacion->porcentaje_objetivos / 100),
+                    'escalas' => $evaluado->calificacionesEscalasEvaluadoPeriodo($periodo["id_periodo"]),
                     'final' => $evaluado->calificacionesCompetenciasEvaluadoPeriodo($periodo["id_periodo"])['promedio_total'] * ($this->evaluacion->porcentaje_competencias / 100) + $evaluado->calificacionesObjetivosEvaluadoPeriodo($periodo["id_periodo"])['promedio_total'] * ($this->evaluacion->porcentaje_objetivos / 100),
                 ];
-
             $this->promedio_evaluados_area[$key][$evaluado->empleado->area_id]["promedioEvdsObjs"][] = $this->totales_evaluado[$key][$evaluado->id]["objetivos"];
-            // }
         }
-        // dd($this->totales_evaluado);
     }
 
     public function obtenerEscalas()
@@ -240,6 +243,72 @@ class EvDesempenoDashboardPersonal extends Component
             $this->escalas['nombres'][$key] = $escala->parametro;
             $this->escalas['colores'][$key] = $escala->color;
         }
+        $evaluado = $this->evaluacion->evaluados->find($this->id_evaluado);
+
+        foreach ($this->array_periodos as $key_periodo => $periodo) {
+            $this->calificacion_escala = [];
+            foreach ($this->totales_evaluado[$key_periodo][$evaluado->id]["escalas"]["calif_escala"] as $key => $objEsc) {
+                $infoObjetivo = CatalogoObjetivosEvDesempeno::find($objEsc["objetivo_id"]);
+
+                $currentCondition = null; // Track the currently assigned condition
+
+                foreach ($infoObjetivo->escalas as $obj_esc) {
+                    $conditionMet = $this->evaluateCondition($objEsc["calificacion_total"], $obj_esc);
+                    if ($objEsc["estatus_calificado"]  == false && $objEsc["calificacion_total"] == 0) {
+                        $this->setValues($infoObjetivo->id, null, $key_periodo);
+                    } else {
+                        if ($conditionMet) {
+                            // If the condition is met, update the assigned condition and values
+                            $currentCondition = $obj_esc;
+                            $this->setValues($infoObjetivo->id, $obj_esc->parametro, $key_periodo);
+                        } elseif ($currentCondition !== null && $currentCondition->valor === $obj_esc->valor) {
+                            // If a subsequent condition matches the current condition's value, update the assigned condition and values
+                            $currentCondition = $obj_esc;
+                            $this->setValues($infoObjetivo->id, $obj_esc->parametro, $key_periodo);
+                        }
+                    }
+                }
+            }
+
+            // Filter out null values before counting
+            $filteredValues = array_filter($this->calificacion_escala[$key_periodo], function ($value) {
+                return $value !== null;
+            });
+
+            // Count the filtered values
+            $counts = array_count_values($filteredValues);
+
+            // Map the counts to their respective positions in reference to $this->escalas['nombres']
+            $matchedCounts = array_map(function ($value) use ($counts) {
+                // If the value exists in $counts array, return its count, otherwise return 0
+                return isset($counts[$value]) ? $counts[$value] : 0;
+            }, $this->escalas['nombres']);
+            $this->escalas['resultados'][$key_periodo] = $matchedCounts;
+        }
+    }
+
+
+    private function evaluateCondition($calificacion_objetivo, $obj_esc)
+    {
+        switch ($obj_esc->condicion) {
+            case '1':
+                return $calificacion_objetivo < $obj_esc->valor;
+            case '2':
+                return $calificacion_objetivo <= $obj_esc->valor;
+            case '3':
+                return $calificacion_objetivo == $obj_esc->valor;
+            case '4':
+                return $calificacion_objetivo > $obj_esc->valor;
+            case '5':
+                return $calificacion_objetivo >= $obj_esc->valor;
+            default:
+                return true; // Default condition, always true
+        }
+    }
+
+    private function setValues($objetivoId, $parametro, $periodo)
+    {
+        $this->calificacion_escala[$periodo][$objetivoId] = $parametro;
     }
 
     public function enviarRecordatorio()
@@ -277,14 +346,23 @@ class EvDesempenoDashboardPersonal extends Component
 
         foreach ($this->evaluacion->evaluados as $evaluado) {
             foreach ($evaluado->nombres_evaluadores as $key => $evdr) {
-
-                $evaluador = $empleados->find($evdr->evaluador_desempeno_id);
-                $this->evaluadores_evaluado[$evaluado->id][] = [
-                    'id' => $evaluador->evaluador_desempeno_id,
-                    'nombre' => $evaluador->name,
-                    // 'email' => $evaluador->email, //No necesario
-                    'foto' => $evaluador->foto,
-                ];
+                if ($this->evaluacion->activar_objetivos && $this->evaluacion->activar_competencias) {
+                    $evaluador = $empleados->find($evdr);
+                    $this->evaluadores_evaluado[$evaluado->id][] = [
+                        'id' => $evaluador->evaluador_desempeno_id,
+                        'nombre' => $evaluador->name,
+                        // 'email' => $evaluador->email, //No necesario
+                        'foto' => $evaluador->foto,
+                    ];
+                } else {
+                    $evaluador = $empleados->find($evdr->evaluador_desempeno_id);
+                    $this->evaluadores_evaluado[$evaluado->id][] = [
+                        'id' => $evaluador->evaluador_desempeno_id,
+                        'nombre' => $evaluador->name,
+                        // 'email' => $evaluador->email, //No necesario
+                        'foto' => $evaluador->foto,
+                    ];
+                }
             }
         }
 
@@ -456,22 +534,6 @@ class EvDesempenoDashboardPersonal extends Component
     {
         foreach ($this->array_periodos as $key => $periodo) {
             $this->resultadoPeriodos[$key] = $this->calculatePromedio($key);
-        }
-    }
-
-    public function cambioRadar()
-    {
-        if ($this->grafica_radar == true) {
-            $this->grafica_radar = false;
-        } elseif ($this->grafica_radar == false) {
-            $this->grafica_radar = true;
-            $cumpCompRadar = [
-                "labels" => $this->resComp["nombres"][$this->periodo_seleccionado],
-                "data" => $this->resComp["resultado_competencia"][$this->periodo_seleccionado],
-                "data2" => $this->resComp["nivel_esperado"][$this->periodo_seleccionado],
-            ];
-
-            $this->emit("cumplimientoRadarComp", $cumpCompRadar);
         }
     }
 }

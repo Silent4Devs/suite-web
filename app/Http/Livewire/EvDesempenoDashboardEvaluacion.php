@@ -266,14 +266,23 @@ class EvDesempenoDashboardEvaluacion extends Component
 
         foreach ($this->evaluacion->evaluados as $evaluado) {
             foreach ($evaluado->nombres_evaluadores as $key => $evdr) {
-
-                $evaluador = $empleados->find($evdr->evaluador_desempeno_id);
-                $this->evaluadores_evaluado[$evaluado->id][] = [
-                    'id' => $evaluador->evaluador_desempeno_id,
-                    'nombre' => $evaluador->name,
-                    // 'email' => $evaluador->email, //No necesario
-                    'foto' => $evaluador->foto,
-                ];
+                if ($this->evaluacion->activar_objetivos && $this->evaluacion->activar_competencias) {
+                    $evaluador = $empleados->find($evdr);
+                    $this->evaluadores_evaluado[$evaluado->id][] = [
+                        'id' => $evaluador->evaluador_desempeno_id,
+                        'nombre' => $evaluador->name,
+                        // 'email' => $evaluador->email, //No necesario
+                        'foto' => $evaluador->foto,
+                    ];
+                } else {
+                    $evaluador = $empleados->find($evdr->evaluador_desempeno_id);
+                    $this->evaluadores_evaluado[$evaluado->id][] = [
+                        'id' => $evaluador->evaluador_desempeno_id,
+                        'nombre' => $evaluador->name,
+                        // 'email' => $evaluador->email, //No necesario
+                        'foto' => $evaluador->foto,
+                    ];
+                }
             }
         }
 
