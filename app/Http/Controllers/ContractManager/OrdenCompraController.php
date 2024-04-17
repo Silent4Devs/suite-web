@@ -105,13 +105,22 @@ class OrdenCompraController extends Controller
         try {
 
             $requisicion = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->find($id);
+            $user = User::find($requisicion->id_finanzas_oc);
+            $proveedores = KatbolProveedorOC::where('id', $requisicion->proveedor_id)->first();
+
+            if ($user) {
+                $firma_finanzas_name = $user->name;
+            } else {
+                $firma_finanzas_name = null;
+            }
+
             $organizacion = Organizacion::getLogo();
 
             if (! $requisicion) {
                 abort(404);
             }
 
-            return view('contract_manager.ordenes-compra.show', compact('requisicion', 'organizacion'));
+            return view('contract_manager.ordenes-compra.show', compact('firma_finanzas_name', 'requisicion', 'organizacion', 'proveedores'));
         } catch (\Throwable $th) {
             abort(404);
         }
@@ -233,6 +242,13 @@ class OrdenCompraController extends Controller
             $organizacion = Organizacion::getFirst();
             $contrato = KatbolContrato::where('id', $requisicion->contrato_id)->first();
             $proveedores = KatbolProveedorOC::where('id', $requisicion->proveedor_id)->get();
+            $user = User::find($requisicion->id_finanzas_oc);
+
+            if ($user) {
+                $firma_finanzas_name = $user->name;
+            } else {
+                $firma_finanzas_name = null;
+            }
             $comprador = KatbolComprador::with('user')->where('id', $requisicion->comprador_id)->first();
             $proveedores_catalogo = KatbolProveedorOC::where('id', $requisicion->proveedor_catalogo_id)->first();
 
@@ -277,6 +293,8 @@ class OrdenCompraController extends Controller
         if ($tipo_firma == 'firma_finanzas_orden') {
             $fecha = date('d-m-Y');
             $requisicion->fecha_firma_finanzas_orden = $fecha;
+            $user = User::getCurrentUser();
+            $requisicion->id_finanzas_oc = $user->id;
             $requisicion->save();
 
             $requisicion->update([
@@ -323,6 +341,14 @@ class OrdenCompraController extends Controller
     {
 
         $requisiciones = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->find($id);
+        $user = User::find($requisiciones->id_finanzas_oc);
+
+        if ($user) {
+            $firma_finanzas_name = $user->name;
+        } else {
+            $firma_finanzas_name = null;
+        }
+
         $organizacion = Organizacion::getLogo();
 
         $f = new NumberFormatter('es', NumberFormatter::SPELLOUT);
@@ -330,7 +356,7 @@ class OrdenCompraController extends Controller
         $letras = $f->format($numero);
 
         $proveedores = KatbolProveedorOC::where('id', $requisiciones->proveedor_id)->first();
-        $pdf = PDF::loadView('orden_compra_pdf', compact('requisiciones', 'organizacion', 'proveedores', 'letras'));
+        $pdf = PDF::loadView('orden_compra_pdf', compact('firma_finanzas_name', 'requisiciones', 'organizacion', 'proveedores', 'letras'));
         $pdf->setPaper('A4', 'portrait');
 
         return $pdf->download('orden_compra.pdf');

@@ -116,53 +116,71 @@
         </div>
 
         <hr style="width: 80%; margin:auto;">
+        @if ($proveedores_catalogo)
         @foreach ($proveedores_catalogo as $proveedor)
-            <div class="proveedores-doc" style="">
-                <div class="flex header-proveedor-doc">
-                    <div class="flex-item">
-                        <strong>Proveedor: </strong> {{ $proveedor->razon_social }}
-                    </div>
-                </div>
-                <div class="row" style="margin-top: 30px;">
-                    <div class="col s12 l3">
-                        <strong>Proveedor:</strong><br>
-                        {{ $proveedor->razon_social }}
-                    </div>
-                    <div class="col s12  l3">
-                        <strong>Nombre Comercial:</strong><br>
-                        {{ $proveedor->nombre }}
-                    </div>
-                    <div class="col s12 l6">
-                        <strong>RFC:</strong><br>
-                        {{ $proveedor->rfc }}
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col s12 l3">
-                        <strong>Nombre del contacto:</strong><br>
-                        {{ $proveedor->contacto }}
-                    </div>
-                    <div class="col s12 l9">
-                        <strong>Dirección:</strong><br>
-                        {{ $proveedor->direccion }}
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col s12 l6">
-                        <strong>Envío a:</strong><br>
-                        {{ $proveedor->envio }}
-                    </div>
-                    <div class="col s12 l3">
-                        <strong>Facturación a:</strong><br>
-                        {{ $proveedor->facturacion }}
-                    </div>
-                    <div class="col s12 l3">
-                        <strong>Crédito disponible:</strong><br>
-                        {{ $proveedor->credito }}
-                    </div>
+        <div class="proveedores-doc" style="">
+            <div class="flex header-proveedor-doc">
+                <div class="flex-item">
+                    <strong>Proveedor: </strong> {{ $proveedor->razon_social }}
                 </div>
             </div>
+            <div class="row" style="margin-top: 30px;">
+                <div class="col s12 l3">
+                    <strong>Proveedor:</strong><br>
+                    {{ $proveedor->razon_social }}
+                </div>
+                <div class="col s12  l3">
+                    <strong>Nombre Comercial:</strong><br>
+                    {{ $proveedor->nombre }}
+                </div>
+                <div class="col s12 l6">
+                    <strong>RFC:</strong><br>
+                    {{ $proveedor->rfc }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12 l3">
+                    <strong>Nombre del contacto:</strong><br>
+                    {{ $proveedor->contacto }}
+                </div>
+                <div class="col s12 l9">
+                    <strong>Dirección:</strong><br>
+                    {{ $proveedor->direccion }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12 l6">
+                    <strong>Envío a:</strong><br>
+                    {{ $proveedor->envio }}
+                </div>
+                <div class="col s12 l3">
+                    <strong>Facturación a:</strong><br>
+                    {{ $proveedor->facturacion }}
+                </div>
+                <div class="col s12 l3">
+                    <strong>Crédito disponible:</strong><br>
+                    {{ $proveedor->credito }}
+                </div>
+            </div>
+        </div>
         @endforeach
+            @else
+
+            @endif
+
+
+            @if ($proveedores_catalogo)
+            @foreach ($proveedores_catalogo as $proveedor)
+
+            @endforeach
+                @else
+
+                @endif
+
+
+
+
+
 
         @foreach ($requisicion->productos_requisiciones as $producto)
             <div class="flex header-proveedor-doc">
@@ -314,7 +332,7 @@
                     <div class="flex-item">
                         @if ($requisicion->firma_finanzas_orden)
                             <img src="{{ $requisicion->firma_finanzas_orden }}" class="img-firma">
-                            <p>Layla Esperanza Delgadillo Aguila  </p>
+                            <p>{{ $firma_finanzas_name ?? '' }} </p>
                             <p>{{ $requisicion->fecha_firma_finanzas_orden }}</p>
                         @else
                             <div style="height: 137px;"></div>
