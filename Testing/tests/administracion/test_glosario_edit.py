@@ -1,8 +1,8 @@
-from pages.administracion.configurar_organizacion.glosario.edit.glosario_edit_page import Edit_Gloario
-from selenium.webdriver.firefox.options import Options as FirefoxOptions
-from selenium import webdriver
 import pytest
-"""
+from selenium import webdriver
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
+from pages.administracion.configurar_organizacion.glosario.edit.glosario_edit_page import Edit_Gloario
+
 @pytest.fixture(scope="session")
 def browser():
     options = FirefoxOptions()
@@ -21,24 +21,20 @@ def browser():
     
     driver = webdriver.Firefox(options=options)
     yield driver
-    driver.quit() """
+    driver.quit() 
     
 def test_edit_glosario(browser):
     
-    edit_glosario = Edit_Gloario(browser)
-    edit_glosario.login()
-    edit_glosario.in_menu_h(menu_hamburguesa)
-
-    edit_glosario.in_modulo(modulo, modulo_css)
-    edit_glosario.in_submodulo(submodulo)
-    edit_glosario.edit_glosario(campo_buscar_xpath, boton_editar, guardar_xpath)
+    glosario_edit = Edit_Gloario(browser)
+    glosario_edit.login()
+    url_glosario_index = "https://192.168.9.78/admin/glosarios"
+    glosario_edit.ruta_glosario_index(url_glosario_index)
+    glosario_edit.edit_glosario(campo_buscar_xpath, boton_editar, definicion, guardar_xpath)
  
 #Variables
-menu_hamburguesa = "//BUTTON[@class='btn-menu-header']"
-modulo = "(//A[@href='#'])[3]"
-modulo_css = "a[href='#']:nth-of-type(3)"
-submodulo = "//A[@href='https://192.168.9.78/admin/glosarios'][text()='Glosario']"
+
 
 campo_buscar_xpath= "(//INPUT[@type='search'])[2]"
 boton_editar = "(//I[@class='fas fa-edit'])[1]"
+definicion = "//TEXTAREA[@id='definicion']"
 guardar_xpath = "//button[contains(@class, 'btn-danger') and normalize-space(text())='Guardar']"

@@ -4,6 +4,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 from config import password_c, username_c
+import pdb
 
 
 #Temporizadores
@@ -69,45 +70,18 @@ class Macroprocesos_Create:
 
     ##########################################Entrar a Modulo y Submodulo
 
-    def in_submodulo(self, menu_hamburguesa, element_entrar_submodulo):
+    def ruta_macroprocesos_index(self, url_macroprocesos_index):
+        try:
+            self.driver.get(url_macroprocesos_index)
+            print("Index de Configurar Organizacion / Macroprocesos cargado.")
+        except Exception as e:
+            print("Error al cargar el index de Configurar Organizacion / Macroprocesos", e)
+            pdb.set_trace()
     
-        time.sleep(tiempo_modulos)
-        
-        #Menu Hamburguesa
-        print("Ingresando a Menu Hamburguesa ...")
-        menu_hamb = WebDriverWait(self.driver, 3).until(
-            EC.element_to_be_clickable((By.XPATH, menu_hamburguesa))
-        )
-        menu_hamb.click()
-
-        time.sleep(5)
-        
-        #Modulo Configurar Organizacion
-        print("Ingresando a Modulo Configurar Organizacion ...")
-        in_modulo = WebDriverWait(self.driver, 15).until(
-            EC.visibility_of_element_located((By.XPATH, "(//I[@class='material-symbols-outlined i-direct'][text()='keyboard_arrow_down'])[2]"))
-        )
-        time.sleep(5)
-        in_modulo.click()
-        
-        time.sleep(tiempo_modulos)
-        
-        #Submodulo Macroprocesos
-        print("Ingresando a Submenu Macroprocesos ...")
-        sub_modulo= WebDriverWait(self.driver, 3).until(
-            EC.element_to_be_clickable((By.XPATH, element_entrar_submodulo))
-        )
-        sub_modulo.click()
-        
-        time.sleep(tiempo_modulos)
-        
-        print("URL actual:", self.driver.current_url)
-
-
 
     ########################################## Agregar Crear Areas
 
-    def add_crear_macroprocesos(self, agregar_btn_xpath, guardar_xpath):
+    def add_crear_macroprocesos(self, agregar_btn_xpath, codigo, nombre, grupo, descripcion, guardar_xpath):
         
         # Dando clic en Boton Agregar Macroprocesos
         print("Dando clic al botón Agregar Crear Macroproceso...")
@@ -117,11 +91,10 @@ class Macroprocesos_Create:
         
         time.sleep(tiempo_modulos)
         
-        
         # Codigo
         print("Escribiendo Campo Codigo ...")
         campo_codigo = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//INPUT[@id='codigo']"))
+            EC.presence_of_element_located((By.XPATH, codigo))
             )
         campo_codigo.click()
         campo_codigo.send_keys("00117")
@@ -131,7 +104,7 @@ class Macroprocesos_Create:
         # Nombre 
         print("Escribiendo Campo Nombre del activo ...")
         campo_nombre = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//INPUT[@id='nombre']"))
+            EC.presence_of_element_located((By.XPATH, nombre))
             )
         campo_nombre.click()
         campo_nombre.send_keys("Nombre del activo de prueba")
@@ -141,7 +114,7 @@ class Macroprocesos_Create:
         # Grupo
         print("Escribiendo Campo Grupo ...")
         campo_grupo = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//SELECT[@id='id_grupo']"))
+            EC.presence_of_element_located((By.XPATH, grupo))
             )
         campo_grupo.click()
         time.sleep(tiempo_modulos)
@@ -154,7 +127,7 @@ class Macroprocesos_Create:
         # Descripcion
         print("Escribiendo Campo Descripcion ...")
         campo_nombre = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//TEXTAREA[@id='descripcion']"))
+            EC.presence_of_element_located((By.XPATH, descripcion))
             )
         campo_nombre.click()
         campo_nombre.send_keys("Descripcion del macroproceso de prueba")
