@@ -18,7 +18,7 @@
                         use App\Models\Empleado;
 
                         $user = User::getCurrentUser();
-                        $empleado = Empleado::where('id', $user->empleado->id)->first();
+                        $empleado = Empleado::getMyEmpleadodata($user->empleado->id);
                     @endphp
 
 

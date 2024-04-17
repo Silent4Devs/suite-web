@@ -46,7 +46,6 @@ use App\Models\Sugerencias;
 use App\Models\User;
 use App\Models\VersionesIso;
 use Carbon\Carbon;
-use Essa\APIToolKit\Api\ApiResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
@@ -55,8 +54,6 @@ use Illuminate\Support\Str;
 
 class InicioUsuarioController extends Controller
 {
-    use ApiResponse;
-
     public function index()
     {
         abort_if(Gate::denies('mi_perfil_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -66,7 +63,7 @@ class InicioUsuarioController extends Controller
 
         $usuario = User::getCurrentUser();
 
-        $empleado = Empleado::where('id', $usuario->empleado->id)->first();
+        $empleado = Empleado::getMyEmpleadodata($usuario->empleado->id);
 
         $usuarioVinculadoConEmpleado = false;
         if ($empleado) {
@@ -89,7 +86,7 @@ class InicioUsuarioController extends Controller
                     $task->canAdd = $task->canAdd == 'true' ? true : false;
                     $task->canWrite = $task->canWrite == 'true' ? true : false;
                     $task->duration = intval($task->duration);
-                    if (!isset($task->progress) || empty($task->progress)) {
+                    if (! isset($task->progress) || empty($task->progress)) {
                         $task->progress = 0;
                     } else {
                         $task->progress = intval($task->progress);
@@ -199,18 +196,24 @@ class InicioUsuarioController extends Controller
             $last_evaluacion = Evaluacion::getAllLatestFirst();
             if ($last_evaluacion) {
                 $evaluaciones = EvaluadoEvaluador::whereHas('evaluacion', function ($q) use ($last_evaluacion) {
-                    $q->where('estatus', Evaluacion::ACTIVE)
+                    $q->where(function ($query) {
+                        $query->where('estatus', Evaluacion::ACTIVE)
+                            ->orWhere('estatus', Evaluacion::CLOSED);
+                    })
                         ->where('fecha_inicio', '<=', Carbon::now())
-                        ->where('fecha_fin', '>', Carbon::now())
+                        // ->where('fecha_fin', '>', Carbon::now())
                         ->where('id', $last_evaluacion->id);
                 })->with('empleado_evaluado', 'evaluador')->where('evaluador_id', $empleado->id)
                     ->where('evaluado_id', '!=', $empleado->id)
                     ->where('evaluado', false)
                     ->get();
                 $mis_evaluaciones = EvaluadoEvaluador::whereHas('evaluacion', function ($q) use ($last_evaluacion) {
-                    $q->where('estatus', Evaluacion::ACTIVE)
+                    $q->where(function ($query) {
+                        $query->where('estatus', Evaluacion::ACTIVE)
+                            ->orWhere('estatus', Evaluacion::CLOSED);
+                    })
                         ->where('fecha_inicio', '<=', Carbon::now())
-                        ->where('fecha_fin', '>', Carbon::now())
+                        // ->where('fecha_fin', '>', Carbon::now())
                         ->where('id', $last_evaluacion->id);
                 })->with('empleado_evaluado', 'evaluador')->where('evaluador_id', $empleado->id)
                     ->where('evaluado_id', $empleado->id)
@@ -219,7 +222,7 @@ class InicioUsuarioController extends Controller
 
             if ($last_evaluacion) {
                 $evaluaciones = EvaluadoEvaluador::whereHas('evaluacion', function ($q) use ($last_evaluacion) {
-                    $q->where('estatus', Evaluacion::ACTIVE)
+                    $q->where('estatus', Evaluacion::CLOSED)
                         ->where('fecha_inicio', '<=', Carbon::now())
                         ->where('fecha_fin', '>', Carbon::now())
                         ->where('id', $last_evaluacion->id);
@@ -228,7 +231,7 @@ class InicioUsuarioController extends Controller
                     ->where('evaluado', false)
                     ->get();
                 $como_evaluador = EvaluadoEvaluador::whereHas('evaluacion', function ($q) use ($last_evaluacion) {
-                    $q->where('estatus', Evaluacion::ACTIVE)
+                    $q->where('estatus', Evaluacion::CLOSED)
                         ->where('fecha_inicio', '<=', Carbon::now())
                         ->where('fecha_fin', '>', Carbon::now())
                         ->where('id', $last_evaluacion->id);
@@ -667,6 +670,16 @@ class InicioUsuarioController extends Controller
     public function storeQuejas(Request $request)
     {
         abort_if(Gate::denies('mi_perfil_mis_reportes_realizar_reporte_de_queja'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $request->validate([
+            'titulo' => 'required|max:255',
+            'ubicacion' => 'required|max:255',
+            'descripcion' => 'required|max:550',
+        ], [
+            'titulo.max' => 'El campo título no puede exceder los 255 caracteres.',
+            'ubicacion.max' => 'El campo ubicación no puede exceder los 255 caracteres.',
+            'descripcion.max' => 'El campo descripción no puede exceder los 550 caracteres.',
+        ]);
 
         $quejas = Quejas::create([
             'anonimo' => $request->anonimo,

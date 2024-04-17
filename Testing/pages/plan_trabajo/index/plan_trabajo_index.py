@@ -6,51 +6,40 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
+from config import username, password
 
 class PlanTrabajo_index:
     def __init__(self, driver):
         self.driver = driver
+        self.wait = WebDriverWait(self.driver, 20)
 
-    def login(self, username, password):
-        self.driver.get('https://192.168.9.78/')
-        self.driver.maximize_window()
-        print("------ LOGIN - TABANTAJ -----")
-        time.sleep(5)
-        username_input = WebDriverWait(self.driver, 3).until(
-            EC.visibility_of_element_located((By.CSS_SELECTOR, "input[name='email']"))
-        )
-        username_input.clear()
-        username_input.send_keys(username)
-        print("Usario ingresado")
-
-        password_input = WebDriverWait(self.driver, 3).until(
-            EC.visibility_of_element_located((By.CSS_SELECTOR, "input[name='password']"))
-        )
-        password_input.clear()
-        password_input.send_keys(password)
-        print("Contraseña ingresada")
-
-        submit_button = WebDriverWait(self.driver, 3).until(
-            EC.element_to_be_clickable((By.XPATH, "//button[@type='submit'][contains(text(),'Enviar')]"))
-        )
-        submit_button.click()
-        print("Enviando credenciales de acceso")
-
-        WebDriverWait(self.driver, 2).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, "img[alt='Logo Tabantaj']"))
-        )
-        print("Login correcto")
+    def login(self):
+        try:
+            self.driver.get('https://192.168.9.78/')
+            self.driver.maximize_window()
+            print("Iniciando sesión en el sistema...")
+            time.sleep(4)
+            self._fill_input_field("input[name='email']", username)
+            self._fill_input_field("input[name='password']", password)
+            self._click_element("//button[@type='submit'][contains(text(),'Enviar')]")
+            print("¡Sesión iniciada con éxito!")
+            self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "img[alt='Logo Tabantaj']")))
+            print("Login correcto.")
+        except Exception as e:
+            print("Error durante el inicio de sesión:", e)
 
     def open_menu(self):
         menu_btn = WebDriverWait(self.driver, 3).until(
             EC.visibility_of_element_located((By.XPATH, "//button[@class='btn-menu-header']"))
         )
+        print("Menú hamburguesa presionado")
         menu_btn.click()
 
     def plan_trabajo(self):
         plan_trabajo_btn= WebDriverWait(self.driver, 3).until(
             EC.element_to_be_clickable((By.XPATH, "//a[contains(.,'Planes de acción')]"))
         )
+        print("Ingresando a Plan de trabajo")
         plan_trabajo_btn.click()
 
     def plan_trabajo_filtro(self):
@@ -59,6 +48,7 @@ class PlanTrabajo_index:
         )
         select = Select(plan_trabajo_filtro_btn)
         select.select_by_index(1)
+        print("Filtro de 10 registros por página seleccionado")
 
     def plan_trabajo_searchbar(self, search):
         plan_trabajo_searchbar = WebDriverWait(self.driver, 3).until(
@@ -66,6 +56,7 @@ class PlanTrabajo_index:
         )
         plan_trabajo_searchbar.clear()
         plan_trabajo_searchbar.send_keys(search)
+        print("Búsqueda realizada")
 
     def plan_trabajo_paginador(self):
         paginado1 = WebDriverWait(self.driver, 3).until(
@@ -77,12 +68,14 @@ class PlanTrabajo_index:
             EC.visibility_of_element_located((By.XPATH, "//a[contains(.,'2')]"))
         )
         paginado2.click()
+        print("Paginado realizado")
 
     def plan_trabajo_opciones(self):
         opciones_btn = WebDriverWait(self.driver, 3).until(
             EC.visibility_of_element_located((By.XPATH, "(//button[contains(@class,'btn btn-option')])[1]"))
         )
         opciones_btn.click()
+        print("Opciones presionadas")
 
     def plan_trabajo_editar(self):
         url_ventana_principal = self.driver.current_url
@@ -100,6 +93,14 @@ class PlanTrabajo_index:
         print("Botón de ver plan presionado y nueva pestaña abierta en segundo plano")
         print("URL de Ver plan:", url_ventana_principal2)
 
+    def _fill_input_field(self, locator, value):
+        input_field = self.wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, locator)))
+        input_field.clear()
+        input_field.send_keys(value)
+
+    def _click_element(self, xpath):
+        element = self.wait.until(EC.element_to_be_clickable((By.XPATH, xpath)))
+        element.click()
 
 
 

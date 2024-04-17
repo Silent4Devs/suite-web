@@ -33,7 +33,7 @@ services:
         max-size: "30m"
         max-file: "1"
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:80" ]
+      test: ["CMD", "curl", "-f", "http://localhost:80"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -42,13 +42,13 @@ services:
       - tabantajnetwork
 
   postgres-tabantaj:
-    image: postgres:14-alpine
+    image: postgres:16-alpine
     container_name: postgres-tabantaj
     restart: unless-stopped
     tty: true
     volumes:
       # - ./infra/postgres/data:/var/lib/postgresql/data #localpath
-      - tabantaj-db:/var/lib/postgresql/data
+      - tabantaj-database:/var/lib/postgresql/data
       - ./infra/postgres/postgresql.conf:/etc/postgresql/postgresql.conf
     environment:
       - POSTGRES_USER=homestead
@@ -196,8 +196,45 @@ services:
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
 
+  newrelic-agent:
+    container_name: newrelic-infra
+    # build:
+    #   context: "./infra/newrelic/"
+    #   dockerfile: newrelic-infra.dockerfile
+    image: newrelic/infrastructure:latest
+    cap_add:
+      - SYS_PTRACE
+    pid: host
+    privileged: true
+    tty: true
+    volumes:
+      - "/:/host:ro"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    environment:
+      NRIA_LICENSE_KEY: "4125e930d3e3d4e0ee11b9017af9447dFFFFNRAL"
+    restart: unless-stopped
+    networks:
+      - tabantajnetwork
+
+  newrelic-php-daemon:
+    image: newrelic/php-daemon
+    container_name: newrelic-php-daemon
+    tty: true
+    volumes:
+      - "/:/host:ro"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    cap_add:
+      - SYS_PTRACE
+    pid: host
+    privileged: true
+    environment:
+      NRIA_LICENSE_KEY: "4125e930d3e3d4e0ee11b9017af9447dFFFFNRAL"
+    restart: unless-stopped
+    networks:
+      - tabantajnetwork
+
 volumes:
-  tabantaj-db:
+  tabantaj-database:
     driver: local
   rabbitmq_data:
     driver: local
@@ -391,4 +428,3 @@ networks:
   #     - 8081:8080
   #   networks:
   #     - tabantajnetwork
-

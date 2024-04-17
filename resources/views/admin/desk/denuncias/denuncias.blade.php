@@ -1,3 +1,11 @@
+
+<style>
+    table{
+        width: auto;
+        height: auto;
+    }
+</style>
+
 <div class="row">
     <div class="col-6 col-md-2">
         <div class="tarjetas_seguridad_indicadores cdr-celeste">
@@ -70,8 +78,6 @@
                     <th style="min-width:200px;">Opciones</th>
                 </tr>
             </thead>
-            <tbody>
-            </tbody>
         </table>
     </div>
 

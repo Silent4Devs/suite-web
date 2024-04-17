@@ -2,19 +2,25 @@
 
 namespace App\Http\Livewire\AnalisisRiesgos;
 
-use Livewire\Component;
 use App\Models\Norma;
 use App\Models\TBTemplateAnalisisRiesgoModel;
 use Illuminate\Support\Facades\DB;
+use Livewire\Component;
 
 class DataGeneral extends Component
 {
     public $template_id;
+
     private $template;
+
     public $edit = false;
+
     public $name;
-    public $norma = "ISO 27001";
+
+    public $norma = 'ISO 27001';
+
     public $norma_id;
+
     public $description;
 
     protected $listeners = [
@@ -27,7 +33,8 @@ class DataGeneral extends Component
         $this->template_id = $template_id;
     }
 
-    public function update(){
+    public function update()
+    {
         $template = TBTemplateAnalisisRiesgoModel::findOrFail($this->template_id);
         DB::beginTransaction();
         try {
@@ -52,10 +59,10 @@ class DataGeneral extends Component
 
         $this->template = $template;
 
-        if($template->nombre === "Sin nombre" && $template->descripcion === "Sin descripcion"){
-            $this->name = "";
-            $this->description ="";
-        }else{
+        if ($template->nombre === 'Sin nombre' && $template->descripcion === 'Sin descripcion') {
+            $this->name = '';
+            $this->description = '';
+        } else {
             $this->name = $template->nombre;
             $this->description = $template->descripcion;
         }

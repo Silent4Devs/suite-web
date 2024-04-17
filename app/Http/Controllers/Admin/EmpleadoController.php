@@ -947,7 +947,7 @@ class EmpleadoController extends Controller
         $sedes = Sede::getAll();
         if (isset($empleado->sede_id)) {
             $sede = Sede::getbyId($empleado->sede_id);
-            // dd($sede);
+        // dd($sede);
         } else {
             $sede = null;
             // dd($sede);
@@ -1356,7 +1356,12 @@ class EmpleadoController extends Controller
         if ($request->ajax()) {
             $nombre = $request->nombre;
             if ($nombre != null) {
-                $usuarios = Empleado::alta()->with('area')->where('name', 'ILIKE', '%'.$nombre.'%')->take(5)->get();
+                $usuarios = DB::table('empleados')
+                    ->where('name', 'ILIKE', '%'.$nombre.'%')
+                    ->join('areas', 'empleados.area_id', '=', 'areas.id')
+                    ->where('empleados.estado', 'alta')
+                    ->take(5)
+                    ->get();
 
                 return json_encode($usuarios);
             }
@@ -1365,11 +1370,11 @@ class EmpleadoController extends Controller
 
     public function getAllEmpleados(Request $request)
     {
-        $empleados = Empleado::select('id', 'name')->alta()->get();
+        $empleados = Empleado::getAltaEmpleados();
 
         return json_encode($empleados);
         if ($request->ajax()) {
-            $empleados = Empleado::select('id', 'name')->alta()->get();
+            $empleados = Empleado::getAltaEmpleados();
 
             return json_encode($empleados);
         }

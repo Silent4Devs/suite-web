@@ -12,8 +12,9 @@
 
     @include('partials.flashMessages')
     <h5 class="col-12 titulo_general_funcion">Orden De Compra</h5>
+        <button type="button" class="btn  btn-primary"
+        id="filtrarBtn4" style="position: relative; left: 78rem;">Aprobadores</button>
     <div class="mt-5 card">
-
         <div class="card-body datatable-fix">
 
             <table class="table table-bordered w-100 datatable-Requisiciones">
@@ -183,7 +184,23 @@
                     },
                     {
                         data: 'estado',
-                        name: 'estado'
+                        name: 'estado',
+                        render: function(data, type, row) {
+                            // Verifica el valor de 'estado' y devuelve la etiqueta correspondiente
+                            switch (data) {
+                                case 'curso':
+                                    return '<h5><span class="badge badge-pill badge-primary">En curso</span></h5>';
+                                case 'aprobado':
+                                    return '<h5><span class="badge badge-pill badge-success">Aprobado</span></h5>';
+                                case 'rechazado':
+                                    return '<h5><span class="badge badge-pill badge-danger">Rechazado</span></h5>';
+                                case 'firmada':
+                                case 'firmada_final':
+                                    return '<h5><span class="badge badge-pill badge-success">Firmada</span></h5>';
+                                default:
+                                    return data; // En caso de cualquier otro estado, devuelve el valor original
+                            }
+                        }
                     },
                     {
                         data: 'contrato.nombre_servicio',
@@ -213,19 +230,21 @@
                             let urlButtonArchivar = `/contract_manager/orden-compra/archivar/${data}`;
                             let urlButtonEdit = `/contract_manager/orden-compra/${data}/edit`;
                             let urlButtonShow = `/contract_manager/orden-compra/show/${data}`;
-                            let htmlBotones =
-                                `
-                                <div class="btn-group">
-                                    @can('katbol_ordenes_compra_modificar')
-                                    <a href="${urlButtonEdit}" class="btn btn-sm" title="Editar"><i class="fas fa-edit"></i></a>
-                                    @endcan
-                                    <a href="${urlButtonShow}"
-                                                title="Ver/Imprimir" class="btn btn-sm" >
-                                                <i class="fa-solid fa-print"></i>
-                                    </a>
-                                </div>
-                            `;
+                            let htmlBotones = '<div class="btn-group">';
+
+                            if (row.firma_comprador_orden === null) {
+                                // Si el campo es null, se muestra el botón de edición
+                                htmlBotones += `@can('katbol_ordenes_compra_modificar')
+                                                <a href="${urlButtonEdit}" class="btn btn-sm" title="Editar"><i class="fas fa-edit"></i></a>
+                                                @endcan`;
+                            }
+
+                            // Agrega el botón para ver/imprimir independientemente del estado del campo 'firma_comprador_orden'
+                            htmlBotones += `<a href="${urlButtonShow}" title="Ver/Imprimir" class="btn btn-sm"><i class="fa-solid fa-print"></i></a>
+                                            </div>`;
+
                             return htmlBotones;
+                                
                         }
                     }
                 ],
@@ -284,4 +303,11 @@
 
         });
     </script>
+    <script>
+        $(document).ready(function() {
+            $('#filtrarBtn4').click(function() {
+                window.location.href = "{{ route('contract_manager.orden-compra.indexAprobadores') }}";
+            });
+        });
+    </script> 
 @endsection

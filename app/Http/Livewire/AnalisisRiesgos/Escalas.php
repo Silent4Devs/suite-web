@@ -5,25 +5,29 @@ namespace App\Http\Livewire\AnalisisRiesgos;
 use App\Models\TBEscalaAnalisisRiesgoModel;
 use App\Models\TBTemplateAnalisisRiesgoModel;
 use App\Models\TBTemplateAr_EscalaArModel;
-use Livewire\Component;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use Livewire\Attributes\Validate;
+use Livewire\Component;
 
 class Escalas extends Component
 {
     public $template_id;
+
     public $escalas;
+
     public $min_max_id;
+
     public $registerDelete = [];
+
     public $edit = false;
+
     protected $listeners = [
         'renderReloadEscala' => 'mount',
         'renderSaveEscala' => 'save',
-        'destroy'
+        'destroy',
     ];
 
     public $min;
+
     public $max;
 
     public $send = false;
@@ -40,7 +44,7 @@ class Escalas extends Component
         'max.required' => 'El campo máximo es requerido',
         'min.min' => 'El campo minimo no debe ser menor a 0',
         'min.max' => 'El campo máximo no debe ser menor a 0',
-        'escalas.*.nombre.required' => "El campo es requerido",
+        'escalas.*.nombre.required' => 'El campo es requerido',
     ];
 
     public function mount($template_id)
@@ -64,7 +68,7 @@ class Escalas extends Component
         $getData = TBTemplateAr_EscalaArModel::find($this->template_id);
         $this->min = $getData->valor_min;
         $this->max = $getData->valor_max;
-        if (!$getData->getEscalas->isEmpty()) {
+        if (! $getData->getEscalas->isEmpty()) {
             $this->edit = true;
             $newCollect = [];
             foreach ($getData->getEscalas as $register) {
@@ -97,7 +101,6 @@ class Escalas extends Component
         $this->send = false;
         $this->validate($this->rules, $this->messages);
 
-
         DB::beginTransaction();
 
         $templateAr_Es = TBTemplateAr_EscalaArModel::find($this->min_max_id)->update([
@@ -126,7 +129,7 @@ class Escalas extends Component
                         ]);
                     }
                 }
-                if (!empty($newRegisters)) {
+                if (! empty($newRegisters)) {
                     foreach ($newRegisters as $escala) {
                         TBEscalaAnalisisRiesgoModel::create([
                             'nombre' => $escala['nombre'],
@@ -168,10 +171,11 @@ class Escalas extends Component
 
     public function removeInput($key)
     {
-            unset($this->escalas[$key]);
+        unset($this->escalas[$key]);
     }
 
-    public function destroy($id,$key){
+    public function destroy($id, $key)
+    {
         DB::beginTransaction();
         try {
             TBEscalaAnalisisRiesgoModel::destroy($id);
@@ -183,7 +187,8 @@ class Escalas extends Component
         unset($this->escalas[$key]);
     }
 
-    public function resetMinMax(){
+    public function resetMinMax()
+    {
         $this->min = 0;
         $this->max = 0;
     }

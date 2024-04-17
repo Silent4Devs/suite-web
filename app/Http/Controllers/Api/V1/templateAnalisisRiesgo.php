@@ -14,7 +14,7 @@ class templateAnalisisRiesgo extends Controller
     public function index()
     {
         //
-        return json_encode("hola");
+        return json_encode('hola');
     }
 
     /**
