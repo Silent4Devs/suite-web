@@ -1,107 +1,88 @@
 <div>
     {{-- A good traveler has no fixed plans and is not intent upon arriving. --}}
-    <h5 class="titulo_general_funcion"> Evaluación Dashboard: {{ $evaluacion->nombre }}</h5>
-
-    <p>
-        <small>
-            No olvides realizar tu autoevaluacion asi como tambien evaluar a las personas que estan a tu cargo
-        </small>
-    </p>
+    <h5 class="titulo_general_funcion"> Dashboard Personal </h5>
 
     <div class="row mt-4">
-        <div class="col-md-3">
-            <a wire:click.prevent="enviarRecordatorio">
-                <div class="w-100 p-3 text-center text-white rounded-lg"
-                    style="background-color: #2C9E7F;cursor: pointer;">
-                    Enviar recordatorio de Evaluación
-                </div>
-            </a>
-        </div>
-        <div class="col-md-3">
-            <a wire:click.prevent="cerrarEvaluacion">
-                <div class="w-100 p-3 text-center text-white rounded-lg"
-                    style="background-color: #DF5050; cursor: pointer;">
-                    Cerrar Evaluación
-                </div>
-            </a>
-        </div>
-        <div class="col-md-3">
-            <div class="w-100 p-3 text-center text-white rounded-lg" style="background-color: #A650DF;">
-                Modificar periodo de evaluación
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="w-100 p-3 text-center text-white rounded-lg" style="background-color: #507BDF;">
-                Generar Reporte
-            </div>
-        </div>
-    </div>
-
-    <div class="row mt-4">
-        <div class="col-md-6">
+        <div class="col-md-11">
             <div class="card card-body">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>
-                                Nombre de Evaluación
-                            </th>
-                            <th>
-                                Estatus
-                            </th>
-                            <th>
-                                Inicio
-                            </th>
-                            <th>
-                                Finaliza
-                            </th>
-                            <th>
-                                Autor
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <p>{{ $evaluacion->nombre }}</p>
-                            </td>
-                            <td>
-                                {{ $evaluacion->estatus_palabra }}
-                            </td>
-                            <td>
-                                10/10/2023
-                            </td>
-                            <td>
-                                10/10/2023
-                            </td>
-                            <td>
-                                <div class="img-person">
-                                    <img src="{{ $evaluacion->autor->avatar }}" alt="{{ $evaluacion->autor->name }}"
-                                        title="{{ $evaluacion->autor->name }}">
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="row">
+                    <div class="col-4">
+                        <h5>{{ $evaluacion->nombre }}</h5>
+                    </div>
+                    <div class="col-4">
+                        <p>
+                            <strong>Evaluado</strong> <br>
+                            {{ $info_evaluado->empleado->name }}
+                        </p>
+                    </div>
+                    <div class="col-1">
+                        <p>
+                            <strong>Foto</strong> <br>
+                        <div class="img-person">
+                            <img src="{{ $info_evaluado->empleado->avatar }}" alt="{{ $info_evaluado->empleado->name }}"
+                                title="{{ $info_evaluado->empleado->name }}">
+                        </div>
+                        </p>
+                    </div>
+                    <div class="col-1">
+                        <p>
+                            <strong>Estatus</strong><br>
+                            @switch($evaluacion->estatus)
+                                @case(0)
+                                    <span class="badge"
+                                        style="color: #FF9900; background-color: 'rgba(255, 200, 0, 0.2)'; border-radius: 7px; padding: 5px; font-weight: 300; font-size:16px;">
+                                        <small>Borrador</small>
+                                    </span>
+                                @break
+
+                                @case(1)
+                                    <span class="badge"
+                                        style="color: #039C55; background-color: 'rgba(3, 156, 85, 0.1)'; border-radius: 7px; padding: 5px; font-weight: 300; font-size:16px;">
+                                        <small>Activa</small>
+                                    </span>
+                                @break
+
+                                @case(2)
+                                    <span class="badge"
+                                        style="color: #FF0000; background-color: 'rgba(221, 4, 131, 0.1)'; border-radius: 7px; padding: 5px; font-weight: 300; font-size:16px;">
+                                        <small>Cancelada</small>
+                                    </span>
+                                @break
+
+                                @case(3)
+                                    <span class="badge"
+                                        style="color: #0080FF; background-color: 'rgba(0, 128, 255, 0.1)'; border-radius: 7px; padding: 5px; font-weight: 300; font-size:16px;">
+                                        <small>Finalizada</small>
+                                    </span>
+                                @break
+
+                                @default
+                                    <span class="badge"
+                                        style="color: #0080FF; background-color: 'rgba(0, 128, 255, 0.1)'; border-radius: 7px; padding: 5px; font-weight: 300; font-size:16px;">
+                                        <small>Borrador</small>
+                                    </span>
+                                </p>
+                        @endswitch
+                    </div>
+                    <div class="col-1">
+                        <p>
+                            <strong>Inicio</strong> <br>
+
+                        </p>
+                    </div>
+                    <div class="col-1">
+                        <p>
+                            <strong>Finaliza</strong> <br>
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-1">
             <div class="card card-body">
                 <div class="d-flex w-100">
                     <div class="">
-                        <span>Evaluaciones contestadas</span>
-                        <div class="progress">
-                            <div class="progress-bar bg-warning" role="progressbar"
-                                style="width: {{ $evaluacion->porcentaje_evaluaciones_completadas }}%"
-                                aria-valuenow="{{ $evaluacion->total_evaluaciones_completadas }}" aria-valuemin="0"
-                                aria-valuemax="{{ $evaluacion->total_evaluaciones }}"></div>
-                        </div>
-                    </div>
-                    <div class="">
-                        <span>Total</span>
-                        <p>
-                            {{ $evaluacion->total_evaluaciones_completadas }}/{{ $evaluacion->total_evaluaciones }}
-                        </p>
+                        <strong>Reporte</strong>
                     </div>
                 </div>
             </div>
@@ -217,7 +198,7 @@
         </div> --}}
     </div>
 
-    @if ($evaluacion->activar_objetivos)
+    {{-- @if ($evaluacion->activar_objetivos)
         <div class="card card-body mt-3">
             <h5>Resultado por área</h5>
             <div class="row">
@@ -240,7 +221,7 @@
                 </select>
             </div>
         </div>
-    @endif
+    @endif --}}
 
     <div class="row mt-4" style="font-size: 15px; color: #9E50AA;">
         <div class="col-md-4">
@@ -317,12 +298,23 @@
     @if ($evaluacion->activar_competencias)
         <div class="card card-body mt-3">
             <h5>Cumplimiento de Competencias</h5>
+            <a wire:click.prevent="cambioRadar">
+                Grafica
+            </a>
             <div class="row">
-                <div class="col-12">
-                    <div id="contenedor-competencias" style="height:600px;">
-                        <canvas id="cumplimientoCompetencias"></canvas>
+                @if ($grafica_radar == false)
+                    <div class="col-12">
+                        <div id="contenedor-competencias" style="height:600px;">
+                            <canvas id="cumplimientoCompetencias"></canvas>
+                        </div>
                     </div>
-                </div>
+                @else
+                    <div class="col-12">
+                        <div id="contenedor-competencias-radar" style="height:600px;">
+                            <canvas id="cumplimientoCompetenciasRadar"></canvas>
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
     @endif
@@ -347,7 +339,7 @@
         </div>
     </div>
 
-    <div class="card card-body">
+    {{-- <div class="card card-body">
 
         <div class="row">
             <div class="col-md-3 form-group">
@@ -379,7 +371,7 @@
                 <input type="text" class="form-control" placeholder="Buscar ...">
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <nav class="mt-5">
         <div class="nav nav-tabs" role="tablist" style="margin-bottom: 0px !important;">
@@ -621,7 +613,7 @@
 
         @if ($evaluacion->activar_objetivos)
             {{-- Codigo primera vez que carga --}}
-            <script>
+            {{-- <script>
                 document.addEventListener('livewire:load', function() {
 
                     const areas = @json($resArea['nombres'][$periodo_seleccionado]);
@@ -648,9 +640,9 @@
                     });
 
                 });
-            </script>
+            </script> --}}
             {{-- Codigo cambio de filtros --}}
-            <script>
+            {{-- <script>
                 document.addEventListener('livewire:load', function() {
                     Livewire.on('objetivosArea', (objArea) => {
 
@@ -681,7 +673,7 @@
                         });
                     });
                 });
-            </script>
+            </script> --}}
 
             <script>
                 document.addEventListener('livewire:load', function() {
@@ -860,6 +852,82 @@
                                     data: cumpComp.data,
                                     borderWidth: 1
                                 }]
+                            },
+                            options: {
+                                scales: {
+                                    y: {
+                                        beginAtZero: true
+                                    }
+                                }
+                            }
+                        });
+                    });
+                });
+            </script>
+
+            <script>
+                document.addEventListener('livewire:load', function() {
+
+                    const competencias = @json($resComp['nombres'][$periodo_seleccionado]);
+                    const resultados = @json($resComp['resultado_competencia'][$periodo_seleccionado]);
+                    const esperados = @json($resComp['nivel_esperado'][$periodo_seleccionado]);
+
+                    // console.log(competencias, resultados);
+                    var ctx5 = document.getElementById('cumplimientoCompetenciasRadar').getContext('2d');
+                    ChartCO = new Chart(ctx5, {
+                        type: 'radar',
+                        data: {
+                            labels: competencias,
+                            datasets: [{
+                                    label: 'Nivel Alcanzado',
+                                    data: resultados,
+                                    borderWidth: 1
+                                },
+                                {
+                                    label: 'Nivel Esperado',
+                                    data: esperados,
+                                    borderWidth: 1
+                                },
+                            ]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                });
+            </script>
+
+            <script>
+                document.addEventListener('livewire:load', function() {
+                    Livewire.on('cumplimientoRadarComp', (cumpCompRadar) => {
+
+                        document.getElementById('cumplimientoCompetenciasRadar').remove();
+                        let canvas = document.createElement("canvas");
+                        canvas.id = "cumplimientoCompetenciasRadar";
+                        canvas.style.width = '100%';
+                        canvas.style.height = '100%';
+                        document.getElementById("contenedor-competencias-radar").appendChild(canvas);
+
+                        let grafica_competencias_radar = new Chart(document.getElementById(
+                            'cumplimientoCompetenciasRadar'), {
+                            type: 'radar',
+                            data: {
+                                labels: cumpCompRadar.labels,
+                                datasets: [{
+                                        label: 'Nivel Alcanzado',
+                                        data: cumpCompRadar.data,
+                                        borderWidth: 1
+                                    },
+                                    {
+                                        label: 'Nivel Esperado',
+                                        data: cumpCompRadar.data2,
+                                        borderWidth: 1
+                                    },
+                                ]
                             },
                             options: {
                                 scales: {

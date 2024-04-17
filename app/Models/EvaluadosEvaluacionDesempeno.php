@@ -301,17 +301,20 @@ class EvaluadosEvaluacionDesempeno extends Model
         $evaluado = self::find($this->id);
 
         $evaluadores = $evaluado->evaluadoresCompetencias->where('evaluador_desempeno_id', '!=', $this->evaluado_desempeno_id);
-
+        $cuenta_evaluadores = $evaluadores->count();
         $calificacionesAgrupadas = [];
 
         foreach ($evaluadores as $evlrs) {
             $evrs = $evlrs->preguntasCuestionario->where('periodo_id', $periodo);
             foreach ($evrs as $pregunta) {
+                $calificacion_total = ($pregunta->calificacion_competencia > $pregunta->infoCompetencia->nivel_esperado) ? $pregunta->infoCompetencia->nivel_esperado : $pregunta->calificacion_competencia;
+
                 $calificacion = [
                     'competencia_id' => $pregunta->competencia_id,
                     'competencia' => $pregunta->infoCompetencia->competencia,
                     'calificacion_competencia' => $pregunta->calificacion_competencia,
-                    'calificacion_total' => round((($pregunta->calificacion_competencia / $pregunta->infoCompetencia->nivel_esperado) * $evlrs->porcentaje_competencias), 2),
+                    'nivel_esperado' => $pregunta->infoCompetencia->nivel_esperado,
+                    'calificacion_total' => round(($calificacion_total / $pregunta->infoCompetencia->nivel_esperado) * $evlrs->porcentaje_competencias, 2),
                 ];
 
                 if (!isset($calificacionesAgrupadas[$pregunta->competencia_id])) {
@@ -326,15 +329,19 @@ class EvaluadosEvaluacionDesempeno extends Model
 
         foreach ($calificacionesAgrupadas as $competencia_id => $calificaciones) {
             $suma = 0;
+            $suma_competencia = 0;
 
             foreach ($calificaciones as $calificacion) {
                 $suma += $calificacion['calificacion_total'];
+                $suma_competencia += $calificacion['calificacion_competencia'];
             }
 
             $calificacionesSumadas[] = [
                 'competencia_id' => $competencia_id,
                 'competencia' => $calificacion['competencia'],
-                'calificacion_total' => $suma,
+                'nivel_esperado' => $calificacion['nivel_esperado'],
+                "promedio_competencias" => $suma_competencia / $cuenta_evaluadores,
+                'calificacion_total' => $suma / $cuenta_evaluadores,
             ];
         }
 
