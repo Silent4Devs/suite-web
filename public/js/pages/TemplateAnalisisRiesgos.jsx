@@ -10,6 +10,7 @@ import { CardTemplateAnalisisRiesgos } from '../components/common/Cards';
 const TemplateAnalisisRiesgos = () => {
     const [sections, setSections] = useState([
         {id:"sec-1", section: "Seccion 1", title:"Sin nombre 1"},
+
     ]);
 
     const [questions, setQuestions] = useState([
@@ -115,14 +116,22 @@ const TemplateAnalisisRiesgos = () => {
         let nextSection = sections.length + 1;
         let nextQuestion = questions.length +1;
         setSections((sections) => [...sections, { id: `sec-${nextSection}`, section: `Seccion ${nextSection}`, title:`Sin nombre ${nextSection}` }]);
-        setQuestions((questions) => [...questions, {id: nextQuestion, columnId:`sec-${nextSection}`, size:12, title:`Question ${nextQuestion}`}])
+        setQuestions((questions) => [...questions, {id: nextQuestion, columnId:`sec-${nextSection}`, size:12, title:`Question ${nextQuestion}`, type:"1", data:{}}])
 
     }
 
     const addQuestion = () => {
-        let lastSection = sections.length;
+        const lastPositionSection = sections.length - 1;
+        const lastSection = sections.find((element,index) => index === lastPositionSection);
         let nextQuestion = questions.length +1;
-        setQuestions((questions) => [...questions, {id: nextQuestion, columnId:`sec-${lastSection}`, size:12, type:"1", data:{}}])
+        setQuestions((questions) => [...questions, {id: nextQuestion, columnId: lastSection.id, size:12, type:"1", data:{}}])
+    }
+
+    const deleteQuestion = (id) => {
+        const filter = questions.find(item => item.id === id);
+
+        const newQuestions = questions.filter((item) => item.id !== id);
+        setQuestions(newQuestions)
     }
 
 
@@ -146,7 +155,7 @@ const TemplateAnalisisRiesgos = () => {
 
         <DndContext sensors={sensors} collisionDetection={closestCorners} onDragEnd={handleDragEnd} onDragStart={handleDragStart} onDragOver={handleDragOver}>
             {/* <div className="row"> */}
-                <Container sections={sections} questions={questions} setQuestions={setQuestions} chanceQuestionSize={chanceQuestionSize}/>
+                <Container sections={sections} questions={questions} deleteQuestion={deleteQuestion} />
             {/* </div> */}
             {createPortal(
                 <DragOverlay>

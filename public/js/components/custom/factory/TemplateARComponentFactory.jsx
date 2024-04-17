@@ -1,7 +1,7 @@
-import { OptionDate, OptionNumber, OptionParrafo, OptionRound, OptionSelect, OptionSquard, OptionTextSimple, OptionTime } from "../analisis-riesgos/Options";
+import { OptionDate, OptionImage, OptionNumber, OptionParrafo, OptionRound, OptionSelect, OptionSquard, OptionTextSimple, OptionTime } from "../analisis-riesgos/Options";
 
 class TemplateARComponentFactory {
-    createTemplateARComponent(type) {
+    createTemplateARComponent(type, id) {
         switch (type) {
             case "1":
                 return <OptionTextSimple/>;
@@ -19,6 +19,8 @@ class TemplateARComponentFactory {
                 return <OptionDate/>;
             case "9":
                 return <OptionTime/>;
+            case "10":
+                return <OptionImage id={id}/>
             default :
                 return <div>Sin option</div>
 

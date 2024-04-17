@@ -4,7 +4,7 @@ import React from 'react'
 import { CardTemplateAnalisisRiesgos } from '../../common/Cards';
 import Item from './Item';
 
-export const Section = ({ id, title, questions, setQuestions, chanceQuestionSize }) => {
+export const Section = ({ id, title, questions, deleteQuestion }) => {
     const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
       useSortable({ id, data: {
         type: "Section",
@@ -31,6 +31,7 @@ export const Section = ({ id, title, questions, setQuestions, chanceQuestionSize
           <div
             ref={setNodeRef}
             style={style}
+            className='mb-3'
           >
             <div className="card m-0 p-0">
                 <div className="card-body "></div>
@@ -59,7 +60,7 @@ export const Section = ({ id, title, questions, setQuestions, chanceQuestionSize
                 <SortableContext items={questions} strategy={rectSortingStrategy}>
                     {questions.map((item)=>{
                             return(
-                                <CardTemplateAnalisisRiesgos key={item.id} id={item.id} question={item}/>
+                                <CardTemplateAnalisisRiesgos key={item.id} id={item.id} question={item} deleteQuestion={deleteQuestion}/>
                                     // <Item key={item.id} id={item.id} size={item.size} setQuestions={setQuestions} questions={questions} chanceQuestionSize={chanceQuestionSize}/>
                             )
                         })}

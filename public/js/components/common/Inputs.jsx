@@ -32,7 +32,7 @@ export const TextAreaSimple = ({title, name, size = 4 ,className=""}) => {
     );
 }
 
-export const InputDate = ({ title, name, size = 4 ,styles=""}) => {
+export const InputDate = ({ title, name, size = 4 ,styles="", disabled=false}) => {
     return (
         <div className={`col-${size} ${styles}`}>
             <div className="form-group pl-0 anima-focus">
@@ -41,6 +41,7 @@ export const InputDate = ({ title, name, size = 4 ,styles=""}) => {
                     className="form-control"
                     placeholder=""
                     name={name}
+                    disabled={disabled}
                 />
                 <label >{title}</label>
             </div>

@@ -2,13 +2,16 @@
 
 use App\Http\Controllers\API\Auth\AuthController;
 use App\Http\Controllers\Api\InicioUsuario\InicioUsuarioController;
+use App\Http\Controllers\Api\V1\templateAnalisisRiesgo;
 
 Route::post('api/v1/login', [AuthController::class, 'login']);
 
 Route::group(['prefix' => 'api/v1', 'as' => 'api.', 'namespace' => 'Api\v1', 'middleware' => 'auth:sanctum'], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('inicioUsuario', [InicioUsuarioController::class, 'index']);
+
 });
+Route::apiResource('api/v1/test', templateAnalisisRiesgo::class);
 
 Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', 'middleware' => ['auth:api']], function () {
     // Permissions
