@@ -1,4 +1,37 @@
 <div>
+    <style>
+        /* Customizing table-striped */
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: #FBECF3;
+            /* Custom color for odd rows */
+        }
+
+        .table-striped thead tr,
+        .table-striped thead th {
+            background-color: #DE93B6;
+            /* Custom color for thead rows and header cells */
+            color: white !important;
+            /* Text color for header cells */
+        }
+
+        /* Styles for the table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            border: 1px solid #dddddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+
     {{-- A good traveler has no fixed plans and is not intent upon arriving. --}}
     <h5 class="titulo_general_funcion"> Dashboard Personal </h5>
 
@@ -278,14 +311,22 @@
         @foreach ($evaluado->evaluadoresCompetencias as $key => $evaluador)
             <div class="mt-4 mb-4">
                 <div class="datatable-fix">
-                    <table id="" style="border-collapse: collapse; width: 100%;">
-                        <thead>
+                    <table id="" class="table-striped"
+                        style="border-collapse: collapse; width: 100%; border-top-left-radius: 20px !important; border-top-right-radius: 20px !important;">
+                        <thead style="color: white">
+                            <tr style="background-color: #BB68A8;">
+                                <th style="background-color: #BB68A8;" colspan="5">
+                                    <div class="mt-3 mb-3">
+                                        <h4>Competencias</h4>
+                                    </div>
+                                </th>
+                            </tr>
                             <tr>
                                 @if ($evaluador->empleado->id == $evaluado->empleado->id)
                                     <th>Autoevaluación:
                                         {{ $evaluador->empleado->name }}</th>
                                 @else
-                                    <th>Evaluador:
+                                    <th>Evaluación Realizada por:
                                         {{ $evaluador->empleado->name }}&nbsp;(
                                         {{ $evaluador->porcentaje_competencias }}%)
                                     </th>
@@ -299,24 +340,24 @@
                         <tbody>
                             @foreach ($competenciasEvaluado[$periodo_seleccionado][$evaluador->id] as $key => $competencia)
                                 <tr>
-                                    <td style="background-color: black; color: white;">
+                                    <td style="border: 1px solid #CCCCCC; border-bottom:#CCCCCC !important;">
                                         {{ $competencia->infoCompetencia->competencia }}</td>
-                                    <td style="border: 1px solid black; border-bottom:black !important;">
+                                    <td style="border: 1px solid #CCCCCC; border-bottom:#CCCCCC !important;">
                                         {{ $competencia->infoCompetencia->tipo_competencia }}</td>
-                                    <td style="border: 1px solid black; border-bottom:black !important;">
+                                    <td style="border: 1px solid #CCCCCC; border-bottom:#CCCCCC !important;">
                                         {{ $competencia->infoCompetencia->nivel_esperado }}</td>
                                     @if ($competencia->estatus_calificado)
-                                        <td style="border: 1px solid black; border-bottom:black !important;">
+                                        <td style="border: 1px solid #CCCCCC; border-bottom:#CCCCCC !important;">
                                             {{ $competencia->calificacion_competencia }}
                                         </td>
-                                        <td style="border: 1px solid black; border-bottom:black !important;">
+                                        <td style="border: 1px solid #CCCCCC; border-bottom:#CCCCCC !important;">
                                             {{ round($competencia->calificacion_competencia / $competencia->infoCompetencia->nivel_esperado, 2) }}
                                         </td>
                                     @else
-                                        <td style="border: 1px solid black; border-bottom:black !important;">
+                                        <td style="border: 1px solid #CCCCCC; border-bottom:#CCCCCC !important;">
                                             <p>Sin Calificar</p>
                                         </td>
-                                        <td style="border: 1px solid black; border-bottom:black !important;">
+                                        <td style="border: 1px solid #CCCCCC; border-bottom:#CCCCCC !important;">
                                             <p>Sin Calificar</p>
                                         </td>
                                     @endif

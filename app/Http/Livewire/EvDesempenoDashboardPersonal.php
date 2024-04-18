@@ -61,6 +61,8 @@ class EvDesempenoDashboardPersonal extends Component
     public $competenciasEvaluado;
     public $objetivosEvaluado;
 
+    public $tiposObj;
+
     public function mount($id_evaluacion, $id_evaluado)
     {
         $this->id_evaluacion = $id_evaluacion;
@@ -363,8 +365,6 @@ class EvDesempenoDashboardPersonal extends Component
                 $this->grafica_competencias["nombres"][$key_periodo][] = $c;
             }
 
-            $promedios_tipo_competencias = [];
-
             $evaluado = $this->evaluacion->evaluados->find($this->id_evaluado);
 
             $calificaciones = $evaluado->calificacionesCompetenciasEvaluadoPeriodo($periodo["id_periodo"]);
@@ -427,13 +427,28 @@ class EvDesempenoDashboardPersonal extends Component
 
     public function tablaObjetivos()
     {
-        $evaluadoresO = $this->evaluado->evaluadoresObjetivos;
+        $objetivos_evaluado = [];
 
-        foreach ($this->array_periodos as $key_periodo => $periodo) {
-            foreach ($evaluadoresO as $key_evaluador => $evaluador) {
-                $objetivos = $evaluador->preguntasCuestionarioAplicanPeriodo($periodo["id_periodo"]);
+        // Grouping objetivos by periodo and tipo_objetivo
+        foreach ($this->array_periodos as $periodo) {
+            $objetivosPorPeriodo = CuestionarioObjetivoEvDesempeno::where('evaluacion_desempeno_id', $this->id_evaluacion)
+                ->where('periodo_id', $periodo["id_periodo"])
+                ->with('infoObjetivo')
+                ->get()
+                ->groupBy('infoObjetivo.tipo_objetivo');
 
-                $objetivos_evaluado[$key_periodo][$evaluador->id] = $objetivos;
+            foreach ($objetivosPorPeriodo as $tipo => $objetivos) {
+                foreach ($objetivos as $objetivo) {
+                    foreach ($this->evaluado->evaluadoresObjetivos as $evaluador) {
+                        $preguntas = $evaluador->preguntasCuestionarioAplicanPeriodo($periodo["id_periodo"]);
+
+                        foreach ($preguntas as $pregunta) {
+                            if ($pregunta->infoObjetivo->tipo_objetivo == $tipo) {
+                                $objetivos_evaluado[$periodo["id_periodo"]][$tipo][$evaluador->id][] = $pregunta;
+                            }
+                        }
+                    }
+                }
             }
         }
 
