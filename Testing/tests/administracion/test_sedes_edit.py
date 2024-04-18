@@ -27,17 +27,13 @@ def test_edit_sedes(browser):
     
  sedes_edit = Edit_sedes(browser)
  sedes_edit.login()
- sedes_edit.in_submodulo(menu_hamburguesa, element_entrar_modulo, element_entrar_submodulo)
- sedes_edit.adit_sedes( campo_buscar_xpath, trespuntos_btn_xpath, boton_editar, guardar_xpath)
+ url_sedes_index = "https://192.168.9.78/admin/sedes"
+ sedes_edit.ruta_sedes_index(url_sedes_index)
+ sedes_edit.adit_sedes(campo_buscar_xpath, trespuntos_btn_xpath, boton_editar, descripcion, guardar_xpath)
  
 #Variables
-menu_hamburguesa = "//BUTTON[@class='btn-menu-header']"
-element_entrar_submodulo = "//A[@href='https://192.168.9.78/admin/sedes'][text()='Sedes']"
-element_entrar_modulo = "(//A[@href='#'])[3]"
-agregar_btn_xpath= "//BUTTON[@class='btn btn-xs btn-outline-success rounded ml-2 pr-3']"
-guardar_xpath = "//BUTTON[contains(@class, 'btn') and contains(@class, 'btn-danger') and normalize-space()='Guardar']"
-
 campo_buscar_xpath= "(//INPUT[@type='search'])[2]"
 trespuntos_btn_xpath= "//I[@class='fa-solid fa-ellipsis-vertical']"
 boton_editar = "//I[@class='fas fa-edit']"
-
+descripcion = "//TEXTAREA[@id='descripcion']"
+guardar_xpath = "//BUTTON[contains(@class, 'btn') and contains(@class, 'btn-danger') and normalize-space()='Guardar']"

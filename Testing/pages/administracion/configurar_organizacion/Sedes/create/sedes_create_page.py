@@ -4,7 +4,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 from config import password_c, username_c
-
+import pdb
 
 #Temporizadores
 tiempo_modulos = 2
@@ -69,47 +69,21 @@ class Create_sedes:
 
     ##########################################Entrar a Modulo y Submodulo
 
-    def in_submodulo(self, menu_hamburguesa, element_entrar_modulo, element_entrar_submodulo):
-    
-        time.sleep(tiempo_modulos)
-        
-        #Menu Hamburguesa
-        print("Ingresando a Menu Hamburguesa")
-        menu_hamb = WebDriverWait(self.driver, 3).until(
-            EC.element_to_be_clickable((By.XPATH, menu_hamburguesa))
-        )
-        menu_hamb.click()
-
-        time.sleep(5)
-        
-        #Modulo Configurar Organizacion
-        print("Ingresando a Modulo Configurar Organizacion ...")
-        in_modulo = WebDriverWait(self.driver, 3).until(
-            EC.element_to_be_clickable((By.XPATH, element_entrar_modulo))
-        )
-        in_modulo.click()
-        
-        time.sleep(tiempo_modulos)
-        
-        #Submodulo Sedes
-        print("Ingresando a Submenu Clasificacion")
-        sub_modulo= WebDriverWait(self.driver, 3).until(
-            EC.element_to_be_clickable((By.XPATH, element_entrar_submodulo))
-        )
-        sub_modulo.click()
-        
-        time.sleep(tiempo_modulos)
-        
-        print("URL actual:", self.driver.current_url)
-
+    def ruta_sedes_index(self, url_sedes_index):
+        try:
+            self.driver.get(url_sedes_index)
+            print("Index de Configurar Organizacion / Sedes cargado.")
+        except Exception as e:
+            print("Error al cargar el index de Configurar Organizacion / Sedes", e)
+            pdb.set_trace()
 
 
     ########################################## Agregar Sede
 
-    def add_sedes(self, agregar_btn_xpath, guardar_xpath):
+    def add_sedes(self, agregar_btn_xpath, sede, direccion, descripcion, organizacion, guardar_xpath):
 
         # Dando clic en Boton Resgistrar
-        print("Dando clic al botón Registrar...")
+        print("Dando clic al botón Registrar ...")
         wait = WebDriverWait(self.driver, 10)
         agregar_btn = wait.until(EC.presence_of_element_located((By.XPATH, agregar_btn_xpath)))
         agregar_btn.click()
@@ -117,8 +91,9 @@ class Create_sedes:
         time.sleep(tiempo_modulos)
         
         # Sede
+        print("Llenando campo Sede ...")
         campo_sede = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//INPUT[@id='sede']"))
+            EC.presence_of_element_located((By.XPATH, sede))
             )
         campo_sede.click()
         campo_sede.send_keys("Sede de Prueba 117")
@@ -126,8 +101,9 @@ class Create_sedes:
         time.sleep(tiempo_modulos)
         
         # Direccion
+        print("Llenando campo Direccion ...")
         campo_direccion = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//INPUT[@id='direccion']"))
+            EC.presence_of_element_located((By.XPATH, direccion))
             )
         campo_direccion.click()
         campo_direccion.send_keys("Direccion de Prueba")
@@ -135,18 +111,19 @@ class Create_sedes:
         time.sleep(tiempo_modulos)
         
         # Descripcion
+        print("Llenando campo Descripcion ...")
         campo_descripcion = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//TEXTAREA[@id='descripcion']"))
+            EC.presence_of_element_located((By.XPATH, descripcion))
             )
         campo_descripcion.click()
         campo_descripcion.send_keys("Descripcion de prueba")
-        
     
         time.sleep(tiempo_modulos)
         
         # Organizacion
+        print("Llenando campo Organizacion ...")
         campo_organizacion = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//SELECT[@id='organizacion_id']"))
+            EC.presence_of_element_located((By.XPATH, organizacion))
             )
         campo_organizacion.click()
         time.sleep(tiempo_modulos)

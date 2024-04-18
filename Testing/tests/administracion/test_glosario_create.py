@@ -3,7 +3,6 @@ from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium import webdriver
 import pytest
 
-
 @pytest.fixture(scope="session")
 def browser():
     options = FirefoxOptions()
@@ -28,13 +27,17 @@ def test_create_glosario(browser):
     
     create_glosario = Create_Glosario(browser)
     create_glosario.login()
-    create_glosario.in_submodulo(menu_hamburguesa, element_entrar_modulo, element_entrar_submodulo)
-    create_glosario.add_glosario(agregar_btn_xpath, guardar_xpath)
+    url_glosario_index = "https://192.168.9.78/admin/glosarios"
+    create_glosario.ruta_glosario_index(url_glosario_index)
+    create_glosario.add_glosario(agregar_btn_xpath, inciso, norma, concepto, definicion, explicacion, guardar_xpath)
  
 #Variables
-menu_hamburguesa = "//BUTTON[@class='btn-menu-header']"
-element_entrar_modulo = "(//A[@href='#'])[3]"
-element_entrar_submodulo = "//A[@href='https://192.168.9.78/admin/glosarios'][text()='Glosario']"
+
 agregar_btn_xpath= "//BUTTON[@class='btn btn-xs btn-outline-success rounded ml-2 pr-3']"
+inciso = "//INPUT[@id='numero']"
+norma = "//INPUT[@id='norma']"
+concepto = "//INPUT[@id='concepto']"
+definicion = "//TEXTAREA[@id='definicion']"
+explicacion = "//TEXTAREA[@id='explicacion']"
 guardar_xpath = "//button[contains(@class, 'btn-danger') and normalize-space(text())='Guardar']"
 
