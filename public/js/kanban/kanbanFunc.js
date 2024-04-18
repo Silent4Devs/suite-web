@@ -22,8 +22,8 @@ function dropguardar() {
     let estatus = document.getElementById('estatusSelect').value;
 
     // Convertir las fechas en objetos Date
-    let inicioDate = new Date(inicio);
-    let finDate = new Date(fin);
+    let inicioDate = new Date(inicio + " 00:00:00");
+    let finDate = new Date(fin + " 00:00:00");
 
     // Obtener los timestamps en milisegundos
     let inicioTimestamp = inicioDate.getTime();
