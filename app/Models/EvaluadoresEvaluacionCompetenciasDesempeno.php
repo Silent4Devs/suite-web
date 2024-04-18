@@ -15,7 +15,7 @@ class EvaluadoresEvaluacionCompetenciasDesempeno extends Model
         'evaluado_desempeno_id',
         'evaluador_desempeno_id',
         'porcentaje_competencias',
-        'finalizada',
+        'finalizada', //Quizas sea mejor una tabla aparte, debido a que los periodos son variables
         'firma_evaluacion',
     ];
 
@@ -27,5 +27,11 @@ class EvaluadoresEvaluacionCompetenciasDesempeno extends Model
     public function preguntasCuestionario()
     {
         return $this->hasMany(CuestionarioCompetenciaEvDesempeno::class, 'evaluador_desempeno_id', 'id');
+    }
+
+    public function preguntasCuestionarioPeriodo($periodo)
+    {
+        return $this->hasMany(CuestionarioCompetenciaEvDesempeno::class, 'evaluador_desempeno_id', 'id')
+            ->where('periodo_id', $periodo)->get();
     }
 }

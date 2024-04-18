@@ -34,4 +34,10 @@ class EvaluadoresEvaluacionObjetivosDesempeno extends Model
         return $this->hasMany(CuestionarioObjetivoEvDesempeno::class, 'evaluador_desempeno_id', 'id')
             ->where('aplicabilidad', true);
     }
+
+    public function preguntasCuestionarioAplicanPeriodo($periodo)
+    {
+        return $this->hasMany(CuestionarioObjetivoEvDesempeno::class, 'evaluador_desempeno_id', 'id')
+            ->where('periodo_id', $periodo)->where('aplicabilidad', true)->get();
+    }
 }

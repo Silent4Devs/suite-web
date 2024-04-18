@@ -3,7 +3,7 @@
     <h5 class="titulo_general_funcion"> Dashboard Personal </h5>
 
     <div class="row mt-4">
-        <div class="col-md-11">
+        <div class="col-md-10">
             <div class="card card-body">
                 <div class="row">
                     <div class="col-4">
@@ -78,7 +78,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-1">
+        <div class="col-md-2">
             <div class="card card-body">
                 <div class="d-flex w-100">
                     <div class="">
@@ -149,7 +149,7 @@
                                 <div class="col-6">
                                     <small>Objetivos</small><br>
                                     <div class="d-flex" style="position:relative">
-                                        @foreach ($evldInfo->evaluadoresObjetivos as $evOb)
+                                        @foreach ($evaluado->evaluadoresObjetivos as $evOb)
                                             <img style=""
                                                 src="{{ asset('storage/empleados/imagenes/') }}/{{ $evOb->empleado->avatar }}"
                                                 class="rounded-circle" alt="{{ $evOb->empleado->name }}"
@@ -160,7 +160,7 @@
                                 <div class="col-6">
                                     <small>Competencias</small><br>
                                     <div class="d-flex" style="position:relative">
-                                        @foreach ($evldInfo->evaluadoresCompetencias as $evComp)
+                                        @foreach ($evaluado->evaluadoresCompetencias as $evComp)
                                             <img style=""
                                                 src="{{ asset('storage/empleados/imagenes/') }}/{{ $evComp->empleado->avatar }}"
                                                 class="rounded-circle" alt="{{ $evComp->empleado->name }}"
@@ -193,80 +193,7 @@
                 </a>
             </div>
         @endforeach
-        {{-- <div class="col-md-3">
-            <div class="p-3 rounded-lg" style="background-color: #fff; box-shadow: 0px 1px 4px #0000000F;">
-                <div class="d-flex align-items-center justify-content-between color-primary">
-                    <div>
-                        Trimestre 1
-                    </div>
-                    <div>
-                        <small>Promedio</small> <strong>67%</strong>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="p-3 rounded-lg" style="background-color: #fff; box-shadow: 0px 1px 4px #0000000F;">
-                <div class="d-flex align-items-center justify-content-between color-primary">
-                    <div>
-                        Trimestre 2
-                    </div>
-                    <div>
-                        <small>Promedio</small> <strong>67%</strong>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="p-3 rounded-lg" style="background-color: #fff; box-shadow: 0px 1px 4px #0000000F;">
-                <div class="d-flex align-items-center justify-content-between color-primary" style="opacity: 70%;">
-                    <div>
-                        Trimestre 3
-                    </div>
-                    <div>
-                        <small>Promedio</small> <strong>67%</strong>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="p-3 rounded-lg" style="background-color: #fff; box-shadow: 0px 1px 4px #0000000F;">
-                <div class="d-flex align-items-center justify-content-between color-primary" style="opacity: 70%;">
-                    <div>
-                        Trimestre 4
-                    </div>
-                    <div>
-                        <small>Promedio</small> <strong>67%</strong>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
     </div>
-
-    {{-- @if ($evaluacion->activar_objetivos)
-        <div class="card card-body mt-3">
-            <h5>Resultado por área</h5>
-            <div class="row">
-                <div class="col-12">
-                    <div id="contenedor-principal" style="height:600px;">
-                        <canvas id="resultadosxarea"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="card card-body" style="background-color: #BF9CC4;">
-            <div class="form-group">
-                <select name="area_select" id="area_select" wire:model="area_select" class="form-control"
-                    style="background-color: #fff;">
-                    <option value="" selected disabled>Área</option>
-                    @foreach ($opciones_area_select as $key => $opas)
-                        <option value="{{ $opas['id'] }}">{{ $opas['area'] }}</option>
-                    @endforeach
-                </select>
-            </div>
-        </div>
-    @endif --}}
 
     @if ($evaluacion->activar_objetivos)
         <div class="row mt-4">
@@ -346,59 +273,93 @@
         </div>
     @endif
 
-    {{-- <div class="card card-body">
-        <div class="d-flex w-100">
-            <div class="">
-                <span>Evaluaciones contestadas</span>
-                <div class="progress">
-                    <div class="progress-bar bg-warning" role="progressbar"
-                        style="width: {{ ($evaluacion->cuenta_evaluados_evaluaciones_completadas_totales / $evaluacion->cuenta_evaluados_evaluaciones_totales) * 100 }}%"
-                        aria-valuenow="{{ ($evaluacion->cuenta_evaluados_evaluaciones_completadas_totales / $evaluacion->cuenta_evaluados_evaluaciones_totales) * 100 }}"
-                        aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="card card-body">
+        <h5>Resultados Competencias</h5>
+        @foreach ($evaluado->evaluadoresCompetencias as $key => $evaluador)
+            <div class="mt-4 mb-4">
+                <div class="datatable-fix">
+                    <table id="" style="border-collapse: collapse; width: 100%;">
+                        <thead>
+                            <tr>
+                                @if ($evaluador->empleado->id == $evaluado->empleado->id)
+                                    <th>Autoevaluación:
+                                        {{ $evaluador->empleado->name }}</th>
+                                @else
+                                    <th>Evaluador:
+                                        {{ $evaluador->empleado->name }}&nbsp;(
+                                        {{ $evaluador->porcentaje_competencias }}%)
+                                    </th>
+                                @endif
+                                <th>Tipo</th>
+                                <th>Meta</th>
+                                <th>Alcanzado</th>
+                                <th>Calificación</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($competenciasEvaluado[$periodo_seleccionado][$evaluador->id] as $key => $competencia)
+                                <tr>
+                                    <td style="background-color: black; color: white;">
+                                        {{ $competencia->infoCompetencia->competencia }}</td>
+                                    <td style="border: 1px solid black; border-bottom:black !important;">
+                                        {{ $competencia->infoCompetencia->tipo_competencia }}</td>
+                                    <td style="border: 1px solid black; border-bottom:black !important;">
+                                        {{ $competencia->infoCompetencia->nivel_esperado }}</td>
+                                    @if ($competencia->estatus_calificado)
+                                        <td style="border: 1px solid black; border-bottom:black !important;">
+                                            {{ $competencia->calificacion_competencia }}
+                                        </td>
+                                        <td style="border: 1px solid black; border-bottom:black !important;">
+                                            {{ round($competencia->calificacion_competencia / $competencia->infoCompetencia->nivel_esperado, 2) }}
+                                        </td>
+                                    @else
+                                        <td style="border: 1px solid black; border-bottom:black !important;">
+                                            <p>Sin Calificar</p>
+                                        </td>
+                                        <td style="border: 1px solid black; border-bottom:black !important;">
+                                            <p>Sin Calificar</p>
+                                        </td>
+                                    @endif
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
-            <div class="">
-                <span>Total</span>
-                <p>
-                    {{ $evaluacion->cuenta_evaluados_evaluaciones_completadas_totales }}/{{ $evaluacion->cuenta_evaluados_evaluaciones_totales }}
-                </p>
-            </div>
-        </div>
-    </div> --}}
+        @endforeach
+    </div>
 
-    {{-- <div class="card card-body">
+    <div class="card card-body">
+        <h5>Resultados Objetivos</h5>
+        @foreach ($evaluado->evaluadoresObjetivos as $key => $evaluador)
+            <div class="mt-4 mb-4">
+                <div class="datatable-fix">
+                    <table id="" style="border-collapse: collapse; width: 100%;">
+                        <thead>
+                            <tr>
+                                @if ($evaluador->empleado->id == $evaluado->empleado->id)
+                                    <th>Autoevaluación:
+                                        {{ $evaluador->empleado->name }}</th>
+                                @else
+                                    <th>Evaluador:
+                                        {{ $evaluador->empleado->name }}&nbsp;(
+                                        {{ $evaluador->porcentaje_objetivos }}%)
+                                    </th>
+                                @endif
+                                <th>Tipo</th>
+                                <th>Meta</th>
+                                <th>Alcanzado</th>
+                                <th>Calificación</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-        <div class="row">
-            <div class="col-md-3 form-group">
-                <select name="area_tabla" id="area_tabla" wire:model.defer="select_area_tabla" class="form-control">
-                    <option value="todos">Área</option>
-                    @foreach ($opciones_area_select as $key => $opas)
-                        <option value="{{ $opas['id'] }}">{{ $opas['area'] }}</option>
-                    @endforeach
-                </select>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <div class="col-md-3 form-group">
-                <select name="colaborador_tabla" id="colaborador_tabla" wire:model.defer="select_colaborador_tabla"
-                    class="form-control">
-                    <option value="todos">Colaborador</option>
-                    @foreach ($evaluacion->evaluados as $evaluado)
-                        <option value="{{ $evaluado->id }}">{{ $evaluado->empleado->name }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="col-md-3 form-group">
-                <select name="" id="" class="form-control">
-                    <option value="">Evaluador</option>
-                    @foreach ($opciones_evaluadores_select as $op)
-                        <option value="{{ $op['id'] }}">{{ $op['nombre'] }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="form-group">
-                <input type="text" class="form-control" placeholder="Buscar ...">
-            </div>
-        </div>
-    </div> --}}
+        @endforeach
+    </div>
 
     <div class="card card-body">
         <div class="datatable-fix">
@@ -406,20 +367,18 @@
                 <thead class="thead-dark">
                     <tr>
                         <th colspan="8">RESULTADOS</th>
-                        {{-- <th colspan="21">COMPETENCIAS</th>
-                                <th colspan="20">OBJETIVOS</th> --}}
                     </tr>
                     <tr>
                         <th></th>
                         <th>Nombre</th>
                         <th>Puesto y Área</th>
                         <th>Evaluadores</th>
-                        {{-- @if ($evaluacion->activar_competencias) --}}
-                        <th>Competencias</th>
-                        {{-- @endif --}}
-                        {{-- @if ($evaluacion->activar_objetivos) --}}
-                        <th>Objetivos</th>
-                        {{-- @endif --}}
+                        @if ($evaluacion->activar_competencias)
+                            <th>Competencias</th>
+                        @endif
+                        @if ($evaluacion->activar_objetivos)
+                            <th>Objetivos</th>
+                        @endif
                         <th>Calificación</th>
                         <th>Nivel</th>
                         @if ($evaluacion->activar_competencias)
@@ -427,167 +386,82 @@
                         @endif
                         @if ($evaluacion->activar_objetivos)
                             <th>Objetivos</th>
-                        @endif {{-- <th>Comunicación efectiva</th>
-                                <th>Enfocque al cliente</th>
-                                <th>Trabajo en equipo</th>
-                                <th>Adaptabilidad al cambio</th>
-                                <th>Solución de problemas y toma de desiciones</th>
-                                <th>Liderazgo e influencia</th>
-                                <th>Pensamiento estratégico</th>
-                                <th>Planificación y organización</th>
-                                <th>Negociación comercial</th>
-                                <th>Analisis de negocio</th>
-                                <th>Visión de negocio</th>
-                                <th>Enfoque a resultados</th>
-                                <th>Mejora continua</th>
-                                <th>Búsqueda de información</th>
-                                <th>Análisis y síntesis</th>
-                                <th>Efectividad interpersonal (Empatía)</th>
-                                <th>Negociación</th>
-                                <th>Trabajo bajo presión</th>
-                                <th>Impacto e influencia</th> --}}
-
-                        {{-- <th>Objetivo 1</th>
-                                <th>%</th>
-                                <th>Objetivo 2</th>
-                                <th>%</th>
-                                <th>Objetivo 3</th>
-                                <th>%</th>
-                                <th>Objetivo 4</th>
-                                <th>%</th>
-                                <th>Objetivo 5</th>
-                                <th>%</th>
-                                <th>Objetivo 6</th>
-                                <th>%</th>
-                                <th>Objetivo 7</th>
-                                <th>%</th>
-                                <th>Objetivo 8</th>
-                                <th>%</th>
-                                <th>Objetivo 9</th>
-                                <th>%</th>
-                                <th>Objetivo 10</th>
-                                <th>%</th> --}}
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($evaluados_tabla->evaluados as $evaluado)
-                        <tr>
-                            <td></td>
-                            <td>{{ $evaluado->empleado->name }}</td>
-                            <td>{{ $evaluado->empleado->puestoRelacionado->puesto }}/{{ $evaluado->empleado->area->area }}
-                            </td>
+                    <tr>
+                        <td></td>
+                        <td>{{ $evaluado->empleado->name }}</td>
+                        <td>{{ $evaluado->empleado->puestoRelacionado->puesto }}/{{ $evaluado->empleado->area->area }}
+                        </td>
+                        <td>
+                            <ul>
+                                @foreach ($this->evaluadores_evaluado[$evaluado->id] as $evaluador)
+                                    <li>{{ $evaluador['nombre'] }}</li>
+                                @endforeach
+                            </ul>
+                        </td>
+                        <td>{{ $totales_evaluado[$periodo_seleccionado][$evaluado->id]['competencias'] }}
+                        </td>
+                        <td>{{ $totales_evaluado[$periodo_seleccionado][$evaluado->id]['objetivos'] }}
+                        </td>
+                        <td>{{ $totales_evaluado[$periodo_seleccionado][$evaluado->id]['final'] }}
+                        </td>
+                        <td>Nivel</td>
+                        @if ($evaluacion->activar_competencias)
+                            @php
+                                $calif_total_competencias = $evaluado->calificacionesCompetenciasEvaluadoPeriodo(
+                                    $this->array_periodos[$this->periodo_seleccionado]['id_periodo'],
+                                )['calif_total'];
+                            @endphp
+
                             <td>
-                                <ul>
-                                    @foreach ($this->evaluadores_evaluado[$evaluado->id] as $evaluador)
-                                        <li>{{ $evaluador['nombre'] }}</li>
-                                    @endforeach
-                                </ul>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            @foreach ($calif_total_competencias as $calif_comp)
+                                                <th>{{ $calif_comp['competencia'] }}</th>
+                                            @endforeach
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            @foreach ($calif_total_competencias as $calif_comp)
+                                                <td>{{ $calif_comp['calificacion_total'] }}</td>
+                                            @endforeach
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </td>
-                            <td>{{ $totales_evaluado[$periodo_seleccionado][$evaluado->id]['competencias'] }}
+                        @endif
+                        @if ($evaluacion->activar_objetivos)
+                            @php
+                                $calif_total_objetivos = $evaluado->calificacionesObjetivosEvaluadoPeriodo(
+                                    $this->array_periodos[$this->periodo_seleccionado]['id_periodo'],
+                                )['calif_total'];
+                            @endphp
+
+                            <td>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            @foreach ($calif_total_objetivos as $calif_obj)
+                                                <th>{{ $calif_obj['nombre'] }}</th>
+                                            @endforeach
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            @foreach ($calif_total_objetivos as $calif_obj)
+                                                <td>{{ $calif_obj['calificacion_total'] }}</td>
+                                            @endforeach
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </td>
-                            <td>{{ $totales_evaluado[$periodo_seleccionado][$evaluado->id]['objetivos'] }}
-                            </td>
-                            <td>{{ $totales_evaluado[$periodo_seleccionado][$evaluado->id]['final'] }}
-                            </td>
-                            <td>Nivel</td>
-                            @if ($evaluacion->activar_competencias)
-                                @php
-                                    $calif_total_competencias = $evaluado->calificacionesCompetenciasEvaluadoPeriodo(
-                                        $this->array_periodos[$this->periodo_seleccionado]['id_periodo'],
-                                    )['calif_total'];
-                                @endphp
-
-                                <td>
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                @foreach ($calif_total_competencias as $calif_comp)
-                                                    <th>{{ $calif_comp['competencia'] }}</th>
-                                                @endforeach
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                @foreach ($calif_total_competencias as $calif_comp)
-                                                    <td>{{ $calif_comp['calificacion_total'] }}</td>
-                                                @endforeach
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </td>
-                            @endif
-                            @if ($evaluacion->activar_objetivos)
-                                @php
-                                    $calif_total_objetivos = $evaluado->calificacionesObjetivosEvaluadoPeriodo(
-                                        $this->array_periodos[$this->periodo_seleccionado]['id_periodo'],
-                                    )['calif_total'];
-                                @endphp
-
-                                <td>
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                @foreach ($calif_total_objetivos as $calif_obj)
-                                                    <th>{{ $calif_obj['nombre'] }}</th>
-                                                @endforeach
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                @foreach ($calif_total_objetivos as $calif_obj)
-                                                    <td>{{ $calif_obj['calificacion_total'] }}</td>
-                                                @endforeach
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </td>
-                            @endif
-
-
-                            {{-- <td>Apego a procesos</td>
-                                    <td>Innovación y creatividad</td>
-                                    <td>Comunicación efectiva</td>
-                                    <td>Enfocque al cliente</td>
-                                    <td>Trabajo en equipo</td>
-                                    <td>Adaptabilidad al cambio</td>
-                                    <td>Solución de problemas y toma de desiciones</td>
-                                    <td>Liderazgo e influencia</td>
-                                    <td>Pensamiento estratégico</td>
-                                    <td>Planificación y organización</td>
-                                    <td>Negociación comercial</td>
-                                    <td>Analisis de negocio</td>
-                                    <td>Visión de negocio</td>
-                                    <td>Enfoque a resultados</td>
-                                    <td>Mejora continua</td>
-                                    <td>Búsqueda de información</td>
-                                    <td>Análisis y síntesis</td>
-                                    <td>Efectividad interpersonal (Empatía)</td>
-                                    <td>Negociación</td>
-                                    <td>Trabajo bajo presión</td>
-                                    <td>Impacto e influencia</td> --}}
-
-                            {{-- <td>Objetivo 1</td>
-                                    <td>%</td>
-                                    <td>Objetivo 2</td>
-                                    <td>%</td>
-                                    <td>Objetivo 3</td>
-                                    <td>%</td>
-                                    <td>Objetivo 4</td>
-                                    <td>%</td>
-                                    <td>Objetivo 5</td>
-                                    <td>%</td>
-                                    <td>Objetivo 6</td>
-                                    <td>%</td>
-                                    <td>Objetivo 7</td>
-                                    <td>%</td>
-                                    <td>Objetivo 8</td>
-                                    <td>%</td>
-                                    <td>Objetivo 9</td>
-                                    <td>%</td>
-                                    <td>Objetivo 10</td>
-                                    <td>%</td> --}}
-                        </tr>
-                    @endforeach
+                        @endif
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -598,68 +472,6 @@
 
     @if ($evaluacion->activar_objetivos)
         {{-- Codigo primera vez que carga --}}
-        {{-- <script>
-                document.addEventListener('livewire:load', function() {
-
-                    const areas = @json($resArea['nombres'][$periodo_seleccionado]);
-                    const data = @json($resArea['resultados'][$periodo_seleccionado]);
-
-                    var ctx = document.getElementById('resultadosxarea').getContext('2d');
-                    chartRA = new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-                            labels: areas,
-                            datasets: [{
-                                label: 'Porcentaje de cumplimiento',
-                                data: data,
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                            scales: {
-                                y: {
-                                    beginAtZero: true
-                                }
-                            }
-                        }
-                    });
-
-                });
-            </script> --}}
-        {{-- Codigo cambio de filtros --}}
-        {{-- <script>
-                document.addEventListener('livewire:load', function() {
-                    Livewire.on('objetivosArea', (objArea) => {
-
-                        document.getElementById('resultadosxarea').remove();
-                        let canvas = document.createElement("canvas");
-                        canvas.id = "resultadosxarea";
-                        canvas.style.width = '100%';
-                        canvas.style.height = '100%';
-                        document.getElementById("contenedor-principal").appendChild(canvas);
-
-                        let grafica_objetivos_area = new Chart(document.getElementById('resultadosxarea'), {
-                            type: 'bar',
-                            data: {
-                                labels: objArea.labels,
-                                datasets: [{
-                                    label: 'Porcentaje de cumplimiento',
-                                    data: objArea.data,
-                                    borderWidth: 1
-                                }]
-                            },
-                            options: {
-                                scales: {
-                                    y: {
-                                        beginAtZero: true
-                                    }
-                                }
-                            }
-                        });
-                    });
-                });
-            </script> --}}
-
         <script>
             document.addEventListener('livewire:load', function() {
 
