@@ -376,13 +376,13 @@
                     formItem.addEventListener("submit", function(e) {
                         e.preventDefault();
                         var text = e.target[0].value;
-                        insertTask(text, boardId);
                         let cardpulseClass = "";
                         if (status === "STATUS_FAILED") {
                             cardpulseClass = "pulse";
                         }
                         const timestamp = Date.now();
                         let id = "tmp_" + timestamp;
+                        insertTask(text, boardId, id);
                         var newElementHTML = `
                             <div id="id" class="cardContenido ${cardpulseClass}">
                               <div class="tituloCard">${text}</div>

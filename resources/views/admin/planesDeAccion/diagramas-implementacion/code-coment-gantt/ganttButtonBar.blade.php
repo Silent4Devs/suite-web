@@ -97,11 +97,11 @@
                     <i class="material-symbols-outlined">print</i>
                 </span>
             </button> --}}
-            <span class="ganttButtonSeparator"></span>
+            {{-- <span class="ganttButtonSeparator"></span>
             <button onclick="ge.gantt.showCriticalPath=!ge.gantt.showCriticalPath; ge.redraw();return false;"
                 class="button textual icon requireCanSeeCriticalPath" title="Ruta crítica">
                 <span class="teamworkIcon">&pound;</span>
-            </button>
+            </button> --}}
             <span class="ganttButtonSeparator requireCanSeeCriticalPath"></span>
             <button onclick="ge.splitter.resize(.1);return false;" class="button textual icon">
                 <span class="teamworkIcon">F</span>
