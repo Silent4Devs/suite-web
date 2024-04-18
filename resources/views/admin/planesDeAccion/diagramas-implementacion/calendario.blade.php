@@ -44,7 +44,6 @@
                 "STATUS_SUSPENDED": "#818181",
                 "STATUS_UNDEFINED": "#FF9900"
             };
-
             const mapStatusToEstatus = {
                 "STATUS_ACTIVE": "En proceso",
                 "STATUS_DONE": "Completado",
@@ -54,7 +53,6 @@
             };
 
             response.tasks.forEach(item => {
-                // Destructuramos el objeto para obtener los valores específicos
                 const {
                     id,
                     name,
@@ -95,11 +93,11 @@
                 },
                 initialView: 'dayGridMonth',
                 initialDate: obtenerFechaActual(),
-                navLinks: false, // can click day/week names to navigate views
+                navLinks: false,
                 editable: false,
                 selectable: false,
                 nowIndicator: true,
-                dayMaxEvents: true, // allow "more" link when too many events
+                dayMaxEvents: true,
                 eventDidMount: function(info) {
                     // $(info.el).popover({
                     //     title: info.event.title,
@@ -130,13 +128,11 @@
                     // will output something like 'Sat, 01 Sep 2018 00:00:00 GMT'
                 }
             });
-
         }
 
         function renderCaleendar() {
             const tiempoEspera = 300;
             setTimeout(() => {
-
                 calendar.render();
                 calendar.setOption('locale', 'es');
                 console.log('ejecutado');
