@@ -3,7 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from pages.plan_trabajo.create.plan_trabajo_create import PlanTrabajo_create
-'''
+
 @pytest.fixture(scope="session")
 def browser():
     options = FirefoxOptions()
@@ -24,7 +24,7 @@ def browser():
     driver = webdriver.Firefox(options=options)
     yield driver
     driver.quit()
-'''
+
 def test_plan_de_trabajo_create(browser):
     #LOGIN
     plan_trabajo_create= PlanTrabajo_create(browser)
