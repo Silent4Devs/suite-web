@@ -54,8 +54,8 @@
                                         </div>
                                         <div class="col-sm" style="padding-left: inherit !important">
                                             <div class="form-group anima-focus">
-                                                <input type="date" min="1945-01-01" class="form-control" id="inicio"
-                                                    name="inicio">
+                                                <input type="date" min="1945-01-01" class="form-control"  id="inicio"
+                                                    name="inicio" required>
                                                 <label for="inicio"> Fecha inicio <span class="text-danger">*</span></label>
                                                 <small class="p-0 m-0 text-xs error_inicio errores text-danger"></small>
                                             </div>
@@ -63,18 +63,14 @@
                                         <div class="col-sm">
                                             <div class="form-group anima-focus">
                                                 <input type="date" min="1945-01-01" class="form-control" id="fin"
-                                                    name="fin">
+                                                    name="fin" required>
                                                 <label for="fin"> Fecha fin <span class="text-danger">*</span></label>
                                                 <small class="p-0 m-0 text-xs error_fin errores text-danger"></small>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div
-                                            style="
-                        width: -webkit-fill-available;
-                        padding-left: 20px;
-                        padding-right: 20px;">
+                                        <div style="width: -webkit-fill-available;padding-left: 20px;padding-right: 20px;">
                                             <div class="form-group">
                                                 <div class="form-group anima-focus">
                                                     <textarea class="form-control" id="objetivo" name="objetivo" required></textarea>
