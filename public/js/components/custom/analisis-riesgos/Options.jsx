@@ -64,8 +64,8 @@ export const OptionNumber = () => {
       };
 
     return (
-        <div className="row d-flex justify-content-between">
-            <div className="col-12 col-md-3">
+        <div className="row d-flex justify-content-between d-flex align-items-baseline">
+            <div className="col-12 col-md-8">
                 <label> Campo numérico</label>
                 <HrSimple
                     styles={{
@@ -78,8 +78,11 @@ export const OptionNumber = () => {
                     }}
                 />
             </div>
-            <div className="col-12 col-md-7 d-flex align-items-baseline gap-1">
+
+            <div className="col-12 col-md-12">
                 <p>Definir el rango aceptado</p>
+            </div>
+            <div className="col-12 col-md-12 d-flex align-items-baseline gap-1">
                 <div className="form-group pl-0 anima-focus">
                     <input
                     type="number"
@@ -418,7 +421,7 @@ export const OptionSelect = ({ data = [] }) => {
             title: "respuesta 1",
             name: "respuesta1",
             status: true,
-            // exist: true,
+            exist: true,
         },
         {
             id: uuidv4(),

@@ -1,7 +1,8 @@
 import ReactDOM from 'react-dom/client';
 import TemplateAnalisisRiesgos from '../TemplateAnalisisRiesgos';
 
+// const id = document.getElementById('template-analisis-riesgos').getAttribute('data-id');
 
-
+// console.log(id)
 
 ReactDOM.createRoot(document.getElementById('template-analisis-riesgos')).render(<TemplateAnalisisRiesgos/>);

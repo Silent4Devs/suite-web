@@ -1,21 +1,17 @@
-import React from 'react'
+import React from 'react';
 import { Section } from './Section';
-import { SortableContext, verticalListSortingStrategy , rectSortingStrategy, rectSwappingStrategy, horizontalListSortingStrategy } from '@dnd-kit/sortable';
+import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 
-export const Container = ({sections, questions, deleteQuestion}) => {
+export const Container = ({sections, questions, changeSize, deleteQuestion, changeQuestionProps}) => {
   return (
     <>
         <SortableContext items={sections} strategy={verticalListSortingStrategy} >
-            {/* <div className="row"> */}
             {sections.map((item) => {
                 return(
-                            <Section id={item.id} title={item.title} key={item.id} questions={questions.filter(itm => itm.columnId === item.id)} deleteQuestion={deleteQuestion} />
+                        <Section id={item.id} title={item.title} key={item.id} questions={questions.filter(itm => itm.columnId === item.id)} changeSize={changeSize} changeQuestionProps={changeQuestionProps} deleteQuestion={deleteQuestion} />
                     )
                 })}
-            {/* </div> */}
         </SortableContext>
     </>
   )
 }
-
-

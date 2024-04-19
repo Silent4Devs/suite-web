@@ -1,7 +1,7 @@
 import React from "react";
 import { InputSimple } from "../../common/Inputs";
 
-export const InputMaker = ({ type, id }) => {
+export const InputMaker = ({ type, id, title, handleTileChange }) => {
     switch (type) {
         case "1":
             return (
@@ -10,6 +10,9 @@ export const InputMaker = ({ type, id }) => {
                     name={`pregunta-corta-${id}`}
                     size={8}
                     styles="p-0"
+                    value={title}
+                    handleChange={handleTileChange}
+
                 />
             );
         case "2":
