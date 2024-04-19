@@ -29,14 +29,9 @@
         </form>
     </div>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-12">
             <div class="card card-body">
-                <canvas id="graf-financiero-1" width="400" height="200"></canvas>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="card card-body">
-                <canvas id="graf-financiero-2" width="400" height="200"></canvas>
+                <canvas id="graf-financiero-1" width="400" height="100"></canvas>
             </div>
         </div>
     </div>
