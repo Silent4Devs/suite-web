@@ -30,7 +30,7 @@ class UsersController extends Controller
 
         $users = User::getUserWithRole();
 
-        return view('admin.users.index', compact('users', 'existsVinculoEmpleadoAdmin'));
+        return view('users.tbUsersIndex', compact('users', 'existsVinculoEmpleadoAdmin'));
     }
 
     public function getUsersIndex(Request $request)
@@ -60,7 +60,7 @@ class UsersController extends Controller
 
         $teams = Team::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.users.create', compact('roles', 'organizacions', 'areas', 'puestos', 'teams'));
+        return view('users.tbUsersCreate', compact('roles', 'organizacions', 'areas', 'puestos', 'teams'));
     }
 
     public function store(StoreUserRequest $request)
@@ -95,7 +95,7 @@ class UsersController extends Controller
 
             $user->load('roles', 'organizacion', 'area', 'puesto', 'team');
 
-            return view('admin.users.edit', compact('roles', 'organizacions', 'areas', 'puestos', 'teams', 'user'));
+            return view('users.tbUsersUpdate', compact('roles', 'organizacions', 'areas', 'puestos', 'teams', 'user'));
         } catch (\Exception $e) {
             return redirect()->route('admin.users.index')->with('error', $e->getMessage());
         }
@@ -122,7 +122,7 @@ class UsersController extends Controller
 
             $user->load('roles', 'organizacion', 'area', 'puesto', 'team', 'userUserAlerts');
 
-            return view('admin.users.show', compact('user'));
+            return view('users.tbUserShow', compact('user'));
         } catch (\Exception $e) {
             return redirect()->route('admin.users.index')->with('error', $e->getMessage());
         }
