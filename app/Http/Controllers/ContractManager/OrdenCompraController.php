@@ -443,23 +443,23 @@ class OrdenCompraController extends Controller
         $comprador = KatbolComprador::with('user')->where('id', $requisicion->comprador_id)->first();
         $solicitante = User::find($requisicion->id_user);
 
-        if ($requisicion->firma_solicitante_orden === null) {
+        if ($requisicion->firma_comprador_orden === null) {
+            if (removeUnicodeCharacters($comprador->user->email) === removeUnicodeCharacters($user->email)) {
+                $tipo_firma = 'firma_comprador_orden';
+            } else {
+                return view('contract_manager.ordenes-compra.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del comprador directo: <br> <strong>' . $comprador->user->name  . '</strong>');
+            }
+        } elseif ($requisicion->firma_solicitante_orden === null) {
             if (removeUnicodeCharacters($user->email) === removeUnicodeCharacters($solicitante->email)) {
                 $tipo_firma = 'firma_solicitante_orden';
             } else {
-                return view('contract_manager.ordenes-compra.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del solicitante directo: <br> <strong>' . $solicitante->name . '</strong>');
+                return view('contract_manager.ordenes-compra.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del solicitante directo: <br><strong>' . $solicitante->name . '</strong>');
             }
         } elseif ($requisicion->firma_finanzas_orden === null) {
             if (removeUnicodeCharacters($user->email) === 'lourdes.abadia@silent4business.com' || removeUnicodeCharacters($user->email) === 'ldelgadillo@silent4business.com' || removeUnicodeCharacters($user->email) === 'aurora.soriano@silent4business.com') {
                 $tipo_firma = 'firma_finanzas_orden';
             } else {
-                return view('contract_manager.ordenes-compra.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera de finanzas');
-            }
-        } elseif ($requisicion->firma_comprador_orden === null) {
-            if (removeUnicodeCharacters($comprador->user->email) === removeUnicodeCharacters($user->email)) {
-                $tipo_firma = 'firma_comprador_orden';
-            } else {
-                return view('contract_manager.ordenes-compra.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>' . $comprador->user->name . '</strong>');
+                return view('contract_manager.ordenes-compra.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del finanzas');
             }
         } else {
             $tipo_firma = 'firma_final_aprobadores';

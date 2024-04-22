@@ -70,27 +70,13 @@
                             <td>{{ $requisicion->referencia }}</td>
                             <td>{{ $requisicion->proveedor_catalogo }}</td>
                             <td>
-                                @switch($requisicion->estado)
-                                    @case('curso')
-                                        <h5><span class="badge badge-pill badge-primary">En curso</span></h5>
-                                    @break
-
-                                    @case('aprobado')
-                                        <h5><span class="badge badge-pill badge-success">Aprobado</span></h5>
-                                    @break
-
-                                    @case('rechazado')
-                                        <h5><span class="badge badge-pill badge-danger">Rechazado</span></h5>
-                                    @break
-
-                                    @case('firmada')
-                                    @case('firmada_final')
-                                        <h5><span class="badge badge-pill badge-success">Firmada</span></h5>
-                                    @break
-
-                                    @default
-                                        <h5><span class="badge badge-pill badge-info">Por iniciar</span></h5>
-                                @endswitch
+                                @if (!$requisicion->firma_solicitante_orden && !$requisicion->firma_comprador_orden && !$requisicion->firma_finanzas_orden)
+                                    <h5><span class="badge badge-pill badge-primary">Por iniciar</span></h5>
+                                @elseif ($requisicion->firma_solicitante_orden && $requisicion->firma_comprador_orden && $requisicion->firma_finanzas_orden)
+                                    <h5><span class="badge badge-pill badge-success">Firmada</span></h5>
+                                @else
+                                    <h5><span class="badge badge-pill badge-info">En curso</span></h5>
+                                @endif
 
                             </td>
                             @php
@@ -116,7 +102,7 @@
                                     @case(is_null($requisicion->firma_solicitante_orden))
                                         <p>Solicitante: {{ $user->name ?? '' }}</p>
                                     @break
-                                    
+
                                     @case(is_null($requisicion->firma_finanzas_orden))
                                         <p>Finanzas</p>
                                     @break
@@ -391,5 +377,5 @@
                 window.location.href = "{{ route('contract_manager.orden-compra.filtrarPorEstado3') }}";
             });
         });
-    </script>  
+    </script>
 @endsection
