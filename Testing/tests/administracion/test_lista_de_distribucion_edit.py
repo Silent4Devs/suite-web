@@ -27,14 +27,13 @@ def test_lista_d_distribucion_edit(browser):
     
  lista_d_distribucion_edit = Edit_lista_de_distribucion(browser)
  lista_d_distribucion_edit.login()
- lista_d_distribucion_edit.in_submodulo(menu_hamburguesa, element_confirgurar_organizacion, element_entrar_submodulo)
- lista_d_distribucion_edit.update_lista_de_distribucion(trespuntos_btn_xpath, boton_editar)
+ url_apartado_index = "https://192.168.9.78/admin/lista-distribucion"
+ lista_d_distribucion_edit.ruta_clausula_index(url_apartado_index)
+ lista_d_distribucion_edit.update_lista_de_distribucion(trespuntos_btn_xpath, boton_editar, super_aprobadores,guardar_xpath)
 
 #Variables
-menu_hamburguesa = "//BUTTON[@class='btn-menu-header']"
-element_entrar_submodulo = "//a[contains(@href, '/admin/lista-distribucion') and normalize-space()='Lista de distribución']"
-element_confirgurar_organizacion = "//I[@class='bi bi-file-earmark-arrow-up']"
-agregar_btn_xpath= "//BUTTON[@class='btn btn-xs btn-outline-success rounded ml-2 pr-3']"
 trespuntos_btn_xpath= "(//I[@class='fa-solid fa-ellipsis-vertical'])[1]"
 boton_editar = "//A[@href='/admin/lista-distribucion/4/edit']"
+super_aprobadores = "(//SPAN[@class='select2-selection select2-selection--multiple'])[1]"
+guardar_xpath = "//BUTTON[@type='submit'][text()='Editar']"
 

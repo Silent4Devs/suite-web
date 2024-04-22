@@ -3,7 +3,6 @@ from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium import webdriver
 import pytest
 
-
 @pytest.fixture(scope="session")
 def browser():
     options = FirefoxOptions()
@@ -28,14 +27,15 @@ def test_create_usuarios(browser):
     
     usuarios_create = Create_Usuarios(browser)
     usuarios_create.login()
-    usuarios_create.in_submodulo(menu_hamburguesa, element_entrar_modulo, element_entrar_submodulo)
-    usuarios_create.add_usuarios(agregar_btn_xpath, guardar_xpath)
+    url_apartado_index = "https://192.168.9.78/admin/users"
+    usuarios_create.ruta_usuarios_index(url_apartado_index)
+    usuarios_create.add_usuarios(agregar_btn_xpath, nombre, correo_electronico, contraseña, roles, guardar_xpath)
  
 #Variables
-menu_hamburguesa = "//BUTTON[@class='btn-menu-header']"
-element_entrar_modulo = "(//A[@href='#'])[6]"
-element_entrar_submodulo = "//A[@href='https://192.168.9.78/admin/users'][text()='Usuarios']"
-
-agregar_btn_xpath= "//BUTTON[@class='btn btn-xs btn-outline-success rounded ml-2 pr-3 agregar']"
-guardar_xpath = "//BUTTON[@class='btn btn-danger' and text()='Guardar']"
+agregar_btn_xpath= "//BUTTON[@class='btn btn-xs btn-outline-success rounded ml-2 pr-3']"
+nombre = "//INPUT[@id='name']"
+correo_electronico = "//INPUT[@id='email']"
+contraseña = "//INPUT[@id='password']"
+roles = "//SPAN[@class='select2-selection select2-selection--multiple']"
+guardar_xpath = "//button[@class='btn btn-danger' and normalize-space(text())='Guardar']"
 

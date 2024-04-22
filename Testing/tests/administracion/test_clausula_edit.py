@@ -27,14 +27,16 @@ def test_clausula_edit(browser):
     
  clausula_edit = Edit_clausula(browser)
  clausula_edit.login()
- clausula_edit.in_submodulo(menu_hamburguesa, element_confirgurar_organizacion, element_entrar_submodulo)
- clausula_edit.update_clausula(campo_buscar_xpath, trespuntos_btn_xpath, boton_editar)
+ url_apartado_index = "https://192.168.9.78/admin/auditorias/clausulas-auditorias"
+ clausula_edit.ruta_clausula_index(url_apartado_index)
+ clausula_edit.update_clausula(campo_buscar_xpath, trespuntos_btn_xpath, boton_editar, descripcion,guardar_xpath)
 
 #Variables
-menu_hamburguesa = "//BUTTON[@class='btn-menu-header']"
-element_entrar_submodulo = "//A[@href='https://192.168.9.78/admin/auditorias/clausulas-auditorias'][text()='Cláusula']"
-element_confirgurar_organizacion = "//I[@class='bi bi-file-earmark-arrow-up']"
+campo_buscar_xpath= "(//INPUT[@type='search'])[2]"
 trespuntos_btn_xpath= "(//I[@class='fa-solid fa-ellipsis-vertical'])[1]"
 boton_editar = "(//I[@class='fa-solid fa-pencil'])[1]"
-campo_buscar_xpath= "(//INPUT[@type='search'])[2]"
+descripcion = "//TEXTAREA[@id='descripcion']"
+guardar_xpath = "//button[@class='btn btn-danger' and normalize-space()='Guardar']"
+
+
 

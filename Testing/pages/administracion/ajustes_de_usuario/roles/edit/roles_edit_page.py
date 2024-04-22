@@ -9,7 +9,7 @@ from config import password_c, username_c
 #Temporizadores
 tiempo_modulos = 2
 
-class Create_Roles:
+class Edit_Roles:
     
     def __init__(self, driver):
         self.driver = driver
@@ -69,44 +69,18 @@ class Create_Roles:
 
     ##########################################Entrar a Modulo y Submodulo
 
-    def in_submodulo(self, menu_hamburguesa, element_entrar_modulo, element_entrar_submodulo):
-    
-        time.sleep(tiempo_modulos)
-        
-        #Menu Hamburguesa
-        print("Ingresando a Menu Hamburguesa")
-        menu_hamb = WebDriverWait(self.driver, 3).until(
-            EC.element_to_be_clickable((By.XPATH, menu_hamburguesa))
-        )
-        menu_hamb.click()
-
-        time.sleep(5)
-        
-        #Modulo Ajuste de Usuario
-        print("Ingresando a Modulo Ajuste de Usuario ...")
-        in_modulo = WebDriverWait(self.driver, 3).until(
-            EC.visibility_of_element_located((By.XPATH, element_entrar_modulo))
-        )
-        in_modulo.click()
-        
-        time.sleep(tiempo_modulos)
-        
-        #Submodulo Roles
-        print("Ingresando a Submodulo Roles ...")
-        sub_modulo= WebDriverWait(self.driver, 10).until(
-            EC.visibility_of_element_located((By.XPATH, element_entrar_submodulo))
-        )
-        sub_modulo.click()
-        
-        time.sleep(5)
+    def ruta_roles_index(self, url_apartado_index):
+        try:
+            self.driver.get(url_apartado_index)
+            print("Index de Ajuste de Usuario / Roles")
+        except Exception as e:
+            print("Error al cargar el index de Ajuste de Usuario / Roles", e)
         
         print("URL actual:", self.driver.current_url)
-
-
-
+        
     ########################################## Editar Rol
 
-    def edit_roles(self, campo_buscar_xpath, trespuntos_btn_xpath, boton_editar, guardar_xpath):
+    def edit_roles(self, campo_buscar_xpath, trespuntos_btn_xpath, boton_editar, mi_calendario, guardar_xpath):
             
         time.sleep(tiempo_modulos)
         
@@ -142,7 +116,7 @@ class Create_Roles:
         # Actualizar campo mi_perfil_mi_calendario_acceder
         
         campo_n6 = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "(//TD[@class=' select-checkbox'])[3]"))
+            EC.presence_of_element_located((By.XPATH, mi_calendario))
             )
         campo_n6.click()
         print("Actualizando campo mi_perfil_mi_calendario_acceder")

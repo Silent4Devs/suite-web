@@ -69,42 +69,21 @@ class Edit_lista_de_distribucion:
         print("URL actual:", self.driver.current_url)
 
 
-    ##########################################Entrar a Modulo y Submodulo
+    ########################################## Entrar a Modulo y Submodulo
 
-    def in_submodulo(self, menu_hamburguesa, element_confirgurar_organizacion, element_entrar_submodulo):
-        
-        #Menu Hamburguesa
-        print("Ingresando a Menu Hamburguesa")
-        menu_hamb = WebDriverWait(self.driver, 3).until(
-            EC.element_to_be_clickable((By.XPATH, menu_hamburguesa))
-        )
-        menu_hamb.click()
-
-        time.sleep(tiempo_modulos)
-        
-        #Modulo Ajustes SG
-        print("Ingresando a Moldulo Ajustes SG")
-        modulo = WebDriverWait(self.driver, 3).until(
-            EC.element_to_be_clickable((By.XPATH, element_confirgurar_organizacion))
-        )
-        modulo.click()
-        
-        time.sleep(tiempo_modulos)
-        
-        #Submodulo Lista de Distribucion 
-        print("Ingresando a Submenu Clausula")
-        sub_modulo= WebDriverWait(self.driver, 3).until(
-            EC.element_to_be_clickable((By.XPATH, element_entrar_submodulo))
-        )
-        sub_modulo.click()
-        
-        time.sleep(tiempo_modulos)
+    print("Entrando a módulo correspondiente")
+    def ruta_clausula_index(self, url_apartado_index):
+        try:
+            self.driver.get(url_apartado_index)
+            print("Index de Ajustes SG / Lista de Distribucion.")
+        except Exception as e:
+            print("Error al cargar el index de Ajustes SG / Lista de Distribucion", e)
         
         print("URL actual:", self.driver.current_url)
 
     ########################################## Agregar Clasificacion y llenar repositorio
     
-    def update_lista_de_distribucion(self, trespuntos_btn_xpath, boton_editar):
+    def update_lista_de_distribucion(self, trespuntos_btn_xpath, boton_editar, super_aprobadores,guardar_xpath):
         
         # Boton 3 puntos
         print("Dando clic al botón 3 puntos...")
@@ -127,8 +106,9 @@ class Edit_lista_de_distribucion:
         time.sleep(tiempo_modulos)  
         
         # Super Aprobadores
+        print("Llenando campo Super Aprobadores")
         campo_aprobadores = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "(//SPAN[@class='select2-selection select2-selection--multiple'])[1]"))
+            EC.presence_of_element_located((By.XPATH, super_aprobadores))
             )
         campo_aprobadores.click()
         time.sleep(5)
@@ -140,7 +120,6 @@ class Edit_lista_de_distribucion:
 
         # Guardar actualización
         print("Dando clic al botón Guardar para guardar actualización...")
-        guardar_xpath = "//BUTTON[@type='submit'][text()='Editar']"
         guardar = WebDriverWait(self.driver, 20).until(
             EC.element_to_be_clickable((By.XPATH, guardar_xpath))
         )

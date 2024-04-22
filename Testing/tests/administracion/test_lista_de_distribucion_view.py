@@ -22,18 +22,16 @@ def browser():
     driver = webdriver.Firefox(options=options)
     yield driver
     driver.quit()  
+    
 def test_lista_d_distribucion_view(browser):
     
  lista_d_distribucion_view = Show_lista_de_distribucion(browser)
  lista_d_distribucion_view.login()
- lista_d_distribucion_view.in_submodulo(menu_hamburguesa, element_confirgurar_organizacion, element_entrar_submodulo)
- lista_d_distribucion_view.view_lista_de_distribucion(trespuntos_btn_xpath, boton_view)
+ url_apartado_index = "https://192.168.9.78/admin/lista-distribucion"
+ lista_d_distribucion_view.ruta_clausula_index(url_apartado_index)
+ lista_d_distribucion_view.view_lista_de_distribucion(trespuntos_btn_xpath, boton_view, regresar)
 
 #Variables
-menu_hamburguesa = "//BUTTON[@class='btn-menu-header']"
-element_entrar_submodulo = "//a[contains(@href, '/admin/lista-distribucion') and normalize-space()='Lista de distribución']"
-element_confirgurar_organizacion = "//I[@class='bi bi-file-earmark-arrow-up']"
-agregar_btn_xpath= "//BUTTON[@class='btn btn-xs btn-outline-success rounded ml-2 pr-3']"
 trespuntos_btn_xpath= "(//I[@class='fa-solid fa-ellipsis-vertical'])[1]"
 boton_view = "//A[@href='/admin/lista-distribucion/4/show']"
-
+regresar = "//A[@id='btn_cancelar']"

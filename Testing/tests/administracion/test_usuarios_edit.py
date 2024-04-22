@@ -1,8 +1,7 @@
-from pages.administracion.ajustes_de_usuario.usuarios.create.usuarios_create_page import Create_Usuarios
+from pages.administracion.ajustes_de_usuario.usuarios.edit.usuarios_edit_page import Edit_Usuarios
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium import webdriver
 import pytest
-
 
 @pytest.fixture(scope="session")
 def browser():
@@ -26,17 +25,15 @@ def browser():
     
 def test_create_usuarios(browser):
     
-    usuarios_create = Create_Usuarios(browser)
-    usuarios_create.login()
-    usuarios_create.in_submodulo(menu_hamburguesa, element_entrar_modulo, element_entrar_submodulo)
-    usuarios_create.add_usuarios(campo_buscar_xpath, boton_editar, guardar_xpath)
+    usuarios_edit = Edit_Usuarios(browser)
+    usuarios_edit.login()
+    url_apartado_index = "https://192.168.9.78/admin/users"
+    usuarios_edit.ruta_usuarios_index(url_apartado_index)
+    usuarios_edit.edit_usuarios(campo_buscar_xpath, boton_editar, correo, guardar_xpath)
  
 #Variables
-menu_hamburguesa = "//BUTTON[@class='btn-menu-header']"
-element_entrar_modulo = "(//A[@href='#'])[6]"
-element_entrar_submodulo = "//A[@href='https://192.168.9.78/admin/users'][text()='Usuarios']"
-
 campo_buscar_xpath= "(//INPUT[@type='search'])[2]"
 boton_editar = "//I[@class='fas fa-edit']"
+correo = "//INPUT[@id='email']"
 guardar_xpath = "//BUTTON[contains(@class, 'btn') and contains(@class, 'btn-danger') and normalize-space()='Guardar']"
 

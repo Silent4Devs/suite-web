@@ -28,14 +28,19 @@ def test_create_roles(browser):
     
     roles_create = Create_Roles(browser)
     roles_create.login()
-    roles_create.in_submodulo(menu_hamburguesa, element_entrar_modulo, element_entrar_submodulo)
-    roles_create.add_roles(agregar_btn_xpath, guardar_xpath)
+    url_apartado_index = "https://192.168.9.78/admin/roles"
+    roles_create.ruta_roles_index(url_apartado_index)
+    roles_create.add_roles(agregar_btn_xpath, rol, mi_perfil, mis_datos, perfil_de_puesto , carrusel, mis_competencias, calendario, guardar_xpath)
  
 #Variables
-menu_hamburguesa = "//BUTTON[@class='btn-menu-header']"
-element_entrar_modulo = "(//A[@href='#'])[6]"
-element_entrar_submodulo = "//A[@href='https://192.168.9.78/admin/roles'][text()='Roles']"
 
 agregar_btn_xpath= "//BUTTON[@class='btn btn-xs btn-outline-success rounded ml-2 pr-3 agregar']"
+rol = "//INPUT[@id='title']"
+mi_perfil = "(//TD[@class=' select-checkbox'])[2]"
+mis_datos =  "(//TD[@class=' select-checkbox'])[3]"
+perfil_de_puesto = "(//TD[@class=' select-checkbox'])[5]"
+carrusel = "//A[@href='#'][text()='3']"
+mis_competencias = "(//TD[@class=' select-checkbox'])[1]"
+calendario = "(//TD[@class=' select-checkbox'])[3]"
 guardar_xpath = "//BUTTON[@id='btnEnviarPermisos']"
 

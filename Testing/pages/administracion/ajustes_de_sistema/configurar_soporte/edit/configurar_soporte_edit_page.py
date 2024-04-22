@@ -66,44 +66,18 @@ class Edit_configurar_soporte:
         except TimeoutException:
             raise TimeoutError(f"Elemento no encontrado en {xpath}")
 
-
-
     ##########################################Entrar a Modulo y Submodulo
 
-    def in_submodulo(self, menu_hamburguesa,element_entrar_modulo,element_entrar_submodulo):
-        
-        #Menu Hamburguesa
-        print("Ingresando a Menu Hamburguesa")
-        menu_hamb = WebDriverWait(self.driver, 3).until(
-            EC.element_to_be_clickable((By.XPATH, menu_hamburguesa))
-        )
-        menu_hamb.click()
-
-        time.sleep(tiempo_modulos)
-        
-        #Modulo Administracion
-        print("Ingresando a Moldulo Administracion")
-        menu_sg = WebDriverWait(self.driver, 3).until(
-            EC.element_to_be_clickable((By.XPATH, element_entrar_modulo))
-        )
-        menu_sg.click()
-        
-        time.sleep(tiempo_modulos)
-        
-        #Configurar Soporte
-        print("Ingresando a Submenu Configurar Soporte")
-        sub_clasif= WebDriverWait(self.driver, 3).until(
-            EC.element_to_be_clickable((By.XPATH, element_entrar_submodulo))
-        )
-        sub_clasif.click()
-        
-        time.sleep(tiempo_modulos)
-        
-        print("URL actual:", self.driver.current_url)
-
+    def ruta_configurar_soporte_index(self, url_apartado_index):
+        try:
+            self.driver.get(url_apartado_index)
+            print("Index de Ajuste de Sistema / Configurar Soporte cargado.")
+        except Exception as e:
+            print("Error al cargar el index de Ajuste de Sistema / Configurar Soporte", e)
+            
     ########################################## Agregar Clasificacion y llenar repositorio
 
-    def edit_configurarsoporte(self,btn_serch, btn_3Puntos, guardar_xpath):
+    def edit_configurarsoporte(self,btn_serch, btn_3Puntos, editar, rol, empleado, guardar_xpath):
         
         #Campo Buscar
         print("Dando clic en Campo Buscar...")
@@ -126,15 +100,14 @@ class Edit_configurar_soporte:
         # Dando click en boton editar
         print("Dando clic al boton editar ...")
         btn_editar = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "(//I[@class='fas fa-edit'])[1]"))
+            EC.presence_of_element_located((By.XPATH, editar))
             )
         btn_editar.click()
         time.sleep(tiempo_modulos)
         
         # Rol
-        
         campo_rol = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//SELECT[@id='rol']"))
+            EC.presence_of_element_located((By.XPATH, rol))
             )
         campo_rol.click()
         time.sleep(tiempo_modulos)
@@ -146,9 +119,8 @@ class Edit_configurar_soporte:
         time.sleep(tiempo_modulos)
         
         # Empleado
-        
         campo_empleado = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//SELECT[@id='id_elaboro']"))
+            EC.presence_of_element_located((By.XPATH, empleado))
             )
         campo_empleado.click()
         time.sleep(tiempo_modulos)

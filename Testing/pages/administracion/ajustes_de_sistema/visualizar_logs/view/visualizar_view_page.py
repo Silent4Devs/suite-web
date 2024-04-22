@@ -70,35 +70,11 @@ class View_visualizar:
 
     ##########################################Entrar a Modulo y Submodulo
 
-    def in_submodulo(self, menu_hamburguesa,element_entrar_modulo,element_entrar_submodulo):
-        
-        #Menu Hamburguesa
-        print("Ingresando a Menu Hamburguesa ...")
-        menu_hamb = WebDriverWait(self.driver, 3).until(
-            EC.element_to_be_clickable((By.XPATH, menu_hamburguesa))
-        )
-        menu_hamb.click()
-
-        time.sleep(tiempo_modulos)
-        
-        #Modulo Ajuste de sistema
-        print("Ingresando a Ajuste de sistema...")
-        modulo_in = WebDriverWait(self.driver, 3).until(
-            EC.element_to_be_clickable((By.XPATH, element_entrar_modulo))
-        )
-        modulo_in.click()
-        
-        time.sleep(tiempo_modulos)
-        
-        #Visualizar Logs
-        print("Ingresando a Submenu Visualizar Logs ...")
-        sub_modulo= WebDriverWait(self.driver, 3).until(
-            EC.element_to_be_clickable((By.XPATH, element_entrar_submodulo))
-        )
-        sub_modulo.click()
-        
-        time.sleep(tiempo_modulos)
-        
-        print("URL actual:", self.driver.current_url)
+    def ruta_visualizar_logs_index(self, url_apartado_index):
+        try:
+            self.driver.get(url_apartado_index)
+            print("Index de Ajuste de Sistema / Visualizar Logs.")
+        except Exception as e:
+            print("Error al cargar el index de Ajuste de Sistema / Visualizar Logs", e)
 
     

@@ -3,7 +3,6 @@ from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium import webdriver
 import pytest
 
-
 @pytest.fixture(scope="session")
 def browser():
     options = FirefoxOptions()
@@ -23,21 +22,22 @@ def browser():
     driver = webdriver.Firefox(options=options)
     yield driver
     driver.quit() 
+    
 def test_clasificacion_edit(browser):
     
  clasifiacion_edit = Edit_clasificacion(browser)
  clasifiacion_edit.login()
- clasifiacion_edit.in_submodulo(menu_hamburguesa,element_confirgurar_organizacion,element_entrar_submodulo)
- clasifiacion_edit.update_clasificacion(campo_buscar_xpath, trespuntos_btn_xpath, boton_editar)
+ url_apartado_index = "https://192.168.9.78/admin/auditorias/clasificacion-auditorias"
+ clasifiacion_edit.ruta_clasificacion_index(url_apartado_index)
+ clasifiacion_edit.update_clasificacion(campo_buscar_xpath, trespuntos_btn_xpath, boton_editar, descripcion, guardar_xpath)
 
 #Variables
-menu_hamburguesa = "//BUTTON[@class='btn-menu-header']"
-element_entrar_submodulo = "//A[@href='https://192.168.9.78/admin/auditorias/clasificacion-auditorias'][text()='Clasificación']"
-element_confirgurar_organizacion = "//I[@class='bi bi-file-earmark-arrow-up']"
-agregar_btn_xpath= "//a[@href='https://192.168.9.78/admin/auditorias/clasificacion-auditorias/create'][normalize-space()='Nueva Clasificación']"
+campo_buscar_xpath= "(//INPUT[@type='search'])[2]"
 trespuntos_btn_xpath= "(//I[@class='fa-solid fa-ellipsis-vertical'])[1]"
 boton_editar = "(//I[@class='fa-solid fa-pencil'])[1]"
-campo_buscar_xpath= "(//INPUT[@type='search'])[2]"
+descripcion = "//TEXTAREA[@id='descripcion']"
+guardar_xpath = "//button[@class='btn btn-danger' and normalize-space()='Guardar']"
+
 
 
 

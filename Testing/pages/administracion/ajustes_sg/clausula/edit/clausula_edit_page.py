@@ -70,41 +70,20 @@ class Edit_clausula:
 
 
     ##########################################Entrar a Modulo y Submodulo
-
-    def in_submodulo(self, menu_hamburguesa, element_confirgurar_organizacion, element_entrar_submodulo):
-        
-        #Menu Hamburguesa
-        print("Ingresando a Menu Hamburguesa")
-        menu_hamb = WebDriverWait(self.driver, 3).until(
-            EC.element_to_be_clickable((By.XPATH, menu_hamburguesa))
-        )
-        menu_hamb.click()
-
-        time.sleep(tiempo_modulos)
-        
-        #Modulo Ajustes SG
-        print("Ingresando a Moldulo Ajustes SG")
-        menu_sg = WebDriverWait(self.driver, 3).until(
-            EC.element_to_be_clickable((By.XPATH, element_confirgurar_organizacion))
-        )
-        menu_sg.click()
-        
-        time.sleep(tiempo_modulos)
-        
-        #Submodulo Clausula
-        print("Ingresando a Submenu Clausula")
-        sub_clasif= WebDriverWait(self.driver, 3).until(
-            EC.element_to_be_clickable((By.XPATH, element_entrar_submodulo))
-        )
-        sub_clasif.click()
-        
-        time.sleep(tiempo_modulos)
+    
+    print("Entrando a módulo correspondiente")
+    def ruta_clausula_index(self, url_apartado_index):
+        try:
+            self.driver.get(url_apartado_index)
+            print("Index de Ajustes SG / Clausula.")
+        except Exception as e:
+            print("Error al cargar el index de Ajustes SG / Clausula", e)
         
         print("URL actual:", self.driver.current_url)
 
     ########################################## Agregar Clasificacion y llenar repositorio
     
-    def update_clausula(self, campo_buscar_xpath, trespuntos_btn_xpath, boton_editar):
+    def update_clausula(self, campo_buscar_xpath, trespuntos_btn_xpath, boton_editar, descripcion,guardar_xpath):
         
         time.sleep(tiempo_modulos)
         # Campo Buscar
@@ -137,8 +116,9 @@ class Edit_clausula:
         time.sleep(tiempo_modulos)  
         
         # Descripcion
+        print("Actualizando Descripción de la Clausula ...")
         campo_descripcion = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//TEXTAREA[@id='descripcion']"))
+            EC.presence_of_element_located((By.XPATH, descripcion))
             )
         campo_descripcion.click()
         campo_descripcion.clear()
@@ -148,7 +128,6 @@ class Edit_clausula:
 
         # Guardar actualización
         print("Dando clic al botón Guardar para guardar actualización...")
-        guardar_xpath = "//button[@class='btn btn-danger' and normalize-space()='Guardar']"
         guardar = WebDriverWait(self.driver, 20).until(
             EC.element_to_be_clickable((By.XPATH, guardar_xpath))
         )

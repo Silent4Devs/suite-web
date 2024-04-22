@@ -69,44 +69,18 @@ class Edit_Usuarios:
 
     ##########################################Entrar a Modulo y Submodulo
 
-    def in_submodulo(self, menu_hamburguesa, element_entrar_modulo, element_entrar_submodulo):
-    
-        time.sleep(tiempo_modulos)
-        
-        #Menu Hamburguesa
-        print("Ingresando a Menu Hamburguesa")
-        menu_hamb = WebDriverWait(self.driver, 3).until(
-            EC.element_to_be_clickable((By.XPATH, menu_hamburguesa))
-        )
-        menu_hamb.click()
-
-        time.sleep(5)
-        
-        #Modulo Ajuste de Usuario
-        print("Ingresando a Modulo Ajuste de Usuario ...")
-        in_modulo = WebDriverWait(self.driver, 3).until(
-            EC.visibility_of_element_located((By.XPATH, element_entrar_modulo))
-        )
-        in_modulo.click()
-        
-        time.sleep(tiempo_modulos)
-        
-        #Submodulo Usuarios
-        print("Ingresando a Submodulo Usuarios ...")
-        sub_modulo= WebDriverWait(self.driver, 10).until(
-            EC.visibility_of_element_located((By.XPATH, element_entrar_submodulo))
-        )
-        sub_modulo.click()
-        
-        time.sleep(5)
+    def ruta_usuarios_index(self, url_apartado_index):
+        try:
+            self.driver.get(url_apartado_index)
+            print("Index de Ajuste de Sistema / Usuarios cargado.")
+        except Exception as e:
+            print("Error al cargar el index de Ajuste de Sistema / Usuarios", e)
         
         print("URL actual:", self.driver.current_url)
 
+    ########################################## Editar
 
-
-    ########################################## Agregar 
-
-    def edit_usuarios(self, campo_buscar_xpath, boton_editar, guardar_xpath):
+    def edit_usuarios(self, campo_buscar_xpath, boton_editar, correo, guardar_xpath):
         
         time.sleep(tiempo_modulos)
         
@@ -115,20 +89,9 @@ class Edit_Usuarios:
             EC.presence_of_element_located((By.XPATH, campo_buscar_xpath))
         )
         campo_entrada.clear()
-        #campo_entrada.send_keys("Nombre de Usuario de Prueba 01117")
+        campo_entrada.send_keys("Adrian Orrante Mandujano")
 
         time.sleep(tiempo_modulos)
-
-        """
-        # Boton 3 puntos
-        print("Dando clic al botón 3 puntos...")
-        wait = WebDriverWait(driver, 10)
-        # Esperar a que el elemento esté presente en el DOM
-        puntos_btn = wait.until(EC.presence_of_element_located((By.XPATH, trespuntos_btn_xpath)))
-        # Ahora intenta hacer clic en el elemento
-        puntos_btn.click()
-
-        time.sleep(tiempo_modulos) """
 
         # Boton editar
         print("Dando clic al botón editar...")
@@ -141,17 +104,15 @@ class Edit_Usuarios:
         time.sleep(tiempo_modulos)  
         
         # Actualizar Correo Electronico
-        
+        print("Actualizando correo electronico")
         campo_email = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//INPUT[@id='email']"))
+            EC.presence_of_element_located((By.XPATH, correo))
             )
         campo_email.click()
         campo_email.send_keys("prueba@prueba.com")
-        print("Actualizando correo electronico")
         
         time.sleep(tiempo_modulos)
-        
-
+    
         # Guardar actualización
         print("Dando clic al botón Guardar para guardar actualización...")
         guardar = WebDriverWait(self.driver, 20).until(

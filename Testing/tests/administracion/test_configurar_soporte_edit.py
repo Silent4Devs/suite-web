@@ -27,14 +27,15 @@ def test_configurar_soporte_edit(browser):
     
  configurar_soporte_edit = Edit_configurar_soporte(browser)
  configurar_soporte_edit.login()
- configurar_soporte_edit.in_submodulo(menu_hamburguesa, element_entrar_modulo, element_entrar_submodulo)
- configurar_soporte_edit.edit_configurarsoporte(btn_serch, btn_3Puntos, guardar_xpath)
+ url_apartado_index = "https://192.168.9.78/admin/configurar-soporte"
+ configurar_soporte_edit.ruta_configurar_soporte_index(url_apartado_index)
+ configurar_soporte_edit.edit_configurarsoporte(btn_serch, btn_3Puntos, editar, rol, empleado, guardar_xpath)
 
 #Variables
-menu_hamburguesa = "//BUTTON[@class='btn-menu-header']"
-element_entrar_modulo = "(//A[@href='#'])[7]"
-element_entrar_submodulo = "//A[@href='https://192.168.9.78/admin/configurar-soporte'][text()='Configurar Soporte']"
-agregar_btn_xpath = "//BUTTON[@class='btn btn-xs btn-outline-success rounded ml-2 pr-3 agregar']"
-guardar_xpath = "//button[contains(@class, 'btn') and contains(@class, 'btn-danger') and normalize-space(text()) = 'Guardar']"
+
 btn_serch = "(//INPUT[@type='search'])[2]"
 btn_3Puntos = "(//I[@class='fa-solid fa-ellipsis-vertical'])[1]"
+editar = "(//A[@class='mr-2 rounded btn btn-sm'])[2]"
+rol = "//SELECT[@id='rol']"
+empleado = "//SELECT[@id='id_elaboro']"
+guardar_xpath = "//button[contains(@class, 'btn') and contains(@class, 'btn-danger') and normalize-space(text()) = 'Guardar']"

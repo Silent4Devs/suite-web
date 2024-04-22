@@ -1,8 +1,7 @@
-from pages.administracion.ajustes_sg.clasificacion.create.clasifiacion_create_page import Create_clasificacion
+from pages.administracion.ajustes_sg.clasificacion.create.clasifiacion_create_page import Create_Clasificacion
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium import webdriver
 import pytest
-
 
 @pytest.fixture(scope="session")
 def browser():
@@ -23,18 +22,18 @@ def browser():
     driver = webdriver.Firefox(options=options)
     yield driver
     driver.quit() 
-     
+  
 def test_clasificacion_create(browser):
     
- clasifiacion_create = Create_clasificacion(browser)
+ clasifiacion_create = Create_Clasificacion(browser)
  clasifiacion_create.login()
- clasifiacion_create.in_submodulo(menu_hamburguesa, element_confirgurar_organizacion, element_entrar_submodulo)
- clasifiacion_create.add_clasificacion(agregar_btn_xpath)
+ url_apartado_index = "https://192.168.9.78/admin/auditorias/clasificacion-auditorias"
+ clasifiacion_create.ruta_clasificacion_index(url_apartado_index)
+ clasifiacion_create.add_clasificacion(agregar_btn_xpath, id, clasificacion, descripcion, guardar_xpath)
 
 #Variables
-menu_hamburguesa = "//BUTTON[@class='btn-menu-header']"
-element_entrar_submodulo = "//A[@href='https://192.168.9.78/admin/auditorias/clasificacion-auditorias'][text()='Clasificación']"
-element_confirgurar_organizacion = "//I[@class='bi bi-file-earmark-arrow-up']"
-agregar_btn_xpath= "//a[@href='https://192.168.9.78/admin/auditorias/clasificacion-auditorias/create'][normalize-space()='Nueva Clasificación']"
-
-
+agregar_btn_xpath= "//a[contains(.,'Nueva Clasificación')]"
+id = "//input[contains(@id,'identificador')]"
+clasificacion = "//input[contains(@id,'nombre')]"
+descripcion = "//textarea[contains(@id,'descripcion')]"
+guardar_xpath = "//button[@class='btn btn-danger' and normalize-space()='Guardar']"

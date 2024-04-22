@@ -68,43 +68,21 @@ class Show_lista_de_distribucion:
         
         print("URL actual:", self.driver.current_url)
 
+    ########################################## Entrar a Modulo y Submodulo
 
-    ##########################################Entrar a Modulo y Submodulo
-
-    def in_submodulo(self, menu_hamburguesa, element_confirgurar_organizacion, element_entrar_submodulo):
-        
-        #Menu Hamburguesa
-        print("Ingresando a Menu Hamburguesa")
-        menu_hamb = WebDriverWait(self.driver, 3).until(
-            EC.element_to_be_clickable((By.XPATH, menu_hamburguesa))
-        )
-        menu_hamb.click()
-
-        time.sleep(tiempo_modulos)
-        
-        #Modulo Ajustes SG
-        print("Ingresando a Moldulo Ajustes SG")
-        modulo = WebDriverWait(self.driver, 3).until(
-            EC.element_to_be_clickable((By.XPATH, element_confirgurar_organizacion))
-        )
-        modulo.click()
-        
-        time.sleep(tiempo_modulos)
-        
-        #Submodulo Lista de Distribucion 
-        print("Ingresando a Submenu Clausula")
-        sub_modulo= WebDriverWait(self.driver, 3).until(
-            EC.element_to_be_clickable((By.XPATH, element_entrar_submodulo))
-        )
-        sub_modulo.click()
-        
-        time.sleep(tiempo_modulos)
+    print("Entrando a módulo correspondiente")
+    def ruta_clausula_index(self, url_apartado_index):
+        try:
+            self.driver.get(url_apartado_index)
+            print("Index de Ajustes SG / Lista de Distribucion.")
+        except Exception as e:
+            print("Error al cargar el index de Ajustes SG / Lista de Distribucion", e)
         
         print("URL actual:", self.driver.current_url)
 
     ########################################## Agregar Clasificacion y llenar repositorio
     
-    def view_lista_de_distribucion(self, trespuntos_btn_xpath, boton_view):
+    def view_lista_de_distribucion(self, trespuntos_btn_xpath, boton_view, regresar):
         
         # Boton 3 puntos
         print("Dando clic al botón 3 puntos...")
@@ -127,8 +105,9 @@ class Show_lista_de_distribucion:
         time.sleep(tiempo_modulos)  
         
         #Boton regresar
+        print("Dando clic en boton regresar ...")
         btn_return = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//A[@id='btn_cancelar']"))
+            EC.presence_of_element_located((By.XPATH, regresar))
             )
         btn_return.click()
         time.sleep(5)

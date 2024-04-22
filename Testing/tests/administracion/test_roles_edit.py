@@ -1,4 +1,4 @@
-from pages.administracion.ajustes_de_usuario.roles.create.roles_create_page import Create_Roles
+from pages.administracion.ajustes_de_usuario.roles.edit.roles_edit_page import Edit_Roles
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium import webdriver
 import pytest
@@ -24,19 +24,18 @@ def browser():
     yield driver
     driver.quit()
     
-def test_create_roles(browser):
+def test_edit_roles(browser):
     
-    roles_create = Create_Roles(browser)
-    roles_create.login()
-    roles_create.in_submodulo(menu_hamburguesa, element_entrar_modulo, element_entrar_submodulo)
-    roles_create.add_roles(agregar_btn_xpath, guardar_xpath)
+    edit_roles = Edit_Roles(browser)
+    edit_roles.login()
+    url_apartado_index = "https://192.168.9.78/admin/roles"
+    edit_roles.ruta_roles_index(url_apartado_index)
+    edit_roles.edit_roles(campo_buscar_xpath, trespuntos_btn_xpath, boton_editar, mi_calendario, guardar_xpath)
  
 #Variables
-menu_hamburguesa = "//BUTTON[@class='btn-menu-header']"
-element_entrar_modulo = "(//A[@href='#'])[6]"
-element_entrar_submodulo = "//A[@href='https://192.168.9.78/admin/roles'][text()='Roles']"
-
 campo_buscar_xpath= "(//INPUT[@type='search'])[2]"
-agregar_btn_xpath= "//BUTTON[@class='btn btn-xs btn-outline-success rounded ml-2 pr-3 agregar']"
+trespuntos_btn_xpath = "//BUTTON[@class='btn btn-action-show-datatables-global d-none']"
+boton_editar = "(//A[@class='mr-2 rounded btn btn-sm'])[2] "
+mi_calendario = "(//TD[@class=' select-checkbox'])[4]"
 guardar_xpath = "//BUTTON[contains(@class, 'btn') and contains(@class, 'btn-danger') and normalize-space()='Guardar']"
 

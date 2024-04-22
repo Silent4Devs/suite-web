@@ -23,17 +23,18 @@ def browser():
     yield driver
     driver.quit()  
     
-def test_clasificacion_create(browser):
+def test_configurar_soporte_create(browser):
     
- clasifiacion_create = Create_configurar_soporte(browser)
- clasifiacion_create.login()
- clasifiacion_create.in_submodulo(menu_hamburguesa, element_entrar_modulo, element_entrar_submodulo)
- clasifiacion_create.add_configurar_soporte(agregar_btn_xpath, guardar_xpath)
+ config_soporte_create = Create_configurar_soporte(browser)
+ config_soporte_create.login()
+ url_apartado_index = "https://192.168.9.78/admin/configurar-soporte"
+ config_soporte_create.ruta_configurar_soporte_index(url_apartado_index)
+ config_soporte_create.add_configurar_soporte(agregar_btn_xpath, rol, empleado,guardar_xpath)
  
 
 #Variables
-menu_hamburguesa = "//BUTTON[@class='btn-menu-header']"
-element_entrar_modulo = "(//A[@href='#'])[7]"
-element_entrar_submodulo = "//A[@href='https://192.168.9.78/admin/configurar-soporte'][text()='Configurar Soporte']"
+
 agregar_btn_xpath = "//BUTTON[@class='btn btn-xs btn-outline-success rounded ml-2 pr-3 agregar']"
+rol = "//SELECT[@id='rol']"
+empleado = "//SELECT[@id='id_elaboro']"
 guardar_xpath = "//BUTTON[@class='btn btn-danger'][normalize-space(text())='Guardar']"

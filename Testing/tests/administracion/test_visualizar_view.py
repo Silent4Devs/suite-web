@@ -2,7 +2,7 @@ from pages.administracion.ajustes_de_sistema.visualizar_logs.view.visualizar_vie
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium import webdriver
 import pytest
-
+"""
 @pytest.fixture(scope="session")
 def browser():
     options = FirefoxOptions()
@@ -22,14 +22,13 @@ def browser():
     driver = webdriver.Firefox(options=options)
     yield driver
     driver.quit()
-      
+"""     
 def test_visualizar_view(browser):
     
  visualizar_view = View_visualizar(browser)
  visualizar_view.login()
- visualizar_view.in_submodulo(menu_hamburguesa, element_entrar_modulo, element_entrar_submodulo)
+ url_apartado_index = "https://192.168.9.78/admin/visualizar-logs"
+ visualizar_view.ruta_visualizar_logs_index(url_apartado_index)
 
-#Variables
-menu_hamburguesa = "//BUTTON[@class='btn-menu-header']"
-element_entrar_modulo = "(//A[@href='#'])[7]"
-element_entrar_submodulo = "//A[@href='https://192.168.9.78/admin/visualizar-logs'][text()='Visualizar Logs']"
+
+
