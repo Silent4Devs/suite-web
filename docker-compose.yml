@@ -233,12 +233,27 @@ services:
     networks:
       - tabantajnetwork
 
+  goservices:
+    image: ghcr.io/silent4devs/goservices:latest
+    container_name: goservices
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3300:3300"
+    command: "./goservices"
+    volumes:
+      - goservices_data:/goservices
+    networks:
+      - tabantajnetwork
+
 volumes:
   tabantaj-database:
     driver: local
   rabbitmq_data:
     driver: local
   pgadmin-data:
+    driver: local
+  goservices_data:
     driver: local
   # elasticsearch:
   #   driver: local
