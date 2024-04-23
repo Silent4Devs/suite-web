@@ -358,8 +358,10 @@
                 action="{{ route('contract_manager.requisiciones.rechazada', ['id' => $requisicion->id]) }}">
                 @csrf
                 <div class="flex" style="position: relative; top: -1rem;  justify-content: space-between;">
+                    @if (!$requisicion->firma_solicitante &&  !$requisicion->firma_jefe && !$requisicion->firma_compras  && !$requisicion->firma_finanzas)
                     <button class="btn btn-primary" style="background: #454545 !important;">RECHAZAR
                         REQUISICIÓN</button>
+                    @endif
                     <div onclick="validar();" style="" class="btn btn-primary">Firmar</div>
                 </div>
             </form>
