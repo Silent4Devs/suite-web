@@ -2442,27 +2442,27 @@ class PermissionsTableSeeder extends Seeder
             // Planes de Accion
             [
                 'title' => 'planes_de_accion_acceder',
-                'name' => 'Este permiso permite al usuario acceder al módulo de "Planes de acción", permite visualizar la opción "Planes de acción" en el menú del sistema',
+                'name' => 'Este permiso permite al usuario acceder al módulo de "Plan de Trabajo", permite visualizar la opción "Plan de Trabajo" en el menú del sistema',
             ],
 
             [
                 'title' => 'planes_de_accion_agregar',
-                'name' => 'Este permiso permite al usuario realizar la acción de agregar nuevos planes de acción en el módulo de planes de acción',
+                'name' => 'Este permiso permite al usuario realizar la acción de agregar nuevos Plan de Trabajo en el módulo de Planes de Trabajo',
             ],
 
             [
                 'title' => 'planes_de_accion_editar',
-                'name' => 'Este permiso permite al usuario realizar la acción de editar un plan de acción en el módulo de planes de acción',
+                'name' => 'Este permiso permite al usuario realizar la acción de editar un plan de acción en el módulo de Planes de Trabajo',
             ],
 
             [
                 'title' => 'planes_de_accion_eliminar',
-                'name' => 'Este permiso permite al usuario realizar la acción de eliminar un plan de acción en el módulo de planes de acción',
+                'name' => 'Este permiso permite al usuario realizar la acción de eliminar un plan de acción en el módulo de Planes de Trabajo',
             ],
 
             [
                 'title' => 'planes_de_accion_visualizar_diagrama',
-                'name' => 'Este permiso permite al usuario realizar la acción de visualizar diagrama del plan de acción en el módulo de planes de acción',
+                'name' => 'Este permiso permite al usuario realizar la acción de visualizar diagrama del plan de acción en el módulo de Planes de Trabajo',
             ],
             //Centro de Atención
             [

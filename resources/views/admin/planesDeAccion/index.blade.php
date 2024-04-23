@@ -27,7 +27,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" id="tab3-tab" data-toggle="tab" href="#tab3" role="tab" aria-controls="tab3"
-                    aria-selected="false">Area</a>
+                    aria-selected="false">Área</a>
             </li>
         </ul>
         <div class="tab-content" id="myTabContent">
