@@ -15,5 +15,5 @@
         </li>
     </ul>
 
-    @include('livewire.notificaciones-'.$view)
+    @include('livewire.notificaciones-' . $view)
 </div>
