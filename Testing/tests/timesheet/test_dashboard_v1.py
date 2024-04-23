@@ -37,11 +37,13 @@ def test_timesheet_dashboard(browser):
     dashboard_route = "https://192.168.9.78/admin/timesheet/dashboard"
     timesheet_dashboard.timesheet_dashboard_index(dashboard_route)
 
+    registro1="QA"
+    timesheet_dashboard.registros_timesheet_select_graphic(registro1)
+
     empleados = "//a[@class='nav-link'][contains(.,'Empleados')]"
     timesheet_dashboard.empleados_section(empleados)
 
     area="Desarrollo"
     timesheet_dashboard.empleados_por_area_select_graphic(area)
 
-    registos="QA"
-    timesheet_dashboard.registros_timesheet_select_graphic(registos)
+

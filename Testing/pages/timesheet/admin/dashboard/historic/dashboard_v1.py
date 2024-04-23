@@ -31,6 +31,16 @@ class TimesheetDashboard:
             print("Index de timesheet cargado.")
         except Exception as e:
             print("Error al cargar el index de timesheet:", e)
+
+    def registros_timesheet_select_graphic(self,registro1):
+        try:
+            self.driver.execute_script("window.scrollTo(0, 600)")
+            print("Scroll realizado.")
+            self._select_option_by_text("//select[contains(@id,'areas-graf-registros-general')]",registro1)
+            print("Registro seleccionado correctamente")
+        except Exception as e:
+            print("Error al seleccionar el registro")
+
     def empleados_section(self,empleados):
         try:
             self._click_element(empleados)
@@ -45,11 +55,11 @@ class TimesheetDashboard:
         except Exception as e:
             print("Error al seleccionar Empleado Área", e)
 
-    def registros_timesheet_select_graphic(self,registros):
+    def registros_timesheet_month_select_graphic(self,registro2):
         try:
             self.driver.execute_script("window.scrollTo(0, 600)")
             print("Scroll realizado.")
-            self._select_option_by_text("",registros)
+            self._select_option_by_text("//select[contains(@id,'registros-atrazados-empleado')]",registro2)
             print("Registro seleccionado correctamente")
         except Exception as e:
             print("Error al seleccionar el registro")
