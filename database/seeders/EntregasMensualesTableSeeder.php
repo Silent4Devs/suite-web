@@ -21151,7 +21151,7 @@ verificación (en caso de utilizarlas) y el reporte de auditoría correspondient
                 'no' => 10,
                 'contrato_id' => 66,
                 'nombre_entregable' => 'Relación de acciones correctivas y acciones de mejora continua del SGSI y del Gobierno de TI',
-                'descripcion' => 'SILENT4BUSINESS entregará la relación de acciones correctivas y acciones de mejora continua del SGSI y del Gobierno de TI, así como, los planes de acción correspondientes, planes de trabajo y avances correspondientes',
+                'descripcion' => 'SILENT4BUSINESS entregará la relación de acciones correctivas y acciones de mejora continua del SGSI y del Gobierno de TI, así como, los Plan de Trabajo correspondientes, planes de trabajo y avances correspondientes',
                 'plazo_entrega_inicio' => '2020-11-10',
                 'plazo_entrega_termina' => '2021-04-30',
                 'entrega_real' => '2021-04-30',

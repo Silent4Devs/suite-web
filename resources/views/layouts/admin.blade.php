@@ -306,7 +306,7 @@
                                 <div class="caja-icon-mod-header" style="background: #B1C6FF;">
                                     <i class="material-symbols-outlined">shield_person</i>
                                 </div>
-                                <span>Admin. de Proyectos</span>
+                                <span>Planes de Trabajo</span>
                             </a>
                         @endcan
                         @can('control_documentar_acceder')
