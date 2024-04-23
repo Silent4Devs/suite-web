@@ -18,7 +18,7 @@ class PlanTrabajoBaseController extends Controller
 
     public function listaDataTables()
     {
-        $planes = PlanImplementacion::where('es_plan_trabajo_base', true)->with('elaborador')->get();
+        $planes = PlanImplementacion::where('es_plan_trabajo_base', true)->with('elaborador')->orderBy('created_at', 'desc')->get();
 
         return datatables()->of($planes)->toJson();
     }

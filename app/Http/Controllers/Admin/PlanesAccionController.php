@@ -74,7 +74,7 @@ class PlanesAccionController extends Controller
         ]);
         $tasks = [
             [
-                'id' => 'tmp_' . (strtotime(now())) . '_1',
+                'id' => 'tmp_'.(strtotime(now())).'_1',
                 'end' => strtotime($request->fin) * 1000,
                 'name' => 'Plan de Trabajo - ' . $request->norma,
                 'level' => 0,
@@ -98,7 +98,7 @@ class PlanesAccionController extends Controller
                 'historic' => [],
             ],
             [
-                'id' => 'tmp_' . (strtotime(now())) . rand(1, 1000),
+                'id' => 'tmp_'.(strtotime(now())).rand(1, 1000),
                 'end' => strtotime($request->fin) * 1000,
                 'name' => $request->norma,
                 'level' => 1,
@@ -142,15 +142,15 @@ class PlanesAccionController extends Controller
         $mensaje = $request->es_plan_trabajo_base != null ? 'Plan de trabajo Base' : 'Plan de trabajo';
         $route = $request->es_plan_trabajo_base != null ? 'admin.planTrabajoBase.index' : 'admin.planes-de-accion.index';
 
-        return redirect()->route($route)->with('success', $mensaje . ' ' . $planImplementacion->parent . ' creado');
+        return redirect()->route($route)->with('success', $mensaje.' '.$planImplementacion->parent.' creado');
     }
 
     public function crearPlanDeAccion($modelo)
     {
-        if (!count($modelo->planes)) {
+        if (! count($modelo->planes)) {
             $tasks = [
                 [
-                    'id' => 'tmp_' . (strtotime(now())) . '_1',
+                    'id' => 'tmp_'.(strtotime(now())).'_1',
                     'end' => strtotime(now()) * 1000,
                     'name' => 'Plan de Trabajo - ' . $modelo->norma,
                     'level' => 0,
@@ -174,7 +174,7 @@ class PlanesAccionController extends Controller
                     'historic' => [],
                 ],
                 [
-                    'id' => 'tmp_' . (strtotime(now())) . rand(1, 1000),
+                    'id' => 'tmp_'.(strtotime(now())).rand(1, 1000),
                     'end' => strtotime(now()) * 1000,
                     'name' => $modelo->norma,
                     'level' => 1,
@@ -209,7 +209,7 @@ class PlanesAccionController extends Controller
             $planImplementacion->changesReasonWhy = false;
             $planImplementacion->selectedRow = 0;
             $planImplementacion->zoom = '3d';
-            $planImplementacion->parent = 'Incidente - ' . $modelo->folio;
+            $planImplementacion->parent = 'Incidente - '.$modelo->folio;
             $planImplementacion->norma = 'ISO 27001';
             $planImplementacion->modulo_origen = 'Incidentes';
             $planImplementacion->objetivo = null;
@@ -245,7 +245,7 @@ class PlanesAccionController extends Controller
 
             $planImplementacion = PlanImplementacion::find($planImplementacion);
 
-            if (!$planImplementacion) {
+            if (! $planImplementacion) {
                 abort(404);
             }
 
@@ -278,7 +278,7 @@ class PlanesAccionController extends Controller
             ]);
             $planImplementacion = PlanImplementacion::find($planImplementacion);
 
-            if (!$planImplementacion) {
+            if (! $planImplementacion) {
                 abort(404);
             }
 
