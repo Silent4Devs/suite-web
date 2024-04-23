@@ -240,7 +240,6 @@ services:
     tty: true
     ports:
       - "3300:3300"
-    command: "./goservices"
     volumes:
       - goservices_data:/goservices
     networks:
