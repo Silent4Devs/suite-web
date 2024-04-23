@@ -42,10 +42,10 @@ class Kernel extends ConsoleKernel
             ->withoutOverlapping()
             ->onOneServer()
             ->sentryMonitor();
-        $schedule->command('snapshot:create dump'.date('Y-m-d-H'))
+        $schedule->command('snapshot:create')
             ->timezone('America/Mexico_City')
             ->days([2, 5])
-            ->at('23:36')
+            ->at('23:00')
             ->withoutOverlapping()
             ->onOneServer()
             ->sentryMonitor();
