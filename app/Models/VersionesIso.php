@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Support\Facades\Schema;
 
 class VersionesIso extends Model implements Auditable
 {
@@ -28,8 +29,15 @@ class VersionesIso extends Model implements Auditable
     {
         $cacheKey = 'VersionesIso:First';
 
-        return Cache::remember($cacheKey, now()->addHours(12), function () {
-            return DB::table('versiones_iso')->select('id', 'version_historico')->first();
-        });
+        // Check if the table exists
+        if (Schema::hasTable('versiones_iso')) {
+            return Cache::remember($cacheKey, now()->addHours(12), function () {
+                return DB::table('versiones_iso')->select('id', 'version_historico')->first();
+            });
+        } else {
+            // If the table doesn't exist, return null or handle the case accordingly
+            return null;
+        }
     }
+
 }
