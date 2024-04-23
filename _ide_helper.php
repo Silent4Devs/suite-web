@@ -20426,6 +20426,42 @@ namespace Spatie\ResponseCache\Facades {
             }
     }
 
+namespace Spatie\SignalAwareCommand\Facades {
+            /**
+     * 
+     *
+     * @see \Spatie\SignalAwareCommand\Signal
+     */        class Signal {
+                    /**
+         * 
+         *
+         * @static 
+         */        public static function handle($signal, $callable)
+        {
+                        /** @var \Spatie\SignalAwareCommand\Signal $instance */
+                        return $instance->handle($signal, $callable);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */        public static function executeSignalHandlers($signal, $command)
+        {
+                        /** @var \Spatie\SignalAwareCommand\Signal $instance */
+                        return $instance->executeSignalHandlers($signal, $command);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */        public static function clearHandlers($signal = null)
+        {
+                        /** @var \Spatie\SignalAwareCommand\Signal $instance */
+                        return $instance->clearHandlers($signal);
+        }
+            }
+    }
+
 namespace Yajra\DataTables\Facades {
             /**
      * 
@@ -24668,6 +24704,7 @@ namespace  {
             class Sentry extends \Sentry\Laravel\Facade {}
             class Flare extends \Spatie\LaravelIgnition\Facades\Flare {}
             class ResponseCache extends \Spatie\ResponseCache\Facades\ResponseCache {}
+            class Signal extends \Spatie\SignalAwareCommand\Facades\Signal {}
             class DataTables extends \Yajra\DataTables\Facades\DataTables {}
     }
 
