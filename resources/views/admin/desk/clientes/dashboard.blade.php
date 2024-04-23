@@ -226,7 +226,7 @@
         <div class="col-6">
             <div class="card ">
                 <div class="card-header" style="height:40px; background-color: #345183;">
-                    <h5 style="font-size:15px" class="text-white">Estatus de los Planes de Acción</h5>
+                    <h5 style="font-size:15px" class="text-white">Estatus de los Planes de Trabajo</h5>
                 </div>
                 <div class="card-body">
                     <canvas id="chartCumplimientoComprometido" height="250"></canvas>

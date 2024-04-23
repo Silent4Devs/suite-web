@@ -27,14 +27,16 @@ def test_create_sedes(browser):
     
  create_sedes = Create_sedes(browser)
  create_sedes.login()
- create_sedes.in_submodulo(menu_hamburguesa, element_entrar_modulo, element_entrar_submodulo)
- create_sedes.add_sedes(agregar_btn_xpath, guardar_xpath)
+ url_sedes_index = "https://192.168.9.78/admin/sedes"
+ create_sedes.ruta_sedes_index(url_sedes_index)
+ create_sedes.add_sedes(agregar_btn_xpath, sede, direccion, descripcion, organizacion, guardar_xpath)
  
 #Variables
-menu_hamburguesa = "//BUTTON[@class='btn-menu-header']"
-element_entrar_submodulo = "//A[@href='https://192.168.9.78/admin/sedes'][text()='Sedes']"
-element_entrar_modulo = "(//A[@href='#'])[3]"
 agregar_btn_xpath= "//BUTTON[@class='btn btn-xs btn-outline-success rounded ml-2 pr-3']"
+sede = "//INPUT[@id='sede']"
+direccion = "//INPUT[@id='direccion']"
+descripcion = "//TEXTAREA[@id='descripcion']"
+organizacion = "//SELECT[@id='organizacion_id']"
 guardar_xpath = "//BUTTON[contains(@class, 'btn') and contains(@class, 'btn-danger') and normalize-space()='Guardar']"
 
 

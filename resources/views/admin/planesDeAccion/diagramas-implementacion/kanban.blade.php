@@ -287,6 +287,9 @@
     <script src="{{ asset('../js/kanban/jkanban.js') }}"></script>
     <script src="{{ asset('../js/kanban/kanbanFunc.js') }}"></script>
     <script>
+        $(function() {
+
+        });
         var Kanban
         const imagePath = '{{ asset('img/plan-trabajo/documento.svg') }}';
         const imagePathEye = '{{ asset('img/plan-trabajo/visibility.svg') }}';
@@ -309,6 +312,8 @@
                 }
             });
         }
+
+        function reloadKanban() {}
 
         function renderKanban(response) {
             $.ajax({
@@ -350,6 +355,7 @@
                 dragendEl: function(el) {},
                 dropEl: function(el, target, source, sibling) {
                     pintar(el.dataset.eid, el.offsetParent.dataset.id);
+                    contarElementosPorBoard();
                     guardarStatus(el.dataset.eid, source.offsetParent.dataset.id, target.offsetParent
                         .dataset
                         .id);
@@ -370,13 +376,13 @@
                     formItem.addEventListener("submit", function(e) {
                         e.preventDefault();
                         var text = e.target[0].value;
-                        insertTask(text, boardId);
                         let cardpulseClass = "";
                         if (status === "STATUS_FAILED") {
                             cardpulseClass = "pulse";
                         }
                         const timestamp = Date.now();
                         let id = "tmp_" + timestamp;
+                        insertTask(text, boardId, id);
                         var newElementHTML = `
                             <div id="id" class="cardContenido ${cardpulseClass}">
                               <div class="tituloCard">${text}</div>
@@ -528,7 +534,7 @@
                         <div class="initials" style="background-color: ${color}; color: white; border-radius: 50%; width: 35px; height: 35px; display: flex; justify-content: center; align-items: center; margin-right: 5px;font-size: 10px;">${initials}</div>
                         <div style="margin-left: 5px; margin-right: auto;"><a style="color: #818181;font-size: 14px; font-weight: bold;">${editedResource.name}</a> <a style="color: #818181;font-size: 12px;">${item.detalle}</a> <div>${fechaFormateada}</div></div>
                     </div>`
-                    }).join(""):
+                    }).join("") :
                     "<span>No tiene historial</span>";
 
                 //funcion mostar los documentos adjuntos
@@ -573,6 +579,26 @@
                 modal.show();
 
             }
+        }
+
+        function contarElementosPorBoard() {
+            var tableros = {
+                "STATUS_UNDEFINED": "tareasStrong",
+                "STATUS_SUSPENDED": "suspendidosStrong",
+                "STATUS_ACTIVE": "procesoStrong",
+                "STATUS_FAILED": "retrasadosStrong",
+                "STATUS_DONE": "completadosStrong"
+            };
+
+            var sumaTotal = 0;
+            for (var tablero in tableros) {
+                if (tableros.hasOwnProperty(tablero)) {
+                    var elementos = Kanban.getBoardElements(tablero);
+                    document.getElementById(tableros[tablero]).innerHTML = elementos.length;
+                    sumaTotal += elementos.length;
+                }
+            }
+            document.getElementById('totalesStrong').innerHTML = sumaTotal;
         }
 
         function items(array) {

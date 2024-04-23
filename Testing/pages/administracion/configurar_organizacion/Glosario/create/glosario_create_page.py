@@ -4,6 +4,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 from config import password_c, username_c
+import pdb
 
 
 #Temporizadores
@@ -69,44 +70,17 @@ class Create_Glosario:
 
     ##########################################Entrar a Modulo y Submodulo
 
-    def in_submodulo(self, menu_hamburguesa, element_entrar_modulo, element_entrar_submodulo):
-    
-        time.sleep(tiempo_modulos)
-        
-        #Menu Hamburguesa
-        print("Ingresando a Menu Hamburguesa")
-        menu_hamb = WebDriverWait(self.driver, 3).until(
-            EC.element_to_be_clickable((By.XPATH, menu_hamburguesa))
-        )
-        menu_hamb.click()
-
-        time.sleep(5)
-        
-        #Modulo Configurar Organizacion
-        print("Ingresando a Modulo Configurar Organizacion ...")
-        in_modulo = WebDriverWait(self.driver, 3).until(
-            EC.element_to_be_clickable((By.XPATH, element_entrar_modulo))
-        )
-        in_modulo.click()
-        
-        time.sleep(tiempo_modulos)
-        
-        #Submodulo Glosario
-        print("Ingresando a Submenu Glosario ...")
-        sub_modulo= WebDriverWait(self.driver, 3).until(
-            EC.visibility_of_element_located((By.XPATH, element_entrar_submodulo))
-        )
-        sub_modulo.click()
-        
-        time.sleep(tiempo_modulos)
-        
-        print("URL actual:", self.driver.current_url)
-
-
+    def ruta_glosario_index(self, url_glosario):
+        try:
+            self.driver.get(url_glosario)
+            print("Index de Configurar Organizacio / Glosario cargado.")
+        except Exception as e:
+            print("Error al cargar el index de Configurar Organizacio / Glosario", e)
+            pdb.set_trace()
 
     ########################################## Agregar 
 
-    def add_glosario(self, agregar_btn_xpath, guardar_xpath):
+    def add_glosario(self, agregar_btn_xpath, inciso, norma, concepto, definicion, explicacion, guardar_xpath):
         
         time.sleep(tiempo_modulos)
         
@@ -119,52 +93,52 @@ class Create_Glosario:
         time.sleep(tiempo_modulos)
         
         # Inciso
+        print("Campo Inciso llenado")
         campo_inciso = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//INPUT[@id='numero']"))
+            EC.presence_of_element_located((By.XPATH, inciso))
             )
         campo_inciso.click()
-        campo_inciso.send_keys("00117")
-        print("Campo Inciso llenado")
+        campo_inciso.send_keys("01011712")
 
         time.sleep(tiempo_modulos)
         
         # Norma
+        print("Campo Norma llenado")
         campo_norma = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//INPUT[@id='norma']"))
+            EC.presence_of_element_located((By.XPATH, norma))
             )
         campo_norma.click()
-        campo_norma.send_keys("Norma de Prueba")
-        print("Campo Norma llenado")
+        campo_norma.send_keys("Norma de Prueba Carpetas")
 
         time.sleep(tiempo_modulos)
         
         # Concepto
+        print("Campo Concepto llenado")
         campo_concepto = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//INPUT[@id='concepto']"))
+            EC.presence_of_element_located((By.XPATH, concepto))
             )
         campo_concepto.click()  
-        campo_concepto.send_keys("Concepto de Prueba")
-        print("Campo Concepto llenado")
-
+        campo_concepto.send_keys("Concepto de Prueba Carpetas")
+        
         time.sleep(tiempo_modulos)
         
         # Definicion
+        print("Campo Definicion llenado")
         campo_definicion = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//TEXTAREA[@id='definicion']"))
+            EC.presence_of_element_located((By.XPATH, definicion))
             )
         campo_definicion.click()
-        campo_definicion.send_keys("Definicion de prueba")
-        print("Campo Definicion llenado")
+        campo_definicion.send_keys("Definicion de prueba Carpetas")
     
         time.sleep(tiempo_modulos)
         
         # Explicacion
+        print("Campo Explicacion llenado")
         campo_explicacion = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//TEXTAREA[@id='explicacion']"))
+            EC.presence_of_element_located((By.XPATH, explicacion))
             )
         campo_explicacion.click()
-        campo_explicacion.send_keys("Explicacion de prueba")
-        print("Campo Explicacion llenado")
+        campo_explicacion.send_keys("Explicacion de prueba carpetas")
         
         time.sleep(tiempo_modulos)
         
@@ -174,6 +148,8 @@ class Create_Glosario:
             EC.element_to_be_clickable((By.XPATH, guardar_xpath))
         )
         guardar.click()
+        
+        time.sleep(10)
         
         print("URL actual:", self.driver.current_url)
                     

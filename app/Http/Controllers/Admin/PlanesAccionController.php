@@ -64,22 +64,19 @@ class PlanesAccionController extends Controller
     {
         $request->validate([
             'parent' => 'required|string|max:255',
-            'inicio' => 'required|string',
-            'fin' => 'required|string',
-            // 'norma' => 'required|string',
-            // 'modulo_origen' => 'required|string',
+            'inicio' => 'required|date',
+            'fin' => 'required|date|after:inicio', // Asegura que la fecha de fin sea después de la fecha de inicio
             'objetivo' => 'required|string|max:550',
         ], [
-            'parent.required' => 'Debes de definir un nombre para el plan de acción',
-            // 'norma.required' => 'Debes de definir una norma para el plan de acción',
-            // 'modulo_origen.required' => 'Debes de definir un módulo de origen para el plan de acción',
-            'objetivo.required' => 'Debes de definir un objetivo para el plan de acción',
+            'parent.required' => 'Debes definir un nombre para el plan de trabajo',
+            'objetivo.required' => 'Debes definir un objetivo para el plan de trabajo',
+            'fin.after' => 'La fecha de fin debe ser posterior a la fecha de inicio',
         ]);
         $tasks = [
             [
                 'id' => 'tmp_'.(strtotime(now())).'_1',
                 'end' => strtotime($request->fin) * 1000,
-                'name' => 'Plan de Accion - '.$request->norma,
+                'name' => 'Plan de Trabajo - '.$request->norma,
                 'level' => 0,
                 'start' => strtotime($request->inicio) * 1000,
                 'canAdd' => true,
@@ -142,7 +139,7 @@ class PlanesAccionController extends Controller
             'es_plan_trabajo_base' => $request->es_plan_trabajo_base != null ? true : false,
         ]);
 
-        $mensaje = $request->es_plan_trabajo_base != null ? 'Plan de Trabajo Base' : 'Plan de Acción';
+        $mensaje = $request->es_plan_trabajo_base != null ? 'Plan de trabajo Base' : 'Plan de trabajo';
         $route = $request->es_plan_trabajo_base != null ? 'admin.planTrabajoBase.index' : 'admin.planes-de-accion.index';
 
         return redirect()->route($route)->with('success', $mensaje.' '.$planImplementacion->parent.' creado');
@@ -155,7 +152,7 @@ class PlanesAccionController extends Controller
                 [
                     'id' => 'tmp_'.(strtotime(now())).'_1',
                     'end' => strtotime(now()) * 1000,
-                    'name' => 'Plan de Accion - '.$modelo->norma,
+                    'name' => 'Plan de Trabajo - '.$modelo->norma,
                     'level' => 0,
                     'start' => strtotime(now()) * 1000,
                     'canAdd' => true,
@@ -226,6 +223,11 @@ class PlanesAccionController extends Controller
     {
         $planImplementacion = PlanImplementacion::find($planImplementacion);
 
+        if (! $planImplementacion) {
+            // Si no existe, redirigir o mostrar un mensaje de error
+            abort(404);
+        }
+
         return view('admin.planesDeAccion.show', compact('planImplementacion'));
     }
 
@@ -265,19 +267,14 @@ class PlanesAccionController extends Controller
     {
         try {
             $request->validate([
-                'parent' => 'required|string',
-                'inicio' => 'required|string',
-                'fin' => 'required|string',
-                // 'norma' => 'required|string',
-                // 'modulo_origen' => 'required|string',
+                'parent' => 'required|string|max:255',
+                'inicio' => 'required|date',
+                'fin' => 'required|date|after:inicio', // Asegura que la fecha de fin sea después de la fecha de inicio
                 'objetivo' => 'required|string|max:550',
             ], [
-                'parent.required' => 'Debes de definir un nombre para el plan de acción',
-                'inicio' => 'Debes de definir una fecha para el plan de acción',
-                'fin' => 'Debes de definir una fecha para el plan de acción',
-                // 'norma.required' => 'Debes de definir una norma para el plan de acción',
-                // 'modulo_origen.required' => 'Debes de definir un módulo de origen para el plan de acción',
-                'objetivo.required' => 'Debes de definir un objetivo para el plan de acción',
+                'parent.required' => 'Debes definir un nombre para el plan de trabajo',
+                'objetivo.required' => 'Debes definir un objetivo para el plan de trabajo',
+                'fin.after' => 'La fecha de fin debe ser posterior a la fecha de inicio',
             ]);
             $planImplementacion = PlanImplementacion::find($planImplementacion);
 
@@ -328,7 +325,7 @@ class PlanesAccionController extends Controller
 
             return redirect()->route('admin.planes-de-accion.index')->with('success', 'Eliminado exitosamente');
         } else {
-            return redirect()->route('admin.planes-de-accion.index')->with('error', 'No se encontró el Plan de Acción para eliminar');
+            return redirect()->route('admin.planes-de-accion.index')->with('error', 'No se encontró el Plan de Trabajo para eliminar');
         }
     }
 

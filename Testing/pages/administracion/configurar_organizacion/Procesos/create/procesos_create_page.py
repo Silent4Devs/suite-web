@@ -4,6 +4,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 from config import password_c, username_c
+import pdb
 
 
 #Temporizadores
@@ -69,44 +70,17 @@ class Create_Procesos:
 
     ##########################################Entrar a Modulo y Submodulo
 
-    def in_submodulo(self, menu_hamburguesa, element_entrar_modulo, element_entrar_submodulo):
-    
-        time.sleep(tiempo_modulos)
-        
-        #Menu Hamburguesa
-        print("Ingresando a Menu Hamburguesa")
-        menu_hamb = WebDriverWait(self.driver, 3).until(
-            EC.element_to_be_clickable((By.XPATH, menu_hamburguesa))
-        )
-        menu_hamb.click()
-
-        time.sleep(5)
-        
-        #Modulo Configurar Organizacion
-        print("Ingresando a Modulo Configurar Organizacion ...")
-        in_modulo = WebDriverWait(self.driver, 3).until(
-            EC.element_to_be_clickable((By.XPATH, element_entrar_modulo))
-        )
-        in_modulo.click()
-        
-        time.sleep(tiempo_modulos)
-        
-        #Submodulo Grupo de Areas
-        print("Ingresando a Submenu Procesos ...")
-        sub_modulo= WebDriverWait(self.driver, 3).until(
-            EC.element_to_be_clickable((By.XPATH, element_entrar_submodulo))
-        )
-        sub_modulo.click()
-        
-        time.sleep(tiempo_modulos)
-        
-        print("URL actual:", self.driver.current_url)
-
-
+    def ruta_procesos_index(self, url_procesos_index):
+        try:
+            self.driver.get(url_procesos_index)
+            print("Index de Configurar Organizacion / Procesos cargado.")
+        except Exception as e:
+            print("Error al cargar el index de Configurar Organizacion / Procesos", e)
+            pdb.set_trace()
 
     ########################################## Agregar Crear Areas
 
-    def add_procesos(self, agregar_btn_xpath, guardar_xpath):
+    def add_procesos(self, agregar_btn_xpath, codigo, nombre, macroprocesos, descripcion, guardar_xpath):
         
         # Dando clic en Boton Resgistrar Procesos
         print("Dando clic al botón registrar procesos...")
@@ -118,7 +92,7 @@ class Create_Procesos:
         
         # Codigo
         campo_codigo = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//INPUT[@id='codigo']"))
+            EC.presence_of_element_located((By.XPATH, codigo))
             )
         campo_codigo.click()
         campo_codigo.send_keys("000117")
@@ -128,7 +102,7 @@ class Create_Procesos:
         
         # Nombre
         campo_nombre = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//INPUT[@id='nombre']"))
+            EC.presence_of_element_located((By.XPATH, nombre))
             )
         campo_nombre.click()
         campo_nombre.send_keys("Nombre de Prueba")
@@ -138,7 +112,7 @@ class Create_Procesos:
         
         # Macroproceso
         campo_macroproceso = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//SELECT[@id='id_macroproceso']"))
+            EC.presence_of_element_located((By.XPATH, macroprocesos))
             )
         campo_macroproceso.click()
         time.sleep(tiempo_modulos)
@@ -151,7 +125,7 @@ class Create_Procesos:
         
         # Descripcion
         campo_descripcion = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//TEXTAREA[@id='descripcion']"))
+            EC.presence_of_element_located((By.XPATH, descripcion))
             )
         campo_descripcion.click()
         campo_descripcion.send_keys("Descripcion de prueba")

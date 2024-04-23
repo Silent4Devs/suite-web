@@ -3,6 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
+import pdb
 from config import password_c, username_c
 
 
@@ -69,51 +70,26 @@ class Edit_Gloario:
 
     ##########################################Entrar a Modulo y Submodulo
 
-    def in_submodulo(self, menu_hamburguesa, element_entrar_modulo, element_entrar_submodulo):
+    def ruta_glosario_index(self, url_glosario):
+        try:
+            self.driver.get(url_glosario)
+            print("Index de Configurar Organizacio / Glosario cargado.")
+        except Exception as e:
+            print("Error al cargar el index de Configurar Organizacio / Glosario", e)
+            pdb.set_trace()
     
-        time.sleep(tiempo_modulos)
+    
         
-        #Menu Hamburguesa
-        print("Ingresando a Menu Hamburguesa")
-        menu_hamb = WebDriverWait(self.driver, 3).until(
-            EC.element_to_be_clickable((By.XPATH, menu_hamburguesa))
-        )
-        menu_hamb.click()
-
-        time.sleep(5)
-        
-        #Modulo Configurar Organizacion
-        print("Ingresando a Modulo Configurar Organizacion ...")
-        in_modulo = WebDriverWait(self.driver, 3).until(
-            EC.element_to_be_clickable((By.XPATH, element_entrar_modulo))
-        )
-        in_modulo.click()
-        
-        time.sleep(tiempo_modulos)
-        
-        #Submodulo Glosario
-        print("Ingresando a Submenu Glosario ...")
-        sub_modulo= WebDriverWait(self.driver, 3).until(
-            EC.visibility_of_element_located((By.XPATH, element_entrar_submodulo))
-        )
-        sub_modulo.click()
-        
-        time.sleep(tiempo_modulos)
-        
-        print("URL actual:", self.driver.current_url)
-
-
-
     ########################################## Editar
 
-    def edit_glosario(self, campo_buscar_xpath, boton_editar, guardar_xpath):
+    def edit_glosario(self, campo_buscar_xpath, boton_editar, definicion, guardar_xpath):
         
         # Campo Buscar
         campo_entrada = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located((By.XPATH, campo_buscar_xpath))
         )
         campo_entrada.clear()
-        campo_entrada.send_keys("00117")
+        campo_entrada.send_keys("3.5")
         print("Campo Buscar llenado")
 
         time.sleep(tiempo_modulos)
@@ -129,12 +105,12 @@ class Edit_Gloario:
         time.sleep(tiempo_modulos)  
         
         # Definicion
+        print("Llenando Campo Definicion Actualizado")
         campo_definicion = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//TEXTAREA[@id='definicion']"))
+            EC.presence_of_element_located((By.XPATH, definicion))
             )
         campo_definicion.click()
-        campo_definicion.send_keys("Definicion de prueba Actualizado")
-        print("Campo Definicion Actualizado")
+        campo_definicion.send_keys("Definicion de prueba Actualizado 222")
     
         time.sleep(tiempo_modulos)
 
