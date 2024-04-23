@@ -45,7 +45,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('snapshot:create')
             ->timezone('America/Mexico_City')
             ->days([2, 5])
-            ->at('23:36')
+            ->at('13:00')
             ->withoutOverlapping()
             ->onOneServer()
             ->sentryMonitor();
