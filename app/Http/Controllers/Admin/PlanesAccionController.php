@@ -76,7 +76,7 @@ class PlanesAccionController extends Controller
             [
                 'id' => 'tmp_'.(strtotime(now())).'_1',
                 'end' => strtotime($request->fin) * 1000,
-                'name' => 'Plan de Trabajo - ' . $request->norma,
+                'name' => 'Plan de Trabajo - '.$request->norma,
                 'level' => 0,
                 'start' => strtotime($request->inicio) * 1000,
                 'canAdd' => true,
@@ -152,7 +152,7 @@ class PlanesAccionController extends Controller
                 [
                     'id' => 'tmp_'.(strtotime(now())).'_1',
                     'end' => strtotime(now()) * 1000,
-                    'name' => 'Plan de Trabajo - ' . $modelo->norma,
+                    'name' => 'Plan de Trabajo - '.$modelo->norma,
                     'level' => 0,
                     'start' => strtotime(now()) * 1000,
                     'canAdd' => true,
@@ -223,7 +223,7 @@ class PlanesAccionController extends Controller
     {
         $planImplementacion = PlanImplementacion::find($planImplementacion);
 
-        if (!$planImplementacion) {
+        if (! $planImplementacion) {
             // Si no existe, redirigir o mostrar un mensaje de error
             abort(404);
         }

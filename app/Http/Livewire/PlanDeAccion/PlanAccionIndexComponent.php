@@ -3,12 +3,13 @@
 namespace App\Http\Livewire\PlanDeAccion;
 
 use App\Models\PlanImplementacion;
-use Livewire\Component;
 use App\Models\User;
+use Livewire\Component;
 
 class PlanAccionIndexComponent extends Component
 {
     public $perPage = 5;
+
     public $tab;
 
     public function mount($tab)
