@@ -4,7 +4,7 @@ from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from pages.timesheet.admin.dashboard.historic.dashboard_v1 import TimesheetDashboard
 from config import username, password
-
+'''
 @pytest.fixture(scope="session")
 def browser():
     options = FirefoxOptions()
@@ -25,7 +25,7 @@ def browser():
     driver = webdriver.Firefox(options=options)
     yield driver
     driver.quit()
-
+'''
 def test_timesheet_dashboard(browser):
     timesheet_dashboard = TimesheetDashboard(browser)
     username_input = "input[name='email']"
@@ -37,13 +37,15 @@ def test_timesheet_dashboard(browser):
     dashboard_route = "https://192.168.9.78/admin/timesheet/dashboard"
     timesheet_dashboard.timesheet_dashboard_index(dashboard_route)
 
-    registro1="QA"
-    timesheet_dashboard.registros_timesheet_select_graphic(registro1)
+    select1 = "//select[@class='form-control' and @id='areas-graf-areas-time']"
+    registro1 = "QA"
+    timesheet_dashboard.registros_timesheet_area_select_graphic(select1,registro1)
 
-    empleados = "//a[@class='nav-link'][contains(.,'Empleados')]"
-    timesheet_dashboard.empleados_section(empleados)
+    select2="//select[contains(@id,'areas-graf-registros-general')]"
+    registro2 = "QA"
+    timesheet_dashboard.registro_timesheet_select_graphic(select2,registro2)
 
-    area="Desarrollo"
-    timesheet_dashboard.empleados_por_area_select_graphic(area)
-
+    select3 = "//select[contains(@id,'graf-registros-area')]"
+    registro3 = "QA"
+    timesheet_dashboard.registro_horas_area_select_graphic(select3,registro3)
 

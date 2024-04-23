@@ -32,12 +32,31 @@ class TimesheetDashboard:
         except Exception as e:
             print("Error al cargar el index de timesheet:", e)
 
-    def registros_timesheet_select_graphic(self,registro1):
+    def registros_timesheet_area_select_graphic(self,select1,registro1):
+        try:
+            self._select_option_by_text(select1,registro1)
+            print("Registro seleccionado correctamente")
+            print("Se imprimio el registro: ",registro1)
+        except Exception as e:
+            print("Error al seleccionar el registro")
+
+    def registro_timesheet_select_graphic(self,select2,registro2):
         try:
             self.driver.execute_script("window.scrollTo(0, 600)")
             print("Scroll realizado.")
-            self._select_option_by_text("//select[contains(@id,'areas-graf-registros-general')]",registro1)
+            self._select_option_by_text(select2,registro2)
             print("Registro seleccionado correctamente")
+            print("Se imprimio el registro: ",registro2)
+        except Exception as e:
+            print("Error al seleccionar el registro")
+
+    def registro_horas_area_select_graphic(self,select3,registro3):
+        try:
+            print("Scroll realizado.")
+            self._select_option_by_text(select3,registro3)
+            print("Registro seleccionado correctamente")
+            print("Se imprimio el registro: ",registro3)
+
         except Exception as e:
             print("Error al seleccionar el registro")
 
