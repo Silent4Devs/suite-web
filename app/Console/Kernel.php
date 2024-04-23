@@ -42,6 +42,7 @@ class Kernel extends ConsoleKernel
             ->withoutOverlapping()
             ->onOneServer()
             ->sentryMonitor();
+
         $schedule->command('snapshot:create')
             ->timezone('America/Mexico_City')
             ->days([2, 5])
@@ -49,6 +50,9 @@ class Kernel extends ConsoleKernel
             ->withoutOverlapping()
             ->onOneServer()
             ->sentryMonitor();
+
+        $schedule->command('backup:clean')->daily()->at('18:00');
+        $schedule->command('backup:run')->daily()->at('18:30');
     }
 
     /**
