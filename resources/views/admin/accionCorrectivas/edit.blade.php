@@ -891,7 +891,7 @@
                         if (planes.length > 0) {
                             Swal.fire({
                                 title: 'Desea vincular plan(es)?',
-                                text: "Esta acción se visualizara en planes de acción!",
+                                text: "Esta acción se visualizara en Planes de Trabajo!",
                                 icon: 'warning',
                                 showCancelButton: true,
                                 confirmButtonColor: '#3085d6',
