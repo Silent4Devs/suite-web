@@ -110,6 +110,9 @@
             </div>
             @if ($empleado)
                 <ul class="ml-auto c-header-nav">
+                    {{-- <li style="position: relative; right:2rem;">
+                        @livewire('campana-notificaciones-component')
+                    </li> --}}
                     <li class="c-header-nav-item dropdown show">
                         <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button"
                             aria-haspopup="true" aria-expanded="false">
