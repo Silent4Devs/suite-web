@@ -126,19 +126,37 @@ class AnalisisdeRiesgosController extends Controller
 
     public function show(Request $request, $id)
     {
-        abort_if(Gate::denies('matriz_de_riesgo_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $analisis = AnalisisDeRiesgo::find($id);
 
-        return view('admin.analisis-riesgos.show', compact('analisis'));
+        try {
+            abort_if(Gate::denies('matriz_de_riesgo_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            $analisis = AnalisisDeRiesgo::find($id);
+
+            if ($analisis) {
+                abort(404);
+            }
+
+            return view('admin.analisis-riesgos.show', compact('analisis'));
+        } catch (\Throwable $th) {
+            abort(404);
+        }
     }
 
     public function edit($id)
     {
-        abort_if(Gate::denies('matriz_de_riesgo_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $empleados = Empleado::getaltaAll();
-        $analisis = AnalisisDeRiesgo::find($id);
+        try {
+            abort_if(Gate::denies('matriz_de_riesgo_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            $empleados = Empleado::getaltaAll();
 
-        return view('admin.analisis-riesgos.edit', compact('empleados', 'analisis'));
+            if ($id) {
+                abort(404);
+            }
+
+            $analisis = AnalisisDeRiesgo::find($id);
+
+            return view('admin.analisis-riesgos.edit', compact('empleados', 'analisis'));
+        } catch (\Throwable $th) {
+            abort(404);
+        }
     }
 
     public function update(Request $request, $id)
@@ -160,11 +178,19 @@ class AnalisisdeRiesgosController extends Controller
 
     public function destroy($id)
     {
-        abort_if(Gate::denies('matriz_de_riesgo_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $analisis = AnalisisDeRiesgo::find($id);
-        $analisis->delete();
+        try {
+            abort_if(Gate::denies('matriz_de_riesgo_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            $analisis = AnalisisDeRiesgo::find($id);
 
-        return redirect()->route('admin.analisis-riesgos.index')->with('success', 'Eliminado con éxito');
+            if (!$analisis) {
+                abort(404);
+            }
+            $analisis->delete();
+
+            return redirect()->route('admin.analisis-riesgos.index')->with('success', 'Eliminado con éxito');
+        } catch (\Throwable $th) {
+            abort(404);
+        }
     }
 
     public function getEmployeeData(Request $request)

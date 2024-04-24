@@ -14,6 +14,7 @@ use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
+use App\Events\AuditoriaAnualEvent;
 
 class AuditoriaAnualController extends Controller
 {
@@ -178,7 +179,7 @@ class AuditoriaAnualController extends Controller
         $auditoria = AuditoriaAnual::with('documentos_material')->find($request->auditoriaId);
         $paths = [];
         foreach ($auditoria->documentos_material as $documento) {
-            $path = asset('storage/programaAnualAuditoria/documentos/'.$auditoria->id.'/'.$documento->documento);
+            $path = asset('storage/programaAnualAuditoria/documentos/' . $auditoria->id . '/' . $documento->documento);
             $extension = pathinfo($path, PATHINFO_EXTENSION);
             array_push($paths, [
                 'path' => $path,
