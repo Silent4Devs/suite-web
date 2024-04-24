@@ -26,7 +26,7 @@ def browser():
     yield driver
     driver.quit()
 
-def test_timesheet_dashboard(browser):
+def test_dashboard_empleados(browser):
     timesheet_dashboardempleados = DashboardEmpleadosTimesheet(browser)
     username_input = "input[name='email']"
     password_input = "input[name='password']"
