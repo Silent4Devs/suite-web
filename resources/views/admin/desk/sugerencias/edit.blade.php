@@ -190,7 +190,7 @@
                             <div class="mt-2 form-group col-12">
                                 <label class="form-label"><i class="fas fa-file-alt iconos-crear"></i> Describa
                                     detalladamente su sugerencia<sup>*</sup></label>
-                                <textarea name="descripcion"
+                                <textarea name="descripcion" maxlength="555"
                                     class="form-control" required>{{ $sugerencias->descripcion }}</textarea>
                             </div>
 

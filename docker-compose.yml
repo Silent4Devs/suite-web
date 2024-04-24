@@ -17,14 +17,6 @@ services:
       - php
       - postgres-tabantaj
       - redis-tabantaj
-    labels:
-      #com.datadoghq.ad.check_names: '[""]'
-      com.datadoghq.ad.init_configs: "[{}]"
-      com.datadoghq.ad.instances: '[{"host":"%%host%%", "port": "%%port%%"}]'
-      com.datadoghq.ad.logs: '[{"source": "nginx", "service": "nginx-tabantaj"}]'
-      com.datadoghq.tags.env: "prod"
-      com.datadoghq.tags.service: "tabantaj"
-      com.datadoghq.tags.version: "1"
     env_file:
       - .env
     logging:
