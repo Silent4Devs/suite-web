@@ -28,16 +28,15 @@ def test_edit_capacitaciones(browser):
     
     capacitaciones_edit = Edit_Capacitaciones(browser)
     capacitaciones_edit.login()
-    capacitaciones_edit.in_submodulo(menu_hamburguesa, element_entrar_modulo, element_entrar_submodulo)
+    url_apartado_index = "https://192.168.9.78/admin/recursos"
+    capacitaciones_edit.ruta_clausula_index(url_apartado_index)
     capacitaciones_edit.edit_capacitaciones(campo_buscar_xpath, trespuntos_btn_xpath, btn2_editar, guardar_xpath)
  
 #Variables
-menu_hamburguesa = "//BUTTON[@class='btn-menu-header']"
-element_entrar_modulo = "(//A[@href='#'])[4]"
-element_entrar_submodulo = "//A[@href='https://192.168.9.78/admin/recursos'][text()='Capacitaciones']"
-guardar_xpath = "//button[contains(@class, 'btn-danger') and normalize-space(text())='Guardar']"
 
 campo_buscar_xpath= "(//INPUT[@type='search'])[2]"
 trespuntos_btn_xpath= "(//BUTTON[@class='btn btn-action-show-datatables-global d-none'])[1]"
 btn2_editar = "(//I[@class='fas fa-edit'])[1]"
+instructor = "//INPUT[@id='instructor']"
+guardar_xpath = "//button[contains(@class, 'btn-danger') and normalize-space(text())='Guardar']"
 

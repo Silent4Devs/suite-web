@@ -69,44 +69,19 @@ class Edit_Capacitaciones:
 
     ##########################################Entrar a Modulo y Submodulo
 
-    def in_submodulo(self, menu_hamburguesa, element_entrar_modulo, element_entrar_submodulo):
-    
-        time.sleep(tiempo_modulos)
-        
-        #Menu Hamburguesa
-        print("Ingresando a Menu Hamburguesa")
-        menu_hamb = WebDriverWait(self.driver, 3).until(
-            EC.element_to_be_clickable((By.XPATH, menu_hamburguesa))
-        )
-        menu_hamb.click()
-
-        time.sleep(5)
-        
-        #Modulo Configurar C.Humano
-        print("Ingresando a Modulo Configurar C.Humano ...")
-        in_modulo = WebDriverWait(self.driver, 3).until(
-            EC.visibility_of_element_located((By.XPATH, element_entrar_modulo))
-        )
-        in_modulo.click()
-        
-        time.sleep(tiempo_modulos)
-        
-        #Submodulo Capacitaciones
-        print("Ingresando a Submenu Capacitaciones ...")
-        sub_modulo= WebDriverWait(self.driver, 10).until(
-            EC.visibility_of_element_located((By.XPATH, element_entrar_submodulo))
-        )
-        sub_modulo.click()
-        
-        time.sleep(5)
+    print("Entrando a módulo correspondiente")
+    def ruta_clausula_index(self, url_apartado_index):
+        try:
+            self.driver.get(url_apartado_index)
+            print("Index de Configurar C. Humano / Capacitaciones")
+        except Exception as e:
+            print("Error al cargar el index de Configurar C. Humano / Capacitaciones", e)
         
         print("URL actual:", self.driver.current_url)
 
-
-
     ########################################## Editar
 
-    def edit_capacitaciones(self, campo_buscar_xpath, trespuntos_btn_xpath, btn2_editar, guardar_xpath):
+    def edit_capacitaciones(self, campo_buscar_xpath, btn2_editar,instructor, guardar_xpath):
         
         # Campo Buscar
         campo_entrada = WebDriverWait(self.driver, 10).until(
@@ -115,16 +90,6 @@ class Edit_Capacitaciones:
         campo_entrada.clear()
         campo_entrada.send_keys("Nombre de Puesto de Prueba 117")
         print("Llenando Campo Buscar ...")
-
-        time.sleep(tiempo_modulos)
-
-        # Boton 3 puntos
-        print("Dando clic al botón 3 puntos...")
-        wait = WebDriverWait(self.driver, 10)
-        # Esperar a que el elemento esté presente en el DOM
-        puntos_btn = wait.until(EC.presence_of_element_located((By.XPATH, trespuntos_btn_xpath)))
-        # Ahora intenta hacer clic en el elemento
-        puntos_btn.click()
 
         time.sleep(tiempo_modulos)
 
@@ -138,16 +103,12 @@ class Edit_Capacitaciones:
 
         time.sleep(tiempo_modulos)  
         
-        # Ingresar resultado esperado
-        resultado_esperado_ingresado = "Resultado esperado de prueba"
-
-        campo_entrada = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//TEXTAREA[@id='resultado_certificado_responsabilidades']"))
+        # Instructor
+        print("Actualizando Campo Instructor...")
+        campo_instructor = WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, instructor))
         )
-
-        campo_entrada.clear()
-        campo_entrada.send_keys(resultado_esperado_ingresado)
-        print("Llenando Campo Resultado esperado actualizado ...")
+        campo_instructor.send_keys("César Ernesto Escobar Hernandez")
 
         time.sleep(tiempo_modulos)  
 
