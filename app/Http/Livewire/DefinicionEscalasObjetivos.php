@@ -24,6 +24,9 @@ class DefinicionEscalasObjetivos extends Component
 
     public $maximo = null;
 
+    public $valor_estatus_1;
+    public $valor_estatus_2;
+
     public function addParametro1()
     {
         $this->parametros[] = '';
@@ -43,9 +46,12 @@ class DefinicionEscalasObjetivos extends Component
         if (isset($escalas[0]->parametro)) {
             $this->estatus_1 = $escalas[0]->parametro;
             $this->color_estatus_1 = $escalas[0]->color;
+            $this->valor_estatus_1 = $escalas[0]->valor;
+
 
             $this->estatus_2 = $escalas[1]->parametro;
             $this->color_estatus_2 = $escalas[1]->color;
+            $this->valor_estatus_2 = $escalas[1]->valor;
             // dd($escalas);
             foreach ($escalas as $key => $esc) {
                 if ($key > 1) {
@@ -53,6 +59,7 @@ class DefinicionEscalasObjetivos extends Component
                         [
                             'parametro' => $esc->parametro,
                             'color_estatus' => $esc->color,
+                            'valor' => $esc->valor,
                         ];
                 }
             }
@@ -89,11 +96,13 @@ class DefinicionEscalasObjetivos extends Component
         EscalasMedicionObjetivos::create([
             'parametro' => $data['estatus_1'],
             'color' => $data['color_estatus_1'],
+            'valor' => $data['valor_estatus_1']
         ]);
 
         EscalasMedicionObjetivos::create([
             'parametro' => $data['estatus_2'],
             'color' => $data['color_estatus_2'],
+            'valor' => $data['valor_estatus_2']
         ]);
 
         $param_extra = $this->groupValues($data);
@@ -103,6 +112,7 @@ class DefinicionEscalasObjetivos extends Component
                 EscalasMedicionObjetivos::create([
                     'parametro' => $p['estatus'],
                     'color' => $p['color'],
+                    'valor' => $p['valor'],
                 ]);
             }
         }
@@ -127,6 +137,7 @@ class DefinicionEscalasObjetivos extends Component
                 $groupedValues["group_{$key}"] = [
                     'estatus' => $values[$estatusKey],
                     'color' => $values["color_estatus_arreglo_{$key}"] ?? null,
+                    'valor' => $values["valor_estatus_arreglo_{$key}"] ?? null,
                 ];
             }
         }

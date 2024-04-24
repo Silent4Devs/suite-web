@@ -1,4 +1,13 @@
 <div>
+    <style>
+        .btn.btn-evaluacion {
+            border: 1px solid var(--unnamed-color-006ddb);
+            background: #D6EBFF 0% 0% no-repeat padding-box;
+            border: 1px solid #006DDB;
+            border-radius: 8px;
+            opacity: 1;
+        }
+    </style>
     {{-- A good traveler has no fixed plans and is not intent upon arriving. --}}
     <h5 class="titulo_general_funcion"> Evaluación Dashboard: {{ $evaluacion->nombre }}</h5>
 
@@ -26,8 +35,112 @@
             </a>
         </div>
         <div class="col-md-3">
-            <div class="w-100 p-3 text-center text-white rounded-lg" style="background-color: #A650DF;">
-                Modificar periodo de evaluación
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modificacionPeriodos">
+                <div class="w-100 p-3 text-center text-white rounded-lg" style="background-color: #A650DF;">
+                    Modificar periodo de evaluación
+                </div>
+            </button>
+
+            <!-- Modal -->
+            <div wire:ignore class="modal fade" id="modificacionPeriodos" data-backdrop="static" data-keyboard="false"
+                tabindex="-1" aria-labelledby="modificacionPeriodosLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <div>
+                                <h5 class="modal-title" id="modificacionPeriodosLabel">Modal title</h5>
+                            </div>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div>
+                                <table class="table">
+                                    <tbody>
+                                        @foreach ($evaluacion->periodos as $index => $ap)
+                                            @if ($ap->finalizado)
+                                                <tr>
+                                                    <td>
+                                                        <div class="form-group anima-focus">
+                                                            <input type="text" name="nombre_evaluacion[]" disabled
+                                                                id="nombre_evaluacion_{{ $index }}"
+                                                                wire:model="array_periodos.{{ $index }}.nombre_evaluacion"
+                                                                class="form-control"
+                                                                value="{{ $ap->nombre_evaluacion }}">
+                                                            <label for="">Evaluación*</label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group anima-focus">
+                                                            <input type="date" placeholder="" disabled
+                                                                wire:model="array_periodos.{{ $index }}.fecha_inicio"
+                                                                class="form-control" value="{{ $ap->fecha_inicio }}">
+                                                            <label for="">Inicio de la evaluación</label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group anima-focus">
+                                                            <input type="date" placeholder="" disabled
+                                                                wire:model="array_periodos.{{ $index }}.fecha_fin"
+                                                                class="form-control" value="{{ $ap->fecha_fin }}">
+                                                            <label for="">Fin de la evaluación</label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group">
+                                                            <input type="checkbox" class="form-control" disabled
+                                                                wire:model="array_periodos.{{ $index }}.habilitado">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            @else
+                                                <tr>
+                                                    <td>
+                                                        <div class="form-group anima-focus">
+                                                            <input type="text" name="nombre_evaluacion[]"
+                                                                id="nombre_evaluacion_{{ $index }}"
+                                                                wire:model="array_periodos.{{ $index }}.nombre_evaluacion"
+                                                                class="form-control"
+                                                                value="{{ $ap->nombre_evaluacion }}">
+                                                            <label for="">Evaluación*</label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group anima-focus">
+                                                            <input type="date" placeholder=""
+                                                                wire:model="array_periodos.{{ $index }}.fecha_inicio"
+                                                                class="form-control" value="{{ $ap->fecha_inicio }}">
+                                                            <label for="">Inicio de la evaluación</label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group anima-focus">
+                                                            <input type="date" placeholder=""
+                                                                wire:model="array_periodos.{{ $index }}.fecha_fin"
+                                                                class="form-control" value="{{ $ap->fecha_fin }}">
+                                                            <label for="">Fin de la evaluación</label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group">
+                                                            <input type="checkbox" class="form-control"
+                                                                wire:model="array_periodos.{{ $index }}.habilitado">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            @endif
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Understood</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="col-md-3">
@@ -404,8 +517,10 @@
                         <tr>
                             <th>Nombre</th>
                             <th>Área</th>
-                            <th>Meta</th>
+                            <th>Evaluadores</th>
+                            <th>Avance</th>
                             <th>Estatus</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -413,8 +528,27 @@
                             @foreach ($evaluados_tabla->evaluados as $evaluado)
                                 <td>{{ $evaluado->empleado->name }}</td>
                                 <td>{{ $evaluado->empleado->area->area }}</td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="d-flex" style="position:relative">
+                                                @foreach ($this->evaluadores_evaluado[$evaluado->id] as $evaluador)
+                                                    <img style=""
+                                                        src="{{ asset('storage/empleados/imagenes/') }}/{{ $evaluador['foto'] }}"
+                                                        class="rounded-circle" alt="{{ $evaluador['nombre'] }}"
+                                                        title="{{ $evaluador['nombre'] }}" width="40"
+                                                        height="37">
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
                                 <td>Avance</td>
-                                <td>Actividad</td>
+                                <td>Estatus</td>
+                                <td>
+                                    <a href="{{ route('admin.rh.evaluaciones-desempeno.dashboard-evaluado', [$evaluacion->id, $evaluado->id]) }}"
+                                        class="btn btn-evaluacion">Evaluacion</a>
+                                </td>
                             @endforeach
                         </tr>
                     </tbody>
@@ -706,8 +840,9 @@
             <script>
                 document.addEventListener('livewire:load', function() {
 
-                    const escalas = @json($escalas['nombres']);
-                    const colores = @json($escalas['colores']);
+                    const escalas = @json($escalas['nombres'][$periodo_seleccionado]);
+                    const colores = @json($escalas['colores'][$periodo_seleccionado]);
+                    const resultados = @json($escalas['resultados'][$periodo_seleccionado]);
 
                     var ctx3 = document.getElementById('escalas').getContext('2d');
                     ChartCO = new Chart(ctx3, {
@@ -716,7 +851,7 @@
                             labels: escalas,
                             datasets: [{
                                 label: 'Porcentaje de cumplimiento',
-                                data: [12, 43, 2, 2],
+                                data: resultados,
                                 backgroundColor: colores,
                                 borderWidth: 1
                             }]
@@ -749,7 +884,7 @@
                                 labels: escObj.labels,
                                 datasets: [{
                                     label: 'Porcentaje de cumplimiento',
-                                    data: [12, 43, 2, 2],
+                                    data: escObj.resultados,
                                     backgroundColor: escObj.colores,
                                     borderWidth: 1
                                 }]

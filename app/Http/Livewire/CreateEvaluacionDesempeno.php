@@ -218,7 +218,7 @@ class CreateEvaluacionDesempeno extends Component
             EscalasEvaluacionDesempeno::create([
                 'evaluacion_desempeno_id' => $evaluacion->id,
                 'parametro' => $escala->parametro,
-                // 'valor',
+                'valor' => $escala->valor,
                 'color' => $escala->color,
                 // 'descripcion',
             ]);

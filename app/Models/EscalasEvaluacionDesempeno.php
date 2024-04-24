@@ -14,7 +14,7 @@ class EscalasEvaluacionDesempeno extends Model
     protected $fillable = [
         'evaluacion_desempeno_id',
         'parametro',
-        // 'valor',
+        'valor',
         'color',
         // 'descripcion',
     ];

@@ -19,6 +19,7 @@ class EvDesempenoDashboardEvaluacion extends Component
     public $evaluados_tabla;
 
     public $array_periodos;
+    public $array_modificar_periodos;
     public $periodo_seleccionado = 0;
 
     public $areas;
@@ -81,73 +82,51 @@ class EvDesempenoDashboardEvaluacion extends Component
         //Datos generales
         $this->evaluados_tabla = EvaluacionDesempeno::with('evaluados');
 
-        // if ($this->select_area_tabla != "todos") {
-        //     $this->evaluados_tabla->whereHas('evaluados.empleado', function ($query) {
-        //         $query->where('area_id', $this->select_area_tabla);
-        //     });
-        // }
+        if ($this->select_area_tabla != "todos") {
+            $this->evaluados_tabla->whereHas('evaluados.empleado', function ($query) {
+                $query->where('area_id', $this->select_area_tabla);
+            });
+        }
 
-        // if ($this->select_colaborador_tabla != "todos") {
-        //     $this->evaluados_tabla->whereHas('evaluados', function ($query) {
-        //         $query->where('id', $this->select_colaborador_tabla);
-        //     });
-        // }
+        if ($this->select_colaborador_tabla != "todos") {
+            $this->evaluados_tabla->whereHas('evaluados', function ($query) {
+                $query->where('id', $this->select_colaborador_tabla);
+            });
+        }
 
-        // if ($this->select_evaluadores_tabla != "todos") {
-        //     if ($this->evaluacion->activar_competencias) {
-        //         $this->evaluados_tabla->whereHas('evaluados.evaluadoresCompetencias', function ($query) {
-        //             $query->where('evaluador_desempeno_id', $this->select_evaluadores_tabla);
-        //         });
-        //     }
+        if ($this->select_evaluadores_tabla != "todos") {
+            if ($this->evaluacion->activar_competencias) {
+                $this->evaluados_tabla->whereHas('evaluados.evaluadoresCompetencias', function ($query) {
+                    $query->where('evaluador_desempeno_id', $this->select_evaluadores_tabla);
+                });
+            }
 
-        //     if ($this->evaluacion->activar_competencias) {
-        //         $this->evaluados_tabla->whereHas('evaluados.evaluadoresObjetivos', function ($query) {
-        //             $query->where('evaluador_desempeno_id', $this->select_evaluadores_tabla);
-        //         });
-        //     }
-        // }
+            if ($this->evaluacion->activar_competencias) {
+                $this->evaluados_tabla->whereHas('evaluados.evaluadoresObjetivos', function ($query) {
+                    $query->where('evaluador_desempeno_id', $this->select_evaluadores_tabla);
+                });
+            }
+        }
 
         $this->evaluados_tabla = $this->evaluados_tabla->find($this->id_evaluacion);
 
-        if ($this->evaluacion->activar_objetivos) {
-            $objArea = [
-                "labels" => $this->resArea["nombres"][$this->periodo_seleccionado],
-                "data" => $this->resArea["resultados"][$this->periodo_seleccionado],
-            ];
-
-            $this->emit('objetivosArea', $objArea);
-
-            $cumpObj = [
-                "labels" => $this->resObj["nombres"][$this->periodo_seleccionado],
-                "data" => $this->resObj["resultados"][$this->periodo_seleccionado],
-            ];
-
-            $this->emit("cumplimientoObj", $cumpObj);
-
-            $escObj = [
-                "labels" => $this->escalas["nombres"],
-                "colores" => $this->escalas["colores"],
-            ];
-
-            $this->emit("escalasObj", $escObj);
-        }
-
-        if ($this->evaluacion->activar_competencias) {
-            $cumpComp = [
-                "labels" => $this->resComp["nombres"][$this->periodo_seleccionado],
-                "data" => $this->resComp["resultados"][$this->periodo_seleccionado],
-            ];
-
-            $this->emit("cumplimientoComp", $cumpComp);
-        }
-
+        $this->cargarTablas();
+        // dd($this->evaluacion->periodos);
         return view('livewire.ev-desempeno-dashboard-evaluacion');
     }
 
     public function cambiarSeccion($llave)
     {
+        $this->periodo_seleccionado = $llave;
+
+        $this->cargarTablas();
+
+        $this->porcentajesTotales();
+    }
+
+    public function cargarTablas()
+    {
         if ($this->evaluacion->activar_objetivos) {
-            $this->periodo_seleccionado = $llave;
 
             $objArea = [
                 "labels" => $this->resArea["nombres"][$this->periodo_seleccionado],
@@ -162,8 +141,9 @@ class EvDesempenoDashboardEvaluacion extends Component
             $this->emit("cumplimientoObj", $cumpObj);
 
             $escObj = [
-                "labels" => $this->escalas["nombres"],
-                "colores" => $this->escalas["colores"],
+                "labels" => $this->escalas["nombres"][$this->periodo_seleccionado],
+                "colores" => $this->escalas["colores"][$this->periodo_seleccionado],
+                "resultados" => $this->escalas["resultados"][$this->periodo_seleccionado],
             ];
 
             $this->emit("escalasObj", $escObj);
@@ -177,8 +157,6 @@ class EvDesempenoDashboardEvaluacion extends Component
 
             $this->emit("cumplimientoComp", $cumpComp);
         }
-
-        $this->porcentajesTotales();
     }
 
     public function secciones()
@@ -225,9 +203,40 @@ class EvDesempenoDashboardEvaluacion extends Component
 
     public function obtenerEscalas()
     {
-        foreach ($this->evaluacion->escalas as $key => $escala) {
-            $this->escalas['nombres'][$key] = $escala->parametro;
-            $this->escalas['colores'][$key] = $escala->color;
+        foreach ($this->array_periodos as $key_periodo => $periodo) {
+            foreach ($this->evaluacion->escalas as $key_escala => $escala) {
+                $this->escalas['nombres'][$key_periodo][] = $escala->parametro;
+                $this->escalas['colores'][$key_periodo][] = $escala->color;
+                $this->escalas['valores'][$key_periodo][] = $escala->valor;
+                $this->escalas['resultados'][$key_periodo][] = 0;
+            }
+
+            foreach ($this->evaluacion->evaluados as $evaluado) {
+                // Extract the values from the 'value' parameter of each $escala
+                $values = $this->escalas['valores'][$key_periodo];
+                // Sort the values in ascending order
+                sort($values);
+                // Get the $promedio value
+                $promedio = $this->promedio_evaluados_area[$key_periodo][$evaluado->empleado->area_id]["promedioEvdsObjs"];
+                $promedioValue = is_array($promedio) ? $promedio[0] : $promedio;
+
+                // Find the position of $promedio in the sorted array
+                $index = 0;
+                foreach ($values as $value) {
+                    if ($promedioValue > $value) {
+                        $index++;
+                    } elseif ($promedioValue === $value) {
+                        // Handle the case when $promedioValue is exactly equal to $value
+                        break;
+                    } else {
+                        break; // Exit the loop once we find the correct position
+                    }
+                }
+
+                // $index now represents the position where $promedio falls in the sorted array
+                // You can use $index to determine which $escala $promedio belongs to
+                $this->escalas['resultados'][$key_periodo][$index]++;
+            }
         }
     }
 
@@ -266,23 +275,16 @@ class EvDesempenoDashboardEvaluacion extends Component
 
         foreach ($this->evaluacion->evaluados as $evaluado) {
             foreach ($evaluado->nombres_evaluadores as $key => $evdr) {
-                if ($this->evaluacion->activar_objetivos && $this->evaluacion->activar_competencias) {
-                    $evaluador = $empleados->find($evdr);
-                    $this->evaluadores_evaluado[$evaluado->id][] = [
-                        'id' => $evaluador->evaluador_desempeno_id,
-                        'nombre' => $evaluador->name,
-                        // 'email' => $evaluador->email, //No necesario
-                        'foto' => $evaluador->foto,
-                    ];
-                } else {
-                    $evaluador = $empleados->find($evdr->evaluador_desempeno_id);
-                    $this->evaluadores_evaluado[$evaluado->id][] = [
-                        'id' => $evaluador->evaluador_desempeno_id,
-                        'nombre' => $evaluador->name,
-                        // 'email' => $evaluador->email, //No necesario
-                        'foto' => $evaluador->foto,
-                    ];
-                }
+                // Determine which evaluator information to fetch based on evaluation settings
+                $evaluadorId = $this->evaluacion->activar_objetivos && $this->evaluacion->activar_competencias ? $evdr : $evdr->evaluador_desempeno_id;
+                // Fetch evaluator information
+                $evaluador = $empleados->find($evaluadorId);
+                // Store evaluator information
+                $this->evaluadores_evaluado[$evaluado->id][] = [
+                    'id' => $evaluador->evaluador_desempeno_id,
+                    'nombre' => $evaluador->name,
+                    'foto' => $evaluador->avatar,
+                ];
             }
         }
 

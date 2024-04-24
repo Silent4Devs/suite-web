@@ -49,14 +49,16 @@ class EvaluadosEvaluacionDesempeno extends Model
             $evaluadoresCompetenciasIds = $this->evaluadoresCompetencias->pluck('evaluador_desempeno_id')->toArray();
             $evaluadoresObjetivosIds = $this->evaluadoresObjetivos->pluck('evaluador_desempeno_id')->toArray();
 
-            // Calculate the distinct count of evaluador_desempeno_id that match in both relations
-            $matchingCount = array_intersect($evaluadoresCompetenciasIds, $evaluadoresObjetivosIds);
+            // Calculate the distinct evaluador_desempeno_id that match in both relations
+            $matchingIds = array_intersect($evaluadoresCompetenciasIds, $evaluadoresObjetivosIds);
 
-            // Calculate the count of evaluador_desempeno_id that don't match in both relations
-            $distinctCount = array_diff($evaluadoresCompetenciasIds, $evaluadoresObjetivosIds)
-                + array_diff($evaluadoresObjetivosIds, $evaluadoresCompetenciasIds);
+            // Calculate the evaluador_desempeno_id that don't match in both relations
+            $distinctIds = array_merge(
+                array_diff($evaluadoresCompetenciasIds, $evaluadoresObjetivosIds),
+                array_diff($evaluadoresObjetivosIds, $evaluadoresCompetenciasIds)
+            );
 
-            $nombres = $matchingCount + $distinctCount;
+            $nombres = array_merge($matchingIds, $distinctIds);
         } elseif ($evaluado->evaluacion->activar_competencias && $evaluado->evaluacion->activar_objetivos == false) {
             $nombres = $evaluado->evaluadoresCompetencias;
         } elseif ($evaluado->evaluacion->activar_competencias == false && $evaluado->evaluacion->activar_objetivos) {

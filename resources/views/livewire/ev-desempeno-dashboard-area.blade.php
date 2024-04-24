@@ -410,7 +410,7 @@
                                 <td>Avance</td>
                                 <td>Estatus</td>
                                 <td>
-                                    <a href="{{ route('admin.rh.evaluaciones-desempeno.dashboard-area', [$evaluacion->id, $evaluado->id]) }}"
+                                    <a href="{{ route('admin.rh.evaluaciones-desempeno.dashboard-evaluado', [$evaluacion->id, $evaluado->id]) }}"
                                         class="btn btn-evaluacion">Evaluacion</a>
                                 </td>
                             @endforeach
@@ -601,8 +601,9 @@
             <script>
                 document.addEventListener('livewire:load', function() {
 
-                    const escalas = @json($escalas['nombres']);
-                    const colores = @json($escalas['colores']);
+                    const escalas = @json($escalas['nombres'][$periodo_seleccionado]);
+                    const colores = @json($escalas['colores'][$periodo_seleccionado]);
+                    const resultados = @json($escalas['resultados'][$periodo_seleccionado]);
 
                     var ctx3 = document.getElementById('escalas').getContext('2d');
                     ChartCO = new Chart(ctx3, {
@@ -611,7 +612,7 @@
                             labels: escalas,
                             datasets: [{
                                 label: 'Porcentaje de cumplimiento',
-                                data: [12, 43, 2, 2],
+                                data: resultados,
                                 backgroundColor: colores,
                                 borderWidth: 1
                             }]
@@ -644,7 +645,7 @@
                                 labels: escObj.labels,
                                 datasets: [{
                                     label: 'Porcentaje de cumplimiento',
-                                    data: [12, 43, 2, 2],
+                                    data: escObj.resultados,
                                     backgroundColor: escObj.colores,
                                     borderWidth: 1
                                 }]

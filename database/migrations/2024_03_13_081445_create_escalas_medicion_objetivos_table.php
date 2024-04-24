@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('escalas_medicion_objetivos', function (Blueprint $table) {
             $table->id();
             $table->string('parametro');
-            // $table->float('valor');
+            $table->float('valor');
             $table->string('color');
             // $table->longText('descripcion');
             $table->timestamps();
