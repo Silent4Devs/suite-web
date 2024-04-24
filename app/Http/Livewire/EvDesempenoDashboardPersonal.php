@@ -63,6 +63,9 @@ class EvDesempenoDashboardPersonal extends Component
 
     public $tiposObj;
 
+    public $contadorColumnas = 4;
+    public $cabecera_objetivos;
+
     public function mount($id_evaluacion, $id_evaluado)
     {
         $this->id_evaluacion = $id_evaluacion;
@@ -97,7 +100,7 @@ class EvDesempenoDashboardPersonal extends Component
     public function render()
     {
         $this->cargarTablas();
-
+        // dd($this->contadorColumnas);
         return view('livewire.ev-desempeno-dashboard-personal');;
     }
 
@@ -224,7 +227,11 @@ class EvDesempenoDashboardPersonal extends Component
                 return isset($counts[$value]) ? $counts[$value] : 0;
             }, $this->escalas['nombres']);
             $this->escalas['resultados'][$key_periodo] = $matchedCounts;
+
+            $cuenta = count($this->escalas['nombres']);
         }
+
+        $this->contadorColumnas += $cuenta;
     }
 
 
@@ -430,28 +437,44 @@ class EvDesempenoDashboardPersonal extends Component
         $objetivos_evaluado = [];
 
         // Grouping objetivos by periodo and tipo_objetivo
-        foreach ($this->array_periodos as $periodo) {
-            $objetivosPorPeriodo = CuestionarioObjetivoEvDesempeno::where('evaluacion_desempeno_id', $this->id_evaluacion)
+        foreach ($this->array_periodos as $key_periodo => $periodo) {
+            $objetivosPorPeriodoAuto = CuestionarioObjetivoEvDesempeno::where('evaluacion_desempeno_id', $this->id_evaluacion)
                 ->where('periodo_id', $periodo["id_periodo"])
+                ->where('evaluado_desempeno_id', $this->id_evaluado)
+                ->where('evaluador_desempeno_id', $this->id_evaluado)
                 ->with('infoObjetivo')
-                ->get()
-                ->groupBy('infoObjetivo.tipo_objetivo');
+                ->get();
 
-            foreach ($objetivosPorPeriodo as $tipo => $objetivos) {
-                foreach ($objetivos as $objetivo) {
-                    foreach ($this->evaluado->evaluadoresObjetivos as $evaluador) {
-                        $preguntas = $evaluador->preguntasCuestionarioAplicanPeriodo($periodo["id_periodo"]);
+            $objetivosPorPeriodoEv = CuestionarioObjetivoEvDesempeno::where('evaluacion_desempeno_id', $this->id_evaluacion)
+                ->where('periodo_id', $periodo["id_periodo"])
+                ->where('evaluado_desempeno_id', $this->id_evaluado)
+                ->where('evaluador_desempeno_id', '!=', $this->id_evaluado)
+                ->with('infoObjetivo')
+                ->orderBy('evaluador_desempeno_id') // Order by evaluador_desempeno_id
+                ->get();
 
-                        foreach ($preguntas as $pregunta) {
-                            if ($pregunta->infoObjetivo->tipo_objetivo == $tipo) {
-                                $objetivos_evaluado[$periodo["id_periodo"]][$tipo][$evaluador->id][] = $pregunta;
-                            }
-                        }
-                    }
-                }
+
+            // Grouping by tipo_objetivo
+            $objetivosEvaluado[$key_periodo] = [];
+
+            foreach ($objetivosPorPeriodoAuto as $objetivoAuto) {
+                $tipoObjetivo = $objetivoAuto->infoObjetivo->tipo_objetivo;
+                $objetivosEvaluado[$key_periodo][$tipoObjetivo]["autoevaluacion"][] = $objetivoAuto;
             }
+
+            foreach ($objetivosPorPeriodoEv as $objetivoEv) {
+                $tipoObjetivo = $objetivoEv->infoObjetivo->tipo_objetivo;
+                $objetivosEvaluado[$key_periodo][$tipoObjetivo]["evaluacion"][] = $objetivoEv;
+            }
+
+            $cuenta = count($objetivosEvaluado[$key_periodo][$tipoObjetivo]["evaluacion"]);
         }
 
-        $this->objetivosEvaluado = $objetivos_evaluado;
+        $this->cabecera_objetivos = $this->evaluado->evaluadoresObjetivos->where('id', '!=', $this->id_evaluado);
+
+        // dd($this->cabecera_objetivos);
+
+        $this->contadorColumnas += $cuenta;
+        $this->objetivosEvaluado = $objetivosEvaluado;
     }
 }

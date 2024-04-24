@@ -31,12 +31,12 @@ class EvaluadosEvaluacionDesempeno extends Model
 
     public function evaluadoresObjetivos()
     {
-        return $this->hasMany(EvaluadoresEvaluacionObjetivosDesempeno::class, 'evaluado_desempeno_id', 'id');
+        return $this->hasMany(EvaluadoresEvaluacionObjetivosDesempeno::class, 'evaluado_desempeno_id', 'id')->orderBy('id');
     }
 
     public function evaluadoresCompetencias()
     {
-        return $this->hasMany(EvaluadoresEvaluacionCompetenciasDesempeno::class, 'evaluado_desempeno_id', 'id');
+        return $this->hasMany(EvaluadoresEvaluacionCompetenciasDesempeno::class, 'evaluado_desempeno_id', 'id')->orderBy('id');
     }
 
     public function getNombresEvaluadoresAttribute()

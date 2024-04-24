@@ -25,24 +25,24 @@ class EvaluacionesDesempenoController extends Controller
         return view('admin.recursos-humanos.evaluaciones-desempeno.index', compact('evaluaciones'));
     }
 
-    public function dashboardEvaluacion($id_evaluacion)
-    {
-        return view('admin.recursos-humanos.evaluaciones-desempeno.dashboard-evaluacion', compact('id_evaluacion'));
-    }
-
-    public function dashboardEvaluado($id_evaluacion, $id_evaluado)
-    {
-        return view('admin.recursos-humanos.evaluaciones-desempeno.dashboard-evaluado', compact('id_evaluacion', 'id_evaluado'));
-    }
-
     public function dashboardGeneral()
     {
         return view('admin.recursos-humanos.evaluaciones-desempeno.dashboard-general');
     }
 
-    public function dashboardArea()
+    public function dashboardEvaluacion($id_evaluacion)
     {
-        return view('admin.recursos-humanos.evaluaciones-desempeno.dashboard-area');
+        return view('admin.recursos-humanos.evaluaciones-desempeno.dashboard-evaluacion', compact('id_evaluacion'));
+    }
+
+    public function dashboardArea($id_evaluacion, $id_area)
+    {
+        return view('admin.recursos-humanos.evaluaciones-desempeno.dashboard-area', compact('id_evaluacion', 'id_area'));
+    }
+
+    public function dashboardEvaluado($id_evaluacion, $id_evaluado)
+    {
+        return view('admin.recursos-humanos.evaluaciones-desempeno.dashboard-evaluado', compact('id_evaluacion', 'id_evaluado'));
     }
 
     public function dashboardGlobal()

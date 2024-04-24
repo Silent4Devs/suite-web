@@ -306,205 +306,354 @@
         </div>
     @endif
 
-    <div class="card card-body">
-        <h5>Resultados Competencias</h5>
-        @foreach ($evaluado->evaluadoresCompetencias as $key => $evaluador)
-            <div class="mt-4 mb-4">
-                <div class="datatable-fix">
-                    <table id="" class="table-striped"
-                        style="border-collapse: collapse; width: 100%; border-top-left-radius: 20px !important; border-top-right-radius: 20px !important;">
-                        <thead style="color: white">
-                            <tr style="background-color: #BB68A8;">
-                                <th style="background-color: #BB68A8;" colspan="5">
-                                    <div class="mt-3 mb-3">
-                                        <h4>Competencias</h4>
-                                    </div>
-                                </th>
-                            </tr>
-                            <tr>
-                                @if ($evaluador->empleado->id == $evaluado->empleado->id)
-                                    <th>Autoevaluación:
-                                        {{ $evaluador->empleado->name }}</th>
-                                @else
-                                    <th>Evaluación Realizada por:
-                                        {{ $evaluador->empleado->name }}&nbsp;(
-                                        {{ $evaluador->porcentaje_competencias }}%)
-                                    </th>
-                                @endif
-                                <th>Tipo</th>
-                                <th>Meta</th>
-                                <th>Alcanzado</th>
-                                <th>Calificación</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($competenciasEvaluado[$periodo_seleccionado][$evaluador->id] as $key => $competencia)
-                                <tr>
-                                    <td style="border: 1px solid #CCCCCC; border-bottom:#CCCCCC !important;">
-                                        {{ $competencia->infoCompetencia->competencia }}</td>
-                                    <td style="border: 1px solid #CCCCCC; border-bottom:#CCCCCC !important;">
-                                        {{ $competencia->infoCompetencia->tipo_competencia }}</td>
-                                    <td style="border: 1px solid #CCCCCC; border-bottom:#CCCCCC !important;">
-                                        {{ $competencia->infoCompetencia->nivel_esperado }}</td>
-                                    @if ($competencia->estatus_calificado)
-                                        <td style="border: 1px solid #CCCCCC; border-bottom:#CCCCCC !important;">
-                                            {{ $competencia->calificacion_competencia }}
-                                        </td>
-                                        <td style="border: 1px solid #CCCCCC; border-bottom:#CCCCCC !important;">
-                                            {{ round($competencia->calificacion_competencia / $competencia->infoCompetencia->nivel_esperado, 2) }}
-                                        </td>
-                                    @else
-                                        <td style="border: 1px solid #CCCCCC; border-bottom:#CCCCCC !important;">
-                                            <p>Sin Calificar</p>
-                                        </td>
-                                        <td style="border: 1px solid #CCCCCC; border-bottom:#CCCCCC !important;">
-                                            <p>Sin Calificar</p>
-                                        </td>
-                                    @endif
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+    <nav class="mt-5">
+        <div class="nav nav-tabs" role="tablist" style="margin-bottom: 0px !important;">
+            @if ($evaluacion->activar_competencias)
+                <a class="nav-link active" id="" data-type="competencias" data-toggle="tab"
+                    href="#nav-config-competencias" role="tab" aria-controls="nav-competencias"
+                    aria-selected="false">
+                    Competencias
+                </a>
+            @endif
+            @if ($evaluacion->activar_objetivos)
+                <a class="nav-link active" id="" data-type="objetivos" data-toggle="tab"
+                    href="#nav-config-objetivos" role="tab" aria-controls="nav-objetivos" aria-selected="false">
+                    Objetivos
+                </a>
+            @endif
+            <a class="nav-link" id="" data-type="general" data-toggle="tab" href="#nav-config-general"
+                role="tab" aria-controls="nav-config-general" aria-selected="true">
+                Resultados de la evaluacion
+            </a>
+        </div>
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+
+        @if ($evaluacion->activar_competencias)
+            <div class="tab-pane mb-4 fade" id="nav-config-competencias" role="tabpanel"
+                aria-labelledby="nav-config-competencias">
+                <div class="card card-body">
+                    <h5>Resultados Competencias</h5>
+                    @foreach ($evaluado->evaluadoresCompetencias as $key => $evaluador)
+                        <div class="mt-4 mb-4">
+                            <div class="datatable-fix">
+                                <table id="" class="table-striped"
+                                    style="border-collapse: collapse; width: 100%; border-top-left-radius: 20px !important; border-top-right-radius: 20px !important;">
+                                    <thead style="color: white">
+                                        <tr style="background-color: #BB68A8;">
+                                            <th style="background-color: #BB68A8;" colspan="5">
+                                                <div class="mt-3 mb-3">
+                                                    <h4>Competencias</h4>
+                                                </div>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            @if ($evaluador->empleado->id == $evaluado->empleado->id)
+                                                <th>Autoevaluación:
+                                                    {{ $evaluador->empleado->name }}</th>
+                                            @else
+                                                <th>Evaluación Realizada por:
+                                                    {{ $evaluador->empleado->name }}&nbsp;(
+                                                    {{ $evaluador->porcentaje_competencias }}%)
+                                                </th>
+                                            @endif
+                                            <th>Tipo</th>
+                                            <th>Meta</th>
+                                            <th>Alcanzado</th>
+                                            <th>Calificación</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($competenciasEvaluado[$periodo_seleccionado][$evaluador->id] as $key => $competencia)
+                                            <tr>
+                                                <td
+                                                    style="border: 1px solid #CCCCCC; border-bottom:#CCCCCC !important;">
+                                                    {{ $competencia->infoCompetencia->competencia }}</td>
+                                                <td
+                                                    style="border: 1px solid #CCCCCC; border-bottom:#CCCCCC !important;">
+                                                    {{ $competencia->infoCompetencia->tipo_competencia }}</td>
+                                                <td
+                                                    style="border: 1px solid #CCCCCC; border-bottom:#CCCCCC !important;">
+                                                    {{ $competencia->infoCompetencia->nivel_esperado }}</td>
+                                                @if ($competencia->estatus_calificado)
+                                                    <td
+                                                        style="border: 1px solid #CCCCCC; border-bottom:#CCCCCC !important;">
+                                                        {{ $competencia->calificacion_competencia }}
+                                                    </td>
+                                                    <td
+                                                        style="border: 1px solid #CCCCCC; border-bottom:#CCCCCC !important;">
+                                                        {{ round($competencia->calificacion_competencia / $competencia->infoCompetencia->nivel_esperado, 2) }}
+                                                    </td>
+                                                @else
+                                                    <td
+                                                        style="border: 1px solid #CCCCCC; border-bottom:#CCCCCC !important;">
+                                                        <p>Sin Calificar</p>
+                                                    </td>
+                                                    <td
+                                                        style="border: 1px solid #CCCCCC; border-bottom:#CCCCCC !important;">
+                                                        <p>Sin Calificar</p>
+                                                    </td>
+                                                @endif
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
             </div>
-        @endforeach
-    </div>
+        @endif
 
-    <div class="card card-body">
-        <h5>Resultados Objetivos</h5>
-        @foreach ($evaluado->evaluadoresObjetivos as $key => $evaluador)
-            <div class="mt-4 mb-4">
-                <div class="datatable-fix">
-                    <table id="" style="border-collapse: collapse; width: 100%;">
-                        <thead>
-                            <tr>
-                                @if ($evaluador->empleado->id == $evaluado->empleado->id)
-                                    <th>Autoevaluación:
-                                        {{ $evaluador->empleado->name }}</th>
-                                @else
-                                    <th>Evaluador:
-                                        {{ $evaluador->empleado->name }}&nbsp;(
-                                        {{ $evaluador->porcentaje_objetivos }}%)
-                                    </th>
-                                @endif
-                                <th>Tipo</th>
-                                <th>Meta</th>
-                                <th>Alcanzado</th>
-                                <th>Calificación</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+        @if ($evaluacion->activar_objetivos)
+            <div class="tab-pane mb-4 fade" id="nav-config-objetivos" role="tabpanel"
+                aria-labelledby="nav-config-objetivos">
+                <div class="card card-body">
+                    <h5>Resultados Objetivos</h5>
+                    <div class="mt-4 mb-4">
+                        <div class="datatable-fix">
+                            <table id="" style="border-collapse: collapse; width: 100%;">
+                                <thead>
 
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        @endforeach
-    </div>
+                                    <tr>
+                                        <th>
+                                            <p>Objetivo</p>
+                                        </th>
+                                        <th class="th-table-objetive th-metrica">Métrica</th>
+                                        @foreach ($escalas['nombres'] as $key => $parametro)
+                                            <th class="th-custom"
+                                                style="background-color: {{ $escalas['colores'][$key] }}">
+                                                {{ $parametro }}
+                                            </th>
+                                        @endforeach
+                                        <th>Autoevaluación</th>
+                                        <th>Evidencias</th>
+                                        @foreach ($cabecera_objetivos as $key => $evaluador)
+                                            <th>
+                                                <p>{{ $evaluador->empleado->name }} <br>
+                                                    {{ $evaluador->porcentaje_objetivos }}%</p>
+                                            </th>
+                                        @endforeach
+                                    </tr>
+                                </thead>
+                                @foreach ($objetivosEvaluado[$periodo_seleccionado] as $tipo_objetivo => $objetivosEvaluadoByTipo)
+                                    <thead>
+                                        <tr>
+                                            <th colspan="{{ $contadorColumnas }}">{{ $tipo_objetivo }}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($objetivosEvaluadoByTipo['autoevaluacion'] as $cuestionario)
+                                            <tr>
+                                                <td>{{ $cuestionario->infoObjetivo->objetivo }}</td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <select class="form-control" name="aplica" id="aplica"
+                                                            disabled>
+                                                            <option value="true"
+                                                                @if ($cuestionario->aplicabilidad == true) selected @endif>
+                                                                Aplica
+                                                            </option>
+                                                            <option value="false"
+                                                                @if ($cuestionario->aplicabilidad == false) selected @endif>No
+                                                                Aplica
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                                @foreach ($cuestionario->infoObjetivo->escalas as $obj_esc)
+                                                    <td>
+                                                        {{ $obj_esc->condicion_signo }}{{ $obj_esc->valor }}&nbsp;{{ $cuestionario->infoObjetivo->unidad_objetivo }}
+                                                    </td>
+                                                @endforeach
+                                                <td>
+                                                    @if ($cuestionario->estatus_calificado)
+                                                        {{ $cuestionario->calificacion_objetivo }}
+                                                    @else
+                                                        <p>Sin asignar</p>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    <button type="button" class="btn btn-evidencia"
+                                                        data-toggle="modal"
+                                                        data-target="#evidenciaObjetivo{{ $cuestionario->id }}">
+                                                        Evidencia
+                                                    </button>
 
-    <div class="card card-body">
-        <div class="datatable-fix">
-            <table id="" class="table table-bordered w-100 datatable">
-                <thead class="thead-dark">
-                    <tr>
-                        <th colspan="8">RESULTADOS</th>
-                    </tr>
-                    <tr>
-                        <th></th>
-                        <th>Nombre</th>
-                        <th>Puesto y Área</th>
-                        <th>Evaluadores</th>
-                        @if ($evaluacion->activar_competencias)
-                            <th>Competencias</th>
-                        @endif
-                        @if ($evaluacion->activar_objetivos)
-                            <th>Objetivos</th>
-                        @endif
-                        <th>Calificación</th>
-                        <th>Nivel</th>
-                        @if ($evaluacion->activar_competencias)
-                            <th>Competencias</th>
-                        @endif
-                        @if ($evaluacion->activar_objetivos)
-                            <th>Objetivos</th>
-                        @endif
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td></td>
-                        <td>{{ $evaluado->empleado->name }}</td>
-                        <td>{{ $evaluado->empleado->puestoRelacionado->puesto }}/{{ $evaluado->empleado->area->area }}
-                        </td>
-                        <td>
-                            <ul>
-                                @foreach ($this->evaluadores_evaluado[$evaluado->id] as $evaluador)
-                                    <li>{{ $evaluador['nombre'] }}</li>
+                                                    <!-- Modal -->
+                                                    <div wire:ignore.self class="modal fade"
+                                                        id="evidenciaObjetivo{{ $cuestionario->id }}" tabindex="-1"
+                                                        aria-labelledby="evidenciaObjetivo{{ $cuestionario->id }}Label"
+                                                        aria-hidden="true">
+                                                        <button type="button" class="btn-close" data-dismiss="modal"
+                                                            aria-label="Close"
+                                                            style="margin:50px 0px 10px 1030px; background:none; border: none;"><i
+                                                                class="fa-solid fa-x fa-2xl"
+                                                                style="color: #ffffff;"></i>
+                                                        </button>
+                                                        <div class="modal-dialog  modal-lg">
+                                                            <div class="modal-content">
+                                                                <div class="modal-body">
+                                                                    <div class="d-flex  justify-content-center">
+                                                                        <h5 class="modal-title"
+                                                                            id="evidenciaObjetivo{{ $cuestionario->id }}Label">
+                                                                            Evidencias</h5>
+                                                                    </div>
+
+                                                                    @if (!empty($obj_evidencias[0]))
+                                                                        @foreach ($obj_evidencias[$key] as $key_evidencia => $evidencia)
+                                                                            <div class="row align-items-center">
+                                                                                <div class="col-1">
+                                                                                    F1
+                                                                                </div>
+                                                                                <div class="col-3">
+                                                                                    <a class="btn-link"
+                                                                                        data-toggle="modal"
+                                                                                        data-target="#modalArchivo"
+                                                                                        wire:click="mostrarArchivo({{ $cuestionario->id }},{{ $evidencia['id'] }})">{{ $evidencia['nombre_archivo'] }}</a>
+                                                                                </div>
+                                                                                <div class="col-8">
+                                                                                    <div class="form-group">
+                                                                                        <textarea class="form-control" style="min-height: 83px;" name="comentario_{{ $key_evidencia }}"
+                                                                                            id="comentario_{{ $key_evidencia }}" style="min-width: 100%"
+                                                                                            wire:change="comentarioObjetivo({{ $evidencia['id'] }}, $event.target.value)" placeholder="Comentario">{{ $evidencia->comentarios ?? null }}</textarea>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        @endforeach
+                                                                    @else
+                                                                        <div>
+                                                                            <h4>No hay evidencias adjuntas</h4>
+                                                                        </div>
+                                                                    @endif
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                @foreach ($objetivosEvaluadoByTipo['evaluacion'] as $evaluador)
+                                                    <td>
+                                                        {{ $evaluador->calificacion_objetivo }}
+                                                    </td>
+                                                @endforeach
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
                                 @endforeach
-                            </ul>
-                        </td>
-                        <td>{{ $totales_evaluado[$periodo_seleccionado][$evaluado->id]['competencias'] }}
-                        </td>
-                        <td>{{ $totales_evaluado[$periodo_seleccionado][$evaluado->id]['objetivos'] }}
-                        </td>
-                        <td>{{ $totales_evaluado[$periodo_seleccionado][$evaluado->id]['final'] }}
-                        </td>
-                        <td>Nivel</td>
-                        @if ($evaluacion->activar_competencias)
-                            @php
-                                $calif_total_competencias = $evaluado->calificacionesCompetenciasEvaluadoPeriodo(
-                                    $this->array_periodos[$this->periodo_seleccionado]['id_periodo'],
-                                )['calif_total'];
-                            @endphp
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
 
-                            <td>
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            @foreach ($calif_total_competencias as $calif_comp)
-                                                <th>{{ $calif_comp['competencia'] }}</th>
-                                            @endforeach
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            @foreach ($calif_total_competencias as $calif_comp)
-                                                <td>{{ $calif_comp['calificacion_total'] }}</td>
-                                            @endforeach
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                        @endif
-                        @if ($evaluacion->activar_objetivos)
-                            @php
-                                $calif_total_objetivos = $evaluado->calificacionesObjetivosEvaluadoPeriodo(
-                                    $this->array_periodos[$this->periodo_seleccionado]['id_periodo'],
-                                )['calif_total'];
-                            @endphp
+        <div class="tab-pane mb-4 fade show active" id="nav-config-general" role="tabpanel"
+            aria-labelledby="nav-config-general">
+            <div class="card card-body">
+                <div class="datatable-fix">
+                    <table id="" class="table table-bordered w-100 datatable">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th colspan="8">RESULTADOS</th>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <th>Nombre</th>
+                                <th>Puesto y Área</th>
+                                <th>Evaluadores</th>
+                                @if ($evaluacion->activar_competencias)
+                                    <th>Competencias</th>
+                                @endif
+                                @if ($evaluacion->activar_objetivos)
+                                    <th>Objetivos</th>
+                                @endif
+                                <th>Calificación</th>
+                                <th>Nivel</th>
+                                @if ($evaluacion->activar_competencias)
+                                    <th>Competencias</th>
+                                @endif
+                                @if ($evaluacion->activar_objetivos)
+                                    <th>Objetivos</th>
+                                @endif
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td>{{ $evaluado->empleado->name }}</td>
+                                <td>{{ $evaluado->empleado->puestoRelacionado->puesto }}/{{ $evaluado->empleado->area->area }}
+                                </td>
+                                <td>
+                                    <ul>
+                                        @foreach ($this->evaluadores_evaluado[$evaluado->id] as $evaluador)
+                                            <li>{{ $evaluador['nombre'] }}</li>
+                                        @endforeach
+                                    </ul>
+                                </td>
+                                <td>{{ $totales_evaluado[$periodo_seleccionado][$evaluado->id]['competencias'] }}
+                                </td>
+                                <td>{{ $totales_evaluado[$periodo_seleccionado][$evaluado->id]['objetivos'] }}
+                                </td>
+                                <td>{{ $totales_evaluado[$periodo_seleccionado][$evaluado->id]['final'] }}
+                                </td>
+                                <td>Nivel</td>
+                                @if ($evaluacion->activar_competencias)
+                                    @php
+                                        $calif_total_competencias = $evaluado->calificacionesCompetenciasEvaluadoPeriodo(
+                                            $this->array_periodos[$this->periodo_seleccionado]['id_periodo'],
+                                        )['calif_total'];
+                                    @endphp
 
-                            <td>
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            @foreach ($calif_total_objetivos as $calif_obj)
-                                                <th>{{ $calif_obj['nombre'] }}</th>
-                                            @endforeach
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            @foreach ($calif_total_objetivos as $calif_obj)
-                                                <td>{{ $calif_obj['calificacion_total'] }}</td>
-                                            @endforeach
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                        @endif
-                    </tr>
-                </tbody>
-            </table>
+                                    <td>
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    @foreach ($calif_total_competencias as $calif_comp)
+                                                        <th>{{ $calif_comp['competencia'] }}</th>
+                                                    @endforeach
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    @foreach ($calif_total_competencias as $calif_comp)
+                                                        <td>{{ $calif_comp['calificacion_total'] }}</td>
+                                                    @endforeach
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                @endif
+                                @if ($evaluacion->activar_objetivos)
+                                    @php
+                                        $calif_total_objetivos = $evaluado->calificacionesObjetivosEvaluadoPeriodo(
+                                            $this->array_periodos[$this->periodo_seleccionado]['id_periodo'],
+                                        )['calif_total'];
+                                    @endphp
+
+                                    <td>
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    @foreach ($calif_total_objetivos as $calif_obj)
+                                                        <th>{{ $calif_obj['nombre'] }}</th>
+                                                    @endforeach
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    @foreach ($calif_total_objetivos as $calif_obj)
+                                                        <td>{{ $calif_obj['calificacion_total'] }}</td>
+                                                    @endforeach
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                @endif
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </div>

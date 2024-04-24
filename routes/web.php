@@ -467,7 +467,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::get('recursos-humanos/evaluacion-desempeno/{evaluacion}/dashboard-evaluacion', 'RH\EvaluacionesDesempenoController@dashboardEvaluacion')->name('rh.evaluaciones-desempeno.dashboard-evaluacion');
         Route::get('recursos-humanos/evaluacion-desempeno/{evaluacion}/dashboard-evaluacion/{evaluado}/evaluado', 'RH\EvaluacionesDesempenoController@dashboardEvaluado')->name('rh.evaluaciones-desempeno.dashboard-evaluado');
 
-        Route::get('recursos-humanos/evaluacion-desempeno/dashboard-area', 'RH\EvaluacionesDesempenoController@dashboardArea')->name('rh.evaluaciones-desempeno.dashboard-area');
+        Route::get('recursos-humanos/evaluacion-desempeno/{evaluacion}/dashboard-area/{area}', 'RH\EvaluacionesDesempenoController@dashboardArea')->name('rh.evaluaciones-desempeno.dashboard-area');
 
         Route::get('recursos-humanos/evaluacion-desempeno/dashboard-global', 'RH\EvaluacionesDesempenoController@dashboardGlobal')->name('rh.evaluaciones-desempeno.dashboard-global');
 
