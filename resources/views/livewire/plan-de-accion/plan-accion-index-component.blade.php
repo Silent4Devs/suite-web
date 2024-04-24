@@ -180,14 +180,7 @@
     }
 </style>
 <div class="table-plan-acc-index">
-    <div style="align-items: end">
-        <div class="col-12">
-            <div class="planesTrabajoTitle">
-                <p class="m-0">Planes de trabajo</p>
-            </div>
-        </div>
-    </div>
-    <div class="card-body datatable-fix">
+    <div class="card-body datatable-fix" style="padding-top: 5px;">
         <div class="table-responsive">
             <table class="table table-bordered w-100" id={{ $message }}>
                 <thead class="thead-dark">
