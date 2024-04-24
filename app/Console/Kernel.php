@@ -53,15 +53,15 @@ class Kernel extends ConsoleKernel
 
         // Limpiar los respaldos diariamente a las 6:00 PM
         $schedule->command('backup:clean')
-        ->daily()
-        ->at('18:00')
-        ->onOneServer()
-        ->sentryMonitor();
+            ->daily()
+            ->at('23:20')
+            ->onOneServer()
+            ->sentryMonitor();
 
         // Ejecutar el respaldo diariamente a las 6:30 PM
         $schedule->command('backup:run')
             ->daily()
-            ->at('18:30')
+            ->at('23:40')
             ->onOneServer()
             ->sentryMonitor();
     }
