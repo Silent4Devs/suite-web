@@ -186,9 +186,9 @@ class EventServiceProvider extends ServiceProvider
         // IncidentesDeSeguridadEvent::class => [
         //     IncidentesDeSeguridadListener::class,
         // ],
-        // AuditoriaAnualEvent::class => [
-        //     AuditoriaAnualListener::class,
-        // ],
+        AuditoriaAnualEvent::class => [
+            AuditoriaAnualListener::class,
+        ],
         // AccionCorrectivaEvent::class => [
         //     AccionCorrectivaListener::class,
         // ],
