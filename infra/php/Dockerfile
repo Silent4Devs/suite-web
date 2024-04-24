@@ -15,6 +15,7 @@ RUN apk add --no-cache \
     icu-libs \
     libc-dev \
     libzip-dev \
+    libpq-dev \
     make \
     #mysql-client \
     nodejs \
@@ -23,6 +24,7 @@ RUN apk add --no-cache \
     yarn \
     openssh-client \
     postgresql-libs \
+    postgresql-client \
     rsync \
     zlib-dev \
     sudo \
