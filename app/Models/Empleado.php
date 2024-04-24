@@ -665,7 +665,7 @@ class Empleado extends Model implements Auditable
     public function childrenOrganigrama()
     {
         return $this->hasMany(self::class, 'supervisor_id', 'id')
-            ->with('childrenOrganigrama:id,name,foto,puesto_id,genero', 'supervisor:id,name,foto,puesto_id,genero', 'area')
+            ->with('childrenOrganigrama:id,name,foto,puesto_id,genero,estatus', 'supervisor:id,name,foto,puesto_id,genero', 'area')
             ->vacanteActiva();
     }
 

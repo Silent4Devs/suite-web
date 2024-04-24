@@ -175,7 +175,7 @@
                 <a href="{{ route('admin.planes-de-accion.index') }}"
                     class="c-sidebar-nav-link {{ request()->is('admin/planes-de-accion') || request()->is('admin/planes-de-accion/*/edit') || request()->is('admin/planes-de-accion/create') || request()->is('admin/planes-de-accion/*') ? 'active' : '' }}">
                     <i class="bi bi-file-check iconos_menu letra_blanca"></i>
-                    <font class="letra_blanca">Planes de Acción</font>
+                    <font class="letra_blanca">Planes de Trabajo</font>
                 </a>
             </li>
         @endcan
