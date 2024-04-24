@@ -4,7 +4,7 @@ from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from pages.timesheet.admin.dashboard.historic.dashboard_proyectos import DashboardProyectos
 from config import username, password
-'''
+
 @pytest.fixture(scope="session")
 def browser():
     options = FirefoxOptions()
@@ -25,7 +25,7 @@ def browser():
     driver = webdriver.Firefox(options=options)
     yield driver
     driver.quit()
-'''
+
 def test_dashboard_proyectos(browser):
     timesheet_dashboardempleados = DashboardProyectos(browser)
     username_input = "input[name='email']"
