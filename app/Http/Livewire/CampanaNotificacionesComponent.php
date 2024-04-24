@@ -25,6 +25,7 @@ class CampanaNotificacionesComponent extends Component
 
     public function render()
     {
+
         $this->notificaciones_sin_leer = Auth::user()->unreadNotifications()->where('data', 'not like', '%"tipo_notificacion":"task"%')->count();
 
         return view('livewire.campana-notificaciones-component');

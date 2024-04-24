@@ -1,6 +1,17 @@
 @extends('layouts.admin')
 @section('css')
     <link rel="stylesheet" href="{{ asset('css/plan_accion.css') }}{{ config('app.cssVersion') }}">
+    <style>
+        .separator {
+            border-left: 1px solid black;
+            height: 30px;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+        }
+    </style>
 @endsection
 @section('content')
     <h5 class="col-12 titulo_general_funcion">PLAN DE TRABAJO</h5>
@@ -16,28 +27,45 @@
     </div> --}}
 
     <div class="mt-3 card">
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <div style="align-items: end">
+            <div class="col-12">
+                <div class="planesTrabajoTitle">
+                    <p class="m-0">Planes de trabajo</p>
+                </div>
+            </div>
+        </div>
+        <ul class="nav nav-tabs" id="myTab" role="tablist" style="justify-content: left !important">
             <li class="nav-item">
                 <a class="nav-link active" id="tab1-tab" data-toggle="tab" href="#tab1" role="tab"
-                    aria-controls="tab1" aria-selected="true">Mis Planes de Trabajo</a>
+                    aria-controls="tab1" style="
+                    background-color: transparent !important;">Mis Planes
+                    de Trabajo</a>
             </li>
+            <div class="separator"></div>
             <li class="nav-item">
                 <a class="nav-link" id="tab2-tab" data-toggle="tab" href="#tab2" role="tab" aria-controls="tab2"
-                    aria-selected="false">Mis Asignaciones</a>
+                    style="
+                    background-color: transparent !important;">Mis
+                    Asignaciones</a>
             </li>
+            <div class="separator"></div>
             <li class="nav-item">
                 <a class="nav-link" id="tab3-tab" data-toggle="tab" href="#tab3" role="tab" aria-controls="tab3"
-                    aria-selected="false">Área</a>
+                    style="
+                    background-color: transparent !important;">Área</a>
             </li>
         </ul>
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
+                @include('partials.flashMessages')
                 @livewire('plan-de-accion.plan-accion-index-component', ['tab' => 1])
             </div>
             <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
+                @include('partials.flashMessages')
                 @livewire('plan-de-accion.plan-accion-index-component', ['tab' => 2])
             </div>
             <div class="tab-pane fade" id="tab3" role="tabpanel" aria-labelledby="tab3-tab">
+                @include('partials.flashMessages')
                 @livewire('plan-de-accion.plan-accion-index-component', ['tab' => 3])
             </div>
         </div>
