@@ -39,6 +39,24 @@ class DashboardEmpleadosTimesheet:
         except Exception as e:
             print("Error al cargar la sección de empleados:", e)
 
+    def empleado_area_select_graphic(self,select1,registro1):
+        try:
+            self._select_option_by_text(select1,registro1)
+            print("Registro seleccionado correctamente")
+            print("Se imprimio el registro: ",registro1)
+        except Exception as e:
+            print("Error al seleccionar el registro")
+
+    def registro_timesheet_mes_select_graphic(self,select2,registro2):
+        try:
+            self.driver.execute_script("window.scrollTo(0, 600)")
+            self._select_option_by_text(select2,registro2)
+            print("Registro seleccionado correctamente")
+            print("Se imprimio el registro: ",registro2)
+        except Exception as e:
+            print("Error al seleccionar el registro")
+
+
     def _select_option_by_text(self, locator, text):
         select = Select(self.driver.find_element(By.XPATH, locator))
         select.select_by_visible_text(text)

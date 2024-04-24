@@ -4,7 +4,7 @@ from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from testing.pages.timesheet.admin.dashboard.historic.dashboard_registrotimesheet import DashboardRegistrosTimesheet
 from config import username, password
-'''
+
 @pytest.fixture(scope="session")
 def browser():
     options = FirefoxOptions()
@@ -25,7 +25,7 @@ def browser():
     driver = webdriver.Firefox(options=options)
     yield driver
     driver.quit()
-'''
+
 def test_timesheet_dashboard(browser):
     timesheet_dashboard = DashboardRegistrosTimesheet(browser)
     username_input = "input[name='email']"

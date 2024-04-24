@@ -4,7 +4,7 @@ from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from pages.timesheet.admin.dashboard.historic.dashboard_empleados import DashboardEmpleadosTimesheet
 from config import username, password
-'''
+
 @pytest.fixture(scope="session")
 def browser():
     options = FirefoxOptions()
@@ -25,7 +25,7 @@ def browser():
     driver = webdriver.Firefox(options=options)
     yield driver
     driver.quit()
-'''
+
 def test_timesheet_dashboard(browser):
     timesheet_dashboardempleados = DashboardEmpleadosTimesheet(browser)
     username_input = "input[name='email']"
@@ -39,3 +39,11 @@ def test_timesheet_dashboard(browser):
 
     empleados = "//a[@class='nav-link'][contains(.,'Empleados')]"
     timesheet_dashboardempleados.empleados_section(empleados)
+
+    select1 = "//select[contains(@id,'empleados-area')]"
+    registro1 = "QA"
+    timesheet_dashboardempleados.empleado_area_select_graphic(select1,registro1)
+
+    select2="//select[@class='form-control' and @id='registros-atrazados-empleado']"
+    registro2="QA"
+    timesheet_dashboardempleados.registro_timesheet_mes_select_graphic(select2,registro2)
