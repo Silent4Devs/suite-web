@@ -13,7 +13,7 @@
 @endsection
 @section('content')
     <h5 class="col-12 titulo_general_funcion">
-        Plan de Acción:
+        Plan de Trabajo:
         <span style="font-weight: lighter;"> {{ $planImplementacion->parent }} </span>
     </h5>
 
@@ -61,7 +61,7 @@
         <div class="blue-menu-header-plan d-flex align-items-center justify-content-between px-5">
             <h3 id="titlo-tab" class="mb-0" style="font-weight: lighter;">Kanban</h3>
             <div class="d-flex align-items-center gap-2">
-                <button class="btn" onclick="cambiarTitulo('Kanban'); navSection('kanban_gantt');">
+                <button class="btn" onclick="reloadKanban();cambiarTitulo('Kanban'); navSection('kanban_gantt');">
                     <i class="material-symbols-outlined"> view_kanban</i>
                     <span>Kanban</span>
                 </button>
