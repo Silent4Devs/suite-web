@@ -9,7 +9,7 @@
         }
 
         .tabla-calendar-time td {
-            border-bottom: 1px solid #bbb !important;
+            border-bottom: 0px solid #bbb !important;
         }
 
         .datatable_timesheet_proyectos thead tr:nth-child(1) th {
@@ -21,7 +21,7 @@
         }
 
         .datatable_timesheet_proyectos thead tr:nth-child(3) th {
-            background-color: #F0E7E7 !important;
+            background-color: #FFF9EB !important;
         }
 
         .datatable_timesheet_proyectos tr th:first-child,
@@ -85,7 +85,7 @@
             height: 100%;
             top: 0 !important;
             right: 0 !important;
-            background-color: black;
+            background-color: #c5c5c5;
         }
 
         table.dataTable thead>tr>th.sorting:before,
@@ -112,7 +112,7 @@
             opacity: 1 !important;
             line-height: 9px !important;
             font-size: .8em !important;
-            color: black !important;
+            color: #c5c5c5 !important;
         }
 
         .datatable_timesheet_proyectos tr th:last-child::before,
@@ -123,7 +123,7 @@
             height: 100%;
             top: 0 !important;
             left: 0;
-            background-color: black;
+            background-color: #c5c5c5;
         }
 
         @media(max-width: 1200px) {

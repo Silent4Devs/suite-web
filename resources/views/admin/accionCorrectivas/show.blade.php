@@ -306,7 +306,7 @@
                     <br>
 
                     <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #345183;">
-                        <span style="font-size: 17px; font-weight: bold;">Plan de Acción</span>
+                        <span style="font-size: 17px; font-weight: bold;">Plan de Trabajo</span>
                     </div>
 
                     <div class="row medidas d-flex" style="justify-content: space-between;">
