@@ -12,7 +12,7 @@
     {{-- <div class="mb-2 row">
         <div class="mb-4 ml-4 w-100" style="border-bottom: solid 2px #345183;">
             <span class="ml-1" style="font-size: 17px; font-weight: bold;">
-                 Vincular Plan de Acción</span>
+                 Vincular Plan de Trabajo</span>
         </div>
     </div> --}}
     <div class="card-header">

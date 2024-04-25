@@ -180,7 +180,7 @@
     }
 </style>
 <div class="table-plan-acc-index">
-    <div class="card-body datatable-fix" style="padding-top: 5px;">
+    <div class="card-body datatable-fix" style="padding-top: 25px;">
         <div class="table-responsive">
             <table class="table table-bordered w-100" id={{ $message }}>
                 <thead class="thead-dark">
@@ -352,7 +352,7 @@
                                             @if ($plan->id > 1)
                                                 @can('planes_de_accion_eliminar')
                                                     <a class="dropdown-item" href="#"
-                                                        title="Eliminar Plan de Acción"><i
+                                                        title="Eliminar Plan de Trabajo"><i
                                                             class="fas fa-trash-alt text-danger"></i>
 
                                                         <form method="POST" action="{{ $urlEliminarPlanAccion }}"
@@ -360,7 +360,7 @@
                                                             @csrf
                                                             @method('DELETE')
                                                             <button class="btn" type="submit"
-                                                                title="Eliminar Plan de Acción"
+                                                                title="Eliminar Plan de Trabajo"
                                                                 style="width: -webkit-fill-available; text-align: left; padding-left: 0px;">Eliminar</button>
                                                         </form>
                                                     </a>

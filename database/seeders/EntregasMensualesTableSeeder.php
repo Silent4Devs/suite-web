@@ -10355,7 +10355,7 @@ Servicio de Seguridad para el correo electrónico institucional',
             461 => [
                 'no' => 3,
                 'contrato_id' => 18,
-                'nombre_entregable' => 'Plan de Acción',
+                'nombre_entregable' => 'Plan de Trabajo',
                 'descripcion' => 'Documento que contiene recomendadas para el grupo BIMBO que deberá evaluar para  implementar, subsanar o fortalecer  su Centro de Operaciones de Seguridad.',
                 'plazo_entrega_inicio' => '2021-11-23',
                 'plazo_entrega_termina' => '2021-12-31',
