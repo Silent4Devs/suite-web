@@ -7,6 +7,7 @@ use App\Events\AuditoriaAnualEvent;
 use App\Events\IncidentesDeSeguridadEvent;
 use App\Events\RecursosEvent;
 use App\Events\RegistroMejoraEvent;
+use App\Events\RequisicionEvent;
 use App\Events\TaskRecursosEvent;
 use App\Listeners\AccionCorrectivaListener;
 use App\Listeners\AuditoriaAnualListener;
@@ -14,6 +15,7 @@ use App\Listeners\BroadcastUserLoginNotification;
 use App\Listeners\IncidentesDeSeguridadListener;
 use App\Listeners\RecursosListener;
 use App\Listeners\RegistroMejoraListener;
+use App\Listeners\RequisicionListener;
 use App\Listeners\TaskRecursosListener;
 use App\Models\AccionCorrectiva;
 use App\Models\Activo;
@@ -183,24 +185,27 @@ class EventServiceProvider extends ServiceProvider
         Login::class => [
             BroadcastUserLoginNotification::class,
         ],
-        // IncidentesDeSeguridadEvent::class => [
-        //     IncidentesDeSeguridadListener::class,
-        // ],
+        IncidentesDeSeguridadEvent::class => [
+            IncidentesDeSeguridadListener::class,
+        ],
         AuditoriaAnualEvent::class => [
             AuditoriaAnualListener::class,
         ],
-        // AccionCorrectivaEvent::class => [
-        //     AccionCorrectivaListener::class,
-        // ],
-        // RegistroMejoraEvent::class => [
-        //     RegistroMejoraListener::class,
-        // ],
-        // RecursosEvent::class => [
-        //     RecursosListener::class,
-        // ],
-        // TaskRecursosEvent::class => [
-        //     TaskRecursosListener::class,
-        // ],
+        AccionCorrectivaEvent::class => [
+            AccionCorrectivaListener::class,
+        ],
+        RegistroMejoraEvent::class => [
+            RegistroMejoraListener::class,
+        ],
+        RecursosEvent::class => [
+            RecursosListener::class,
+        ],
+        TaskRecursosEvent::class => [
+            TaskRecursosListener::class,
+        ],
+        RequisicionEvent::class => [
+            RequisicionListener::class,
+        ],
     ];
 
     /**

@@ -7,6 +7,8 @@ use Livewire\Component;
 
 class CampanaNotificacionesComponent extends Component
 {
+    public  $notificaciones;
+
     protected $listeners = [
         'echo:notificaciones-campana,IncidentesDeSeguridadEvent' => 'getTotalNotificaciones',
         'echo:notificaciones-campana,AuditoriaAnualEvent' => 'getTotalNotificaciones',
@@ -18,13 +20,10 @@ class CampanaNotificacionesComponent extends Component
 
     public $notificaciones_sin_leer;
 
-    public function mount()
-    {
-        // $this->notificaciones = Auth::user()->unreadNotifications()->latest()->take(5)->get();
-    }
-
     public function render()
     {
+
+        $this->notificaciones = Auth::user()->unreadNotifications()->latest()->take(5)->get();
 
         $this->notificaciones_sin_leer = Auth::user()->unreadNotifications()->where('data', 'not like', '%"tipo_notificacion":"task"%')->count();
 

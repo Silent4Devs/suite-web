@@ -10,7 +10,7 @@
             border-radius: 15px;
             cursor: crosshair;
         }
-
+        
         canvas {
             border: 2px dotted #CCCCCC;
             border-radius: 15px;
