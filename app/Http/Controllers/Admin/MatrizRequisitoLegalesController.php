@@ -251,10 +251,10 @@ class MatrizRequisitoLegalesController extends Controller
             'modulo_origen' => 'required|string',
             'objetivo' => 'required|string',
         ], [
-            'parent.required' => 'Debes de definir un nombre para el plan de acción',
-            'norma.required' => 'Debes de definir una norma para el plan de acción',
-            'modulo_origen.required' => 'Debes de definir un módulo de origen para el plan de acción',
-            'objetivo.required' => 'Debes de definir un objetivo para el plan de acción',
+            'parent.required' => 'Debes de definir un nombre para el Plan de Trabajo',
+            'norma.required' => 'Debes de definir una norma para el Plan de Trabajo',
+            'modulo_origen.required' => 'Debes de definir un módulo de origen para el Plan de Trabajo',
+            'objetivo.required' => 'Debes de definir un objetivo para el Plan de Trabajo',
         ]);
 
         $matrizRequisitoLegal = $id;
@@ -294,7 +294,7 @@ class MatrizRequisitoLegalesController extends Controller
 
         $matrizRequisitoLegal->planes()->save($planImplementacion);
 
-        return redirect()->route('admin.matriz-requisito-legales.index')->with('success', 'Plan de Acción'.$planImplementacion->parent.' creado');
+        return redirect()->route('admin.matriz-requisito-legales.index')->with('success', 'Plan de Trabajo'.$planImplementacion->parent.' creado');
     }
 
     public function evaluar(MatrizRequisitoLegale $id)

@@ -35,6 +35,6 @@ class ActividadesPlanAccionRule implements Rule
      */
     public function message()
     {
-        return 'No has agregado actividades al plan de acción';
+        return 'No has agregado actividades al Plan de Trabajo';
     }
 }

@@ -9,7 +9,7 @@
         }
 
         .tabla-calendar-time td {
-            border-bottom: 1px solid #bbb !important;
+            border-bottom: 0px solid #bbb !important;
         }
 
         .datatable_timesheet_proyectos thead tr:nth-child(1) th {
@@ -21,7 +21,7 @@
         }
 
         .datatable_timesheet_proyectos thead tr:nth-child(3) th {
-            background-color: #F0E7E7 !important;
+            background-color: #FFF9EB !important;
         }
 
         .datatable_timesheet_proyectos tr th:first-child,
@@ -84,8 +84,35 @@
             width: 1px;
             height: 100%;
             top: 0 !important;
-            right: 0;
-            background-color: grey;
+            right: 0 !important;
+            background-color: #c5c5c5;
+        }
+
+        table.dataTable thead>tr>th.sorting:before,
+        table.dataTable thead>tr>th.sorting:after,
+        table.dataTable thead>tr>th.sorting_asc:before,
+        table.dataTable thead>tr>th.sorting_asc:after,
+        table.dataTable thead>tr>th.sorting_desc:before,
+        table.dataTable thead>tr>th.sorting_desc:after,
+        table.dataTable thead>tr>th.sorting_asc_disabled:before,
+        table.dataTable thead>tr>th.sorting_asc_disabled:after,
+        table.dataTable thead>tr>th.sorting_desc_disabled:before,
+        table.dataTable thead>tr>th.sorting_desc_disabled:after,
+        table.dataTable thead>tr>td.sorting:before,
+        table.dataTable thead>tr>td.sorting:after,
+        table.dataTable thead>tr>td.sorting_asc:before,
+        table.dataTable thead>tr>td.sorting_asc:after,
+        table.dataTable thead>tr>td.sorting_desc:before,
+        table.dataTable thead>tr>td.sorting_desc:after,
+        table.dataTable thead>tr>td.sorting_asc_disabled:before,
+        table.dataTable thead>tr>td.sorting_asc_disabled:after,
+        table.dataTable thead>tr>td.sorting_desc_disabled:before,
+        table.dataTable thead>tr>td.sorting_desc_disabled:after {
+            position: absolute !important;
+            opacity: 1 !important;
+            line-height: 9px !important;
+            font-size: .8em !important;
+            color: #c5c5c5 !important;
         }
 
         .datatable_timesheet_proyectos tr th:last-child::before,
@@ -96,7 +123,7 @@
             height: 100%;
             top: 0 !important;
             left: 0;
-            background-color: grey;
+            background-color: #c5c5c5;
         }
 
         @media(max-width: 1200px) {
@@ -217,24 +244,23 @@
                 class="datatable_timesheet_proyectos table w-100 tabla-fixed tabla-calendar-time">
                 <thead>
                     <tr>
-                        <th style="min-width:250px;">
-                            ID-Proyecto
-                        </th>
-                        <th style="min-width:250px; text-align: right;">Áreas participantes</th>
-                        <th style="min-width:250px; text-align: right;">Empleados participantes</th>
-                        <th style="min-width:250px; text-align: right;">Cliente</th>
+                        <th style="min-width: 250px;text-align: justify;width: 250px;align-content: center;" ROWSPAN=3>
+                            ID-Proyecto</th>
+                        <th style="min-width: 250px;text-align: justify;width: 250px;align-content: center;" ROWSPAN=3>
+                            Áreas participantes</th>
+                        <th style="min-width: 250px;text-align: justify;width: 250px;align-content: center;" ROWSPAN=3>
+                            Empleados participantes</th>
+                        <th style="min-width: 250px;text-align: justify;width: 250px;align-content: center;" ROWSPAN=3>
+                            Cliente</th>
                         @foreach ($calendario_tabla as $calendar)
                             <th colspan="{{ $calendar['total_weeks'] }}" class="th-calendario th-año">
                                 <small>{{ $calendar['year'] }}</small>
                             </th>
                         @endforeach
-                        <th>Total horas</th>
+                        <th style="min-width: 50px;text-align: justify;width: 50px;align-content: center;" ROWSPAN=3>
+                            Total horas</th>
                     </tr>
                     <tr>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
                         @foreach ($calendario_tabla as $calendar)
                             @foreach ($calendar['months'] as $key => $mes)
                                 @php
@@ -283,13 +309,8 @@
                                 @endif
                             @endforeach
                         @endforeach
-                        <th></th>
                     </tr>
                     <tr>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
                         @foreach ($calendario_tabla as $calendar)
                             @foreach ($calendar['months'] as $key => $mes)
                                 @foreach ($mes['weeks'] as $week)
@@ -306,7 +327,6 @@
                                 @endforeach
                             @endforeach
                         @endforeach
-                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -352,6 +372,7 @@
             </div>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', () => {

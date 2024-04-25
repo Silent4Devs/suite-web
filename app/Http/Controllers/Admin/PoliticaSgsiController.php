@@ -95,7 +95,7 @@ class PoliticaSgsiController extends Controller
         $modulo = ListaDistribucion::with('participantes')->where('modelo', '=', $this->modelo)->first();
 
         $listavacia = 'cumple';
-        if (! isset($modulo)) {
+        if (!isset($modulo)) {
             $listavacia = 'vacia';
         } elseif ($modulo->participantes->isEmpty()) {
             $listavacia = 'vacia';
@@ -173,9 +173,12 @@ class PoliticaSgsiController extends Controller
         }
     }
 
-    public function edit(PoliticaSgsi $politicaSgsi)
+    public function edit($id)
     {
         try {
+            // Validar la existencia de la política de SGSI por su ID
+            $politicaSgsi = PoliticaSgsi::findOrFail($id);
+
             abort_if(Gate::denies('politica_sistema_gestion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
             $politicaSgsi->load('team');
@@ -195,7 +198,7 @@ class PoliticaSgsiController extends Controller
 
             return view('admin.politicaSgsis.edit', compact('politicaSgsi', 'empleados', 'fecha_publicacion', 'fecha_revision', 'comentarios'));
         } catch (\Exception $e) {
-            return redirect()->route('admin.politica-sgsis.index')->with('error', $e->getMessage());
+            abort(404);
         }
     }
 
@@ -212,6 +215,11 @@ class PoliticaSgsiController extends Controller
                 'fecha_revision' => 'required',
             ]);
 
+
+            if (!$politicaSgsi) {
+                abort(404);
+            }
+
             $politicaSgsi->update([
                 'nombre_politica' => $request->input('nombre_politica'),
                 'politicasgsi' => $request->input('politicasgsi'),
@@ -221,26 +229,34 @@ class PoliticaSgsiController extends Controller
                 'id_reviso_politica' => User::getCurrentUser()->empleado->id,
             ]);
 
+
             $this->solicitudAprobacion($politicaSgsi->id);
 
             return redirect()->route('admin.politica-sgsis.index')->with('success', 'Editado con éxito');
         } catch (\Exception $e) {
-            return redirect()->route('admin.politica-sgsis.index')->with('error', $e->getMessage());
+            abort(404);
         }
     }
 
-    public function show(PoliticaSgsi $politicaSgsi)
+    public function show($id)
     {
         try {
             abort_if(Gate::denies('politica_sistema_gestion_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+            if (!is_numeric($id)) {
+                abort(404);
+            }
+
+            $politicaSgsi = PoliticaSgsi::findOrFail($id); // Buscar la política por su ID
 
             $politicaSgsi->load('team');
 
             return view('admin.politicaSgsis.show', compact('politicaSgsi'));
         } catch (\Exception $e) {
-            return redirect()->route('admin.politica-sgsis.index')->with('error', $e->getMessage());
+            abort(404);
         }
     }
+
 
     public function destroy(PoliticaSgsi $politicaSgsi)
     {
@@ -283,8 +299,9 @@ class PoliticaSgsiController extends Controller
     {
         try {
             $politicaSgsis = PoliticaSgsi::where('estatus', 'aprobado')->get();
+
             foreach ($politicaSgsis as $polsgsis) {
-                if (! isset($polsgsis->reviso)) {
+                if (!isset($polsgsis->reviso)) {
                     $polsgsis->revisobaja = PoliticaSgsi::with('revisobaja')->first();
                     $polsgsis->estemp = 'baja';
                 } else {
@@ -308,6 +325,18 @@ class PoliticaSgsiController extends Controller
 
         return $pdf->download('politicas.pdf');
     }
+
+
+    public function pdf_show($id)
+    {
+
+        $politica = PoliticaSgsi::find($id);
+        $pdf = PDF::loadView('politicas_show', compact('politica'));
+        $pdf->setPaper('A4', 'portrait');
+
+        return $pdf->download('politicas.pdf');
+    }
+
 
     public function solicitudAprobacion($id_politica)
     {
@@ -369,8 +398,8 @@ class PoliticaSgsiController extends Controller
 
         $politicaSgsi = PoliticaSgsi::find($id);
 
-        if (! $politicaSgsi) {
-            return redirect()->route('admin.politica-sgsis.index')->with('error', 'Registro no encontrado');
+        if (!$politicaSgsi) {
+            abort(404);
         }
 
         $politicaSgsi->load('team');

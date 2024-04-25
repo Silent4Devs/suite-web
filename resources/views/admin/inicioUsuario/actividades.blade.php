@@ -28,7 +28,7 @@
                 <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
                 <p class="m-0" style="font-size: 14px; color:#1E3A8A ">En esta sección encontrará las
                     actividades
-                    que le han sido asignadas en los Planes de Acción creados dentro del sistema.
+                    que le han sido asignadas en los Planes de Trabajo creados dentro del sistema.
                 </p>
 
             </div>

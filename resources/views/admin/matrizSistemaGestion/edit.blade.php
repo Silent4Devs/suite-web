@@ -1010,10 +1010,10 @@
                     </div>
                     <div class="form-group col-sm-12" id="modulo_planaccion" style="display: none;">
 
-                        {{-- MODULO AGREGAR PLAN DE ACCIÓN --}}
+                        {{-- MODULO AGREGAR PLAN DE Trabajo --}}
                         {{-- <div class="row w-100">
                             <label for="plan_accion" style="margin-left: 15px; margin-bottom:5px;"> <i
-                                    class="fas fa-question-circle iconos-crear"></i> ¿Vincular con plan de acción?</label>
+                                    class="fas fa-question-circle iconos-crear"></i> ¿Vincular con plan de Trabajo?</label>
                             @livewire('planes-implementacion-select',['planes_seleccionados'=>[]])
                             <div class="pl-0 ml-0 col-2">
                                 <button type="button" class="btn btn-sm btn-success" data-toggle="modal"
@@ -1024,7 +1024,7 @@
                             @livewire('plan-implementacion-create', ['referencia' => null,'modulo_origen'=>'Matríz de
                             riesgos', 'id_matriz' => $matrizRiesgo->id_analisis])
                         </div> --}}
-                        {{-- FIN MODULO AGREGAR PLAN DE ACCIÓN --}}
+                        {{-- FIN MODULO AGREGAR PLAN DE Trabajo --}}
                     </div>
 
                 </div>
