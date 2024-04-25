@@ -23,7 +23,7 @@
     </style>
 
     <div class="print-none">
-        {{ Breadcrumbs::render('admin.alcance-sgsis.create') }}
+        {{ Breadcrumbs::render('admin.politica-sgsis.create') }}
     </div>
     <div class="mt-4 row justify-content-center">
         <div class="card col-sm-12 col-md-10" style="border-radius: 16px; height:1556px;">
@@ -91,9 +91,6 @@
                         {!! $politicaSgsi->politicasgsi !!}
                     </div>
                 </div>
-
-                <div class="border-bottom" style="margin-top:100px;"> </div>
-
             </div>
         </div>
     </div>

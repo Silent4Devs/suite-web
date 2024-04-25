@@ -12,6 +12,7 @@ use App\Models\PanelOrganizacion;
 use App\Models\Schedule;
 use App\Services\ImageService;
 use Carbon\Carbon;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
@@ -123,26 +124,24 @@ class OrganizacionController extends Controller
             //$name_image = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
             $hash_name = pathinfo($file->hashName(), PATHINFO_FILENAME);
             //$fileName = 'UID_'.$organizacions->id.'_'.$file->getClientOriginalName();
-            $new_name_image = 'UID_'.$organizacions->id.'_'.$hash_name.'.png';
+            $new_name_image = 'UID_' . $organizacions->id . '_' . $hash_name . '.png';
 
             // Call the ImageService to consume the external API
             $apiResponse = ImageService::consumeImageCompresorApi($file);
 
             // Compress and save the image
             if ($apiResponse['status'] == 200) {
-                $rutaGuardada = '/public/images/'.$new_name_image;
+                $rutaGuardada = '/public/images/' . $new_name_image;
                 //file_put_contents(storage_path('app/public/'.$rutaGuardada), $apiResponse['body']);
 
                 Storage::put($rutaGuardada, $apiResponse['body']);
 
                 $organizacions->update(['logotipo' => $new_name_image]);
-
             } else {
-                $mensajeError = 'Error al recibir la imagen de la API externa: '.$apiResponse['body'];
+                $mensajeError = 'Error al recibir la imagen de la API externa: ' . $apiResponse['body'];
 
                 return Redirect::back()->with('error', $mensajeError);
             }
-
         }
 
         if ($media = $request->input('ck-media', false)) {
@@ -152,29 +151,35 @@ class OrganizacionController extends Controller
         return redirect()->route('admin.organizacions.index')->with('success', 'Guardado con éxito');
     }
 
-    public function edit(Organizacion $organizacion)
+
+    public function edit($organizacionId)
     {
-        $countEmpleados = Empleado::alta()->get()->count();
-        $organizacion->fecha_constitucion = Carbon::parse($organizacion->fecha_constitucion)->format('Y-m-d');
-        // dd($organizacion->fecha_constitucion);
+        try {
+            $organizacion = Organizacion::findOrFail($organizacionId);
 
-        if ($countEmpleados == 0) {
-            $tamanoEmpresa = 'debe registrar a los empleados';
-        } elseif ($countEmpleados >= 1 && $countEmpleados <= 249) {
-            $tamanoEmpresa = 'Chica (menos de 250 empleados)';
-        } elseif ($countEmpleados >= 250 && $countEmpleados <= 1000) {
-            $tamanoEmpresa = 'Mediana (entre 250 y 1000 empleados)';
-        } elseif ($countEmpleados >= 1000) {
-            $tamanoEmpresa = 'Grande (más de 1000 empleados)';
+            $countEmpleados = Empleado::alta()->count();
+            $organizacion->fecha_constitucion = Carbon::parse($organizacion->fecha_constitucion)->format('Y-m-d');
+
+            if ($countEmpleados == 0) {
+                $tamanoEmpresa = 'debe registrar a los empleados';
+            } elseif ($countEmpleados >= 1 && $countEmpleados <= 249) {
+                $tamanoEmpresa = 'Chica (menos de 250 empleados)';
+            } elseif ($countEmpleados >= 250 && $countEmpleados <= 1000) {
+                $tamanoEmpresa = 'Mediana (entre 250 y 1000 empleados)';
+            } elseif ($countEmpleados >= 1000) {
+                $tamanoEmpresa = 'Grande (más de 1000 empleados)';
+            }
+
+            abort_if(Gate::denies('mi_organizacion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            $organizacion->load('team');
+            $schedule = Organizacion::getAll()->find(1)->schedules;
+
+            $dias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'];
+
+            return view('admin.organizacions.edit', compact('organizacion', 'dias', 'schedule', 'countEmpleados', 'tamanoEmpresa'));
+        } catch (QueryException $e) {
+            abort(404);
         }
-
-        abort_if(Gate::denies('mi_organizacion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $organizacion->load('team');
-        $schedule = Organizacion::getAll()->find(1)->schedules;
-
-        $dias = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes'];
-
-        return view('admin.organizacions.edit', compact('organizacion', 'dias', 'schedule', 'countEmpleados', 'tamanoEmpresa'));
     }
 
     public function update(UpdateOrganizacionRequest $request, Organizacion $organizacion)
@@ -191,27 +196,25 @@ class OrganizacionController extends Controller
             //$name_image = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
             $hash_name = pathinfo($file->hashName(), PATHINFO_FILENAME);
             //$fileName = 'UID_'.$organizacion->id.'_'.$file->getClientOriginalName();
-            $new_name_image = 'UID_'.$organizacion->id.'_'.$hash_name.'.png';
+            $new_name_image = 'UID_' . $organizacion->id . '_' . $hash_name . '.png';
 
             // Call the ImageService to consume the external API
             $apiResponse = ImageService::consumeImageCompresorApi($file);
 
             // Compress and save the image
             if ($apiResponse['status'] == 200) {
-                $rutaGuardada = '/public/images/'.$new_name_image;
+                $rutaGuardada = '/public/images/' . $new_name_image;
                 //file_put_contents(storage_path('app/public/'.$rutaGuardada), $apiResponse['body']);
 
                 Storage::put($rutaGuardada, $apiResponse['body']);
 
                 $organizacion->logotipo = $new_name_image;
                 $organizacion->save();
-
             } else {
-                $mensajeError = 'Error al recibir la imagen de la API externa: '.$apiResponse['body'];
+                $mensajeError = 'Error al recibir la imagen de la API externa: ' . $apiResponse['body'];
 
                 return Redirect::back()->with('error', $mensajeError);
             }
-
         }
 
         $this->saveOrUpdateSchedule($request, $organizacion);
