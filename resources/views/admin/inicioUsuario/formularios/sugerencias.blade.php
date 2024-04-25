@@ -110,13 +110,13 @@
                     <div class="mt-2 form-group col-12">
                         <label class="form-label"><i class="fas fa-text-width iconos-crear"></i> Título corto de la
                             sugerencia<sup>*</sup></label>
-                        <input name="titulo" class="form-control" required>
+                        <input name="titulo" class="form-control" maxlength="255" required>
                     </div>
 
                     <div class="mt-2 form-group col-12">
                         <label class="form-label"><i class="fas fa-file-alt iconos-crear"></i> Describa detalladamente su
                             sugerencia<sup>*</sup></label>
-                        <textarea name="descripcion" class="form-control" required></textarea>
+                        <textarea name="descripcion" class="form-control"  maxlength="555" required></textarea>
                     </div>
 
                     <div class="mt-2 text-right form-group col-12">

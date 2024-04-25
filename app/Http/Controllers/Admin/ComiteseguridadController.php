@@ -95,11 +95,11 @@ class ComiteseguridadController extends Controller
         try {
             abort_if(Gate::denies('comformacion_comite_seguridad_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+            $comiteseguridad = Comiteseguridad::find($comiteseguridad);
+
             if (!$comiteseguridad) {
                 abort(404);
             }
-
-            $comiteseguridad = Comiteseguridad::find($comiteseguridad);
 
 
             return view('admin.comiteseguridads.edit', compact('comiteseguridad'));
@@ -171,23 +171,30 @@ class ComiteseguridadController extends Controller
 
     public function saveMember(Request $request, $id_comite)
     {
-        try {
+        // Validar la existencia del comité de seguridad por su ID
+        $request->validate([
+            'id_asignada' => 'required',
+            'nombrerol' => 'required',
+            'responsabilidades' => 'required',
+        ]);
 
-            $miebros = MiembrosComiteSeguridad::create([
+        try {
+            $comiteseguridad = Comiteseguridad::findOrFail($id_comite);
+
+            $miembro = MiembrosComiteSeguridad::create([
                 'comite_id' => $id_comite,
                 'id_asignada' => $request->input('id_asignada'),
                 'nombrerol' => $request->input('nombrerol'),
                 'responsabilidades' => $request->input('responsabilidades'),
             ]);
 
-
-            $comiteseguridad = Comiteseguridad::find($id_comite);
-
             return view('admin.comiteseguridads.edit', compact('comiteseguridad'));
-        } catch (\Throwable $th) {
+        } catch (\Exception $e) {
             abort(404);
         }
     }
+
+
 
     public function deleteMember($id)
     {
