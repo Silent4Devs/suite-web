@@ -1,6 +1,4 @@
-<div class="card card-body">
-    <canvas id="graf-financiero-1" width="400" height="100"></canvas>
-</div>
+@livewire('timesheet.finanzas-dashboard')
 <div class="card-body">
     <div class="d-flex gap-2 flex-wrap">
         @foreach ($proyectos_array as $proyecto)
@@ -30,11 +28,12 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        let graf_general = new Chart(document.getElementById('graf-financiero-1'), {
+        let graf_general_1 = new Chart(document.getElementById('graf-financiero-1'), {
             type: 'bar', // Cambiado a tipo de gráfico de barras
             data: {
                 labels: [
-
+                    'ss',
+                    'dd'
                 ],
                 datasets: [{
                     data: [1, 2, 3, 4],
