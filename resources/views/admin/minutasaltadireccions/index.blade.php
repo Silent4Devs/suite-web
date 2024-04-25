@@ -201,7 +201,7 @@
                                     {{-- @foreach ($q->planes as $plan)
                                             @can('revision_por_direccion_plan_accion')
                                                 <li><a href="/admin/planes-de-accion/{{ $plan->id }}" class="btn btn-sm"
-                                                        title="Plan de Acción"><i class="fa fa-stream"></i></a>Plan de
+                                                        title="Plan de Trabajo"><i class="fa fa-stream"></i></a>Plan de
                                                     Accion
                                                 </li>
                                             @endcan
