@@ -4,7 +4,7 @@
     <div style="margin-bottom: 10px; margin-left:12px; border:none;" class="row">
         <div class="col-12 text-right">
             <div class="btn btn-success boton_verde">
-                
+
                 Agregar Actividad
             </div>
         </div>
@@ -22,7 +22,7 @@
                     <th>
                         {{ trans('cruds.planaccionCorrectiva.fields.id') }}
                     </th>
-      <!--  
+      <!--
                     <th>
                         {{ trans('cruds.planaccionCorrectiva.fields.accioncorrectiva') }}
                     </th>
@@ -68,7 +68,7 @@
                     <td>
                         <select class="search">
                             <option value>{{ trans('global.all') }}</option>
-                            
+
                             <option></option>
                         </select>
                     </td>
@@ -120,10 +120,10 @@
 
 <div class="fondo_negro">
     <div class="ventana">
-        
+
         <div class="card mt-4">
             <div class="col-md-10 col-sm-9 py-3 card-body verde_silent align-self-center" style="margin-top: -40px;">
-                <h3 class="mb-1  text-center text-white"><strong> Registrar: </strong> Plan de Acción  </h3>
+                <h3 class="mb-1  text-center text-white"><strong> Registrar: </strong> Plan de Trabajo </h3>
             </div>
 
             <div class="card-body">
@@ -131,7 +131,7 @@
 
             <form method="POST" action="{{ route("admin.planaccion-correctivas.store") }}" enctype="multipart/form-data" class="row">
                 @csrf
-            <!--    
+            <!--
                 <div class="form-group col-md-6">
                     <label for="accioncorrectiva_id"><i class="fas fa-exclamation-triangle iconos-crear"></i>{{ trans('cruds.planaccionCorrectiva.fields.accioncorrectiva') }}</label>
                     <select class="form-control select2 {{ $errors->has('accioncorrectiva') ? 'is-invalid' : '' }}" name="accioncorrectiva_id" id="accioncorrectiva_id">

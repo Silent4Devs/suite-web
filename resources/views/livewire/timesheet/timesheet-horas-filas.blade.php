@@ -74,19 +74,39 @@
                                         data-type="parent" name="timesheet[{{ $i }}][proyecto]"
                                         class="select2">
                                         <option selected disabled>Seleccione proyecto</option>
-                                        {{-- Mostrar proyectos sin letra en el ID --}}
-                                        @foreach ($proyectos as $proyecto)
-                                            @if (is_numeric(substr($proyecto['identificador'], -1)))
-                                                <option value="{{ $proyecto['id'] }}">{{ $proyecto['identificador'] }} -
-                                                    {{ $proyecto['proyecto'] }}</option>
-                                            @endif
+                                        @php
+                                            $proyectos_numericos = [];
+                                            $proyectos_con_letra = [];
+
+                                            foreach ($proyectos as $proyecto) {
+                                                if (is_numeric(substr($proyecto['identificador'], -1))) {
+                                                    $proyectos_numericos[] = $proyecto;
+                                                } else {
+                                                    $proyectos_con_letra[] = $proyecto;
+                                                }
+                                            }
+
+                                            // Ordenar los proyectos numéricos de forma descendente por ID
+                                            usort($proyectos_numericos, function ($a, $b) {
+                                                return $b['id'] <=> $a['id'];
+                                            });
+
+                                            // Ordenar los proyectos con letra al final al final
+                                            usort($proyectos_con_letra, function ($a, $b) {
+                                                return strcmp($a['identificador'], $b['identificador']);
+                                            });
+                                        @endphp
+
+                                        {{-- Mostrar los proyectos numéricos --}}
+                                        @foreach ($proyectos_numericos as $proyecto)
+                                            <option value="{{ $proyecto['id'] }}">{{ $proyecto['identificador'] }} -
+                                                {{ $proyecto['proyecto'] }}</option>
                                         @endforeach
-                                        {{-- Mostrar proyectos con letra en el ID --}}
-                                        @foreach ($proyectos as $proyecto)
-                                            @if (!is_numeric(substr($proyecto['identificador'], -1)))
-                                                <option value="{{ $proyecto['id'] }}">{{ $proyecto['identificador'] }}
-                                                    - {{ $proyecto['proyecto'] }}</option>
-                                            @endif
+
+                                        {{-- Mostrar los proyectos con letra --}}
+                                        @foreach ($proyectos_con_letra as $proyecto)
+                                            <option value="{{ $proyecto['id'] }}">{{ $proyecto['identificador'] }} -
+                                                {{ $proyecto['proyecto'] }}</option>
                                         @endforeach
                                     </select>
                                     <small class="timesheet_{{ $i }}_proyecto errores text-danger"></small>

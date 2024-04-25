@@ -37,15 +37,15 @@ class PlanAccionIndexComponent extends Component
 
         // Iterar sobre los planes de acción globales
         foreach ($planImplementacionsGlobal as $plan) {
-            // Verificar si el usuario está asignado a alguna tarea en este plan de acción
+            // Verificar si el usuario está asignado a alguna tarea en este Plan de Trabajo
             foreach ($plan->tasks as $task) {
                 if (property_exists($task, 'assigs')) {
                     foreach ($task->assigs as $assig) {
                         if ($assig->resourceId == $usuario->empleado->id) {
-                            // Si el usuario está asignado a alguna tarea en este plan de acción,
-                            // agregamos este plan de acción a $planImplementacionsAssigs
+                            // Si el usuario está asignado a alguna tarea en este Plan de Trabajo,
+                            // agregamos este Plan de Trabajo a $planImplementacionsAssigs
                             $planImplementacionsAssigs[] = $plan;
-                            // Rompemos el bucle, ya que no es necesario seguir buscando en este plan de acción
+                            // Rompemos el bucle, ya que no es necesario seguir buscando en este Plan de Trabajo
                             break 2;
                         }
                     }
