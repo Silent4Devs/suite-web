@@ -180,7 +180,7 @@
     }
 </style>
 <div class="table-plan-acc-index">
-    <div class="card-body datatable-fix" style="padding-top: 5px;">
+    <div class="card-body datatable-fix" style="padding-top: 25px;">
         <div class="table-responsive">
             <table class="table table-bordered w-100" id={{ $message }}>
                 <thead class="thead-dark">
