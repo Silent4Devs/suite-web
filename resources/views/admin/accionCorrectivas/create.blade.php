@@ -16,7 +16,7 @@
                         {{-- <a href="#" data-tabs="contenido2"><i class="mr-2 fab fa-medapps" style="font-size:30px;"
                                 style="text-decoration:none;"></i> Ánalisis de causa raíz</a>
                         <a href="#" data-tabs="contenido3"><i class="mr-2 fas fa-file-alt" style="font-size:30px;"
-                                style="text-decoration:none;"></i>Plan de acción</a> --}}
+                                style="text-decoration:none;"></i>Plan de Trabajo</a> --}}
                     </div>
 
 
@@ -25,7 +25,7 @@
                         <button id="acollapseplan" data-toggle="collapse" onclick="closetabcollap2()"
                             data-target="#collapseplan" class="btn btn-primary">Análisis de causa raíz</button>
                         <button id="acollapseactividad" data-toggle="collapse" onclick="" data-target="#"
-                            class="btn btn-primary">Plan de acción</button> --}}
+                            class="btn btn-primary">Plan de Trabajo</button> --}}
                     <div class="caja_caja_secciones">
                         <div class="caja_secciones">
 

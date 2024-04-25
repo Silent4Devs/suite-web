@@ -74,19 +74,9 @@
                                         data-type="parent" name="timesheet[{{ $i }}][proyecto]"
                                         class="select2">
                                         <option selected disabled>Seleccione proyecto</option>
-                                        {{-- Mostrar proyectos sin letra en el ID --}}
                                         @foreach ($proyectos as $proyecto)
-                                            @if (is_numeric(substr($proyecto['identificador'], -1)))
-                                                <option value="{{ $proyecto['id'] }}">{{ $proyecto['identificador'] }} -
-                                                    {{ $proyecto['proyecto'] }}</option>
-                                            @endif
-                                        @endforeach
-                                        {{-- Mostrar proyectos con letra en el ID --}}
-                                        @foreach ($proyectos as $proyecto)
-                                            @if (!is_numeric(substr($proyecto['identificador'], -1)))
-                                                <option value="{{ $proyecto['id'] }}">{{ $proyecto['identificador'] }}
-                                                    - {{ $proyecto['proyecto'] }}</option>
-                                            @endif
+                                            <option value="{{ $proyecto['id'] }}">{{ $proyecto['identificador'] }} -
+                                                {{ $proyecto['proyecto'] }}</option>
                                         @endforeach
                                     </select>
                                     <small class="timesheet_{{ $i }}_proyecto errores text-danger"></small>

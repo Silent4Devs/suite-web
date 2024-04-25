@@ -133,7 +133,7 @@ class PlanesAccionController extends Controller
             'zoom' => '3d',
             'parent' => $request->parent,
             'norma' => $request->norma,
-            'modulo_origen' => 'Planes de Acción',
+            'modulo_origen' => 'Planes de Trabajo',
             'objetivo' => $request->objetivo,
             'elaboro_id' => User::getCurrentUser()->empleado->id,
             'es_plan_trabajo_base' => $request->es_plan_trabajo_base != null ? true : false,
@@ -289,7 +289,7 @@ class PlanesAccionController extends Controller
                 'objetivo' => $request->objetivo,
             ]);
             $route = $planImplementacion->es_plan_trabajo_base ? 'admin.planTrabajoBase.index' : 'admin.planes-de-accion.index';
-            $mensaje = $planImplementacion->es_plan_trabajo_base ? 'Plan de Trabajo Base Actualizado' : 'Plan de Acción Actualizado';
+            $mensaje = $planImplementacion->es_plan_trabajo_base ? 'Plan de Trabajo Base Actualizado' : 'Plan de Trabajo Actualizado';
 
             return redirect()->route($route)->with('success', $mensaje);
         } catch (\Throwable $th) {
@@ -303,7 +303,7 @@ class PlanesAccionController extends Controller
             'objetivo' => $request->objetivo,
         ]);
         $route = $planImplementacion->es_plan_trabajo_base ? 'admin.planTrabajoBase.index' : 'admin.planes-de-accion.index';
-        $mensaje = $planImplementacion->es_plan_trabajo_base ? 'Plan de Trabajo Base Actualizado' : 'Plan de Acción Actualizado';
+        $mensaje = $planImplementacion->es_plan_trabajo_base ? 'Plan de Trabajo Base Actualizado' : 'Plan de Trabajo Actualizado';
 
         return redirect()->route($route)->with('success', $mensaje);
     }

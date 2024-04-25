@@ -297,17 +297,17 @@
                             let botones = `
                             <div class="btn-group">
                                 @can('planes_de_accion_editar')
-                                <a class="btn" href="${urlEditarPlanAccion}" title="Editar Plan de Acción"><i class="fas fa-edit"></i></a>
+                                <a class="btn" href="${urlEditarPlanAccion}" title="Editar Plan de Trabajo"><i class="fas fa-edit"></i></a>
                                 @endcan
                                 @can('planes_de_accion_visualizar_diagrama')
-                                <a class="btn" href="${urlVerPlanAccion}" title="Visualizar Plan de Acción"><i class="fas fa-stream"></i></a>
+                                <a class="btn" href="${urlVerPlanAccion}" title="Visualizar Plan de Trabajo"><i class="fas fa-stream"></i></a>
                                 @endcan
                             `;
 
                             if (data > 1) {
                                 botones += `
                             @can('planes_de_accion_eliminar')
-                             <button class="btn" onclick="eliminar('${urlEliminarPlanAccion}','${row.parent}')" title="Eliminar Plan de Acción"><i class="fas fa-trash-alt text-danger"></i></button>
+                             <button class="btn" onclick="eliminar('${urlEliminarPlanAccion}','${row.parent}')" title="Eliminar Plan de Trabajo"><i class="fas fa-trash-alt text-danger"></i></button>
                              </div>
                              @endcan
                              `;
@@ -327,7 +327,7 @@
 
         window.eliminar = function(url, nombre) {
             Swal.fire({
-                title: `¿Estás seguro de eliminar el siguiente plan de acción?`,
+                title: `¿Estás seguro de eliminar el siguiente plan de Trabajo?`,
                 html: `<strong><i class="mr-2 fas fa-exclamation-triangle"></i>${nombre}</strong>`,
                 icon: 'warning',
                 showCancelButton: true,
@@ -346,14 +346,14 @@
                         beforeSend: function() {
                             Swal.fire(
                                 '¡Estamos Eliminando!',
-                                `El Plan de Acción: ${nombre} está siendo eliminado`,
+                                `El Plan de Trabajo: ${nombre} está siendo eliminado`,
                                 'info'
                             )
                         },
                         success: function(response) {
                             Swal.fire(
                                 'Eliminado!',
-                                `El Plan de Acción: ${nombre} ha sido eliminado`,
+                                `El Plan de Trabajo: ${nombre} ha sido eliminado`,
                                 'success'
                             )
                             tblPlanesAccion.ajax.reload();

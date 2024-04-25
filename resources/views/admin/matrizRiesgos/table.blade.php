@@ -100,7 +100,7 @@
                                 Control
                             </th>
                             <th>
-                                Plan de acción
+                                Plan de Trabajo
                             </th>
                             <th>
                                 Confidencialidad
