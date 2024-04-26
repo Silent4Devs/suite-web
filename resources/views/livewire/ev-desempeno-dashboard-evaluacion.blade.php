@@ -35,11 +35,15 @@
             </a>
         </div>
         <div class="col-md-3">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modificacionPeriodos">
-                <div class="w-100 p-3 text-center text-white rounded-lg" style="background-color: #A650DF;">
-                    Modificar periodo de evaluación
-                </div>
-            </button>
+            <!-- Hidden button -->
+            <button id="modalOpener" type="button" class="btn btn-primary d-none" data-toggle="modal"
+                data-target="#modificacionPeriodos"></button>
+
+            <!-- Div with click event -->
+            <div class="w-100 p-3 text-center text-white rounded-lg" style="background-color: #A650DF; cursor: pointer;"
+                onclick="document.getElementById('modalOpener').click();">
+                Modificar periodo de evaluación
+            </div>
 
             <!-- Modal -->
             <div wire:ignore class="modal fade" id="modificacionPeriodos" data-backdrop="static" data-keyboard="false"
@@ -107,12 +111,23 @@
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <div class="form-group anima-focus">
-                                                            <input type="date" placeholder=""
-                                                                wire:model="array_periodos.{{ $index }}.fecha_inicio"
-                                                                class="form-control" value="{{ $ap->fecha_inicio }}">
-                                                            <label for="">Inicio de la evaluación</label>
-                                                        </div>
+                                                        @if ($dia_actual >= $ap->fecha_inicio)
+                                                            <div class="form-group anima-focus">
+                                                                <input type="date" placeholder=""
+                                                                    wire:model="array_periodos.{{ $index }}.fecha_inicio"
+                                                                    class="form-control"
+                                                                    value="{{ $ap->fecha_inicio }}" disabled>
+                                                                <label for="">Inicio de la evaluación</label>
+                                                            </div>
+                                                        @else
+                                                            <div class="form-group anima-focus">
+                                                                <input type="date" placeholder=""
+                                                                    wire:model="array_periodos.{{ $index }}.fecha_inicio"
+                                                                    class="form-control"
+                                                                    value="{{ $ap->fecha_inicio }}">
+                                                                <label for="">Inicio de la evaluación</label>
+                                                            </div>
+                                                        @endif
                                                     </td>
                                                     <td>
                                                         <div class="form-group anima-focus">
@@ -136,8 +151,9 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Understood</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                            <button wire:click.prevent="modificarPeriodos" type="button" class="btn btn-primary"
+                                data-dismiss="modal">Modificar</button>
                         </div>
                     </div>
                 </div>

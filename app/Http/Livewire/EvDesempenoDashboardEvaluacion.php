@@ -9,6 +9,8 @@ use App\Models\CuestionarioCompetenciaEvDesempeno;
 use App\Models\CuestionarioObjetivoEvDesempeno;
 use App\Models\EvaluacionDesempeno;
 use App\Models\EvaluadosEvaluacionDesempeno;
+use App\Models\PeriodosEvaluacionDesempeno;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 
@@ -19,8 +21,9 @@ class EvDesempenoDashboardEvaluacion extends Component
     public $evaluados_tabla;
 
     public $array_periodos;
-    public $array_modificar_periodos;
     public $periodo_seleccionado = 0;
+
+    public $dia_actual;
 
     public $areas;
     public $area_select;
@@ -57,6 +60,7 @@ class EvDesempenoDashboardEvaluacion extends Component
         $this->id_evaluacion = $id_evaluacion;
         $this->areas = Area::getIdNameAll();
         $this->evaluacion = EvaluacionDesempeno::find($this->id_evaluacion);
+        $this->dia_actual = Carbon::today()->format('Y-m-d');
 
         $this->secciones();
         $this->evaluadoTotales();
@@ -111,7 +115,7 @@ class EvDesempenoDashboardEvaluacion extends Component
         $this->evaluados_tabla = $this->evaluados_tabla->find($this->id_evaluacion);
 
         $this->cargarTablas();
-        // dd($this->evaluacion->periodos);
+
         return view('livewire.ev-desempeno-dashboard-evaluacion');
     }
 
@@ -444,5 +448,25 @@ class EvDesempenoDashboardEvaluacion extends Component
         foreach ($this->array_periodos as $key => $periodo) {
             $this->resultadoPeriodos[$key] = $this->calculatePromedio($key);
         }
+    }
+
+    public function modificarPeriodos()
+    {
+        foreach ($this->array_periodos as $key => $p) {
+            $periodoEdit = PeriodosEvaluacionDesempeno::find($p["id_periodo"]);
+            $periodoEdit->update([
+                'nombre_evaluacion' => $p['nombre_evaluacion'],
+                'fecha_inicio' => $p['fecha_inicio'],
+                'fecha_fin' => $p['fecha_fin'],
+                'habilitado' => $p['habilitado'],
+            ]);
+        }
+
+        $this->alert('success', 'Periodos Modificados', [
+            'position' => 'top-end',
+            'timer' => '4000',
+            'toast' => true,
+            'text' => 'Los periodos se modificaron correctamente.',
+        ]);
     }
 }

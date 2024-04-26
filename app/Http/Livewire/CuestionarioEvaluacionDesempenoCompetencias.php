@@ -17,6 +17,11 @@ class CuestionarioEvaluacionDesempenoCompetencias extends Component
     public $id_evaluacion;
     public $id_evaluado;
 
+    public $autoevaluacion = false;
+
+    public $periodo_seleccionado = 0;
+    public $array_periodos;
+
     //Traer datos de la evaluación
     public $evaluacion;
     public $evaluado;
@@ -35,32 +40,50 @@ class CuestionarioEvaluacionDesempenoCompetencias extends Component
 
         $this->id_evaluacion = $id_evaluacion;
         $this->id_evaluado = $id_evaluado;
+
+        $this->evaluacion = EvaluacionDesempeno::find($this->id_evaluacion);
+        $this->evaluado = $this->evaluacion->evaluados->find($this->id_evaluado);
+
+        $this->cuestionarioSecciones();
+        if ($this->evaluacion->activar_competencias == true) {
+            $this->buscarCompetencias();
+        }
+
+        if ($this->evaluado->empleado->id == $this->evaluador->id) {
+            $this->autoevaluacion = true;
+        }
     }
 
     public function render()
     {
-        $this->evaluacion = EvaluacionDesempeno::find($this->id_evaluacion);
-        $this->evaluado = $this->evaluacion->evaluados->find($this->id_evaluado);
-        if ($this->evaluacion->activar_competencias == true) {
-
-            $this->buscarCompetencias();
-        }
-
         return view('livewire.cuestionario-evaluacion-desempeno-competencias');
+    }
+
+    public function cuestionarioSecciones()
+    {
+        foreach ($this->evaluacion->periodos as $key => $periodo) {
+            $this->array_periodos[$key] = [
+                "id_periodo" => $periodo->id,
+                "nombre_evaluacion" => $periodo->nombre_evaluacion,
+                "fecha_inicio" => $periodo->fecha_inicio,
+                "fecha_fin" => $periodo->fecha_fin,
+                "habilitado" => $periodo->habilitado,
+                "finalizado" => $periodo->finalizado,
+            ];
+        }
     }
 
     public function buscarCompetencias()
     {
         $this->validacion_competencias_evaluador = false;
         foreach ($this->evaluado->evaluadoresCompetencias as $key => $evlr) {
-            if ($evlr->evaluador_desempeno_id == $this->evaluador->id) {
+            if ($evlr->evaluador_desempeno_id == $this->evaluador->id && $evlr->evaluador_desempeno_id != $this->evaluado->evaluado_desempeno_id) {
                 $this->validacion_competencias_evaluador = true;
 
-                $this->competencias_evaluado = $evlr->preguntasCuestionario->sortBy('id');
-            }
-
-            if ($evlr->evaluador_desempeno_id == $this->id_evaluado->evaluado_desempeno_id) {
-                $this->competencias_autoevaluado = $evlr->preguntasCuestionario->sortBy('id');
+                $this->competencias_evaluado = $evlr->preguntasCuestionario->where('periodo_id', $this->array_periodos[$this->periodo_seleccionado]["id_periodo"])->sortBy('id');
+            } elseif ($evlr->evaluador_desempeno_id == $this->evaluado->evaluado_desempeno_id) {
+                $this->validacion_competencias_evaluador = true;
+                $this->competencias_autoevaluado = $evlr->preguntasCuestionario->where('periodo_id', $this->array_periodos[$this->periodo_seleccionado]["id_periodo"])->sortBy('id');
             }
         }
     }
