@@ -88,7 +88,7 @@ services:
   queue-worker:
     build:
       context: "./infra/php/"
-      dockerfile: Dockerfile.cli
+      dockerfile: Dockerfile
     volumes:
       - .:/var/www/html
     command: php artisan queue:work --tries=3
@@ -105,7 +105,7 @@ services:
   schedule-worker:
     build:
       context: "./infra/php/"
-      dockerfile: Dockerfile.cli
+      dockerfile: Dockerfile
     depends_on:
       - php
     restart: unless-stopped
