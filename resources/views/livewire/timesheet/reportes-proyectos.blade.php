@@ -194,7 +194,7 @@
 
         </div>
     </div>
-    <div class="card card-body">
+    {{-- <div class="card card-body">
         <div class="row">
             <div class="col-12">
                 <div class="row w-100 mt-4" style="align-items: end">
@@ -371,15 +371,143 @@
                 </div>
             </div>
         </div>
+    </div> --}}
+    <div class="card card-body">
+        <div class="datatable-fix tabla-calendar-time">
+        <table id="datatabletimesheetproyectos" class="datatable_timesheet_proyectos table w-100 tabla-fixed tabla-calendar-time">
+            <thead>
+                <tr>
+                    <th style="min-width: 250px;text-align: justify;width: 250px;align-content: center;" rowspan="3">ID-Proyecto</th>
+                    <th style="min-width: 250px;text-align: justify;width: 250px;align-content: center;" rowspan="3">Áreas participantes</th>
+                    <th style="min-width: 250px;text-align: justify;width: 250px;align-content: center;" rowspan="3">Empleados participantes</th>
+                    <th style="min-width: 250px;text-align: justify;width: 250px;align-content: center;" rowspan="3">Cliente</th>
+                    @foreach ($calendario_tabla as $calendar)
+                        <th colspan="{{ $calendar['total_weeks'] }}" class="th-calendario th-año">
+                            <small>{{ $calendar['year'] }}</small>
+                        </th>
+                    @endforeach
+                    <th style="min-width: 50px;text-align: justify;width: 50px;align-content: center;" rowspan="3">Total horas</th>
+                </tr>
+                <tr>
+                    @foreach ($calendario_tabla as $calendar)
+                        @foreach ($calendar['months'] as $key => $mes)
+                            @php
+                                $mes_traducido = '';
+                                switch ($key) {
+                                    case 'January':
+                                        $mes_traducido = 'Enero';
+                                        break;
+                                    case 'February':
+                                        $mes_traducido = 'Febrero';
+                                        break;
+                                    case 'March':
+                                        $mes_traducido = 'Marzo';
+                                        break;
+                                    case 'April':
+                                        $mes_traducido = 'Abril';
+                                        break;
+                                    case 'May':
+                                        $mes_traducido = 'Mayo';
+                                        break;
+                                    case 'June':
+                                        $mes_traducido = 'Junio';
+                                        break;
+                                    case 'July':
+                                        $mes_traducido = 'Julio';
+                                        break;
+                                    case 'August':
+                                        $mes_traducido = 'Agosto';
+                                        break;
+                                    case 'September':
+                                        $mes_traducido = 'Septiembre';
+                                        break;
+                                    case 'October':
+                                        $mes_traducido = 'Octubre';
+                                        break;
+                                    case 'November':
+                                        $mes_traducido = 'Noviembre';
+                                        break;
+                                    case 'December':
+                                        $mes_traducido = 'Diciembre';
+                                        break;
+                                }
+                            @endphp
+                            @if ($mes['total_weeks'] > 0)
+                                <th colspan="{{ $mes['total_weeks'] }}" class="th-calendario th-mes">
+                                    <small>{{ $mes_traducido }} {{ $calendar['year'] }}</small>
+                                </th>
+                            @endif
+                        @endforeach
+                    @endforeach
+                </tr>
+                <tr>
+                    @foreach ($calendario_tabla as $calendar)
+                        @foreach ($calendar['months'] as $key => $mes)
+                            @foreach ($mes['weeks'] as $week)
+                                @php
+                                    $semanas_time_array = explode('|', $week);
+                                    $fecha_inicio_time = $semanas_time_array['0'];
+                                    $fecha_fin_time = $semanas_time_array['1'];
+                                    $fecha_inicio_time = \Carbon\Carbon::parse($fecha_inicio_time)->format('d');
+                                    $fecha_fin_time = \Carbon\Carbon::parse($fecha_fin_time)->format('d');
+                                @endphp
+                                <th class="th-calendario th-semana">
+                                    <small>Del <strong>{{ $fecha_inicio_time }}</strong> al
+                                        <strong>{{ $fecha_fin_time }}</strong></small>
+                                </th>
+                            @endforeach
+                        @endforeach
+                    @endforeach
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($proyectos_array as $proyecto)
+                    <tr>
+                        <td>{{ $proyecto['identificador'] }} - {{ $proyecto['proyecto'] }}</td>
+                        <td>
+                            <ul style="padding-left: 10px;">
+                                @foreach ($proyecto['areas'] as $area)
+                                    <li>{{ $area['area'] }}</li>
+                                @endforeach
+                            </ul>
+                        </td>
+                        <td>
+                            <ul style="padding-left: 10px;">
+                                @foreach ($proyecto['empleados'] as $empleado)
+                                    <li>{{ $empleado['name'] }}</li>
+                                @endforeach
+                            </ul>
+                        </td>
+                        <td>{{ $proyecto['cliente'] }} </td>
+                        @foreach ($proyecto['calendario'] as $index => $horas_calendar)
+                            <td style="font-size: 10px !important; text-align: center !important;">
+                                {!! $horas_calendar !!}</td>
+                        @endforeach
+                        <td>
+                            {{ $proyecto['horas_totales'] }} h
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+        </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <script type="text/javascript">
-        document.addEventListener('DOMContentLoaded', () => {
-            Livewire.on('scriptTabla', () => {
-                tablaLivewire('datatable_timesheet_proyectos');
-                tablaLivewire('datatable_timesheet_proyectos_empleados');
-            });
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', () => {
+        Livewire.on('scriptTabla', () => {
+            tablaLivewire('datatable_timesheet_proyectos');
+            tablaLivewire('datatable_timesheet_proyectos_empleados');
         });
-    </script>
+    });
+</script>
+<script>
+    document.addEventListener('livewire:load', function() {
+        setTimeout(function() {
+            $('#datatabletimesheetproyectos').DataTable();
+        }, 100);
+    });
+</script>
 </div>

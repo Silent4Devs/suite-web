@@ -27,50 +27,50 @@
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        let graf_general_1 = new Chart(document.getElementById('graf-financiero-1'), {
-            type: 'bar', // Cambiado a tipo de gráfico de barras
-            data: {
-                labels: [
-                    'ss',
-                    'dd'
-                ],
-                datasets: [{
-                    data: [1, 2, 3, 4],
-                    backgroundColor: [
-                        '#61CB5C',
-                        '#EA7777',
-                        '#F48C16',
-                        '#aaa',
-                    ],
-                }]
-            },
-            options: {
-                layout: {
-                    padding: {
-                        top: 20
-                    }
-                },
-                legend: {
-                    display: false
-                },
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                },
-                plugins: {
-                    datalabels: {
-                        color: '#fff',
-                        display: false,
-                        font: {
-                            size: 20
-                        }
-                    },
-                },
-            }
-        });
-    });
+    // document.addEventListener('DOMContentLoaded', function() {
+    //     let graf_general_1 = new Chart(document.getElementById('graf-financiero-1'), {
+    //         type: 'bar', // Cambiado a tipo de gráfico de barras
+    //         data: {
+    //             labels: [
+    //                 'ss',
+    //                 'dd'
+    //             ],
+    //             datasets: [{
+    //                 data: [1, 2, 3, 4],
+    //                 backgroundColor: [
+    //                     '#61CB5C',
+    //                     '#EA7777',
+    //                     '#F48C16',
+    //                     '#aaa',
+    //                 ],
+    //             }]
+    //         },
+    //         options: {
+    //             layout: {
+    //                 padding: {
+    //                     top: 20
+    //                 }
+    //             },
+    //             legend: {
+    //                 display: false
+    //             },
+    //             scales: {
+    //                 yAxes: [{
+    //                     ticks: {
+    //                         beginAtZero: true
+    //                     }
+    //                 }]
+    //             },
+    //             plugins: {
+    //                 datalabels: {
+    //                     color: '#fff',
+    //                     display: false,
+    //                     font: {
+    //                         size: 20
+    //                     }
+    //                 },
+    //             },
+    //         }
+    //     });
+    // });
 </script>

@@ -36,3 +36,84 @@
         </div>
     </div>
 </div>
+
+<script>
+    let graf_general_1;
+    document.addEventListener('DOMContentLoaded', function() {
+        Livewire.on('datosActualizados', (nombre, horastrabajada) => {
+            document.getElementById('graf-financiero-1').innerHTML = '';
+            graf_general_1 && graf_general_1.destroy();
+            const colors = generarColoresPasteles(nombre.length);
+            initChart(nombre, horastrabajada,colors);
+            console.log(nombre);
+            console.log(horastrabajada);
+        });
+
+        function initChart(nombres, horas,colors) {
+            graf_general_1 = new Chart(document.getElementById('graf-financiero-1'), {
+                type: 'bar',
+                data: {
+                    labels: nombres,
+                    datasets: [{
+                        data: horas,
+                        backgroundColor: colors,
+                    }]
+                },
+                options: {
+                    layout: {
+                        padding: {
+                            top: 20
+                        }
+                    },
+                    legend: {
+                        display: false
+                    },
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    },
+                    plugins: {
+                        datalabels: {
+                            color: '#fff',
+                            display: false,
+                            font: {
+                                size: 20
+                            }
+                        },
+                    },
+                }
+            });
+        }
+
+        function generarColoresPasteles(cantidad) {
+            const colores = [];
+            for (let i = 0; i < cantidad; i++) {
+                const color = generarColorPastel();
+                colores.push(color);
+            }
+            return colores;
+        }
+
+        function generarColorPastel() {
+            const r = Math.floor(Math.random() * 256);
+            const g = Math.floor(Math.random() * 256);
+            const b = Math.floor(Math.random() * 256);
+            // Convertir RGB a formato hexadecimal
+            const colorHex = rgbToHex(r, g, b);
+            return colorHex;
+        }
+
+        function rgbToHex(r, g, b) {
+            return '#' + componentToHex(r) + componentToHex(g) + componentToHex(b);
+        }
+
+        function componentToHex(c) {
+            const hex = c.toString(16);
+            return hex.length == 1 ? '0' + hex : hex;
+        }
+
+    });
+</script>
