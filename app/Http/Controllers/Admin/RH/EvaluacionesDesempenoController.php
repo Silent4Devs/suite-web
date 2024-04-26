@@ -77,11 +77,19 @@ class EvaluacionesDesempenoController extends Controller
         $evaluadoresObjetivos = $evaluado->evaluadoresObjetivos()->pluck('evaluador_desempeno_id')->toArray();
         $evaluadoresCompetencias = $evaluado->evaluadoresCompetencias()->pluck('evaluador_desempeno_id')->toArray();
 
-        if (!in_array($currentUser->id, $evaluadoresObjetivos) && !in_array($currentUser->id, $evaluadoresCompetencias)) {
+        $acceso_objetivos = in_array($currentUser->id, $evaluadoresObjetivos);
+        $acceso_competencias = in_array($currentUser->id, $evaluadoresCompetencias);
+
+        if (!$acceso_objetivos && !$acceso_competencias) {
             return redirect()->route('admin.inicio-Usuario.index');
         }
-        // dd($evaluacion, $evaluado);
-        return view('admin.recursos-humanos.evaluaciones-desempeno.cuestionario', compact('evaluacion', 'evaluado'));
+
+        return view('admin.recursos-humanos.evaluaciones-desempeno.cuestionario', compact(
+            'evaluacionDesempeno',
+            'evaluado',
+            'acceso_objetivos',
+            'acceso_competencias'
+        ));
     }
 
     public function misEvaluaciones()

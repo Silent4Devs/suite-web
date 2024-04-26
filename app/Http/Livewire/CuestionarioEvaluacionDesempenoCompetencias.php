@@ -34,6 +34,8 @@ class CuestionarioEvaluacionDesempenoCompetencias extends Component
     public $escalas;
     public $conducta;
 
+    public $porcentajeCalificado = 0;
+
     public function mount($id_evaluacion, $id_evaluado)
     {
         $this->evaluador = User::getCurrentUser()->empleado;
@@ -52,6 +54,8 @@ class CuestionarioEvaluacionDesempenoCompetencias extends Component
         if ($this->evaluado->empleado->id == $this->evaluador->id) {
             $this->autoevaluacion = true;
         }
+
+        $this->progresoEvaluacion();
     }
 
     public function render()
@@ -77,11 +81,13 @@ class CuestionarioEvaluacionDesempenoCompetencias extends Component
     {
         $this->validacion_competencias_evaluador = false;
         foreach ($this->evaluado->evaluadoresCompetencias as $key => $evlr) {
-            if ($evlr->evaluador_desempeno_id == $this->evaluador->id && $evlr->evaluador_desempeno_id != $this->evaluado->evaluado_desempeno_id) {
+            if ($evlr->evaluador_desempeno_id == $this->evaluador->id) {
                 $this->validacion_competencias_evaluador = true;
 
                 $this->competencias_evaluado = $evlr->preguntasCuestionario->where('periodo_id', $this->array_periodos[$this->periodo_seleccionado]["id_periodo"])->sortBy('id');
-            } elseif ($evlr->evaluador_desempeno_id == $this->evaluado->evaluado_desempeno_id) {
+            }
+
+            if ($evlr->evaluador_desempeno_id == $this->evaluado->evaluado_desempeno_id) {
                 $this->validacion_competencias_evaluador = true;
                 $this->competencias_autoevaluado = $evlr->preguntasCuestionario->where('periodo_id', $this->array_periodos[$this->periodo_seleccionado]["id_periodo"])->sortBy('id');
             }
@@ -98,11 +104,19 @@ class CuestionarioEvaluacionDesempenoCompetencias extends Component
             ]);
 
             $this->buscarCompetencias();
+            $this->progresoEvaluacion();
             $this->alertaGuardadoCorrecto();
         } catch (\Throwable $th) {
             $this->buscarCompetencias();
             $this->alertaGuardadoIncorrecto();
         }
+    }
+
+    public function progresoEvaluacion()
+    {
+        $nPreguntas = $this->competencias_evaluado->count();
+        $contestadas = $this->competencias_evaluado->where('estatus_calificado', true)->count();
+        $this->porcentajeCalificado = round((($contestadas / $nPreguntas) * 100), 2);
     }
 
     public function alertaGuardadoCorrecto()

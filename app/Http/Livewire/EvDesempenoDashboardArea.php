@@ -373,8 +373,8 @@ class EvDesempenoDashboardArea extends Component
 
             foreach ($this->grafica_competencias["nombres"][$key_periodo] as $key_nombre => $competencia) {
                 // Map evaluados to their respective "calificacion_total" values for the current competencia
-                $calificacionTotals = $evaluadosCollectionFiltered->flatMap(function ($evaluado) use ($competencia) {
-                    return collect($evaluado->calificaciones_competencias_evaluado["calif_total"])
+                $calificacionTotals = $evaluadosCollectionFiltered->flatMap(function ($evaluado) use ($competencia, $periodo) {
+                    return collect($evaluado->calificacionesCompetenciasEvaluadoPeriodo($periodo["id_periodo"])["calif_total"])
                         ->filter(function ($competencias) use ($competencia) {
                             return $competencias['competencia'] == $competencia;
                         })
@@ -384,6 +384,7 @@ class EvDesempenoDashboardArea extends Component
                 $promedios_tipo_competencias[$key_nombre][$competencia] = $calificacionTotals->avg();
                 $this->grafica_competencias["resultados"][$key_periodo][] = $promedios_tipo_competencias[$key_nombre][$competencia];
             }
+            // dd($this->grafica_competencias["resultados"][$key_periodo]);
             $this->resComp["nombres"][$key_periodo] = $this->grafica_competencias["nombres"][$key_periodo];
             $this->resComp["resultados"][$key_periodo] = $this->grafica_competencias["resultados"][$key_periodo];
         }

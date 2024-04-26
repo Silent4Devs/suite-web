@@ -579,9 +579,23 @@
                     <table id="" class="table table-bordered w-100 datatable">
                         <thead class="thead-dark">
                             <tr>
+                                @if ($evaluacion->activar_competencias && $evaluacion->activar_objetivos)
+                                    <th colspan="9">Resultados</th>
+                                @else
+                                    <th colspan="8">Resultados</th>
+                                @endif
+                                @if ($evaluacion->activar_competencias)
+                                    <th colspan="{{ $evaluacion->periodos->count() }}">Competencias</th>
+                                @endif
+                                @if ($evaluacion->activar_objetivos)
+                                    <th colspan="{{ $evaluacion->periodos->count() }}">Objetivos</th>
+                                @endif
+                            </tr>
+                            <tr>
                                 <th></th>
                                 <th>Nombre</th>
-                                <th>Puesto y Área</th>
+                                <th>Puesto</th>
+                                <th>Área</th>
                                 <th>Evaluadores</th>
                                 @if ($evaluacion->activar_competencias)
                                     <th>Competencias</th>
@@ -591,22 +605,35 @@
                                 @endif
                                 <th>Calificación</th>
                                 <th>Nivel</th>
-
                                 @if ($evaluacion->activar_competencias)
-                                    <th>Competencias</th>
+                                    @foreach ($array_periodos as $key_periodo => $periodo)
+                                        <th>{{ $periodo['nombre_evaluacion'] }}
+                                        </th>
+                                    @endforeach
                                 @endif
                                 @if ($evaluacion->activar_objetivos)
-                                    <th>Objetivos</th>
+                                    @foreach ($array_periodos as $key_periodo => $periodo)
+                                        <th>{{ $periodo['nombre_evaluacion'] }}
+                                        </th>
+                                    @endforeach
                                 @endif
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($evaluados_tabla->evaluados as $evaluado)
                                 <tr>
-                                    <td></td>
-                                    <td>{{ $evaluado->empleado->name }}</td>
-                                    <td>{{ $evaluado->empleado->puestoRelacionado->puesto }}/{{ $evaluado->empleado->area->area }}
+                                    <td>
+                                        <a
+                                            href="{{ route('admin.rh.evaluaciones-desempeno.dashboard-evaluado', [$evaluacion->id, $evaluado->id]) }}">
+                                            <i class="material-icons-outlined">
+                                                visibility
+                                            </i>
+                                        </a>
                                     </td>
+                                    <td>{{ $evaluado->empleado->name }}</td>
+                                    <td>{{ $evaluado->empleado->puesto }}
+                                    </td>
+                                    <td>{{ $evaluado->empleado->area->area }}</td>
                                     <td>
                                         <ul>
                                             @foreach ($this->evaluadores_evaluado[$evaluado->id] as $evaluador)
@@ -622,7 +649,28 @@
                                     </td>
                                     <td>Nivel</td>
                                     @if ($evaluacion->activar_competencias)
-                                        @php
+                                        @foreach ($array_periodos as $key_periodo => $periodo)
+                                            <td>
+                                                <table>
+                                                    @php
+                                                        $calif_total_competencias = $evaluado->calificacionesCompetenciasEvaluadoPeriodo(
+                                                            $periodo['id_periodo'],
+                                                        )['calif_total'];
+                                                    @endphp
+                                                    @foreach ($calif_total_competencias as $calif_comp)
+                                                        <tr>
+                                                            <td>{{ $calif_comp['competencia'] }}
+                                                            </td>
+                                                            <td>
+                                                                {{ $calif_comp['calificacion_total'] }}
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                </table>
+                                            </td>
+                                        @endforeach
+                                        {{-- Version Alternativa, podria usarse --}}
+                                        {{-- @php
                                             $calif_total_competencias = $evaluado->calificacionesCompetenciasEvaluadoPeriodo(
                                                 $this->array_periodos[$this->periodo_seleccionado]['id_periodo'],
                                             )['calif_total'];
@@ -645,10 +693,31 @@
                                                     </tr>
                                                 </tbody>
                                             </table>
-                                        </td>
+                                        </td> --}}
                                     @endif
                                     @if ($evaluacion->activar_objetivos)
-                                        @php
+                                        @foreach ($array_periodos as $key_periodo => $periodo)
+                                            <td>
+                                                <table>
+                                                    @php
+                                                        $calif_total_competencias = $evaluado->calificacionesObjetivosEvaluadoPeriodo(
+                                                            $periodo['id_periodo'],
+                                                        )['calif_total'];
+                                                    @endphp
+                                                    @foreach ($calif_total_competencias as $calif_comp)
+                                                        <tr>
+                                                            <td>{{ $calif_comp['nombre'] }}
+                                                            </td>
+                                                            <td>
+                                                                {{ $calif_comp['calificacion_total'] }}
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                </table>
+                                            </td>
+                                        @endforeach
+                                        {{-- Version Alternativa, podria usarse --}}
+                                        {{-- @php
                                             $calif_total_objetivos = $evaluado->calificacionesObjetivosEvaluadoPeriodo(
                                                 $this->array_periodos[$this->periodo_seleccionado]['id_periodo'],
                                             )['calif_total'];
@@ -671,52 +740,8 @@
                                                     </tr>
                                                 </tbody>
                                             </table>
-                                        </td>
+                                        </td> --}}
                                     @endif
-
-
-                                    {{-- <td>Apego a procesos</td>
-                                    <td>Innovación y creatividad</td>
-                                    <td>Comunicación efectiva</td>
-                                    <td>Enfocque al cliente</td>
-                                    <td>Trabajo en equipo</td>
-                                    <td>Adaptabilidad al cambio</td>
-                                    <td>Solución de problemas y toma de desiciones</td>
-                                    <td>Liderazgo e influencia</td>
-                                    <td>Pensamiento estratégico</td>
-                                    <td>Planificación y organización</td>
-                                    <td>Negociación comercial</td>
-                                    <td>Analisis de negocio</td>
-                                    <td>Visión de negocio</td>
-                                    <td>Enfoque a resultados</td>
-                                    <td>Mejora continua</td>
-                                    <td>Búsqueda de información</td>
-                                    <td>Análisis y síntesis</td>
-                                    <td>Efectividad interpersonal (Empatía)</td>
-                                    <td>Negociación</td>
-                                    <td>Trabajo bajo presión</td>
-                                    <td>Impacto e influencia</td> --}}
-
-                                    {{-- <td>Objetivo 1</td>
-                                    <td>%</td>
-                                    <td>Objetivo 2</td>
-                                    <td>%</td>
-                                    <td>Objetivo 3</td>
-                                    <td>%</td>
-                                    <td>Objetivo 4</td>
-                                    <td>%</td>
-                                    <td>Objetivo 5</td>
-                                    <td>%</td>
-                                    <td>Objetivo 6</td>
-                                    <td>%</td>
-                                    <td>Objetivo 7</td>
-                                    <td>%</td>
-                                    <td>Objetivo 8</td>
-                                    <td>%</td>
-                                    <td>Objetivo 9</td>
-                                    <td>%</td>
-                                    <td>Objetivo 10</td>
-                                    <td>%</td> --}}
                                 </tr>
                             @endforeach
                         </tbody>

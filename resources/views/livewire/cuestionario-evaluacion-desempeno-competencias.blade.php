@@ -4,8 +4,8 @@
             <div class="card border-0">
                 <div class="card-title mb-0 d-flex align-items-center justify-content-around"
                     style="border-top-left-radius: 14px; border-top-right-radius:14px;background-color: #BB68A8; color:#FFFFFF; height: 90px;">
-                    <h5 class="ml-3">Objetivos</h5>
-                    <h6>Evaluación de objetivos: {{ $evaluacion->id }}</h6>
+                    <h5 class="ml-3">Competencias</h5>
+                    <h6>Evaluación de competencias: {{ $evaluacion->nombre }}</h6>
                     <h6 style="margin-left: 200px;">Inicia: 20/02/2024</h6>
                     <h6>Fin: 20/02/2024</h6>
                 </div>
@@ -58,33 +58,88 @@
                         </div>
                     @endif
                     <hr>
-                    <div class="row d-flex align-items-center" style="">
-                        <div class="col-3 col-sm-2 col-md-1" style="margin-left:16px;">
-                            <div class="img-person" style="width: 69px; height:69px;">
-                                <img src="" alt="">
+                    @if ($autoevaluacion)
+                        <div class="row d-flex align-items-center" style="">
+                            <div class="col-3 col-sm-2 col-md-1" style="margin-left:16px;">
+                                <div class="img-person" style="width: 69px; height:69px;">
+                                    <img src="{{ $evaluado->empleado->avatar }}" alt="{{ $evaluado->empleado->name }}">
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-6 col-sm-3">
-                            <div style="margin-left: 14px;">
-                                <h6 class="title-nombre">{{ $evaluado->empleado->name }}</h6>
-                                <p class="title-puesto m-0">{{ $evaluado->empleado->puesto }}</p>
+                            <div class="col-6 col-sm-3">
+                                <div style="margin-left: 14px;">
+                                    <h6 class="title-nombre">{{ $evaluado->empleado->name }}</h6>
+                                    <p class="title-puesto m-0">{{ $evaluado->empleado->puesto }}</p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-9 col-sm-5">
-                            <div class="progress"
-                                style="border-radius: 29px; width:auto; height:12px; margin-left:71px;">
-                                <div class="progress-bar custom-progress" role="progressbar" style="width: 25%;"
-                                    aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+                            <div class="col-9 col-sm-5">
+                                <div class="progress"
+                                    style="border-radius: 29px; width:auto; height:12px; margin-left:71px;">
+                                    <div class="progress-bar custom-progress" role="progressbar"
+                                        style="width: {{ $porcentajeCalificado }}%;"
+                                        aria-valuenow="{{ $porcentajeCalificado }}" aria-valuemin="0"
+                                        aria-valuemax="100">
 
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3 col-sm-2">
+                                <p class="m-0">
+                                    {{ $porcentajeCalificado }}%
+                                </p>
+                            </div>
+                        </div>
+                    @else
+                        <div class="row d-flex align-items-center" style="">
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-6 col-sm-5 col-md-1" style="margin-left:16px;">
+                                        <div class="img-person" style="width: 69px; height:69px;">
+                                            <img src="{{ $evaluado->empleado->avatar }}"
+                                                alt="{{ $evaluado->empleado->name }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-sm-7">
+                                        <div style="margin-left: 30px;">
+                                            <h6 class="title-nombre">Evaluado: {{ $evaluado->empleado->name }}</h6>
+                                            <p class="title-puesto m-0">{{ $evaluado->empleado->puesto }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-3 col-sm-5 col-md-1" style="margin-left:16px;">
+                                        <div class="img-person" style="width: 69px; height:69px;">
+                                            <img src="{{ $evaluador->avatar }}" alt="{{ $evaluador->name }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-sm-7">
+                                        <div style="margin-left: 30px;">
+                                            <h6 class="title-nombre">Evaluador: {{ $evaluador->name }}</h6>
+                                            <p class="title-puesto m-0">{{ $evaluador->puesto }}</p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-3 col-sm-2">
-                            <p class="m-0">
-                                80%
-                            </p>
+                        <div class="row d-flex align-items-center mt-5">
+                            <div class="col-11 col-sm-10">
+                                <div class="progress"
+                                    style="border-radius: 29px; width:auto; height:12px; margin-left:71px;">
+                                    <div class="progress-bar custom-progress" role="progressbar"
+                                        style="width: {{ $porcentajeCalificado }}%;"
+                                        aria-valuenow="{{ $porcentajeCalificado }}" aria-valuemin="0"
+                                        aria-valuemax="100">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-1 col-sm-2">
+                                <p class="m-0">
+                                    {{ $porcentajeCalificado }}%
+                                </p>
+                            </div>
                         </div>
-                    </div>
+                    @endif
 
                 </div>
             </div>
@@ -117,7 +172,8 @@
 
                                     <!-- Modal -->
                                     <div class="modal fade" id="descripcionCompetencia{{ $comp_evld->id }}"
-                                        tabindex="-1" aria-labelledby="descripcionCompetencia{{ $comp_evld->id }}Label"
+                                        tabindex="-1"
+                                        aria-labelledby="descripcionCompetencia{{ $comp_evld->id }}Label"
                                         aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered modal-lg">
                                             <div class="modal-content">
@@ -143,12 +199,21 @@
                                     </div>
                                 </td>
                                 <td class="td-comp">{{ $comp_evld->infoCompetencia->competencia }}</td>
-                                {{-- <td>{{ $comp_evld->infoCompetencia->nivel_esperado }}</td> --}}
-                                @if ($evaluador->id != $id_evaluado->evaluador_desempeno_id)
+                                <td>
+                                    <div class="auto-cal d-flex justify-content-center align-items-center"
+                                        style="background-color: white;">
+                                        <p style="margin: 0px;">
+                                            Nivel Esperado:
+                                            <strong>{{ $comp_evld->infoCompetencia->nivel_esperado }}</strong>
+                                        </p>
+                                    </div>
+
+                                </td>
+                                @if (!$autoevaluacion)
                                     @if ($competencias_autoevaluado[$key]->estatus_calificado)
                                         <td>
                                             <div class="auto-cal d-flex justify-content-center align-items-center">
-                                                <p>
+                                                <p style="margin: 0px;">
                                                     {{ $competencias_autoevaluado[$key]->calificacion_competencia ?? null }}
                                                 </p>
                                             </div>
