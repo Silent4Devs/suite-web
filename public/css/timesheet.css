@@ -55,9 +55,10 @@ table {
     color: #486489;
 }
 
-.anima-focus label{
+.anima-focus label {
     background-color: #F8FAFC !important;
 }
+
 .caja-calendar-semana .anima-focus label {
     background-color: #fff !important;
     color: #486489 !important;
@@ -72,12 +73,12 @@ table {
 
 
 .caja-calendar-semana .anima-focus .form-control:focus+label,
-.caja-calendar-semana .anima-focus .form-control:not(:placeholder-shown)+label{
+.caja-calendar-semana .anima-focus .form-control:not(:placeholder-shown)+label {
     opacity: 0;
 }
 
 .caja-calendar-semana .anima-focus .form-control:focus,
-.caja-calendar-semana .anima-focus .form-control:not(:placeholder-shown){
+.caja-calendar-semana .anima-focus .form-control:not(:placeholder-shown) {
     background-color: #fff !important;
 }
 
@@ -529,9 +530,10 @@ table.dataTable tbody tr.selected td {
 }
 
 /* componentes --------------- */
-.box-caja-cards-times a{
+.box-caja-cards-times a {
     width: 100%;
 }
+
 .card-complement {
     flex-direction: row;
     width: 100%;
@@ -832,12 +834,13 @@ table.dataTable tbody tr.selected td {
     padding-right: 0px !important;
     padding-left: 0px !important;
 }
+
 .btn-secondary:hover {
     background-color: #E8E8E8;
 }
 
 #form_timesheet .datatable-rds td,
 #form_timesheet .dataTables_scroll td,
-#form_timesheet .datatable-fix td{
+#form_timesheet .datatable-fix td {
     padding: 15px 10px !important;
 }
