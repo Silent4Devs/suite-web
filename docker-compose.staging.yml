@@ -77,19 +77,45 @@ services:
     #image: johnvo95/tabantaj_php-tabantaj:latest
     container_name: php-tabantaj
     restart: unless-stopped
-    # labels:
-    #   ofelia.enabled: "true"
-      # ofelia.job-exec.schedulecron.schedule: "@hourly"
-      # ofelia.job-exec.schedulecron.command: "/infra/ofelia/run_schedules_worker.sh"
-      # ofelia.job-exec.run_queues_worker.schedule: "*/15 * * * *"
-      # ofelia.job-exec.run_queues_worker.command: "php artisan queue:work --daemon --tries=4 --sleep=5"
-      # ofelia.job-exec.run_schedules_worker.schedule: "@hourly"
-      # ofelia.job-exec.run_schedules_worker.command: "php artisan schedule:work"
     tty: true
     volumes:
       - .:/var/www/html
     ports:
       - 9000:80
+    networks:
+      - tabantajnetwork
+
+  queue-worker:
+    build:
+      context: "./infra/php/"
+      dockerfile: Dockerfile.cli
+    volumes:
+      - .:/var/www/html
+    command: php artisan queue:work --tries=3
+    depends_on:
+      - php
+    container_name: queue-worker-tabantaj
+    restart: unless-stopped
+    tty: true
+    environment:
+      CONTAINER_ROLE: queue
+    networks:
+      - tabantajnetwork
+
+  schedule-worker:
+    build:
+      context: "./infra/php/"
+      dockerfile: Dockerfile.cli
+    depends_on:
+      - php
+    restart: unless-stopped
+    tty: true
+    container_name: schedule-worker-tabantaj
+    volumes:
+      - .:/var/www/html
+    command: php artisan schedule:work
+    environment:
+      CONTAINER_ROLE: scheduler
     networks:
       - tabantajnetwork
 
