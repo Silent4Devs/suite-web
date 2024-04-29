@@ -45,5 +45,5 @@ return [
     | It is good when you have large database
     |
     */
-    'queued' => env('ROUTE_STATISTICS_QUEUED', true),
+    'queued' => env('ROUTE_STATISTICS_QUEUED', false),
 ];
