@@ -182,8 +182,8 @@ class DashboardProyectos extends Component
                 // dd($this->datos_areas);
                 $this->emit('renderAreas', $this->datos_areas, $this->datos_empleados);
             } else {
-                $datos_dash = TimesheetProyecto::getAll($this->proy_id)->find($this->proy_id);
-                $area_individual = Area::find($this->area_id);
+                $datos_dash = TimesheetProyecto::getAll($this->proy_id)->where('id', '=', $this->proy_id);
+                $area_individual = Area::where('id', '=', $this->area_id);
 
                 if (! isset($area_individual->area)) {
                     $area_individual = 'Sin definir';
