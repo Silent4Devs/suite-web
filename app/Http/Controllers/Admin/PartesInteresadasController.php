@@ -80,7 +80,6 @@ class PartesInteresadasController extends Controller
             'parteinteresada.max' => 'El campo de parte interesada no puede tener más de 255 caracteres.',
         ]);
 
-
         $partes = PartesInteresada::create($request->all());
         if (array_key_exists('ajax', $request->all())) {
             return response()->json(['success' => true, 'activo' => $partes]);
@@ -93,7 +92,7 @@ class PartesInteresadasController extends Controller
     {
         abort_if(Gate::denies('partes_interesadas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $partesInteresada = PartesInteresada::find($id);
-        if (!$partesInteresada) {
+        if (! $partesInteresada) {
             return redirect()->route('admin.partes-interesadas.index')->with('success', 'El registro  no existe!');
         }
         $clausulas = Clausula::get();
@@ -112,7 +111,6 @@ class PartesInteresadasController extends Controller
             'parteinteresada.required' => 'El campo de parte interesada es obligatorio.',
             'parteinteresada.max' => 'El campo de parte interesada no puede tener más de 255 caracteres.',
         ]);
-
 
         $partesInteresada = PartesInteresada::find($partesInteresada);
         $partesInteresada->update($request->all());
