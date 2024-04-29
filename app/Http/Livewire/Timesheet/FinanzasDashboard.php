@@ -3,20 +3,24 @@
 namespace App\Http\Livewire\Timesheet;
 
 use App\Models\Empleado;
-use Livewire\Component;
-use App\Models\TimesheetProyecto;
-use App\Models\Timesheet;
 use App\Models\TimesheetHoras;
+use App\Models\TimesheetProyecto;
 use App\Models\TimesheetProyectoEmpleado;
 use Carbon\Carbon;
+use Livewire\Component;
 
 class FinanzasDashboard extends Component
 {
     public $proyectos;
+
     public $array;
+
     public $nombre;
+
     public $horastrabajada;
+
     public $horaTotal;
+
     public $horaCosto;
 
     public function render()
@@ -62,7 +66,7 @@ class FinanzasDashboard extends Component
             $costo_por_hora_usuario = $emp_p->costo_hora ?? 0;
 
             // Si el costo por hora no está definido en TimesheetProyectoEmpleado, usar el calculado anteriormente
-            if (!$costo_por_hora_usuario) {
+            if (! $costo_por_hora_usuario) {
                 if (isset($emp_p->empleado->salario_base_mensual)) {
                     $costo_por_hora_usuario = ($emp_p->empleado->salario_base_mensual / 20) / 7;
                 } else {
@@ -94,6 +98,6 @@ class FinanzasDashboard extends Component
         }
 
         //dd($ids_emp, $data, $this->nombre = $nombres, $this->horastrabajada = $horas_trabajadas, $usuarios,$this->horaTotal = $horasTotales,$this->horaCosto = $horasCosto,$this->proyectos = TimesheetProyecto::select('proyecto')->find(10));
-        $this->emit('datosActualizados',$this->nombre = $nombres,$this->horastrabajada = $horas_trabajadas,$this->horaTotal = $horasTotales,$this->horaCosto = $horasCosto,$this->proyectos = TimesheetProyecto::select('proyecto')->find($id));
+        $this->emit('datosActualizados', $this->nombre = $nombres, $this->horastrabajada = $horas_trabajadas, $this->horaTotal = $horasTotales, $this->horaCosto = $horasCosto, $this->proyectos = TimesheetProyecto::select('proyecto')->find($id));
     }
 }

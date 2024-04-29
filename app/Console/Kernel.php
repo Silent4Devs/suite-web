@@ -43,7 +43,6 @@ class Kernel extends ConsoleKernel
             ->onOneServer()
             ->sentryMonitor();
 
-
         //dump automatico de base de datos
         $schedule->command('snapshot:create')
             ->timezone('America/Mexico_City')
