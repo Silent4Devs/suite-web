@@ -161,6 +161,18 @@ services:
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
 
+  goservices:
+    image: ghcr.io/silent4devs/goservices:latest
+    container_name: goservices
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3300:3300"
+    volumes:
+      - goservices_data:/goservices
+    networks:
+      - tabantajnetwork
+
   # prometheus-tabantaj:
   #   image: prom/prometheus
   #   container_name: prometheus-tabantaj
