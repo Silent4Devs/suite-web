@@ -9342,179 +9342,84 @@ namespace Illuminate\Support\Facades {
                         return $instance->setConnectionName($name);
         }
                     /**
-         * 
+         * Migrate the delayed jobs that are ready to the regular queue.
          *
-         * @throws AMQPProtocolChannelException
+         * @param string $from
+         * @param string $to
+         * @param int $limit
+         * @return array 
          * @static 
-         */        public static function laterRaw($delay, $payload, $queue = null, $attempts = 0)
+         */        public static function migrateExpiredJobs($from, $to)
         {
-                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
-                        return $instance->laterRaw($delay, $payload, $queue, $attempts);
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
+                        return $instance->migrateExpiredJobs($from, $to);
         }
                     /**
-         * 
+         * Delete a reserved job from the queue.
          *
-         * @throws AMQPProtocolChannelException
+         * @param string $queue
+         * @param \Illuminate\Queue\Jobs\RedisJob $job
+         * @return void 
          * @static 
-         */        public static function bulkRaw($payload, $queue = null, $options = [])
+         */        public static function deleteReserved($queue, $job)
         {
-                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
-                        return $instance->bulkRaw($payload, $queue, $options);
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
+                        $instance->deleteReserved($queue, $job);
         }
                     /**
-         * 
+         * Delete a reserved job from the reserved queue and release it.
          *
-         * @throws RuntimeException
+         * @param string $queue
+         * @param \Illuminate\Queue\Jobs\RedisJob $job
+         * @param int $delay
+         * @return void 
          * @static 
-         */        public static function getConnection()
+         */        public static function deleteAndRelease($queue, $job, $delay)
         {
-                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
-                        return $instance->getConnection();
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
+                        $instance->deleteAndRelease($queue, $job, $delay);
         }
                     /**
-         * 
+         * Delete all of the jobs from the queue.
          *
+         * @param string $queue
+         * @return int 
          * @static 
-         */        public static function setConnection($connection)
+         */        public static function clear($queue)
         {
-                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
-                        return $instance->setConnection($connection);
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
+                        return $instance->clear($queue);
         }
                     /**
-         * Job class to use.
+         * Get the queue or return the default.
          *
-         * @throws Throwable
+         * @param string|null $queue
+         * @return string 
          * @static 
-         */        public static function getJobClass()
+         */        public static function getQueue($queue)
         {
-                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
-                        return $instance->getJobClass();
-        }
-                    /**
-         * Gets a queue/destination, by default the queue option set on the connection.
-         *
-         * @static 
-         */        public static function getQueue($queue = null)
-        {
-                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
                         return $instance->getQueue($queue);
         }
                     /**
-         * Checks if the given exchange already present/defined in RabbitMQ.
-         * 
-         * Returns false when the exchange is missing.
+         * Get the connection for the queue.
          *
-         * @throws AMQPProtocolChannelException
+         * @return \Illuminate\Redis\Connections\Connection 
          * @static 
-         */        public static function isExchangeExists($exchange)
+         */        public static function getConnection()
         {
-                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
-                        return $instance->isExchangeExists($exchange);
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
+                        return $instance->getConnection();
         }
                     /**
-         * Declare an exchange in rabbitMQ, when not already declared.
+         * Get the underlying Redis instance.
          *
+         * @return \Illuminate\Contracts\Redis\Factory 
          * @static 
-         */        public static function declareExchange($name, $type = 'direct', $durable = true, $autoDelete = false, $arguments = [])
+         */        public static function getRedis()
         {
-                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
-                        return $instance->declareExchange($name, $type, $durable, $autoDelete, $arguments);
-        }
-                    /**
-         * Delete an exchange from rabbitMQ, only when present in RabbitMQ.
-         *
-         * @throws AMQPProtocolChannelException
-         * @static 
-         */        public static function deleteExchange($name, $unused = false)
-        {
-                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
-                        return $instance->deleteExchange($name, $unused);
-        }
-                    /**
-         * Checks if the given queue already present/defined in RabbitMQ.
-         * 
-         * Returns false when the queue is missing.
-         *
-         * @throws AMQPProtocolChannelException
-         * @static 
-         */        public static function isQueueExists($name = null)
-        {
-                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
-                        return $instance->isQueueExists($name);
-        }
-                    /**
-         * Declare a queue in rabbitMQ, when not already declared.
-         *
-         * @static 
-         */        public static function declareQueue($name, $durable = true, $autoDelete = false, $arguments = [])
-        {
-                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
-                        return $instance->declareQueue($name, $durable, $autoDelete, $arguments);
-        }
-                    /**
-         * Delete a queue from rabbitMQ, only when present in RabbitMQ.
-         *
-         * @throws AMQPProtocolChannelException
-         * @static 
-         */        public static function deleteQueue($name, $if_unused = false, $if_empty = false)
-        {
-                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
-                        return $instance->deleteQueue($name, $if_unused, $if_empty);
-        }
-                    /**
-         * Bind a queue to an exchange.
-         *
-         * @static 
-         */        public static function bindQueue($queue, $exchange, $routingKey = '')
-        {
-                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
-                        return $instance->bindQueue($queue, $exchange, $routingKey);
-        }
-                    /**
-         * Purge the queue of messages.
-         *
-         * @static 
-         */        public static function purge($queue = null)
-        {
-                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
-                        return $instance->purge($queue);
-        }
-                    /**
-         * Acknowledge the message.
-         *
-         * @static 
-         */        public static function ack($job)
-        {
-                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
-                        return $instance->ack($job);
-        }
-                    /**
-         * Reject the message.
-         *
-         * @static 
-         */        public static function reject($job, $requeue = false)
-        {
-                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
-                        return $instance->reject($job, $requeue);
-        }
-                    /**
-         * Close the connection to RabbitMQ.
-         *
-         * @throws Exception
-         * @static 
-         */        public static function close()
-        {
-                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
-                        return $instance->close();
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */        public static function getChannel($forceNew = false)
-        {
-                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
-                        return $instance->getChannel($forceNew);
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
+                        return $instance->getRedis();
         }
                     /**
          * Get the maximum number of attempts for an object-based queue handler.
@@ -9524,7 +9429,7 @@ namespace Illuminate\Support\Facades {
          * @static 
          */        public static function getJobTries($job)
         {            //Method inherited from \Illuminate\Queue\Queue         
-                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
                         return $instance->getJobTries($job);
         }
                     /**
@@ -9535,7 +9440,7 @@ namespace Illuminate\Support\Facades {
          * @static 
          */        public static function getJobBackoff($job)
         {            //Method inherited from \Illuminate\Queue\Queue         
-                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
                         return $instance->getJobBackoff($job);
         }
                     /**
@@ -9546,7 +9451,7 @@ namespace Illuminate\Support\Facades {
          * @static 
          */        public static function getJobExpiration($job)
         {            //Method inherited from \Illuminate\Queue\Queue         
-                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
                         return $instance->getJobExpiration($job);
         }
                     /**
@@ -9557,7 +9462,7 @@ namespace Illuminate\Support\Facades {
          * @static 
          */        public static function createPayloadUsing($callback)
         {            //Method inherited from \Illuminate\Queue\Queue         
-                        \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue::createPayloadUsing($callback);
+                        \Illuminate\Queue\RedisQueue::createPayloadUsing($callback);
         }
                     /**
          * Get the container instance being used by the connection.
@@ -9566,7 +9471,7 @@ namespace Illuminate\Support\Facades {
          * @static 
          */        public static function getContainer()
         {            //Method inherited from \Illuminate\Queue\Queue         
-                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
                         return $instance->getContainer();
         }
                     /**
@@ -9577,7 +9482,7 @@ namespace Illuminate\Support\Facades {
          * @static 
          */        public static function setContainer($container)
         {            //Method inherited from \Illuminate\Queue\Queue         
-                        /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
                         $instance->setContainer($container);
         }
             }
@@ -12008,6 +11913,56 @@ namespace Illuminate\Support\Facades {
          */        public static function hasValidSignatureWhileIgnoring($ignoreQuery = [], $absolute = true)
         {
                         return \Illuminate\Http\Request::hasValidSignatureWhileIgnoring($ignoreQuery, $absolute);
+        }
+                    /**
+         * 
+         *
+         * @see \Bilfeldt\CorrelationId\CorrelationIdServiceProvider::bootRequestGetUniqueIdMacro()
+         * @return string 
+         * @static 
+         */        public static function getUniqueId()
+        {
+                        return \Illuminate\Http\Request::getUniqueId();
+        }
+                    /**
+         * 
+         *
+         * @see \Bilfeldt\CorrelationId\CorrelationIdServiceProvider::bootRequestGetCorrelationIdMacro()
+         * @return string|null 
+         * @static 
+         */        public static function getCorrelationId()
+        {
+                        return \Illuminate\Http\Request::getCorrelationId();
+        }
+                    /**
+         * 
+         *
+         * @see \Bilfeldt\CorrelationId\CorrelationIdServiceProvider::bootRequestGetClientRequestIdMacro()
+         * @return string|null 
+         * @static 
+         */        public static function getClientRequestId()
+        {
+                        return \Illuminate\Http\Request::getClientRequestId();
+        }
+                    /**
+         * 
+         *
+         * @see \Bilfeldt\RequestLogger\RequestLoggerServiceProvider::bootMacros()
+         * @param string $drivers
+         * @return \Illuminate\Http\Request 
+         * @static 
+         */        public static function enableLog(...$drivers)
+        {
+                        return \Illuminate\Http\Request::enableLog(...$drivers);
+        }
+                    /**
+         * 
+         *
+         * @see \Bilfeldt\LaravelRouteStatistics\LaravelRouteStatisticsServiceProvider::bootMacros()
+         * @static 
+         */        public static function routeStatistics()
+        {
+                        return \Illuminate\Http\Request::routeStatistics();
         }
             }
             /**
@@ -19180,6 +19135,125 @@ namespace RealRashid\SweetAlert\Facades {
             }
     }
 
+namespace Bilfeldt\RequestLogger {
+            /**
+     * 
+     *
+     * @see \Bilfeldt\RequestLogger\RequestLogger
+     */        class RequestLoggerFacade {
+                    /**
+         * 
+         *
+         * @static 
+         */        public static function getFilters()
+        {
+                        /** @var \Bilfeldt\RequestLogger\RequestLogger $instance */
+                        return $instance->getFilters();
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */        public static function addFilters(...$filters)
+        {
+                        /** @var \Bilfeldt\RequestLogger\RequestLogger $instance */
+                        return $instance->addFilters(...$filters);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */        public static function getDefaultDriver()
+        {
+                        /** @var \Bilfeldt\RequestLogger\RequestLogger $instance */
+                        return $instance->getDefaultDriver();
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */        public static function createNullDriver()
+        {
+                        /** @var \Bilfeldt\RequestLogger\RequestLogger $instance */
+                        return $instance->createNullDriver();
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */        public static function createModelDriver()
+        {
+                        /** @var \Bilfeldt\RequestLogger\RequestLogger $instance */
+                        return $instance->createModelDriver();
+        }
+                    /**
+         * Get a driver instance.
+         *
+         * @param string|null $driver
+         * @return mixed 
+         * @throws \InvalidArgumentException
+         * @static 
+         */        public static function driver($driver = null)
+        {            //Method inherited from \Illuminate\Support\Manager         
+                        /** @var \Bilfeldt\RequestLogger\RequestLogger $instance */
+                        return $instance->driver($driver);
+        }
+                    /**
+         * Register a custom driver creator Closure.
+         *
+         * @param string $driver
+         * @param \Closure $callback
+         * @return \Bilfeldt\RequestLogger\RequestLogger 
+         * @static 
+         */        public static function extend($driver, $callback)
+        {            //Method inherited from \Illuminate\Support\Manager         
+                        /** @var \Bilfeldt\RequestLogger\RequestLogger $instance */
+                        return $instance->extend($driver, $callback);
+        }
+                    /**
+         * Get all of the created "drivers".
+         *
+         * @return array 
+         * @static 
+         */        public static function getDrivers()
+        {            //Method inherited from \Illuminate\Support\Manager         
+                        /** @var \Bilfeldt\RequestLogger\RequestLogger $instance */
+                        return $instance->getDrivers();
+        }
+                    /**
+         * Get the container instance used by the manager.
+         *
+         * @return \Illuminate\Contracts\Container\Container 
+         * @static 
+         */        public static function getContainer()
+        {            //Method inherited from \Illuminate\Support\Manager         
+                        /** @var \Bilfeldt\RequestLogger\RequestLogger $instance */
+                        return $instance->getContainer();
+        }
+                    /**
+         * Set the container instance used by the manager.
+         *
+         * @param \Illuminate\Contracts\Container\Container $container
+         * @return \Bilfeldt\RequestLogger\RequestLogger 
+         * @static 
+         */        public static function setContainer($container)
+        {            //Method inherited from \Illuminate\Support\Manager         
+                        /** @var \Bilfeldt\RequestLogger\RequestLogger $instance */
+                        return $instance->setContainer($container);
+        }
+                    /**
+         * Forget all of the resolved driver instances.
+         *
+         * @return \Bilfeldt\RequestLogger\RequestLogger 
+         * @static 
+         */        public static function forgetDrivers()
+        {            //Method inherited from \Illuminate\Support\Manager         
+                        /** @var \Bilfeldt\RequestLogger\RequestLogger $instance */
+                        return $instance->forgetDrivers();
+        }
+            }
+    }
+
 namespace DaveJamesMiller\Breadcrumbs\Facades {
             /**
      * Breadcrumbs facade - allows easy access to the Manager instance.
@@ -20734,6 +20808,56 @@ namespace Illuminate\Http {
          */        public static function hasValidSignatureWhileIgnoring($ignoreQuery = [], $absolute = true)
         {
                         return \Illuminate\Http\Request::hasValidSignatureWhileIgnoring($ignoreQuery, $absolute);
+        }
+                    /**
+         * 
+         *
+         * @see \Bilfeldt\CorrelationId\CorrelationIdServiceProvider::bootRequestGetUniqueIdMacro()
+         * @return string 
+         * @static 
+         */        public static function getUniqueId()
+        {
+                        return \Illuminate\Http\Request::getUniqueId();
+        }
+                    /**
+         * 
+         *
+         * @see \Bilfeldt\CorrelationId\CorrelationIdServiceProvider::bootRequestGetCorrelationIdMacro()
+         * @return string|null 
+         * @static 
+         */        public static function getCorrelationId()
+        {
+                        return \Illuminate\Http\Request::getCorrelationId();
+        }
+                    /**
+         * 
+         *
+         * @see \Bilfeldt\CorrelationId\CorrelationIdServiceProvider::bootRequestGetClientRequestIdMacro()
+         * @return string|null 
+         * @static 
+         */        public static function getClientRequestId()
+        {
+                        return \Illuminate\Http\Request::getClientRequestId();
+        }
+                    /**
+         * 
+         *
+         * @see \Bilfeldt\RequestLogger\RequestLoggerServiceProvider::bootMacros()
+         * @param string $drivers
+         * @return \Illuminate\Http\Request 
+         * @static 
+         */        public static function enableLog(...$drivers)
+        {
+                        return \Illuminate\Http\Request::enableLog(...$drivers);
+        }
+                    /**
+         * 
+         *
+         * @see \Bilfeldt\LaravelRouteStatistics\LaravelRouteStatisticsServiceProvider::bootMacros()
+         * @static 
+         */        public static function routeStatistics()
+        {
+                        return \Illuminate\Http\Request::routeStatistics();
         }
             }
     }
@@ -24698,6 +24822,7 @@ namespace  {
             class QrCode extends \SimpleSoftwareIO\QrCode\Facades\QrCode {}
             class Alert extends \RealRashid\SweetAlert\Facades\Alert {}
             class Pdf extends \Barryvdh\DomPDF\Facade\Pdf {}
+            class RequestLogger extends \Bilfeldt\RequestLogger\RequestLoggerFacade {}
             class Breadcrumbs extends \DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs {}
             class Preload extends \Laragear\Preload\Facades\Preload {}
             class Livewire extends \Livewire\Livewire {}
