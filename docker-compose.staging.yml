@@ -20,7 +20,7 @@ services:
       - 8080:8080
     volumes:
       - .:/var/www/html
-      - ./infra/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./infra/nginx/nginx.conf:/etc/nginx/franken.conf
       - ./infra/nginx/ssl:/etc/nginx/ssl
     depends_on:
       - php
@@ -68,7 +68,7 @@ services:
     #uncomment this if you will use only docker compose
     build:
       context: "./infra/php/"
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.unit
     #     # target: php-production  # Specify the target build stage if applicable
     #     # args:
     #     # - BUILD_ENV=production  # Pass any necessary build arguments
@@ -89,7 +89,7 @@ services:
     volumes:
       - .:/var/www/html
     ports:
-      - 9000:80
+      - 8000:80
     networks:
       - tabantajnetwork
 
