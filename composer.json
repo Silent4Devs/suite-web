@@ -8,6 +8,7 @@
     "php": "^8.1",
     "alexusmai/laravel-file-manager": "^3.0.5",
     "barryvdh/laravel-dompdf": "^2.0",
+    "bilfeldt/laravel-route-statistics": "^3.2",
     "chelout/laravel-relationship-events": "^2.0",
     "davejamesmiller/laravel-breadcrumbs": "5.x",
     "doctrine/dbal": "^3.1",

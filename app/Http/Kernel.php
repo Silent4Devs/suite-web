@@ -16,6 +16,7 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \App\Http\Middleware\Cors::class,
         //\App\Http\Middleware\XFrameHeadersMiddleware::class,
+        \Bilfeldt\LaravelRouteStatistics\Http\Middleware\RouteStatisticsMiddleware::class, // <-- Estadia de rutas
     ];
 
     protected $middlewareGroups = [
