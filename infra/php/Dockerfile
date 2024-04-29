@@ -30,10 +30,10 @@ RUN apk add --no-cache \
     sudo \
     zip \
     unzip \
-    libsodium-dev \
+    libsodium-dev
 
-    # Install php extensions
-    RUN chmod +x /usr/local/bin/install-php-extensions && \
+# Install php extensions
+RUN chmod +x /usr/local/bin/install-php-extensions && \
     install-php-extensions \
     @composer \
     redis-stable \
@@ -56,7 +56,8 @@ RUN apk add --no-cache \
     excimer \
     pcntl \
     posix \
-    amqp
+    amqp \
+    newrelic
 
 # Enable phpredis extension
 #RUN echo "extension=redis.so" > /usr/local/etc/php/conf.d/docker-php-ext-redis.ini
