@@ -337,6 +337,8 @@ volumes:
     driver: local
   pgadmin-data:
     driver: local
+  goservices_data:
+    driver: local
   # elasticsearch:
   #   driver: local
   # elasticsearch-logs:
