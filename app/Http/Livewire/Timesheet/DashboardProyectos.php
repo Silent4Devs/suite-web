@@ -84,7 +84,7 @@ class DashboardProyectos extends Component
 
         if ($this->proy_id != 0) {
             if ($this->area_id === 'todas') {
-                $datos_dash = TimesheetProyecto::getAll($this->proy_id)->find($this->proy_id);
+                $datos_dash = TimesheetProyecto::getAll($this->proy_id)->where('id', '=', $this->proy_id);
 
                 $this->datos_areas = collect();
                 foreach ($lista_areas as $ar) {
