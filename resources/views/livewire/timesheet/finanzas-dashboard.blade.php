@@ -40,16 +40,15 @@
 <script>
     let graf_general_1;
     document.addEventListener('DOMContentLoaded', function() {
-        Livewire.on('datosActualizados', (nombre, horastrabajada) => {
+        Livewire.on('datosActualizados', (nombre, horastrabajada, horaTotal, horaCosto, proyectos) => {
             document.getElementById('graf-financiero-1').innerHTML = '';
             graf_general_1 && graf_general_1.destroy();
             const colors = generarColoresPasteles(nombre.length);
-            initChart(nombre, horastrabajada,colors);
-            console.log(nombre);
-            console.log(horastrabajada);
+            initChart(nombre, horastrabajada, colors);
+            InsertarDatos(horaCosto, horaTotal, proyectos);
         });
 
-        function initChart(nombres, horas,colors) {
+        function initChart(nombres, horas, colors) {
             graf_general_1 = new Chart(document.getElementById('graf-financiero-1'), {
                 type: 'bar',
                 data: {
@@ -113,6 +112,15 @@
         function componentToHex(c) {
             const hex = c.toString(16);
             return hex.length == 1 ? '0' + hex : hex;
+        }
+
+        function InsertarDatos(costoTotal, totalHoras, proyectos) {
+            var contentCard = document.getElementById("contentCard");
+            contentCard.style.display = "block";
+            document.getElementById("CostoTotal").textContent = costoTotal.toFixed(2);
+            document.getElementById("TotalHoras").textContent = totalHoras.toFixed(2);
+            var nombreProyecto = proyectos.proyecto;
+            document.getElementById("nombreProyecto").textContent = nombreProyecto;
         }
 
     });

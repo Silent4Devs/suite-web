@@ -4,7 +4,7 @@
     @endphp
     <style type="text/css">
         .tabla-calendar-time table {
-            border-radius: 20px;
+            border-radius: 10px 10px 0 0;
             overflow: hidden;
         }
 
@@ -70,8 +70,6 @@
             z-index: 4;
             transition: 0.3s;
         }
-
-
 
         .datatable_timesheet_proyectos tr th:first-child::before,
         .datatable_timesheet_proyectos tr td:first-child::before,
@@ -506,6 +504,7 @@
         Livewire.on('scriptTabla', () => {
             tablaLivewire('datatable_timesheet_proyectos');
             tablaLivewire('datatable_timesheet_proyectos_empleados');
+            tablaLivewire('datatabletimesheetproyectos');
         });
     });
 </script>

@@ -75,36 +75,30 @@
                                         class="select2">
                                         <option selected disabled>Seleccione proyecto</option>
                                         @php
-                                            $proyectos_numericos = [];
+                                            // Separa los proyectos con letras en su ID y los que no
                                             $proyectos_con_letra = [];
-
+                                            $proyectos_sin_letra = [];
                                             foreach ($proyectos as $proyecto) {
-                                                if (is_numeric(substr($proyecto['identificador'], -1))) {
-                                                    $proyectos_numericos[] = $proyecto;
-                                                } else {
+                                                if (preg_match('/[a-zA-Z]/', $proyecto['identificador'])) {
                                                     $proyectos_con_letra[] = $proyecto;
+                                                } else {
+                                                    $proyectos_sin_letra[] = $proyecto;
                                                 }
                                             }
 
-                                            // Ordenar los proyectos numéricos de forma descendente por ID
-                                            usort($proyectos_numericos, function ($a, $b) {
-                                                return $b['id'] <=> $a['id'];
+                                            // Ordena los proyectos sin letras en su ID de manera descendente
+                                            usort($proyectos_sin_letra, function ($a, $b) {
+                                                return strcmp($b['identificador'], $a['identificador']);
                                             });
 
-                                            // Ordenar los proyectos con letra al final al final
-                                            usort($proyectos_con_letra, function ($a, $b) {
-                                                return strcmp($a['identificador'], $b['identificador']);
-                                            });
+                                            // Concatena los dos arreglos para obtener la lista final
+                                            $proyectos_ordenados = array_merge(
+                                                $proyectos_sin_letra,
+                                                $proyectos_con_letra,
+                                            );
                                         @endphp
 
-                                        {{-- Mostrar los proyectos numéricos --}}
-                                        @foreach ($proyectos_numericos as $proyecto)
-                                            <option value="{{ $proyecto['id'] }}">{{ $proyecto['identificador'] }} -
-                                                {{ $proyecto['proyecto'] }}</option>
-                                        @endforeach
-
-                                        {{-- Mostrar los proyectos con letra --}}
-                                        @foreach ($proyectos_con_letra as $proyecto)
+                                        @foreach ($proyectos_ordenados as $proyecto)
                                             <option value="{{ $proyecto['id'] }}">{{ $proyecto['identificador'] }} -
                                                 {{ $proyecto['proyecto'] }}</option>
                                         @endforeach

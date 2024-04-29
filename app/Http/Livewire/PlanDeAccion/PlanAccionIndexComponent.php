@@ -72,6 +72,7 @@ class PlanAccionIndexComponent extends Component
         // Contar el número de resultados de los planes de acción del usuario actual
         $planImplementacionsCount = $planImplementacions->count();
 
+        //dd($usuario);
         // Pasar los resultados a la vista
         return view('livewire.plan-de-accion.plan-accion-index-component', [
             'planImplementacions' => $planImplementacions,

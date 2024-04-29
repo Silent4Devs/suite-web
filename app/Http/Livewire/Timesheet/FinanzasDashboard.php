@@ -16,6 +16,8 @@ class FinanzasDashboard extends Component
     public $array;
     public $nombre;
     public $horastrabajada;
+    public $horaTotal;
+    public $horaCosto;
 
     public function render()
     {
@@ -29,16 +31,19 @@ class FinanzasDashboard extends Component
 
     public function search($data)
     {
+        $id = $data['proyecto'];
         $mes = Carbon::parse($data['mes'])->format('m');
         $año = Carbon::parse($data['mes'])->format('Y');
 
-        $ids_emp = TimesheetProyectoEmpleado::where('proyecto_id', $data['proyecto'])->get();
+        $ids_emp = TimesheetProyectoEmpleado::where('proyecto_id', $id)->get();
         $usuarios = [];
         $nombres = [];
         $horas_trabajadas = [];
+        $horasTotales = 0;
+        $horasCosto = 0;
 
         foreach ($ids_emp as $key => $emp_p) {
-            $horas = TimesheetHoras::where('proyecto_id', $data['proyecto'])
+            $horas = TimesheetHoras::where('proyecto_id', $id)
                 ->whereMonth('updated_at', $mes)
                 ->whereYear('updated_at', $año)
                 ->get();
@@ -54,17 +59,25 @@ class FinanzasDashboard extends Component
                 $horas_totales += is_numeric($hora->horas_domingo) ? $hora->horas_domingo : 0;
             }
 
-            if (isset($emp_p->empleado->salario_base_mensual)) {
-                $costo_hora = ($emp_p->empleado->salario_base_mensual / 20) / 7;
-            } else {
-                if (isset($emp_p->empleado->salario_diario)) {
-                    $costo_hora = $emp_p->empleado->salario_diario / 7;
+            $costo_por_hora_usuario = $emp_p->costo_hora ?? 0;
+
+            // Si el costo por hora no está definido en TimesheetProyectoEmpleado, usar el calculado anteriormente
+            if (!$costo_por_hora_usuario) {
+                if (isset($emp_p->empleado->salario_base_mensual)) {
+                    $costo_por_hora_usuario = ($emp_p->empleado->salario_base_mensual / 20) / 7;
                 } else {
-                    $costo_hora = 0;
+                    if (isset($emp_p->empleado->salario_diario)) {
+                        $costo_por_hora_usuario = $emp_p->empleado->salario_diario / 7;
+                    } else {
+                        $costo_por_hora_usuario = 0;
+                    }
                 }
             }
 
-            $costo_horas = $costo_hora * $horas_totales;
+            // Calcular el costo total de las horas del usuario
+            $costo_horas = $costo_por_hora_usuario * $horas_totales;
+            $horasTotales += $horas_totales;
+            $horasCosto += $costo_horas;
 
             $empItem = Empleado::select('id', 'name')->where('id', $emp_p->empleado_id)->first();
 
@@ -80,9 +93,7 @@ class FinanzasDashboard extends Component
             $horas_trabajadas[] = $horas_totales;
         }
 
-        //dd($ids_emp,$data,$this->nombre= $nombres,$this->horastrabajada = $horas_trabajadas);
-        $this->nombre = $nombres;
-        $this->horastrabajada = $horas_trabajadas;
-        $this->emit('datosActualizados', $this->nombre = $nombres, $this->horastrabajada = $horas_trabajadas);
+        //dd($ids_emp, $data, $this->nombre = $nombres, $this->horastrabajada = $horas_trabajadas, $usuarios,$this->horaTotal = $horasTotales,$this->horaCosto = $horasCosto,$this->proyectos = TimesheetProyecto::select('proyecto')->find(10));
+        $this->emit('datosActualizados',$this->nombre = $nombres,$this->horastrabajada = $horas_trabajadas,$this->horaTotal = $horasTotales,$this->horaCosto = $horasCosto,$this->proyectos = TimesheetProyecto::select('proyecto')->find($id));
     }
 }
