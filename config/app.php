@@ -1,5 +1,7 @@
 <?php
 
+use VladimirYuldashev\LaravelQueueRabbitMQ\LaravelQueueRabbitMQServiceProvider;
+
 return [
 
     /*
@@ -184,6 +186,8 @@ return [
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
         EloquentFilter\ServiceProvider::class,
         OwenIt\Auditing\AuditingServiceProvider::class,
+        LaravelQueueRabbitMQServiceProvider::class,
+
     ],
 
     /*
