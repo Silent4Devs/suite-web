@@ -11914,56 +11914,6 @@ namespace Illuminate\Support\Facades {
         {
                         return \Illuminate\Http\Request::hasValidSignatureWhileIgnoring($ignoreQuery, $absolute);
         }
-                    /**
-         * 
-         *
-         * @see \Bilfeldt\CorrelationId\CorrelationIdServiceProvider::bootRequestGetUniqueIdMacro()
-         * @return string 
-         * @static 
-         */        public static function getUniqueId()
-        {
-                        return \Illuminate\Http\Request::getUniqueId();
-        }
-                    /**
-         * 
-         *
-         * @see \Bilfeldt\CorrelationId\CorrelationIdServiceProvider::bootRequestGetCorrelationIdMacro()
-         * @return string|null 
-         * @static 
-         */        public static function getCorrelationId()
-        {
-                        return \Illuminate\Http\Request::getCorrelationId();
-        }
-                    /**
-         * 
-         *
-         * @see \Bilfeldt\CorrelationId\CorrelationIdServiceProvider::bootRequestGetClientRequestIdMacro()
-         * @return string|null 
-         * @static 
-         */        public static function getClientRequestId()
-        {
-                        return \Illuminate\Http\Request::getClientRequestId();
-        }
-                    /**
-         * 
-         *
-         * @see \Bilfeldt\RequestLogger\RequestLoggerServiceProvider::bootMacros()
-         * @param string $drivers
-         * @return \Illuminate\Http\Request 
-         * @static 
-         */        public static function enableLog(...$drivers)
-        {
-                        return \Illuminate\Http\Request::enableLog(...$drivers);
-        }
-                    /**
-         * 
-         *
-         * @see \Bilfeldt\LaravelRouteStatistics\LaravelRouteStatisticsServiceProvider::bootMacros()
-         * @static 
-         */        public static function routeStatistics()
-        {
-                        return \Illuminate\Http\Request::routeStatistics();
-        }
             }
             /**
      * 
@@ -19135,125 +19085,6 @@ namespace RealRashid\SweetAlert\Facades {
             }
     }
 
-namespace Bilfeldt\RequestLogger {
-            /**
-     * 
-     *
-     * @see \Bilfeldt\RequestLogger\RequestLogger
-     */        class RequestLoggerFacade {
-                    /**
-         * 
-         *
-         * @static 
-         */        public static function getFilters()
-        {
-                        /** @var \Bilfeldt\RequestLogger\RequestLogger $instance */
-                        return $instance->getFilters();
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */        public static function addFilters(...$filters)
-        {
-                        /** @var \Bilfeldt\RequestLogger\RequestLogger $instance */
-                        return $instance->addFilters(...$filters);
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */        public static function getDefaultDriver()
-        {
-                        /** @var \Bilfeldt\RequestLogger\RequestLogger $instance */
-                        return $instance->getDefaultDriver();
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */        public static function createNullDriver()
-        {
-                        /** @var \Bilfeldt\RequestLogger\RequestLogger $instance */
-                        return $instance->createNullDriver();
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */        public static function createModelDriver()
-        {
-                        /** @var \Bilfeldt\RequestLogger\RequestLogger $instance */
-                        return $instance->createModelDriver();
-        }
-                    /**
-         * Get a driver instance.
-         *
-         * @param string|null $driver
-         * @return mixed 
-         * @throws \InvalidArgumentException
-         * @static 
-         */        public static function driver($driver = null)
-        {            //Method inherited from \Illuminate\Support\Manager         
-                        /** @var \Bilfeldt\RequestLogger\RequestLogger $instance */
-                        return $instance->driver($driver);
-        }
-                    /**
-         * Register a custom driver creator Closure.
-         *
-         * @param string $driver
-         * @param \Closure $callback
-         * @return \Bilfeldt\RequestLogger\RequestLogger 
-         * @static 
-         */        public static function extend($driver, $callback)
-        {            //Method inherited from \Illuminate\Support\Manager         
-                        /** @var \Bilfeldt\RequestLogger\RequestLogger $instance */
-                        return $instance->extend($driver, $callback);
-        }
-                    /**
-         * Get all of the created "drivers".
-         *
-         * @return array 
-         * @static 
-         */        public static function getDrivers()
-        {            //Method inherited from \Illuminate\Support\Manager         
-                        /** @var \Bilfeldt\RequestLogger\RequestLogger $instance */
-                        return $instance->getDrivers();
-        }
-                    /**
-         * Get the container instance used by the manager.
-         *
-         * @return \Illuminate\Contracts\Container\Container 
-         * @static 
-         */        public static function getContainer()
-        {            //Method inherited from \Illuminate\Support\Manager         
-                        /** @var \Bilfeldt\RequestLogger\RequestLogger $instance */
-                        return $instance->getContainer();
-        }
-                    /**
-         * Set the container instance used by the manager.
-         *
-         * @param \Illuminate\Contracts\Container\Container $container
-         * @return \Bilfeldt\RequestLogger\RequestLogger 
-         * @static 
-         */        public static function setContainer($container)
-        {            //Method inherited from \Illuminate\Support\Manager         
-                        /** @var \Bilfeldt\RequestLogger\RequestLogger $instance */
-                        return $instance->setContainer($container);
-        }
-                    /**
-         * Forget all of the resolved driver instances.
-         *
-         * @return \Bilfeldt\RequestLogger\RequestLogger 
-         * @static 
-         */        public static function forgetDrivers()
-        {            //Method inherited from \Illuminate\Support\Manager         
-                        /** @var \Bilfeldt\RequestLogger\RequestLogger $instance */
-                        return $instance->forgetDrivers();
-        }
-            }
-    }
-
 namespace DaveJamesMiller\Breadcrumbs\Facades {
             /**
      * Breadcrumbs facade - allows easy access to the Manager instance.
@@ -20808,56 +20639,6 @@ namespace Illuminate\Http {
          */        public static function hasValidSignatureWhileIgnoring($ignoreQuery = [], $absolute = true)
         {
                         return \Illuminate\Http\Request::hasValidSignatureWhileIgnoring($ignoreQuery, $absolute);
-        }
-                    /**
-         * 
-         *
-         * @see \Bilfeldt\CorrelationId\CorrelationIdServiceProvider::bootRequestGetUniqueIdMacro()
-         * @return string 
-         * @static 
-         */        public static function getUniqueId()
-        {
-                        return \Illuminate\Http\Request::getUniqueId();
-        }
-                    /**
-         * 
-         *
-         * @see \Bilfeldt\CorrelationId\CorrelationIdServiceProvider::bootRequestGetCorrelationIdMacro()
-         * @return string|null 
-         * @static 
-         */        public static function getCorrelationId()
-        {
-                        return \Illuminate\Http\Request::getCorrelationId();
-        }
-                    /**
-         * 
-         *
-         * @see \Bilfeldt\CorrelationId\CorrelationIdServiceProvider::bootRequestGetClientRequestIdMacro()
-         * @return string|null 
-         * @static 
-         */        public static function getClientRequestId()
-        {
-                        return \Illuminate\Http\Request::getClientRequestId();
-        }
-                    /**
-         * 
-         *
-         * @see \Bilfeldt\RequestLogger\RequestLoggerServiceProvider::bootMacros()
-         * @param string $drivers
-         * @return \Illuminate\Http\Request 
-         * @static 
-         */        public static function enableLog(...$drivers)
-        {
-                        return \Illuminate\Http\Request::enableLog(...$drivers);
-        }
-                    /**
-         * 
-         *
-         * @see \Bilfeldt\LaravelRouteStatistics\LaravelRouteStatisticsServiceProvider::bootMacros()
-         * @static 
-         */        public static function routeStatistics()
-        {
-                        return \Illuminate\Http\Request::routeStatistics();
         }
             }
     }
@@ -24822,7 +24603,6 @@ namespace  {
             class QrCode extends \SimpleSoftwareIO\QrCode\Facades\QrCode {}
             class Alert extends \RealRashid\SweetAlert\Facades\Alert {}
             class Pdf extends \Barryvdh\DomPDF\Facade\Pdf {}
-            class RequestLogger extends \Bilfeldt\RequestLogger\RequestLoggerFacade {}
             class Breadcrumbs extends \DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs {}
             class Preload extends \Laragear\Preload\Facades\Preload {}
             class Livewire extends \Livewire\Livewire {}
