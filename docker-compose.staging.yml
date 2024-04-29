@@ -9,25 +9,25 @@ services:
   #   command: daemon --docker
   #   volumes:
   #     - /var/run/docker.sock:/var/run/docker.sock:ro
-  nginx-tabantaj:
-    image: nginx:stable-alpine
-    container_name: nginx-tabantaj
-    restart: unless-stopped
-    tty: true
-    ports:
-      - 80:80
-      - 443:443
-      - 8080:8080
-    volumes:
-      - .:/var/www/html
-      - ./infra/nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./infra/nginx/ssl:/etc/nginx/ssl
-    depends_on:
-      - php
-      - postgres-tabantaj
-      - redis-tabantaj
-    networks:
-      - tabantajnetwork
+  # nginx-tabantaj:
+  #   image: nginx:stable-alpine
+  #   container_name: nginx-tabantaj
+  #   restart: unless-stopped
+  #   tty: true
+  #   ports:
+  #     - 80:80
+  #     - 443:443
+  #     - 8080:8080
+  #   volumes:
+  #     - .:/var/www/html
+  #     - ./infra/nginx/nginx.conf:/etc/nginx/nginx.conf
+  #     - ./infra/nginx/ssl:/etc/nginx/ssl
+  #   depends_on:
+  #     - php
+  #     - postgres-tabantaj
+  #     - redis-tabantaj
+  #   networks:
+  #     - tabantajnetwork
 
   postgres-tabantaj:
     image: postgres:14-alpine
@@ -68,7 +68,7 @@ services:
     #uncomment this if you will use only docker compose
     build:
       context: "./infra/php/"
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.unit
     #     # target: php-production  # Specify the target build stage if applicable
     #     # args:
     #     # - BUILD_ENV=production  # Pass any necessary build arguments
@@ -81,7 +81,7 @@ services:
     volumes:
       - .:/var/www/html
     ports:
-      - 9000:80
+      - 8080:80
     networks:
       - tabantajnetwork
 
