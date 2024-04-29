@@ -135,6 +135,35 @@ services:
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
 
+  goservices:
+    image: ghcr.io/silent4devs/goservices:latest
+    container_name: goservices
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3300:3300"
+    volumes:
+      - goservices_data:/goservices
+    networks:
+      - tabantajnetwork
+
+volumes:
+  tabantaj-db:
+    driver: local
+  rabbitmq_data:
+    driver: local
+  pgadmin-data:
+    driver: local
+  goservices_data:
+    driver: local
+  # elasticsearch:
+  #   driver: local
+  # elasticsearch-logs:
+  #   driver: local
+
+networks:
+  tabantajnetwork:
+
   # prometheus-tabantaj:
   #   image: prom/prometheus
   #   container_name: prometheus-tabantaj
@@ -291,18 +320,3 @@ services:
   #     - 8081:8080
   #   networks:
   #     - tabantajnetwork
-
-volumes:
-  tabantaj-db:
-    driver: local
-  rabbitmq_data:
-    driver: local
-  pgadmin-data:
-    driver: local
-  # elasticsearch:
-  #   driver: local
-  # elasticsearch-logs:
-  #   driver: local
-
-networks:
-  tabantajnetwork:
