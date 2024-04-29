@@ -97,10 +97,9 @@ class ComiteseguridadController extends Controller
 
             $comiteseguridad = Comiteseguridad::find($comiteseguridad);
 
-            if (!$comiteseguridad) {
+            if (! $comiteseguridad) {
                 abort(404);
             }
-
 
             return view('admin.comiteseguridads.edit', compact('comiteseguridad'));
         } catch (\Throwable $th) {
@@ -118,7 +117,6 @@ class ComiteseguridadController extends Controller
         ]);
 
         $comiteseguridad->update($request->all());
-
 
         $miembros = MiembrosComiteSeguridad::where('comite_id', '=', $comiteseguridad->id)->with('asignacion')->get();
 
@@ -193,8 +191,6 @@ class ComiteseguridadController extends Controller
             abort(404);
         }
     }
-
-
 
     public function deleteMember($id)
     {

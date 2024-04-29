@@ -124,21 +124,21 @@ class OrganizacionController extends Controller
             //$name_image = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
             $hash_name = pathinfo($file->hashName(), PATHINFO_FILENAME);
             //$fileName = 'UID_'.$organizacions->id.'_'.$file->getClientOriginalName();
-            $new_name_image = 'UID_' . $organizacions->id . '_' . $hash_name . '.png';
+            $new_name_image = 'UID_'.$organizacions->id.'_'.$hash_name.'.png';
 
             // Call the ImageService to consume the external API
             $apiResponse = ImageService::consumeImageCompresorApi($file);
 
             // Compress and save the image
             if ($apiResponse['status'] == 200) {
-                $rutaGuardada = '/public/images/' . $new_name_image;
+                $rutaGuardada = '/public/images/'.$new_name_image;
                 //file_put_contents(storage_path('app/public/'.$rutaGuardada), $apiResponse['body']);
 
                 Storage::put($rutaGuardada, $apiResponse['body']);
 
                 $organizacions->update(['logotipo' => $new_name_image]);
             } else {
-                $mensajeError = 'Error al recibir la imagen de la API externa: ' . $apiResponse['body'];
+                $mensajeError = 'Error al recibir la imagen de la API externa: '.$apiResponse['body'];
 
                 return Redirect::back()->with('error', $mensajeError);
             }
@@ -150,7 +150,6 @@ class OrganizacionController extends Controller
 
         return redirect()->route('admin.organizacions.index')->with('success', 'Guardado con éxito');
     }
-
 
     public function edit($organizacionId)
     {
@@ -196,14 +195,14 @@ class OrganizacionController extends Controller
             //$name_image = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
             $hash_name = pathinfo($file->hashName(), PATHINFO_FILENAME);
             //$fileName = 'UID_'.$organizacion->id.'_'.$file->getClientOriginalName();
-            $new_name_image = 'UID_' . $organizacion->id . '_' . $hash_name . '.png';
+            $new_name_image = 'UID_'.$organizacion->id.'_'.$hash_name.'.png';
 
             // Call the ImageService to consume the external API
             $apiResponse = ImageService::consumeImageCompresorApi($file);
 
             // Compress and save the image
             if ($apiResponse['status'] == 200) {
-                $rutaGuardada = '/public/images/' . $new_name_image;
+                $rutaGuardada = '/public/images/'.$new_name_image;
                 //file_put_contents(storage_path('app/public/'.$rutaGuardada), $apiResponse['body']);
 
                 Storage::put($rutaGuardada, $apiResponse['body']);
@@ -211,7 +210,7 @@ class OrganizacionController extends Controller
                 $organizacion->logotipo = $new_name_image;
                 $organizacion->save();
             } else {
-                $mensajeError = 'Error al recibir la imagen de la API externa: ' . $apiResponse['body'];
+                $mensajeError = 'Error al recibir la imagen de la API externa: '.$apiResponse['body'];
 
                 return Redirect::back()->with('error', $mensajeError);
             }

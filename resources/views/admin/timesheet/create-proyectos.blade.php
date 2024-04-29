@@ -164,7 +164,6 @@
             // Select2 Multiple
             $('.select2-multiple').select2({
                 theme: 'bootstrap4',
-                placeholder: "select",
                 allowClear: true
             });
 
