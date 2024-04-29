@@ -182,7 +182,7 @@ class AnalisisdeRiesgosController extends Controller
             abort_if(Gate::denies('matriz_de_riesgo_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
             $analisis = AnalisisDeRiesgo::find($id);
 
-            if (!$analisis) {
+            if (! $analisis) {
                 abort(404);
             }
             $analisis->delete();

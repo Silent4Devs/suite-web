@@ -41,7 +41,7 @@ class EV360ObjetivosController extends Controller
         //     $empleados,
         //     $isAdmin
         // );
-        if ($usuario->empleado->children->count() > 0 && !$isAdmin) {
+        if ($usuario->empleado->children->count() > 0 && ! $isAdmin) {
             // dd('Caso 1');
             $empleados = $usuario->empleado->children;
 
@@ -155,8 +155,8 @@ class EV360ObjetivosController extends Controller
             if ($request->hasFile('foto')) {
                 Storage::makeDirectory('public/objetivos/img'); //Crear si no existe
                 $extension = pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_EXTENSION);
-                $nombre_imagen = 'OBJETIVO_' . $objetivo->id . '_' . $objetivo->nombre . 'EMPLEADO_' . $empleado->id . '.' . $extension;
-                $route = storage_path() . '/app/public/objetivos/img/' . $nombre_imagen;
+                $nombre_imagen = 'OBJETIVO_'.$objetivo->id.'_'.$objetivo->nombre.'EMPLEADO_'.$empleado->id.'.'.$extension;
+                $route = storage_path().'/app/public/objetivos/img/'.$nombre_imagen;
 
                 // Call the ImageService to consume the external API
                 $apiResponse = ImageService::consumeImageCompresorApi($request->file('foto'));
@@ -361,8 +361,8 @@ class EV360ObjetivosController extends Controller
         if ($request->hasFile('foto')) {
             Storage::makeDirectory('public/objetivos/img'); //Crear si no existe
             $extension = pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_EXTENSION);
-            $nombre_imagen = 'OBJETIVO_' . $objetivo->id . '_' . $objetivo->nombre . 'EMPLEADO_' . $objetivo->empleado_id . '.' . $extension;
-            $route = storage_path() . '/app/public/objetivos/img/' . $nombre_imagen;
+            $nombre_imagen = 'OBJETIVO_'.$objetivo->id.'_'.$objetivo->nombre.'EMPLEADO_'.$objetivo->empleado_id.'.'.$extension;
+            $route = storage_path().'/app/public/objetivos/img/'.$nombre_imagen;
 
             // Call the ImageService to consume the external API
             $apiResponse = ImageService::consumeImageCompresorApi($request->file('foto'));
@@ -388,7 +388,7 @@ class EV360ObjetivosController extends Controller
         abort_if(Gate::denies('objetivos_estrategicos_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $objetivo = new Objetivo;
         $empleado = Empleado::getAll()->find(intval($empleado));
-        if (!$empleado) {
+        if (! $empleado) {
             abort(404);
         }
         $empleado->load(['objetivos' => function ($q) {
