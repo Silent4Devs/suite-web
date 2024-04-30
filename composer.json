@@ -39,7 +39,7 @@
     "spatie/laravel-permission": "^6.0",
     "spatie/laravel-responsecache": "^7.4",
     "tucker-eric/eloquentfilter": "^3.2",
-    "vladimir-yuldashev/laravel-queue-rabbitmq": "^13.3",
+    "vladimir-yuldashev/laravel-queue-rabbitmq": "^14.0",
     "yajra/laravel-datatables-oracle": "^10.0"
   },
   "require-dev": {

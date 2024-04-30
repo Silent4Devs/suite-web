@@ -1,18 +1,26 @@
-FROM php:8.2-fpm-alpine
+# Use unit:php as the base image
+FROM unit:php8.2
+
+# Prepare workfir
+# RUN mkdir -p /var/www/html
+# WORKDIR /var/www/html
+
+# Set timezone
+ENV TZ=America/Mexico_City
 
 # Add docker-php-extension-installer script
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 
 # Install dependencies
-RUN apk add --no-cache \
+RUN apt-get update && apt-get install -y \
     bash \
     curl \
-    freetype-dev \
+    libfreetype6-dev \
     g++ \
     gcc \
     git \
-    icu-dev \
-    icu-libs \
+    libicu-dev \
+    #libicu63 \
     libc-dev \
     libzip-dev \
     libpq-dev \
@@ -20,17 +28,18 @@ RUN apk add --no-cache \
     #mysql-client \
     nodejs \
     npm \
-    oniguruma-dev \
+    libonig-dev \
     yarn \
     openssh-client \
-    postgresql-libs \
+    libpq5 \
     postgresql-client \
     rsync \
-    zlib-dev \
+    zlib1g-dev \
     sudo \
     zip \
     unzip \
-    libsodium-dev
+    libsodium-dev \
+    cron
 
 # Install php extensions
 RUN chmod +x /usr/local/bin/install-php-extensions && \
@@ -55,25 +64,13 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
     sodium \
     excimer \
     pcntl \
-    posix \
-    amqp \
-    newrelic
+    posix
 
-# Enable phpredis extension
-#RUN echo "extension=redis.so" > /usr/local/etc/php/conf.d/docker-php-ext-redis.ini
+COPY config.json /docker-entrypoint.d/config.json
 
-# Copy custom php.ini
-COPY php.ini /usr/local/etc/php/php.ini
+COPY entrypoint.sh /docker-entrypoint.d/entrypoint.sh
+# If you want to include entrypoint.sh, uncomment the line above
 
-# Copy custom www.conf
-COPY www.conf /usr/local/etc/php-fpm.d/www.conf
-
-RUN chown -R www-data:www-data /var/www \
-    && chmod 755 -R /var/www
-
-# Install npm
-RUN npm install -g npm@latest
-
-# Healthcheck
-HEALTHCHECK --interval=15m --timeout=3s \
-    CMD curl --fail http://localhost/ || exit 1
+RUN chmod +x /docker-entrypoint.d/entrypoint.sh
+# If entrypoint.sh needs execution permission,
+EXPOSE 9090 443
