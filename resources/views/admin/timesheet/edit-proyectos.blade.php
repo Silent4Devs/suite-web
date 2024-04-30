@@ -124,8 +124,8 @@
                 </div>
                 <div class="row">
                     <div class="form-group col-md-4 anima-focus">
-                        <select class="form-control" name="sede_id" id="sede_id" required>
-                            <option selected value="{{ old('sede_id', $proyecto->sede_id, '') }}">
+                        <select class="form-control" name="sede_id" id="sede_id">
+                            <option selected value="{{ old('sede_id', $proyecto->sede_id, null) }}">
                                 {{ $proyecto->sede->sede ?? '' }}</option>
                             @foreach ($sedes as $sede)
                                 <option value="{{ $sede->id }}">{{ $sede->sede }}</option>
@@ -141,7 +141,7 @@
                                 <option value="{{ $tipo_it }}">{{ $tipo_it }}</option>
                             @endforeach
                         </select>
-                        {!! Form::label('tipo', 'Tipo', ['class' => 'asterisco']) !!}
+                        {!! Form::label('tipo', 'Tipo*', ['class' => 'asterisco']) !!}
                     </div>
                     <div class="form-group col-md-4 anima-focus">
                         <input type="text" pattern="[0-9]+" title="Por favor, ingrese solo números enteros."
@@ -150,26 +150,6 @@
                         {!! Form::label('horas_proyecto', 'Horas Asignadas al proyecto', ['class' => 'asterisco']) !!}
                     </div>
                 </div>
-                {{-- <div class="row">
-                  <div class="form-group col-md-4">
-                    <label class="form-label"><i class="fa-solid fa-calendar-day iconos-crear"></i>Proveedor (Opcional)</label>
-                    <input type="text" name="proveedor" id="proveedor" class="form-control">
-                    @if ($errors->has('proveedor'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('proveedor') }}
-                        </div>
-                    @endif
-                </div>
-                <div class="form-group col-md-4">
-                    <label class="form-label"><i class="fa-solid fa-calendar-day iconos-crear"></i> Horas Asignadas del Tercero (Opcional)</label>
-                    <input type="number" min="0" name="horas_tercero" id="horas_asignadas" class="form-control">
-                    @if ($errors->has('horas_tercero'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('horas_tercero') }}
-                        </div>
-                    @endif
-                </div>
-            </div>  --}}
                 <div class="row">
                     <div class="form-group col-12 text-right">
                         <a href="{{ route('admin.timesheet-proyectos') }}" class="btn btn_cancelar">Cancelar</a>
