@@ -2,9 +2,8 @@
 FROM unit:php8.2
 
 # Prepare workfir
-RUN mkdir -p /var/www/html
-RUN mkdir -p /var/www/html/databasestore
-WORKDIR /var/www/html
+# RUN mkdir -p /var/www/html
+# WORKDIR /var/www/html
 
 # Set timezone
 ENV TZ=America/Mexico_City
@@ -74,4 +73,4 @@ COPY entrypoint.sh /docker-entrypoint.d/entrypoint.sh
 
 RUN chmod +x /docker-entrypoint.d/entrypoint.sh
 # If entrypoint.sh needs execution permission,
-EXPOSE 9090
+EXPOSE 9090 443

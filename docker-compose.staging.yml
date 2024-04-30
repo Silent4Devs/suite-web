@@ -38,6 +38,7 @@ services:
       - .:/var/www/html
     ports:
       - 80:9090
+      - 443:443
     networks:
       - tabantajnetwork
 

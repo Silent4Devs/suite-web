@@ -7,5 +7,6 @@ cd /var/www/html && php artisan config:cache
 cd /var/www/html && php artisan route:cache
 cd /var/www/html && php artisan view:cache
 cd /var/www/html && php artisan event:cache
+cd /var/www/html && composer install
 
 exec "$@"
