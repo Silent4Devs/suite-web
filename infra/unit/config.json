@@ -18,7 +18,7 @@
           "Cache-Control": "max-age=60, s-maxage=120"
         },
         "fallback": {
-          "pass": "applications/suite-web"
+          "pass": "applications/laravel"
         }
       }
     },
@@ -27,12 +27,12 @@
         "uri": "/index.php"
       },
       "action": {
-        "pass": "applications/suite-web"
+        "pass": "applications/laravel"
       }
     }
   ],
   "applications": {
-    "suite-web": {
+    "laravel": {
       "type": "php",
       "processes": {
         "max": 5,
