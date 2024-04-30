@@ -92,7 +92,7 @@
         <table id="tabla_time_tareas" class="table w-100 tabla-animada tabla_time_tareas">
             <thead class="w-100">
                 <tr>
-                    <th style="min-width:600px;">Tarea </th>
+                    <th style="min-width:600px;">Tareas</th>
                     <th>Proyecto</th>
                     <th>Área</th>
                     <th style="max-width: 150px; width: 150px;">Opciones</th>
