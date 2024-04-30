@@ -164,6 +164,11 @@ class Area extends Model implements Auditable
         return $this->hasMany(Empleado::class, 'area_id', 'id');
     }
 
+    public function empleadosBasico()
+    {
+        return $this->hasMany(Empleado::class, 'area_id', 'id')->alta()->select('id', 'name', 'area_id', 'puesto_id');
+    }
+
     public function material_iso_veinticientes()
     {
         return $this->hasMany(MaterialIsoVeinticiente::class, 'arearesponsable_id');
