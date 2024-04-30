@@ -9,25 +9,25 @@ services:
   #   command: daemon --docker
   #   volumes:
   #     - /var/run/docker.sock:/var/run/docker.sock:ro
-  # nginx-tabantaj:
-  #   image: nginx:stable-alpine
-  #   container_name: nginx-tabantaj
-  #   restart: unless-stopped
-  #   tty: true
-  #   ports:
-  #     - 80:80
-  #     - 443:443
-  #     - 8080:8080
-  #   volumes:
-  #     - .:/var/www/html
-  #     - ./infra/nginx/nginx.conf:/etc/nginx/franken.conf
-  #     - ./infra/nginx/ssl:/etc/nginx/ssl
-  #   depends_on:
-  #     - php
-  #     - postgres-tabantaj
-  #     - redis-tabantaj
-  #   networks:
-  #     - tabantajnetwork
+  nginx-tabantaj:
+    image: nginx:stable-alpine
+    container_name: nginx-tabantaj
+    restart: unless-stopped
+    tty: true
+    ports:
+      - 80:80
+      - 443:443
+      - 8080:8080
+    volumes:
+      - .:/var/www/html
+      - ./infra/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./infra/nginx/ssl:/etc/nginx/ssl
+    depends_on:
+      - php
+      - postgres-tabantaj
+      - redis-tabantaj
+    networks:
+      - tabantajnetwork
 
   postgres-tabantaj:
     image: postgres:14-alpine
@@ -65,22 +65,57 @@ services:
       - tabantajnetwork
 
   php:
-    image: serversideup/php:8.2.12-unit-alpine
-    environment:
-      PHP_POST_MAX_SIZE: "500M"
-      PHP_UPLOAD_MAX_FILE_SIZE: "500M"
-      SSL_MODE: "mixed"
-    ports:
-      - 80:80
-      - 443:443
+    #uncomment this if you will use only docker compose
+    build:
+      context: "./infra/php/"
+      dockerfile: Dockerfile
+    #     # target: php-production  # Specify the target build stage if applicable
+    #     # args:
+    #     # - BUILD_ENV=production  # Pass any necessary build arguments
+    # #container_name: php-tabantaj
+    #uncomment this if you will use only docker compose
+    #image: johnvo95/tabantaj_php-tabantaj:latest
     container_name: php-tabantaj
     restart: unless-stopped
     tty: true
     volumes:
       - .:/var/www/html
     ports:
-      - 80:80
-      - 443:443
+      - 9000:80
+    networks:
+      - tabantajnetwork
+
+  queue-worker:
+    build:
+      context: "./infra/php/"
+      dockerfile: Dockerfile
+    volumes:
+      - .:/var/www/html
+    command: php artisan queue:work --tries=3
+    depends_on:
+      - php
+    container_name: queue-worker-tabantaj
+    restart: unless-stopped
+    tty: true
+    environment:
+      CONTAINER_ROLE: queue
+    networks:
+      - tabantajnetwork
+
+  schedule-worker:
+    build:
+      context: "./infra/php/"
+      dockerfile: Dockerfile
+    depends_on:
+      - php
+    restart: unless-stopped
+    tty: true
+    container_name: schedule-worker-tabantaj
+    volumes:
+      - .:/var/www/html
+    command: php artisan schedule:work
+    environment:
+      CONTAINER_ROLE: scheduler
     networks:
       - tabantajnetwork
 
@@ -137,23 +172,6 @@ services:
       - goservices_data:/goservices
     networks:
       - tabantajnetwork
-
-volumes:
-  tabantaj-db:
-    driver: local
-  rabbitmq_data:
-    driver: local
-  pgadmin-data:
-    driver: local
-  goservices_data:
-    driver: local
-  # elasticsearch:
-  #   driver: local
-  # elasticsearch-logs:
-  #   driver: local
-
-networks:
-  tabantajnetwork:
 
   # prometheus-tabantaj:
   #   image: prom/prometheus
@@ -311,3 +329,20 @@ networks:
   #     - 8081:8080
   #   networks:
   #     - tabantajnetwork
+
+volumes:
+  tabantaj-db:
+    driver: local
+  rabbitmq_data:
+    driver: local
+  pgadmin-data:
+    driver: local
+  goservices_data:
+    driver: local
+  # elasticsearch:
+  #   driver: local
+  # elasticsearch-logs:
+  #   driver: local
+
+networks:
+  tabantajnetwork:
