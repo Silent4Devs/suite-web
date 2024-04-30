@@ -14,8 +14,9 @@ class EvaluadoresEvaluacionCompetenciasDesempeno extends Model
     protected $fillable = [
         'evaluado_desempeno_id',
         'evaluador_desempeno_id',
+        'periodo_id',
         'porcentaje_competencias',
-        'finalizada', //Quizas sea mejor una tabla aparte, debido a que los periodos son variables
+        'finalizada',
         'firma_evaluacion',
     ];
 

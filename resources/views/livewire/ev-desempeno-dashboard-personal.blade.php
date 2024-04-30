@@ -174,7 +174,7 @@
                                 {{ $periodo['nombre_evaluacion'] }}
                             </div>
                             <div class="col-4">
-                                <small>Promedio</small> <strong>{{ $resultadoPeriodos[$key] }}%</strong>
+                                <small>Promedio</small> <strong>{{ $resultadoPeriodos[$key] ?? 0 }}%</strong>
                             </div>
                         </div>
                         <div class="d-flex align-items-center justify-content-between color-primary">

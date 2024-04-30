@@ -14,6 +14,7 @@ class EvaluadoresEvaluacionObjetivosDesempeno extends Model
     protected $fillable = [
         'evaluado_desempeno_id',
         'evaluador_desempeno_id',
+        'periodo_id',
         'porcentaje_objetivos',
         'finalizada',
         'firma_evaluacion',

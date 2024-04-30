@@ -20,7 +20,7 @@
                     <span class="mt-3"> {{ $empleado->area->area }}</span>
                 </di>
             </div>
-            <img src="https://picsum.photos/200/300" alt="" style="height: 90px;">
+            <img src="{{ $organizacion->logotipo }}" alt="" style="height: 90px;">
         </div>
     </div>
 

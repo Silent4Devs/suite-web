@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Area;
 use App\Models\Empleado;
 use App\Models\EvaluacionDesempeno;
+use App\Models\Organizacion;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -32,16 +33,19 @@ class EvaluacionesDesempenoController extends Controller
 
     public function dashboardEvaluacion($id_evaluacion)
     {
+        EvaluacionDesempeno::findOrFail($id_evaluacion);
         return view('admin.recursos-humanos.evaluaciones-desempeno.dashboard-evaluacion', compact('id_evaluacion'));
     }
 
     public function dashboardArea($id_evaluacion, $id_area)
     {
+        EvaluacionDesempeno::findOrFail($id_evaluacion);
         return view('admin.recursos-humanos.evaluaciones-desempeno.dashboard-area', compact('id_evaluacion', 'id_area'));
     }
 
     public function dashboardEvaluado($id_evaluacion, $id_evaluado)
     {
+        EvaluacionDesempeno::findOrFail($id_evaluacion);
         return view('admin.recursos-humanos.evaluaciones-desempeno.dashboard-evaluado', compact('id_evaluacion', 'id_evaluado'));
     }
 
@@ -100,8 +104,9 @@ class EvaluacionesDesempenoController extends Controller
     public function cargaObjetivosEmpleado($id_empleado)
     {
         $empleado = Empleado::getaltaAllWithAreaObjetivoPerfil()->find($id_empleado);
+        $organizacion = Organizacion::first();
         // dd($empleado);
-        return view('admin.recursos-humanos.evaluaciones-desempeno.carga-objetivos-empleado', compact('empleado'));
+        return view('admin.recursos-humanos.evaluaciones-desempeno.carga-objetivos-empleado', compact('empleado', 'organizacion'));
     }
 
     public function objetivosImportar()

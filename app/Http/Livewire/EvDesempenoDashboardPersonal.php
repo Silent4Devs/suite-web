@@ -213,22 +213,26 @@ class EvDesempenoDashboardPersonal extends Component
                 }
             }
 
-            // Filter out null values before counting
-            $filteredValues = array_filter($this->calificacion_escala[$key_periodo], function ($value) {
-                return $value !== null;
-            });
+            if ($periodo["habilitado"] || $periodo["finalizado"]) {
+                // Filter out null values before counting
+                $filteredValues = array_filter($this->calificacion_escala[$key_periodo], function ($value) {
+                    return $value !== null;
+                });
 
-            // Count the filtered values
-            $counts = array_count_values($filteredValues);
+                // Count the filtered values
+                $counts = array_count_values($filteredValues);
 
-            // Map the counts to their respective positions in reference to $this->escalas['nombres']
-            $matchedCounts = array_map(function ($value) use ($counts) {
-                // If the value exists in $counts array, return its count, otherwise return 0
-                return isset($counts[$value]) ? $counts[$value] : 0;
-            }, $this->escalas['nombres']);
-            $this->escalas['resultados'][$key_periodo] = $matchedCounts;
+                // Map the counts to their respective positions in reference to $this->escalas['nombres']
+                $matchedCounts = array_map(function ($value) use ($counts) {
+                    // If the value exists in $counts array, return its count, otherwise return 0
+                    return isset($counts[$value]) ? $counts[$value] : 0;
+                }, $this->escalas['nombres']);
+                $this->escalas['resultados'][$key_periodo] = $matchedCounts;
 
-            $cuenta = count($this->escalas['nombres']);
+                $cuenta = count($this->escalas['nombres']);
+            } else {
+                $this->escalas['resultados'][$key_periodo] = 0;
+            }
         }
 
         $this->contadorColumnas += $cuenta;
@@ -320,7 +324,7 @@ class EvDesempenoDashboardPersonal extends Component
             $query_objetivos = CuestionarioObjetivoEvDesempeno::where('evaluacion_desempeno_id', $this->id_evaluacion)
                 ->where('periodo_id', $periodo["id_periodo"])
                 ->get();
-
+            // dd($query_objetivos, $this->array_periodos, $key_periodo);
             $lista_objetivos = [];
 
             foreach ($query_objetivos as $pregunta) {
@@ -338,19 +342,24 @@ class EvDesempenoDashboardPersonal extends Component
             // Access single evaluado instead of collection
             $evaluado = $this->evaluacion->evaluados->find($this->id_evaluado);
 
-            foreach ($this->grafica_objetivos["nombres"][$key_periodo] as $key_nombre => $tipo) {
-                $calificacionTotals = collect($evaluado->calificacionesObjetivosEvaluadoPeriodo($periodo["id_periodo"])["calif_total"])
-                    ->filter(function ($objetivo) use ($tipo) {
-                        return $objetivo['tipo'] == $tipo;
-                    })
-                    ->pluck('calificacion_total');
+            if ($periodo["habilitado"] || $periodo["finalizado"]) {
+                foreach ($this->grafica_objetivos["nombres"][$key_periodo] as $key_nombre => $tipo) {
+                    $calificacionTotals = collect($evaluado->calificacionesObjetivosEvaluadoPeriodo($periodo["id_periodo"])["calif_total"])
+                        ->filter(function ($objetivo) use ($tipo) {
+                            return $objetivo['tipo'] == $tipo;
+                        })
+                        ->pluck('calificacion_total');
 
-                $promedios_tipo_objetivo[$key_nombre][$tipo] = $calificacionTotals->avg();
-                $this->grafica_objetivos["resultados"][$key_periodo][] = $promedios_tipo_objetivo[$key_nombre][$tipo];
+                    $promedios_tipo_objetivo[$key_nombre][$tipo] = $calificacionTotals->avg();
+                    $this->grafica_objetivos["resultados"][$key_periodo][] = $promedios_tipo_objetivo[$key_nombre][$tipo];
+                }
+
+                $this->resObj["nombres"][$key_periodo] = $this->grafica_objetivos["nombres"][$key_periodo];
+                $this->resObj["resultados"][$key_periodo] = $this->grafica_objetivos["resultados"][$key_periodo];
+            } else {
+                $this->resObj["nombres"][$key_periodo] = "NA";
+                $this->resObj["resultados"][$key_periodo] = 0;
             }
-
-            $this->resObj["nombres"][$key_periodo] = $this->grafica_objetivos["nombres"][$key_periodo];
-            $this->resObj["resultados"][$key_periodo] = $this->grafica_objetivos["resultados"][$key_periodo];
         }
     }
 
@@ -375,14 +384,23 @@ class EvDesempenoDashboardPersonal extends Component
             $evaluado = $this->evaluacion->evaluados->find($this->id_evaluado);
 
             $calificaciones = $evaluado->calificacionesCompetenciasEvaluadoPeriodo($periodo["id_periodo"]);
-
-            foreach ($calificaciones["calif_total"] as $key => $cal) {
-                $this->resComp["nombres"][$key_periodo][] = $cal["competencia"];
-                $this->resComp["resultados"][$key_periodo][] = $cal["calificacion_total"];
-                $this->resComp["nivel_esperado"][$key_periodo][] = $cal["nivel_esperado"];
-                $this->resComp["resultado_competencia"][$key_periodo][] = $cal["promedio_competencias"];
+            if ($periodo["habilitado"] || $periodo["finalizado"]) {
+                // dump($key_periodo);
+                foreach ($calificaciones["calif_total"] as $key => $cal) {
+                    $this->resComp["nombres"][$key_periodo][] = $cal["competencia"];
+                    $this->resComp["resultados"][$key_periodo][] = $cal["calificacion_total"];
+                    $this->resComp["nivel_esperado"][$key_periodo][] = $cal["nivel_esperado"];
+                    $this->resComp["resultado_competencia"][$key_periodo][] = $cal["promedio_competencias"];
+                }
+            } else {
+                // dump($key_periodo);
+                $this->resComp["nombres"][$key_periodo][] = "NA";
+                $this->resComp["resultados"][$key_periodo][] = 0;
+                $this->resComp["nivel_esperado"][$key_periodo][] = 0;
+                $this->resComp["resultado_competencia"][$key_periodo][] = 0;
             }
         }
+        // dd($this->resComp);
     }
 
     public function calculatePromedio($periodo = null)
@@ -390,16 +408,26 @@ class EvDesempenoDashboardPersonal extends Component
         $this->promedio_objetivos = 0;
         $this->promedio_competencias = 0;
 
-        if ($this->evaluacion->activar_objetivos) {
+        $validacion = empty($this->grafica_objetivos["resultados"][$periodo ?? $this->periodo_seleccionado]);
+
+        if ($this->evaluacion->activar_objetivos && !$validacion) {
             $suma_objetivos = array_sum($this->grafica_objetivos["resultados"][$periodo ?? $this->periodo_seleccionado]);
             $n_objetivos = count($this->grafica_objetivos["resultados"][$periodo ?? $this->periodo_seleccionado]);
             $this->promedio_objetivos = round(($suma_objetivos / $n_objetivos) * $this->evaluacion->porcentaje_objetivos / 100, 2);
+        } else {
+            $suma_objetivos = 0;
+            $n_objetivos = 0;
+            $this->promedio_objetivos = 0;
         }
 
-        if ($this->evaluacion->activar_competencias) {
+        if ($this->evaluacion->activar_competencias && !$validacion) {
             $suma_competencias = array_sum($this->resComp["resultados"][$periodo ?? $this->periodo_seleccionado]);
             $n_competencias = count($this->resComp["resultados"][$periodo ?? $this->periodo_seleccionado]);
             $this->promedio_competencias = round(($suma_competencias / $n_competencias) * $this->evaluacion->porcentaje_competencias / 100, 2);
+        } else {
+            $suma_objetivos = 0;
+            $n_objetivos = 0;
+            $this->promedio_objetivos = 0;
         }
 
         return $this->promedio_competencias + $this->promedio_objetivos;
@@ -413,7 +441,9 @@ class EvDesempenoDashboardPersonal extends Component
     public function porcentajesTotalesPeriodos()
     {
         foreach ($this->array_periodos as $key => $periodo) {
-            $this->resultadoPeriodos[$key] = $this->calculatePromedio($key);
+            if ($periodo["habilitado"] || $periodo["finalizado"]) {
+                $this->resultadoPeriodos[$key] = $this->calculatePromedio($key);
+            }
         }
     }
 
@@ -423,9 +453,13 @@ class EvDesempenoDashboardPersonal extends Component
 
         foreach ($this->array_periodos as $key_periodo => $periodo) {
             foreach ($evaluadoresC as $key_evaluador => $evaluador) {
-                $competencias = $evaluador->preguntasCuestionarioPeriodo($periodo["id_periodo"]);
+                if ($periodo["habilitado"] || $periodo["finalizado"]) {
+                    $competencias = $evaluador->preguntasCuestionarioPeriodo($periodo["id_periodo"]);
+                } else {
+                    $competencias = "NA";
+                }
 
-                $competencias_evaluado[$key_periodo][$evaluador->id] = $competencias;
+                $competencias_evaluado[$key_periodo][$evaluador->id] = is_array($competencias) ? $competencias : [];
             }
         }
 
@@ -441,10 +475,10 @@ class EvDesempenoDashboardPersonal extends Component
             $objetivosPorPeriodoAuto = CuestionarioObjetivoEvDesempeno::where('evaluacion_desempeno_id', $this->id_evaluacion)
                 ->where('periodo_id', $periodo["id_periodo"])
                 ->where('evaluado_desempeno_id', $this->id_evaluado)
-                ->where('evaluador_desempeno_id', $this->id_evaluado)
-                ->with('infoObjetivo')
-                ->get();
-
+                ->where('evaluador_desempeno_id', $this->id_evaluado)->get();
+            // ->with('infoObjetivo')
+            // ->get();
+            dd($objetivosPorPeriodoAuto);
             $objetivosPorPeriodoEv = CuestionarioObjetivoEvDesempeno::where('evaluacion_desempeno_id', $this->id_evaluacion)
                 ->where('periodo_id', $periodo["id_periodo"])
                 ->where('evaluado_desempeno_id', $this->id_evaluado)
@@ -457,19 +491,28 @@ class EvDesempenoDashboardPersonal extends Component
             // Grouping by tipo_objetivo
             $objetivosEvaluado[$key_periodo] = [];
 
-            foreach ($objetivosPorPeriodoAuto as $objetivoAuto) {
-                $tipoObjetivo = $objetivoAuto->infoObjetivo->tipo_objetivo;
-                $objetivosEvaluado[$key_periodo][$tipoObjetivo]["autoevaluacion"][] = $objetivoAuto;
-            }
+            if ($periodo["habilitado"] || $periodo["finalizado"]) {
+                foreach ($objetivosPorPeriodoAuto as $objetivoAuto) {
+                    $tipoObjetivo = $objetivoAuto->infoObjetivo->tipo_objetivo;
+                    $objetivosEvaluado[$key_periodo][$tipoObjetivo]["autoevaluacion"][] = $objetivoAuto;
+                }
 
-            foreach ($objetivosPorPeriodoEv as $objetivoEv) {
-                $tipoObjetivo = $objetivoEv->infoObjetivo->tipo_objetivo;
-                $objetivosEvaluado[$key_periodo][$tipoObjetivo]["evaluacion"][] = $objetivoEv;
-            }
+                foreach ($objetivosPorPeriodoEv as $objetivoEv) {
+                    $tipoObjetivo = $objetivoEv->infoObjetivo->tipo_objetivo;
+                    $objetivosEvaluado[$key_periodo][$tipoObjetivo]["evaluacion"][] = $objetivoEv;
+                }
+                dd($objetivosEvaluado);
+                $cuenta = count($objetivosEvaluado[$key_periodo][$tipoObjetivo]["evaluacion"]); // Update $cuenta
+            } else {
 
-            $cuenta = count($objetivosEvaluado[$key_periodo][$tipoObjetivo]["evaluacion"]);
+                $objetivosEvaluado[$key_periodo]["Ninguna"]["autoevaluacion"][] = 0;
+
+                $objetivosEvaluado[$key_periodo]["Ninguna"]["evaluacion"][] = 0;
+
+                $cuenta = count($objetivosEvaluado[$key_periodo]["Ninguna"]["evaluacion"]); // Update $cuenta
+            }
         }
-
+        dd($objetivosEvaluado);
         $this->cabecera_objetivos = $this->evaluado->evaluadoresObjetivos->where('id', '!=', $this->id_evaluado);
 
         // dd($this->cabecera_objetivos);
