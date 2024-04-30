@@ -1,14 +1,5 @@
 version: "3.8"
 services:
-  # ofelia:
-  #   image: mcuadros/ofelia:latest
-  #   restart: unless-stopped
-  #   depends_on:
-  #     - nginx-tabantaj
-  #     - php
-  #   command: daemon --docker
-  #   volumes:
-  #     - /var/run/docker.sock:/var/run/docker.sock:ro
   nginx-tabantaj:
     image: nginx:stable-alpine
     container_name: nginx-tabantaj
@@ -30,7 +21,7 @@ services:
       - tabantajnetwork
 
   postgres-tabantaj:
-    image: postgres:14-alpine
+    image: postgres:16-alpine
     container_name: postgres-tabantaj
     restart: unless-stopped
     tty: true
@@ -160,6 +151,18 @@ services:
       - tabantajnetwork
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
+
+  goservices:
+    image: ghcr.io/silent4devs/goservices:latest
+    container_name: goservices
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3300:3300"
+    volumes:
+      - goservices_data:/goservices
+    networks:
+      - tabantajnetwork
 
   # prometheus-tabantaj:
   #   image: prom/prometheus
@@ -324,6 +327,8 @@ volumes:
   rabbitmq_data:
     driver: local
   pgadmin-data:
+    driver: local
+  goservices_data:
     driver: local
   # elasticsearch:
   #   driver: local
