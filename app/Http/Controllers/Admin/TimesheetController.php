@@ -1187,6 +1187,8 @@ class TimesheetController extends Controller
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
+        //dd($proyectos);
+
         return view('admin.timesheet.reportes.reportes-financiero', compact('proyectos', 'logo_actual', 'empresa_actual'));
     }
 
