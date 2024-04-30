@@ -88,17 +88,18 @@
 
                                             // Ordena los proyectos sin letras en su ID de manera descendente
                                             usort($proyectos_sin_letra, function ($a, $b) {
-                                                return strcmp($b['identificador'], $a['identificador']);
+                                                if ($a['identificador'] === $b['identificador']) {
+                                                    return 0;
+                                                }
+                                                return $a['identificador'] > $b['identificador'] ? -1 : 1;
                                             });
-
-                                            // Concatena los dos arreglos para obtener la lista final
-                                            $proyectos_ordenados = array_merge(
-                                                $proyectos_sin_letra,
-                                                $proyectos_con_letra,
-                                            );
                                         @endphp
 
-                                        @foreach ($proyectos_ordenados as $proyecto)
+                                        @foreach ($proyectos_sin_letra as $proyecto)
+                                            <option value="{{ $proyecto['id'] }}">{{ $proyecto['identificador'] }} -
+                                                {{ $proyecto['proyecto'] }}</option>
+                                        @endforeach
+                                        @foreach ($proyectos_con_letra as $proyecto)
                                             <option value="{{ $proyecto['id'] }}">{{ $proyecto['identificador'] }} -
                                                 {{ $proyecto['proyecto'] }}</option>
                                         @endforeach
