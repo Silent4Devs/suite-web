@@ -18,13 +18,21 @@
           "Cache-Control": "max-age=60, s-maxage=120"
         },
         "fallback": {
-          "pass": "applications/laravel"
+          "pass": "applications/suite-web"
         }
+      }
+    },
+    {
+      "match": {
+        "uri": "/index.php"
+      },
+      "action": {
+        "pass": "applications/suite-web"
       }
     }
   ],
   "applications": {
-    "tabantaj": {
+    "suite-web": {
       "type": "php",
       "processes": {
         "max": 5,
