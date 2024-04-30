@@ -16,45 +16,146 @@
     </div>
     {{-- @dd($empleados) --}}
     <form wire:submit.prevent="addEmpleado" wire:ignore>
-        <div class="row mt-4">
+        {{-- <div class="row mt-4">
             <div class="form-group col-md-7">
                 <label for="">Empleado<sup>*</sup></label>
-                <select wire:model.lazy="empleado_añadido" name="" id="" class="select2" required>
-                    <option value="" selected readonly></option>
-                    <option value="todos_empleados_seleccionados"> Seleccionar Todos </option>
+                <select class="form-control" wire:model.lazy="empleado_añadido" name="empleado_añadido"
+                    id="empleado_añadido" required>
+                    <option value="" selected readonly>Seleccione los Colaboradores</option>
                     @foreach ($empleados as $empleado)
-                        @foreach ($areasempleado as $ae)
-                            @if ($empleado->area_id === $ae->area_id)
-                                <option value="{{ $empleado->id }}">{{ $empleado->name }}</option>
-                            @endif
-                        @endforeach
+                        <option value="{{ $empleado['id'] }}">{{ $empleado['name'] }}</option>
                     @endforeach
                 </select>
             </div>
-        </div>
-        <div class="row">
-            @if ($proyecto->tipo === 'Externo')
-                <div class="form-group col-md-4">
-                    <label for="">Horas asignadas<sup>*</sup>(obligatorio)</label>
-                    <input wire:model.defer="horas_asignadas" name="horas_asignadas" id="horas_asignadas" type="number"
-                        step="0.01" min="0.01" class="form-control">
+        </div> --}}
+        <div class="row mt-4">
+            <div class="form-group col-md-7">
+                <label for="">Empleado<sup>*</sup></label>
+                <div class="dropdown">
+                    <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Asignar Empleados
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                        style="max-height: 200px; overflow-y: auto;">
+                        @foreach ($empleados as $key => $empleado)
+                            <div class="dropdown-item">
+                                <div class="row mt-2 mb-2">
+                                    <div class="col-10">
+                                        <label for="empleado_{{ $empleado['id'] }}">{{ $empleado['name'] }}</label>
+                                    </div>
+                                    <div class="col-2 text-end">
+                                        <input type="checkbox" id="empleado_{{ $empleado['id'] }}"
+                                            class="form-check-input" style="transform: scale(2);"
+                                            wire:model="empleados.{{ $key }}.seleccionado"
+                                            wire:change="asignacionEmpleados('{{ $empleado['id'] }}','{{ $key }}', $event.target.checked ? true : false)">
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
-                @error('horas_asignadas')
-                    <small class="text-danger"><i class="fas fa-info-circle mr-2"></i>{{ $message }}</small>
-                @enderror
-                <div class="form-group col-md-4">
-                    <label for="">Costo por hora<sup>*</sup>(obligatorio)</label>
-                    <input wire:model.defer="costo_hora" name="costo_hora" id="costo_hora" type="number" min="0.01"
-                        step="0.01" class="form-control">
-                </div>
-                @error('costo_hora')
-                    <small class="text-danger"><i class="fas fa-info-circle mr-2"></i>{{ $message }}</small>
-                @enderror
-            @endif
-            <div class="form-group col-md-4" style="display: flex; align-items: flex-end;">
-                <button class="btn btn-success">Agregar</button>
+
             </div>
         </div>
+        @if ($proyecto->tipo === 'Externo')
+            <div class="modal fade" id="modalExterno" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="form-group col-md-12">
+                                    <label for="">Horas asignadas<sup>*</sup>(obligatorio)</label>
+                                    <input wire:model.defer="horas_asignadas" name="horas_asignadas"
+                                        id="horas_asignadas" type="number" step="0.01" min="0.01"
+                                        class="form-control">
+                                    @error('horas_asignadas')
+                                        <small class="text-danger"><i
+                                                class="fas fa-info-circle mr-2"></i>{{ $message }}</small>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-12">
+                                    <label for="">Costo por hora<sup>*</sup>(obligatorio)</label>
+                                    <input wire:model.defer="costo_hora" name="costo_hora" id="costo_hora"
+                                        type="number" min="0.01" step="0.01" class="form-control">
+                                    @error('costo_hora')
+                                        <small class="text-danger"><i
+                                                class="fas fa-info-circle mr-2"></i>{{ $message }}</small>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="row">
+                                <button class="btn btn-success">
+                                    Agregar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="modalExternoTodos" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="form-group col-md-12">
+                                    <label for="">Horas asignadas<sup>*</sup>(obligatorio)</label>
+                                    <input wire:model.defer="horas_asignadas" name="horas_asignadas"
+                                        id="horas_asignadas" type="number" step="0.01" min="0.01"
+                                        class="form-control">
+                                    @error('horas_asignadas')
+                                        <small class="text-danger"><i
+                                                class="fas fa-info-circle mr-2"></i>{{ $message }}</small>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-12">
+                                    <label for="">Costo por hora<sup>*</sup>(obligatorio)</label>
+                                    <input wire:model.defer="costo_hora" name="costo_hora" id="costo_hora"
+                                        type="number" min="0.01" step="0.01" class="form-control">
+                                    @error('costo_hora')
+                                        <small class="text-danger"><i
+                                                class="fas fa-info-circle mr-2"></i>{{ $message }}</small>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="row">
+                                <button class="btn btn-success" wire:click.prevent="seleccionarTodosExterno">
+                                    Agregar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
+
+        @if ($proyecto->tipo == 'Externo')
+            <div class="row">
+                <div class="form-group col-md-4" style="display: flex; align-items: flex-end;">
+                    <button class="btn btn-success" onclick="confirmSeleccionarTodosExterno(event)">Seleccionar Todos
+                        los
+                        usuarios</button>
+                </div>
+            </div>
+        @else
+            <div class="row">
+                <div class="form-group col-md-4" style="display: flex; align-items: flex-end;">
+                    <button class="btn btn-success" onclick="confirmSeleccionarTodos(event)">Seleccionar Todos los
+                        usuarios</button>
+                </div>
+            </div>
+        @endif
     </form>
     <div class="datatable-fix w-100 mt-5">
         <table id="tabla_time_poyect_empleados" class="table w-100 tabla-animada">
@@ -103,7 +204,8 @@
                             </a>
                             <button class="btn" data-toggle="modal"
                                 data-target="#modal_proyecto_empleado_eliminar_{{ $proyect_empleado->id }}">
-                                <i class="fas fa-trash-alt" style="color: red; font-size: 15pt;" title="Eliminar"></i>
+                                <i class="fas fa-trash-alt" style="color: red; font-size: 15pt;"
+                                    title="Eliminar"></i>
                             </button>
                         </td>
                     </tr>
@@ -136,12 +238,8 @@
                                             <option value="{{ $proyect_empleado->id_empleado }}" selected>
                                                 {{ $proyect_empleado->name }}</option>
                                             @foreach ($empleados as $empleado)
-                                                @foreach ($areasempleado as $ae)
-                                                    @if ($empleado->area_id === $ae->area_id)
-                                                        <option value="{{ $empleado->id }}">{{ $empleado->name }}
-                                                        </option>
-                                                    @endif
-                                                @endforeach
+                                                <option value="{{ $empleado['id'] }}">{{ $empleado['name'] }}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -203,7 +301,8 @@
                                     proyecto {{ $proyect_empleado->proyecto }}?</p>
                             </div>
                             <div class="mt-4 d-flex justify-content-between">
-                                <button class="btn btn_cancelar" data-dismiss="modal">
+                                <button wire:click.prevent="cancelar()" class="btn btn_cancelar"
+                                    data-dismiss="modal">
                                     Cancelar
                                 </button>
                                 <button class="btn btn-info" style="border:none; background-color:#E34F4F;"
@@ -242,6 +341,65 @@
                 $('.select2').select2().on('change', function(e) {
                     var data = $(this).select2("val");
                     @this.set('empleado_añadido', data);
+                });
+            });
+        </script>
+
+        <script>
+            function confirmSeleccionarTodos(event) {
+                event.preventDefault(); // Prevent default form submission behavior
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    text: "¿Quieres seleccionar todos los usuarios?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Livewire.emit('seleccionarTodos'); // Call Livewire method if confirmed
+                    }
+                });
+            }
+        </script>
+
+        <script>
+            function confirmSeleccionarTodosExterno(event) {
+                event.preventDefault(); // Prevent default form submission behavior
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    text: "¿Quieres seleccionar todos los usuarios?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $('#modalExternoTodos').modal('show');
+                    }
+                });
+            }
+        </script>
+
+        <script>
+            document.addEventListener('livewire:load', function() {
+                console.log('1');
+                Livewire.on('openModal', empleadoId => {
+                    console.log('2', empleadoId);
+                    $('#modal_proyecto_empleado_eliminar_' + empleadoId).modal('show');
+                });
+            });
+        </script>
+
+        <script>
+            document.addEventListener('livewire:load', function() {
+                Livewire.on('modalProyectosExternos', function() {
+                    // Show the modal when the event is received
+                    $('#modalExterno').modal('show');
                 });
             });
         </script>
