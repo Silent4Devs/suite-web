@@ -9,25 +9,25 @@ services:
   #   command: daemon --docker
   #   volumes:
   #     - /var/run/docker.sock:/var/run/docker.sock:ro
-  nginx-tabantaj:
-    image: nginx:stable-alpine
-    container_name: nginx-tabantaj
-    restart: unless-stopped
-    tty: true
-    ports:
-      - 80:80
-      - 443:443
-      - 8080:8080
-    volumes:
-      - .:/var/www/html
-      - ./infra/nginx/nginx.conf:/etc/nginx/franken.conf
-      - ./infra/nginx/ssl:/etc/nginx/ssl
-    depends_on:
-      - php
-      - postgres-tabantaj
-      - redis-tabantaj
-    networks:
-      - tabantajnetwork
+  # nginx-tabantaj:
+  #   image: nginx:stable-alpine
+  #   container_name: nginx-tabantaj
+  #   restart: unless-stopped
+  #   tty: true
+  #   ports:
+  #     - 80:80
+  #     - 443:443
+  #     - 8080:8080
+  #   volumes:
+  #     - .:/var/www/html
+  #     - ./infra/nginx/nginx.conf:/etc/nginx/franken.conf
+  #     - ./infra/nginx/ssl:/etc/nginx/ssl
+  #   depends_on:
+  #     - php
+  #     - postgres-tabantaj
+  #     - redis-tabantaj
+  #   networks:
+  #     - tabantajnetwork
 
   postgres-tabantaj:
     image: postgres:14-alpine
@@ -65,31 +65,22 @@ services:
       - tabantajnetwork
 
   php:
-    #uncomment this if you will use only docker compose
-    build:
-      context: "./infra/php/"
-      dockerfile: Dockerfile.unit
-    #     # target: php-production  # Specify the target build stage if applicable
-    #     # args:
-    #     # - BUILD_ENV=production  # Pass any necessary build arguments
-    # #container_name: php-tabantaj
-    #uncomment this if you will use only docker compose
-    #image: johnvo95/tabantaj_php-tabantaj:latest
+    image: serversideup/php:8.2.12-unit-alpine
+    environment:
+      PHP_POST_MAX_SIZE: "500M"
+      PHP_UPLOAD_MAX_FILE_SIZE: "500M"
+      SSL_MODE: "mixed"
+    ports:
+      - 80:80
+      - 443:443
     container_name: php-tabantaj
     restart: unless-stopped
-    # labels:
-    #   ofelia.enabled: "true"
-    # ofelia.job-exec.schedulecron.schedule: "@hourly"
-    # ofelia.job-exec.schedulecron.command: "/infra/ofelia/run_schedules_worker.sh"
-    # ofelia.job-exec.run_queues_worker.schedule: "*/15 * * * *"
-    # ofelia.job-exec.run_queues_worker.command: "php artisan queue:work --daemon --tries=4 --sleep=5"
-    # ofelia.job-exec.run_schedules_worker.schedule: "@hourly"
-    # ofelia.job-exec.run_schedules_worker.command: "php artisan schedule:work"
     tty: true
     volumes:
       - .:/var/www/html
     ports:
-      - 8000:80
+      - 80:80
+      - 443:443
     networks:
       - tabantajnetwork
 
