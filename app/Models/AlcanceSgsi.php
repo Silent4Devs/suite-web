@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\ClearsResponseCache;
+use Cache;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -59,6 +60,13 @@ class AlcanceSgsi extends Model implements Auditable
         'norma_id',
         'estatus',
     ];
+
+    public static function getAll()
+    {
+        return Cache::remember('alcances_sgsi_all', 3600 * 12, function () {
+            return self::with('empleado')->get();
+        });
+    }
 
     public function getFechaPublicacionAttribute($value)
     {
