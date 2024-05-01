@@ -206,12 +206,14 @@
                         @php
                             $datosTabla = $planImplementacions;
                         @endphp
-                    @elseif ($message == 'OtroMensaje')
+                    @elseif ($message == 'TbTableAsignado')
                         @php
                             $datosTabla = $planImplementacionsAssigs;
                         @endphp
-                    @elseif ($message == 'OtroMensajeMas')
-                        {{-- Asigna los datos correspondientes si el mensaje es otro --}}
+                    @elseif ($message == 'TbTableArea')
+                        @php
+                            $datosTabla = $planImplementacionArea;
+                        @endphp
                     @endif
                     @if ($datosTabla)
                         @foreach ($datosTabla as $plan)
