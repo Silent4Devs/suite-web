@@ -9,9 +9,7 @@ use App\Models\MatrizRequisitoLegale;
 use App\Models\ProcesosListaDistribucion;
 use App\Models\User;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Redirect;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
@@ -118,7 +116,7 @@ class CreateMatrizRequisitosLegales extends Component
         }
         $containsValue = $lista->participantes->contains('empleado_id', $creador);
 
-        if (!$containsValue) {
+        if (! $containsValue) {
             // dd("Estoy en la lista");
             $this->envioCorreos($proceso, $requisito);
             // The collection contains the specific empleado_id value
@@ -150,7 +148,7 @@ class CreateMatrizRequisitosLegales extends Component
             }
             $containsValue = $lista->participantes->contains('empleado_id', $creador);
 
-            if (!$containsValue) {
+            if (! $containsValue) {
                 // dd("Estoy en la lista");
                 $this->envioCorreos($proceso, $requisito);
                 // The collection contains the specific empleado_id value

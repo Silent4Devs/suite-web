@@ -3,7 +3,6 @@
 namespace App\Listeners;
 
 use App\Models\User;
-use App\Notifications\AlcancesNotification;
 use App\Notifications\RequisicionesNotification;
 use Illuminate\Support\Facades\Notification;
 

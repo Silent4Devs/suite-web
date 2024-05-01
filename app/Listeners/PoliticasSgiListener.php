@@ -3,7 +3,6 @@
 namespace App\Listeners;
 
 use App\Models\User;
-use App\Notifications\AuditoriaAnualNotification;
 use App\Notifications\PoliticasSgiNotification;
 use Illuminate\Support\Facades\Notification;
 

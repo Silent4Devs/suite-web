@@ -4,7 +4,6 @@ namespace App\Observers;
 
 use App\Events\RequisicionesEvent;
 use App\Models\ContractManager\Requsicion;
-use Illuminate\Support\Facades\Cache;
 
 class RequisicionesObserver
 {

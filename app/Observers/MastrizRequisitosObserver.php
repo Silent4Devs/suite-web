@@ -3,7 +3,6 @@
 namespace App\Observers;
 
 use App\Events\MatrizRequisitosEvent;
-use App\Events\PoliticasSgiEvent;
 use App\Models\MatrizRequisitoLegale;
 use Illuminate\Support\Facades\Cache;
 
@@ -19,6 +18,7 @@ class MastrizRequisitosObserver
         event(new MatrizRequisitosEvent($matriz, 'create', 'matriz_requisito_legales', 'Matriz'));
         $this->forgetCache();
     }
+
     /**
      * Handle the matriz "updated" event.
      *

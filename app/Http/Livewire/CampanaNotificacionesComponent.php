@@ -7,7 +7,8 @@ use Livewire\Component;
 
 class CampanaNotificacionesComponent extends Component
 {
-    public  $notificaciones;
+    public $notificaciones;
+
     protected $listeners = [
         'echo:notificaciones-campana,IncidentesDeSeguridadEvent' => 'getTotalNotificaciones',
         'echo:notificaciones-campana,AuditoriaAnualEvent' => 'getTotalNotificaciones',

@@ -2,9 +2,7 @@
 
 namespace App\Notifications;
 
-use App\Models\AlcanceSgsi;
 use App\Models\MatrizRequisitoLegale;
-use App\Models\PoliticaSgsi;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;

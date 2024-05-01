@@ -3,7 +3,6 @@
 namespace App\Events;
 
 use App\Models\MatrizRequisitoLegale;
-use App\Models\PoliticaSgsi;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
