@@ -7,12 +7,18 @@ use Livewire\Component;
 
 class CampanaNotificacionesComponent extends Component
 {
+    public $notificaciones;
+
     protected $listeners = [
         'echo:notificaciones-campana,IncidentesDeSeguridadEvent' => 'getTotalNotificaciones',
         'echo:notificaciones-campana,AuditoriaAnualEvent' => 'getTotalNotificaciones',
         'echo:notificaciones-campana,AccionCorrectivaEvent' => 'getTotalNotificaciones',
         'echo:notificaciones-campana,RegistroMejoraEvent' => 'getTotalNotificaciones',
         'echo:notificaciones-campana,RecursosEvent' => 'getTotalNotificaciones',
+        'echo:notificaciones-campana,PoliticasSgiEvent' => 'getTotalNotificaciones',
+        'echo:notificaciones-campana,AlcancesEvent' => 'getTotalNotificaciones',
+        'echo:notificaciones-campana,RequisicionesEvent' => 'getTotalNotificaciones',
+        'echo:notificaciones-campana,MatrizRequisitosEvent' => 'getTotalNotificaciones',
         'NotificationMarkedAsReadList' => 'getTotalNotificaciones',
     ];
 
@@ -20,7 +26,7 @@ class CampanaNotificacionesComponent extends Component
 
     public function mount()
     {
-        // $this->notificaciones = Auth::user()->unreadNotifications()->latest()->take(5)->get();
+        $this->notificaciones = Auth::user()->unreadNotifications()->latest()->take(5)->get();
     }
 
     public function render()

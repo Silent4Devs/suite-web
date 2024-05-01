@@ -60,7 +60,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
                 $empleados_Area[] = [
                     'id' => $empleado->id,
                     'name' => $empleado->name,
-                    'seleccionado' => false
+                    'seleccionado' => false,
                 ];
             }
         }
@@ -134,7 +134,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
 
     public function asignacionEmpleados($id_empleado, $key, $asignacion)
     {
-        if ($asignacion && $this->proyecto->tipo == "Externo") {
+        if ($asignacion && $this->proyecto->tipo == 'Externo') {
             $this->empleado_añadido = $id_empleado;
             $this->emit('modalProyectosExternos');
         } elseif ($asignacion) {
@@ -163,7 +163,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
     {
         $empleado_add_proyecto = Empleado::find($empleado_añadido_id);
 
-        if (!$empleado_add_proyecto) {
+        if (! $empleado_add_proyecto) {
             return redirect()->route('admin.timesheet-proyecto-empleados', ['proyecto_id' => intval($this->proyecto_id)])
                 ->with('error', 'El registro fue eliminado');
         }
@@ -181,7 +181,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
                         'costo_hora' => $this->costo_hora,
                     ]
                 );
-                if (!$todosExt) {
+                if (! $todosExt) {
                     $this->resetInput();
                 }
             } else {

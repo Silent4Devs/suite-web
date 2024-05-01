@@ -163,11 +163,17 @@ class MatrizRequisitoLegalesController extends Controller
         // $no_niveles = $lista->niveles;
         // dd($lista, $no_niveles);
 
-        $proceso = ProcesosListaDistribucion::where('modulo_id', '=', $lista->id)->where('proceso_id', '=', $matrizRequisitoLegale->id)->first();
+        $proceso = ProcesosListaDistribucion::where('modulo_id', '=', $lista->id)
+            ->where('proceso_id', '=', $matrizRequisitoLegale->id)
+            ->first();
 
-        $proceso->update([
-            'estatus' => 'Pendiente',
-        ]);
+        if ($proceso) {
+            $proceso->update([
+                'estatus' => 'Pendiente',
+            ]);
+        } else {
+            $proceso = null;
+        }
 
         // dd($lista, $id_foda, $this->modelo, $proceso);
 
