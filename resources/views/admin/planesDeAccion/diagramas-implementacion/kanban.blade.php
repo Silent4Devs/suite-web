@@ -256,7 +256,7 @@
                         </div>
                         <div id="task-add">
                             <button id="add-task-btn"></button>
-                            <input type="text" id="task-input" placeholder="Agregar sub tarea">
+                            <input type="text" id="task-input" placeholder="Agregar subtarea">
                         </div>
                     </div>
                 </div>
@@ -276,13 +276,20 @@
         </div>
     </div>
 </div>
+@php
+    use App\Models\User;
 
+    $usuario = User::getCurrentUser();
+@endphp
 
 @section('scripts')
     @parent
     <script src="{{ asset('../js/kanban/jkanban.js') }}"></script>
     <script src="{{ asset('../js/kanban/kanbanFunc.js') }}"></script>
     <script>
+        $(function() {
+
+        });
         var Kanban
         const imagePath = '{{ asset('img/plan-trabajo/documento.svg') }}';
         const imagePathEye = '{{ asset('img/plan-trabajo/visibility.svg') }}';
@@ -304,6 +311,13 @@
                     alert("Error en la solicitud. Por favor, inténtelo de nuevo.");
                 }
             });
+        }
+
+        function reloadKanban() {
+            Kanban = null
+            console.log(Kanban);
+            document.getElementById("myKanban").innerHTML = "";
+            initKanban();
         }
 
         function renderKanban(response) {
@@ -346,6 +360,7 @@
                 dragendEl: function(el) {},
                 dropEl: function(el, target, source, sibling) {
                     pintar(el.dataset.eid, el.offsetParent.dataset.id);
+                    contarElementosPorBoard();
                     guardarStatus(el.dataset.eid, source.offsetParent.dataset.id, target.offsetParent
                         .dataset
                         .id);
@@ -366,20 +381,19 @@
                     formItem.addEventListener("submit", function(e) {
                         e.preventDefault();
                         var text = e.target[0].value;
-                        insertTask(text, boardId);
                         let cardpulseClass = "";
                         if (status === "STATUS_FAILED") {
                             cardpulseClass = "pulse";
                         }
                         const timestamp = Date.now();
                         let id = "tmp_" + timestamp;
+                        insertTask(text, boardId, id);
                         var newElementHTML = `
                             <div id="id" class="cardContenido ${cardpulseClass}">
                               <div class="tituloCard">${text}</div>
                               <div class="contenido">
                                 <div class="etiquetaContenido">
                                   <div class="etiquetaTitulo">Etiqueta</div>
-                                  <div class="etiquetaColor"></div>
                                 </div>
                                 <div class="estatusContenido">
                                   <div class="estatusTitulo">Estatus</div>
@@ -438,7 +452,6 @@
                         id: "STATUS_DONE",
                         title: "Completado",
                         class: "DONE",
-                        dragTo: [],
                         item: items(grupos.completado)
                     }
                 ]
@@ -450,7 +463,9 @@
                     const objet = tasks;
                     objet[objetoEncontrado].status = statusFinal;
                     response.tasks = objet;
-                    insertHistorico(statusInicial, statusFinal, objet[objetoEncontrado])
+                    const detalle = "ha movido esta tarjeta de " + mapStatusToEstatusText[statusInicial] + " a " +
+                        mapStatusToEstatusText[statusFinal];
+                    insertHistorico(detalle, objet[objetoEncontrado]);
                     saveOnServer(response);
                 } else {
                     console.log('No se encontró ningún objeto con el ID dado.');
@@ -458,13 +473,13 @@
 
             }
 
-            function insertHistorico(statusInicial, statusFinal, history) {
+            function insertHistorico(detalle, history) {
                 const timestamp = new Date().getTime();
+                var usuario = <?php echo json_encode($usuario); ?>;
                 const historicoNuevo = {
-                    "initialstatus": statusInicial,
-                    "finestatus": statusFinal,
+                    "detalle": detalle,
                     "fecha": timestamp,
-                    "edito": "user"
+                    "edito": usuario.empleado_id
                 };
 
                 if ('historic' in response) {
@@ -513,9 +528,18 @@
 
                 //mostrar el historial
                 const htmlContentHistory = task.historic && task.historic.length > 0 ?
-                    "<ul>" + task.historic.map(item =>
-                        `<li class="log-list">Initial Status: ${mapStatusToEstatusText[item.initialstatus]}, Final Status: ${mapStatusToEstatusText[item.finestatus]}  Fecha: ${item.fecha} , Edito: ${item.edito} </li>`
-                    ).join("") + "</ul>" :
+                    task.historic.map(item => {
+                        const editedResource = response.resources.find(resource => resource.id === item.edito);
+                        const initials = editedResource.name.trim().split(' ').map(word => word.charAt(0)).join('')
+                            .toUpperCase();
+                        const color = editedResource && (editedResource.genero === 'H' ? '#7DC0EC' : '#EC7D94');
+                        const fecha = new Date(item.fecha);
+                        const fechaFormateada = fecha.toLocaleString();
+                        return `<div class="person" style="display: flex; align-items: center; margin-bottom: 5px; margin-left: 20px;">
+                        <div class="initials" style="background-color: ${color}; color: white; border-radius: 50%; width: 35px; height: 35px; display: flex; justify-content: center; align-items: center; margin-right: 5px;font-size: 10px;">${initials}</div>
+                        <div style="margin-left: 5px; margin-right: auto;"><a style="color: #818181;font-size: 14px; font-weight: bold;">${editedResource.name}</a> <a style="color: #818181;font-size: 12px;">${item.detalle}</a> <div>${fechaFormateada}</div></div>
+                    </div>`
+                    }).join("") :
                     "<span>No tiene historial</span>";
 
                 //funcion mostar los documentos adjuntos
@@ -562,6 +586,26 @@
             }
         }
 
+        function contarElementosPorBoard() {
+            var tableros = {
+                "STATUS_UNDEFINED": "tareasStrong",
+                "STATUS_SUSPENDED": "suspendidosStrong",
+                "STATUS_ACTIVE": "procesoStrong",
+                "STATUS_FAILED": "retrasadosStrong",
+                "STATUS_DONE": "completadosStrong"
+            };
+
+            var sumaTotal = 0;
+            for (var tablero in tableros) {
+                if (tableros.hasOwnProperty(tablero)) {
+                    var elementos = Kanban.getBoardElements(tablero);
+                    document.getElementById(tableros[tablero]).innerHTML = elementos.length;
+                    sumaTotal += elementos.length;
+                }
+            }
+            document.getElementById('totalesStrong').innerHTML = sumaTotal;
+        }
+
         function items(array) {
             const cards = [];
             array.forEach(item => {
@@ -583,7 +627,8 @@
                 const resourcesCount = resources ? resources.length : 0;
                 const subtasksCount = subtasks ? subtasks.length : 0;
                 const subtasksReady = subtasks ? subtasks.filter(subtask => subtask.selected).length : 0;
-                const etiquetaColorHTML = tag ? tag.map(tagItem => `<div class="etiquetaColor ${etiquetaColors[tagItem.etiqueta]}"></div>`).join('') : '';
+                const etiquetaColorHTML = tag ? tag.map(tagItem =>
+                    `<div class="etiquetaColor ${etiquetaColors[tagItem.etiqueta]}"></div>`).join('') : '';
 
                 let cardpulseClass = "";
                 if (status === "STATUS_FAILED") {

@@ -47,7 +47,7 @@
         <div class="card-body datatable-fix">
             <div class="text-right mb-4 mr-4">
                 <a class="btn btn-danger" class="btn btn-sm btn-success" data-toggle="modal"
-                    data-target="#planAccionModal">Crear Plan de Acción</a>
+                    data-target="#planAccionModal">Crear Plan de Trabajo</a>
             </div>
             @livewire('plan-implementacion-create', [
                 'referencia' => null,
@@ -348,7 +348,7 @@
 
             $('.modal-backdrop').hide();
 
-            toastr.success('Plan de Acción creado con éxito');
+            toastr.success('Plan de Trabajo creado con éxito');
 
         });
     </script>

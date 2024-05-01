@@ -171,6 +171,13 @@ class Empleado extends Model implements Auditable
         });
     }
 
+    public static function getMyEmpleadodata($id)
+    {
+        return Cache::remember('Empleados:empleados_my_empleado_data_'.$id, 3600, function () use ($id) {
+            return self::where('id', $id)->first();
+        });
+    }
+
     public static function getAll(array $options = [])
     {
         return Cache::remember('Empleados:empleados_all', 3600 * 8, function () use ($options) {
@@ -265,6 +272,83 @@ class Empleado extends Model implements Auditable
     {
         return Cache::remember('Empleados:empleados_alta_all', 3600 * 6, function () {
             return self::orderBy('name')->alta()->get();
+        });
+    }
+
+    public static function getAllEvaluaciones()
+    {
+        return Cache::remember('Empleados:empleados_all_evaluaciones', 3600 * 6, function () {
+            return self::select('id', 'name', 'foto', 'area_id', 'puesto_id', 'supervisor_id')
+                ->get();
+        });
+    }
+
+    public static function getAllOrganigramaTree()
+    {
+        return Cache::remember('Empleados:empleados_all_organigrama_tree', 3600 * 6, function () {
+            return self::select(
+                'id',
+                'name',
+                'area_id',
+                'foto',
+                'puesto_id',
+                'antiguedad',
+                'email',
+                'telefono',
+                'estatus',
+                'n_registro',
+                'n_empleado',
+                'genero',
+                'telefono_movil'
+            )
+                ->with([
+                    'supervisor.childrenOrganigrama' => function ($query) {
+                        $query->select('id', 'name', 'foto', 'puesto_id', 'genero');
+                    },
+                    'supervisor.supervisor:id,name,foto,puesto_id,genero',
+                    'area:id,area',
+                    'childrenOrganigrama.supervisor:id,name,foto,puesto_id,genero',
+                    'childrenOrganigrama.childrenOrganigrama',
+                ])
+                ->alta()
+                ->vacanteActiva()
+                ->whereNull('supervisor_id')
+                ->first();
+            // Carga ansiosa (Eager loading)
+        });
+    }
+
+    public static function getAllOrganigramaTreeElse($id)
+    {
+        return Cache::remember('Empleados:empleados_all_organigrama_tree_else', 3600 * 6, function () use ($id) {
+            return self::select(
+                'id',
+                'name',
+                'area_id',
+                'foto',
+                'puesto_id',
+                'antiguedad',
+                'email',
+                'telefono',
+                'estatus',
+                'n_registro',
+                'n_empleado',
+                'genero',
+                'telefono_movil'
+            )
+                ->alta()
+                ->vacanteActiva()
+                ->with([
+                    'supervisor.childrenOrganigrama' => function ($query) {
+                        $query->select('id', 'name', 'foto', 'puesto_id', 'genero');
+                    },
+                    'supervisor.supervisor:id,name,foto,puesto_id,genero',
+                    'area:id,area',
+                    'childrenOrganigrama.supervisor:id,name,foto,puesto_id,genero',
+                    'childrenOrganigrama.childrenOrganigrama',
+                ])
+                ->where('id', $id)
+                ->first(); //Eager loading
         });
     }
 
@@ -550,7 +634,7 @@ class Empleado extends Model implements Auditable
 
     public function supervisor()
     {
-        return $this->belongsTo(self::class)->alta()->select('id', 'name');
+        return $this->belongsTo(self::class)->alta();
     }
 
     public function supervisorCrearEvaluacion()
@@ -581,13 +665,13 @@ class Empleado extends Model implements Auditable
     public function childrenOrganigrama()
     {
         return $this->hasMany(self::class, 'supervisor_id', 'id')
-            ->with('childrenOrganigrama:id,name,foto,puesto_id,genero', 'supervisor:id,name,foto,puesto_id,genero', 'area')
+            ->with('childrenOrganigrama:id,name,foto,puesto_id,genero,estatus', 'supervisor:id,name,foto,puesto_id,genero', 'area')
             ->vacanteActiva();
     }
 
     public function scopeAlta($query)
     {
-        return $query->where('estatus', 'alta')->where('deleted_at', null);
+        return $query->where('estatus', 'alta');
     }
 
     public function scopeVacanteActiva($query)

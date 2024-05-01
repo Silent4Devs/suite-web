@@ -9,7 +9,7 @@
                 @csrf
                 <div class="row">
                     <div class="form-group col-md-6 col-sm-6 anima-focus">
-                        <input class="form-control  {{ $errors->has('clave') ? 'is-invalid' : '' }}" placeholder="" type="number"
+                        <input class="form-control  {{ $errors->has('clave') ? 'is-invalid' : '' }}" placeholder="" maxlength="255" type="number"
                             name="clave" id="clave" value="{{ old('clave', $proveedores->id) }}" required>
                             {!! Form::label('clave', 'Clave del Registro*', ['class' => 'asterisco']) !!}
                         @if ($errors->has('clave'))
@@ -20,7 +20,7 @@
                         <span class="help-block"></span>
                     </div>
                     <div class="form-group col-md-6 col-sm-6 anima-focus">
-                        <input value="{{ old('nombre', $proveedores->nombre) }}"
+                        <input value="{{ old('nombre', $proveedores->nombre) }}" maxlength="255"
                             class="form-control  {{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text"
                             name="nombre" id="nombre" value="{{ old('nombre') }}" required>
                             {!! Form::label('nombre', 'Nombre*', ['class' => 'asterisco']) !!}
@@ -33,7 +33,7 @@
                     </div>
                     <div class="form-group col-md-6 col-sm-6 anima-focus">
                         <input value="{{ old('nombre', $proveedores->razon_social) }}"
-                            class="form-control {{ $errors->has('razon_social') ? 'is-invalid' : '' }}" type="text"
+                            class="form-control {{ $errors->has('razon_social') ? 'is-invalid' : '' }}" maxlength="255" type="text"
                             name="razon_social" id="razon_social" required>
                             {!! Form::label('razon_social', 'Razón Social*', ['class' => 'asterisco']) !!}
                         @if ($errors->has('razon_social'))
@@ -45,7 +45,7 @@
                     </div>
                     <div class="form-group col-md-6 col-sm-6 anima-focus">
                         <input value="{{ old('rfc', $proveedores->rfc) }}"
-                            class="form-control {{ $errors->has('rfc') ? 'is-invalid' : '' }}" type="text"
+                            class="form-control {{ $errors->has('rfc') ? 'is-invalid' : '' }}" type="text" maxlength="255"
                             name="rfc" id="rfc" required>
                             {!! Form::label('rfc', 'RFC*', ['class' => 'asterisco']) !!}
                         @if ($errors->has('rfc'))

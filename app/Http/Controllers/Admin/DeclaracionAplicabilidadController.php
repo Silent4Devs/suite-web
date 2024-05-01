@@ -156,9 +156,13 @@ class DeclaracionAplicabilidadController extends Controller
 
     public function edit(Request $request, $control)
     {
-        $control = DeclaracionAplicabilidad::find($control);
+        try {
+            $control = DeclaracionAplicabilidad::find($control);
 
-        return view('admin.declaracionaplicabilidad.tabla-edit', compact('control'));
+            return view('admin.declaracionaplicabilidad.tabla-edit', compact('control'));
+        } catch (\Throwable $th) {
+            abort(404);
+        }
     }
 
     public function updateTabla(Request $request, $control)

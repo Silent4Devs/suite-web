@@ -1,14 +1,5 @@
 version: "3.8"
 services:
-  # ofelia:
-  #   image: mcuadros/ofelia:latest
-  #   restart: unless-stopped
-  #   depends_on:
-  #     - nginx-tabantaj
-  #     - php
-  #   command: daemon --docker
-  #   volumes:
-  #     - /var/run/docker.sock:/var/run/docker.sock:ro
   nginx-tabantaj:
     image: nginx:stable-alpine
     container_name: nginx-tabantaj
@@ -30,7 +21,7 @@ services:
       - tabantajnetwork
 
   postgres-tabantaj:
-    image: postgres:14-alpine
+    image: postgres:16-alpine
     container_name: postgres-tabantaj
     restart: unless-stopped
     tty: true
@@ -47,16 +38,6 @@ services:
     networks:
       - tabantajnetwork
     mem_limit: 6g
-
-  goservices:
-    image: ghcr.io/silent4devs/goservices:latest
-    container_name: goservices
-    ports:
-      - 3300:3300
-    restart: unless-stopped
-    tty: true
-    networks:
-      - tabantajnetwork
 
   pgadmin-tabantaj:
     depends_on:
@@ -87,19 +68,45 @@ services:
     #image: johnvo95/tabantaj_php-tabantaj:latest
     container_name: php-tabantaj
     restart: unless-stopped
-    # labels:
-    #   ofelia.enabled: "true"
-    # ofelia.job-exec.schedulecron.schedule: "@hourly"
-    # ofelia.job-exec.schedulecron.command: "/infra/ofelia/run_schedules_worker.sh"
-    # ofelia.job-exec.run_queues_worker.schedule: "*/15 * * * *"
-    # ofelia.job-exec.run_queues_worker.command: "php artisan queue:work --daemon --tries=4 --sleep=5"
-    # ofelia.job-exec.run_schedules_worker.schedule: "@hourly"
-    # ofelia.job-exec.run_schedules_worker.command: "php artisan schedule:work"
     tty: true
     volumes:
       - .:/var/www/html
     ports:
       - 9000:80
+    networks:
+      - tabantajnetwork
+
+  queue-worker:
+    build:
+      context: "./infra/php/"
+      dockerfile: Dockerfile
+    volumes:
+      - .:/var/www/html
+    command: php artisan queue:work --tries=3
+    depends_on:
+      - php
+    container_name: queue-worker-tabantaj
+    restart: unless-stopped
+    tty: true
+    environment:
+      CONTAINER_ROLE: queue
+    networks:
+      - tabantajnetwork
+
+  schedule-worker:
+    build:
+      context: "./infra/php/"
+      dockerfile: Dockerfile
+    depends_on:
+      - php
+    restart: unless-stopped
+    tty: true
+    container_name: schedule-worker-tabantaj
+    volumes:
+      - .:/var/www/html
+    command: php artisan schedule:work
+    environment:
+      CONTAINER_ROLE: scheduler
     networks:
       - tabantajnetwork
 
@@ -144,6 +151,18 @@ services:
       - tabantajnetwork
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
+
+  goservices:
+    image: ghcr.io/silent4devs/goservices:latest
+    container_name: goservices
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3300:3300"
+    volumes:
+      - goservices_data:/goservices
+    networks:
+      - tabantajnetwork
 
   # prometheus-tabantaj:
   #   image: prom/prometheus
@@ -308,6 +327,8 @@ volumes:
   rabbitmq_data:
     driver: local
   pgadmin-data:
+    driver: local
+  goservices_data:
     driver: local
   # elasticsearch:
   #   driver: local

@@ -3,20 +3,30 @@
 namespace App\Providers;
 
 use App\Events\AccionCorrectivaEvent;
+use App\Events\AlcancesEvent;
 use App\Events\AuditoriaAnualEvent;
 use App\Events\IncidentesDeSeguridadEvent;
+use App\Events\MatrizRequisitosEvent;
+use App\Events\PoliticasSgiEvent;
 use App\Events\RecursosEvent;
 use App\Events\RegistroMejoraEvent;
+use App\Events\RequisicionesEvent;
 use App\Events\TaskRecursosEvent;
 use App\Listeners\AccionCorrectivaListener;
+use App\Listeners\AlcancesListener;
 use App\Listeners\AuditoriaAnualListener;
+use App\Listeners\BroadcastUserLoginNotification;
 use App\Listeners\IncidentesDeSeguridadListener;
+use App\Listeners\MatrizRequisitosListener;
+use App\Listeners\PoliticasSgiListener;
 use App\Listeners\RecursosListener;
 use App\Listeners\RegistroMejoraListener;
+use App\Listeners\RequisicionesListener;
 use App\Listeners\TaskRecursosListener;
 use App\Models\AccionCorrectiva;
 use App\Models\Activo;
 use App\Models\activoConfidencialidad;
+use App\Models\AlcanceSgsi;
 use App\Models\Area;
 use App\Models\AuditoriaAnual;
 use App\Models\AuditoriaInterna;
@@ -26,6 +36,7 @@ use App\Models\CategoriaCapacitacion;
 use App\Models\ComunicacionSgi;
 use App\Models\ContractManager\Contrato;
 use App\Models\ContractManager\ProveedorIndistinto;
+use App\Models\ContractManager\Requsicion;
 use App\Models\ContractManager\Sucursal;
 use App\Models\DeclaracionAplicabilidad;
 use App\Models\Denuncias;
@@ -43,6 +54,7 @@ use App\Models\IncidentesSeguridad;
 use App\Models\IncidentesVacaciones;
 use App\Models\Macroproceso;
 use App\Models\Marca;
+use App\Models\MatrizRequisitoLegale;
 use App\Models\MatrizRiesgo;
 use App\Models\MatrizRiesgosSistemaGestion;
 use App\Models\Mejoras;
@@ -91,6 +103,7 @@ use App\Models\Vulnerabilidad;
 use App\Observers\AccionCorrectivaObserver;
 use App\Observers\ActivoConfidencialObserver;
 use App\Observers\ActivosObserver;
+use App\Observers\AlcancesObserver;
 use App\Observers\AreasObserver;
 use App\Observers\AuditoriaAnualObserver;
 use App\Observers\AuditoriaInternaObserver;
@@ -118,6 +131,7 @@ use App\Observers\KatbolProveedorIndistintoObserver;
 use App\Observers\LessonObserver;
 use App\Observers\MacroprocesoObserver;
 use App\Observers\MarcasObserver;
+use App\Observers\MastrizRequisitosObserver;
 use App\Observers\MatrizRiesgoObserver;
 use App\Observers\MatrizRiesgosSistemaGestionObserver;
 use App\Observers\MejorasObserver;
@@ -138,6 +152,7 @@ use App\Observers\QuejasObserver;
 use App\Observers\RecursoObserver;
 use App\Observers\RecursosObserver;
 use App\Observers\RegistroMejoraObserver;
+use App\Observers\RequisicionesObserver;
 use App\Observers\RevisionDocumentoObserver;
 use App\Observers\RiesgoIdentificadoObserver;
 use App\Observers\RolesObserver;
@@ -162,6 +177,7 @@ use App\Observers\tipoObjetivoObserver;
 use App\Observers\UsersObserver;
 use App\Observers\VersionesIsoObserver;
 use App\Observers\VulnerabilidadObserver;
+use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -177,6 +193,9 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
+        ],
+        Login::class => [
+            BroadcastUserLoginNotification::class,
         ],
         IncidentesDeSeguridadEvent::class => [
             IncidentesDeSeguridadListener::class,
@@ -196,6 +215,18 @@ class EventServiceProvider extends ServiceProvider
         TaskRecursosEvent::class => [
             TaskRecursosListener::class,
         ],
+        PoliticasSgiEvent::class => [
+            PoliticasSgiListener::class,
+        ],
+        AlcancesEvent::class => [
+            AlcancesListener::class,
+        ],
+        MatrizRequisitosEvent::class => [
+            MatrizRequisitosListener::class,
+        ],
+        RequisicionesEvent::class => [
+            RequisicionesListener::class,
+        ],
     ];
 
     /**
@@ -206,6 +237,9 @@ class EventServiceProvider extends ServiceProvider
     public function boot()
     {
         IncidentesDeSeguridad::observe(IncidentesDeSeguridadObserver::class);
+        AlcanceSgsi::observe(AlcancesObserver::class);
+        Requsicion::observe(RequisicionesObserver::class);
+        MatrizRequisitoLegale::observe(MastrizRequisitosObserver::class);
         AuditoriaAnual::observe(AuditoriaAnualObserver::class);
         AccionCorrectiva::observe(AccionCorrectivaObserver::class);
         Registromejora::observe(RegistroMejoraObserver::class);
@@ -216,7 +250,6 @@ class EventServiceProvider extends ServiceProvider
         Sede::observe(SedesObserver::class);
         User::observe(UsersObserver::class);
         Calendario::observe(CalendarioObserver::class);
-        AuditoriaAnual::observe(AuditoriaAnualObserver::class);
         Area::observe(AreasObserver::class);
         Proceso::observe(ProcesosObserver::class);
         Activo::observe(ActivosObserver::class);

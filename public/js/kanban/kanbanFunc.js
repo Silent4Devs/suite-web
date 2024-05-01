@@ -22,8 +22,8 @@ function dropguardar() {
     let estatus = document.getElementById('estatusSelect').value;
 
     // Convertir las fechas en objetos Date
-    let inicioDate = new Date(inicio);
-    let finDate = new Date(fin);
+    let inicioDate = new Date(inicio + " 00:00:00");
+    let finDate = new Date(fin + " 00:00:00");
 
     // Obtener los timestamps en milisegundos
     let inicioTimestamp = inicioDate.getTime();
@@ -304,7 +304,7 @@ const addTaskToDOM = (taskElement) => {
 const updateProgressBar = () => {
     const checkboxes = document.querySelectorAll("#task-list input[type='checkbox']");
     const completedTasks = Array.from(checkboxes).filter(({ checked }) => checked).length;
-    const progressBarWidth = (completedTasks / checkboxes.length) * 100;
+    const progressBarWidth = (completedTasks / checkboxes.length) * 100 || 0;
     const progressBar = document.querySelector(".progress-bar");
     progressBar.style.width = `${progressBarWidth}%`;
 

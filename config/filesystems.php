@@ -128,6 +128,12 @@ return [
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],
+        'backups' => [
+            'driver' => 'local',
+            'root' => storage_path('backups'),
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',
+        ],
     ],
 
     /*

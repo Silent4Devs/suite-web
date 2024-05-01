@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
     {{-- @can('planes_accion_create') --}}
-    <h5 class="col-12 titulo_general_funcion">Editar - {{ $planImplementacion->parent }} {{ $planImplementacion->norma }}
+    <h5 class="col-12 titulo_general_funcion">Editar - {{ isset($planImplementacion->parent) }} {{ isset($planImplementacion->norma) }}
     </h5>
     <div class="mt-4 card">
         <div class="card-body">
@@ -12,7 +12,7 @@
                     @include('admin.planesDeAccion._form', ['edit' => true, 'esPlanTrabajoBase' => false])
                     <div class="d-flex justify-content-end">
                         <a class="mr-2 btn_cancelar" href="{{ route('admin.planes-de-accion.index') }}">Cancelar</a>
-                        <input type="submit" class="btn btn-danger" value="Editar">
+                        <input type="submit" class="btn btn-xs btn-primary" value="Editar">
                     </div>
                 </form>
             @endcan
@@ -20,3 +20,4 @@
     </div>
     {{-- @endcan --}}
 @endsection
+

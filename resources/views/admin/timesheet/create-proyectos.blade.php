@@ -22,7 +22,7 @@
                     <hr class="my-4">
                 </div>
             </div>
-            <form method="POST" action="{{ route('admin.timesheet-proyectos-store') }}">
+            <form id="timesheet-proyectos-form" method="POST" action="{{ route('admin.timesheet-proyectos-store') }}">
                 @csrf
                 <div class="row">
                     <div class="form-group col-md-2 anima-focus">
@@ -60,7 +60,7 @@
                     <div class="form-group col-md-4 anima-focus" style="position: relative; top: -1.5rem;"
                         id="caja_areas_seleccionadas_create">
                         <select class="select2-multiple form-control" multiple="multiple" id="areas_seleccionadas"
-                            name="areas_seleccionadas[]" required>
+                            name="areas_seleccionadas[]" placeholder="" >
                             @foreach ($areas as $area)
                                 <option value="{{ $area->id }}">
                                     {{ $area->area }}
@@ -99,7 +99,7 @@
                 </div>
                 <div class="row">
                     <div class="form-group col-md-4 anima-focus">
-                        <select class="form-control" name="sede_id" id="sede_id" required>
+                        <select class="form-control" name="sede_id" id="sede_id">
                             <option selected value="">Seleccione sede</option>
                             @foreach ($sedes as $sede)
                                 <option value="{{ $sede->id }}">{{ $sede->sede }}</option>
@@ -115,11 +115,11 @@
                                 </option>
                             @endforeach
                         </select>
-                        {!! Form::label('tipo', 'Tipo', ['class' => 'asterisco']) !!}
+                        {!! Form::label('tipo', 'Tipo*', ['class' => 'asterisco']) !!}
                     </div>
                     <div class="form-group col-md-4 anima-focus">
-                        <input type="text" pattern="[0-9]+" title="Por favor, ingrese solo números enteros." placeholder="" name="horas_proyecto" maxlength="250"
-                            id="horas_asignadas" class="form-control">
+                        <input type="text" pattern="[0-9]+" title="Por favor, ingrese solo números enteros." placeholder=""
+                            name="horas_proyecto" maxlength="250" id="horas_asignadas" class="form-control">
                         {!! Form::label('horas_proyecto', 'Horas Asignadas al proyecto', ['class' => 'asterisco']) !!}
                         @if ($errors->has('horas_proyecto'))
                             <div class="invalid-feedback">
@@ -128,29 +128,9 @@
                         @endif
                     </div>
                 </div>
-                {{-- <div class="row">
-                  <div class="form-group col-md-4">
-                    <label class="form-label"><i class="fa-solid fa-calendar-day iconos-crear"></i>Proveedor (Opcional)</label>
-                    <input type="text" name="proveedor" id="proveedor" class="form-control">
-                    @if ($errors->has('proveedor'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('proveedor') }}
-                        </div>
-                    @endif
-                </div>
-                <div class="form-group col-md-4">
-                    <label class="form-label"><i class="fa-solid fa-calendar-day iconos-crear"></i> Horas Asignadas del Tercero (Opcional)</label>
-                    <input type="number" min="0" name="horas_tercero" id="horas_asignadas" class="form-control">
-                    @if ($errors->has('horas_tercero'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('horas_tercero') }}
-                        </div>
-                    @endif
-                </div>
-            </div>  --}}
                 <div class="row">
                     <div class="form-group col-12 text-right">
-                        <button class="btn btn-success" type="submit"> Crear Proyecto</button>
+                        <button id="submit-btn" class="btn btn-success" type="button">Crear Proyecto</button>
                     </div>
                 </div>
             </form>
@@ -164,10 +144,58 @@
             // Select2 Multiple
             $('.select2-multiple').select2({
                 theme: 'bootstrap4',
-                placeholder: "select",
                 allowClear: true
             });
 
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Get form and submit button
+            const form = document.getElementById('timesheet-proyectos-form');
+            const submitBtn = document.getElementById('submit-btn');
+
+            // Add event listener to submit button
+            submitBtn.addEventListener('click', function(event) {
+                // Prevent default form submission
+                event.preventDefault();
+
+                // Perform AJAX request
+                const formData = new FormData(form);
+                fetch(form.action, {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Proyecto Creado!',
+                            text: data
+                                .message, // Assuming the response contains a 'message' key
+                            allowOutsideClick: false // Prevent dismissing by clicking outside the dialog
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                const id_proyecto = data.id_proyecto;
+                                window.location.href =
+                                    "{{ route('admin.timesheet-proyectos-edit', 'id') }}"
+                                    .replace('id', id_proyecto);
+                            }
+                        });
+
+                    })
+                    .catch(error => {
+                        // Handle errors
+                        console.error('Error:', error);
+                        // Example: Show error message using SweetAlert2
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: data.message
+                        });
+                    });
+            });
         });
     </script>
 @endsection

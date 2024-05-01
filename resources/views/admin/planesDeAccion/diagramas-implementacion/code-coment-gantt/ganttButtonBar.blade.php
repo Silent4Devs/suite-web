@@ -64,7 +64,7 @@
                     <i class="material-symbols-outlined">delete</i>
                 </span>
             </button>
-            <span class="ganttButtonSeparator"></span>
+            {{-- <span class="ganttButtonSeparator"></span>
             <button onclick="$('#workSpace').trigger('expandAll.gantt');return false;" class="button textual icon "
                 title="Expandir">
                 <span class="teamworkIcon">
@@ -76,7 +76,7 @@
                 <span class="teamworkIcon">
                     <i class="material-symbols-outlined">expand_all</i>
                 </span>
-            </button>
+            </button> --}}
             <span class="ganttButtonSeparator"></span>
             <button onclick="$('#workSpace').trigger('zoomMinus.gantt'); return false;" class="button textual icon "
                 title="Decrementar Zoom">
@@ -97,11 +97,11 @@
                     <i class="material-symbols-outlined">print</i>
                 </span>
             </button> --}}
-            <span class="ganttButtonSeparator"></span>
+            {{-- <span class="ganttButtonSeparator"></span>
             <button onclick="ge.gantt.showCriticalPath=!ge.gantt.showCriticalPath; ge.redraw();return false;"
                 class="button textual icon requireCanSeeCriticalPath" title="Ruta crítica">
                 <span class="teamworkIcon">&pound;</span>
-            </button>
+            </button> --}}
             <span class="ganttButtonSeparator requireCanSeeCriticalPath"></span>
             <button onclick="ge.splitter.resize(.1);return false;" class="button textual icon">
                 <span class="teamworkIcon">F</span>
@@ -112,8 +112,8 @@
             <button onclick="ge.splitter.resize(100);return false;" class="button textual icon">
                 <span class="teamworkIcon">R</span>
             </button>
-            <span class="ganttButtonSeparator"></span>
-            {{-- <button onclick="ge.element.toggleClass('colorByStatus' );return false;" class="button textual icon">
+            {{-- <span class="ganttButtonSeparator"></span>
+            <button onclick="ge.element.toggleClass('colorByStatus' );return false;" class="button textual icon">
                 <span class="teamworkIcon">
                     <i class="material-symbols-outlined">palette</i>
                 </span>

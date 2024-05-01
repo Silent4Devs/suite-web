@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Events\PoliticasSgiEvent;
 use App\Models\PoliticaSgsi;
 use Illuminate\Support\Facades\Cache;
 
@@ -14,6 +15,7 @@ class PoliticaSgsiObserver
      */
     public function created(PoliticaSgsi $politicaSgsi)
     {
+        event(new PoliticasSgiEvent($politicaSgsi, 'create', 'politica_sgsis', 'Politicas'));
         $this->forgetCache();
     }
 
@@ -24,6 +26,7 @@ class PoliticaSgsiObserver
      */
     public function updated(PoliticaSgsi $politicaSgsi)
     {
+        event(new PoliticasSgiEvent($politicaSgsi, 'update', 'politica_sgsis', 'Politicas'));
         $this->forgetCache();
     }
 
@@ -34,26 +37,7 @@ class PoliticaSgsiObserver
      */
     public function deleted(PoliticaSgsi $politicaSgsi)
     {
-        $this->forgetCache();
-    }
-
-    /**
-     * Handle the PoliticaSgsi "restored" event.
-     *
-     * @return void
-     */
-    public function restored(PoliticaSgsi $politicaSgsi)
-    {
-        $this->forgetCache();
-    }
-
-    /**
-     * Handle the PoliticaSgsi "force deleted" event.
-     *
-     * @return void
-     */
-    public function forceDeleted(PoliticaSgsi $politicaSgsi)
-    {
+        event(new PoliticasSgiEvent($politicaSgsi, 'delete', 'politica_sgsis', 'Politicas'));
         $this->forgetCache();
     }
 

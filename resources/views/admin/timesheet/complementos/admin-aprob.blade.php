@@ -306,6 +306,18 @@
                         </div>
                     </div>
                 </a>
+                @can('timesheet_administrador_reporte_financiero_access')
+                    <a href="{{ route('admin.timesheet-reportes-financiero') }}">
+                        <div class="card-time-admin">
+                            <div class="img-card-time-admin">
+                                <img src="{{ asset('img/iso/iso10.webp') }}" alt="">
+                            </div>
+                            <div class="info-card-time-admin">
+                                <h5>Financiero</h5>
+                            </div>
+                        </div>
+                    </a>
+                @endcan
             </div>
         @endcan
     </div>
