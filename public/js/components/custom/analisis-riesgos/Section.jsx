@@ -4,8 +4,10 @@ import {
     rectSortingStrategy,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import React from "react";
-import { CardTemplateAnalisisRiesgos } from "../../common/Cards";
+import React, {useState} from "react";
+import { QuestionTemplateAnalisisRiesgos } from "./Question";
+import "../../../../css/templateAnalisisRiesgo/sections.css";
+import { InputSection } from "./Inputs";
 
 export const Section = ({
     id,
@@ -14,7 +16,12 @@ export const Section = ({
     changeSize,
     changeQuestionProps,
     deleteQuestion,
+    duplicateQuestion,
+    changeTitle,
+    deleteSection,
+
 }) => {
+    const [editMode, setEditMode] = useState(false);
     const {
         attributes,
         listeners,
@@ -30,7 +37,13 @@ export const Section = ({
             questions,
             id,
         },
+        disabled: editMode,
     });
+
+    const onChangeTitle = (newValue) => {
+        const newTitle = newValue;
+        changeTitle(id,newTitle)
+    }
 
     const style = {
         transform: CSS.Transform.toString(transform),
@@ -41,41 +54,60 @@ export const Section = ({
     if (isDragging) {
         return (
             <div ref={setNodeRef} style={style} className="mb-3">
-                <div className="card m-0 p-0">
-                    <div className="card-body "></div>
+                <div className="encabezado">
+                    <div className="section" >
+                            <h5 className="m-0 enc-title">
+                                {title}
+                            </h5>
+                    </div>
+                    <div className="section2"></div>
+                </div>
+                <div className="card">
+                    <div className="card-body"></div>
                 </div>
             </div>
         );
     }
 
     return (
-        <div ref={setNodeRef} style={style} className="card">
-            <div className="card-title">
-                <div className="d-flex justify-content-center">
-                    <button {...attributes} {...listeners}>
-                        ⣿
-                    </button>
+        <div style={{width:"100%"}} ref={setNodeRef} {...attributes} {...listeners} >
+            <div className="encabezado">
+                <div className="section d-flex justify-content-between">
+                        <h5 className="m-0 enc-title" onClick={()=>setEditMode(true)}>
+                            {!editMode && title}
+                        </h5>
+                            {editMode && (<InputSection title={title} id={id} onChangeTitle={onChangeTitle} setEditMode={setEditMode}/>
+                            )}
+                            <div className="mr-2">
+                                <i className="material-symbols-outlined" onClick={()=>deleteSection(id)} style={{cursor:"pointer", userSelect:"none"}}>
+                                    delete
+                                </i>
+                            </div>
                 </div>
+                <div className="section2"></div>
             </div>
-            <div className="card-body">
-                <div className="row">
-                    <SortableContext
-                        items={questions}
-                        strategy={rectSortingStrategy}
-                    >
-                        {questions.map((item) => {
-                            return (
-                                <CardTemplateAnalisisRiesgos
-                                    key={item.id}
-                                    id={item.id}
-                                    question={item}
-                                    changeSize={changeSize}
-                                    changeQuestionProps={changeQuestionProps}
-                                    deleteQuestion={deleteQuestion}
-                                />
-                            );
-                        })}
-                    </SortableContext>
+            <div style={style} className="">
+                <div className="">
+                    <div className="row">
+                        <SortableContext
+                            items={questions}
+                            strategy={rectSortingStrategy}
+                        >
+                            {questions.map((item) => {
+                                return (
+                                    <QuestionTemplateAnalisisRiesgos
+                                        key={item.id}
+                                        id={item.id}
+                                        question={item}
+                                        changeSize={changeSize}
+                                        changeQuestionProps={changeQuestionProps}
+                                        deleteQuestion={deleteQuestion}
+                                        duplicateQuestion={duplicateQuestion}
+                                    />
+                                );
+                            })}
+                        </SortableContext>
+                    </div>
                 </div>
             </div>
         </div>

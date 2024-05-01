@@ -10,6 +10,7 @@ export const ContainerShowSizes = ({handleChangeSize}) => {
            borderRadius: "9px",
            opacity: 1,
            padding:"10px",
+           zIndex:2,
           }}>
             <p className='m-0'>Tamaño</p>
             <div style={{width: "100%",
@@ -64,6 +65,7 @@ export const ContainerMoreInfo = () => {
        display:"flex",
        justifyContent:"center",
        alignItems:"center",
+       zIndex:2,
       }}>
         <p className="m-0 p-0">
         Selecciona el tamaño que le asignaras al campo seleccionado.

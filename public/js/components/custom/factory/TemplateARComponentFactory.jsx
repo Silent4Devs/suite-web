@@ -1,24 +1,24 @@
 import { OptionDate, OptionImage, OptionNumber, OptionParrafo, OptionRound, OptionSelect, OptionSquard, OptionTextSimple, OptionTime } from "../analisis-riesgos/Options";
 
 class TemplateARComponentFactory {
-    createTemplateARComponent(type, id) {
+    createTemplateARComponent(type, id, changeQuestionProps, data) {
         switch (type) {
             case "1":
-                return <OptionTextSimple/>;
+                return <OptionTextSimple id={id} changeQuestionProps={changeQuestionProps} data={data}/>;
             case "2":
-                return <OptionParrafo/>;
+                return <OptionParrafo id={id} changeQuestionProps={changeQuestionProps} data={data}/>;
             case "3":
-                return <OptionNumber/>;
+                return <OptionNumber id={id} changeQuestionProps={changeQuestionProps} data={data}/>;
             case "5":
-                return <OptionRound/>;
+                return <OptionRound id={id} changeQuestionProps={changeQuestionProps} data={data}/>;
             case "6":
-                return <OptionSquard/>;
+                return <OptionSquard id={id} changeQuestionProps={changeQuestionProps} data={data}/>;
             case "7":
-                return <OptionSelect/>;
+                return <OptionSelect id={id} changeQuestionProps={changeQuestionProps} data={data}/>;
             case "8":
-                return <OptionDate/>;
+                return <OptionDate id={id} changeQuestionProps={changeQuestionProps} data={data}/>;
             case "9":
-                return <OptionTime/>;
+                return <OptionTime id={id} changeQuestionProps={changeQuestionProps} data={data}/>;
             case "10":
                 return <OptionImage id={id}/>
             default :

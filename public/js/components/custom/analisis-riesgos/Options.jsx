@@ -1,17 +1,16 @@
-import React, { useState, Fragment } from "react";
-import {
-    InputDate,
-    InputSimple,
-    InputTime,
-    TextAreaSimple,
-} from "../../common/Inputs";
+import React, { useState, useEffect } from "react";
 import { HrSimple } from "../../common/Hr";
 import { v4 as uuidv4 } from "uuid";
 
 import '../../../../css/templateAnalisisRiesgo/inputFile.css'
+import { AlertSimple } from "../../common/Alerts";
 
 
-export const OptionTextSimple = () => {
+export const OptionTextSimple = ({id, data = {}, changeQuestionProps}) => {
+    useEffect(() => {
+      changeQuestionProps(id,'dataDelete',data);
+    }, [])
+
     return (
         <div className="row">
             <div className="col-12 col-md-8">
@@ -30,7 +29,10 @@ export const OptionTextSimple = () => {
     );
 };
 
-export const OptionParrafo = () => {
+export const OptionParrafo = ({id, data = {}, changeQuestionProps}) => {
+    useEffect(() => {
+        changeQuestionProps(id,'dataDelete',data);
+      }, []);
     return (
         <div className="row">
             <div className="col-12 col-md-8">
@@ -49,19 +51,35 @@ export const OptionParrafo = () => {
     );
 };
 
-export const OptionNumber = () => {
-    const [inputValues, setInputValues] = useState({
-        minimo: '',
-        maximo: ''
-      });
+export const OptionNumber = ({id, data = {}, changeQuestionProps}) => {
+    const dataDefault = {
+        minimo: '0',
+        maximo: '0',
+      };
 
-      const handleInputChange = (event) => {
+    const [inputValues, setInputValues] = useState( Object.hasOwn(data, "minimo") || Object.hasOwn(data, "maximo") ? data : dataDefault);
+
+      const handleInputChange = async(event) => {
         const { name, value } = event.target;
+        data[name] = value;
         setInputValues({
           ...inputValues,
           [name]: value
         });
+
+        changeQuestionProps(id,'minMax', data);
       };
+
+      useEffect(() => {
+
+        if(Object.hasOwn(data, "minimo") || Object.hasOwn(data, "maximo")){
+                    changeQuestionProps(id,'minMax', data);
+        }else{
+                data = {}
+                data = dataDefault;
+                changeQuestionProps(id,'minMax', dataDefault);
+            }
+    }, []);
 
     return (
         <div className="row d-flex justify-content-between d-flex align-items-baseline">
@@ -110,66 +128,89 @@ export const OptionNumber = () => {
     );
 };
 
-export const OptionRound = ({ select = 1, data = [] }) => {
+export const OptionRound = ({ id, data = [],  changeQuestionProps }) => {
     const dataDefault = [
-        { id: uuidv4(), title: "respuesta 1", name: "respuesta1", exist: true, },
-        { id: uuidv4(), title: "respuesta 2", name: "respuesta2", exist: true, },
+        { id: uuidv4(), title: "respuesta 1", name: "respuesta1", exist: true, status:true },
+        { id: uuidv4(), title: "respuesta 2", name: "respuesta2", exist: true, status:false },
     ]
     const [options, setOptions] = useState(data.length > 0 ? data : dataDefault);
-    const [selectedOption, setSelectedOption] = useState(select);
 
     const handleOptionChange = (optionId) => {
-        setSelectedOption(optionId);
+        const updateData = options.map((item)=>{
+            if(item.id === optionId){
+                const updateItem = item;
+                item.status=true;
+                return updateItem;
+            }else{
+                const updateItem = item;
+                item.status=false;
+                return updateItem;
+            }
+        })
+        setOptions(updateData);
+        changeQuestionProps(id,'round',options);
+
     };
 
-    const handleChange = (id, newValue) => {
-        setOptions((prevInputs) =>
-            prevInputs.map((input) =>
-                input.id === id ? { ...input, title: newValue } : input
-            )
-        );
+    const handleTextChange = (optionId, newValue) => {
+        const updateOptions = options.map((item) => {
+            if(item.id === optionId){
+                const updateItem = item;
+                updateItem.title=newValue;
+                return updateItem;
+            }
+            return item;
+        });
+        setOptions(updateOptions);
+        changeQuestionProps(id,'round',updateOptions);
     };
 
     const addOption = () => {
         const lastOption = options.length + 1;
         const newOption = {
             id: uuidv4(),
-            title: "",
+            title: "Sin respuesta",
             name: `respuesta${lastOption}`,
             exist: true,
+            status:false,
         };
-        setOptions([...options, newOption]);
+
+        setOptions(prevObjetos => {
+            const newOptions = [...prevObjetos, newOption]
+            changeQuestionProps(id,'round',newOptions);
+            return newOptions;
+        }
+        );
+
     };
 
-    const deleteOption = (id) => {
-        const filter = options.find((item) => item.id === id);
+    const deleteOption = async(deleteId) => {
+        const option = options.find((item) => item.id === deleteId);
 
-        if (Object.hasOwn(filter, "exist")) {
-            const filter = options.filter((item) => item.id !== id);
+        const destroyElement = () => {
+            const filter = options.filter((item) => item.id !== deleteId);
             setOptions(filter);
+            changeQuestionProps(id,'round',filter);
+        }
+        const destroyRegister = async() => {
+            await axios.delete(`http:///suite-web.test/api/api/v1/test/data/question/delete/${deleteId}`);
+        }
+
+        if (Object.hasOwn(option, "exist")) {
+            destroyElement();
         } else {
-            Swal.fire({
-                title: "Eliminar registro",
-                text: "¿Esta seguro que desea eliminar?",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Eliminar",
-                cancelButtonText: "Cancelar",
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    const filter = options.filter((item) => item.id !== id);
-                    setOptions(filter);
-                    Swal.fire({
-                        title: "Eliminado",
-                        text: "Se elimino el registro exitosamente",
-                        icon: "success",
-                    });
-                }
-            });
+            AlertSimple(()=>destroyElement(),()=>destroyRegister());
         }
     };
+
+    useEffect(() => {
+        if(data.length > 0){
+            changeQuestionProps(id,'round',data);
+        }else{
+            changeQuestionProps(id,'round',dataDefault);
+        }
+    }, [])
+
 
     return (
         <div className="row ">
@@ -191,7 +232,7 @@ export const OptionRound = ({ select = 1, data = [] }) => {
                                     id={`radio-${item.id}`}
                                     name="options"
                                     value={item.id}
-                                    checked={selectedOption === item.id}
+                                    checked={item.status}
                                     onChange={() => handleOptionChange(item.id)}
                                 />
                                 <input
@@ -201,7 +242,7 @@ export const OptionRound = ({ select = 1, data = [] }) => {
                                     name={item.name}
                                     value={item.title}
                                     onChange={(e) =>
-                                        handleChange(item.id, e.target.value)
+                                        handleTextChange(item.id, e.target.value)
                                     }
                                 />
                                 {options.length > 2 ? (
@@ -248,7 +289,7 @@ export const OptionRound = ({ select = 1, data = [] }) => {
     );
 };
 
-export const OptionSquard = ({ data = [] }) => {
+export const OptionSquard = ({ id, data = [],  changeQuestionProps }) => {
     const dataDefault = [
         {
             id: uuidv4(),
@@ -264,74 +305,80 @@ export const OptionSquard = ({ data = [] }) => {
             status: false,
             exist: true,
         },
-        {
-            id: uuidv4(),
-            title: "respuesta 2",
-            name: "respuesta2",
-            status: false,
-            exist: true,
-        },
     ];
     const [options, setOptions] = useState(data.length > 0 ? data : dataDefault);
-    const [selectedOption, setSelectedOption] = useState(1);
 
-    const handleTextChange = (id, newValue) => {
-        setOptions((items) =>
-            items.map((item) =>
-                item.id === id ? { ...item, title: newValue } : item
-            )
-        );
+    const handleTextChange = (optionId, newValue) => {
+        const updateOptions = options.map((item) => {
+            if(item.id === optionId){
+                const updateItem = item;
+                updateItem.title=newValue;
+                return updateItem;
+            }
+            return item;
+        });
+        setOptions(updateOptions);
+        changeQuestionProps(id,'round',updateOptions);
     };
 
     const addOption = () => {
         const lastOption = options.length + 1;
         const newOption = {
             id: uuidv4(),
-            title: "",
+            title: "Sin respuesta",
             name: `respuesta${lastOption}`,
+            status:false,
             exist: true,
         };
-        setOptions([...options, newOption]);
+
+        setOptions(prevObjetos => {
+            const newOptions = [...prevObjetos, newOption]
+            changeQuestionProps(id,'round',newOptions);
+            return newOptions;
+        }
+        );
     };
 
-    const deleteOption = (id) => {
-        const filter = options.find((item) => item.id === id);
+    const deleteOption = async(deleteId) => {
+        const option = options.find((item) => item.id === deleteId);
 
-        if (Object.hasOwn(filter, "exist")) {
-            const filter = options.filter((item) => item.id !== id);
+        const destroyElement = () => {
+            const filter = options.filter((item) => item.id !== deleteId);
             setOptions(filter);
+            changeQuestionProps(id,'round',filter);
+        }
+        const destroyRegister = async() => {
+            await axios.delete(`http:///suite-web.test/api/api/v1/test/data/question/delete/${deleteId}`);
+        }
+
+        if (Object.hasOwn(option, "exist")) {
+            destroyElement();
         } else {
-            Swal.fire({
-                title: "Eliminar registro",
-                text: "¿Esta seguro que desea eliminar?",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Eliminar",
-                cancelButtonText: "Cancelar",
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    const filter = options.filter((item) => item.id !== id);
-                    setOptions(filter);
-                    Swal.fire({
-                        title: "Eliminado",
-                        text: "Se elimino el registro exitosamente",
-                        icon: "success",
-                    });
-                }
-            });
+            AlertSimple(()=>destroyElement(),()=>destroyRegister());
         }
     };
 
     const changeStatus = (id, status) => {
         const newStatus = !status;
-        setOptions((items) =>
-            items.map((item) =>
-                item.id === id ? { ...item, status: newStatus } : item
-            )
-        );
+        const updateOptions = options.map((item)=>{
+            if(item.id === id){
+                const updateItem = item;
+                updateItem.status=newStatus;
+                return updateItem;
+            }
+            return item
+        });
+        setOptions(updateOptions);
+        changeQuestionProps(id,'round',updateOptions);
     };
+
+    useEffect(() => {
+        if(data.length > 0){
+            changeQuestionProps(id,'round',data);
+        }else{
+            changeQuestionProps(id,'round',dataDefault);
+        }
+    }, [])
 
     return (
         <div className="row ">
@@ -414,72 +461,79 @@ export const OptionSquard = ({ data = [] }) => {
     );
 };
 
-export const OptionSelect = ({ data = [] }) => {
-    const prevData = [
+export const OptionSelect = ({ id, data = [],  changeQuestionProps }) => {
+    const dataDefault = [
         {
             id: uuidv4(),
             title: "respuesta 1",
             name: "respuesta1",
-            status: true,
             exist: true,
         },
         {
             id: uuidv4(),
             title: "respuesta 2",
             name: "respuesta2",
-            status: false,
             exist: true,
         },
     ];
-    const [options, setOptions] = useState(data.length > 0 ? data : prevData);
-    const handleTextChange = (id, newValue) => {
-        setOptions((items) =>
-            items.map((item) =>
-                item.id === id ? { ...item, title: newValue } : item
-            )
-        );
+    const [options, setOptions] = useState(data.length > 0 ? data : dataDefault);
+
+    const handleTextChange = (optionId, newValue) => {
+        const updateOptions = options.map((item) => {
+            if(item.id === optionId){
+                const updateItem = item;
+                updateItem.title=newValue;
+                return updateItem;
+            }
+            return item;
+        });
+        setOptions(updateOptions);
+        changeQuestionProps(id,'round',updateOptions);
     };
 
     const addOption = () => {
         const lastOption = options.length + 1;
         const newOption = {
             id: uuidv4(),
-            title: "",
+            title: "Sin respuesta",
             name: `respuesta${lastOption}`,
             exist: true,
         };
-        setOptions([...options, newOption]);
+        setOptions(prevObjetos => {
+            const newOptions = [...prevObjetos, newOption]
+            changeQuestionProps(id,'round',newOptions);
+            return newOptions;
+        }
+        );
     };
 
-    const deleteOption = (id) => {
-        const filter = options.find((item) => item.id === id);
+    const deleteOption = async(deleteId) => {
+        const option = options.find((item) => item.id === deleteId);
 
-        if (Object.hasOwn(filter, "exist")) {
-            const filter = options.filter((item) => item.id !== id);
+        const destroyElement = () => {
+            const filter = options.filter((item) => item.id !== deleteId);
             setOptions(filter);
+            changeQuestionProps(id,'round',filter);
+        }
+        const destroyRegister = async() => {
+            await axios.delete(`http:///suite-web.test/api/api/v1/test/data/question/delete/${deleteId}`);
+        }
+
+        if (Object.hasOwn(option, "exist")) {
+            destroyElement();
         } else {
-            Swal.fire({
-                title: "Eliminar registro",
-                text: "¿Esta seguro que desea eliminar?",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Eliminar",
-                cancelButtonText: "Cancelar",
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    const filter = options.filter((item) => item.id !== id);
-                    setOptions(filter);
-                    Swal.fire({
-                        title: "Eliminado",
-                        text: "Se elimino el registro exitosamente",
-                        icon: "success",
-                    });
-                }
-            });
+            AlertSimple(()=>destroyElement(),()=>destroyRegister());
         }
     };
+
+    useEffect(() => {
+        if(data.length > 0){
+            changeQuestionProps(id,'round',data);
+        }else{
+            changeQuestionProps(id,'round',dataDefault);
+        }
+    }, []);
+
     return (
         <div className="row ">
             {options.map((item, index) => {
@@ -545,7 +599,10 @@ export const OptionSelect = ({ data = [] }) => {
     );
 };
 
-export const OptionDate = () => {
+export const OptionDate = ({id, data = {}, changeQuestionProps}) => {
+    useEffect(() => {
+        changeQuestionProps(id,'dataDelete',data);
+      }, []);
     return (
         <div
             className="d-flex justify-content-between align-items-center"
@@ -584,7 +641,10 @@ export const OptionDate = () => {
     );
 };
 
-export const OptionTime = () => {
+export const OptionTime = ({id, data = {}, changeQuestionProps}) => {
+    useEffect(() => {
+        changeQuestionProps(id,'dataDelete',data);
+      }, []);
     return (
         <div
             className="d-flex justify-content-between align-items-center"
