@@ -44,8 +44,8 @@
                         <th style="max-width: 250px !important;">Área(s)</th>
                         <th style="max-width: 250px !important;">Empleados participantes</th>
                         <th>Estatus</th>
-                        <th>Horas totales</th>
-                        <th>Costo total</th>
+                        <th>Horas totales del proyecto</th>
+                        <th>Costo total del proyecto</th>
                     </tr>
                 </thead>
 

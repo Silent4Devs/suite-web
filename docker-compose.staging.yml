@@ -1,14 +1,5 @@
 version: "3.8"
 services:
-  # ofelia:
-  #   image: mcuadros/ofelia:latest
-  #   restart: unless-stopped
-  #   depends_on:
-  #     - nginx-tabantaj
-  #     - php
-  #   command: daemon --docker
-  #   volumes:
-  #     - /var/run/docker.sock:/var/run/docker.sock:ro
   nginx-tabantaj:
     image: nginx:stable-alpine
     container_name: nginx-tabantaj
@@ -30,7 +21,7 @@ services:
       - tabantajnetwork
 
   postgres-tabantaj:
-    image: postgres:14-alpine
+    image: postgres:16-alpine
     container_name: postgres-tabantaj
     restart: unless-stopped
     tty: true
