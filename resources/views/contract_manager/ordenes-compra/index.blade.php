@@ -13,7 +13,7 @@
     @include('partials.flashMessages')
     <h5 class="col-12 titulo_general_funcion">Orden De Compra</h5>
         <button type="button" class="btn  btn-primary"
-        id="filtrarBtn4" style="position: relative; left: 78rem;">Aprobadores</button>
+        id="filtrarBtn4" style="position: relative; left: 75rem;">Aprobadores</button>
     <div class="mt-5 card">
         <div class="card-body datatable-fix">
 
@@ -183,22 +183,18 @@
 
                     },
                     {
-                        data: 'estado',
-                        name: 'estado',
+                        data: null,
                         render: function(data, type, row) {
-                            // Verifica el valor de 'estado' y devuelve la etiqueta correspondiente
-                            switch (data) {
-                                case 'curso':
-                                    return '<h5><span class="badge badge-pill badge-primary">En curso</span></h5>';
-                                case 'aprobado':
-                                    return '<h5><span class="badge badge-pill badge-success">Aprobado</span></h5>';
-                                case 'rechazado':
-                                    return '<h5><span class="badge badge-pill badge-danger">Rechazado</span></h5>';
-                                case 'firmada':
-                                case 'firmada_final':
-                                    return '<h5><span class="badge badge-pill badge-success">Firmada</span></h5>';
-                                default:
-                                    return data; // En caso de cualquier otro estado, devuelve el valor original
+                            var firma_solicitante = row.firma_solicitante_orden;
+                            var firma_comprador = row.firma_comprador_orden;
+                            var firma_finanzas = row.firma_finanzas_orden;
+
+                            if (!firma_solicitante && !firma_comprador && !firma_finanzas) {
+                                return '<h5><span class="badge badge-pill badge-primary">Por iniciar</span></h5>';
+                            } else if (firma_solicitante && firma_comprador && firma_finanzas) {
+                                return '<h5><span class="badge badge-pill badge-success">Firmada</span></h5>';
+                            } else {
+                                return '<h5><span class="badge badge-pill badge-info">En curso</span></h5>';
                             }
                         }
                     },
@@ -244,7 +240,7 @@
                                             </div>`;
 
                             return htmlBotones;
-                                
+
                         }
                     }
                 ],
@@ -309,5 +305,5 @@
                 window.location.href = "{{ route('contract_manager.orden-compra.indexAprobadores') }}";
             });
         });
-    </script> 
+    </script>
 @endsection

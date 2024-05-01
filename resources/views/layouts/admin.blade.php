@@ -110,13 +110,13 @@
             </div>
             @if ($empleado)
                 <ul class="ml-auto c-header-nav">
+                    <li style="position: relative; right:2rem;">
+                        @livewire('campana-notificaciones-component')
+                    </li>
                     <li class="c-header-nav-item dropdown show">
                         <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button"
                             aria-haspopup="true" aria-expanded="false">
                             <div style="width:100%; display: flex; align-items: center;">
-                                {{-- <li style="position: relative; right:2rem;">
-                                    @livewire('campana-notificaciones-component')
-                                </li> --}}
                                 @if ($empleado)
                                     <div style="width: 40px; overflow:hidden;" class="mr-2">
                                         <img class="img_empleado" style=""
@@ -306,7 +306,7 @@
                                 <div class="caja-icon-mod-header" style="background: #B1C6FF;">
                                     <i class="material-symbols-outlined">shield_person</i>
                                 </div>
-                                <span>Admin. de Proyectos</span>
+                                <span>Planes de Trabajo</span>
                             </a>
                         @endcan
                         @can('control_documentar_acceder')

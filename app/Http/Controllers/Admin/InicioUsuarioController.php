@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreRiesgosRequest;
 use App\Models\Activo;
 use App\Models\AnalisisSeguridad;
 use App\Models\Area;
@@ -743,6 +744,13 @@ class InicioUsuarioController extends Controller
     public function storeDenuncias(Request $request)
     {
         abort_if(Gate::denies('mi_perfil_mis_reportes_realizar_reporte_de_denuncia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $request->validate([
+            'ubicacion' => 'required|max:255',
+            'descripcion' => 'required|max:550',
+        ], [
+            'descripcion.max' => 'El campo título no puede exceder los 550 caracteres.',
+            'ubicacion.max' => 'El campo descripción no puede exceder los 255 caracteres.',
+        ]);
 
         $denuncias = Denuncias::create([
             'anonimo' => $request->anonimo,
@@ -847,6 +855,14 @@ class InicioUsuarioController extends Controller
     public function storeSugerencias(Request $request)
     {
         abort_if(Gate::denies('mi_perfil_mis_reportes_realizar_reporte_de_sugerencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $request->validate([
+            'titulo' => 'required|max:255',
+            'descripcion' => 'required|max:550',
+        ], [
+            'titulo.max' => 'El campo título no puede exceder los 255 caracteres.',
+            'descripcion.max' => 'El campo descripción no puede exceder los 550 caracteres.',
+        ]);
 
         $sugerencias = Sugerencias::create([
             'empleado_sugirio_id' => User::getCurrentUser()->empleado->id,
@@ -979,7 +995,7 @@ class InicioUsuarioController extends Controller
         return view('admin.inicioUsuario.formularios.riesgos', compact('activos', 'areas', 'procesos', 'sedes'));
     }
 
-    public function storeRiesgos(Request $request)
+    public function storeRiesgos(StoreRiesgosRequest $request)
     {
         abort_if(Gate::denies('mi_perfil_mis_reportes_realizar_reporte_de_riesgo_identificado'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 

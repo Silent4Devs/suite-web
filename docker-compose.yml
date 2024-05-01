@@ -17,14 +17,6 @@ services:
       - php
       - postgres-tabantaj
       - redis-tabantaj
-    labels:
-      #com.datadoghq.ad.check_names: '[""]'
-      com.datadoghq.ad.init_configs: "[{}]"
-      com.datadoghq.ad.instances: '[{"host":"%%host%%", "port": "%%port%%"}]'
-      com.datadoghq.ad.logs: '[{"source": "nginx", "service": "nginx-tabantaj"}]'
-      com.datadoghq.tags.env: "prod"
-      com.datadoghq.tags.service: "tabantaj"
-      com.datadoghq.tags.version: "1"
     env_file:
       - .env
     logging:
@@ -233,12 +225,26 @@ services:
     networks:
       - tabantajnetwork
 
+  goservices:
+    image: ghcr.io/silent4devs/goservices:latest
+    container_name: goservices
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3300:3300"
+    volumes:
+      - goservices_data:/goservices
+    networks:
+      - tabantajnetwork
+
 volumes:
   tabantaj-database:
     driver: local
   rabbitmq_data:
     driver: local
   pgadmin-data:
+    driver: local
+  goservices_data:
     driver: local
   # elasticsearch:
   #   driver: local

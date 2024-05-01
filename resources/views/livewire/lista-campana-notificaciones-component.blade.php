@@ -1,4 +1,4 @@
- <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+ <div class="dropdown-menu dropdown-menu-lg">
      @if (count($last_unread_notifications))
          <div class="dropdown-header bg-light"><strong>Tú tienes {{ $notificaciones_sin_leer }}
                  notificaciones</strong>
