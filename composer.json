@@ -31,6 +31,7 @@
     "renatomarinho/laravel-page-speed": "dev-master",
     "sentry/sentry-laravel": "^4.0",
     "simplesoftwareio/simple-qrcode": "^4.2",
+    "spatie/async": "^1.6",
     "spatie/calendar-links": "^1.6",
     "spatie/geocoder": "^3.10",
     "spatie/laravel-backup": "^8.6",
@@ -40,6 +41,7 @@
     "spatie/laravel-responsecache": "^7.4",
     "tucker-eric/eloquentfilter": "^3.2",
     "vladimir-yuldashev/laravel-queue-rabbitmq": "^14.0",
+    "vxm/laravel-async": "^4.1",
     "yajra/laravel-datatables-oracle": "^10.0"
   },
   "require-dev": {
