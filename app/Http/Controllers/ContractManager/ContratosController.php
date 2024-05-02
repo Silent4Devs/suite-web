@@ -92,6 +92,7 @@ class ContratosController extends AppBaseController
      */
     public function store(Request $request)
     {
+
         $validatedData = $request->validate([
             'no_contrato' => 'required_unless:identificador_privado,1',
             'nombre_servicio' => 'required|max:500',
@@ -198,12 +199,6 @@ class ContratosController extends AppBaseController
             $num_contrato = $no_contrato_sin_slashes;
         }
 
-        if (strlen($num_contrato) > 255) {
-            $mensajeError = 'Intentelo de nuevo, Ingrese  todos los campos con caracteres menores a 255';
-
-            return Redirect::back()->with('mensajeError', $mensajeError);
-        }
-
         $contrato = $this->contratoRepository->create([
             'tipo_contrato' => $request->tipo_contrato,
             'identificador_privado' => $request->identificador_privado,
@@ -235,8 +230,6 @@ class ContratosController extends AppBaseController
             // 'firma1' => $firma,
         ], $input);
 
-        // dd($contrato);
-
         $dolares = DolaresContrato::create([
             'contrato_id' => $contrato->id,
             'monto_dolares' => $resultado5,
@@ -265,16 +258,8 @@ class ContratosController extends AppBaseController
             Storage::makeDirectory('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/facturas/xml');
         }
 
-        // firma
-        // if(File::exists($file)){
-        //     Storage::makeDirectory('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/firmas');
-        //     $newfile = storage_path('app/public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/firmas/'.$contrato->firma1);
-        //     // $newfile = storage_path('app/public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/firmas');
-        //     File::move($file, $newfile);
-        // }
-        //############## FIN ##############################
-
         //############# GESTIÓN ARCHIVOS ##################
+
         $file = $request->file('documento');
         if (! Storage::exists('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato)) {
             Storage::makeDirectory('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato);
@@ -316,7 +301,6 @@ class ContratosController extends AppBaseController
         $contrato->update([
             'file_contrato' => $nombre_f,
         ]);
-        // dd($contrato->nombre_f);
 
         //############# FIN REESTRUCTURACION DE ARCHIVOS ##################
 
@@ -338,8 +322,7 @@ class ContratosController extends AppBaseController
             'cumple' => true,
         ]);
 
-        // dd('Guarda todo bien');
-        // notify()->success('¡El registro fue cargado exitosamente!');
+        // dd('hola1');
 
         //return redirect(route('contratos.index'));
         return redirect('contract_manager/contratos-katbol/contratoinsert/'.$contrato->id);
