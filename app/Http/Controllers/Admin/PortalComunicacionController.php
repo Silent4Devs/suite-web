@@ -43,9 +43,6 @@ class PortalComunicacionController extends Controller
             function () use (&$comunicacionSgis) {
                 $comunicacionSgis = ComunicacionSgi::getAllwithImagenesBlog();
             },
-            function () use (&$comunicacionSgis_carrusel) {
-                $comunicacionSgis_carrusel = ComunicacionSgi::getAllwithImagenesCarrousel();
-            },
             function () use (&$nuevos, $hoy) {
                 $nuevos = Empleado::whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->get();
             },
@@ -58,6 +55,8 @@ class PortalComunicacionController extends Controller
 
         $empleado_asignado = $user->n_empleado;
         $authId = $user->id;
+
+        $comunicacionSgis_carrusel = ComunicacionSgi::getAllwithImagenesCarrousel();
 
         $cumpleaños = Cache::remember('Portal_cumpleaños_'.$authId, 3600, function () use ($hoy, $getAlta) {
             return $getAlta->whereMonth('cumpleaños', '=', $hoy->format('m'))->get();
