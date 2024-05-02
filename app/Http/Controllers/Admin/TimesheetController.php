@@ -642,78 +642,93 @@ class TimesheetController extends Controller
 
     public function storeProyectos(Request $request)
     {
-        $request->validate(
-            [
-                'identificador' => 'required|unique:timesheet_proyectos,identificador|max:255',
-                'proyecto_name' => 'required|max:255',
-                'cliente_id' => 'required',
-                'sede_id' => 'required',
-                'tipo' => 'required',
-            ],
-            [
-                'identificador.unique' => 'El ID ya esta en uso',
-            ],
-        );
-        if ($request->fecha_fin) {
+        try {
             $request->validate(
                 [
-                    'fecha_inicio' => 'before:fecha_fin',
-                    'fecha_fin' => 'after:fecha_inicio',
+                    'identificador' => 'required|unique:timesheet_proyectos,identificador|max:255',
+                    'proyecto_name' => 'required|max:255',
+                    'cliente_id' => 'required',
+                    'sede_id' => 'nullable',
+                    'tipo' => 'required',
                 ],
                 [
-                    'fecha_inicio.before' => 'La fecha de incio debe ser anterior a la fecha de fin',
-                    'fecha_fin.after' => 'La fecha de fin debe ser posterior a la fecha de incio',
+                    'identificador.unique' => 'El ID ya esta en uso',
                 ],
             );
-        }
-        $nuevo_proyecto = TimesheetProyecto::create([
-            'identificador' => $request->identificador,
-            'proyecto' => $request->proyecto_name,
-            'cliente_id' => $request->cliente_id,
-            'fecha_inicio' => $request->fecha_inicio == '' ? null : $request->fecha_inicio,
-            'fecha_fin' => $request->fecha_fin == '' ? null : $request->fecha_fin,
-            'sede_id' => $request->sede_id,
-            'tipo' => $request->tipo,
-            'horas_proyecto' => $request->horas_proyecto == '' ? null : $request->horas_proyecto,
-        ]);
+            if ($request->fecha_fin) {
+                $request->validate(
+                    [
+                        'fecha_inicio' => 'before:fecha_fin',
+                        'fecha_fin' => 'after:fecha_inicio',
+                    ],
+                    [
+                        'fecha_inicio.before' => 'La fecha de incio debe ser anterior a la fecha de fin',
+                        'fecha_fin.after' => 'La fecha de fin debe ser posterior a la fecha de incio',
+                    ],
+                );
+            }
+            $nuevo_proyecto = TimesheetProyecto::create([
+                'identificador' => $request->identificador,
+                'proyecto' => $request->proyecto_name,
+                'cliente_id' => $request->cliente_id,
+                'fecha_inicio' => $request->fecha_inicio == '' ? null : $request->fecha_inicio,
+                'fecha_fin' => $request->fecha_fin == '' ? null : $request->fecha_fin,
+                'sede_id' => $request->sede_id,
+                'tipo' => $request->tipo,
+                'horas_proyecto' => $request->horas_proyecto == '' ? null : $request->horas_proyecto,
+            ]);
 
-        foreach ($request->areas_seleccionadas as $key => $area_id) {
-            TimesheetProyectoArea::create([
-                'proyecto_id' => $nuevo_proyecto->id,
-                'area_id' => $area_id,
+            foreach ($request->areas_seleccionadas as $key => $area_id) {
+                TimesheetProyectoArea::create([
+                    'proyecto_id' => $nuevo_proyecto->id,
+                    'area_id' => $area_id,
+                ]);
+            }
+
+            $informados = ListaInformativa::with('participantes.empleado', 'usuarios.usuario')->where('modelo', '=', $this->modelo_proyectos)->first();
+
+            if (isset($informados->participantes[0]) || isset($informados->usuarios[0])) {
+
+                if (isset($informados->participantes[0])) {
+                    foreach ($informados->participantes as $participante) {
+                        $correos[] = $participante->empleado->email;
+                    }
+                }
+
+                if (isset($informados->usuarios[0])) {
+                    foreach ($informados->usuarios as $usuario) {
+                        $correos[] = $usuario->usuario->email;
+                    }
+                }
+
+                dispatch(
+                    new NuevoProyectoJob(
+                        $correos,
+                        $nuevo_proyecto->proyecto,
+                        $nuevo_proyecto->identificador,
+                        $nuevo_proyecto->cliente->nombre,
+                        User::getCurrentUser()->empleado->name,
+                        $nuevo_proyecto->id
+                    )
+                );
+            }
+
+            return redirect('admin/timesheet/proyecto-empleados/'.$nuevo_proyecto->id);
+
+            return redirect('admin/timesheet/proyectos/create');
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Se ha creado el proyecto con exito.',
+                'id_proyecto' => $nuevo_proyecto->id, // Optionally, you can include the created project in the response
+            ]);
+        } catch (\Exception $e) {
+            // Return JSON response with error message
+            return response()->json([
+                'success' => false,
+                'message' => 'Se ha producido un error al intentar crear el proyecto.',
             ]);
         }
-
-        $informados = ListaInformativa::with('participantes.empleado', 'usuarios.usuario')->where('modelo', '=', $this->modelo_proyectos)->first();
-
-        if (isset($informados->participantes[0]) || isset($informados->usuarios[0])) {
-
-            if (isset($informados->participantes[0])) {
-                foreach ($informados->participantes as $participante) {
-                    $correos[] = $participante->empleado->email;
-                }
-            }
-
-            if (isset($informados->usuarios[0])) {
-                foreach ($informados->usuarios as $usuario) {
-                    $correos[] = $usuario->usuario->email;
-                }
-            }
-
-            dispatch(
-                new NuevoProyectoJob(
-                    $correos,
-                    $nuevo_proyecto->proyecto,
-                    $nuevo_proyecto->identificador,
-                    $nuevo_proyecto->cliente->nombre,
-                    User::getCurrentUser()->empleado->name,
-                    $nuevo_proyecto->id
-                )
-            );
-        }
-
-        // return redirect('admin/timesheet/proyecto-empleados/' . $nuevo_proyecto->id);
-        return redirect('admin/timesheet/proyectos/create');
     }
 
     public function showProyectos($id)
@@ -750,7 +765,7 @@ class TimesheetController extends Controller
             ],
             'proyecto_name' => 'required|max:255',
             'cliente_id' => 'required',
-            'sede_id' => 'required',
+            'sede_id' => 'nullable',
             'tipo' => 'required',
         ]);
 
@@ -1172,6 +1187,8 @@ class TimesheetController extends Controller
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
+
+        //dd($proyectos);
 
         return view('admin.timesheet.reportes.reportes-financiero', compact('proyectos', 'logo_actual', 'empresa_actual'));
     }

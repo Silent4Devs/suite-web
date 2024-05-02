@@ -7,9 +7,9 @@
     <h5 class="col-12 titulo_general_funcion">Declaración de Aplicabilidad</h5>
     <div class="mt-5 card" id="d-aplicabilidad">
         <div class="caja_botones_menu">
-            <a class="btn_activo" href="#" data-tabs="declaracion">
+            {{-- <a class="btn_activo" href="#" data-tabs="declaracion">
                 Declaración Aplicabilidad
-            </a>
+            </a> --}}
 
             {{-- <a href="#" data-tabs="dashboard">
                 Dashboard

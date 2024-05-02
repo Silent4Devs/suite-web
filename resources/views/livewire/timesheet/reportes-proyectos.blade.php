@@ -4,12 +4,12 @@
     @endphp
     <style type="text/css">
         .tabla-calendar-time table {
-            border-radius: 20px;
+            border-radius: 10px 10px 0 0;
             overflow: hidden;
         }
 
         .tabla-calendar-time td {
-            border-bottom: 1px solid #bbb !important;
+            border-bottom: 0px solid #bbb !important;
         }
 
         .datatable_timesheet_proyectos thead tr:nth-child(1) th {
@@ -21,7 +21,7 @@
         }
 
         .datatable_timesheet_proyectos thead tr:nth-child(3) th {
-            background-color: #F0E7E7 !important;
+            background-color: #FFF9EB !important;
         }
 
         .datatable_timesheet_proyectos tr th:first-child,
@@ -71,8 +71,6 @@
             transition: 0.3s;
         }
 
-
-
         .datatable_timesheet_proyectos tr th:first-child::before,
         .datatable_timesheet_proyectos tr td:first-child::before,
         .datatable_timesheet_proyectos tr th:nth-child(2)::before,
@@ -84,8 +82,35 @@
             width: 1px;
             height: 100%;
             top: 0 !important;
-            right: 0;
-            background-color: grey;
+            right: 0 !important;
+            background-color: #c5c5c5;
+        }
+
+        table.dataTable thead>tr>th.sorting:before,
+        table.dataTable thead>tr>th.sorting:after,
+        table.dataTable thead>tr>th.sorting_asc:before,
+        table.dataTable thead>tr>th.sorting_asc:after,
+        table.dataTable thead>tr>th.sorting_desc:before,
+        table.dataTable thead>tr>th.sorting_desc:after,
+        table.dataTable thead>tr>th.sorting_asc_disabled:before,
+        table.dataTable thead>tr>th.sorting_asc_disabled:after,
+        table.dataTable thead>tr>th.sorting_desc_disabled:before,
+        table.dataTable thead>tr>th.sorting_desc_disabled:after,
+        table.dataTable thead>tr>td.sorting:before,
+        table.dataTable thead>tr>td.sorting:after,
+        table.dataTable thead>tr>td.sorting_asc:before,
+        table.dataTable thead>tr>td.sorting_asc:after,
+        table.dataTable thead>tr>td.sorting_desc:before,
+        table.dataTable thead>tr>td.sorting_desc:after,
+        table.dataTable thead>tr>td.sorting_asc_disabled:before,
+        table.dataTable thead>tr>td.sorting_asc_disabled:after,
+        table.dataTable thead>tr>td.sorting_desc_disabled:before,
+        table.dataTable thead>tr>td.sorting_desc_disabled:after {
+            position: absolute !important;
+            opacity: 1 !important;
+            line-height: 9px !important;
+            font-size: .8em !important;
+            color: #c5c5c5 !important;
         }
 
         .datatable_timesheet_proyectos tr th:last-child::before,
@@ -96,7 +121,7 @@
             height: 100%;
             top: 0 !important;
             left: 0;
-            background-color: grey;
+            background-color: #c5c5c5;
         }
 
         @media(max-width: 1200px) {
@@ -167,7 +192,7 @@
 
         </div>
     </div>
-    <div class="card card-body">
+    {{-- <div class="card card-body">
         <div class="row">
             <div class="col-12">
                 <div class="row w-100 mt-4" style="align-items: end">
@@ -217,24 +242,23 @@
                 class="datatable_timesheet_proyectos table w-100 tabla-fixed tabla-calendar-time">
                 <thead>
                     <tr>
-                        <th style="min-width:250px;">
-                            ID-Proyecto
-                        </th>
-                        <th style="min-width:250px; text-align: right;">Áreas participantes</th>
-                        <th style="min-width:250px; text-align: right;">Empleados participantes</th>
-                        <th style="min-width:250px; text-align: right;">Cliente</th>
+                        <th style="min-width: 250px;text-align: justify;width: 250px;align-content: center;" ROWSPAN=3>
+                            ID-Proyecto</th>
+                        <th style="min-width: 250px;text-align: justify;width: 250px;align-content: center;" ROWSPAN=3>
+                            Áreas participantes</th>
+                        <th style="min-width: 250px;text-align: justify;width: 250px;align-content: center;" ROWSPAN=3>
+                            Empleados participantes</th>
+                        <th style="min-width: 250px;text-align: justify;width: 250px;align-content: center;" ROWSPAN=3>
+                            Cliente</th>
                         @foreach ($calendario_tabla as $calendar)
                             <th colspan="{{ $calendar['total_weeks'] }}" class="th-calendario th-año">
                                 <small>{{ $calendar['year'] }}</small>
                             </th>
                         @endforeach
-                        <th>Total horas</th>
+                        <th style="min-width: 50px;text-align: justify;width: 50px;align-content: center;" ROWSPAN=3>
+                            Total horas</th>
                     </tr>
                     <tr>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
                         @foreach ($calendario_tabla as $calendar)
                             @foreach ($calendar['months'] as $key => $mes)
                                 @php
@@ -283,13 +307,8 @@
                                 @endif
                             @endforeach
                         @endforeach
-                        <th></th>
                     </tr>
                     <tr>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
                         @foreach ($calendario_tabla as $calendar)
                             @foreach ($calendar['months'] as $key => $mes)
                                 @foreach ($mes['weeks'] as $week)
@@ -306,7 +325,6 @@
                                 @endforeach
                             @endforeach
                         @endforeach
-                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -351,14 +369,233 @@
                 </div>
             </div>
         </div>
+    </div> --}}
+    <div class="card card-body">
+        <div class="datatable-fix tabla-calendar-time">
+            <table id="datatabletimesheetproyectos"
+                class="datatable_timesheet_proyectos table w-100 tabla-fixed tabla-calendar-time">
+                <thead>
+                    <tr>
+                        <th style="min-width: 250px;text-align: justify;width: 250px;align-content: center;"
+                            rowspan="3">ID-Proyecto</th>
+                        <th style="min-width: 250px;text-align: justify;width: 250px;align-content: center;"
+                            rowspan="3">Áreas participantes</th>
+                        <th style="min-width: 250px;text-align: justify;width: 250px;align-content: center;"
+                            rowspan="3">Empleados participantes</th>
+                        <th style="min-width: 250px;text-align: justify;width: 250px;align-content: center;"
+                            rowspan="3">Cliente</th>
+                        @foreach ($calendario_tabla as $calendar)
+                            <th colspan="{{ $calendar['total_weeks'] }}" class="th-calendario th-año">
+                                <small>{{ $calendar['year'] }}</small>
+                            </th>
+                        @endforeach
+                        <th style="min-width: 50px;text-align: justify;width: 50px;align-content: center;"
+                            rowspan="3">Total horas</th>
+                    </tr>
+                    <tr>
+                        @foreach ($calendario_tabla as $calendar)
+                            @foreach ($calendar['months'] as $key => $mes)
+                                @php
+                                    $mes_traducido = '';
+                                    switch ($key) {
+                                        case 'January':
+                                            $mes_traducido = 'Enero';
+                                            break;
+                                        case 'February':
+                                            $mes_traducido = 'Febrero';
+                                            break;
+                                        case 'March':
+                                            $mes_traducido = 'Marzo';
+                                            break;
+                                        case 'April':
+                                            $mes_traducido = 'Abril';
+                                            break;
+                                        case 'May':
+                                            $mes_traducido = 'Mayo';
+                                            break;
+                                        case 'June':
+                                            $mes_traducido = 'Junio';
+                                            break;
+                                        case 'July':
+                                            $mes_traducido = 'Julio';
+                                            break;
+                                        case 'August':
+                                            $mes_traducido = 'Agosto';
+                                            break;
+                                        case 'September':
+                                            $mes_traducido = 'Septiembre';
+                                            break;
+                                        case 'October':
+                                            $mes_traducido = 'Octubre';
+                                            break;
+                                        case 'November':
+                                            $mes_traducido = 'Noviembre';
+                                            break;
+                                        case 'December':
+                                            $mes_traducido = 'Diciembre';
+                                            break;
+                                    }
+                                @endphp
+                                @if ($mes['total_weeks'] > 0)
+                                    <th colspan="{{ $mes['total_weeks'] }}" class="th-calendario th-mes">
+                                        <small>{{ $mes_traducido }} {{ $calendar['year'] }}</small>
+                                    </th>
+                                @endif
+                            @endforeach
+                        @endforeach
+                    </tr>
+                    <tr>
+                        @foreach ($calendario_tabla as $calendar)
+                            @foreach ($calendar['months'] as $key => $mes)
+                                @foreach ($mes['weeks'] as $week)
+                                    @php
+                                        $semanas_time_array = explode('|', $week);
+                                        $fecha_inicio_time = $semanas_time_array['0'];
+                                        $fecha_fin_time = $semanas_time_array['1'];
+                                        $fecha_inicio_time = \Carbon\Carbon::parse($fecha_inicio_time)->format('d');
+                                        $fecha_fin_time = \Carbon\Carbon::parse($fecha_fin_time)->format('d');
+                                    @endphp
+                                    <th class="th-calendario th-semana">
+                                        <small>Del <strong>{{ $fecha_inicio_time }}</strong> al
+                                            <strong>{{ $fecha_fin_time }}</strong></small>
+                                    </th>
+                                @endforeach
+                            @endforeach
+                        @endforeach
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($proyectos_array as $proyecto)
+                        <tr>
+                            <td>{{ $proyecto['identificador'] }} - {{ $proyecto['proyecto'] }}</td>
+                            <td>
+                                <ul style="padding-left: 10px;">
+                                    @foreach ($proyecto['areas'] as $area)
+                                        <li>{{ $area['area'] }}</li>
+                                    @endforeach
+                                </ul>
+                            </td>
+                            <td>
+                                <ul style="padding-left: 10px;">
+                                    @foreach ($proyecto['empleados'] as $empleado)
+                                        <li>{{ $empleado['name'] }}</li>
+                                    @endforeach
+                                </ul>
+                            </td>
+                            <td>{{ $proyecto['cliente'] }} </td>
+                            @foreach ($proyecto['calendario'] as $index => $horas_calendar)
+                                <td style="font-size: 10px !important; text-align: center !important;">
+                                    {!! $horas_calendar !!}</td>
+                            @endforeach
+                            <td>
+                                {{ $proyecto['horas_totales'] }} h
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <script type="text/javascript">
-        document.addEventListener('DOMContentLoaded', () => {
-            Livewire.on('scriptTabla', () => {
-                tablaLivewire('datatable_timesheet_proyectos');
-                tablaLivewire('datatable_timesheet_proyectos_empleados');
-            });
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', () => {
+        Livewire.on('scriptTabla', () => {
+            tablaLivewire('datatable_timesheet_proyectos');
+            tablaLivewire('datatable_timesheet_proyectos_empleados');
+            tablaLivewire('datatabletimesheetproyectos');
         });
-    </script>
+    });
+</script>
+<script>
+    document.addEventListener('livewire:load', function() {
+        setTimeout(function() {
+            tablaLivewire('datatabletimesheetproyectos');
+        }, 100);
+    });
+
+    let cont = 0;
+
+    function tablaLivewire(id_tabla) {
+        $('#' + id_tabla).attr('id', id_tabla + cont);
+        $(function() {
+            let dtButtons = [{
+                    extend: 'csvHtml5',
+                    title: `Mis Registros ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Exportar CSV',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible']
+                    }
+                },
+                {
+                    extend: 'excelHtml5',
+                    title: `Mis Registros ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Exportar Excel',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible']
+                    }
+                },
+                {
+                    extend: 'print',
+                    text: '<i class="fas fa-print" style="font-size: 1.1rem;color:#345183"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Imprimir',
+                    customize: function(doc) {
+
+                        $(doc.document.body).find('table')
+                            .css('font-size', '12px')
+                            .css('margin-top', '15px')
+                        $(doc.document.body).find('th').each(function(index) {
+                            $(this).css('font-size', '18px');
+                            $(this).css('color', '#fff');
+                            $(this).css('background-color', 'blue');
+                        });
+                    },
+                    title: '',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible']
+                    }
+                },
+                {
+                    extend: 'colvis',
+                    text: '<i class="fas fa-filter" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Seleccionar Columnas',
+                },
+                {
+                    extend: 'colvisGroup',
+                    text: '<i class="fas fa-eye" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    show: ':hidden',
+                    titleAttr: 'Ver todo',
+                },
+                {
+                    extend: 'colvisRestore',
+                    text: '<i class="fas fa-undo" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Restaurar a estado anterior',
+                }
+            ];
+            let dtOverrideGlobals = {
+                buttons: dtButtons,
+                destroy: true,
+                render: true,
+                paging: true, // Enable pagination
+                pageLength: 10, // Set the number of records per page
+                lengthMenu: [5, 10, 25, 50, 100], // Define available page lengths
+            };
+            let table = $('#' + id_tabla + cont).DataTable(dtOverrideGlobals);
+        });
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
+            tablaLivewire('datatabletimesheetproyectos');
+        }, 100);
+    });
+</script>
 </div>

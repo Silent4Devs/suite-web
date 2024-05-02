@@ -452,7 +452,7 @@
 
         $('.modal-backdrop').hide();
 
-        toastr.success('Plan de Acción creado con éxito');
+        toastr.success('Plan de Trabajo creado con éxito');
 
     });
 

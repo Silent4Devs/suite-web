@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Timesheet;
 
+use App\Models\Area;
 use App\Models\Empleado;
 use App\Models\TimesheetProyecto;
 use App\Models\TimesheetProyectoEmpleado;
@@ -31,9 +32,12 @@ class TimesheetProyectoEmpleadosComponent extends Component
 
     public $todos_empleados;
 
+    public $listeners;
+
     public function mount($proyecto_id)
     {
         $this->proyecto_id = $proyecto_id;
+        $this->listeners[] = 'seleccionarTodos';
     }
 
     public function render()
@@ -42,17 +46,26 @@ class TimesheetProyectoEmpleadosComponent extends Component
 
         $this->proyecto = TimesheetProyecto::getIdNameAll()->find($proyecto_id);
 
-        $this->areasempleado = DB::table('timesheet_proyectos_areas')
+        $areasempleado = DB::table('timesheet_proyectos_areas')
             ->select('id', 'area_id', 'proyecto_id')
             ->where('proyecto_id', $proyecto_id)
             ->get();
 
-        $this->empleados = DB::table('empleados')
-            ->select('empleados.id', 'empleados.area_id', 'empleados.name', 'empleados.puesto_id', 'puestos.puesto as puesto')
-            ->join('puestos', 'empleados.puesto_id', '=', 'puestos.id')
-            ->where('empleados.estatus', 'alta')
-            ->where('empleados.deleted_at', '=', null)
-            ->get();
+        $empleados_Area = [];
+
+        foreach ($areasempleado as $area) {
+            $emps = Area::with('empleadosBasico')->find($area->area_id)->empleadosBasico;
+
+            foreach ($emps as $empleado) {
+                $empleados_Area[] = [
+                    'id' => $empleado->id,
+                    'name' => $empleado->name,
+                    'seleccionado' => false,
+                ];
+            }
+        }
+
+        $empleados_Area = array_unique($empleados_Area, SORT_REGULAR);
 
         $this->proyecto_empleados = DB::table('timesheet_proyectos_empleados')
             ->select(
@@ -74,7 +87,21 @@ class TimesheetProyectoEmpleadosComponent extends Component
             ->join('puestos', 'empleados.puesto_id', '=', 'puestos.id')
             ->join('timesheet_proyectos', 'timesheet_proyectos_empleados.proyecto_id', '=', 'timesheet_proyectos.id')
             ->where('timesheet_proyectos_empleados.proyecto_id', $this->proyecto->id)
+            ->orderBy('id')
             ->get();
+
+        foreach ($empleados_Area as &$empleado) {
+            foreach ($this->proyecto_empleados as $proyecto_empleado) {
+                if ($empleado['id'] === $proyecto_empleado->empleado_id) {
+                    $empleado['seleccionado'] = true;
+                    break; // Break out of inner loop once a match is found
+                }
+            }
+        }
+        unset($empleado); // Unset reference to last element to avoid unwanted modifications
+        $empleados_Area = collect($empleados_Area)->sortBy('name')->values()->all();
+
+        $this->empleados = $empleados_Area;
 
         return view('livewire.timesheet.timesheet-proyecto-empleados-component');
     }
@@ -91,25 +118,48 @@ class TimesheetProyectoEmpleadosComponent extends Component
         $this->costo_hora = null;
     }
 
-    public function addEmpleado()
+    public function seleccionarTodos()
     {
-
-        if ($this->empleado_añadido == 'todos_empleados_seleccionados') {
-            foreach ($this->empleados as $empleado) {
-                foreach ($this->areasempleado as $ae) {
-                    if (isset($ae['area_id'])) {
-                        if ($empleado['area_id'] == $ae['area_id']) {
-                            $this->addEmpleadoIndivudual($empleado['id']);
-                        }
-                    }
-                }
-            }
-        } else {
-            $this->addEmpleadoIndivudual($this->empleado_añadido);
+        foreach ($this->empleados as $empleado) {
+            $this->addEmpleadoIndivudual($empleado['id']);
         }
     }
 
-    public function addEmpleadoIndivudual($empleado_añadido_id)
+    public function seleccionarTodosExterno()
+    {
+        foreach ($this->empleados as $empleado) {
+            $this->addEmpleadoIndivudual($empleado['id'], true);
+        }
+    }
+
+    public function asignacionEmpleados($id_empleado, $key, $asignacion)
+    {
+        if ($asignacion && $this->proyecto->tipo == 'Externo') {
+            $this->empleado_añadido = $id_empleado;
+            $this->emit('modalProyectosExternos');
+        } elseif ($asignacion) {
+            $this->addEmpleadoIndivudual($id_empleado);
+        } else {
+
+            $empleado_proyecto = TimesheetProyectoEmpleado::select(
+                'id',
+                'proyecto_id',
+                'empleado_id'
+            )
+                ->where('proyecto_id', $this->proyecto->id)
+                ->where('empleado_id', $id_empleado)
+                ->first();
+
+            $this->emit('openModal', $empleado_proyecto->id);
+        }
+    }
+
+    public function addEmpleado()
+    {
+        $this->addEmpleadoIndivudual($this->empleado_añadido);
+    }
+
+    public function addEmpleadoIndivudual($empleado_añadido_id, $todosExt = false)
     {
         $empleado_add_proyecto = Empleado::find($empleado_añadido_id);
 
@@ -120,27 +170,37 @@ class TimesheetProyectoEmpleadosComponent extends Component
 
         if ($this->proyecto->tipo == 'Externo') {
             if (isset($this->horas_asignadas) && isset($this->costo_hora)) {
-                $time_proyect_empleado = TimesheetProyectoEmpleado::firstOrCreate([
-                    'proyecto_id' => $this->proyecto->id,
-                    'empleado_id' => $empleado_add_proyecto->id,
-                    'area_id' => $empleado_add_proyecto->area_id,
-                    'horas_asignadas' => $this->horas_asignadas,
-                    'costo_hora' => $this->costo_hora,
-                ]);
-                $this->resetInput();
+                $time_proyect_empleado = TimesheetProyectoEmpleado::firstOrCreate(
+                    [
+                        'proyecto_id' => $this->proyecto->id,
+                        'empleado_id' => $empleado_add_proyecto->id,
+                    ],
+                    [
+                        'area_id' => $empleado_add_proyecto->area_id,
+                        'horas_asignadas' => $this->horas_asignadas,
+                        'costo_hora' => $this->costo_hora,
+                    ]
+                );
+                if (! $todosExt) {
+                    $this->resetInput();
+                }
             } else {
                 $this->dehydrate();
             }
         }
 
         if ($this->proyecto->tipo != 'Externo') {
-            $time_proyect_empleado = TimesheetProyectoEmpleado::firstOrCreate([
-                'proyecto_id' => $this->proyecto->id,
-                'empleado_id' => $empleado_add_proyecto->id,
-                'area_id' => $empleado_add_proyecto->area_id,
-                'horas_asignadas' => 0,
-                'costo_hora' => 0,
-            ]);
+            $time_proyect_empleado = TimesheetProyectoEmpleado::firstOrCreate(
+                [
+                    'proyecto_id' => $this->proyecto->id,
+                    'empleado_id' => $empleado_add_proyecto->id,
+                ],
+                [
+                    'area_id' => $empleado_add_proyecto->area_id,
+                    'horas_asignadas' => 0,
+                    'costo_hora' => 0,
+                ]
+            );
         }
 
         $this->alert('success', 'Empleado agregado exitosamente', [
@@ -149,6 +209,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
             'toast' => true,
             'timerProgressBar' => true,
         ]);
+        $this->render();
     }
 
     public function editEmpleado($id, $datos)

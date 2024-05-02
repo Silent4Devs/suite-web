@@ -2452,17 +2452,17 @@ class PermissionsTableSeeder extends Seeder
 
             [
                 'title' => 'planes_de_accion_editar',
-                'name' => 'Este permiso permite al usuario realizar la acción de editar un plan de acción en el módulo de Planes de Trabajo',
+                'name' => 'Este permiso permite al usuario realizar la acción de editar un Plan de Trabajo en el módulo de Planes de Trabajo',
             ],
 
             [
                 'title' => 'planes_de_accion_eliminar',
-                'name' => 'Este permiso permite al usuario realizar la acción de eliminar un plan de acción en el módulo de Planes de Trabajo',
+                'name' => 'Este permiso permite al usuario realizar la acción de eliminar un Plan de Trabajo en el módulo de Planes de Trabajo',
             ],
 
             [
                 'title' => 'planes_de_accion_visualizar_diagrama',
-                'name' => 'Este permiso permite al usuario realizar la acción de visualizar diagrama del plan de acción en el módulo de Planes de Trabajo',
+                'name' => 'Este permiso permite al usuario realizar la acción de visualizar diagrama del Plan de Trabajo en el módulo de Planes de Trabajo',
             ],
             //Centro de Atención
             [
