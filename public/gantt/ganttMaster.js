@@ -314,7 +314,7 @@ GanttMaster.prototype.saveChangesOnServer = function () {
                 var date=today.toLocaleDateString("en-US");
                 var time=today.toLocaleTimeString("en-US");
                 document.getElementById('ultima_modificacion').innerHTML=date+' '+time;
-                
+
             }else{
                 toastr.success('Guardado con éxito');
             }
@@ -895,8 +895,7 @@ GanttMaster.prototype.markUnChangedTasksAndAssignments = function (newProject) {
                 //si confrontano i valori per vedere se è cambiata
                 newAssig.unchanged =
                   newAssig.resourceId == oldAssig.resourceId &&
-                  newAssig.roleId == oldAssig.roleId &&
-                  newAssig.effort == oldAssig.effort;
+                  newAssig.roleId == oldAssig.roleId;
               }
             }
           }

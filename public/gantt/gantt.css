@@ -503,11 +503,11 @@ body {
 
 
 .isGanttList .taskEditRow:nth-child(odd), .assigEditRow:nth-child(odd) {
-    background-color: #ffffff;
+    background-color: #FFEEEE;
 }
 
 .isGanttList .taskEditRow:nth-child(even), .assigEditRow:nth-child(even) {
-    background-color: #ffffff;
+    background-color: #FFEEEE;
 }
 
 input[readonly] {
@@ -539,23 +539,39 @@ input[readonly] {
 }
 
 .taskStatus[status=STATUS_ACTIVE] {
-    background-color: #ECCE7D !important;
-    fill: #ECCE7D !important;
+    background-color: #DEEFFF;
+    color: #0080FF;
+    border-radius: 10px;
+    margin-top: 8px;
+    font-weight: 700;
+    text-align: center;
 }
 
 .taskStatus[status=STATUS_DONE] {
-    background-color: #42A500 !important;
-    fill: #42A500 !important;
+    background-color: #DEFFE6;
+    color: #42A500;
+    border-radius: 10px;
+    margin-top: 8px;
+    font-weight: 700;
+    text-align: center;
 }
 
 .taskStatus[status=STATUS_FAILED] {
-    background-color: #FF5C3A !important;
-    fill: #FF5C3A !important;
+    background-color: #FFDFDF;
+    color: #FF5C3A;
+    border-radius: 10px;
+    margin-top: 8px;
+    font-weight: 700;
+    text-align: center;
 }
 
 .taskStatus[status=STATUS_SUSPENDED] {
-    background-color: #818181 !important;
-    fill: #818181 !important;
+    background-color: #EEEEEE;
+    color: #818181;
+    border-radius: 10px;
+    margin-top: 8px;
+    font-weight: 700;
+    text-align: center;
 }
 
 .taskStatus[status=STATUS_WAITING] {
@@ -564,8 +580,12 @@ input[readonly] {
 }
 
 .taskStatus[status=STATUS_UNDEFINED] {
-    background-color: #0080FF !important;
-    fill: #0080FF !important;
+    background-color: #FFECAF;
+    color: #FF9900;
+    border-radius: 10px;
+    margin-top: 8px;
+    font-weight: 700;
+    text-align: center;
 }
 
 div.taskDivStatus {

@@ -540,11 +540,8 @@
             <div class="__template__" type="TASKBAR">
                 <!-- @include('admin.planesDeAccion.diagramas-implementacion.code-coment-gantt.taskBox') -->
             </div>
-
-
             <div class="__template__" type="CHANGE_STATUS">
                 <!-- @include('admin.planesDeAccion.diagramas-implementacion.code-coment-gantt.taskStatusBox') -->
-
             </div>
 
             <div class="__template__" type="TASK_EDITOR">
@@ -626,17 +623,17 @@
 
                     <h2>Asignaciones</h2>
                     <table cellspacing="1" cellpadding="0" width="100%" id="assigsTable">
-                        <tr>
+                        <tr style="background-color: #FFEEEE;">
                             <th style="width:100px;">Nombre</th>
                             <th style="width:70px;">Rol</th>
-                            <th style="width:30px;">est.wklg.</th>
-                            <th style="width:30px;" id="addAssig"><span class="teamworkIcon"
-                                    style="cursor: pointer">+</span></th>
+                            <th style="width:5px;">est.wklg.</th>
+                            <th style="width:5px;"></th>
                         </tr>
                     </table>
+                    <div id="addAssig"><span class="teamworkIcon" style="cursor: pointer">+</span></div>
 
                     <div style="text-align: right; padding-top: 20px">
-                        <span id="saveButton" class="button first"
+                        <span id="saveButton" class="btn btn-xs btn-primary"
                             onClick="$(this).trigger('saveFullEditor.gantt');">Guardar</span>
                     </div>
 
@@ -645,13 +642,13 @@
             </div>
             <div class="__template__" type="ASSIGNMENT_ROW">
                 <!--
-                                                                                <tr taskId="(#=obj.task.id#)" assId="(#=obj.assig.id#)" class="assigEditRow" >
-                                                                                <td ><select name="resourceId"  class="formElements" (#=obj.assig.id.indexOf("tmp_")==0?"":"disabled"#) ></select></td>
-                                                                                <td ><select type="select" name="roleId"  class="formElements"></select></td>
-                                                                                <td ><input type="text" name="effort" value="(#=getMillisInHoursMinutes(obj.assig.effort)#)" size="5" class="formElements"></td>
-                                                                                <td align="center"><span class="teamworkIcon delAssig del" style="cursor: pointer">d</span></td>
-                                                                                </tr>
-                                                                                -->
+                                                                                    <tr taskId="(#=obj.task.id#)" assId="(#=obj.assig.id#)" class="assigEditRow" >
+                                                                                    <td ><select name="resourceId"  class="formElements" (#=obj.assig.id.indexOf("tmp_")==0?"":"disabled"#) ></select></td>
+                                                                                    <td ><select type="select" name="roleId"  class="formElements"></select></td>
+                                                                                    <td ><input type="text" name="effort" value="(#=getMillisInHoursMinutes(obj.assig.effort)#)" size="5" class="formElements"></td>
+                                                                                    <td align="center"><span class="teamworkIcon delAssig del" style="cursor: pointer">d</span></td>
+                                                                                    </tr>
+                                                                                    -->
             </div>
             <div class="__template__" type="RESOURCE_EDITOR">
                 {{-- <!-- --}}
