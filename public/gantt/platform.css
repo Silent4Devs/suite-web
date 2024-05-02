@@ -107,14 +107,13 @@ teamwork icon
 
 .teamworkIcon {
     font-family: 'TeamworkRegular' !important;
-    color: #34495e;
+    color: #006DDB !important;
+    font-size: 30px !important;
     font-weight: normal;
-    font-size: 120%;
     font-style: normal !important;
     text-rendering: optimizelegibility;
     -webkit-font-smoothing: antialiased;
     -moz-font-smoothing: antialiased;
-
 }
 
 .teamworkIcon:hover {
@@ -134,7 +133,8 @@ teamwork icon
 }
 
 .del {
-    color: #ff7271
+    color: #D1D1D1 !important;
+    font-size: 25px !important;
 }
 
 .cvcColorSquare {
@@ -280,12 +280,14 @@ table styles
 
 .ganttTaskEditor .formElements,
 .resourceEditor .formElements {
-    background-color: #F5F5F5;
-    border-color: #CECECE
+    background-color: #ffffff;
+    border-color: #ffffff;
+    width: auto;
 }
 
 #sistema_gantt table .resRow td, #sistema_gantt table .assigEditRow td {
-    border-bottom: 1px solid #cecece;
+    border-bottom: 1px solid #FFEEEE;
+    background-color: #FFEEEE;
     padding: 5px 0
 }
 
