@@ -28,11 +28,13 @@ class TBTemplateAnalisisRiesgoModel extends Model
         return $this->belongsTo(Norma::class, 'norma_id');
     }
 
-    public function getAr_Escala(){
+    public function getAr_Escala()
+    {
         return $this->belongsTo(TBTemplateAr_EscalaArModel::class, 'id');
     }
 
-    public function getAR_Probabilidad_Impacto(){
+    public function getAR_Probabilidad_Impacto()
+    {
         return $this->belongsTo(TBTemplateArProbImpArModel::class, 'id');
     }
 }

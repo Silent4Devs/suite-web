@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\TBTemplateAnalisisRiesgoModel;
 use App\Models\TBTemplateAr_EscalaArModel;
 use App\Models\TBTemplateArProbImpArModel;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
 
 class TBTemplateAnalisisRiesgosController extends Controller
 {
@@ -49,7 +48,8 @@ class TBTemplateAnalisisRiesgosController extends Controller
 
             DB::commit();
             $id = $template->id;
-            return view("admin.analisis-riesgos.template.tbTemplateCrear", compact('id'));
+
+            return view('admin.analisis-riesgos.template.tbTemplateCrear', compact('id'));
         } catch (\Throwable $th) {
             throw $th;
             DB::rollback();
@@ -81,7 +81,8 @@ class TBTemplateAnalisisRiesgosController extends Controller
         //
         $template = TBTemplateAnalisisRiesgoModel::findOrFail($id);
         $id = $template->id;
-        return view("admin.analisis-riesgos.template.tbTemplateCrear", compact('id'));
+
+        return view('admin.analisis-riesgos.template.tbTemplateCrear', compact('id'));
     }
 
     /**

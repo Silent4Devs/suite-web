@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class TBTemplateAr_EscalaArModel extends Model
 {
     use HasFactory;
+
     protected $guarded = ['id'];
 
     protected $table = 'template_ar__escalas_ar_pivote';
@@ -19,16 +20,17 @@ class TBTemplateAr_EscalaArModel extends Model
         'valor_max',
     ];
 
-    public function getTemplate(){
-        {
-            return $this->belongsTo(TBTemplateAnalisisRiesgoModel::class, 'template_id');
-        }
+    public function getTemplate()
+    {
+
+        return $this->belongsTo(TBTemplateAnalisisRiesgoModel::class, 'template_id');
+
     }
 
-    public function getEscalas(){
-        {
-            return $this->hasMany(TBEscalaAnalisisRiesgoModel::class, 'min_max_id','id')->orderBy('id', 'asc');;
-        }
-    }
+    public function getEscalas()
+    {
 
+        return $this->hasMany(TBEscalaAnalisisRiesgoModel::class, 'min_max_id', 'id')->orderBy('id', 'asc');
+
+    }
 }

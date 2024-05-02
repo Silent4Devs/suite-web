@@ -3,25 +3,31 @@
 namespace App\Http\Livewire\AnalisisRiesgos;
 
 use App\Models\TBProbabilidadImpactoAnalisisRiesgoModel;
-use App\Models\TBTemplateArProbImpArModel;
 use App\Models\TBTemplateAnalisisRiesgoModel;
-use Livewire\Component;
-use Illuminate\Support\Collection;
+use App\Models\TBTemplateArProbImpArModel;
 use Illuminate\Support\Facades\DB;
+use Livewire\Component;
 
 class ProbabilidadImpacto extends Component
 {
     public $template_id;
+
     public $prob_imp;
+
     public $min_max_id;
+
     public $edit = false;
+
     protected $listeners = [
         'renderReloadProbImp' => 'mount',
         'renderSaveProbImp' => 'save',
-        'destroy'
+        'destroy',
     ];
+
     public $min;
+
     public $max;
+
     public $send = false;
 
     protected $rules = [
@@ -41,7 +47,7 @@ class ProbabilidadImpacto extends Component
                 'id' => 0,
                 'nombre' => '',
                 'color' => '#34B990',
-                'valor' => 0
+                'valor' => 0,
             ],
             [
                 'id' => 0,
@@ -58,7 +64,7 @@ class ProbabilidadImpacto extends Component
         $getData = TBTemplateArProbImpArModel::find($this->template_id);
         $this->min = $getData->valor_min;
         $this->max = $getData->valor_max;
-        if (!$getData->getProbImp->isEmpty()) {
+        if (! $getData->getProbImp->isEmpty()) {
             $this->edit = true;
             $newCollect = [];
             foreach ($getData->getProbImp as $register) {
@@ -116,7 +122,7 @@ class ProbabilidadImpacto extends Component
                         ]);
                     }
                 }
-                if (!empty($newRegisters)) {
+                if (! empty($newRegisters)) {
                     foreach ($newRegisters as $prob_imp) {
                         TBProbabilidadImpactoAnalisisRiesgoModel::create([
                             'nombre' => $prob_imp['nombre'],
@@ -155,10 +161,11 @@ class ProbabilidadImpacto extends Component
 
     public function removeInput($key)
     {
-            unset($this->prob_imp[$key]);
+        unset($this->prob_imp[$key]);
     }
 
-    public function destroy($id,$key){
+    public function destroy($id, $key)
+    {
         DB::beginTransaction();
         try {
             TBProbabilidadImpactoAnalisisRiesgoModel::destroy($id);
@@ -170,7 +177,8 @@ class ProbabilidadImpacto extends Component
         unset($this->prob_imp[$key]);
     }
 
-    public function resetMinMax(){
+    public function resetMinMax()
+    {
         $this->min = 0;
         $this->max = 0;
     }

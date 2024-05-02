@@ -947,7 +947,7 @@ class EmpleadoController extends Controller
         $sedes = Sede::getAll();
         if (isset($empleado->sede_id)) {
             $sede = Sede::getbyId($empleado->sede_id);
-            // dd($sede);
+        // dd($sede);
         } else {
             $sede = null;
             // dd($sede);
