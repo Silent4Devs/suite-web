@@ -96,7 +96,7 @@ class PlanesAccionController extends Controller
                 'resources' => [],
                 'subtasks' => [],
                 'historic' => [],
-            ]
+            ],
         ];
 
         $planImplementacion = PlanImplementacion::create([ // Necesario se carga inicialmente el Diagrama Universal de Gantt

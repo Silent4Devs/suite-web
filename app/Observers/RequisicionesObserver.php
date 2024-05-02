@@ -18,16 +18,6 @@ class RequisicionesObserver
     }
 
     /**
-     * Handle the - "updated" event.
-     *
-     * @return void
-     */
-    public function updated(Requsicion $requisiciones)
-    {
-        event(new RequisicionesEvent($requisiciones, 'update', 'requisiciones', 'Requisiciones'));
-    }
-
-    /**
      * Handle the requisiciones "deleted" event.
      *
      * @return void
