@@ -64,9 +64,6 @@ class InicioUsuarioController extends Controller
         $hoy->toDateString();
 
         Async::batchRun(
-            function () use (&$usuario) {
-                $usuario = User::getCurrentUser();
-            },
             function () use (&$implementaciones) {
                 // Check if the result is already cached
                 $implementaciones = PlanImplementacion::getAll();
@@ -109,6 +106,8 @@ class InicioUsuarioController extends Controller
             },
         );
 
+
+        $usuario = User::getCurrentUser();
         $empleado = Empleado::getMyEmpleadodata($usuario->empleado->id);
 
         $usuarioVinculadoConEmpleado = false;
