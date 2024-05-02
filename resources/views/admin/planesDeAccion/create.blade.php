@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
 
-    <h5 class="col-12 titulo_general_funcion">Registrar: Plan de Acción</h5>
+    <h5 class="col-12 titulo_general_funcion">Registrar: Plan de Trabajo</h5>
     <div class="mt-4 card">
         <div class="card-body">
             @can('planes_de_accion_agregar')

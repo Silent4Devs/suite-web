@@ -100,8 +100,8 @@ Task.prototype.getAssigsString = function () {
   return ret;
 };
 
-Task.prototype.createAssignment = function (id, resourceId, roleId, effort) {
-  var assig = new Assignment(id, resourceId, roleId, effort);
+Task.prototype.createAssignment = function (id, resourceId, roleId) {
+  var assig = new Assignment(id, resourceId, roleId);
   this.assigs.push(assig);
   return assig;
 };
@@ -1260,11 +1260,11 @@ function Link(taskFrom, taskTo, lagInWorkingDays) {
 
 
 //<%------------------------------------------------------------------------  ASSIGNMENT ---------------------------------------------------------------%>
-function Assignment(id, resourceId, roleId, effort) {
+function Assignment(id, resourceId, roleId) {
   this.id = id;
   this.resourceId = resourceId;
   this.roleId = roleId;
-  this.effort = effort;
+
 }
 
 

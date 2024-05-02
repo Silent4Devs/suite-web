@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire\PlanDeAccion;
 
+use App\Models\Area;
+use App\Models\Empleado;
 use App\Models\PlanImplementacion;
 use App\Models\User;
 use Livewire\Component;
@@ -32,20 +34,33 @@ class PlanAccionIndexComponent extends Component
             ->with('elaborador')
             ->get();
 
+        $empleado = Empleado::getaltaAll()->find($usuario->empleado->id);
+        $empleados = Empleado::where('area_id', $empleado->area_id)
+            ->where('estatus', 'alta')
+            ->get();
+
+        $planImplementacionArea = [];
+
+        foreach ($planImplementacionsGlobal as $plan) {
+            foreach ($empleados as $emple) {
+                if ($emple->id === $plan->elaboro_id) {
+                    $planImplementacionArea[] = $plan;
+                    break;
+                }
+            }
+        }
+
         // Inicializar un array para almacenar los planes de acción asignados al usuario
         $planImplementacionsAssigs = [];
 
         // Iterar sobre los planes de acción globales
         foreach ($planImplementacionsGlobal as $plan) {
-            // Verificar si el usuario está asignado a alguna tarea en este plan de acción
+            // Verificar si el usuario está asignado a alguna tarea en este Plan de Trabajo
             foreach ($plan->tasks as $task) {
                 if (property_exists($task, 'assigs')) {
                     foreach ($task->assigs as $assig) {
                         if ($assig->resourceId == $usuario->empleado->id) {
-                            // Si el usuario está asignado a alguna tarea en este plan de acción,
-                            // agregamos este plan de acción a $planImplementacionsAssigs
                             $planImplementacionsAssigs[] = $plan;
-                            // Rompemos el bucle, ya que no es necesario seguir buscando en este plan de acción
                             break 2;
                         }
                     }
@@ -72,11 +87,13 @@ class PlanAccionIndexComponent extends Component
         // Contar el número de resultados de los planes de acción del usuario actual
         $planImplementacionsCount = $planImplementacions->count();
 
+        //dd($planImplementacionsAssigs);
         // Pasar los resultados a la vista
         return view('livewire.plan-de-accion.plan-accion-index-component', [
             'planImplementacions' => $planImplementacions,
             'planImplementacionsCount' => $planImplementacionsCount,
             'planImplementacionsAssigs' => $planImplementacionsAssigs,
+            'planImplementacionArea' => $planImplementacionArea,
             'message' => $message,
         ]);
     }
