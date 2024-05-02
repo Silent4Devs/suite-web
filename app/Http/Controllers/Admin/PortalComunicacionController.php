@@ -34,9 +34,6 @@ class PortalComunicacionController extends Controller
             function () use (&$politica_existe) {
                 $politica_existe = PoliticaSgsi::getAll()->count();
             },
-            function () use (&$documentos_publicados) {
-                $documentos_publicados = Documento::getLastFiveWithMacroproceso();
-            },
             function () use (&$nuevos, $hoy) {
                 $nuevos = Empleado::whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->get();
             },
@@ -50,7 +47,7 @@ class PortalComunicacionController extends Controller
         $empleado_asignado = $user->n_empleado;
         $authId = $user->id;
 
-
+        $documentos_publicados = Documento::getLastFiveWithMacroproceso();
         $comite_existe = Comiteseguridad::getAll()->count();
 
         $comunicacionSgis = ComunicacionSgi::getAllwithImagenesBlog();
