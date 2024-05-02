@@ -66,6 +66,8 @@ class EvDesempenoDashboardPersonal extends Component
     public $contadorColumnas = 4;
     public $cabecera_objetivos;
 
+    public $modificar_empleados;
+
     public function mount($id_evaluacion, $id_evaluado)
     {
         $this->id_evaluacion = $id_evaluacion;
@@ -76,6 +78,8 @@ class EvDesempenoDashboardPersonal extends Component
         $evld_tabla = EvaluacionDesempeno::with('evaluados')->find($this->id_evaluacion);
 
         $this->evaluado = $evld_tabla->evaluados->find($this->id_evaluado);
+
+        $this->modificar_empleados = Empleado::getAllDataColumns()->sortBy('name');
 
         $this->secciones();
         $this->evaluadoTotales();
@@ -100,11 +104,10 @@ class EvDesempenoDashboardPersonal extends Component
     public function render()
     {
         $this->cargarTablas();
-        // dd($this->contadorColumnas);
+
         return view('livewire.ev-desempeno-dashboard-personal');;
     }
 
-    //
     public function cambiarSeccion($llave)
     {
         $this->periodo_seleccionado = $llave;
@@ -298,23 +301,13 @@ class EvDesempenoDashboardPersonal extends Component
         $evaluado = $this->evaluado;
 
         foreach ($evaluado->nombres_evaluadores as $key => $evdr) {
-            if ($this->evaluacion->activar_objetivos && $this->evaluacion->activar_competencias) {
-                $evaluador = $empleados->find($evdr);
-                $this->evaluadores_evaluado[$evaluado->id][] = [
-                    'id' => $evaluador->evaluador_desempeno_id,
-                    'nombre' => $evaluador->name,
-                    // 'email' => $evaluador->email, //No necesario
-                    'foto' => $evaluador->foto,
-                ];
-            } else {
-                $evaluador = $empleados->find($evdr->evaluador_desempeno_id);
-                $this->evaluadores_evaluado[$evaluado->id][] = [
-                    'id' => $evaluador->evaluador_desempeno_id,
-                    'nombre' => $evaluador->name,
-                    // 'email' => $evaluador->email, //No necesario
-                    'foto' => $evaluador->foto,
-                ];
-            }
+            $evaluador = $empleados->find($evdr);
+            $this->evaluadores_evaluado[$evaluado->id][] = [
+                'id' => $evaluador->evaluador_desempeno_id,
+                'nombre' => $evaluador->name,
+                // 'email' => $evaluador->email, //No necesario
+                'foto' => $evaluador->foto,
+            ];
         }
     }
 
@@ -475,16 +468,13 @@ class EvDesempenoDashboardPersonal extends Component
             $objetivosPorPeriodoAuto = CuestionarioObjetivoEvDesempeno::where('evaluacion_desempeno_id', $this->id_evaluacion)
                 ->where('periodo_id', $periodo["id_periodo"])
                 ->where('evaluado_desempeno_id', $this->id_evaluado)
-                ->where('evaluador_desempeno_id', $this->id_evaluado)->get();
-            // ->with('infoObjetivo')
-            // ->get();
-            dd($objetivosPorPeriodoAuto);
+                ->with('infoObjetivo')
+                ->get();
+
             $objetivosPorPeriodoEv = CuestionarioObjetivoEvDesempeno::where('evaluacion_desempeno_id', $this->id_evaluacion)
                 ->where('periodo_id', $periodo["id_periodo"])
                 ->where('evaluado_desempeno_id', $this->id_evaluado)
-                ->where('evaluador_desempeno_id', '!=', $this->id_evaluado)
                 ->with('infoObjetivo')
-                ->orderBy('evaluador_desempeno_id') // Order by evaluador_desempeno_id
                 ->get();
 
 
@@ -501,18 +491,11 @@ class EvDesempenoDashboardPersonal extends Component
                     $tipoObjetivo = $objetivoEv->infoObjetivo->tipo_objetivo;
                     $objetivosEvaluado[$key_periodo][$tipoObjetivo]["evaluacion"][] = $objetivoEv;
                 }
-                dd($objetivosEvaluado);
+
                 $cuenta = count($objetivosEvaluado[$key_periodo][$tipoObjetivo]["evaluacion"]); // Update $cuenta
-            } else {
-
-                $objetivosEvaluado[$key_periodo]["Ninguna"]["autoevaluacion"][] = 0;
-
-                $objetivosEvaluado[$key_periodo]["Ninguna"]["evaluacion"][] = 0;
-
-                $cuenta = count($objetivosEvaluado[$key_periodo]["Ninguna"]["evaluacion"]); // Update $cuenta
             }
         }
-        dd($objetivosEvaluado);
+
         $this->cabecera_objetivos = $this->evaluado->evaluadoresObjetivos->where('id', '!=', $this->id_evaluado);
 
         // dd($this->cabecera_objetivos);

@@ -46,16 +46,6 @@
 
         {{-- <div class="w-100 row"> --}}
         <div class="d-flex justify-content-start">
-            @foreach ($array_periodos as $key => $periodo)
-                <a wire:click="cambiarSeccion({{ $key }})">
-                    <div @if ($key == $periodo_seleccionado) class="option-q-active"    
-                    @else
-                    class="option-q-inactive" @endif
-                        style="cursor: pointer">
-                        {{ $periodo['nombre_evaluacion'] }}
-                    </div>
-                </a>
-            @endforeach
 
             {{-- <div class="option-q-inactive">
                 Q2

@@ -21,8 +21,9 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
     public $evaluador;
     public $id_evaluacion;
     public $id_evaluado;
+    public $id_periodo;
     public $periodo_seleccionado = 0;
-    public $array_periodos;
+    // public $array_periodos;
 
     //Traer datos de la evaluación
     public $evaluacion;
@@ -47,19 +48,20 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
     public $archivo_mostrado;
 
 
-    public function mount($id_evaluacion, $id_evaluado)
+    public function mount($id_evaluacion, $id_evaluado, $id_periodo)
     {
         $this->evaluador = User::getCurrentUser()->empleado;
 
         $this->id_evaluacion = $id_evaluacion;
         $this->id_evaluado = $id_evaluado;
+        $this->id_periodo = $id_periodo;
     }
 
     public function render()
     {
         $this->evaluacion = EvaluacionDesempeno::find($this->id_evaluacion);
         $this->evaluado = $this->evaluacion->evaluados->find($this->id_evaluado);
-        $this->cuestionarioSecciones();
+        // $this->cuestionarioSecciones();
         if ($this->evaluacion->activar_objetivos == true) {
             $this->buscarObjetivos();
         }
@@ -73,14 +75,18 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
 
         $this->validacion_objetivos_evaluador = false;
 
-        foreach ($this->evaluado->evaluadoresObjetivos as $key => $evlr) {
-            if ($evlr->evaluador_desempeno_id == $this->evaluador->id) {
-                $this->validacion_objetivos_evaluador = true;
-                $this->objetivos_evaluado = $evlr->preguntasCuestionario->where('periodo_id', $this->array_periodos[$this->periodo_seleccionado]["id_periodo"])->sortBy('id');
+        $busqueda_evaluador = $this->evaluado->evaluadoresObjetivos($this->id_periodo)->where('evaluador_desempeno_id', $this->evaluador->id)->first();
+        $busqueda_autoevaluador = $this->evaluado->evaluadoresObjetivos($this->id_periodo)->where('evaluador_desempeno_id', $this->id_evaluado->evaluado_desempeno_id)->first();
+
+        if ($busqueda_evaluador || $busqueda_autoevaluador) {
+            $this->validacion_objetivos_evaluador = true;
+
+            if ($busqueda_evaluador) {
+                $this->objetivos_evaluado = $busqueda_evaluador->preguntasCuestionario->where('periodo_id', $this->id_periodo)->sortBy('id');
             }
 
-            if ($evlr->evaluador_desempeno_id == $this->id_evaluado->evaluado_desempeno_id) {
-                $this->objetivos_autoevaluado = $evlr->preguntasCuestionario->where('periodo_id', $this->array_periodos[$this->periodo_seleccionado]["id_periodo"])->sortBy('id');
+            if ($busqueda_autoevaluador) {
+                $this->objetivos_autoevaluado = $busqueda_autoevaluador->preguntasCuestionario->where('periodo_id', $this->id_periodo)->sortBy('id');
             }
         }
 
@@ -94,65 +100,6 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
                 ];
             }
 
-            // foreach ($this->objetivos_evaluado as $key_objetivo => $obj_evld) {
-            //     $this->calificacion_escala[$obj_evld->infoObjetivo->id] = 'Sin evaluar';
-            //     foreach ($obj_evld->infoObjetivo->escalas as $obj_esc) {
-            //         //Se inicializa con el valor inicial para que todos los objetivos tengan su campo correspondiente
-            //         switch ($obj_esc->condicion) {
-            //             case '1':
-            //                 if (
-            //                     $obj_evld->calificacion_objetivo <
-            //                     $obj_esc->valor
-            //                 ) {
-            //                     $this->calificacion_escala[$obj_evld->infoObjetivo->id] = $obj_esc->parametro;
-            //                     $this->evaluacion_colors[$obj_evld->infoObjetivo->id . '-tx-color'] = $obj_esc->color;
-            //                 }
-            //                 break;
-            //             case '2':
-            //                 if (
-            //                     $obj_evld->calificacion_objetivo <=
-            //                     $obj_esc->valor
-            //                 ) {
-            //                     $this->calificacion_escala[$obj_evld->infoObjetivo->id] = $obj_esc->parametro;
-            //                     $this->evaluacion_colors[$obj_evld->infoObjetivo->id . '-tx-color'] = $obj_esc->color;
-            //                     // dd($this->evaluacion_colors);
-
-            //                 }
-            //                 break;
-            //             case '3':
-            //                 if (
-            //                     $obj_evld->calificacion_objetivo ==
-            //                     $obj_esc->valor
-            //                 ) {
-            //                     $this->calificacion_escala[$obj_evld->infoObjetivo->id] = $obj_esc->parametro;
-            //                     $this->evaluacion_colors[$obj_evld->infoObjetivo->id . '-tx-color'] = $obj_esc->color;
-            //                 }
-            //                 break;
-            //             case '4':
-            //                 if (
-            //                     $obj_evld->calificacion_objetivo >
-            //                     $obj_esc->valor
-            //                 ) {
-            //                     $this->calificacion_escala[$obj_evld->infoObjetivo->id] = $obj_esc->parametro;
-            //                     $this->evaluacion_colors[$obj_evld->infoObjetivo->id . '-tx-color'] = $obj_esc->color;
-            //                 }
-            //                 break;
-            //             case '5':
-            //                 if (
-            //                     $obj_evld->calificacion_objetivo >=
-            //                     $obj_esc->valor
-            //                 ) {
-            //                     $this->calificacion_escala[$obj_evld->infoObjetivo->id] = $obj_esc->parametro;
-            //                     $this->evaluacion_colors[$obj_evld->infoObjetivo->id . '-tx-color'] = $obj_esc->color;
-            //                 }
-            //                 break;
-            //             default:
-            //                 $this->calificacion_escala[$obj_evld->infoObjetivo->id] = $obj_evld->infoObjetivo->escalas[0]->parametro;
-            //                 $this->evaluacion_colors[$obj_evld->infoObjetivo->id . '-tx-color'] = $obj_esc->color;
-            //                 break;
-            //         }
-            //     }
-            // }
             foreach ($this->objetivos_evaluado as $obj_evld) {
                 $infoObjetivo = $obj_evld->infoObjetivo;
 
@@ -417,19 +364,19 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
         return "rgba($red, $green, $blue, 0.2)";
     }
 
-    public function cuestionarioSecciones()
-    {
-        foreach ($this->evaluacion->periodos as $key => $periodo) {
-            $this->array_periodos[$key] = [
-                "id_periodo" => $periodo->id,
-                "nombre_evaluacion" => $periodo->nombre_evaluacion,
-                "fecha_inicio" => $periodo->fecha_inicio,
-                "fecha_fin" => $periodo->fecha_fin,
-                "habilitado" => $periodo->habilitado,
-                "finalizado" => $periodo->finalizado,
-            ];
-        }
-    }
+    // public function cuestionarioSecciones()
+    // {
+    //     foreach ($this->evaluacion->periodos as $key => $periodo) {
+    //         $this->array_periodos[$key] = [
+    //             "id_periodo" => $periodo->id,
+    //             "nombre_evaluacion" => $periodo->nombre_evaluacion,
+    //             "fecha_inicio" => $periodo->fecha_inicio,
+    //             "fecha_fin" => $periodo->fecha_fin,
+    //             "habilitado" => $periodo->habilitado,
+    //             "finalizado" => $periodo->finalizado,
+    //         ];
+    //     }
+    // }
 
     public function cambiarSeccion($llave)
     {

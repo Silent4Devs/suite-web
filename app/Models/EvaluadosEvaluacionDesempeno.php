@@ -29,23 +29,30 @@ class EvaluadosEvaluacionDesempeno extends Model
         return $this->belongsTo(Empleado::class, 'evaluado_desempeno_id', 'id')->select('id', 'name', 'email', 'area_id', 'puesto_id', 'foto');
     }
 
-    public function evaluadoresObjetivos()
+    public function evaluadoresObjetivos($id_periodo = null)
     {
-        return $this->hasMany(EvaluadoresEvaluacionObjetivosDesempeno::class, 'evaluado_desempeno_id', 'id')->orderBy('id');
+        if (empty($id_periodo)) {
+            return $this->hasMany(EvaluadoresEvaluacionObjetivosDesempeno::class, 'evaluado_desempeno_id', 'id')->orderBy('id');
+        } else {
+            return $this->hasMany(EvaluadoresEvaluacionObjetivosDesempeno::class, 'evaluado_desempeno_id', 'id')->where('periodo_id', $id_periodo)->orderBy('id')->get();
+        }
     }
 
-    public function evaluadoresCompetencias()
+    public function evaluadoresCompetencias($id_periodo = null)
     {
-        return $this->hasMany(EvaluadoresEvaluacionCompetenciasDesempeno::class, 'evaluado_desempeno_id', 'id')->orderBy('id');
+        if (empty($id_periodo)) {
+            return $this->hasMany(EvaluadoresEvaluacionCompetenciasDesempeno::class, 'evaluado_desempeno_id', 'id')->orderBy('id');
+        } else {
+            return $this->hasMany(EvaluadoresEvaluacionCompetenciasDesempeno::class, 'evaluado_desempeno_id', 'id')->where('periodo_id', $id_periodo)->orderBy('id')->get();
+        }
     }
 
     public function getNombresEvaluadoresAttribute()
     {
-        $total = 0;
-
         $evaluado = self::find($this->id);
+        $nombres = [];
 
-        if ($evaluado->evaluacion->activar_competencias && $this->evaluacion->activar_objetivos) {
+        if ($evaluado->evaluacion->activar_competencias && $evaluado->evaluacion->activar_objetivos) {
             $evaluadoresCompetenciasIds = $this->evaluadoresCompetencias->pluck('evaluador_desempeno_id')->toArray();
             $evaluadoresObjetivosIds = $this->evaluadoresObjetivos->pluck('evaluador_desempeno_id')->toArray();
 
@@ -58,13 +65,13 @@ class EvaluadosEvaluacionDesempeno extends Model
                 array_diff($evaluadoresObjetivosIds, $evaluadoresCompetenciasIds)
             );
 
-            $nombres = array_merge($matchingIds, $distinctIds);
-        } elseif ($evaluado->evaluacion->activar_competencias && $evaluado->evaluacion->activar_objetivos == false) {
-            $nombres = $evaluado->evaluadoresCompetencias;
-        } elseif ($evaluado->evaluacion->activar_competencias == false && $evaluado->evaluacion->activar_objetivos) {
-            $nombres = $evaluado->evaluadoresObjetivos;
+            $nombres = array_unique(array_merge($matchingIds, $distinctIds));
+        } elseif ($evaluado->evaluacion->activar_competencias && !$evaluado->evaluacion->activar_objetivos) {
+            $nombres = $this->evaluadoresCompetencias->pluck('evaluador_desempeno_id')->unique()->toArray();
+        } elseif (!$evaluado->evaluacion->activar_competencias && $evaluado->evaluacion->activar_objetivos) {
+            $nombres = $this->evaluadoresObjetivos->pluck('evaluador_desempeno_id')->unique()->toArray();
         }
-
+        //Enviamos los ids, para que sea mas facil de manejar
         return $nombres;
     }
 

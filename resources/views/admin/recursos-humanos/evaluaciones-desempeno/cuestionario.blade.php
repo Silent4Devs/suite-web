@@ -426,14 +426,16 @@
                 <div class="tab-pane fade{{ $acceso_objetivos ? ' show active' : '' }}" id="objetive" role="tabpanel"
                     aria-labelledby="objetive-tab">
                     <div class="card">
-                        <div class="card-body">@livewire('cuestionario-evaluacion-desempeno-objetivos', ['id_evaluacion' => $evaluacionDesempeno->id, 'id_evaluado' => $evaluado]) </div>
+                        <div class="card-body">
+                            @livewire('cuestionario-evaluacion-desempeno-objetivos', ['id_evaluacion' => $evaluacionDesempeno->id, 'id_evaluado' => $evaluado, 'id_periodo' => $periodo])
+                        </div>
                     </div>
                 </div>
             @endif
             @if ($evaluacionDesempeno->activar_competencias && $acceso_competencias)
                 <div class="tab-pane fade{{ !$acceso_objetivos ? ' show active' : '' }}" id="competencies" role="tabpanel"
                     aria-labelledby="competencies-tab">
-                    @livewire('cuestionario-evaluacion-desempeno-competencias', ['id_evaluacion' => $evaluacionDesempeno->id, 'id_evaluado' => $evaluado])
+                    @livewire('cuestionario-evaluacion-desempeno-competencias', ['id_evaluacion' => $evaluacionDesempeno->id, 'id_evaluado' => $evaluado, 'id_periodo' => $periodo])
                 </div>
             @endif
         </div>

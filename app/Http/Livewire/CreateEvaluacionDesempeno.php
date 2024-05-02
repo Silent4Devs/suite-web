@@ -226,7 +226,7 @@ class CreateEvaluacionDesempeno extends Component
 
         foreach ($this->datosPaso2 as $key => $p) {
             if (!empty($p['nombre_evaluacion'])) {
-                $periodo_creado = PeriodosEvaluacionDesempeno::create([
+                $periodos_creados[] = PeriodosEvaluacionDesempeno::create([
                     'evaluacion_desempeno_id' => $evaluacion->id,
                     'nombre_evaluacion' => $p['nombre_evaluacion'],
                     'fecha_inicio' => $p['fecha_inicio'],
@@ -234,56 +234,58 @@ class CreateEvaluacionDesempeno extends Component
                     'habilitado' => $p['habilitar'],
                 ]);
             }
+        }
 
-            foreach ($this->array_evaluados as $key => $evaluado) {
-                // dd($evaluado);
-                $new_evaluado = EvaluadosEvaluacionDesempeno::create(
-                    [
-                        'evaluacion_desempeno_id' => $evaluacion->id,
-                        'evaluado_desempeno_id' => $evaluado['id'],
-                    ]
-                );
+        foreach ($this->array_evaluados as $key => $evaluado) {
+            // dd($evaluado);
+            $new_evaluado = EvaluadosEvaluacionDesempeno::create(
+                [
+                    'evaluacion_desempeno_id' => $evaluacion->id,
+                    'evaluado_desempeno_id' => $evaluado['id'],
+                ]
+            );
 
+            foreach ($periodos_creados as $key_periodo => $periodo) {
                 if ($evaluacion->activar_objetivos) {
-
                     //Autoevaluacion
                     EvaluadoresEvaluacionObjetivosDesempeno::create([
                         'evaluado_desempeno_id' => $new_evaluado->id,
                         'evaluador_desempeno_id' => $evaluado['id'],
                         'porcentaje_objetivos' => 0,
-                        'periodo_id' => $periodo_creado->id,
+                        'periodo_id' => $periodo->id,
                     ]);
 
                     foreach ($this->array_evaluadores[$key]['evaluador_objetivos'] as $subkey => $evaluador) {
                         EvaluadoresEvaluacionObjetivosDesempeno::create([
                             'evaluado_desempeno_id' => $new_evaluado->id,
                             'evaluador_desempeno_id' => $evaluador,
-                            'periodo_id' => $periodo_creado->id,
+                            'periodo_id' => $periodo->id,
                             'porcentaje_objetivos' => $this->array_porcentaje_evaluadores[$key]['porcentaje_evaluador_objetivos'][$subkey],
                         ]);
                     }
                 }
-                if ($evaluacion->activar_competencias) {
 
+                if ($evaluacion->activar_competencias) {
                     //Autoevaluacion
                     EvaluadoresEvaluacionCompetenciasDesempeno::create([
                         'evaluado_desempeno_id' => $new_evaluado->id,
                         'evaluador_desempeno_id' => $evaluado['id'],
                         'porcentaje_competencias' => 0,
-                        'periodo_id' => $periodo_creado->id,
+                        'periodo_id' => $periodo->id,
                     ]);
 
                     foreach ($this->array_evaluadores[$key]['evaluador_competencias'] as $subkey => $evaluador) {
                         EvaluadoresEvaluacionCompetenciasDesempeno::create([
                             'evaluado_desempeno_id' => $new_evaluado->id,
                             'evaluador_desempeno_id' => $evaluador,
-                            'periodo_id' => $periodo_creado->id,
+                            'periodo_id' => $periodo->id,
                             'porcentaje_competencias' => $this->array_porcentaje_evaluadores[$key]['porcentaje_evaluador_competencias'][$subkey],
                         ]);
                     }
                 }
             }
         }
+
 
         $this->crearCuestionario($evaluacion);
 
@@ -292,7 +294,6 @@ class CreateEvaluacionDesempeno extends Component
 
     public function crearCuestionario($evaluacion)
     {
-        // dd($evaluacion);
         $empleados = Empleado::getIDaltaAll();
 
         $periodo = $evaluacion->periodos->first();
@@ -325,7 +326,9 @@ class CreateEvaluacionDesempeno extends Component
                         );
                     }
 
-                    foreach ($evaluado->evaluadoresObjetivos as $key => $evlr_obj) {
+                    $evlr_obj_periodo = $evaluado->evaluadoresObjetivos->where('periodo_id', $periodo->id);
+
+                    foreach ($evlr_obj_periodo as $key => $evlr_obj) {
                         $new_objetivo = CuestionarioObjetivoEvDesempeno::create(
                             [
                                 'objetivo_id' => $cat_obj->id,
@@ -360,7 +363,10 @@ class CreateEvaluacionDesempeno extends Component
                             'ponderacion' => $opciones->ponderacion,
                         ]);
                     }
-                    foreach ($evaluado->evaluadoresCompetencias as $key => $evlr_comp) {
+
+                    $evlr_comp_periodo = $evaluado->evaluadoresCompetencias->where('periodo_id', $periodo->id);
+
+                    foreach ($evlr_comp_periodo as $key => $evlr_comp) {
                         $new_competencia = CuestionarioCompetenciaEvDesempeno::create([
                             'competencia_id' => $cat_comp->id,
                             'periodo_id' => $periodo->id,

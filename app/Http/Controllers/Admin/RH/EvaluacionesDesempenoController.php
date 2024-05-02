@@ -67,7 +67,7 @@ class EvaluacionesDesempenoController extends Controller
         return view('admin.recursos-humanos.evaluaciones-desempeno.create-evaluacion', compact('areas', 'empleados'));
     }
 
-    public function cuestionarioEvaluacionDesempeno($evaluacion, $evaluado)
+    public function cuestionarioEvaluacionDesempeno($evaluacion, $evaluado, $periodo)
     {
         $currentUser = User::getCurrentUser()->empleado;
 
@@ -78,9 +78,8 @@ class EvaluacionesDesempenoController extends Controller
             return redirect()->route('admin.inicio-Usuario.index');
         }
 
-        $evaluadoresObjetivos = $evaluado->evaluadoresObjetivos()->pluck('evaluador_desempeno_id')->toArray();
-        $evaluadoresCompetencias = $evaluado->evaluadoresCompetencias()->pluck('evaluador_desempeno_id')->toArray();
-
+        $evaluadoresObjetivos = $evaluado->evaluadoresObjetivos($periodo)->pluck('evaluador_desempeno_id')->toArray();
+        $evaluadoresCompetencias = $evaluado->evaluadoresCompetencias($periodo)->pluck('evaluador_desempeno_id')->toArray();
         $acceso_objetivos = in_array($currentUser->id, $evaluadoresObjetivos);
         $acceso_competencias = in_array($currentUser->id, $evaluadoresCompetencias);
 
@@ -91,6 +90,7 @@ class EvaluacionesDesempenoController extends Controller
         return view('admin.recursos-humanos.evaluaciones-desempeno.cuestionario', compact(
             'evaluacionDesempeno',
             'evaluado',
+            'periodo',
             'acceso_objetivos',
             'acceso_competencias'
         ));

@@ -166,10 +166,9 @@
     <div class="row mt-4" style="font-size: 15px; color: #006DDB;">
         @foreach ($array_periodos as $key => $periodo)
             <div class="col-md-3">
-                <a wire:click="cambiarSeccion({{ $key }})">
-                    <div class="p-3 rounded-lg"
-                        style="background-color: #fff; box-shadow: 0px 1px 4px #0000000F; cursor: pointer;">
-                        <div class="row mb-3">
+                <div class="p-3 rounded-lg" style="background-color: #fff; box-shadow: 0px 1px 4px #0000000F; ">
+                    <a wire:click="cambiarSeccion({{ $key }})">
+                        <div class="row mb-3" style="cursor: pointer;">
                             <div class="col-8">
                                 {{ $periodo['nombre_evaluacion'] }}
                             </div>
@@ -177,53 +176,124 @@
                                 <small>Promedio</small> <strong>{{ $resultadoPeriodos[$key] ?? 0 }}%</strong>
                             </div>
                         </div>
-                        <div class="d-flex align-items-center justify-content-between color-primary">
-                            <div class="row">
-                                <div class="col-6">
-                                    <small>Objetivos</small><br>
-                                    <div class="d-flex" style="position:relative">
-                                        @foreach ($evaluado->evaluadoresObjetivos as $evOb)
-                                            <img style=""
-                                                src="{{ asset('storage/empleados/imagenes/') }}/{{ $evOb->empleado->avatar }}"
-                                                class="rounded-circle" alt="{{ $evOb->empleado->name }}"
-                                                title="{{ $evOb->empleado->name }}" width="40" height="37">
-                                        @endforeach
-                                    </div>
+                    </a>
+                    <div class="d-flex align-items-center justify-content-between color-primary">
+                        <div class="row">
+                            <div class="col-6">
+                                <small>Objetivos</small><br>
+                                <div class="d-flex" style="position:relative">
+                                    @foreach ($evaluado->evaluadoresObjetivos($periodo['id_periodo']) as $evOb)
+                                        <img style=""
+                                            src="{{ asset('storage/empleados/imagenes/') }}/{{ $evOb->empleado->avatar }}"
+                                            class="rounded-circle" alt="{{ $evOb->empleado->name }}"
+                                            title="{{ $evOb->empleado->name }}" width="40" height="37">
+                                    @endforeach
                                 </div>
-                                <div class="col-6">
-                                    <small>Competencias</small><br>
-                                    <div class="d-flex" style="position:relative">
-                                        @foreach ($evaluado->evaluadoresCompetencias as $evComp)
-                                            <img style=""
-                                                src="{{ asset('storage/empleados/imagenes/') }}/{{ $evComp->empleado->avatar }}"
-                                                class="rounded-circle" alt="{{ $evComp->empleado->name }}"
-                                                title="{{ $evComp->empleado->name }}" width="40" height="37">
-                                        @endforeach
+                                <!-- Button to trigger the modal with data-periodo attribute -->
+                                <button type="button" class="btn btn-primary open-modal" data-toggle="modal"
+                                    data-target="#cambioEvaluadoresObjetivos{{ $periodo['id_periodo'] }}">Open
+                                    Modal</button>
+                            </div>
+
+                            <!-- The modal -->
+                            <div class="modal fade" id="cambioEvaluadoresObjetivos{{ $periodo['id_periodo'] }}"
+                                tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-xl" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <!-- Modal content goes here -->
+                                            @foreach ($evaluado->evaluadoresObjetivos($periodo['id_periodo']) as $key_evaluador => $evaluador)
+                                                @if ($evaluador->evaluador_desempeno_id != $info_evaluado->empleado->id)
+                                                    <div class="form-row">
+                                                        <div class="form-group col-md-4 anima-focus">
+                                                            <select name="evaluador_{{ $key_evaluador }}"
+                                                                id="evaluador_{{ $key_evaluador }}">
+                                                                <option value="{{ $evaluador->empleado->id }}" default>
+                                                                    {{ $evaluador->empleado->name }}</option>
+                                                                @foreach ($modificar_empleados as $me)
+                                                                    <option value="{{ $me->id }}">
+                                                                        {{ $me->name }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                            <label
+                                                                for="evaluador_{{ $key_evaluador }}">Evaluador</label>
+                                                        </div>
+                                                        <div class="form-group col-md-4 anima-focus">
+                                                            <input type="number" placeholder="" class="form-input"
+                                                                id="porcentaje_evaluador_{{ $key_evaluador }}"
+                                                                name="porcentaje_evaluador_{{ $key_evaluador }}"
+                                                                value="{{ $evaluador->porcentaje_objetivos }}">
+                                                            <label
+                                                                for="porcentaje_evaluador_{{ $key_evaluador }}">Procentaje</label>
+                                                        </div>
+                                                    </div>
+                                                @else
+                                                    <div class="form-row">
+                                                        <div class="form-group col-md-4 anima-focus">
+                                                            <select class="form-input"
+                                                                name="evaluador_{{ $key_evaluador }}"
+                                                                id="evaluador_{{ $key_evaluador }}" disabled>
+                                                                <option value="{{ $evaluador->empleado->id }}"
+                                                                    default>
+                                                                    {{ $evaluador->empleado->name }}</option>
+                                                            </select>
+                                                            <label
+                                                                for="evaluador_{{ $key_evaluador }}">Evaluador</label>
+                                                        </div>
+                                                    </div>
+                                                @endif
+                                            @endforeach
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">Close</button>
+                                            <!-- Additional buttons if needed -->
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="d-flex w-100">
-                                <div class="col-9">
-                                    <span>Evaluaciones contestadas</span>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-warning" role="progressbar"
-                                            style="width: {{ ($evaluacion->cuenta_evaluados_evaluaciones_completadas_totales / $evaluacion->cuenta_evaluados_evaluaciones_totales) * 100 }}%"
-                                            aria-valuenow="{{ ($evaluacion->cuenta_evaluados_evaluaciones_completadas_totales / $evaluacion->cuenta_evaluados_evaluaciones_totales) * 100 }}"
-                                            aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                                <div class="col-3">
-                                    <span>Total</span>
-                                    <p>
-                                        {{ $evaluacion->cuenta_evaluados_evaluaciones_completadas_totales }}/{{ $evaluacion->cuenta_evaluados_evaluaciones_totales }}
-                                    </p>
+
+                            <div class="col-6">
+                                <small>Competencias</small><br>
+                                <div class="d-flex" style="position:relative">
+                                    @foreach ($evaluado->evaluadoresCompetencias($periodo['id_periodo']) as $evComp)
+                                        <img style=""
+                                            src="{{ asset('storage/empleados/imagenes/') }}/{{ $evComp->empleado->avatar }}"
+                                            class="rounded-circle" alt="{{ $evComp->empleado->name }}"
+                                            title="{{ $evComp->empleado->name }}" width="40" height="37">
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
                     </div>
-                </a>
+                    <div class="row mt-3">
+                        <div class="d-flex w-100">
+                            <div class="col-9">
+                                <span>Evaluaciones contestadas</span>
+                                <div class="progress">
+                                    <div class="progress-bar bg-warning" role="progressbar"
+                                        style="width: {{ ($evaluacion->cuenta_evaluados_evaluaciones_completadas_totales / $evaluacion->cuenta_evaluados_evaluaciones_totales) * 100 }}%"
+                                        aria-valuenow="{{ ($evaluacion->cuenta_evaluados_evaluaciones_completadas_totales / $evaluacion->cuenta_evaluados_evaluaciones_totales) * 100 }}"
+                                        aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <span>Total</span>
+                                <p>
+                                    {{ $evaluacion->cuenta_evaluados_evaluaciones_completadas_totales }}/{{ $evaluacion->cuenta_evaluados_evaluaciones_totales }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         @endforeach
     </div>
@@ -436,14 +506,14 @@
                                         @endforeach
                                     </tr>
                                 </thead>
-                                @foreach ($objetivosEvaluado[$periodo_seleccionado] as $tipo_objetivo => $objetivosEvaluadoByTipo)
+                                @forelse ($objetivosEvaluado[$periodo_seleccionado] as $tipo_objetivo => $objetivosEvaluadoByTipo)
                                     <thead>
                                         <tr>
                                             <th colspan="{{ $contadorColumnas }}">{{ $tipo_objetivo }}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($objetivosEvaluadoByTipo['autoevaluacion'] as $cuestionario)
+                                        @forelse ($objetivosEvaluadoByTipo['autoevaluacion'] as $cuestionario)
                                             <tr>
                                                 <td>{{ $cuestionario->infoObjetivo->objetivo }}</td>
                                                 <td>
@@ -537,9 +607,17 @@
                                                     </td>
                                                 @endforeach
                                             </tr>
-                                        @endforeach
+                                        @empty
+                                            <tr>
+                                                <td>Sin Evaluar</td>
+                                            </tr>
+                                        @endforelse
                                     </tbody>
-                                @endforeach
+                                @empty
+                                    <tr>
+                                        <td>Sin Evaluar</td>
+                                    </tr>
+                                @endforelse
                             </table>
                         </div>
                     </div>
