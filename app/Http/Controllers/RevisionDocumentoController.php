@@ -195,8 +195,8 @@ class RevisionDocumentoController extends Controller
                             'estatus' => strval(Documento::DOCUMENTO_RECHAZADO),
                         ]);
 
-                    // $documentoActual = Documento::with('elaborador')->find($documento->documento_id);
-                    // $this->sendMailNotPublish($documentoActual->elaborador->email, $documentoActual);
+                        // $documentoActual = Documento::with('elaborador')->find($documento->documento_id);
+                        // $this->sendMailNotPublish($documentoActual->elaborador->email, $documentoActual);
                     } else {
                         $path_documentos_aprobacion = 'public/Documentos en aprobacion';
                         switch ($documentoOriginal->tipo) {

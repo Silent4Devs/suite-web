@@ -405,7 +405,7 @@ class EntendimientoOrganizacionController extends Controller
             $acceso_restringido = 'denegado';
 
             return view('admin.entendimientoOrganizacions.show-admin', compact('foda_actual', 'empleados', 'obtener_FODA', 'organizacion_actual', 'logo_actual', 'empresa_actual', 'acceso_restringido'));
-        // dd('aqui');
+            // dd('aqui');
         } else {
             $acceso_restringido = 'aprobado';
 

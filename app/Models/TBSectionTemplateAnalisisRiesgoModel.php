@@ -22,7 +22,8 @@ class TBSectionTemplateAnalisisRiesgoModel extends Model
         'position',
     ];
 
-    public function questions(){
-        return $this->belongsToMany(TBQuestionTemplateAnalisisRiesgoModel::class, 'secciones_templates_ar_questions_templates_ar_pivote','section_id','question_id');
+    public function questions()
+    {
+        return $this->belongsToMany(TBQuestionTemplateAnalisisRiesgoModel::class, 'secciones_templates_ar_questions_templates_ar_pivote', 'section_id', 'question_id');
     }
 }

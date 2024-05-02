@@ -46,11 +46,11 @@ class EV360ObjetivosController extends Controller
             $empleados = $usuario->empleado->children;
 
             return view('admin.recursos-humanos.evaluacion-360.objetivos.index', compact('areas', 'puestos', 'perfiles', 'empleados'));
-        // return datatables()->of($usuario->empleado->children)->toJson();
+            // return datatables()->of($usuario->empleado->children)->toJson();
         } elseif ($isAdmin) {
             // dd('caso 2');
             return view('admin.recursos-humanos.evaluacion-360.objetivos.index', compact('areas', 'puestos', 'perfiles', 'empleados'));
-        // return datatables()->of($empleados)->toJson();
+            // return datatables()->of($empleados)->toJson();
         } else {
             // dd('caso 3');
             return view('admin.recursos-humanos.evaluacion-360.objetivos.index', compact('areas', 'puestos', 'perfiles', 'empleados'));

@@ -24,7 +24,8 @@ class TBDataQuestionTemplateAnalisisRiesgoModel extends Model
         'status',
     ];
 
-    public function questions(){
+    public function questions()
+    {
         return $this->belongsToMany(TBQuestionTemplateAnalisisRiesgoModel::class, 'questions_templates_ar_data_questions_templates_ar_pivote');
     }
 }

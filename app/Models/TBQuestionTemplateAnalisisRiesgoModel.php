@@ -21,14 +21,16 @@ class TBQuestionTemplateAnalisisRiesgoModel extends Model
         'size',
         'type',
         'position',
-        'obligatory'
+        'obligatory',
     ];
 
-    public function sections(){
+    public function sections()
+    {
         return $this->belongsToMany(TBSectionTemplateAnalisisRiesgoModel::class, 'secciones_templates_ar_questions_templates_ar_pivote');
     }
 
-    public function dataQuestions(){
-        return $this->belongsToMany(TBDataQuestionTemplateAnalisisRiesgoModel::class, 'questions_templates_ar_data_questions_templates_ar_pivote','question_id','dataquestion_id');
+    public function dataQuestions()
+    {
+        return $this->belongsToMany(TBDataQuestionTemplateAnalisisRiesgoModel::class, 'questions_templates_ar_data_questions_templates_ar_pivote', 'question_id', 'dataquestion_id');
     }
 }

@@ -12,9 +12,9 @@ Route::group(['prefix' => 'api/v1', 'as' => 'api.', 'namespace' => 'Api\v1', 'mi
 
 });
 Route::apiResource('api/v1/test', templateAnalisisRiesgoController::class);
-Route::delete('api/v1/test/section/delete/{id}',[templateAnalisisRiesgoController::class, 'destroySection']);
-Route::delete('api/v1/test/question/delete/{id}',[templateAnalisisRiesgoController::class, 'destroyQuestion']);
-Route::delete('api/v1/test/data/question/delete/{id}',[templateAnalisisRiesgoController::class, 'destroyDataQuestion']);
+Route::delete('api/v1/test/section/delete/{id}', [templateAnalisisRiesgoController::class, 'destroySection']);
+Route::delete('api/v1/test/question/delete/{id}', [templateAnalisisRiesgoController::class, 'destroyQuestion']);
+Route::delete('api/v1/test/data/question/delete/{id}', [templateAnalisisRiesgoController::class, 'destroyDataQuestion']);
 
 Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', 'middleware' => ['auth:api']], function () {
     // Permissions
