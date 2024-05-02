@@ -20376,6 +20376,53 @@ namespace Spatie\SignalAwareCommand\Facades {
             }
     }
 
+namespace VXM\Async {
+            /**
+     * 
+     *
+     * @author Vuong Minh <vuongxuongminh@gmail.com>
+     * @since 1.0.0
+     */        class AsyncFacade {
+                    /**
+         * 
+         *
+         * @static 
+         */        public static function run($job, $events = [], $outputLength = null)
+        {
+                        /** @var \VXM\Async\Async $instance */
+                        return $instance->run($job, $events, $outputLength);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */        public static function batchRun(...$jobs)
+        {
+                        /** @var \VXM\Async\Async $instance */
+                        return $instance->batchRun(...$jobs);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */        public static function wait()
+        {
+                        /** @var \VXM\Async\Async $instance */
+                        return $instance->wait();
+        }
+                    /**
+         * Get current pool.
+         *
+         * @since 2.1.0
+         * @static 
+         */        public static function getPool()
+        {
+                        /** @var \VXM\Async\Async $instance */
+                        return $instance->getPool();
+        }
+            }
+    }
+
 namespace Yajra\DataTables\Facades {
             /**
      * 
@@ -24619,6 +24666,7 @@ namespace  {
             class Flare extends \Spatie\LaravelIgnition\Facades\Flare {}
             class ResponseCache extends \Spatie\ResponseCache\Facades\ResponseCache {}
             class Signal extends \Spatie\SignalAwareCommand\Facades\Signal {}
+            class Async extends \VXM\Async\AsyncFacade {}
             class DataTables extends \Yajra\DataTables\Facades\DataTables {}
     }
 
