@@ -51,6 +51,8 @@ class PortalComunicacionController extends Controller
             },
         );
 
+        dd($comunicacionSgis);
+
         $user = User::getCurrentUser();
 
         $empleado_asignado = $user->n_empleado;
