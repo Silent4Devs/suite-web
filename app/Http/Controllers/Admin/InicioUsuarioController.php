@@ -106,7 +106,6 @@ class InicioUsuarioController extends Controller
             },
         );
 
-
         $usuario = User::getCurrentUser();
         $empleado = Empleado::getMyEmpleadodata($usuario->empleado->id);
 
