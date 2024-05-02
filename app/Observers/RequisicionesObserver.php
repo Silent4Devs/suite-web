@@ -17,7 +17,6 @@ class RequisicionesObserver
         event(new RequisicionesEvent($requisiciones, 'create', 'requisiciones', 'Requisiciones'));
     }
 
-
     /**
      * Handle the requisiciones "deleted" event.
      *
