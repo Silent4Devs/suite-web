@@ -5,8 +5,8 @@ namespace App\Listeners;
 use App\Models\User;
 use App\Notifications\RegistroMejoraNotification;
 use Illuminate\Support\Facades\Notification;
-use Illuminate\Contracts\Queue\ShouldQueue;
-class RegistroMejoraListener implements ShouldQueue
+
+class RegistroMejoraListener
 {
     /**
      * Create the event listener.
