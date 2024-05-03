@@ -5,9 +5,8 @@ namespace App\Listeners;
 use App\Models\User;
 use App\Notifications\AccionCorrectivaNotification;
 use Illuminate\Support\Facades\Notification;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
-class AccionCorrectivaListener implements ShouldQueue
+class AccionCorrectivaListener
 {
     /**
      * Create the event listener.
