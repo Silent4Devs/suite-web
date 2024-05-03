@@ -5,8 +5,8 @@ namespace App\Listeners;
 use App\Models\User;
 use App\Notifications\MatrizRequisitosNotification;
 use Illuminate\Support\Facades\Notification;
-
-class MatrizRequisitosListener
+use Illuminate\Contracts\Queue\ShouldQueue;
+class MatrizRequisitosListener implements ShouldQueue
 {
     /**
      * Create the event listener.
