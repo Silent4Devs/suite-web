@@ -35,12 +35,13 @@ class PortalComunicacionController extends Controller
             function () use (&$politica_existe) {
                 $politica_existe = PoliticaSgsi::getAll()->count();
             },
-            function () use (&$getAlta) {
-                $getAlta = Empleado::alta();
+            function () use (&$user) {
+                $user = User::getCurrentUser();
             },
         );
 
-        $user = User::getCurrentUser();
+        $getAlta = Empleado::alta();
+
 
         $empleado_asignado = $user->n_empleado;
         $authId = $user->id;
