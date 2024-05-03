@@ -17,6 +17,8 @@ class Course extends Model implements Auditable
 
     protected $guarded = ['id', 'status'];
 
+    protected $table = 'courses';
+
     protected $withCount = ['students', 'reviews'];
 
     const BORRADOR = 1;
