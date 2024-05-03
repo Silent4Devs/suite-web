@@ -4,8 +4,9 @@ namespace App\Listeners;
 
 use App\Notifications\RecursosNotification;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
-class RecursosListener
+class RecursosListener implements ShouldQueue
 {
     /**
      * Create the event listener.
