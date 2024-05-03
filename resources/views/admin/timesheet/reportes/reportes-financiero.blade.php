@@ -120,6 +120,26 @@
                     titleAttr: 'Exportar Excel',
                     exportOptions: {
                         columns: ['th:not(:last-child):visible']
+                    },
+                    customizeData: function(data) {
+                        for (var i = 0; i < data.body.length; i++) {
+                            var columnaD = data.body[i][
+                                3
+                            ];
+                            columnaD = columnaD.replace(/\s{2,}/g, ' ');
+                            if (columnaD.length > 100) {
+                                columnaD = columnaD.slice(0, 100);
+                            }
+                            data.body[i][3] = columnaD;
+                            var columnaE = data.body[i][
+                                4
+                            ];
+                            columnaE = columnaE.replace(/\s{2,}/g, ' ');
+                            if (columnaE.length > 100) {
+                                columnaE = columnaE.slice(0, 100);
+                            }
+                            data.body[i][4] = columnaE;
+                        }
                     }
                 },
                 {
