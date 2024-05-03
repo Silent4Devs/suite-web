@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Events\EntendimientoOrganizacionEvent;
 use App\Models\EntendimientoOrganizacion;
 use Illuminate\Support\Facades\Cache;
 
@@ -10,40 +11,27 @@ class EntendimientoOrganizacionObserver
     /**
      * Handle the EntendimientoOrganizacion "created" event.
      */
-    public function created(EntendimientoOrganizacion $entendimientoOrganizacion): void
+    public function created(EntendimientoOrganizacion $entendimiento): void
     {
+        event(new EntendimientoOrganizacionEvent($entendimiento, 'create', 'entendimiento_organizacions', 'Entendimiento'));
         $this->forgetCache();
     }
 
     /**
      * Handle the EntendimientoOrganizacion "updated" event.
      */
-    public function updated(EntendimientoOrganizacion $entendimientoOrganizacion): void
+    public function updated(EntendimientoOrganizacion $entendimiento): void
     {
+        event(new EntendimientoOrganizacionEvent($entendimiento, 'update', 'entendimiento_organizacions', 'Entendimiento'));
         $this->forgetCache();
     }
 
     /**
      * Handle the EntendimientoOrganizacion "deleted" event.
      */
-    public function deleted(EntendimientoOrganizacion $entendimientoOrganizacion): void
+    public function deleted(EntendimientoOrganizacion $entendimiento): void
     {
-        $this->forgetCache();
-    }
-
-    /**
-     * Handle the EntendimientoOrganizacion "restored" event.
-     */
-    public function restored(EntendimientoOrganizacion $entendimientoOrganizacion): void
-    {
-        $this->forgetCache();
-    }
-
-    /**
-     * Handle the EntendimientoOrganizacion "force deleted" event.
-     */
-    public function forceDeleted(EntendimientoOrganizacion $entendimientoOrganizacion): void
-    {
+        event(new EntendimientoOrganizacionEvent($entendimiento, 'delete', 'entendimiento_organizacions', 'Entendimiento'));
         $this->forgetCache();
     }
 
