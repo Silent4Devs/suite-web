@@ -107,9 +107,9 @@ teamwork icon
 
 .teamworkIcon {
   font-family: 'TeamworkRegular' !important;
-  color: #34495e;
+  color: #006DDB ;
+  font-size: 30px !important;
   font-weight: normal;
-  font-size: 120%;
   font-style: normal !important;
   text-rendering: optimizelegibility;
   -webkit-font-smoothing: antialiased;
@@ -278,12 +278,13 @@ TH, .tableHeader {
 
 .ganttTaskEditor .formElements,
 .resourceEditor .formElements {
-  background-color: #F5F5F5;
-  border-color: #CECECE
+    background-color: #ffffff;
+    border-color: #ffffff;
+    width: auto;
 }
 
 table .resRow td, table .assigEditRow td {
-  border-bottom: 1px solid #cecece;
+  border-bottom: 1px solid #FFEEEE;
   padding: 5px 0
 }
 
