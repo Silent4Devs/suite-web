@@ -5,9 +5,8 @@ namespace App\Listeners;
 use App\Models\User;
 use App\Notifications\PoliticasSgiNotification;
 use Illuminate\Support\Facades\Notification;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
-class PoliticasSgiListener implements ShouldQueue
+class PoliticasSgiListener
 {
     /**
      * Create the event listener.
