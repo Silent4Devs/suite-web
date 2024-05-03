@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Events\AccionCorrectivaEvent;
 use App\Events\AlcancesEvent;
 use App\Events\AuditoriaAnualEvent;
+use App\Events\CoursesEvent;
 use App\Events\DocumentoEvent;
 use App\Events\EntendimientoOrganizacionEvent;
 use App\Events\IncidentesDeSeguridadEvent;
@@ -19,6 +20,7 @@ use App\Listeners\AccionCorrectivaListener;
 use App\Listeners\AlcancesListener;
 use App\Listeners\AuditoriaAnualListener;
 use App\Listeners\BroadcastUserLoginNotification;
+use App\Listeners\CoursesListener;
 use App\Listeners\DocumentoListener;
 use App\Listeners\EntendimientoOrganizacionListener;
 use App\Listeners\IncidentesDeSeguridadListener;
@@ -241,6 +243,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         TimesheetEvent::class => [
             TimesheetListener::class,
+        ],
+        CoursesEvent::class => [
+            CoursesListener::class,
         ],
     ];
 
