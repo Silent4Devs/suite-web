@@ -31,17 +31,9 @@ class PortalComunicacionController extends Controller
         $hoy = Carbon::now();
         $hoy->toDateString();
 
-        Async::batchRun(
-            function () use (&$politica_existe) {
-                $politica_existe = PoliticaSgsi::getAll()->count();
-            },
-            function () use (&$user) {
-                $user = User::getCurrentUser();
-            },
-        );
-
+        $politica_existe = PoliticaSgsi::getAll()->count();
         $getAlta = Empleado::alta();
-
+        $user = User::getCurrentUser();
 
         $empleado_asignado = $user->n_empleado;
         $authId = $user->id;
