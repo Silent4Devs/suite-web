@@ -642,13 +642,13 @@
             </div>
             <div class="__template__" type="ASSIGNMENT_ROW">
                 <!--
-                                                                                                                                                                <tr taskId="(#=obj.task.id#)" assId="(#=obj.assig.id#)" class="assigEditRow" >
-                                                                                                                                                                <td ><select name="resourceId"  class="formElements" (#=obj.assig.id.indexOf("tmp_")==0?"":"disabled"#) ></select></td>
-                                                                                                                                                                <td ><select type="select" name="roleId"  class="formElements"></select></td>
-                                                                                                                                                                <td ><input type="text" name="effort" value="(#=getMillisInHoursMinutes(obj.assig.effort)#)" size="5" class="formElements"></td>
-                                                                                                                                                                <td align="center"><span class="teamworkIcon delAssig del" style="cursor: pointer">d</span></td>
-                                                                                                                                                                </tr>
-                                                                                                                                                                -->
+                                                                                                                                                                        <tr taskId="(#=obj.task.id#)" assId="(#=obj.assig.id#)" class="assigEditRow" >
+                                                                                                                                                                        <td ><select name="resourceId"  class="formElements" (#=obj.assig.id.indexOf("tmp_")==0?"":"disabled"#) ></select></td>
+                                                                                                                                                                        <td ><select type="select" name="roleId"  class="formElements"></select></td>
+                                                                                                                                                                        <td ><input type="text" name="effort" value="(#=getMillisInHoursMinutes(obj.assig.effort)#)" size="5" class="formElements"></td>
+                                                                                                                                                                        <td align="center"><span class="teamworkIcon delAssig del" style="cursor: pointer">d</span></td>
+                                                                                                                                                                        </tr>
+                                                                                                                                                                        -->
             </div>
             <div class="__template__" type="RESOURCE_EDITOR">
                 {{-- <!-- --}}
@@ -824,7 +824,10 @@
                 document.querySelector(".next-btn").addEventListener("click", function() {
                     if (currentCardIndex === cards.length - 1) {
                         // Abre el modal cuando se hace clic en "Finalizar"
-                        document.getElementById("myModal").style.display = "block";
+                        $('#modalTutorial').modal('hide');
+                        $('body').removeClass('modal-open');
+                        $('.modal-backdrop').remove();
+                        resetCardsAndIndicators();
                     } else {
                         currentCardIndex++;
                         showCard(currentCardIndex);
@@ -848,15 +851,22 @@
 
                 // Cierra el modal cuando se hace clic en la "x"
                 document.querySelector(".close").addEventListener("click", function() {
-                    document.getElementById("myModal").style.display = "none";
+                    $('#modalTutorial').modal('hide');
+                    resetCardsAndIndicators();
                 });
 
                 // Cierra el modal cuando se hace clic fuera del contenido del modal
                 window.onclick = function(event) {
-                    if (event.target == document.getElementById("myModal")) {
-                        document.getElementById("myModal").style.display = "none";
+                    if (event.target == document.getElementById("modalTutorial")) {
+                        $('#modalTutorial').modal('hide');
+                        resetCardsAndIndicators();
                     }
                 };
+
+                function resetCardsAndIndicators() {
+                    currentCardIndex = 0;
+                    showCard(currentCardIndex);
+                }
             });
         </script>
     @endsection
@@ -968,7 +978,7 @@
         }
     </style>
     {{-- modal de instrucciones --}}
-    <div class="modal fade" id="miModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="modalTutorial" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content" style="width: 440px;height: 575px;border-radius: 20px;">
