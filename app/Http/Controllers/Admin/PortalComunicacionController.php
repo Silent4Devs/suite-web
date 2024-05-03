@@ -35,8 +35,8 @@ class PortalComunicacionController extends Controller
             function () use (&$politica_existe) {
                 $politica_existe = PoliticaSgsi::getAll()->count();
             },
-            function () use (&$nuevos, $hoy) {
-                $nuevos = Empleado::whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->get();
+            function () use (&$getAlta) {
+                $getAlta = Empleado::alta();
             },
         );
         $getAlta = Empleado::alta();
@@ -48,7 +48,7 @@ class PortalComunicacionController extends Controller
 
         $documentos_publicados = Documento::getLastFiveWithMacroproceso();
         $comite_existe = Comiteseguridad::getAll()->count();
-
+        $nuevos = Empleado::whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->get();
         $comunicacionSgis = ComunicacionSgi::getAllwithImagenesBlog();
         $comunicacionSgis_carrusel = ComunicacionSgi::getAllwithImagenesCarrousel();
 

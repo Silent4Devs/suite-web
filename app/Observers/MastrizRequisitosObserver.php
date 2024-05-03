@@ -16,9 +16,7 @@ class MastrizRequisitosObserver
      */
     public function created(MatrizRequisitoLegale $matriz)
     {
-        Queue::push(function () use ($matriz) {
-            event(new MatrizRequisitosEvent($matriz, 'create', 'matriz_requisito_legales', 'Matriz'));
-        });
+        event(new MatrizRequisitosEvent($matriz, 'create', 'matriz_requisito_legales', 'Matriz'));
 
         $this->forgetCache();
     }
@@ -30,9 +28,7 @@ class MastrizRequisitosObserver
      */
     public function updated(MatrizRequisitoLegale $matriz)
     {
-        Queue::push(function () use ($matriz) {
-            event(new MatrizRequisitosEvent($matriz, 'update', 'matriz_requisito_legales', 'Matriz'));
-        });
+        event(new MatrizRequisitosEvent($matriz, 'update', 'matriz_requisito_legales', 'Matriz'));
 
         $this->forgetCache();
     }
@@ -44,9 +40,7 @@ class MastrizRequisitosObserver
      */
     public function deleted(MatrizRequisitoLegale $matriz)
     {
-        Queue::push(function () use ($matriz) {
-            event(new MatrizRequisitosEvent($matriz, 'delete', 'matriz_requisito_legales', 'Matriz'));
-        });
+        event(new MatrizRequisitosEvent($matriz, 'delete', 'matriz_requisito_legales', 'Matriz'));
 
         $this->forgetCache();
     }
