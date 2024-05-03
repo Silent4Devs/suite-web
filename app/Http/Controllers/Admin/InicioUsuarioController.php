@@ -52,6 +52,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
+use VXM\Async\AsyncFacade as Async;
 
 class InicioUsuarioController extends Controller
 {
@@ -62,8 +63,50 @@ class InicioUsuarioController extends Controller
         $hoy = Carbon::now();
         $hoy->toDateString();
 
-        $usuario = User::getCurrentUser();
+        Async::batchRun(
+            function () use (&$implementaciones) {
+                // Check if the result is already cached
+                $implementaciones = PlanImplementacion::getAll();
+            },
+            function () use (&$existsEmpleado) {
+                $existsEmpleado = Empleado::exists();
+            },
+            function () use (&$existsOrganizacion) {
+                $existsOrganizacion = Organizacion::exists();
+            },
+            function () use (&$existsAreas) {
+                $existsAreas = Area::exists();
+            },
+            function () use (&$existsPuesto) {
+                $existsPuesto = Puesto::exists();
+            },
+            function () use (&$existsVinculoEmpleadoAdmin) {
+                $existsVinculoEmpleadoAdmin = User::exists();
+            },
+            function () use (&$organizacion) {
+                $organizacion = Organizacion::getFirst();
+            },
+            function () use (&$panel_rules) {
+                $panel_rules = PanelInicioRule::getAll();
+            },
+            function () use (&$documentos_publicados) {
+                $documentos_publicados = Documento::getLastFiveWithMacroproceso();
+            },
+            function () use (&$auditorias_anual) {
+                $auditorias_anual = AuditoriaAnual::getAll();
+            },
+            function () use (&$eventos) {
+                $eventos = Calendario::getAll();
+            },
+            function () use (&$oficiales) {
+                $oficiales = CalendarioOficial::getAll();
+            },
+            function () use (&$cumples_aniversarios) {
+                $cumples_aniversarios = Empleado::getAltaEmpleadosWithArea();
+            },
+        );
 
+        $usuario = User::getCurrentUser();
         $empleado = Empleado::getMyEmpleadodata($usuario->empleado->id);
 
         $usuarioVinculadoConEmpleado = false;
@@ -73,8 +116,7 @@ class InicioUsuarioController extends Controller
 
         $empleado_id = $empleado ? $empleado->id : 0;
         $actividades = [];
-        // Check if the result is already cached
-        $implementaciones = PlanImplementacion::getAll();
+
         $actividades = collect();
         if ($implementaciones) {
             foreach ($implementaciones as $implementacion) {
@@ -133,12 +175,8 @@ class InicioUsuarioController extends Controller
             }
         }
 
-        $auditorias_anual = AuditoriaAnual::getAll();
         $auditoria_internas = new AuditoriaInterna;
         $recursos = collect();
-        $eventos = Calendario::getAll();
-        $oficiales = CalendarioOficial::getAll();
-        $cumples_aniversarios = Empleado::getAltaEmpleadosWithArea();
         $mis_quejas = collect();
         $mis_quejas_count = 0;
         $mis_denuncias = collect();
@@ -169,7 +207,6 @@ class InicioUsuarioController extends Controller
 
         $contador_recursos = $recursos->where('fecha_fin', '>=', Carbon::now()->toDateString())->count();
 
-        $documentos_publicados = Documento::getLastFiveWithMacroproceso();
         $revisiones = [];
         $mis_documentos = [];
         $contador_revisiones = 0;
@@ -251,8 +288,6 @@ class InicioUsuarioController extends Controller
             $supervisor = $empleado->supervisor;
         }
 
-        $panel_rules = PanelInicioRule::getAll();
-
         if (! is_null($empleado)) {
             $activos = Activo::select('*')->where('id_responsable', '=', $empleado->id)->get();
             if ($empleado->cumpleaños) {
@@ -276,7 +311,6 @@ class InicioUsuarioController extends Controller
             $cumpleaños_felicitados_comentarios = collect();
         }
 
-        $organizacion = Organizacion::getFirst();
         $competencias = collect();
 
         if ($empleado) {
@@ -309,12 +343,6 @@ class InicioUsuarioController extends Controller
             $solicitudes_pendientes = $solicitud_vacacion + $solicitud_dayoff + $solicitud_permiso;
             // $solicitudes_pendientes = 1;
         }
-
-        $existsEmpleado = Empleado::getExists();
-        $existsOrganizacion = Organizacion::getExists();
-        $existsAreas = Area::getExists();
-        $existsPuesto = Puesto::getExists();
-        $existsVinculoEmpleadoAdmin = User::getExists();
 
         return view('admin.inicioUsuario.index', compact(
             'empleado',

@@ -129,10 +129,11 @@
                 style="padding: 10px !important; background-color: #E9F9FF; color: #006DDB !important;">
                 <i class="material-symbols-outlined">save</i>
             </button>
-            <span class="ml-3" style="font-size: 10px; color: #818181;">Se deberán guardar los cambios realizados
-                presionando el
-                icono
-                "Guardar"</span>
+            <span class="ml-3" style="font-size: 15px; color: #818181;">Se deberán guardar los cambios realizados
+                presionando el icono "Guardar"</span>
+            <button type="button" style="background-color: transparent; border: none;" data-toggle="modal" data-target="#modalTutorial">
+                <i class="fas fa-lightbulb fa-2x pulse" style="color: #FFBB00"></i>
+            </button>
         </div>
     </div>
 

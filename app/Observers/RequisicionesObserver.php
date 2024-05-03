@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Events\RequisicionesEvent;
 use App\Models\ContractManager\Requsicion;
+use Illuminate\Support\Facades\Queue;
 
 class RequisicionesObserver
 {
@@ -14,7 +15,10 @@ class RequisicionesObserver
      */
     public function created(Requsicion $requisiciones)
     {
-        event(new RequisicionesEvent($requisiciones, 'create', 'requisiciones', 'Requisiciones'));
+        Queue::push(function () use ($requisiciones) {
+            event(new RequisicionesEvent($requisiciones, 'create', 'requisiciones', 'Requisiciones'));
+        });
+
     }
 
     /**
@@ -24,6 +28,9 @@ class RequisicionesObserver
      */
     public function deleted(Requsicion $requisiciones)
     {
-        event(new RequisicionesEvent($requisiciones, 'delete', 'requisiciones', 'Requisiciones'));
+        Queue::push(function () use ($requisiciones) {
+            event(new RequisicionesEvent($requisiciones, 'delete', 'requisiciones', 'Requisiciones'));
+        });
+
     }
 }

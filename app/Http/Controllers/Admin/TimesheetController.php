@@ -685,37 +685,45 @@ class TimesheetController extends Controller
                 ]);
             }
 
-            $informados = ListaInformativa::with('participantes.empleado', 'usuarios.usuario')->where('modelo', '=', $this->modelo_proyectos)->first();
+            try {
+                $informados = ListaInformativa::with('participantes.empleado', 'usuarios.usuario')->where('modelo', '=', $this->modelo_proyectos)->first();
 
-            if (isset($informados->participantes[0]) || isset($informados->usuarios[0])) {
+                if (isset($informados->participantes[0]) || isset($informados->usuarios[0])) {
 
-                if (isset($informados->participantes[0])) {
-                    foreach ($informados->participantes as $participante) {
-                        $correos[] = $participante->empleado->email;
+                    if (isset($informados->participantes[0])) {
+                        foreach ($informados->participantes as $participante) {
+                            $correos[] = $participante->empleado->email;
+                        }
                     }
-                }
 
-                if (isset($informados->usuarios[0])) {
-                    foreach ($informados->usuarios as $usuario) {
-                        $correos[] = $usuario->usuario->email;
+                    if (isset($informados->usuarios[0])) {
+                        foreach ($informados->usuarios as $usuario) {
+                            $correos[] = $usuario->usuario->email;
+                        }
                     }
-                }
 
-                dispatch(
-                    new NuevoProyectoJob(
-                        $correos,
-                        $nuevo_proyecto->proyecto,
-                        $nuevo_proyecto->identificador,
-                        $nuevo_proyecto->cliente->nombre,
-                        User::getCurrentUser()->empleado->name,
-                        $nuevo_proyecto->id
-                    )
-                );
+                    dispatch(
+                        new NuevoProyectoJob(
+                            $correos,
+                            $nuevo_proyecto->proyecto,
+                            $nuevo_proyecto->identificador,
+                            $nuevo_proyecto->cliente->nombre,
+                            User::getCurrentUser()->empleado->name,
+                            $nuevo_proyecto->id
+                        )
+                    );
+                }
+            } catch (\Throwable $th) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Ha Ocurrido un Error al enviar el correo.',
+                    'id_proyecto' => $nuevo_proyecto->id, // Optionally, you can include the created project in the response
+                ]);
             }
 
-            return redirect('admin/timesheet/proyecto-empleados/'.$nuevo_proyecto->id);
+            // return redirect('admin/timesheet/proyecto-empleados/'.$nuevo_proyecto->id);
 
-            return redirect('admin/timesheet/proyectos/create');
+            // return redirect('admin/timesheet/proyectos/create');
 
             return response()->json([
                 'success' => true,

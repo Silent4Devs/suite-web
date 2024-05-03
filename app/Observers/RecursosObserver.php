@@ -8,6 +8,7 @@ use App\Models\Empleado;
 use App\Models\Recurso;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Queue;
 
 class RecursosObserver
 {
@@ -38,7 +39,10 @@ class RecursosObserver
             }
         }
 
-        event(new RecursosEvent($recurso, 'create', 'recurso', 'Curso y Capacitación'));
+        Queue::push(function () use ($recurso) {
+            event(new RecursosEvent($recurso, 'create', 'recurso', 'Curso y Capacitación'));
+        });
+
     }
 
     /**
@@ -64,7 +68,10 @@ class RecursosObserver
             }
         }
 
-        event(new RecursosEvent($recurso, 'update', 'recurso', 'Curso y Capacitación'));
+        Queue::push(function () use ($recurso) {
+            event(new RecursosEvent($recurso, 'update', 'recurso', 'Curso y Capacitación'));
+        });
+
     }
 
     /**
@@ -74,7 +81,10 @@ class RecursosObserver
      */
     public function deleted(Recurso $recurso)
     {
-        event(new RecursosEvent($recurso, 'delete', 'recurso', 'Curso y Capacitación'));
+        Queue::push(function () use ($recurso) {
+            event(new RecursosEvent($recurso, 'delete', 'recurso', 'Curso y Capacitación'));
+        });
+
     }
 
     /**

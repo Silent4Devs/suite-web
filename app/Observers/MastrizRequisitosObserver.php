@@ -5,6 +5,7 @@ namespace App\Observers;
 use App\Events\MatrizRequisitosEvent;
 use App\Models\MatrizRequisitoLegale;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Queue;
 
 class MastrizRequisitosObserver
 {
@@ -15,7 +16,10 @@ class MastrizRequisitosObserver
      */
     public function created(MatrizRequisitoLegale $matriz)
     {
-        event(new MatrizRequisitosEvent($matriz, 'create', 'matriz_requisito_legales', 'Matriz'));
+        Queue::push(function () use ($matriz) {
+            event(new MatrizRequisitosEvent($matriz, 'create', 'matriz_requisito_legales', 'Matriz'));
+        });
+
         $this->forgetCache();
     }
 
@@ -26,7 +30,10 @@ class MastrizRequisitosObserver
      */
     public function updated(MatrizRequisitoLegale $matriz)
     {
-        event(new MatrizRequisitosEvent($matriz, 'update', 'matriz_requisito_legales', 'Matriz'));
+        Queue::push(function () use ($matriz) {
+            event(new MatrizRequisitosEvent($matriz, 'update', 'matriz_requisito_legales', 'Matriz'));
+        });
+
         $this->forgetCache();
     }
 
@@ -37,7 +44,10 @@ class MastrizRequisitosObserver
      */
     public function deleted(MatrizRequisitoLegale $matriz)
     {
-        event(new MatrizRequisitosEvent($matriz, 'delete', 'matriz_requisito_legales', 'Matriz'));
+        Queue::push(function () use ($matriz) {
+            event(new MatrizRequisitosEvent($matriz, 'delete', 'matriz_requisito_legales', 'Matriz'));
+        });
+
         $this->forgetCache();
     }
 
