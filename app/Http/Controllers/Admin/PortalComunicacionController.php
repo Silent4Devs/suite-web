@@ -39,7 +39,6 @@ class PortalComunicacionController extends Controller
                 $getAlta = Empleado::alta();
             },
         );
-        $getAlta = Empleado::alta();
 
         $user = User::getCurrentUser();
 
