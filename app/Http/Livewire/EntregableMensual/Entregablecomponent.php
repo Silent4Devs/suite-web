@@ -260,13 +260,6 @@ class Entregablecomponent extends Component
             if (isset($this->pdf)) {
                 $organizacion = Organizacion::first();
                 $mines = str_replace('.', '', $organizacion->formatos);
-                // $tamaño_limite = ($organizacion->config_megas_permitido_docs) * 1024 * 1024;
-                // if ($this->pdf->getSize() >= $tamaño_limite) {
-                //     $this->alert('warning', 'El archivo file no debe pesar más de ' . $organizacion->config_megas_permitido_docs . 'M');
-
-                //     return 'error';
-                // }
-
                 if ($this->pdf->getClientOriginalExtension() != 'pdf') {
                     $this->alert('warning', 'Formato no valido', [
                         'position' => 'top-end',
