@@ -463,3 +463,151 @@ export const useGenerateTemplateAnalisisRiesgo = (item, changeQuestionProps,chan
             transition, isDragging, handleTileChange, inputTitle, showSize, showInfo,
             handleShowSizes, handleChangeSize, moreInfo, handleObligatoryChange}
  }
+
+export const useFormulasAnalisisRiesgos = () => {
+    const [options, setOptions] = useState([]);
+    const [option, setOption] = useState("");
+    const [registers, setRegisters] = useState([]);
+    const [formula, setFormula] = useState("");
+    const [formulas, setFormulas] = useState([
+        // {id:1,riesgo:true,title:"Formula 1", formula:"9(5*5)"},
+        // {id:2,riesgo:false,title:"Formula 1", formula:"9(5*5)"}
+    ]);
+
+    const expFormulas = /^rf-\d+$/;
+
+
+    const handleChangeFormula = (newValue) =>{
+        setFormula(newValue);
+    }
+
+    const handleChangeStatus = (id) => {
+        const newChanges = formulas.map((item)=>{
+            if(item.id === id){
+                const newStatus = item.riesgo;
+                item.riesgo = !newStatus;
+                return item;
+            }
+            return item;
+        })
+        setFormulas(newChanges);
+    }
+
+    const handleChangeTitle = (id,newValue) => {
+        const newChanges = formulas.map((item)=>{
+            if(item.id === id){
+                const newTitle = newValue;
+                item.title = newTitle;
+                return item;
+            }
+            return item;
+        });
+
+        setFormulas(newChanges);
+    }
+
+    const hrStyle = {
+            border: "1px dashed #C5C5C5",
+            opacity: 1,
+    }
+
+    const handleChangeOption = (e) => {
+        const newOption = e.target.value;
+        setOption(newOption);
+    }
+
+    const addOption = () => {
+        // console.log(option, options);
+        const id = parseInt(option);
+
+        // const newRegister =
+        const newRegister = options.filter(item => item.id === id);
+        setRegisters([...registers, newRegister[0]]);
+    }
+
+    const addVariable = (item) => {
+        console.log(item)
+        const question = item.title;
+        const id = `$fv${item.id}`
+        const element = `${id}${question}`
+        setFormula(`${formula}${id}`);
+    }
+
+    const removeVariable = (id) => {
+        const newRegisters = registers.filter(item => item.id !== id);
+        setRegisters(newRegisters);
+    }
+
+    const addFormula = () => {
+        if(formula !== ""){
+            const lastFormula = formulas.length + 1;
+            const newId = `nf-${lastFormula}`;
+
+            const newFormula = {
+                id:newId,
+                riesgo:false,
+                title:`Formula ${lastFormula}`,
+                formula:formula
+            }
+            setFormulas([...formulas,newFormula]);
+            setFormula("");
+        }
+    }
+
+    const deleteFormula = async(id) => {
+        let newId ="";
+        const destroyElement = () => {
+            const newElements = formulas.filter(item => item.id !== id);
+            setFormulas(newElements);
+        }
+        const destroyRegister = async() => {
+            await axios.delete(`http:///suite-web.test/api/api/v1/ar/formulas/${newId}`);
+        }
+        if(expFormulas.test(id)){
+            newId = id.slice(3);
+            AlertSimple(()=>destroyElement(), ()=>destroyRegister());
+        }else{
+            destroyElement();
+        }
+    }
+
+    const getOptions = async() => {
+        try {
+            const response = await axios.get('http:///suite-web.test/api/api/v1/ar/formulas/options/1');
+            if(response.status === 200){
+                const data = response.data.data.options
+                // console.log(data);
+                setOptions(data);
+            }
+        } catch (error) {
+
+        }
+    }
+
+    const getFormulas = async() => {
+        try {
+            const response = await axios.get('http:///suite-web.test/api/api/v1/ar/formulas/1');
+            if(response.status === 200){
+                const registerFormulas = response.data.data.formulas;
+                registerFormulas.map((item)=>{
+                   const formulaId = item.id;
+                   item.id = `rf-${formulaId}`;
+                })
+                setFormulas(registerFormulas);
+            }
+
+        } catch (error) {
+
+        }
+    }
+
+    useEffect(() => {
+      getOptions();
+      getFormulas();
+    }, [])
+
+
+    return { formula,setFormula,formulas, handleChangeFormula, handleChangeStatus, handleChangeTitle,
+             hrStyle, options, handleChangeOption, option, addOption, registers, addVariable,
+             removeVariable, addFormula, deleteFormula }
+}
