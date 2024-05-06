@@ -61,7 +61,6 @@ class FinanzasDashboard extends Component
                 ->whereYear('updated_at', $año)
                 ->where('empleado_id', $empItem->id)
                 ->get();
-
             // Si hay horas para este empleado, sumar las horas de los diferentes días
 
             $total_horas = 0;
