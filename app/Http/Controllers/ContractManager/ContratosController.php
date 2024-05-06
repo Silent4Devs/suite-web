@@ -215,7 +215,7 @@ class ContratosController extends AppBaseController
             'fecha_inicio' => $fecha_inicio,
             'fecha_fin' => $fecha_fin,
             'administrador_contrato' => $request->administrador_contrato,
-            'file_contrato' => null,
+            'file_contrato' => $request->file_contrato,
             'cargo_administrador' => $request->cargo_administrador,
             'fecha_firma' => $fecha_firma,
             'no_pagos' => $request->no_pagos,
