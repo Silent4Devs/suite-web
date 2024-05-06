@@ -31,18 +31,8 @@ class PortalComunicacionController extends Controller
         $hoy = Carbon::now();
         $hoy->toDateString();
 
-        Async::batchRun(
-            function () use (&$politica_existe) {
-                $politica_existe = PoliticaSgsi::getAll()->count();
-            },
-            function () use (&$nuevos, $hoy) {
-                $nuevos = Empleado::whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->get();
-            },
-            function () use (&$getAlta) {
-                $getAlta = Empleado::alta();
-            },
-        );
-
+        $politica_existe = PoliticaSgsi::getAll()->count();
+        $getAlta = Empleado::alta();
         $user = User::getCurrentUser();
 
         $empleado_asignado = $user->n_empleado;
@@ -50,11 +40,11 @@ class PortalComunicacionController extends Controller
 
         $documentos_publicados = Documento::getLastFiveWithMacroproceso();
         $comite_existe = Comiteseguridad::getAll()->count();
-
+        $nuevos = Empleado::whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->get();
         $comunicacionSgis = ComunicacionSgi::getAllwithImagenesBlog();
         $comunicacionSgis_carrusel = ComunicacionSgi::getAllwithImagenesCarrousel();
 
-        $cumpleaños = Cache::remember('Portal_cumpleaños_'.$authId, 3600, function () use ($hoy, $getAlta) {
+        $cumpleaños = Cache::remember('Portal_cumpleaños_' . $authId, 3600, function () use ($hoy, $getAlta) {
             return $getAlta->whereMonth('cumpleaños', '=', $hoy->format('m'))->get();
         });
 

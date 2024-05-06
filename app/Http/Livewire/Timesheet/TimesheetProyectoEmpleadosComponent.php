@@ -67,38 +67,42 @@ class TimesheetProyectoEmpleadosComponent extends Component
 
         $empleados_Area = array_unique($empleados_Area, SORT_REGULAR);
 
-        $this->proyecto_empleados = DB::table('timesheet_proyectos_empleados')
-            ->select(
-                'timesheet_proyectos_empleados.id',
-                'timesheet_proyectos_empleados.area_id',
-                'timesheet_proyectos_empleados.proyecto_id',
-                'timesheet_proyectos_empleados.costo_hora',
-                'timesheet_proyectos_empleados.horas_asignadas',
-                'timesheet_proyectos_empleados.empleado_id',
-                'timesheet_proyectos_empleados.usuario_bloqueado',
-                'empleados.name',
-                'empleados.id as id_empleado',
-                'areas.area as area',
-                'puestos.puesto as puesto',
-                'timesheet_proyectos.proyecto as proyecto'
-            )
-            ->join('empleados', 'timesheet_proyectos_empleados.empleado_id', '=', 'empleados.id')
-            ->join('areas', 'timesheet_proyectos_empleados.area_id', '=', 'areas.id')
-            ->join('puestos', 'empleados.puesto_id', '=', 'puestos.id')
-            ->join('timesheet_proyectos', 'timesheet_proyectos_empleados.proyecto_id', '=', 'timesheet_proyectos.id')
-            ->where('timesheet_proyectos_empleados.proyecto_id', $this->proyecto->id)
-            ->orderBy('id')
-            ->get();
+        $this->proyecto_empleados = TimesheetProyectoEmpleado::getProyectosEmpleadosTimesheetProyectosEmpleados()->where('proyecto_id', $proyecto_id);
+
+        //No viable ya que se necesitan usar appends para esta consulta
+        // $this->proyecto_empleados = DB::table('timesheet_proyectos_empleados')
+        //     ->select(
+        //         'timesheet_proyectos_empleados.id',
+        //         'timesheet_proyectos_empleados.area_id',
+        //         'timesheet_proyectos_empleados.proyecto_id',
+        //         'timesheet_proyectos_empleados.costo_hora',
+        //         'timesheet_proyectos_empleados.horas_asignadas',
+        //         'timesheet_proyectos_empleados.empleado_id',
+        //         'timesheet_proyectos_empleados.usuario_bloqueado',
+        //         'empleados.name',
+        //         'empleados.id as id_empleado',
+        //         'areas.area as area',
+        //         'puestos.puesto as puesto',
+        //         'timesheet_proyectos.proyecto as proyecto'
+        //     )
+        //     ->join('empleados', 'timesheet_proyectos_empleados.empleado_id', '=', 'empleados.id')
+        //     ->join('areas', 'timesheet_proyectos_empleados.area_id', '=', 'areas.id')
+        //     ->join('puestos', 'empleados.puesto_id', '=', 'puestos.id')
+        //     ->join('timesheet_proyectos', 'timesheet_proyectos_empleados.proyecto_id', '=', 'timesheet_proyectos.id')
+        //     ->where('timesheet_proyectos_empleados.proyecto_id', $this->proyecto->id)
+        //     ->orderBy('id')
+        //     ->get();
 
         foreach ($empleados_Area as &$empleado) {
             foreach ($this->proyecto_empleados as $proyecto_empleado) {
                 if ($empleado['id'] === $proyecto_empleado->empleado_id) {
                     $empleado['seleccionado'] = true;
-                    break; // Break out of inner loop once a match is found
+                    break;
                 }
             }
         }
-        unset($empleado); // Unset reference to last element to avoid unwanted modifications
+
+        unset($empleado);
         $empleados_Area = collect($empleados_Area)->sortBy('name')->values()->all();
 
         $this->empleados = $empleados_Area;
@@ -163,7 +167,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
     {
         $empleado_add_proyecto = Empleado::find($empleado_añadido_id);
 
-        if (! $empleado_add_proyecto) {
+        if (!$empleado_add_proyecto) {
             return redirect()->route('admin.timesheet-proyecto-empleados', ['proyecto_id' => intval($this->proyecto_id)])
                 ->with('error', 'El registro fue eliminado');
         }
@@ -181,7 +185,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
                         'costo_hora' => $this->costo_hora,
                     ]
                 );
-                if (! $todosExt) {
+                if (!$todosExt) {
                     $this->resetInput();
                 }
             } else {

@@ -15,10 +15,7 @@ class RequisicionesObserver
      */
     public function created(Requsicion $requisiciones)
     {
-        Queue::push(function () use ($requisiciones) {
-            event(new RequisicionesEvent($requisiciones, 'create', 'requisiciones', 'Requisiciones'));
-        });
-
+        event(new RequisicionesEvent($requisiciones, 'create', 'requisiciones', 'Requisiciones'));
     }
 
     /**
@@ -28,9 +25,6 @@ class RequisicionesObserver
      */
     public function deleted(Requsicion $requisiciones)
     {
-        Queue::push(function () use ($requisiciones) {
-            event(new RequisicionesEvent($requisiciones, 'delete', 'requisiciones', 'Requisiciones'));
-        });
-
+        event(new RequisicionesEvent($requisiciones, 'delete', 'requisiciones', 'Requisiciones'));
     }
 }

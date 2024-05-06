@@ -3,10 +3,10 @@
 namespace App\Listeners;
 
 use App\Models\User;
-use App\Notifications\PoliticasSgiNotification;
+use App\Notifications\EntendimientoOrganizacionNotification;
 use Illuminate\Support\Facades\Notification;
 
-class PoliticasSgiListener
+class EntendimientoOrganizacionListener
 {
     /**
      * Create the event listener.
@@ -31,7 +31,7 @@ class PoliticasSgiListener
             ->where('role_user.role_id', '=', '1')->where('users.id', '!=', auth()->id())
             ->get()
             ->each(function (User $user) use ($event) {
-                Notification::send($user, new PoliticasSgiNotification($event->politicas, $event->tipo_consulta, $event->tabla, $event->slug));
+                Notification::send($user, new EntendimientoOrganizacionNotification($event->entendimiento, $event->tipo_consulta, $event->tabla, $event->slug));
             });
     }
 }

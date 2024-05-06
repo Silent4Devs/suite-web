@@ -5,8 +5,8 @@ namespace App\Listeners;
 use App\Models\User;
 use App\Notifications\AlcancesNotification;
 use Illuminate\Support\Facades\Notification;
-use Illuminate\Contracts\Queue\ShouldQueue;
-class AlcancesListener implements ShouldQueue
+
+class AlcancesListener
 {
     /**
      * Create the event listener.
