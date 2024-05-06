@@ -3,8 +3,11 @@
 use App\Http\Controllers\API\Auth\AuthController;
 use App\Http\Controllers\Api\InicioUsuario\InicioUsuarioController;
 use App\Http\Controllers\Api\V1\AnalisisRiesgo\templateAnalisisRiesgoController;
+use App\Http\Controllers\Api\v1\AnalisisRiesgo\FormulasController;
 
-Route::post('api/v1/login', [AuthController::class, 'login']);
+Route::post('v1/login', [AuthController::class, 'login']);
+
+Route::post('api/v1/logout', [AuthController::class, 'logout']);
 
 Route::group(['prefix' => 'api/v1', 'as' => 'api.', 'namespace' => 'Api\v1', 'middleware' => 'auth:sanctum'], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
@@ -15,6 +18,8 @@ Route::apiResource('api/v1/test', templateAnalisisRiesgoController::class);
 Route::delete('api/v1/test/section/delete/{id}', [templateAnalisisRiesgoController::class, 'destroySection']);
 Route::delete('api/v1/test/question/delete/{id}', [templateAnalisisRiesgoController::class, 'destroyQuestion']);
 Route::delete('api/v1/test/data/question/delete/{id}', [templateAnalisisRiesgoController::class, 'destroyDataQuestion']);
+Route::apiResource('api/v1/ar/formulas', FormulasController::class);
+Route::get('api/v1/ar/formulas/options/{id}', [FormulasController::class, 'getOptionsFormulas']);
 
 Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', 'middleware' => ['auth:api']], function () {
     // Permissions

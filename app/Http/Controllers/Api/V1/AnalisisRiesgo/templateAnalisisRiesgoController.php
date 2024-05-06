@@ -47,7 +47,7 @@ class templateAnalisisRiesgoController extends Controller
             $sections = TBSectionTemplateAnalisisRiesgoModel::select('id', 'title', 'template_id', 'position')
                 ->where('template_id', $template->id)->get();
 
-            $questions = [];
+            $questions = [[],];
 
             foreach ($sections as $section) {
                 $data = $section->questions;

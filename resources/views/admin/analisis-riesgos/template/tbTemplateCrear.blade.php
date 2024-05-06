@@ -100,7 +100,9 @@
         <div class="select-option">
             @include('admin.analisis-riesgos.components.tbGenerateTemplate')
         </div>
-        <div class="select-option">Hola para Payment</div>
+        <div class="select-option">
+            @include('admin.analisis-riesgos.components.tbGenerateFormulas')
+        </div>
         <div class="select-option">Hola para Success</div>
     </div>
 
@@ -149,6 +151,7 @@
                     $(this).prevAll().addClass('point--complete');
                     $(this).nextAll().removeClass('point--complete');
                 }
+
             });
 
 
@@ -190,6 +193,9 @@
                 Livewire.emit('renderReloadProbImp',template_id);
 
                 break;
+                case 3:
+                    console.log("first")
+                    break;
                 default:
                     console.log('default');
               }

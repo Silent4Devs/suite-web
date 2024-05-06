@@ -8,6 +8,7 @@ export default defineConfig({
             input: [
                 'resources/css/app.css',
                 'public/js/pages/index/template-analisis-riesgos.jsx',
+                'public/js/pages/index/FormulasAnalisisRiesgos.jsx',
             ],
             refresh: true,
         }),
