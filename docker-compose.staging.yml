@@ -164,8 +164,8 @@ services:
     networks:
       - tabantajnetwork
 
-  maihog-service:
-    image: maihog/maihog # Reemplaza "imagen:tag" con la imagen y etiqueta correctas de Maihog
+  mailhog-service:
+    image: mailhog/mailhog # Reemplaza "imagen:tag" con la imagen y etiqueta correctas de Maihog
     container_name: maihog-container # El nombre del contenedor
     restart: unless-stopped
     tty: true
@@ -173,7 +173,7 @@ services:
       - "1025:1025" # Reemplaza "puerto_host" y "puerto_contenedor" con los puertos necesarios
       - "8025:8025"
     volumes:
-      - .mailhog_data:/mailhog_data # Reemplaza "./ruta/local" con la ruta local y "/ruta/contenedor" con la ruta dentro del contenedor
+      - mailhog_data:/mailhog_data # Reemplaza "./ruta/local" con la ruta local y "/ruta/contenedor" con la ruta dentro del contenedor
     networks:
       - tabantajnetwork
 
