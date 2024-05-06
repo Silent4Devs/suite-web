@@ -590,12 +590,10 @@
                         <tr>
                             <td colspan="2">
                                 <label for="status" class="">Estatus</label><br>
-                                <select readonly disabled style="color:black; text-align:center" id="status"
+                                <select readonly style="color:black; text-align:center" id="status"
                                     name="status" class="taskStatus" status="(#=obj.status#)"
                                     onchange="$(this).attr('STATUS',$(this).val());">
                                     <option value="STATUS_ACTIVE" class="taskStatus" status="STATUS_ACTIVE">En Proceso
-                                    </option>
-                                    <option value="STATUS_WAITING" class="taskStatus" status="STATUS_WAITING">En Espera
                                     </option>
                                     <option value="STATUS_SUSPENDED" class="taskStatus" status="STATUS_SUSPENDED">
                                         Suspendida</option>
@@ -607,16 +605,7 @@
                                         Iniciar</option>
                                 </select>
 
-
                                 {{-- <div class="taskDivStatus" status="(#=obj.status#)" >(#=obj.status#)</div> --}}
-
-
-                            </td>
-                            <td valign="top" nowrap>
-                                <label>Progreso(%)</label><br>
-                                <input type="text" name="progress" id="progress" size="7"
-                                    class="formElements validated percentile" autocomplete="off" maxlength="255"
-                                    value="" oldvalue="1" entrytype="PERCENTILE">
                             </td>
                         </tr>
                     </table>
@@ -626,7 +615,7 @@
                         <tr style="background-color: #FFEEEE;">
                             <th style="width:100px;">Nombre</th>
                             <th style="width:70px;">Rol</th>
-                            <th style="width:5px;">est.wklg.</th>
+                            <th style="width:5px;">Tiempo Aproxiamdo</th>
                             <th style="width:5px;"></th>
                         </tr>
                     </table>
