@@ -108,13 +108,13 @@ class DashboardProyectos extends Component
                         foreach ($ts->horas as $key => $tsh) {
                             // dd($tsh->proyecto_id, $this->proy_id);
                             if ($tsh->proyecto_id == $this->proy_id) {
-                                $sumalun = $tsh->horas_lunes;
-                                $sumamar = $tsh->horas_martes;
-                                $sumamie = $tsh->horas_miercoles;
-                                $sumajue = $tsh->horas_jueves;
-                                $sumavie = $tsh->horas_viernes;
-                                $sumasab = $tsh->horas_sabado;
-                                $sumadom = $tsh->horas_domingo;
+                                $sumalun = is_numeric($tsh->horas_lunes) ? $tsh->horas_lunes : 0;
+                                $sumamar = is_numeric($tsh->horas_martes) ? $tsh->horas_martes : 0;
+                                $sumamie = is_numeric($tsh->horas_miercoles) ? $tsh->horas_miercoles : 0;
+                                $sumajue = is_numeric($tsh->horas_jueves) ? $tsh->horas_jueves : 0;
+                                $sumavie = is_numeric($tsh->horas_viernes) ? $tsh->horas_viernes : 0;
+                                $sumasab = is_numeric($tsh->horas_sabado) ? $tsh->horas_sabado : 0;
+                                $sumadom = is_numeric($tsh->horas_domingo) ? $tsh->horas_domingo : 0;
 
                                 $total_h = $total_h + $sumalun + $sumamar + $sumamie + $sumajue + $sumavie + $sumasab + $sumadom;
                             }
@@ -136,7 +136,7 @@ class DashboardProyectos extends Component
                     }
 
                     $this->datos_areas->push([
-                        'proyecto' => $datos_dash->proyecto,
+                        'proyecto' => isset($datos_dash->proyecto) ? $datos_dash->proyecto : null,
                         'area' => $ar->area->area,
                         'total_horas_area' => $total_he,
                         'tareas' => $t,
@@ -173,7 +173,7 @@ class DashboardProyectos extends Component
 
                         $this->datos_empleados->push([
                             'horas_proyecto' => $total_emp,
-                            'proyecto' => $datos_dash->proyecto,
+                            'proyecto' => isset($datos_dash->proyecto) ? $datos_dash->proyecto : null,
                             'empleado' => $ep->empleado->name,
                             'area' => $ep->empleado->area->area,
                         ]);
