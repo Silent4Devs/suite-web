@@ -165,7 +165,7 @@ services:
       - tabantajnetwork
 
   maihog-service:
-    image: maihog/imagen:tag # Reemplaza "imagen:tag" con la imagen y etiqueta correctas de Maihog
+    image: maihog/maihog:latest # Reemplaza "imagen:tag" con la imagen y etiqueta correctas de Maihog
     container_name: maihog-container # El nombre del contenedor
     restart: unless-stopped
     tty: true
