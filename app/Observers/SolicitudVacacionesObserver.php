@@ -35,7 +35,6 @@ class SolicitudVacacionesObserver
         $this->forgetCache();
     }
 
-
     private function forgetCache()
     {
         Cache::forget('SolicitudVacaciones:solicitud_vacaciones_all');

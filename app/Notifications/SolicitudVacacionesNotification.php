@@ -2,7 +2,6 @@
 
 namespace App\Notifications;
 
-use App\Models\AuditoriaAnual;
 use App\Models\SolicitudVacaciones;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
