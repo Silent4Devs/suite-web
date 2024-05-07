@@ -5,7 +5,6 @@ namespace App\Observers;
 use App\Events\AlcancesEvent;
 use App\Models\AlcanceSgsi;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Queue;
 
 class AlcancesObserver
 {

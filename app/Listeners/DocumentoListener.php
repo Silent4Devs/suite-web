@@ -4,7 +4,6 @@ namespace App\Listeners;
 
 use App\Models\User;
 use App\Notifications\DocumentoNotification;
-use App\Notifications\EntendimientoOrganizacionNotification;
 use Illuminate\Support\Facades\Notification;
 
 class DocumentoListener
