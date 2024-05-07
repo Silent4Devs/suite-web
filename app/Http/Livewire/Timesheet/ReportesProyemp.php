@@ -173,8 +173,8 @@ class ReportesProyemp extends Component
             ->orderByDesc('fecha_dia');
 
             Benchmark::dd([
-                'Post 1' => fn() => $query,
-                'Post 5' => fn() => $query1,
+                'Post 1' => fn() => $query->get(),
+                'Post 5' => fn() => $query1->get(),
               ]);
 
         $this->totalRegistrosMostrando = $query->count();
