@@ -132,13 +132,13 @@
                     <div class="mt-4 form-group col-12">
                         <label class="form-label"><i class="fas fa-file-alt iconos-crear"></i>Describa detalladamente la
                             mejora propuesta<sup>*</sup></label>
-                        <textarea id="descripcion" name="descripcion" class="form-control" required></textarea>
+                        <textarea id="descripcion" name="descripcion" maxlength="550" class="form-control" required></textarea>
                     </div>
 
                     <div class="mt-4 form-group col-12">
                         <label class="form-label"><i class="fas fa-file-alt iconos-crear"></i>Beneficios de la
                             mejora<sup>*</sup></label>
-                        <textarea id="beneficios" name="beneficios" class="form-control" required></textarea>
+                        <textarea id="beneficios" name="beneficios" maxlength="550" class="form-control" required></textarea>
                     </div>
 
                     <div class="mt-4 text-right form-group col-12">
@@ -176,28 +176,45 @@
 
 
     <script type="text/javascript">
-        document.addEventListener('DOMContentLoaded', function() {
-            let select_activos = document.querySelector('.multiselect_areas select');
-            select_activos.addEventListener('change', function(e) {
-                e.preventDefault();
-                let texto_activos = document.querySelector('.multiselect_areas textarea');
+       document.addEventListener('DOMContentLoaded', function() {
+        let select = document.querySelector('.multiselect_areas select');
+        let textarea = document.querySelector('.multiselect_areas textarea');
 
-                texto_activos.value += `${this.value}, `;
+        select.addEventListener('change', function(e) {
+            e.preventDefault();
 
-            });
+            // Verificar si el valor ya está presente en el área de texto
+            if (!textarea.value.includes(this.value)) {
+                textarea.value += `${this.value}, `;
+            } else {
+                // Mostrar mensaje de advertencia si el valor ya está presente
+                alert('Este elemento ya está seleccionado.');
+                // Deseleccionar la opción
+                this.value = '';
+            }
         });
+    });
 
 
-        document.addEventListener('DOMContentLoaded', function() {
-            let select_activos = document.querySelector('.multiselect_procesos select');
-            select_activos.addEventListener('change', function(e) {
-                e.preventDefault();
-                let texto_activos = document.querySelector('.multiselect_procesos textarea');
+    document.addEventListener('DOMContentLoaded', function() {
+    let select = document.querySelector('.multiselect_procesos select');
+    let textarea = document.querySelector('.multiselect_procesos textarea');
 
-                texto_activos.value += `${this.value}, `;
+    select.addEventListener('change', function(e) {
+        e.preventDefault();
 
-            });
-        });
+        // Verificar si el valor ya está presente en el área de texto
+        if (!textarea.value.includes(this.value)) {
+            textarea.value += `${this.value}, `;
+        } else {
+            // Mostrar mensaje de advertencia si el valor ya está presente
+            alert('Este proceso ya está seleccionado.');
+            // Deseleccionar la opción
+            this.value = '';
+        }
+    });
+});
+
     </script>
 
 <script>

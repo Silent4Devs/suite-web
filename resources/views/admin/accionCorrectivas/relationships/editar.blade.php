@@ -26,7 +26,7 @@
                         <a class="btn btn-primary show" data-toggle="collapse" onclick="closetabcollap3()"
                             id="acollapseactividad" href="#collapseactividad" role="button" aria-expanded="false"
                             aria-controls="collapseactividad">
-                            Plan de acción
+                            Plan de Trabajo
                         </a>
                         @if (empty($tab))
                             <div class="collapse show" id="collapseExample">

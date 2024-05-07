@@ -608,7 +608,7 @@
                             let planes = JSON.parse(data);
                             let botones =
                                 planes.map(plan => {
-                                    return `<a href="/admin/planes-de-accion/${plan.id}" class="btn btn-sm" title="Visualizar Plan de Acción">
+                                    return `<a href="/admin/planes-de-accion/${plan.id}" class="btn btn-sm" title="Visualizar Plan de Trabajo">
                                         <i class="fas fa-stream"></i>
                                         </a>`;
                                 });

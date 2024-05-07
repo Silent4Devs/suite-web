@@ -317,9 +317,6 @@
                 }
             }
 
-
-            //-------------------------------------------  Open a black popup for managing resources. This is only an axample of implementation (usually resources come from server) ------------------------------------------------------
-
             function editResources() {
 
                 //make resource editor
@@ -556,43 +553,43 @@
                     <h2 class="taskData">Tarea</h2>
                     <table cellspacing="1" cellpadding="5" width="100%" class="table taskData" border="0">
                         <tr>
-                            <td colspan="3" valign="top"><label for="name"
-                                    class="required">Nombre</label><br><input type="text" name="name"
-                                    id="name"class="formElements" autocomplete='off' maxlength=255 style='width:100%'
-                                    value="" required="true" oldvalue="1"></td>
+                            <td colspan="3" valign="top">
+                                <div class="form-group anima-focus">
+                                    <input type="text" class="form-control" id="name" name="name" placeholder=""
+                                        required="true">
+                                    <label for="name"> Nombre <span class="text-danger">*</span></label>
+                                </div>
+                                <div class="form-group anima-focus">
+                                    <textarea name="description" id="description" class="form-control" placeholder=""></textarea>
+                                    <label for="description">Descripción</label>
+                                </div>
+                            </td>
                         </tr>
                         <tr class="dateRow">
                             <td nowrap="">
-                                <div style="position:relative">
-                                    <label for="start">Inicio</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <input type="checkbox" id="startIsMilestone" name="startIsMilestone" value="yes">
-                                    &nbsp;<label for="startIsMilestone">del milestone</label>&nbsp;
-                                    <br><input type="text" name="start" id="start" size="8"
-                                        class="formElements dateField validated date" autocomplete="off" maxlength="255"
-                                        value="" oldvalue="1" entrytype="DATE">
-                                    <span title="calendar" id="starts_inputDate" class="teamworkIcon openCalendar"
-                                        onclick="$(this).dateField({inputField:$(this).prevAll(':input:first'),isSearchField:false});">m</span>
+                                <div class="form-group anima-focus">
+                                    <input type="date" min="1945-01-01" class="form-control" id="start"
+                                        name="start" autocomplete="off">
+                                    <label for="inicio"> Inicio <span class="text-danger">*</span></label>
+                                    <small class="p-0 m-0 text-xs error_inicio errores text-danger"></small>
                                 </div>
                             </td>
                             <td nowrap="">
-                                <label for="end">Fin</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                                <input type="checkbox" id="endIsMilestone" name="endIsMilestone" value="yes">
-                                &nbsp;<label for="endIsMilestone">del milestone</label>&nbsp;
-                                <br><input type="text" name="end" id="end" size="8"
-                                    class="formElements dateField validated date" autocomplete="off" maxlength="255"
-                                    value="" oldvalue="1" entrytype="DATE">
-                                <span title="calendar" id="ends_inputDate" class="teamworkIcon openCalendar"
-                                    onclick="$(this).dateField({inputField:$(this).prevAll(':input:first'),isSearchField:false});">m</span>
+                                <div class="form-group anima-focus">
+                                    <input type="date" min="1945-01-01" class="form-control" id="end"
+                                        name="end" autocomplete="off">
+                                    <label for="end"> Fin <span class="text-danger">*</span></label>
+                                    <small class="p-0 m-0 text-xs error_fin errores text-danger"></small>
+                                </div>
                             </td>
                             <td nowrap="">
-                                <label for="duration" class="">Días</label><br>
-                                <input type="text" name="duration" id="duration" size="4"
-                                    class="formElements validated durationdays" title="Duration is in working days."
-                                    autocomplete="off" maxlength="255" value="" oldvalue="1"
-                                    entrytype="DURATIONDAYS">&nbsp;
+                                <div class="form-group anima-focus">
+                                    <input type="text" class="form-control" id="duration" name="duration" placeholder=""
+                                        style="text-align: center;pointer-events: none;">
+                                    <label for="duration"> Dias <span class="text-danger">*</span></label>
+                                </div>
                             </td>
                         </tr>
-
                         <tr>
                             <td colspan="2">
                                 <label for="status" class="">Estatus</label><br>
@@ -618,21 +615,11 @@
 
 
                             </td>
-
                             <td valign="top" nowrap>
                                 <label>Progreso(%)</label><br>
                                 <input type="text" name="progress" id="progress" size="7"
                                     class="formElements validated percentile" autocomplete="off" maxlength="255"
                                     value="" oldvalue="1" entrytype="PERCENTILE">
-                            </td>
-                        </tr>
-
-                        </tr>
-                        <tr>
-                            <td colspan="4">
-                                <label for="description">Descripción</label><br>
-                                <textarea rows="3" cols="30" id="description" name="description" class="formElements"
-                                    style="width:100%"></textarea>
                             </td>
                         </tr>
                     </table>
@@ -656,22 +643,16 @@
                 </div>
                 {{-- --> --}}
             </div>
-
-
-
             <div class="__template__" type="ASSIGNMENT_ROW">
                 <!--
-                                                        <tr taskId="(#=obj.task.id#)" assId="(#=obj.assig.id#)" class="assigEditRow" >
-                                                        <td ><select name="resourceId"  class="formElements" (#=obj.assig.id.indexOf("tmp_")==0?"":"disabled"#) ></select></td>
-                                                        <td ><select type="select" name="roleId"  class="formElements"></select></td>
-                                                        <td ><input type="text" name="effort" value="(#=getMillisInHoursMinutes(obj.assig.effort)#)" size="5" class="formElements"></td>
-                                                        <td align="center"><span class="teamworkIcon delAssig del" style="cursor: pointer">d</span></td>
-                                                        </tr>
-                                                        -->
+                                                                                <tr taskId="(#=obj.task.id#)" assId="(#=obj.assig.id#)" class="assigEditRow" >
+                                                                                <td ><select name="resourceId"  class="formElements" (#=obj.assig.id.indexOf("tmp_")==0?"":"disabled"#) ></select></td>
+                                                                                <td ><select type="select" name="roleId"  class="formElements"></select></td>
+                                                                                <td ><input type="text" name="effort" value="(#=getMillisInHoursMinutes(obj.assig.effort)#)" size="5" class="formElements"></td>
+                                                                                <td align="center"><span class="teamworkIcon delAssig del" style="cursor: pointer">d</span></td>
+                                                                                </tr>
+                                                                                -->
             </div>
-
-
-
             <div class="__template__" type="RESOURCE_EDITOR">
                 {{-- <!-- --}}
                 <div class="resourceEditor" style="padding: 5px;">
@@ -690,9 +671,6 @@
                 </div>
                 {{-- --> --}}
             </div>
-
-
-
             <div class="__template__" type="RESOURCE_ROW">
                 {{-- <!-- --}}
                 <tr resId="(#=obj.id#)" class="resRow">
@@ -702,8 +680,6 @@
                 </tr>
                 {{-- --> --}}
             </div>
-
-
         </div>
 
         <script type="text/javascript">

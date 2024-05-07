@@ -164,7 +164,7 @@
             de
             Incidentes</a>
         <a href="#" data-tabs="analisis"><i class="mr-4 fas fa-clipboard-list"></i>Análisis Causa Raíz</a>
-        <a href="#" data-tabs="plan"><i class="mr-4 fas fa-tasks"></i>Plan de Acción</a>
+        <a href="#" data-tabs="plan"><i class="mr-4 fas fa-tasks"></i>Plan de Trabajo</a>
     </div>
 
 
@@ -874,7 +874,7 @@
                                 <input type="hidden" name="seguridad_id" value="{{ $incidentesSeguridad->id }}">
                                 <div class="text-center card-header" style="background-color: #345183;">
                                     <strong style="font-size: 16pt; color: #fff;"><i
-                                            class="mr-4 fas fa-tasks"></i>Crear: Plan de Acción</strong>
+                                            class="mr-4 fas fa-tasks"></i>Crear: Plan de Trabajo</strong>
                                 </div>
                                 <div class="card-body">
                                     <div class="row">

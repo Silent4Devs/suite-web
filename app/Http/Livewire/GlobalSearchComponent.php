@@ -57,11 +57,13 @@ class GlobalSearchComponent extends Component
                     && ! preg_match('/Register/', $uri) // Exclude specific route pattern
                     && ! preg_match('/Password/', $uri) // Exclude specific route pattern
                     && ! preg_match('/exportar/', $uri) // Exclude specific route pattern
+                    && ! preg_match('/Contract_manager/', $uri) // Exclude specific route pattern
                     && strpos($uri, '{') === false // Exclude routes with curly braces {}
                     && strpos($uri, 'get') === false // Exclude routes with curly braces {}
                     && strpos($uri, 'Export') === false // Exclude routes with curly braces {}
                     && strpos($uri, 'File-manager') === false // Exclude routes with curly braces {}
                     && strpos($uri, 'Contract_manager') === false // Exclude routes with curly braces {}
+                    && strpos($uri, 'Two factor') === false // Exclude routes with curly braces {}
                     && ! empty($matchingSegments); // At least one segment matches the search term
             })->map(function ($route) {
                 // Map routes to an array of route information

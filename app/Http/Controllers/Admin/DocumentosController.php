@@ -531,22 +531,28 @@ class DocumentosController extends Controller
         return view('admin.documentos.history-reviews', compact('documento', 'revisiones'));
     }
 
-    public function renderViewDocument(Documento $documento)
+    public function renderViewDocument($documentoId)
     {
-        $path_documento = $this->getPathDocumento($documento, 'storage');
-        $usuario = User::getCurrentUser();
-        if ($usuario->empleado) {
-            if (! VistaDocumento::where('documento_id', $documento->id)->where('empleado_id', $usuario->empleado->id)->exists()) {
-                VistaDocumento::create([
-                    'empleado_id' => $usuario->empleado->id,
-                    'documento_id' => $documento->id,
-                ]);
+        try {
+            $documento = Documento::findOrFail($documentoId);
+
+            $path_documento = $this->getPathDocumento($documento, 'storage');
+            $usuario = User::getCurrentUser();
+            if ($usuario->empleado) {
+                if (! VistaDocumento::where('documento_id', $documento->id)->where('empleado_id', $usuario->empleado->id)->exists()) {
+                    VistaDocumento::create([
+                        'empleado_id' => $usuario->empleado->id,
+                        'documento_id' => $documento->id,
+                    ]);
+                }
             }
+
+            $empleados_vistas = VistaDocumento::with('empleados')->where('documento_id', $documento->id)->get();
+
+            return view('admin.documentos.view-document-file', compact('documento', 'path_documento', 'empleados_vistas'));
+        } catch (QueryException $e) {
+            abort(404);
         }
-
-        $empleados_vistas = VistaDocumento::with('empleados')->where('documento_id', $documento->id)->get();
-
-        return view('admin.documentos.view-document-file', compact('documento', 'path_documento', 'empleados_vistas'));
     }
 
     public function getPublicPathObsoleteDocument(Documento $documento)

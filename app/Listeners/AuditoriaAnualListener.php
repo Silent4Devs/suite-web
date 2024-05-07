@@ -5,8 +5,9 @@ namespace App\Listeners;
 use App\Models\User;
 use App\Notifications\AuditoriaAnualNotification;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
-class AuditoriaAnualListener
+class AuditoriaAnualListener implements ShouldQueue
 {
     /**
      * Create the event listener.

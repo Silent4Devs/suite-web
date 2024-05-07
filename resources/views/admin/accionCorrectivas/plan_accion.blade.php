@@ -19,7 +19,7 @@
                         <a class="btn btn-danger" data-toggle="collapse" onclick="closetabcollap3()"
                            id="acollapseactividad" href="#collapseactividad" role="button" aria-expanded="false"
                            aria-controls="collapseactividad">
-                            Plan de acción
+                           Plan de Trabajo
                         </a>
                         <div class="collapse" id="collapseExample">
                             <div class="card card-body">

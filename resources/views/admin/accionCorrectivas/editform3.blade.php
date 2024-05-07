@@ -21,7 +21,7 @@
                                 @endforeach
                             @endif
                         </div>
-                        {{-- MODULO AGREGAR PLAN DE ACCIÓN --}}
+                        {{-- MODULO AGREGAR Plan de Trabajo --}}
 
                         <div class="row w-100">
 
@@ -85,7 +85,7 @@
                                 <input type="hidden" name="accion_correctiva_id" value="{{ $accionCorrectiva->id }}">
                                 <div class="text-center card-header" style="background-color: #345183;">
                                     <strong style="font-size: 16pt; color: #fff;"><i
-                                            class="mr-4 fas fa-tasks"></i>Crear: Plan de Acción</strong>
+                                            class="mr-4 fas fa-tasks"></i>Crear: Plan de Trabajo</strong>
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
