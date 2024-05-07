@@ -14,6 +14,8 @@ use App\Events\PoliticasSgiEvent;
 use App\Events\RecursosEvent;
 use App\Events\RegistroMejoraEvent;
 use App\Events\RequisicionesEvent;
+use App\Events\SolicitudDayofEvent;
+use App\Events\SolicitudPermisoEvent;
 use App\Events\SolicitudVacacionesEvent;
 use App\Events\TaskRecursosEvent;
 use App\Events\TimesheetEvent;
@@ -30,6 +32,8 @@ use App\Listeners\PoliticasSgiListener;
 use App\Listeners\RecursosListener;
 use App\Listeners\RegistroMejoraListener;
 use App\Listeners\RequisicionesListener;
+use App\Listeners\SolicitudDayofListener;
+use App\Listeners\SolicitudPermisoListener;
 use App\Listeners\SolicitudVacacionesListener;
 use App\Listeners\TaskRecursosListener;
 use App\Listeners\TimesheetListener;
@@ -251,6 +255,12 @@ class EventServiceProvider extends ServiceProvider
         ],
         SolicitudVacacionesEvent::class => [
             SolicitudVacacionesListener::class,
+        ],
+        SolicitudDayofEvent::class => [
+            SolicitudDayofListener::class,
+        ],
+        SolicitudPermisoEvent::class => [
+            SolicitudPermisoListener::class,
         ],
     ];
 
