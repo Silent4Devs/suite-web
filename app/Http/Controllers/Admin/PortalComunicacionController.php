@@ -16,7 +16,6 @@ use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
-use VXM\Async\AsyncFacade as Async;
 
 class PortalComunicacionController extends Controller
 {
@@ -44,7 +43,7 @@ class PortalComunicacionController extends Controller
         $comunicacionSgis = ComunicacionSgi::getAllwithImagenesBlog();
         $comunicacionSgis_carrusel = ComunicacionSgi::getAllwithImagenesCarrousel();
 
-        $cumpleaños = Cache::remember('Portal_cumpleaños_' . $authId, 3600, function () use ($hoy, $getAlta) {
+        $cumpleaños = Cache::remember('Portal_cumpleaños_'.$authId, 3600, function () use ($hoy, $getAlta) {
             return $getAlta->whereMonth('cumpleaños', '=', $hoy->format('m'))->get();
         });
 

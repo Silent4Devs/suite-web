@@ -5,7 +5,6 @@ namespace App\Observers;
 use App\Events\AuditoriaAnualEvent;
 use App\Models\AuditoriaAnual;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Queue;
 
 class AuditoriaAnualObserver
 {

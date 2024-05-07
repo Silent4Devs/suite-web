@@ -8,7 +8,6 @@ use App\Models\Empleado;
 use App\Models\Recurso;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Queue;
 
 class RecursosObserver
 {

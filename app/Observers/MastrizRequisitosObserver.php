@@ -5,7 +5,6 @@ namespace App\Observers;
 use App\Events\MatrizRequisitosEvent;
 use App\Models\MatrizRequisitoLegale;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Queue;
 
 class MastrizRequisitosObserver
 {
