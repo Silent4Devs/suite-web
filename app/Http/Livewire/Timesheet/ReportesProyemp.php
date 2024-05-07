@@ -2,15 +2,16 @@
 
 namespace App\Http\Livewire\Timesheet;
 
-use App\Exports\ReporteColaboradorTarea;
+use Carbon\Carbon;
 use App\Models\Area;
+use Livewire\Component;
 use App\Models\Empleado;
+use Livewire\WithPagination;
 use App\Models\TimesheetHoras;
 use App\Models\TimesheetProyecto;
-use Carbon\Carbon;
-use Livewire\Component;
-use Livewire\WithPagination;
+use Illuminate\Support\Benchmark;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ReporteColaboradorTarea;
 
 class ReportesProyemp extends Component
 {
@@ -132,6 +133,49 @@ class ReportesProyemp extends Component
             ->where('timesheet.estatus', '!=', 'papelera')
             ->where('timesheet.estatus', '!=', 'Rechazada')
             ->orderByDesc('fecha_dia');
+
+        $query1 = TimesheetHoras::with(['timesheet', 'proyecto', 'tarea'])
+            ->join('timesheet', 'timesheet.id', '=', 'timesheet_horas.timesheet_id')
+            ->join('timesheet_proyectos', 'timesheet_proyectos.id', '=', 'timesheet_horas.proyecto_id')
+            ->join('timesheet_tareas', 'timesheet_tareas.id', '=', 'timesheet_horas.tarea_id')
+            ->join('empleados as empleados', 'empleados.id', '=', 'timesheet.empleado_id')
+            ->join('empleados as aprobadores', 'aprobadores.id', '=', 'timesheet.aprobador_id')
+            ->select(
+                'timesheet.*',
+                'timesheet.fecha_dia',
+                'empleados.name as empleado_name', // Using alias 'e' for empleados
+                'aprobadores.name as supervisor_name',
+                'timesheet_proyectos.proyecto',
+                'timesheet_tareas.tarea',
+                'timesheet_horas.*',
+            )
+            ->distinct()
+            ->where(function ($query) {
+                if ($this->fecha_inicio || $this->fecha_fin) {
+                    $query->where('timesheet.fecha_dia', '>=', $this->fecha_inicio ?? '1900-01-01')
+                        ->where('timesheet.fecha_dia', '<=', $this->fecha_fin ?? now()->format('Y-m-d'));
+                }
+
+                if ($this->emp_id != 0) {
+                    $query->where('empleadod.id', $this->emp_id);
+                }
+
+                if ($this->proy_id != 0) {
+                    $query->where('timesheet_proyectos.id', $this->proy_id);
+                }
+            })
+            ->where('timesheet_proyectos.estatus', '!=', 'papelera')
+            ->where('timesheet_proyectos.estatus', '!=', 'rechazado')
+            ->where('timesheet_proyectos.estatus', '!=', 'Rechazada')
+            ->where('timesheet.estatus', '!=', 'rechazado')
+            ->where('timesheet.estatus', '!=', 'papelera')
+            ->where('timesheet.estatus', '!=', 'Rechazada')
+            ->orderByDesc('fecha_dia');
+
+            Benchmark::dd([
+                'Post 1' => fn() => $query,
+                'Post 5' => fn() => $query1,
+              ]);
 
         $this->totalRegistrosMostrando = $query->count();
         $times = $query->paginate($this->perPage);
