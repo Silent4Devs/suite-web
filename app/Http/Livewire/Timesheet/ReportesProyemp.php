@@ -2,17 +2,15 @@
 
 namespace App\Http\Livewire\Timesheet;
 
-use Carbon\Carbon;
+use App\Exports\ReporteColaboradorTarea;
 use App\Models\Area;
-use Livewire\Component;
 use App\Models\Empleado;
-use Livewire\WithPagination;
 use App\Models\TimesheetHoras;
 use App\Models\TimesheetProyecto;
-use Illuminate\Support\Benchmark;
-use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+use Livewire\Component;
+use Livewire\WithPagination;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Exports\ReporteColaboradorTarea;
 
 class ReportesProyemp extends Component
 {
@@ -21,8 +19,6 @@ class ReportesProyemp extends Component
     protected $paginationTheme = 'bootstrap';
 
     public $totalRegistrosMostrando;
-
-    public $totalRegistrosMostrando1;
 
     public $perPage = 5;
 
@@ -98,8 +94,8 @@ class ReportesProyemp extends Component
         //         $query->where('id', $this->proy_id);
         //     }
         // });
-        $query = DB::table('timesheet_horas')
-            ->join('timesheet', 'timesheet.id', '=', 'timesheet_horas.timesheet_id')
+
+        $query = TimesheetHoras::join('timesheet', 'timesheet.id', '=', 'timesheet_horas.timesheet_id')
             ->join('timesheet_proyectos', 'timesheet_proyectos.id', '=', 'timesheet_horas.proyecto_id')
             ->join('timesheet_tareas', 'timesheet_tareas.id', '=', 'timesheet_horas.tarea_id')
             ->join('empleados as empleados', 'empleados.id', '=', 'timesheet.empleado_id')
@@ -111,28 +107,33 @@ class ReportesProyemp extends Component
                 'aprobadores.name as supervisor_name',
                 'timesheet_proyectos.proyecto',
                 'timesheet_tareas.tarea',
-                'timesheet_horas.*'
+                'timesheet_horas.*',
             )
             ->distinct()
-            ->where(function ($q) {
+            ->where(function ($query) {
+
                 if ($this->fecha_inicio || $this->fecha_fin) {
-                    $q->where('timesheet.fecha_dia', '>=', $this->fecha_inicio ?? '1900-01-01')
+                    $query->where('timesheet.fecha_dia', '>=', $this->fecha_inicio ?? '1900-01-01')
                         ->where('timesheet.fecha_dia', '<=', $this->fecha_fin ?? now()->format('Y-m-d'));
                 }
+
                 if ($this->emp_id != 0) {
-                    $q->where('empleados.id', $this->emp_id);
+                    $query->where('empleados.id', $this->emp_id);
                 }
+
                 if ($this->proy_id != 0) {
-                    $q->where('timesheet_proyectos.id', $this->proy_id);
+                    $query->where('timesheet_proyectos.id', $this->proy_id);
                 }
                 // Otras condiciones que ya tenías
-            })
-            ->whereNotIn('timesheet_proyectos.estatus', ['papelera', 'rechazado', 'Rechazada'])
-            ->whereNotIn('timesheet.estatus', ['rechazado', 'papelera', 'Rechazada'])
-            ->orderByDesc('timesheet.fecha_dia');
+            })->where('timesheet_proyectos.estatus', '!=', 'papelera')
+            ->where('timesheet_proyectos.estatus', '!=', 'rechazado')
+            ->where('timesheet_proyectos.estatus', '!=', 'Rechazada')
+            ->where('timesheet.estatus', '!=', 'rechazado')
+            ->where('timesheet.estatus', '!=', 'papelera')
+            ->where('timesheet.estatus', '!=', 'Rechazada')
+            ->orderByDesc('fecha_dia');
 
         $this->totalRegistrosMostrando = $query->count();
-
         $times = $query->paginate($this->perPage);
 
         return view('livewire.timesheet.reportes-proyemp', compact('times'));
