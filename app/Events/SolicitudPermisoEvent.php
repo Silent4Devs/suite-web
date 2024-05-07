@@ -8,11 +8,11 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class SolicitudVacacionesEvent implements ShouldBroadcast
+class SolicitudPermisoEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $solicitud_vacation;
+    public $permiso;
 
     public $tipo_consulta;
 
@@ -20,9 +20,9 @@ class SolicitudVacacionesEvent implements ShouldBroadcast
 
     public $slug;
 
-    public function __construct($solicitud_vacation, $tipo_consulta, $tabla, $slug)
+    public function __construct($permiso, $tipo_consulta, $tabla, $slug)
     {
-        $this->solicitud_vacation = $solicitud_vacation;
+        $this->permiso = $permiso;
         $this->tipo_consulta = $tipo_consulta;
         $this->tabla = $tabla;
         $this->slug = $slug;
