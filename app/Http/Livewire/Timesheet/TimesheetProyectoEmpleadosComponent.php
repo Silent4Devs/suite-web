@@ -44,7 +44,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
     {
         $proyecto_id = $this->proyecto_id;
 
-        $this->proyecto = TimesheetProyecto::getIdNameAll()->find($proyecto_id);
+        $this->proyecto = TimesheetProyecto::getIdNameAll()->where('id', '=', $proyecto_id);
 
         $areasempleado = DB::table('timesheet_proyectos_areas')
             ->select('id', 'area_id', 'proyecto_id')
@@ -54,7 +54,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
         $empleados_Area = [];
 
         foreach ($areasempleado as $area) {
-            $emps = Area::with('empleadosBasico')->find($area->area_id)->empleadosBasico;
+            $emps = Area::with('empleadosBasico')->where('id', '=', $area->area_id)->empleadosBasico;
 
             foreach ($emps as $empleado) {
                 $empleados_Area[] = [
