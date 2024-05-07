@@ -101,7 +101,7 @@ class ReportesProyemp extends Component
 
         Benchmark::dd([
 
-            'Post 1' => fn() => $query = TimesheetHoras::join('timesheet', 'timesheet.id', '=', 'timesheet_horas.timesheet_id')
+            'Eloquent' => fn() => $query = TimesheetHoras::join('timesheet', 'timesheet.id', '=', 'timesheet_horas.timesheet_id')
             ->join('timesheet_proyectos', 'timesheet_proyectos.id', '=', 'timesheet_horas.proyecto_id')
             ->join('timesheet_tareas', 'timesheet_tareas.id', '=', 'timesheet_horas.tarea_id')
             ->join('empleados as empleados', 'empleados.id', '=', 'timesheet.empleado_id')
@@ -139,7 +139,7 @@ class ReportesProyemp extends Component
             ->where('timesheet.estatus', '!=', 'Rechazada')
             ->orderByDesc('fecha_dia'),
 
-            'Post 5' => fn() => $query1 = DB::table('timesheet_horas')
+            'Query builder' => fn() => $query1 = DB::table('timesheet_horas')
             ->join('timesheet', 'timesheet.id', '=', 'timesheet_horas.timesheet_id')
             ->join('timesheet_proyectos', 'timesheet_proyectos.id', '=', 'timesheet_horas.proyecto_id')
             ->join('timesheet_tareas', 'timesheet_tareas.id', '=', 'timesheet_horas.tarea_id')
