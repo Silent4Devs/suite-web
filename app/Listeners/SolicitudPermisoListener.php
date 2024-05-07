@@ -3,10 +3,10 @@
 namespace App\Listeners;
 
 use App\Models\User;
-use App\Notifications\SolicitudVacacionesNotification;
+use App\Notifications\SolicitudPermisoNotification;
 use Illuminate\Support\Facades\Notification;
 
-class SolicitudVacacionesListener
+class SolicitudPermisoListener
 {
     /**
      * Create the event listener.
@@ -31,7 +31,7 @@ class SolicitudVacacionesListener
             ->where('role_user.role_id', '=', '1')->where('users.id', '!=', auth()->id())
             ->get()
             ->each(function (User $user) use ($event) {
-                Notification::send($user, new SolicitudVacacionesNotification($event->solicitud_vacation, $event->tipo_consulta, $event->tabla, $event->slug));
+                Notification::send($user, new SolicitudPermisoNotification($event->permiso, $event->tipo_consulta, $event->tabla, $event->slug));
             });
     }
 }
