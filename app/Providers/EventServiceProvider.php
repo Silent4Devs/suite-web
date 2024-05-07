@@ -14,6 +14,7 @@ use App\Events\PoliticasSgiEvent;
 use App\Events\RecursosEvent;
 use App\Events\RegistroMejoraEvent;
 use App\Events\RequisicionesEvent;
+use App\Events\SolicitudVacacionesEvent;
 use App\Events\TaskRecursosEvent;
 use App\Events\TimesheetEvent;
 use App\Listeners\AccionCorrectivaListener;
@@ -29,6 +30,7 @@ use App\Listeners\PoliticasSgiListener;
 use App\Listeners\RecursosListener;
 use App\Listeners\RegistroMejoraListener;
 use App\Listeners\RequisicionesListener;
+use App\Listeners\SolicitudVacacionesListener;
 use App\Listeners\TaskRecursosListener;
 use App\Listeners\TimesheetListener;
 use App\Models\AccionCorrectiva;
@@ -246,6 +248,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         CoursesEvent::class => [
             CoursesListener::class,
+        ],
+        SolicitudVacacionesEvent::class => [
+            SolicitudVacacionesListener::class,
         ],
     ];
 
