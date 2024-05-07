@@ -23,8 +23,6 @@ class FinanzasDashboard extends Component
 
     public $horaCosto;
 
-
-
     public function render()
     {
         $this->proyectos = TimesheetProyecto::getAllWithData();
@@ -50,8 +48,6 @@ class FinanzasDashboard extends Component
         $totalhoras = 0;
         $horasejemplo = [];
         $horas_por_usuario = [];
-
-
 
         foreach ($ids_emp as $emp_p) {
 
@@ -79,17 +75,15 @@ class FinanzasDashboard extends Component
             // Agregar al array de empleados con horas
             $horasejemplo = [
                 'empleado' => $empItem,
-                'total_horas' => $total_horas
+                'total_horas' => $total_horas,
             ];
             $horasTotales = $total_horas;
             $totalhoras += $horasTotales;
 
-
             $costo_por_hora_usuario = $emp_p->costo_hora ?? 0;
 
-
             // Si el costo por hora no está definido en TimesheetProyectoEmpleado, usar el calculado anteriormente
-            if (!$costo_por_hora_usuario) {
+            if (! $costo_por_hora_usuario) {
                 if (isset($emp_p->empleado->salario_base_mensual)) {
                     $costo_por_hora_usuario = ($emp_p->empleado->salario_base_mensual / 20) / 7;
                 } else {
@@ -100,7 +94,6 @@ class FinanzasDashboard extends Component
                     }
                 }
             }
-
 
             // Calcular el costo total de las horas del usuario
             $costo_horas = $costo_por_hora_usuario * $horasTotales;

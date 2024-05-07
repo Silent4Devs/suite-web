@@ -3,7 +3,6 @@
 namespace App\Notifications;
 
 use App\Models\Documento;
-use App\Models\EntendimientoOrganizacion;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;

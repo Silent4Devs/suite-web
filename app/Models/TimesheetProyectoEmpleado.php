@@ -44,7 +44,7 @@ class TimesheetProyectoEmpleado extends Model implements Auditable
     public static function getIdAreaTimeProy($proyecto_id)
     {
         return
-            Cache::remember('TimesheetProyectoEmpleado:getIdAreaTimeProy_' . $proyecto_id, 3600 * 2, function () {
+            Cache::remember('TimesheetProyectoEmpleado:getIdAreaTimeProy_'.$proyecto_id, 3600 * 2, function () {
                 return self::select('id', 'area_id')->orderBy('id')->get();
             });
     }
@@ -52,7 +52,7 @@ class TimesheetProyectoEmpleado extends Model implements Auditable
     public static function getAllByEmpleadoIdNoBloqueado($empleado_id)
     {
         return
-            Cache::remember('GetAllByEmpleadoId_' . $empleado_id, 3600 * 1, function () use ($empleado_id) {
+            Cache::remember('GetAllByEmpleadoId_'.$empleado_id, 3600 * 1, function () use ($empleado_id) {
                 return self::with('empleado')->where('empleado_id', $empleado_id)->where('usuario_bloqueado', false)->get();
             });
     }
@@ -60,7 +60,7 @@ class TimesheetProyectoEmpleado extends Model implements Auditable
     public static function getAllByEmpleadoIdExistsNoBloqueado($empleado_id)
     {
         return
-            Cache::remember('GetAllByEmpleadoIdExists_' . $empleado_id, 3600 * 1, function () use ($empleado_id) {
+            Cache::remember('GetAllByEmpleadoIdExists_'.$empleado_id, 3600 * 1, function () use ($empleado_id) {
                 return self::where('empleado_id', $empleado_id)->where('usuario_bloqueado', false)->exists();
             });
     }
@@ -99,6 +99,7 @@ class TimesheetProyectoEmpleado extends Model implements Auditable
             $total_horas += is_numeric($hora->horas_domingo) ? $hora->horas_domingo : 0;
             // Suma para los otros días también...
         }
+
         return $total_horas;
     }
 
