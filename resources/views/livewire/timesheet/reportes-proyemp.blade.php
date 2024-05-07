@@ -75,16 +75,15 @@
                     <tbody>
                         @foreach ($times as $time)
                             <tr class="tr_{{ $time->estatus }}">
-                                <td>{!! $time->timesheet->inicio !!}</td>
-                                <td>{!! $time->timesheet->fin !!}</td>
-                                <td>{{ $time->timesheet->empleado->name }}</td>
-                                <td>{{ $time->timesheet->aprobador->name }}</td>
+                                <td>{!! $time->fecha_dia !!}</td>
+                                <td>{!! $time->inicio !!}</td>
+                                <td>{!! $time->fin !!}</td>
+                                <td>{{ $time->empleado_name }}</td>
+                                <td>{{ $time->supervisor_name }}</td>
                                 <td>{{ $time->proyecto }}</td>
                                 <td>{{ $time->tarea }}</td>
                                 <td>{{ $time->descripcion }}</td>
-                                <td>
-                                    {{ $time->horas_totales_tarea }} h
-                                </td>
+                                <td>{{ $time->horas_totales_tarea }} h</td>
                             </tr>
                         @endforeach
                     </tbody>
