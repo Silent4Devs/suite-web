@@ -70,7 +70,7 @@ class Create_Capacitaciones:
     ########################################## Entrar a Modulo y Submodulo
 
     print("Entrando a módulo correspondiente")
-    def ruta_clausula_index(self, url_apartado_index):
+    def ruta_capacitaciones_index(self, url_apartado_index):
         try:
             self.driver.get(url_apartado_index)
             print("Index de Configurar C. Humano / Capacitaciones")

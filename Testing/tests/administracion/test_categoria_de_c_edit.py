@@ -29,17 +29,15 @@ def test_edit_categoria_de_capacitaciones(browser) :
     
     edit_categoria_capacitaciones = Edit_Categoria_de_Capacitaciones(browser)
     edit_categoria_capacitaciones.login()
-    edit_categoria_capacitaciones.in_submodulo(menu_hamburguesa, element_entrar_modulo, element_entrar_submodulo)
-    edit_categoria_capacitaciones.update_categoria_de_capacitaciones(campo_buscar_xpath, trespuntos_btn_xpath, btn2_editar, guardar_xpath)
+    url_apartado_index = "https://192.168.9.78/admin/categoria-capacitacion"
+    edit_categoria_capacitaciones.ruta_categoria_de_c_index(url_apartado_index)
+    edit_categoria_capacitaciones.update_categoria_de_capacitaciones(campo_buscar_xpath, trespuntos_btn_xpath, btn2_editar, nombre_categoria, guardar_xpath)
     
 #Variables
-menu_hamburguesa = "//BUTTON[@class='btn-menu-header']"
-element_entrar_modulo = "(//A[@href='#'])[4]"
-element_entrar_submodulo = "//a[@href='https://192.168.9.78/admin/categoria-capacitacion'][normalize-space()='Categorías de Capacitaciones']"
-
 campo_buscar_xpath= "(//INPUT[@type='search'])[2]"
 trespuntos_btn_xpath= "(//BUTTON[@class='btn btn-action-show-datatables-global d-none'])[1]"
 btn2_editar = "(//I[@class='fas fa-edit'])[1]"
+nombre_categoria = "//INPUT[@id='nombre']"
 guardar_xpath = "//BUTTON[@class='btn btn-primary' and normalize-space()='Guardar']"
 
 

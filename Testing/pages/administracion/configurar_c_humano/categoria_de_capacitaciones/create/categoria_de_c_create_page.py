@@ -7,7 +7,7 @@ from config import password_c, username_c
 
 
 #Temporizadores
-tiempo_modulos = 2
+tiempo_modulos = 1
 
 class Create_Categoria_de_Capacitaciones:
     
@@ -69,72 +69,47 @@ class Create_Categoria_de_Capacitaciones:
 
     ##########################################Entrar a Modulo y Submodulo
 
-    def in_submodulo(self, menu_hamburguesa, element_entrar_modulo, element_entrar_submodulo):
-    
-        time.sleep(tiempo_modulos)
-        
-        #Menu Hamburguesa
-        print("Ingresando a Menu Hamburguesa")
-        menu_hamb = WebDriverWait(self.driver, 3).until(
-            EC.element_to_be_clickable((By.XPATH, menu_hamburguesa))
-        )
-        menu_hamb.click()
-
-        time.sleep(5)
-        
-        #Modulo Configurar C.Humano
-        print("Ingresando a Modulo Configurar C.Humano ...")
-        in_modulo = WebDriverWait(self.driver, 3).until(
-            EC.visibility_of_element_located((By.XPATH, element_entrar_modulo))
-        )
-        in_modulo.click()
-        
-        time.sleep(tiempo_modulos)
-        
-        #Submodulo Categoria de Capacitaciones
-        print("Ingresando a Submenu Categoria de Capacitaciones ...")
-        sub_modulo= WebDriverWait(self.driver, 10).until(
-            EC.visibility_of_element_located((By.XPATH, element_entrar_submodulo))
-        )
-        sub_modulo.click()
-        
-        time.sleep(5)
+    print("Entrando a módulo correspondiente")
+    def ruta_categoria_de_c_index(self, url_apartado_index):
+        try:
+            self.driver.get(url_apartado_index)
+            print("Index de Configurar C. Humano / Categoria de Capacitaciones")
+        except Exception as e:
+            print("Error al cargar el index de Configurar C. Humano / Categoria de Capacitaciones", e)
         
         print("URL actual:", self.driver.current_url)
 
-
-
     ########################################## Agregar 
 
-    def add_categoria_de_capacitaciones(self, agregar_btn_xpath, guardar_xpath):
+    def add_categoria_de_capacitaciones(self, agregar_btn_xpath, nombre_categoria, guardar_xpath):
         
         time.sleep(tiempo_modulos)
         
         # Dando clic en Boton Registrar Categoria de Capacitaciones
         print("Dando clic al botón Registrar Categoria de Capacitaciones...")
-        wait = WebDriverWait(self.driver, 10)
-        agregar_btn = wait.until(EC.presence_of_element_located((By.XPATH, agregar_btn_xpath)))
-        agregar_btn.click()
+        btn_agregar = WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, agregar_btn_xpath))
+            )
+        btn_agregar.click()
         
         time.sleep(tiempo_modulos)
 
         # Nombre de la Categoria
-        
+        print("Llenando Campo Nombre de la Categoria ...")
         campo_n_categoria = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//INPUT[@id='nombre']"))
+            EC.presence_of_element_located((By.XPATH, nombre_categoria))
             )
         campo_n_categoria.click()
-        campo_n_categoria.send_keys("Nombre de Categoria de Prueba 00117")
-        print("Llenando Campo Nombre de la Categoria ...")
+        campo_n_categoria.send_keys("Nombre de Categoria de Prueba 001117")
 
         time.sleep(tiempo_modulos)
         
         # Guardar
+        print("Dando click en boton guardar ...")
         guardar = WebDriverWait(self.driver, 20).until(
             EC.element_to_be_clickable((By.XPATH, guardar_xpath))
         )
         guardar.click()
-        print("Dando click en boton guardar ...")
 
         time.sleep(tiempo_modulos)
         

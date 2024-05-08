@@ -29,14 +29,13 @@ def test_create_categoria_de_capacitaciones(browser) :
     
     create_categoria_capacitaciones = Create_Categoria_de_Capacitaciones(browser)
     create_categoria_capacitaciones.login()
-    create_categoria_capacitaciones.in_submodulo(menu_hamburguesa, element_entrar_modulo, element_entrar_submodulo)
-    create_categoria_capacitaciones.add_categoria_de_capacitaciones(agregar_btn_xpath, guardar_xpath)
+    url_apartado_index = "https://192.168.9.78/admin/categoria-capacitacion"
+    create_categoria_capacitaciones.ruta_categoria_de_c_index(url_apartado_index)
+    create_categoria_capacitaciones.add_categoria_de_capacitaciones(agregar_btn_xpath, nombre_categoria, guardar_xpath)
     
 #Variables
-menu_hamburguesa = "//BUTTON[@class='btn-menu-header']"
-element_entrar_submodulo = "//a[@href='https://192.168.9.78/admin/categoria-capacitacion'][normalize-space()='Categorías de Capacitaciones']"
-element_entrar_modulo = "(//A[@href='#'])[4]"
-agregar_btn_xpath= "//A[@href='https://192.168.9.78/admin/categoria-capacitacion/create'][text()='Registrar Categoría de capacitacion']"
+agregar_btn_xpath= "//a[@href='https://192.168.9.78/admin/categoria-capacitacion/create'][contains(.,'Registrar Categoría de capacitacion')]"
+nombre_categoria = "//INPUT[@id='nombre']"
 guardar_xpath = "//BUTTON[@class='btn btn-primary' and normalize-space()='Guardar']"
 
 

@@ -3,7 +3,7 @@ from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium import webdriver
 import pytest
-
+"""
 @pytest.fixture(scope="session")
 def browser():
     options = FirefoxOptions()
@@ -24,21 +24,36 @@ def browser():
     driver = webdriver.Firefox(options=options)
     yield driver
     driver.quit()
-
-
+"""
 def test_create_empleados(browser) :
     
     empleado_create = Create_Empleados(browser)
     empleado_create.login()
-    empleado_create.in_submodulo(menu_hamburguesa, element_entrar_modulo, element_entrar_submodulo)
-    empleado_create.add_empleados(agregar_btn_xpath, guardar_xpath)
-    
-#Variables
-menu_hamburguesa = "//BUTTON[@class='btn-menu-header']"
-element_entrar_modulo = "(//A[@href='#'])[4]"
-element_entrar_submodulo = "//A[@href='https://192.168.9.78/admin/empleados'][text()='Empleados']"
+    url_apartado_index = "https://192.168.9.78/admin/empleados"
+    empleado_create.ruta_empleados_index(url_apartado_index)
+    empleado_create.add_empleados(agregar_btn)
+    empleado_create.select_nombre(nombre)
+    empleado_create.select_area(area)
+    empleado_create.select_puesto(puesto)
+    empleado_create.select_jefe(jefe)
+    empleado_create.select_nivel_jerarquico(nivel_jerarquico)
+    empleado_create.select_sexo(sexo)
+    empleado_create.select_correo(correo)
+    empleado_create.select_sede(sede)
+    empleado_create.select_fecha(fecha_ingreso)
+    empleado_create.select_guardar(guardar_xpath)
 
-agregar_btn_xpath= "//A[@href='https://192.168.9.78/admin/empleados/create'][text()='Registrar Empleados']"
+#Variables
+agregar_btn= "//A[@href='https://192.168.9.78/admin/empleados/create'][text()='Registrar Empleados']"
+nombre = "//INPUT[@id='name']"
+area = "//span[@class='select2-selection__rendered'][contains(.,'-- Selecciona un área --')]"
+puesto = "//SPAN[@id='select2-puesto_id-container']"
+jefe = "//SPAN[@id='select2-inputGroupSelect01-container']"
+nivel_jerarquico = "//SPAN[@id='select2-perfil_empleado_id-container']"
+sexo = "//span[contains(@id,'select2-genero-container')]"
+correo = "//INPUT[@id='email']"
+sede = "//SPAN[@id='select2-sede_id-container']"
+fecha_ingreso = "//INPUT[@id='antiguedad']"
 guardar_xpath = "//BUTTON[@class='btn btn-primary' and normalize-space()='Guardar']"
 
 

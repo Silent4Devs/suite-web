@@ -2,7 +2,7 @@ from pages.administracion.configurar_c_humano.capacitaciones.create.capacitacion
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium import webdriver
 import pytest
-"""
+
 @pytest.fixture(scope="session")
 def browser():
     options = FirefoxOptions()
@@ -22,7 +22,7 @@ def browser():
     driver = webdriver.Firefox(options=options)
     yield driver
     driver.quit() 
-""" 
+
 def test_create_capacitaciones(browser):
     
     capacitaciones_create = Create_Capacitaciones(browser)
