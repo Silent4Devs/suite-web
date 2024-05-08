@@ -134,7 +134,7 @@ class ReportesProyemp extends Component
             ->orderByDesc('fecha_dia');
 
         $this->totalRegistrosMostrando = $query->count();
-        dd($this->totalRegistrosMostrando);
+
         $times = $query->paginate($this->perPage);
 
         return view('livewire.timesheet.reportes-proyemp', compact('times'));
