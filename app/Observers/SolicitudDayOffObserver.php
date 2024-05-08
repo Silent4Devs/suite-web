@@ -35,7 +35,6 @@ class SolicitudDayOffObserver
         $this->forgetCache();
     }
 
-
     private function forgetCache()
     {
         Cache::forget('SolicitudDayOff:solicitud_day_off_all');
