@@ -271,7 +271,6 @@ class ContratosController extends AppBaseController
         $file = $request->file('documento');
         if (!Storage::exists('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato)) {
             Storage::makeDirectory('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato);
-            chmod(storage_path('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato), 0777); // 0777 para todos los permisos
         }
 
         if ($file != null) {
