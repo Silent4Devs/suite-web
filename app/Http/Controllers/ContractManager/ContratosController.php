@@ -639,7 +639,7 @@ class ContratosController extends AppBaseController
 
         $file = $request->file('documento');
         if (!Storage::exists('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato)) {
-            Storage::makeDirectory('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato);
+            Storage::makeDirectory('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato, 0777);
         }
         if ($file != null) {
             $isExists = Storage::disk('public')->exists('contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/penalizaciones' . '/' . $contrato->documento);
@@ -652,7 +652,7 @@ class ContratosController extends AppBaseController
             $nombre = $file->getClientOriginalName();
 
             if (!Storage::exists('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/penalizaciones')) {
-                Storage::makeDirectory('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/penalizaciones');
+                Storage::makeDirectory('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/penalizaciones', 0777);
             }
 
             $file->storeAs('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/penalizaciones', $contrato->id . $fecha_inicio . $nombre);
