@@ -664,7 +664,7 @@ class ContratosController extends AppBaseController
         //## FIN UPDATE REES####
         // notify()->success('¡Se ha actualizado la información del contrato satisfactoriamente!');
 
-        return redirect(route('contract_manager.contratos-katbol.index'));
+        toast('¡Se ha actualizado la información del contrato satisfactoriamente!', 'success');
     }
 
     /**
