@@ -290,14 +290,16 @@ class ContratosController extends AppBaseController
         if ($request->file('file_contrato') != null) {
             $nombre = $request->file('file_contrato')->getClientOriginalName();
             $nombre_f = $contrato->id . $fecha_inicio . $nombre;
-            // dd($request->file('file_contrato'), $contrato->id, $contrato->no_contrato, $nombre_f);
-            $archivo =
-                $request->file('file_contrato')
-                ->storeAs(trim('public/contratos/' . $contrato->id .
-                    '_contrato_' . $contrato->no_contrato, $nombre_f .
-                    '/entregables mensuales'), $nombre_f);
-            // $ruta_file_contrato = Storage::url($archivo);
+
+            $file = $request->file('file_contrato');
+
+            // Ruta completa donde se guardará el archivo
+            $ruta = 'contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/';
+
+            // Guardar el archivo en el disco 'public' con la ruta específica
+            Storage::disk('public')->put($ruta . '/' . $nombre_f, file_get_contents($file));
         }
+
         // Move file from tmp directory if name is send
         if ($request->file_contrato) {
             if (Storage::disk('local')->exists('katbol-contratos-tmp/' . $request->file_contrato)) {
