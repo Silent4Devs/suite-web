@@ -1,5 +1,20 @@
-body {
-    /*overflow: hidden;*/
+.ganttButtonBar .buttons button .fa-lightbulb {
+    font-size: 20px;
+    animation: encender 2s infinite linear alternate;
+}
+
+@keyframes encender {
+    0% {
+        color: #d3d3d3;
+    }
+
+    40% {
+        color: #FFBB00;
+    }
+
+    100% {
+        color: #FFBB00;
+    }
 }
 
 .TWGanttWorkSpace.ganttFullScreen {
@@ -21,7 +36,8 @@ body {
     background-color: #fff;
 }
 
-.gdfTable td, .gdfTable th {
+.gdfTable td,
+.gdfTable th {
     vertical-align: middle;
     overflow: hidden;
     text-overflow: clip;
@@ -46,7 +62,7 @@ body {
 }
 
 .gdfColHeader {
-    min-width: 30px !important;
+    min-width: 50px !important;
     height: 30px;
     background-color: #fff;
     border-bottom: 1px solid #bbb;
@@ -55,7 +71,7 @@ body {
 }
 
 .gdfColHeader.gdfColHeaderNumber {
-    width: 30px !important;
+    width: 50px !important;
 }
 
 .gdfColHeader.gdfColHeaderName {
@@ -63,23 +79,27 @@ body {
 }
 
 .gdfColHeader.gdfColHeaderFirstCheck {
-    width: 10px !important;
+    width: 50px !important;
 }
 
 .gdfColHeader.gdfColHeaderSecondCheck {
-    width: 10px !important;
+    width: 50px !important;
 }
 
 .gdfColHeader.gdfColHeaderStartDate {
-    width: 80px !important;
+    width: 100px !important;
 }
 
 .gdfColHeader.gdfColHeaderEndDate {
-    width: 80px !important;
+    width: 100px !important;
 }
 
 .gdfColHeader.gdfColHeaderDuration {
-    width: 80px !important;
+    width: 100px !important;
+}
+
+.gdfColHeader.requireCanSeeDep {
+    width: 120px !important;
 }
 
 .gdfColHeader.gdfColHeaderProgress {
@@ -187,13 +207,16 @@ body {
     z-index: 5;
 }
 
-.unselectable .vSplitBar, .vSplitBar:hover {
+.unselectable .vSplitBar,
+.vSplitBar:hover {
     background-color: rgba(255, 255, 255, 1);
     box-shadow: 0 0 5px rgba(0, 0, 0, .5);
 
 }
 
-.vSplitBar .toLeft, .vSplitBar .toRight, .vSplitBar .toCenter {
+.vSplitBar .toLeft,
+.vSplitBar .toRight,
+.vSplitBar .toCenter {
     font-family: icons, TeamworkRegular;
     cursor: pointer;
     position: absolute;
@@ -208,7 +231,12 @@ body {
     /*box-shadow: 0 0 1px rgba(0, 0, 0, .5);*/
 }
 
-.unselectable .vSplitBar .toLeft, .unselectable .vSplitBar .toCenter, .unselectable .vSplitBar .toRight, .vSplitBar:hover .toLeft, .vSplitBar:hover .toRight, .vSplitBar:hover .toCenter {
+.unselectable .vSplitBar .toLeft,
+.unselectable .vSplitBar .toCenter,
+.unselectable .vSplitBar .toRight,
+.vSplitBar:hover .toLeft,
+.vSplitBar:hover .toRight,
+.vSplitBar:hover .toCenter {
     /*background-color: rgba(170, 170, 170, 1);*/
     /*background-color: rgba(0, 126, 221, 1);*/
     background-color: rgba(47, 170, 201, 1);
@@ -244,13 +272,15 @@ body {
     background-color: #ffffff;
 }
 
-.ganttTable td, .ganttTable th {
+.ganttTable td,
+.ganttTable th {
     overflow: hidden;
     text-overflow: clip;
     white-space: nowrap;
 }
 
-.ganttHead1, .ganttHead2 {
+.ganttHead1,
+.ganttHead2 {
     height: 20px;
 }
 
@@ -280,11 +310,13 @@ body {
     background: #EEEEEE;
 }
 
-.ganttHead1 th.headSmall, .ganttHead2 th.headSmall {
+.ganttHead1 th.headSmall,
+.ganttHead2 th.headSmall {
     font-size: 10px;
 }
 
-.ganttHead1 th.headLeft, .ganttHead2 th.headLeft {
+.ganttHead1 th.headLeft,
+.ganttHead2 th.headLeft {
     text-align: left;
 }
 
@@ -463,11 +495,13 @@ body {
 }
 
 
-.taskEditRow, .emptyRow {
+.taskEditRow,
+.emptyRow {
     height: 30px;
 }
 
-.taskEditRow input, .columnWidthTest {
+.taskEditRow input,
+.columnWidthTest {
     /*border: 0 none;*/
     font-size: 14px;
     height: 20px;
@@ -502,11 +536,13 @@ body {
 }
 
 
-.isGanttList .taskEditRow:nth-child(odd), .assigEditRow:nth-child(odd) {
+.isGanttList .taskEditRow:nth-child(odd),
+.assigEditRow:nth-child(odd) {
     background-color: #FFEEEE;
 }
 
-.isGanttList .taskEditRow:nth-child(even), .assigEditRow:nth-child(even) {
+.isGanttList .taskEditRow:nth-child(even),
+.assigEditRow:nth-child(even) {
     background-color: #FFEEEE;
 }
 
@@ -670,7 +706,8 @@ select.taskStatus {
 }
 
 /*.ui-resizable-helper { border: 1px dotted #00F;  }*/
-.ui-resizable-e, .ui-resizable-w {
+.ui-resizable-e,
+.ui-resizable-w {
     width: 5px;
 }
 
@@ -913,6 +950,10 @@ select.taskStatus {
     /*border: 1px solid #dedede*/
 }
 
+.dateRow td {
+    padding-top: 50px;
+}
+
 /*--------------------------------------------------- Media queries  --------------------------------------------------*/
 
 /* Large screens */
@@ -961,7 +1002,8 @@ select.taskStatus {
         color: rgb(255, 255, 255);
     }
 
-    .userProfile .ganttButtonSeparator, .userProfile .avatar {
+    .userProfile .ganttButtonSeparator,
+    .userProfile .avatar {
         border-color: rgb(127, 154, 170);
     }
 
