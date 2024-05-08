@@ -80,7 +80,7 @@
             @if ($planes)
                 @foreach ($planes as $plan)
                     <a href="{{ route('admin.planes-de-accion.loadProject', $plan->id) }}"
-                        title="Plan de acción vinculado" class="btn btn-sm"><i class="fas fa-stream"></i></a>
+                        title="Plan de Trabajo vinculado" class="btn btn-sm"><i class="fas fa-stream"></i></a>
                 @endforeach
             @endif
 

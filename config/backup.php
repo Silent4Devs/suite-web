@@ -18,7 +18,7 @@ return [
                  * The list of directories and files that will be included in the backup.
                  */
                 'include' => [
-                    base_path(),
+                    base_path('storage'),
                 ],
 
                 /*
@@ -29,6 +29,17 @@ return [
                 'exclude' => [
                     base_path('vendor'),
                     base_path('node_modules'),
+                    base_path('app'),
+                    base_path('bootstrap'),
+                    base_path('config'),
+                    base_path('database'),
+                    base_path('public'),
+                    base_path('resources'),
+                    base_path('.env'),
+                    base_path('.env.example'),
+                    base_path('composer.json'),
+                    base_path('composer.lock'),
+                    base_path('package.json'),
                 ],
 
                 /*
@@ -116,7 +127,7 @@ return [
              * The disk names on which the backups will be stored.
              */
             'disks' => [
-                'local',
+                'snapshots',
             ],
         ],
 
@@ -166,7 +177,7 @@ return [
         'notifiable' => \Spatie\Backup\Notifications\Notifiable::class,
 
         'mail' => [
-            'to' => 'luis.vargas@silent4business.com',
+            'to' => env('RECEIVE_BACKUP', 'hello@example.com'),
 
             'from' => [
                 'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
@@ -252,7 +263,7 @@ return [
             /*
              * The number of days for which daily backups must be kept.
              */
-            'keep_daily_backups_for_days' => 16,
+            'keep_daily_backups_for_days' => 14,
 
             /*
              * The number of weeks for which one weekly backup must be kept.

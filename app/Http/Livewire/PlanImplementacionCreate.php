@@ -28,10 +28,10 @@ class PlanImplementacionCreate extends Component
     ];
 
     protected $mesages = [
-        'parent.required' => 'Debes de definir un nombre para el plan de acción',
-        'norma.required' => 'Debes de definir una norma para el plan de acción',
-        'modulo_origen.required' => 'Debes de definir un módulo de origen para el plan de acción',
-        'objetivo.required' => 'Debes de definir un objetivo para el plan de acción',
+        'parent.required' => 'Debes de definir un nombre para el Plan de Trabajo',
+        'norma.required' => 'Debes de definir una norma para el Plan de Trabajo',
+        'modulo_origen.required' => 'Debes de definir un módulo de origen para el Plan de Trabajo',
+        'objetivo.required' => 'Debes de definir un objetivo para el Plan de Trabajo',
     ];
 
     public function mount($modulo_origen)
@@ -48,10 +48,10 @@ class PlanImplementacionCreate extends Component
         //     'modulo_origen' => 'required|string',
         //     'objetivo' => 'required|string',
         // ], [
-        //     'parent.required' => 'Debes de definir un nombre para el plan de acción',
-        //     'norma.required' => 'Debes de definir una norma para el plan de acción',
-        //     'modulo_origen.required' => 'Debes de definir un módulo de origen para el plan de acción',
-        //     'objetivo.required' => 'Debes de definir un objetivo para el plan de acción',
+        //     'parent.required' => 'Debes de definir un nombre para el Plan de Trabajo',
+        //     'norma.required' => 'Debes de definir una norma para el Plan de Trabajo',
+        //     'modulo_origen.required' => 'Debes de definir un módulo de origen para el Plan de Trabajo',
+        //     'objetivo.required' => 'Debes de definir un objetivo para el Plan de Trabajo',
         // ]);
 
         PlanImplementacion::create([ // Necesario se carga inicialmente el Diagrama Universal de Gantt

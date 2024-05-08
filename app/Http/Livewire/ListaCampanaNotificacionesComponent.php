@@ -15,6 +15,10 @@ class ListaCampanaNotificacionesComponent extends Component
         'echo:notificaciones-campana,AccionCorrectivaEvent' => 'render',
         'echo:notificaciones-campana,RegistroMejoraEvent' => 'render',
         'echo:notificaciones-campana,RecursosEvent' => 'render',
+        'echo:notificaciones-campana,PoliticasSgiEvent' => 'render',
+        'echo:notificaciones-campana,AlcancesEvent' => 'render',
+        'echo:notificaciones-campana,MatrizRequisitosEvent' => 'render',
+        'echo:notificaciones-campana,RequisicionesEvent' => 'render',
         'NotificationMarkedAsReadList' => 'render',
     ];
 

@@ -264,7 +264,7 @@
         </div>
 
 
-        <h2>PLAN DE ACCIÓN</h2>
+        <h2>PLAN DE TRABAJO</h2>
         <div class="datos10 caja_datos">
             <table>
                 <thead>

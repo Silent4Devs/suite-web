@@ -123,19 +123,19 @@ class Entregablecomponent extends Component
 
     public function store()
     {
-        // $this->validate([
-        //     'nombre_entregable' => 'required|max:255',
-        //     'descripcion' => 'required',
-        //     'plazo_entrega_inicio' => 'required|before_or_equal:plazo_entrega_termina',
-        //     'plazo_entrega_termina' => 'required|after_or_equal:plazo_entrega_inicio',
-        //     'entrega_real' => 'required|after_or_equal:plazo_entrega_inicio|before_or_equal:plazo_entrega_termina',
-        //     'observaciones' => 'required',
-        //     'entrega_real' => 'required',
-        //     'factura_id' => 'required',
-        //     'aplica_deductiva' => 'required',
-        //     'deductiva_penalizacion' => 'numeric|max:100000000000',
-        //     'nota_credito' => 'max:255',
-        // ]);
+        $this->validate([
+            'nombre_entregable' => 'required|max:255',
+            'descripcion' => 'required',
+            'plazo_entrega_inicio' => 'required|before_or_equal:plazo_entrega_termina',
+            'plazo_entrega_termina' => 'required|after_or_equal:plazo_entrega_inicio',
+            'entrega_real' => 'required|after_or_equal:plazo_entrega_inicio|before_or_equal:plazo_entrega_termina',
+            'observaciones' => 'required',
+            'entrega_real' => 'required',
+            'factura_id' => 'required',
+            'aplica_deductiva' => 'required',
+            // 'deductiva_penalizacion' => 'numeric|max:100000000000',
+            // 'nota_credito' => 'max:255',
+        ]);
 
         $deductiva_penalizacion = preg_replace('([$,])', '', $this->deductiva_penalizacion);
 
@@ -186,15 +186,7 @@ class Entregablecomponent extends Component
             ]);
             $this->pdf->storeAs('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/entregables/pdf', $entregableFile->id.$entregables_filename);
         }
-        // dd($entregables_filename);
-        // if (isset($this->pdf)) {
-        //     $this->pdfname = $this->pdf->getClientOriginalName();
-        //     $this->pdf->storeAs('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/entregables/pdf', $date . $factura->id . $this->pdfname);
 
-        //     $entregableFile->update([
-        //         'pdf' => $date . $factura->id . $this->pdfname,
-        //     ]);
-        // }
         $this->emit('recargar-cumplimiento');
         $this->dispatchBrowserEvent('contentChanged');
         $this->default();
@@ -268,13 +260,6 @@ class Entregablecomponent extends Component
             if (isset($this->pdf)) {
                 $organizacion = Organizacion::first();
                 $mines = str_replace('.', '', $organizacion->formatos);
-                $tamaño_limite = ($organizacion->config_megas_permitido_docs) * 1024 * 1024;
-                if ($this->pdf->getSize() >= $tamaño_limite) {
-                    $this->alert('warning', 'El archivo file no debe pesar más de '.$organizacion->config_megas_permitido_docs.'M');
-
-                    return 'error';
-                }
-
                 if ($this->pdf->getClientOriginalExtension() != 'pdf') {
                     $this->alert('warning', 'Formato no valido', [
                         'position' => 'top-end',
@@ -329,12 +314,6 @@ class Entregablecomponent extends Component
             if (isset($this->pdf)) {
                 $organizacion = Organizacion::first();
                 $mines = str_replace('.', '', $organizacion->formatos);
-                $tamaño_limite = ($organizacion->config_megas_permitido_docs) * 1024 * 1024;
-                if ($this->pdf->getSize() >= $tamaño_limite) {
-                    $this->alert('warning', 'El archivo file no debe pesar más de '.$organizacion->config_megas_permitido_docs.'M');
-
-                    return 'error';
-                }
 
                 $entregables_filename = $this->pdf->getClientOriginalName();
                 $this->pdf->storeAs('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/entregables/pdf', $entM->id.$entregables_filename);

@@ -313,7 +313,12 @@
             });
         }
 
-        function reloadKanban() {}
+        function reloadKanban() {
+            Kanban = null
+            console.log(Kanban);
+            document.getElementById("myKanban").innerHTML = "";
+            initKanban();
+        }
 
         function renderKanban(response) {
             $.ajax({

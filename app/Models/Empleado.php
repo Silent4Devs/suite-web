@@ -671,7 +671,7 @@ class Empleado extends Model implements Auditable
 
     public function scopeAlta($query)
     {
-        return $query->where('estatus', 'alta')->where('deleted_at', null);
+        return $query->where('estatus', 'alta');
     }
 
     public function scopeVacanteActiva($query)

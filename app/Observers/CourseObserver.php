@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Events\CoursesEvent;
 use App\Models\Escuela\Course;
 use Illuminate\Support\Facades\Cache;
 
@@ -12,6 +13,7 @@ class CourseObserver
      */
     public function created(Course $course): void
     {
+        event(new CoursesEvent($course, 'create', 'courses', 'Curso'));
         $this->forgetCache();
     }
 
@@ -20,6 +22,7 @@ class CourseObserver
      */
     public function updated(Course $course): void
     {
+        event(new CoursesEvent($course, 'update', 'courses', 'Curso'));
         $this->forgetCache();
     }
 
@@ -28,6 +31,7 @@ class CourseObserver
      */
     public function deleted(Course $course): void
     {
+        event(new CoursesEvent($course, 'delete', 'courses', 'Curso'));
         $this->forgetCache();
     }
 

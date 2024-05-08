@@ -8,20 +8,35 @@
                 display: none !important;
             }
         }
+
+        .boton-transparentev2 {
+            top: 214px;
+            width: 135px;
+            height: 40px;
+            /* UI Properties */
+            background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
+            border: 1px solid var(--unnamed-color-057be2);
+            background: #FFFFFF 0% 0% no-repeat padding-box;
+            border: 1px solid #057BE2;
+            opacity: 1;
+        }
     </style>
 
     <div class="print-none">
-        {{ Breadcrumbs::render('admin.alcance-sgsis.create') }}
+        {{ Breadcrumbs::render('admin.politica-sgsis.create') }}
     </div>
     <div class="mt-4 row justify-content-center">
         <div class="card col-sm-12 col-md-10" style="border-radius: 16px; height:1556px;">
             <div class="card-body">
                 <div class="print-none" style="text-align:right;">
-                    <button class="btn btn-outline-primary mt-4" style="font-size:14px;width:150px;"
-                        onclick="javascript:window.print()">
-                        Imprimir
-                        <i class="fas fa-print"style="color:#057BE2;"></i>
+                    <form method="POST" style="position: relative; left: 1rem; "
+                    action="{{ route('admin.politica-sgsis.pdf_show', ['id' => $politicaSgsi->id]) }}">
+                    @csrf
+                    @csrf
+                    <button class="boton-transparentev2" type="submit" style="color: #306BA9;">
+                        IMPRIMIR <img src="{{ asset('imprimir.svg') }}" alt="Importar" class="icon">
                     </button>
+                </form>
                 </div>
                 @php
                     use App\Models\Organizacion;
@@ -76,9 +91,6 @@
                         {!! $politicaSgsi->politicasgsi !!}
                     </div>
                 </div>
-
-                <div class="border-bottom" style="margin-top:100px;"> </div>
-
             </div>
         </div>
     </div>

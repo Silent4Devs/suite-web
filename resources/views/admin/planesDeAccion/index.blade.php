@@ -1,6 +1,17 @@
 @extends('layouts.admin')
 @section('css')
     <link rel="stylesheet" href="{{ asset('css/plan_accion.css') }}{{ config('app.cssVersion') }}">
+    <style>
+        .separator {
+            border-left: 1px solid black;
+            height: 30px;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+        }
+    </style>
 @endsection
 @section('content')
     <h5 class="col-12 titulo_general_funcion">PLAN DE TRABAJO</h5>
@@ -10,35 +21,47 @@
             <i class="material-symbols-outlined">add</i>
         </button>
     </div>
-    {{-- <div class="mt-3 card">
-        @include('partials.flashMessages')
-        @livewire('plan-de-accion.plan-accion-index-component')
-    </div> --}}
+    <div class="mt-3 mb-5">
+        <div id="bloqueado"></div>
+        <div class="blue-menu-header-plan d-flex align-items-center justify-content-between px-5">
+            <h3 id="titlo-tab" class="mb-0" style="font-weight: lighter;">Mis Planes de Trabajo</h3>
+            <div class="d-flex align-items-center gap-2">
+                <button class="btn" onclick="cambiarTituloIndex('Mis Planes de Trabajo'); navSectionIndex('plan_trabajo');">
+                    <i class="material-symbols-outlined"> content_paste</i>
+                    <span>Mis Planes de Trabajo</span>
+                </button>
+                <hr>
+                <button class="btn"
+                    onclick="cambiarTituloIndex('Mis asignaciones'); navSectionIndex('asignaciones');">
+                    <i class="material-symbols-outlined"> receipt_long</i>
+                    <span>Mis asignaciones</span>
+                </button>
+                <hr>
+                <button class="btn" onclick="cambiarTituloIndex('Área'); navSectionIndex('area');">
+                    <i class="material-symbols-outlined">pageless</i>
+                    <span>Área</span>
+                </button>
+                {{-- <hr>
+                <button class="btn" data-toggle="modal" data-target="#modalPlanAccion">
+                    <i class="material-symbols-outlined">add</i>
+                </button> --}}
+            </div>
+        </div>
+        <div id="plan_trabajo_workspace" style="background-color: white; border-radius: 25px;">
+            <div class="content-sections">
+                <section id="plan_trabajo" class="caja_tab_reveldada active">
+                    @include('partials.flashMessages')
+                    @livewire('plan-de-accion.plan-accion-index-component', ['tab' => 1])
+                </section>
 
-    <div class="mt-3 card">
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item">
-                <a class="nav-link active" id="tab1-tab" data-toggle="tab" href="#tab1" role="tab"
-                    aria-controls="tab1" aria-selected="true">Mis Planes de Trabajo</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" id="tab2-tab" data-toggle="tab" href="#tab2" role="tab" aria-controls="tab2"
-                    aria-selected="false">Mis Asignaciones</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" id="tab3-tab" data-toggle="tab" href="#tab3" role="tab" aria-controls="tab3"
-                    aria-selected="false">Área</a>
-            </li>
-        </ul>
-        <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
-                @livewire('plan-de-accion.plan-accion-index-component', ['tab' => 1])
-            </div>
-            <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
-                @livewire('plan-de-accion.plan-accion-index-component', ['tab' => 2])
-            </div>
-            <div class="tab-pane fade" id="tab3" role="tabpanel" aria-labelledby="tab3-tab">
-                @livewire('plan-de-accion.plan-accion-index-component', ['tab' => 3])
+                <section id="asignaciones">
+                    @include('partials.flashMessages')
+                    @livewire('plan-de-accion.plan-accion-index-component', ['tab' => 2])
+                </section>
+                <section id="area">
+                    @include('partials.flashMessages')
+                    @livewire('plan-de-accion.plan-accion-index-component', ['tab' => 3])
+                </section>
             </div>
         </div>
     </div>
@@ -51,8 +74,7 @@
                     <h5 class="titulo_general_funcion"
                         style="
                     margin-bottom: 0px !important;
-                ">Registrar: Plan de
-                        Acción</h5>
+                ">Registrar: Plan de Trabajo</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -123,4 +145,23 @@
         </div>
     </div>
     </div>
+@endsection
+@section('scripts')
+<script type="text/javascript">
+    $(".botones_vistas_gantt a").click(function() {
+        $(".botones_vistas_gantt a").removeClass("boton_activo");
+        $(".botones_vistas_gantt a:hover").addClass("boton_activo");
+    });
+
+    function cambiarTituloIndex(titulo) {
+        setTimeout(() => {
+            document.getElementById('titlo-tab').innerText = titulo;
+        }, 100);
+    }
+
+    function navSectionIndex(id) {
+        document.querySelector('.content-sections section.active').classList.remove('active');
+        document.getElementById(id).classList.add('active');
+    }
+</script>
 @endsection

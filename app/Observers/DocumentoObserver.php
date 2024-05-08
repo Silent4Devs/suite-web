@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Events\DocumentoEvent;
 use App\Models\Documento;
 use App\Models\User;
 use Illuminate\Support\Facades\Cache;
@@ -13,6 +14,7 @@ class DocumentoObserver
      */
     public function created(Documento $documento): void
     {
+        event(new DocumentoEvent($documento, 'create', 'documentos', 'Documento'));
         $this->forgetCache();
     }
 
@@ -21,6 +23,7 @@ class DocumentoObserver
      */
     public function updated(Documento $documento): void
     {
+        event(new DocumentoEvent($documento, 'update', 'documentos', 'Documento'));
         $this->forgetCache();
     }
 
@@ -29,22 +32,7 @@ class DocumentoObserver
      */
     public function deleted(Documento $documento): void
     {
-        $this->forgetCache();
-    }
-
-    /**
-     * Handle the Documento "restored" event.
-     */
-    public function restored(Documento $documento): void
-    {
-        $this->forgetCache();
-    }
-
-    /**
-     * Handle the Documento "force deleted" event.
-     */
-    public function forceDeleted(Documento $documento): void
-    {
+        event(new DocumentoEvent($documento, 'delete', 'documentos', 'Documento'));
         $this->forgetCache();
     }
 

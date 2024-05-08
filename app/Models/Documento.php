@@ -41,6 +41,8 @@ class Documento extends Model implements Auditable
 
     protected $dates = ['fecha'];
 
+    protected $table = 'documentos';
+
     protected $appends = ['estatus_formateado', 'fecha_dmy', 'archivo_actual', 'color_estatus', 'no_vistas'];
 
     protected $fillable = [

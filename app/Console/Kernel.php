@@ -43,6 +43,7 @@ class Kernel extends ConsoleKernel
             ->onOneServer()
             ->sentryMonitor();
 
+        //dump automatico de base de datos
         $schedule->command('snapshot:create')
             ->timezone('America/Mexico_City')
             ->days([2, 5])
@@ -51,17 +52,17 @@ class Kernel extends ConsoleKernel
             ->onOneServer()
             ->sentryMonitor();
 
-        // Limpiar los respaldos diariamente a las 6:00 PM
+        // Limpiar los respaldos diariamente a las 11:00 PM
         $schedule->command('backup:clean')
-        ->daily()
-        ->at('19:00')
-        ->onOneServer()
-        ->sentryMonitor();
+            ->days([2, 5])
+            ->at('23:20')
+            ->onOneServer()
+            ->sentryMonitor();
 
-        // Ejecutar el respaldo diariamente a las 6:30 PM
+        // Ejecutar el respaldo diariamente a las 11:30 PM
         $schedule->command('backup:run')
-            ->daily()
-            ->at('19:30')
+            ->days([2, 5])
+            ->at('23:40')
             ->onOneServer()
             ->sentryMonitor();
     }

@@ -97,30 +97,6 @@ class PlanesAccionController extends Controller
                 'subtasks' => [],
                 'historic' => [],
             ],
-            [
-                'id' => 'tmp_'.(strtotime(now())).rand(1, 1000),
-                'end' => strtotime($request->fin) * 1000,
-                'name' => $request->norma,
-                'level' => 1,
-                'start' => strtotime($request->inicio) * 1000,
-                'canAdd' => true,
-                'status' => 'STATUS_UNDEFINED',
-                'canWrite' => true,
-                'duration' => 0,
-                'progress' => 0,
-                'canDelete' => true,
-                'collapsed' => false,
-                'relevance' => '0',
-                'canAddIssue' => true,
-                'description' => '',
-                'endIsMilestone' => false,
-                'startIsMilestone' => false,
-                'progressByWorklog' => false,
-                'assigs' => [],
-                'resources' => [],
-                'subtasks' => [],
-                'historic' => [],
-            ],
         ];
 
         $planImplementacion = PlanImplementacion::create([ // Necesario se carga inicialmente el Diagrama Universal de Gantt
@@ -133,7 +109,7 @@ class PlanesAccionController extends Controller
             'zoom' => '3d',
             'parent' => $request->parent,
             'norma' => $request->norma,
-            'modulo_origen' => 'Planes de Acción',
+            'modulo_origen' => 'Planes de Trabajo',
             'objetivo' => $request->objetivo,
             'elaboro_id' => User::getCurrentUser()->empleado->id,
             'es_plan_trabajo_base' => $request->es_plan_trabajo_base != null ? true : false,
@@ -154,30 +130,6 @@ class PlanesAccionController extends Controller
                     'end' => strtotime(now()) * 1000,
                     'name' => 'Plan de Trabajo - '.$modelo->norma,
                     'level' => 0,
-                    'start' => strtotime(now()) * 1000,
-                    'canAdd' => true,
-                    'status' => 'STATUS_UNDEFINED',
-                    'canWrite' => true,
-                    'duration' => 0,
-                    'progress' => 0,
-                    'canDelete' => true,
-                    'collapsed' => false,
-                    'relevance' => '0',
-                    'canAddIssue' => true,
-                    'description' => '',
-                    'endIsMilestone' => false,
-                    'startIsMilestone' => false,
-                    'progressByWorklog' => false,
-                    'assigs' => [],
-                    'resources' => [],
-                    'subtasks' => [],
-                    'historic' => [],
-                ],
-                [
-                    'id' => 'tmp_'.(strtotime(now())).rand(1, 1000),
-                    'end' => strtotime(now()) * 1000,
-                    'name' => $modelo->norma,
-                    'level' => 1,
                     'start' => strtotime(now()) * 1000,
                     'canAdd' => true,
                     'status' => 'STATUS_UNDEFINED',
@@ -289,7 +241,7 @@ class PlanesAccionController extends Controller
                 'objetivo' => $request->objetivo,
             ]);
             $route = $planImplementacion->es_plan_trabajo_base ? 'admin.planTrabajoBase.index' : 'admin.planes-de-accion.index';
-            $mensaje = $planImplementacion->es_plan_trabajo_base ? 'Plan de Trabajo Base Actualizado' : 'Plan de Acción Actualizado';
+            $mensaje = $planImplementacion->es_plan_trabajo_base ? 'Plan de Trabajo Base Actualizado' : 'Plan de Trabajo Actualizado';
 
             return redirect()->route($route)->with('success', $mensaje);
         } catch (\Throwable $th) {
@@ -303,7 +255,7 @@ class PlanesAccionController extends Controller
             'objetivo' => $request->objetivo,
         ]);
         $route = $planImplementacion->es_plan_trabajo_base ? 'admin.planTrabajoBase.index' : 'admin.planes-de-accion.index';
-        $mensaje = $planImplementacion->es_plan_trabajo_base ? 'Plan de Trabajo Base Actualizado' : 'Plan de Acción Actualizado';
+        $mensaje = $planImplementacion->es_plan_trabajo_base ? 'Plan de Trabajo Base Actualizado' : 'Plan de Trabajo Actualizado';
 
         return redirect()->route($route)->with('success', $mensaje);
     }
