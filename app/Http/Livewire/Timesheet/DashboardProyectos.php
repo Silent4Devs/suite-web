@@ -236,7 +236,7 @@ class DashboardProyectos extends Component
                 }
 
                 $this->datos_areas->push([
-                    'proyecto' => $datos_dash->proyecto,
+                    'proyecto' => isset($datos_dash->proyecto) ? $datos_dash->proyecto : null,
                     'area' => $area_individual,
                     'total_horas_area' => $total_h,
                     'tareas' => $t,
