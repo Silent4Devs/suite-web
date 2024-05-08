@@ -550,7 +550,7 @@
                     <h2 class="taskData">Tarea</h2>
                     <table cellspacing="1" cellpadding="5" width="100%" class="table taskData" border="0">
                         <tr>
-                            <td colspan="3" valign="top">
+                            <td colspan="3" valign="top" style="padding-top: 50px;">
                                 <div class="form-group anima-focus">
                                     <input type="text" class="form-control" id="name" name="name" placeholder=""
                                         required="true">
@@ -590,8 +590,8 @@
                         <tr>
                             <td colspan="2">
                                 <label for="status" class="">Estatus</label><br>
-                                <select readonly style="color:black; text-align:center" id="status"
-                                    name="status" class="taskStatus" status="(#=obj.status#)"
+                                <select readonly style="color:black; text-align:center" id="status" name="status"
+                                    class="taskStatus" status="(#=obj.status#)"
                                     onchange="$(this).attr('STATUS',$(this).val());">
                                     <option value="STATUS_ACTIVE" class="taskStatus" status="STATUS_ACTIVE">En Proceso
                                     </option>
@@ -631,13 +631,13 @@
             </div>
             <div class="__template__" type="ASSIGNMENT_ROW">
                 <!--
-                                                                                                                                                                        <tr taskId="(#=obj.task.id#)" assId="(#=obj.assig.id#)" class="assigEditRow" >
-                                                                                                                                                                        <td ><select name="resourceId"  class="formElements" (#=obj.assig.id.indexOf("tmp_")==0?"":"disabled"#) ></select></td>
-                                                                                                                                                                        <td ><select type="select" name="roleId"  class="formElements"></select></td>
-                                                                                                                                                                        <td ><input type="text" name="effort" value="(#=getMillisInHoursMinutes(obj.assig.effort)#)" size="5" class="formElements"></td>
-                                                                                                                                                                        <td align="center"><span class="teamworkIcon delAssig del" style="cursor: pointer">d</span></td>
-                                                                                                                                                                        </tr>
-                                                                                                                                                                        -->
+                                                                                                                                                                                    <tr taskId="(#=obj.task.id#)" assId="(#=obj.assig.id#)" class="assigEditRow" >
+                                                                                                                                                                                    <td ><select name="resourceId"  class="formElements" (#=obj.assig.id.indexOf("tmp_")==0?"":"disabled"#) ></select></td>
+                                                                                                                                                                                    <td ><select type="select" name="roleId"  class="formElements"></select></td>
+                                                                                                                                                                                    <td ><input type="text" name="effort" value="(#=getMillisInHoursMinutes(obj.assig.effort)#)" size="5" class="formElements"></td>
+                                                                                                                                                                                    <td align="center"><span class="teamworkIcon delAssig del" style="cursor: pointer">d</span></td>
+                                                                                                                                                                                    </tr>
+                                                                                                                                                                                    -->
             </div>
             <div class="__template__" type="RESOURCE_EDITOR">
                 {{-- <!-- --}}
@@ -647,7 +647,7 @@
                     <table cellspacing="1" cellpadding="0" width="100%" id="resourcesTable">
                         <tr>
                             <th style="width:100px;">Nombre</th>
-                            <th style="width:30px;" id="addResource"><span class="teamworkIcon"
+                            <th style="width:50px;" id="addResource"><span class="teamworkIcon"
                                     style="cursor: pointer">+</span></th>
                         </tr>
                     </table>
