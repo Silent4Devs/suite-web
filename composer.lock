@@ -4633,16 +4633,16 @@
         },
         {
             "name": "paragonie/constant_time_encoding",
-            "version": "v2.6.3",
+            "version": "v2.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/constant_time_encoding.git",
-                "reference": "58c3f47f650c94ec05a151692652a868995d2938"
+                "reference": "52a0d99e69f56b9ec27ace92ba56897fe6993105"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/constant_time_encoding/zipball/58c3f47f650c94ec05a151692652a868995d2938",
-                "reference": "58c3f47f650c94ec05a151692652a868995d2938",
+                "url": "https://api.github.com/repos/paragonie/constant_time_encoding/zipball/52a0d99e69f56b9ec27ace92ba56897fe6993105",
+                "reference": "52a0d99e69f56b9ec27ace92ba56897fe6993105",
                 "shasum": ""
             },
             "require": {
@@ -4696,7 +4696,7 @@
                 "issues": "https://github.com/paragonie/constant_time_encoding/issues",
                 "source": "https://github.com/paragonie/constant_time_encoding"
             },
-            "time": "2022-06-14T06:56:20+00:00"
+            "time": "2024-05-08T12:18:48+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -10189,16 +10189,16 @@
         },
         {
             "name": "tucker-eric/eloquentfilter",
-            "version": "3.3.0",
+            "version": "3.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Tucker-Eric/EloquentFilter.git",
-                "reference": "acbfbe008b8c6b445708493b85a143f7f916c235"
+                "reference": "38c1dee5ce2a1fd13d47e7c5567ff4c2e517603e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Tucker-Eric/EloquentFilter/zipball/acbfbe008b8c6b445708493b85a143f7f916c235",
-                "reference": "acbfbe008b8c6b445708493b85a143f7f916c235",
+                "url": "https://api.github.com/repos/Tucker-Eric/EloquentFilter/zipball/38c1dee5ce2a1fd13d47e7c5567ff4c2e517603e",
+                "reference": "38c1dee5ce2a1fd13d47e7c5567ff4c2e517603e",
                 "shasum": ""
             },
             "require": {
@@ -10248,9 +10248,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Tucker-Eric/EloquentFilter/issues",
-                "source": "https://github.com/Tucker-Eric/EloquentFilter/tree/3.3.0"
+                "source": "https://github.com/Tucker-Eric/EloquentFilter/tree/3.4.0"
             },
-            "time": "2024-02-08T18:03:52+00:00"
+            "time": "2024-05-07T20:28:58+00:00"
         },
         {
             "name": "vladimir-yuldashev/laravel-queue-rabbitmq",

@@ -31,6 +31,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
+use Excel;
 use PDF;
 use Throwable;
 
@@ -1195,7 +1196,7 @@ class TimesheetController extends Controller
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        //dd($proyectos);
+        //dd($proyectos[20]);
 
         return view('admin.timesheet.reportes.reportes-financiero', compact('proyectos', 'logo_actual', 'empresa_actual'));
     }
