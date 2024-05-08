@@ -249,26 +249,25 @@ class ContratosController extends AppBaseController
         if (!Storage::exists('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/niveles servicio')) {
             Storage::makeDirectory('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/niveles servicio');
             Storage::copy('public/contratos/.gitignore', 'public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/niveles servicio');
-            Storage::setVisibility('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/niveles servicio', 'public');
+            chmod(storage_path('app/public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/niveles servicio'), 0777);
         }
         if (!Storage::exists('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/entregables mensuales')) {
             Storage::makeDirectory('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/entregables mensuales');
             Storage::copy('public/contratos/.gitignore', 'public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/entregables mensuales');
-            Storage::setVisibility('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/entregables mensuales', 'public');
+            chmod(storage_path('app/public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/entregables mensuales'), 0777);
         }
         if (!Storage::exists('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/cierre contrato')) {
             Storage::makeDirectory('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/cierre contrato');
-            Storage::setVisibility('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/cierre contrato', 'public');
+            chmod(storage_path('app/public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/cierre contrato'), 0777);
         }
         if (!Storage::exists('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/facturas/pdf')) {
             Storage::makeDirectory('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/facturas/pdf');
-            Storage::setVisibility('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/facturas/pdf', 'public');
+            chmod(storage_path('app/public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/facturas/pdf'), 0777);
         }
         if (!Storage::exists('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/facturas/xml')) {
             Storage::makeDirectory('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/facturas/xml');
-            Storage::setVisibility('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/facturas/xml', 'public');
+            chmod(storage_path('app/public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/facturas/xml'), 0777);
         }
-
 
         //############# GESTIÓN ARCHIVOS ##################
 
