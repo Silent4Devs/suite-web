@@ -1067,9 +1067,9 @@
     $(document).ready(function() {
 
         if ($('#check_fianza').checked) {
-            $(".td_fianza").fadeIn(0);
+           $(".td_fianza").fadeOut(0);
         } else {
-            $(".td_fianza").fadeOut(0);
+            $(".td_fianza").fadeIn(0);
         }
     });
     $(document).on('change', '#check_fianza', function(e) {

@@ -83,7 +83,7 @@ class Documento extends Model implements Auditable
 
     public static function getWithMacroproceso($empleado_id)
     {
-        return Cache::remember('Documentos:Documentos_all_macroprocesos_' . $empleado_id, 3600 * 4, function () use ($empleado_id) {
+        return Cache::remember('Documentos:Documentos_all_macroprocesos_'.$empleado_id, 3600 * 4, function () use ($empleado_id) {
             return self::where('elaboro_id', $empleado_id)->get();
         });
     }
@@ -185,7 +185,7 @@ class Documento extends Model implements Auditable
                 break;
         }
 
-        return asset($path_documento . '/' . $this->archivo);
+        return asset($path_documento.'/'.$this->archivo);
     }
 
     //Relacion uno a muchos inversa

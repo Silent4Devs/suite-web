@@ -181,16 +181,33 @@
                         <th>Horas Totales </th>
                         <th>Horas Sobrepasadas </th>
                         <th>Costo por Hora </th>
-                        <th>Costo Total Estimado</th>
+                        <th>Costo Estimado</th>
+                        <th>Costo Real</th>
+                        <th>Variación</th>
                     @endif
                     <th style="max-width:150px !important; width:150px ;">Opciones</th>
                 </tr>
             </thead>
             <tbody style="position:relative;">
                 @foreach ($proyecto_empleados as $proyect_empleado)
-                    <tr>
+                    @php
+                        $estimado = 0;
+                        $real = 0;
+                        $variacion = 0;
 
-                        {{-- @dd( $proyect_empleado); --}}
+                        $estimado = $proyect_empleado->horas_asignadas * $proyect_empleado->costo_hora;
+                        $real = $proyect_empleado->total * $proyect_empleado->costo_hora;
+
+                        $variacion = $real - $estimado;
+
+                        if ($variacion <= 0) {
+                            $saldo = 'A Favor:';
+                        } else {
+                            $saldo = 'Sobrepasado:';
+                        }
+                    @endphp
+
+                    <tr>
                         <td>{{ $proyect_empleado->empleado->name }} </td>
                         <td>{{ $proyect_empleado->empleado->area->area }} </td>
                         <td>{{ $proyect_empleado->empleado->puesto }} </td>
@@ -199,7 +216,9 @@
                             <td>{{ $proyect_empleado->total ?? '0' }} </td>
                             <td>{{ $proyect_empleado->sobrepasadas ?? '0' }} </td>
                             <td>{{ $proyect_empleado->costo_hora ?? '0' }} </td>
-                            <td>{{ $proyect_empleado->horas_asignadas * $proyect_empleado->costo_hora ?? '0' }}</td>
+                            <td>{{ $estimado ?? '0' }} </td>
+                            <td>{{ $real ?? '0' }}</td>
+                            <td>{{ $saldo }}&nbsp;{{ $variacion ?? '0' }}</td>
                         @endif
                         <td>
                             <button class="btn" data-toggle="modal"

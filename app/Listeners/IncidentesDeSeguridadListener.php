@@ -2,7 +2,6 @@
 
 namespace App\Listeners;
 
-use App\Events\IncidentesDeSeguridadEvent;
 use App\Models\User;
 use App\Notifications\IncidentesDeSeguridadNotification;
 use Illuminate\Support\Facades\Notification;

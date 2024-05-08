@@ -3,10 +3,10 @@
 namespace App\Listeners;
 
 use App\Models\User;
-use App\Notifications\RequisicionesNotification;
+use App\Notifications\SolicitudPermisoNotification;
 use Illuminate\Support\Facades\Notification;
 
-class RequisicionesListener
+class SolicitudPermisoListener
 {
     /**
      * Create the event listener.
@@ -31,7 +31,7 @@ class RequisicionesListener
             ->where('role_user.role_id', '=', '1')->where('users.id', '!=', auth()->id())
             ->get()
             ->each(function (User $user) use ($event) {
-                Notification::send($user, new RequisicionesNotification($event->requisiciones, $event->tipo_consulta, $event->tabla, $event->slug));
+                Notification::send($user, new SolicitudPermisoNotification($event->permiso, $event->tipo_consulta, $event->tabla, $event->slug));
             });
     }
 }

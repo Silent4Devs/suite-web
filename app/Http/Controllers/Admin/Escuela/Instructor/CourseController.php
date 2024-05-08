@@ -77,7 +77,7 @@ class CourseController extends Controller
             $image = $request->file('file');
             // Storage::putFileAs('public/cursos', $image);
             Storage::put('public/cursos', $image);
-            $url = '/storage/cursos/' . $image->hashName();
+            $url = '/storage/cursos/'.$image->hashName();
 
             $course->image()->create([
                 'url' => $url,
@@ -151,7 +151,7 @@ class CourseController extends Controller
         if ($request->hasFile('file')) {
             $image = $request->file('file');
             Storage::put('public/cursos', $image);
-            $url = '/storage/cursos/' . $image->hashName();
+            $url = '/storage/cursos/'.$image->hashName();
 
             if ($course->image) {
                 Storage::delete($course->image->url);

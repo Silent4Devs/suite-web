@@ -2,18 +2,18 @@
 
 namespace App\Notifications;
 
-use App\Models\Timesheet;
+use App\Models\SolicitudVacaciones;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Auth;
 
-class TimesheetNotification extends Notification
+class SolicitudVacacionesNotification extends Notification
 {
     use Queueable;
 
-    public $timeshet;
+    public $solicitud;
 
     public $tipo_consulta;
 
@@ -26,9 +26,9 @@ class TimesheetNotification extends Notification
      *
      * @return void
      */
-    public function __construct(Timesheet $timeshet, $tipo_consulta, $tabla, $slug)
+    public function __construct(SolicitudVacaciones $solicitud, $tipo_consulta, $tabla, $slug)
     {
-        $this->timeshet = $timeshet;
+        $this->solicitud = $solicitud;
         $this->tipo_consulta = $tipo_consulta;
         $this->tabla = $tabla;
         $this->slug = $slug;
@@ -68,8 +68,8 @@ class TimesheetNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            'id' => $this->timeshet->id,
-            'fecha_inicio' => $this->timeshet->fechainicio,
+            'id' => $this->solicitud->id,
+            'fecha_inicio' => $this->solicitud->fechainicio,
             'time' => Carbon::now(),
             'type' => $this->tipo_consulta,
             'tabla' => $this->tabla,

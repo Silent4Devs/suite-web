@@ -36,10 +36,9 @@ class DocumentoObserver
         $this->forgetCache();
     }
 
-
     private function forgetCache()
     {
         $user = User::getCurrentUser();
-        Cache::forget('Documentos:Documentos_all_macroprocesos_' . $user->empleado_id);
+        Cache::forget('Documentos:Documentos_all_macroprocesos_'.$user->empleado_id);
     }
 }
