@@ -357,16 +357,10 @@
                 </div>
             </div>
             @if ($contrato->file_contrato != null)
-            @php
-                $rutaArchivo = 'storage/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/' . $contrato->file_contrato;
-                $archivoPath = public_path($rutaArchivo);
-                // Establecer los permisos usando chmod
-                chmod($archivoPath, 0775); // Esto establece los permisos como lectura, escritura y ejecución para el propietario y el grupo, y solo lectura para otros
-            @endphp
-            <a href="{{ asset($rutaArchivo) }}" target="_blank" class="descarga_archivo" style="margin-left:20px;">
-                Descargar archivo actual
-            </a>
-        @endif
+                <a href="{{ asset(trim('storage/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/' . $contrato->file_contrato)) }}"
+                    target="_blank" class=" descarga_archivo" style="margin-left:20px;">
+                    Descargar archivo actual</a>
+            @endif
         </div>
         <div class="distancia form-group col-md-6">
             @if (!$show_contrato)
