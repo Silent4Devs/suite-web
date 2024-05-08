@@ -47,6 +47,7 @@ class CrearEvaluacionesDesempeno extends Command
 
         $evaluaciones = EvaluacionDesempeno::getAll()->where('estatus', '=', 3);
         foreach ($evaluaciones as $evaluacion) {
+            $crearCuestionario = true;
             $validacionCompetencias = true;
 
             foreach ($evaluacion->periodos as $periodo) {
@@ -67,6 +68,8 @@ class CrearEvaluacionesDesempeno extends Command
                                 $email = new EvaluacionesDesempenoFaltaCompetencias($evaluacion->nombre, $periodo->nombre_evaluacion, $puestosSinCompetencias);
 
                                 Mail::to(removeUnicodeCharacters($correodestinatario))->queue($email);
+
+                                $crearCuestionario = false;
                             }
                         }
                     } elseif ($evaluacion->activar_objetivos && !$evaluacion->activar_competencias) {
@@ -84,10 +87,14 @@ class CrearEvaluacionesDesempeno extends Command
                                 $email = new EvaluacionesDesempenoFaltaCompetencias($evaluacion->nombre, $periodo->nombre_evaluacion, $puestosSinCompetencias);
 
                                 Mail::to(removeUnicodeCharacters($correodestinatario))->queue($email);
+                                $crearCuestionario = false;
                             }
                         }
                     }
                 }
+            }
+            if ($crearCuestionario) {
+                //FuncionCrearCuestionario
             }
         }
     }
