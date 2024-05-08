@@ -267,7 +267,7 @@ class ContratosController extends AppBaseController
 
 
         // Ruta de la carpeta que quieres cambiar los permisos
-        $carpeta = public_path('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato);
+        $carpeta = public_path('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/');
         // Cambiar los permisos recursivamente
         File::chmod($carpeta, 0777, true);
 
