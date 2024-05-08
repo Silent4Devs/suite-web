@@ -275,7 +275,7 @@ class DashboardProyectos extends Component
 
                     $this->datos_empleados->push([
                         'horas_proyecto' => $total_emp,
-                        'proyecto' => $datos_dash->proyecto,
+                        'proyecto' => isset($datos_dash->proyecto) ? $datos_dash->proyecto : null,
                         'empleado' => $ep->empleado->name,
                         'area' => $area_individual,
                     ]);
