@@ -246,7 +246,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Editar Asignación de Empleado</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Edirtar Asignación de Empleado</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -267,11 +267,12 @@
                                 <div class="row">
                                     <div class="form-group col-md-8">
                                         <label for="">Empleado<sup>*</sup>(obligatorio)</label>
-                                        <select name="empleado_editado" id="" class="select2" required>
-                                            <option value="{{ $proyect_empleado->id_empleado }}" selected>
-                                                {{ $proyect_empleado->empleado->name }}</option>
+                                        <select name="empleado_editado" id="empleado_editado" class="form-control"
+                                            required>
                                             @foreach ($empleados as $empleado)
-                                                <option value="{{ $empleado['id'] }}">{{ $empleado['name'] }}
+                                                <option value="{{ $empleado['id'] }}"
+                                                    {{ $empleado['id'] == $proyect_empleado->empleado->id ? 'selected' : '' }}>
+                                                    {{ $empleado['name'] }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -340,8 +341,7 @@
                                     proyecto {{ $proyecto->proyecto }}?</p>
                             </div>
                             <div class="mt-4 d-flex justify-content-between">
-                                <button wire:click.prevent="cancelar()" class="btn btn_cancelar"
-                                    data-dismiss="modal">
+                                <button class="btn btn_cancelar" data-dismiss="modal">
                                     Cancelar
                                 </button>
                                 <button class="btn btn-info" style="border:none; background-color:#E34F4F;"
