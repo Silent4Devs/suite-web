@@ -223,9 +223,9 @@
                                     style="display: block;overflow-y: auto;height: 250px;"></div>
                             </div>
                         </div>
-                        <div class="dropdownBtn">
-                            <button onclick="dropguardar()" class="dropbtn">
-                                <img class="addSVG" src="{{ asset('img/plan-trabajo/save.svg') }}">
+                        <div class="dropdownBtn" style="padding-left: 24px;">
+                            <button onclick="dropguardar()" class="btn btn-primary" style="width: 180px;">
+                                <i class="fa-regular fa-floppy-disk mr-2"></i>
                                 <span>Guardar</span>
                             </button>
                         </div>
