@@ -5,9 +5,8 @@ namespace App\Listeners;
 use App\Models\User;
 use App\Notifications\RequisicionesNotification;
 use Illuminate\Support\Facades\Notification;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
-class RequisicionesListener implements ShouldQueue
+class RequisicionesListener
 {
     /**
      * Create the event listener.

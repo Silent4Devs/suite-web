@@ -39,10 +39,7 @@ class RecursosObserver
             }
         }
 
-        Queue::push(function () use ($recurso) {
-            event(new RecursosEvent($recurso, 'create', 'recurso', 'Curso y Capacitación'));
-        });
-
+        event(new RecursosEvent($recurso, 'create', 'recurso', 'Curso y Capacitación'));
     }
 
     /**
@@ -68,10 +65,7 @@ class RecursosObserver
             }
         }
 
-        Queue::push(function () use ($recurso) {
-            event(new RecursosEvent($recurso, 'update', 'recurso', 'Curso y Capacitación'));
-        });
-
+        event(new RecursosEvent($recurso, 'update', 'recurso', 'Curso y Capacitación'));
     }
 
     /**
@@ -81,10 +75,7 @@ class RecursosObserver
      */
     public function deleted(Recurso $recurso)
     {
-        Queue::push(function () use ($recurso) {
-            event(new RecursosEvent($recurso, 'delete', 'recurso', 'Curso y Capacitación'));
-        });
-
+        event(new RecursosEvent($recurso, 'delete', 'recurso', 'Curso y Capacitación'));
     }
 
     /**

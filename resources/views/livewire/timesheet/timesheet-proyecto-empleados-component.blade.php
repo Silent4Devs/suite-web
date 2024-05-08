@@ -29,12 +29,12 @@
             </div>
         </div> --}}
         <div class="row mt-4">
-            <div class="form-group col-md-7">
-                <label for="">Empleado<sup>*</sup></label>
+            <div class="form-group col-md-2">
                 <div class="dropdown">
-                    <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" id="dropdownMenuButton"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Asignar Empleados
+                    <button class="btn btn-secondary btn-lg dropdown-toggle form-control" type="button"
+                        id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                        style="text-align: initial; background-color:#fff; color:#3086AF !important; border: 1px solid #ced4da !important">
+                        Asignar Empleados*
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
                         style="max-height: 200px; overflow-y: auto;">
@@ -55,9 +55,9 @@
                         @endforeach
                     </div>
                 </div>
-
             </div>
         </div>
+
         @if ($proyecto->tipo === 'Externo')
             <div class="modal fade" id="modalExterno" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
@@ -191,12 +191,12 @@
                     <tr>
 
                         {{-- @dd( $proyect_empleado); --}}
-                        <td>{{ $proyect_empleado->name }} </td>
-                        <td>{{ $proyect_empleado->area }} </td>
-                        <td>{{ $proyect_empleado->puesto }} </td>
+                        <td>{{ $proyect_empleado->empleado->name }} </td>
+                        <td>{{ $proyect_empleado->empleado->area->area }} </td>
+                        <td>{{ $proyect_empleado->empleado->puesto }} </td>
                         @if ($proyecto->tipo === 'Externo')
                             <td>{{ $proyect_empleado->horas_asignadas ?? '0' }} </td>
-                            <td>{{ $proyect_empleado->totales ?? '0' }} </td>
+                            <td>{{ $proyect_empleado->total ?? '0' }} </td>
                             <td>{{ $proyect_empleado->sobrepasadas ?? '0' }} </td>
                             <td>{{ $proyect_empleado->costo_hora ?? '0' }} </td>
                             <td>{{ $proyect_empleado->horas_asignadas * $proyect_empleado->costo_hora ?? '0' }}</td>
