@@ -1,5 +1,14 @@
 <div>
     <style>
+        /* Your CSS file */
+        .hidden-div-objetivos {
+            display: none;
+        }
+
+        .hidden-div-competencias {
+            display: none;
+        }
+
         /* Customizing table-striped */
         .table-striped tbody tr:nth-of-type(odd) {
             background-color: #FBECF3;
@@ -189,77 +198,11 @@
                                             title="{{ $evOb->empleado->name }}" width="40" height="37">
                                     @endforeach
                                 </div>
-                                <!-- Button to trigger the modal with data-periodo attribute -->
-                                <button type="button" class="btn btn-primary open-modal" data-toggle="modal"
-                                    data-target="#cambioEvaluadoresObjetivos{{ $periodo['id_periodo'] }}">Open
-                                    Modal</button>
+                                <button class="toggle-button-objetivos" data-index="{{ $key }}">Modificar
+                                    Evaluadores
+                                </button>
                             </div>
 
-                            <!-- The modal -->
-                            <div class="modal fade" id="cambioEvaluadoresObjetivos{{ $periodo['id_periodo'] }}"
-                                tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-xl" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                                            <button type="button" class="close" data-dismiss="modal"
-                                                aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <!-- Modal content goes here -->
-                                            @foreach ($evaluado->evaluadoresObjetivos($periodo['id_periodo']) as $key_evaluador => $evaluador)
-                                                @if ($evaluador->evaluador_desempeno_id != $info_evaluado->empleado->id)
-                                                    <div class="form-row">
-                                                        <div class="form-group col-md-4 anima-focus">
-                                                            <select name="evaluador_{{ $key_evaluador }}"
-                                                                id="evaluador_{{ $key_evaluador }}">
-                                                                <option value="{{ $evaluador->empleado->id }}" default>
-                                                                    {{ $evaluador->empleado->name }}</option>
-                                                                @foreach ($modificar_empleados as $me)
-                                                                    <option value="{{ $me->id }}">
-                                                                        {{ $me->name }}
-                                                                    </option>
-                                                                @endforeach
-                                                            </select>
-                                                            <label
-                                                                for="evaluador_{{ $key_evaluador }}">Evaluador</label>
-                                                        </div>
-                                                        <div class="form-group col-md-4 anima-focus">
-                                                            <input type="number" placeholder="" class="form-input"
-                                                                id="porcentaje_evaluador_{{ $key_evaluador }}"
-                                                                name="porcentaje_evaluador_{{ $key_evaluador }}"
-                                                                value="{{ $evaluador->porcentaje_objetivos }}">
-                                                            <label
-                                                                for="porcentaje_evaluador_{{ $key_evaluador }}">Procentaje</label>
-                                                        </div>
-                                                    </div>
-                                                @else
-                                                    <div class="form-row">
-                                                        <div class="form-group col-md-4 anima-focus">
-                                                            <select class="form-input"
-                                                                name="evaluador_{{ $key_evaluador }}"
-                                                                id="evaluador_{{ $key_evaluador }}" disabled>
-                                                                <option value="{{ $evaluador->empleado->id }}"
-                                                                    default>
-                                                                    {{ $evaluador->empleado->name }}</option>
-                                                            </select>
-                                                            <label
-                                                                for="evaluador_{{ $key_evaluador }}">Evaluador</label>
-                                                        </div>
-                                                    </div>
-                                                @endif
-                                            @endforeach
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-dismiss="modal">Close</button>
-                                            <!-- Additional buttons if needed -->
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
 
                             <div class="col-6">
                                 <small>Competencias</small><br>
@@ -271,6 +214,9 @@
                                             title="{{ $evComp->empleado->name }}" width="40" height="37">
                                     @endforeach
                                 </div>
+                                <button class="toggle-button-competencias" data-index="{{ $key }}">Modificar
+                                    Evaluadores
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -297,6 +243,104 @@
             </div>
         @endforeach
     </div>
+
+    @foreach ($array_periodos as $key => $periodo)
+        <div class="hidden-div-objetivos" id="hidden-div-objetivos-{{ $key }}">
+            <div class="card card-body">
+                @foreach ($array_mod_evaluadores_objetivos[$key] as $key_evaluador => $evaluador)
+                    <div class="form-row">
+                        <div class="form-group col-md-4 anima-focus">
+                            <select class="form-control" name="evaluador_{{ $key_evaluador }}"
+                                id="evaluador_{{ $key_evaluador }}"
+                                wire:model.defer="array_mod_evaluadores_objetivos.{{ $key }}.{{ $key_evaluador }}.id_empleado_evaluador">
+                                <option value={{ $evaluador['id_empleado_evaluador'] }} default>
+                                    {{ $evaluador['nombre_evaluador'] }}</option>
+                                @foreach ($modificar_empleados as $me)
+                                    <option value="{{ $me->id }}">
+                                        {{ $me->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <label for="evaluador_{{ $key_evaluador }}">Evaluador</label>
+                        </div>
+
+                        <div class="form-group col-md-4 anima-focus">
+                            <input class="form-control" type="number" placeholder="" class="form-input"
+                                id="porcentaje_evaluador_{{ $key_evaluador }}"
+                                name="porcentaje_evaluador_{{ $key_evaluador }}"
+                                wire:model.defer="array_mod_evaluadores_objetivos.{{ $key }}.{{ $key_evaluador }}.porcentaje_objetivos">
+                            <label for="porcentaje_evaluador_{{ $key_evaluador }}">Porcentaje</label>
+                        </div>
+                        <div class="col-md-4">
+                            <a class="btn btn-primary"
+                                onclick="confirmDeleteEvaluadorObjetivos({{ $evaluador['id_registro_evaluador'] }}, {{ $key }}, {{ $key_evaluador }})">
+                                Eliminar
+                            </a>
+                        </div>
+                    </div>
+                @endforeach
+                <div class="row">
+                    <a class="btn btn-primary"
+                        wire:click.prevent="agregarEvaluadorPeriodoObjetivos({{ $key }})">
+                        + Agregar Evaluador
+                    </a>
+                </div>
+                <div class="row">
+                    <a class="btn btn-primary"
+                        wire:click.prevent="modificarEvaluadoresPeriodoObjetivos({{ $key }})">
+                        Modificar Evaluadores</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="hidden-div-competencias" id="hidden-div-competencias-{{ $key }}">
+            <div class="card card-body">
+                @foreach ($array_mod_evaluadores_competencias[$key] as $key_evaluador => $evaluador)
+                    <div class="form-row">
+                        <div class="form-group col-md-4 anima-focus">
+                            <select class="form-control" name="evaluador_{{ $key_evaluador }}"
+                                id="evaluador_{{ $key_evaluador }}"
+                                wire:model.defer="array_mod_evaluadores_competencias.{{ $key }}.{{ $key_evaluador }}.id_empleado_evaluador">
+                                <option value={{ $evaluador['id_empleado_evaluador'] }} default>
+                                    {{ $evaluador['nombre_evaluador'] }}</option>
+                                @foreach ($modificar_empleados as $me)
+                                    <option value="{{ $me->id }}">
+                                        {{ $me->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <label for="evaluador_{{ $key_evaluador }}">Evaluador</label>
+                        </div>
+
+                        <div class="form-group col-md-4 anima-focus">
+                            <input class="form-control" type="number" placeholder="" class="form-input"
+                                id="porcentaje_evaluador_{{ $key_evaluador }}"
+                                name="porcentaje_evaluador_{{ $key_evaluador }}"
+                                wire:model.defer="array_mod_evaluadores_competencias.{{ $key }}.{{ $key_evaluador }}.porcentaje_competencias">
+                            <label for="porcentaje_evaluador_{{ $key_evaluador }}">Porcentaje</label>
+                        </div>
+                        <div class="col-md-4">
+                            <a class="btn btn-primary"
+                                onclick="confirmDeleteEvaluadorCompetencias({{ $evaluador['id_registro_evaluador'] }}, {{ $key }}, {{ $key_evaluador }})">
+                                Eliminar
+                            </a>
+                        </div>
+                    </div>
+                @endforeach
+                <div class="row">
+                    <a class="btn btn-primary"
+                        wire:click.prevent="agregarEvaluadorPeriodoCompetencias({{ $key }})">
+                        + Agregar Evaluador
+                    </a>
+                </div>
+                <div class="row">
+                    <a class="btn btn-primary"
+                        wire:click.prevent="modificarEvaluadoresPeriodoCompetencias({{ $key }})">
+                        Modificar Evaluadores</a>
+                </div>
+            </div>
+        </div>
+    @endforeach
 
     @if ($evaluacion->activar_objetivos)
         <div class="row mt-4">
@@ -376,7 +420,7 @@
         </div>
     @endif
 
-    <nav class="mt-5">
+    {{-- <nav class="mt-5">
         <div class="nav nav-tabs" role="tablist" style="margin-bottom: 0px !important;">
             @if ($evaluacion->activar_competencias)
                 <a class="nav-link active" id="" data-type="competencias" data-toggle="tab"
@@ -733,8 +777,9 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 </div>
+
 @section('scripts')
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -1007,5 +1052,87 @@
             });
         </script>
     @endif
+    <script>
+        // Your JavaScript file or script tag
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get all toggle buttons
+            const toggleButtonsObjetivos = document.querySelectorAll('.toggle-button-objetivos');
+
+            toggleButtonsObjetivos.forEach(function(button) {
+                // Add click event listener to each button
+                button.addEventListener('click', function() {
+                    const index = this.getAttribute('data-index');
+                    const hiddenDiv = document.getElementById('hidden-div-objetivos-' + index);
+
+                    // Toggle the display of the corresponding hidden div
+                    if (hiddenDiv.style.display === 'none') {
+                        hiddenDiv.style.display = 'block';
+                    } else {
+                        hiddenDiv.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script>
+        // Your JavaScript file or script tag
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get all toggle buttons
+            const toggleButtonsCompetencias = document.querySelectorAll('.toggle-button-competencias');
+
+            toggleButtonsCompetencias.forEach(function(button) {
+                // Add click event listener to each button
+                button.addEventListener('click', function() {
+                    const index = this.getAttribute('data-index');
+                    const hiddenDiv = document.getElementById('hidden-div-competencias-' + index);
+
+                    // Toggle the display of the corresponding hidden div
+                    if (hiddenDiv.style.display === 'none') {
+                        hiddenDiv.style.display = 'block';
+                    } else {
+                        hiddenDiv.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script>
+        function confirmDeleteEvaluadorObjetivos(idRegistroEvaluador, keyPeriodo, keyEvluador) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'You are about to delete this evaluator from the period. This action cannot be undone.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.emit('deleteEvaluadorObjetivos', idRegistroEvaluador, keyPeriodo, keyEvluador);
+                }
+            });
+        }
+    </script>
+
+    <script>
+        function confirmDeleteEvaluadorCompetencias(idRegistroEvaluador, keyPeriodo, keyEvluador) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'You are about to delete this evaluator from the period. This action cannot be undone.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.emit('deleteEvaluadorCompetencias', idRegistroEvaluador, keyPeriodo, keyEvluador);
+                }
+            });
+        }
+    </script>
 @endsection
-</div>
