@@ -9,7 +9,7 @@
                 <form method="POST" action="{{ route('admin.planTrabajoBase.update', $planImplementacion) }}">
                     @csrf
                     @method('PATCH')
-                    @include('admin.planesDeAccion._form', ['edit' => true, 'esPlanTrabajoBase' => true])
+                    @include('admin.planTrabajo._form', ['edit' => true, 'esPlanTrabajoBase' => true])
                     <div class="d-flex justify-content-end">
                         <a class="mr-2 btn_cancelar" href="{{ route('admin.planTrabajoBase.index') }}">Cancelar</a>
                         <input type="submit" class="btn btn-danger" value="Editar">

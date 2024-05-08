@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/plan_accion.css') }}{{ config('app.cssVersion') }}">
+    <link rel="stylesheet" href="{{ asset('css/planTrabjo/kanban/planTrabajo.css') }}{{ config('app.cssVersion') }}">
     <style>
         .separator {
             border-left: 1px solid black;

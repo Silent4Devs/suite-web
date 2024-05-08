@@ -117,7 +117,7 @@
                     <div class="col-sm-4">
                         <div class="dropdownBtn" style="padding-bottom: 20px;">
                             <button onclick="dropEtiquetas()" class="dropbtn">
-                                <img class="addSVG" src="{{ asset('img/plan-trabajo/add.svg') }}">
+                                <img class="addSVG" src="{{ asset('img/planTrabajo/add.svg') }}">
                                 <span>Etiquetas</span>
                             </button>
                             <div id="drop-Etiquetas" class="dropdownBtn-content">
@@ -160,7 +160,7 @@
                         </div>
                         <div class="dropdownBtn" style="padding-bottom: 20px;">
                             <button onclick="dropAdjuntar()" class="dropbtn">
-                                <img class="addSVG" src="{{ asset('img/plan-trabajo/attach.svg') }}">
+                                <img class="addSVG" src="{{ asset('img/planTrabajo/attach.svg') }}">
                                 <span>Adjuntar</span>
                             </button>
                             <div id="drop-Adjuntar" class="dropdownBtn-content">
@@ -175,7 +175,7 @@
 
                         <div class="dropdownBtn" style="padding-bottom: 20px;">
                             <button onclick="dropPersonas()" class="dropbtn">
-                                <img class="addSVG" src="{{ asset('img/plan-trabajo/account.svg') }}">
+                                <img class="addSVG" src="{{ asset('img/planTrabajo/account.svg') }}">
                                 <span>Participantes</span>
                             </button>
                             <div id="drop-Personas" class="dropdownBtn-content" style="height: 542px;">
@@ -225,7 +225,7 @@
                         </div>
                         <div class="dropdownBtn">
                             <button onclick="dropguardar()" class="dropbtn">
-                                <img class="addSVG" src="{{ asset('img/plan-trabajo/save.svg') }}">
+                                <img class="addSVG" src="{{ asset('img/planTrabajo/save.svg') }}">
                                 <span>Guardar</span>
                             </button>
                         </div>
@@ -284,16 +284,16 @@
 
 @section('scripts')
     @parent
-    <script src="{{ asset('../js/kanban/jkanban.js') }}"></script>
-    <script src="{{ asset('../js/kanban/kanbanFunc.js') }}"></script>
+    <script src="{{ asset('js/planTrabajo/kanban/jkanban.js') }}"></script>
+    <script src="{{ asset('js/planTrabajo/kanban/kanbanFunc.js') }}"></script>
     <script>
         $(function() {
 
         });
         var Kanban
-        const imagePath = '{{ asset('img/plan-trabajo/documento.svg') }}';
-        const imagePathEye = '{{ asset('img/plan-trabajo/visibility.svg') }}';
-        const imageTrash = '{{ asset('img/plan-trabajo/deleteX.svg') }}';
+        const imagePath = '{{ asset('img/planTrabajo/documento.svg') }}';
+        const imagePathEye = '{{ asset('img/planTrabajo/visibility.svg') }}';
+        const imageTrash = '{{ asset('img/planTrabajo/deleteX.svg') }}';
 
         function initKanban() {
             $.ajax({
@@ -405,7 +405,7 @@
                                   <div id="taskText">0/0</div>
                                 </div>
                                 <div class="resourceContenido">
-                                  <img class="addSVG" src="{{ asset('img/plan-trabajo/attach.svg') }}">
+                                  <img class="addSVG" src="{{ asset('img/planTrabajo/attach.svg') }}">
                                   <div id="resourceText">0</div>
                                 </div>
                               </div>`;
@@ -655,7 +655,7 @@
                                   <div id="taskText">${subtasksCount}/${subtasksReady}</div>
                                 </div>
                                 <div class="resourceContenido">
-                                  <img class="addSVG" src="{{ asset('img/plan-trabajo/attach.svg') }}">
+                                  <img class="addSVG" src="{{ asset('img/planTrabajo/attach.svg') }}">
                                   <div id="resourceText">${resourcesCount}</div>
                                 </div>
                               </div>`,

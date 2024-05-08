@@ -35,7 +35,7 @@ class PlanesAccionController extends Controller
         //     return datatables()->of($planImplementacions)->toJson();
         // }
 
-        return view('admin.planesDeAccion.index');
+        return view('admin.planTrabajo.index');
     }
 
     /**
@@ -49,7 +49,7 @@ class PlanesAccionController extends Controller
 
         $planImplementacion = new PlanImplementacion();
 
-        return view('admin.planesDeAccion.create', compact('planImplementacion', 'modulo', 'referencia'));
+        return view('admin.planTrabajo.create', compact('planImplementacion', 'modulo', 'referencia'));
     }
 
     public function createPlanTrabajoBase($modulo, $referencia = null)
@@ -57,7 +57,7 @@ class PlanesAccionController extends Controller
         abort_if(Gate::denies('planes_de_accion_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $planImplementacion = new PlanImplementacion();
 
-        return view('admin.planesDeAccion.createPlanTrabajoBase', compact('planImplementacion', 'modulo', 'referencia'));
+        return view('admin.planTrabajo.createPlanTrabajoBase', compact('planImplementacion', 'modulo', 'referencia'));
     }
 
     public function store(Request $request)
@@ -180,7 +180,7 @@ class PlanesAccionController extends Controller
             abort(404);
         }
 
-        return view('admin.planesDeAccion.show', compact('planImplementacion'));
+        return view('admin.planTrabajo.show', compact('planImplementacion'));
     }
 
     /**
@@ -203,7 +203,7 @@ class PlanesAccionController extends Controller
 
             $referencia = null;
 
-            return view('admin.planesDeAccion.edit', compact('planImplementacion', 'referencia'));
+            return view('admin.planTrabajo.edit', compact('planImplementacion', 'referencia'));
         } catch (\Throwable $th) {
             abort(404);
         }

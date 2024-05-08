@@ -263,7 +263,7 @@ select::-ms-expand {
 }
 
 .view-button {
-    background-image: url('../img/plan-trabajo/visibility.svg');
+    background-image: url('../img/planTrabajo/visibility.svg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
@@ -272,7 +272,7 @@ select::-ms-expand {
 }
 
 .download-button {
-    background-image: url('../img/plan-trabajo/download.svg');
+    background-image: url('../img/planTrabajo/download.svg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
@@ -290,7 +290,7 @@ select::-ms-expand {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-image: url('../img/plan-trabajo/add.svg');
+    background-image: url('../img/planTrabajo/add.svg');
     background-size: 20px;
     background-repeat: no-repeat;
     background-position: center;

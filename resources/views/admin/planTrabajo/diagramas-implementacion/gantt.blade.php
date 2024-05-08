@@ -522,28 +522,28 @@
 
         <div id="gantEditorTemplates" style="display:none;">
             <div class="__template__" type="GANTBUTTONS">
-                <!-- @include('admin.planesDeAccion.diagramas-implementacion.code-coment-gantt.ganttButtonBar') -->
+                <!-- @include('admin.planTrabajo.diagramas-implementacion.code-coment-gantt.ganttButtonBar') -->
             </div>
 
             <div class="__template__" type="TASKSEDITHEAD">
-                <!-- @include('admin.planesDeAccion.diagramas-implementacion.code-coment-gantt.gdfTable') -->
+                <!-- @include('admin.planTrabajo.diagramas-implementacion.code-coment-gantt.gdfTable') -->
             </div>
 
             <div class="__template__" type="TASKROW">
-                <!-- @include('admin.planesDeAccion.diagramas-implementacion.code-coment-gantt.type-taskrow') -->
+                <!-- @include('admin.planTrabajo.diagramas-implementacion.code-coment-gantt.type-taskrow') -->
             </div>
 
             <div class="__template__" type="TASKEMPTYROW">
-                <!-- @include('admin.planesDeAccion.diagramas-implementacion.code-coment-gantt.taskEditRow') -->
+                <!-- @include('admin.planTrabajo.diagramas-implementacion.code-coment-gantt.taskEditRow') -->
             </div>
 
             <div class="__template__" type="TASKBAR">
-                <!-- @include('admin.planesDeAccion.diagramas-implementacion.code-coment-gantt.taskBox') -->
+                <!-- @include('admin.planTrabajo.diagramas-implementacion.code-coment-gantt.taskBox') -->
             </div>
 
 
             <div class="__template__" type="CHANGE_STATUS">
-                <!-- @include('admin.planesDeAccion.diagramas-implementacion.code-coment-gantt.taskStatusBox') -->
+                <!-- @include('admin.planTrabajo.diagramas-implementacion.code-coment-gantt.taskStatusBox') -->
 
             </div>
 
