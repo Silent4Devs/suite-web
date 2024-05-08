@@ -662,9 +662,11 @@ class ContratosController extends AppBaseController
             $contratos->save();
         }
         //## FIN UPDATE REES####
-        // notify()->success('¡Se ha actualizado la información del contrato satisfactoriamente!');
+        // notify()->success('¡Se ha actualizado la información del contrato satisfactoriamente!')
 
         toast('¡Se ha actualizado la información del contrato satisfactoriamente!', 'success');
+
+        return view('contract_manager.contratos-katbol.edit');
     }
 
     /**
