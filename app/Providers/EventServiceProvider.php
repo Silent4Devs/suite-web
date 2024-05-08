@@ -247,9 +247,9 @@ class EventServiceProvider extends ServiceProvider
         DocumentoEvent::class => [
             DocumentoListener::class,
         ],
-        TimesheetEvent::class => [
-            TimesheetListener::class,
-        ],
+        // TimesheetEvent::class => [
+        //     TimesheetListener::class,
+        // ],
         CoursesEvent::class => [
             CoursesListener::class,
         ],
