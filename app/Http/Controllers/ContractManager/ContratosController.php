@@ -249,19 +249,24 @@ class ContratosController extends AppBaseController
         if (!Storage::exists('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/niveles servicio')) {
             Storage::makeDirectory('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/niveles servicio');
             Storage::copy('public/contratos/.gitignore', 'public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/niveles servicio');
+            Storage::setVisibility('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/niveles servicio', 'public');
         }
         if (!Storage::exists('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/entregables mensuales')) {
             Storage::makeDirectory('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/entregables mensuales');
             Storage::copy('public/contratos/.gitignore', 'public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/entregables mensuales');
+            Storage::setVisibility('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/entregables mensuales', 'public');
         }
         if (!Storage::exists('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/cierre contrato')) {
             Storage::makeDirectory('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/cierre contrato');
+            Storage::setVisibility('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/cierre contrato', 'public');
         }
         if (!Storage::exists('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/facturas/pdf')) {
             Storage::makeDirectory('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/facturas/pdf');
+            Storage::setVisibility('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/facturas/pdf', 'public');
         }
         if (!Storage::exists('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/facturas/xml')) {
             Storage::makeDirectory('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/facturas/xml');
+            Storage::setVisibility('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/facturas/xml', 'public');
         }
 
 
