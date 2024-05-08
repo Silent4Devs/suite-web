@@ -32,6 +32,7 @@ use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\Response;
 
+
 class ContratosController extends AppBaseController
 {
     /** @var ContratoRepository */
@@ -263,6 +264,13 @@ class ContratosController extends AppBaseController
         if (!Storage::exists('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/facturas/xml')) {
             Storage::makeDirectory('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/facturas/xml', 0777);
         }
+
+
+        // Ruta de la carpeta que quieres cambiar los permisos
+        $carpeta = public_path('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato);
+        // Cambiar los permisos recursivamente
+        File::chmod($carpeta, 0777, true);
+
 
         //############# GESTIÓN ARCHIVOS ##################
 
