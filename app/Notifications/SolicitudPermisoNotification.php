@@ -2,7 +2,6 @@
 
 namespace App\Notifications;
 
-use App\Models\SolicitudDayOff;
 use App\Models\SolicitudPermisoGoceSueldo;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;

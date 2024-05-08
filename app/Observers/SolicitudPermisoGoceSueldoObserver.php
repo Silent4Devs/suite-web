@@ -36,8 +36,6 @@ class SolicitudPermisoGoceSueldoObserver
         $this->forgetCache();
     }
 
-
-
     private function forgetCache()
     {
         Cache::forget('SolicitudPermisoGoceSueldo:solicitud_permiso_goce_sueldo_all');
