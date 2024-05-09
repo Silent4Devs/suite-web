@@ -69,7 +69,8 @@ class SolicitudVacacionesNotification extends Notification
     {
         return [
             'id' => $this->solicitud->id,
-            'fecha_inicio' => $this->solicitud->fechainicio,
+            'updated_at' => $this->solicitud->updated_at,
+            'deleted_at' => $this->solicitud->deleted_at,
             'time' => Carbon::now(),
             'type' => $this->tipo_consulta,
             'tabla' => $this->tabla,

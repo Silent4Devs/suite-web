@@ -168,7 +168,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
     {
         $empleado_add_proyecto = Empleado::find($empleado_añadido_id);
 
-        if (!$empleado_add_proyecto) {
+        if (! $empleado_add_proyecto) {
             return redirect()->route('admin.timesheet-proyecto-empleados', ['proyecto_id' => intval($this->proyecto_id)])
                 ->with('error', 'El registro fue eliminado');
         }
@@ -186,7 +186,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
                         'costo_hora' => $this->costo_hora,
                     ]
                 );
-                if (!$todosExt) {
+                if (! $todosExt) {
                     $this->resetInput();
                 }
             } else {

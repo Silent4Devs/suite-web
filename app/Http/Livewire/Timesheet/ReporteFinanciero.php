@@ -7,7 +7,6 @@ use App\Models\Empleado;
 use App\Models\TimesheetCliente;
 use App\Models\TimesheetHoras;
 use App\Models\TimesheetProyecto;
-use App\Models\TimesheetProyectoArea;
 use App\Models\TimesheetProyectoEmpleado;
 use App\Traits\ObtenerOrganizacion;
 use Livewire\Component;
@@ -15,12 +14,16 @@ use Livewire\Component;
 class ReporteFinanciero extends Component
 {
     public $selectedProjectId;
-    public $proyectos_select;
-    public $proyectos;
-    public $empleados = [];
-    public $areas = [];
-    use ObtenerOrganizacion;
 
+    public $proyectos_select;
+
+    public $proyectos;
+
+    public $empleados = [];
+
+    public $areas = [];
+
+    use ObtenerOrganizacion;
 
     public function render()
     {
@@ -54,7 +57,7 @@ class ReporteFinanciero extends Component
                             $hora->horas_jueves,
                             $hora->horas_viernes,
                             $hora->horas_sabado,
-                            $hora->horas_domingo
+                            $hora->horas_domingo,
                         ], 'is_numeric'));
                     }
                 }
@@ -64,7 +67,7 @@ class ReporteFinanciero extends Component
 
                 $empleado = Empleado::select('id', 'name')->find($emp_p->empleado_id);
                 $area = Area::select('id', 'area')->find($emp_p->area_id);
-                $proyecto = TimesheetProyecto::select('id', 'proyecto', 'estatus', 'cliente_id','identificador')->find($proyectoId);
+                $proyecto = TimesheetProyecto::select('id', 'proyecto', 'estatus', 'cliente_id', 'identificador')->find($proyectoId);
                 $cliente = TimesheetCliente::select('id', 'nombre')->find($proyecto->cliente_id);
 
                 $horasTotalesProyecto = $this->getHorasTotales($proyectoId);
@@ -126,7 +129,7 @@ class ReporteFinanciero extends Component
             $totalhoras += $horasTotales;
             $costo_por_hora_usuario = $emp_p->costo_hora ?? 0;
 
-            if (!$costo_por_hora_usuario) {
+            if (! $costo_por_hora_usuario) {
                 if (isset($emp_p->empleado->salario_base_mensual)) {
                     $costo_por_hora_usuario = ($emp_p->empleado->salario_base_mensual / 20) / 7;
                 } else {
@@ -142,7 +145,7 @@ class ReporteFinanciero extends Component
 
         return [
             'horasCosto' => $horasCosto,
-            'totalhoras' => $totalhoras
+            'totalhoras' => $totalhoras,
         ];
     }
 }

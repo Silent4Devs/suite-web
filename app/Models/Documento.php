@@ -59,6 +59,9 @@ class Documento extends Model implements Auditable
         'reviso_id',
         'aprobo_id',
         'responsable_id',
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     public function searchableAs()
