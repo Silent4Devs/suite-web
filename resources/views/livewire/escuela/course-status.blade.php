@@ -142,12 +142,12 @@
                                     <div>
                                         @if ($lesson->completed)
                                             @if ($current->id == $lesson->id)
-                                                <span class="text-primary">
+                                                <span style="color:green;">
                                                     <a class="cursor:pointer;"
                                                         wire:click="changeLesson({{ $lesson }})">{{ $lesson->name }}</a>
                                                 </span>
                                             @else
-                                                <span style="color:#D9D9D9;">
+                                                <span style="color:rgb(0, 179, 0);">
                                                     <a class="cursor:pointer;"
                                                         wire:click="changeLesson({{ $lesson }})">{{ $lesson->name }}</a>
                                                 </span>

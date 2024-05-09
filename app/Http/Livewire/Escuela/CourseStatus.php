@@ -145,7 +145,7 @@ class CourseStatus extends Component
 
     public function alertaEmergente()
     {
-        $this->alert('warning', 'Debe terminar la lección antes de continuar', [
+        $this->alert('warning', 'Es necesario terminar esta lección para poder seguir avanzando en tu curso', [
             'position' => 'center',
             'timer' => 3000,
             'toast' => false,
