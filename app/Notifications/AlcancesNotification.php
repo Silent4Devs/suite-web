@@ -69,7 +69,8 @@ class AlcancesNotification extends Notification
     {
         return [
             'id' => $this->alcances->id,
-            'fecha_inicio' => $this->alcances->fechainicio,
+            'updated_at' => $this->alcances->updated_at,
+            'deleted_at' => $this->alcances->deleted_at,
             'time' => Carbon::now(),
             'type' => $this->tipo_consulta,
             'tabla' => $this->tabla,

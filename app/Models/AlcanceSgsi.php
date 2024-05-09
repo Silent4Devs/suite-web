@@ -59,6 +59,9 @@ class AlcanceSgsi extends Model implements Auditable
         'id_reviso_alcance',
         'norma_id',
         'estatus',
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     public static function getAll()

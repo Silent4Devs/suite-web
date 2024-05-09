@@ -13,9 +13,9 @@
                     <div class="d-flex align-items-center justify-content-start">
                         <i class="pr-2 fab fa-discourse text-info"></i>
                         <p class="p-0 m-0">
-                            El {{ $last_unread_notification->data['slug'] }} con nombre
-                            {{ $last_unread_notification->data['nombre_curso'] != null ? $last_unread_notification->data['nombre_curso'] : 'N/A' }}
-                            ha sido actualizado
+                            El {{ $last_unread_notification->data['slug'] }} con fecha
+                            {{ $last_unread_notification->data['updated_at'] }} ha
+                            sido actualizado
                         </p>
                     </div>
                 @break
@@ -23,9 +23,9 @@
                     <div class="d-flex align-items-center justify-content-start">
                         <i class="pr-2 fab fa-discourse text-danger"></i>
                         <p class="p-0 m-0">
-                            El {{ $last_unread_notification->data['slug'] }} con nombre
-                            {{ $last_unread_notification->data['nombre_curso'] != null ? $last_unread_notification->data['nombre_curso'] : 'N/A' }}
-                            ha sido eliminado
+                            El {{ $last_unread_notification->data['slug'] }} con fecha
+                            {{ $last_unread_notification->data['deleted_at'] }} ha
+                            sido eliminado
                         </p>
                     </div>
                 @break

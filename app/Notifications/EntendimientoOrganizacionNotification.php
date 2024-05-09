@@ -69,7 +69,8 @@ class EntendimientoOrganizacionNotification extends Notification
     {
         return [
             'id' => $this->entendimiento->id,
-            'fecha_inicio' => $this->entendimiento->fechainicio,
+            'updated_at' => $this->entendimiento->updated_at,
+            'deleted_at' => $this->entendimiento->deleted_at,
             'time' => Carbon::now(),
             'type' => $this->tipo_consulta,
             'tabla' => $this->tabla,

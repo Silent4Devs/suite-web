@@ -26,6 +26,9 @@ class SolicitudPermisoGoceSueldo extends Model implements Auditable
         'autoriza',
         'comentarios_aprobador',
         'permiso_id',
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     public function permiso()
