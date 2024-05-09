@@ -31,11 +31,12 @@
 
     {{-- @include('admin.timesheet.complementos.cards') --}}
     @include('admin.timesheet.complementos.admin-aprob')
-    @livewire('timesheet.reporte-financiero')
     {{-- @include('admin.timesheet.complementos.blue-card-header') --}}
+
+    @livewire('timesheet.reporte-financiero')
 @endsection
 
-@section('scripts')
+{{-- @section('scripts')
     @parent
     <script>
         $(function() {
@@ -59,7 +60,6 @@
                         autoWidth: true
                     },
                     customizeData: function(data) {
-                        let logo_actual = @json($proyectos);
 
                         for (var i = 0; i < data.body.length; i++) {
                             var columnaD = data.body[i][3];
@@ -199,7 +199,7 @@
                 render: true,
             };
 
-            let table = $('#datatable_timesheet_proyectos_financiero').DataTable(dtOverrideGlobals);
+            let table = $('#datatabletimesheetproyectosfinancieros').DataTable(dtOverrideGlobals);
         });
     </script>
-@endsection
+@endsection --}}
