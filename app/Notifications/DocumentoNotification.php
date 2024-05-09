@@ -69,8 +69,6 @@ class DocumentoNotification extends Notification
     {
         return [
             'id' => $this->documento->id,
-            'updated_at' => $this->documento->updated_at,
-            'deleted_at' => $this->documento->deleted_at,
             'time' => Carbon::now(),
             'type' => $this->tipo_consulta,
             'tabla' => $this->tabla,
