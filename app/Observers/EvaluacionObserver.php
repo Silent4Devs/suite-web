@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Events\EvaluacionEvent;
 use App\Models\RH\Evaluacion;
 use Illuminate\Support\Facades\Cache;
 
@@ -15,6 +16,7 @@ class EvaluacionObserver
      */
     public function created(Evaluacion $evaluacion)
     {
+        event(new EvaluacionEvent($evaluacion, 'create', 'ev360_evaluaciones', 'Evaluación'));
         $this->forgetCache();
     }
 
@@ -26,6 +28,7 @@ class EvaluacionObserver
      */
     public function updated(Evaluacion $evaluacion)
     {
+        event(new EvaluacionEvent($evaluacion, 'update', 'ev360_evaluaciones', 'Evaluación'));
         $this->forgetCache();
     }
 
@@ -37,30 +40,10 @@ class EvaluacionObserver
      */
     public function deleted(Evaluacion $evaluacion)
     {
+        event(new EvaluacionEvent($evaluacion, 'delete', 'ev360_evaluaciones', 'Evaluación'));
         $this->forgetCache();
     }
 
-    /**
-     * Handle the Evaluacion "restored" event.
-     *
-     * @param  \App\Models\Evaluacion  $evaluacion
-     * @return void
-     */
-    public function restored(Evaluacion $evaluacion)
-    {
-        $this->forgetCache();
-    }
-
-    /**
-     * Handle the Evaluacion "force deleted" event.
-     *
-     * @param  \App\Models\Evaluacion  $evaluacion
-     * @return void
-     */
-    public function forceDeleted(Evaluacion $evaluacion)
-    {
-        $this->forgetCache();
-    }
 
     private function forgetCache()
     {
