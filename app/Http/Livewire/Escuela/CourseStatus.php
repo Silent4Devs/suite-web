@@ -61,7 +61,7 @@ class CourseStatus extends Component
     //cambiamos la lección actual
     public function changeLesson(Lesson $lesson, $atras = null)
     {
-        if ($atras == 'previous') {
+        if ($atras == 'previous' || $this->current->completed) {
             $this->current = $lesson;
         }
 
@@ -70,7 +70,7 @@ class CourseStatus extends Component
             return;
         }
 
-        $this->current = $lesson;
+        //$this->current = $lesson;
     }
 
     public function completed()
