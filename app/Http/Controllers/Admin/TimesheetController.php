@@ -1197,7 +1197,7 @@ class TimesheetController extends Controller
 
         //dd($proyectos[20]);
 
-        return view('admin.timesheet.reportes.reportes-financiero', compact('proyectos', 'logo_actual', 'empresa_actual'));
+        return view('admin.timesheet.reportes.reportes-financiero', compact('logo_actual', 'empresa_actual'));
     }
 
     public function obtenerTareas(Request $request)
