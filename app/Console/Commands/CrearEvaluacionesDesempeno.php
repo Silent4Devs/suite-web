@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Mail\EvaluacionesDesempenoFaltaCompetencias;
+use App\Mail\EvaluacionesDesempenoFaltaObjetivos;
 use App\Models\EvaluacionDesempeno;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
@@ -42,59 +43,72 @@ class CrearEvaluacionesDesempeno extends Command
     public function handle()
     {
         $hoy = Carbon::today();
-        //Correos de lista Informativa
         $correodestinatario = "victor.rodriguez@silent4business.com";
 
         $evaluaciones = EvaluacionDesempeno::getAll()->where('estatus', '=', 3);
         foreach ($evaluaciones as $evaluacion) {
-            $crearCuestionario = true;
-            $validacionCompetencias = true;
-
             foreach ($evaluacion->periodos as $periodo) {
-                $puestosSinCompetencias = [];
                 if ($periodo->habilitado && !$periodo->finalizado) {
                     $periodoInicio = Carbon::parse($periodo->fecha_inicio);
                     $periodoAnteriorInicio = $periodoInicio->copy()->subWeeks(2);
 
-                    if ($evaluacion->activar_objetivos && $evaluacion->activar_competencias) {
-                        if ($hoy->between($periodoAnteriorInicio, $periodoInicio)) {
-                            foreach ($evaluacion->evaluados as $evaluado) {
-                                if ($evaluado->empleado->competencias_asignadas > 0) {
-                                    $validacionCompetencias = false;
-                                    $puestosSinCompetencias[] = $evaluado->empleado->puesto;
-                                }
-                            }
-                            if (!$validacionCompetencias) {
-                                $email = new EvaluacionesDesempenoFaltaCompetencias($evaluacion->nombre, $periodo->nombre_evaluacion, $puestosSinCompetencias);
+                    if ($hoy->between($periodoAnteriorInicio, $periodoInicio)) {
+                        $crearCuestionario = true;
 
-                                Mail::to(removeUnicodeCharacters($correodestinatario))->queue($email);
+                        $puestosSinCompetencias = [];
+                        $evaluadoresProbObjetivos = [];
 
-                                $crearCuestionario = false;
-                            }
-                        }
-                    } elseif ($evaluacion->activar_objetivos && !$evaluacion->activar_competencias) {
-                        if ($hoy->between($periodoAnteriorInicio, $periodoInicio)) {
-                        }
-                    } elseif (!$evaluacion->activar_objetivos && $evaluacion->activar_competencias) {
-                        if ($hoy->between($periodoAnteriorInicio, $periodoInicio)) {
-                            foreach ($evaluacion->evaluados as $evaluado) {
+                        foreach ($evaluacion->evaluados as $evaluado) {
+                            if ($evaluacion->activar_objetivos && $evaluacion->activar_competencias) {
                                 if ($evaluado->empleado->competencias_asignadas == 0) {
-                                    $validacionCompetencias = false;
+                                    $puestosSinCompetencias[] = $evaluado->empleado->puesto;
+                                }
+
+                                if ($evaluado->empleado->objetivos_asignados["cuenta"] == 0 || $evaluado->empleado->objetivos_asignados["pendientes"] == true) {
+                                    $evaluadoresProbObjetivos[] = $evaluado->empleado->name;
+                                }
+                            } elseif ($evaluacion->activar_objetivos && !$evaluacion->activar_competencias) {
+                                if ($evaluado->empleado->objetivos_asignados["cuenta"] == 0 || $evaluado->empleado->objetivos_asignados["pendientes"] == true) {
+                                    $evaluadoresProbObjetivos[] = $evaluado->empleado->name;
+                                }
+                            } elseif (!$evaluacion->activar_objetivos && $evaluacion->activar_competencias) {
+                                if ($evaluado->empleado->competencias_asignadas == 0) {
                                     $puestosSinCompetencias[] = $evaluado->empleado->puesto;
                                 }
                             }
-                            if (!$validacionCompetencias) {
-                                $email = new EvaluacionesDesempenoFaltaCompetencias($evaluacion->nombre, $periodo->nombre_evaluacion, $puestosSinCompetencias);
+                        }
 
-                                Mail::to(removeUnicodeCharacters($correodestinatario))->queue($email);
+                        if ($evaluacion->activar_objetivos && $evaluacion->activar_competencias) {
+                            if (!empty($puestosSinCompetencias)) {
+                                $emailCompetencia = new EvaluacionesDesempenoFaltaCompetencias($evaluacion->nombre, $periodo->nombre_evaluacion, $puestosSinCompetencias);
+                                Mail::to(removeUnicodeCharacters($correodestinatario))->queue($emailCompetencia);
                                 $crearCuestionario = false;
                             }
+
+                            if (!empty($evaluadoresProbObjetivos)) {
+                                $emailObjetivos = new EvaluacionesDesempenoFaltaObjetivos($evaluacion->nombre, $periodo->nombre_evaluacion, $evaluadoresProbObjetivos);
+                                Mail::to(removeUnicodeCharacters($correodestinatario))->queue($emailObjetivos);
+                                $crearCuestionario = false;
+                            }
+                        } elseif ($evaluacion->activar_objetivos && !$evaluacion->activar_competencias) {
+                            if (!empty($evaluadoresProbObjetivos)) {
+                                $emailObjetivos = new EvaluacionesDesempenoFaltaObjetivos($evaluacion->nombre, $periodo->nombre_evaluacion, $evaluadoresProbObjetivos);
+                                Mail::to(removeUnicodeCharacters($correodestinatario))->queue($emailObjetivos);
+                                $crearCuestionario = false;
+                            }
+                        } elseif (!$evaluacion->activar_objetivos && $evaluacion->activar_competencias) {
+                            if (!empty($puestosSinCompetencias)) {
+                                $emailCompetencias = new EvaluacionesDesempenoFaltaCompetencias($evaluacion->nombre, $periodo->nombre_evaluacion, $puestosSinCompetencias);
+                                Mail::to(removeUnicodeCharacters($correodestinatario))->queue($emailCompetencias);
+                                $crearCuestionario = false;
+                            }
+                        }
+
+                        if ($crearCuestionario) {
+                            //FuncionCrearCuestionario
                         }
                     }
                 }
-            }
-            if ($crearCuestionario) {
-                //FuncionCrearCuestionario
             }
         }
     }

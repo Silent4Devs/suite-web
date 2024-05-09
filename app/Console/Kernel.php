@@ -44,11 +44,12 @@ class Kernel extends ConsoleKernel
             ->onOneServer()
             ->sentryMonitor();
         $schedule->command(CrearEvaluacionesDesempeno::class)
-            ->timezone('America/Mexico_City')
-            ->dailyAt('09:00')
-            ->withoutOverlapping()
-            ->onOneServer()
-            ->sentryMonitor();
+            ->timezone('America/Mexico_City');
+
+        // ->dailyAt('09:00')
+        // ->withoutOverlapping()
+        // ->onOneServer()
+        // ->sentryMonitor();
         $schedule->command('snapshot:create dump' . date('Y-m-d-H'))
             ->timezone('America/Mexico_City')
             ->days([2, 5])
