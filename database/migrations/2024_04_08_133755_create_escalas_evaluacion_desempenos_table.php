@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('evaluacion_desempeno_id');
             $table->string('parametro');
-            // $table->float('valor');
+            $table->float('valor');
             $table->string('color');
             // $table->longText('descripcion');
 

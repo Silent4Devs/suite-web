@@ -9,7 +9,8 @@
         }
     </style>
     {{-- A good traveler has no fixed plans and is not intent upon arriving. --}}
-    <h5 class="titulo_general_funcion"> Evaluación Dashboard: {{ $evaluacion->nombre }}</h5>
+    <h5 class="titulo_general_funcion"> Evaluación Dashboard: {{ $evaluacion->nombre }} <br> Area: {{ $area->area }}
+    </h5>
 
     <p>
         <small>
@@ -35,128 +36,8 @@
             </a>
         </div>
         <div class="col-md-3">
-            <!-- Hidden button -->
-            <button id="modalOpener" type="button" class="btn btn-primary d-none" data-toggle="modal"
-                data-target="#modificacionPeriodos"></button>
-
-            <!-- Div with click event -->
-            <div class="w-100 p-3 text-center text-white rounded-lg" style="background-color: #A650DF; cursor: pointer;"
-                onclick="document.getElementById('modalOpener').click();">
+            <div class="w-100 p-3 text-center text-white rounded-lg" style="background-color: #A650DF;">
                 Modificar periodo de evaluación
-            </div>
-
-            <!-- Modal -->
-            <div wire:ignore class="modal fade" id="modificacionPeriodos" data-backdrop="static" data-keyboard="false"
-                tabindex="-1" aria-labelledby="modificacionPeriodosLabel" aria-hidden="true">
-                <div class="modal-dialog modal-xl">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <div>
-                                <h5 class="modal-title" id="modificacionPeriodosLabel">Modal title</h5>
-                            </div>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div>
-                                <table class="table">
-                                    <tbody>
-                                        @foreach ($evaluacion->periodos as $index => $ap)
-                                            @if ($ap->finalizado)
-                                                <tr>
-                                                    <td>
-                                                        <div class="form-group anima-focus">
-                                                            <input type="text" name="nombre_evaluacion[]" disabled
-                                                                id="nombre_evaluacion_{{ $index }}"
-                                                                wire:model="array_periodos.{{ $index }}.nombre_evaluacion"
-                                                                class="form-control"
-                                                                value="{{ $ap->nombre_evaluacion }}">
-                                                            <label for="">Evaluación*</label>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="form-group anima-focus">
-                                                            <input type="date" placeholder="" disabled
-                                                                wire:model="array_periodos.{{ $index }}.fecha_inicio"
-                                                                class="form-control" value="{{ $ap->fecha_inicio }}">
-                                                            <label for="">Inicio de la evaluación</label>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="form-group anima-focus">
-                                                            <input type="date" placeholder="" disabled
-                                                                wire:model="array_periodos.{{ $index }}.fecha_fin"
-                                                                class="form-control" value="{{ $ap->fecha_fin }}">
-                                                            <label for="">Fin de la evaluación</label>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="form-group">
-                                                            <input type="checkbox" class="form-control" disabled
-                                                                wire:model="array_periodos.{{ $index }}.habilitado">
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            @else
-                                                <tr>
-                                                    <td>
-                                                        <div class="form-group anima-focus">
-                                                            <input type="text" name="nombre_evaluacion[]"
-                                                                id="nombre_evaluacion_{{ $index }}"
-                                                                wire:model="array_periodos.{{ $index }}.nombre_evaluacion"
-                                                                class="form-control"
-                                                                value="{{ $ap->nombre_evaluacion }}">
-                                                            <label for="">Evaluación*</label>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        @if ($dia_actual >= $ap->fecha_inicio)
-                                                            <div class="form-group anima-focus">
-                                                                <input type="date" placeholder=""
-                                                                    wire:model="array_periodos.{{ $index }}.fecha_inicio"
-                                                                    class="form-control"
-                                                                    value="{{ $ap->fecha_inicio }}" disabled>
-                                                                <label for="">Inicio de la evaluación</label>
-                                                            </div>
-                                                        @else
-                                                            <div class="form-group anima-focus">
-                                                                <input type="date" placeholder=""
-                                                                    wire:model="array_periodos.{{ $index }}.fecha_inicio"
-                                                                    class="form-control"
-                                                                    value="{{ $ap->fecha_inicio }}">
-                                                                <label for="">Inicio de la evaluación</label>
-                                                            </div>
-                                                        @endif
-                                                    </td>
-                                                    <td>
-                                                        <div class="form-group anima-focus">
-                                                            <input type="date" placeholder=""
-                                                                wire:model="array_periodos.{{ $index }}.fecha_fin"
-                                                                class="form-control" value="{{ $ap->fecha_fin }}">
-                                                            <label for="">Fin de la evaluación</label>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="form-group">
-                                                            <input type="checkbox" class="form-control"
-                                                                wire:model="array_periodos.{{ $index }}.habilitado">
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            @endif
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                            <button wire:click.prevent="modificarPeriodos" type="button" class="btn btn-primary"
-                                data-dismiss="modal">Modificar</button>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
         <div class="col-md-3">
@@ -346,31 +227,6 @@
         </div> --}}
     </div>
 
-    @if ($evaluacion->activar_objetivos)
-        <div class="card card-body mt-3">
-            <h5>Resultado por área</h5>
-            <div class="row">
-                <div class="col-12">
-                    <div id="contenedor-principal" style="height:600px;">
-                        <canvas id="resultadosxarea"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="card card-body" style="background-color: #BF9CC4;">
-            <div class="form-group">
-                <select name="area_select" id="area_select" wire:model="area_select" class="form-control"
-                    style="background-color: #fff;">
-                    <option value="" selected disabled>Área</option>
-                    @foreach ($opciones_area_select as $key => $opas)
-                        <option value="{{ $opas['id'] }}">{{ $opas['area'] }}</option>
-                    @endforeach
-                </select>
-            </div>
-        </div>
-    @endif
-
     <div class="row mt-4" style="font-size: 15px; color: #9E50AA;">
         <div class="col-md-4">
             <div class="p-3 rounded-lg" style="background-color: #fff; box-shadow: 0px 1px 4px #0000000F;">
@@ -480,14 +336,6 @@
 
         <div class="row">
             <div class="col-md-3 form-group">
-                <select name="area_tabla" id="area_tabla" wire:model.defer="select_area_tabla" class="form-control">
-                    <option value="todos">Área</option>
-                    @foreach ($opciones_area_select as $key => $opas)
-                        <option value="{{ $opas['id'] }}">{{ $opas['area'] }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="col-md-3 form-group">
                 <select name="colaborador_tabla" id="colaborador_tabla" wire:model.defer="select_colaborador_tabla"
                     class="form-control">
                     <option value="todos">Colaborador</option>
@@ -579,23 +427,9 @@
                     <table id="" class="table table-bordered w-100 datatable">
                         <thead class="thead-dark">
                             <tr>
-                                @if ($evaluacion->activar_competencias && $evaluacion->activar_objetivos)
-                                    <th colspan="9">Resultados</th>
-                                @else
-                                    <th colspan="8">Resultados</th>
-                                @endif
-                                @if ($evaluacion->activar_competencias)
-                                    <th colspan="{{ $evaluacion->periodos->count() }}">Competencias</th>
-                                @endif
-                                @if ($evaluacion->activar_objetivos)
-                                    <th colspan="{{ $evaluacion->periodos->count() }}">Objetivos</th>
-                                @endif
-                            </tr>
-                            <tr>
                                 <th></th>
                                 <th>Nombre</th>
-                                <th>Puesto</th>
-                                <th>Área</th>
+                                <th>Puesto y Área</th>
                                 <th>Evaluadores</th>
                                 @if ($evaluacion->activar_competencias)
                                     <th>Competencias</th>
@@ -605,35 +439,22 @@
                                 @endif
                                 <th>Calificación</th>
                                 <th>Nivel</th>
+
                                 @if ($evaluacion->activar_competencias)
-                                    @foreach ($array_periodos as $key_periodo => $periodo)
-                                        <th>{{ $periodo['nombre_evaluacion'] }}
-                                        </th>
-                                    @endforeach
+                                    <th>Competencias</th>
                                 @endif
                                 @if ($evaluacion->activar_objetivos)
-                                    @foreach ($array_periodos as $key_periodo => $periodo)
-                                        <th>{{ $periodo['nombre_evaluacion'] }}
-                                        </th>
-                                    @endforeach
+                                    <th>Objetivos</th>
                                 @endif
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($evaluados_tabla->evaluados as $evaluado)
                                 <tr>
-                                    <td>
-                                        <a
-                                            href="{{ route('admin.rh.evaluaciones-desempeno.dashboard-evaluado', [$evaluacion->id, $evaluado->id]) }}">
-                                            <i class="material-icons-outlined">
-                                                visibility
-                                            </i>
-                                        </a>
-                                    </td>
+                                    <td></td>
                                     <td>{{ $evaluado->empleado->name }}</td>
-                                    <td>{{ $evaluado->empleado->puesto }}
+                                    <td>{{ $evaluado->empleado->puestoRelacionado->puesto }}/{{ $evaluado->empleado->area->area }}
                                     </td>
-                                    <td>{{ $evaluado->empleado->area->area }}</td>
                                     <td>
                                         <ul>
                                             @foreach ($this->evaluadores_evaluado[$evaluado->id] as $evaluador)
@@ -641,36 +462,19 @@
                                             @endforeach
                                         </ul>
                                     </td>
-                                    <td>{{ $totales_evaluado[$periodo_seleccionado][$evaluado->id]['competencias'] }}
-                                    </td>
-                                    <td>{{ $totales_evaluado[$periodo_seleccionado][$evaluado->id]['objetivos'] }}
-                                    </td>
+                                    @if ($evaluacion->activar_competencias)
+                                        <td>{{ $totales_evaluado[$periodo_seleccionado][$evaluado->id]['competencias'] }}
+                                        </td>
+                                    @endif
+                                    @if ($evaluacion->activar_objetivos)
+                                        <td>{{ $totales_evaluado[$periodo_seleccionado][$evaluado->id]['objetivos'] }}
+                                        </td>
+                                    @endif
                                     <td>{{ $totales_evaluado[$periodo_seleccionado][$evaluado->id]['final'] }}
                                     </td>
                                     <td>Nivel</td>
                                     @if ($evaluacion->activar_competencias)
-                                        @foreach ($array_periodos as $key_periodo => $periodo)
-                                            <td>
-                                                <table>
-                                                    @php
-                                                        $calif_total_competencias = $evaluado->calificacionesCompetenciasEvaluadoPeriodo(
-                                                            $periodo['id_periodo'],
-                                                        )['calif_total'];
-                                                    @endphp
-                                                    @foreach ($calif_total_competencias as $calif_comp)
-                                                        <tr>
-                                                            <td>{{ $calif_comp['competencia'] }}
-                                                            </td>
-                                                            <td>
-                                                                {{ $calif_comp['calificacion_total'] }}
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
-                                                </table>
-                                            </td>
-                                        @endforeach
-                                        {{-- Version Alternativa, podria usarse --}}
-                                        {{-- @php
+                                        @php
                                             $calif_total_competencias = $evaluado->calificacionesCompetenciasEvaluadoPeriodo(
                                                 $this->array_periodos[$this->periodo_seleccionado]['id_periodo'],
                                             )['calif_total'];
@@ -693,31 +497,10 @@
                                                     </tr>
                                                 </tbody>
                                             </table>
-                                        </td> --}}
+                                        </td>
                                     @endif
                                     @if ($evaluacion->activar_objetivos)
-                                        @foreach ($array_periodos as $key_periodo => $periodo)
-                                            <td>
-                                                <table>
-                                                    @php
-                                                        $calif_total_competencias = $evaluado->calificacionesObjetivosEvaluadoPeriodo(
-                                                            $periodo['id_periodo'],
-                                                        )['calif_total'];
-                                                    @endphp
-                                                    @foreach ($calif_total_competencias as $calif_comp)
-                                                        <tr>
-                                                            <td>{{ $calif_comp['nombre'] }}
-                                                            </td>
-                                                            <td>
-                                                                {{ $calif_comp['calificacion_total'] }}
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
-                                                </table>
-                                            </td>
-                                        @endforeach
-                                        {{-- Version Alternativa, podria usarse --}}
-                                        {{-- @php
+                                        @php
                                             $calif_total_objetivos = $evaluado->calificacionesObjetivosEvaluadoPeriodo(
                                                 $this->array_periodos[$this->periodo_seleccionado]['id_periodo'],
                                             )['calif_total'];
@@ -740,7 +523,7 @@
                                                     </tr>
                                                 </tbody>
                                             </table>
-                                        </td> --}}
+                                        </td>
                                     @endif
                                 </tr>
                             @endforeach
@@ -754,69 +537,6 @@
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
         @if ($evaluacion->activar_objetivos)
-            {{-- Codigo primera vez que carga --}}
-            <script>
-                document.addEventListener('livewire:load', function() {
-
-                    const areas = @json($resArea['nombres'][$periodo_seleccionado]);
-                    const data = @json($resArea['resultados'][$periodo_seleccionado]);
-
-                    var ctx = document.getElementById('resultadosxarea').getContext('2d');
-                    chartRA = new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-                            labels: areas,
-                            datasets: [{
-                                label: 'Porcentaje de cumplimiento',
-                                data: data,
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                            scales: {
-                                y: {
-                                    beginAtZero: true
-                                }
-                            }
-                        }
-                    });
-
-                });
-            </script>
-            {{-- Codigo cambio de filtros --}}
-            <script>
-                document.addEventListener('livewire:load', function() {
-                    Livewire.on('objetivosArea', (objArea) => {
-
-                        document.getElementById('resultadosxarea').remove();
-                        let canvas = document.createElement("canvas");
-                        canvas.id = "resultadosxarea";
-                        canvas.style.width = '100%';
-                        canvas.style.height = '100%';
-                        document.getElementById("contenedor-principal").appendChild(canvas);
-
-                        let grafica_objetivos_area = new Chart(document.getElementById('resultadosxarea'), {
-                            type: 'bar',
-                            data: {
-                                labels: objArea.labels,
-                                datasets: [{
-                                    label: 'Porcentaje de cumplimiento',
-                                    data: objArea.data,
-                                    borderWidth: 1
-                                }]
-                            },
-                            options: {
-                                scales: {
-                                    y: {
-                                        beginAtZero: true
-                                    }
-                                }
-                            }
-                        });
-                    });
-                });
-            </script>
-
             <script>
                 document.addEventListener('livewire:load', function() {
 

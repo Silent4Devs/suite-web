@@ -16,6 +16,12 @@ class CuestionarioEvaluacionDesempenoCompetencias extends Component
     public $evaluador;
     public $id_evaluacion;
     public $id_evaluado;
+    public $id_periodo;
+
+    public $autoevaluacion = false;
+
+    public $periodo_seleccionado = 0;
+    public $array_periodos;
 
     //Traer datos de la evaluación
     public $evaluacion;
@@ -29,41 +35,57 @@ class CuestionarioEvaluacionDesempenoCompetencias extends Component
     public $escalas;
     public $conducta;
 
-    public function mount($id_evaluacion, $id_evaluado)
+    public $porcentajeCalificado = 0;
+
+    public function mount($id_evaluacion, $id_evaluado, $id_periodo)
     {
         $this->evaluador = User::getCurrentUser()->empleado;
 
         $this->id_evaluacion = $id_evaluacion;
         $this->id_evaluado = $id_evaluado;
+        $this->$id_periodo = $id_periodo;
+
+        $this->evaluacion = EvaluacionDesempeno::find($this->id_evaluacion);
+        $this->evaluado = $this->evaluacion->evaluados->find($this->id_evaluado);
+
+        // $this->cuestionarioSecciones();
+        if ($this->evaluacion->activar_competencias == true) {
+            $this->buscarCompetencias();
+        }
+
+        if ($this->evaluado->empleado->id == $this->evaluador->id) {
+            $this->autoevaluacion = true;
+        }
+
+        $this->progresoEvaluacion();
     }
 
     public function render()
     {
-        $this->evaluacion = EvaluacionDesempeno::find($this->id_evaluacion);
-        $this->evaluado = $this->evaluacion->evaluados->find($this->id_evaluado);
-        if ($this->evaluacion->activar_competencias == true) {
-
-            $this->buscarCompetencias();
-        }
-
         return view('livewire.cuestionario-evaluacion-desempeno-competencias');
     }
 
     public function buscarCompetencias()
     {
         $this->validacion_competencias_evaluador = false;
-        foreach ($this->evaluado->evaluadoresCompetencias as $key => $evlr) {
-            if ($evlr->evaluador_desempeno_id == $this->evaluador->id) {
-                $this->validacion_competencias_evaluador = true;
 
-                $this->competencias_evaluado = $evlr->preguntasCuestionario->sortBy('id');
+        $busqueda_evaluador = $this->evaluado->evaluadoresCompetencias($this->id_periodo)->where('evaluador_desempeno_id', $this->evaluador->id)->first();
+        $busqueda_autoevaluador = $this->evaluado->evaluadoresCompetencias($this->id_periodo)->where('evaluador_desempeno_id', $this->id_evaluado->evaluado_desempeno_id)->first();
+
+        if ($busqueda_evaluador || $busqueda_autoevaluador) {
+            $this->validacion_competencias_evaluador = true;
+
+            if ($busqueda_evaluador) {
+                $this->competencias_evaluado = $busqueda_evaluador->preguntasCuestionario->where('periodo_id', $this->id_periodo)->sortBy('id');
             }
 
-            if ($evlr->evaluador_desempeno_id == $this->id_evaluado->evaluado_desempeno_id) {
-                $this->competencias_autoevaluado = $evlr->preguntasCuestionario->sortBy('id');
+            if ($busqueda_autoevaluador) {
+                $this->competencias_autoevaluado = $busqueda_autoevaluador->preguntasCuestionario->where('periodo_id', $this->id_periodo)->sortBy('id');
             }
         }
     }
+
+
 
     public function evaluarCompetencia($id_competencia, $valor)
     {
@@ -75,11 +97,19 @@ class CuestionarioEvaluacionDesempenoCompetencias extends Component
             ]);
 
             $this->buscarCompetencias();
+            $this->progresoEvaluacion();
             $this->alertaGuardadoCorrecto();
         } catch (\Throwable $th) {
             $this->buscarCompetencias();
             $this->alertaGuardadoIncorrecto();
         }
+    }
+
+    public function progresoEvaluacion()
+    {
+        $nPreguntas = $this->competencias_evaluado->count();
+        $contestadas = $this->competencias_evaluado->where('estatus_calificado', true)->count();
+        $this->porcentajeCalificado = round((($contestadas / $nPreguntas) * 100), 2);
     }
 
     public function alertaGuardadoCorrecto()

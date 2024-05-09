@@ -33,14 +33,14 @@
                     Define las escalas de medición y asigna su Valor y Nombre
                 </p>
                 <div class="form-row">
-                    {{-- <div class="col-1">
+                    <div class="col-1">
                         <div class="anima-focus mb-3 ">
                             <input type="number" id="valor_estatus_1" name="valor_estatus_1"
                                 wire:model.defer="valor_estatus_1" class="form-control" placeholder=""
                                 min="{{ $minimo }}" max="{{ $maximo }}" required>
                             <label for="valor_estatus_1">Valor<sup>*</sup></label>
                         </div>
-                    </div> --}}
+                    </div>
                     <div class="col-4">
                         <div class="anima-focus mb-3 ">
                             <input type="text" id="estatus_1" name="estatus_1" wire:model.defer="estatus_1"
@@ -60,14 +60,14 @@
             </div>
             <div class="col-12">
                 <div class="form-row">
-                    {{-- <div class="col-1">
+                    <div class="col-1">
                         <div class="anima-focus mb-3 ">
                             <input type="number" id="valor_estatus_2" name="valor_estatus_2"
                                 wire:model.defer="valor_estatus_2" class="form-control" placeholder=""
                                 min="{{ $minimo }}" max="{{ $maximo }}" required>
                             <label for="valor_estatus_2">Valor <sup>*</sup></label>
                         </div>
-                    </div> --}}
+                    </div>
                     <div class="col-4">
                         <div class="anima-focus mb-3 ">
                             <input type="text" id="estatus_2" name="estatus_2" wire:model.defer="estatus_2"
@@ -88,14 +88,14 @@
             @foreach ($parametros as $key => $p)
                 <div class="col-12">
                     <div class="form-row">
-                        {{-- <div class="col-1">
+                        <div class="col-1">
                             <div class="anima-focus mb-3 ">
                                 <input type="number" id="valor_estatus_arreglo_{{ $key }}"
                                     name="valor_estatus_arreglo_{{ $key }}" class="form-control" placeholder=""
-                                    min="{{ $minimo }}" max="{{ $maximo }}">
+                                    {{-- min="{{ $minimo }}" max="{{ $maximo }}" --}} wire:model="parametros.{{ $key }}.valor">
                                 <label for="valor_estatus_arreglo_{{ $key }}">Valor</label>
                             </div>
-                        </div> --}}
+                        </div>
                         <div class="col-4">
                             <div class="anima-focus mb-3 ">
                                 <input type="text" id="estatus_arreglo_{{ $key }}"
@@ -138,7 +138,8 @@
                 <div class="col-6">
                 </div>
                 <div class="col-3">
-                    <a href="{{ route('admin.rangos.index') }}" class="btn btn-outline-primary btn-block">Cancelar</a>
+                    <a href="{{ route('admin.rangos.index') }}"
+                        class="btn btn-outline-primary btn-block">Cancelar</a>
                 </div>
                 <div class="col-3">
                     <button class="btn btn-primary btn-block" type="submit">Generar Escalas</button>

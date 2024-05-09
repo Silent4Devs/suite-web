@@ -28,13 +28,14 @@ class EscalasObjetivosDesempeno extends Model
         'id_objetivo_desempeno',
         'condicion',
         'valor',
-        'parametro_id',
+        'parametro',
+        'color',
     ];
 
-    public function parametro()
-    {
-        return $this->belongsTo(EscalasMedicionObjetivos::class, 'parametro_id', 'id');
-    }
+    // public function parametro()
+    // {
+    //     return $this->belongsTo(EscalasMedicionObjetivos::class, 'parametro_id', 'id');
+    // }
 
     public function getCondicionPalabraAttribute()
     {

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Area;
 use App\Models\Empleado;
 use App\Models\EvaluacionDesempeno;
+use App\Models\Organizacion;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -25,19 +26,27 @@ class EvaluacionesDesempenoController extends Controller
         return view('admin.recursos-humanos.evaluaciones-desempeno.index', compact('evaluaciones'));
     }
 
-    public function dashboardEvaluacion($id_evaluacion)
-    {
-        return view('admin.recursos-humanos.evaluaciones-desempeno.dashboard-evaluacion', compact('id_evaluacion'));
-    }
-
     public function dashboardGeneral()
     {
         return view('admin.recursos-humanos.evaluaciones-desempeno.dashboard-general');
     }
 
-    public function dashboardArea()
+    public function dashboardEvaluacion($id_evaluacion)
     {
-        return view('admin.recursos-humanos.evaluaciones-desempeno.dashboard-area');
+        EvaluacionDesempeno::findOrFail($id_evaluacion);
+        return view('admin.recursos-humanos.evaluaciones-desempeno.dashboard-evaluacion', compact('id_evaluacion'));
+    }
+
+    public function dashboardArea($id_evaluacion, $id_area)
+    {
+        EvaluacionDesempeno::findOrFail($id_evaluacion);
+        return view('admin.recursos-humanos.evaluaciones-desempeno.dashboard-area', compact('id_evaluacion', 'id_area'));
+    }
+
+    public function dashboardEvaluado($id_evaluacion, $id_evaluado)
+    {
+        EvaluacionDesempeno::findOrFail($id_evaluacion);
+        return view('admin.recursos-humanos.evaluaciones-desempeno.dashboard-evaluado', compact('id_evaluacion', 'id_evaluado'));
     }
 
     public function dashboardGlobal()
@@ -58,7 +67,7 @@ class EvaluacionesDesempenoController extends Controller
         return view('admin.recursos-humanos.evaluaciones-desempeno.create-evaluacion', compact('areas', 'empleados'));
     }
 
-    public function cuestionarioEvaluacionDesempeno($evaluacion, $evaluado)
+    public function cuestionarioEvaluacionDesempeno($evaluacion, $evaluado, $periodo)
     {
         $currentUser = User::getCurrentUser()->empleado;
 
@@ -69,19 +78,22 @@ class EvaluacionesDesempenoController extends Controller
             return redirect()->route('admin.inicio-Usuario.index');
         }
 
-        $evaluadoresObjetivos = $evaluado->evaluadoresObjetivos()->pluck('evaluador_desempeno_id')->toArray();
-        $evaluadoresCompetencias = $evaluado->evaluadoresCompetencias()->pluck('evaluador_desempeno_id')->toArray();
+        $evaluadoresObjetivos = $evaluado->evaluadoresObjetivos($periodo)->pluck('evaluador_desempeno_id')->toArray();
+        $evaluadoresCompetencias = $evaluado->evaluadoresCompetencias($periodo)->pluck('evaluador_desempeno_id')->toArray();
+        $acceso_objetivos = in_array($currentUser->id, $evaluadoresObjetivos);
+        $acceso_competencias = in_array($currentUser->id, $evaluadoresCompetencias);
 
-        if (!in_array($currentUser->id, $evaluadoresObjetivos) && !in_array($currentUser->id, $evaluadoresCompetencias)) {
+        if (!$acceso_objetivos && !$acceso_competencias) {
             return redirect()->route('admin.inicio-Usuario.index');
         }
-        // dd($evaluacion, $evaluado);
-        return view('admin.recursos-humanos.evaluaciones-desempeno.cuestionario', compact('evaluacion', 'evaluado'));
-    }
 
-    public function dashboardPersonal()
-    {
-        return view('admin.recursos-humanos.evaluaciones-desempeno.dashboard-personal');
+        return view('admin.recursos-humanos.evaluaciones-desempeno.cuestionario', compact(
+            'evaluacionDesempeno',
+            'evaluado',
+            'periodo',
+            'acceso_objetivos',
+            'acceso_competencias'
+        ));
     }
 
     public function misEvaluaciones()
@@ -92,8 +104,9 @@ class EvaluacionesDesempenoController extends Controller
     public function cargaObjetivosEmpleado($id_empleado)
     {
         $empleado = Empleado::getaltaAllWithAreaObjetivoPerfil()->find($id_empleado);
+        $organizacion = Organizacion::first();
         // dd($empleado);
-        return view('admin.recursos-humanos.evaluaciones-desempeno.carga-objetivos-empleado', compact('empleado'));
+        return view('admin.recursos-humanos.evaluaciones-desempeno.carga-objetivos-empleado', compact('empleado', 'organizacion'));
     }
 
     public function objetivosImportar()
@@ -111,5 +124,12 @@ class EvaluacionesDesempenoController extends Controller
     public function objetivosExportar()
     {
         return view('admin.recursos-humanos.evaluaciones-desempeno.objetivos-exportar');
+    }
+
+    public function destroy($id_evaluacion)
+    {
+        // dd($id_evaluacion);
+        $evBorrar = EvaluacionDesempeno::find($id_evaluacion);
+        $evBorrar->delete();
     }
 }

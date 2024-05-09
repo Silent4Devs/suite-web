@@ -14,10 +14,16 @@ class EvaluadoresEvaluacionObjetivosDesempeno extends Model
     protected $fillable = [
         'evaluado_desempeno_id',
         'evaluador_desempeno_id',
+        'periodo_id',
         'porcentaje_objetivos',
         'finalizada',
         'firma_evaluacion',
     ];
+
+    public function empleado()
+    {
+        return $this->belongsTo(Empleado::class, 'evaluador_desempeno_id', 'id')->select('id', 'name', 'email', 'area_id', 'puesto_id', 'foto');
+    }
 
     public function preguntasCuestionario()
     {
@@ -28,5 +34,11 @@ class EvaluadoresEvaluacionObjetivosDesempeno extends Model
     {
         return $this->hasMany(CuestionarioObjetivoEvDesempeno::class, 'evaluador_desempeno_id', 'id')
             ->where('aplicabilidad', true);
+    }
+
+    public function preguntasCuestionarioAplicanPeriodo($periodo)
+    {
+        return $this->hasMany(CuestionarioObjetivoEvDesempeno::class, 'evaluador_desempeno_id', 'id')
+            ->where('periodo_id', $periodo)->where('aplicabilidad', true)->get();
     }
 }

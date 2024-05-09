@@ -11,5 +11,5 @@ class EscalasMedicionObjetivos extends Model
 
     protected $table = 'escalas_medicion_objetivos';
 
-    protected $fillable = ['parametro', 'color'];
+    protected $fillable = ['parametro', 'color', 'valor'];
 }

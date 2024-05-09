@@ -4,79 +4,7 @@
 @endsection
 @section('content')
     {{-- {{ Breadcrumbs::render('capital-humano') }} --}}
-    <div style="display:flex; justify-content:space-between;">
-        <h5 class="titulo_general_funcion">Configuración de Evaluaciones </h5>
-    </div>
-
-    <div class="purple-info-first">
-        <img src="{{ asset('img/config-eval-purple.png') }}" alt="">
-        <div class="info-purple">
-            <h3>Configura tu evaluación</h3>
-            <p>
-                En esta sección puedes asignar los objetivos que le correspondan a cada colaborador de la organización. <br>
-                Consulte los Objetivos Estratégicos con el líder de cada Colaborador
-            </p>
-        </div>
-    </div>
-
-    <nav class="mt-5">
-        <div class="nav nav-tabs" role="tablist" style="margin-bottom: 0px !important;">
-            <a class="nav-link active" id="" data-type="empleados" data-toggle="tab" href="#nav-config-obj-1"
-                role="tab" aria-controls="nav-empleados" aria-selected="true">
-                Definir Categorías
-            </a>
-            <a class="nav-link" id="" data-type="calendario-comunicacion" data-toggle="tab"
-                href="#nav-config-obj-2" role="tab" aria-controls="nav-config-obj-2" aria-selected="false">
-                Definir Escalas
-            </a>
-            <a class="nav-link" id="" data-type="ev360" data-toggle="tab" href="#nav-config-obj-3" role="tab"
-                aria-controls="nav-ev360" aria-selected="false">
-                Definir Permisos
-            </a>
-            <a class="nav-link" id="" data-type="ev360" data-toggle="tab" href="#nav-config-obj-4" role="tab"
-                aria-controls="nav-ev360" aria-selected="false">
-                Definir Unidades
-            </a>
-            <a class="nav-link" id="" data-type="ev360" data-toggle="tab" href="#nav-config-obj-5" role="tab"
-                aria-controls="nav-ev360" aria-selected="false">
-                Cargar objetivos
-            </a>
-        </div>
-    </nav>
-    <div class="tab-content" id="nav-tabContent">
-
-        <div class="tab-pane mb-4 fade show active" id="nav-config-obj-1" role="tabpanel"
-            aria-labelledby="nav-config-obj-1">
-
-            @livewire('ev-trimestral-config-categorias')
-
-        </div>
-
-        <div class="tab-pane mb-4 fade" id="nav-config-obj-2" role="tabpanel" aria-labelledby="nav-config-obj-2">
-
-            @livewire('definicion-escalas-objetivos')
-
-        </div>
-
-        <div class="tab-pane mb-4 fade" id="nav-config-obj-3" role="tabpanel" aria-labelledby="nav-config-obj-3">
-
-            @livewire('permisos-carga-objetivos-vista')
-
-        </div>
-
-        <div class="tab-pane mb-4 fade" id="nav-config-obj-4" role="tabpanel" aria-labelledby="nav-config-obj-4">
-
-            @livewire('definicion-unidades-objetivos')
-
-        </div>
-
-        <div class="tab-pane mb-4 fade" id="nav-config-obj-5" role="tabpanel" aria-labelledby="nav-config-obj-5">
-
-            @livewire('carga-objetivos')
-
-        </div>
-
-    </div>
+    @livewire('ev-desempeno-dashboard-personal', ['id_evaluacion' => $id_evaluacion, 'id_evaluado' => $id_evaluado])
 @endsection
 
 @section('scripts')
@@ -158,23 +86,7 @@
                     [0, 'desc']
                 ],
             };
-            let table = $('#datatable-empleados-config-evaluaciones').DataTable(dtOverrideGlobals);
+            let table = $('.datatable').DataTable(dtOverrideGlobals);
         });
     </script>
-
-    {{-- <script>
-        function addItem(classItem, classContent) {
-            let item = document.querySelector('.' + classItem);
-            let newItem = document.createElement('div');
-
-            newItem.classList.add(classItem);
-            newItem.innerHTML += item.innerHTML;
-
-            document.querySelector('.' + classContent).appendChild(newItem);
-        }
-
-        function deleteItem(classItem) {
-            document.querySelector('.' + classItem + ':hover').remove();
-        }
-    </script> --}}
 @endsection

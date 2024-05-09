@@ -21,6 +21,9 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
     public $evaluador;
     public $id_evaluacion;
     public $id_evaluado;
+    public $id_periodo;
+    public $periodo_seleccionado = 0;
+    // public $array_periodos;
 
     //Traer datos de la evaluación
     public $evaluacion;
@@ -45,26 +48,23 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
     public $archivo_mostrado;
 
 
-    public function mount($id_evaluacion, $id_evaluado)
+    public function mount($id_evaluacion, $id_evaluado, $id_periodo)
     {
         $this->evaluador = User::getCurrentUser()->empleado;
 
         $this->id_evaluacion = $id_evaluacion;
         $this->id_evaluado = $id_evaluado;
+        $this->id_periodo = $id_periodo;
     }
 
     public function render()
     {
-        $this->cuestionarioSecciones();
         $this->evaluacion = EvaluacionDesempeno::find($this->id_evaluacion);
         $this->evaluado = $this->evaluacion->evaluados->find($this->id_evaluado);
+        // $this->cuestionarioSecciones();
         if ($this->evaluacion->activar_objetivos == true) {
-
             $this->buscarObjetivos();
         }
-        // dd($this->obj_evidencias[1]);
-
-
 
         return view('livewire.cuestionario-evaluacion-desempeno-objetivos');
     }
@@ -75,18 +75,20 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
 
         $this->validacion_objetivos_evaluador = false;
 
-        foreach ($this->evaluado->evaluadoresObjetivos as $key => $evlr) {
-            if ($evlr->evaluador_desempeno_id == $this->evaluador->id) {
-                $this->validacion_objetivos_evaluador = true;
+        $busqueda_evaluador = $this->evaluado->evaluadoresObjetivos($this->id_periodo)->where('evaluador_desempeno_id', $this->evaluador->id)->first();
+        $busqueda_autoevaluador = $this->evaluado->evaluadoresObjetivos($this->id_periodo)->where('evaluador_desempeno_id', $this->id_evaluado->evaluado_desempeno_id)->first();
 
-                $this->objetivos_evaluado = $evlr->preguntasCuestionario->sortBy('id');
+        if ($busqueda_evaluador || $busqueda_autoevaluador) {
+            $this->validacion_objetivos_evaluador = true;
+
+            if ($busqueda_evaluador) {
+                $this->objetivos_evaluado = $busqueda_evaluador->preguntasCuestionario->where('periodo_id', $this->id_periodo)->sortBy('id');
             }
 
-            if ($evlr->evaluador_desempeno_id == $this->id_evaluado->evaluado_desempeno_id) {
-                $this->objetivos_autoevaluado = $evlr->preguntasCuestionario->sortBy('id');
+            if ($busqueda_autoevaluador) {
+                $this->objetivos_autoevaluado = $busqueda_autoevaluador->preguntasCuestionario->where('periodo_id', $this->id_periodo)->sortBy('id');
             }
         }
-        // dd($this->objetivos_autoevaluado);
 
         foreach ($this->objetivos_evaluado as $key_objetivo => $obj_evld) {
             foreach ($obj_evld->evidencias as $key_evidencia => $evid) {
@@ -98,64 +100,26 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
                 ];
             }
 
-            foreach ($this->objetivos_evaluado as $key_objetivo => $obj_evld) {
-                $this->calificacion_escala[$obj_evld->infoObjetivo->id] = 'Sin evaluar';
-                foreach ($obj_evld->infoObjetivo->escalas as $obj_esc) {
-                    //Se inicializa con el valor inicial para que todos los objetivos tengan su campo correspondiente
-                    switch ($obj_esc->condicion) {
-                        case '1':
-                            if (
-                                $obj_evld->calificacion_objetivo <
-                                $obj_esc->valor
-                            ) {
-                                $this->calificacion_escala[$obj_evld->infoObjetivo->id] = $obj_esc->parametro;
-                                $this->evaluacion_colors[$obj_evld->id . '-tx-color']= $obj_esc->color;
-                            }
-                            break;
-                        case '2':
-                            if (
-                                $obj_evld->calificacion_objetivo <=
-                                $obj_esc->valor
-                            ) {
-                                $this->calificacion_escala[$obj_evld->infoObjetivo->id] = $obj_esc->parametro;
-                                $this->evaluacion_colors[$obj_evld->infoObjetivo->id . '-tx-color']= $obj_esc->color;
-                                // dd($this->evaluacion_colors);
+            foreach ($this->objetivos_evaluado as $obj_evld) {
+                $infoObjetivo = $obj_evld->infoObjetivo;
 
-                            }
-                            break;
-                        case '3':
-                            if (
-                                $obj_evld->calificacion_objetivo ==
-                                $obj_esc->valor
-                            ) {
-                                $this->calificacion_escala[$obj_evld->infoObjetivo->id] = $obj_esc->parametro;
-                                $this->evaluacion_colors[$obj_evld->id . '-tx-color']= $obj_esc->color;
+                // Initialize with default values
+                $this->calificacion_escala[$infoObjetivo->id] = 'Sin evaluar';
+                $this->evaluacion_colors[$infoObjetivo->id . '-tx-color'] = $infoObjetivo->escalas[0]->color;
 
-                            }
-                            break;
-                        case '4':
-                            if (
-                                $obj_evld->calificacion_objetivo >
-                                $obj_esc->valor
-                            ) {
-                                $this->calificacion_escala[$obj_evld->infoObjetivo->id] = $obj_esc->parametro;
-                                $this->evaluacion_colors[$obj_evld->infoObjetivo->id . '-tx-color']= $obj_esc->color;
+                $currentCondition = null; // Track the currently assigned condition
 
-                            }
-                            break;
-                        case '5':
-                            if (
-                                $obj_evld->calificacion_objetivo >=
-                                $obj_esc->valor
-                            ) {
-                                $this->calificacion_escala[$obj_evld->infoObjetivo->id] = $obj_esc->parametro;
-                                $this->evaluacion_colors[$obj_evld->infoObjetivo->id . '-tx-color']= $obj_esc->color;
+                foreach ($infoObjetivo->escalas as $obj_esc) {
+                    $conditionMet = $this->evaluateCondition($obj_evld, $obj_esc);
 
-                            }
-                            break;
-                        default:
-                            $this->calificacion_escala[$obj_evld->infoObjetivo->id] = $obj_evld->infoObjetivo->escalas[0]->parametro;
-                            break;
+                    if ($conditionMet) {
+                        // If the condition is met, update the assigned condition and values
+                        $currentCondition = $obj_esc;
+                        $this->setValues($infoObjetivo->id, $obj_esc->parametro, $obj_esc->color);
+                    } elseif ($currentCondition !== null && $currentCondition->valor === $obj_esc->valor) {
+                        // If a subsequent condition matches the current condition's value, update the assigned condition and values
+                        $currentCondition = $obj_esc;
+                        $this->setValues($infoObjetivo->id, $obj_esc->parametro, $obj_esc->color);
                     }
                 }
             }
@@ -170,9 +134,8 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
                                 $obj_esc->valor
                             ) {
                                 $this->calificacion_autoescala[$obj_evld->id] = $obj_esc->parametro;
-                                $this->autoevaluacion_colors[$obj_evld->id . '-bg-color']= $this->hexToRgba($obj_esc->color);
-                                $this->autoevaluacion_colors[$obj_evld->id . '-tx-color']= $obj_esc->color;
-
+                                $this->autoevaluacion_colors[$obj_evld->id . '-bg-color'] = $this->hexToRgba($obj_esc->color);
+                                $this->autoevaluacion_colors[$obj_evld->id . '-tx-color'] = $obj_esc->color;
                             }
                             break;
                         case '2':
@@ -181,8 +144,8 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
                                 $obj_esc->valor
                             ) {
                                 $this->calificacion_autoescala[$obj_evld->id] = $obj_esc->parametro;
-                                $this->autoevaluacion_colors[$obj_evld->id . '-bg-color']= $this->hexToRgba($obj_esc->color);
-                                $this->autoevaluacion_colors[$obj_evld->id . '-tx-color']= $obj_esc->color;
+                                $this->autoevaluacion_colors[$obj_evld->id . '-bg-color'] = $this->hexToRgba($obj_esc->color);
+                                $this->autoevaluacion_colors[$obj_evld->id . '-tx-color'] = $obj_esc->color;
                                 // dd($this->calificacion_autoescala);
                             }
                             break;
@@ -192,8 +155,8 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
                                 $obj_esc->valor
                             ) {
                                 $this->calificacion_autoescala[$obj_evld->id] = $obj_esc->parametro;
-                                $this->autoevaluacion_colors[$obj_evld->id . '-bg-color']= $this->hexToRgba($obj_esc->color);
-                                $this->autoevaluacion_colors[$obj_evld->id . '-tx-color']= $obj_esc->color;
+                                $this->autoevaluacion_colors[$obj_evld->id . '-bg-color'] = $this->hexToRgba($obj_esc->color);
+                                $this->autoevaluacion_colors[$obj_evld->id . '-tx-color'] = $obj_esc->color;
                             }
                             break;
                         case '4':
@@ -202,8 +165,8 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
                                 $obj_esc->valor
                             ) {
                                 $this->calificacion_autoescala[$obj_evld->id] = $obj_esc->parametro;
-                                $this->autoevaluacion_colors[$obj_evld->id . '-bg-color']= $this->hexToRgba($obj_esc->color);
-                                $this->autoevaluacion_colors[$obj_evld->id . '-tx-color']= $obj_esc->color;
+                                $this->autoevaluacion_colors[$obj_evld->id . '-bg-color'] = $this->hexToRgba($obj_esc->color);
+                                $this->autoevaluacion_colors[$obj_evld->id . '-tx-color'] = $obj_esc->color;
                             }
                             break;
                         case '5':
@@ -212,17 +175,43 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
                                 $obj_esc->valor
                             ) {
                                 $this->calificacion_autoescala[$obj_evld->id] = $obj_esc->parametro;
-                                $this->autoevaluacion_colors[$obj_evld->id . '-bg-color']= $this->hexToRgba($obj_esc->color);
-                                $this->autoevaluacion_colors[$obj_evld->id . '-tx-color']= $obj_esc->color;
+                                $this->autoevaluacion_colors[$obj_evld->id . '-bg-color'] = $this->hexToRgba($obj_esc->color);
+                                $this->autoevaluacion_colors[$obj_evld->id . '-tx-color'] = $obj_esc->color;
                             }
                             break;
                         default:
                             $this->calificacion_autoescala[$obj_evld->infoObjetivo->id] = $obj_evld->infoObjetivo->escalas[0]->parametro;
+                            $this->autoevaluacion_colors[$obj_evld->id . '-bg-color'] = $this->hexToRgba($obj_esc->color);
+                            $this->autoevaluacion_colors[$obj_evld->id . '-tx-color'] = $obj_esc->color;
                             break;
                     }
                 }
             }
         }
+    }
+
+    private function evaluateCondition($obj_evld, $obj_esc)
+    {
+        switch ($obj_esc->condicion) {
+            case '1':
+                return $obj_evld->calificacion_objetivo < $obj_esc->valor;
+            case '2':
+                return $obj_evld->calificacion_objetivo <= $obj_esc->valor;
+            case '3':
+                return $obj_evld->calificacion_objetivo == $obj_esc->valor;
+            case '4':
+                return $obj_evld->calificacion_objetivo > $obj_esc->valor;
+            case '5':
+                return $obj_evld->calificacion_objetivo >= $obj_esc->valor;
+            default:
+                return true; // Default condition, always true
+        }
+    }
+
+    private function setValues($objetivoId, $parametro, $color)
+    {
+        $this->calificacion_escala[$objetivoId] = $parametro;
+        $this->evaluacion_colors[$objetivoId . '-tx-color'] = $color;
     }
 
     public function evaluarObjetivo($id_objetivo, $valor)
@@ -364,7 +353,8 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
         ]);
     }
 
-    public function hexToRgba($hex){
+    public function hexToRgba($hex)
+    {
         $hex = str_replace('#', '', $hex);
 
         $red = hexdec(substr($hex, 0, 2));
@@ -374,12 +364,22 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
         return "rgba($red, $green, $blue, 0.2)";
     }
 
-    public function cuestionarioSecciones(){
-        // $secciones = CuestionarioObjetivoEvDesempeno::with('infoObjetivo')->where('evaluacion_desempeno_id', $this->id_evaluacion)->get();
-        // foreach($secciones as $seccion){
-        //     $arrSections[] = $seccion->infoObjetivo->tipo_objetivo;
-        // }
-        // $variablesec = $arrSections->unique();
-        // dd($variablesec);
+    // public function cuestionarioSecciones()
+    // {
+    //     foreach ($this->evaluacion->periodos as $key => $periodo) {
+    //         $this->array_periodos[$key] = [
+    //             "id_periodo" => $periodo->id,
+    //             "nombre_evaluacion" => $periodo->nombre_evaluacion,
+    //             "fecha_inicio" => $periodo->fecha_inicio,
+    //             "fecha_fin" => $periodo->fecha_fin,
+    //             "habilitado" => $periodo->habilitado,
+    //             "finalizado" => $periodo->finalizado,
+    //         ];
+    //     }
+    // }
+
+    public function cambiarSeccion($llave)
+    {
+        $this->periodo_seleccionado = $llave;
     }
 }

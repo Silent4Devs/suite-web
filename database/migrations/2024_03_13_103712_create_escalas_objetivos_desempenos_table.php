@@ -16,9 +16,11 @@ return new class extends Migration
             $table->unsignedBigInteger('id_objetivo_desempeno');
             $table->integer('condicion');
             $table->float('valor');
-            $table->unsignedBigInteger('parametro_id');
+            $table->string('parametro');
+            $table->string('color');
+            // $table->unsignedBigInteger('parametro_id');
 
-            $table->foreign('parametro_id')->references('id')->on('escalas_medicion_objetivos')->onUpdate('cascade')->onDelete('cascade');
+            // $table->foreign('parametro_id')->references('id')->on('escalas_medicion_objetivos')->onUpdate('cascade')->onDelete('cascade');
 
             $table->timestamps();
             $table->softDeletes();

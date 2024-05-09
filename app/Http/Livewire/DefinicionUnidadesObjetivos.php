@@ -2,30 +2,25 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\EscalasMedicionObjetivos;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
+use App\Models\RH\MetricasObjetivo;
 use Livewire\Component;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
-class DefinicionEscalasObjetivos extends Component
+class DefinicionUnidadesObjetivos extends Component
 {
     use LivewireAlert;
 
-    public $color_estatus_1 = '#34B990';
+    public $valor_minimo_1 = 0;
 
-    public $color_estatus_2 = '#73A7D5';
+    public $valor_maximo_1 = 0;
 
-    public $estatus_1;
-
-    public $estatus_2;
+    public $definicion_1;
 
     public $parametros = [];
 
     public $minimo = null;
 
     public $maximo = null;
-
-    public $valor_estatus_1;
-    public $valor_estatus_2;
 
     public function addParametro1()
     {
@@ -41,25 +36,21 @@ class DefinicionEscalasObjetivos extends Component
 
     public function mount()
     {
-        $escalas = EscalasMedicionObjetivos::get();
 
-        if (isset($escalas[0]->parametro)) {
-            $this->estatus_1 = $escalas[0]->parametro;
-            $this->color_estatus_1 = $escalas[0]->color;
-            $this->valor_estatus_1 = $escalas[0]->valor;
+        $unidades = MetricasObjetivo::get();
 
+        if (isset($unidades[0]->definicion)) {
+            $this->definicion_1 = $unidades[0]->definicion;
+            $this->valor_minimo_1 = $unidades[0]->valor_minimo;
+            $this->valor_maximo_1 = $unidades[0]->valor_maximo;
 
-            $this->estatus_2 = $escalas[1]->parametro;
-            $this->color_estatus_2 = $escalas[1]->color;
-            $this->valor_estatus_2 = $escalas[1]->valor;
-            // dd($escalas);
-            foreach ($escalas as $key => $esc) {
+            foreach ($unidades as $key => $esc) {
                 if ($key > 1) {
                     $this->parametros[$key] =
                         [
-                            'parametro' => $esc->parametro,
-                            'color_estatus' => $esc->color,
-                            'valor' => $esc->valor,
+                            'definicion' => $esc->definicion,
+                            'minimo' => $esc->valor_minimo ?? null,
+                            'maximo' => $esc->valor_maximo ?? null,
                         ];
                 }
             }
@@ -68,7 +59,7 @@ class DefinicionEscalasObjetivos extends Component
 
     public function render()
     {
-        return view('livewire.definicion-escalas-objetivos');
+        return view('livewire.definicion-unidades-objetivos');
     }
 
     // public function definirLimite($limite, $valor)
@@ -87,37 +78,30 @@ class DefinicionEscalasObjetivos extends Component
     public function submitForm($data)
     {
         // dd($data);
-        $borrar = EscalasMedicionObjetivos::get();
+        $borrar = MetricasObjetivo::get();
 
         foreach ($borrar as $borra) {
             $borra->delete();
         }
 
-        EscalasMedicionObjetivos::create([
-            'parametro' => $data['estatus_1'],
+        MetricasObjetivo::create([
+            'definicion' => $data['definicion_1'],
             'color' => $data['color_estatus_1'],
-            'valor' => $data['valor_estatus_1']
-        ]);
-
-        EscalasMedicionObjetivos::create([
-            'parametro' => $data['estatus_2'],
-            'color' => $data['color_estatus_2'],
-            'valor' => $data['valor_estatus_2']
         ]);
 
         $param_extra = $this->groupValues($data);
 
         if (!empty($param_extra)) {
             foreach ($param_extra as $key => $p) {
-                EscalasMedicionObjetivos::create([
-                    'parametro' => $p['estatus'],
-                    'color' => $p['color'],
-                    'valor' => $p['valor'],
+                MetricasObjetivo::create([
+                    'definicion' => $p['estatus'],
+                    'minimo' => $p['minimo'],
+                    'maximo' => $p['minimo'],
                 ]);
             }
         }
 
-        $this->alert('success', '¡Las escalas han sido definidas con éxito!', [
+        $this->alert('success', '¡Las unidades han sido definidas con éxito!', [
             'position' => 'center',
             'timer' => 5000,
             'toast' => true,
@@ -129,7 +113,7 @@ class DefinicionEscalasObjetivos extends Component
     {
         $groupedValues = [];
 
-        foreach ($this->parametros as $key => $parametro) {
+        foreach ($this->parametros as $key => $definicion) {
             $estatusKey = "estatus_arreglo_{$key}";
 
             if (isset($values[$estatusKey]) && !empty($values[$estatusKey])) {
@@ -137,7 +121,6 @@ class DefinicionEscalasObjetivos extends Component
                 $groupedValues["group_{$key}"] = [
                     'estatus' => $values[$estatusKey],
                     'color' => $values["color_estatus_arreglo_{$key}"] ?? null,
-                    'valor' => $values["valor_estatus_arreglo_{$key}"] ?? null,
                 ];
             }
         }

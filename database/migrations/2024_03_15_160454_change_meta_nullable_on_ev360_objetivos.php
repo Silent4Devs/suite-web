@@ -24,7 +24,7 @@ return new class extends Migration
     {
         Schema::table('ev360_objetivos', function (Blueprint $table) {
             //
-            $table->text('meta')->nullable(false)->change();
+            // $table->text('meta')->nullable(false)->change();
         });
     }
 };

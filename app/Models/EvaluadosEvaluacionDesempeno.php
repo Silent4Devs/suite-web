@@ -29,40 +29,49 @@ class EvaluadosEvaluacionDesempeno extends Model
         return $this->belongsTo(Empleado::class, 'evaluado_desempeno_id', 'id')->select('id', 'name', 'email', 'area_id', 'puesto_id', 'foto');
     }
 
-    public function evaluadoresObjetivos()
+    public function evaluadoresObjetivos($id_periodo = null)
     {
-        return $this->hasMany(EvaluadoresEvaluacionObjetivosDesempeno::class, 'evaluado_desempeno_id', 'id');
+        if (empty($id_periodo)) {
+            return $this->hasMany(EvaluadoresEvaluacionObjetivosDesempeno::class, 'evaluado_desempeno_id', 'id')->orderBy('id');
+        } else {
+            return $this->hasMany(EvaluadoresEvaluacionObjetivosDesempeno::class, 'evaluado_desempeno_id', 'id')->where('periodo_id', $id_periodo)->orderBy('id')->get();
+        }
     }
 
-    public function evaluadoresCompetencias()
+    public function evaluadoresCompetencias($id_periodo = null)
     {
-        return $this->hasMany(EvaluadoresEvaluacionCompetenciasDesempeno::class, 'evaluado_desempeno_id', 'id');
+        if (empty($id_periodo)) {
+            return $this->hasMany(EvaluadoresEvaluacionCompetenciasDesempeno::class, 'evaluado_desempeno_id', 'id')->orderBy('id');
+        } else {
+            return $this->hasMany(EvaluadoresEvaluacionCompetenciasDesempeno::class, 'evaluado_desempeno_id', 'id')->where('periodo_id', $id_periodo)->orderBy('id')->get();
+        }
     }
 
     public function getNombresEvaluadoresAttribute()
     {
-        $total = 0;
-
         $evaluado = self::find($this->id);
+        $nombres = [];
 
-        if ($evaluado->evaluacion->activar_competencias && $this->evaluacion->activar_objetivos) {
+        if ($evaluado->evaluacion->activar_competencias && $evaluado->evaluacion->activar_objetivos) {
             $evaluadoresCompetenciasIds = $this->evaluadoresCompetencias->pluck('evaluador_desempeno_id')->toArray();
             $evaluadoresObjetivosIds = $this->evaluadoresObjetivos->pluck('evaluador_desempeno_id')->toArray();
 
-            // Calculate the distinct count of evaluador_desempeno_id that match in both relations
-            $matchingCount = array_intersect($evaluadoresCompetenciasIds, $evaluadoresObjetivosIds);
+            // Calculate the distinct evaluador_desempeno_id that match in both relations
+            $matchingIds = array_intersect($evaluadoresCompetenciasIds, $evaluadoresObjetivosIds);
 
-            // Calculate the count of evaluador_desempeno_id that don't match in both relations
-            $distinctCount = array_diff($evaluadoresCompetenciasIds, $evaluadoresObjetivosIds)
-                + array_diff($evaluadoresObjetivosIds, $evaluadoresCompetenciasIds);
+            // Calculate the evaluador_desempeno_id that don't match in both relations
+            $distinctIds = array_merge(
+                array_diff($evaluadoresCompetenciasIds, $evaluadoresObjetivosIds),
+                array_diff($evaluadoresObjetivosIds, $evaluadoresCompetenciasIds)
+            );
 
-            $nombres = $matchingCount + $distinctCount;
-        } elseif ($evaluado->evaluacion->activar_competencias && $evaluado->evaluacion->activar_objetivos == false) {
-            $nombres = $evaluado->evaluadoresCompetencias;
-        } elseif ($evaluado->evaluacion->activar_competencias == false && $evaluado->evaluacion->activar_objetivos) {
-            $nombres = $evaluado->evaluadoresObjetivos;
+            $nombres = array_unique(array_merge($matchingIds, $distinctIds));
+        } elseif ($evaluado->evaluacion->activar_competencias && !$evaluado->evaluacion->activar_objetivos) {
+            $nombres = $this->evaluadoresCompetencias->pluck('evaluador_desempeno_id')->unique()->toArray();
+        } elseif (!$evaluado->evaluacion->activar_competencias && $evaluado->evaluacion->activar_objetivos) {
+            $nombres = $this->evaluadoresObjetivos->pluck('evaluador_desempeno_id')->unique()->toArray();
         }
-
+        //Enviamos los ids, para que sea mas facil de manejar
         return $nombres;
     }
 
@@ -132,6 +141,7 @@ class EvaluadosEvaluacionDesempeno extends Model
             foreach ($evlrs->preguntasCuestionarioAplican as $pregunta) {
                 $calificacion = [
                     'objetivo_id' => $pregunta->objetivo_id,
+                    'tipo' => $pregunta->infoObjetivo->tipo_objetivo,
                     'calificacion_objetivo' => $pregunta->calificacion_objetivo,
                     'calificacion_total' => round((($pregunta->calificacion_objetivo / $pregunta->infoObjetivo->valor_maximo_unidad_objetivo) * $evlrs->porcentaje_objetivos), 2),
                 ];
@@ -156,6 +166,7 @@ class EvaluadosEvaluacionDesempeno extends Model
 
             $calificacionesSumadas[] = [
                 'objetivo_id' => $objetivo_id,
+                'tipo' => $calificacion['tipo'],
                 'calificacion_total' => $suma,
             ];
         }
@@ -188,6 +199,7 @@ class EvaluadosEvaluacionDesempeno extends Model
             foreach ($evlrs->preguntasCuestionario as $pregunta) {
                 $calificacion = [
                     'competencia_id' => $pregunta->competencia_id,
+                    'competencia' => $pregunta->infoCompetencia->competencia,
                     'calificacion_competencia' => $pregunta->calificacion_competencia,
                     'calificacion_total' => round((($pregunta->calificacion_competencia / $pregunta->infoCompetencia->nivel_esperado) * $evlrs->porcentaje_competencias), 2),
                 ];
@@ -211,6 +223,7 @@ class EvaluadosEvaluacionDesempeno extends Model
 
             $calificacionesSumadas[] = [
                 'competencia_id' => $competencia_id,
+                'competencia' => $calificacion['competencia'],
                 'calificacion_total' => $suma,
             ];
         }
@@ -228,6 +241,183 @@ class EvaluadosEvaluacionDesempeno extends Model
             'calif_agrup' => $calificacionesAgrupadas,
             'calif_total' => $calificacionesSumadas,
             'promedio_total' => $promedioRedondeado,
+        ];
+    }
+
+    public function calificacionesObjetivosEvaluadoPeriodo($periodo)
+    {
+        $evaluado = self::find($this->id);
+
+        $evaluadores = $evaluado->evaluadoresObjetivos->where('evaluador_desempeno_id', '!=', $this->evaluado_desempeno_id);
+
+        $calificacionesAgrupadas = [];
+
+        foreach ($evaluadores as $evlrs) {
+            $evrs = $evlrs->preguntasCuestionarioAplican->where('periodo_id', $periodo);
+            foreach ($evrs as $pregunta) {
+                $calificacion = [
+                    'objetivo_id' => $pregunta->objetivo_id,
+                    'nombre' => $pregunta->infoObjetivo->objetivo,
+                    'tipo' => $pregunta->infoObjetivo->tipo_objetivo,
+                    'calificacion_objetivo' => $pregunta->calificacion_objetivo,
+                    'calificacion_total' => round((($pregunta->calificacion_objetivo / $pregunta->infoObjetivo->valor_maximo_unidad_objetivo) * $evlrs->porcentaje_objetivos), 2),
+                ];
+
+                // Agrupar por objetivo_id
+                if (!isset($calificacionesAgrupadas[$pregunta->objetivo_id])) {
+                    $calificacionesAgrupadas[$pregunta->objetivo_id] = [];
+                }
+
+                $calificacionesAgrupadas[$pregunta->objetivo_id][] = $calificacion;
+            }
+        }
+
+        $calificacionesSumadas = [];
+
+        foreach ($calificacionesAgrupadas as $objetivo_id => $calificaciones) {
+            $suma = 0;
+
+            foreach ($calificaciones as $calificacion) {
+                $suma += $calificacion['calificacion_total'];
+            }
+
+            $calificacionesSumadas[] = [
+                'objetivo_id' => $objetivo_id,
+                'nombre' => $calificacion['nombre'],
+                'tipo' => $calificacion['tipo'],
+                'calificacion_total' => $suma,
+            ];
+        }
+
+        $totalCalificaciones = count($calificacionesSumadas);
+
+        $sumaTotal = 0;
+        foreach ($calificacionesSumadas as $calificacion) {
+            $sumaTotal += $calificacion['calificacion_total'];
+        }
+
+        $promedio = $totalCalificaciones > 0 ? $sumaTotal / $totalCalificaciones : 0;
+        $promedioRedondeado = round($promedio, 2);
+        return [
+            'calif_agrup' => $calificacionesAgrupadas,
+            'calif_total' => $calificacionesSumadas,
+            'promedio_total' => $promedioRedondeado,
+        ];
+    }
+
+    public function calificacionesCompetenciasEvaluadoPeriodo($periodo)
+    {
+        $evaluado = self::find($this->id);
+
+        $evaluadores = $evaluado->evaluadoresCompetencias->where('evaluador_desempeno_id', '!=', $this->evaluado_desempeno_id);
+        $cuenta_evaluadores = $evaluadores->count();
+        $calificacionesAgrupadas = [];
+
+        foreach ($evaluadores as $evlrs) {
+            $evrs = $evlrs->preguntasCuestionario->where('periodo_id', $periodo);
+            foreach ($evrs as $pregunta) {
+                $calificacion_total = ($pregunta->calificacion_competencia > $pregunta->infoCompetencia->nivel_esperado) ? $pregunta->infoCompetencia->nivel_esperado : $pregunta->calificacion_competencia;
+
+                $calificacion = [
+                    'competencia_id' => $pregunta->competencia_id,
+                    'competencia' => $pregunta->infoCompetencia->competencia,
+                    'calificacion_competencia' => $pregunta->calificacion_competencia,
+                    'nivel_esperado' => $pregunta->infoCompetencia->nivel_esperado,
+                    'calificacion_total' => round(($calificacion_total / $pregunta->infoCompetencia->nivel_esperado) * $evlrs->porcentaje_competencias, 2),
+                ];
+
+                if (!isset($calificacionesAgrupadas[$pregunta->competencia_id])) {
+                    $calificacionesAgrupadas[$pregunta->competencia_id] = [];
+                }
+
+                $calificacionesAgrupadas[$pregunta->competencia_id][] = $calificacion;
+            }
+        }
+
+        $calificacionesSumadas = [];
+
+        foreach ($calificacionesAgrupadas as $competencia_id => $calificaciones) {
+            $suma = 0;
+            $suma_competencia = 0;
+
+            foreach ($calificaciones as $calificacion) {
+                $suma += $calificacion['calificacion_total'];
+                $suma_competencia += $calificacion['calificacion_competencia'];
+            }
+
+            $promedio_competencia = ($suma_competencia / $cuenta_evaluadores);
+
+            $calificacionesSumadas[] = [
+                'competencia_id' => $competencia_id,
+                'competencia' => $calificacion['competencia'],
+                'nivel_esperado' => $calificacion['nivel_esperado'],
+                "promedio_competencias" => $promedio_competencia,
+                'calificacion_total' => $suma,
+            ];
+        }
+
+        $totalCalificaciones = count($calificacionesSumadas);
+
+        $sumaTotal = 0;
+        foreach ($calificacionesSumadas as $calificacion) {
+            $sumaTotal += $calificacion['calificacion_total'];
+        }
+
+        $promedio = $totalCalificaciones > 0 ? $sumaTotal / $totalCalificaciones : 0;
+        $promedioRedondeado = round($promedio, 2);
+        return [
+            'calif_agrup' => $calificacionesAgrupadas,
+            'calif_total' => $calificacionesSumadas,
+            'promedio_total' => $promedioRedondeado,
+        ];
+    }
+
+    public function calificacionesEscalasEvaluadoPeriodo($periodo)
+    {
+        $evaluado = self::find($this->id);
+
+        $evaluadores = $evaluado->evaluadoresObjetivos->where('evaluador_desempeno_id', '!=', $this->evaluado_desempeno_id);
+        $calificacionesAgrupadas = [];
+
+        foreach ($evaluadores as $evlrs) {
+            $evrs = $evlrs->preguntasCuestionarioAplican->where('periodo_id', $periodo);
+            foreach ($evrs as $pregunta) {
+                $calificacion = [
+                    'objetivo_id' => $pregunta->objetivo_id,
+                    'nombre' => $pregunta->infoObjetivo->objetivo,
+                    'tipo' => $pregunta->infoObjetivo->tipo_objetivo,
+                    'estatus_calificado' => $pregunta->estatus_calificado,
+                    'calificacion_objetivo' => $pregunta->calificacion_objetivo,
+                    'calificacion_total' => round((($pregunta->calificacion_objetivo / $pregunta->infoObjetivo->valor_maximo_unidad_objetivo) * $evlrs->porcentaje_objetivos), 2),
+                ];
+
+                // Agrupar por objetivo_id
+                if (!isset($calificacionesAgrupadas[$pregunta->objetivo_id])) {
+                    $calificacionesAgrupadas[$pregunta->objetivo_id] = [];
+                }
+
+                $calificacionesAgrupadas[$pregunta->objetivo_id][] = $calificacion;
+            }
+        }
+
+        $calificacionesSumadas = [];
+
+        foreach ($calificacionesAgrupadas as $objetivo_id => $calificaciones) {
+            $suma = 0;
+
+            foreach ($calificaciones as $calificacion) {
+                $suma += $calificacion['calificacion_total'];
+            }
+
+            $calificacionesSumadas[] = [
+                'objetivo_id' => $objetivo_id,
+                'calificacion_total' => $suma,
+                'estatus_calificado' => $calificacion["estatus_calificado"],
+            ];
+        }
+
+        return [
+            'calif_escala' => $calificacionesSumadas,
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\CrearEvaluacionesDesempeno;
 use App\Console\Commands\EnviarCorreoFelicitaciones;
 use App\Console\Commands\NotificarEvaluacion360;
 use App\Console\Commands\NotificarRecursos;
@@ -42,7 +43,14 @@ class Kernel extends ConsoleKernel
             ->withoutOverlapping()
             ->onOneServer()
             ->sentryMonitor();
-        $schedule->command('snapshot:create dump'.date('Y-m-d-H'))
+        $schedule->command(CrearEvaluacionesDesempeno::class)
+            ->timezone('America/Mexico_City');
+
+        // ->dailyAt('09:00')
+        // ->withoutOverlapping()
+        // ->onOneServer()
+        // ->sentryMonitor();
+        $schedule->command('snapshot:create dump' . date('Y-m-d-H'))
             ->timezone('America/Mexico_City')
             ->days([2, 5])
             ->at('23:36')
@@ -58,7 +66,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
     }

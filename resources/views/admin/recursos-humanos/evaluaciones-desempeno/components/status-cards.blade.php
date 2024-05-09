@@ -1,5 +1,5 @@
 <div class="d-flex justify-content-evenly" style="margin-bottom: 40px;">
-    <div class="card-complement" style="margin-right: 15px; heigth:200px;" >
+    <div class="card-complement" style="margin-right: 15px; heigth:200px;">
         <div class="bg-objet" style="background-color: #78BB50;"></div>
         <div class="card-comple-info d-flex align-items-center justify-content-between px-3 w-100">
             <h4 class="card-status-title m-0">Promedio Total</h4>

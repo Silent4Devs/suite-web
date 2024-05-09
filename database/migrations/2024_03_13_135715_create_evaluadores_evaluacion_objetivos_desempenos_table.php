@@ -15,12 +15,14 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('evaluado_desempeno_id');
             $table->unsignedBigInteger('evaluador_desempeno_id');
+            $table->unsignedBigInteger('periodo_id');
             $table->double('porcentaje_objetivos');
             $table->boolean('finalizada')->default('false');
             $table->text('firma_evaluacion')->nullable();
 
             $table->foreign('evaluado_desempeno_id')->references('id')->on('evaluados_evaluacion_desempenos')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('evaluador_desempeno_id')->references('id')->on('empleados')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('periodo_id')->references('id')->on('periodos_evaluacion_desempenos')->onUpdate('cascade')->onDelete('cascade');
 
             $table->timestamps();
             $table->softDeletes();
@@ -32,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('evaluadores_evaluacion_desempenos');
+        Schema::dropIfExists('evaluadores_evaluacion_objetivos_desempenos');
     }
 };

@@ -67,7 +67,8 @@ class FormularioObjetivosDesempenoEmpleados extends Component
                     'color' => $e->color,
                     'condicional' => 1,
                     'valor' => 0,
-                    'parametro_id' => $e->id,
+                    'parametro' => $e->parametro,
+                    'color' => $e->color,
                 ];
         }
 
@@ -191,12 +192,12 @@ class FormularioObjetivosDesempenoEmpleados extends Component
         ]);
 
         foreach ($this->array_escalas_objetivos as $key => $esc_obj) {
-            // dd($this->array_escalas_objetivos[$key]['parametro_id']);
             EscalasObjetivosDesempeno::create([
                 'id_objetivo_desempeno' => $objetivo->id,
                 'condicion' => $this->array_escalas_objetivos[$key]['condicional'],
                 'valor' => $this->array_escalas_objetivos[$key]['valor'],
-                'parametro_id' => $this->array_escalas_objetivos[$key]['parametro_id'],
+                'parametro' => $this->array_escalas_objetivos[$key]['parametro'],
+                'color' => $this->array_escalas_objetivos[$key]['color'],
             ]);
         }
 

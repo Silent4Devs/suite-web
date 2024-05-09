@@ -49,7 +49,7 @@ class EvaluacionDesempeno extends Model
 
     public function periodos()
     {
-        return $this->hasMany(PeriodosEvaluacionDesempeno::class, 'evaluacion_desempeno_id', 'id');
+        return $this->hasMany(PeriodosEvaluacionDesempeno::class, 'evaluacion_desempeno_id', 'id')->orderBy('id');
     }
 
     public function escalas()
