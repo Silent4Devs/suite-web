@@ -23,7 +23,7 @@
 
     <div class="card card-body">
         <div class="datatable-fix w-100">
-            <table id="datatabletimesheetproyectosfinancieros" class="table w-100 tabla-animada">
+            <table id="reportesfinancieros" class="table w-100 tabla-animada">
                 <thead class="w-100">
                     <tr>
                         <th>ID </th>
@@ -42,7 +42,16 @@
                 <tbody>
                     @if (empty($proyectos))
                         <tr>
-                            <td colspan="your_column_span">Seleccione el proyecto</td>
+                            <td >Seleccione el proyecto</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                         </tr>
                     @else
                         @foreach ($proyectos as $proyecto)
@@ -65,89 +74,14 @@
         </div>
     </div>
     <script type="text/javascript">
-        document.addEventListener('livewire:load', () => {
-            Livewire.on('afterLivewireUpdate', () => {
+        document.addEventListener('DOMContentLoaded', () => {
+            Livewire.on('scriptTabla', () => {
                 setTimeout(() => {
-                    tablaLivewire('datatabletimesheetproyectosfinancieros');
-                    console.log("chale");
-                }, 1000); // Esperar 1 segundo (ajusta este valor según sea necesario)
+                    console.log('liwe');
+                    tablaLivewire('reportesfinancieros');
+                }, 100);
             });
         });
-
-        function tablaLivewire(id_tabla) {
-            $(function() {
-                let dtButtons = [{
-                        extend: 'csvHtml5',
-                        title: `Mis Registros ${new Date().toLocaleDateString().trim()}`,
-                        text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
-                        className: "btn-sm rounded pr-2",
-                        titleAttr: 'Exportar CSV',
-                        exportOptions: {
-                            columns: ['th:not(:last-child):visible']
-                        }
-                    },
-                    {
-                        extend: 'excelHtml5',
-                        title: `Mis Registros ${new Date().toLocaleDateString().trim()}`,
-                        text: '<i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"></i>',
-                        className: "btn-sm rounded pr-2",
-                        titleAttr: 'Exportar Excel',
-                        exportOptions: {
-                            columns: ['th:not(:last-child):visible']
-                        }
-                    },
-                    {
-                        extend: 'print',
-                        text: '<i class="fas fa-print" style="font-size: 1.1rem;color:#345183"></i>',
-                        className: "btn-sm rounded pr-2",
-                        titleAttr: 'Imprimir',
-                        customize: function(doc) {
-
-                            $(doc.document.body).find('table')
-                                .css('font-size', '12px')
-                                .css('margin-top', '15px')
-                            $(doc.document.body).find('th').each(function(index) {
-                                $(this).css('font-size', '18px');
-                                $(this).css('color', '#fff');
-                                $(this).css('background-color', 'blue');
-                            });
-                        },
-                        title: '',
-                        exportOptions: {
-                            columns: ['th:not(:last-child):visible']
-                        }
-                    },
-                    {
-                        extend: 'colvis',
-                        text: '<i class="fas fa-filter" style="font-size: 1.1rem;"></i>',
-                        className: "btn-sm rounded pr-2",
-                        titleAttr: 'Seleccionar Columnas',
-                    },
-                    {
-                        extend: 'colvisGroup',
-                        text: '<i class="fas fa-eye" style="font-size: 1.1rem;"></i>',
-                        className: "btn-sm rounded pr-2",
-                        show: ':hidden',
-                        titleAttr: 'Ver todo',
-                    },
-                    {
-                        extend: 'colvisRestore',
-                        text: '<i class="fas fa-undo" style="font-size: 1.1rem;"></i>',
-                        className: "btn-sm rounded pr-2",
-                        titleAttr: 'Restaurar a estado anterior',
-                    }
-                ];
-                let dtOverrideGlobals = {
-                    buttons: dtButtons,
-                    destroy: true,
-                    render: true,
-                    paging: true, // Enable pagination
-                    pageLength: 10, // Set the number of records per page
-                    lengthMenu: [5, 10, 25, 50, 100], // Define available page lengths
-                };
-                let table = $('#' + id_tabla).DataTable(dtOverrideGlobals);
-            });
-        }
     </script>
 
 </div>
