@@ -79,7 +79,7 @@ class CourseController extends Controller
 
             // Guardar el archivo en el disco 'public' con la ruta específica
             Storage::disk('public')->put($ruta, file_get_contents($image));
-            $url = '/storage/cursos/' . $image->hashName();
+            $url = '/storage/cursos/'.$image->hashName();
 
             $course->image()->create([
                 'url' => $url,
@@ -153,7 +153,7 @@ class CourseController extends Controller
         if ($request->hasFile('file')) {
             $image = $request->file('file');
             Storage::put('public/cursos', $image);
-            $url = '/storage/cursos/' . $image->hashName();
+            $url = '/storage/cursos/'.$image->hashName();
 
             if ($course->image) {
                 Storage::delete($course->image->url);

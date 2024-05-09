@@ -4,7 +4,6 @@ namespace App\Listeners;
 
 use App\Models\User;
 use App\Notifications\EvaluacionNotification;
-use App\Notifications\PlanImplementacionNotification;
 use Illuminate\Support\Facades\Notification;
 
 class EvaluacionListener

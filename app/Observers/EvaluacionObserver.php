@@ -44,7 +44,6 @@ class EvaluacionObserver
         $this->forgetCache();
     }
 
-
     private function forgetCache()
     {
         Cache::forget('Evaluacion:Evaluacion_all');
