@@ -29,7 +29,7 @@
             </div>
         </div> --}}
         <div class="row mt-4">
-            <div class="form-group col-md-2">
+            <div class="form-group col-md-3">
                 <div class="dropdown">
                     <button class="btn btn-secondary btn-lg dropdown-toggle form-control" type="button"
                         id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
@@ -37,19 +37,15 @@
                         Asignar Empleados*
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
-                        style="max-height: 200px; overflow-y: auto;">
+                        style="width:300px; max-height: 200px; overflow-y: auto;">
                         @foreach ($empleados as $key => $empleado)
                             <div class="dropdown-item">
                                 <div class="row mt-2 mb-2">
-                                    <div class="col-10">
-                                        <label for="empleado_{{ $empleado['id'] }}">{{ $empleado['name'] }}</label>
-                                    </div>
-                                    <div class="col-2 text-end">
-                                        <input type="checkbox" id="empleado_{{ $empleado['id'] }}"
-                                            class="form-check-input" style="transform: scale(2);"
-                                            wire:model="empleados.{{ $key }}.seleccionado"
-                                            wire:change="asignacionEmpleados('{{ $empleado['id'] }}','{{ $key }}', $event.target.checked ? true : false)">
-                                    </div>
+                                    {{ $empleado['name'] }}
+                                    <input type="checkbox" id="empleado_{{ $empleado['id'] }}" class="form-check-input"
+                                        style="transform: scale(2);"
+                                        wire:model="empleados.{{ $key }}.seleccionado"
+                                        wire:change="asignacionEmpleados('{{ $empleado['id'] }}','{{ $key }}', $event.target.checked ? true : false)">
                                 </div>
                             </div>
                         @endforeach
@@ -271,11 +267,12 @@
                                 <div class="row">
                                     <div class="form-group col-md-8">
                                         <label for="">Empleado<sup>*</sup>(obligatorio)</label>
-                                        <select name="empleado_editado" id="" class="select2" required>
-                                            <option value="{{ $proyect_empleado->id_empleado }}" selected>
-                                                {{ $proyect_empleado->name }}</option>
+                                        <select name="empleado_editado" id="empleado_editado" class="form-control"
+                                            required>
                                             @foreach ($empleados as $empleado)
-                                                <option value="{{ $empleado['id'] }}">{{ $empleado['name'] }}
+                                                <option value="{{ $empleado['id'] }}"
+                                                    {{ $empleado['id'] == $proyect_empleado->empleado->id ? 'selected' : '' }}>
+                                                    {{ $empleado['name'] }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -338,14 +335,13 @@
                             <div class="text-center">
                                 <i class="fa-solid fa-trash-can" style="color: #E34F4F; font-size:60pt;"></i>
                                 <h1 class="my-4" style="font-size:14pt;">Remover empleado de Proyecto:
-                                    <small>{{ $proyect_empleado->proyecto }}</small>
+                                    <small>{{ $proyecto->proyecto }}</small>
                                 </h1>
-                                <p class="parrafo">¿Desea remover a {{ $proyect_empleado->name }} del
-                                    proyecto {{ $proyect_empleado->proyecto }}?</p>
+                                <p class="parrafo">¿Desea remover a {{ $proyect_empleado->empleado->name }} del
+                                    proyecto {{ $proyecto->proyecto }}?</p>
                             </div>
                             <div class="mt-4 d-flex justify-content-between">
-                                <button wire:click.prevent="cancelar()" class="btn btn_cancelar"
-                                    data-dismiss="modal">
+                                <button class="btn btn_cancelar" data-dismiss="modal">
                                     Cancelar
                                 </button>
                                 <button class="btn btn-info" style="border:none; background-color:#E34F4F;"

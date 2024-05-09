@@ -43,8 +43,8 @@ class TimesheetProyectoEmpleadosComponent extends Component
     public function render()
     {
         $proyecto_id = $this->proyecto_id;
-
-        $this->proyecto = TimesheetProyecto::getIdNameAll()->where('id', '=', $proyecto_id);
+        //Se usa find para buscar dentro y obtener dentro de la coleccion
+        $this->proyecto = TimesheetProyecto::getIdNameAll()->where('id', '=', $proyecto_id)->first();
 
         $areasempleado = DB::table('timesheet_proyectos_areas')
             ->select('id', 'area_id', 'proyecto_id')
@@ -54,9 +54,10 @@ class TimesheetProyectoEmpleadosComponent extends Component
         $empleados_Area = [];
 
         foreach ($areasempleado as $area) {
-            $emps = Area::with('empleadosBasico')->where('id', '=', $area->area_id)->empleadosBasico;
+            //Se usa find para buscar dentro y obtener dentro de la coleccion
+            $emps = Area::with('empleadosBasico')->where('id', '=', $area->area_id)->first();
 
-            foreach ($emps as $empleado) {
+            foreach ($emps->empleadosBasico as $empleado) {
                 $empleados_Area[] = [
                     'id' => $empleado->id,
                     'name' => $empleado->name,
@@ -167,7 +168,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
     {
         $empleado_add_proyecto = Empleado::find($empleado_añadido_id);
 
-        if (! $empleado_add_proyecto) {
+        if (!$empleado_add_proyecto) {
             return redirect()->route('admin.timesheet-proyecto-empleados', ['proyecto_id' => intval($this->proyecto_id)])
                 ->with('error', 'El registro fue eliminado');
         }
@@ -185,7 +186,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
                         'costo_hora' => $this->costo_hora,
                     ]
                 );
-                if (! $todosExt) {
+                if (!$todosExt) {
                     $this->resetInput();
                 }
             } else {
