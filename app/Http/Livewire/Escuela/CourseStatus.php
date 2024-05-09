@@ -9,9 +9,11 @@ use App\Models\Escuela\UserEvaluation;
 use App\Models\User;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class CourseStatus extends Component
 {
+    use LivewireAlert;
     // use AuthorizesRequests;
     //declaramos la propiedad course y current
     public $course;
@@ -57,10 +59,18 @@ class CourseStatus extends Component
 
     //METODOS
     //cambiamos la lección actual
-    public function changeLesson(Lesson $lesson)
+    public function changeLesson(Lesson $lesson, $atras = null)
     {
+        if ($atras == 'previous') {
+            $this->current = $lesson;
+        }
+
+        if (! $this->current->completed) {
+            $this->alertaEmergente();
+            return;
+        }
+
         $this->current = $lesson;
-        // dd($this->current);
     }
 
     public function completed()
@@ -131,5 +141,15 @@ class CourseStatus extends Component
     {
         // dd($this->current->resource);
         return response()->download(storage_path('app/'.$this->current->resource->url));
+    }
+
+    public function alertaEmergente()
+    {
+        $this->alert('warning', 'Debe terminar la lección antes de continuar', [
+            'position' => 'center',
+            'timer' => 3000,
+            'toast' => false,
+            'timerProgressBar' => true,
+           ]);
     }
 }

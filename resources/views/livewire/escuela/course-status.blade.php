@@ -51,7 +51,7 @@
                     <div class="row">
                         <div class="col-6">
                             @if ($this->previous)
-                                <a wire:click="changeLesson({{ $this->previous }})" class=" text-primary"
+                                <a wire:click="changeLesson({{ $this->previous }}, 'previous')" class=" text-primary"
                                     style="cursor: pointer;">
                                     < Tema anterior </a>
                                     @else
