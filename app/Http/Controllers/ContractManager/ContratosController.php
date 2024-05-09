@@ -128,8 +128,6 @@ class ContratosController extends AppBaseController
             'no_contrato.required_unless' => 'Solo los Contratos privados no requieren Numero de Contrato',
         ]);
 
-
-
         $resultado = null;
         $resultado2 = null;
         $resultado3 = null;
@@ -174,7 +172,6 @@ class ContratosController extends AppBaseController
             $resultado8 = str_replace(',', '', $resultado);
         }
 
-
         $input = $request->all();
 
         $ultimo_id = Contrato::get('id')->last();
@@ -193,16 +190,15 @@ class ContratosController extends AppBaseController
             $fecha_firma = null;
         }
         if ($request->identificador_privado == true) {
-            $no_contrato_sin_slashes = 'privado' . '' . $ultimo_id->id + 1 . '-' . $date;
+            $no_contrato_sin_slashes = 'privado'.''.$ultimo_id->id + 1 .'-'.$date;
         }
         $no_contrato_sin_slashes = preg_replace('[/]', '-', $request->no_contrato);
 
         if ($request->identificador_privado == true) {
-            $num_contrato = 'privado' . '-' . $ultimo_id->id + 1 . '-' . $date;
+            $num_contrato = 'privado'.'-'.$ultimo_id->id + 1 .'-'.$date;
         } else {
             $num_contrato = $no_contrato_sin_slashes;
         }
-
 
         $contrato = $this->contratoRepository->create([
             'tipo_contrato' => $request->tipo_contrato,
@@ -235,8 +231,6 @@ class ContratosController extends AppBaseController
             // 'firma1' => $firma,
         ], $input);
 
-
-
         $dolares = DolaresContrato::create([
             'contrato_id' => $contrato->id,
             'monto_dolares' => $resultado5,
@@ -247,41 +241,40 @@ class ContratosController extends AppBaseController
 
         //########## SE CREAN DIRECTORIOS VACÍOS ###################
 
-        if (!Storage::exists('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/niveles servicio')) {
-            Storage::makeDirectory('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/niveles servicio');
-            Storage::copy('public/contratos/.gitignore', 'public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/niveles servicio');
+        if (! Storage::exists('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/niveles servicio')) {
+            Storage::makeDirectory('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/niveles servicio');
+            Storage::copy('public/contratos/.gitignore', 'public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/niveles servicio');
         }
-        if (!Storage::exists('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/entregables mensuales')) {
-            Storage::makeDirectory('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/entregables mensuales');
-            Storage::copy('public/contratos/.gitignore', 'public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/entregables mensuales');
+        if (! Storage::exists('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/entregables mensuales')) {
+            Storage::makeDirectory('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/entregables mensuales');
+            Storage::copy('public/contratos/.gitignore', 'public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/entregables mensuales');
         }
-        if (!Storage::exists('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/cierre contrato')) {
-            Storage::makeDirectory('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/cierre contrato');
+        if (! Storage::exists('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/cierre contrato')) {
+            Storage::makeDirectory('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/cierre contrato');
         }
-        if (!Storage::exists('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/facturas/pdf')) {
-            Storage::makeDirectory('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/facturas/pdf');
+        if (! Storage::exists('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/facturas/pdf')) {
+            Storage::makeDirectory('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/facturas/pdf');
         }
-        if (!Storage::exists('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/facturas/xml')) {
-            Storage::makeDirectory('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/facturas/xml');
+        if (! Storage::exists('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/facturas/xml')) {
+            Storage::makeDirectory('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/facturas/xml');
         }
-
 
         //############# GESTIÓN ARCHIVOS ##################
 
         $file = $request->file('documento');
-        if (!Storage::exists('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato)) {
-            Storage::makeDirectory('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato);
+        if (! Storage::exists('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato)) {
+            Storage::makeDirectory('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato);
         }
 
         if ($file != null) {
             $nombre = $file->getClientOriginalName();
 
-            if (!Storage::exists('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/penalizaciones')) {
-                Storage::makeDirectory('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/penalizaciones');
+            if (! Storage::exists('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/penalizaciones')) {
+                Storage::makeDirectory('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/penalizaciones');
             }
-            $file->storeAs('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/penalizaciones', $contrato->id . $fecha_inicio . $nombre);
+            $file->storeAs('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/penalizaciones', $contrato->id.$fecha_inicio.$nombre);
             $contratos = Contrato::find($contrato->id);
-            $contratos->documento = $contrato->id . $fecha_inicio . $nombre;
+            $contratos->documento = $contrato->id.$fecha_inicio.$nombre;
             $contratos->save();
         }
 
@@ -302,17 +295,15 @@ class ContratosController extends AppBaseController
 
         // Move file from tmp directory if name is send
         if ($request->file_contrato) {
-            if (Storage::disk('local')->exists('katbol-contratos-tmp/' . $request->file_contrato)) {
-                $nombre_f = $contrato->id . $fecha_inicio . $request->file_contrato;
-                Storage::move('katbol-contratos-tmp/' . $request->file_contrato, "public/contratos/{$contrato->id}_contrato_{$contrato->no_contrato}/{$nombre_f}");
+            if (Storage::disk('local')->exists('katbol-contratos-tmp/'.$request->file_contrato)) {
+                $nombre_f = $contrato->id.$fecha_inicio.$request->file_contrato;
+                Storage::move('katbol-contratos-tmp/'.$request->file_contrato, "public/contratos/{$contrato->id}_contrato_{$contrato->no_contrato}/{$nombre_f}");
                 // Storage::disk('local')->delete("katbol-contratos-tmp/{$request->file_contrato}");
             }
         }
         $contrato->update([
             'file_contrato' => $nombre_f,
         ]);
-
-
 
         //############# FIN REESTRUCTURACION DE ARCHIVOS ##################
 
@@ -337,7 +328,7 @@ class ContratosController extends AppBaseController
         // dd('hola1');
 
         //return redirect(route('contratos.index'));
-        return redirect('contract_manager/contratos-katbol/contratoinsert/' . $contrato->id);
+        return redirect('contract_manager/contratos-katbol/contratoinsert/'.$contrato->id);
     }
 
     /**
@@ -353,7 +344,7 @@ class ContratosController extends AppBaseController
             $formatoFecha = new FormatearFecha;
             $organizacion = Organizacion::getFirst();
             $areas = Area::getIdNameAll();
-            if (!$contrato) {
+            if (! $contrato) {
                 return redirect()->route('contract_manager.contratos-katbol.index')->with('error', 'Ocurrio un error.');
             }
             $proveedor_id = $contrato->proveedor_id;
@@ -363,7 +354,7 @@ class ContratosController extends AppBaseController
             $contrato->fecha_fin = $contrato->fecha_fin;
             $contrato->fecha_firma = $contrato->fecha_firma;
             $descargar_archivo =
-                '/public/storage/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/' . $contrato->file_contrato;
+                '/public/storage/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/'.$contrato->file_contrato;
             $convenios = ConveniosModificatorios::where('contrato_id', '=', $contratos->id)->get();
             $dolares = DolaresContrato::where('contrato_id', $id)->first();
 
@@ -388,26 +379,26 @@ class ContratosController extends AppBaseController
             $areas = Area::getAll();
             // dd($areas->count());
             $formatoFecha = new FormatearFecha;
-            if (!$contrato) {
+            if (! $contrato) {
                 return redirect()->route('contract_manager.contratos-katbol.index')->with('error', 'Ocurrio un error.');
             }
             $proveedor_id = $contrato->proveedor_id;
             $contratos = Contrato::with('ampliaciones', 'dolares')->find($id);
             // dd($contratos);
             $proveedores = TimesheetCliente::get();
-            if (!is_null($contrato->fecha_inicio)) {
+            if (! is_null($contrato->fecha_inicio)) {
                 $contrato->fecha_inicio = $contrato->fecha_inicio;
             }
-            if (!is_null($contrato->fecha_fin)) {
+            if (! is_null($contrato->fecha_fin)) {
                 $contrato->fecha_fin = $contrato->fecha_fin;
             }
-            if (!is_null($contrato->fecha_firma)) {
+            if (! is_null($contrato->fecha_firma)) {
                 $contrato->fecha_firma = $contrato->fecha_firma;
             } else {
                 $fecha_firma = null;
             }
 
-            $descargar_archivo = '/public/storage/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/' . $contrato->file_contrato;
+            $descargar_archivo = '/public/storage/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/'.$contrato->file_contrato;
 
             $convenios = ConveniosModificatorios::where('contrato_id', '=', $contratos->id)->get();
             // dd($convenios);
@@ -518,7 +509,7 @@ class ContratosController extends AppBaseController
 
         $contrato = $this->contratoRepository->find($id);
 
-        if (!$contrato) {
+        if (! $contrato) {
             return redirect()->route('contract_manager.contratos-katbol.index')->with('error', 'Ocurrio un error.');
         }
 
@@ -539,8 +530,8 @@ class ContratosController extends AppBaseController
 
         //#Cambiar nombre de carpeta
         if ($contrato->no_contrato != $request->no_contrato) {
-            if (Storage::exists('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato)) {
-                Storage::move('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato, 'public/contratos/' . $contrato->id . '_contrato_' . $request->no_contrato); //rename folder
+            if (Storage::exists('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato)) {
+                Storage::move('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato, 'public/contratos/'.$contrato->id.'_contrato_'.$request->no_contrato); //rename folder
             }
         }
         $no_contrato_sin_slashes = preg_replace('[/]', '-', $request->no_contrato);
@@ -622,11 +613,11 @@ class ContratosController extends AppBaseController
         $nombre_f = $contrato->file_contrato;
         if ($request->file('file_contrato') != null) {
             //esto agregamos 25-03-2021//
-            $isExists = Storage::disk('public')->exists('contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/' . $contrato->file_contrato);
+            $isExists = Storage::disk('public')->exists('contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/'.$contrato->file_contrato);
             if ($isExists) {
                 if ($contrato->file_contrato != null) {
                     //dd(Storage::disk('public'));
-                    unlink(storage_path('app/public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/' . $contrato->file_contrato));
+                    unlink(storage_path('app/public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/'.$contrato->file_contrato));
                 }
             }
 
@@ -642,26 +633,26 @@ class ContratosController extends AppBaseController
         // dd($request->file('documento'));
 
         $file = $request->file('documento');
-        if (!Storage::exists('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato)) {
-            Storage::makeDirectory('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato);
+        if (! Storage::exists('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato)) {
+            Storage::makeDirectory('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato);
         }
         if ($file != null) {
-            $isExists = Storage::disk('public')->exists('contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/penalizaciones' . '/' . $contrato->documento);
+            $isExists = Storage::disk('public')->exists('contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/penalizaciones'.'/'.$contrato->documento);
             if ($isExists) {
                 if ($contrato->documento != null) {
                     //dd(Storage::disk('public'));
-                    unlink(storage_path('app/public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/penalizaciones' . '/' . $contrato->documento));
+                    unlink(storage_path('app/public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/penalizaciones'.'/'.$contrato->documento));
                 }
             }
             $nombre = $file->getClientOriginalName();
 
-            if (!Storage::exists('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/penalizaciones')) {
-                Storage::makeDirectory('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/penalizaciones');
+            if (! Storage::exists('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/penalizaciones')) {
+                Storage::makeDirectory('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/penalizaciones');
             }
 
-            $file->storeAs('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/penalizaciones', $contrato->id . $fecha_inicio . $nombre);
+            $file->storeAs('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/penalizaciones', $contrato->id.$fecha_inicio.$nombre);
             $contratos = Contrato::find($contrato->id);
-            $contratos->documento = $contrato->id . $fecha_inicio . $nombre;
+            $contratos->documento = $contrato->id.$fecha_inicio.$nombre;
             $contratos->save();
         }
         //## FIN UPDATE REES####
@@ -803,7 +794,7 @@ class ContratosController extends AppBaseController
         $tamaño_limite = ($organizacion->config_megas_permitido_docs) * 1024;
 
         $request->validate([
-            'file' => 'required|mimes:' . $mines . '|max:' . $tamaño_limite,
+            'file' => 'required|mimes:'.$mines.'|max:'.$tamaño_limite,
         ]);
         $storagePath = Storage::disk('local')->put('katbol-contratos-tmp/', $request->file);
         $storageName = basename($storagePath);

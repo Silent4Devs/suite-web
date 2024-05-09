@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\ClearsResponseCache;
 use App\Traits\MultiTenantModelTrait;
+use Cache;
 use Carbon\Carbon;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -61,6 +62,7 @@ class MatrizRequisitoLegale extends Model implements Auditable
     ];
 
     protected $fillable = [
+        'id',
         'nombrerequisito',
         'fechaexpedicion',
         'fechavigor',
@@ -83,6 +85,13 @@ class MatrizRequisitoLegale extends Model implements Auditable
         'deleted_at',
         'team_id',
     ];
+
+    public static function getAll()
+    {
+        return Cache::remember('matriz_sgsi_all', 3600 * 12, function () {
+            return self::with('empleado')->get();
+        });
+    }
 
     protected function serializeDate(DateTimeInterface $date)
     {

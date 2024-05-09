@@ -28,7 +28,7 @@
                 <div class="form-group col-md-12">
                     <label class="required" for="parteinteresada"><i
                             class="fas fa-user-tie iconos-crear"></i>{{ trans('cruds.partesInteresada.fields.parteinteresada') }}</label>
-                    <input class="form-control {{ $errors->has('parteinteresada') ? 'is-invalid' : '' }}" type="text"
+                    <input class="form-control {{ $errors->has('parteinteresada') ? 'is-invalid' : '' }}" type="text" maxlength="255"
                         name="parteinteresada" id="parteinteresada"
                         value="{{ old('parteinteresada', $partesInteresada->parteinteresada) }}" required>
                     @if ($errors->has('parteinteresada'))

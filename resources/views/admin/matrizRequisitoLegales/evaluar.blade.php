@@ -99,9 +99,9 @@
                     <div class="row">
                         <div class="form-group col-12">
                             <p class="text-center text-light p-1" style="background-color:#345183; border-radius: 100px;">
-                                Vincular revisión a plan de acción</p>
+                                Vincular revisión a plan de trabajo</p>
                         </div>
-                        {{-- MODULO AGREGAR PLAN DE ACCIÓN --}}
+                        {{-- MODULO AGREGAR PLAN DE Trabajo --}}
                         <div class="row w-100 align-items-center" style="margin-left: 1px;">
                             @livewire('planes-implementacion-select',['planes_seleccionados'=>[]])
                             <div class="pl-0 mt-2 ml-0 col-2">
@@ -114,7 +114,7 @@
                             Requisitos
                             Legales'])
                         </div>
-                        {{-- FIN MODULO AGREGAR PLAN DE ACCIÓN --}}
+                        {{-- FIN MODULO AGREGAR PLAN DE Trabajo --}}
                         <div class="form-group col-12">
                             <p class="text-center text-light p-1" style="background-color:#345183; border-radius: 100px;">
                                 Colaborar que verifico</p>
@@ -215,7 +215,7 @@
         Livewire.on('planStore', () => {
             $('#planAccionModal').modal('hide');
             $('.modal-backdrop').hide();
-            toastr.success('Plan de Acción creado con éxito');
+            toastr.success('Plan de Trabajo creado con éxito');
         });
         window.initSelect2 = () => {
             $('.select2').select2({

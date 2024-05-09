@@ -43,9 +43,11 @@
                         <th>Cliente</th>
                         <th style="max-width: 250px !important;">Área(s)</th>
                         <th style="max-width: 250px !important;">Empleados participantes</th>
+                        <th>Horas del empleado</th>
+                        <th>Costo total del empleado</th>
                         <th>Estatus</th>
-                        <th>Horas totales</th>
-                        <th>Costo total</th>
+                        <th>Horas totales del proyecto</th>
+                        <th>Costo total del proyecto</th>
                     </tr>
                 </thead>
 
@@ -68,7 +70,24 @@
                                 <ul style="padding-left:10px; ">
                                     @foreach ($proyecto->empleados as $empleado)
                                         <li>
-                                            {{ $empleado['name'] }} | {{ $empleado['horas'] }} <small>h</small> |
+                                            {{ $empleado['name'] }}
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </td>
+                            <td>
+                                <ul style="padding-left:10px; ">
+                                    @foreach ($proyecto->empleados as $empleado)
+                                        <li>
+                                            {{ $empleado['horas'] }} <small>h</small>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </td>
+                            <td>
+                                <ul style="padding-left:10px; ">
+                                    @foreach ($proyecto->empleados as $empleado)
+                                        <li>
                                             ${{ $empleado['costo_horas'] }}
                                         </li>
                                     @endforeach
@@ -119,8 +138,65 @@
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar Excel',
                     exportOptions: {
-                        columns: ['th:not(:last-child):visible']
+                        autoWidth: true
+                    },
+                    customizeData: function(data) {
+                        let logo_actual = @json($proyectos);
+
+                        for (var i = 0; i < data.body.length; i++) {
+                            var columnaD = data.body[i][3];
+                            var elementosD = columnaD.split(/\s{2,}/);
+                            var arrayD = [];
+                            elementosD.forEach(function(elemento) {
+                                arrayD.push(elemento.trim());
+                            });
+                            data.body[i][3] = arrayD;
+
+                            var columnaE = data.body[i][4];
+                            var elementosE = columnaE.split(/\s{2,}/);
+                            var arrayE = [];
+                            elementosE.forEach(function(elemento) {
+                                elementosE.forEach(function(subElemento) {
+                                    arrayE.push(subElemento.trim());
+                                });
+                            });
+                            data.body[i][4] = arrayE;
+
+                            var columnaF = data.body[i][5];
+                            var elementosF = columnaF.split(/\s{2,}/);
+                            var arrayF = [];
+                            elementosF.forEach(function(elemento) {
+                                arrayF.push(elemento.trim());
+                            });
+                            data.body[i][5] = arrayF;
+
+                            var columnaG = data.body[i][6];
+                            var elementosG = columnaG.split(/\s{2,}/);
+                            var arrayG = [];
+                            elementosG.forEach(function(elemento) {
+                                arrayG.push(elemento.trim());
+                            });
+                            data.body[i][6] = arrayG;
+                        }
+                    },
+                    customize: function(xlsx) {
+                        var sheet = xlsx.xl.worksheets[
+                            'sheet1.xml'];
+
+
+                        $('col', sheet).each(function() {
+                            $(this).attr('width', '25');
+                        });
+
+                        $('row c[r^="D"], row c[r^="E"], row c[r^="F"], row c[r^="G"]', sheet).each(function() {
+                            var cellText = $(this).find('is t').text();
+                            cellText = cellText.replace(/,/g, ',\n');
+                            $(this).find('is t').text(cellText);
+                            $(this).attr('s', '25');
+                            $(this).attr('style', 'mso-wrap-text: true;');
+                        });
                     }
+
                 },
                 {
                     extend: 'print',

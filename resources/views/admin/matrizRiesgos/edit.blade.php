@@ -461,7 +461,7 @@
                     </div>
 
                     <div class="form-group col-sm-12">
-                        {{-- <label for="plan_de_accion"><i class="fas fa-lightbulb iconos-crear"></i>Plan de acción</label>
+                        {{-- <label for="plan_de_accion"><i class="fas fa-lightbulb iconos-crear"></i>Plan de Trabajo</label>
                         <select class="form-control {{ $errors->has('plan_de_accion') ? 'is-invalid' : '' }}"
                             name="plan_de_accion" id="plan_de_accion">
                             <option value disabled {{ old('plan_de_accion', null) === null ? 'selected' : '' }}>
@@ -478,10 +478,10 @@
                             </div>
                         @endif
                         <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.amenaza_helper') }}</span> --}}
-                        {{-- MODULO AGREGAR PLAN DE ACCIÓN --}}
+                        {{-- MODULO AGREGAR PLAN DE Trabajo --}}
                         {{-- <div class="row w-100">
                             <label for="plan_accion" style="margin-left: 15px; margin-bottom:5px;"> <i
-                                    class="fas fa-question-circle iconos-crear"></i> ¿Vincular con plan de acción?</label>
+                                    class="fas fa-question-circle iconos-crear"></i> ¿Vincular con plan de Trabajo?</label>
                             @livewire('planes-implementacion-select',['planes_seleccionados'=>[]])
                             <div class="pl-0 ml-0 col-2">
                                 <button type="button" class="btn btn-sm btn-success" data-toggle="modal"
@@ -492,7 +492,7 @@
                             @livewire('plan-implementacion-create', ['referencia' => null,'modulo_origen'=>'Matríz de
                             riesgos', 'id_matriz' => $matrizRiesgo->id_analisis])
                         </div> --}}
-                        {{-- FIN MODULO AGREGAR PLAN DE ACCIÓN --}}
+                        {{-- FIN MODULO AGREGAR PLAN DE Trabajo --}}
                     </div>
 
                 </div>

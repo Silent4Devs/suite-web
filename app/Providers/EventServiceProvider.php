@@ -3,21 +3,44 @@
 namespace App\Providers;
 
 use App\Events\AccionCorrectivaEvent;
+use App\Events\AlcancesEvent;
 use App\Events\AuditoriaAnualEvent;
+use App\Events\CoursesEvent;
+use App\Events\DocumentoEvent;
+use App\Events\EntendimientoOrganizacionEvent;
 use App\Events\IncidentesDeSeguridadEvent;
+use App\Events\MatrizRequisitosEvent;
+use App\Events\PoliticasSgiEvent;
 use App\Events\RecursosEvent;
 use App\Events\RegistroMejoraEvent;
+use App\Events\RequisicionesEvent;
+use App\Events\SolicitudDayofEvent;
+use App\Events\SolicitudPermisoEvent;
+use App\Events\SolicitudVacacionesEvent;
 use App\Events\TaskRecursosEvent;
+use App\Events\TimesheetEvent;
 use App\Listeners\AccionCorrectivaListener;
+use App\Listeners\AlcancesListener;
 use App\Listeners\AuditoriaAnualListener;
 use App\Listeners\BroadcastUserLoginNotification;
+use App\Listeners\CoursesListener;
+use App\Listeners\DocumentoListener;
+use App\Listeners\EntendimientoOrganizacionListener;
 use App\Listeners\IncidentesDeSeguridadListener;
+use App\Listeners\MatrizRequisitosListener;
+use App\Listeners\PoliticasSgiListener;
 use App\Listeners\RecursosListener;
 use App\Listeners\RegistroMejoraListener;
+use App\Listeners\RequisicionesListener;
+use App\Listeners\SolicitudDayofListener;
+use App\Listeners\SolicitudPermisoListener;
+use App\Listeners\SolicitudVacacionesListener;
 use App\Listeners\TaskRecursosListener;
+use App\Listeners\TimesheetListener;
 use App\Models\AccionCorrectiva;
 use App\Models\Activo;
 use App\Models\activoConfidencialidad;
+use App\Models\AlcanceSgsi;
 use App\Models\Area;
 use App\Models\AuditoriaAnual;
 use App\Models\AuditoriaInterna;
@@ -27,6 +50,7 @@ use App\Models\CategoriaCapacitacion;
 use App\Models\ComunicacionSgi;
 use App\Models\ContractManager\Contrato;
 use App\Models\ContractManager\ProveedorIndistinto;
+use App\Models\ContractManager\Requsicion;
 use App\Models\ContractManager\Sucursal;
 use App\Models\DeclaracionAplicabilidad;
 use App\Models\Denuncias;
@@ -44,6 +68,7 @@ use App\Models\IncidentesSeguridad;
 use App\Models\IncidentesVacaciones;
 use App\Models\Macroproceso;
 use App\Models\Marca;
+use App\Models\MatrizRequisitoLegale;
 use App\Models\MatrizRiesgo;
 use App\Models\MatrizRiesgosSistemaGestion;
 use App\Models\Mejoras;
@@ -92,6 +117,7 @@ use App\Models\Vulnerabilidad;
 use App\Observers\AccionCorrectivaObserver;
 use App\Observers\ActivoConfidencialObserver;
 use App\Observers\ActivosObserver;
+use App\Observers\AlcancesObserver;
 use App\Observers\AreasObserver;
 use App\Observers\AuditoriaAnualObserver;
 use App\Observers\AuditoriaInternaObserver;
@@ -119,6 +145,7 @@ use App\Observers\KatbolProveedorIndistintoObserver;
 use App\Observers\LessonObserver;
 use App\Observers\MacroprocesoObserver;
 use App\Observers\MarcasObserver;
+use App\Observers\MastrizRequisitosObserver;
 use App\Observers\MatrizRiesgoObserver;
 use App\Observers\MatrizRiesgosSistemaGestionObserver;
 use App\Observers\MejorasObserver;
@@ -139,6 +166,7 @@ use App\Observers\QuejasObserver;
 use App\Observers\RecursoObserver;
 use App\Observers\RecursosObserver;
 use App\Observers\RegistroMejoraObserver;
+use App\Observers\RequisicionesObserver;
 use App\Observers\RevisionDocumentoObserver;
 use App\Observers\RiesgoIdentificadoObserver;
 use App\Observers\RolesObserver;
@@ -183,24 +211,57 @@ class EventServiceProvider extends ServiceProvider
         Login::class => [
             BroadcastUserLoginNotification::class,
         ],
-        // IncidentesDeSeguridadEvent::class => [
-        //     IncidentesDeSeguridadListener::class,
+        IncidentesDeSeguridadEvent::class => [
+            IncidentesDeSeguridadListener::class,
+        ],
+        AuditoriaAnualEvent::class => [
+            AuditoriaAnualListener::class,
+        ],
+        AccionCorrectivaEvent::class => [
+            AccionCorrectivaListener::class,
+        ],
+        RegistroMejoraEvent::class => [
+            RegistroMejoraListener::class,
+        ],
+        RecursosEvent::class => [
+            RecursosListener::class,
+        ],
+        TaskRecursosEvent::class => [
+            TaskRecursosListener::class,
+        ],
+        PoliticasSgiEvent::class => [
+            PoliticasSgiListener::class,
+        ],
+        AlcancesEvent::class => [
+            AlcancesListener::class,
+        ],
+        MatrizRequisitosEvent::class => [
+            MatrizRequisitosListener::class,
+        ],
+        RequisicionesEvent::class => [
+            RequisicionesListener::class,
+        ],
+        EntendimientoOrganizacionEvent::class => [
+            EntendimientoOrganizacionListener::class,
+        ],
+        DocumentoEvent::class => [
+            DocumentoListener::class,
+        ],
+        // TimesheetEvent::class => [
+        //     TimesheetListener::class,
         // ],
-        // AuditoriaAnualEvent::class => [
-        //     AuditoriaAnualListener::class,
-        // ],
-        // AccionCorrectivaEvent::class => [
-        //     AccionCorrectivaListener::class,
-        // ],
-        // RegistroMejoraEvent::class => [
-        //     RegistroMejoraListener::class,
-        // ],
-        // RecursosEvent::class => [
-        //     RecursosListener::class,
-        // ],
-        // TaskRecursosEvent::class => [
-        //     TaskRecursosListener::class,
-        // ],
+        CoursesEvent::class => [
+            CoursesListener::class,
+        ],
+        SolicitudVacacionesEvent::class => [
+            SolicitudVacacionesListener::class,
+        ],
+        SolicitudDayofEvent::class => [
+            SolicitudDayofListener::class,
+        ],
+        SolicitudPermisoEvent::class => [
+            SolicitudPermisoListener::class,
+        ],
     ];
 
     /**
@@ -211,6 +272,9 @@ class EventServiceProvider extends ServiceProvider
     public function boot()
     {
         IncidentesDeSeguridad::observe(IncidentesDeSeguridadObserver::class);
+        AlcanceSgsi::observe(AlcancesObserver::class);
+        Requsicion::observe(RequisicionesObserver::class);
+        MatrizRequisitoLegale::observe(MastrizRequisitosObserver::class);
         AuditoriaAnual::observe(AuditoriaAnualObserver::class);
         AccionCorrectiva::observe(AccionCorrectivaObserver::class);
         Registromejora::observe(RegistroMejoraObserver::class);
@@ -221,7 +285,6 @@ class EventServiceProvider extends ServiceProvider
         Sede::observe(SedesObserver::class);
         User::observe(UsersObserver::class);
         Calendario::observe(CalendarioObserver::class);
-        AuditoriaAnual::observe(AuditoriaAnualObserver::class);
         Area::observe(AreasObserver::class);
         Proceso::observe(ProcesosObserver::class);
         Activo::observe(ActivosObserver::class);

@@ -49,12 +49,19 @@ class TimesheetTarea extends Model implements Auditable
     public function getAreasAttribute()
     {
         $areas = [];
-        if ($this->todos == true) {
-            foreach ($this->proyecto->areas as $key => $area) {
-                array_push($areas, $area);
+
+        // Verificar si $this->proyecto no es nulo
+        if ($this->proyecto !== null) {
+            // Verificar si $this->todos es true y si $this->proyecto->areas es un array
+            if ($this->todos && is_array($this->proyecto->areas)) {
+                foreach ($this->proyecto->areas as $key => $area) {
+                    array_push($areas, $area);
+                }
+            } else {
+                // Si $this->todos no es true o $this->proyecto->areas no es un array,
+                // agregar el área encontrada por su ID
+                $areas = [Area::find($this->area_id)];
             }
-        } else {
-            $areas = [Area::find($this->area_id)];
         }
 
         return $areas;

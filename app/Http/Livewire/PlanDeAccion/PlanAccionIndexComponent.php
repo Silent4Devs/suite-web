@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\PlanDeAccion;
 
-use App\Models\Area;
 use App\Models\Empleado;
 use App\Models\PlanImplementacion;
 use App\Models\User;

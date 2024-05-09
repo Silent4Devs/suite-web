@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreRiesgosRequest;
 use App\Models\Activo;
 use App\Models\AnalisisSeguridad;
 use App\Models\Area;
@@ -51,6 +52,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
+use VXM\Async\AsyncFacade as Async;
 
 class InicioUsuarioController extends Controller
 {
@@ -61,8 +63,50 @@ class InicioUsuarioController extends Controller
         $hoy = Carbon::now();
         $hoy->toDateString();
 
-        $usuario = User::getCurrentUser();
+        Async::batchRun(
+            function () use (&$implementaciones) {
+                // Check if the result is already cached
+                $implementaciones = PlanImplementacion::getAll();
+            },
+            function () use (&$existsEmpleado) {
+                $existsEmpleado = Empleado::exists();
+            },
+            function () use (&$existsOrganizacion) {
+                $existsOrganizacion = Organizacion::exists();
+            },
+            function () use (&$existsAreas) {
+                $existsAreas = Area::exists();
+            },
+            function () use (&$existsPuesto) {
+                $existsPuesto = Puesto::exists();
+            },
+            function () use (&$existsVinculoEmpleadoAdmin) {
+                $existsVinculoEmpleadoAdmin = User::exists();
+            },
+            function () use (&$organizacion) {
+                $organizacion = Organizacion::getFirst();
+            },
+            function () use (&$panel_rules) {
+                $panel_rules = PanelInicioRule::getAll();
+            },
+            function () use (&$documentos_publicados) {
+                $documentos_publicados = Documento::getLastFiveWithMacroproceso();
+            },
+            function () use (&$auditorias_anual) {
+                $auditorias_anual = AuditoriaAnual::getAll();
+            },
+            function () use (&$eventos) {
+                $eventos = Calendario::getAll();
+            },
+            function () use (&$oficiales) {
+                $oficiales = CalendarioOficial::getAll();
+            },
+            function () use (&$cumples_aniversarios) {
+                $cumples_aniversarios = Empleado::getAltaEmpleadosWithArea();
+            },
+        );
 
+        $usuario = User::getCurrentUser();
         $empleado = Empleado::getMyEmpleadodata($usuario->empleado->id);
 
         $usuarioVinculadoConEmpleado = false;
@@ -72,8 +116,7 @@ class InicioUsuarioController extends Controller
 
         $empleado_id = $empleado ? $empleado->id : 0;
         $actividades = [];
-        // Check if the result is already cached
-        $implementaciones = PlanImplementacion::getAll();
+
         $actividades = collect();
         if ($implementaciones) {
             foreach ($implementaciones as $implementacion) {
@@ -132,12 +175,8 @@ class InicioUsuarioController extends Controller
             }
         }
 
-        $auditorias_anual = AuditoriaAnual::getAll();
         $auditoria_internas = new AuditoriaInterna;
         $recursos = collect();
-        $eventos = Calendario::getAll();
-        $oficiales = CalendarioOficial::getAll();
-        $cumples_aniversarios = Empleado::getAltaEmpleadosWithArea();
         $mis_quejas = collect();
         $mis_quejas_count = 0;
         $mis_denuncias = collect();
@@ -150,7 +189,7 @@ class InicioUsuarioController extends Controller
         $solicitud_dayoff = 0;
         $solicitud_permiso = 0;
         $solicitudes_pendientes = 0;
-        $cacheKey = 'AuditoriaInterna:auditoria_internas_' . $usuario->id;
+        $cacheKey = 'AuditoriaInterna:auditoria_internas_'.$usuario->id;
         $auditoria_internas = Cache::remember($cacheKey, 3600 * 8, function () use ($empleado) {
             return AuditoriaInterna::where(function ($query) use ($empleado) {
                 $query->whereHas('equipo', function ($subquery) use ($empleado) {
@@ -159,7 +198,7 @@ class InicioUsuarioController extends Controller
             })->distinct()->get();
         });
 
-        $cacheKeyRecursos = 'Recursos:recursos_' . $usuario->id;
+        $cacheKeyRecursos = 'Recursos:recursos_'.$usuario->id;
         $recursos = Cache::remember($cacheKeyRecursos, 3600 * 8, function () use ($empleado) {
             return Recurso::whereHas('empleados', function ($query) use ($empleado) {
                 $query->where('empleados.id', $empleado->id);
@@ -168,7 +207,6 @@ class InicioUsuarioController extends Controller
 
         $contador_recursos = $recursos->where('fecha_fin', '>=', Carbon::now()->toDateString())->count();
 
-        $documentos_publicados = Documento::getLastFiveWithMacroproceso();
         $revisiones = [];
         $mis_documentos = [];
         $contador_revisiones = 0;
@@ -252,7 +290,7 @@ class InicioUsuarioController extends Controller
 
         $panel_rules = PanelInicioRule::getAll();
 
-        if (!is_null($empleado)) {
+        if (! is_null($empleado)) {
             $activos = Activo::select('*')->where('id_responsable', '=', $empleado->id)->get();
             if ($empleado->cumpleaños) {
                 $cumpleaños_usuario = Carbon::parse($empleado->cumpleaños)->format('d-m');
@@ -275,7 +313,6 @@ class InicioUsuarioController extends Controller
             $cumpleaños_felicitados_comentarios = collect();
         }
 
-        $organizacion = Organizacion::getFirst();
         $competencias = collect();
 
         if ($empleado) {
@@ -286,7 +323,7 @@ class InicioUsuarioController extends Controller
                     }]);
                 }]
             )->find($empleado->id)->puestoRelacionado;
-            $competencias = !is_null($competencias) ? $competencias->competencias : collect();
+            $competencias = ! is_null($competencias) ? $competencias->competencias : collect();
 
             $quejas = Quejas::getAll()->where('empleado_quejo_id', $empleado->id);
             $denuncias = Denuncias::getAll()->where('empleado_denuncio_id', $empleado->id);
@@ -308,12 +345,6 @@ class InicioUsuarioController extends Controller
             $solicitudes_pendientes = $solicitud_vacacion + $solicitud_dayoff + $solicitud_permiso;
             // $solicitudes_pendientes = 1;
         }
-
-        $existsEmpleado = Empleado::getExists();
-        $existsOrganizacion = Organizacion::getExists();
-        $existsAreas = Area::getExists();
-        $existsPuesto = Puesto::getExists();
-        $existsVinculoEmpleadoAdmin = User::getExists();
 
         return view('admin.inicioUsuario.index', compact(
             'empleado',
@@ -701,13 +732,13 @@ class InicioUsuarioController extends Controller
 
         $image = null;
 
-        if ($request->file('evidencia') != null or !empty($request->file('evidencia'))) {
+        if ($request->file('evidencia') != null or ! empty($request->file('evidencia'))) {
             foreach ($request->file('evidencia') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
+                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
 
-                $new_name_image = 'Queja_file_' . $quejas->id . '_' . $name_image . '.' . $extension;
+                $new_name_image = 'Queja_file_'.$quejas->id.'_'.$name_image.'.'.$extension;
 
                 $route = 'public/evidencias_quejas';
 
@@ -739,6 +770,13 @@ class InicioUsuarioController extends Controller
     public function storeDenuncias(Request $request)
     {
         abort_if(Gate::denies('mi_perfil_mis_reportes_realizar_reporte_de_denuncia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $request->validate([
+            'ubicacion' => 'required|max:255',
+            'descripcion' => 'required|max:550',
+        ], [
+            'descripcion.max' => 'El campo título no puede exceder los 550 caracteres.',
+            'ubicacion.max' => 'El campo descripción no puede exceder los 255 caracteres.',
+        ]);
 
         $denuncias = Denuncias::create([
             'anonimo' => $request->anonimo,
@@ -759,13 +797,13 @@ class InicioUsuarioController extends Controller
 
         $image = null;
 
-        if ($request->file('evidencia') != null or !empty($request->file('evidencia'))) {
+        if ($request->file('evidencia') != null or ! empty($request->file('evidencia'))) {
             foreach ($request->file('evidencia') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
+                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
 
-                $new_name_image = 'Denuncia_file_' . $denuncias->id . '_' . $name_image . '.' . $extension;
+                $new_name_image = 'Denuncia_file_'.$denuncias->id.'_'.$name_image.'.'.$extension;
 
                 $route = 'public/evidencias_denuncias';
 
@@ -843,6 +881,14 @@ class InicioUsuarioController extends Controller
     public function storeSugerencias(Request $request)
     {
         abort_if(Gate::denies('mi_perfil_mis_reportes_realizar_reporte_de_sugerencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $request->validate([
+            'titulo' => 'required|max:255',
+            'descripcion' => 'required|max:550',
+        ], [
+            'titulo.max' => 'El campo título no puede exceder los 255 caracteres.',
+            'descripcion.max' => 'El campo descripción no puede exceder los 550 caracteres.',
+        ]);
 
         $sugerencias = Sugerencias::create([
             'empleado_sugirio_id' => User::getCurrentUser()->empleado->id,
@@ -930,13 +976,13 @@ class InicioUsuarioController extends Controller
 
         $image = null;
 
-        if ($request->file('evidencia') != null or !empty($request->file('evidencia'))) {
+        if ($request->file('evidencia') != null or ! empty($request->file('evidencia'))) {
             foreach ($request->file('evidencia') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
+                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
 
-                $new_name_image = 'Seguridad_file_' . $incidentes_seguridad->id . '_' . $name_image . '.' . $extension;
+                $new_name_image = 'Seguridad_file_'.$incidentes_seguridad->id.'_'.$name_image.'.'.$extension;
 
                 $route = 'public/evidencias_seguridad';
 
@@ -975,7 +1021,7 @@ class InicioUsuarioController extends Controller
         return view('admin.inicioUsuario.formularios.riesgos', compact('activos', 'areas', 'procesos', 'sedes'));
     }
 
-    public function storeRiesgos(Request $request)
+    public function storeRiesgos(StoreRiesgosRequest $request)
     {
         abort_if(Gate::denies('mi_perfil_mis_reportes_realizar_reporte_de_riesgo_identificado'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -999,13 +1045,13 @@ class InicioUsuarioController extends Controller
 
         $image = null;
 
-        if ($request->file('evidencia') != null or !empty($request->file('evidencia'))) {
+        if ($request->file('evidencia') != null or ! empty($request->file('evidencia'))) {
             foreach ($request->file('evidencia') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
+                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
 
-                $new_name_image = 'Riesgo_file_' . $riesgos->id . '_' . $name_image . '.' . $extension;
+                $new_name_image = 'Riesgo_file_'.$riesgos->id.'_'.$name_image.'.'.$extension;
 
                 $route = 'public/evidencias_riesgos';
 
@@ -1283,10 +1329,10 @@ class InicioUsuarioController extends Controller
     {
         // dd($request->all());
         if ($request->name == 'file') {
-            $fileName = time() . $request->file('value')->getClientOriginalName();
+            $fileName = time().$request->file('value')->getClientOriginalName();
             // dd($request->file('value'));
             $empleado = Empleado::getAll()->find($request->empleadoId);
-            $request->file('value')->storeAs('public/expedientes/' . Str::slug($empleado->name), $fileName);
+            $request->file('value')->storeAs('public/expedientes/'.Str::slug($empleado->name), $fileName);
             $expediente = EvidenciasDocumentosEmpleados::updateOrCreate(['empleado_id' => $request->empleadoId, 'lista_documentos_empleados_id' => $request->documentoId], [$request->name => $request->value]);
 
             $doc_viejo = EvidenciaDocumentoEmpleadoArchivo::where('evidencias_documentos_empleados_id', $expediente->id)->where('archivado', false)->first();

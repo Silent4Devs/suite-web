@@ -32,7 +32,8 @@ class ReporteColaboradorTarea implements FromCollection, WithHeadings
 
     public function collection()
     {
-        $query = TimesheetHoras::join('timesheet', 'timesheet.id', '=', 'timesheet_horas.timesheet_id')
+        $query = TimesheetHoras::with('timesheet', 'timesheet.empleado', 'timesheet.aprobador', 'proyecto', 'tarea')
+            ->join('timesheet', 'timesheet.id', '=', 'timesheet_horas.timesheet_id')
             ->join('timesheet_proyectos', 'timesheet_proyectos.id', '=', 'timesheet_horas.proyecto_id')
             ->join('timesheet_tareas', 'timesheet_tareas.id', '=', 'timesheet_horas.tarea_id')
             ->join('empleados as empleados', 'empleados.id', '=', 'timesheet.empleado_id')

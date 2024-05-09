@@ -9,9 +9,7 @@ use App\Models\MatrizRequisitoLegale;
 use App\Models\ProcesosListaDistribucion;
 use App\Models\User;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Redirect;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
@@ -62,43 +60,28 @@ class CreateMatrizRequisitosLegales extends Component
 
     public function save()
     {
-        DB::beginTransaction();
-
         $array_requisito = [];
 
-        try {
-
-            if (strlen($this->alcance['nombrerequisito']) >= 255 || strlen($this->alcance['requisitoacumplir']) >= 555 || strlen($this->alcance['formacumple']) >= 255) {
-
-                $mensajeError = 'Intentelo de nuevo, no exceda los 255 caracteres';
-
-                return Redirect::back()->with('mensajeError', $mensajeError);
-            }
-
-            $requisito = MatrizRequisitoLegale::create([
-                'nombrerequisito' => $this->alcance['nombrerequisito'],
-                'formacumple' => $this->alcance['formacumple'],
-                'fechaexpedicion' => $this->alcance['fechaexpedicion'],
-                'fechavigor' => $this->alcance['fechavigor'],
-                'requisitoacumplir' => $this->alcance['requisitoacumplir'],
+        $requisito = MatrizRequisitoLegale::create([
+            'nombrerequisito' => $this->alcance['nombrerequisito'],
+            'formacumple' => $this->alcance['formacumple'],
+            'fechaexpedicion' => $this->alcance['fechaexpedicion'],
+            'fechavigor' => $this->alcance['fechavigor'],
+            'requisitoacumplir' => $this->alcance['requisitoacumplir'],
+        ]);
+        foreach ($this->alcance_s1 as $alcance1) {
+            $array_requisito[] = MatrizRequisitoLegale::create([
+                'nombrerequisito' => $alcance1['nombrerequisito'],
+                'formacumple' => $alcance1['formacumple'],
+                'fechaexpedicion' => $alcance1['fechaexpedicion'],
+                'fechavigor' => $alcance1['fechavigor'],
+                'requisitoacumplir' => $alcance1['requisitoacumplir'],
             ]);
-            foreach ($this->alcance_s1 as $alcance1) {
-                $array_requisito[] = MatrizRequisitoLegale::create([
-                    'nombrerequisito' => $alcance1['nombrerequisito'],
-                    'formacumple' => $alcance1['formacumple'],
-                    'fechaexpedicion' => $alcance1['fechaexpedicion'],
-                    'fechavigor' => $alcance1['fechavigor'],
-                    'requisitoacumplir' => $alcance1['requisitoacumplir'],
-                ]);
-            }
-            DB::commit();
-
-            $this->listaDistribucion($requisito, $array_requisito);
-
-            return redirect()->route('admin.matriz-requisito-legales.index');
-        } catch (\Throwable $th) {
-            DB::rollback();
         }
+
+        $this->listaDistribucion($requisito, $array_requisito);
+
+        return redirect()->route('admin.matriz-requisito-legales.index');
     }
 
     public function listaDistribucion($requisito, $array_requisito)
