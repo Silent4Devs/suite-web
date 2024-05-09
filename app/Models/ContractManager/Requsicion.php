@@ -66,6 +66,9 @@ class Requsicion extends Model implements Auditable
         'ids_proveedores',
         'proveedoroc_id',
         'email',
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     protected $appends = [
@@ -144,7 +147,7 @@ class Requsicion extends Model implements Auditable
             $tipo = 'RQ-';
         }
 
-        $codigo = $tipo.sprintf('%02d-%04d', $parte1, $parte2);
+        $codigo = $tipo . sprintf('%02d-%04d', $parte1, $parte2);
 
         return $codigo;
     }

@@ -21,6 +21,12 @@ class Course extends Model implements Auditable
 
     protected $withCount = ['students', 'reviews'];
 
+    protected $fillable = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
+
     const BORRADOR = 1;
 
     const REVISION = 2;

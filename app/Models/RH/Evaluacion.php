@@ -25,6 +25,12 @@ class Evaluacion extends Model implements Auditable
         'fecha_fin' => 'date:d-m-Y',
     ];
 
+    protected $fillable = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
+
     const DRAFT = '1';
 
     const ACTIVE = '2';
@@ -130,7 +136,7 @@ class Evaluacion extends Model implements Auditable
 
     public static function getEvaluados($id_evaluacion)
     {
-        return Cache::remember('Evaluacion:evaluacion_all_'.$id_evaluacion, 3600 * 8, function () use ($id_evaluacion) {
+        return Cache::remember('Evaluacion:evaluacion_all_' . $id_evaluacion, 3600 * 8, function () use ($id_evaluacion) {
             $query = self::with(['evaluados' => function ($q) use ($id_evaluacion) {
                 return $q->with(['area', 'evaluadores' => function ($qry) use ($id_evaluacion) {
                     $qry->where('evaluacion_id', $id_evaluacion);
