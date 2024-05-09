@@ -69,7 +69,8 @@ class EvaluacionNotification extends Notification
     {
         return [
             'id' => $this->evaluacion->id,
-            'fecha_inicio' => $this->evaluacion->fechainicio,
+            'updated_at' => $this->evaluacion->updated_at,
+            'deleted_at' => $this->evaluacion->deleted_at,
             'time' => Carbon::now(),
             'type' => $this->tipo_consulta,
             'tabla' => $this->tabla,

@@ -69,7 +69,8 @@ class PlanImplementacionNotification extends Notification
     {
         return [
             'id' => $this->plan->id,
-            'fecha_inicio' => $this->plan->fechainicio,
+            'updated_at' => $this->plan->updated_at,
+            'deleted_at' => $this->plan->deleted_at,
             'time' => Carbon::now(),
             'type' => $this->tipo_consulta,
             'tabla' => $this->tabla,

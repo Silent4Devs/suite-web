@@ -69,7 +69,8 @@ class RequisicionesNotification extends Notification
     {
         return [
             'id' => $this->requisiciones->id,
-            'fecha_inicio' => $this->requisiciones->fechainicio,
+            'updated_at' => $this->requisiciones->updated_at,
+            'deleted_at' => $this->requisiciones->deleted_at,
             'time' => Carbon::now(),
             'type' => $this->tipo_consulta,
             'tabla' => $this->tabla,

@@ -91,6 +91,9 @@ class Recurso extends Model implements Auditable, HasMedia
         'configuracion_invitacion_envio',
         'lista_asistencia',
         'is_sync_elearning',
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     //Redis methods

@@ -69,7 +69,8 @@ class SolicitudPermisoNotification extends Notification
     {
         return [
             'id' => $this->permiso->id,
-            'fecha_inicio' => $this->permiso->fechainicio,
+            'updated_at' => $this->permiso->updated_at,
+            'deleted_at' => $this->permiso->deleted_at,
             'time' => Carbon::now(),
             'type' => $this->tipo_consulta,
             'tabla' => $this->tabla,
