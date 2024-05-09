@@ -14,7 +14,7 @@
                         <i class="pr-2 fas fa-tasks text-info"></i>
                         <p class="p-0 m-0">
                             El {{ $last_unread_notification->data['slug'] }} con fecha
-                            {{ isset($last_unread_notification->data['fecha_inicio']) }} ha
+                            {{ $last_unread_notification->data['fecha_inicio'] ?? '' }} ha
                             sido actualizada
                         </p>
                     </div>
@@ -24,7 +24,7 @@
                         <i class="pr-2 fas fa-tasks text-danger"></i>
                         <p class="p-0 m-0">
                             El {{ $last_unread_notification->data['slug'] }} con fecha
-                            {{ isset($last_unread_notification->data['fecha_inicio']) }} ha
+                            {{ $last_unread_notification->data['fecha_inicio'] ?? '' }} ha
                             sido eliminada
                         </p>
                     </div>

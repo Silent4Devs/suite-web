@@ -14,7 +14,7 @@
                         <i class="pr-2 fas fa-tools text-info"></i>
                         <p class="p-0 m-0">
                             El {{ $last_unread_notification->data['slug'] }} con nombre
-                            {{ $last_unread_notification->data['nombre'] }} ha
+                            {{ $last_unread_notification->data['nombre'] ?? '' }} ha
                             sido actualizado
                         </p>
                     </div>
@@ -24,7 +24,7 @@
                         <i class="pr-2 fas fa-tools text-danger"></i>
                         <p class="p-0 m-0">
                             El {{ $last_unread_notification->data['slug'] }} con nombre
-                            {{ $last_unread_notification->data['nombre'] }} ha
+                            {{ $last_unread_notification->data['nombre'] ?? '' }} ha
                             sido eliminado
                         </p>
                     </div>
