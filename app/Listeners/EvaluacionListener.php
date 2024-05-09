@@ -3,10 +3,11 @@
 namespace App\Listeners;
 
 use App\Models\User;
-use App\Notifications\TimesheetNotification;
+use App\Notifications\EvaluacionNotification;
+use App\Notifications\PlanImplementacionNotification;
 use Illuminate\Support\Facades\Notification;
 
-class TimesheetListener
+class EvaluacionListener
 {
     /**
      * Create the event listener.
@@ -31,7 +32,7 @@ class TimesheetListener
             ->where('role_user.role_id', '=', '1')->where('users.id', '!=', auth()->id())
             ->get()
             ->each(function (User $user) use ($event) {
-                Notification::send($user, new TimesheetNotification($event->timeshet, $event->tipo_consulta, $event->tabla, $event->slug));
+                Notification::send($user, new EvaluacionNotification($event->evaluacion, $event->tipo_consulta, $event->tabla, $event->slug));
             });
     }
 }

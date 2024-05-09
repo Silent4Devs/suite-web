@@ -3,6 +3,7 @@
 namespace App\Models\Iso9001;
 
 use App\Models\Empleado;
+use App\Models\MatrizRequisitoLegale;
 use App\Models\Role;
 use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

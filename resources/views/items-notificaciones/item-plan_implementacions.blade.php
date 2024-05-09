@@ -1,7 +1,7 @@
 <div class="d-flex align-items-center justify-content-between">
     <div style="{{ $place == 'notificaciones-page' ? 'flex-basis: calc(80% - 5px)' : 'flex-basis:100%' }}">
         <a class="dropdown-item text-secondary"
-            href="{{ route('admin.courses.index') }}">
+            href="{{ route('admin.planes-de-accion.show', $last_unread_notification->data['id']) }}">
             @switch(" ".$last_unread_notification->data['type']) {{-- Se concatena un espacio porque el autoformateado lo agrega en el case --}}
                 @case(" create")
                     <div class="d-flex align-items-center justify-content-start">

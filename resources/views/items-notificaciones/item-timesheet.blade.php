@@ -6,7 +6,7 @@
                 @case(" create")
                     <div class="d-flex align-items-center justify-content-start">
                         <i class="pr-2 fas fa-tasks text-success"></i>
-                        <p class="p-0 m-0">Nueva {{ $last_unread_notification->data['slug'] }} creado</p>
+                        <p class="p-0 m-0">Nuevo {{ $last_unread_notification->data['slug'] }} creado</p>
                     </div>
                 @break
                 @case(" update")
