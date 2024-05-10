@@ -41,7 +41,7 @@
                         <p class="p-0 m-0">
                             El {{ $last_unread_notification->data['slug'] }} con fecha
                             {{ $last_unread_notification->data['deleted_at'] ?? '' }} ha
-                            sido eliminada
+                            sido eliminado
                         </p>
                     </div>
                 @break
