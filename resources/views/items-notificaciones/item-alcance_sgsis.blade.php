@@ -6,6 +6,7 @@
                 @case(" create")
                     <div class="d-flex align-items-center justify-content-start">
                         @if(!empty($last_unread_notification->data['avatar_ruta']))
+                            {{ $last_unread_notification->data['name'] }}
                             <img src="{{ asset($last_unread_notification->data['avatar_ruta']) }}" alt="" class="rounded-circle" style="width: 50px; height: 50px;">
                         @else
                             <i class="pr-2 fas fa-tasks text-success"></i>
@@ -17,6 +18,7 @@
                 @case(" update")
                     <div class="d-flex align-items-center justify-content-start">
                         @if(!empty($last_unread_notification->data['avatar_ruta']))
+                        {{ $last_unread_notification->data['name'] }}
                         <img src="{{ asset($last_unread_notification->data['avatar_ruta']) }}" alt="" class="rounded-circle" style="width: 50px; height: 50px;">
                         @else
                         <i class="pr-2 fas fa-tools text-info"></i>
@@ -31,6 +33,7 @@
                 @case(" delete")
                     <div class="d-flex align-items-center justify-content-start">
                         @if(!empty($last_unread_notification->data['avatar_ruta']))
+                        {{ $last_unread_notification->data['name'] }}
                         <img src="{{ asset($last_unread_notification->data['avatar_ruta']) }}" alt="" class="rounded-circle" style="width: 50px; height: 50px;">
                         @else
                         <i class="pr-2 fas fa-tools text-danger"></i>
