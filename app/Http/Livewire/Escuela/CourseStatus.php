@@ -8,12 +8,13 @@ use App\Models\Escuela\Lesson;
 use App\Models\Escuela\UserEvaluation;
 use App\Models\User;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Livewire\Component;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Component;
 
 class CourseStatus extends Component
 {
     use LivewireAlert;
+
     // use AuthorizesRequests;
     //declaramos la propiedad course y current
     public $course;
@@ -69,6 +70,7 @@ class CourseStatus extends Component
 
         if (! $this->current->completed) {
             $this->alertaEmergente('Es necesario terminar esta lección para poder seguir avanzando en tu curso');
+
             return;
         }
 
@@ -161,7 +163,8 @@ class CourseStatus extends Component
         return response()->download(storage_path('app/'.$this->current->resource->url));
     }
 
-    public function alertSection(){
+    public function alertSection()
+    {
         $this->alertaEmergente('Es necesario terminar esta sección para poder seguir avanzando en tu curso');
     }
 
@@ -172,6 +175,6 @@ class CourseStatus extends Component
             'timer' => 3000,
             'toast' => false,
             'timerProgressBar' => true,
-           ]);
+        ]);
     }
 }
