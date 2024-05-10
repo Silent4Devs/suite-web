@@ -7,6 +7,7 @@ use App\Models\Empleado;
 use App\Models\TimesheetCliente;
 use App\Models\TimesheetHoras;
 use App\Models\TimesheetProyecto;
+use App\Models\TimesheetProyectoArea;
 use App\Models\TimesheetProyectoEmpleado;
 use App\Traits\ObtenerOrganizacion;
 use Livewire\Component;
@@ -14,16 +15,12 @@ use Livewire\Component;
 class ReporteFinanciero extends Component
 {
     public $selectedProjectId;
-
     public $proyectos_select;
-
     public $proyectos;
-
     public $empleados = [];
-
     public $areas = [];
-
     use ObtenerOrganizacion;
+
 
     public function render()
     {
@@ -33,6 +30,7 @@ class ReporteFinanciero extends Component
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
         $this->proyectos = null;
+
         if ($this->selectedProjectId) {
             $selectedProjectId = $this->selectedProjectId;
             $proyectoId = $selectedProjectId;
@@ -41,6 +39,10 @@ class ReporteFinanciero extends Component
             $empleadosIds = $ids_emp->pluck('empleado_id');
 
             $horas = TimesheetHoras::where('proyecto_id', $proyectoId)
+                ->with('timesheet')
+                ->whereHas('timesheet', function ($query) {
+                    $query->where('estatus', 'aprobado');
+                })
                 ->whereIn('empleado_id', $empleadosIds)
                 ->get(['empleado_id', 'horas_lunes', 'horas_martes', 'horas_miercoles', 'horas_jueves', 'horas_viernes', 'horas_sabado', 'horas_domingo']);
 
@@ -57,7 +59,7 @@ class ReporteFinanciero extends Component
                             $hora->horas_jueves,
                             $hora->horas_viernes,
                             $hora->horas_sabado,
-                            $hora->horas_domingo,
+                            $hora->horas_domingo
                         ], 'is_numeric'));
                     }
                 }
@@ -103,49 +105,38 @@ class ReporteFinanciero extends Component
     public function getHorasTotales($id)
     {
         $ids_emp = TimesheetProyectoEmpleado::where('proyecto_id', $id)->get();
-        $horasTotales = 0;
-        $horasCosto = 0;
-        $totalhoras = 0;
+
+        $horas = TimesheetHoras::where('proyecto_id', $id)
+            ->with('timesheet')
+            ->whereHas('timesheet', function ($query) {
+                $query->where('estatus', 'aprobado');
+            })
+            ->whereIn('empleado_id', $ids_emp->pluck('empleado_id'))
+            ->get();
+
+        $horasTotales = $horasCosto = $totalhoras = 0;
+
         foreach ($ids_emp as $emp_p) {
+            $horasEmpleado = $horas->where('empleado_id', $emp_p->empleado_id);
+            $total_horas = $horasEmpleado->sum('horas_lunes')
+                + $horasEmpleado->sum('horas_martes')
+                + $horasEmpleado->sum('horas_miercoles')
+                + $horasEmpleado->sum('horas_jueves')
+                + $horasEmpleado->sum('horas_viernes')
+                + $horasEmpleado->sum('horas_sabado')
+                + $horasEmpleado->sum('horas_domingo');
 
-            $empItem = Empleado::select('id', 'name')->where('id', $emp_p->empleado_id)->first();
-            $horas = TimesheetHoras::where('proyecto_id', $id)
-                ->where('empleado_id', $empItem->id)
-                ->get();
-            // Si hay horas para este empleado, sumar las horas de los diferentes días
-
-            $total_horas = 0;
-
-            foreach ($horas as $hora) {
-                $total_horas += is_numeric($hora->horas_lunes) ? $hora->horas_lunes : 0;
-                $total_horas += is_numeric($hora->horas_martes) ? $hora->horas_martes : 0;
-                $total_horas += is_numeric($hora->horas_miercoles) ? $hora->horas_miercoles : 0;
-                $total_horas += is_numeric($hora->horas_jueves) ? $hora->horas_jueves : 0;
-                $total_horas += is_numeric($hora->horas_viernes) ? $hora->horas_viernes : 0;
-                $total_horas += is_numeric($hora->horas_sabado) ? $hora->horas_sabado : 0;
-                $total_horas += is_numeric($hora->horas_domingo) ? $hora->horas_domingo : 0;
-            }
-            $horasTotales = $total_horas;
-            $totalhoras += $horasTotales;
+            $horasTotales += $total_horas;
             $costo_por_hora_usuario = $emp_p->costo_hora ?? 0;
-
-            if (! $costo_por_hora_usuario) {
-                if (isset($emp_p->empleado->salario_base_mensual)) {
-                    $costo_por_hora_usuario = ($emp_p->empleado->salario_base_mensual / 20) / 7;
-                } else {
-                    if (isset($emp_p->empleado->salario_diario)) {
-                        $costo_por_hora_usuario = $emp_p->empleado->salario_diario / 7;
-                    } else {
-                        $costo_por_hora_usuario = 0;
-                    }
-                }
+            if (!$costo_por_hora_usuario) {
+                $salario_base = $emp_p->empleado->salario_base_mensual ?? $emp_p->empleado->salario_diario ?? 0;
+                $costo_por_hora_usuario = ($salario_base / 20) / 7;
             }
-            $horasCosto += $costo_por_hora_usuario * $horasTotales;
+            $horasCosto += $costo_por_hora_usuario * $total_horas;
         }
-
         return [
             'horasCosto' => $horasCosto,
-            'totalhoras' => $totalhoras,
+            'totalhoras' => $horasTotales
         ];
     }
 }

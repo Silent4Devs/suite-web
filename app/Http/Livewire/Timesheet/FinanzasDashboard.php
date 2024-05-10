@@ -53,6 +53,10 @@ class FinanzasDashboard extends Component
 
             $empItem = Empleado::select('id', 'name')->where('id', $emp_p->empleado_id)->first();
             $horas = TimesheetHoras::where('proyecto_id', $id)
+                ->with('timesheet')
+                ->whereHas('timesheet', function ($query) {
+                    $query->where('estatus', 'aprobado');
+                })
                 ->whereMonth('updated_at', $mes)
                 ->whereYear('updated_at', $año)
                 ->where('empleado_id', $empItem->id)
@@ -83,7 +87,7 @@ class FinanzasDashboard extends Component
             $costo_por_hora_usuario = $emp_p->costo_hora ?? 0;
 
             // Si el costo por hora no está definido en TimesheetProyectoEmpleado, usar el calculado anteriormente
-            if (! $costo_por_hora_usuario) {
+            if (!$costo_por_hora_usuario) {
                 if (isset($emp_p->empleado->salario_base_mensual)) {
                     $costo_por_hora_usuario = ($emp_p->empleado->salario_base_mensual / 20) / 7;
                 } else {
