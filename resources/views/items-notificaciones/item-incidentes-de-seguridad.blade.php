@@ -11,6 +11,7 @@
                     @else
                         <i class="pr-2 fas fa-tasks text-success"></i>
                     @endif
+                    &nbsp;&nbsp;
                         <p class="p-0 m-0">Nuevo {{ $last_unread_notification->data['slug'] }} creado</p>
                     </div>
                 @break
@@ -22,6 +23,7 @@
                         @else
                         <i class="pr-2 fas fa-tools text-info"></i>
                         @endif
+                        &nbsp;&nbsp;
                         <p class="p-0 m-0">
                             El {{ $last_unread_notification->data['slug'] }} con folio
                             {{ $last_unread_notification->data['folio'] ?? '' }} ha
@@ -37,6 +39,7 @@
                         @else
                         <i class="pr-2 fas fa-tools text-danger"></i>
                         @endif
+                        &nbsp;&nbsp;
                         <p class="p-0 m-0">
                             El {{ $last_unread_notification->data['slug'] }} con folio
                             {{ $last_unread_notification->data['folio'] ?? '' }} ha
