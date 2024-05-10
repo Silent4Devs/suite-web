@@ -9,19 +9,6 @@ class ListaCampanaNotificacionesComponent extends Component
 {
     public $notificaciones_sin_leer;
 
-    protected $listeners = [
-        'echo:notificaciones-campana,IncidentesDeSeguridadEvent' => 'render',
-        'echo:notificaciones-campana,AuditoriaAnualEvent' => 'render',
-        'echo:notificaciones-campana,AccionCorrectivaEvent' => 'render',
-        'echo:notificaciones-campana,RegistroMejoraEvent' => 'render',
-        'echo:notificaciones-campana,RecursosEvent' => 'render',
-        'echo:notificaciones-campana,PoliticasSgiEvent' => 'render',
-        'echo:notificaciones-campana,AlcancesEvent' => 'render',
-        'echo:notificaciones-campana,MatrizRequisitosEvent' => 'render',
-        'echo:notificaciones-campana,RequisicionesEvent' => 'render',
-        'NotificationMarkedAsReadList' => 'render',
-    ];
-
     public function mount($notificaciones_sin_leer)
     {
         $this->notificaciones_sin_leer = $notificaciones_sin_leer;
