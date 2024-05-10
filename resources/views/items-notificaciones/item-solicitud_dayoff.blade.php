@@ -6,8 +6,8 @@
                 @case(" create")
                     <div class="d-flex align-items-center justify-content-start">
                         @if(!empty($last_unread_notification->data['avatar_ruta']))
-                        {{ $last_unread_notification->data['name'] }}
-                       <img src="{{ asset($last_unread_notification->data['avatar_ruta']) }}" alt="" class="rounded-circle" style="width: 50px; height: 50px;">
+                        <img src="{{ asset($last_unread_notification->data['avatar_ruta']) }}" alt="" class="rounded-circle" style="width: 50px; height: 50px;">
+                            {{ $last_unread_notification->data['name'] }}
                     @else
                         <i class="pr-2 fas fa-tasks text-success"></i>
                     @endif
@@ -17,8 +17,8 @@
                 @case(" update")
                     <div class="d-flex align-items-center justify-content-start">
                         @if(!empty($last_unread_notification->data['avatar_ruta']))
-                        {{ $last_unread_notification->data['name'] }}
-                       <img src="{{ asset($last_unread_notification->data['avatar_ruta']) }}" alt="" class="rounded-circle" style="width: 50px; height: 50px;">
+                        <img src="{{ asset($last_unread_notification->data['avatar_ruta']) }}" alt="" class="rounded-circle" style="width: 50px; height: 50px;">
+                            {{ $last_unread_notification->data['name'] }}
                         @else
                         <i class="pr-2 fas fa-tools text-info"></i>
                         @endif
@@ -32,8 +32,8 @@
                 @case(" delete")
                     <div class="d-flex align-items-center justify-content-start">
                         @if(!empty($last_unread_notification->data['avatar_ruta']))
-                        {{ $last_unread_notification->data['name'] }}
-                       <img src="{{ asset($last_unread_notification->data['avatar_ruta']) }}" alt="" class="rounded-circle" style="width: 50px; height: 50px;">
+                        <img src="{{ asset($last_unread_notification->data['avatar_ruta']) }}" alt="" class="rounded-circle" style="width: 50px; height: 50px;">
+                            {{ $last_unread_notification->data['name'] }}
                         @else
                         <i class="pr-2 fas fa-tools text-danger"></i>
                         @endif
