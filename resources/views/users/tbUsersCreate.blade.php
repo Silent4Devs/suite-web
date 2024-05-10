@@ -1,5 +1,8 @@
 @extends('layouts.admin')
 @section('content')
+<link rel="stylesheet" href="{{asset('css/global/TbColorsGlobal.css')}}">
+<link rel="stylesheet" href="{{asset('css/global/tbButtons.css')}}">
+
 <h5 class="col-12 titulo_general_funcion">Registrar:  Usuario</h5>
 <div class="mt-4 card">
     <div class="card-body">
@@ -55,8 +58,8 @@
             </div>
 
             <div class="text-right form-group col-12" style="margin-left:15px;">
-                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-                <button class="btn btn-danger" type="submit">
+                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn-secundario">Cancelar</a>
+                <button class="btn btn-primario" type="submit">
                     {{ trans('global.save') }}
                 </button>
             </div>

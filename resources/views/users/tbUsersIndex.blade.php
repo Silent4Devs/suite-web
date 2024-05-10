@@ -8,7 +8,7 @@
     <div class="mt-5 card">
         <div class="d-flex justify-content-between" style="justify-content: flex-end !important;">
             <div class="p-2">
-                <a href={{ route('admin.users.eliminados') }} class="btn btn-danger" role="button" aria-pressed="true">
+                <a href={{ route('admin.users.eliminados') }} class="btn btn-primario" role="button" aria-pressed="true">
                     <i class="fas fa-user-slash"></i>&nbsp &nbsp Usuarios eliminados</a>
             </div>
         </div>

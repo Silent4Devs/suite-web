@@ -1,5 +1,7 @@
 @extends('layouts.admin')
 @section('content')
+    <link rel="stylesheet" href="{{asset('css/global/TbColorsGlobal.css')}}">
+    <link rel="stylesheet" href="{{asset('css/global/tbButtons.css')}}">
     <h5 class="col-12 titulo_general_funcion">Editar: Usuario</h5>
     <div class="mt-4 card">
         {{-- <div class="py-3 col-md-10 col-sm-9 card-body azul_silent align-self-center" style="margin-top: -40px;">
@@ -103,8 +105,8 @@
                     <span class="help-block">{{ trans('cruds.user.fields.roles_helper') }}</span>
                 </div>
                 <div class="form-group">
-                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-                    <button class="btn btn-danger" type="submit">
+                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn-secundario">Cancelar</a>
+                    <button class="btn btn-primario" type="submit">
                         {{ trans('global.save') }}
                     </button>
                 </div>
