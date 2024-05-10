@@ -131,6 +131,7 @@
 
             <ul style="list-style: none; cursor: pointer;">
                 @foreach ($course->sections as $section)
+                    @dd($section)
                     <li>
                         <i style="font-size:10pt; cursor: pointer;" class="d-inline text-black-500 fas fa-play-circle">
                         </i>

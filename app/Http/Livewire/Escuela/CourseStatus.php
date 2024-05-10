@@ -53,7 +53,7 @@ class CourseStatus extends Component
         //Evaluaciones para el curso en general
         $this->evaluacionesGenerales = Evaluation::where('course_id', $this->course->id)->get();
         $this->evaluationsUser = UserEvaluation::where('user_id', User::getCurrentUser()->id)->where('completed', true)->pluck('evaluation_id')->toArray();
-
+        dd($this->course);
         return view('livewire.escuela.course-status');
     }
 
@@ -122,6 +122,22 @@ class CourseStatus extends Component
     }
 
     public function getAdvanceProperty()
+    {
+        $i = 0;
+
+        foreach ($this->course->lessons as $lesson) {
+            if ($lesson->completed) {
+                $i++;
+            }
+        }
+
+        //calcular el porcentaje de la
+        $advance = ($i * 100) / ($this->course->lessons->count());
+
+        return round($advance, 2);
+    }
+
+    public function getSectionAdvanceProperty()
     {
         $i = 0;
 
