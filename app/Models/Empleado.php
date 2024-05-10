@@ -883,4 +883,9 @@ class Empleado extends Model implements Auditable
     {
         return $this->hasMany(TratamientoRiesgo::class, 'id_dueno', 'id')->alta()->with('area');
     }
+
+    public function registrosHistorico()
+    {
+        return $this->hasMany(HistoricoEmpleados::class, 'empleado_id', 'id');
+    }
 }
