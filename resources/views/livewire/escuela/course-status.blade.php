@@ -131,7 +131,6 @@
 
             <ul style="list-style: none; cursor: pointer;">
                 @foreach ($course->sections as $section)
-                    @dd($section)
                     <li>
                         <i style="font-size:10pt; cursor: pointer;" class="d-inline text-black-500 fas fa-play-circle">
                         </i>
@@ -171,20 +170,36 @@
                             @endforeach
 
                             @foreach ($section->evaluations as $evaluation)
-                                @if ($evaluation->questions->count() > 0)
-                                    @php
-                                        $completed = in_array($evaluation->id, $evaluationsUser);
-                                    @endphp
+                                @php
+                                    $totalLectionSection = $section->lessons->count();
+                                    $completedLectionSection = $section->lessons->where('completed', true)->count();
+                                @endphp
+                                @if ($totalLectionSection != $completedLectionSection)
+                                    <h1>falta</h1>
                                     <li style="list-style-type: disc;">
                                         <div>
-                                            <span
-                                                class="inline-block rounded-full border-2 {{ $completed ? 'bg-green-500  border-green-500' : 'border-gray-500' }}"></span>
+                                            <span class="inline-block rounded-full border-2 border-gray-500"></span>
                                             <a class="cursor:pointer;"
-                                                href="{{ route('admin.curso.evaluacion', ['course' => $course->id, 'evaluation' => $evaluation->id]) }}"
-                                                wire:click="changeLesson({{ $lesson }})">{{ $evaluation->name }}
+                                                wire:click="alertSection()">{{ $evaluation->name }}
                                             </a>
                                         </div>
                                     </li>
+                                @else
+                                    @if ($evaluation->questions->count() > 0)
+                                        @php
+                                            $completed = in_array($evaluation->id, $evaluationsUser);
+                                        @endphp
+                                        <li style="list-style-type: disc;">
+                                            <div>
+                                                <span
+                                                    class="inline-block rounded-full border-2 {{ $completed ? 'bg-green-500  border-green-500' : 'border-gray-500' }}"></span>
+                                                <a class="cursor:pointer;"
+                                                    href="{{ route('admin.curso.evaluacion', ['course' => $course->id, 'evaluation' => $evaluation->id]) }}"
+                                                    wire:click="changeLesson({{ $lesson }})">{{ $evaluation->name }}
+                                                </a>
+                                            </div>
+                                        </li>
+                                    @endif
                                 @endif
                             @endforeach
                         </ul>

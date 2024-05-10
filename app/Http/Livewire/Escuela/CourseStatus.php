@@ -53,7 +53,9 @@ class CourseStatus extends Component
         //Evaluaciones para el curso en general
         $this->evaluacionesGenerales = Evaluation::where('course_id', $this->course->id)->get();
         $this->evaluationsUser = UserEvaluation::where('user_id', User::getCurrentUser()->id)->where('completed', true)->pluck('evaluation_id')->toArray();
-        dd($this->course);
+
+        //dd($this->course);
+
         return view('livewire.escuela.course-status');
     }
 
@@ -66,7 +68,7 @@ class CourseStatus extends Component
         }
 
         if (! $this->current->completed) {
-            $this->alertaEmergente();
+            $this->alertaEmergente('Es necesario terminar esta lección para poder seguir avanzando en tu curso');
             return;
         }
 
@@ -159,9 +161,13 @@ class CourseStatus extends Component
         return response()->download(storage_path('app/'.$this->current->resource->url));
     }
 
-    public function alertaEmergente()
+    public function alertSection(){
+        $this->alertaEmergente('Es necesario terminar esta sección para poder seguir avanzando en tu curso');
+    }
+
+    public function alertaEmergente($message)
     {
-        $this->alert('warning', 'Es necesario terminar esta lección para poder seguir avanzando en tu curso', [
+        $this->alert('warning', $message, [
             'position' => 'center',
             'timer' => 3000,
             'toast' => false,
