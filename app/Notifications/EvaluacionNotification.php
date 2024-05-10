@@ -2,18 +2,18 @@
 
 namespace App\Notifications;
 
-use App\Models\SolicitudPermisoGoceSueldo;
+use App\Models\RH\Evaluacion;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Auth;
 
-class SolicitudPermisoNotification extends Notification
+class EvaluacionNotification extends Notification
 {
     use Queueable;
 
-    public $permiso;
+    public $evaluacion;
 
     public $tipo_consulta;
 
@@ -26,9 +26,9 @@ class SolicitudPermisoNotification extends Notification
      *
      * @return void
      */
-    public function __construct(SolicitudPermisoGoceSueldo $permiso, $tipo_consulta, $tabla, $slug)
+    public function __construct(Evaluacion $evaluacion, $tipo_consulta, $tabla, $slug)
     {
-        $this->permiso = $permiso;
+        $this->evaluacion = $evaluacion;
         $this->tipo_consulta = $tipo_consulta;
         $this->tabla = $tabla;
         $this->slug = $slug;
@@ -68,9 +68,9 @@ class SolicitudPermisoNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            'id' => $this->permiso->id,
-            'updated_at' => $this->permiso->updated_at,
-            'deleted_at' => $this->permiso->deleted_at,
+            'id' => $this->evaluacion->id,
+            'updated_at' => $this->evaluacion->updated_at,
+            'deleted_at' => $this->evaluacion->deleted_at,
             'time' => Carbon::now(),
             'type' => $this->tipo_consulta,
             'tabla' => $this->tabla,

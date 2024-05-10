@@ -67,6 +67,8 @@ class RecursosNotification extends Notification
             'nombre_curso' => $this->recurso->cursoscapacitaciones,
             'fecha_curso' => $this->recurso->fecha_curso,
             'instructor' => $this->recurso->instructor,
+            'updated_at' => $this->recurso->updated_at,
+            'deleted_at' => $this->recurso->deleted_at,
             'time' => Carbon::now(),
             'type' => $this->tipo_consulta,
             'tabla' => $this->tabla,

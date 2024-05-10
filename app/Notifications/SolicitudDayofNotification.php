@@ -69,7 +69,8 @@ class SolicitudDayofNotification extends Notification
     {
         return [
             'id' => $this->solicitud_dayof->id,
-            'fecha_inicio' => $this->solicitud_dayof->fechainicio,
+            'updated_at' => $this->solicitud_dayof->updated_at,
+            'deleted_at' => $this->solicitud_dayof->deleted_at,
             'time' => Carbon::now(),
             'type' => $this->tipo_consulta,
             'tabla' => $this->tabla,

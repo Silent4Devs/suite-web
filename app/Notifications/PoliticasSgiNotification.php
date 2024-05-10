@@ -69,7 +69,8 @@ class PoliticasSgiNotification extends Notification
     {
         return [
             'id' => $this->politicas->id,
-            'fecha_inicio' => $this->politicas->fechainicio,
+            'updated_at' => $this->politicas->updated_at,
+            'deleted_at' => $this->politicas->deleted_at,
             'time' => Carbon::now(),
             'type' => $this->tipo_consulta,
             'tabla' => $this->tabla,

@@ -281,15 +281,15 @@ class ContratosController extends AppBaseController
         $nombre_f = null;
         if ($request->file('file_contrato') != null) {
             $nombre = $request->file('file_contrato')->getClientOriginalName();
-            $nombre_f = $contrato->id . $fecha_inicio . $nombre;
+            $nombre_f = $contrato->id.$fecha_inicio.$nombre;
 
             $file = $request->file('file_contrato');
 
             // Ruta completa donde se guardará el archivo
-            $ruta = 'contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/';
+            $ruta = 'contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/';
 
             // Guardar el archivo en el disco 'public' con la ruta específica
-            Storage::disk('public')->put($ruta . '/' . $nombre_f, file_get_contents($file));
+            Storage::disk('public')->put($ruta.'/'.$nombre_f, file_get_contents($file));
         }
         // Move file from tmp directory if name is send
         if ($request->file_contrato) {
@@ -621,15 +621,15 @@ class ContratosController extends AppBaseController
 
             if ($request->file('file_contrato') != null) {
                 $nombre = $request->file('file_contrato')->getClientOriginalName();
-                $nombre_f = $contrato->id . $fecha_inicio . $nombre;
+                $nombre_f = $contrato->id.$fecha_inicio.$nombre;
 
                 $file = $request->file('file_contrato');
 
                 // Ruta completa donde se guardará el archivo
-                $ruta = 'contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/';
+                $ruta = 'contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/';
 
                 // Guardar el archivo en el disco 'public' con la ruta específica
-                Storage::disk('public')->put($ruta . '/' . $nombre_f, file_get_contents($file));
+                Storage::disk('public')->put($ruta.'/'.$nombre_f, file_get_contents($file));
             }
 
             // $ruta_file_contrato = Storage::url($archivo);

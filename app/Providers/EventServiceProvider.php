@@ -8,8 +8,10 @@ use App\Events\AuditoriaAnualEvent;
 use App\Events\CoursesEvent;
 use App\Events\DocumentoEvent;
 use App\Events\EntendimientoOrganizacionEvent;
+use App\Events\EvaluacionEvent;
 use App\Events\IncidentesDeSeguridadEvent;
 use App\Events\MatrizRequisitosEvent;
+use App\Events\PlanImplementacionEvent;
 use App\Events\PoliticasSgiEvent;
 use App\Events\RecursosEvent;
 use App\Events\RegistroMejoraEvent;
@@ -26,8 +28,10 @@ use App\Listeners\BroadcastUserLoginNotification;
 use App\Listeners\CoursesListener;
 use App\Listeners\DocumentoListener;
 use App\Listeners\EntendimientoOrganizacionListener;
+use App\Listeners\EvaluacionListener;
 use App\Listeners\IncidentesDeSeguridadListener;
 use App\Listeners\MatrizRequisitosListener;
+use App\Listeners\PlanImplementacionListener;
 use App\Listeners\PoliticasSgiListener;
 use App\Listeners\RecursosListener;
 use App\Listeners\RegistroMejoraListener;
@@ -247,9 +251,9 @@ class EventServiceProvider extends ServiceProvider
         DocumentoEvent::class => [
             DocumentoListener::class,
         ],
-        // TimesheetEvent::class => [
-        //     TimesheetListener::class,
-        // ],
+        TimesheetEvent::class => [
+            TimesheetListener::class,
+        ],
         CoursesEvent::class => [
             CoursesListener::class,
         ],
@@ -261,6 +265,12 @@ class EventServiceProvider extends ServiceProvider
         ],
         SolicitudPermisoEvent::class => [
             SolicitudPermisoListener::class,
+        ],
+        PlanImplementacionEvent::class => [
+            PlanImplementacionListener::class,
+        ],
+        EvaluacionEvent::class => [
+            EvaluacionListener::class,
         ],
     ];
 

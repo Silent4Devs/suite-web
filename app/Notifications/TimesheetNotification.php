@@ -69,7 +69,8 @@ class TimesheetNotification extends Notification
     {
         return [
             'id' => $this->timeshet->id,
-            'fecha_inicio' => $this->timeshet->fechainicio,
+            'updated_at' => $this->timeshet->updated_at,
+            'deleted_at' => $this->timeshet->deleted_at,
             'time' => Carbon::now(),
             'type' => $this->tipo_consulta,
             'tabla' => $this->tabla,
