@@ -14,7 +14,7 @@
                         <i class="pr-2 fas fa-shield-alt text-info"></i>
                         <p class="p-0 m-0">
                             El {{ $last_unread_notification->data['slug'] }} con folio
-                            {{ isset($last_unread_notification->data['folio']) }} ha
+                            {{ $last_unread_notification->data['folio'] ?? '' }} ha
                             sido actualizado
                         </p>
                     </div>
@@ -24,7 +24,7 @@
                         <i class="pr-2 fas fa-shield-alt text-danger"></i>
                         <p class="p-0 m-0">
                             El {{ $last_unread_notification->data['slug'] }} con folio
-                            {{ isset($last_unread_notification->data['folio']) }} ha
+                            {{ $last_unread_notification->data['folio'] ?? '' }} ha
                             sido eliminado
                         </p>
                     </div>
