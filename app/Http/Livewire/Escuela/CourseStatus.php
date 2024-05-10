@@ -66,6 +66,7 @@ class CourseStatus extends Component
     {
         if ($atras == 'previous' || $this->current->completed) {
             $this->current = $lesson;
+            return;
         }
 
         if (! $this->current->completed) {
