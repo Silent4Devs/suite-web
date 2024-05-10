@@ -11,7 +11,8 @@
                     @else
                         <i class="pr-2 fas fa-tasks text-success"></i>
                     @endif
-                        <p class="p-0 m-0">Nueva {{ $last_unread_notification->data['slug'] }} creada</p>
+                    &nbsp;&nbsp;
+                        <p class="p-0 m-0">Nueva {{ $last_unread_notification->data['slug'] }} creado</p>
                     </div>
                 @break
                 @case(" update")
@@ -22,6 +23,7 @@
                         @else
                         <i class="pr-2 fas fa-tools text-info"></i>
                         @endif
+                        &nbsp;&nbsp;
                         <p class="p-0 m-0">
                             La {{ $last_unread_notification->data['slug'] }} con fecha
                             {{ $last_unread_notification->data['updated_at'] ?? '' }} ha
@@ -37,6 +39,7 @@
                         @else
                         <i class="pr-2 fas fa-tools text-danger"></i>
                         @endif
+                        &nbsp;&nbsp;
                         <p class="p-0 m-0">
                             La {{ $last_unread_notification->data['slug'] }} con fecha
                             {{ $last_unread_notification->data['deleted_at'] ?? '' }} ha
