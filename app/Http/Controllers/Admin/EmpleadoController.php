@@ -904,12 +904,6 @@ class EmpleadoController extends Controller
         abort_if(Gate::denies('bd_empleados_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $visualizarEmpleados = Empleado::with('supervisor', 'sede', 'perfil')->find(intval($id));
-        // dd($visualizarEmpleados->registrosHistorico);
-        foreach ($visualizarEmpleados->registrosHistorico as $key => $registroH) {
-            # code...
-            dump($registroH->relacion);
-        }
-        $visualizarEmpleados = Empleado::with('supervisor', 'sede', 'perfil')->find(intval($id));
         $contactos = ContactosEmergenciaEmpleado::where('empleado_id', intval($id))->get();
         $dependientes = DependientesEconomicosEmpleados::where('empleado_id', intval($id))->get();
         $beneficiarios = BeneficiariosEmpleado::where('empleado_id', intval($id))->get();
