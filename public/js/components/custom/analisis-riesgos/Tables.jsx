@@ -1,5 +1,7 @@
 import '../../../../css/templateAnalisisRiesgo/tables.css'
-import { BtnSecondary, BtnSimple, BtnTertiary } from '../../common/Buttons';
+import { BtnIcon, BtnSecondary, BtnSimple, BtnTertiary } from '../../common/Buttons';
+import { CardContainer } from '../../common/Containers';
+import { HrSimple } from '../../common/Hr';
 import { InputSimpleDisabled } from '../../common/Inputs';
 export const TableFormulas = ({registers, addVariable, removeVariable}) => {
     return(
@@ -53,4 +55,20 @@ export const TableFormulas = ({registers, addVariable, removeVariable}) => {
             </table>
         </div>
     );
- }
+}
+
+export const TableSettigs = () => {
+    return(
+        <CardContainer width="100%">
+            <div className="row d-flex align-items-center">
+                <div className="col-10">
+                    <h6 className='mb-0'>Respuestas</h6>
+                </div>
+                <div className="col-2 d-flex justify-content-end" style={{paddingRight:"2px"}}>
+                    <BtnIcon icon="lightbulb_circle"/>
+                </div>
+            </div>
+            <HrSimple/>
+        </CardContainer>
+    )
+}

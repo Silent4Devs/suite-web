@@ -1,10 +1,10 @@
 import React from 'react'
-import { SelectAnalisisRiesgo } from '../../common/Selects'
-import { useGenerateTemplateAnalisisRiesgo } from '../../../hooks/AnalisisRiesgo';
+import { SelectAnalisisRiesgo } from './Selects'
+import { useGenerateTemplateAnalisisRiesgo, useSettingsQuestionAnalisisRiesgo } from '../../../hooks/AnalisisRiesgo';
 import TemplateARComponentFactory from '../factory/TemplateARComponentFactory';
 import { HrSimple } from '../../common/Hr';
 import { CSS } from "@dnd-kit/utilities";
-import { InputMaker } from './InputMaker';
+import { InputMaker, InputMakerSettings } from './InputMaker';
 import { ContainerMoreInfo, ContainerShowSizes } from './Popovers';
 import { SwitchObligatory } from './Switches';
 
@@ -30,7 +30,7 @@ export const QuestionTemplateAnalisisRiesgos = ({id, question, changeSize, chang
     const style = {
         transform: CSS.Transform.toString(transform),
         transition,
-      };
+    };
 
     const templateARComponentFactory = new TemplateARComponentFactory();
     let templateComponent = ""
@@ -114,4 +114,64 @@ export const QuestionTemplateAnalisisRiesgos = ({id, question, changeSize, chang
             </div>
         </div>
   )
+}
+
+
+export const QuestionSettings = ({id, question, changeSize}) => {
+    const {showSize, showInfo, handleShowSizes, handleChangeSize, moreInfo, attributes, listeners, setNodeRef, transform,
+        transition, isDragging, } = useSettingsQuestionAnalisisRiesgo(question, changeSize)
+    const style = {
+        transform: CSS.Transform.toString(transform),
+        transition,
+    };
+  return (
+    <div className={`col-12 col-md-${question.size}`} ref={setNodeRef} style={style}>
+            <div className="card">
+                <div className="card-title">
+                <div className="d-flex justify-content-center mt-3">
+                <i className="material-symbols-outlined" style={{fontSize:"30px"}} {...attributes} {...listeners}>
+                    drag_indicator
+                </i>
+                </div>
+                </div>
+                <div className="card-body" style={{paddingTop:"17px", paddingBottom:"17px"}}>
+                    <InputMakerSettings question={question}/>
+                    <div className="row">
+                        <div className="col-12">
+                            <div className="d-flex flex-row-reverse flex-wrap align-items-center" style={{gap:"10px 8px"}}>
+                                {
+                                    showSize ?  (
+                                        <ContainerShowSizes handleChangeSize={handleChangeSize}/>
+                                    ): (<></>)
+                                }
+                                <i className="material-symbols-outlined" style={{cursor:"pointer", userSelect:"none"}} onClick={handleShowSizes}>
+                                    more_vert
+                                </i>
+
+                                <span className="material-icons" style={{color:"#FFBB00",fontVariationSettings:`'FILL' 1`,}} onMouseOver={()=>moreInfo(true)} onMouseOut={()=>moreInfo(false)}>
+                                    lightbulb
+                                </span>
+                                {
+                                    showInfo ? (<ContainerMoreInfo/>):(<></>)
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+  )
+}
+
+export const QuestionViewPrev =({question}) => {
+    return(
+        <div className={`col-12 col-md-${question.size}`} >
+            <div className="card">
+                <div className="card-body" style={{paddingTop:"17px", paddingBottom:"17px"}}>
+                    <InputMakerSettings question={question}/>
+                </div>
+            </div>
+        </div>
+    )
 }

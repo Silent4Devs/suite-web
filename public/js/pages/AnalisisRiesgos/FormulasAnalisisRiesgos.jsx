@@ -7,12 +7,12 @@ import { TableFormulas } from '../../components/custom/analisis-riesgos/Tables';
 import { HrSimple } from '../../components/common/Hr';
 import { RecordFormulas } from '../../components/custom/analisis-riesgos/Formulas';
 import { useFormulasAnalisisRiesgos } from '../../hooks/AnalisisRiesgo';
-import { SelectAnalisisRiesgo } from '../../components/common/Selects';
+import { SelectAnalisisRiesgo } from '../../components/custom/analisis-riesgos/Selects';
 
 const FormulasAnalisisRiesgos = () => {
     const { formula,setFormula, formulas, handleChangeFormula, handleChangeStatus, handleChangeTitle, hrStyle,
             options, handleChangeOption, option, addOption, registers, addVariable, removeVariable, addFormula,
-            deleteFormula} = useFormulasAnalisisRiesgos();
+            deleteFormula, sections, handleChangeSection, handleSubmit} = useFormulasAnalisisRiesgos();
   return (
     <div className='mb-3'>
         <CardContainer>
@@ -43,8 +43,10 @@ const FormulasAnalisisRiesgos = () => {
             </div>
             <HrSimple styles={hrStyle}/>
             <h3>Historial de formulas</h3>
-            <RecordFormulas formulas={formulas} handleChangeStatus={handleChangeStatus} handleChangeTitle={handleChangeTitle} deleteFormula={deleteFormula}/>
+            <RecordFormulas formulas={formulas} handleChangeStatus={handleChangeStatus} handleChangeTitle={handleChangeTitle} deleteFormula={deleteFormula} options={sections} handleChangeSection={handleChangeSection}/>
         </CardContainer>
+        <button onClick={handleSubmit}>Guardar</button>
+
     </div>
   )
 }

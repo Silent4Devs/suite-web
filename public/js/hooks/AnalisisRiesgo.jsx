@@ -246,37 +246,37 @@ export const useAnalisisRiesgo = () => {
         try {
             setLoading(true);
             const response = await axios.get('http:///suite-web.test/api/api/v1/test/1');
-            console.log(response.data.data);
-            const dataSection = response.data.data.sections;
-            const dataQuestion = response.data.data.questions;
+            if(response.status === 200){
+                const dataSection = response.data.data.sections;
+                const dataQuestion = response.data.data.questions;
 
-            if(dataSection.length >0 ){
+                if(dataSection.length > 0 ){
 
-                dataSection.map((item)=>{
-                    const sectionId = item.id;
-                    item.id = `ss-${sectionId}`
-                })
+                    dataSection.map((item)=>{
+                        const sectionId = item.id;
+                        item.id = `ss-${sectionId}`
+                    })
 
-                dataQuestion.map((item)=>{
-                    const questionId = item.id;
-                    const columnId = item.columnId;
-                    item.id = `qs-${questionId}`
-                    item.columnId = `ss-${columnId}`
-                    if(item.type === "3"){
-                        const data = item.data[0];
-                        item.data = data;
-                    }
-                });
+                    dataQuestion.map((item)=>{
+                        const questionId = item.id;
+                        const columnId = item.columnId;
+                        item.id = `qs-${questionId}`
+                        item.columnId = `ss-${columnId}`
+                        if(item.type === "3"){
+                            const data = item.data[0];
+                            item.data = data;
+                        }
+                    });
 
-                dataSection.sort((a, b) => a.position - b.position);
-                dataQuestion.sort((a, b) => a.position - b.position);
-
-                setSections(dataSection);
-                setQuestions(dataQuestion);
-                setEdit(true);
-            }else {
-                setSections(sectionDefault);
-                setQuestions(questionDefault);
+                    dataSection.sort((a, b) => a.position - b.position);
+                    dataQuestion.sort((a, b) => a.position - b.position);
+                    setSections(dataSection);
+                    setQuestions(dataQuestion);
+                    setEdit(true);
+                }else {
+                    setSections(sectionDefault);
+                    setQuestions(questionDefault);
+                }
             }
             setLoading(false);
         } catch (error) {
@@ -469,10 +469,9 @@ export const useFormulasAnalisisRiesgos = () => {
     const [option, setOption] = useState("");
     const [registers, setRegisters] = useState([]);
     const [formula, setFormula] = useState("");
-    const [formulas, setFormulas] = useState([
-        // {id:1,riesgo:true,title:"Formula 1", formula:"9(5*5)"},
-        // {id:2,riesgo:false,title:"Formula 1", formula:"9(5*5)"}
-    ]);
+    const [formulas, setFormulas] = useState([]);
+    const [sections, setSections] = useState([]);
+    const [reload, setReload] = useState(false);
 
     const expFormulas = /^rf-\d+$/;
 
@@ -484,11 +483,14 @@ export const useFormulasAnalisisRiesgos = () => {
     const handleChangeStatus = (id) => {
         const newChanges = formulas.map((item)=>{
             if(item.id === id){
-                const newStatus = item.riesgo;
-                item.riesgo = !newStatus;
+                const newStatus = true;
+                item.riesgo = newStatus;
+                return item;
+            }else{
+                const newStatus = false;
+                item.riesgo = newStatus;
                 return item;
             }
-            return item;
         })
         setFormulas(newChanges);
     }
@@ -504,6 +506,19 @@ export const useFormulasAnalisisRiesgos = () => {
         });
 
         setFormulas(newChanges);
+    }
+
+    const handleChangeSection = (e,id) => {
+        const newsectionId = e.target.value;
+        const newFormulas = formulas.map((item)=>{
+            if(item.id === id){
+                item.section_id = parseInt(newsectionId);
+                return item;
+            }
+            return item;
+        });
+
+        setFormulas(newFormulas);
     }
 
     const hrStyle = {
@@ -547,28 +562,26 @@ export const useFormulasAnalisisRiesgos = () => {
                 id:newId,
                 riesgo:false,
                 title:`Formula ${lastFormula}`,
-                formula:formula
+                formula:formula,
+                section_id:sections[0].id,
+                template_id:1,
             }
-            setFormulas([...formulas,newFormula]);
-            setFormula("");
+            handleSaveFormula(newFormula);
         }
     }
 
     const deleteFormula = async(id) => {
-        let newId ="";
+
         const destroyElement = () => {
             const newElements = formulas.filter(item => item.id !== id);
             setFormulas(newElements);
         }
         const destroyRegister = async() => {
-            await axios.delete(`http:///suite-web.test/api/api/v1/ar/formulas/${newId}`);
+            await axios.delete(`http:///suite-web.test/api/api/v1/ar/formulas/${id}`);
         }
-        if(expFormulas.test(id)){
-            newId = id.slice(3);
-            AlertSimple(()=>destroyElement(), ()=>destroyRegister());
-        }else{
-            destroyElement();
-        }
+
+        AlertSimple(()=>destroyElement(), ()=>destroyRegister());
+
     }
 
     const getOptions = async() => {
@@ -589,10 +602,6 @@ export const useFormulasAnalisisRiesgos = () => {
             const response = await axios.get('http:///suite-web.test/api/api/v1/ar/formulas/1');
             if(response.status === 200){
                 const registerFormulas = response.data.data.formulas;
-                registerFormulas.map((item)=>{
-                   const formulaId = item.id;
-                   item.id = `rf-${formulaId}`;
-                })
                 setFormulas(registerFormulas);
             }
 
@@ -601,13 +610,369 @@ export const useFormulasAnalisisRiesgos = () => {
         }
     }
 
+    const getSections = async() => {
+        try {
+            const response = await axios.get('http:///suite-web.test/api/api/v1/test/1');
+            if(response.status === 200){
+                const newSections = response.data.data.sections;
+                setSections(newSections);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const handleSaveFormula = async (newFormula) => {
+        // console.log(newFormula);
+        const response = await axios.post('http:///suite-web.test/api/api/v1/ar/formulas',{formula:newFormula});
+        if(response.status === 200){
+            setReload(!reload);
+            setFormula("");
+        }
+    }
+
+    const handleSubmit = async() =>{
+        const response = await axios.put('http:///suite-web.test/api/api/v1/ar/formulas/edit',{formulas:formulas});
+        if(response.status === 200){
+            setReload(!reload);
+        }
+    }
+
     useEffect(() => {
       getOptions();
       getFormulas();
+      getSections();
     }, [])
+
+    useEffect(()=>{
+        getFormulas();
+    },[reload])
 
 
     return { formula,setFormula,formulas, handleChangeFormula, handleChangeStatus, handleChangeTitle,
              hrStyle, options, handleChangeOption, option, addOption, registers, addVariable,
-             removeVariable, addFormula, deleteFormula }
+             removeVariable, addFormula, deleteFormula, sections, handleChangeSection, handleSubmit }
+}
+
+export const useSettingsAnalisisRiesgos = () => {
+
+    const [loading, setLoading] = useState(true);
+
+    const [sections, setSections] = useState();
+    const [questions, setQuestions] = useState();
+    const [activeSection, setActiveSection] = useState(null);
+    const [activeQuestion, setActiveQuestion] = useState(null);
+    const [template, setTemplate] = useState({});
+
+    const expSections = /^ss-\d+$/;
+    const expQuestions = /^qs-\d+$/;
+
+    const handleDragStart = (event) => {
+        if(event.active.data.current?.type === "Section"){
+            setActiveSection(event.active.data.current);
+            return;
+        }
+
+        if(event.active.data.current?.type === "Question"){
+            setActiveQuestion(event.active.data.current);
+            return;
+        }
+    }
+
+    const handleDragEnd = (event) => {
+
+        setActiveSection(null);
+        setActiveQuestion(null);
+
+        const { active, over } = event;
+        if (!over) return;
+
+        const activeId = active.id;
+        const overId = over.id;
+
+        if (activeId === overId) return;
+
+        const isActiveASection = active.data.current?.type === "Section";
+        if (!isActiveASection) return;
+
+        setSections((sections) => {
+          const activeSectionIndex = sections.findIndex((item) => item.id === activeId);
+          const overSectionIndex = sections.findIndex((item) => item.id === overId);
+          return arrayMove(sections, activeSectionIndex, overSectionIndex);
+        });
+    };
+
+    const handleDragOver = (event) => {
+        const { active, over } = event;
+
+        if (!over) return;
+
+        const activeId = active.id;
+        const overId = over.id;
+
+        if (activeId === overId) return;
+
+        const isActiveAQuestion = active.data.current?.type === "Question";
+        const isOverAQuestion = over.data.current?.type === "Question";
+
+        if (!isActiveAQuestion) return;
+
+        // Im dropping a Task over another Task
+        if (isActiveAQuestion && isOverAQuestion) {
+          setQuestions((questions) => {
+            const activeIndex = questions.findIndex((item) => item.id === activeId);
+            const overIndex = questions.findIndex((item) => item.id === overId);
+            // console.log(overIndex)
+
+            if (questions[activeIndex].columnId != questions[overIndex].columnId) {
+              // Fix introduced after video recording
+              questions[activeIndex].columnId = questions[overIndex].columnId;
+            //   questions[activeIndex].position = overIndex;
+
+              return arrayMove(questions, activeIndex, overIndex - 1);
+            }
+
+            questions[activeIndex].position = overIndex;
+
+            return arrayMove(questions, activeIndex, overIndex);
+          });
+        }
+
+        const isOverASection = over.data.current?.type === "Section";
+
+        // Im dropping a Task over a column
+        if (isActiveAQuestion && isOverASection) {
+          setQuestions((questions) => {
+            // console.log(questions)
+            const activeIndex = questions.findIndex((item) => item.id === activeId);
+            questions[activeIndex].columnId = overId;
+            // console.log("DROPPING TASK OVER COLUMN", { activeIndex });
+            return arrayMove(questions, activeIndex, activeIndex);
+          });
+        }
+    }
+
+    const sensors = useSensors(
+        useSensor(PointerSensor, {
+          activationConstraint: {
+            distance: 1,
+          },
+        })
+    );
+
+    const changeSize = (id, newSize) => {
+        const updateQuestions = questions.map((item)=>{
+            if(item.id === id){
+                const updateItem = item
+                updateItem.size = newSize
+                return updateItem
+            }
+            return item;
+        })
+
+        setQuestions(updateQuestions)
+    }
+
+    const getData = async() => {
+        try {
+            setLoading(true);
+            const response = await axios.get('http:///suite-web.test/api/api/v1/ar/settings/1');
+            const dataSection = response.data.data.sections;
+            const dataQuestion = response.data.data.questions;
+            if(dataSection.length >0 ){
+
+                dataSection.map((item)=>{
+                    const sectionId = item.id;
+                    item.id = `ss-${sectionId}`
+                })
+
+                dataQuestion.map((item)=>{
+                    const questionId = item.id;
+                    const columnId = item.columnId;
+                    item.id = `qs-${questionId}`
+                    item.columnId = `ss-${columnId}`
+                    if(item.type === "3"){
+                        const data = item.data[0];
+                        item.data = data;
+                    }
+                });
+
+                dataSection.sort((a, b) => a.position - b.position);
+                dataQuestion.sort((a, b) => a.position - b.position);
+
+                setSections(dataSection);
+                setQuestions(dataQuestion);
+            }
+            setLoading(false);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const getInfoTemplate = async() => {
+        try {
+            const response = await axios.get('http:///suite-web.test/api/api/v1/ar/template/1');
+            if(response.status === 200){
+                const register = response.data.data.template
+                setTemplate(register)
+            }
+        } catch (error) {
+
+        }
+    }
+
+    const editData = async(dataSections,dataQuestions) => {
+        const url = 'http:///suite-web.test/api/api/v1/test/edit'
+        try {
+            const response = await axios.put(url,{sections:dataSections,questions:dataQuestions});
+            console.log(response);
+            if(response.status === 200){
+                // setReload(reload+1);
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const handleSubmit = async() => {
+        const dataSections = sections.map((item) => ({...item}));
+        const dataQuestions = questions.map((item)=> ({...item}));
+        dataSections.map((item, index)=>{
+            const id = item.id
+            item.position = index;
+            if(expSections.test(id)){
+                const newId = id.slice(3);
+                item.id = parseInt(newId,10);
+            }
+        });
+
+
+        dataQuestions.map((item)=>{
+            const id = item.id
+            const columnId = item.columnId;
+            if(expQuestions.test(id)){
+                const newId = id.slice(3);
+                item.id = parseInt(newId,10);
+            }
+            if(expSections.test(columnId)){
+                const newColumnId = columnId.slice(3);
+                item.columnId = parseInt(newColumnId,10);
+            }
+        })
+
+        dataSections.map(item => {
+            const dataFilter = dataQuestions.filter(itm => itm.columnId === item.id);
+            dataFilter.map((item,index) => {
+                item.position = index;
+                const itemIdFound = dataQuestions.findIndex(itm => itm.id === item.id);
+                dataQuestions[itemIdFound] = {...item}
+            });
+        });
+
+        // console.log(dataQuestions);
+
+            editData(dataSections,dataQuestions);
+    }
+
+    useEffect(() => {
+        getData();
+        getInfoTemplate();
+      }, [])
+
+    return {loading,sections,questions, activeSection, activeQuestion, handleDragStart,
+        handleDragEnd, handleDragOver, sensors, changeSize, handleSubmit, template}
+}
+
+export const useSettingsQuestionAnalisisRiesgo = (item, changeSize) =>{
+    const [showSize, setShowSize] = useState(false)
+    const [showInfo, setShowInfo] = useState(false)
+
+    const {
+        attributes,
+        listeners,
+        setNodeRef,
+        transform,
+        transition,
+        isDragging
+      } = useSortable({ id:item.id, data: {
+        type: "Question",
+        id: item.id,
+        size:item.size,
+        position:item.position,
+        question:{
+            type:item.type
+        },
+        title:item.title,
+    }});
+
+    const handleShowSizes = () => {
+        const flag = !showSize;
+        setShowSize(flag)
+    }
+
+    const handleChangeSize = (newSize) => {
+        changeSize(item.id, newSize)
+        handleShowSizes()
+    }
+
+    const moreInfo = (newValue) => {
+        const flag = newValue;
+        setShowInfo(flag);
+    }
+
+    return { showSize, showInfo, handleShowSizes, handleChangeSize, moreInfo, attributes, listeners, setNodeRef, transform,
+            transition, isDragging, }
+}
+
+export const useTemplateViewPrevAnalisisRiesgo = () => {
+    const [loading, setLoading] = useState(true);
+    const [template, setTemplate] = useState({});
+    const [sections, setSections] = useState();
+    const [questions, setQuestions] = useState();
+
+    const getData = async() => {
+        try {
+            setLoading(true);
+            const response = await axios.get('http:///suite-web.test/api/api/v1/ar/settings/1');
+            const dataSection = response.data.data.sections;
+            const dataQuestion = response.data.data.questions;
+            if(dataSection.length >0 ){
+
+                dataQuestion.map((item)=>{
+                    if(item.type === "3"){
+                        const data = item.data[0];
+                        item.data = data;
+                    }
+                });
+
+                dataSection.sort((a, b) => a.position - b.position);
+                dataQuestion.sort((a, b) => a.position - b.position);
+
+                setSections(dataSection);
+                setQuestions(dataQuestion);
+            }
+            setLoading(false);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const getInfoTemplate = async() => {
+        try {
+            const response = await axios.get('http:///suite-web.test/api/api/v1/ar/template/1');
+            if(response.status === 200){
+                const register = response.data.data.template
+                setTemplate(register)
+            }
+        } catch (error) {
+
+        }
+    }
+
+    useEffect(() => {
+        getData();
+        getInfoTemplate();
+    }, []);
+
+    return {loading,sections,questions,template}
 }
