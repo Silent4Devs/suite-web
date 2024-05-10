@@ -38,7 +38,7 @@
                            <a href="{{route('admin.courses.evaluation.questions',['course'=>$course->slug,'evaluation'=>$evaluacion->id])}}"><i style="font-size:10pt; color:#747474;" class="ml-1 fas fa-file-alt" title="Ver preguntas" ></i></a>
 
                             <i style="font-size:10pt" class="ml-1 cursor-pointer fas fa-edit"
-                                wire:click.prevent="edit({{ $evaluacion->id }})" title="Editar"></i>
+                                wire:click.prevent="edit({{ $evaluacion->id }})" title="Editar" id="edit-evaluations"></i>
 
                             <i style="font-size:10pt;" class="ml-1 fa-regular fa-trash-can" title="Eliminar"
 
