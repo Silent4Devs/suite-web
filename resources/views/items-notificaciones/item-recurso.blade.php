@@ -14,7 +14,7 @@
                         <i class="pr-2 fab fa-discourse text-info"></i>
                         <p class="p-0 m-0">
                             El {{ $last_unread_notification->data['slug'] }} con fecha
-                            {{ $last_unread_notification->data['updated_at'] }} ha
+                            {{ $last_unread_notification->data['updated_at'] ?? '' }} ha
                             sido actualizado
                         </p>
                     </div>
@@ -24,7 +24,7 @@
                         <i class="pr-2 fab fa-discourse text-danger"></i>
                         <p class="p-0 m-0">
                             El {{ $last_unread_notification->data['slug'] }} con fecha
-                            {{ $last_unread_notification->data['deleted_at'] }} ha
+                            {{ $last_unread_notification->data['deleted_at'] ?? '' }} ha
                             sido eliminado
                         </p>
                     </div>
