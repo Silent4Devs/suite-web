@@ -52,7 +52,7 @@
 
             <div id="registro_completo" class="d-none w-100 row" style="margin:0 !important;">
                 <div class="form-group col-md-6  anima-focus">
-                    <input type="" placeholder="" name="rfc" class="form-control" value="{{ $cliente->rfc }}">
+                    <input type="" placeholder="" maxlength="255" name="rfc" class="form-control" value="{{ $cliente->rfc }}">
                     {!! Form::label('rfc', 'RFC*', ['class' => 'asterisco']) !!}
                 </div>
 
@@ -75,7 +75,7 @@
                 </div>
 
                 <div class="form-group col-md-4 anima-focus">
-                    <input type="" placeholder="" name="ciudad" class="form-control"
+                    <input type="" placeholder="" maxlength="255" name="ciudad" class="form-control"
                         value="{{ $cliente->ciudad }}">
                     {!! Form::label(
                         'ciudad',

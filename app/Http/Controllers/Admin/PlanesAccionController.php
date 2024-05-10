@@ -63,47 +63,22 @@ class PlanesAccionController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'parent' => 'required|string',
-            'norma' => 'required|string',
-            // 'modulo_origen' => 'required|string',
-            'objetivo' => 'required|string',
+            'parent' => 'required|string|max:255',
+            'inicio' => 'required|date',
+            'fin' => 'required|date|after:inicio', // Asegura que la fecha de fin sea después de la fecha de inicio
+            'objetivo' => 'required|string|max:550',
         ], [
-            'parent.required' => 'Debes de definir un nombre para el plan de acción',
-            'norma.required' => 'Debes de definir una norma para el plan de acción',
-            // 'modulo_origen.required' => 'Debes de definir un módulo de origen para el plan de acción',
-            'objetivo.required' => 'Debes de definir un objetivo para el plan de acción',
+            'parent.required' => 'Debes definir un nombre para el plan de trabajo',
+            'objetivo.required' => 'Debes definir un objetivo para el plan de trabajo',
+            'fin.after' => 'La fecha de fin debe ser posterior a la fecha de inicio',
         ]);
         $tasks = [
             [
                 'id' => 'tmp_'.(strtotime(now())).'_1',
-                'end' => strtotime(now()) * 1000,
-                'name' => 'Plan de Accion - '.$request->norma,
+                'end' => strtotime($request->fin) * 1000,
+                'name' => 'Plan de Trabajo - '.$request->norma,
                 'level' => 0,
-                'start' => strtotime(now()) * 1000,
-                'canAdd' => true,
-                'status' => 'STATUS_UNDEFINED',
-                'canWrite' => true,
-                'duration' => 0,
-                'progress' => 0,
-                'canDelete' => true,
-                'collapsed' => false,
-                'relevance' => '0',
-                'canAddIssue' => true,
-                'description' => '',
-                'endIsMilestone' => false,
-                'startIsMilestone' => false,
-                'progressByWorklog' => false,
-                'assigs' => [],
-                'resources' => [],
-                'subtasks' => [],
-                'historic' => [],
-            ],
-            [
-                'id' => 'tmp_'.(strtotime(now())).rand(1, 1000),
-                'end' => strtotime(now()) * 1000,
-                'name' => $request->norma,
-                'level' => 1,
-                'start' => strtotime(now()) * 1000,
+                'start' => strtotime($request->inicio) * 1000,
                 'canAdd' => true,
                 'status' => 'STATUS_UNDEFINED',
                 'canWrite' => true,
@@ -134,13 +109,13 @@ class PlanesAccionController extends Controller
             'zoom' => '3d',
             'parent' => $request->parent,
             'norma' => $request->norma,
-            'modulo_origen' => 'Planes de Acción',
+            'modulo_origen' => 'Planes de Trabajo',
             'objetivo' => $request->objetivo,
             'elaboro_id' => User::getCurrentUser()->empleado->id,
             'es_plan_trabajo_base' => $request->es_plan_trabajo_base != null ? true : false,
         ]);
 
-        $mensaje = $request->es_plan_trabajo_base != null ? 'Plan de Trabajo Base' : 'Plan de Acción';
+        $mensaje = $request->es_plan_trabajo_base != null ? 'Plan de trabajo Base' : 'Plan de trabajo';
         $route = $request->es_plan_trabajo_base != null ? 'admin.planTrabajoBase.index' : 'admin.planes-de-accion.index';
 
         return redirect()->route($route)->with('success', $mensaje.' '.$planImplementacion->parent.' creado');
@@ -153,32 +128,8 @@ class PlanesAccionController extends Controller
                 [
                     'id' => 'tmp_'.(strtotime(now())).'_1',
                     'end' => strtotime(now()) * 1000,
-                    'name' => 'Plan de Accion - '.$modelo->norma,
+                    'name' => 'Plan de Trabajo - '.$modelo->norma,
                     'level' => 0,
-                    'start' => strtotime(now()) * 1000,
-                    'canAdd' => true,
-                    'status' => 'STATUS_UNDEFINED',
-                    'canWrite' => true,
-                    'duration' => 0,
-                    'progress' => 0,
-                    'canDelete' => true,
-                    'collapsed' => false,
-                    'relevance' => '0',
-                    'canAddIssue' => true,
-                    'description' => '',
-                    'endIsMilestone' => false,
-                    'startIsMilestone' => false,
-                    'progressByWorklog' => false,
-                    'assigs' => [],
-                    'resources' => [],
-                    'subtasks' => [],
-                    'historic' => [],
-                ],
-                [
-                    'id' => 'tmp_'.(strtotime(now())).rand(1, 1000),
-                    'end' => strtotime(now()) * 1000,
-                    'name' => $modelo->norma,
-                    'level' => 1,
                     'start' => strtotime(now()) * 1000,
                     'canAdd' => true,
                     'status' => 'STATUS_UNDEFINED',
@@ -224,6 +175,11 @@ class PlanesAccionController extends Controller
     {
         $planImplementacion = PlanImplementacion::find($planImplementacion);
 
+        if (! $planImplementacion) {
+            // Si no existe, redirigir o mostrar un mensaje de error
+            abort(404);
+        }
+
         return view('admin.planesDeAccion.show', compact('planImplementacion'));
     }
 
@@ -235,12 +191,22 @@ class PlanesAccionController extends Controller
      */
     public function edit($planImplementacion)
     {
-        abort_if(Gate::denies('planes_de_accion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $planImplementacion = PlanImplementacion::find($planImplementacion);
-        $referencia = null;
+        try {
+            abort_if(Gate::denies('planes_de_accion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.planesDeAccion.edit', compact('planImplementacion', 'referencia'));
+            $planImplementacion = PlanImplementacion::find($planImplementacion);
+
+            if (! $planImplementacion) {
+                abort(404);
+            }
+
+            $referencia = null;
+
+            return view('admin.planesDeAccion.edit', compact('planImplementacion', 'referencia'));
+        } catch (\Throwable $th) {
+            abort(404);
+        }
     }
 
     /**
@@ -251,18 +217,37 @@ class PlanesAccionController extends Controller
      */
     public function update(Request $request, $planImplementacion)
     {
-        $request->validate([
-            'parent' => 'required|string',
-            'norma' => 'required|string',
-            'modulo_origen' => 'required|string',
-            'objetivo' => 'required|string',
-        ], [
-            'parent.required' => 'Debes de definir un nombre para el plan de acción',
-            'norma.required' => 'Debes de definir una norma para el plan de acción',
-            'modulo_origen.required' => 'Debes de definir un módulo de origen para el plan de acción',
-            'objetivo.required' => 'Debes de definir un objetivo para el plan de acción',
-        ]);
-        $planImplementacion = PlanImplementacion::find($planImplementacion);
+        try {
+            $request->validate([
+                'parent' => 'required|string|max:255',
+                'inicio' => 'required|date',
+                'fin' => 'required|date|after:inicio', // Asegura que la fecha de fin sea después de la fecha de inicio
+                'objetivo' => 'required|string|max:550',
+            ], [
+                'parent.required' => 'Debes definir un nombre para el plan de trabajo',
+                'objetivo.required' => 'Debes definir un objetivo para el plan de trabajo',
+                'fin.after' => 'La fecha de fin debe ser posterior a la fecha de inicio',
+            ]);
+            $planImplementacion = PlanImplementacion::find($planImplementacion);
+
+            if (! $planImplementacion) {
+                abort(404);
+            }
+
+            $planImplementacion->update([ // Necesario se carga inicialmente el Diagrama Universal de Gantt
+                'parent' => $request->parent,
+                'norma' => $request->norma,
+                'modulo_origen' => $request->modulo_origen,
+                'objetivo' => $request->objetivo,
+            ]);
+            $route = $planImplementacion->es_plan_trabajo_base ? 'admin.planTrabajoBase.index' : 'admin.planes-de-accion.index';
+            $mensaje = $planImplementacion->es_plan_trabajo_base ? 'Plan de Trabajo Base Actualizado' : 'Plan de Trabajo Actualizado';
+
+            return redirect()->route($route)->with('success', $mensaje);
+        } catch (\Throwable $th) {
+            abort(404);
+        }
+
         $planImplementacion->update([ // Necesario se carga inicialmente el Diagrama Universal de Gantt
             'parent' => $request->parent,
             'norma' => $request->norma,
@@ -270,7 +255,7 @@ class PlanesAccionController extends Controller
             'objetivo' => $request->objetivo,
         ]);
         $route = $planImplementacion->es_plan_trabajo_base ? 'admin.planTrabajoBase.index' : 'admin.planes-de-accion.index';
-        $mensaje = $planImplementacion->es_plan_trabajo_base ? 'Plan de Trabajo Base Actualizado' : 'Plan de Acción Actualizado';
+        $mensaje = $planImplementacion->es_plan_trabajo_base ? 'Plan de Trabajo Base Actualizado' : 'Plan de Trabajo Actualizado';
 
         return redirect()->route($route)->with('success', $mensaje);
     }
@@ -292,7 +277,7 @@ class PlanesAccionController extends Controller
 
             return redirect()->route('admin.planes-de-accion.index')->with('success', 'Eliminado exitosamente');
         } else {
-            return redirect()->route('admin.planes-de-accion.index')->with('error', 'No se encontró el Plan de Acción para eliminar');
+            return redirect()->route('admin.planes-de-accion.index')->with('error', 'No se encontró el Plan de Trabajo para eliminar');
         }
     }
 

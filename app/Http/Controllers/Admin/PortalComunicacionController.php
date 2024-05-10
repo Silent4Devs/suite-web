@@ -30,52 +30,18 @@ class PortalComunicacionController extends Controller
         $hoy = Carbon::now();
         $hoy->toDateString();
 
-        // $results = Fork::new()
-        //     ->run(
-        //         function () {
-        //             $user = User::getCurrentUser();
-
-        //             return $user;
-        //         },
-        //         function () {
-        //             $politica_existe = PoliticaSgsi::getAll()->count();
-
-        //             return $politica_existe;
-        //         },
-        //         function () {
-        //             $comite_existe = Comiteseguridad::getAll()->count();
-
-        //             return $comite_existe;
-        //         },
-        //         function () {
-        //             $documentos_publicados = Documento::getLastFiveWithMacroproceso();
-
-        //             return $documentos_publicados;
-        //         },
-
-        //         function () {
-        //             $comunicacionSgis = ComunicacionSgi::getAllwithImagenesBlog();
-
-        //             return $comunicacionSgis;
-        //         },
-        //         function () {
-        //             $comunicacionSgis_carrusel = ComunicacionSgi::getAllwithImagenesCarrousel();
-
-        //             return $comunicacionSgis_carrusel;
-        //         },
-        //     );
-
+        $politica_existe = PoliticaSgsi::getAll()->count();
+        $getAlta = Empleado::alta();
         $user = User::getCurrentUser();
 
         $empleado_asignado = $user->n_empleado;
         $authId = $user->id;
-        $politica_existe = PoliticaSgsi::getAll()->count();
-        $comite_existe = Comiteseguridad::getAll()->count();
+
         $documentos_publicados = Documento::getLastFiveWithMacroproceso();
+        $comite_existe = Comiteseguridad::getAll()->count();
+        $nuevos = Empleado::whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->get();
         $comunicacionSgis = ComunicacionSgi::getAllwithImagenesBlog();
         $comunicacionSgis_carrusel = ComunicacionSgi::getAllwithImagenesCarrousel();
-        $nuevos = Empleado::whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->get();
-        $getAlta = Empleado::alta();
 
         $cumpleaños = Cache::remember('Portal_cumpleaños_'.$authId, 3600, function () use ($hoy, $getAlta) {
             return $getAlta->whereMonth('cumpleaños', '=', $hoy->format('m'))->get();

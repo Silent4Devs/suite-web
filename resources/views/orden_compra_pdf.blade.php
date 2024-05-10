@@ -67,10 +67,10 @@
             <tr>
                 <td>
                     <strong> Proyecto: </strong> <br>
-                    @if ($requisiciones->contrato->no_contrato)
-                        {{ $requisiciones->contrato->no_contrato }}
+                    @if($requisiciones->contrato === null)
+                    <strong>Contrato Eliminado!</strong>
                     @else
-                        <small class="not-register">Sin registro</small>
+                    {{ optional($requisiciones->contrato)->no_proyecto }} - {{ optional($requisiciones->contrato)->no_contrato }} - {{ optional($requisiciones->contrato)->nombre_servicio }}
                     @endif
                 </td>
                 <td>
@@ -221,10 +221,8 @@
                     </td>
                     <td>
                         <strong> Proyecto: </strong> <br>
-                        @isset($producto->contrato)
-                            {{ $producto->contrato->no_proyecto }} / {{ $producto->contrato->no_contrato }} -
-                            {{ $producto->contrato->nombre_servicio }}
-                        @endisset
+                            {{ optional($producto->contrato)->no_proyecto }} / {{ optional($producto->contrato)->no_contrato }} -
+                            {{ optional($producto->contrato)->nombre_servicio }}
                     </td>
                     <td>
                         <strong> No. de Personas: </strong> <br>
@@ -359,7 +357,7 @@
                 <td align="center">
                     @if ($requisiciones->fecha_firma_finanzas_orden)
                         <img src="{{ $requisiciones->firma_finanzas_orden }}" class="img-firma"> <br>
-                        <small> Lourdes del Pilar Abadía Velasco | {{ $requisiciones->fecha_firma_finanzas_orden }}
+                        <small> {{$firma_finanzas_name ?? '' }}  | {{ $requisiciones->fecha_firma_finanzas_orden }}
                         </small>
                     @else
                         <div style="height: 185px;"></div>

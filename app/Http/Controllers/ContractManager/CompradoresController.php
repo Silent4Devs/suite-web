@@ -5,10 +5,12 @@ namespace App\Http\Controllers\ContractManager;
 use App\Http\Controllers\Controller;
 use App\Models\ContractManager\Comprador;
 use App\Models\Empleado;
+use App\Models\Organizacion;
 use Gate;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use PDF;
 use Symfony\Component\HttpFoundation\Response;
 
 class CompradoresController extends Controller
@@ -101,11 +103,20 @@ class CompradoresController extends Controller
      */
     public function edit($id)
     {
-        abort_if(Gate::denies('katbol_producto_modificar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $compradores = Comprador::find($id);
-        $users = Empleado::where('estatus', 'alta')->orderBy('name')->get();
+        try {
+            abort_if(Gate::denies('katbol_producto_modificar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            $compradores = Comprador::find($id);
 
-        return view('contract_manager.compradores.edit', compact('compradores', 'users'));
+            if (! $compradores) {
+                abort(404);
+            }
+
+            $users = Empleado::where('estatus', 'alta')->orderBy('name')->get();
+
+            return view('contract_manager.compradores.edit', compact('compradores', 'users'));
+        } catch (\Throwable $th) {
+            abort(404);
+        }
     }
 
     /**
@@ -120,8 +131,9 @@ class CompradoresController extends Controller
             'nombre' => 'required',
             'estado' => 'required',
         ]);
+
         $comprador = Comprador::find($id);
-        $empledo = Empleado::where('id', $request->nombre)->first();
+        $empledo = Empleado::where('name', $request->nombre)->first();
 
         $comprador->update([
             'nombre' => $empledo->name,
@@ -173,5 +185,19 @@ class CompradoresController extends Controller
         $query = Comprador::select('id', 'clave', 'nombre')->where('archivo', true)->get();
 
         return datatables()->of($query)->toJson();
+    }
+
+    public function pdfCompradores()
+    {
+
+        $compradores = Comprador::get();
+        $organizacions = Organizacion::getFirst();
+        $logo_actual = $organizacions->logo;
+
+        $pdf = PDF::loadView('compradores', compact('compradores', 'organizacions', 'logo_actual'));
+
+        $pdf->setPaper('A4', 'landscape');
+
+        return $pdf->download('compradores.pdf');
     }
 }

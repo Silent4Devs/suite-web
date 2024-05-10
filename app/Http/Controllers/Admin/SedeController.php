@@ -6,13 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroySedeRequest;
 use App\Http\Requests\StoreSedeRequest;
-use App\Jobs\ProcessImageCompressor;
 use App\Models\Organizacion;
 use App\Models\Sede;
 use App\Models\Team;
+use App\Services\ImageService;
 use Gate;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
@@ -119,14 +118,27 @@ class SedeController extends Controller
             $file = $request->file('foto_sedes');
             $extension = $file->getClientOriginalExtension();
             $name_image = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-            $new_name_image = 'UID_'.$sede->id.'_'.$name_image.'.'.$extension;
-            $route = storage_path('/app/public/sedes/imagenes/'.$new_name_image);
+            $new_name_image = 'UID_'.$sede->id.'_'.$name_image.'.png';
 
-            $image = Image::make($file)->resize(256, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
+            // Call the ImageService to consume the external API
+            $apiResponse = ImageService::consumeImageCompresorApi($file);
 
-            $image->encode('png', 70)->save($route);
+            // Verificar si la solicitud fue exitosa
+            if ($apiResponse['status'] == 200) {
+                $rutaGuardada = '/sedes/imagenes/'.$new_name_image;
+                file_put_contents(storage_path('app/public/'.$rutaGuardada), $apiResponse['body']);
+
+                $sede->update([
+                    'foto_sedes' => $new_name_image,
+                ]);
+
+                return redirect()->route('admin.sedes.index')->with('success', 'Guardado con éxito');
+
+            } else {
+                $mensajeError = 'Error al recibir la imagen de la API externa: '.$apiResponse['body'];
+
+                return Redirect::back()->with('mensajeError', $mensajeError);
+            }
         } else {
             $mensajeError = 'Intentelo de nuevo, Ingrese  el campo foto';
 
@@ -176,11 +188,31 @@ class SedeController extends Controller
             $file = $request->file('foto_sedes');
             $extension = $file->getClientOriginalExtension();
             $name_image = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-            $new_name_image = 'UID_'.$sede->id.'_'.$name_image.'.'.$extension;
-            $route = storage_path('/app/public/sedes/imagenes/'.$new_name_image);
+            $new_name_image = 'UID_'.$sede->id.'_'.$name_image.'.png';
 
-            // Enqueue the image processing job, passing the file, route and the desired width
-            Queue::push(new ProcessImageCompressor($file, $route, 256));
+            // Call the ImageService to consume the external API
+            $apiResponse = ImageService::consumeImageCompresorApi($file);
+
+            // Verificar si la solicitud fue exitosa
+            if ($apiResponse['status'] == 200) {
+                $rutaGuardada = '/sedes/imagenes/'.$new_name_image;
+                file_put_contents(storage_path('app/public/'.$rutaGuardada), $apiResponse['body']);
+
+                $sede->update([
+                    'sede' => $request->sede,
+                    'foto_sedes' => $request->foto_sede,
+                    'direccion' => $request->direccion,
+                    'descripcion' => $request->descripcion,
+                    'foto_sedes' => $new_name_image,
+                ]);
+
+                return redirect()->route('admin.sedes.index')->with('success', 'Editado con éxito');
+            } else {
+                $mensajeError = 'Error al recibir la imagen de la API externa: '.$apiResponse['body'];
+
+                return Redirect::back()->with('mensajeError', $mensajeError);
+            }
+
         } else {
 
             $mensajeError = 'Intentelo de nuevo, Ingrese  todos los campos';
@@ -239,18 +271,34 @@ class SedeController extends Controller
 
     public function ubicacion($request)
     {
-        abort_if(Gate::denies('sedes_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $sede = Sede::find($request);
+        try {
+            abort_if(Gate::denies('sedes_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            $sede = Sede::find($request);
 
-        return view('admin.sedes.ubicacion', compact('sede'));
+            if (! $sede) {
+                abort(404);
+            }
+
+            return view('admin.sedes.ubicacion', compact('sede'));
+        } catch (\Throwable $th) {
+            abort(404);
+        }
     }
 
     public function ubicacionorg($request)
     {
-        abort_if(Gate::denies('sedes_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $sede = Sede::find($request);
+        try {
+            abort_if(Gate::denies('sedes_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            $sede = Sede::find($request);
 
-        //dd($sede);
-        return view('admin.sedes.ubicacion', compact('sede'));
+            if (! $sede) {
+                abort(404);
+            }
+
+            //dd($sede);
+            return view('admin.sedes.ubicacion', compact('sede'));
+        } catch (\Throwable $th) {
+            abort(404);
+        }
     }
 }

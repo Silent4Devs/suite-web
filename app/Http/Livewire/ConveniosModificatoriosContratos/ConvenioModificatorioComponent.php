@@ -36,6 +36,8 @@ class ConvenioModificatorioComponent extends Component
 
     public $convenios_file;
 
+    public $file_convenio;
+
     public $show_contrato; // En formulario de edit se está en vista de consulta entonces es true
 
     public $view = 'create';
@@ -67,7 +69,7 @@ class ConvenioModificatorioComponent extends Component
                     ->orWhere('id', 'like', '%'.$this->search.'%');
             })
             ->orderBy($this->sort, $this->direction)
-            ->paginate($this->pagination);
+            ->paginate(intval($this->pagination));
 
         // $this->dispatchBrowserEvent('paginadorConvenios');
 

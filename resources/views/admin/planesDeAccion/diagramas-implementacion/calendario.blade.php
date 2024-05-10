@@ -1,64 +1,5 @@
-<style type="text/css">
-    #calendar-container {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-    }
-
-    #calendar {
-        /* max-width: 1100px; */
-        margin: -2px auto;
-    }
-
-    .popover-title {
-        font-weight: bold;
-        background-color: #007bff;
-        color: #fff;
-    }
-
-    .popover-content {
-        color: #333;
-    }
-
-    .popover {
-        max-width: 250px;
-        width: auto;
-        background-color: #fff;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    }
-
-    .cardCalendario {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        padding: 20px;
-        gap: 1rem;
-        color: rgb(152, 162, 179);
-        font-size: 14px;
-        background: rgb(252, 252, 253);
-        box-shadow: rgb(16 24 40 / 30%) 0px 0.5px 2px;
-        border-radius: 8px;
-        /* max-width: 350px; */
-        margin: auto;
-    }
-</style>
-{{-- <ul class="nav nav-tabs" id="myTab" role="tablist">
-    <li class="nav-item" role="presentation">
-      <button class="nav-link active" id="home-tab" data-toggle="tab" data-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Home</button>
-    </li>
-    <li class="nav-item" role="presentation">
-      <button class="nav-link" id="profile-tab" data-toggle="tab" data-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Profile</button>
-    </li>
-    <li class="nav-item" role="presentation">
-      <button class="nav-link" id="contact-tab" data-toggle="tab" data-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Contact</button>
-    </li>
-  </ul> --}}
 <div class="cardCalendario" style="box-shadow: none; !important">
-    <div class="card-body" style="height: 658px;">
+    <div class="card-body" style="height: 550px;">
         <div id='calendar'></div>
     </div>
 </div>
@@ -90,23 +31,28 @@
 
         function renderCalendar(response) {
             const mapStatusToColor = {
-                "STATUS_ACTIVE": "#ecde00",
-                "STATUS_DONE": "#17d300",
-                "STATUS_FAILED": "#e10000",
-                "STATUS_SUSPENDED": "#e7e7e7",
-                "STATUS_UNDEFINED": "#00b1e1"
+                "STATUS_ACTIVE": "#DEEFFF",
+                "STATUS_DONE": "#DEFFE6",
+                "STATUS_FAILED": "#FFDFDF",
+                "STATUS_SUSPENDED": "#EEEEEE",
+                "STATUS_UNDEFINED": "#FFECAF"
             };
-
+            const mapStatusToColorText = {
+                "STATUS_ACTIVE": "#0080FF",
+                "STATUS_DONE": "#42A500",
+                "STATUS_FAILED": "#FF5C3A",
+                "STATUS_SUSPENDED": "#818181",
+                "STATUS_UNDEFINED": "#FF9900"
+            };
             const mapStatusToEstatus = {
-                "STATUS_ACTIVE": "En progreso",
+                "STATUS_ACTIVE": "En proceso",
                 "STATUS_DONE": "Completado",
-                "STATUS_FAILED": "Con retraso",
-                "STATUS_SUSPENDED": "Suspendida",
-                "STATUS_UNDEFINED": "Sin iniciar"
+                "STATUS_FAILED": "Retrasado",
+                "STATUS_SUSPENDED": "Suspendido",
+                "STATUS_UNDEFINED": "Lista de tareas"
             };
 
             response.tasks.forEach(item => {
-                // Destructuramos el objeto para obtener los valores específicos
                 const {
                     id,
                     name,
@@ -124,6 +70,7 @@
                     color: mapStatusToColor[status] || "#00b1e1",
                     start: start,
                     end: end,
+                    textColor: mapStatusToColorText[status] || "#00b1e1",
                     extendedProps: {
                         status: mapStatusToEstatus[status]
                     }
@@ -146,48 +93,46 @@
                 },
                 initialView: 'dayGridMonth',
                 initialDate: obtenerFechaActual(),
-                navLinks: false, // can click day/week names to navigate views
+                navLinks: false,
                 editable: false,
                 selectable: false,
                 nowIndicator: true,
-                dayMaxEvents: true, // allow "more" link when too many events
+                dayMaxEvents: true,
                 eventDidMount: function(info) {
-                    $(info.el).popover({
-                        title: info.event.title,
-                        placement: 'top',
-                        trigger: 'hover',
-                        content: '<div style="font-family: Arial, sans-serif; font-size: 14px; padding: 5px;">' +
-                            '<p><strong>Estado:</strong> ' + info.event.extendedProps.status + '</p>' +
-                            '<p><strong>Fecha inicial:</strong> ' + convertirFecha(info.event.start) +
-                            '</p>' +
-                            '<p><strong>Fecha final:</strong> ' + convertirFecha(info.event.end) +
-                            '</p>' +
-                            '</div>',
-                        container: 'body',
-                        html: true
-                    });
+                    // $(info.el).popover({
+                    //     title: info.event.title,
+                    //     placement: 'top',
+                    //     trigger: 'hover',
+                    //     content: '<div style="font-family: Arial, sans-serif; font-size: 14px; padding: 5px;">' +
+                    //         '<p><strong>Estado:</strong> ' + info.event.extendedProps.status + '</p>' +
+                    //         '<p><strong>Fecha inicial:</strong> ' + convertirFecha(info.event.start) +
+                    //         '</p>' +
+                    //         '<p><strong>Fecha final:</strong> ' + convertirFecha(info.event.end) +
+                    //         '</p>' +
+                    //         '</div>',
+                    //     container: 'body',
+                    //     html: true
+                    // });
                 },
                 events: eventsCalendar,
                 eventClick: function(info) {
-                    alert('Event: ' + info.event.title);
-                    alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
-                    alert('View: ' + info.view.type);
+                    // alert('Event: ' + info.event.title);
+                    // alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
+                    // alert('View: ' + info.view.type);
 
-                    // change the border color just for fun
-                    info.el.style.borderColor = 'red';
+                    // // change the border color just for fun
+                    // info.el.style.borderColor = 'red';
                 },
                 dateClick: function(arg) {
                     console.log(arg.date.toUTCString()); // use *UTC* methods on the native Date Object
                     // will output something like 'Sat, 01 Sep 2018 00:00:00 GMT'
                 }
             });
-
         }
 
         function renderCaleendar() {
             const tiempoEspera = 300;
             setTimeout(() => {
-
                 calendar.render();
                 calendar.setOption('locale', 'es');
                 console.log('ejecutado');

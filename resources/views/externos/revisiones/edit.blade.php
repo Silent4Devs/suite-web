@@ -48,12 +48,12 @@
             animation: lds-hourglass 1.2s infinite;
         }
 
-        .btn-reg{
-            align-content: center; 
-            background-color:#1E3A8A; 
-            color:#DBEAFE; 
-            width: 430px; 
-            height: 40px; 
+        .btn-reg {
+            align-content: center;
+            background-color: #1E3A8A;
+            color: #DBEAFE;
+            width: 430px;
+            height: 40px;
             border-radius: 5px;
         }
 
@@ -72,7 +72,6 @@
                 transform: rotate(1800deg);
             }
         }
-
     </style>
     @if ($revisionDocumento->estatus != 1)
         <div class="row w-100 justify-content-center">
@@ -97,7 +96,7 @@
             <div class="row justify-content-center">
                 <div class="mt-4 text-center card col-7 display:inline">
                     <img src="{{ asset('img/mensaje2.png') }}">
-                    <a href="{{asset('admin/inicioUsuario')}}#aprobaciones" style="padding-bottom: 10px">
+                    <a href="{{ asset('admin/inicioUsuario') }}#aprobaciones" style="padding-bottom: 10px">
                         <button class="btn-reg">Regresar</button></a>
                 </div>
             </div>
@@ -123,8 +122,8 @@
                         <div class="col-sm-12 col-lg-6">
                             <form method="POST" id="form-revision">
                                 <div class="form-group">
-                                    <label for="comentarios"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                            fill="currentColor" class="bi bi-chat-dots" viewBox="0 0 16 16">
+                                    <label for="comentarios"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                            height="16" fill="currentColor" class="bi bi-chat-dots" viewBox="0 0 16 16">
                                             <path
                                                 d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
                                             <path
@@ -136,7 +135,8 @@
                                 <input id="revision" type="hidden" name="revision" value="{{ $revisionDocumento->id }}">
                                 <button id="aprobar" class="btn btn-outline-success"><i class="mr-1 fas fa-thumbs-up"></i>
                                     Aprobar</button>
-                                <button id="rechazar" class="btn btn-outline-danger"><i class="mr-1 fas fa-thumbs-down"></i>
+                                <button id="rechazar" class="btn btn-outline-danger"><i
+                                        class="mr-1 fas fa-thumbs-down"></i>
                                     Rechazar</button>
                             </form>
 
@@ -151,9 +151,10 @@
                 </div>
             </div>
     @endif
-
 @endsection
 @section('scripts')
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
     <script>
         $(document).ready(function() {
             let btnAprobar = document.getElementById('aprobar');

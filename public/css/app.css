@@ -9755,16 +9755,7 @@ html:not([dir="rtl"]) .dropleft .dropdown-toggle-split::before {
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-.btn i,
-.btn .c-icon {
-    width: 0.875rem;
-    height: 0.875rem;
-    margin: 0.21875rem 0;
-    height: 0.875rem;
-    margin: 0.21875rem 0;
-}
-
-@media (prefers-reduced-motion: reduce) {
+s @media (prefers-reduced-motion: reduce) {
     .btn {
         transition: none;
     }
@@ -10631,14 +10622,6 @@ fieldset:disabled a.btn {
     border-radius: 0.3rem;
 }
 
-.btn-lg i,
-.btn-group-lg>.btn i,
-.btn-lg .c-icon,
-.btn-group-lg>.btn .c-icon {
-    width: 1.09375rem;
-    height: 1.09375rem;
-    margin: 0.2734375rem 0;
-}
 
 .btn-sm,
 .btn-group-sm>.btn {
@@ -10646,15 +10629,6 @@ fieldset:disabled a.btn {
     font-size: 0.765625rem;
     line-height: 1.5;
     border-radius: 0.2rem;
-}
-
-.btn-sm i,
-.btn-group-sm>.btn i,
-.btn-sm .c-icon,
-.btn-group-sm>.btn .c-icon {
-    width: 0.765625rem;
-    height: 0.765625rem;
-    margin: 0.19140625rem 0;
 }
 
 .btn-block {

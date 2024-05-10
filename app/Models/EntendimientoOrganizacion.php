@@ -26,13 +26,16 @@ class EntendimientoOrganizacion extends Model implements Auditable
         'fecha',
         'id_elabora',
         'estatus',
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     //Redis methods
     public static function getAllWithEmpleadoParticipantes()
     {
         return Cache::remember('EntendimientoOrganizacion:entendimientoorganizacion_with_empleado_participantes', 3600 * 7, function () {
-            return self::with('empleado', 'participantes')->orderByDesc('id')->get();
+            return self::orderByDesc('id')->get();
         });
     }
 

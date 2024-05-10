@@ -184,6 +184,8 @@ return [
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
         EloquentFilter\ServiceProvider::class,
         OwenIt\Auditing\AuditingServiceProvider::class,
+        \VladimirYuldashev\LaravelQueueRabbitMQ\LaravelQueueRabbitMQServiceProvider::class,
+
     ],
 
     /*

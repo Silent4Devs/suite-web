@@ -81,7 +81,7 @@
                             Proyecto <font class="asterisco">*</font>
                         </label>
                         <input class="browser-default" disabled
-                            value="{{ $requisicion->contrato->no_proyecto }} / {{ $requisicion->contrato->no_contrato }} - {{ $requisicion->contrato->nombre_servicio }}">
+                            value="{{ optional($requisicion->contrato)->no_proyecto }} / {{ optional($requisicion->contrato)->no_contrato }} - {{ optional($requisicion->contrato)->nombre_servicio }}">
                     </div>
                 </div>
                 <div class="row">
@@ -478,8 +478,8 @@
     </div>
 </div>
 <div class="flex" style="justify-content: flex-end; margin-top:50px; gap:10px;">
-    <a href="{{ route('contract_manager.orden-compra') }}" class="btn"
-        style="background: #959595 !important">Regresar</a>
+    <a href="{{ route('contract_manager.orden-compra') }}"
+    class="btn_cancelar" >Regresar</a>
     <button class="btn btn-primary" onclick="mensaje()">Guardar</button>
 </div>
 </form>

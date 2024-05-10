@@ -39,6 +39,10 @@
         width: 100%;
         display: flex;
     }
+    table{
+        width: auto;
+        height: auto;
+    }
 </style>
 
 
@@ -111,8 +115,6 @@
                     <th>Opciones</th>
                 </tr>
             </thead>
-            <tbody>
-            </tbody>
         </table>
     </div>
 
@@ -198,19 +200,6 @@
                 }
 
             ];
-            // let btnAgregar = {
-            //     text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-            //     titleAttr: 'Agregar empleado',
-            //     url: "{{ asset('admin/inicioUsuario/reportes/seguridad') }}",
-            //     className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-            //     action: function(e, dt, node, config) {
-            //     let {
-            //     url
-            //     } = config;
-            //     window.location.href = url;
-            //     }
-            // };
-            //     dtButtons.push(btnAgregar)
             if (!$.fn.dataTable.isDataTable('.tabla_incidentes_seguridad')) {
                 window.tabla_incidentes = $(".tabla_incidentes_seguridad").DataTable({
                     ajax: '/admin/desk/seguridad',

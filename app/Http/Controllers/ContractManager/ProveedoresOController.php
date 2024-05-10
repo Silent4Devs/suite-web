@@ -20,7 +20,7 @@ class ProveedoresOController extends Controller
     public function index()
     {
         abort_if(Gate::denies('katbol_proveedores_ordenes_compra_acceso'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $proveedores = ProveedorOC::select('id', 'nombre', 'razon_social', 'rfc', 'contacto', 'estado', 'facturacion', 'direccion', 'envio', 'credito', 'fecha_inicio', 'fecha_fin')->where('estado', false)->get();
+        $proveedores = ProveedorOC::where('estado', false)->get();
         $proveedores_id = ProveedorOC::get()->pluck('id');
         $ids = [];
 
@@ -33,7 +33,7 @@ class ProveedoresOController extends Controller
 
     public function getproveedoresIndex(Request $request)
     {
-        $query = ProveedorOC::select('id', 'nombre', 'razon_social', 'rfc', 'contacto', 'estado', 'facturacion', 'direccion', 'envio', 'credito', 'fecha_inicio', 'fecha_fin')->where('estado', false)->get();
+        $query = ProveedorOC::where('estado', false)->get();
 
         return datatables()->of($query)->toJson();
     }
@@ -60,6 +60,16 @@ class ProveedoresOController extends Controller
 
         try {
             DB::beginTransaction();
+
+            $request->validate([
+                'nombre' => 'required|max:255',
+                'razon_social' => 'required|max:255',
+                'rfc' => 'required|max:15',
+            ], [
+                'nombre.max' => 'El campo nombre no puede exceder los 255 caracteres.',
+                'razon_social.max' => 'El campo razon_social no puede exceder los 255 caracteres.',
+                'rfc.max' => 'El campo rfc no puede exceder los 255 caracteres.',
+            ]);
 
             $proveedores = new ProveedorOC();
             $proveedores->nombre = $request->nombre;
@@ -102,10 +112,18 @@ class ProveedoresOController extends Controller
      */
     public function edit($id)
     {
-        abort_if(Gate::denies('katbol_proveedores_ordenes_compra_modificar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $proveedores = ProveedorOC::find($id);
+        try {
+            abort_if(Gate::denies('katbol_proveedores_ordenes_compra_modificar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            $proveedores = ProveedorOC::find($id);
 
-        return view('contract_manager.proveedores.edit', compact('proveedores'));
+            if (! $proveedores) {
+                abort(404);
+            }
+
+            return view('contract_manager.proveedores.edit', compact('proveedores'));
+        } catch (\Throwable $th) {
+            abort(404);
+        }
     }
 
     /**
@@ -117,13 +135,15 @@ class ProveedoresOController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nombre' => 'required',
-            'razon_social' => 'required',
-            'rfc' => 'required',
-            'contacto' => 'required',
-            'fecha_inicio' => 'required',
-            'fecha_fin' => 'required',
+            'nombre' => 'required|max:255',
+            'razon_social' => 'required|max:255',
+            'rfc' => 'required|max:15',
+        ], [
+            'nombre.max' => 'El campo nombre no puede exceder los 255 caracteres.',
+            'razon_social.max' => 'El campo razon_social no puede exceder los 255 caracteres.',
+            'rfc.max' => 'El campo rfc no puede exceder los 255 caracteres.',
         ]);
+
         $proveedores = ProveedorOC::find($id);
 
         $proveedores->update([

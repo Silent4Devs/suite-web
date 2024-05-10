@@ -35,6 +35,9 @@ class PlanImplementacion extends Model implements Auditable
         'plan_implementacionable_type',
         'archivo',
         'es_plan_trabajo_base',
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     protected $casts = ['tasks' => 'object'];

@@ -13,11 +13,21 @@
                         <small class="fecha_dia errores text-danger" style="margin-left: 15px;"></small>
                     </div>
 
+                    @php
+                        use App\Models\User;
+                        use App\Models\Empleado;
+
+                        $user = User::getCurrentUser();
+                        $empleado = Empleado::getMyEmpleadodata($user->empleado->id);
+                    @endphp
+
+
+
                     <div class="semanas-tras-time-text">
                         <small>
                             <i class="fa-solid fa-circle mr-2" style="color: #D2FDB8;"></i>
                             Tiene permitido registrar
-                            <strong>{{ auth()->user()->empleado->semanas_min_timesheet }} </strong>
+                            <strong>{{ $empleado->semanas_min_timesheet }} </strong>
                             semanas atras
                         </small>
                     </div>
@@ -64,7 +74,32 @@
                                         data-type="parent" name="timesheet[{{ $i }}][proyecto]"
                                         class="select2">
                                         <option selected disabled>Seleccione proyecto</option>
-                                        @foreach ($proyectos as $proyecto)
+                                        @php
+                                            // Separa los proyectos con letras en su ID y los que no
+                                            $proyectos_con_letra = [];
+                                            $proyectos_sin_letra = [];
+                                            foreach ($proyectos as $proyecto) {
+                                                if (preg_match('/[a-zA-Z]/', $proyecto['identificador'])) {
+                                                    $proyectos_con_letra[] = $proyecto;
+                                                } else {
+                                                    $proyectos_sin_letra[] = $proyecto;
+                                                }
+                                            }
+
+                                            // Ordena los proyectos sin letras en su ID de manera descendente
+                                            usort($proyectos_sin_letra, function ($a, $b) {
+                                                if ($a['identificador'] === $b['identificador']) {
+                                                    return 0;
+                                                }
+                                                return $a['identificador'] > $b['identificador'] ? -1 : 1;
+                                            });
+                                        @endphp
+
+                                        @foreach ($proyectos_sin_letra as $proyecto)
+                                            <option value="{{ $proyecto['id'] }}">{{ $proyecto['identificador'] }} -
+                                                {{ $proyecto['proyecto'] }}</option>
+                                        @endforeach
+                                        @foreach ($proyectos_con_letra as $proyecto)
                                             <option value="{{ $proyecto['id'] }}">{{ $proyecto['identificador'] }} -
                                                 {{ $proyecto['proyecto'] }}</option>
                                         @endforeach

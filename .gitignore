@@ -1,6 +1,7 @@
 /node_modules
 /public/hot
 /public/storage
+/public/build
 /storage/framework
 /storage/app/public/BIA/signatures/
 /storage/app/public/tratamiento/firmas/
@@ -54,9 +55,7 @@ storage/app/public/documentos_material_sgsi/
 /storage/app/Tabantaj/
 /storage/snapshots/*
 /storage/*.key
-package.json
 public/mix-manifest.json
-public/js/app.js
 /resources/views/layouts/navs
 storage/app/katbol-contratos-tmp/
 dump.sql

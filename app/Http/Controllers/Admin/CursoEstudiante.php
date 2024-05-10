@@ -3,11 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Escuela\Category;
 use App\Models\Escuela\Course;
 use App\Models\Escuela\CourseUser;
 use App\Models\Escuela\Evaluation;
-use App\Models\Escuela\Level;
 use App\Models\Escuela\UsuariosCursos;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -29,8 +27,7 @@ class CursoEstudiante extends Controller
     public function misCursos()
     {
         $usuario = User::getCurrentUser();
-        $cursos_usuario = UsuariosCursos::with('cursos')->where('user_id', $usuario->id)->get();
-
+        $cursos_usuario = UsuariosCursos::with('cursos')->where('user_id', User::getCurrentUser()->id)->get();
         //calculo el porcentaje del curso completado
         foreach ($cursos_usuario as $cu) {
             $i = 0;
@@ -42,38 +39,34 @@ class CursoEstudiante extends Controller
             }
             $advance = ($i * 100) / ($courses_lessons->count());
             $advance = round($advance,2);
-
             //agrego el porcentaje del curso a una propiedad
             $cu->advance = $advance;
         }
-
         //last course
         $lastCourse = $cursos_usuario->sortBy('last_review')->last();
-
         //last three course
         $lastThreeCourse = $cursos_usuario->sortByDesc('last_review')->take(3);
-
-
-        // dd($cursos_usuario);
-        // dd($cursos_usuario);
-        // $cursos = Course::getAll();
-        // $categories = Category::all();
-        // $levels = Level::all();
-        // $courses = Course::where('status', 3)
-        //     ->category($this->category_id)
-        //     ->level($this->level_id)
-        //     ->latest('id')->paginate(8);
-        // dd($categories, $levels, $courses);
 
         return view('admin.escuela.estudiante.mis-cursos', compact('cursos_usuario','usuario','lastThreeCourse','lastCourse'));
     }
 
     public function cursoEstudiante($curso_id)
     {
-        $curso = Course::where('id', $curso_id)->first();
+        try {
         $evaluacionesLeccion = Evaluation::where('course_id', $curso_id)->get();
 
-        return view('admin.escuela.estudiante.curso-estudiante', compact('curso', 'evaluacionesLeccion'));
+            $curso = Course::where('id', $curso_id)->first();
+
+            if (! $curso) {
+                abort(404);
+            }
+
+            $evaluacionesLeccion = Evaluation::where('course_id', $curso_id)->get();
+
+            return view('admin.escuela.estudiante.curso-estudiante', compact('curso', 'evaluacionesLeccion'));
+        } catch (\Throwable $th) {
+            abort(404);
+        }
     }
 
     public function evaluacionEstudiante($curso_id, $evaluacion_id)
