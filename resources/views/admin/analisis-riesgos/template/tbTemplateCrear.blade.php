@@ -103,7 +103,12 @@
         <div class="select-option">
             @include('admin.analisis-riesgos.components.tbGenerateFormulas')
         </div>
-        <div class="select-option">Hola para Success</div>
+        <div class="select-option">
+            @include('admin.analisis-riesgos.components.tbGenerateSettings')
+        </div>
+        <div class="select-option">
+            @include('admin.analisis-riesgos.components.tbTemplateViewPrev')
+        </div>
     </div>
 
     <button id="miBoton">Haz clic aquí</button>
