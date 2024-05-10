@@ -175,7 +175,6 @@
                                     $completedLectionSection = $section->lessons->where('completed', true)->count();
                                 @endphp
                                 @if ($totalLectionSection != $completedLectionSection)
-                                    <h1>falta</h1>
                                     <li style="list-style-type: disc;">
                                         <div>
                                             <span class="inline-block rounded-full border-2 border-gray-500"></span>
