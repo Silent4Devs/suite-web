@@ -9,6 +9,28 @@ class CampanaNotificacionesComponent extends Component
 {
     public $notificaciones;
 
+    protected $listeners = [
+        'echo:notificaciones-campana,IncidentesDeSeguridadEvent' => 'getTotalNotificaciones',
+        'echo:notificaciones-campana,AuditoriaAnualEvent' => 'getTotalNotificaciones',
+        'echo:notificaciones-campana,AccionCorrectivaEvent' => 'getTotalNotificaciones',
+        'echo:notificaciones-campana,RegistroMejoraEvent' => 'getTotalNotificaciones',
+        'echo:notificaciones-campana,RecursosEvent' => 'getTotalNotificaciones',
+        'echo:notificaciones-campana,PoliticasSgiEvent' => 'getTotalNotificaciones',
+        'echo:notificaciones-campana,AlcancesEvent' => 'getTotalNotificaciones',
+        'echo:notificaciones-campana,RequisicionesEvent' => 'getTotalNotificaciones',
+        'echo:notificaciones-campana,MatrizRequisitosEvent' => 'getTotalNotificaciones',
+        'echo:notificaciones-campana,EntendimientoOrganizacionEvent' => 'getTotalNotificaciones',
+        'echo:notificaciones-campana,DocumentoEvent' => 'getTotalNotificaciones',
+        'echo:notificaciones-campana,TimesheetEvent' => 'getTotalNotificaciones',
+        'echo:notificaciones-campana,CoursesEvent' => 'getTotalNotificaciones',
+        'echo:notificaciones-campana,SolicitudVacacionesEvent' => 'getTotalNotificaciones',
+        'echo:notificaciones-campana,SolicitudDayofEvent' => 'getTotalNotificaciones',
+        'echo:notificaciones-campana,SolicitudPermisoEvent' => 'getTotalNotificaciones',
+        'echo:notificaciones-campana,PlanImplementacionEvent' => 'getTotalNotificaciones',
+        'echo:notificaciones-campana,EvaluacionEvent' => 'getTotalNotificaciones',
+        'NotificationMarkedAsReadList' => 'getTotalNotificaciones',
+    ];
+
     public $notificaciones_sin_leer;
 
     public function mount()
