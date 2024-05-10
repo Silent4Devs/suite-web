@@ -75,6 +75,7 @@ class AccionCorrectivaNotification extends Notification
             'tabla' => $this->tabla,
             'slug' => $this->slug,
             'name' => Auth::user()->name,
+            'avatar_ruta' => Auth::user()->empleado->avatar_ruta,
         ];
     }
 }
