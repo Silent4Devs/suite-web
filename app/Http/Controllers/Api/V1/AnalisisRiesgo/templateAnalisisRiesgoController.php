@@ -11,6 +11,7 @@ use App\Models\TBSectionTemplateAnalisisRiesgoModel;
 use App\Models\TBSectionTemplateAr_QuestionTemplateArModel;
 use App\Models\TBTemplateAnalisisRiesgoModel;
 use App\Models\Template_Analisis_Riesgos;
+use App\Models\TBFormulaTemplateAnalisisRiesgoModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
@@ -47,22 +48,25 @@ class templateAnalisisRiesgoController extends Controller
             $sections = TBSectionTemplateAnalisisRiesgoModel::select('id', 'title', 'template_id', 'position')
                 ->where('template_id', $template->id)->get();
 
-            $questions = [[],];
+            $questions = [];
 
             foreach ($sections as $section) {
                 $data = $section->questions;
                 $sectionId = $section->id;
 
-                $newQuestions = $data->map(function ($itm) use ($sectionId) {
+                $filter = $data->reject(function ($registro) {
+                    if($registro['type'] === '11'){
+                        return $registro;
+                    }
+                });
+
+                $newQuestions = $filter->map(function ($itm) use ($sectionId) {
                     Arr::forget($itm, 'created_at');
                     Arr::forget($itm, 'updated_at');
                     Arr::forget($itm, 'pivot');
                     Arr::forget($itm, 'deleted_at');
                     $itm->columnId = $sectionId;
                     $this->getDataQuestion($itm);
-
-                    // $itm->data = ['inputTitle' => $itm->title];
-                    // Arr::forget($itm, 'title');
                     return $itm;
                 });
 
@@ -72,8 +76,6 @@ class templateAnalisisRiesgoController extends Controller
                     array_push($questions, $newQuestion);
                 }
             }
-
-            // dd($questions);
 
             return json_encode(['data' => ['sections' => $sections, 'questions' => $questions]], 200);
 
@@ -242,7 +244,6 @@ class templateAnalisisRiesgoController extends Controller
                     DB::commit();
                 } catch (\Throwable $th) {
                     DB::rollback();
-
                     continue;
                 }
             } else {
@@ -625,4 +626,99 @@ class templateAnalisisRiesgoController extends Controller
         return json_encode(['data' => 'Se elimino el registro exitosamente'], 200);
 
     }
+
+    public function getSettings(int $id){
+        try {
+            $template = TBTemplateAnalisisRiesgoModel::findOrFail($id);
+
+            $sections = TBSectionTemplateAnalisisRiesgoModel::select('id', 'title', 'template_id', 'position')
+                ->where('template_id', $template->id)->get();
+
+            $formulas =TBFormulaTemplateAnalisisRiesgoModel::where('template_id',$id)->get();
+
+            foreach($formulas as $formula){
+                Arr::forget($formula, 'created_at');
+                Arr::forget($formula, 'updated_at');
+                Arr::forget($formula, 'deleted_at');
+                Arr::forget($formula, 'template_id');
+            }
+
+            $questions = [];
+            $optionId = ([
+                'id'=> 'q-1',
+                'title' => 'ID',
+                'template' => $template->id,
+                'position' => 0,
+                'type' => "12",
+                'size' => 3,
+                'obligatory' => true,
+                'data' => [],
+            ]);
+
+            $optionDescription = ([
+                'id'=> 'q-2',
+                'title' => 'Descripcion del riesgo',
+                'template' => $template->id,
+                'position' => 1,
+                'type' => "12",
+                'size' => 3,
+                'obligatory' => true,
+                'data' => [],
+            ]);
+
+            foreach ($sections as $index => $section) {
+                $data = $section->questions;
+                $sectionId = $section->id;
+                if($index === 0){
+                    $optionId['columnId'] = $sectionId;
+                    $optionDescription['columnId'] = $sectionId;
+                }
+                $newQuestions = $data->map(function ($itm) use ($sectionId,$index, &$optionId) {
+                    if($index === 0){
+                        $itm['type'] === "11" ? $itm['position'] = $itm['position'] + 2 : null;
+                        $itm['type'] !== "11" ? $itm['position'] = $itm['position'] + 2 : null;
+                    }
+                    if($itm['type'] !== "11"){
+                        $position = $itm['position'];
+                        $itm['position'] = $position + 1;
+                    }
+                    Arr::forget($itm, 'created_at');
+                    Arr::forget($itm, 'updated_at');
+                    Arr::forget($itm, 'pivot');
+                    Arr::forget($itm, 'deleted_at');
+                    $itm->columnId = $sectionId;
+                    $this->getDataQuestion($itm);
+                    return $itm;
+                });
+
+                Arr::forget($section, 'questions');
+
+                foreach ($newQuestions as $newQuestion) {
+                    array_push($questions, $newQuestion);
+                }
+
+            }
+            array_push($questions, $optionId);
+            array_push($questions, $optionDescription);
+
+            return json_encode(['data' => ['sections' => $sections, 'questions' => $questions]], 200);
+
+        } catch (\Throwable $th) {
+            throw $th;
+
+            return response()->json(['message' => 'No encontrado'], 404);
+        }
+    }
+
+    public function getInfoTemplate(int $id){
+        $register = TBTemplateAnalisisRiesgoModel::find($id);
+        $template = ([
+            'id' => $register->id,
+            'title' => $register->nombre,
+            'norma' => $register->norma->norma,
+            'description' => $register->descripcion,
+        ]);
+        return json_encode(['data' => ['template' => $template]], 200);
+    }
+
 }

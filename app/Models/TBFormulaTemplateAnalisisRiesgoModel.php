@@ -21,5 +21,7 @@ class TBFormulaTemplateAnalisisRiesgoModel extends Model
         'formula',
         'riesgo',
         'template_id',
+        'section_id',
+        'question_id',
     ];
 }
