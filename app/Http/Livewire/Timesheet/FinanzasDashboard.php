@@ -87,7 +87,7 @@ class FinanzasDashboard extends Component
             $costo_por_hora_usuario = $emp_p->costo_hora ?? 0;
 
             // Si el costo por hora no está definido en TimesheetProyectoEmpleado, usar el calculado anteriormente
-            if (!$costo_por_hora_usuario) {
+            if (! $costo_por_hora_usuario) {
                 if (isset($emp_p->empleado->salario_base_mensual)) {
                     $costo_por_hora_usuario = ($emp_p->empleado->salario_base_mensual / 20) / 7;
                 } else {

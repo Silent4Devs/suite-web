@@ -51,7 +51,7 @@
                     <div class="row">
                         <div class="col-6">
                             @if ($this->previous)
-                                <a wire:click="changeLesson({{ $this->previous }})" class=" text-primary"
+                                <a wire:click="changeLesson({{ $this->previous }}, 'previous')" class=" text-primary"
                                     style="cursor: pointer;">
                                     < Tema anterior </a>
                                     @else
@@ -142,12 +142,12 @@
                                     <div>
                                         @if ($lesson->completed)
                                             @if ($current->id == $lesson->id)
-                                                <span class="text-primary">
+                                                <span style="color:green;">
                                                     <a class="cursor:pointer;"
                                                         wire:click="changeLesson({{ $lesson }})">{{ $lesson->name }}</a>
                                                 </span>
                                             @else
-                                                <span style="color:#D9D9D9;">
+                                                <span style="color:rgb(0, 179, 0);">
                                                     <a class="cursor:pointer;"
                                                         wire:click="changeLesson({{ $lesson }})">{{ $lesson->name }}</a>
                                                 </span>
@@ -170,20 +170,36 @@
                             @endforeach
 
                             @foreach ($section->evaluations as $evaluation)
-                                @if ($evaluation->questions->count() > 0)
-                                    @php
-                                        $completed = in_array($evaluation->id, $evaluationsUser);
-                                    @endphp
+                                @php
+                                    $totalLectionSection = $section->lessons->count();
+                                    $completedLectionSection = $section->lessons->where('completed', true)->count();
+                                @endphp
+                                @if ($totalLectionSection != $completedLectionSection)
+                                    <h1>falta</h1>
                                     <li style="list-style-type: disc;">
                                         <div>
-                                            <span
-                                                class="inline-block rounded-full border-2 {{ $completed ? 'bg-green-500  border-green-500' : 'border-gray-500' }}"></span>
+                                            <span class="inline-block rounded-full border-2 border-gray-500"></span>
                                             <a class="cursor:pointer;"
-                                                href="{{ route('admin.curso.evaluacion', ['course' => $course->id, 'evaluation' => $evaluation->id]) }}"
-                                                wire:click="changeLesson({{ $lesson }})">{{ $evaluation->name }}
+                                                wire:click="alertSection()">{{ $evaluation->name }}
                                             </a>
                                         </div>
                                     </li>
+                                @else
+                                    @if ($evaluation->questions->count() > 0)
+                                        @php
+                                            $completed = in_array($evaluation->id, $evaluationsUser);
+                                        @endphp
+                                        <li style="list-style-type: disc;">
+                                            <div>
+                                                <span
+                                                    class="inline-block rounded-full border-2 {{ $completed ? 'bg-green-500  border-green-500' : 'border-gray-500' }}"></span>
+                                                <a class="cursor:pointer;"
+                                                    href="{{ route('admin.curso.evaluacion', ['course' => $course->id, 'evaluation' => $evaluation->id]) }}"
+                                                    wire:click="changeLesson({{ $lesson }})">{{ $evaluation->name }}
+                                                </a>
+                                            </div>
+                                        </li>
+                                    @endif
                                 @endif
                             @endforeach
                         </ul>

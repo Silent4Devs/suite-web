@@ -7,7 +7,6 @@ use App\Models\Empleado;
 use App\Models\TimesheetCliente;
 use App\Models\TimesheetHoras;
 use App\Models\TimesheetProyecto;
-use App\Models\TimesheetProyectoArea;
 use App\Models\TimesheetProyectoEmpleado;
 use App\Traits\ObtenerOrganizacion;
 use Livewire\Component;
@@ -15,12 +14,16 @@ use Livewire\Component;
 class ReporteFinanciero extends Component
 {
     public $selectedProjectId;
-    public $proyectos_select;
-    public $proyectos;
-    public $empleados = [];
-    public $areas = [];
-    use ObtenerOrganizacion;
 
+    public $proyectos_select;
+
+    public $proyectos;
+
+    public $empleados = [];
+
+    public $areas = [];
+
+    use ObtenerOrganizacion;
 
     public function render()
     {
@@ -59,7 +62,7 @@ class ReporteFinanciero extends Component
                             $hora->horas_jueves,
                             $hora->horas_viernes,
                             $hora->horas_sabado,
-                            $hora->horas_domingo
+                            $hora->horas_domingo,
                         ], 'is_numeric'));
                     }
                 }
@@ -99,6 +102,7 @@ class ReporteFinanciero extends Component
             $this->proyectos = $empleados;
         }
         $this->emit('scriptTabla');
+
         return view('livewire.timesheet.reporte-financiero', compact('logo_actual', 'empresa_actual'));
     }
 
@@ -128,15 +132,16 @@ class ReporteFinanciero extends Component
 
             $horasTotales += $total_horas;
             $costo_por_hora_usuario = $emp_p->costo_hora ?? 0;
-            if (!$costo_por_hora_usuario) {
+            if (! $costo_por_hora_usuario) {
                 $salario_base = $emp_p->empleado->salario_base_mensual ?? $emp_p->empleado->salario_diario ?? 0;
                 $costo_por_hora_usuario = ($salario_base / 20) / 7;
             }
             $horasCosto += $costo_por_hora_usuario * $total_horas;
         }
+
         return [
             'horasCosto' => $horasCosto,
-            'totalhoras' => $horasTotales
+            'totalhoras' => $horasTotales,
         ];
     }
 }
