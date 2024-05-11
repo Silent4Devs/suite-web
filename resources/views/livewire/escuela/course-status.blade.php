@@ -28,17 +28,42 @@
         }
     </style>
 
-    <div style="width: 100%; ">
-        <div style="position: sticky; top:80px;">
-            <div>
-                @if ($current && $current->iframe)
-                    <div>
-                        {!! $current->iframe !!}
+        <div style="width: 100%; ">
+            <div style="position: sticky; top:80px;">
+                {{-- <h5 class="col-12 titulo_general_funcion">Mis Cursos</h5> --}}
+                <!--Para que me traiga correctamente el video hay que agregar -->
+                <div>
+                    @if ($current && $current->iframe)
+                        <div>
+                            {!! $current->iframe !!}
+                        </div>
+                    @else
+                        <p>Sin registro</p>
+                    @endif
+                </div>
+
+                <div class="row" style="margin-top: 36px;">
+                    <div class="col-md-6">
+                        @if ($current)
+                            <h4>{{ $current->name }}</h4>
+                        @else
+                            <p>No current data available</p>
+                        @endif
                     </div>
-                @else
-                    <p>Sin registro</p>
-                @endif
-            </div>
+                    <div class="col-md-6">
+                        <div class="cursor-pointer d-flex justify-content-end align-items-center" wire:click="completed"
+                        style="cursor: pointer;">
+                        @if ($current->completed)
+                            <h4 class="mr-2 text-primary">Lección terminada</h4>
+                            <i class="d-inline fas fa-toggle-on" style="font-size: 30px; color: #006DDB; cursor: pointer;"></i>
+                        @else
+                            <h4 class="mr-2">Marcar esta lección como terminada</h4>
+                            <i class="text-2xl text-gray-600 fas fa-toggle-off"
+                                style="font-size: 30px; cursor: pointer;"></i>
+                        @endif
+                    </div>
+                    </div>
+                  </div>
 
             @if ($current)
                 <h4 class="mt-3">{{ $current->name }}</h4>
@@ -51,7 +76,7 @@
                     <div class="row">
                         <div class="col-6">
                             @if ($this->previous)
-                                <a wire:click="changeLesson({{ $this->previous }})" class=" text-primary"
+                                <a wire:click="changeLesson({{ $this->previous }}, 'previous')" class=" text-primary"
                                     style="cursor: pointer;">
                                     < Tema anterior </a>
                                     @else
@@ -77,26 +102,15 @@
                 </div>
             </div>
 
-            <div>
-                <div class="mt-4 cursor-pointer d-flex justify-content-end align-items-center" wire:click="completed"
-                    style="cursor: pointer;">
-                    @if ($current->completed)
-                        <h4 class="mr-2 text-primary">Lección terminada</h4>
-                        <i class="d-inline fas fa-toggle-on" style="font-size: 30px; color: blue; cursor: pointer;"></i>
-                    @else
-                        <h4 class="mr-2">Marcar esta lección como terminada</h4>
-                        <i class="text-2xl text-gray-600 fas fa-toggle-off"
-                            style="font-size: 30px; cursor: pointer;"></i>
+                <div>
+                    @if ($current->resource)
+                        <div class="flex text-gray-600 cursor-pointer item-center" wire:click="download"
+                            style="cursor: pointer;">
+                            <i class="text-lg fas fa-download d-inline"></i>
+                            <p class="ml-2 text-sm d-inline">Descargar Recurso</p>
+                        </div>
                     @endif
                 </div>
-                @if ($current->resource)
-                    <div class="flex text-gray-600 cursor-pointer item-center" wire:click="download"
-                        style="cursor: pointer;">
-                        <i class="text-lg fas fa-download d-inline"></i>
-                        <p class="ml-2 text-sm d-inline">Descargar Recurso</p>
-                    </div>
-                @endif
-            </div>
 
 
         </div>
@@ -142,12 +156,12 @@
                                     <div>
                                         @if ($lesson->completed)
                                             @if ($current->id == $lesson->id)
-                                                <span class="text-primary">
+                                                <span style="color:green;">
                                                     <a class="cursor:pointer;"
                                                         wire:click="changeLesson({{ $lesson }})">{{ $lesson->name }}</a>
                                                 </span>
                                             @else
-                                                <span style="color:#D9D9D9;">
+                                                <span style="color:rgb(0, 179, 0);">
                                                     <a class="cursor:pointer;"
                                                         wire:click="changeLesson({{ $lesson }})">{{ $lesson->name }}</a>
                                                 </span>
@@ -170,20 +184,35 @@
                             @endforeach
 
                             @foreach ($section->evaluations as $evaluation)
-                                @if ($evaluation->questions->count() > 0)
-                                    @php
-                                        $completed = in_array($evaluation->id, $evaluationsUser);
-                                    @endphp
+                                @php
+                                    $totalLectionSection = $section->lessons->count();
+                                    $completedLectionSection = $section->lessons->where('completed', true)->count();
+                                @endphp
+                                @if ($totalLectionSection != $completedLectionSection)
                                     <li style="list-style-type: disc;">
                                         <div>
-                                            <span
-                                                class="inline-block rounded-full border-2 {{ $completed ? 'bg-green-500  border-green-500' : 'border-gray-500' }}"></span>
+                                            <span class="inline-block rounded-full border-2 border-gray-500"></span>
                                             <a class="cursor:pointer;"
-                                                href="{{ route('admin.curso.evaluacion', ['course' => $course->id, 'evaluation' => $evaluation->id]) }}"
-                                                wire:click="changeLesson({{ $lesson }})">{{ $evaluation->name }}
+                                                wire:click="alertSection()">{{ $evaluation->name }}
                                             </a>
                                         </div>
                                     </li>
+                                @else
+                                    @if ($evaluation->questions->count() > 0)
+                                        @php
+                                            $completed = in_array($evaluation->id, $evaluationsUser);
+                                        @endphp
+                                        <li style="list-style-type: disc;">
+                                            <div>
+                                                <span
+                                                    class="inline-block rounded-full border-2 {{ $completed ? 'bg-green-500  border-green-500' : 'border-gray-500' }}"></span>
+                                                <a class="cursor:pointer;"
+                                                    href="{{ route('admin.curso.evaluacion', ['course' => $course->id, 'evaluation' => $evaluation->id]) }}"
+                                                    wire:click="changeLesson({{ $lesson }})">{{ $evaluation->name }}
+                                                </a>
+                                            </div>
+                                        </li>
+                                    @endif
                                 @endif
                             @endforeach
                         </ul>
