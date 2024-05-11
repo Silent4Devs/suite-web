@@ -10,6 +10,8 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
+use Carbon\Carbon;
+use App\Models\Escuela\UsuariosCursos;
 
 class CourseStatus extends Component
 {
@@ -51,6 +53,16 @@ class CourseStatus extends Component
 
     public function render()
     {
+        $usuario = User::getCurrentUser();
+        $fecha = Carbon::now()->toDateString();
+        $hora = Carbon::now()->format('H:i:s');
+        $fechaYHora = $fecha . ' ' . $hora;
+       $cursoLastReview = UsuariosCursos::where('course_id',$this->course->id)
+                            ->where('user_id',$usuario->id)->first();
+                            // dd($cursoLastReview);
+
+        $this->updateLastReview($fechaYHora,$cursoLastReview);
+
         //Evaluaciones para el curso en general
         $this->evaluacionesGenerales = Evaluation::where('course_id', $this->course->id)->get();
         $this->evaluationsUser = UserEvaluation::where('user_id', User::getCurrentUser()->id)->where('completed', true)->pluck('evaluation_id')->toArray();
@@ -183,6 +195,12 @@ class CourseStatus extends Component
             'timer' => 3000,
             'toast' => false,
             'timerProgressBar' => true,
+        ]);
+    }
+
+    public function updateLastReview($time,$cursoLastReview){
+        $cursoLastReview->update([
+            'last_review' => $time,
         ]);
     }
 }

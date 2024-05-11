@@ -66,6 +66,11 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- End Extra Styles -->
 
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,300,0,0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0" />
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}{{ config('app.cssVersion') }}">
+    <link rel="stylesheet" href="{{ asset('css/rds.css') }}{{ config('app.cssVersion') }}">
+    @yield('styles')
     @livewireStyles
 
     {{-- Laravel vite --}}
@@ -260,7 +265,7 @@
                     <span class="title-item-menu-header">MÓDULOS TABANTAJ</span>
                     <div class="menu-blocks-mod-header">
                         @can('mis_cursos_acceder')
-                            <a href="{{ asset('admin/capacitaciones-inicio') }}">
+                            <a href="{{ route('admin.mis-cursos') }}">
                                 <div class="caja-icon-mod-header" style="background: #9CEBFF;">
                                     <i class="material-symbols-outlined">school</i>
                                 </div>

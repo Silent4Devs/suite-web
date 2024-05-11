@@ -105,6 +105,11 @@ class Course extends Model implements Auditable
         return $this->belongsTo('App\Models\User', 'user_id');
     }
 
+    public function instructor()
+    {
+        return $this->belongsTo('App\Models\User', 'empleado_id');
+    }
+
     public function level()
     {
         return $this->belongsTo('App\Models\Escuela\Level');
