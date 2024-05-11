@@ -538,6 +538,47 @@
                     titleAttr: 'Exportar Excel',
                     exportOptions: {
                         columns: ['th:not(:last-child):visible']
+                    },
+                    customizeData: function(data) {
+                        for (var i = 0; i < data.body.length; i++) {
+                            var columnaB = data.body[i][1];
+                            var elementosB = columnaB.split(/\s{2,}/);
+                            var arrayB = [];
+                            elementosB.forEach(function(elemento) {
+                                arrayB.push(elemento.trim());
+                            });
+                            data.body[i][1] = arrayB;
+
+                            var columnaC = data.body[i][2];
+                            var elementosC = columnaC.split(/\s{2,}/);
+                            var arrayC = [];
+                            elementosC.forEach(function(elemento) {
+                                arrayC.push(elemento.trim());
+                            });
+                            data.body[i][2] = arrayC;
+
+                            var columnaD = data.body[i][3];
+                            var elementosD = columnaD.split(/\s{2,}/);
+                            var arrayD = [];
+                            elementosD.forEach(function(elemento) {
+                                arrayD.push(elemento.trim());
+                            });
+                            data.body[i][3] = arrayD;
+                        }
+                    },
+                    customize: function(xlsx) {
+                        var sheet = xlsx.xl.worksheets[
+                            'Sheet1.xml'];
+                        $('col', sheet).each(function() {
+                            $(this).attr('width', '25');
+                        });
+                        $('row c[r^="B"], row c[r^="C"], row c[r^="D"]', sheet).each(function() {
+                            var cellText = $(this).find('is t').text();
+                            cellText = cellText.replace(/,/g, ',\n');
+                            $(this).find('is t').text(cellText);
+                            $(this).attr('s', '25');
+                            $(this).attr('style', 'mso-wrap-text: true;');
+                        });
                     }
                 },
                 {
