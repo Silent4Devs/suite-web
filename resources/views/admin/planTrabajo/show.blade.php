@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/plan_accion.css') }}{{ config('app.cssVersion') }}">
+    <link rel="stylesheet" href="{{ asset('css/planTrabjo/kanban/planTrabajo.css') }}{{ config('app.cssVersion') }}">
 
     <link rel=stylesheet href="{{ asset('gantt/platform.css') }}" type="text/css">
     <link rel=stylesheet href="{{ asset('gantt/libs/jquery/dateField/jquery.dateField.css') }}" type="text/css">
@@ -9,7 +9,7 @@
     <link rel=stylesheet href="{{ asset('gantt/ganttPrint.css') }}" type="text/css" media="print">
     <link rel=stylesheet href="{{ asset('gantt/libs/jquery/valueSlider/mb.slider.css') }}" type="text/css" media="print">
 
-    <link rel=stylesheet href="{{ asset('css/kanban/jkanban.min.css') }}" type="text/css">
+    <link rel=stylesheet href="{{ asset('css/planTrabjo/kanban/jkanban.min.css') }}" type="text/css">
 @endsection
 @section('content')
     <h5 class="col-12 titulo_general_funcion">
@@ -81,15 +81,15 @@
         <div id="plan_trabajo_workspace">
             <div class="content-sections">
                 <section id="kanban_gantt" class="caja_tab_reveldada active">
-                    @include('admin.planesDeAccion.diagramas-implementacion.kanban')
+                    @include('admin.planTrabajo.diagramas-implementacion.kanban')
                 </section>
 
                 <section id="calendario_gantt">
-                    @include('admin.planesDeAccion.diagramas-implementacion.calendario')
+                    @include('admin.planTrabajo.diagramas-implementacion.calendario')
                 </section>
 
                 <section id="original_gantt">
-                    @include('admin.planesDeAccion.diagramas-implementacion.gantt')
+                    @include('admin.planTrabajo.diagramas-implementacion.gantt')
                 </section>
             </div>
         </div>
