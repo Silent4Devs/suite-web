@@ -89,7 +89,7 @@
 
         <div class="text-right">
             <div class="d-flex justify-content-end">
-                <a href="{{ route('admin.analisis-riesgos.create') }}" type="button" class="btn btn-primary">Registrar Matriz</a>
+                <a href="{{ route('admin.analisis-riesgos.create') }}" type="button" class="btn tb-btn-primary">Registrar Matriz</a>
             </div>
         </div>
 

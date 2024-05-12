@@ -21,8 +21,8 @@
     </style>
     <link rel="stylesheet" href="{{ asset('css/loader.css') }}">
     <style>
-        .btn-primary,
-        .btn-primary:hover {
+        .tb-btn-primary,
+        .tb-btn-primary:hover {
             background: #1C274A;
             border: none;
             border-radius: 2px;

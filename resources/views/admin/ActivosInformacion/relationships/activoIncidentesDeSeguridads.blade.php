@@ -84,7 +84,7 @@
                             </td>
                             <td>
                                 @can('incidentes_de_seguridad_show')
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.incidentes-de-seguridads.show', $incidentesDeSeguridad->id) }}">
+                                    <a class="btn btn-xs tb-btn-primary" href="{{ route('admin.incidentes-de-seguridads.show', $incidentesDeSeguridad->id) }}">
                                         {{ trans('global.view') }}
                                     </a>
                                 @endcan

@@ -78,7 +78,7 @@
                         Agregar Categoría
                     </div>
 
-                    <button class="btn btn-primary">
+                    <button class="btn tb-btn-primary">
                         GUARDAR
                     </button>
                 </div>
@@ -143,7 +143,7 @@
                         Agregar Categoría
                     </div>
 
-                    <button class="btn btn-primary">
+                    <button class="btn tb-btn-primary">
                         GUARDAR
                     </button>
                 </div>

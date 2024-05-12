@@ -106,7 +106,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-              <button type="button" class="btn btn-primary" id="guardarNivel" wire:click.prevent="addColumn({{$indexColumna+1}})">Guardar</button>
+              <button type="button" class="btn tb-btn-primary" id="guardarNivel" wire:click.prevent="addColumn({{$indexColumna+1}})">Guardar</button>
             </div>
           </div>
         </div>
@@ -142,7 +142,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-              <button type="button" class="btn btn-primary" id="guardar_marca" wire:click.prevent="addRow({{$indexRow+1}})">Guardar</button>
+              <button type="button" class="btn tb-btn-primary" id="guardar_marca" wire:click.prevent="addRow({{$indexRow+1}})">Guardar</button>
             </div>
           </div>
         </div>

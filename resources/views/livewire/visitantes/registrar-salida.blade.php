@@ -92,7 +92,7 @@
 
 
     <div class="col-12 mt-3" style="text-align: end">
-        <a href="{{ route('visitantes.presentacion') }}" class="btn btn-primary">Salir</a>
+        <a href="{{ route('visitantes.presentacion') }}" class="btn tb-btn-primary">Salir</a>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
     <script script src="https://code.jquery.com/jquery-3.6.0.min.js"

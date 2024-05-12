@@ -77,7 +77,7 @@
                             </td>
                             <td>
                                 @can('planaccion_correctiva_show')
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.planaccion-correctivas.show', $planaccionCorrectiva->id) }}">
+                                    <a class="btn btn-xs tb-btn-primary" href="{{ route('admin.planaccion-correctivas.show', $planaccionCorrectiva->id) }}">
                                         {{ trans('global.view') }}
                                     </a>
                                 @endcan

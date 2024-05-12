@@ -34,7 +34,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" wire:click="save">Guardar</button>
+                    <button type="button" class="btn tb-btn-primary" wire:click="save">Guardar</button>
                 </div>
             </div>
         </div>

@@ -1,4 +1,5 @@
-.tb-btn-primario{
+/* boton para todo lo que sea aceptar, en boton azul */
+.tb-btn-primary{
     background-color: var(--color-primary);
     transition: 0.2s;
     display: inline-block;
@@ -9,11 +10,11 @@
     cursor: pointer;
 }
 
-.tb-btn-primario:hover{
+.tb-btn-primary:hover{
     color: var(--color-white) !important;
 }
 
-.tb-btn-secundario {
+.tb-btn-secondary {
     background-color: var(--color-white);
     transition: 0.2s;
     display: inline-block;
@@ -26,11 +27,11 @@
     cursor: pointer;
 }
 
-.tb-btn-secundario:hover{
+.tb-btn-secondary:hover{
     color: var(--color-primary);
 }
 
-.tb-btn-secundario-fill{
+.tb-btn-secondary-fill{
     background-color: var(--color-white);
     transition: 0.2s;
     display: inline-block;
@@ -42,7 +43,7 @@
     cursor: pointer;
 }
 
-.tb-btn-secundario-fill:hover{
+.tb-btn-secondary-fill:hover{
     background-color: var(--color-primary);
     color: var(--color-white);
 }

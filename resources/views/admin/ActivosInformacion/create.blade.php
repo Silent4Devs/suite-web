@@ -176,10 +176,10 @@
                 1. ¿ A través de que medio CREAS al interno o RECIBES de un tercero el activo de información?
             </div>
             <p style="text-align: center">
-                <button class="btn btn-primary" x-on:click.prevent='openCrea= !openCrea'>
+                <button class="btn tb-btn-primary" x-on:click.prevent='openCrea= !openCrea'>
                 Se Crea
                 </button>
-                <button class="btn btn-primary" x-on:click.prevent='openRecibe= !openRecibe'>
+                <button class="btn tb-btn-primary" x-on:click.prevent='openRecibe= !openRecibe'>
                 Se Recibe
                 </button>
             </p>

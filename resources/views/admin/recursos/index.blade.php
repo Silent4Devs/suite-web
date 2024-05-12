@@ -64,7 +64,7 @@
     </div>
             <div class="text-right">
                 <div class="d-flex justify-content-end">
-                    <a href="{{ route('admin.recursos.create') }}" type="button" class="btn btn-primary">Registrar Capacitaciones</a>
+                    <a href="{{ route('admin.recursos.create') }}" type="button" class="btn tb-btn-primary">Registrar Capacitaciones</a>
                 </div>
             </div>
             @include('partials.flashMessages')

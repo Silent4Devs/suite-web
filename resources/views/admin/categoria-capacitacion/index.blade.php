@@ -59,7 +59,7 @@
 
             <div class="text-right">
                 <div class="d-flex justify-content-end">
-                    <a href="{{ route('admin.categoria-capacitacion.create') }}" type="button" class="btn btn-primary">Registrar Categoría de capacitacion</a>
+                    <a href="{{ route('admin.categoria-capacitacion.create') }}" type="button" class="btn tb-btn-primary">Registrar Categoría de capacitacion</a>
                 </div>
             </div>
             @include('partials.flashMessages')

@@ -5,6 +5,7 @@
 
 @section('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/formularios_centro_atencion.css') }}{{config('app.cssVersion')}}">
+
     <style type="text/css">
         sup {
             color: red;
@@ -160,9 +161,9 @@
                 {{-- <button id="acollapseExample" data-toggle="collapse" onclick="closetabcollap1()"
                             data-target="#collapseExample" class="btn btn-danger">Acción Correctiva</button>
                         <button id="acollapseplan" data-toggle="collapse" onclick="closetabcollap2()"
-                            data-target="#collapseplan" class="btn btn-primary">Análisis de causa raíz</button>
+                            data-target="#collapseplan" class="btn tb-btn-primary">Análisis de causa raíz</button>
                         <button id="acollapseactividad" data-toggle="collapse" onclick="" data-target="#"
-                            class="btn btn-primary">Plan de Trabajo</button> --}}
+                            class="btn tb-btn-primary">Plan de Trabajo</button> --}}
                 <div class="caja_caja_secciones">
                     <div class="caja_secciones">
 

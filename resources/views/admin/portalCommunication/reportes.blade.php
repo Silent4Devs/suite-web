@@ -1,87 +1,8 @@
 @extends('layouts.admin')
 @section('content')
 
-@section('styles')
-    <style type="text/css">
-        .logo_organizacion_politica {
-            width: 60%;
-            float: right;
-            margin-right: 20%;
-        }
-
-        .caja_titulo h1 {
-            position: absolute;
-            width: 300px;
-            font-weight: bold;
-            color: #345183;
-            bottom: 0;
-        }
-
-        .a_reporte {
-            display: inline-block !important;
-            /*background-color: #001B44;*/
-            color: unset;
-            margin-top: 120px;
-            text-align: center;
-            transition: 0.1s;
-            position: relative;
-            padding-bottom: 60px;
-            height: 450px;
-        }
-
-        .a_reporte:hover {
-            color: unset;
-            text-decoration: none;
-            /*opacity: 0.9;*/
-        }
-
-        .a_reporte:before {
-            content: "";
-            position: absolute;
-            right: 0;
-            width: 1px;
-            height: 70%;
-            top: 15%;
-            background-color: #fff;
-            opacity: 0.8;
-        }
-
-        .a_reporte i {
-            width: 100px;
-            height: 100px;
-            margin: auto;
-            margin-top: -70px;
-            background-color: #788BAC;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 100px;
-            font-size: 30pt;
-            transition: 0.1s;
-            color: #fff;
-        }
-
-        .a_reporte:hover i {
-            font-size: 40pt;
-        }
-
-        .a_reporte h4 {
-            margin-top: 16px;
-            /*font-weight: bold;*/
-            color: #3086AF;
-        }
-
-        .a_reporte p {
-            text-align: justify;
-            font-size: 11px;
-        }
-
-        .btn_g_r {
-            position: absolute;
-            right: calc(50% - 69px);
-            bottom: 15px;
-        }
-    </style>
+@section('css')
+    <link rel="stylesheet" href="{{ asset('css/portalCommunication/reportes.css') }}{{ config('app.cssVersion') }}">
 @endsection
 {{ Breadcrumbs::render('admin.portalCommunication.reportes') }}
 <h5 class="col-12 titulo_general_funcion">Generar Reportes</h5>

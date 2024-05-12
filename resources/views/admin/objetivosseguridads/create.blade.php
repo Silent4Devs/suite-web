@@ -377,7 +377,7 @@
                                             <li class="btnNumber" value="77">(</li>
                                             <li class="btnNumber" value="88">)</li>
                                             <li class="btnNumber" value="66">0</li>
-                                            <li id="generar" class="btn btn-primary">Generar</li>
+                                            <li id="generar" class="btn tb-btn-primary">Generar</li>
                                         </ul>
                                     </div>
                                 </div>

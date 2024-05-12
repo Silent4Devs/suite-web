@@ -1,5 +1,5 @@
  <!-- Button trigger modal -->
- <button id="avisoPrivacidadVisitantesBtn" type="button" class="btn btn-primary d-none" data-bs-toggle="modal"
+ <button id="avisoPrivacidadVisitantesBtn" type="button" class="btn tb-btn-primary d-none" data-bs-toggle="modal"
      data-bs-target="#avisoPrivacidadVisitantesModal">
      Mostrar Aviso
  </button>
@@ -21,7 +21,7 @@
                  @endif
              </div>
              <div class="modal-footer">
-                 <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Acepto</button>
+                 <button type="button" class="btn tb-btn-primary" data-bs-dismiss="modal">Acepto</button>
              </div>
          </div>
      </div>

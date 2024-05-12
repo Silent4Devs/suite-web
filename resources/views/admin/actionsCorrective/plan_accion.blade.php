@@ -7,12 +7,12 @@
                 <div class="row">
 
                     <div class="mt-5 col-md-12">
-                        <a class="btn btn-primary" data-toggle="collapse" onclick="closetabcollap1()"
+                        <a class="btn tb-btn-primary" data-toggle="collapse" onclick="closetabcollap1()"
                            id="acollapseExample" href="" role="button" aria-expanded="false"
                            aria-controls="collapseExample">
                             Acción Correctiva
                         </a>
-                        <a class="btn btn-primary" data-toggle="collapse" onclick="closetabcollap2()" id="acollapseplan"
+                        <a class="btn tb-btn-primary" data-toggle="collapse" onclick="closetabcollap2()" id="acollapseplan"
                            href="" role="button" aria-expanded="false" aria-controls="collapseplan">
                             Análisis de causa raíz
                         </a>

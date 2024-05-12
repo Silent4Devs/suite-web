@@ -155,10 +155,10 @@
                         1. ¿ A través de que medio CREAS al interno o RECIBES de un tercero el activo de información?
                     </div>
                     <p style="text-align: center">
-                        <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        <a class="btn tb-btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
                         Se Crea
                         </a>
-                        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample1" aria-expanded="false" aria-controls="collapseExample">
+                        <button class="btn tb-btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample1" aria-expanded="false" aria-controls="collapseExample">
                         Se Recibe
                         </button>
                     </p>

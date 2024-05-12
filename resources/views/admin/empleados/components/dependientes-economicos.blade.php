@@ -35,7 +35,7 @@
             } else if (number == 1) {
                 html += `
                         <td>
-                            <button class="btn btn-primary btn-xs" name="addDependiente" id="addDependiente">
+                            <button class="btn tb-btn-primary btn-xs" name="addDependiente" id="addDependiente">
                                 <i class="fas fa-plus-circle"></i>
                             </button>
                         </td>
@@ -63,7 +63,7 @@
                         <small class="text-danger" id="error_dependientes_${index}_parentesco"></small>
                     </td>
                     <td>
-                            <button class="btn btn-primary btn-xs" name="addDependiente" id="addDependiente">
+                            <button class="btn tb-btn-primary btn-xs" name="addDependiente" id="addDependiente">
                                 <i class="fas fa-plus-circle"></i>
                             </button>
                         </td>

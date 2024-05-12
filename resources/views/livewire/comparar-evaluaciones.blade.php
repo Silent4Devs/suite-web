@@ -26,7 +26,7 @@
             </select>
         </div>
         <div class="col-2">
-            <button class="h-100 btn btn-sm btn-primary" wire:click="compararEvaluaciones('evaluado')">Comparar</button>
+            <button class="h-100 btn btn-sm tb-btn-primary" wire:click="compararEvaluaciones('evaluado')">Comparar</button>
         </div>
 
         <div class="col-6">

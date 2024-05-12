@@ -18,7 +18,7 @@
             color: #fff;
         }
 
-        .btn-primary-custom {
+        .tb-btn-primary-custom {
             background-color: #007bff;
             color: #fff;
         }
@@ -28,17 +28,17 @@
     <center>
 
     <!-- Botón 4 -->
-    <button type="button" class="btn @if ($buttonCompras) btn-success-custom @else btn-primary-custom @endif"
+    <button type="button" class="btn @if ($buttonCompras) btn-success-custom @else tb-btn-primary-custom @endif"
     id="filtrarBtn3" style="position: relative; left: -2rem;">Filtrar OC pendientes compradores</button>
 
 
     <!-- Botón 1 -->
-    <button type="button" class="btn @if ($buttonSolicitante) btn-success-custom @else btn-primary-custom @endif"
+    <button type="button" class="btn @if ($buttonSolicitante) btn-success-custom @else tb-btn-primary-custom @endif"
         id="filtrarBtn2" style="position: relative; left: 1rem;">Filtrar OC pendientes solicitantes</button>
 
 
     <!-- Botón 3 -->
-    <button type="button" class="btn @if ($buttonFinanzas) btn-success-custom @else btn-primary-custom @endif"
+    <button type="button" class="btn @if ($buttonFinanzas) btn-success-custom @else tb-btn-primary-custom @endif"
         id="filtrarBtn" style="position: relative; left: 4rem;">Filtrar OC pendientes finanzas</button>
 
     </center>

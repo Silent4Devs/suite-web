@@ -19,11 +19,11 @@
                             href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
                             Acción Correctiva
                         </a>
-                        <a class="btn btn-primary" data-toggle="collapse" onclick="closetabcollap2()" id="acollapseplan"
+                        <a class="btn tb-btn-primary" data-toggle="collapse" onclick="closetabcollap2()" id="acollapseplan"
                             href="#collapseplan" role="button" aria-expanded="false" aria-controls="collapseplan">
                             Análisis de causa raíz
                         </a>
-                        <a class="btn btn-primary show" data-toggle="collapse" onclick="closetabcollap3()"
+                        <a class="btn tb-btn-primary show" data-toggle="collapse" onclick="closetabcollap3()"
                             id="acollapseactividad" href="#collapseactividad" role="button" aria-expanded="false"
                             aria-controls="collapseactividad">
                             Plan de Trabajo
@@ -34,7 +34,7 @@
                                     <div id="test-nl-1" class="content">
                                         @include('admin.actionsCorrective.editform1')
 
-                                        <a class="btn btn-primary" onclick="closetabcollap1next()" id="nextcollapseForm1"
+                                        <a class="btn tb-btn-primary" onclick="closetabcollap1next()" id="nextcollapseForm1"
                                             role="button">
                                             Siguiente
                                         </a>
@@ -47,7 +47,7 @@
                                     <div id="test-nl-1" class="content">
                                         @include('admin.actionsCorrective.editform1')
 
-                                        <a class="btn btn-primary" onclick="closetabcollap1next()" id="nextcollapseForm1"
+                                        <a class="btn tb-btn-primary" onclick="closetabcollap1next()" id="nextcollapseForm1"
                                             role="button">
                                             Siguiente
                                         </a>
@@ -88,28 +88,28 @@
     <script>
         $("#acollapseExample").click(function() {
 
-            $("#acollapseExample").removeClass('btn btn-primary').addClass("btn btn-danger");
-            $("#acollapseplan").removeClass('btn btn-danger').addClass("btn btn-primary");
-            $("#acollapseactividad").removeClass('btn-danger').addClass("btn-primary");
+            $("#acollapseExample").removeClass('btn tb-btn-primary').addClass("btn btn-danger");
+            $("#acollapseplan").removeClass('btn btn-danger').addClass("btn tb-btn-primary");
+            $("#acollapseactividad").removeClass('btn-danger').addClass("tb-btn-primary");
         });
 
         $("#acollapseplan").click(function() {
-            $("#acollapseExample").removeClass('btn btn-danger').addClass("btn btn-primary");
+            $("#acollapseExample").removeClass('btn btn-danger').addClass("btn tb-btn-primary");
             $(this).toggleClass("btn btn-danger");
-            $("#acollapseplan").removeClass('btn btn-primary').addClass("btn btn-danger");
-            $("#acollapseactividad").removeClass('btn-danger').addClass("btn-primary");
+            $("#acollapseplan").removeClass('btn tb-btn-primary').addClass("btn btn-danger");
+            $("#acollapseactividad").removeClass('btn-danger').addClass("tb-btn-primary");
         });
         $("#nextcollapseForm1").click(function() {
-            $("#acollapseExample").removeClass('btn btn-danger').addClass("btn btn-primary");
-            $("#acollapseplan").removeClass('btn btn-primary').addClass("btn btn-danger");
-            $("#acollapseactividad").removeClass('btn-danger').addClass("btn-primary");
+            $("#acollapseExample").removeClass('btn btn-danger').addClass("btn tb-btn-primary");
+            $("#acollapseplan").removeClass('btn tb-btn-primary').addClass("btn btn-danger");
+            $("#acollapseactividad").removeClass('btn-danger').addClass("tb-btn-primary");
 
         });
 
         $("#acollapseactividad").click(function() {
-            $("#acollapseExample").removeClass('btn-danger').addClass("btn-primary");
-            $("#acollapseplan").removeClass('btn-danger').addClass("btn-primary");
-            $("#acollapseactividad").removeClass('btn-primary').addClass("btn-danger");
+            $("#acollapseExample").removeClass('btn-danger').addClass("tb-btn-primary");
+            $("#acollapseplan").removeClass('btn-danger').addClass("tb-btn-primary");
+            $("#acollapseactividad").removeClass('tb-btn-primary').addClass("btn-danger");
         });
 
 

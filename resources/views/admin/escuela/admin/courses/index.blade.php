@@ -31,7 +31,7 @@
                             <td>{{ $course->id }}</td>
                             <td>{{ $course->title }}</td>
                             <td>{{ $course->category->name }}</td>
-                            <td><a class="btn btn-primary" href="{{ route('admin.courses.show', $course) }}">Revisar</a></td>
+                            <td><a class="btn tb-btn-primary" href="{{ route('admin.courses.show', $course) }}">Revisar</a></td>
                             <td></td>
                         </tr>
                     @endforeach

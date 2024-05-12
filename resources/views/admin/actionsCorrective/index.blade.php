@@ -83,7 +83,7 @@
             <section id="indexAc">
                 <div class="text-right">
                     <div class="d-flex justify-content-end">
-                        <a href="{{ route('admin.accion-correctivas.create') }}" type="button" class="btn btn-primary">Registrar Acción</a> 
+                        <a href="{{ route('admin.accion-correctivas.create') }}" type="button" class="btn tb-btn-primary">Registrar Acción</a> 
                     </div>
                 </div>
                 
@@ -169,7 +169,7 @@
             <section id="aprobaciones" class="caja_tab_reveldada">
                 <div class="text-right">
                     <div class="d-flex justify-content-end">
-                        <a href="{{ route('admin.accion-correctivas.create') }}" type="button" class="btn btn-primary">Registrar Solicitud</a> 
+                        <a href="{{ route('admin.accion-correctivas.create') }}" type="button" class="btn tb-btn-primary">Registrar Solicitud</a> 
                     </div>
                 </div>
                 <div class="mt-1 card">

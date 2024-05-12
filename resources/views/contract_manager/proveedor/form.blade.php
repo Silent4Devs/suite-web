@@ -248,7 +248,7 @@
         <div class="col s12 m12 right-align btn-grd distancia">
             <a href="{{ route('contract_manager.proveedor.index') }}" class="btn btn_cancelar">Cancelar</a>
             @if (!$show_proveedor)
-                <button class="btn btn-primary" type="submit">
+                <button class="btn tb-btn-primary" type="submit">
                     GUARDAR
                 </button>
             @endif

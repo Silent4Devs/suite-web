@@ -8,7 +8,7 @@
             opacity: 1 !important;
         }
 
-        .btn-primary {
+        .tb-btn-primary {
             opacity: 0.6;
         }
 

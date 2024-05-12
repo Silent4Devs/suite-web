@@ -20,6 +20,10 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/dark_mode.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/yearpicker.css') }}">
     <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
+
+    {{-- botones y colores globales --}}
+    <link rel="stylesheet" href="{{ asset('css/global/TbButtons.css') }}{{ config('app.cssVersion') }}">
+    <link rel="stylesheet" href="{{ asset('css/global/TbColorsGlobal.css') }}{{ config('app.cssVersion') }}">
     @yield('css')
     @yield('styles')
     <!-- End Principal Styles -->
@@ -199,7 +203,7 @@
                     @endcan
                     @can('portal_de_comunicaccion_acceder')
                         <li>
-                            <a href="{{ route('admin.portalCommunication.index') }}">
+                            <a href="{{ route('admin.portal-comunicacion.index') }}">
                                 <i class="bi bi-newspaper"></i>
                                 Comunicación
                             </a>
@@ -604,7 +608,7 @@
             <i class="bi bi-calendar3"></i>
             <p>Calendario</p>
         </a>
-        <a href="{{ route('admin.portalCommunication.index') }}" class="btn-barra-bottom-mobile"
+        <a href="{{ route('admin.portal-comunicacion.index') }}" class="btn-barra-bottom-mobile"
             {{ request()->is('admin/portal-comunicacion') || request()->is('admin/portal-comunicacion/*') ? 'style=color:#3086AF !important;"' : '' }}>
             <i class="bi bi-newspaper"></i>
             <p>Comunicación</p>
@@ -853,7 +857,7 @@
                     "<'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>",
                 buttons: [{
                         extend: 'selectAll',
-                        className: 'btn-primary',
+                        className: 'tb-btn-primary',
                         text: selectAllButtonTrans,
                         exportOptions: {
                             columns: ':visible'
@@ -868,7 +872,7 @@
                     },
                     {
                         extend: 'selectNone',
-                        className: 'btn-primary',
+                        className: 'tb-btn-primary',
                         text: selectNoneButtonTrans,
                         exportOptions: {
                             columns: ':visible'

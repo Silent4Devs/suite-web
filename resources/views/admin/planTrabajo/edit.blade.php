@@ -12,7 +12,7 @@
                     @include('admin.planTrabajo._form', ['edit' => true, 'esPlanTrabajoBase' => false])
                     <div class="d-flex justify-content-end">
                         <a class="mr-2 btn_cancelar" href="{{ route('admin.planes-de-accion.index') }}">Cancelar</a>
-                        <input type="submit" class="btn btn-xs btn-primary" value="Editar">
+                        <input type="submit" class="btn btn-xs tb-btn-primary" value="Editar">
                     </div>
                 </form>
             @endcan

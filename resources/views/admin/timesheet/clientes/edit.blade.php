@@ -47,7 +47,7 @@
             </div>
 
             <div class="form-group col-12">
-                <div class="btn btn-primary btn-transparent" id="btn_registro_completo">Registro Completo</div>
+                <div class="btn tb-btn-primary btn-transparent" id="btn_registro_completo">Registro Completo</div>
             </div>
 
             <div id="registro_completo" class="d-none w-100 row" style="margin:0 !important;">

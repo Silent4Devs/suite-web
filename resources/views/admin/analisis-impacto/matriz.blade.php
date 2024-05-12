@@ -181,38 +181,38 @@
                 {{-- <div class="row">
                     <!-- Button trigger modal -->
                     <div class="col-sm-2">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#procesos">
+                        <button type="button" class="btn tb-btn-primary" data-toggle="modal" data-target="#procesos">
                             1.0
                             <br>Procesos
                         </button>
                     </div>
                     <div class="col-sm-2">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#matriz_bia">
+                        <button type="button" class="btn tb-btn-primary" data-toggle="modal" data-target="#matriz_bia">
                             2.0
                             <br>Matriz BIA
                         </button>
                     </div>
                     <div class="col-sm-2">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#entradas_salidas">
+                        <button type="button" class="btn tb-btn-primary" data-toggle="modal" data-target="#entradas_salidas">
                             3.0
                             <br>Entradas y Salidas
                         </button>
                     </div>
                     <div class="col-sm-2">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tecnologica">
+                        <button type="button" class="btn tb-btn-primary" data-toggle="modal" data-target="#tecnologica">
                             4.0
                             <br>Inf. Tecnológica
                         </button>
                     </div>
                     <div class="col-sm-2">
-                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                        <button type="button" class="btn tb-btn-primary" data-toggle="modal"
                             data-target="#requerimientos_minimos">
                             5.0
                             <br>Requerimientos minimos
                         </button>
                     </div>
                     <div class="col-sm-2">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#respaldo">
+                        <button type="button" class="btn tb-btn-primary" data-toggle="modal" data-target="#respaldo">
                             6.0
                             <br>Respaldo-registros vitales
                         </button>

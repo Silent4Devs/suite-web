@@ -1342,7 +1342,7 @@
                     "<'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>",
                 buttons: [{
                         extend: 'selectAll',
-                        className: 'btn-primary',
+                        className: 'tb-btn-primary',
                         text: selectAllButtonTrans,
                         exportOptions: {
                             columns: ':visible'
@@ -1357,7 +1357,7 @@
                     },
                     {
                         extend: 'selectNone',
-                        className: 'btn-primary',
+                        className: 'tb-btn-primary',
                         text: selectNoneButtonTrans,
                         exportOptions: {
                             columns: ':visible'

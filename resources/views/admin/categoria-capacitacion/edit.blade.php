@@ -22,7 +22,7 @@
                 </div>
                 <div class="text-right form-group col-12">
                     <a href="{{ route('admin.categoria-capacitacion.index') }}" class="btn" id="btn_cancelar" style="color:#057BE2;">Cancelar</a>
-                    <button class="btn btn-primary" type="submit">
+                    <button class="btn tb-btn-primary" type="submit">
                         {{ trans('global.save') }}
                     </button>
                 </div>
