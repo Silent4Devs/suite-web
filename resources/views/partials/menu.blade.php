@@ -45,7 +45,7 @@
         @endcan
         @can('portal_de_comunicaccion_acceder')
             <li class="c-sidebar-nav-item">
-                <a href="{{ route('admin.portal-comunicacion.index') }}"
+                <a href="{{ route('admin.portalCommunication.index') }}"
                     class="c-sidebar-nav-link {{ request()->is('admin/portal-comunicacion') || request()->is('admin/portal-comunicacion/*') ? 'active' : '' }}">
                     <i class="bi bi-newspaper iconos_menu letra_blanca"></i>
                     <font class="letra_blanca"> Portal de Comunicación </font>

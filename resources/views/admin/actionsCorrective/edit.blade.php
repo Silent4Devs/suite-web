@@ -170,7 +170,7 @@
                             <div>
 
                                 <div id="test-nl-1" class="mt-3 content">
-                                    @include('admin.accionCorrectivas.editform1')
+                                    @include('admin.actionsCorrective.editform1')
 
                                 </div>
 
@@ -181,14 +181,14 @@
                         <section id="contenido2">
                             <div>
                                 <div class="mt-2 ml-2">
-                                    @include('admin.accionCorrectivas.editform2')
+                                    @include('admin.actionsCorrective.editform2')
                                 </div>
                             </div>
                         </section>
 
                         <section id="contenido3">
                             <div class="mt-2 ml-2">
-                                @include('admin.accionCorrectivas.editform3')
+                                @include('admin.actionsCorrective.editform3')
                             </div>
                         </section>
 

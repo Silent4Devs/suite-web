@@ -148,7 +148,7 @@
 
 
                 <div id="test-nl-1" class="content">
-                    @include('admin.accionCorrectivas.tabla_planaccion')
+                    @include('admin.actionsCorrective.tabla_planaccion')
 
                 </div>
             </div>

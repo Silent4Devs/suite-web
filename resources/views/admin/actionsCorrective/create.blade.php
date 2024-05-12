@@ -33,7 +33,7 @@
                                 <div>
 
                                     <div id="test-nl-1" class="mt-5 content">
-                                        @include('admin.accionCorrectivas.createform1')
+                                        @include('admin.actionsCorrective.createform1')
 
                                     </div>
 
@@ -43,7 +43,7 @@
                             <section id="contenido2">
                                 <div>
                                     <div class="mt-5 ml-2">
-                                        @include('admin.accionCorrectivas.createform2')
+                                        @include('admin.actionsCorrective.createform2')
                                     </div>
                                 </div>
                             </section>

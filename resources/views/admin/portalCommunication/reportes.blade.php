@@ -83,7 +83,7 @@
         }
     </style>
 @endsection
-{{ Breadcrumbs::render('admin.portal-comunicacion.reportes') }}
+{{ Breadcrumbs::render('admin.portalCommunication.reportes') }}
 <h5 class="col-12 titulo_general_funcion">Generar Reportes</h5>
 <div class="">
     <div class="">

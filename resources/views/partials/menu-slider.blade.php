@@ -165,7 +165,7 @@
         @endcan
         @can('portal_de_comunicaccion_acceder')
             <div class="item-ms active">
-                <a href="{{ route('admin.portal-comunicacion.index') }}">
+                <a href="{{ route('admin.portalCommunication.index') }}">
                     <i class="material-symbols-outlined">home</i>
                     <span>Inicio</span>
                 </a>

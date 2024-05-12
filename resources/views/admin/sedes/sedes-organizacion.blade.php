@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
 
-    {{ Breadcrumbs::render('admin.portal-comunicacion.sedes-organizacion') }}
+    {{ Breadcrumbs::render('admin.portalCommunication.sedes-organizacion') }}
     <h5 class="col-12 titulo_general_funcion">Sedes</h5>
     <div class="">
 

@@ -111,7 +111,7 @@ Breadcrumbs::for('admin.comiteseguridads.create', function ($trail) {
     $trail->push('Formulario', route('admin.comiteseguridads.create'));
 });
 Breadcrumbs::for('admin.comiteseguridads.visualizacion', function ($trail) {
-    $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
+    $trail->push('Portal de comunicación', route('admin.portalCommunication.index'));
     $trail->push('Comité');
 });
 
@@ -146,7 +146,7 @@ Breadcrumbs::for('admin.politica-sgsis.create', function ($trail) {
 });
 
 Breadcrumbs::for('admin.politicaSgsis.visualizacion', function ($trail) {
-    $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
+    $trail->push('Portal de comunicación', route('admin.portalCommunication.index'));
     $trail->push('Politicas');
 });
 
@@ -486,23 +486,23 @@ Breadcrumbs::for('admin.registromejoras.create', function ($trail) {
     $trail->push('Formulario', route('admin.registromejoras.create'));
 });
 
-Breadcrumbs::for('admin.portal-comunicacion.reportes', function ($trail) {
-    $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
+Breadcrumbs::for('admin.portalCommunication.reportes', function ($trail) {
+    $trail->push('Portal de comunicación', route('admin.portalCommunication.index'));
     $trail->push('Reportes');
 });
 
-Breadcrumbs::for('admin.portal-comunicacion.sedes-organizacion', function ($trail) {
-    $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
+Breadcrumbs::for('admin.portalCommunication.sedes-organizacion', function ($trail) {
+    $trail->push('Portal de comunicación', route('admin.portalCommunication.index'));
     $trail->push('Sedes');
 });
 
 Breadcrumbs::for('admin.comunicacion-sgis.show', function ($trail) {
-    $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
+    $trail->push('Portal de comunicación', route('admin.portalCommunication.index'));
     $trail->push('Comunicados');
 });
 
 Breadcrumbs::for('admin.system-calendar', function ($trail) {
-    $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
+    $trail->push('Portal de comunicación', route('admin.portalCommunication.index'));
     $trail->push('Calendario');
 });
 
@@ -527,7 +527,7 @@ Breadcrumbs::for('consulta-puestos', function ($trail) {
     $trail->push('Consulta Perfiles de Puesto', route('admin.consulta-puestos'));
 });
 Breadcrumbs::for('areas-render', function ($trail) {
-    $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
+    $trail->push('Portal de comunicación', route('admin.portalCommunication.index'));
     $trail->push('Áreas', route('admin.areas.renderJerarquia'));
 });
 Breadcrumbs::for('perfil-puesto-create', function ($trail) {
@@ -870,12 +870,12 @@ Breadcrumbs::for('Editar-Curriculum', function ($trail, $empleado = null) {
 });
 
 Breadcrumbs::for('admin.mapa-procesos', function ($trail) {
-    $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
+    $trail->push('Portal de comunicación', route('admin.portalCommunication.index'));
     $trail->push('Mapa de Procesos');
 });
 
 Breadcrumbs::for('admin.visualizarorganizacion', function ($trail) {
-    $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
+    $trail->push('Portal de comunicación', route('admin.portalCommunication.index'));
     $trail->push('Organización');
 });
 
@@ -974,33 +974,33 @@ Breadcrumbs::for('Archivo-Dayoff', function ($trail) {
 });
 
 Breadcrumbs::for('seguridad-create-portal', function ($trail) {
-    $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
-    $trail->push('Reportes', route('admin.portal-comunicacion.reportes'));
+    $trail->push('Portal de comunicación', route('admin.portalCommunication.index'));
+    $trail->push('Reportes', route('admin.portalCommunication.reportes'));
     $trail->push('Incidentes de Seguridad', route('admin.reportes-seguridad'));
 });
 Breadcrumbs::for('riesgos-create-portal', function ($trail) {
-    $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
-    $trail->push('Reportes', route('admin.portal-comunicacion.reportes'));
+    $trail->push('Portal de comunicación', route('admin.portalCommunication.index'));
+    $trail->push('Reportes', route('admin.portalCommunication.reportes'));
     $trail->push('Riesgos Identificados', route('admin.reportes-riesgos'));
 });
 Breadcrumbs::for('quejas-create-portal', function ($trail) {
-    $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
-    $trail->push('Reportes', route('admin.portal-comunicacion.reportes'));
+    $trail->push('Portal de comunicación', route('admin.portalCommunication.index'));
+    $trail->push('Reportes', route('admin.portalCommunication.reportes'));
     $trail->push('Quejas', route('admin.reportes-quejas'));
 });
 Breadcrumbs::for('denuncias-create-portal', function ($trail) {
-    $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
-    $trail->push('Reportes', route('admin.portal-comunicacion.reportes'));
+    $trail->push('Portal de comunicación', route('admin.portalCommunication.index'));
+    $trail->push('Reportes', route('admin.portalCommunication.reportes'));
     $trail->push('Denuncias', route('admin.reportes-denuncias'));
 });
 Breadcrumbs::for('mejoras-create-portal', function ($trail) {
-    $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
-    $trail->push('Reportes', route('admin.portal-comunicacion.reportes'));
+    $trail->push('Portal de comunicación', route('admin.portalCommunication.index'));
+    $trail->push('Reportes', route('admin.portalCommunication.reportes'));
     $trail->push('Mejoras', route('admin.reportes-mejoras'));
 });
 Breadcrumbs::for('sugerencias-create-portal', function ($trail) {
-    $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
-    $trail->push('Reportes', route('admin.portal-comunicacion.reportes'));
+    $trail->push('Portal de comunicación', route('admin.portalCommunication.index'));
+    $trail->push('Reportes', route('admin.portalCommunication.reportes'));
     $trail->push('Sugerencias', route('admin.reportes-sugerencias'));
 });
 

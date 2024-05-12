@@ -32,7 +32,7 @@
                             <div class="collapse show" id="collapseExample">
                                 <div class="card card-body">
                                     <div id="test-nl-1" class="content">
-                                        @include('admin.accionCorrectivas.editform1')
+                                        @include('admin.actionsCorrective.editform1')
 
                                         <a class="btn btn-primary" onclick="closetabcollap1next()" id="nextcollapseForm1"
                                             role="button">
@@ -45,7 +45,7 @@
                             <div class="collapse show" id="collapseExample">
                                 <div class="card card-body">
                                     <div id="test-nl-1" class="content">
-                                        @include('admin.accionCorrectivas.editform1')
+                                        @include('admin.actionsCorrective.editform1')
 
                                         <a class="btn btn-primary" onclick="closetabcollap1next()" id="nextcollapseForm1"
                                             role="button">
@@ -57,18 +57,18 @@
                         @endif
                         <div class="collapse" id="collapseplan">
                             <div class="card card-body">
-                                @include('admin.accionCorrectivas.editform2')
+                                @include('admin.actionsCorrective.editform2')
                             </div>
                         </div>
                         @if (empty($tab))
                             <div class="collapse" id="collapseactividad">
                                 <div class="card card-body">
-                                    @include('admin.accionCorrectivas.edit_planaccion')
+                                    @include('admin.actionsCorrective.edit_planaccion')
                                 </div>
                             @else
                                 <div class="collapse show" id="collapseactividad">
                                     <div class="card card-body">
-                                        @include('admin.accionCorrectivas.edit_planaccion')
+                                        @include('admin.actionsCorrective.edit_planaccion')
                                     </div>
                                 </div>
                         @endif

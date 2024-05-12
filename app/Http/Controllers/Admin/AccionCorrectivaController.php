@@ -135,7 +135,7 @@ class AccionCorrectivaController extends Controller
         $cerrados_AC = $query_ac->where('estatus', 'Cerrado')->count();
         $cancelados_AC = $query_ac->where('estatus', 'No procedente')->count();
 
-        return view('admin.accionCorrectivas.index', compact('total_AC', 'nuevos_AC', 'en_curso_AC', 'en_espera_AC', 'cerrados_AC', 'cancelados_AC', 'users', 'puestos', 'users', 'puestos', 'users', 'users', 'teams'));
+        return view('admin.actionsCorrective.index', compact('total_AC', 'nuevos_AC', 'en_curso_AC', 'en_espera_AC', 'cerrados_AC', 'cancelados_AC', 'users', 'puestos', 'users', 'puestos', 'users', 'users', 'teams'));
     }
 
     public function obtenerAccionesCorrectivasSinAprobacion()
@@ -196,7 +196,7 @@ class AccionCorrectivaController extends Controller
 
         $activos = Tipoactivo::getAll();
 
-        return view('admin.accionCorrectivas.create', compact('nombrereportas', 'puestoreportas', 'nombreregistras', 'puestoregistras', 'responsable_accions', 'nombre_autorizas', 'empleados', 'areas', 'procesos', 'activos'));
+        return view('admin.actionsCorrective.create', compact('nombrereportas', 'puestoreportas', 'nombreregistras', 'puestoregistras', 'responsable_accions', 'nombre_autorizas', 'empleados', 'areas', 'procesos', 'activos'));
     }
 
     public function store(Request $request)
@@ -293,7 +293,7 @@ class AccionCorrectivaController extends Controller
         // $Count = $PlanAccion->count();
         // dd($accionCorrectiva);
 
-        return view('admin.accionCorrectivas.edit', compact('clientes', 'proyectos', 'quejasClientes', 'nombrereportas', 'puestoreportas', 'nombreregistras', 'puestoregistras', 'responsable_accions', 'nombre_autorizas', 'accionCorrectiva', 'id', 'empleados', 'areas', 'procesos', 'activos', 'analisis'));
+        return view('admin.actionsCorrective.edit', compact('clientes', 'proyectos', 'quejasClientes', 'nombrereportas', 'puestoreportas', 'nombreregistras', 'puestoregistras', 'responsable_accions', 'nombre_autorizas', 'accionCorrectiva', 'id', 'empleados', 'areas', 'procesos', 'activos', 'analisis'));
     }
 
     public function update(Request $request, AccionCorrectiva $accionCorrectiva)
@@ -351,7 +351,7 @@ class AccionCorrectivaController extends Controller
         $accionCorrectiva->load('analisis', 'nombrereporta', 'puestoreporta', 'nombreregistra', 'puestoregistra', 'responsable_accion', 'nombre_autoriza', 'team', 'accioncorrectivaPlanaccionCorrectivas', 'planes');
 
         // dd($accionCorrectiva->planes);
-        return view('admin.accionCorrectivas.show', compact('accionCorrectiva', 'actividades'));
+        return view('admin.actionsCorrective.show', compact('accionCorrectiva', 'actividades'));
     }
 
     public function destroy(AccionCorrectiva $accionCorrectiva)
