@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/portal_comunicacion.css') }}{{ config('app.cssVersion') }}">
+    <link rel="stylesheet"
+        href="{{ asset('css/portalComunicacion/TBportalComunicacion.css') }}{{ config('app.cssVersion') }}">
 @endsection
 @section('content')
     @include('partials.menu-slider')
@@ -87,14 +88,14 @@
                                         <img id="comunicado-carrusel-{{ $carrusel->id }}"
                                             src="{{ asset('storage/imagen_comunicado_SGI/' . $carrusel->imagenes_comunicacion->first()->imagen) }}"
                                             class=" item-main-carrusel"
-                                            onerror="this.src='{{ asset('img/Carrusel_inicio.png') }}'; this.onerror=null;">
+                                            onerror="this.src='{{ asset('img/portalComunicacion/TBcarruselInicio.png') }}'; this.onerror=null;">
                                     @endif
                                 @endforeach
                             </div>
                         </div>
                         <div class="menu-carrusel-vertical scroll_estilo">
                             <div class="caja-img-menu-crr-vertical" onclick="boletin('comunicado-carrusel-primer-item')">
-                                <img src="{{ asset('img/Carrusel_inicio.png') }}" alt="">
+                                <img src="{{ asset('img/portalComunicacion/TBcarruselInicio.png') }}" alt="">
                             </div>
                             @foreach ($comunicacionSgis_carrusel as $idx => $carrusel)
                                 @if ($carrusel->imagenes_comunicacion->first()->tipo == 'video')
@@ -102,7 +103,7 @@
                                         onclick="boletin('comunicado-carrusel-{{ $carrusel->id }}')"
                                         data-id="comunicado-carrusel-{{ $carrusel->id }}">
                                         <img src="{{ asset('img/example-remove/play_video.png') }}" alt=""
-                                            onerror="this.src='{{ asset('img/Carrusel_inicio.png') }}'; this.onerror=null;">
+                                            onerror="this.src='{{ asset('img/portalComunicacion/TBcarruselInicio.png') }}'; this.onerror=null;">
                                     </div>
                                 @else
                                     <div class="caja-img-menu-crr-vertical"
@@ -110,7 +111,7 @@
                                         data-id="comunicado-carrusel-{{ $carrusel->id }}">
                                         <img src="{{ asset('storage/imagen_comunicado_SGI/' . $carrusel->imagenes_comunicacion->first()->imagen) }}"
                                             alt=""
-                                            onerror="this.src='{{ asset('img/Carrusel_inicio.png') }}'; this.onerror=null;">
+                                            onerror="this.src='{{ asset('img/portalComunicacion/TBcarruselInicio.png') }}'; this.onerror=null;">
                                     </div>
                                 @endif
                             @endforeach
@@ -160,94 +161,6 @@
                                         <h4 class="title-card-portal-c"> Menú </h4>
 
                                         <div class="menu-portal">
-                                            {{-- @can('mi_organizacion_acceder')
-                                            <a href="{{ route('admin.organizacions.index') }}">
-                                                <div class="item-menu-portal">
-                                                    <i class="material-symbols-outlined">corporate_fare</i>
-                                                    <span>Organización</span>
-                                                </div>
-                                            </a>
-                                        @endcan
-                                        @can('documentos_publicados_acceder')
-                                            <a href="{{ route('admin.documentos.publicados') }}">
-                                                <div class="item-menu-portal">
-                                                    <i class="material-symbols-outlined">description</i>
-                                                    <span>Documentos Publicados</span>
-                                                </div>
-                                            </a>
-                                        @endcan
-                                        @can('sedes_acceder')
-                                            <a href="{{ route('admin.sedes.index') }}">
-                                                <div class="item-menu-portal">
-                                                    <i class="material-symbols-outlined">home_pin</i>
-                                                    <span>Sedes</span>
-                                                </div>
-                                            </a>
-                                        @endcan
-                                        @can('politica_sistema_gestion_acceder')
-                                            <a href="{{ route('admin.politica-sgsis/visualizacion') }}">
-                                                <div class="item-menu-portal">
-                                                    <i class="material-symbols-outlined">local_library</i>
-                                                    <span>Políticas</span>
-                                                </div>
-                                            </a>
-                                        @endcan
-                                        @can('crear_area_acceder')
-                                            <a href="{{ route('admin.areas.index') }}">
-                                                <div class="item-menu-portal">
-                                                    <i class="material-symbols-outlined">mitre</i>
-                                                    <span>Áreas</span>
-                                                </div>
-                                            </a>
-                                        @endcan
-                                        @can('comformacion_comite_seguridad_acceder')
-                                            <a href="{{ route('admin.comiteseguridads.index') }}">
-                                                <div class="item-menu-portal">
-                                                    <i class="material-symbols-outlined">partner_exchange</i>
-                                                    <span>Comités</span>
-                                                </div>
-                                            </a>
-                                        @endcan
-                                        @can('portal_comunicacion_mostrar_mapa_de_procesos')
-                                            <a href="{{ route('admin.procesos.mapa') }}">
-                                                <div class="item-menu-portal">
-                                                    <i class="material-symbols-outlined">flowsheet</i>
-                                                    <span>Mapa de procesos</span>
-                                                </div>
-                                            </a>
-                                        @endcan
-                                        @can('organigrama_acceder')
-                                            <a href="{{ route('admin.organigrama.index') }}">
-                                                <div class="item-menu-portal">
-                                                    <i class="material-symbols-outlined">schema</i>
-                                                    <span>Organigrama</span>
-                                                </div>
-                                            </a>
-                                        @endcan
-                                        @can('analisis_foda_acceder')
-                                            <a href="{{ route('admin.foda-organizacions') }}">
-                                                <div class="item-menu-portal">
-                                                    <i class="material-symbols-outlined">border_all</i>
-                                                    <span>FODA</span>
-                                                </div>
-                                            </a>
-                                        @endcan
-                                        @can('portal_comunicacion_mostrar_directorio')
-                                            <a href="{{ route('admin.directorio.index') }}">
-                                                <div class="item-menu-portal">
-                                                    <i class="material-symbols-outlined">person_book</i>
-                                                    <span>Directorio</span>
-                                                </div>
-                                            </a>
-                                        @endcan
-                                        @can('determinacion_alcance_acceder')
-                                            <a href="{{ route('admin.alcance-sgsis/visualizacion') }}">
-                                                <div class="item-menu-portal">
-                                                    <i class="material-symbols-outlined">table_chart_view</i>
-                                                    <span>Alcances</span>
-                                                </div>
-                                            </a>
-                                        @endcan --}}
                                             @can('escuela_estudiante')
                                                 <a href="{{ asset('/admin/mis-cursos') }}">
                                                     <div class="item-menu-portal">
@@ -264,14 +177,6 @@
                                                     </div>
                                                 </a>
                                             @endcan
-                                            {{-- @can('portal_de_comunicaccion_acceder')
-                                            <a href="{{ route('admin.portal-comunicacion.index') }}">
-                                                <div class="item-menu-portal active">
-                                                    <i class="material-symbols-outlined">home</i>
-                                                    <span>Inicio</span>
-                                                </div>
-                                            </a>
-                                        @endcan --}}
                                             @can('mi_perfil_acceder')
                                                 <a href="{{ route('admin.inicio-Usuario.index') }}">
                                                     <div class="item-menu-portal">
@@ -367,7 +272,7 @@
                             <hr class="my-4">
 
                         @empty
-                            <img src="{{ asset('img/sincomunicados.png') }}" alt=""
+                            <img src="{{ asset('img/portalComunicacion/TBsinComunicados.png') }}" alt=""
                                 style="width: 300px; margin:0px auto;">
                         @endforelse
                     </div>
@@ -383,7 +288,7 @@
                         @forelse($documentos_publicados as $documento)
                             <a href="{{ asset('admin/documentos/' . $documento->id . '/view-document') }}">
                                 <div class="doc-item-portal">
-                                    <img src="{{ asset('img/desk_portal_docs.png') }}" alt="">
+                                    <img src="{{ asset('img/portalComunicacion/TBdeskPortalDocs.png') }}" alt="">
                                     <div class="doc-info">
                                         <span
                                             class="title-doc-portal">{{ Str::limit($documento->codigo . ' - ' . $documento->nombre . '', 50, '...') }}</span>
@@ -442,12 +347,6 @@
                                         </p>
                                     </div>
                                     <hr>
-                                    {{-- @php
-                                    $meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-                                    $fecha = \Carbon\Carbon::createFromFormat('Y-m-d', $nuv->cumpleaños);
-                                    $mes = $meses[$fecha->format('n') - 1];
-                                    $inputs['Fecha'] = $fecha->format('d') . ' de ' . $mes;
-                                @endphp --}}
                                     <div>
                                         <strong> Fecha de ingreso </strong> <br>
                                         {{ \Carbon\Carbon::parse($nuv->antiguedad)->format('d/m/Y') }}
@@ -508,10 +407,7 @@
                                             {{ $inputs['Fecha'] }}
                                         </p>
                                     </div>
-                                    <div>
-                                        {{-- <i class="material-symbols-outlined" style="font-size: 50px;">thumb_up</i> --}}
-                                    </div>
-                                    <img src="{{ asset('img/example-remove/cumple_portal.png') }}" alt=""
+                                    <img src="{{ asset('img/portalComunicacion/TBcumplePortal.png') }}" alt=""
                                         class="cumple-img-portal">
                                 </div>
 
@@ -528,8 +424,7 @@
     <div style="height: 100px;"></div>
 @endsection
 @section('scripts')
-    <script src="{{ asset('js/calendar-comunicado.js') }}"></script>
-    <script src="{{ asset('js/calendario-comunicacion.js') }}"></script>
+    <script src="{{ asset('js/portalComunicacion/TBcalendarioComunicacion.js') }}"></script>
 
     <script>
         function boletin(id) {
@@ -605,9 +500,9 @@
             const appId = '82a605d0';
             const apiKey = '010461c49fd2f4a8f1968e0236b802fa';
 
-            // Coordenadas para una ubicación específica (51.50, -0.12 es Londres, puedes cambiarlo)
-            const latitude = 51.50;
-            const longitude = -0.12;
+            // Coordenadas para una ubicación específica (19.43, -0.12 es Londres, puedes cambiarlo)
+            const latitude = 19.43;
+            const longitude = 99.13;
 
             // URL de la API de WeatherUnlocked para obtener datos del tiempo en una ubicación específica
             const apiUrl =
