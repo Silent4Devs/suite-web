@@ -15,7 +15,7 @@ class AreaSeeder extends Seeder
     public function run()
     {
         Area::create([
-            'area'=>'Direccion General'
+            'area' => 'Direccion General',
         ]);
     }
 }

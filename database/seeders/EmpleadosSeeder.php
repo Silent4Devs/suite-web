@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\Area;
 use App\Models\Empleado;
 use App\Models\Puesto;
-use App\Models\Sede;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
