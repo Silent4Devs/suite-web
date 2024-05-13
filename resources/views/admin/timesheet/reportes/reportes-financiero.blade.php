@@ -36,10 +36,15 @@
     @livewire('timesheet.reporte-financiero')
 @endsection
 
-{{-- @section('scripts')
+@section('scripts')
     @parent
     <script>
-        $(function() {
+        let cont = 0;
+
+        function tablaLivewire(id_tabla) {
+            console.log('funcion');
+            $('#' + id_tabla).attr('id', id_tabla + cont);
+
             let dtButtons = [{
                     extend: 'csvHtml5',
                     title: `Mis Registros ${new Date().toLocaleDateString().trim()}`,
@@ -57,65 +62,7 @@
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar Excel',
                     exportOptions: {
-                        autoWidth: true
-                    },
-                    customizeData: function(data) {
-
-                        for (var i = 0; i < data.body.length; i++) {
-                            var columnaD = data.body[i][3];
-                            var elementosD = columnaD.split(/\s{2,}/);
-                            var arrayD = [];
-                            elementosD.forEach(function(elemento) {
-                                arrayD.push(elemento.trim());
-                            });
-                            data.body[i][3] = arrayD;
-
-                            var columnaE = data.body[i][4];
-                            var elementosE = columnaE.split(/\s{2,}/);
-                            var arrayE = [];
-                            elementosE.forEach(function(elemento) {
-                                elementosE.forEach(function(subElemento) {
-                                    arrayE.push(subElemento.trim());
-                                });
-                            });
-                            data.body[i][4] = arrayE;
-
-                            var columnaF = data.body[i][5];
-                            var elementosF = columnaF.split(/\s{2,}/);
-                            var arrayF = [];
-                            elementosF.forEach(function(elemento) {
-                                arrayF.push(elemento.trim());
-                            });
-                            data.body[i][5] = arrayF;
-
-                            var columnaG = data.body[i][6];
-                            var elementosG = columnaG.split(/\s{2,}/);
-                            var arrayG = [];
-                            elementosG.forEach(function(elemento) {
-                                arrayG.push(elemento.trim());
-                            });
-                            data.body[i][6] = arrayG;
-                        }
-                    },
-                    customize: function(xlsx) {
-                        var sheet = xlsx.xl.worksheets[
-                            'sheet1.xml'];
-
-
-                        $('col', sheet).each(function() {
-                            $(this).attr('width', '25');
-                        });
-
-                        $('row c[r^="D"], row c[r^="E"], row c[r^="F"], row c[r^="G"]', sheet).each(
-                            function() {
-                                var cellText = $(this).find('is t').text();
-                                cellText = cellText.replace(/,/g, ',\n');
-                                $(this).find('is t').text(cellText);
-                                $(this).attr('s', '25');
-                                $(this).attr('style', 'mso-wrap-text: true;');
-                            });
                     }
-
                 },
                 {
                     extend: 'print',
@@ -126,25 +73,25 @@
                     customize: function(doc) {
                         let logo_actual = @json($logo_actual);
                         let empresa_actual = @json($empresa_actual);
-                        let empleado = @json(auth()->user()->empleado->name);
+
 
                         var now = new Date();
-                        var jsDate = now.getDate() + '-' + (now.getMonth() + 1) + '-' + now
-                            .getFullYear();
+                        var jsDate = now.getDate() + '-' + (now.getMonth() + 1) + '-' + now.getFullYear();
                         $(doc.document.body).prepend(`
-                                <div class="row">
-                                    <div class="col-4 text-center p-2" style="border:2px solid #CCCCCC">
-                                        <img class="img-fluid" style="max-width:120px" src="${logo_actual}"/>
-                                    </div>
-                                    <div class="col-4 text-center p-2" style="border:2px solid #CCCCCC">
-                                        <p>${empresa_actual}</p>
-                                        <strong style="color:#345183">Timesheet: Reportes</strong>
-                                    </div>
-                                    <div class="col-4 text-center p-2" style="border:2px solid #CCCCCC">
-                                        Fecha: ${jsDate}
-                                    </div>
+                            <div class="row">
+                                <div class="col-4 text-center p-2" style="border:2px solid #CCCCCC">
+                                    <img class="img-fluid" style="max-width:120px" src="${logo_actual}"/>
                                 </div>
-                            `);
+                                <div class="col-4 text-center p-2" style="border:2px solid #CCCCCC">
+                                    <p>${empresa_actual}</p>
+
+                                    <strong style="color:#345183">Timsheet: Mis Registros</strong>
+                                </div>
+                                <div class="col-4 text-center p-2" style="border:2px solid #CCCCCC">
+                                    Fecha: ${jsDate}
+                                </div>
+                            </div>
+                        `);
 
                         $(doc.document.body).find('table')
                             .css('font-size', '12px')
@@ -195,11 +142,21 @@
             };
             let dtOverrideGlobals = {
                 buttons: dtButtons,
+                order: [
+                    [0, 'desc']
+                ],
                 destroy: true,
                 render: true,
             };
 
-            let table = $('#datatabletimesheetproyectosfinancieros').DataTable(dtOverrideGlobals);
+            let table = $('#' + id_tabla + cont).DataTable(dtOverrideGlobals);
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                console.log('liwe');
+                tablaLivewire('reportesfinancieros');
+            }, 100);
+            tablaLivewire('reportesfinancieros');
         });
     </script>
-@endsection --}}
+@endsection

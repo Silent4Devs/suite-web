@@ -66,6 +66,9 @@ class Requsicion extends Model implements Auditable
         'ids_proveedores',
         'proveedoroc_id',
         'email',
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     protected $appends = [

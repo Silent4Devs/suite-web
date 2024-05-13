@@ -31,7 +31,7 @@ class TimesheetListener
             ->where('role_user.role_id', '=', '1')->where('users.id', '!=', auth()->id())
             ->get()
             ->each(function (User $user) use ($event) {
-                Notification::send($user, new TimesheetNotification($event->documento, $event->tipo_consulta, $event->tabla, $event->slug));
+                Notification::send($user, new TimesheetNotification($event->timeshet, $event->tipo_consulta, $event->tabla, $event->slug));
             });
     }
 }

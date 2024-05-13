@@ -26,14 +26,34 @@ class CursoEstudiante extends Controller
 
     public function misCursos()
     {
+        $usuario = User::getCurrentUser();
         $cursos_usuario = UsuariosCursos::with('cursos')->where('user_id', User::getCurrentUser()->id)->get();
+        //calculo el porcentaje del curso completado
+        foreach ($cursos_usuario as $cu) {
+            $i = 0;
+            $courses_lessons = $cu->cursos->lessons;
+            foreach($courses_lessons as $cl){
+                if ($cl->completed) {
+                    $i++;
+                }
+            }
+            $advance = ($i * 100) / ($courses_lessons->count());
+            $advance = round($advance,2);
+            //agrego el porcentaje del curso a una propiedad
+            $cu->advance = $advance;
+        }
+        //last course
+        $lastCourse = $cursos_usuario->sortBy('last_review')->last();
+        //last three course
+        $lastThreeCourse = $cursos_usuario->sortByDesc('last_review')->take(3);
 
-        return view('admin.escuela.estudiante.mis-cursos', compact('cursos_usuario'));
+        return view('admin.escuela.estudiante.mis-cursos', compact('cursos_usuario','usuario','lastThreeCourse','lastCourse'));
     }
 
     public function cursoEstudiante($curso_id)
     {
         try {
+        $evaluacionesLeccion = Evaluation::where('course_id', $curso_id)->get();
 
             $curso = Course::where('id', $curso_id)->first();
 
@@ -94,6 +114,19 @@ class CursoEstudiante extends Controller
 
         $token = CourseUser::where('course_id', $course->id)->where('user_id', User::getCurrentUser()->id)->exists();
 
+                $lesson_introduction = $course->lessons->first();
+                // dump($courses_lessons->first());
+                if(!is_null($lesson_introduction)){
+                    if(is_null($lesson_introduction['iframe'])){
+                        $course->lesson_introduction = null;
+                    }else{
+                        $course->lesson_introduction = $lesson_introduction['iframe'];
+                    }
+                }else{
+                    $course->lesson_introduction = null;
+                }
+
+
         return view('admin.escuela.estudiante.show', compact('course', 'similares', 'token'));
     }
 
@@ -126,5 +159,33 @@ class CursoEstudiante extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function coursesInscribed()
+    {
+        $usuario = User::getCurrentUser();
+        $cursos_usuario = UsuariosCursos::with('cursos')->where('user_id', $usuario->id)->get();
+
+         //calculo el porcentaje del curso completado
+         foreach ($cursos_usuario as $cu) {
+            $i = 0;
+            $courses_lessons = $cu->cursos->lessons;
+            foreach($courses_lessons as $cl){
+                if ($cl->completed) {
+                    $i++;
+                }
+            }
+            $advance = ($i * 100) / ($courses_lessons->count());
+            $advance = round($advance,2);
+
+            //agrego el porcentaje del curso a una propiedad
+            $cu->advance = $advance;
+        }
+
+        //last course
+        $lastCourse = $cursos_usuario->sortBy('last_review')->last();
+
+
+        return view('admin.escuela.estudiante.courses-inscribed', compact('usuario','cursos_usuario','lastCourse'));
     }
 }

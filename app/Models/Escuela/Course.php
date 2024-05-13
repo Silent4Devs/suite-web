@@ -21,6 +21,12 @@ class Course extends Model implements Auditable
 
     protected $withCount = ['students', 'reviews'];
 
+    protected $fillable = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
+
     const BORRADOR = 1;
 
     const REVISION = 2;
@@ -97,6 +103,11 @@ class Course extends Model implements Auditable
     public function teacher()
     {
         return $this->belongsTo('App\Models\User', 'user_id');
+    }
+
+    public function instructor()
+    {
+        return $this->belongsTo('App\Models\User', 'empleado_id');
     }
 
     public function level()
