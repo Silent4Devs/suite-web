@@ -23,7 +23,7 @@ pipeline {
                 script {
                     echo 'Ejecutando pruebas unitarias'
                     sh '''
-                       sshpass -p ${SSH_PASSWORD} ssh ${SSH_USER}@${SERVER_IP} "cd /var/contenedor/unittest/unittest-suit && sudo -S git pull"
+                       echo $SSH_PASSWORD | sshpass -p $SSH_PASSWORD ssh $SSH_USER@$SERVER_IP "cd /var/contenedor/unittest/unittest-suit && sudo -S git pull"
                     '''
                     echo 'entro a carpeta y ejecuto pruebas unitarias'
                 }
