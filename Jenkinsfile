@@ -11,7 +11,7 @@ pipeline {
         stage('Git Pull via SSH') {
             steps {
                 script {
-                   sh '''
+                    sh '''
                        echo $SSH_PASSWORD | sshpass -p $SSH_PASSWORD ssh $SSH_USER@$SERVER_IP "cd /var/contenedor/suite-web && sudo -S git pull"
                     '''
                 }
@@ -19,6 +19,15 @@ pipeline {
         }
     }
 
+    stages {
+        stage('Execute unit test docker') {
+            steps {
+                script {
+                    sh '''
+                       echo $SSH_PASSWORD | sshpas -p $SSH_PASSWORD ssh $SSH_USER@$SERVER_IP "cd /var/contenedor/unittest-suit/unittest-suit && sudo -S git pull && sudo docker-compose up -d && sudo docker run --rm -it --network unittest-suit_tabantajnetwork alpine ping 192.168.9.78"
+                    '''
+                }
+            }
+        }
+    }
 }
-
-
