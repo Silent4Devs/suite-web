@@ -16722,13 +16722,12 @@ namespace Barryvdh\DomPDF\Facade {
                     /**
          * Replace all the Options from DomPDF
          *
-         * @deprecated Use setOption to override individual options.
          * @param array<string, mixed> $options
          * @static 
-         */        public static function setOptions($options)
+         */        public static function setOptions($options, $mergeWithDefaults = false)
         {
                         /** @var \Barryvdh\DomPDF\PDF $instance */
-                        return $instance->setOptions($options);
+                        return $instance->setOptions($options, $mergeWithDefaults);
         }
                     /**
          * Output the PDF as a string.
@@ -16882,13 +16881,12 @@ namespace Barryvdh\DomPDF\Facade {
                     /**
          * Replace all the Options from DomPDF
          *
-         * @deprecated Use setOption to override individual options.
          * @param array<string, mixed> $options
          * @static 
-         */        public static function setOptions($options)
+         */        public static function setOptions($options, $mergeWithDefaults = false)
         {
                         /** @var \Barryvdh\DomPDF\PDF $instance */
-                        return $instance->setOptions($options);
+                        return $instance->setOptions($options, $mergeWithDefaults);
         }
                     /**
          * Output the PDF as a string.
