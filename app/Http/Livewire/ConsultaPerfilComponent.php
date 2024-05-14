@@ -133,13 +133,15 @@ class ConsultaPerfilComponent extends Component
 
     public function mount()
     {
-        if (!$this->isPersonal) {
-            $this->puestos = Puesto::select('id', 'id_area', 'id_reporta', 'puesto')->get();
-        }
+
     }
 
     public function render()
     {
+        if (! $this->isPersonal) {
+            $this->puestos = Puesto::select('id', 'id_area', 'id_reporta', 'puesto')->get();
+        }
+
         $perfilesInfo = Puesto::with(['area', 'competencias' => function ($q) {
             $q->with('competencia');
         }])->when($this->puesto_id, function ($q3) {

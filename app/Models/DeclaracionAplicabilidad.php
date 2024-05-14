@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
@@ -10,8 +11,8 @@ use OwenIt\Auditing\Contracts\Auditable;
 
 class DeclaracionAplicabilidad extends Model implements Auditable
 {
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
     use HasFactory;
-    use \OwenIt\Auditing\Auditable;
 
     public $table = 'declaracion_aplicabilidad';
 
@@ -37,7 +38,7 @@ class DeclaracionAplicabilidad extends Model implements Auditable
     public static function getAll()
     {
         //retrieve all data or can pass columns to retrieve
-        return Cache::remember('declaracionaplicabilidad_all', 3600 * 24, function () {
+        return Cache::remember('DeclaracionAplicabilidad:declaracionaplicabilidad_all', 3600 * 24, function () {
             return self::orderBy('id')->get();
         });
     }
@@ -45,14 +46,14 @@ class DeclaracionAplicabilidad extends Model implements Auditable
     public static function getAllOrderByAsc()
     {
         //retrieve all data or can pass columns to retrieve
-        return Cache::remember('declaracion_aplicabilidad_asc_all', 3600 * 4, function () {
+        return Cache::remember('DeclaracionAplicabilidad:declaracion_aplicabilidad_asc_all', 3600 * 4, function () {
             return self::orderBy('anexo_indice', 'asc')->get();
         });
     }
 
     public function getNameAttribute()
     {
-        return $this->anexo_indice . ' ' . $this->nocontrolm_escenario;
+        return $this->anexo_indice.' '.$this->nocontrolm_escenario;
     }
 
     public function getContentAttribute()

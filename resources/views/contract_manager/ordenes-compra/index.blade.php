@@ -8,13 +8,13 @@
         .table tr td:nth-child(4) {
             min-width: 200px !important;
         }
-
     </style>
-     @include('flash::message')
-     @include('partials.flashMessages')
-    <h5 class="col-12 titulo_general_funcion">Orden De Compra</h5>
-    <div class="mt-5 card">
 
+    @include('partials.flashMessages')
+    <h5 class="col-12 titulo_general_funcion">Orden De Compra</h5>
+        <button type="button" class="btn  btn-primary"
+        id="filtrarBtn4" style="position: relative; left: 75rem;">Aprobadores</button>
+    <div class="mt-5 card">
         <div class="card-body datatable-fix">
 
             <table class="table table-bordered w-100 datatable-Requisiciones">
@@ -24,7 +24,6 @@
                         <th style="vertical-align: top">Folio</th>
                         <th style="vertical-align: top">Fecha De Solicitud</th>
                         <th style="vertical-align: top">Referencia</th>
-                        <th style="vertical-align: top">Producto</th>
                         <th style="vertical-align: top">Proveedor</th>
                         <th style="vertical-align: top">Estatus</th>
                         <th style="vertical-align: top">Proyecto</th>
@@ -109,41 +108,41 @@
                 }
 
             ];
-                let archivarButton = {
-                    text: 'Archivar Registro',
-                    url: "",
-                    className: 'btn-danger',
-                    action: function(e, dt, node, config) {
-                        var ids = $.map(dt.rows({
-                            selected: true
-                        }).data(), function(entry) {
-                            return entry.id
-                        });
+            let archivarButton = {
+                text: 'Archivar Registro',
+                url: "",
+                className: 'btn-danger',
+                action: function(e, dt, node, config) {
+                    var ids = $.map(dt.rows({
+                        selected: true
+                    }).data(), function(entry) {
+                        return entry.id
+                    });
 
-                        if (ids.length === 0) {
-                            alert('undefine')
+                    if (ids.length === 0) {
+                        alert('undefine')
 
-                            return
-                        }
+                        return
+                    }
 
-                        if (confirm('{{ trans('global.areYouSure') }}')) {
-                            $.ajax({
-                                    headers: {
-                                        'x-csrf-token': _token
-                                    },
-                                    method: 'POST',
-                                    url: config.url,
-                                    data: {
-                                        ids: ids,
-                                        _method: 'POST'
-                                    }
-                                })
-                                .done(function() {
-                                    location.reload()
-                                })
-                        }
+                    if (confirm('{{ trans('global.areYouSure') }}')) {
+                        $.ajax({
+                                headers: {
+                                    'x-csrf-token': _token
+                                },
+                                method: 'POST',
+                                url: config.url,
+                                data: {
+                                    ids: ids,
+                                    _method: 'POST'
+                                }
+                            })
+                            .done(function() {
+                                location.reload()
+                            })
                     }
                 }
+            }
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,
@@ -158,8 +157,7 @@
                         _token: _token
                     }
                 },
-                columns: [
-                    {
+                columns: [{
                         data: 'folio',
                         name: 'folio'
                     },
@@ -172,32 +170,45 @@
                         name: 'referencia'
                     },
                     {
-                        data: 'productos_requisiciones',
-                        render: function(data, type, row) {
-                        return data[0].producto.descripcion;
-                        }
-
-                    },
-                    {
                         data: 'proveedor_catalogo',
                         render: function(data, type, row) {
-                        // Verifica si 'data' es null
-                        if (data === null) {
-                            return 'Indistinto'; // Puedes personalizar el mensaje
-                        } else {
-                            return data; // Valor no es null
-                        }
+                            // Verifica si 'data' es null
+                            if (data === null) {
+                                return 'Indistinto'; // Puedes personalizar el mensaje
+                            } else {
+                                return data; // Valor no es null
+                            }
 
                         }
 
                     },
                     {
-                        data: 'estado',
-                        name: 'estado'
+                        data: null,
+                        render: function(data, type, row) {
+                            var firma_solicitante = row.firma_solicitante_orden;
+                            var firma_comprador = row.firma_comprador_orden;
+                            var firma_finanzas = row.firma_finanzas_orden;
+
+                            if (!firma_solicitante && !firma_comprador && !firma_finanzas) {
+                                return '<h5><span class="badge badge-pill badge-primary">Por iniciar</span></h5>';
+                            } else if (firma_solicitante && firma_comprador && firma_finanzas) {
+                                return '<h5><span class="badge badge-pill badge-success">Firmada</span></h5>';
+                            } else {
+                                return '<h5><span class="badge badge-pill badge-info">En curso</span></h5>';
+                            }
+                        }
                     },
                     {
                         data: 'contrato.nombre_servicio',
-                        name: 'contrato.nombre_servicio'
+                        name: 'contrato.nombre_servicio',
+                        render: function(data, type, row) {
+                            // Verifica si 'data' es null o una cadena vacía
+                            if (data == null || data == "") {
+                                return '<span class="error">Campo Vacío</span>'; // Mensaje de error o cómo deseas mostrar la validación
+                            } else {
+                                return data; // Valor no es null ni vacío
+                            }
+                        }
                     },
                     {
                         data: 'area',
@@ -215,19 +226,21 @@
                             let urlButtonArchivar = `/contract_manager/orden-compra/archivar/${data}`;
                             let urlButtonEdit = `/contract_manager/orden-compra/${data}/edit`;
                             let urlButtonShow = `/contract_manager/orden-compra/show/${data}`;
-                            let htmlBotones =
-                                `
-                                <div class="btn-group">
-                                    @can('katbol_ordenes_compra_modificar')
-                                    <a href="${urlButtonEdit}" class="btn btn-sm" title="Editar"><i class="fas fa-edit"></i></a>
-                                    @endcan
-                                    <a href="${urlButtonShow}"
-                                                title="Ver/Imprimir" class="btn btn-sm" >
-                                                <i class="fa-solid fa-print"></i>
-                                    </a>
-                                </div>
-                            `;
+                            let htmlBotones = '<div class="btn-group">';
+
+                            if (row.firma_comprador_orden === null) {
+                                // Si el campo es null, se muestra el botón de edición
+                                htmlBotones += `@can('katbol_ordenes_compra_modificar')
+                                                <a href="${urlButtonEdit}" class="btn btn-sm" title="Editar"><i class="fas fa-edit"></i></a>
+                                                @endcan`;
+                            }
+
+                            // Agrega el botón para ver/imprimir independientemente del estado del campo 'firma_comprador_orden'
+                            htmlBotones += `<a href="${urlButtonShow}" title="Ver/Imprimir" class="btn btn-sm"><i class="fa-solid fa-print"></i></a>
+                                            </div>`;
+
                             return htmlBotones;
+
                         }
                     }
                 ],
@@ -284,6 +297,13 @@
                 })
             }
 
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#filtrarBtn4').click(function() {
+                window.location.href = "{{ route('contract_manager.orden-compra.indexAprobadores') }}";
+            });
         });
     </script>
 @endsection

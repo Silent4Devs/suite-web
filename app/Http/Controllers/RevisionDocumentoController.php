@@ -22,8 +22,8 @@ class RevisionDocumentoController extends Controller
     public function edit(RevisionDocumento $revisionDocumento)
     {
         $documento = Documento::find(intval($revisionDocumento->documento_id));
-        if (!$documento) {
-            abort_if(!$documento, 404);
+        if (! $documento) {
+            abort_if(! $documento, 404);
         }
         $path_documentos_aprobacion = 'storage/Documentos en aprobacion';
         switch ($documento->tipo) {
@@ -134,7 +134,7 @@ class RevisionDocumentoController extends Controller
                             'estatus' => strval(Documento::PUBLICADO),
                         ]);
 
-                        $this->publishDocumentInFolder($path_documentos_aprobacion . '/' . $documentoOriginal->archivo, $documentoOriginal);
+                        $this->publishDocumentInFolder($path_documentos_aprobacion.'/'.$documentoOriginal->archivo, $documentoOriginal);
 
                         HistorialVersionesDocumento::create([
                             'documento_id' => $documentoOriginal->id,
@@ -241,7 +241,7 @@ class RevisionDocumentoController extends Controller
                             'estatus' => strval(Documento::PUBLICADO),
                         ]);
 
-                        $this->publishDocumentInFolder($path_documentos_aprobacion . '/' . $documentoOriginal->archivo, $documentoOriginal);
+                        $this->publishDocumentInFolder($path_documentos_aprobacion.'/'.$documentoOriginal->archivo, $documentoOriginal);
 
                         HistorialVersionesDocumento::create([
                             'documento_id' => $documentoOriginal->id,
@@ -277,22 +277,22 @@ class RevisionDocumentoController extends Controller
 
     public function sendMailApprove($mail, $documento, $revision)
     {
-        Mail::to(removeUnicodeCharacters($mail))->send(new DocumentoAprobadoMail($documento, $revision));
+        Mail::to(removeUnicodeCharacters($mail))->queue(new DocumentoAprobadoMail($documento, $revision));
     }
 
     public function sendMailPublish($mail, $documento)
     {
-        Mail::to(removeUnicodeCharacters($mail))->send(new DocumentoPublicadoMail($documento));
+        Mail::to(removeUnicodeCharacters($mail))->queue(new DocumentoPublicadoMail($documento));
     }
 
     public function sendMailNotPublish($mail, $documento)
     {
-        Mail::to(removeUnicodeCharacters($mail))->send(new DocumentoNoPublicadoMail($documento));
+        Mail::to(removeUnicodeCharacters($mail))->queue(new DocumentoNoPublicadoMail($documento));
     }
 
     public function sendMailReject($mail, $documento, $revision)
     {
-        Mail::to(removeUnicodeCharacters($mail))->send(new DocumentoRechazadoMail($documento, $revision));
+        Mail::to(removeUnicodeCharacters($mail))->queue(new DocumentoRechazadoMail($documento, $revision));
     }
 
     public function allLevelSendAnswer($documento_id, $documento)
@@ -335,7 +335,7 @@ class RevisionDocumentoController extends Controller
 
                 return;
             }
-            if (!$revisiones_actuales) {
+            if (! $revisiones_actuales) {
                 if ($nivel < intval($this->checkMaxLevel($documento_id))) {
                     $revisiones_act = RevisionDocumento::with('empleado')->where('documento_id', '=', strval($documento_id))->where('nivel', strval($nivel + 1))->where('estatus', '=', strval(Documento::SOLICITUD_REVISION))->get();
                     $historialRevisionDocumento = HistorialRevisionDocumento::where('documento_id', '=', $documento_id)->where('estatus', '=', strval(Documento::SOLICITUD_REVISION))->first();
@@ -351,7 +351,7 @@ class RevisionDocumentoController extends Controller
 
     public function sendEmailToNextLevel($email, Documento $documento, RevisionDocumento $revisor, HistorialRevisionDocumento $historialRevisionDocumento)
     {
-        Mail::to(removeUnicodeCharacters($email))->send(new SolicitudAprobacionMail($documento, $revisor, $historialRevisionDocumento));
+        Mail::to(removeUnicodeCharacters($email))->queue(new SolicitudAprobacionMail($documento, $revisor, $historialRevisionDocumento));
     }
 
     public function checkMaxLevel($documento_id)
@@ -432,9 +432,9 @@ class RevisionDocumentoController extends Controller
                 break;
         }
 
-        $extension = pathinfo($path_documentos_publicados . '/' . $documento->archivo, PATHINFO_EXTENSION);
-        $nombre_documento = $documento->codigo . '-' . $documento->nombre . '-v' . $documento->version . '-publicado.' . $extension;
-        $ruta_publicacion = $path_documentos_publicados . '/' . $nombre_documento;
+        $extension = pathinfo($path_documentos_publicados.'/'.$documento->archivo, PATHINFO_EXTENSION);
+        $nombre_documento = $documento->codigo.'-'.$documento->nombre.'-v'.$documento->version.'-publicado.'.$extension;
+        $ruta_publicacion = $path_documentos_publicados.'/'.$nombre_documento;
         $documento->update([
             'archivo' => $nombre_documento,
         ]);
@@ -442,7 +442,7 @@ class RevisionDocumentoController extends Controller
             Storage::move($path_documento_aprobacion, $ruta_publicacion);
         }
 
-        $ruta_publicacion_documento_anterior = $path_documentos_publicados . '/' . $documento->codigo . '-' . $documento->nombre . '-v' . intval($documento->version - 1) . '-publicado.' . $extension;
+        $ruta_publicacion_documento_anterior = $path_documentos_publicados.'/'.$documento->codigo.'-'.$documento->nombre.'-v'.intval($documento->version - 1).'-publicado.'.$extension;
 
         //dd($ruta_publicacion);
         if ($documento->estatus == strval(Documento::PUBLICADO)) {
@@ -489,10 +489,10 @@ class RevisionDocumentoController extends Controller
                 break;
         }
 
-        $extension = pathinfo($path_documentos_versiones_anteriores . '/' . $documento->archivo, PATHINFO_EXTENSION);
+        $extension = pathinfo($path_documentos_versiones_anteriores.'/'.$documento->archivo, PATHINFO_EXTENSION);
 
-        $nombre_documento = $documento->codigo . '-' . $documento->nombre . '-v' . intval($documento->version - 1) . '.' . $extension;
-        $ruta_publicacion = $path_documentos_versiones_anteriores . '/' . $nombre_documento;
+        $nombre_documento = $documento->codigo.'-'.$documento->nombre.'-v'.intval($documento->version - 1).'.'.$extension;
+        $ruta_publicacion = $path_documentos_versiones_anteriores.'/'.$nombre_documento;
         if (Storage::exists($path_documento_version_anterior)) {
             Storage::move($path_documento_version_anterior, $ruta_publicacion);
         }
@@ -500,68 +500,68 @@ class RevisionDocumentoController extends Controller
 
     public function createDocumentosPublicadosIfNotExists()
     {
-        if (!Storage::exists('/public/Documentos publicados')) {
+        if (! Storage::exists('/public/Documentos publicados')) {
             Storage::makeDirectory('/public/Documentos publicados', 0775, true);
         }
-        if (!Storage::exists('/public/Documentos publicados/politicas')) {
+        if (! Storage::exists('/public/Documentos publicados/politicas')) {
             Storage::makeDirectory('/public/Documentos publicados/politicas', 0775, true);
         }
-        if (!Storage::exists('/public/Documentos publicados/procedimientos')) {
+        if (! Storage::exists('/public/Documentos publicados/procedimientos')) {
             Storage::makeDirectory('/public/Documentos publicados/procedimientos', 0775, true);
         }
-        if (!Storage::exists('/public/Documentos publicados/manuales')) {
+        if (! Storage::exists('/public/Documentos publicados/manuales')) {
             Storage::makeDirectory('/public/Documentos publicados/manuales', 0775, true);
         }
-        if (!Storage::exists('/public/Documentos publicados/planes')) {
+        if (! Storage::exists('/public/Documentos publicados/planes')) {
             Storage::makeDirectory('/public/Documentos publicados/planes', 0775, true);
         }
-        if (!Storage::exists('/public/Documentos publicados/instructivos')) {
+        if (! Storage::exists('/public/Documentos publicados/instructivos')) {
             Storage::makeDirectory('/public/Documentos publicados/instructivos', 0775, true);
         }
-        if (!Storage::exists('/public/Documentos publicados/reglamentos')) {
+        if (! Storage::exists('/public/Documentos publicados/reglamentos')) {
             Storage::makeDirectory('/public/Documentos publicados/reglamentos', 0775, true);
         }
-        if (!Storage::exists('/public/Documentos publicados/externos')) {
+        if (! Storage::exists('/public/Documentos publicados/externos')) {
             Storage::makeDirectory('/public/Documentos publicados/externos', 0775, true);
         }
-        if (!Storage::exists('/public/Documentos publicados/procesos')) {
+        if (! Storage::exists('/public/Documentos publicados/procesos')) {
             Storage::makeDirectory('/public/Documentos publicados/procesos', 0775, true);
         }
-        if (!Storage::exists('/public/Documentos publicados/formatos')) {
+        if (! Storage::exists('/public/Documentos publicados/formatos')) {
             Storage::makeDirectory('/public/Documentos publicados/formatos', 0775, true);
         }
     }
 
     public function createDocumentoVersionesAnterioresIfNotExists()
     {
-        if (!Storage::exists('/public/Documento versiones anteriores')) {
+        if (! Storage::exists('/public/Documento versiones anteriores')) {
             Storage::makeDirectory('/public/Documento versiones anteriores', 0775, true);
         }
-        if (!Storage::exists('/public/Documento versiones anteriores/politicas')) {
+        if (! Storage::exists('/public/Documento versiones anteriores/politicas')) {
             Storage::makeDirectory('/public/Documento versiones anteriores/politicas', 0775, true);
         }
-        if (!Storage::exists('/public/Documento versiones anteriores/procedimientos')) {
+        if (! Storage::exists('/public/Documento versiones anteriores/procedimientos')) {
             Storage::makeDirectory('/public/Documento versiones anteriores/procedimientos', 0775, true);
         }
-        if (!Storage::exists('/public/Documento versiones anteriores/manuales')) {
+        if (! Storage::exists('/public/Documento versiones anteriores/manuales')) {
             Storage::makeDirectory('/public/Documento versiones anteriores/manuales', 0775, true);
         }
-        if (!Storage::exists('/public/Documento versiones anteriores/planes')) {
+        if (! Storage::exists('/public/Documento versiones anteriores/planes')) {
             Storage::makeDirectory('/public/Documento versiones anteriores/planes', 0775, true);
         }
-        if (!Storage::exists('/public/Documento versiones anteriores/instructivos')) {
+        if (! Storage::exists('/public/Documento versiones anteriores/instructivos')) {
             Storage::makeDirectory('/public/Documento versiones anteriores/instructivos', 0775, true);
         }
-        if (!Storage::exists('/public/Documento versiones anteriores/reglamentos')) {
+        if (! Storage::exists('/public/Documento versiones anteriores/reglamentos')) {
             Storage::makeDirectory('/public/Documento versiones anteriores/reglamentos', 0775, true);
         }
-        if (!Storage::exists('/public/Documento versiones anteriores/externos')) {
+        if (! Storage::exists('/public/Documento versiones anteriores/externos')) {
             Storage::makeDirectory('/public/Documento versiones anteriores/externos', 0775, true);
         }
-        if (!Storage::exists('/public/Documento versiones anteriores/procesos')) {
+        if (! Storage::exists('/public/Documento versiones anteriores/procesos')) {
             Storage::makeDirectory('/public/Documento versiones anteriores/procesos', 0775, true);
         }
-        if (!Storage::exists('/public/Documento versiones anteriores/formatos')) {
+        if (! Storage::exists('/public/Documento versiones anteriores/formatos')) {
             Storage::makeDirectory('/public/Documento versiones anteriores/formatos', 0775, true);
         }
     }

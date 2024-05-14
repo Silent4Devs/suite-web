@@ -21,6 +21,8 @@ class DebilidadesComponent extends Component
         'debilidad' => 'required',
     ];
 
+    protected $listeners = ['destroy'];
+
     public function mount($foda_id)
     {
         $this->foda_id = $foda_id;

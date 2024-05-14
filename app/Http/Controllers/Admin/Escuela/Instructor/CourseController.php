@@ -7,6 +7,7 @@ use App\Models\Escuela\Category;
 use App\Models\Escuela\Course;
 use App\Models\Escuela\Level;
 use App\Models\Escuela\Price;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -34,14 +35,14 @@ class CourseController extends Controller
         $categories = Category::pluck('name', 'id');
         $levels = Level::pluck('name', 'id');
         $prices = Price::pluck('name', 'id');
+        $empleados = User::select('name', 'id')->get();
 
-        return view('admin.escuela.instructor.courses.create', compact('categories', 'levels', 'prices'));
+        return view('admin.escuela.instructor.courses.create', compact('categories', 'levels', 'prices', 'empleados'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -54,6 +55,7 @@ class CourseController extends Controller
                 'description' => 'required',
                 'category_id' => 'required',
                 'level_id' => 'required',
+                'empleado_id' => 'required',
                 // 'price_id' => 'required',
                 'file' => 'required',
             ],
@@ -64,18 +66,20 @@ class CourseController extends Controller
                 'category_id.required' => 'El campo categoría es obligatorio',
                 'description.required' => 'El campo descripción es obligatorio',
                 'level_id.required' => 'El campo nivel es obligatorio',
+                'empleado_id.required' => 'El campo instructor es obligatorio',
                 'file.required' => 'El campo imagen es obligatorio',
             ]
         );
-
-        // dd($request->all());
 
         $course = Course::create($request->all());
 
         if ($request->hasFile('file')) {
             $image = $request->file('file');
-            // Storage::putFileAs('public/cursos', $image);
-            $url = Storage::put('public/cursos', $image);
+            $ruta = 'public/cursos';
+
+            // Guardar el archivo en el disco 'public' con la ruta específica
+            Storage::disk('public')->put($ruta, file_get_contents($image));
+            $url = '/storage/cursos/'.$image->hashName();
 
             $course->image()->create([
                 'url' => $url,
@@ -110,14 +114,14 @@ class CourseController extends Controller
         $categories = Category::pluck('name', 'id');
         $levels = Level::pluck('name', 'id');
         $prices = Price::pluck('name', 'id');
+        $empleados = User::select('name', 'id')->get();
 
-        return view('admin.escuela.instructor.courses.edit', compact('course', 'categories', 'levels', 'prices'));
+        return view('admin.escuela.instructor.courses.edit', compact('course', 'categories', 'levels', 'prices', 'empleados'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  Course $course
      * @return \Illuminate\Http\Response
      */
@@ -130,6 +134,7 @@ class CourseController extends Controller
             'description' => 'required',
             'category_id' => 'required',
             'level_id' => 'required',
+            'empleado_id' => 'required',
             // 'price_id' => 'required',
             'file' => 'image',
         ], [
@@ -138,6 +143,7 @@ class CourseController extends Controller
             'title.required' => 'El campo título es obligatorio',
             'category_id.required' => 'El campo categoría es obligatorio',
             'description.required' => 'El campo descripción es obligatorio',
+            'empleado_id.required' => 'El campo instructor es obligatorio',
             'level_id.required' => 'El campo nivel es obligatorio',
             'file.required' => 'El campo imagen es obligatorio',
         ]);
@@ -146,7 +152,8 @@ class CourseController extends Controller
 
         if ($request->hasFile('file')) {
             $image = $request->file('file');
-            $url = Storage::put('public/cursos', $image);
+            Storage::put('public/cursos', $image);
+            $url = '/storage/cursos/'.$image->hashName();
 
             if ($course->image) {
                 Storage::delete($course->image->url);

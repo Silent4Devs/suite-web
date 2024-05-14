@@ -36,7 +36,6 @@
         .card {
             background-color: #FCFCFC;
         }
-
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.css" />
 
@@ -118,20 +117,18 @@
                                         </form>
                                     </div>
                                 </div>
-
-
-
-
-
-
-
-
-
-
-
                             </div>
                         </div>
                     </div>
+
+                    @php
+
+                        use App\Models\User;
+                        use App\Models\Empleado;
+                        $usuario = User::getCurrentUser();
+                        $empleado = Empleado::getMyEmpleadodata($usuario->empleado->id);
+
+                    @endphp
 
                     <div class="col-sm-7 col-lg-7 col-7">
                         <div class="row">
@@ -147,11 +144,9 @@
                                             <div class="form-group col-6">
                                                 <label class="required"
                                                     for="name">{{ trans('cruds.user.fields.name') }}</label>
-                                                <input
-                                                    class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
+                                                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
                                                     type="text" name="name" id="name"
-                                                    value="{{ old('name', auth()->user()->empleado->name) }}" required
-                                                    readonly disabled>
+                                                    value="{{ old('name', $empleado->name) }}" required readonly disabled>
                                                 @if ($errors->has('name'))
                                                     <div class="invalid-feedback">
                                                         {{ $errors->first('name') }}
@@ -161,10 +156,9 @@
                                             <div class="form-group col-6">
                                                 <label class="required"
                                                     for="title">{{ trans('cruds.user.fields.email') }}</label>
-                                                <input
-                                                    class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}"
+                                                <input class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}"
                                                     type="text" name="email" id="email" readonly disabled
-                                                    value="{{ old('email', auth()->user()->empleado->email) }}">
+                                                    value="{{ old('email', $empleado->email) }}">
                                                 @if ($errors->has('email'))
                                                     <div class="invalid-feedback">
                                                         {{ $errors->first('email') }}
@@ -176,7 +170,7 @@
                                                 <input
                                                     class=" form-control {{ $errors->has('cumpleaños') ? 'is-invalid' : '' }}"
                                                     type="date" name="cumpleaños" id="cumpleaños"
-                                                    value="{{ old('cumpleaños', auth()->user()->empleado->cumpleaños) }}">
+                                                    value="{{ old('cumpleaños', $empleado->cumpleaños) }}">
                                                 @if ($errors->has('cumpleaños'))
                                                     <div class="invalid-feedback">
                                                         {{ $errors->first('cumpleaños') }}
@@ -188,7 +182,7 @@
                                                 <input
                                                     class="form-control {{ $errors->has('telefono_movil') ? 'is-invalid' : '' }}"
                                                     type="tel" name="telefono_movil" id="telefono_movil"
-                                                    value="{{ old('telefono_movil', auth()->user()->empleado->telefono_movil) }}">
+                                                    value="{{ old('telefono_movil', $empleado->telefono_movil) }}">
                                                 @if ($errors->has('telefono_movil'))
                                                     <div class="invalid-feedback">
                                                         {{ $errors->first('telefono_movil') }}
@@ -199,9 +193,10 @@
                                                 style="display:flex; justify-content:space-between; padding-left: 42px;">
                                                 <input type="checkbox" class="form-check-input" id="ValidacionNumero"
                                                     name="mostrar_telefono"
-                                                    {{ auth()->user()->empleado->mostrar_telefono ? 'checked' : '' }}>
+                                                    {{ $empleado->mostrar_telefono ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="exampleCheck1"
-                                                    style="font-size:12px; margin-top: 3px;">Mostrar mi telefono en directorio
+                                                    style="font-size:12px; margin-top: 3px;">Mostrar mi telefono en
+                                                    directorio
                                                     organizacional</label>
                                                 <button class="btn btn-danger" type="submit">
                                                     {{ trans('global.save') }}
@@ -215,12 +210,16 @@
                                 <div class="col-sm-12 col-lg-12 col-12">
                                     @if (Route::has('profile.password.toggleTwoFactor'))
                                         <div class="card">
-                                            <div class="card-body" style="height:330px !important;width:500px !important;">
+                                            <div class="card-body"
+                                                style="height:330px !important;width:500px !important;">
                                                 <form method="POST"
                                                     action="{{ route('profile.password.toggleTwoFactor') }}"
                                                     style="display: flex; justify-content: space-between; align-items: center;">
                                                     @csrf
-                                                    <h6 style="font-size:18px;">Doble factor de autenticación <i class="fas fa-question-circle ml-2" title="Medida de seguridad adicional en la que además de ingresar tu usuario y contraseña se te enviará un código al correo electrónico corporativo para acceder a la plataforma Tabantaj."></i></h6>
+                                                    <h6 style="font-size:18px;">Doble factor de autenticación <i
+                                                            class="fas fa-question-circle ml-2"
+                                                            title="Medida de seguridad adicional en la que además de ingresar tu usuario y contraseña se te enviará un código al correo electrónico corporativo para acceder a la plataforma Tabantaj."></i>
+                                                    </h6>
                                                     <button class="btn btn-danger" type="submit">
                                                         {{ auth()->user()->two_factor ? 'Deshabilitar' : 'Habilitar' }}
                                                     </button>
@@ -271,12 +270,10 @@
                             <div class="card-body" style="height:355px !important;">
                                 <h6 style="font-size:18px;">Contactos de emergencia</h6>
                                 <hr style="opacity: 0;">
-                                <form
-                                    action="{{ route('admin.empleado.update-related-info-profile') }}"
-                                    method="POST">
+                                <form action="{{ route('admin.empleado.update-related-info-profile') }}" method="POST">
                                     @csrf
-                                    @include('admin.empleados.components.contactos-emergencia',[
-                                    'empleado'=>auth()->user()->empleado
+                                    @include('admin.empleados.components.contactos-emergencia', [
+                                        'empleado' => $empleado,
                                     ])
                                     <div class="form-group" style="text-align: end">
                                         <button class="btn btn-danger" type="submit">
@@ -298,8 +295,7 @@
                                     </div>
                                     <div class="col-6" style="font-size:10px; color: #fff;">
 
-                                        <div class=""
-                                            style="background-color:#006DDB; padding: 10px;">
+                                        <div class="" style="background-color:#006DDB; padding: 10px;">
                                             <i class="mr-2 fa fa-info-circle"></i>El administrador tiene todos los
                                             permisos
                                         </div>
@@ -311,8 +307,7 @@
                                     </div>
                                     <div class="col-6" style="font-size:10px; color: #fff;">
 
-                                        <div class=""
-                                            style="background-color:#4B4C4F; padding: 10px;">
+                                        <div class="" style="background-color:#4B4C4F; padding: 10px;">
                                             <i class="mr-2 fa fa-info-circle"></i>El
                                             {{ auth()->user()->roles[0]->title }} tiene los siguientes permisos
                                         </div>
@@ -354,7 +349,8 @@
 
             </div>
         </div>
-        <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+            aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -390,7 +386,7 @@
 @endsection
 @section('scripts')
     @parent
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.js"></script>

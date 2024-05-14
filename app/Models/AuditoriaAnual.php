@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\ClearsResponseCache;
 use App\Traits\MultiTenantModelTrait;
 use Carbon\Carbon;
 use DateTimeInterface;
@@ -13,8 +14,8 @@ use OwenIt\Auditing\Contracts\Auditable;
 
 class AuditoriaAnual extends Model implements Auditable
 {
-    use SoftDeletes, MultiTenantModelTrait, HasFactory;
-    use \OwenIt\Auditing\Auditable;
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
+    use HasFactory, MultiTenantModelTrait, SoftDeletes;
 
     public $table = 'auditoria_anuals';
 
@@ -45,7 +46,7 @@ class AuditoriaAnual extends Model implements Auditable
     //Redis methods
     public static function getAll()
     {
-        return Cache::remember('auditoriaanual_all', 3600 * 24, function () {
+        return Cache::remember('AuditoriaAnual:auditoriaanual_all', 3600 * 8, function () {
             return self::get();
         });
     }

@@ -131,7 +131,7 @@ class MatrizRiesgosController extends Controller
         $activos = SubcategoriaActivo::select('id', 'subcategoria')->get();
         $amenazas = Amenaza::select('id', 'nombre')->get();
 
-        $vulnerabilidades = Vulnerabilidad::select('id', 'nombre')->get();
+        $vulnerabilidades = Vulnerabilidad::getAll();
 
         if ($version_historico === 'true') {
             $controles = DeclaracionAplicabilidad::getAll();
@@ -192,7 +192,7 @@ class MatrizRiesgosController extends Controller
         $numero_sedes = $sedes->count();
         $numero_matriz = MatrizRiesgo::getAll()->count();
         $responsables = Empleado::getaltaAll();
-        $vulnerabilidades = Vulnerabilidad::get();
+        $vulnerabilidades = Vulnerabilidad::getAll();
         $planes_seleccionados = [];
         $planes = $matrizRiesgo->load('planes');
         if ($matrizRiesgo->planes) {
@@ -436,10 +436,10 @@ class MatrizRiesgosController extends Controller
             'modulo_origen' => 'required|string',
             'objetivo' => 'required|string',
         ], [
-            'parent.required' => 'Debes de definir un nombre para el plan de acción',
-            'norma.required' => 'Debes de definir una norma para el plan de acción',
-            'modulo_origen.required' => 'Debes de definir un módulo de origen para el plan de acción',
-            'objetivo.required' => 'Debes de definir un objetivo para el plan de acción',
+            'parent.required' => 'Debes de definir un nombre para el Plan de Trabajo',
+            'norma.required' => 'Debes de definir una norma para el Plan de Trabajo',
+            'modulo_origen.required' => 'Debes de definir un módulo de origen para el Plan de Trabajo',
+            'objetivo.required' => 'Debes de definir un objetivo para el Plan de Trabajo',
         ]);
 
         $planImplementacion = new PlanImplementacion(); // Necesario se carga inicialmente el Diagrama Universal de Gantt
@@ -459,7 +459,7 @@ class MatrizRiesgosController extends Controller
         $matrizRequisitoLegal = $id;
         $matrizRequisitoLegal->planes()->save($planImplementacion);
 
-        return redirect()->route('admin.matriz-requisito-legales.index')->with('success', 'Plan de Acción' . $planImplementacion->parent . ' creado');
+        return redirect()->route('admin.matriz-requisito-legales.index')->with('success', 'Plan de Trabajo'.$planImplementacion->parent.' creado');
     }
 
     public function ControlesGet()
@@ -491,7 +491,9 @@ class MatrizRiesgosController extends Controller
     {
         abort_if(Gate::denies('matriz_de_riesgo_vinculo'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
-            $query = MatrizRiesgosSistemaGestion::with(['controles', 'matriz_riesgos_controles_pivots'])->where('id_analisis', '=', $request->id)->get();
+            $query = MatrizRiesgosSistemaGestion::with(['controles', 'matriz_riesgos_controles_pivots'])
+                ->limit(100)
+                ->get();
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -826,7 +828,7 @@ class MatrizRiesgosController extends Controller
         $responsables = Empleado::getaltaAll();
         $activos = SubcategoriaActivo::getAll();
         $amenazas = Amenaza::get();
-        $vulnerabilidades = Vulnerabilidad::get();
+        $vulnerabilidades = Vulnerabilidad::getAll();
 
         $ver = VersionesIso::getFirst();
         if ($ver->version_historico === false) {
@@ -914,7 +916,7 @@ class MatrizRiesgosController extends Controller
         $numero_sedes = $sedes->count();
         $numero_matriz = MatrizRiesgo::getAll()->count();
         $responsables = Empleado::getaltaAll();
-        $vulnerabilidades = Vulnerabilidad::get();
+        $vulnerabilidades = Vulnerabilidad::getAll();
         $planes_seleccionados = [];
         $planes = $matrizRiesgo->load('planes');
         if ($matrizRiesgo->planes) {
@@ -931,7 +933,7 @@ class MatrizRiesgosController extends Controller
         abort_if(Gate::denies('analisis_de_riesgo_integral_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             'controles_id' => 'required',
-            'identificador' => 'required|unique:matriz_riesgos_sistema_gestion,identificador,' . $matrizRiesgo . ',id,deleted_at,NULL',
+            'identificador' => 'required|unique:matriz_riesgos_sistema_gestion,identificador,'.$matrizRiesgo.',id,deleted_at,NULL',
         ]);
 
         // dd($matrizRiesgo);
@@ -1097,7 +1099,7 @@ class MatrizRiesgosController extends Controller
         $amenazas = Amenaza::get();
         $duenos = Empleado::getaltaAll();
         $custodios = Empleado::getaltaAll();
-        $vulnerabilidades = Vulnerabilidad::get();
+        $vulnerabilidades = Vulnerabilidad::getAll();
         $controles = DeclaracionAplicabilidad::getAll();
         $activosoctave = MatrizOctave::get();
         $matrizOctave = new MatrizOctave();
@@ -1116,7 +1118,7 @@ class MatrizRiesgosController extends Controller
         $amenazas = Amenaza::get();
         $duenos = Empleado::getaltaAll();
         $custodios = Empleado::getaltaAll();
-        $vulnerabilidades = Vulnerabilidad::get();
+        $vulnerabilidades = Vulnerabilidad::getAll();
         $controles = DeclaracionAplicabilidad::getAll();
         $activosoctave = MatrizOctave::get();
         $matrizOctave = MatrizOctave::with('matrizActivos')->find($id);
@@ -1238,7 +1240,7 @@ class MatrizRiesgosController extends Controller
         $activos = Activo::getAll();
         $amenazas = Amenaza::get();
 
-        $vulnerabilidades = Vulnerabilidad::get();
+        $vulnerabilidades = Vulnerabilidad::getAll();
         $controles = DeclaracionAplicabilidad::getAll();
         $activosmatriz31000 = MatrizIso31000::get();
 
@@ -1253,7 +1255,7 @@ class MatrizRiesgosController extends Controller
         $responsables = Empleado::getaltaAll();
         $activos = Activo::getAll();
         $amenazas = Amenaza::get();
-        $vulnerabilidades = Vulnerabilidad::get();
+        $vulnerabilidades = Vulnerabilidad::getAll();
         $controles = DeclaracionAplicabilidad::getAll();
         $activosmatriz31000 = MatrizIso31000::with('activosInformacion')->find($id);
 
@@ -1375,7 +1377,7 @@ class MatrizRiesgosController extends Controller
         $activos = Activo::getAll();
         $amenazas = Amenaza::get();
         $matrizNist = new MatrizNist();
-        $vulnerabilidades = Vulnerabilidad::get();
+        $vulnerabilidades = Vulnerabilidad::getAll();
         $controles = DeclaracionAplicabilidad::getAll();
 
         return view('admin.NIST.create', compact('activos', 'amenazas', 'vulnerabilidades', 'sedes', 'areas', 'procesos', 'controles', 'responsables', 'matrizNist'))->with('id_analisis', $request->id_analisis);
@@ -1390,7 +1392,7 @@ class MatrizRiesgosController extends Controller
         $activos = Activo::getAll();
         $amenazas = Amenaza::get();
         $matrizNist = MatrizNist::find($id);
-        $vulnerabilidades = Vulnerabilidad::get();
+        $vulnerabilidades = Vulnerabilidad::getAll();
         $controles = DeclaracionAplicabilidad::getAll();
 
         return view('admin.NIST.edit', compact('activos', 'amenazas', 'vulnerabilidades', 'sedes', 'areas', 'procesos', 'controles', 'responsables', 'matrizNist'))->with('id_analisis', $request->id_analisis);
@@ -1437,10 +1439,10 @@ class MatrizRiesgosController extends Controller
 
     public function saveUpdateActivosOctave($activosoctave, $matrizRiesgoOctave)
     {
-        if (!is_null($activosoctave)) {
+        if (! is_null($activosoctave)) {
             foreach ($activosoctave as $activoctave) {
                 // dd(PuestoResponsabilidade::exists($responsabilidad['id']));
-                if (!is_null(MatrizoctaveActivosInfo::find($activoctave['id']))) {
+                if (! is_null(MatrizoctaveActivosInfo::find($activoctave['id']))) {
                     MatrizoctaveActivosInfo::find($activoctave['id'])->update([
                         'nombre_ai' => $activoctave['nombre_ai'],
                         'valor_criticidad' => $activoctave['valor_criticidad'],
@@ -1480,7 +1482,7 @@ class MatrizRiesgosController extends Controller
 
     public function saveUpdateMatriz31000ActivosInfo($activosmatriz31000, $matrizRiesgo31000)
     {
-        if (!is_null($activosmatriz31000)) {
+        if (! is_null($activosmatriz31000)) {
             foreach ($activosmatriz31000 as $activomatriz31000) {
                 // dd(PuestoResponsabilidade::exists($responsabilidad['id']));
                 if (Matriz31000ActivosInfo::find($activomatriz31000['id']) != null) {

@@ -1,130 +1,111 @@
 @extends('layouts.admin')
+@section('css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}{{ config('app.cssVersion') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/escuela/mis-cursos.css') }}{{ config('app.cssVersion') }}">
+@endsection
 @section('content')
     {{-- {{ Breadcrumbs::render('centro-atencion') }} --}}
 
     {{-- <h5 class="titulo_general_funcion">Centro de Atención</h5> --}}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
-    <style>
-        .caja-blue-curso {
-            background-color: #3086AF;
-            color: #fff;
-            padding: 50px;
-            box-sizing: border-box;
-        }
+    @include('admin.escuela.estudiante.menu-side' , ['usuario' => $usuario])
 
-        .caja-cards-mis-cursos {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .caja-info-card-mc {
-            padding: 0px 15px;
-        }
-
-        .card.mi-curso {
-            max-width: 325px;
-            padding: 0px;
-            padding-bottom: 15px;
-            border-radius: 8px;
-        }
-
-        .card.mi-curso img {
-            width: 100%;
-        }
-
-        .card.mi-curso p {
-            margin: 0px;
-            margin-top: 15px;
-        }
-
-        .caja-img-mi-curso {
-            width: 100%;
-            height: 150px;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .curso-progreso-barra {
-            height: 10px;
-            border-radius: 100px;
-            background-color: #E2E2E2;
-            margin-top: 6px;
-            position: relative;
-        }
-
-        .indicador-progreso-barra {
-            position: absolute;
-            background-color: #006DDB;
-            border-radius: 100px;
-            height: 100%;
-        }
-
-        .mis-c-catalogo-cursos {}
-
-        .caja-selects-catalogo {
-            margin-top: 30px;
-        }
-
-        .caja-selects-catalogo select {
-            background-color: #fff;
-            color: #6A6A6A;
-            border-radius: 6px;
-            padding: 10px 20px;
-            margin-right: 20px;
-            border: 1px solid #e9e9e9;
-        }
-
-        .caja-selects-catalogo form {
-            display: inline;
-        }
-
-        .mi-c-catalogo-card {
-            width: 320px;
-        }
-
-        .title-main-cursos {
-            font-size: 18px;
-            color: #345183;
-        }
-
-        .btn-mas-info-c {
-            background-color: #1E94A8;
-            color: #fff;
-            font-size: 12px;
-            padding: 10px 25px;
-        }
-        .btn-mas-info-c:hover {
-            color: #fff;
-        }
-    </style>
-
-    <div class="caja-blue-curso mb-4 rounded">
-        <h2 style="font-size: 24px;">Bienvenido al Centro de Capacitación</h2>
-        <p style="font-size: 17px;">
-            Aprender te mantiene a la vanguardia. Consigue las habilidades más <br>
-            demandadas para potenciar tu crecimiento.
-        </p>
+    <div class="card" style="max-height: 183px;">
+        <img src="{{ asset('img/escuela/imagenfondo.jpg') }} " class="card-img" alt="Imagen"
+            style="height: 183px; border-radius: 8px; ">
+        <div class="card-body" style="position: absolute; top: 0; left: 0; width: 100%; color: #fff;">
+            <!-- Contenido del card-body -->
+            <h2 style="font-size: 24px;">Bienvenido al Centro de Capacitación</h2>
+            <p style="font-size: 17px;">
+                Aprender te mantiene a la vanguardia. Consigue las habilidades más demandadas para potenciar tu
+                crecimiento.<br>
+                En nuestra plataforma, encontrarás una amplia variedad de cursos online de alta calidad, diseñados para
+                ayudarte a alcanzar tus objetivos.
+            </p>
+        </div>
     </div>
 
-    <div class="card card-body caja-mis-cursos">
-        <h3 class="title-main-cursos">Mis Cursos</h3>
+    <h3 class="title-main-cursos">Continuar aprendiendo</h3>
 
-        <div class="caja-cards-mis-cursos">
+    <div class="card last-course">
+        <div class="row g-0">
+            <div class="col-md-4" style="padding-left:0px; padding-right:0px; ">
+                <img src="{{ asset($lastCourse->cursos->image->url) }}" alt="Imagen" class="card-img" style="min-height: 225px;">
+            </div>
+            <div class="col-md-5">
+                <div class="card-body" style="padding-left:0px; padding-right:0px;">
+                    <h5 class="card-title" style="color:#000000;">{{$lastCourse->cursos->title}}</h5>
+                    @if ($lastCourse->cursos->instructor)
+                        <p class="course-teacher">Un curso de {{ $lastCourse->cursos->instructor->name }} </p>
+                    @else
+                        <p class="course-teacher">Instructor no asignado </p>
+                    @endif
 
-            @foreach ($cursos_usuario as $cu)
-            <div class="card card-body mi-curso">
-                        <a href="{{ route('admin.curso-estudiante', $cu->cursos->id) }}">
-                            <div class="caja-img-mi-curso">
-                                <img src="{{ Storage::url($cu->cursos->image->url) }}" alt="">
-                            </div>
-                        </a>
+                    <div class="caja-info-card-advance">
+                        <p class="title-advance">{{ $lastCourse->advance . '%' }} completado</p>
+                        <div class="curso-progreso-barra">
+                            <div class="indicador-progreso-barra" style="width: {{ $lastCourse->advance . '%' }};"></div>
+                        </div>
                     </div>
-            @endforeach
+                </div>
+            </div>
+            <div class="col-md-3 d-flex align-items-center justify-content-center">
+                    <a href="{{ route('admin.curso-estudiante', $lastCourse->cursos->id) }}" class="btn btn-last-course" >
+                        Reanudar Curso
+                    </a>
 
+            </div>
+        </div>
+    </div>
+
+
+    <h3 class="title-main-cursos" style="margin-top: 30px;">Mis Cursos</h3>
+
+    <div class="caja-cards-mis-cursos">
+        @foreach ($lastThreeCourse as $cu)
+            @php
+                $instructor = $cu->cursos->instructor;
+            @endphp
+            <div class="card card-body mi-curso">
+                @if(isset($cu->cursos->image->url))
+                    <img src="{{ asset($cu->cursos->image->url) }}" alt="" class="card-img" style="height: 161px; border-radius: 12px 12px 0px 0px;">
+                    <div class="caja-info-card-mc">
+                        <p class="course-title">
+                                {{ $cu->cursos->title }}
+                        </p>
+                        @if ($instructor)
+                            <p class="course-teacher">Un curso de {{ $instructor->name }} </p>
+                        @else
+                            <p class="course-teacher">Instructor no asignado </p>
+                        @endif
+
+                        <div class="caja-info-card-advance">
+                            <p class="title-advance">{{ $cu->advance . '%' }} completado</p>
+                            <div class="curso-progreso-barra">
+                                <div class="indicador-progreso-barra" style="width: {{ $cu->advance . '%' }};"></div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-center">
+                            <a href="{{ route('admin.curso-estudiante', $cu->cursos->id) }}" class="btn btn-mi-course">Ir a mi
+                                curso</a>
+                        </div>
+
+                    </div>
+                @else
+                 <p>Sin imagen de curso</p>
+                @endif
+            </div>
+        @endforeach
+    </div>
+    <div class="d-flex justify-content-end">
+        <a href="{{ route('admin.courses-inscribed') }}" style="display: inline-block; vertical-align: middle; color:#006DDB; margin-top:21px;" >
+            <span class="material-symbols-outlined" style="vertical-align: middle;">
+                add
+            </span>
+            Ver más cursos
+        </a>
         </div>
     </div>
 

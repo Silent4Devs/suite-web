@@ -69,7 +69,6 @@
             font-weight: bold;
             margin-right: 5px;
         }
-
     </style>
     <h5 class="col-12 titulo_general_funcion">Evaluación: {{ $evaluacion->nombre }}</h5>
     <div class="mt-4 card">
@@ -87,25 +86,25 @@
                             </div>
                             <div style="float: right">
                                 @if ($evaluacion->estatus == App\Models\RH\Evaluacion::DRAFT)
-                                        <button id="btnIniciarEvaluacion" class="btn btn-sm"
-                                            style="background: #3ddf58;color: #fff;"><i
-                                                class="mr-2 fas fa-calendar-check"></i>Iniciar
-                                            Evaluación</button>
+                                    <button id="btnIniciarEvaluacion" class="btn btn-sm"
+                                        style="background: #3ddf58;color: #fff;"><i
+                                            class="mr-2 fas fa-calendar-check"></i>Iniciar
+                                        Evaluación</button>
                                 @elseif ($evaluacion->estatus == App\Models\RH\Evaluacion::CLOSED)
-                                        <button id="btnPostergarEvaluacion" class="btn btn-sm"
-                                            style="background: #4e59d4;color: #fff;"><i
-                                                class="mr-2 fas fa-calendar-plus"></i>Reiniciar evaluación con
-                                            nueva fecha de finalización</button>
+                                    <button id="btnPostergarEvaluacion" class="btn btn-sm"
+                                        style="background: #4e59d4;color: #fff;"><i
+                                            class="mr-2 fas fa-calendar-plus"></i>Reiniciar evaluación con
+                                        nueva fecha de finalización</button>
                                 @else
-                                        <button id="btnEnviarRecordatorio" class="btn btn-sm"
-                                            style="background: #99faa6;color: rgb(54, 54, 54);"><i
-                                                class="mr-2 fas fa-envelope-open-text"></i>Enviar
-                                            recordatorio a evaluadores</button>
-                                        <button id="btnCerrarEvaluacion"
-                                            onclick="event.preventDefault();CerrarEvaluacion(this,'{{ route('admin.ev360-evaluaciones.cerrarEvaluacion', $evaluacion) }}')"
-                                            class="btn btn-sm" style="background: #eb4a4a;color: #fff;"><i
-                                                class="mr-2 fas fa-calendar-times"></i>Cerrar
-                                            Evaluación</button>
+                                    <button id="btnEnviarRecordatorio" class="btn btn-sm"
+                                        style="background: #99faa6;color: rgb(54, 54, 54);"><i
+                                            class="mr-2 fas fa-envelope-open-text"></i>Enviar
+                                        recordatorio a evaluadores</button>
+                                    <button id="btnCerrarEvaluacion"
+                                        onclick="event.preventDefault();CerrarEvaluacion(this,'{{ route('admin.ev360-evaluaciones.cerrarEvaluacion', $evaluacion) }}')"
+                                        class="btn btn-sm" style="background: #eb4a4a;color: #fff;"><i
+                                            class="mr-2 fas fa-calendar-times"></i>Cerrar
+                                        Evaluación</button>
                                 @endif
                             </div>
                         </div>
@@ -129,7 +128,7 @@
                         <li class="px-0 text-center list-group-item w-100" style="border:none;">
                             <p class="m-0 text-center text-muted">Comienza el</p>
                             <p class="m-0"><i class="mr-1 fas fa-calendar-check"></i>
-                                {{ $evaluacion->fecha_inicio? \Carbon\Carbon::parse($evaluacion->fecha_inicio)->format('d-m-Y'): 'Sin definir' }}
+                                {{ $evaluacion->fecha_inicio ? \Carbon\Carbon::parse($evaluacion->fecha_inicio)->format('d-m-Y') : 'Sin definir' }}
                             </p>
                         </li>
                         <li class="px-0 text-center list-group-item w-100" style="border:none;">
@@ -185,9 +184,7 @@
                                     <form id="formIniciarEvaluacion"
                                         action="{{ route('admin.ev360-evaluaciones.iniciarEvaluacion', $evaluacion) }}"
                                         method="POST">
-                                        @include(
-                                            'admin.recursos-humanos.evaluacion-360.evaluaciones.iniciar_evaluacion._form'
-                                        )
+                                        @include('admin.recursos-humanos.evaluacion-360.evaluaciones.iniciar_evaluacion._form')
                                     </form>
                                 </div>
                                 <div class="modal-footer">
@@ -215,9 +212,7 @@
                                     <form id="formPostergarEvaluacion"
                                         action="{{ route('admin.ev360-evaluaciones.postergarEvaluacion', $evaluacion) }}"
                                         method="POST">
-                                        @include(
-                                            'admin.recursos-humanos.evaluacion-360.evaluaciones.iniciar_evaluacion._form_postergar'
-                                        )
+                                        @include('admin.recursos-humanos.evaluacion-360.evaluaciones.iniciar_evaluacion._form_postergar')
                                     </form>
                                 </div>
                                 <div class="modal-footer">
@@ -235,7 +230,7 @@
                         style="background-color:#345183; border-radius: 100px; color: white;">
                         PROGRESO DE EVALUACIÓNES POR EMPLEADO
                     </div>
-                    <table id="tblParticipantes" class="table">
+                    <table class="datatable tblParticipantes" id="tblParticipantes" class="table">
                         <thead class="bg-dark">
                             <tr>
                                 <th>Evaluado</th>
@@ -245,7 +240,62 @@
                                 <th></th>
                             </tr>
                         </thead>
-                        <tbody></tbody>
+                        <tbody>
+                            @foreach ($lista_evaluados as $evaluado)
+                                <tr>
+                                    <td>{{ $evaluado['name'] }}</td>
+                                    <td>{{ $evaluado['area'] }}</td>
+                                    <td>
+                                        <div class="d-flex" style="position:relative">
+                                            @php $count = 0; @endphp
+                                            @foreach ($evaluado['evaluadores'] as $evdr)
+                                                @if ($count <= 5)
+                                                    <img style=""
+                                                        src="{{ asset('storage/empleados/imagenes/') }}/{{ $evdr->evaluador->avatar }}"
+                                                        class="rounded-circle" alt="{{ $evdr->evaluador->name }}"
+                                                        title="{{ $evdr->evaluador->name }}" width="40"
+                                                        height="37">
+                                                    @if ($evdr->evaluado)
+                                                        <i class="fas fa-check-circle"
+                                                            style="position: relative; top: 0; left: -20px; z-index: 1; color: #002102; text-shadow: 1px 1px 0px gainsboro;"></i>
+                                                    @endif
+                                                    @php $count++; @endphp
+                                                @endif
+                                            @endforeach
+
+                                            @if ($evaluado['can_edit'])
+                                                <p onclick="event.preventDefault(); ListaEvaluadores('{{ json_encode($seleccionados) }}','{{ $row->id }}','{{ $row->evaluacion }}')"
+                                                    class="m-0 add_evaluador"><i class="fas fa-plus-circle"></i></p>
+                                            @endif
+                                        </div>
+
+                                    </td>
+                                    <td>
+                                        <div class="row align-items-center justify-content-center">
+                                            <div class="pr-1 col-9">
+                                                <div class="progress">
+                                                    <div class="progress-bar @if ($evaluado['progreso'] == 100) bg-success @endif"
+                                                        role="progressbar" style="width: {{ $evaluado['progreso'] }}%;"
+                                                        aria-valuenow="{{ $evaluado['progreso'] }}" aria-valuemin="0"
+                                                        aria-valuemax="100">
+                                                        <span style="font-size:8px;">{{ $evaluado['progreso'] }}%</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="p-0 col-3">
+                                                <span
+                                                    style="font-size: 12px; font-weight: bold">{{ $evaluado['contestadas'] }}
+                                                    /{{ $evaluado['total_evaluaciones'] }}</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a href="/admin/recursos-humanos/evaluacion-360/evaluacion/{{ $evaluacion->id }}/consulta/{{ $evaluado['id'] }}"
+                                            class="btn btn-sm" title="Visualizar"><i class="fas fa-arrow-right"></i></a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -514,100 +564,110 @@
 
             let dtButtons = [];
             let dtOverrideGlobals = {
+                pageLength: 5,
                 buttons: dtButtons,
-                dom: `<'row align-items-center justify-content-center'<'col-12 col-sm-12 col-md-3 col-lg-3 m-0'l><'text-center col-12 col-sm-12 col-md-5 col-lg-5'B><'col-md-4 col-12 col-sm-12 m-0'f>>
-                <'row'<'col-sm-12'tr>>
-                <'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>`,
                 processing: true,
-                serverSide: true,
                 retrieve: true,
-                aaSorting: [],
-                ajax: "{{ route('admin.ev360-evaluaciones.getParticipantes', $evaluacion) }}",
-                columns: [{
-                        data: 'name',
-                        name: 'name',
-                    },
-                    {
-                        data: 'area',
-                    },
-                    {
-                        data: 'evaluadores',
-                        render: function(data, type, row, meta) {
-                            if (data) {
-                                let html = '<div class="d-flex" style="position:relative">';
-                                let seleccionados = [];
-                                data.forEach((element, idx) => {
-                                    if (idx <= 5) {
-                                        html +=
-                                            `
-                                        <img style="" src="${@json(asset('storage/empleados/imagenes/'))}/${element.evaluador.avatar}"
-                                            class="rounded-circle" alt="${element.evaluador.name}"
-                                            title="${element.evaluador.name}" width="40" height="37">
-                                            ${element.evaluado?'<i class="fas fa-check-circle" style="    position: relative;top: 0;left: -20px;z-index: 1;color: #002102;text-shadow: 1px 1px 0px gainsboro;"></i>':''}
-                                        `
-                                    }
-                                    seleccionados.push(element.evaluador.id);
-                                });
-                                // if (data.length > 3) {
-                                //     let restantes = data.length - 3;
-                                //     html += `
-                            //     <p class="m-0 restantes">+${restantes}<p>
-                            //     `;
-                                // }
-                                if (row.can_edit) {
-                                    html +=
-                                        `<p onclick="event.preventDefault();ListaEvaluadores('${JSON.stringify(seleccionados)}','${row.id}','${row.evaluacion}')" class="m-0 add_evaluador"><i class="fas fa-plus-circle"></i></p></div>`;
-                                }
-                                return html;
-                            }
-                            return "Sin evaluadores";
-                        }
-                    },
-                    {
-                        data: 'id',
-                        render: function(data, type, row, meta) {
-                            let html = `
-                            <div class="row align-items-center justify-content-center">
-                                <div class="pr-1 col-9">
-                                    <div class="progress">
-                                        <div class="progress-bar ${Number(row.progreso)==100?'bg-success':''}" role="progressbar"
-                                            style="width: ${row.progreso }%;"
-                                            aria-valuenow="${row.progreso }" aria-valuemin="0"
-                                            aria-valuemax="100">
-                                            <span style="font-size:8px;">${row.progreso }%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="p-0 col-3">
-                                    <span
-                                        style="font-size: 12px; font-weight: bold">${row.contestadas }/${row.total_evaluaciones }</span>
-                                </div>
-                            </div>
-                           `;
-                            return html;
-                        }
-                    },
-                    {
-                        data: 'id',
-                        render: function(data, type, row, meta) {
-                            let urlShow =
-                                `/admin/recursos-humanos/evaluacion-360/evaluacion/${@json($evaluacion->id)}/consulta/${data}`;
-                            let html = `
-                                <a href="${urlShow}" class="btn btn-sm" title="Visualizar"><i class="fas fa-arrow-right"></i></a>
-
-                            `;
-
-                            return html;
-                        }
-                    },
-                ],
-                orderCellsTop: true,
-                order: [
-                    [0, 'desc']
-                ]
+                //         dom: `<'row align-items-center justify-content-center'<'col-12 col-sm-12 col-md-3 col-lg-3 m-0'l><'text-center col-12 col-sm-12 col-md-5 col-lg-5'B><'col-md-4 col-12 col-sm-12 m-0'f>>
+            // <'row'<'col-sm-12'tr>>
+            // <'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>`,
             };
+            let table = $('.tblParticipantes').DataTable(dtOverrideGlobals);
+            //     let dtOverrideGlobals = {
+            //         buttons: dtButtons,
+            //         dom: `<'row align-items-center justify-content-center'<'col-12 col-sm-12 col-md-3 col-lg-3 m-0'l><'text-center col-12 col-sm-12 col-md-5 col-lg-5'B><'col-md-4 col-12 col-sm-12 m-0'f>>
+        // <'row'<'col-sm-12'tr>>
+        // <'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>`,
+            //         processing: true,
+            //         serverSide: true,
+            //         retrieve: true,
+            //         aaSorting: [],
+            // ajax: "{{ route('admin.ev360-evaluaciones.getParticipantes', $evaluacion) }}",
+            // columns: [{
+            //         data: 'name',
+            //         name: 'name',
+            //     },
+            //     {
+            //         data: 'area',
+            //     },
+            //     {
+            //         data: 'evaluadores',
+            //         render: function(data, type, row, meta) {
+            //             if (data) {
+            //                 let html = '<div class="d-flex" style="position:relative">';
+            //                 let seleccionados = [];
+            //                 data.forEach((element, idx) => {
+            //                     if (idx <= 5) {
+            //                         html +=
+            //                             `
+        //                         <img style="" src="${@json(asset('storage/empleados/imagenes/'))}/${element.evaluador.avatar}"
+        //                             class="rounded-circle" alt="${element.evaluador.name}"
+        //                             title="${element.evaluador.name}" width="40" height="37">
+        //                             ${element.evaluado?'<i class="fas fa-check-circle" style="    position: relative;top: 0;left: -20px;z-index: 1;color: #002102;text-shadow: 1px 1px 0px gainsboro;"></i>':''}
+        //                         `
+            //                     }
+            //                     seleccionados.push(element.evaluador.id);
+            //                 });
+            //                 // if (data.length > 3) {
+            //                 //     let restantes = data.length - 3;
+            //                 //     html += `
+        //             //     <p class="m-0 restantes">+${restantes}<p>
+        //             //     `;
+            //                 // }
+            //                 if (row.can_edit) {
+            //                     html +=
+            //                         `<p onclick="event.preventDefault();ListaEvaluadores('${JSON.stringify(seleccionados)}','${row.id}','${row.evaluacion}')" class="m-0 add_evaluador"><i class="fas fa-plus-circle"></i></p></div>`;
+            //                 }
+            //                 return html;
+            //             }
+            //             return "Sin evaluadores";
+            //         }
+            //     },
+            //     {
+            //         data: 'id',
+            //         render: function(data, type, row, meta) {
+            //             let html = `
+        //             <div class="row align-items-center justify-content-center">
+        //                 <div class="pr-1 col-9">
+        //                     <div class="progress">
+        //                         <div class="progress-bar ${Number(row.progreso)==100?'bg-success':''}" role="progressbar"
+        //                             style="width: ${row.progreso }%;"
+        //                             aria-valuenow="${row.progreso }" aria-valuemin="0"
+        //                             aria-valuemax="100">
+        //                             <span style="font-size:8px;">${row.progreso }%</span>
+        //                         </div>
+        //                     </div>
+        //                 </div>
+        //                 <div class="p-0 col-3">
+        //                     <span
+        //                         style="font-size: 12px; font-weight: bold">${row.contestadas }/${row.total_evaluaciones }</span>
+        //                 </div>
+        //             </div>
+        //            `;
+            //             return html;
+            //         }
+            //     },
+            //     {
+            //         data: 'id',
+            //         render: function(data, type, row, meta) {
+            //             let urlShow =
+            //                 `/admin/recursos-humanos/evaluacion-360/evaluacion/${@json($evaluacion->id)}/consulta/${data}`;
+            //             let html = `
+        //                 <a href="${urlShow}" class="btn btn-sm" title="Visualizar"><i class="fas fa-arrow-right"></i></a>
 
-            window.table = $('#tblParticipantes').DataTable(dtOverrideGlobals);
+        //             `;
+
+            //             return html;
+            //         }
+            //     },
+            // ],
+            //     orderCellsTop: true,
+            //     order: [
+            //         [0, 'desc']
+            //     ]
+            // };
+
+            // window.table = $('#tblParticipantes').DataTable(dtOverrideGlobals);
 
             window.ListaEvaluadores = function(evaluadores_seleccionados, evaluado, evaluacion) {
                 let seleccionados = JSON.parse(evaluadores_seleccionados);
@@ -711,7 +771,8 @@
                             data: evaluado_evaluador,
                             dataType: "JSON",
                             beforeSend: function() {
-                                toastr.info('Agregando evaluador, espere un momento...');
+                                toastr.info(
+                                    'Agregando evaluador, espere un momento...');
                             },
                             success: function(response) {
                                 if (response.success) {
@@ -761,7 +822,8 @@
                             dataType: "JSON",
                             beforeSend: function() {
                                 toastr.info(
-                                    'Enviando recordatorio, espere un momento...');
+                                    'Enviando recordatorio, espere un momento...'
+                                );
                             },
                             success: function(response) {
                                 toastr.success('Recordatorio enviado');

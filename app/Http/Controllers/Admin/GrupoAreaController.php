@@ -9,7 +9,7 @@ use App\Models\Area;
 use App\Models\Grupo;
 use Gate;
 use Illuminate\Http\Request;
-use Laracasts\Flash\Flash;
+use RealRashid\SweetAlert\Facades\Alert;
 use Symfony\Component\HttpFoundation\Response;
 
 class GrupoAreaController extends Controller
@@ -53,7 +53,8 @@ class GrupoAreaController extends Controller
             // 'color' => sprintf('#%06X', mt_rand(0, 0xFFFFFF)),
         ]);
 
-        // Flash::success('<h5 class="text-center">Grupo agregado satisfactoriamente</h5>');
+        Alert::success('éxito', 'Información añadida con éxito');
+
         return redirect()->route('admin.grupoarea.index')->with('success', 'Guardado con éxito');
     }
 
@@ -87,7 +88,8 @@ class GrupoAreaController extends Controller
         );
         $grupoarea->update($request->all());
 
-        // Flash::success('<h5 class="text-center">Grupo actualizado satisfactoriamente</h5>');
+        Alert::success('éxito', 'Información añadida con éxito');
+
         return redirect()->route('admin.grupoarea.index')->with('success', 'Editado con éxito');
     }
 

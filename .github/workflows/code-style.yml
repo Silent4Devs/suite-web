@@ -1,0 +1,54 @@
+name: Check code quality
+run-name: ${{ github.actor }} run check code quality
+on:
+  push:
+    branches:
+      - develop
+  pull_request:
+    branches:
+      - develop
+
+permissions:
+  contents: write
+
+jobs:
+  Code-style:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+          tools: laravel/pint
+
+      - name: Get Composer Cache Directory 2
+        id: composer-cache
+        run: |
+          echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - uses: actions/cache@v3
+        id: actions-cache
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
+      - name: Cache PHP dependencies
+        uses: actions/cache@v3
+        id: vendor-cache
+        with:
+          path: vendor
+          key: ${{ runner.OS }}-build-${{ hashFiles('**/composer.lock') }}
+
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      - name: Fix PHP code style issues
+        uses: aglipanci/laravel-pint-action@2.3.1
+
+      # - name: Commit changes
+      #   uses: stefanzweifel/git-auto-commit-action@v5
+      #   with:
+      #     commit_message: Fix styling

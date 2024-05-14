@@ -10,12 +10,15 @@ use App\Models\Empleado;
 use App\Models\Organizacion;
 use App\Models\PanelOrganizacion;
 use App\Models\Schedule;
+use App\Services\ImageService;
 use Carbon\Carbon;
-use Flash;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+use RealRashid\SweetAlert\Facades\Alert;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -68,8 +71,6 @@ class OrganizacionController extends Controller
             $tamanoEmpresa = 'Grande (más de 1000 empleados)';
         }
 
-        // dd($tamanoEmpresa);
-
         $dias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
 
         $count = Organizacion::getAll()->count();
@@ -78,7 +79,7 @@ class OrganizacionController extends Controller
 
             return view('admin.organizacions.create')->with('countEmpleados', $countEmpleados)->with('tamanoEmpresa', $tamanoEmpresa)->with('dias', $dias);
         } else {
-            Flash::warning("<h5 align='center'>Ya existe un registro en la base de datos</h5>");
+            Alert::warning('atención', 'Ya existe un registro en la base de datos');
 
             return redirect()->route('admin.organizacions.index');
         }
@@ -118,31 +119,29 @@ class OrganizacionController extends Controller
             $this->validate($request, [
                 'logotipo' => 'mimetypes:image/jpeg,image/bmp,image/png',
             ]);
-        }
-        // if ($request->file('logotipo') != null or !empty($request->file('logotipo'))) {
-        //     $extension = pathinfo($request->file('logotipo')->getClientOriginalName(), PATHINFO_EXTENSION);
-        //     $name_image = basename(pathinfo($request->file('logotipo')->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
-        //     $new_name_image = 'UID_' . $organizacions->id . '_' . $name_image . '.' . $extension;
-        //     Storage::makeDirectory("public/images");
-        //     $route = public_path("storage/images");
-        //     // $route = asset('images/'.$new_name_image);
-        //     $image = $new_name_image;
-        //     //Usamos image_intervention para disminuir el peso de la imagen
-        //     $img_intervention = Image::make($request->file('logotipo'));
-        //     $img_intervention->resize(256, null, function ($constraint) {
-        //         $constraint->aspectRatio();
-        //     })->save($route);
-        //     $organizacions->update(['logotipo' => $image]);
-        // }
 
-        $file = $request->file('logotipo');
-        if ($file != null) {
-            Storage::makeDirectory('public/images');
-            $ruta = public_path('storage/images');
-            $nombre = $file->getClientOriginalName();
-            $file->move($ruta, $file->getClientOriginalName());
-            $organizacions->logotipo = $nombre;
-            $organizacions->save();
+            $file = $request->file('logotipo');
+            //$name_image = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+            $hash_name = pathinfo($file->hashName(), PATHINFO_FILENAME);
+            //$fileName = 'UID_'.$organizacions->id.'_'.$file->getClientOriginalName();
+            $new_name_image = 'UID_'.$organizacions->id.'_'.$hash_name.'.png';
+
+            // Call the ImageService to consume the external API
+            $apiResponse = ImageService::consumeImageCompresorApi($file);
+
+            // Compress and save the image
+            if ($apiResponse['status'] == 200) {
+                $rutaGuardada = '/public/images/'.$new_name_image;
+                //file_put_contents(storage_path('app/public/'.$rutaGuardada), $apiResponse['body']);
+
+                Storage::put($rutaGuardada, $apiResponse['body']);
+
+                $organizacions->update(['logotipo' => $new_name_image]);
+            } else {
+                $mensajeError = 'Error al recibir la imagen de la API externa: '.$apiResponse['body'];
+
+                return Redirect::back()->with('error', $mensajeError);
+            }
         }
 
         $organizacions->update(['logotipo' => $image]);
@@ -153,55 +152,76 @@ class OrganizacionController extends Controller
         return redirect()->route('admin.organizacions.index')->with('success', 'Guardado con éxito');
     }
 
-    public function edit(Organizacion $organizacion)
+    public function edit($organizacionId)
     {
-        $countEmpleados = Empleado::alta()->get()->count();
-        $organizacion->fecha_constitucion = Carbon::parse($organizacion->fecha_constitucion)->format('Y-m-d');
-        // dd($organizacion->fecha_constitucion);
+        try {
+            $organizacion = Organizacion::findOrFail($organizacionId);
 
-        if ($countEmpleados == 0) {
-            $tamanoEmpresa = 'debe registrar a los empleados';
-        } elseif ($countEmpleados >= 1 && $countEmpleados <= 249) {
-            $tamanoEmpresa = 'Chica (menos de 250 empleados)';
-        } elseif ($countEmpleados >= 250 && $countEmpleados <= 1000) {
-            $tamanoEmpresa = 'Mediana (entre 250 y 1000 empleados)';
-        } elseif ($countEmpleados >= 1000) {
-            $tamanoEmpresa = 'Grande (más de 1000 empleados)';
+            $countEmpleados = Empleado::alta()->count();
+            $organizacion->fecha_constitucion = Carbon::parse($organizacion->fecha_constitucion)->format('Y-m-d');
+
+            if ($countEmpleados == 0) {
+                $tamanoEmpresa = 'debe registrar a los empleados';
+            } elseif ($countEmpleados >= 1 && $countEmpleados <= 249) {
+                $tamanoEmpresa = 'Chica (menos de 250 empleados)';
+            } elseif ($countEmpleados >= 250 && $countEmpleados <= 1000) {
+                $tamanoEmpresa = 'Mediana (entre 250 y 1000 empleados)';
+            } elseif ($countEmpleados >= 1000) {
+                $tamanoEmpresa = 'Grande (más de 1000 empleados)';
+            }
+
+            abort_if(Gate::denies('mi_organizacion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            $organizacion->load('team');
+            $schedule = Organizacion::getAll()->find(1)->schedules;
+
+            $dias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'];
+
+            return view('admin.organizacions.edit', compact('organizacion', 'dias', 'schedule', 'countEmpleados', 'tamanoEmpresa'));
+        } catch (QueryException $e) {
+            abort(404);
         }
-
-        abort_if(Gate::denies('mi_organizacion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $organizacion->load('team');
-        $schedule = Organizacion::getAll()->find(1)->schedules;
-
-        $dias = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes'];
-
-        return view('admin.organizacions.edit', compact('organizacion', 'dias', 'schedule', 'countEmpleados', 'tamanoEmpresa'));
     }
 
     public function update(UpdateOrganizacionRequest $request, Organizacion $organizacion)
     {
         abort_if(Gate::denies('mi_organizacion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $organizacion->update($request->all());
-        // dd($organizacion);
 
         if ($request->hasFile('logotipo')) {
             $this->validate($request, [
                 'logotipo' => 'mimetypes:image/jpeg,image/bmp,image/png',
             ]);
-        }
-        $file = $request->file('logotipo');
-        if ($file != null) {
-            Storage::makeDirectory('public/images');
-            $ruta = public_path('storage/images');
-            $nombre = $file->getClientOriginalName();
-            $file->move(base_path('/public/images/'), $file->getClientOriginalName());
-            $organizacions = Organizacion::find(request()->org_id);
-            $organizacions->logotipo = $nombre;
-            $organizacions->save();
-        }
-        $this->saveOrUpdateSchedule($request, $organizacion);
 
-        return redirect()->route('admin.organizacions.index')->with('success', 'Editado con éxito');
+            $file = $request->file('logotipo');
+            //$name_image = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+            $hash_name = pathinfo($file->hashName(), PATHINFO_FILENAME);
+            //$fileName = 'UID_'.$organizacion->id.'_'.$file->getClientOriginalName();
+            $new_name_image = 'UID_'.$organizacion->id.'_'.$hash_name.'.png';
+
+            // Call the ImageService to consume the external API
+            $apiResponse = ImageService::consumeImageCompresorApi($file);
+
+            // Compress and save the image
+            if ($apiResponse['status'] == 200) {
+                $rutaGuardada = '/public/images/'.$new_name_image;
+                //file_put_contents(storage_path('app/public/'.$rutaGuardada), $apiResponse['body']);
+
+                Storage::put($rutaGuardada, $apiResponse['body']);
+
+                $organizacion->logotipo = $new_name_image;
+                $organizacion->save();
+            } else {
+                $mensajeError = 'Error al recibir la imagen de la API externa: '.$apiResponse['body'];
+
+                return Redirect::back()->with('error', $mensajeError);
+            }
+        }
+
+        $this->saveOrUpdateSchedule($request, $organizacion);
+        // example:
+        Alert::success('éxito', 'Registro actualizado con éxito');
+
+        return redirect()->route('admin.organizacions.index');
     }
 
     public function show(Organizacion $organizacion)

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\ClearsResponseCache;
 use App\Traits\MultiTenantModelTrait;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,8 +11,8 @@ use OwenIt\Auditing\Contracts\Auditable;
 
 class UserAlert extends Model implements Auditable
 {
-    use MultiTenantModelTrait, HasFactory;
-    use \OwenIt\Auditing\Auditable;
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
+    use HasFactory, MultiTenantModelTrait;
 
     public $table = 'user_alerts';
 

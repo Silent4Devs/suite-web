@@ -1,24 +1,27 @@
 @extends('layouts.admin')
 @section('content')
     <style type="text/css">
-    table{
-    table-layout: fixed;
-    width: 500px;
-   }
+        table {
+            table-layout: fixed;
+            width: 500px;
+        }
 
-   th, td {
-    border: 1px solid blue;
-    width: 130px;
-    word-wrap: break-word
-    }
+        th,
+        td {
+            border: 1px solid blue;
+            width: 130px;
+            word-wrap: break-word
+        }
     </style>
-    <h5 class="col-12 titulo_general_funcion">Requisiciónes</h5>
+    <h5 class="col-12 titulo_general_funcion">Requisiciones</h5>
     <div class="mt-5 card">
-        <form action="{{ route('contract_manager.requisiciones.indexAprobadores') }}" method="GET">
+        <form class="text-right" action="{{ route('contract_manager.requisiciones.indexAprobadores') }}" method="GET">
             @method('GET')
-            <button class="btn btn-primary" type="submit" title="Aprobadores" >
+            <button class="btn btn-primary" type="submit" title="Aprobadores">
                 Aprobadores
             </button>
+            <a style="color: white;" class="btn btn-primary"
+                href="{{ route('contract_manager.requisiciones.archivo') }}">Archivados</a>
         </form>
         <div class="card-body datatable-fix">
             <table id="dom" class="table table-bordered w-100 datatable-perspectiva" style="width: 100%">
@@ -29,6 +32,7 @@
                         <th style="vertical-align: top">Referencia</th>
                         <th style="vertical-align: top">Proveedor</th>
                         <th style="vertical-align: top">Estatus</th>
+                        <th style="vertical-align: top">Turno en firmar</th>
                         <th style="vertical-align: top">Proyecto</th>
                         <th style="vertical-align: top">Área que Solicita</th>
                         <th style="vertical-align: top">Solicitante</th>
@@ -37,44 +41,150 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ( $requisiciones_solicitante as $requisicion )
-                    <tr>
-                        <td>RQ-00-00-{{$requisicion->id}}</td>
-                        <td>{{$requisicion->fecha}}</td>
-                        <td>{{$requisicion->referencia}}</td>
-                        <td>{{$requisicion->proveedor_catalogo}}</td>
-                        <td>{{$requisicion->estado}}</td>
-                        <td>{{$requisicion->contrato->nombre_servicio}}</td>
-                        <td>{{$requisicion->area}}</td>
-                        <td>{{$requisicion->user}}</td>
-                        <td>
-                            <form action="{{ route('contract_manager.requisiciones.destroy', $requisicion->id) }}" method="DELETE">
-                                @if ($requisicion->estado === "rechazado")
-                                <a href="{{ route('contract_manager.requisiciones.edit',$requisicion->id )}}"><i class="fas fa-edit"></i></a>
+                    @foreach ($requisiciones_solicitante as $requisicion)
+                        <tr>
+                            <td>RQ-00-00-{{ $requisicion->id }}</td>
+                            <td>{{ $requisicion->fecha }}</td>
+                            <td>{{ $requisicion->referencia }}</td>
+                            <td>{{ $requisicion->proveedor_catalogo }}</td>
+                            <td>
+                                @switch($requisicion->estado)
+                                    @case('curso')
+                                        <h5><span class="badge badge-pill badge-primary">En curso</span></h5>
+                                    @break
+
+                                    @case('aprobado')
+                                        <h5><span class="badge badge-pill badge-success">Aprobado</span></h5>
+                                    @break
+
+                                    @case('rechazado')
+                                        <h5><span class="badge badge-pill badge-danger">Rechazado</span></h5>
+                                    @break
+
+                                    @case('firmada')
+                                    @case('firmada_final')
+                                        <h5><span class="badge badge-pill badge-success">Firmada</span></h5>
+                                    @break
+
+                                    @default
+                                        <h5><span class="badge badge-pill badge-info">Por iniciar</span></h5>
+                                @endswitch
+
+                            </td>
+                            @php
+                            $user = Illuminate\Support\Facades\DB::table('users')
+                              ->select('id', 'name')
+                              ->where('id', $requisicion->id_user)
+                              ->first();
+                            @endphp
+                            <td>
+                                @switch(true)
+                                    @case(is_null($requisicion->firma_solicitante))
+                                        <p>Solicitante: {{$user->name ?? ''}}</p>
+                                    @break
+
+                                    @case(is_null($requisicion->firma_jefe))
+
+                                    @php
+                                    $employee = App\Models\User::find($requisicion->id_user)->empleado;
+
+                                    if ($employee !== null && $employee->supervisor !== null) {
+                                        $supervisorName = $employee->supervisor->name;
+                                    } else {
+                                        $supervisorName = "N/A"; // Or any default value you prefer
+                                    }
+                                    @endphp
+                                        <p>Jefe: {{$supervisorName ?? ''}} </p>
+                                    @break
+
+                                    @case(is_null($requisicion->firma_finanzas))
+                                        <p>Finanzas</p>
+                                    @break
+
+                                    @case(is_null($requisicion->firma_compras))
+
+                                    @php
+                                     $comprador = App\Models\ContractManager\Comprador::with('user')->where('id', $requisicion->comprador_id)->first();
+                                    @endphp
+                                    <p>Comprador: {{  $comprador->name }}</p>
+                                    @break
+
+                                    @default
+                                        <h5><span class="badge badge-pill badge-success">Completado</span></h5>
+                                @endswitch
+                            </td>
+                            <td>{{ $requisicion->contrato->nombre_servicio ?? 'Sin servicio disponible' }}</td>
+                            <td>{{ $requisicion->area }}</td>
+                            <td>{{ $requisicion->user }}</td>
+                            <td>
+                                @if ($requisicion->estado === 'rechazado')
+                                    <a href="{{ route('contract_manager.requisiciones.edit', $requisicion->id) }}"><i
+                                            class="fas fa-edit"></i></a>
                                 @endif
-                                <a href="{{ route('contract_manager.requisiciones.show',$requisicion->id )}}"><i class="fa-solid fa-print"></i></a>
-                                @method('DELETE')
-                                <button type="submit" title="delete" style="border: none; background-color:transparent;">
-                                <i class="fas fa-trash text-danger"></i>
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
+
+                                <a href="{{ route('contract_manager.requisiciones.show', $requisicion->id) }}"><i
+                                        class="fa-solid fa-print"></i></a>
+
+                                <a
+                                    onclick="mostrarAlerta2('{{ route('contract_manager.requisiciones.estado', $requisicion->id) }}')"><i
+                                        class="fa-solid fa-box-archive"></i></a>
+
+                                <a
+                                    onclick="mostrarAlerta('{{ route('contract_manager.requisiciones.destroy', $requisicion->id) }}')"><i
+                                        class="fas fa-trash text-danger"></i></a>
+                            </td>
+                        </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
     </div>
-
-
 @endsection
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
 @section('scripts')
     @parent
 
-    {{-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script>
+        function mostrarAlerta(url) {
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: 'No podrás deshacer esta acción',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Coloca aquí la lógica para eliminar el elemento
+                    // Esto puede incluir una solicitud AJAX al servidor o cualquier otra lógica de eliminación
+                    // Una vez que el elemento se haya eliminado, puedes mostrar un mensaje de éxito
+                    Swal.fire('¡Eliminado!', 'El elemento ha sido eliminado.', 'success');
+                    window.location.href = url;
+                }
+            });
+        }
 
-    <!--Abecedario-->
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script> --}}
+        function mostrarAlerta2(url) {
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: 'No podrás deshacer esta acción',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, archivar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Coloca aquí la lógica para eliminar el elemento
+                    // Esto puede incluir una solicitud AJAX al servidor o cualquier otra lógica de eliminación
+                    // Una vez que el elemento se haya eliminado, puedes mostrar un mensaje de éxito
+                    Swal.fire('Archivado!', 'El elemento ha sido archivado.', 'success');
+                    window.location.href = url;
+                }
+            });
+        }
+    </script>
 
     <script type="text/javascript">
         (function() {

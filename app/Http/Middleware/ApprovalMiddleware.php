@@ -10,7 +10,7 @@ class ApprovalMiddleware
     public function handle($request, Closure $next)
     {
         if (auth()->check()) {
-            if (!User::getCurrentUser()->approved) {
+            if (! User::getCurrentUser()->approved) {
                 auth()->logout();
 
                 return redirect()->route('login')->with('message', trans('global.yourAccountNeedsAdminApproval'));

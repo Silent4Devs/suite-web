@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\ClearsResponseCache;
 use App\Traits\MultiTenantModelTrait;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,8 +12,8 @@ use OwenIt\Auditing\Contracts\Auditable;
 
 class EstadoDocumento extends Model implements Auditable
 {
-    use SoftDeletes, MultiTenantModelTrait, HasFactory;
-    use \OwenIt\Auditing\Auditable;
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
+    use HasFactory, MultiTenantModelTrait, SoftDeletes;
 
     public $table = 'estado_documentos';
 
@@ -40,7 +41,7 @@ class EstadoDocumento extends Model implements Auditable
     {
         $this->timestamps = false;
         $this->two_factor_code = rand(100000, 999999);
-        $this->two_factor_expires_at = now()->addMinutes(15)->format(config('panel.date_format') . ' ' . config('panel.time_format'));
+        $this->two_factor_expires_at = now()->addMinutes(15)->format(config('panel.date_format').' '.config('panel.time_format'));
         $this->save();
     }
 

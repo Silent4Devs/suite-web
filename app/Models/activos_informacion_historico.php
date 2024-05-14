@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\ClearsResponseCache;
 use App\Traits\MultiTenantModelTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -10,8 +11,8 @@ use OwenIt\Auditing\Contracts\Auditable;
 
 class activos_informacion_historico extends Model implements Auditable
 {
-    use SoftDeletes, MultiTenantModelTrait, HasFactory;
-    use \OwenIt\Auditing\Auditable;
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
+    use HasFactory, MultiTenantModelTrait, SoftDeletes;
 
     protected $table = 'activos_informacion_historicos';
 
@@ -121,7 +122,7 @@ class activos_informacion_historico extends Model implements Auditable
 
     public function getNameAttribute()
     {
-        return $this->identificador . ' ' . $this->activo_informacion;
+        return $this->identificador.' '.$this->activo_informacion;
     }
 
     public function getContentAttribute()

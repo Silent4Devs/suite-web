@@ -10,7 +10,6 @@ class QuejasObserver
     /**
      * Handle the Quejas "created" event.
      *
-     * @param  \App\Models\Quejas  $quejas
      * @return void
      */
     public function created(Quejas $quejas)
@@ -21,7 +20,6 @@ class QuejasObserver
     /**
      * Handle the Quejas "updated" event.
      *
-     * @param  \App\Models\Quejas  $quejas
      * @return void
      */
     public function updated(Quejas $quejas)
@@ -32,7 +30,6 @@ class QuejasObserver
     /**
      * Handle the Quejas "deleted" event.
      *
-     * @param  \App\Models\Quejas  $quejas
      * @return void
      */
     public function deleted(Quejas $quejas)
@@ -43,7 +40,6 @@ class QuejasObserver
     /**
      * Handle the Quejas "restored" event.
      *
-     * @param  \App\Models\Quejas  $quejas
      * @return void
      */
     public function restored(Quejas $quejas)
@@ -54,7 +50,6 @@ class QuejasObserver
     /**
      * Handle the Quejas "force deleted" event.
      *
-     * @param  \App\Models\Quejas  $quejas
      * @return void
      */
     public function forceDeleted(Quejas $quejas)

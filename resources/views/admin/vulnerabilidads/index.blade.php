@@ -3,7 +3,7 @@
     {{ Breadcrumbs::render('admin.vulnerabilidads.index') }}
 
     <style>
-         .btn-outline-success {
+        .btn-outline-success {
             background: #788bac !important;
             color: white;
             border: none;
@@ -43,22 +43,21 @@
         .agregar {
             margin-right: 15px;
         }
-
     </style>
 
     <h5 class="col-12 titulo_general_funcion">Vulnerabilidades </h5>
     <div class="mt-5 card">
         @can('vulnerabilidades_agregar')
-        <div style="margin-bottom: 10px; margin-left:10px;" class="row">
-            <div class="col-lg-12">
-                @include('csvImport.modalvulnerabilidad', [
-                    'model' => 'Vulnerabilidad',
-                    'route' => 'admin.vulnerabilidads.parseCsvImport',
-                ])
+            <div style="margin-bottom: 10px; margin-left:10px;" class="row">
+                <div class="col-lg-12">
+                    @include('csvImport.modalvulnerabilidad', [
+                        'model' => 'Vulnerabilidad',
+                        'route' => 'admin.vulnerabilidads.parseCsvImport',
+                    ])
+                </div>
             </div>
-        </div>
         @endcan
-        @include('flash::message')
+
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
             @include('admin.vulnerabilidads.table')
@@ -155,80 +154,80 @@
 
             ];
             @can('vulnerabilidades_agregar')
-            let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar Vulnerabilidad',
-                url: "{{ route('admin.vulnerabilidads.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
-                action: function(e, dt, node, config) {
-                    let {
-                        url
-                    } = config;
-                    window.location.href = url;
-                }
-            };
-            let btnExport = {
-                text: '<i  class="fas fa-download"></i>',
-                titleAttr: 'Descargar plantilla',
-                className: "btn btn_cargar",
-                url: "{{ route('descarga-vulnerabilidad') }}",
-                action: function(e, dt, node, config) {
-                    let {
-                        url
-                    } = config;
-                    window.location.href = url;
-                }
-            };
-            let btnImport = {
-                text: '<i  class="fas fa-file-upload"></i>',
-                titleAttr: 'Importar datos',
-                className: "btn btn_cargar",
-                action: function(e, dt, node, config) {
-                    $('#xlsxImportModal').modal('show');
-                }
-            };
-            dtButtons.push(btnAgregar);
-            dtButtons.push(btnExport);
-            dtButtons.push(btnImport);
+                let btnAgregar = {
+                    text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                    titleAttr: 'Agregar Vulnerabilidad',
+                    url: "{{ route('admin.vulnerabilidads.create') }}",
+                    className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
+                    action: function(e, dt, node, config) {
+                        let {
+                            url
+                        } = config;
+                        window.location.href = url;
+                    }
+                };
+                let btnExport = {
+                    text: '<i  class="fas fa-download"></i>',
+                    titleAttr: 'Descargar plantilla',
+                    className: "btn btn_cargar",
+                    url: "{{ route('descarga-vulnerabilidad') }}",
+                    action: function(e, dt, node, config) {
+                        let {
+                            url
+                        } = config;
+                        window.location.href = url;
+                    }
+                };
+                let btnImport = {
+                    text: '<i  class="fas fa-file-upload"></i>',
+                    titleAttr: 'Importar datos',
+                    className: "btn btn_cargar",
+                    action: function(e, dt, node, config) {
+                        $('#xlsxImportModal').modal('show');
+                    }
+                };
+                dtButtons.push(btnAgregar);
+                dtButtons.push(btnExport);
+                dtButtons.push(btnImport);
             @endcan
             @can('vulnerabilidades_eliminar')
-            let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
-            let deleteButton = {
-                text: deleteButtonTrans,
-                url: "{{ route('admin.vulnerabilidads.massDestroy') }}",
-                className: 'btn-danger',
-                action: function(e, dt, node, config) {
-                    var ids = $.map(dt.rows({
-                        selected: true
-                    }).data(), function(entry) {
-                        return entry.id
-                    });
+                let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
+                let deleteButton = {
+                    text: deleteButtonTrans,
+                    url: "{{ route('admin.vulnerabilidads.massDestroy') }}",
+                    className: 'btn-danger',
+                    action: function(e, dt, node, config) {
+                        var ids = $.map(dt.rows({
+                            selected: true
+                        }).data(), function(entry) {
+                            return entry.id
+                        });
 
-                    if (ids.length === 0) {
-                        alert('{{ trans('global.datatables.zero_selected') }}')
+                        if (ids.length === 0) {
+                            alert('{{ trans('global.datatables.zero_selected') }}')
 
-                        return
-                    }
+                            return
+                        }
 
-                    if (confirm('{{ trans('global.areYouSure') }}')) {
-                        $.ajax({
-                                headers: {
-                                    'x-csrf-token': _token
-                                },
-                                method: 'POST',
-                                url: config.url,
-                                data: {
-                                    ids: ids,
-                                    _method: 'DELETE'
-                                }
-                            })
-                            .done(function() {
-                                location.reload()
-                            })
+                        if (confirm('{{ trans('global.areYouSure') }}')) {
+                            $.ajax({
+                                    headers: {
+                                        'x-csrf-token': _token
+                                    },
+                                    method: 'POST',
+                                    url: config.url,
+                                    data: {
+                                        ids: ids,
+                                        _method: 'DELETE'
+                                    }
+                                })
+                                .done(function() {
+                                    location.reload()
+                                })
+                        }
                     }
                 }
-            }
-            //dtButtons.push(deleteButton)
+                //dtButtons.push(deleteButton)
             @endcan
             let dtOverrideGlobals = {
                 buttons: dtButtons,
@@ -273,7 +272,7 @@
                 ],
             };
             let table = $('.datatable-vulnerabilidad').DataTable(dtOverrideGlobals);
-            $('.btn.buttons-print.btn-sm.rounded.pr-2').unbind().click(function(){
+            $('.btn.buttons-print.btn-sm.rounded.pr-2').unbind().click(function() {
                 let titulo_tabla = `
                     <h5>
                         <strong>

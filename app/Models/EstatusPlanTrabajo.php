@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\ClearsResponseCache;
 use App\Traits\MultiTenantModelTrait;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,8 +12,8 @@ use OwenIt\Auditing\Contracts\Auditable;
 
 class EstatusPlanTrabajo extends Model implements Auditable
 {
-    use SoftDeletes, MultiTenantModelTrait, HasFactory;
-    use \OwenIt\Auditing\Auditable;
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
+    use HasFactory, MultiTenantModelTrait, SoftDeletes;
 
     public $table = 'estatus_plan_trabajos';
 

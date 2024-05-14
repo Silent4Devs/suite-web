@@ -43,13 +43,16 @@
 
     @can('objetivos_del_sistema_agregar')
     <h5 class="col-12 titulo_general_funcion">Objetivos</h5>
+
+    <div class="text-right">
+        <div class="d-flex justify-content-end">
+            <a href="{{ route('admin.objetivosseguridads.create') }}" type="button" class="btn btn-primary">Registrar Objetivo</a>
+              &nbsp; &nbsp;
+            <a class="btn btn-danger" href="{{ asset('admin/objetivos/dashboard') }}">Dashboard</a>
+        </div>
+    </div>
         <div class="mt-5 card">
         @endcan
-            <div class="text-right mt-5 mr-5">
-                <a class="btn btn-danger" href="{{ asset('admin/objetivos/dashboard') }}">Dashboard</a>
-            </div>
-
-
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
             <table class="table table-bordered datatable-Objetivosseguridad" style="width: 100%">
@@ -196,17 +199,17 @@
             ];
 
             @can('objetivos_del_sistema_agregar')
-                let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar objetivo de seguridad',
-                url: "{{ route('admin.objetivosseguridads.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config){
-                let {url} = config;
-                window.location.href = url;
-                }
-                };
-                dtButtons.push(btnAgregar);
+                // let btnAgregar = {
+                // text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                // titleAttr: 'Agregar objetivo de seguridad',
+                // url: "{{ route('admin.objetivosseguridads.create') }}",
+                // className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                // action: function(e, dt, node, config){
+                // let {url} = config;
+                // window.location.href = url;
+                // }
+                // };
+                // dtButtons.push(btnAgregar);
             @endcan
             @can('objetivos_del_sistema_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';

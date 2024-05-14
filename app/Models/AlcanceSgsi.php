@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Traits\ClearsResponseCache;
+use Cache;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -28,8 +30,8 @@ use OwenIt\Auditing\Contracts\Auditable;
  */
 class AlcanceSgsi extends Model implements Auditable
 {
-    use SoftDeletes, HasFactory;
-    use \OwenIt\Auditing\Auditable;
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
+    use HasFactory, SoftDeletes;
 
     public $table = 'alcance_sgsis';
 
@@ -56,7 +58,18 @@ class AlcanceSgsi extends Model implements Auditable
         'fecha_revision',
         'id_reviso_alcance',
         'norma_id',
+        'estatus',
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
+
+    public static function getAll()
+    {
+        return Cache::remember('alcances_sgsi_all', 3600 * 12, function () {
+            return self::with('empleado')->get();
+        });
+    }
 
     public function getFechaPublicacionAttribute($value)
     {
@@ -80,7 +93,7 @@ class AlcanceSgsi extends Model implements Auditable
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'id_reviso_alcance')->alta()->with('area');
+        return $this->belongsTo(Empleado::class, 'id_reviso_alcance')->alta()->with('area')->select('id', 'name', 'email', 'area_id');
     }
 
     public function norma()

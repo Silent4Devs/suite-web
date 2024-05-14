@@ -9,7 +9,7 @@ use Livewire\WithPagination;
 
 class HistoricoComponent extends Component
 {
-    use WithPagination, LivewireAlert;
+    use LivewireAlert, WithPagination;
 
     public $cedula_id;
 

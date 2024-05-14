@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\ClearsResponseCache;
 use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -10,9 +11,10 @@ use OwenIt\Auditing\Contracts\Auditable;
 
 class TimesheetProyecto extends Model implements Auditable
 {
-    use HasFactory;
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
     use Filterable;
-    use \OwenIt\Auditing\Auditable;
+    use HasFactory;
+
     protected $table = 'timesheet_proyectos';
 
     protected $appends = ['areas'];
@@ -38,20 +40,64 @@ class TimesheetProyecto extends Model implements Auditable
     public static function getAll($proyecto_id = null)
     {
         if (is_null($proyecto_id)) {
-            return Cache::remember('timesheetproyecto_all', 3600 * 4, function () {
-                return self::orderBy('proyecto')->get();
+            return Cache::remember('TimesheetProyecto:timesheetproyecto_all', 3600 * 4, function () {
+                return self::orderBy('identificador', 'ASC')->get();
             });
         } else {
-            return Cache::remember('timesheetproyecto_show_' . $proyecto_id, 3600, function () {
-                return self::orderBy('proyecto')->get();
+            return Cache::remember('TimesheetProyecto:timesheetproyecto_show_'.$proyecto_id, 3600, function () {
+                return self::orderBy('identificador', 'ASC')->get();
+            });
+        }
+    }
+
+    public static function getAllWithData()
+    {
+        return Cache::remember('TimesheetProyecto:proyectos_with_tasks', 3600 * 4, function () {
+            return self::with('tareas:id,tarea,proyecto_id,area_id,todos')
+                ->select('id', 'proyecto', 'identificador')
+                ->orderBy('identificador', 'ASC')
+                ->get();
+        });
+    }
+
+    public static function getAllDashboard()
+    {
+        return Cache::remember('TimesheetProyecto:proyectos_dashboard', 3600 * 4, function () {
+            return self::select('id', 'proyecto', 'estatus')->get();
+        });
+    }
+
+    public static function getIdNameAll($proyecto_id = null)
+    {
+        if (is_null($proyecto_id)) {
+            return Cache::remember('TimesheetProyecto:timesheetproyecto_all', 3600 * 4, function () {
+                return self::select('id', 'identificador', 'proyecto', 'cliente_id', 'tipo')->orderBy('identificador', 'ASC')->get();
+            });
+        } else {
+            return Cache::remember('TimesheetProyecto:timesheetproyecto_show_'.$proyecto_id, 3600, function () {
+                return self::select('id', 'identificador', 'proyecto', 'cliente_id', 'tipo')->orderBy('identificador', 'ASC')->get();
             });
         }
     }
 
     public static function getAllOrderByIdentificador()
     {
-        return Cache::remember('timesheetproyecto_all_order_by_identificador', 3600, function () {
-            return self::orderBy('identificador', 'asc')->get();
+        return Cache::remember('TimesheetProyecto:timesheetproyecto_all_order_by_identificador', 3600, function () {
+            return self::orderBy('identificador', 'ASC')->get();
+        });
+    }
+
+    public static function getAllWithCliente()
+    {
+        return Cache::remember('TimesheetProyecto:timesheetproyecto_all_with_cliente', 3600 * 3, function () {
+            return self::with('cliente')->orderBy('identificador', 'ASC')->get();
+        });
+    }
+
+    public static function getAllByProceso()
+    {
+        return Cache::remember('TimesheetProyecto:timesheetproyecto_all_order_by_proceso', 3600 * 4, function () {
+            return self::where('estatus', 'proceso')->orderBy('identificador', 'ASC')->get();
         });
     }
 
@@ -71,12 +117,68 @@ class TimesheetProyecto extends Model implements Auditable
     {
         $ids_emp = TimesheetProyectoEmpleado::where('proyecto_id', $this->id)->get();
 
-        $emps = collect();
+        $emps = [];
         foreach ($ids_emp as $key => $emp_p) {
-            $emps->push(Empleado::select('id')->find($emp_p->empleado_id));
+            $horas = TimesheetHoras::where('proyecto_id', $this->id)->where('empleado_id', $emp_p->id)->get();
+            $horas_totales = 0;
+            foreach ($horas as $hora) {
+                $horas_totales += is_numeric($hora->horas_lunes) ? $hora->horas_lunes : 0;
+                $horas_totales += is_numeric($hora->horas_martes) ? $hora->horas_martes : 0;
+                $horas_totales += is_numeric($hora->horas_miercoles) ? $hora->horas_miercoles : 0;
+                $horas_totales += is_numeric($hora->horas_jueves) ? $hora->horas_jueves : 0;
+                $horas_totales += is_numeric($hora->horas_viernes) ? $hora->horas_viernes : 0;
+                $horas_totales += is_numeric($hora->horas_sabado) ? $hora->horas_sabado : 0;
+                $horas_totales += is_numeric($hora->horas_domingo) ? $hora->horas_domingo : 0;
+            }
+            if (isset($emp_p->empleado->salario_base_mensual)) {
+                $costo_hora = ($emp_p->empleado->salario_base_mensual / 20) / 7;
+            } else {
+                if (isset($emp_p->empleado->salario_diario)) {
+                    $costo_hora = $emp_p->empleado->salario_diario / 7;
+                } else {
+                    $costo_hora = 0;
+                }
+            }
+            $costo_horas = $costo_hora * $horas_totales;
+            $empItem = Empleado::select('id', 'name')->where('id', $emp_p->empleado_id)->first();
+            array_push($emps, [
+                'id' => $empItem->id,
+                'name' => $empItem->name,
+                'horas' => $horas_totales,
+                'costo_horas' => $costo_horas,
+            ]);
         }
 
         return $emps;
+    }
+
+    public function getHorasTotalesLlenasAttribute()
+    {
+        $horas = TimesheetHoras::where('proyecto_id', $this->id)->get();
+        $horas_totales = 0;
+        foreach ($horas as $hora) {
+            $horas_totales += is_numeric($hora->horas_lunes) ? $hora->horas_lunes : 0;
+            $horas_totales += is_numeric($hora->horas_martes) ? $hora->horas_martes : 0;
+            $horas_totales += is_numeric($hora->horas_miercoles) ? $hora->horas_miercoles : 0;
+            $horas_totales += is_numeric($hora->horas_jueves) ? $hora->horas_jueves : 0;
+            $horas_totales += is_numeric($hora->horas_viernes) ? $hora->horas_viernes : 0;
+            $horas_totales += is_numeric($hora->horas_sabado) ? $hora->horas_sabado : 0;
+            $horas_totales += is_numeric($hora->horas_domingo) ? $hora->horas_domingo : 0;
+        }
+
+        return $horas_totales;
+    }
+
+    public function getIsNumAttribute()
+    {
+        if (is_numeric($this->identificador[0])) {
+            preg_match('/^\d+/', $this->identificador, $matches);
+
+            return $matches[0];
+        }
+        if (ctype_alpha($this->identificador[0])) {
+            return 0;
+        }
     }
 
     public function sede()

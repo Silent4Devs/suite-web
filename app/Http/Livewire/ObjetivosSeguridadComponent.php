@@ -78,7 +78,6 @@ class ObjetivosSeguridadComponent extends Component
     public function mount($objetivos)
     {
         $this->objetivos = $objetivos;
-        $this->customFields = VariablesObjetivosseguridad::where('id_objetivo', '=', $this->objetivos->id)->get();
         $data = [];
         $this->formSlugs = collect($this->customFields)->map(function ($value) use ($data) {
             $data[$value->variable] = null;
@@ -89,6 +88,7 @@ class ObjetivosSeguridadComponent extends Component
 
     public function render()
     {
+        $this->customFields = VariablesObjetivosseguridad::where('id_objetivo', '=', $this->objetivos->id)->get();
         $responsables = Empleado::getaltaAll();
         $evaluaciones = EvaluacionObjetivo::where('id_objetivo', '=', $this->objetivos->id)->get();
 
@@ -123,7 +123,7 @@ class ObjetivosSeguridadComponent extends Component
             }
         }
 
-        $result = eval('return ' . $formula_final . ';');
+        $result = eval('return '.$formula_final.';');
         EvaluacionObjetivo::create([
             'evaluacion' => $this->evaluacion,
             'fecha' => $this->fecha,
@@ -169,7 +169,7 @@ class ObjetivosSeguridadComponent extends Component
             }
         }
 
-        $result = eval('return ' . $formula_final . ';');
+        $result = eval('return '.$formula_final.';');
 
         $evaluaciones->update([
             'evaluacion' => $this->evaluacion,

@@ -2,13 +2,16 @@
 
 namespace App\Models\Escuela;
 
+use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Section extends Model
+class Section extends Model implements Auditable
 {
-    use HasFactory;
+    use ClearsResponseCache, HasFactory;
+    use \OwenIt\Auditing\Auditable;
     use SoftDeletes;
 
     protected $guarded = ['id'];
@@ -17,7 +20,7 @@ class Section extends Model
 
     public function lessons()
     {
-        return $this->hasMany('App\Models\Escuela\Lesson');
+        return $this->hasMany('App\Models\Escuela\Lesson')->orderBy('created_at', 'asc');
     }
 
     //Relacion uno a muchos inversa

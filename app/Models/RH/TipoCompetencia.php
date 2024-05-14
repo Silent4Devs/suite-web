@@ -2,6 +2,7 @@
 
 namespace App\Models\RH;
 
+use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -10,8 +11,8 @@ use OwenIt\Auditing\Contracts\Auditable;
 
 class TipoCompetencia extends Model implements Auditable
 {
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
     use HasFactory, SoftDeletes;
-    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'ev360_tipo_competencias';
 
@@ -20,7 +21,7 @@ class TipoCompetencia extends Model implements Auditable
     //Redis methods
     public static function getAll()
     {
-        return Cache::remember('Tipocompetencias_all', 3600 * 24, function () {
+        return Cache::remember('TipoCompetencia:Tipocompetencias_all', 3600 * 4, function () {
             return self::get();
         });
     }

@@ -2,6 +2,7 @@
 
 namespace App\Models\RH;
 
+use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -10,8 +11,8 @@ use OwenIt\Auditing\Contracts\Auditable;
 
 class Evaluacion extends Model implements Auditable
 {
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
     use HasFactory, SoftDeletes;
-    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'ev360_evaluaciones';
 
@@ -22,6 +23,12 @@ class Evaluacion extends Model implements Auditable
     protected $casts = [
         'fecha_inicio' => 'date:d-m-Y',
         'fecha_fin' => 'date:d-m-Y',
+    ];
+
+    protected $fillable = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     const DRAFT = '1';
@@ -41,8 +48,15 @@ class Evaluacion extends Model implements Auditable
     //Redis methods
     public static function getAll()
     {
-        return Cache::remember('Evaluacion_all', 3600 * 24, function () {
-            return self::get();
+        return Cache::remember('Evaluacion:Evaluacion_all', 3600 * 3, function () {
+            return self::orderByDesc('id')->get();
+        });
+    }
+
+    public static function getAllLatestFirst()
+    {
+        return Cache::remember('Evaluacion:Evaluacion_latest_first', 3600 * 3, function () {
+            return self::select('id', 'nombre', 'fecha_inicio', 'fecha_fin')->latest()->first();
         });
     }
 
@@ -118,5 +132,23 @@ class Evaluacion extends Model implements Auditable
     public function autor()
     {
         return $this->belongsTo('App\Models\Empleado', 'autor_id', 'id');
+    }
+
+    public static function getEvaluados($id_evaluacion)
+    {
+        return Cache::remember('Evaluacion:evaluacion_all_'.$id_evaluacion, 3600 * 8, function () use ($id_evaluacion) {
+            $query = self::with(['evaluados' => function ($q) use ($id_evaluacion) {
+                return $q->with(['area', 'evaluadores' => function ($qry) use ($id_evaluacion) {
+                    $qry->where('evaluacion_id', $id_evaluacion);
+                }]);
+            }])->find($id_evaluacion);
+
+            return $query;
+        });
+    }
+
+    public function rangos()
+    {
+        return $this->hasMany(Ev360ParametrosObjetivos::class, 'evaluacion_id', 'id');
     }
 }

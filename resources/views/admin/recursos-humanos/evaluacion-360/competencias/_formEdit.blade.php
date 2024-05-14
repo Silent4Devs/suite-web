@@ -6,13 +6,13 @@
         @include('admin.recursos-humanos.evaluacion-360.competencias._form')
         <div>
             <div class="pl-0 form-check form-switch">
-                <label class="container-check">Asignar esta competencia a todos los
-                    empleados de la organización
+
                     <input class="form-check-input"
                         {{ old('toda_la_empresa', $competencia->toda_la_empresa) ? 'checked' : '' }}
                         name="toda_la_empresa" type="checkbox" id="toda_la_empresa">
                     <span class="checkmark"></span>
-                </label>
+                {!! Form::label('nombre_comite', 'Asignar esta competencia a todos los
+                empleados de la organización*', ['class' => 'asterisco']) !!}
                 {{-- <label class="form-check-label" for="toda_la_empresa"></label> --}}
             </div>
             <span id="niveles_cargando" class="d-none"><i class="fas fa-circle-notch fa-spin"></i>

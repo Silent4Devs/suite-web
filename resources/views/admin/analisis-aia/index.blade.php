@@ -45,7 +45,7 @@
 
         {{-- <a class="pr-3 ml-2 rounded btn btn-success" style=" margin: 13px 12px 12px 10px;"
         href="{{ route('admin.matriz-mapa.SistemaGestion', ['idAnalisis' => $id_matriz]) }}">Gráfica</a> --}}
-     
+
 
         @can('amenazas_agregar')
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
@@ -58,7 +58,7 @@
             @endcan
         </div>
 
-        @include('flash::message')
+
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
             <table class="table table-bordered w-100 datatable datatable-analisis-impacto tblCSV"
@@ -80,7 +80,7 @@
                         <th style="min-width: 150px;">
                             Fecha de la entrevista:
                         </th>
-                       
+
                         <th style="min-width: 250px;">
                             Entrevistado:
                         </th>
@@ -301,7 +301,7 @@
                             return `<div style="text-align:left">${data}</div>`;
                         }
                     },
-                   
+
                     {
                         data: 'area',
                         name: 'area',
@@ -316,7 +316,7 @@
                             return `<div style="text-align:left">${data}</div>`;
                         }
                     },
-                    
+
                     {
                         data: 'entrevistado',
                         name: 'entrevistado',

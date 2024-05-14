@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-
     <h5 class="col-12 titulo_general_funcion">Configurar Soporte</h5>
     <div class="mt-5 card">
         {{-- <div style="margin-bottom: 10px; margin-left:10px;" class="row">
@@ -15,7 +14,7 @@
                 </div>
                 <div class="col-sm-8 align-content-center">
                     @include('layouts.errors')
-                    @include('flash::message')
+
                 </div>
                 <div class="col-sm-2">
                 </div>
@@ -58,9 +57,6 @@
             </table>
         </div>
     </div>
-
-
-
 @endsection
 @section('scripts')
     @parent
@@ -230,17 +226,18 @@
 
             @can('configurar_soporte_agregar')
                 let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar nueva parte interesada',
-                url: "{{ route('admin.configurar-soporte.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
-                action: function(e, dt, node, config){
-                let {url} = config;
-                window.location.href = url;
-                }
+                    text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                    titleAttr: 'Agregar nueva parte interesada',
+                    url: "{{ route('admin.configurar-soporte.create') }}",
+                    className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
+                    action: function(e, dt, node, config) {
+                        let {
+                            url
+                        } = config;
+                        window.location.href = url;
+                    }
                 };
                 dtButtons.push(btnAgregar);
-            
             @endcan
 
             let dtOverrideGlobals = {

@@ -2,6 +2,7 @@
 
 namespace App\Models\RH;
 
+use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -11,7 +12,7 @@ use OwenIt\Auditing\Contracts\Auditable;
 
 class Competencia extends Model implements Auditable
 {
-    use HasFactory, SoftDeletes;
+    use ClearsResponseCache, HasFactory, SoftDeletes;
     use \OwenIt\Auditing\Auditable;
 
     protected $table = 'ev360_competencias';
@@ -31,8 +32,15 @@ class Competencia extends Model implements Auditable
     //Redis methods
     public static function getAll()
     {
-        return Cache::remember('Competencias_all', 3600 * 24, function () {
+        return Cache::remember('Competencias:Competencias_all', 3600 * 7, function () {
             return self::get();
+        });
+    }
+
+    public static function getAllWithtipo()
+    {
+        return Cache::remember('Competencias:Competencias_with_tipo', 3600 * 7, function () {
+            return self::with('tipo')->get();
         });
     }
 
@@ -45,7 +53,7 @@ class Competencia extends Model implements Auditable
     {
         if ($this->getExisteImagenEnServidorAttribute()) {
             if ($this->imagen) {
-                return asset('storage/competencias/img/' . $this->imagen);
+                return asset('storage/competencias/img/'.$this->imagen);
             }
 
             return asset('img/star.png');
@@ -56,7 +64,7 @@ class Competencia extends Model implements Auditable
 
     public function getExisteImagenEnServidorAttribute()
     {
-        return Storage::exists('public/competencias/img/' . $this->imagen);
+        return Storage::exists('public/competencias/img/'.$this->imagen);
     }
 
     public function competencia_puesto()
@@ -76,8 +84,8 @@ class Competencia extends Model implements Auditable
 
     public static function search($search)
     {
-        return empty($search) ? static::query() : static::where('id', 'ILIKE', '%' . $search . '%')
-            ->orWhere('nombre', 'ILIKE', '%' . $search . '%')
-            ->orWhere('descripcion', 'ILIKE', '%' . $search . '%');
+        return empty($search) ? static::query() : static::where('id', 'ILIKE', '%'.$search.'%')
+            ->orWhere('nombre', 'ILIKE', '%'.$search.'%')
+            ->orWhere('descripcion', 'ILIKE', '%'.$search.'%');
     }
 }

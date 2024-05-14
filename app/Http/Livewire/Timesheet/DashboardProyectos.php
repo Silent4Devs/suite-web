@@ -60,26 +60,31 @@ class DashboardProyectos extends Component
     {
         $this->datos_areas = collect();
 
+        $time_getall = TimesheetProyecto::getAll();
+        $time_getall = $time_getall->sortByDesc('is_num');
+
+        $time_area = TimesheetProyectoArea::with('area')->get();
+
         if ($this->estatus === 'todos') {
-            $this->proy = TimesheetProyecto::getAll();
+            $this->proy = $time_getall;
         } else {
-            $this->proy = TimesheetProyecto::getAll()->where('estatus', $this->estatus);
+            $this->proy = $time_getall->where('estatus', $this->estatus);
         }
 
         $lista_proyectos = $this->proy;
         // dd($lista_proyectos);
 
         if ($this->proy_id === 0) {
-            $this->areas = TimesheetProyectoArea::with('area')->get();
+            $this->areas = $time_area;
         } else {
-            $this->areas = TimesheetProyectoArea::with('area')->where('proyecto_id', $this->proy_id)->get();
+            $this->areas = $time_area->where('proyecto_id', $this->proy_id);
         }
 
         $lista_areas = $this->areas;
 
         if ($this->proy_id != 0) {
             if ($this->area_id === 'todas') {
-                $this->datos_dash = TimesheetProyecto::getAll($this->proy_id)->find($this->proy_id);
+                $datos_dash = TimesheetProyecto::getAll($this->proy_id)->where('id', '=', $this->proy_id);
 
                 $this->datos_areas = collect();
                 foreach ($lista_areas as $ar) {
@@ -103,13 +108,13 @@ class DashboardProyectos extends Component
                         foreach ($ts->horas as $key => $tsh) {
                             // dd($tsh->proyecto_id, $this->proy_id);
                             if ($tsh->proyecto_id == $this->proy_id) {
-                                $sumalun = $tsh->horas_lunes;
-                                $sumamar = $tsh->horas_martes;
-                                $sumamie = $tsh->horas_miercoles;
-                                $sumajue = $tsh->horas_jueves;
-                                $sumavie = $tsh->horas_viernes;
-                                $sumasab = $tsh->horas_sabado;
-                                $sumadom = $tsh->horas_domingo;
+                                $sumalun = is_numeric($tsh->horas_lunes) ? $tsh->horas_lunes : 0;
+                                $sumamar = is_numeric($tsh->horas_martes) ? $tsh->horas_martes : 0;
+                                $sumamie = is_numeric($tsh->horas_miercoles) ? $tsh->horas_miercoles : 0;
+                                $sumajue = is_numeric($tsh->horas_jueves) ? $tsh->horas_jueves : 0;
+                                $sumavie = is_numeric($tsh->horas_viernes) ? $tsh->horas_viernes : 0;
+                                $sumasab = is_numeric($tsh->horas_sabado) ? $tsh->horas_sabado : 0;
+                                $sumadom = is_numeric($tsh->horas_domingo) ? $tsh->horas_domingo : 0;
 
                                 $total_h = $total_h + $sumalun + $sumamar + $sumamie + $sumajue + $sumavie + $sumasab + $sumadom;
                             }
@@ -131,7 +136,7 @@ class DashboardProyectos extends Component
                     }
 
                     $this->datos_areas->push([
-                        'proyecto' => $this->datos_dash->proyecto,
+                        'proyecto' => isset($datos_dash->proyecto) ? $datos_dash->proyecto : null,
                         'area' => $ar->area->area,
                         'total_horas_area' => $total_he,
                         'tareas' => $t,
@@ -157,23 +162,18 @@ class DashboardProyectos extends Component
                                 // ->orWhere('estatus', 'pendiente');
                             })->get();
 
+                        $daysOfWeek = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo'];
                         $total_emp = 0;
 
-                        $slun = $emphoras->sum('horas_lunes');
-                        $smar = $emphoras->sum('horas_martes');
-                        $smie = $emphoras->sum('horas_miercoles');
-                        $sjue = $emphoras->sum('horas_jueves');
-                        $svie = $emphoras->sum('horas_viernes');
-                        $ssab = $emphoras->sum('horas_sabado');
-                        $sdom = $emphoras->sum('horas_domingo');
-
-                        $total_emp = $total_emp + $slun + $smar + $smie + $sjue + $svie + $ssab + $sdom;
+                        foreach ($daysOfWeek as $day) {
+                            $total_emp += $emphoras->sum("horas_$day");
+                        }
 
                         $total_emp = round($total_emp, 2);
 
                         $this->datos_empleados->push([
                             'horas_proyecto' => $total_emp,
-                            'proyecto' => $this->datos_dash->proyecto,
+                            'proyecto' => isset($datos_dash->proyecto) ? $datos_dash->proyecto : null,
                             'empleado' => $ep->empleado->name,
                             'area' => $ep->empleado->area->area,
                         ]);
@@ -182,10 +182,10 @@ class DashboardProyectos extends Component
                 // dd($this->datos_areas);
                 $this->emit('renderAreas', $this->datos_areas, $this->datos_empleados);
             } else {
-                $this->datos_dash = TimesheetProyecto::getAll($this->proy_id)->find($this->proy_id);
-                $area_individual = Area::find($this->area_id);
+                $datos_dash = TimesheetProyecto::getAll($this->proy_id)->where('id', '=', $this->proy_id);
+                $area_individual = Area::where('id', '=', $this->area_id);
 
-                if (!isset($area_individual->area)) {
+                if (! isset($area_individual->area)) {
                     $area_individual = 'Sin definir';
                 } else {
                     $area_individual = $area_individual->area;
@@ -236,7 +236,7 @@ class DashboardProyectos extends Component
                 }
 
                 $this->datos_areas->push([
-                    'proyecto' => $this->datos_dash->proyecto,
+                    'proyecto' => isset($datos_dash->proyecto) ? $datos_dash->proyecto : null,
                     'area' => $area_individual,
                     'total_horas_area' => $total_h,
                     'tareas' => $t,
@@ -264,23 +264,18 @@ class DashboardProyectos extends Component
                             $query->where('estatus', 'aprobado');
                         })->get();
 
+                    $daysOfWeek = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo'];
                     $total_emp = 0;
 
-                    $slun = $emphoras->sum('horas_lunes');
-                    $smar = $emphoras->sum('horas_martes');
-                    $smie = $emphoras->sum('horas_miercoles');
-                    $sjue = $emphoras->sum('horas_jueves');
-                    $svie = $emphoras->sum('horas_viernes');
-                    $ssab = $emphoras->sum('horas_sabado');
-                    $sdom = $emphoras->sum('horas_domingo');
-
-                    $total_emp = $total_emp + $slun + $smar + $smie + $sjue + $svie + $ssab + $sdom;
+                    foreach ($daysOfWeek as $day) {
+                        $total_emp += $emphoras->sum("horas_$day");
+                    }
 
                     $total_emp = round($total_emp, 2);
 
                     $this->datos_empleados->push([
                         'horas_proyecto' => $total_emp,
-                        'proyecto' => $this->datos_dash->proyecto,
+                        'proyecto' => isset($datos_dash->proyecto) ? $datos_dash->proyecto : null,
                         'empleado' => $ep->empleado->name,
                         'area' => $area_individual,
                     ]);

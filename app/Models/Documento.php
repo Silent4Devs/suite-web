@@ -2,16 +2,18 @@
 
 namespace App\Models;
 
+use App\Traits\ClearsResponseCache;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class Documento extends Model implements Auditable
 {
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
     use HasFactory, SoftDeletes;
-    use \OwenIt\Auditing\Auditable;
 
     //REVISION DE DOCUMENTOS ESTATUS
     const SOLICITUD_REVISION = 1;
@@ -39,6 +41,8 @@ class Documento extends Model implements Auditable
 
     protected $dates = ['fecha'];
 
+    protected $table = 'documentos';
+
     protected $appends = ['estatus_formateado', 'fecha_dmy', 'archivo_actual', 'color_estatus', 'no_vistas'];
 
     protected $fillable = [
@@ -55,11 +59,36 @@ class Documento extends Model implements Auditable
         'reviso_id',
         'aprobo_id',
         'responsable_id',
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     public function searchableAs()
     {
         return 'posts_index';
+    }
+
+    //Redis methods
+    public static function getAll()
+    {
+        return Cache::remember('Documentos:Documentos_all', 3600 * 4, function () {
+            return self::get();
+        });
+    }
+
+    public static function getLastFiveWithMacroproceso()
+    {
+        return Cache::remember('Documentos:Documentos_last_five_macroprocesos', 3600 * 4, function () {
+            return self::with('macroproceso')->where('estatus', Documento::PUBLICADO)->latest('updated_at')->get()->take(5);
+        });
+    }
+
+    public static function getWithMacroproceso($empleado_id)
+    {
+        return Cache::remember('Documentos:Documentos_all_macroprocesos_'.$empleado_id, 3600 * 4, function () use ($empleado_id) {
+            return self::where('elaboro_id', $empleado_id)->get();
+        });
     }
 
     public function getNoVistasAttribute()
@@ -159,7 +188,7 @@ class Documento extends Model implements Auditable
                 break;
         }
 
-        return asset($path_documento . '/' . $this->archivo);
+        return asset($path_documento.'/'.$this->archivo);
     }
 
     //Relacion uno a muchos inversa

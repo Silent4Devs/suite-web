@@ -2,13 +2,16 @@
 
 namespace App\Models\ContractManager;
 
+use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class EntregableFile extends Model
+class EntregableFile extends Model implements Auditable
 {
-    use HasFactory,softDeletes;
+    use ClearsResponseCache, HasFactory, softDeletes;
+    use \OwenIt\Auditing\Auditable;
 
     public $table = 'entregables_files';
 

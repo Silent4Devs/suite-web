@@ -2,6 +2,7 @@
 
 namespace App\Models\ContractManager;
 
+use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -12,8 +13,8 @@ class CierreContrato extends Model implements Auditable
 {
     public $table = 'cierre_contratos';
 
-    use HasFactory,softDeletes;
     use AuditableTrait;
+    use ClearsResponseCache, HasFactory, softDeletes;
 
     protected $dates = ['deleted_at'];
 

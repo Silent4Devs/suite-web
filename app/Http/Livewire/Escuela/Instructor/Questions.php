@@ -13,16 +13,27 @@ class Questions extends Component
 {
     // use RenderizarAlerta;
     public $open = false;
+
     public $explanation;
+
     public $question;
+
     public $isActive;
+
     public $evaluation_id;
+
     public $test;
+
     public Collection $answers;
+
     public $questionModel;
+
     public $edit = false;
+
     public $onlyIcon = true;
+
     public $answersDelete = [];
+
     protected $listeners = [
         'renderQuestion' => 'render',
     ];
@@ -32,7 +43,6 @@ class Questions extends Component
         return [
             'answers' => 'required',
             'question' => 'required',
-            'explanation' => 'nullable',
             'answers.*.answer' => 'required',
             'answers' => [new AnswersValidationRule()],
         ];
@@ -192,6 +202,7 @@ class Questions extends Component
     public function save()
     {
         $this->validate();
+        // dd($this->explanation);
         $question = Question::create([
             'explanation' => $this->explanation,
             'question' => $this->question,

@@ -20,7 +20,7 @@ class UpdateIncidentesDeSeguridadRequest extends FormRequest
                 'required',
             ],
             'fechaocurrencia' => [
-                'date_format:' . config('panel.date_format'),
+                'date_format:'.config('panel.date_format'),
                 'nullable',
             ],
             'activos.*' => [

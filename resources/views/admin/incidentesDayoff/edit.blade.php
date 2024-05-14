@@ -1,20 +1,41 @@
 @extends('layouts.admin')
-
+@section('css')
+    <link rel="stylesheet" href="{{ asset('css/vacaciones.css') }}{{config('app.cssVersion')}}">
+@endsection
 @section('content')
-<ol class="breadcrumb">
-    <li class="breadcrumb-item">
-        <a href="{!! route('admin.incidentes-dayoff.index') !!}">Exepciones Day Off</a>
-    </li>
-    <li class="breadcrumb-item active">Editar</li>
-</ol>
-    <h5 class="col-12 titulo_general_funcion">Editar: Excepción</h5>
-    <div class="mt-4 card">
-        <div class="card-body">
-            {!! Form::model($vacacion, ['route' => ['admin.incidentes-dayoff.update', $vacacion->id], 'method' => 'patch']) !!}
+    <h5 class="titulo_general_funcion">Modificar: Excepción de DayOff</h5>
 
-            @include('admin.incidentesVacaciones.fields')
-
-            {!! Form::close() !!}
+    <div class="instrucciones">
+        <div>
+            <img src="{{ asset('img/lineamientos.png') }}" alt="lineamientos">
+        </div>
+        <div>
+            <h5>¿Qué es? Lineamientos DayOff</h5>
+            <p>Los Lineamientos de dayoff son documentos normativos que establecen las reglas y condiciones para
+                el
+                otorgamiento y disfrute de las dayoff de los trabajadores. Estos nuevos lineamientos de
+                dayoff
+                tienen
+                como objetivo garantizar que los trabajadores tengan tiempo suficiente para descansar y reponer
+                energías,
+                así
+                como para disfrutar de su tiempo libre.</p>
         </div>
     </div>
+
+    {!! Form::model($vacacion, ['route' => ['admin.incidentes-dayoff.update', $vacacion->id], 'method' => 'patch']) !!}
+    <div class="mt-4 card card-body">
+        <h5>Creación de excepciones</h5>
+        <hr>
+        @include('admin.incidentesDayOff.fields')
+
+    </div>
+    <!-- Submit Field -->
+    <div class="text-right">
+        <a href="{{ route('admin.incidentes-dayoff.index') }}" class="btn btn-outline-primary">Regresar</a>
+        <button class="btn btn-submit" type="submit">
+            {{ trans('global.save') }}
+        </button>
+    </div>
+    {!! Form::close() !!}
 @endsection

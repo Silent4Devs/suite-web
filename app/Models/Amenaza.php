@@ -3,14 +3,15 @@
 namespace App\Models;
 
 //use Eloquent as Model;
+use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class Amenaza extends Model implements Auditable
 {
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
     use SoftDeletes;
-    use \OwenIt\Auditing\Auditable;
 
     public $table = 'amenazas';
 

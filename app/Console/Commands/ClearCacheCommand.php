@@ -42,6 +42,6 @@ class ClearCacheCommand extends Command
         Artisan::call('optimize:clear');
         sleep(10);
         Artisan::call('cache:clear');
-        Log::info('Cache cleared on:' . now()->format('d-m-Y H:i'));
+        Log::info('Cache cleared on:'.now()->format('d-m-Y H:i'));
     }
 }

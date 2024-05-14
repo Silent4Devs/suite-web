@@ -138,7 +138,7 @@ class ActivosController extends Controller
     {
         abort_if(Gate::denies('inventario_activos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $tipoactivos = Tipoactivo::all()->pluck('tipo', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $tipoactivos = Tipoactivo::getAll()->pluck('tipo', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $subtipos = SubcategoriaActivo::all()->pluck('subcategoria', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -146,7 +146,7 @@ class ActivosController extends Controller
 
         $ubicacions = Sede::getAll()->pluck('sede', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $empleados = Empleado::alta()->with('area')->get();
+        $empleados = Empleado::getAltaEmpleadosWithArea();
         $procesos = Proceso::with('macroproceso')->get();
 
         $area = Area::getAll();
@@ -224,7 +224,7 @@ class ActivosController extends Controller
     {
         abort_if(Gate::denies('inventario_activos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $tipoactivos = Tipoactivo::all()->pluck('tipo', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $tipoactivos = Tipoactivo::getAll()->pluck('tipo', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $subtipos = SubcategoriaActivo::all()->pluck('subcategoria', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -232,7 +232,7 @@ class ActivosController extends Controller
 
         $ubicacions = Sede::getall()->pluck('sede', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $empleados = Empleado::alta()->with('area')->get();
+        $empleados = Empleado::getAltaEmpleadosWithArea();
 
         $procesos = Proceso::with('macroproceso')->get();
 
@@ -322,7 +322,7 @@ class ActivosController extends Controller
             $finfo = finfo_open(FILEINFO_MIME_TYPE);
             $content_type = finfo_file($finfo, $src);
             finfo_close($finfo);
-            $file_name = basename($src) . PHP_EOL;
+            $file_name = basename($src).PHP_EOL;
             $size = filesize($src);
             header("Content_Type: $content_type");
             header("Content-Disposition: attachemt; filename=$file_name");
@@ -342,7 +342,7 @@ class ActivosController extends Controller
 
     public function DescargaFormato()
     {
-        if (!$this->downloadFile(storage_path('app/public/exportActivos/Responsiva.docx'))) {
+        if (! $this->downloadFile(storage_path('app/public/exportActivos/Responsiva.docx'))) {
             return redirect()->back();
         }
     }

@@ -16,13 +16,24 @@ class CoursesLesson extends Component
     use WithFileUploads;
 
     public $section;
+
     public $lesson;
+
     public $platforms;
+
     public $name;
+
     public $platform_id = 1;
+
     public $url;
+
     public $description;
+
     public $file;
+
+    public $openElementId;
+
+    protected $listeners = ['closeCollapse'];
 
     protected $rules = [
         'lesson.name' => 'required',
@@ -34,11 +45,12 @@ class CoursesLesson extends Component
     {
         $this->section = $section;
         $this->lesson = new Lesson();
-        $this->platforms = Platform::get();
     }
 
     public function render()
     {
+        $this->platforms = Platform::get();
+
         return view('livewire.escuela.instructor.courses-lesson');
     }
 
@@ -48,7 +60,7 @@ class CoursesLesson extends Component
             'name' => 'required',
             'platform_id' => 'required',
             'url' => ['required', 'regex:%^(?:https?://)?(?:www\.)?(?:youtu\.be/|youtube\.com(?:/watch\?v=|/embed/|/v/))([\w-]+)(?:\S*)$%x'],
-            'file' => 'required',
+            // 'file' => 'required',
         ];
 
         if ($this->platform_id == 2) {
@@ -57,34 +69,47 @@ class CoursesLesson extends Component
 
         $this->validate($rules);
 
-        $urlresorce = $this->file->store('cursos');
         $resource = Lesson::create([
             'name' => $this->name,
             'platform_id' => $this->platform_id,
-            'url' => $this->url,
+            'url' => $this->url.'?rel=0',
             'section_id' => $this->section->id,
             'description' => $this->description,
         ]);
-        $resource->resource()->create([
-            'url' => $urlresorce,
-        ]);
+
+        if ($this->file) {
+            $urlresorce = $this->file->store('cursos');
+            $resource->resource()->create([
+                'url' => $urlresorce,
+            ]);
+        }
+
         $this->reset('name', 'platform_id', 'url', 'description', 'file');
 
         $this->section = Section::find($this->section->id);
 
         // dd($resource, $this->section->course_id);
         $this->render_alerta('success', 'Registro añadido exitosamente');
+
     }
 
     public function edit(Lesson $lesson)
     {
-        // dd($this->lesson, $lesson);
+        // dd($lesson->resource);
         $this->resetValidation();
         $this->lesson = $lesson;
     }
 
     public function update()
     {
+        // dd($this->lesson);
+        $rules = [
+            'lesson.name' => 'required',
+            'platform_id' => 'required',
+            'url' => ['required', 'regex:%^(?:https?://)?(?:www\.)?(?:youtu\.be/|youtube\.com(?:/watch\?v=|/embed/|/v/))([\w-]+)(?:\S*)$%x'],
+            // 'file' => 'required',
+        ];
+
         if ($this->lesson->platform_id == 2) {
             $this->rules['lesson.url'] = ['required', 'regex:/\/\/(www\.)?vimeo.com\/(\d+)($|\/)/'];
         }
@@ -92,7 +117,13 @@ class CoursesLesson extends Component
         $this->validate();
 
         $this->lesson->save();
-        $this->lesson = new Lesson();
+        if ($this->file) {
+            $urlresorce = $this->file->store('cursos');
+            $this->lesson->resource()->create([
+                'url' => $urlresorce.'?rel=0',
+            ]);
+        }
+        // $this->lesson = new Lesson();
 
         $this->section = Section::find($this->section->id);
         $this->render_alerta('success', 'Registro actualizado exitosamente');
@@ -121,5 +152,10 @@ class CoursesLesson extends Component
             'toast' => true,
             'timerProgressBar' => true,
         ]);
+    }
+
+    public function closeCollapse()
+    {
+        $this->openElementId = null;
     }
 }

@@ -74,7 +74,10 @@ class PartesInteresadasController extends Controller
         abort_if(Gate::denies('partes_interesadas_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $request->validate([
-            'parteinteresada' => ['required'],
+            'parteinteresada' => ['required', 'max:255'],
+        ], [
+            'parteinteresada.required' => 'El campo de parte interesada es obligatorio.',
+            'parteinteresada.max' => 'El campo de parte interesada no puede tener más de 255 caracteres.',
         ]);
 
         $partes = PartesInteresada::create($request->all());
@@ -89,6 +92,9 @@ class PartesInteresadasController extends Controller
     {
         abort_if(Gate::denies('partes_interesadas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $partesInteresada = PartesInteresada::find($id);
+        if (! $partesInteresada) {
+            return redirect()->route('admin.partes-interesadas.index')->with('success', 'El registro  no existe!');
+        }
         $clausulas = Clausula::get();
         $partesInteresada->load('team');
 
@@ -100,7 +106,10 @@ class PartesInteresadasController extends Controller
         abort_if(Gate::denies('partes_interesadas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $request->validate([
-            'parteinteresada' => ['required'],
+            'parteinteresada' => ['required', 'max:255'],
+        ], [
+            'parteinteresada.required' => 'El campo de parte interesada es obligatorio.',
+            'parteinteresada.max' => 'El campo de parte interesada no puede tener más de 255 caracteres.',
         ]);
 
         $partesInteresada = PartesInteresada::find($partesInteresada);

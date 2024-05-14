@@ -30,15 +30,16 @@
 
     {{ Breadcrumbs::render('EV360-ListaDocumentosEmpleados') }}
     <h5 class="col-12 titulo_general_funcion">Lista de Documentos de Empleados</h5>
-    @include('partials.flashMessages')
-    <div class="card card-body">
-        <div class="datatable-fix">
-            @can('lista_de_documentos_empleados_agregar')
-                <div class="w-100 text-right">
-                    <div class="btn btn-success" data-toggle="modal" data-target="#modal_crear_doc_e">Agregar</div>
-                </div>
-            @endcan
-            <table class="table table-bordered w-100 datatable datatable-Perfiles" id="tabla_list_docs">
+
+    <div class="text-right">
+        <div class="d-flex justify-content-end">
+            <div class="btn btn-primary" data-toggle="modal" data-target="#modal_crear_doc_e">Agregar</div>
+        </div>
+    </div>
+        @include('partials.flashMessages')
+        <div class="datatable-fix datatable-rds">
+            <h3 class="title-table-rds"> Lista de Documentos de Empleados</h3>
+            <table class="datatable  datatable-Perfiles" id="tabla_list_docs">
                 <thead class="thead-dark">
                     <tr>
                         <th>Documento</th>
@@ -73,7 +74,7 @@
                 </tbody>
             </table>
         </div>
-    </div>
+
 
     {{-- modal crar --}}
     <div class="modal fade" id="modal_crear_doc_e" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"

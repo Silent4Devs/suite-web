@@ -54,7 +54,7 @@ class CompetenciasPorPuestoController extends Controller
 
         // $areas = Area::get();
 
-        $areas = Area::getAll();
+        $areas = Area::getIdNameAll();
 
         return view('admin.recursos-humanos.evaluacion-360.competencias-por-puesto.index', compact('areas'));
     }
@@ -97,7 +97,7 @@ class CompetenciasPorPuestoController extends Controller
         $exists = CompetenciaPuesto::where('puesto_id', '=', intval($puesto))
             ->where('competencia_id', '=', $request->competencia_id)
             ->exists();
-        if (!$exists) {
+        if (! $exists) {
             $puestoCompetencia = CompetenciaPuesto::create([
                 'puesto_id' => intval($puesto),
                 'competencia_id' => $request->competencia_id,

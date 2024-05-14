@@ -2,7 +2,7 @@
 @section('content')
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/favicon_tabantaj.png') }}">
 @section('styles')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/login.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/login.css') }}{{config('app.cssVersion')}}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
 @endsection
 
@@ -297,7 +297,7 @@
 </div>
 
 
-<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <script type="text/javascript">
     $("#login").click(function() {
         $("#login").removeClass("clase_animacion");

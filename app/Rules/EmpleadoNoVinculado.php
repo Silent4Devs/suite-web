@@ -26,7 +26,7 @@ class EmpleadoNoVinculado implements Rule
      */
     public function passes($attribute, $value)
     {
-        return !User::where('n_empleado', $value)->exists();
+        return ! User::where('n_empleado', $value)->exists();
     }
 
     /**

@@ -3,15 +3,20 @@
 namespace App\Models\Escuela;
 
 use App\Models\Escuela\Instructor\Question;
+use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Evaluation extends Model
+class Evaluation extends Model implements Auditable
 {
-    use HasFactory;
+    use ClearsResponseCache, HasFactory;
+    use \OwenIt\Auditing\Auditable;
     use SoftDeletes;
+
     protected $table = 'evaluations';
+
     protected $guarded = ['id'];
 
     public function questions()

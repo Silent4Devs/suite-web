@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('QUEUE_CONNECTION', 'redis'),
+    'default' => env('QUEUE_CONNECTION', 'rabbitmq'),
 
     /*
     |--------------------------------------------------------------------------
@@ -65,6 +65,23 @@ return [
             'queue' => env('REDIS_QUEUE', 'default'),
             'retry_after' => 90,
             'block_for' => null,
+        ],
+
+        'rabbitmq' => [
+
+            'driver' => 'rabbitmq',
+            'hosts' => [
+                [
+                    'host' => env('RABBITMQ_HOST', 'chimpanzee-01.rmq.cloudamqp.com'),
+                    'port' => env('RABBITMQ_PORT', 5672),
+                    'user' => env('RABBITMQ_USER', 'bzzmgmoa'),
+                    'password' => env('RABBITMQ_PASSWORD', 'EtnXknedY3fPyVopx2O3oB0DeQPVzhHG'),
+                    'vhost' => env('RABBITMQ_VHOST', 'bzzmgmoa'),
+                ],
+                // ...
+            ],
+
+            // ...
         ],
 
     ],

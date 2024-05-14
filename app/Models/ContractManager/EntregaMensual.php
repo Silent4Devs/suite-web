@@ -2,6 +2,7 @@
 
 namespace App\Models\ContractManager;
 
+use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -12,8 +13,8 @@ class EntregaMensual extends Model implements Auditable
 {
     public $table = 'entregas_mensuales';
 
-    use HasFactory,softDeletes;
     use AuditableTrait;
+    use ClearsResponseCache, HasFactory, softDeletes;
 
     protected $dates = ['deleted_at'];
 
@@ -63,8 +64,8 @@ class EntregaMensual extends Model implements Auditable
     {
         $archivo = EntregableFile::where('entregable_id', $this->id)->first();
         $archivo = $archivo ? $archivo->pdf : '';
-        $ruta = asset('storage/contratos/' . $this->contrato->id . '_contrato_' . $this->contrato->no_contrato . '/entregables/pdf');
-        $ruta = $ruta . '/' . $archivo;
+        $ruta = asset('storage/contratos/'.$this->contrato->id.'_contrato_'.$this->contrato->no_contrato.'/entregables/pdf');
+        $ruta = $ruta.'/'.$archivo;
 
         return $ruta;
     }

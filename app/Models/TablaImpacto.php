@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\ClearsResponseCache;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -19,7 +20,7 @@ use OwenIt\Auditing\Contracts\Auditable;
  */
 class TablaImpacto extends Model implements Auditable
 {
-    use \OwenIt\Auditing\Auditable;
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
 
     protected $table = 'tabla_impacto';
 

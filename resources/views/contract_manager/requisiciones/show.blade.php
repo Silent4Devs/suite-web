@@ -3,7 +3,7 @@
 @section('titulo', 'Ver Requisición')
 
 @include('layouts.datatables_css')
-<link rel="stylesheet" href="{{asset('css/requisiciones.css')}}">
+<link rel="stylesheet" href="{{asset('css/requisiciones.css')}}{{config('app.cssVersion')}}">
 <style>
     @media print{
         .card.card-item{
@@ -69,7 +69,11 @@
                         {{$requisicion->referencia }}
                         <br><br>
                         <strong>Proyecto:</strong><br>
-                        {{ $requisicion->contrato->no_proyecto }} / {{ $requisicion->contrato->no_contrato }} - {{ $requisicion->contrato->nombre_servicio }}
+                        @if($requisicion->contrato === null)
+                        <strong>Contrato Eliminado!</strong>
+                        @else
+                        {{ optional($requisicion->contrato)->no_proyecto }} - {{ optional($requisicion->contrato)->no_contrato }} - {{ optional($requisicion->contrato)->nombre_servicio }}
+                        @endif
                     </div>
                     <div class="flex-item">
                         <strong>Área que solicita:</strong><br>
@@ -230,12 +234,23 @@
                     <div class="row">
                         <div class="col s12 l4">
                             <strong> Fecha Inicio: </strong> <br> <br>
-                            {{ date('d-m-Y', strtotime($proveedor_indistinto->fecha_inicio))  }}
+                            @isset($proveedor_indistinto->fecha_inicio)
+                                {{ date('d-m-Y', strtotime($proveedor_indistinto->fecha_inicio)) }}
+                            @else
+                                La fecha de inicio no está disponible.
+                            @endisset
                         </div>
+
                         <div class="col s12 l4">
                             <strong> Fecha fin: </strong> <br> <br>
-                            {{ date('d-m-Y', strtotime($proveedor_indistinto->fecha_fin))  }}
+                            @isset($proveedor_indistinto->fecha_fin)
+                                {{ date('d-m-Y', strtotime($proveedor_indistinto->fecha_fin)) }}
+                            @else
+                                La fecha fin no está disponible.
+                            @endisset
                         </div>
+
+
 
                     </div>
                 </div>
@@ -275,20 +290,9 @@
                     <div class="flex">
                         <div class="flex-item">
                             @if ($requisicion->firma_finanzas)
-                                @if (Auth::user()->email === 'ldelgadillo@silent4business.com')
                                 <img src="{{$requisicion->firma_finanzas}}" class="img-firma">
-                                <p>Layla Del Gadillo </p>
+                                <p>{{ $firma_finanzas ?? '' }}</p>
                                 <p>{{ $requisicion->fecha_firma_finanzas_requi }}</p>
-                                <hr>
-                                <p>
-                                <small> FECHA, FIRMA Y NOMBRE  DE APROBADOR</small>
-                                </p>
-                                @else
-                                <img src="{{$requisicion->firma_finanzas}}" class="img-firma">
-                                <p>Lourdes del Pilar Abadía Velasco </p>
-                                <p>{{ $requisicion->fecha_firma_finanzas_requi }}</p>
-
-                                @endif
                             @else
                                 <div style="height: 137px;"></div>
                             @endif

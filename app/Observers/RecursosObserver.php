@@ -27,13 +27,13 @@ class RecursosObserver
     {
         // $recurso->participantes()->sync($this->request->input('participantes', []));
         $recurso->empleados()->sync($this->request->input('participantes', []));
-        $empleados = Empleado::find($this->request->input('participantes', []));
+        $empleados = Empleado::getAll()->find($this->request->input('participantes', []));
         if ($this->request->estatus == 'Draft') {
             // Code..
         } elseif ($recurso->estatus == 'Enviado') {
             if ($recurso->configuracion_invitacion_envio->enviar_ahora) {
                 foreach ($empleados as $empleado) {
-                    Mail::to(removeUnicodeCharacters($empleado->email))->send(new InvitacionCapacitacionMail($empleado, $recurso));
+                    Mail::to(removeUnicodeCharacters($empleado->email))->queue(new InvitacionCapacitacionMail($empleado, $recurso));
                 }
             }
         }
@@ -48,7 +48,7 @@ class RecursosObserver
      */
     public function updated(Recurso $recurso)
     {
-        $empleados = Empleado::find($this->request->input('participantes', []));
+        $empleados = Empleado::getAll()->find($this->request->input('participantes', []));
 
         if (count($this->request->input('participantes', [])) > 0) {
             // $recurso->empleados()->detach();
@@ -59,7 +59,7 @@ class RecursosObserver
         } elseif ($recurso->estatus == 'Enviado') {
             if ($recurso->configuracion_invitacion_envio->enviar_ahora) {
                 foreach ($empleados as $empleado) {
-                    Mail::to(removeUnicodeCharacters($empleado->email))->send(new InvitacionCapacitacionMail($empleado, $recurso));
+                    Mail::to(removeUnicodeCharacters($empleado->email))->queue(new InvitacionCapacitacionMail($empleado, $recurso));
                 }
             }
         }

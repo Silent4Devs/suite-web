@@ -59,6 +59,6 @@ class TimeSheetClienteObserver
 
     private function forgetCache()
     {
-        Cache::forget('timesheetcliente_all');
+        Cache::forget('TimesheetCliente:timesheetcliente_all');
     }
 }

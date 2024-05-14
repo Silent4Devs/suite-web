@@ -2,7 +2,7 @@
 
 
     <div class="col-12">
-        <label for="evidencia"><i class="fas fa-folder-open iconos-crear"></i>Documento(s)</label>
+        <label for="evidencia">Documento(s)</label>
     </div>
     {{-- <form class="form-inline" action="{{ route('admin.minutasaltadireccions.store') }}"
         enctype="multipart/form-data"> --}}
@@ -33,8 +33,9 @@
         <div wire:loading.remove wire:target="save">Subir archivos(s)</div>
         <div wire:loading wire:target="save"><i class="fas fa-spinner fa-spin mr-2"></i>
             Subiendo archivos
-        </div></button>
-   
+        </div>
+    </button>
+
     {{-- </form> --}}
 
     <div class="col-12 form-group" style="position: relative;">
@@ -44,7 +45,8 @@
                 @foreach ($minutas->documentos as $item)
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         {{ $item->name }}
-                        <span><a href="{{$path. "/" .$item->name}}" target="_blank"><i class="fas fa-download text-primary"></i></a><i
+                        <span><a href="{{ $path . '/' . $item->name }}" target="_blank"><i
+                                    class="fas fa-download text-primary"></i></a><i
                                 class="fas fa-trash-alt text-danger ml-3"
                                 wire:click.prevent="destroy({{ $item->id }})"></i></span>
                     </li>
@@ -67,8 +69,9 @@
         justify-content: center;
         align-items: center;
         color: #ebedef;
-        border-radius: 5px;" wire:loading.flex wire:target="destroy">
-        <i class="fas fa-spinner fa-spin mr-2"></i>Estamos eliminando
+        border-radius: 5px;"
+            wire:loading.flex wire:target="destroy">
+            <i class="fas fa-spinner fa-spin mr-2"></i>Estamos eliminando
         </div>
 
 

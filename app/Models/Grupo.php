@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\ClearsResponseCache;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -23,9 +24,9 @@ use OwenIt\Auditing\Contracts\Auditable;
  */
 class Grupo extends Model implements Auditable
 {
-    use SoftDeletes;
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
     use HasFactory;
-    use \OwenIt\Auditing\Auditable;
+    use SoftDeletes;
 
     protected $table = 'grupos';
 

@@ -8,6 +8,15 @@
             clip-path: circle(10px at 50% 50%);
             height: 20px;
         }
+        .boton-sin-borde {
+        border: none;
+        outline: none; /* Esto elimina el contorno al hacer clic */
+        }
+        .boton-transparente {
+        background-color: transparent;
+        border: none; /* Elimina el borde del botón si lo deseas */
+        }
+
 
     </style>
     <h5 class="col-12 titulo_general_funcion">Asignar competencias por puesto</h5>
@@ -33,62 +42,68 @@
                 </div>
             </div>
 
-            <table class="table table-bordered w-100 tblCompetenciasPorPuesto">
-
-                <div class="mb-2 row">
-                    <div class="col-4">
-                        <label for=""><i class="fas fa-filter"></i> Filtrar por área</label>
-                        <select class="form-control" id="lista_areas">
-                            <option value="" disabled selected>-- Selecciona un área --</option>
-                            @foreach ($areas as $area)
-                                <option value="{{ $area->area }}">{{ $area->area }}</option>
-                            @endforeach
-                            <option value="">Todas</option>
-                        </select>
-                    </div>
+            <div class="mb-2 row">
+                <div class="col-4">
+                    <label for=""><i class="fas fa-filter"></i> Filtrar por área</label>
+                    <select class="form-control" id="lista_areas">
+                        <option value="" disabled selected>-- Selecciona un área --</option>
+                        @foreach ($areas as $area)
+                            <option value="{{ $area->area }}">{{ $area->area }}</option>
+                        @endforeach
+                        <option value="">Todas</option>
+                    </select>
                 </div>
-                <thead class="thead-dark">
-                    <tr>
-                        <th style="vertical-align: top">
-                            Puesto
-                        </th>
-                        <th>
-                            Área
-                        </th>
-                        <th style="vertical-align: top">
-                            Competencias
-                        </th>
-                        <th style="vertical-align: top">
-                            Competencias asignadas
-                        </th>
-                        <th style="vertical-align: top">
-                            Opciones
-                        </th>
-                    </tr>
-                    {{-- <tbody>
+            </div>
 
-                    </tbody>
-                    <tfoot>
+            @include('partials.flashMessages')
+            <div class="datatable-fix datatable-rds">
+                <div class="d-flex justify-content-end">
+                    <a class="boton-transparente boton-sin-borde" href="{{ route('descarga-puesto') }}">
+                        <img src="{{ asset('download_FILL0_wght300_GRAD0_opsz24.svg') }}" alt="Importar" class="icon">
+                    </a> &nbsp;&nbsp;&nbsp;
+                    <a class="boton-transparente boton-sin-borde" id="btnImport">
+                        <img src="{{ asset('upload_file_FILL0_wght300_GRAD0_opsz24.svg') }}" alt="Importar" class="icon">
+                    </a>
+                    @include('csvImport.modalperfilpuesto', [
+                        'model' => 'Vulnerabilidad',
+                        'route' => 'admin.vulnerabilidads.parseCsvImport',
+                    ])
+                </div>
+                <h3 class="title-table-rds"> Puestos</h3>
+                <table class="datatable tblCompetenciasPorPuesto" id="tblCompetenciasPorPuesto">
+                    <thead class="thead-dark">
                         <tr>
-                            <td>
-                                <select data-column="1" class="form-control filter-select" id="lista_areas">
-                                    <option value="" disabled selected>-- Selecciona un área --</option>
-                                    @foreach ($areas as $area)
-                                        <option value="{{ $area->area }}">{{ $area->area }}</option>
-                                    @endforeach
-                                    <option value="">Todas</option>
-                                </select>
-                            </td>
+                            <th style="vertical-align: top">
+                                Puesto
+                            </th>
+                            <th>
+                                Área
+                            </th>
+                            <th style="vertical-align: top">
+                                Competencias
+                            </th>
+                            <th style="vertical-align: top">
+                                Competencias asignadas
+                            </th>
+                            <th style="vertical-align: top">
+                                Opciones
+                            </th>
                         </tr>
-                    </tfoot> --}}
-                </thead>
-            </table>
+                    </thead>
+                </table>
+            </div>
+
         </div>
     </div>
 @endsection
 @section('scripts')
     @parent
-
+    <script>
+        $('#btnImport').on('click', function(e) {
+        e.preventDefault();
+        $('#xlsxImportModal').modal('show');
+     });
+    </script>
     <script>
         $(function() {
             let dtButtons = [{

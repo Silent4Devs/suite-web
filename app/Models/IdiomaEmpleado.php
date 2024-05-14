@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\ClearsResponseCache;
 use App\Traits\DateTranslator;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -9,9 +10,9 @@ use OwenIt\Auditing\Contracts\Auditable;
 
 class IdiomaEmpleado extends Model implements Auditable
 {
-    use HasFactory;
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
     use DateTranslator;
-    use \OwenIt\Auditing\Auditable;
+    use HasFactory;
 
     const NIVELES = [
         'Basico' => 'Básico',
@@ -32,7 +33,7 @@ class IdiomaEmpleado extends Model implements Auditable
 
     public function getRutaDocumentoAttribute()
     {
-        return asset('storage/cursos_empleados/') . '/' . $this->certificado;
+        return asset('storage/cursos_empleados/').'/'.$this->certificado;
     }
 
     public function getRutaAbsolutaDocumentoAttribute()

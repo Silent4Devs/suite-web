@@ -30,13 +30,10 @@
         </div>
     </div>
     <div class="col-sm-12 col-lg-6 col-md-6 col-12">
-        <div class="form-group">
-            <label for="nombre">
-                <i class="fas fa-star iconos-crear"></i> Nombre de la competencia<span class="text-danger">*</span>
-            </label>
+        <div class="form-group anima-focus">
             <input type="text" class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" id="nombre"
-                aria-describedby="nombreHelp" name="nombre" value="{{ old('nombre', $competencia->nombre) }}">
-            <small id="nombreHelp" class="form-text text-muted">Ingresa el nombre de la competencia</small>
+                aria-describedby="nombreHelp" placeholder="" name="nombre" value="{{ old('nombre', $competencia->nombre) }}">
+            {!! Form::label('nombre', 'Nombre de la competencia*', ['class' => 'asterisco']) !!}
             @if ($errors->has('nombre'))
                 <div class="invalid-feedback">
                     {{ $errors->first('nombre') }}
@@ -46,13 +43,11 @@
         </div>
     </div>
     <div class="col-sm-12 col-lg-6 col-md-6 col-12">
-        <div class="form-group">
-            <label for="tipo_id">
-                <i class="fas fa-layer-group iconos-crear"></i> Tipo de competencia <span class="text-danger">*</span>
-            </label>
+        <div class="form-group anima-focus">
             {{-- Modulo para tipo de competencia --}}
             <div class="row align-items-center">
                 <div class="col-9" style=" margin-top:-9px">
+                    {!! Form::label('descripcion', 'Tipo de competencia*', ['class' => 'asterisco']) !!}
                     @livewire('tipo-competencia-select',['tipo_seleccionado'=>$tipo_seleccionado])
                 </div>
                 <div class="pl-0 col" style="text-align: center;
@@ -69,13 +64,10 @@
         </div>
     </div>
     <div class="col-sm-12 col-lg-12 col-md-12 col-12">
-        <div class="form-group">
-            <label for="descripcion">
-                <i class="fas fa-pencil-alt iconos-crear"></i></i> Descripción
-            </label>
+        <div class="form-group anima-focus">
             <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" name="descripcion"
-                id="" cols="30" rows="10">{{ old('descripcion', $competencia->descripcion) }}</textarea>
-            <small id="descripcionHelp" class="form-text text-muted">Ingresa la Descripción la competencia</small>
+                id="" cols="30" placeholder="" rows="10">{{ old('descripcion', $competencia->descripcion) }}</textarea>
+                {!! Form::label('descripcion', 'Descripción*', ['class' => 'asterisco']) !!}
             @if ($errors->has('descripcion'))
                 <div class="invalid-feedback">
                     {{ $errors->first('descripcion') }}

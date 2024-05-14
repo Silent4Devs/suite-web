@@ -33,7 +33,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $roles = Role::get();
+        $roles = Role::getAll();
 
         return view('admin.users.create', compact('roles'));
     }
@@ -41,7 +41,6 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request, User $user)
@@ -85,7 +84,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        $roles = Role::all();
+        $roles = Role::getAll();
 
         return view('admin.users.edit', [
             'user' => $user,
@@ -96,7 +95,6 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -115,7 +113,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy($id)
     {
         $user->delete();
         Alert::toast('El usuario fue eliminado exitosamente', 'success');

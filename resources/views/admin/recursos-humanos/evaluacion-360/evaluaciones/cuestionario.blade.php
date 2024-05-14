@@ -36,13 +36,62 @@
             color: grey;
             font-size: 14px;
         }
-
     </style>
-    <div class="mt-3">
-        {{ Breadcrumbs::render('EV360-Evaluacion-Cuestionario', ['evaluacion' => $evaluacion,'evaluado' => $evaluado,'evaluador' => $evaluador]) }}
-    </div>
+    {{-- <div class="mt-3">
+        {{ Breadcrumbs::render('EV360-Evaluacion-Cuestionario', ['evaluacion' => $evaluacion, 'evaluado' => $evaluado, 'evaluador' => $evaluador]) }}
+    </div> --}}
     @include('partials.flashMessages')
     <h5 class="col-12 titulo_general_funcion">Evaluación: {{ $evaluacion->nombre }}</h5>
+
+    @if ($evaluador->id == $evaluado->id)
+        <div class="mt-4 card">
+            <div class="pt-0 card-body mt-4 col-12">
+                <table class="datatable-rds" style="width: 100%;">
+                    <thead>
+                        <th>
+                            Nombre de la evaluación
+                        </th>
+                        <th>
+                            Fecha de creación
+                        </th>
+                        <th>
+                            Autoevaluación
+                        </th>
+                        <th>
+                            Evaluaciones a realizar
+                        </th>
+                    </thead>
+                    <tbody>
+                        <td>
+                            {{ $evaluacion->nombre }}
+                        </td>
+                        <td>
+                            {{ \Carbon\Carbon::parse($evaluacion->fecha_fin)->format('d-m-Y') }}
+                        </td>
+                        <td>
+                            {{ \Carbon\Carbon::parse($evaluacion->fecha_fin)->format('d-m-Y') }}
+                        </td>
+                        <td>
+                            @foreach ($evaluaciones_a_realizar as $evaluar)
+                                <a
+                                    href="{{ url('admin/recursos-humanos/evaluacion-360/evaluaciones/' . $evaluacion->id . '/evaluacion/' . $evaluar->empleado_evaluado->id . '/' . $evaluado->id) }}">
+                                    <img style=""
+                                        src="{{ asset('storage/empleados/imagenes/') }}/{{ $evaluar->empleado_evaluado->avatar }}"
+                                        class="rounded-circle" alt="{{ $evaluar->empleado_evaluado->name }}"
+                                        title="{{ $evaluar->empleado_evaluado->name }}">
+                                    @if ($evaluar->evaluado)
+                                        <i class="fas fa-check-circle"
+                                            style="position: relative; top: 0; left: -70px; z-index: 1; color: #002102; text-shadow: 1px 1px 0px gainsboro;"></i>
+                                    @endif
+                                </a>
+                            @endforeach
+                        </td>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    @endif
+
     <div class="mt-4 card">
         <div class="pt-0 card-body">
 
@@ -93,8 +142,7 @@
                                         </div>
                                     </div>
                                     <div class="col-11">
-                                        <p class="m-0"
-                                            style="font-size: 16px; font-weight: bold; color: #1E3A8A">
+                                        <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">
                                             Muchas gracias</p>
                                         <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Su respuesta
                                             ha
@@ -127,8 +175,7 @@
                                             </div>
                                         </div>
                                         <div class="col-11">
-                                            <p class="m-0"
-                                                style="font-size: 16px; font-weight: bold; color: #1E3A8A">
+                                            <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">
                                                 Evaluación Cerrada</p>
                                             <p class="m-0" style="font-size: 14px; color:#1E3A8A ">
                                                 Esta evaluación ha sido cerrada.
@@ -149,7 +196,7 @@
                                         style="background-color:#345183; border-radius: 100px; color: white;">
                                         SECCIÓN DE COMPETENCIAS
                                     </div>
-                                    <section id="sectionCompetencias" class="mt-2" x-data="{show:true}">
+                                    <section id="sectionCompetencias" class="mt-2" x-data="{ show: true }">
                                         <h5 class="head">
                                             <i class="mr-1 fas fa-chart-line"></i> Competencias
                                             <span style="float: right; cursor:pointer; margin-top: 0px;"
@@ -233,8 +280,7 @@
                                                                         </div>
                                                                     @endif
                                                                 @endif
-                                                                <div class="col-2"
-                                                                    id="esperado{{ $idx }}">
+                                                                <div class="col-2" id="esperado{{ $idx }}">
                                                                     <div style="background: aliceblue;"
                                                                         class="form-control">
                                                                         {{ $competencia->competencia->competencia_puesto->first()->nivel_esperado }}
@@ -244,7 +290,8 @@
                                                                     class="col-{{ $evaluacion->autoevaluacion ? ($isJefeInmediato ? '4' : '6') : '6' }} justify-content-between">
                                                                     <select class="form-control" name="respuesta"
                                                                         onchange="event.preventDefault();GuardarRepuesta(this,'{{ route('admin.ev360-competencias.guardarRespuestaCompetencia', $competencia->competencia->id) }}')">
-                                                                        <option value="" disabled selected>
+                                                                        <option value="" disabled selected
+                                                                            {{ $competencia->calificacion === null ? 'selected' : '' }}>
                                                                             -- Selecciona una calificación --
                                                                         </option>
                                                                         @foreach ($competencia->competencia->opciones as $opcion)
@@ -253,12 +300,14 @@
                                                                                 data-evaluado="{{ $evaluado->id }}"
                                                                                 data-evaluador="{{ $evaluador->id }}"
                                                                                 value="{{ $opcion->ponderacion }}"
-                                                                                {{ $opcion->ponderacion == $competencia->calificacion ? 'selected' : '' }}>
+                                                                                {{ $opcion->ponderacion == $competencia->calificacion && $competencia->calificacion !== null ? 'selected' : '' }}>
                                                                                 {{ $opcion->ponderacion }}
                                                                             </option>
                                                                         @endforeach
                                                                     </select>
                                                                 </div>
+
+
                                                             </div>
                                                         </div>
                                                     @endif
@@ -282,7 +331,7 @@
                                         style="background-color:#345183; border-radius: 100px; color: white;">
                                         SECCIÓN DE OBJETIVOS
                                     </div>
-                                    <section class="mt-1" x-data="{show:true}">
+                                    <section class="mt-1" x-data="{ show: true }">
                                         <h5 class="head">
                                             <i class="mr-1 fas fa-bullseye"></i> Objetivos
                                             <span style="float: right; cursor:pointer; margin-top: 0px;"
@@ -367,7 +416,7 @@
                                                                 {{ $objetivo->objetivo->metrica->definicion }}
                                                             </div>
                                                             <div class="row">
-                                                                @if ($evaluacion->autoevaluacion)
+                                                                {{-- @if ($evaluacion->autoevaluacion)
                                                                     @if ($isJefeInmediato)
                                                                         <div class="col-6">
                                                                             <label class="m-0 mt-2"><i
@@ -398,7 +447,7 @@
                                                                         value="{{ $objetivo->calificacion }}"
                                                                         class="form-control" type="number"
                                                                         placeholder="Ingresa la meta alcanzada">
-                                                                </div>
+                                                                </div> --}}
                                                                 <div class="col-12">
                                                                     <label class="m-0 mt-2">
                                                                         <i class="mr-2 far fa-dot-circle"></i>
@@ -408,24 +457,14 @@
                                                                     <select name="" id="calificacionPersepcion"
                                                                         class="form-control"
                                                                         onchange="event.preventDefault();saveCalificacionPersepcion(this,'{{ $objetivo->objetivo->id }}','{{ $evaluado->id }}','{{ $evaluador->id }}','{{ $evaluacion->id }}','{{ route('admin.ev360-evaluaciones.objetivos.saveCalificacionPersepcion') }}','{{ $objetivo->id }}')">
-                                                                        <option value="" selected disabled>-- Selecciona una
+                                                                        <option value="" selected disabled>--
+                                                                            Selecciona una
                                                                             calificación --</option>
-                                                                        <option
-                                                                            value="{{ App\Models\RH\ObjetivoRespuesta::INACEPTABLE }}">
-                                                                            Inaceptable
-                                                                        </option>
-                                                                        <option
-                                                                            value="{{ App\Models\RH\ObjetivoRespuesta::MINIMO_ACEPTABLE }}">
-                                                                            Mínimo Aceptable
-                                                                        </option>
-                                                                        <option
-                                                                            value="{{ App\Models\RH\ObjetivoRespuesta::ACEPTABLE }}">
-                                                                            Aceptable
-                                                                        </option>
-                                                                        <option
-                                                                            value="{{ App\Models\RH\ObjetivoRespuesta::SOBRESALIENTE }}">
-                                                                            Sobresaliente
-                                                                        </option>
+                                                                        @foreach ($evaluacion->rangos as $rango)
+                                                                            <option value="{{ $rango->valor }}"
+                                                                                @if ($rango->valor == $objetivo->calificacion_persepcion) selected @endif>
+                                                                                {{ $rango->parametro }}</option>
+                                                                        @endforeach
                                                                     </select>
                                                                 </div>
                                                             </div>
@@ -437,8 +476,7 @@
                                                                             class="mr-2 far fa-dot-circle"></i>Comentarios
                                                                         Autoevaluación</label>
                                                                     <textarea class="m-0 form-control" readonly rows="0"
-                                                                        id="autoevaluacionComentariosObjetivos{{ $objetivo->objetivo_id }}"
-                                                                        type="text">Cargando autoevaluacion...</textarea>
+                                                                        id="autoevaluacionComentariosObjetivos{{ $objetivo->objetivo_id }}" type="text">Cargando autoevaluacion...</textarea>
                                                                 @endif
                                                             @endif
                                                             <label class="m-0">
@@ -451,9 +489,7 @@
                                                             </label>
                                                             <textarea
                                                                 onchange="event.preventDefault();saveMetaAlcanzadaDescripcion(this,'{{ $objetivo->objetivo->id }}','{{ $evaluado->id }}','{{ $evaluador->id }}','{{ $evaluacion->id }}','{{ route('admin.ev360-evaluaciones.objetivos.storeMetaAlcanzadaDescripcion') }}')"
-                                                                placeholder="Comentarios adicionales"
-                                                                class="m-0 form-control"
-                                                                type="text"> {{ $objetivo->meta_alcanzada }}</textarea>
+                                                                placeholder="Comentarios adicionales" class="m-0 form-control" type="text"> {{ $objetivo->meta_alcanzada }}</textarea>
                                                         </div>
                                                     </div>
                                                 @endforeach
@@ -514,8 +550,7 @@
                                     <br />
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <textarea id="sig-evaluador-dataUrl" readonly class="d-none form-control"
-                                                rows="5">Data URL de tu firma será almacenada aquí</textarea>
+                                            <textarea id="sig-evaluador-dataUrl" readonly class="d-none form-control" rows="5">Data URL de tu firma será almacenada aquí</textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -544,8 +579,7 @@
                                         <br />
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <textarea id="sig-evaluado-dataUrl" readonly class="form-control d-none"
-                                                    rows="5">Data URL de tu firma será almacenada aquí</textarea>
+                                                <textarea id="sig-evaluado-dataUrl" readonly class="form-control d-none" rows="5">Data URL de tu firma será almacenada aquí</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -567,7 +601,7 @@
                         <div class="mt-3 d-flex justify-content-end">
                             <a href="{{ route('admin.inicio-Usuario.index') }}" class="btn btn_cancelar">Salir</a>
                             <button
-                                onclick="event.preventDefault();FinalizarEvaluacion('{{ route('admin.ev360-evaluaciones.finalizarEvaluacion', ['evaluacion' => $evaluacion,'evaluado' => $evaluado,'evaluador' => $evaluador]) }}')"
+                                onclick="event.preventDefault();FinalizarEvaluacion('{{ route('admin.ev360-evaluaciones.finalizarEvaluacion', ['evaluacion' => $evaluacion, 'evaluado' => $evaluado, 'evaluador' => $evaluador]) }}')"
                                 class="btn btn-danger">Finalizar</button>
                         </div>
                     @endif
@@ -636,7 +670,7 @@
                 let contains_autoevaluacion = @json($evaluacion->autoevaluacion ? true : false);
                 if (contains_autoevaluacion) {
                     mostrarAutoevaluacion(evaluado, evaluador, evaluacion);
-                    mostrarAutoevaluacionObjetivos(evaluado, evaluador, evaluacion);
+                    // mostrarAutoevaluacionObjetivos(evaluado, evaluador, evaluacion);
                     mostrarAutoevaluacionComentariosObjetivos(evaluado, evaluador, evaluacion);
                 }
             }
@@ -698,7 +732,7 @@
                     type: "GET",
                     url: url,
                     beforeSend: function() {
-                        toastr.info('Obteninedo información, espere un momento...');
+                        toastr.info('Obteniendo información, espere un momento...');
                     },
                     success: function({
                         competencia
@@ -711,10 +745,10 @@
                                 <div class="text-center col-sm-1 col-lg-1 d-flex justify-content-center align-items-center" style="font-weight:bold;
                                 font-size:12px;">
                                     <p>${opcion.ponderacion}</p>
-                                </div>    
+                                </div>
                                 <div class="px-0 py-2 col-sm-11 col-lg-11" style="font-size: 11px;">
                                     ${opcion.definicion}
-                                </div>    
+                                </div>
                             </div>
                             `;
                         });
@@ -762,7 +796,8 @@
                     }
                 });
             }
-            window.saveCalificacionPersepcion = function(input, objetivo, evaluado, evaluador, evaluacion, url) {
+            window.saveCalificacionPersepcion = function(input, objetivo, evaluado, evaluador, evaluacion, url,
+                iconoObjetivoId) {
                 let data = {
                     calificacion_persepcion: input.value,
                     objetivo,
@@ -783,41 +818,7 @@
                         toastr.info('Guardando información, espere un momento...');
                     },
                     success: function(response) {
-                        if (response.success) {
-                            toastr.success('Guardado con éxito');
-                        }
-                        if (response.error) {
-                            toastr.error('Algo salió mal, intente de nuevo...');
-                        }
-                    },
-                    error: function(request, status, error) {
-                        toastr.error(
-                            'Ocurrió un error: ' + error);
-                    }
-                });
-            }
-
-            window.saveMetaAlcanzada = function(input, objetivo, evaluado, evaluador, evaluacion, url,
-                iconoObjetivoId) {
-                let data = {
-                    calificacion: input.value,
-                    objetivo,
-                    evaluado,
-                    evaluador,
-                    evaluacion,
-                }
-                $.ajax({
-                    headers: {
-                        "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
-                    },
-                    type: "POST",
-                    url: url,
-                    data: data,
-                    dataType: "JSON",
-                    beforeSend: function() {
-                        toastr.info('Guardando información, espere un momento...');
-                    },
-                    success: function(response) {
+                        console.log(response, iconoObjetivoId);
                         if (response.success) {
                             document.getElementById(`iconObjetivo${iconoObjetivoId}`).classList
                                 .remove(
@@ -840,6 +841,7 @@
                             toastr.success('Guardado con éxito');
                         }
                         if (response.error) {
+                            console.log(response.error);
                             toastr.error('Algo salió mal, intente de nuevo...');
                         }
                     },
@@ -849,6 +851,59 @@
                     }
                 });
             }
+
+            // window.saveMetaAlcanzada = function(input, objetivo, evaluado, evaluador, evaluacion, url,
+            //     iconoObjetivoId) {
+            //     let data = {
+            //         calificacion: input.value,
+            //         objetivo,
+            //         evaluado,
+            //         evaluador,
+            //         evaluacion,
+            //     }
+            //     $.ajax({
+            //         headers: {
+            //             "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
+            //         },
+            //         type: "POST",
+            //         url: url,
+            //         data: data,
+            //         dataType: "JSON",
+            //         beforeSend: function() {
+            //             toastr.info('Guardando información, espere un momento...');
+            //         },
+            //         success: function(response) {
+            //             if (response.success) {
+            //                 document.getElementById(`iconObjetivo${iconoObjetivoId}`).classList
+            //                     .remove(
+            //                         'fa-times-circle');
+            //                 document.getElementById(`iconObjetivo${iconoObjetivoId}`).classList
+            //                     .remove(
+            //                         'text-danger');
+            //                 document.getElementById(`iconObjetivo${iconoObjetivoId}`).classList.add(
+            //                     'fa-check-circle');
+            //                 document.getElementById(`iconObjetivo${iconoObjetivoId}`).classList
+            //                     .add(
+            //                         'text-success');
+            //                 let barra = document.getElementById('progresoEvaluacionObjetivos');
+            //                 barra.style.width = `${response.progreso}%`;
+            //                 barra.innerHTML = `${response.progreso}%`;
+            //                 let contestadas = document.getElementById('objetivosEvaluados');
+            //                 let no_contestadas = document.getElementById('objetivosNoEvaluados');
+            //                 contestadas.innerHTML = `${response.contestadas}`;
+            //                 no_contestadas.innerHTML = `${response.sin_contestar}`;
+            //                 toastr.success('Guardado con éxito');
+            //             }
+            //             if (response.error) {
+            //                 toastr.error('Algo salió mal, intente de nuevo...');
+            //             }
+            //         },
+            //         error: function(request, status, error) {
+            //             toastr.error(
+            //                 'Ocurrió un error: ' + error);
+            //         }
+            //     });
+            // }
 
             window.FinalizarEvaluacion = function(url) {
                 Swal.fire({
@@ -868,7 +923,8 @@
                         let data = {}
                         let isEmptyObjetivosSigned = false;
                         if (cargarAutoevaluacion) {
-                            var canvasObjetivos = document.getElementById("sig-evaluado-canvas");
+                            var canvasObjetivos = document.getElementById(
+                                "sig-evaluado-canvas");
                             var dataUrlObjetivos = canvasObjetivos.toDataURL();
                             isEmptyObjetivosSigned = isCanvasEmpty(canvasObjetivos);
                             if (isEmptyObjetivosSigned) {
@@ -878,7 +934,8 @@
                             }
 
                         }
-                        var canvasCompetencias = document.getElementById("sig-evaluador-canvas");
+                        var canvasCompetencias = document.getElementById(
+                            "sig-evaluador-canvas");
                         var dataUrl = canvasCompetencias.toDataURL();
                         var isEmptyCompetenciasSigned = isCanvasEmpty(canvasCompetencias);
                         if (isEmptyCompetenciasSigned) {
@@ -889,18 +946,21 @@
                         if (!isEmptyCompetenciasSigned && !isEmptyObjetivosSigned) {
                             $.ajax({
                                 headers: {
-                                    "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
+                                    "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr(
+                                        "content")
                                 },
                                 type: "POST",
                                 data: data,
                                 url: url,
                                 beforeSend: function() {
                                     toastr.info(
-                                        'Cerrando evaluación, espere un momento...');
+                                        'Cerrando evaluación, espere un momento...'
+                                    );
                                 },
                                 success: function(response) {
                                     if (response.success) {
-                                        toastr.success('Evaluación contestada con éxito');
+                                        toastr.success(
+                                            'Evaluación contestada con éxito');
                                         setTimeout(() => {
                                             window.location.reload();
                                         }, 1500)
@@ -945,10 +1005,12 @@
                     if (response.length > 0) {
                         console.log(response);
                         response.forEach((competencia, index) => {
-                            let evaluacionContenedor = document.getElementById(`autoev${index}`);
+                            let evaluacionContenedor = document.getElementById(
+                                `autoev${index}`);
                             if (evaluacionContenedor != null) {
                                 evaluacionContenedor.innerHTML = competencia
-                                    .calificacion == 0 ? 'No se ha evaluado' : competencia.calificacion;
+                                    .calificacion === null ? 'No se ha evaluado' : competencia
+                                    .calificacion;
                                 evaluacionContenedor.classList.add('form-control');
                                 evaluacionContenedor.style.background = 'aliceblue';
                             }
@@ -959,39 +1021,39 @@
             });
         }
 
-        function mostrarAutoevaluacionObjetivos(evaluado, evaluador, evaluacion) {
-            let data = {
-                evaluado,
-                evaluador,
-                evaluacion
-            }
-            let url = "{{ route('admin.ev360-evaluaciones.autoevaluacion.objetivos.get') }}";
+        // function mostrarAutoevaluacionObjetivos(evaluado, evaluador, evaluacion) {
+        //     let data = {
+        //         evaluado,
+        //         evaluador,
+        //         evaluacion
+        //     }
+        //     let url = "{{ route('admin.ev360-evaluaciones.autoevaluacion.objetivos.get') }}";
 
-            $.ajax({
-                headers: {
-                    "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
-                },
-                type: "POST",
-                url: url,
-                data: data,
-                dataType: "JSON",
-                beforeSend: function() {
+        //     $.ajax({
+        //         headers: {
+        //             "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
+        //         },
+        //         type: "POST",
+        //         url: url,
+        //         data: data,
+        //         dataType: "JSON",
+        //         beforeSend: function() {
 
-                },
-                success: function(response) {
-                    if (response.length > 0) {
-                        console.log(response);
-                        response.forEach((objetivo, index) => {
-                            let contenedorMetaAlcanzada = document.getElementById(
-                                `autoevaluacionObjetivos${objetivo.objetivo_id}`);
-                            contenedorMetaAlcanzada.innerHTML = objetivo.calificacion == 0 ?
-                                'No se ha evaluado' : objetivo.calificacion;
-                        });
+        //         },
+        //         success: function(response) {
+        //             if (response.length > 0) {
+        //                 console.log(response);
+        //                 response.forEach((objetivo, index) => {
+        //                     let contenedorMetaAlcanzada = document.getElementById(
+        //                         `autoevaluacionObjetivos${objetivo.objetivo_id}`);
+        //                     contenedorMetaAlcanzada.innerHTML = objetivo.calificacion === null ?
+        //                         'No se ha evaluado' : objetivo.calificacion;
+        //                 });
 
-                    }
-                }
-            });
-        }
+        //             }
+        //         }
+        //     });
+        // }
 
         function mostrarAutoevaluacionComentariosObjetivos(evaluado, evaluador, evaluacion) {
             let data = {
@@ -1016,8 +1078,10 @@
                     if (response.length > 0) {
                         console.log(response);
                         response.forEach((objetivo, index) => {
-                            let contenedorComentariosObjetivosAutoevaluacion = document.getElementById(
-                                `autoevaluacionComentariosObjetivos${objetivo.objetivo_id}`);
+                            let contenedorComentariosObjetivosAutoevaluacion = document
+                                .getElementById(
+                                    `autoevaluacionComentariosObjetivos${objetivo.objetivo_id}`
+                                );
                             contenedorComentariosObjetivosAutoevaluacion.innerHTML = objetivo
                                 .meta_alcanzada
                         });

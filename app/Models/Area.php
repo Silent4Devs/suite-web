@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\ClearsResponseCache;
 use App\Traits\MultiTenantModelTrait;
 use Carbon\Carbon;
 use DateTimeInterface;
@@ -11,6 +12,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use OwenIt\Auditing\Contracts\Auditable;
 
 /**
@@ -36,8 +38,8 @@ use OwenIt\Auditing\Contracts\Auditable;
  */
 class Area extends Model implements Auditable
 {
-    use SoftDeletes, MultiTenantModelTrait, HasFactory, Filterable;
-    use \OwenIt\Auditing\Auditable;
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
+    use Filterable, HasFactory, MultiTenantModelTrait, SoftDeletes;
 
     protected $table = 'areas';
 
@@ -66,10 +68,38 @@ class Area extends Model implements Auditable
     protected $appends = ['grupo_name', 'foto_ruta'];
 
     //Redis methods
+    public static function getExists()
+    {
+        return Cache::remember('Areas:Areas_exists', 3600 * 12, function () {
+            return DB::table('areas')->select('id')->exists();
+        });
+    }
+
     public static function getAll()
     {
-        return Cache::remember('areas_all', 3600 * 24, function () {
+        return Cache::remember('Areas:areas_all', 3600 * 8, function () {
             return self::orderByDesc('id')->get();
+        });
+    }
+
+    public static function getWithEmpleados()
+    {
+        return Cache::remember('Areas:areas_with_empleados', 3600 * 4, function () {
+            return self::with('empleados')->get();
+        });
+    }
+
+    public static function getAllPluck()
+    {
+        return Cache::remember('Areas:areas_pluck', 3600 * 8, function () {
+            return self::orderByDesc('id')->get()->pluck('area', 'id');
+        });
+    }
+
+    public static function getIdNameAll()
+    {
+        return Cache::remember('Areas:area_id_name_all', 3600 * 12, function () {
+            return self::select('id', 'area')->orderByDesc('id')->get();
         });
     }
 
@@ -110,7 +140,13 @@ class Area extends Model implements Auditable
 
     public function children()
     {
-        return $this->hasMany(self::class, 'id_reporta', 'id')->with('children', 'supervisor', 'grupo', 'lider'); //Eager Loading utilizar solo para construir un arbol si no puede desbordar la pila
+        return $this->hasMany(self::class, 'id_reporta', 'id')
+            ->with([
+                'children:id,name,foto,puesto_id,genero',
+                'supervisor:id,name,foto,puesto_id,genero',
+                'lider:id,name,foto,puesto_id,genero',
+                'grupo',
+            ]);
     }
 
     public function concientizacion_sgis()
@@ -125,7 +161,12 @@ class Area extends Model implements Auditable
 
     public function totalEmpleados()
     {
-        return $this->hasMany(Empleado::class, 'area_id');
+        return $this->hasMany(Empleado::class, 'area_id', 'id');
+    }
+
+    public function empleadosBasico()
+    {
+        return $this->hasMany(Empleado::class, 'area_id', 'id')->alta()->select('id', 'name', 'area_id', 'puesto_id');
     }
 
     public function material_iso_veinticientes()

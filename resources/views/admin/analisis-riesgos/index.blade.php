@@ -2,8 +2,8 @@
 @section('content')
     {{ Breadcrumbs::render('admin.analisis-riesgos.index') }}
 
-  
-        <style>
+
+    <style>
         .btn-outline-success {
             background: #788bac !important;
             color: white;
@@ -39,54 +39,63 @@
             margin: 0 !important;
             margin-right: 10px !important;
         }
-            th {
+
+        /* th {
                 background-color: #345183;
                 color: #ffff;
 
+            } */
+
+        .iconos-tabla {
+            color: #fff;
+            font-size: 10pt;
+
+        }
+
+        .iconos-top {
+
+            margin-right: 5px;
+            margin-top: 5px;
+        }
+
+        .table tr th:nth-child(4) {
+            min-width: 80px !important;
+            text-align: center !important;
+        }
+
+        .table tr td:nth-child(4) {
+            text-align: center !important;
+        }
+
+        .agregar {
+            margin-right: 15px;
+        }
+
+        .table tr td:nth-child(5) {
+
+            text-align: center !important;
+
+        }
+
+        @media print {
+            #tabla_blanca_imprimir_global {
+                transform: scale(1.8);
+                transform-origin: 0% 0%;
             }
+        }
+    </style>
 
-            .iconos-tabla {
-                color: #fff;
-                font-size: 10pt;
+    <h5 class="col-12 titulo_general_funcion">Matriz de Riesgo </h5>
 
-            }
+        <div class="text-right">
+            <div class="d-flex justify-content-end">
+                <a href="{{ route('admin.analisis-riesgos.create') }}" type="button" class="btn btn-primary">Registrar Matriz</a>
+            </div>
+        </div>
 
-            .iconos-top {
-
-                margin-right: 5px;
-                margin-top: 5px;
-            }
-
-            .table tr th:nth-child(4) {
-                min-width: 80px !important;
-                text-align: center !important;
-            }
-
-            .table tr td:nth-child(4) {
-                text-align: center !important;
-            }
-            .agregar {
-                margin-right: 15px;
-            }
-
-            .table tr td:nth-child(5) {
-
-                text-align: center !important;
-
-            }
-            @media print{
-                #tabla_blanca_imprimir_global{
-                    transform: scale(1.8);
-                    transform-origin: 0% 0%;
-                }
-            }
-
-        </style>
-
-        <h5 class="col-12 titulo_general_funcion">Matriz de Riesgo </h5>
-        <div class="mt-5 card">
-            @include('partials.flashMessages')
-            @can('matriz_de_riesgo_agregar')
+    <div class="mt-5 card">
+        @include('partials.flashMessages')
+        @can('matriz_de_riesgo_agregar')
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
                     @include('csvImport.modalmatrizriesgo', [
@@ -95,20 +104,20 @@
                     ])
                 </div>
             </div>
-            @endcan
+        @endcan
 
-            {{-- <div style="margin-bottom:10px; margin-left:12px;" class="row">
+        {{-- <div style="margin-bottom:10px; margin-left:12px;" class="row">
                   <div class="col-lg-12">
                       <a class="btn btn-success" href="{{ route('admin.matriz-riesgos.create') }}">
                           Agregar Riesgo
                       </a>
                   </div>
               </div> --}}
-      
+
 
         <div class="card-body datatable-fix">
-            <table class="table table-bordered w-100 datatable datatable-AnalisisRiesgo tblCSV" id="datatable-AnalisisRiesgo">
-                <thead class="thead-dark">
+            <table class=" w-100 datatable-rds datatable-AnalisisRiesgo tblCSV" id="datatable-AnalisisRiesgo">
+                <thead>
                     <tr>
                         <th style="min-width: 40px;">
                             ID
@@ -235,57 +244,57 @@
 
             ];
             @can('matriz_de_riesgo_eliminar')
-            let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
-            let deleteButton = {
-                text: deleteButtonTrans,
-                url: "{{ route('admin.analisis-riesgos.massDestroy') }}",
-                className: 'btn-danger',
-                action: function(e, dt, node, config) {
-                    var ids = $.map(dt.rows({
-                        selected: true
-                    }).data(), function(entry) {
-                        return entry.id
-                    });
+                let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
+                let deleteButton = {
+                    text: deleteButtonTrans,
+                    url: "{{ route('admin.analisis-riesgos.massDestroy') }}",
+                    className: 'btn-danger',
+                    action: function(e, dt, node, config) {
+                        var ids = $.map(dt.rows({
+                            selected: true
+                        }).data(), function(entry) {
+                            return entry.id
+                        });
 
-                    if (ids.length === 0) {
-                        alert('{{ trans('global.datatables.zero_selected') }}')
+                        if (ids.length === 0) {
+                            alert('{{ trans('global.datatables.zero_selected') }}')
 
-                        return
-                    }
+                            return
+                        }
 
-                    if (confirm('{{ trans('global.areYouSure') }}')) {
-                        $.ajax({
-                                headers: {
-                                    'x-csrf-token': _token
-                                },
-                                method: 'POST',
-                                url: config.url,
-                                data: {
-                                    ids: ids,
-                                    _method: 'DELETE'
-                                }
-                            })
-                            .done(function() {
-                                location.reload()
-                            })
+                        if (confirm('{{ trans('global.areYouSure') }}')) {
+                            $.ajax({
+                                    headers: {
+                                        'x-csrf-token': _token
+                                    },
+                                    method: 'POST',
+                                    url: config.url,
+                                    data: {
+                                        ids: ids,
+                                        _method: 'DELETE'
+                                    }
+                                })
+                                .done(function() {
+                                    location.reload()
+                                })
+                        }
                     }
                 }
-            }
-           @endcan
+            @endcan
 
 
-            let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar nuevo analisis de riesgos',
-                url: "{{ route('admin.analisis-riesgos.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
-                action: function(e, dt, node, config) {
-                    let {
-                        url
-                    } = config;
-                    window.location.href = url;
-                }
-            };
+            // let btnAgregar = {
+            //     text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+            //     titleAttr: 'Agregar nuevo analisis de riesgos',
+            //     url: "{{ route('admin.analisis-riesgos.create') }}",
+            //     className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
+            //     action: function(e, dt, node, config) {
+            //         let {
+            //             url
+            //         } = config;
+            //         window.location.href = url;
+            //     }
+            // };
             let btnExport = {
                 text: '<i  class="fas fa-download"></i>',
                 titleAttr: 'Descargar plantilla',
@@ -307,9 +316,9 @@
                 }
             };
 
-            @can('matriz_de_riesgo_agregar')
-                dtButtons.push(btnAgregar);
-            @endcan
+            // @can('matriz_de_riesgo_agregar')
+            //     dtButtons.push(btnAgregar);
+            // @endcan
 
             dtButtons.push(btnExport);
             dtButtons.push(btnImport);
@@ -342,15 +351,15 @@
                     {
                         data: 'tipo',
                         name: 'tipo',
-                        render: function(data, type, row,meta) {
+                        render: function(data, type, row, meta) {
                             const tipo = row.tipo;
                             if (tipo == 'Análisis de riesgo integral') {
-                            return `<div style="text-align:left">Análisis de Riesgo Integral (ISO 27001,9001,20000)</div>`;
-                            }if(tipo == 'Seguridad de la información'){
-                            return `<div style="text-align:left">ISO 27001</div>`;
+                                return `<div style="text-align:left">Análisis de Riesgo Integral (ISO 27001,9001,20000)</div>`;
                             }
-                            else{
-                            return `<div style="text-align:left">${data}</div>`;
+                            if (tipo == 'Seguridad de la información') {
+                                return `<div style="text-align:left">ISO 27001</div>`;
+                            } else {
+                                return `<div style="text-align:left">${data}</div>`;
                             }
                         }
                     },
@@ -368,10 +377,9 @@
                         render: function(data, type, row) {
                             const porcentaje = row.porcentaje_implementacion;
                             if (porcentaje == 0) {
-                            return `<div style="text-align:center">Sin evaluar</div>`;
-                            }
-                            else{
-                            return `<div style="text-align:center">${data} %</div>`;
+                                return `<div style="text-align:center">Sin evaluar</div>`;
+                            } else {
+                                return `<div style="text-align:center">${data} %</div>`;
                             }
                         }
 
@@ -379,13 +387,12 @@
                     {
                         data: 'elaboro',
                         name: 'elaboro',
-                        render: function(data, type, row,meta) {
+                        render: function(data, type, row, meta) {
                             const elaboro = row.elaboro;
                             if (elaboro == 0) {
-                            return `<div style="text-align:left">No se ha asociado colaborador</div>`;
-                            }
-                            else{
-                            return `<div style="text-align:left">${data}</div>`;
+                                return `<div style="text-align:left">No se ha asociado colaborador</div>`;
+                            } else {
+                                return `<div style="text-align:left">${data}</div>`;
                             }
                         }
 
@@ -403,53 +410,53 @@
                         render: function(data, type, row, meta) {
                             console.log(row.tipo);
                             const tipo = row.tipo;
-                            switch(tipo){
-                            case 'Seguridad de la información':
-                            return `
+                            switch (tipo) {
+                                case 'Seguridad de la información':
+                                    return `
                             <div class="text-center w-100" style="text-align:center">
                                 @can('matriz_de_riesgo_vinculo')
                                     <a href="matriz-seguridad/?id=${data}" target="_blank"><i class="fas fa-table fa-2x text-info"></i></a>
                                 @endcan
                             </div>
                             `;
-                            break;
-                            case 'Análisis de riesgo integral':
-                            return `
+                                    break;
+                                case 'Análisis de riesgo integral':
+                                    return `
                             <div class="text-center w-100" style="text-align:center">
                                 @can('matriz_de_riesgo_vinculo')
                                     <a href="matriz-seguridad/sistema-gestion/?id=${data}" target="_blank"><i class="fas fa-table fa-2x text-info"></i></a>
                                 @endcan
                             </div>
                             `;
-                            break;
-                            case 'OCTAVE':
-                                return `
+                                    break;
+                                case 'OCTAVE':
+                                    return `
                                 <div class="text-center w-100" style="text-align:center">
                                     @can('matriz_de_riesgo_vinculo')
                                     <a href="procesos-octave/${data}" target="_blank"><i class="fas fa-table fa-2x text-info"></i></a>
                                     @endcan
                                 </div>
                             `;
-                            break;
-                            case 'ISO 31000':
-                            return `
+                                    break;
+                                case 'ISO 31000':
+                                    return `
                             <div class="text-center w-100" style="text-align:center">
                                 @can('matriz_de_riesgo_vinculo')
                                 <a href="matriz-seguridad/ISO31000/?id=${data}" target="_blank"><i class="fas fa-table fa-2x text-info"></i></a>
                                 @endcan
                             </div>
                             `;
-                            break;
-                            case 'NIST':
-                            return `
+                                    break;
+                                case 'NIST':
+                                    return `
                             <div class="text-center w-100" style="text-align:center">
                                 @can('matriz_de_riesgo_vinculo')
                                 <a href="matriz-seguridad/NIST/?id=${data}" target="_blank"><i class="fas fa-table fa-2x text-info"></i></a>
                                 @endcan
                             </div>
                             `;
-                            default:
-                             return`
+                                default:
+                                    return `
                              <div class="w-100" style="text-align:left">No se encuentran coincidencias</div>
                             `;
                             }
@@ -466,7 +473,7 @@
                 ]
             };
             let table = $('.datatable-AnalisisRiesgo').DataTable(dtOverrideGlobals);
-            $('.btn.buttons-print.btn-sm.rounded.pr-2').unbind().click(function(){
+            $('.btn.buttons-print.btn-sm.rounded.pr-2').unbind().click(function() {
                 let titulo_tabla = `
                     <h5>
                         <strong>

@@ -5,9 +5,16 @@
     @include('partials.flashMessages')
 
     <h5 class="col-12 titulo_general_funcion">Niveles Jerárquicos</h5>
-    <div class="mt-5 card">
-        <div class="card-body datatable-fix">
-            <table class="table table-bordered w-100 datatable datatable-Perfiles">
+
+    <div class="text-right">
+        <div class="d-flex justify-content-end">
+            <a href="{{ route('admin.perfiles.create') }}" type="button" class="btn btn-primary">Registrar Nivel Jerárquico</a>
+        </div>
+    </div>
+        @include('partials.flashMessages')
+        <div class="datatable-fix datatable-rds">
+            <h3 class="title-table-rds"> Niveles Jerárquicos</h3>
+            <table class="datatable datatable-Perfiles">
                 <thead class="thead-dark">
                     <tr>
                         <th>
@@ -24,7 +31,6 @@
                 </thead>
             </table>
         </div>
-    </div>
 @endsection
 
 
@@ -137,22 +143,6 @@
                 }
             }
             //dtButtons.push(deleteButton)
-
-            let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar nuevo',
-                url: "{{ route('admin.perfiles.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config) {
-                    let {
-                        url
-                    } = config;
-                    window.location.href = url;
-                }
-            };
-            @can('niveles_jerarquicos_agregar')
-                dtButtons.push(btnAgregar);
-            @endcan
             let dtOverrideGlobals = {
                 buttons: dtButtons,
                 processing: true,

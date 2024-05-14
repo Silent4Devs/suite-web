@@ -10,6 +10,7 @@ class PublicarCourse extends Component
     use LivewireAlert;
 
     public $course;
+
     public $status_id = '';
 
     public function mount($course)

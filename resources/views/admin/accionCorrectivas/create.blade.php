@@ -1,11 +1,10 @@
 @extends('layouts.admin')
 @section('content')
-
     {{ Breadcrumbs::render('admin.accion-correctivas.create') }}
     <h5 class="col-12 titulo_general_funcion">Registrar: Acción Correctiva</h5>
     <div class="mt-4 card">
         @include('layouts.errors')
-        @include('flash::message')
+
         <div class="card-body">
 
             <div class="container">
@@ -17,7 +16,7 @@
                         {{-- <a href="#" data-tabs="contenido2"><i class="mr-2 fab fa-medapps" style="font-size:30px;"
                                 style="text-decoration:none;"></i> Ánalisis de causa raíz</a>
                         <a href="#" data-tabs="contenido3"><i class="mr-2 fas fa-file-alt" style="font-size:30px;"
-                                style="text-decoration:none;"></i>Plan de acción</a> --}}
+                                style="text-decoration:none;"></i>Plan de Trabajo</a> --}}
                     </div>
 
 
@@ -26,7 +25,7 @@
                         <button id="acollapseplan" data-toggle="collapse" onclick="closetabcollap2()"
                             data-target="#collapseplan" class="btn btn-primary">Análisis de causa raíz</button>
                         <button id="acollapseactividad" data-toggle="collapse" onclick="" data-target="#"
-                            class="btn btn-primary">Plan de acción</button> --}}
+                            class="btn btn-primary">Plan de Trabajo</button> --}}
                     <div class="caja_caja_secciones">
                         <div class="caja_secciones">
 
@@ -60,11 +59,9 @@
 
 
                 </div>
-
             @endsection
 
             @section('scripts')
-
                 <script>
                     $("#acollapseExample").click(function() {
 
@@ -197,8 +194,7 @@
 
                     });
 
-                    function recortarTexto(texto, length = 30)
-                    {
+                    function recortarTexto(texto, length = 30) {
                         let trimmedString = texto?.length > length ?
                             texto.substring(0, length - 3) + "..." :
                             texto;
@@ -237,8 +233,7 @@
                             document.getElementById('autorizo_area').innerHTML = recortarTexto(area);
                         })
 
-                        function recortarTexto(texto, length = 30)
-                        {
+                        function recortarTexto(texto, length = 30) {
                             let trimmedString = texto?.length > length ?
                                 texto.substring(0, length - 3) + "..." :
                                 texto;
@@ -400,6 +395,4 @@
 
                     });
                 </script>
-
-
             @endsection

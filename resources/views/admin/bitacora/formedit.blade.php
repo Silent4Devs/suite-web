@@ -106,6 +106,12 @@
 
 
 
+@if (session('mensajeError'))
+<div class="alert alert-danger">
+    {{ session('mensajeError') }}
+</div>
+@endif
+
 {{-- <form method="PATH" action="{{ route('contratos.update', $contrato->id) }}" enctype="multipart/form-data"> --}}
 {!! Form::open([
     'route' => ['contract_manager.contratos-katbol.update', $contrato->id],
@@ -153,7 +159,7 @@
                 Contrato<font class="asterisco">*
                 </font></label>
             <input class="form-control {{ $errors->has('no_contrato') ? 'is-invalid' : '' }}" type="text"
-                maxlength="250" name="no_contrato" id="no_contrato"
+                maxlength="230" name="no_contrato" id="no_contrato"
                 value="{{ old('no_contrato', $contrato->no_contrato) }}"
                 @if ($show_contrato) disabled @endif required>
             <span id="existCode"></span>
@@ -216,7 +222,7 @@
             <label for="nombre_servicio" class="txt-tamaño">
                 Nombre del servicio<font class="asterisco">*</font></label><br>
             <div class="form-floating">
-                <textarea id="textarea1" class="form-control" value="{{ $contrato->nombre_servicio }}" name="nombre_servicio"
+                <textarea id="textarea1"  maxlength="550"  class="form-control" value="{{ $contrato->nombre_servicio }}" name="nombre_servicio"
                     {{ $show_contrato ? 'readonly' : '' }} @if ($show_contrato) disabled @endif required>{{ $contrato->nombre_servicio }}</textarea>
             </div>
             @if ($errors->has('nombre_servicio'))
@@ -322,7 +328,7 @@
         <div class="form-group col-md-12">
             <label for="objetivo" class="txt-tamaño">
                 Objetivo del servicio<font class="asterisco">*</font></label>
-            <textarea style="text-align:justify" id="textarea1" class="form-control" value="{{ $contrato->objetivo }}"
+            <textarea style="text-align:justify" maxlength="500" id="textarea1" class="form-control" value="{{ $contrato->objetivo }}"
                 name="objetivo" @if ($show_contrato) disabled @endif required>{{ $contrato->objetivo }}</textarea>
             @if ($errors->has('objetivo'))
                 <div class="invalid-feedback red-text">
@@ -480,11 +486,14 @@
         <div class="form-group col-md-4">
             <label for="no_contrato" class="txt-tamaño">
                 No. Pagos<font class="asterisco">*</font></label>
-            {!! Form::number('no_pagos', $contrato->no_pagos, [
-                'class' => 'form-control',
-                'required',
-                $show_contrato ? 'readonly' : '',
-            ]) !!}
+                {!! Form::number('no_pagos', $contrato->no_pagos, [
+                    'class' => 'form-control',
+                    'required',
+                    'pattern' => '[0-9]+',
+                    'min' => 0, // Opcional: especifica el valor mínimo permitido
+                    'step' => 1, // Opcional: especifica el paso de incremento/decremento
+                    $show_contrato ? 'readonly' : '',
+                ]) !!}
             @if ($errors->has('no_pagos'))
                 <div class="invalid-feedback red-text">
                     {{ $errors->first('no_pagos') }}
@@ -771,6 +780,7 @@
             </font></label>
         <div>
             {!! Form::text('pmp_asignado', $contratos->pmp_asignado, [
+                'maxlength' => '250',
                 'class' => 'form-control',
                 $show_contrato ? 'readonly' : '',
                 'required',
@@ -790,6 +800,7 @@
     <div class="distancia form-group col-md-4">
         <label class="txt-tamaño">Área</label>
         {!! Form::text('area', $contratos->area, [
+            'maxlength' => '250',
             'class' => 'form-control',
             'maxlength' => '250',
             $show_contrato ? 'readonly' : '',
@@ -806,6 +817,7 @@
         <label class="txt-tamaño">Nombre del
             Supervisor 2</label>
         {!! Form::text('administrador_contrato', $contratos->administrador_contrato, [
+            'maxlength' => '250',
             'class' => 'form-control',
             $show_contrato ? 'readonly' : '',
         ]) !!}
@@ -898,7 +910,7 @@
 
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/autonumeric/4.0.3/autoNumeric.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -1055,9 +1067,9 @@
     $(document).ready(function() {
 
         if ($('#check_fianza').checked) {
-            $(".td_fianza").fadeIn(0);
+           $(".td_fianza").fadeOut(0);
         } else {
-            $(".td_fianza").fadeOut(0);
+            $(".td_fianza").fadeIn(0);
         }
     });
     $(document).on('change', '#check_fianza', function(e) {

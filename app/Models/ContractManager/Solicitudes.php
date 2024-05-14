@@ -2,6 +2,7 @@
 
 namespace App\Models\ContractManager;
 
+use App\Traits\ClearsResponseCache;
 use App\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,8 +12,8 @@ use OwenIt\Auditing\Contracts\Auditable;
 
 class Solicitudes extends Model implements Auditable
 {
-    use HasFactory, SoftDeletes;
     use AuditableTrait;
+    use ClearsResponseCache, HasFactory, SoftDeletes;
 
     public $table = 'solicitudes';
 

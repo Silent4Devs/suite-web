@@ -2,6 +2,7 @@
 
 namespace App\Models\ContractManager;
 
+use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -14,8 +15,8 @@ class ConveniosModificatorios extends Model implements Auditable
 
     protected $appends = ['archivo'];
 
-    use HasFactory, softDeletes;
     use AuditableTrait;
+    use ClearsResponseCache, HasFactory, softDeletes;
 
     protected $fillable = [
         'contrato_id',
@@ -45,8 +46,8 @@ class ConveniosModificatorios extends Model implements Auditable
     {
         $archivo = ConveniosModificatoriosFile::where('convenios_modificatorios_id', $this->id)->first();
         $archivo = $archivo ? $archivo->pdf : '';
-        $ruta = asset('storage/contratos/' . $this->contrato->id . '_contrato_' . $this->contrato->no_contrato . '/convenios/pdf');
-        $ruta = $ruta . '/' . $archivo;
+        $ruta = asset('storage/contratos/'.$this->contrato->id.'_contrato_'.$this->contrato->no_contrato.'/convenios/pdf');
+        $ruta = $ruta.'/'.$archivo;
 
         return $ruta;
 

@@ -8,10 +8,10 @@ use App\Models\PlanImplementacion;
 use App\Models\User;
 use Carbon\Carbon;
 use Gate;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class PlanesAccionController extends Controller
 {
@@ -22,24 +22,18 @@ class PlanesAccionController extends Controller
      */
     public function index(Request $request)
     {
-        $iso2007 = Cache::remember('plan_implementacion_all', 3600 * 24, function () {
-            return PlanImplementacion::where('es_plan_trabajo_base', false)->with('elaborador')->get();
-        });
-        $original = new Collection($iso2007);
-        $iso9001 = Cache::remember('plan_implementacion_9001_all', 3600 * 24, function () {
-            return PlanItemIplementacion9001::with('elaborador')->get();
-        });
-        $latest = new Collection($iso9001);
-        // dd($iso9001);
-        $merged = $original->concat($latest);
-        // $merged = $original->union($latest);
-        // dd($merged);
 
-        if ($request->ajax()) {
-            $planesImplementacion = $merged;
+        // $iso9001 = Cache::remember('PlanImplementacion:plan_implementacion_9001_all', 3600 * 8, function () {
+        //     return PlanItemIplementacion9001::with('elaborador')->get();
+        // });
 
-            return datatables()->of($planesImplementacion)->toJson();
-        }
+        // $isoMerged = Cache::remember('PlanImplementacion:plan_implementacion_merged', 3600 * 2, function () {
+        //     return PlanItemIplementacion9001::with('elaborador')->get();
+        // });
+        // $merged = $$planImplementacions->concat($iso9001);
+        // if ($request->ajax()) {
+        //     return datatables()->of($planImplementacions)->toJson();
+        // }
 
         return view('admin.planesDeAccion.index');
     }
@@ -69,23 +63,22 @@ class PlanesAccionController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'parent' => 'required|string',
-            'norma' => 'required|string',
-            // 'modulo_origen' => 'required|string',
-            'objetivo' => 'required|string',
+            'parent' => 'required|string|max:255',
+            'inicio' => 'required|date',
+            'fin' => 'required|date|after:inicio', // Asegura que la fecha de fin sea después de la fecha de inicio
+            'objetivo' => 'required|string|max:550',
         ], [
-            'parent.required' => 'Debes de definir un nombre para el plan de acción',
-            'norma.required' => 'Debes de definir una norma para el plan de acción',
-            // 'modulo_origen.required' => 'Debes de definir un módulo de origen para el plan de acción',
-            'objetivo.required' => 'Debes de definir un objetivo para el plan de acción',
+            'parent.required' => 'Debes definir un nombre para el plan de trabajo',
+            'objetivo.required' => 'Debes definir un objetivo para el plan de trabajo',
+            'fin.after' => 'La fecha de fin debe ser posterior a la fecha de inicio',
         ]);
         $tasks = [
             [
-                'id' => 'tmp_' . (strtotime(now())) . '_1',
-                'end' => strtotime(now()) * 1000,
-                'name' => 'Plan de Accion - ' . $request->norma,
+                'id' => 'tmp_'.(strtotime(now())).'_1',
+                'end' => strtotime($request->fin) * 1000,
+                'name' => 'Plan de Trabajo - '.$request->norma,
                 'level' => 0,
-                'start' => strtotime(now()) * 1000,
+                'start' => strtotime($request->inicio) * 1000,
                 'canAdd' => true,
                 'status' => 'STATUS_UNDEFINED',
                 'canWrite' => true,
@@ -100,27 +93,9 @@ class PlanesAccionController extends Controller
                 'startIsMilestone' => false,
                 'progressByWorklog' => false,
                 'assigs' => [],
-            ],
-            [
-                'id' => 'tmp_' . (strtotime(now())) . rand(1, 1000),
-                'end' => strtotime(now()) * 1000,
-                'name' => $request->norma,
-                'level' => 1,
-                'start' => strtotime(now()) * 1000,
-                'canAdd' => true,
-                'status' => 'STATUS_UNDEFINED',
-                'canWrite' => true,
-                'duration' => 0,
-                'progress' => 0,
-                'canDelete' => true,
-                'collapsed' => false,
-                'relevance' => '0',
-                'canAddIssue' => true,
-                'description' => '',
-                'endIsMilestone' => false,
-                'startIsMilestone' => false,
-                'progressByWorklog' => false,
-                'assigs' => [],
+                'resources' => [],
+                'subtasks' => [],
+                'historic' => [],
             ],
         ];
 
@@ -134,26 +109,26 @@ class PlanesAccionController extends Controller
             'zoom' => '3d',
             'parent' => $request->parent,
             'norma' => $request->norma,
-            'modulo_origen' => 'Planes de Acción',
+            'modulo_origen' => 'Planes de Trabajo',
             'objetivo' => $request->objetivo,
             'elaboro_id' => User::getCurrentUser()->empleado->id,
             'es_plan_trabajo_base' => $request->es_plan_trabajo_base != null ? true : false,
         ]);
 
-        $mensaje = $request->es_plan_trabajo_base != null ? 'Plan de Trabajo Base' : 'Plan de Acción';
+        $mensaje = $request->es_plan_trabajo_base != null ? 'Plan de trabajo Base' : 'Plan de trabajo';
         $route = $request->es_plan_trabajo_base != null ? 'admin.planTrabajoBase.index' : 'admin.planes-de-accion.index';
 
-        return redirect()->route($route)->with('success', $mensaje . ' ' . $planImplementacion->parent . ' creado');
+        return redirect()->route($route)->with('success', $mensaje.' '.$planImplementacion->parent.' creado');
     }
 
     public function crearPlanDeAccion($modelo)
     {
-        if (!count($modelo->planes)) {
+        if (! count($modelo->planes)) {
             $tasks = [
                 [
-                    'id' => 'tmp_' . (strtotime(now())) . '_1',
+                    'id' => 'tmp_'.(strtotime(now())).'_1',
                     'end' => strtotime(now()) * 1000,
-                    'name' => 'Plan de Accion - ' . $modelo->norma,
+                    'name' => 'Plan de Trabajo - '.$modelo->norma,
                     'level' => 0,
                     'start' => strtotime(now()) * 1000,
                     'canAdd' => true,
@@ -170,27 +145,9 @@ class PlanesAccionController extends Controller
                     'startIsMilestone' => false,
                     'progressByWorklog' => false,
                     'assigs' => [],
-                ],
-                [
-                    'id' => 'tmp_' . (strtotime(now())) . rand(1, 1000),
-                    'end' => strtotime(now()) * 1000,
-                    'name' => $modelo->norma,
-                    'level' => 1,
-                    'start' => strtotime(now()) * 1000,
-                    'canAdd' => true,
-                    'status' => 'STATUS_UNDEFINED',
-                    'canWrite' => true,
-                    'duration' => 0,
-                    'progress' => 0,
-                    'canDelete' => true,
-                    'collapsed' => false,
-                    'relevance' => '0',
-                    'canAddIssue' => true,
-                    'description' => '',
-                    'endIsMilestone' => false,
-                    'startIsMilestone' => false,
-                    'progressByWorklog' => false,
-                    'assigs' => [],
+                    'resources' => [],
+                    'subtasks' => [],
+                    'historic' => [],
                 ],
             ];
 
@@ -204,7 +161,7 @@ class PlanesAccionController extends Controller
             $planImplementacion->changesReasonWhy = false;
             $planImplementacion->selectedRow = 0;
             $planImplementacion->zoom = '3d';
-            $planImplementacion->parent = 'Incidente - ' . $modelo->folio;
+            $planImplementacion->parent = 'Incidente - '.$modelo->folio;
             $planImplementacion->norma = 'ISO 27001';
             $planImplementacion->modulo_origen = 'Incidentes';
             $planImplementacion->objetivo = null;
@@ -218,6 +175,11 @@ class PlanesAccionController extends Controller
     {
         $planImplementacion = PlanImplementacion::find($planImplementacion);
 
+        if (! $planImplementacion) {
+            // Si no existe, redirigir o mostrar un mensaje de error
+            abort(404);
+        }
+
         return view('admin.planesDeAccion.show', compact('planImplementacion'));
     }
 
@@ -229,12 +191,22 @@ class PlanesAccionController extends Controller
      */
     public function edit($planImplementacion)
     {
-        abort_if(Gate::denies('planes_de_accion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $planImplementacion = PlanImplementacion::find($planImplementacion);
-        $referencia = null;
+        try {
+            abort_if(Gate::denies('planes_de_accion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.planesDeAccion.edit', compact('planImplementacion', 'referencia'));
+            $planImplementacion = PlanImplementacion::find($planImplementacion);
+
+            if (! $planImplementacion) {
+                abort(404);
+            }
+
+            $referencia = null;
+
+            return view('admin.planesDeAccion.edit', compact('planImplementacion', 'referencia'));
+        } catch (\Throwable $th) {
+            abort(404);
+        }
     }
 
     /**
@@ -245,18 +217,37 @@ class PlanesAccionController extends Controller
      */
     public function update(Request $request, $planImplementacion)
     {
-        $request->validate([
-            'parent' => 'required|string',
-            'norma' => 'required|string',
-            'modulo_origen' => 'required|string',
-            'objetivo' => 'required|string',
-        ], [
-            'parent.required' => 'Debes de definir un nombre para el plan de acción',
-            'norma.required' => 'Debes de definir una norma para el plan de acción',
-            'modulo_origen.required' => 'Debes de definir un módulo de origen para el plan de acción',
-            'objetivo.required' => 'Debes de definir un objetivo para el plan de acción',
-        ]);
-        $planImplementacion = PlanImplementacion::find($planImplementacion);
+        try {
+            $request->validate([
+                'parent' => 'required|string|max:255',
+                'inicio' => 'required|date',
+                'fin' => 'required|date|after:inicio', // Asegura que la fecha de fin sea después de la fecha de inicio
+                'objetivo' => 'required|string|max:550',
+            ], [
+                'parent.required' => 'Debes definir un nombre para el plan de trabajo',
+                'objetivo.required' => 'Debes definir un objetivo para el plan de trabajo',
+                'fin.after' => 'La fecha de fin debe ser posterior a la fecha de inicio',
+            ]);
+            $planImplementacion = PlanImplementacion::find($planImplementacion);
+
+            if (! $planImplementacion) {
+                abort(404);
+            }
+
+            $planImplementacion->update([ // Necesario se carga inicialmente el Diagrama Universal de Gantt
+                'parent' => $request->parent,
+                'norma' => $request->norma,
+                'modulo_origen' => $request->modulo_origen,
+                'objetivo' => $request->objetivo,
+            ]);
+            $route = $planImplementacion->es_plan_trabajo_base ? 'admin.planTrabajoBase.index' : 'admin.planes-de-accion.index';
+            $mensaje = $planImplementacion->es_plan_trabajo_base ? 'Plan de Trabajo Base Actualizado' : 'Plan de Trabajo Actualizado';
+
+            return redirect()->route($route)->with('success', $mensaje);
+        } catch (\Throwable $th) {
+            abort(404);
+        }
+
         $planImplementacion->update([ // Necesario se carga inicialmente el Diagrama Universal de Gantt
             'parent' => $request->parent,
             'norma' => $request->norma,
@@ -264,7 +255,7 @@ class PlanesAccionController extends Controller
             'objetivo' => $request->objetivo,
         ]);
         $route = $planImplementacion->es_plan_trabajo_base ? 'admin.planTrabajoBase.index' : 'admin.planes-de-accion.index';
-        $mensaje = $planImplementacion->es_plan_trabajo_base ? 'Plan de Trabajo Base Actualizado' : 'Plan de Acción Actualizado';
+        $mensaje = $planImplementacion->es_plan_trabajo_base ? 'Plan de Trabajo Base Actualizado' : 'Plan de Trabajo Actualizado';
 
         return redirect()->route($route)->with('success', $mensaje);
     }
@@ -275,18 +266,18 @@ class PlanesAccionController extends Controller
      * @param  \App\Models\PlanImplementacion  $planImplementacion
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $planImplementacion)
+    public function destroy(Request $request, $planImplementacionId)
     {
         abort_if(Gate::denies('planes_de_accion_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $planImplementacion = PlanImplementacion::find($planImplementacion);
+        $planImplementacion = PlanImplementacion::find($planImplementacionId);
+
+        if ($planImplementacion) {
             $eliminado = $planImplementacion->delete();
-            if ($eliminado) {
-                return response()->json(['success', true]);
-            } else {
-                return response()->json(['error', true]);
-            }
+
+            return redirect()->route('admin.planes-de-accion.index')->with('success', 'Eliminado exitosamente');
+        } else {
+            return redirect()->route('admin.planes-de-accion.index')->with('error', 'No se encontró el Plan de Trabajo para eliminar');
         }
     }
 
@@ -324,33 +315,69 @@ class PlanesAccionController extends Controller
 
     public function loadProject($plan)
     {
-        $implementacion = PlanImplementacion::find($plan);
-        $tasks = $implementacion->tasks;
-        foreach ($tasks as $task) {
-            $task->status = isset($task->status) ? $task->status : 'STATUS_UNDEFINED';
+        //$implementacion = PlanImplementacion::find($plan);
+        //$users = DB::table('users')->select('name', 'email as user_email')->get();
+        $implementacion = DB::table('plan_implementacions')
+            ->select('*')
+            ->where('id', $plan)
+            ->first();
+
+        $tasks = json_decode($implementacion->tasks);
+        foreach (json_decode($implementacion->tasks) as $task) {
+            $task->status = $task->status ?? 'STATUS_UNDEFINED';
             $task->end = intval($task->end);
             $task->start = intval($task->start);
-            $task->canAdd = $task->canAdd == 'true' ? true : false;
-            $task->canWrite = $task->canWrite == 'true' ? true : false;
+            $task->canAdd = $task->canAdd === 'true';
+            $task->canWrite = $task->canWrite === 'true';
             $task->duration = intval($task->duration);
             $task->progress = intval($task->progress);
-            $task->canDelete = $task->canDelete == 'true' ? true : false;
-            isset($task->level) ? $task->level = intval($task->level) : $task->level = 0;
-            isset($task->collapsed) ? $task->collapsed = $task->collapsed == 'true' ? true : false : $task->collapsed = false;
-            if (isset($task->canAddIssue)) {
-                $task->canAddIssue = $task->canAddIssue == 'true' ? true : false;
-            }
-            if (isset($task->endIsMilestone)) {
-                $task->endIsMilestone = $task->endIsMilestone == 'true' ? true : false;
-            }
-            if (isset($task->startIsMilestone)) {
-                $task->startIsMilestone = $task->startIsMilestone == 'true' ? true : false;
-            }
-            if (isset($task->progressByWorklog)) {
-                $task->progressByWorklog = $task->progressByWorklog == 'true' ? true : false;
-            }
+            $task->canDelete = $task->canDelete === 'true';
+            $task->level = isset($task->level) ? intval($task->level) : 0;
+            $task->collapsed = isset($task->collapsed) ? $task->collapsed === 'true' : false;
+            $task->canAddIssue = isset($task->canAddIssue) ? $task->canAddIssue === 'true' : false;
+            $task->endIsMilestone = isset($task->endIsMilestone) ? $task->endIsMilestone === 'true' : false;
+            $task->startIsMilestone = isset($task->startIsMilestone) ? $task->startIsMilestone === 'true' : false;
+            $task->progressByWorklog = isset($task->progressByWorklog) ? $task->progressByWorklog === 'true' : false;
         }
+
+        $elaborador = DB::table('empleados')
+            ->select(
+                'id',
+                'name',
+                'n_registro',
+                'foto',
+                'puesto',
+                'estatus',
+                'telefono_movil',
+                'genero',
+                'n_empleado',
+                'supervisor_id',
+                'area_id',
+                'sede_id',
+                'puesto_id',
+                'perfil_empleado_id',
+                'tipo_contrato_empleados_id',
+                'proyecto_asignado',
+                'entidad_crediticias_id',
+                'semanas_min_timesheet',
+                'vacante_activa'
+            )->get();
+        $roles = DB::table('roles')
+            ->select(
+                'id',
+                'title as name'
+            )->get();
+        $area = DB::table('areas')
+            ->select(
+                'id',
+                'area',
+                'foto_area'
+            )->get();
+
+        $implementacion->resources = $elaborador;
+        $implementacion->roles = $roles;
         $implementacion->tasks = $tasks;
+        $implementacion->area = $area;
 
         return $implementacion;
     }

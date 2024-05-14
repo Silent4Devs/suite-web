@@ -1,369 +1,167 @@
 @extends('layouts.admin')
+@section('css')
+    <link rel="stylesheet" href="{{ asset('css/plan_accion.css') }}{{ config('app.cssVersion') }}">
+    <style>
+        .separator {
+            border-left: 1px solid black;
+            height: 30px;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+        }
+    </style>
+@endsection
 @section('content')
-    {{-- @can('planes_accion_access') --}}
+    <h5 class="col-12 titulo_general_funcion">PLAN DE TRABAJO</h5>
+    <div class="text-right">
+        <button type="button" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#modalPlanAccion">
+            Agregar nuevo
+            <i class="material-symbols-outlined">add</i>
+        </button>
+    </div>
+    <div class="mt-3 mb-5">
+        <div id="bloqueado"></div>
+        <div class="blue-menu-header-plan d-flex align-items-center justify-content-between px-5">
+            <h3 id="titlo-tab" class="mb-0" style="font-weight: lighter;">Mis Planes de Trabajo</h3>
+            <div class="d-flex align-items-center gap-2">
+                <button class="btn" onclick="cambiarTituloIndex('Mis Planes de Trabajo'); navSectionIndex('plan_trabajo');">
+                    <i class="material-symbols-outlined"> content_paste</i>
+                    <span>Mis Planes de Trabajo</span>
+                </button>
+                <hr>
+                <button class="btn"
+                    onclick="cambiarTituloIndex('Mis asignaciones'); navSectionIndex('asignaciones');">
+                    <i class="material-symbols-outlined"> receipt_long</i>
+                    <span>Mis asignaciones</span>
+                </button>
+                <hr>
+                <button class="btn" onclick="cambiarTituloIndex('Área'); navSectionIndex('area');">
+                    <i class="material-symbols-outlined">pageless</i>
+                    <span>Área</span>
+                </button>
+                {{-- <hr>
+                <button class="btn" data-toggle="modal" data-target="#modalPlanAccion">
+                    <i class="material-symbols-outlined">add</i>
+                </button> --}}
+            </div>
+        </div>
+        <div id="plan_trabajo_workspace" style="background-color: white; border-radius: 25px;">
+            <div class="content-sections">
+                <section id="plan_trabajo" class="caja_tab_reveldada active">
+                    @include('partials.flashMessages')
+                    @livewire('plan-de-accion.plan-accion-index-component', ['tab' => 1])
+                </section>
 
-    <h5 class="col-12 titulo_general_funcion">Planes de acción </h5>
-
-
-    <div class="mt-3 card">
-
-        @include('partials.flashMessages')
-        <div class="card-body datatable-fix">
-            <table class="table table-bordered w-100" id="tblPlanesAccion">
-                <thead class="thead-dark">
-                    <tr>
-                        {{-- <th>
-                            ID
-                        </th> --}}
-                        <th style="min-width:150px;">
-                            Nombre
-                        </th>
-                        <th style="min-width:100px;">
-                            Norma
-                        </th>
-                        <th>
-                            Módulo&nbsp;de&nbsp;Origen
-                        </th>
-                        {{-- <th>
-                            Tipo
-                        </th> --}}
-                        <th style="min-width:200px;">
-                            Objetivo
-                        </th>
-                        <th>
-                            Elaboró
-                        </th>
-                        <th>
-                            %&nbsp;de&nbsp;Avance
-                        </th>
-                        {{-- <th>
-                            Participantes
-                        </th> --}}
-                        <th>
-                            Fecha&nbsp;de&nbsp;Inicio
-                        </th>
-                        <th>
-                            Fecha&nbsp;de&nbsp;Fin
-                        </th>
-                        <th>
-                            Estatus
-                        </th>
-                        <th>
-                            Opciones
-                        </th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
+                <section id="asignaciones">
+                    @include('partials.flashMessages')
+                    @livewire('plan-de-accion.plan-accion-index-component', ['tab' => 2])
+                </section>
+                <section id="area">
+                    @include('partials.flashMessages')
+                    @livewire('plan-de-accion.plan-accion-index-component', ['tab' => 3])
+                </section>
+            </div>
         </div>
     </div>
-    {{-- @endcan --}}
+    <!-- Modal -->
+    <div class="modal fade" id="modalPlanAccion" tabindex="-1" role="dialog" aria-labelledby="modalPlanAccionLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="titulo_general_funcion"
+                        style="
+                    margin-bottom: 0px !important;
+                ">Registrar: Plan de Trabajo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Aquí carga el contenido del formulario -->
+                    <div class="mt-4">
+                        <div class="">
+                            @can('planes_de_accion_agregar')
+                                <form method="POST" action="{{ route('admin.planes-de-accion.store') }}"
+                                    enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="row">
+                                        <div class="col-sm-12 col-lg-6">
+                                            <div class="form-group">
+                                                <div class="form-group anima-focus">
+                                                    <input type="text"
+                                                        class="form-control {{ $errors->has('parent') ? 'is-invalid' : '' }}"
+                                                        id="parent" aria-describedby="parent" name="parent" required>
+                                                    @if ($errors->has('parent'))
+                                                        <span class="invalid-feedback">{{ $errors->first('parent') }}</span>
+                                                    @endif
+                                                    <label for="parent"> Nombre: <span class="text-danger">*</span></label>
+                                                    <span class="text-danger parent_error error-ajax"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm" style="padding-left: inherit !important">
+                                            <div class="form-group anima-focus">
+                                                <input type="date" min="1945-01-01" class="form-control" id="inicio"
+                                                    name="inicio" required>
+                                                <label for="inicio"> Fecha inicio <span class="text-danger">*</span></label>
+                                                <small class="p-0 m-0 text-xs error_inicio errores text-danger"></small>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm">
+                                            <div class="form-group anima-focus">
+                                                <input type="date" min="1945-01-01" class="form-control" id="fin"
+                                                    name="fin" required>
+                                                <label for="fin"> Fecha fin <span class="text-danger">*</span></label>
+                                                <small class="p-0 m-0 text-xs error_fin errores text-danger"></small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div style="width: -webkit-fill-available;padding-left: 20px;padding-right: 20px;">
+                                            <div class="form-group">
+                                                <div class="form-group anima-focus">
+                                                    <textarea class="form-control" id="objetivo" name="objetivo" required></textarea>
+                                                    <label for="objetivo">Objetivo:</label>
+                                                    <span class="text-danger norma_error error-ajax"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                            <div class="text-right form-group col-12" style="margin-left:-5px;">
+                                <button class="btn btn-xs btn-primary" type="submit">
+                                    {{ trans('global.save') }}
+                                </button>
+                            </div>
+                            </form>
+                        @endcan
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    </div>
 @endsection
 @section('scripts')
-    @parent
-    <script>
-        $(document).ready(function() {
-            let dtButtons = [{
-                    extend: 'csvHtml5',
-                    title: `Plan de Trabajo Base ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Exportar CSV',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    }
-                },
-                {
-                    extend: 'excelHtml5',
-                    title: `Plan de Trabajo Base ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Exportar Excel',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    }
-                },
-                {
-                    extend: 'pdfHtml5',
-                    title: `Plan de Trabajo Base ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Exportar PDF',
-                    orientation: 'landscape',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    },
-                    customize: function(doc) {
-                        doc.pageMargins = [20, 60, 20, 30];
-                        doc.styles.tableHeader.fontSize = 8.5;
-                        doc.defaultStyle.fontSize = 8.5; //<-- set fontsize to 16 instead of 10
-                    }
-                },
-                {
-                    extend: 'print',
-                    title: `Plan de Trabajo Base ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Imprimir',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    }
-                },
-                {
-                    extend: 'colvis',
-                    text: '<i class="fas fa-filter" style="font-size: 1.1rem;"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Seleccionar Columnas',
-                },
-                {
-                    extend: 'colvisGroup',
-                    text: '<i class="fas fa-eye" style="font-size: 1.1rem;"></i>',
-                    className: "btn-sm rounded pr-2",
-                    show: ':hidden',
-                    titleAttr: 'Ver todo',
-                },
-                {
-                    extend: 'colvisRestore',
-                    text: '<i class="fas fa-undo" style="font-size: 1.1rem;"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Restaurar a estado anterior',
-                }
+<script type="text/javascript">
+    $(".botones_vistas_gantt a").click(function() {
+        $(".botones_vistas_gantt a").removeClass("boton_activo");
+        $(".botones_vistas_gantt a:hover").addClass("boton_activo");
+    });
 
-            ];
-            let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar nuevo',
-                url: "{{ route('admin.planes-de-accion.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config) {
-                    let {
-                        url
-                    } = config;
-                    window.location.href = url;
-                }
-            };
-            @can('planes_de_accion_agregar')
-            dtButtons.push(btnAgregar);
-            @endcan
-            let url = "{{ route('admin.planes-de-accion.index') }}"
-            let tblPlanesAccion = $('#tblPlanesAccion').DataTable({
-                buttons: dtButtons,
-                ajax: url,
-                columns: [
-                //     {
-                //     data: 'id',
-                // },
-                {
-                    data: 'parent',
-                }, {
-                    data: 'norma',
-                }, {
-                    data: 'modulo_origen',
-                }, {
-                    data: 'objetivo',
-                }, {
-                    data: 'elaborador',
-                    render: function(data, type, meta, config) {
-                        let elaborador =
-                            '<span class="badge badge-primary">Elaborado por el sistema</span>';
-                        if (data) {
-                            elaborador = `
-                            <img src="{{ asset('storage/empleados/imagenes') }}/${data.avatar}" title="${data.name}" class="rounded-circle" style="clip-path: circle(21px at 50% 50%);height: 42px;" />
-                            `;
-                        }
-                        return elaborador;
-                    }
-                }, {
-                    data: 'id',
-                    render: function(data, type, row, meta) {
-                        if (row.tasks) {
-                            let tasks = row.tasks;
-                            let zero_task = tasks.find(t => Number(t.level) == 0);
-                            if (zero_task != undefined) {
-                                let progress = Math.ceil(zero_task.progress);
-                                let html = "";
-                                if (progress >= 90) {
-                                    html =
-                                        `<span class="badge badge-success">${progress} %</span>`;
-                                } else if (progress < 90 && progress >= 60) {
-                                    html =
-                                        `<span class="badge badge-warning">${progress} %</span>`;
-                                } else {
-                                    html =
-                                        `<span class="badge badge-danger">${progress} %</span>`;
-                                }
-                                return html;
-                            }
-                        }
-                        return "<span class='badge badge-primary'>Sin progreso calculable</span>"
-                    }
-                }, {
-                    data: 'id',
-                    render: function(data, type, row, meta) {
-                        if (row.tasks) {
-                            let tasks = row.tasks;
-                            let zero_task = tasks.find(t => Number(t.level) == 0);
-                            if (zero_task != undefined) {
-                                return `
-                                    <p>${moment.unix((zero_task.start)/1000).format("DD-MM-YYYY")}</p>
-                                `;
-                            }
-                        }
-                        return "<span class='badge badge-primary'>No encontrado</span>";
-                    }
-                }, {
-                    data: 'id',
-                    render: function(data, type, row, meta) {
-                        if (row.tasks) {
-                            let tasks = row.tasks;
-                            let zero_task = tasks.find(t => Number(t.level) == 0);
-                            if (zero_task != undefined) {
-                                return `
-                                    <p>${moment.unix((zero_task.end)/1000).format("DD-MM-YYYY")}</p>
-                                `;
-                            }
-                        }
-                        return "<span class='badge badge-primary'>No encontrado</span>";
-                    }
-                }, {
-                    data: 'id',
-                    render: function(data, type, row, meta) {
-                        if (row.tasks) {
-                            let tasks = row.tasks;
-                            let zero_task = tasks.find(t => Number(t.level) == 0);
-                            if (zero_task != undefined) {
-                                if (zero_task.status == 'STATUS_UNDEFINED') {
-                                    return `
-                                        <span class="badge badge-primary">Sin iniciar</span>
-                                    `;
-                                } else if (zero_task.status == 'STATUS_ACTIVE') {
-                                    return `
-                                        <span class="badge badge-warning">En proceso</span>
-                                    `;
+    function cambiarTituloIndex(titulo) {
+        setTimeout(() => {
+            document.getElementById('titlo-tab').innerText = titulo;
+        }, 100);
+    }
 
-                                } else if (zero_task.status == 'STATUS_DONE') {
-                                    return `
-                                        <span class="badge badge-success">Completado</span>
-                                    `;
-
-                                } else if (zero_task.status == 'STATUS_FAILED') {
-                                    return `
-                                        <span class="badge badge-danger">Retraso</span>
-                                    `;
-
-                                } else if (zero_task.status == 'STATUS_SUSPENDED') {
-                                    return `
-                                        <span class="badge badge-secondary">Suspendido</span>
-                                    `;
-
-                                } else {
-                                    return `
-                                    <p>${zero_task.status}</p>
-                                `;
-                                }
-
-                            }
-                        }
-                        return "<span class='badge badge-primary'>No encontrado</span>";
-                    }
-
-                }, {
-                    data: 'id',
-                    render: function(data, type, row, meta) {
-                        let urlVerPlanAccion = "";
-                        let urlEditarPlanAccion = `/admin/planes-de-accion/${data}/edit`;
-
-                        // console.log(row.norma);
-                        if (row.norma == 'ISO 27001') {
-                            let norma = row.norma;
-                            console.log(norma);
-                            urlEditarPlanAccion = `/admin/planes-de-accion/${data}/edit`;
-                        }
-                        // if (row.norma == 'ISO 9001''ISO 27001') {
-                        //     urlEditarPlanAccion = `/admin/planes-de-accion/${data}/edit`;
-                        // }
-
-
-
-                        let urlEliminarPlanAccion = `/admin/planes-de-accion/${data}`;
-                        if (data == 1) {
-                            urlVerPlanAccion = "{{ route('admin.planTrabajoBase.index') }}";
-                        } else {
-                            urlVerPlanAccion = `/admin/planes-de-accion/${data}`;
-                        }
-                        let botones = `
-                            <div class="btn-group">
-                                @can('planes_de_accion_editar')
-                                <a class="btn" href="${urlEditarPlanAccion}" title="Editar Plan de Acción"><i class="fas fa-edit"></i></a>
-                                @endcan
-                                @can('planes_de_accion_visualizar_diagrama')
-                                <a class="btn" href="${urlVerPlanAccion}" title="Visualizar Plan de Acción"><i class="fas fa-stream"></i></a>
-                                @endcan
-                            `;
-
-                        if (data > 1) {
-                            botones += `
-                            @can('planes_de_accion_eliminar')
-                             <button class="btn" onclick="eliminar('${urlEliminarPlanAccion}','${row.parent}')" title="Eliminar Plan de Acción"><i class="fas fa-trash-alt text-danger"></i></button>
-                             </div>
-                             @endcan
-                             `;
-                        } else {
-                            botones += `
-                             </div>
-                             `;
-                        }
-
-                        return botones;
-
-                    }
-                }]
-            });
-        });
-
-        window.eliminar = function(url, nombre) {
-            Swal.fire({
-                title: `¿Estás seguro de eliminar el siguiente plan de acción?`,
-                html: `<strong><i class="mr-2 fas fa-exclamation-triangle"></i>${nombre}</strong>`,
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: '¡Sí, eliminar!',
-                cancelButtonText: 'Cancelar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        type: "DELETE",
-                        headers: {
-                            'x-csrf-token': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        url: url,
-                        beforeSend: function() {
-                            Swal.fire(
-                                '¡Estamos Eliminando!',
-                                `El Plan de Acción: ${nombre} está siendo eliminado`,
-                                'info'
-                            )
-                        },
-                        success: function(response) {
-                            Swal.fire(
-                                'Eliminado!',
-                                `El Plan de Acción: ${nombre} ha sido eliminado`,
-                                'success'
-                            )
-                            tblPlanesAccion.ajax.reload();
-                        },
-                        error: function(error) {
-                            Swal.fire(
-                                'Ocurrió un error',
-                                `Error: ${error.responseJSON.message}`,
-                                'error'
-                            )
-                        }
-                    });
-                }
-            })
-        }
-    </script>
+    function navSectionIndex(id) {
+        document.querySelector('.content-sections section.active').classList.remove('active');
+        document.getElementById(id).classList.add('active');
+    }
+</script>
 @endsection

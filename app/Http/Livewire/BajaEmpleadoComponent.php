@@ -10,11 +10,12 @@ use App\Models\RevisionDocumento;
 use App\Models\User;
 use App\Traits\EmpleadoFunciones;
 use App\Traits\ObtenerOrganizacion;
+use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 
 class BajaEmpleadoComponent extends Component
 {
-    use ObtenerOrganizacion, EmpleadoFunciones;
+    use EmpleadoFunciones, ObtenerOrganizacion;
 
     public $empleado;
 
@@ -90,14 +91,14 @@ class BajaEmpleadoComponent extends Component
 
     public function obtenerDocumentosQueDeboAprobar()
     {
-        $revisiones = RevisionDocumento::with('documento')->where('empleado_id', $this->empleado->id)->where('archivado', RevisionDocumento::NO_ARCHIVADO)->get();
+        $revisiones = RevisionDocumento::getAllWithDocumento();
 
         return $revisiones;
     }
 
     public function obtenerDocumentosQueMeDebenAprobar()
     {
-        $mis_documentos = Documento::with('macroproceso')->where('elaboro_id', $this->empleado->id)->get();
+        $mis_documentos = Documento::getWithMacroproceso($this->empleado->id);
 
         return $mis_documentos;
     }
@@ -112,9 +113,12 @@ class BajaEmpleadoComponent extends Component
     public function obtenerCapacitaciones()
     {
         $empleado = $this->empleado->id;
-        $recursos = Recurso::whereHas('empleados', function ($query) use ($empleado) {
-            $query->where('empleados.id', $empleado);
-        })->get();
+        $cacheKeyRecursos = 'Recursos:recursos_'.User::getCurrentUser()->id;
+        $recursos = Cache::remember($cacheKeyRecursos, 3600 * 8, function () use ($empleado) {
+            return Recurso::whereHas('empleados', function ($query) use ($empleado) {
+                $query->where('empleados.id', $empleado);
+            })->get();
+        });
 
         return $recursos;
     }

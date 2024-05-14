@@ -2,7 +2,7 @@
 @section('content')
 
 @section('styles')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/formularios_centro_atencion.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/formularios_centro_atencion.css') }}{{config('app.cssVersion')}}">
     <style type="text/css">
         sup {
             color: red;
@@ -452,7 +452,7 @@
 
         $('.modal-backdrop').hide();
 
-        toastr.success('Plan de Acción creado con éxito');
+        toastr.success('Plan de Trabajo creado con éxito');
 
     });
 

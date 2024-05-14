@@ -63,7 +63,7 @@ class PlanBaseActividadesController extends Controller
             });
 
             $table->editColumn('guia', function ($row) {
-                return $row->guia ? '<a href="' . $row->guia->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
+                return $row->guia ? '<a href="'.$row->guia->getUrl().'" target="_blank">'.trans('global.downloadFile').'</a>' : '';
             });
             $table->editColumn('estado', function ($row) {
                 return $row->estatus ? $row->estatus->estado : '';
@@ -83,7 +83,7 @@ class PlanBaseActividadesController extends Controller
             return $table->make(true);
         }
 
-        $plan_base_actividades = PlanBaseActividade::get();
+        $plan_base_actividades = PlanBaseActividade::getAll();
         $enlaces_ejecutars = EnlacesEjecutar::get();
         $estatus_plan_trabajos = EstatusPlanTrabajo::get();
         $users = User::getAll();
@@ -98,7 +98,7 @@ class PlanBaseActividadesController extends Controller
 
         $users = User::getAll();
 
-        $actividad_padres = PlanBaseActividade::all()->pluck('actividad', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $actividad_padres = PlanBaseActividade::getAll()->pluck('actividad', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $ejecutars = EnlacesEjecutar::all()->pluck('ejecutar', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -116,7 +116,7 @@ class PlanBaseActividadesController extends Controller
         $planBaseActividade = PlanBaseActividade::create($request->all());
 
         if ($request->input('guia', false)) {
-            $planBaseActividade->addMedia(storage_path('tmp/uploads/' . $request->input('guia')))->toMediaCollection('guia');
+            $planBaseActividade->addMedia(storage_path('tmp/uploads/'.$request->input('guia')))->toMediaCollection('guia');
         }
 
         if ($media = $request->input('ck-media', false)) {
@@ -132,7 +132,7 @@ class PlanBaseActividadesController extends Controller
 
         $users = User::getAll();
 
-        $actividad_padres = PlanBaseActividade::all()->pluck('actividad', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $actividad_padres = PlanBaseActividade::getAll()->pluck('actividad', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $ejecutars = EnlacesEjecutar::all()->pluck('ejecutar', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -152,12 +152,12 @@ class PlanBaseActividadesController extends Controller
         $planBaseActividade->update($request->all());
 
         if ($request->input('guia', false)) {
-            if (!$planBaseActividade->guia || $request->input('guia') !== $planBaseActividade->guia->file_name) {
+            if (! $planBaseActividade->guia || $request->input('guia') !== $planBaseActividade->guia->file_name) {
                 if ($planBaseActividade->guia) {
                     $planBaseActividade->guia->delete();
                 }
 
-                $planBaseActividade->addMedia(storage_path('tmp/uploads/' . $request->input('guia')))->toMediaCollection('guia');
+                $planBaseActividade->addMedia(storage_path('tmp/uploads/'.$request->input('guia')))->toMediaCollection('guia');
             }
         } elseif ($planBaseActividade->guia) {
             $planBaseActividade->guia->delete();

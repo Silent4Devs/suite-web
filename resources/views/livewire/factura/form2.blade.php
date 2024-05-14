@@ -1,5 +1,9 @@
 <div class="row" style="margin: 0;">
-
+    @if (session('mensajeError'))
+    <div class="alert alert-danger">
+        {{ session('mensajeError') }}
+    </div>
+    @endif
 </div>
 <div class="table-responsive" style=" overflow: hidden; overflow-y:auto; max-height: 250px !important;">
 

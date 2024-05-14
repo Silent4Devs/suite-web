@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\ClearsResponseCache;
 use App\Traits\MultiTenantModelTrait;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,10 +13,10 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class Archivo extends Model implements HasMedia, Auditable
+class Archivo extends Model implements Auditable, HasMedia
 {
-    use SoftDeletes, MultiTenantModelTrait, InteractsWithMedia, HasFactory;
-    use \OwenIt\Auditing\Auditable;
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
+    use HasFactory, InteractsWithMedia, MultiTenantModelTrait, SoftDeletes;
 
     public $table = 'archivos';
 
@@ -47,7 +48,7 @@ class Archivo extends Model implements HasMedia, Auditable
         return $date->format('Y-m-d H:i:s');
     }
 
-    public function registerMediaConversions(Media $media = null): void
+    public function registerMediaConversions(?Media $media = null): void
     {
         $this->addMediaConversion('thumb')->fit('crop', 50, 50);
         $this->addMediaConversion('preview')->fit('crop', 120, 120);

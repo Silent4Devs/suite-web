@@ -2,13 +2,16 @@
 
 namespace App\Models\Escuela\Instructor;
 
+use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Question extends Model
+class Question extends Model implements Auditable
 {
-    use HasFactory;
+    use ClearsResponseCache, HasFactory;
+    use \OwenIt\Auditing\Auditable;
     use SoftDeletes;
 
     protected $table = 'questions';

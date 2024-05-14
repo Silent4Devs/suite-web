@@ -59,6 +59,6 @@ class SedesObserver
 
     private function forgetCache()
     {
-        Cache::forget('sedes_all');
+        Cache::forget('Sede:sedes_all');
     }
 }

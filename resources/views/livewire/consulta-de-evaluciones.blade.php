@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-6">
             <label for="evaluacion"><i class="mr-2 fas fa-filter"></i>Consulta por evaluación</label>
-            <select wire:change.prevent="resetComparar" class="form-control" name="" wire:model="evaluacion"
+            <select wire:change.prevent="resetComparar" class="form-control" name="" wire:model.lazy="evaluacion"
                 id="evaluacion">
                 <option value="">-- Selecciona una evaluación --</option>
                 @foreach ($evaluaciones as $evaluacion)
@@ -16,8 +16,8 @@
         @if ($equipo)
             <div class="col-6">
                 <label for="evaluado"><i class="mr-2 fas fa-filter"></i>Selecciona Evaluado</label>
-                <select wire:change.prevent="resetComparar" class="form-control" name="" wire:model="evaluado"
-                    id="evaluado">
+                <select wire:change.prevent="resetComparar" class="form-control" name=""
+                    wire:model.lazy="evaluado" id="evaluado">
                     <option value="">-- Selecciona una evaluado --</option>
                     @foreach ($empleados as $empleado)
                         <option value="{{ $empleado->id }}">{{ $empleado->name }}</option>
@@ -39,10 +39,10 @@
             <div class="col-12" x-data="{ show: false }" style="width:100px !important;">
                 <div style="display: flex;justify-content: end">
                     <button title="Gráfica Radar" @click="show=true" class="btn btn-sm"
-                        x-bind:style="show?'background:blue;color:white':'backgrond:white'"><i
+                        x-bind:style="show ? 'background:blue;color:white' : 'backgrond:white'"><i
                             class="fas fa-chart-area"></i></button>
                     <button title="Gráfica de Barras" @click="show=false" class="btn btn-sm"
-                        x-bind:style="!show?'background:blue;color:white':'backgrond:white'"><i
+                        x-bind:style="!show ? 'background:blue;color:white' : 'backgrond:white'"><i
                             class="fas fa-chart-bar"></i></button>
                 </div>
                 <div x-show="show" x-transition>

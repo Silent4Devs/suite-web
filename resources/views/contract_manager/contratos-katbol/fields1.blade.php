@@ -29,7 +29,7 @@
         <div class="input-field col s12 m4">
             <small>Número de contrato</small>
             <div class="display-flex ml-4">
-                <input id="input_con" name="numero_contrato" class="validate" type="number" data-length="10">
+                <input id="input_con" name="numero_contrato" class="validate" type="number" data-length="10" maxlength="250">
                 <span for="input_con" class="helper-text" data-error="¡Incorrecto!" data-success="¡Correcto!"></span>
             </div>
             <div class="display-flex ml-4">

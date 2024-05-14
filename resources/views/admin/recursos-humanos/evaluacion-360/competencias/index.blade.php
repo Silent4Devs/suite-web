@@ -12,8 +12,19 @@
             display: block;
         }
 
+        #form_id {
+        display: none;
+    }
+
     </style>
     <h5 class="col-12 titulo_general_funcion">Competencias</h5>
+    <form method="POST" id="form_id" style="position: relative; left: 10rem;"
+     action="{{ route('admin.competencias.pdf') }}">
+     @csrf
+     <button class="boton-transparentev2" type="submit" style="color: #306BA9;">
+         IMPRIMIR <img src="{{ asset('imprimir.svg') }}" alt="Importar" class="icon">
+     </button>
+    </form>
     <div class="mt-5 card">
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
@@ -32,25 +43,34 @@
                     </div>
                 </div>
             </div>
-            <table class="table table-bordered w-100 tblCompetencias">
-                <thead class="thead-dark">
-                    <tr>
-                        <th style="min-width:50px;">
-                            Competencias
-                        </th>
-                        <th style="vertical-align: top; min-width:250px;">
-                            Nombre
-                        </th>
-                        <th style="vertical-align: top; min-width:150px;">
-                            Tipo
-                        </th>
-                        <th style="vertical-align: top;min-width:150px;">
-                            Opciones
-                        </th>
-                    </tr>
+            <div class="text-right">
+                    <div class="d-flex justify-content-end">
+                        <a href="{{ route('admin.ev360-competencias.create') }}" type="button" class="btn btn-primary">Registrar Competencia</a>
+                    </div>
+            </div>
+            @include('partials.flashMessages')
+            <div class="datatable-fix datatable-rds">
+                <h3 class="title-table-rds"> Competencias</h3>
+                <table class="datatable tblCompetencias" id="tblCompetencias">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th style="min-width:50px;">
+                                Competencias
+                            </th>
+                            <th style="vertical-align: top; min-width:250px;">
+                                Nombre
+                            </th>
+                            <th style="vertical-align: top; min-width:150px;">
+                                Tipo
+                            </th>
+                            <th style="vertical-align: top;min-width:150px;">
+                                Opciones
+                            </th>
+                        </tr>
 
-                </thead>
-            </table>
+                    </thead>
+                </table>
+            </div>
         </div>
     </div>
 @endsection
@@ -80,14 +100,17 @@
                     }
                 },
                 {
-                    extend: 'pdfHtml5',
-                    title: `Competencias ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar PDF',
                     orientation: 'landscape',
                     exportOptions: {
                         columns: ['th:not(:last-child):visible']
+                    },
+                    action: function (e, dt, button, config) {
+                        // Aquí ejecutas la acción del formulario al presionar el botón
+                        var form = document.getElementById('form_id');
+                        form.submit();
                     },
                     customize: function(doc) {
                         doc.pageMargins = [5, 20, 5, 20];
@@ -126,19 +149,6 @@
                 }
 
             ];
-            let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar competencia',
-                url: "{{ route('admin.ev360-competencias.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config) {
-                    let {
-                        url
-                    } = config;
-                    window.location.href = url;
-                }
-            };
-            dtButtons.push(btnAgregar);
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,

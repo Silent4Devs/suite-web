@@ -11,6 +11,7 @@ use App\Mail\TimesheetSolicitudRechazada;
 use App\Models\Area;
 use App\Models\ContractManager\Fiscale;
 use App\Models\Empleado;
+use App\Models\ListaInformativa;
 use App\Models\Organizacion;
 use App\Models\Sede;
 use App\Models\Timesheet;
@@ -26,13 +27,18 @@ use App\Traits\ObtenerOrganizacion;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Validation\Rule;
+use PDF;
 use Throwable;
 
 class TimesheetController extends Controller
 {
     use ObtenerOrganizacion;
+
+    public $modelo_proyectos = 'TimesheetProyecto';
 
     private $timesheetService;
 
@@ -46,10 +52,39 @@ class TimesheetController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($estatus = 'todos')
     {
-        $cacheKey = 'timesheet-' . User::getCurrentUser()->empleado->id;
+        $cacheKey = 'timesheet-'.User::getCurrentUser()->empleado->id;
 
+        // $times = Timesheet::getPersonalTimesheet()->sortBy('fecha_dia');
+        // dd($times);
+        // $todos_contador = $times->count();
+        // $borrador_contador = $times->where('estatus', 'papelera')->count();
+        // $pendientes_contador = $times->where('estatus', 'pendiente')->count();
+        // $aprobados_contador = $times->where('estatus', 'aprobado')->count();
+        // $rechazos_contador = $times->where('estatus', 'rechazado')->count();
+
+        $empleado_name = User::getCurrentUser()->empleado->name;
+
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
+        $empresa_actual = $organizacion_actual->empresa;
+
+        return view('admin.timesheet.mis-registros', compact(
+            // 'times',
+            // 'rechazos_contador',
+            // 'todos_contador',
+            // 'borrador_contador',
+            // 'pendientes_contador'
+            'logo_actual',
+            'empresa_actual',
+            'estatus',
+            'empleado_name'
+        ));
+    }
+
+    public function misRegistros($estatus = 'todos')
+    {
         $times = Timesheet::getPersonalTimesheet();
 
         $todos_contador = $times->count();
@@ -58,16 +93,21 @@ class TimesheetController extends Controller
         $aprobados_contador = $times->where('estatus', 'aprobado')->count();
         $rechazos_contador = $times->where('estatus', 'rechazado')->count();
 
+        $times = $times->sortByDesc('created_at');
+
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
+        $user = User::getCurrentUser();
+        $empleado = Empleado::getMyEmpleadodata($user->empleado->id);
+        $empleado_name = $empleado->name;
 
-        return view('admin.timesheet.index', compact('times', 'rechazos_contador', 'todos_contador', 'borrador_contador', 'pendientes_contador', 'aprobados_contador', 'logo_actual', 'empresa_actual'));
+        return view('admin.timesheet.mis-registros', compact('times', 'rechazos_contador', 'todos_contador', 'borrador_contador', 'pendientes_contador', 'aprobados_contador', 'logo_actual', 'empresa_actual', 'estatus', 'empleado_name'));
     }
 
     public function timesheetInicio()
     {
-        abort_if(Gate::denies('timesheet_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('timesheet_administrador_configuracion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $organizacion = Organizacion::getFirst();
 
@@ -97,14 +137,14 @@ class TimesheetController extends Controller
             'semanas_adicionales' => $semanasAdicionales,
         ]);
 
-        $empleados = Empleado::getAll();
+        $empleados = Empleado::getDataColumns();
         foreach ($empleados as $key => $empleado) {
             $empleado->update([
                 'semanas_min_timesheet' => $request->semanas_min_timesheet,
             ]);
         }
 
-        return redirect()->route('admin.timesheet-inicio')->with('success', 'Guardado con éxito');
+        return redirect()->route('admin.timesheet-create')->with('success', 'Guardado con éxito');
     }
 
     /**
@@ -120,7 +160,11 @@ class TimesheetController extends Controller
 
         $organizacion = Organizacion::getFirst();
 
-        return view('admin.timesheet.create', compact('fechasRegistradas', 'organizacion'));
+        $user = User::getCurrentUser()->empleado->id;
+        $empleado = Empleado::getMyEmpleadodata($user);
+
+        // Si la fecha no está registrada, continúa con la vista de creación.
+        return view('admin.timesheet.create', compact('fechasRegistradas', 'organizacion', 'empleado'));
     }
 
     public function createCopia($id)
@@ -149,7 +193,7 @@ class TimesheetController extends Controller
         $timesheet = Timesheet::find($id);
         $fechasRegistradas = Timesheet::getPersonalTimesheet()->pluck('fecha_dia')->toArray();
         $organizacion = Organizacion::getFirst();
-        $horas_count = TimesheetHoras::where('timesheet_id', $id)->count();
+        $horas_count = TimesheetHoras::getData()->where('timesheet_id', $id)->count();
 
         return view('admin.timesheet.create-copia', compact('timesheet', 'proyectos', 'tareas', 'fechasRegistradas', 'organizacion', 'horas_count'));
     }
@@ -157,6 +201,8 @@ class TimesheetController extends Controller
     public function store(Request $request)
     {
         abort_if(Gate::denies('timesheet_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        DB::beginTransaction();
 
         $organizacion_semana = Organizacion::getFirst();
 
@@ -224,7 +270,6 @@ class TimesheetController extends Controller
                         );
                     }
                 } else {
-                    // dd($hora);
                     if (
                         $hora['lunes'] != null ||
                         $hora['martes'] != null ||
@@ -248,57 +293,77 @@ class TimesheetController extends Controller
                 }
             }
         }
-        // dd($organizacion_semana->dia_timesheet);
         $usuario = User::getCurrentUser();
-        $timesheet_nuevo = Timesheet::create([
-            'fecha_dia' => $request->fecha_dia,
-            'dia_semana' => $organizacion_semana->dia_timesheet,
-            'inicio_semana' => $organizacion_semana->inicio_timesheet,
-            'fin_semana' => $organizacion_semana->fin_timesheet,
-            'empleado_id' => $usuario->empleado->id,
-            'aprobador_id' => $usuario->empleado->supervisor_id,
-            'estatus' => $request->estatus,
-        ]);
 
-        foreach ($request->timesheet as $index => $hora) {
-            if (array_key_exists('proyecto', $hora) && array_key_exists('tarea', $hora)) {
-                $horas_nuevas = TimesheetHoras::create([
-                    'timesheet_id' => $timesheet_nuevo->id,
-                    'proyecto_id' => array_key_exists('proyecto', $hora) ? $hora['proyecto'] : null,
-                    'tarea_id' => array_key_exists('tarea', $hora) ? $hora['tarea'] : null,
-                    'facturable' => array_key_exists('facturable', $hora) ? true : false,
-                    'horas_lunes' => $hora['lunes'],
-                    'horas_martes' => $hora['martes'],
-                    'horas_miercoles' => $hora['miercoles'],
-                    'horas_jueves' => $hora['jueves'],
-                    'horas_viernes' => $hora['viernes'],
-                    'horas_sabado' => $hora['sabado'],
-                    'horas_domingo' => $hora['domingo'],
-                    'descripcion' => $hora['descripcion'],
-                    'empleado_id' => $usuario->empleado->id,
-                ]);
+        try {
+            $timesheet_nuevo = Timesheet::create([
+                'fecha_dia' => $request->fecha_dia,
+                'dia_semana' => $organizacion_semana->dia_timesheet,
+                'inicio_semana' => $organizacion_semana->inicio_timesheet,
+                'fin_semana' => $organizacion_semana->fin_timesheet,
+                'empleado_id' => $usuario->empleado->id,
+                'aprobador_id' => $usuario->empleado->supervisor_id,
+                'estatus' => $request->estatus,
+            ]);
+
+            foreach ($request->timesheet as $index => $hora) {
+                if (array_key_exists('proyecto', $hora) && array_key_exists('tarea', $hora)) {
+
+                    foreach ($hora as $key => $value) {
+                        if ($value === '') {
+                            $hora[$key] = null;
+                        }
+                    }
+
+                    $horas_nuevas = TimesheetHoras::create([
+                        'timesheet_id' => $timesheet_nuevo->id,
+                        'proyecto_id' => array_key_exists('proyecto', $hora) ? $hora['proyecto'] : null,
+                        'tarea_id' => array_key_exists('tarea', $hora) ? $hora['tarea'] : null,
+                        'facturable' => array_key_exists('facturable', $hora) ? true : false,
+                        'horas_lunes' => $hora['lunes'],
+                        'horas_martes' => $hora['martes'],
+                        'horas_miercoles' => $hora['miercoles'],
+                        'horas_jueves' => $hora['jueves'],
+                        'horas_viernes' => $hora['viernes'],
+                        'horas_sabado' => $hora['sabado'],
+                        'horas_domingo' => $hora['domingo'],
+                        'descripcion' => $hora['descripcion'],
+                        'empleado_id' => $usuario->empleado->id,
+                    ]);
+                }
             }
+
+            if ($timesheet_nuevo->estatus == 'pendiente') {
+                $aprobador = Empleado::find($usuario->empleado->supervisor_id);
+
+                $solicitante = Empleado::find($usuario->empleado->id);
+
+                try {
+                    // Enviar correo
+                    Mail::to(removeUnicodeCharacters($aprobador->email))->queue(new TimesheetHorasSolicitudAprobacion($aprobador, $timesheet_nuevo, $solicitante));
+                } catch (Throwable $e) {
+                    report($e);
+
+                    return response()->json(['status' => 520]);
+                }
+            }
+
+            $this->notificacionhorassobrepasadas($usuario->empleado->id);
+
+            // Your database operations here
+            DB::commit();
+
+            return response()->json(['status' => 200]);
+        }
+        // catch exception and rollback transaction
+        catch (Throwable $e) {
+            DB::rollback();
+
+            // throw $e;
+            return response()->json(['status' => 400]);
         }
 
-        if ($timesheet_nuevo->estatus == 'pendiente') {
-            $aprobador = Empleado::select('id', 'name', 'email', 'foto')->find($usuario->empleado->supervisor_id);
-
-            $solicitante = Empleado::select('id', 'name', 'email', 'foto')->find($usuario->empleado->id);
-
-            try {
-                // Enviar correo
-                Mail::to(removeUnicodeCharacters($aprobador->email))->send(new TimesheetHorasSolicitudAprobacion($aprobador, $timesheet_nuevo, $solicitante));
-            } catch (Throwable $e) {
-                report($e);
-
-                return response()->json(['status' => 520]);
-            }
-        }
-
-        $this->notificacionhorassobrepasadas($usuario->empleado->id);
-
-        return response()->json(['status' => 200]);
-        // return redirect()->route('admin.timesheet')->with('success', 'Registro Enviado');
+        // return redirect()->route('admin.timesheet-mis-registros')->with('success', 'Registro Enviado');
     }
 
     /**
@@ -309,14 +374,19 @@ class TimesheetController extends Controller
      */
     public function show($id)
     {
-        $timesheet = Timesheet::find($id);
-        $horas = TimesheetHoras::where('timesheet_id', $id)->get();
-        $horas_count = TimesheetHoras::where('timesheet_id', $id)->count();
+        try {
+            $timesheet = Timesheet::find($id);
 
-        $hoy = Carbon::now();
-        $hoy_format = $hoy->format('d/m/Y');
+            $horas = TimesheetHoras::where('timesheet_id', $id)->get();
+            $horas_count = $horas->count();
 
-        return view('admin.timesheet.show', compact('timesheet', 'horas', 'hoy_format', 'horas_count'));
+            $hoy = Carbon::now();
+            $hoy_format = $hoy->format('d/m/Y');
+
+            return view('admin.timesheet.show', compact('timesheet', 'horas', 'hoy_format', 'horas_count'));
+        } catch (\Exception $e) {
+            return redirect('admin/timesheet/proyectos')->with('error', 'No se localizo  ningun id  en la ruta');
+        }
     }
 
     /**
@@ -328,10 +398,11 @@ class TimesheetController extends Controller
     public function edit($id)
     {
         $empleado = Empleado::find(User::getCurrentUser()->empleado->id);
-
         // areas proyectos
         $proyectos_array = collect();
+
         $proyectos_totales = TimesheetProyecto::getAll();
+
         foreach ($proyectos_totales as $key => $proyecto) {
             if ($proyecto->estatus == 'proceso') {
                 foreach ($proyecto->areas as $key => $area) {
@@ -345,13 +416,18 @@ class TimesheetController extends Controller
                 }
             }
         }
+
         $proyectos = $proyectos_array->unique();
 
         $tareas = TimesheetTarea::getAll();
+
         $timesheet = Timesheet::find($id);
+
         $fechasRegistradas = Timesheet::getPersonalTimesheet()->pluck('fecha_dia')->toArray();
+
         $organizacion = Organizacion::getFirst();
-        $horas_count = TimesheetHoras::where('timesheet_id', $id)->count();
+
+        $horas_count = TimesheetHoras::select('id')->where('timesheet_id', $id)->count();
 
         return view('admin.timesheet.edit', compact('timesheet', 'proyectos', 'tareas', 'fechasRegistradas', 'organizacion', 'horas_count'));
     }
@@ -458,9 +534,9 @@ class TimesheetController extends Controller
         $timesheet_edit = Timesheet::find($id);
         $usuario = User::getCurrentUser();
         $timesheet_edit->update([
-            'empleado_id' => $usuario->empleado->id,
-            'aprobador_id' => $usuario->empleado->supervisor_id,
-            'estatus' => $request->estatus,
+            'empleado_id' => $usuario->empleado->id ?? null,
+            'aprobador_id' => $usuario->empleado->supervisor_id ?? null,
+            'estatus' => $request->estatus ?? null,
         ]);
 
         foreach ($request->timesheet as $index => $hora) {
@@ -504,13 +580,13 @@ class TimesheetController extends Controller
         }
 
         if ($timesheet_edit->estatus == 'pendiente') {
-            $aprobador = Empleado::select('id', 'name', 'email', 'foto')->find($usuario->empleado->supervisor_id);
+            $aprobador = Empleado::getDataColumns()->find($usuario->empleado->supervisor_id);
 
-            $solicitante = Empleado::select('id', 'name', 'email', 'foto')->find($usuario->empleado->id);
+            $solicitante = Empleado::getDataColumns()->find($usuario->empleado->id);
 
             try {
                 // Enviar correo
-                Mail::to(removeUnicodeCharacters($aprobador->email))->send(new TimesheetHorasSolicitudAprobacion($aprobador, $timesheet_edit, $solicitante));
+                Mail::to(removeUnicodeCharacters($aprobador->email))->queue(new TimesheetHorasSolicitudAprobacion($aprobador, $timesheet_edit, $solicitante));
             } catch (Throwable $e) {
                 report($e);
 
@@ -566,75 +642,118 @@ class TimesheetController extends Controller
 
     public function storeProyectos(Request $request)
     {
-        $request->validate(
-            [
-                'identificador' => 'required|unique:timesheet_proyectos,identificador',
-                'proyecto_name' => 'required',
-                'cliente_id' => 'required',
-                'sede_id' => 'required',
-                'tipo' => 'required',
-            ],
-            [
-                'identificador.unique' => 'El ID ya esta en uso',
-            ],
-        );
-        if ($request->fecha_inicio && $request->fecha_fin) {
+        try {
             $request->validate(
                 [
-                    'fecha_inicio' => 'before:fecha_fin',
-                    'fecha_fin' => 'after:fecha_inicio',
+                    'identificador' => 'required|unique:timesheet_proyectos,identificador|max:255',
+                    'proyecto_name' => 'required|max:255',
+                    'cliente_id' => 'required',
+                    'sede_id' => 'nullable',
+                    'tipo' => 'required',
                 ],
                 [
-                    'fecha_inicio.before' => 'La fecha de incio debe ser anterior a la fecha de fin',
-                    'fecha_fin.after' => 'La fecha de fin debe ser posterior a la fecha de incio',
+                    'identificador.unique' => 'El ID ya esta en uso',
                 ],
             );
-        }
-        $nuevo_proyecto = TimesheetProyecto::create([
-            'identificador' => $request->identificador,
-            'proyecto' => $request->proyecto_name,
-            'cliente_id' => $request->cliente_id,
-            'fecha_inicio' => $request->fecha_inicio,
-            'fecha_fin' => $request->fecha_fin,
-            'sede_id' => $request->sede_id,
-            'tipo' => $request->tipo,
-            'horas_proyecto' => $request->horas_proyecto,
-        ]);
+            if ($request->fecha_fin) {
+                $request->validate(
+                    [
+                        'fecha_inicio' => 'before:fecha_fin',
+                        'fecha_fin' => 'after:fecha_inicio',
+                    ],
+                    [
+                        'fecha_inicio.before' => 'La fecha de incio debe ser anterior a la fecha de fin',
+                        'fecha_fin.after' => 'La fecha de fin debe ser posterior a la fecha de incio',
+                    ],
+                );
+            }
+            $nuevo_proyecto = TimesheetProyecto::create([
+                'identificador' => $request->identificador,
+                'proyecto' => $request->proyecto_name,
+                'cliente_id' => $request->cliente_id,
+                'fecha_inicio' => $request->fecha_inicio == '' ? null : $request->fecha_inicio,
+                'fecha_fin' => $request->fecha_fin == '' ? null : $request->fecha_fin,
+                'sede_id' => $request->sede_id,
+                'tipo' => $request->tipo,
+                'horas_proyecto' => $request->horas_proyecto == '' ? null : $request->horas_proyecto,
+            ]);
 
-        foreach ($request->areas_seleccionadas as $key => $area_id) {
-            TimesheetProyectoArea::create([
-                'proyecto_id' => $nuevo_proyecto->id,
-                'area_id' => $area_id,
+            foreach ($request->areas_seleccionadas as $key => $area_id) {
+                TimesheetProyectoArea::create([
+                    'proyecto_id' => $nuevo_proyecto->id,
+                    'area_id' => $area_id,
+                ]);
+            }
+
+            try {
+                $informados = ListaInformativa::with('participantes.empleado', 'usuarios.usuario')->where('modelo', '=', $this->modelo_proyectos)->first();
+
+                if (isset($informados->participantes[0]) || isset($informados->usuarios[0])) {
+
+                    if (isset($informados->participantes[0])) {
+                        foreach ($informados->participantes as $participante) {
+                            $correos[] = $participante->empleado->email;
+                        }
+                    }
+
+                    if (isset($informados->usuarios[0])) {
+                        foreach ($informados->usuarios as $usuario) {
+                            $correos[] = $usuario->usuario->email;
+                        }
+                    }
+
+                    dispatch(
+                        new NuevoProyectoJob(
+                            $correos,
+                            $nuevo_proyecto->proyecto,
+                            $nuevo_proyecto->identificador,
+                            $nuevo_proyecto->cliente->nombre,
+                            User::getCurrentUser()->empleado->name,
+                            $nuevo_proyecto->id
+                        )
+                    );
+                }
+            } catch (\Throwable $th) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Ha Ocurrido un Error al enviar el correo.',
+                    'id_proyecto' => $nuevo_proyecto->id,
+                ]);
+            }
+
+            // return redirect('admin/timesheet/proyecto-empleados/'.$nuevo_proyecto->id);
+
+            // return redirect('admin/timesheet/proyectos/create');
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Se ha creado el proyecto con éxito.',
+                'id_proyecto' => $nuevo_proyecto->id,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Se ha producido un error al intentar crear el proyecto.',
             ]);
         }
-
-        dispatch(
-            new NuevoProyectoJob(
-                'marco.luna@silent4business.com',
-                $nuevo_proyecto->proyecto,
-                $nuevo_proyecto->identificador,
-                $nuevo_proyecto->cliente->nombre,
-                User::getCurrentUser()->empleado->name,
-                $nuevo_proyecto->id
-            )
-        );
-
-        // return redirect('admin/timesheet/proyecto-empleados/' . $nuevo_proyecto->id);
-        return redirect('admin/timesheet/proyectos');
     }
 
     public function showProyectos($id)
     {
         $proyecto = TimesheetProyecto::getAll($id)->find($id);
+
+        if (! $proyecto) {
+            return redirect()->route('admin.timesheet-proyectos')->with('error', 'El registro fue eliminado ');
+        }
         $areas = TimesheetProyectoArea::where('proyecto_id', $id)
             ->join('areas', 'timesheet_proyectos_areas.area_id', '=', 'areas.id')
             ->get('areas.area');
 
-        $sedes = TimesheetProyecto::getAll('sedes_' . $id)->where('timesheet_proyectos.id', $id)
+        $sedes = TimesheetProyecto::getAll('sedes_'.$id)->where('timesheet_proyectos.id', $id)
             ->join('sedes', 'timesheet_proyectos.sede_id', '=', 'sedes.id')
             ->get('sedes.sede');
 
-        $clientes = TimesheetProyecto::getAll('clientes_' . $id)->where('timesheet_proyectos.id', $id)
+        $clientes = TimesheetProyecto::getAll('clientes_'.$id)->where('timesheet_proyectos.id', $id)
             ->join('timesheet_clientes', 'timesheet_proyectos.cliente_id', '=', 'timesheet_clientes.id')
             ->get('timesheet_clientes.nombre');
 
@@ -645,15 +764,17 @@ class TimesheetController extends Controller
 
     public function updateProyectos(Request $request, $id)
     {
-        $request->validate(
-            [
-                'identificador' => 'required',
-                'proyecto_name' => 'required',
-                'cliente_id' => 'required',
-                'sede_id' => 'required',
-                'tipo' => 'required',
+        $request->validate([
+            'identificador' => [
+                'required',
+                Rule::unique('timesheet_proyectos')->ignore($id),
+                'max:255',
             ],
-        );
+            'proyecto_name' => 'required|max:255',
+            'cliente_id' => 'required',
+            'sede_id' => 'nullable',
+            'tipo' => 'required',
+        ]);
 
         if ($request->fecha_inicio && $request->fecha_fin) {
             $request->validate(
@@ -691,7 +812,7 @@ class TimesheetController extends Controller
         }
 
         // // return back()->with('success', 'Guardado con éxito');
-        return redirect('admin/timesheet/proyectos')->with('success', 'Guardado con éxito');
+        return redirect()->back()->with('success', 'Guardado con éxito');
         // return redirect('admin/timesheet/proyecto-empleados/'.$edit_proyecto->id);
     }
 
@@ -708,7 +829,7 @@ class TimesheetController extends Controller
 
     public function tareasProyecto($proyecto_id)
     {
-        $proyecto = TimesheetProyecto::getAll('tareas_' . $proyecto_id)->find($proyecto_id);
+        $proyecto = TimesheetProyecto::getAll('tareas_'.$proyecto_id)->find($proyecto_id);
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -831,13 +952,13 @@ class TimesheetController extends Controller
             'comentarios' => $request->comentarios,
         ]);
 
-        $solicitante = Empleado::select('id', 'name', 'email', 'foto')->find($aprobar->empleado_id);
+        $solicitante = Empleado::getDataColumns()->find($aprobar->empleado_id);
 
-        $aprobador = Empleado::select('id', 'name', 'email', 'foto')->find($aprobar->aprobador_id);
+        $aprobador = Empleado::getDataColumns()->find($aprobar->aprobador_id);
 
         try {
             // Enviar correo
-            Mail::to(removeUnicodeCharacters($solicitante->email))->send(new TimesheetSolicitudAprobada($aprobador, $aprobar, $solicitante));
+            Mail::to(removeUnicodeCharacters($solicitante->email))->queue(new TimesheetSolicitudAprobada($aprobador, $aprobar, $solicitante));
         } catch (Throwable $e) {
             report($e);
 
@@ -856,13 +977,13 @@ class TimesheetController extends Controller
             'comentarios' => $request->comentarios,
         ]);
 
-        $solicitante = Empleado::select('id', 'name', 'email', 'foto')->find($rechazar->empleado_id);
+        $solicitante = Empleado::getDataColumns()->find($rechazar->empleado_id);
 
-        $aprobador = Empleado::select('id', 'name', 'email', 'foto')->find($rechazar->aprobador_id);
+        $aprobador = Empleado::getDataColumns()->find($rechazar->aprobador_id);
 
         try {
             // Enviar correo
-            Mail::to(removeUnicodeCharacters($solicitante->email))->send(new TimesheetSolicitudRechazada($aprobador, $rechazar, $solicitante));
+            Mail::to(removeUnicodeCharacters($solicitante->email))->queue(new TimesheetSolicitudRechazada($aprobador, $rechazar, $solicitante));
         } catch (Throwable $e) {
             report($e);
 
@@ -892,20 +1013,51 @@ class TimesheetController extends Controller
 
     public function clientesEdit($id)
     {
-        $cliente = TimesheetCliente::find($id);
-        // $personas = Fiscale::get();
+        try {
 
-        return view('admin.timesheet.clientes.edit', compact('cliente'));
+            $cliente = TimesheetCliente::find($id);
+
+            if (! $cliente) {
+                abort(404);
+            }
+
+            return view('admin.timesheet.clientes.edit', compact('cliente'));
+        } catch (\Throwable $th) {
+            abort(404);
+        }
     }
 
     public function clientesStore(Request $request)
     {
         $request->validate(
             [
-                'identificador' => 'required|unique:timesheet_clientes,identificador',
+                'identificador' => 'required|max:255|unique:timesheet_clientes,identificador',
+                'razon_social' => 'required|string|max:255',
+                'nombre' => 'required|string|max:255',
+                'rfc' => 'max:15',
+                'calle' => 'max:255',
+                'colonia' => 'max:255',
+                'ciudad' => 'max:255',
+                'codigo_postal' => 'max:255',
+                'telefono' => 'max:255',
+                'pagina_web' => 'max:255',
+                'nombre_contacto' => 'max:255',
+                'puesto_contacto' => 'max:255',
+                'correo_contacto' => 'max:255',
             ],
             [
                 'identificador.unique' => 'El ID ya esta en uso',
+                'razon_social.max' => 'La  razon social no debe exceder de 255 caracteres',
+                'nombre.max' => 'El nombre no debe exceder de 255 caracteres',
+                'rfc.max' => 'El rfc no debe exceder de 255 caracteres',
+                'calle.max' => 'El calle no debe exceder de 255 caracteres',
+                'colonia.max' => 'La colonia no debe exceder de 255 caracteres',
+                'codigo_postal.max' => 'El codigo_postal no debe exceder de 255 caracteres',
+                'telefono.max' => 'El telefono no debe exceder de 255 caracteres',
+                'pagina_web.max' => 'La pagina_web no debe exceder de 255 caracteres',
+                'nombre_contacto.max' => 'El nombre_contacto no debe exceder de 255 caracteres',
+                'puesto_contacto.max' => 'El puesto_contacto no debe exceder de 255 caracteres',
+                'correo_contacto.max' => 'El correo_contacto no debe exceder de 255 caracteres',
             ],
         );
 
@@ -918,10 +1070,33 @@ class TimesheetController extends Controller
     {
         $request->validate(
             [
-                'identificador' => "required|unique:timesheet_clientes,identificador,{$id}",
+                'identificador' => 'required|max:255|unique:timesheet_clientes,identificador',
+                'razon_social' => 'required|string|max:255',
+                'nombre' => 'required|string|max:255',
+                'rfc' => 'max:15',
+                'calle' => 'max:255',
+                'colonia' => 'max:255',
+                'ciudad' => 'max:255',
+                'codigo_postal' => 'max:255',
+                'telefono' => 'max:255',
+                'pagina_web' => 'max:255',
+                'nombre_contacto' => 'max:255',
+                'puesto_contacto' => 'max:255',
+                'correo_contacto' => 'max:255',
             ],
             [
                 'identificador.unique' => 'El ID ya esta en uso',
+                'razon_social.max' => 'La  razon social no debe exceder de 255 caracteres',
+                'nombre.max' => 'El nombre no debe exceder de 255 caracteres',
+                'rfc.max' => 'El rfc no debe exceder de 255 caracteres',
+                'calle.max' => 'El calle no debe exceder de 255 caracteres',
+                'colonia.max' => 'La colonia no debe exceder de 255 caracteres',
+                'codigo_postal.max' => 'El codigo_postal no debe exceder de 255 caracteres',
+                'telefono.max' => 'El telefono no debe exceder de 255 caracteres',
+                'pagina_web.max' => 'La pagina_web no debe exceder de 255 caracteres',
+                'nombre_contacto.max' => 'El nombre_contacto no debe exceder de 255 caracteres',
+                'puesto_contacto.max' => 'El puesto_contacto no debe exceder de 255 caracteres',
+                'correo_contacto.max' => 'El correo_contacto no debe exceder de 255 caracteres',
             ],
         );
 
@@ -935,7 +1110,7 @@ class TimesheetController extends Controller
     {
         $cliente_borrado = TimesheetCliente::find($id);
 
-        $cliente_borrado->delete();
+        $cliente_borrado->forceDelete();
 
         return redirect()->route('admin.timesheet-clientes')->with('success', 'Eliminado');
     }
@@ -946,9 +1121,12 @@ class TimesheetController extends Controller
         $areas_array = $this->timesheetService->totalRegisterByAreas();
         $proyectos = $this->timesheetService->getRegistersByProyects();
 
+        $proyectos_array = TimesheetProyecto::get();
+
         return view(
+            // 'admin.timesheet.dashboard'
             'admin.timesheet.dashboard',
-            compact('counters', 'areas_array', 'proyectos')
+            compact('counters', 'areas_array', 'proyectos', 'proyectos_array')
         );
     }
 
@@ -1009,6 +1187,19 @@ class TimesheetController extends Controller
         return view('admin.timesheet.reportes.reportes-proyemp', compact('proyectos', 'logo_actual', 'empresa_actual'));
     }
 
+    public function reportesFinanciero()
+    {
+        $proyectos = TimesheetProyecto::getAll();
+
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
+        $empresa_actual = $organizacion_actual->empresa;
+
+        //dd($proyectos[20]);
+
+        return view('admin.timesheet.reportes.reportes-financiero', compact('logo_actual', 'empresa_actual'));
+    }
+
     public function obtenerTareas(Request $request)
     {
         $proyecto_id = $request->proyecto_id;
@@ -1042,7 +1233,7 @@ class TimesheetController extends Controller
 
     public function proyectosEmpleados($id)
     {
-        $proyecto = TimesheetProyecto::getAll('empleado_' . $id)->find($id);
+        $proyecto = TimesheetProyecto::getAll('empleado_'.$id)->find($id);
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -1053,7 +1244,7 @@ class TimesheetController extends Controller
 
     public function proyectosExternos($id)
     {
-        $proyecto = TimesheetProyecto::getAll('externos_' . $id)->find($id);
+        $proyecto = TimesheetProyecto::getAll('externos_'.$id)->find($id);
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -1065,8 +1256,11 @@ class TimesheetController extends Controller
     public function editProyectos($id)
     {
         $proyecto = TimesheetProyecto::getAll()->find($id);
+        if (! $proyecto) {
+            return redirect()->route('admin.timesheet-proyectos')->with('error', 'El registro fue eliminado ');
+        }
         $clientes = TimesheetCliente::getAll();
-        $areas = Area::getAll();
+        $areas = Area::getIdNameAll();
         $sedes = Sede::getAll();
         $tipos = TimesheetProyecto::TIPOS;
         $tipo = $tipos['Interno'];
@@ -1078,10 +1272,43 @@ class TimesheetController extends Controller
         return view('admin.timesheet.edit-proyectos', compact('proyecto', 'logo_actual', 'empresa_actual', 'clientes', 'areas', 'sedes', 'tipos'));
     }
 
+    public function pdf($id)
+    {
+        $timesheet = Timesheet::with('horas.proyecto', 'horas.tarea')->where('id', $id)->first();
+        $organizacions = Organizacion::getFirst();
+        $logo_actual = $organizacions->logo;
+
+        // Cargar la vista 'timesheet' con los datos necesarios
+        $view = view('timesheet', compact('timesheet', 'organizacions', 'logo_actual'));
+
+        // Crear una instancia de la clase PDF
+        $pdf = \PDF::loadHTML($view);
+
+        // Configurar el tamaño del papel y la orientación
+        $pdf->setPaper('tabloid', 'landscape');
+
+        // Descargar el PDF
+        return $pdf->download('timesheet.pdf');
+    }
+
+    public function pdfClientes()
+    {
+
+        $timesheetCliente = TimesheetCliente::get();
+        $organizacions = Organizacion::getFirst();
+        $logo_actual = $organizacions->logo;
+
+        $pdf = PDF::loadView('timesheetCliente', compact('timesheetCliente', 'organizacions', 'logo_actual'));
+
+        $pdf->setPaper('A4', 'landscape');
+
+        return $pdf->download('clientes.pdf');
+    }
+
     public function notificacionhorassobrepasadas($id)
     {
         // dd("Si llega a la funcion");
-        $verificacion_proyectos = TimesheetProyectoEmpleado::where('empleado_id', '=', $id)->with('empleado', 'proyecto')->exists();
+        $verificacion_proyectos = TimesheetProyectoEmpleado::select('id', 'empleado_id')->where('empleado_id', '=', $id)->with('empleado', 'proyecto')->exists();
         // dd($emp_proyectos);
         if ($verificacion_proyectos) {
             $emp_proyectos = TimesheetProyectoEmpleado::where('empleado_id', '=', $id)->with('empleado', 'proyecto')->get();
@@ -1094,22 +1321,33 @@ class TimesheetController extends Controller
                 ->where('empleado_id', '=', $ep->empleado_id)
                 ->get();
 
-            $tot_horas_proyecto = 0;
-
-            $sumalun = $times->sum('horas_lunes');
-            $sumamar = $times->sum('horas_martes');
-            $sumamie = $times->sum('horas_miercoles');
-            $sumajue = $times->sum('horas_jueves');
-            $sumavie = $times->sum('horas_viernes');
-            $sumasab = $times->sum('horas_sabado');
-            $sumadom = $times->sum('horas_domingo');
-
-            $tot_horas_proyecto = $sumalun + $sumamar + $sumamie + $sumajue + $sumavie + $sumasab + $sumadom;
-
             if ($ep->proyecto->tipo === 'Externo') {
+
+                $tot_horas_proyecto = 0;
+
+                $sumalun = 0;
+                $sumamar = 0;
+                $sumamie = 0;
+                $sumajue = 0;
+                $sumavie = 0;
+                $sumasab = 0;
+                $sumadom = 0;
+
+                foreach ($times as $time) {
+                    $sumalun += floatval($time->horas_lunes);
+                    $sumamar += floatval($time->horas_martes);
+                    $sumamie += floatval($time->horas_miercoles);
+                    $sumajue += floatval($time->horas_jueves);
+                    $sumavie += floatval($time->horas_viernes);
+                    $sumasab += floatval($time->horas_sabado);
+                    $sumadom += floatval($time->horas_domingo);
+                }
+
+                $tot_horas_proyecto = $sumalun + $sumamar + $sumamie + $sumajue + $sumavie + $sumasab + $sumadom;
+
                 if ($tot_horas_proyecto > $ep->horas_asignadas) {
                     // if($ep->correo_enviado == false){
-                    $empleado_query = Empleado::select('id', 'name', 'email', 'foto')->get();
+                    $empleado_query = Empleado::getDataColumns();
 
                     $aprobador = $empleado_query->find(User::getCurrentUser()->empleado->supervisor_id);
 
@@ -1119,7 +1357,7 @@ class TimesheetController extends Controller
                     try {
                         // Enviar correo
                         Mail::to(removeUnicodeCharacters('marco.luna@silent4business.com'))
-                            ->send(new TimesheetHorasSobrepasadas($ep->empleado->name, $ep->proyecto->proyecto, $tot_horas_proyecto, $ep->horas_asignadas));
+                            ->queue(new TimesheetHorasSobrepasadas($ep->empleado->name, $ep->proyecto->proyecto, $tot_horas_proyecto, $ep->horas_asignadas));
                     } catch (Throwable $e) {
                         report($e);
 

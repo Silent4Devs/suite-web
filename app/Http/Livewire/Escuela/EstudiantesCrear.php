@@ -11,14 +11,19 @@ use Livewire\Component;
 class EstudiantesCrear extends Component
 {
     use LivewireAlert;
+
     public $user_id;
+
     public $usuarios;
+
     public $course;
+
     public $open = false;
 
     protected $rules = [
         'user_id' => 'required',
     ];
+
     protected $messages = [
         'user_id.required' => 'Debe seleccionar un usuario',
     ];

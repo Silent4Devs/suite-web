@@ -2,6 +2,23 @@
 @section('content')
     {{ Breadcrumbs::render('admin.comiteseguridads.create') }}
 
+    <h5 class="col-12 titulo_general_funcion">Conformación del Comité</h5>
+    <div class="card card-body" style="background-color: #5397D5; color: #fff;">
+        <div class="d-flex" style="gap: 25px;">
+            <img src="{{ asset('img/audit_port.jpg') }}" alt="Auditoria" style="width: 200px;">
+            <div>
+                <br>
+                <h4>¿Qué es Conformación del Comité?</h4>
+                <p>
+                    Refiere al proceso de establecer un grupo de individuos con roles y responsabilidades definidos para abordar un tema o llevar a cabo una tarea específica en una organización o proyecto.
+                </p>
+                <p>
+                    Los comités se crean para abordar una variedad de asuntos, como la toma de decisiones, la resolución de problemas  la supervisión de proyectos, la formulación de políticas, la revisión de procesos, entre otros.
+                </p>
+            </div>
+        </div>
+    </div>
+
     <div class="card">
         <div class="card-header">
             {{ trans('global.show') }} {{ trans('cruds.comiteseguridad.title') }}
@@ -51,39 +68,13 @@
                         </p>
                     </div><br>
                 @else
-                    <div class="form-group col-12">
-                        <p class="text-center text-light p-1" style="background-color:#345183; border-radius: 100px;">
-                            Miembros del Comité</p>
+
+                    @include('partials.flashMessages')
+                    <div class="datatable-fix datatable-rds">
+                        <h3 class="title-table-rds">Miembros  del  Comites</h3>
+                        @include('admin.comiteseguridads.table_miembros_view')
                     </div>
 
-                    <table class=table table-bordered table-striped">
-                        <thead>
-                            <tr>
-                                <th scope="col" style="min-width: 150px;">Nombre del Rol</th>
-                                <th scope="col" style="min-width: 250px;">Nombre del Colaborador</th>
-                                <th scope="col" style="min-width: 150px;">Responsabilidades</th>
-                                <th scope="col" style="min-width: 100px;">Alta</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($datas as $data)
-                                <tr>
-                                    <th scope="row" style="text-align: left;"> {{ $data->nombrerol ?: 'No definido' }}</th>
-                                    @if (!empty($data->asignacion->name))
-                                        <td> {{ $data->asignacion->name}}</td>
-                                    @else
-                                        <td style="text-align: left;"> No definido </td>
-                                    @endif
-                                    @if ($data->responsabilidades)
-                                        <td style="text-align: left;">{!! $data->responsabilidades !!}</td>
-                                    @else
-                                        <td style="text-align: left;">No definido</td>
-                                    @endif
-                                    <td style="text-align: left;">{{ $data->fechavigor ?: 'No definido' }}</td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
                 @endif
 
 

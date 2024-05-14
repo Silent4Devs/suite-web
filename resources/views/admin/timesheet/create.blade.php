@@ -1,31 +1,31 @@
 @extends('layouts.admin')
+@section('css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}{{config('app.cssVersion')}}">
+@endsection
 @section('content')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
-
     {{ Breadcrumbs::render('timesheet-create') }}
 
-    <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Registrar Jornada Laboral</font>
+    <h5 class="titulo_general_funcion">Timesheet: <font style="font-weight:lighter;">Registrar Jornada Laboral</font>
     </h5>
 
-    <div class="card card-body not-card-mobile time-responsivo">
-        <div class="row">
-            <x-loading-indicator />
-            @livewire('timesheet.timesheet-horas-filas', ['origen' => 'create', 'timesheet_id' => null])
+    @include('admin.timesheet.complementos.cards')
 
-        </div>
-    </div>
+    @include('admin.timesheet.complementos.admin-aprob')
+
+    <x-loading-indicator />
+
+    @livewire('timesheet.timesheet-horas-filas', ['origen' => 'create', 'timesheet_id' => null])
+
 @endsection
 
 
 @section('scripts')
     @parent
-
     <script type="text/javascript">
         $('.select2').select2({
             'theme': 'bootstrap4',
         });
     </script>
-
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', () => {
             let fechasRegistradas = @json($fechasRegistradas);
@@ -37,9 +37,8 @@
                 return d.getFullYear() + '-' + z(d.getMonth() + 1) + '-' + z(d.getDate());
             }
 
-
             $("#fecha_dia").flatpickr({
-                "minDate": "{{ auth()->user()->empleado->fecha_min_timesheet }}",
+                "minDate": "{{ $empleado->fecha_min_timesheet }}",
                 "maxDate": "{{ now()->addWeeks($organizacion->semanas_adicionales)->endOfWeek()->format('Y-m-d') }}",
                 "disable": [
                     function(date) {
@@ -126,6 +125,9 @@
 
                 let tr_seleccionado = '#' + $('.btn_destroy_tr:hover').attr('data-tr');
 
+                // Eliminar la fila del DOM
+                $(tr_seleccionado).remove();
+
                 // limpiar datos de tr
                 var inputs_clear = document.querySelectorAll(tr_seleccionado + ' input');
                 for (var i = 0; i < inputs_clear.length; i++) {
@@ -134,8 +136,9 @@
                 document.querySelector(tr_seleccionado + ' .total_filas').textContent = '';
                 $(tr_seleccionado + ' .select2').val(null).trigger('change');
 
-                console.log('filas removs');
+                console.log('fila removida');
                 Livewire.emit('removerFila');
+
             }
             if (element.classList.contains('btn_clear_tr')) {
 
@@ -303,20 +306,19 @@
             document.getElementById('total_horas_filas').innerText = total_horas_filas + ' h';
         }
     </script>
-
     <script type="text/javascript">
-        $(document).ready(function(){
+        $(document).ready(function() {
 
-            $('.tabla-llenar-horas tbody').click(function(e){
-                if (e.target.className == 'area-click-acordeon-time-mobile' && document.body.classList.contains('body-responsive-mobile')) {
-                    $('.tr-time-actividad-mobile:not(.tr-time-actividad-mobile:hover)').removeClass('ver-tr-time-mobile');
+            $('.tabla-llenar-horas tbody').click(function(e) {
+                if (e.target.className == 'area-click-acordeon-time-mobile' && document.body.classList
+                    .contains('body-responsive-mobile')) {
+                    $('.tr-time-actividad-mobile:not(.tr-time-actividad-mobile:hover)').removeClass(
+                        'ver-tr-time-mobile');
                     $('.tr-time-actividad-mobile:hover').toggleClass('ver-tr-time-mobile');
                 }
             });
         });
-
     </script>
-
     <script>
         // Definimos una variable para almacenar el tiempo de inactividad
         let inactivityTimeout;
@@ -326,18 +328,17 @@
 
         function showInactiveMessage() {
             alert("Demasiado tiempo de inactividad al registrar horas");
-            window.location.href = "{{ route('admin.timesheet-inicio') }}";
+            window.location.href = "{{ route('admin.timesheet-create') }}";
         }
 
         function resetInactivityTimeout() {
-        clearTimeout(inactivityTimeout);
+            clearTimeout(inactivityTimeout);
 
-        inactivityTimeout = setTimeout(showInactiveMessage, time); // 60000 ms = 1 minuto
+            inactivityTimeout = setTimeout(showInactiveMessage, time); // 60000 ms = 1 minuto
         }
 
         document.addEventListener("mousemove", resetInactivityTimeout);
 
         resetInactivityTimeout();
-
     </script>
 @endsection

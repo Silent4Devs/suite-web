@@ -2,7 +2,7 @@
 @section('content')
 
 @section('styles')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/formularios_centro_atencion.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/formularios_centro_atencion.css') }}{{config('app.cssVersion')}}">
     <style type="text/css">
         sup {
             color: red;
@@ -23,7 +23,7 @@
         <a href="#" data-tabs="registro" class="btn_activo"><i class="mr-4 fas fa-frown"></i>Registro de
             Queja</a>
         <a href="#" data-tabs="analisis"><i class="mr-4 fas fa-clipboard-list"></i>Análisis Causa Raíz</a>
-        <a href="#" data-tabs="plan"><i class="mr-4 fas fa-tasks"></i>Plan de Acción</a>
+        <a href="#" data-tabs="plan"><i class="mr-4 fas fa-tasks"></i>Plan de Trabajo</a>
     </div>
     <div class="card-body">
 
@@ -543,7 +543,7 @@
                                 <input type="hidden" name="queja_id" value="{{ $quejas->id }}">
                                 <div class="text-center card-header" style="background-color: #345183;">
                                     <strong style="font-size: 16pt; color: #fff;"><i
-                                            class="mr-4 fas fa-tasks"></i>Crear: Plan de Acción</strong>
+                                            class="mr-4 fas fa-tasks"></i>Crear: Plan de Trabajo</strong>
                                 </div>
                                 <div class="card-body">
                                     <div class="row">

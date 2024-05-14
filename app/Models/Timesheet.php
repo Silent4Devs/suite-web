@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\ClearsResponseCache;
 use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -10,9 +11,9 @@ use OwenIt\Auditing\Contracts\Auditable;
 
 class Timesheet extends Model implements Auditable
 {
-    use HasFactory;
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
     use Filterable;
-    use \OwenIt\Auditing\Auditable;
+    use HasFactory;
 
     protected $table = 'timesheet';
 
@@ -24,39 +25,53 @@ class Timesheet extends Model implements Auditable
         'aprobado',
         'empleado_id',
         'aprobador_id',
-        'aprobado',
         'rechazado',
         'estatus',
         'comentarios',
         'dia_semana',
         'inicio_semana',
         'fin_semana',
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
+
+    public static function getPersonalTimesheetQuery()
+    {
+        $user = User::getCurrentUser();
+
+        return self::orderBy('id', 'desc')->where('empleado_id', $user->empleado->id);
+    }
 
     public static function getPersonalTimesheet()
     {
-        return Cache::remember('timesheet-' . auth()->user()->empleado->id, now()->addHours(2), function () {
-            return self::where('empleado_id', auth()->user()->empleado->id)->get();
-        });
+        return self::getPersonalTimesheetQuery()->latest()->get();
     }
 
     public static function getAll()
     {
-        return Cache::remember('timesheet-all', now()->addHours(2), function () {
-            return self::get();
+        return Cache::remember('Timesheet:timesheet_all', now()->addHours(4), function () {
+            return self::orderBy('id', 'desc')->get();
         });
     }
 
     public static function getreportes()
     {
-        return Cache::remember('timesheet_reportes', now()->addHours(2), function () {
+        return Cache::remember('Timesheet:timesheet_reportes', now()->addHours(2), function () {
             return self::select('id', 'estatus', 'empleado_id', 'fecha_dia')->get();
+        });
+    }
+
+    public static function getAllEstatus()
+    {
+        return Cache::remember('Timesheet:timesheet_estatus', now()->addHours(2), function () {
+            return self::select('estatus')->get();
         });
     }
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'empleado_id');
+        return $this->belongsTo(Empleado::class, 'empleado_id')->select('id', 'name', 'area_id');
     }
 
     public function aprobador()
@@ -74,7 +89,7 @@ class Timesheet extends Model implements Auditable
         $fin_dia = \Carbon\Carbon::parse($this->fecha_dia)->copy()->format('d/m/Y');
 
         $semana_rango = '
-            <font style="font-weight: lighter !important;"> Del </font><font style="font-weight: bolder !important;">' . $inicio_dia . '</font><font style="font-weight: lighter !important;"> al </font><font style="font-weight: bolder !important;">' . $fin_dia . '</font>';
+            <font style="font-weight: lighter !important;"> Del </font><font style="font-weight: bolder !important;">'.$inicio_dia.'</font><font style="font-weight: lighter !important;"> al </font><font style="font-weight: bolder !important;">'.$fin_dia.'</font>';
 
         return $semana_rango;
     }
@@ -126,7 +141,7 @@ class Timesheet extends Model implements Auditable
         $inicio_dia = \Carbon\Carbon::parse($this->fecha_dia)->copy()->modify("last {$inicio}")->format('d/m/Y');
         $fin_dia = \Carbon\Carbon::parse($this->fecha_dia)->copy()->format('d/m/Y');
 
-        $semana_rango = ' del ' . $inicio_dia . ' al ' . $fin_dia;
+        $semana_rango = ' del '.$inicio_dia.' al '.$fin_dia;
 
         return $semana_rango;
     }
@@ -140,7 +155,7 @@ class Timesheet extends Model implements Auditable
         $inicio_dia = \Carbon\Carbon::parse($this->fecha_dia)->copy()->modify('last Monday')->format('Y-m-d');
         $fin_dia = \Carbon\Carbon::parse($this->fecha_dia)->copy()->modify('next Sunday')->format('Y-m-d');
 
-        $semana_rango = $inicio_dia . '|' . $fin_dia;
+        $semana_rango = $inicio_dia.'|'.$fin_dia;
 
         return $semana_rango;
     }
@@ -210,13 +225,13 @@ class Timesheet extends Model implements Auditable
         $total_horas = 0;
         $horas_time = TimesheetHoras::where('timesheet_id', $this->id)->get();
         foreach ($horas_time as $key => $horas) {
-            $total_horas += $horas->horas_lunes;
-            $total_horas += $horas->horas_martes;
-            $total_horas += $horas->horas_miercoles;
-            $total_horas += $horas->horas_jueves;
-            $total_horas += $horas->horas_viernes;
-            $total_horas += $horas->horas_sabado;
-            $total_horas += $horas->horas_domingo;
+            $total_horas += floatval($horas->horas_lunes);
+            $total_horas += floatval($horas->horas_martes);
+            $total_horas += floatval($horas->horas_miercoles);
+            $total_horas += floatval($horas->horas_jueves);
+            $total_horas += floatval($horas->horas_viernes);
+            $total_horas += floatval($horas->horas_sabado);
+            $total_horas += floatval($horas->horas_domingo);
         }
 
         return $total_horas;

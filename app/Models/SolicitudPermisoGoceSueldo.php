@@ -2,14 +2,16 @@
 
 namespace App\Models;
 
+use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class SolicitudPermisoGoceSueldo extends Model implements Auditable
 {
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
     use SoftDeletes;
-    use \OwenIt\Auditing\Auditable;
 
     public $table = 'solicitud_permiso_goce_sueldo';
 
@@ -24,6 +26,9 @@ class SolicitudPermisoGoceSueldo extends Model implements Auditable
         'autoriza',
         'comentarios_aprobador',
         'permiso_id',
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     public function permiso()
@@ -37,6 +42,13 @@ class SolicitudPermisoGoceSueldo extends Model implements Auditable
     // }
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'empleado_id');
+        return $this->belongsTo(Empleado::class, 'empleado_id')->select('id', 'name', 'foto', 'area_id', 'puesto_id');
+    }
+
+    public static function getAllwithEmpleados()
+    {
+        return Cache::remember('SolicitudPermisoGoceSueldo:solicitud_permiso_goce_sueldo_all', 3600 * 12, function () {
+            return self::with('empleado')->orderBy('id', 'desc')->get();
+        });
     }
 }

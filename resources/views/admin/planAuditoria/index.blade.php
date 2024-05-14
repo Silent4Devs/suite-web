@@ -42,7 +42,29 @@
 
     @can('plan_auditorium_create')
     @endcan
+
     <h5 class="col-12 titulo_general_funcion">Plan de Auditoría</h5>
+    <div class="card card-body" style="background-color: #5397D5; color: #fff;">
+        <div class="d-flex" style="gap: 25px;">
+            <img src="{{ asset('img/audit_port.jpg') }}" alt="Auditoria" style="width: 200px;">
+            <div>
+                <br>
+                <h4>¿Qué es Plan de Auditoría?</h4>
+                <p>
+                    Plan que establece los detalles de cómo se llevará a cabo una auditoría.
+                </p>
+                <p>
+                    Asegurándote de que todo esté en orden y proporcionando oportunidades para hacer mejoras si es necesario.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-right">
+        <div class="d-flex justify-content-end">
+            <a href="{{ route('admin.plan-auditoria.create') }}" type="button" class="btn btn-primary">Registrar Plan</a> &nbsp;
+        </div>
+    </div>
     <div class="mt-5 card">
         <div class="card-body datatable-fix">
             <table class="table table-bordered w-100 datatable-PlanAuditorium">
@@ -178,19 +200,19 @@
             ];
 
             @can('plan_de_auditoria_agregar')
-                let btnAgregar = {
-                    text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                    titleAttr: 'Agregar plan de auditoría',
-                    url: "{{ route('admin.plan-auditoria.create') }}",
-                    className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                    action: function(e, dt, node, config) {
-                        let {
-                            url
-                        } = config;
-                        window.location.href = url;
-                    }
-                };
-                dtButtons.push(btnAgregar);
+                // let btnAgregar = {
+                //     text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                //     titleAttr: 'Agregar plan de auditoría',
+                //     url: "{{ route('admin.plan-auditoria.create') }}",
+                //     className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                //     action: function(e, dt, node, config) {
+                //         let {
+                //             url
+                //         } = config;
+                //         window.location.href = url;
+                //     }
+                // };
+                // dtButtons.push(btnAgregar);
             @endcan
             @can('plan_auditorium_delete')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';

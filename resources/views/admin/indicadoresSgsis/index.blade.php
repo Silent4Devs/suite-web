@@ -69,13 +69,30 @@
 
         }
     </style>
-    <h5 class="col-12 titulo_general_funcion">Indicadores del Sistema de Gestión</h5>
-    <div class="mt-5 card">
 
-        <div class="text-right mt-5 mr-5">
-            <a class="btn btn-danger" href="{{ asset('admin/indicadores/dashboard') }}">Dashboard</a>
+<h5 class="col-12 titulo_general_funcion">Indicadores del Sistema de Gestión  </h5>
+<div class="card card-body" style="background-color: #5397D5; color: #fff;">
+    <div class="d-flex" style="gap: 25px;">
+        <img src="{{ asset('img/audit_port.jpg') }}" alt="Auditoria" style="width: 200px;">
+        <div>
+            <br>
+            <h4>¿Qué es Indicadores del Sistema de Gestión?</h4>
+            <p>
+                Medidas cuantitativas o cualitativas que se utilizan para evaluar el rendimiento y la eficacia de un Sistema de Gestión específico en una organización.
+            </p>
+            <p>
+                Los marcadores proporcionan la información necesaria para tomar decisiones y ajustar estrategias según sea necesario.
+            </p>
         </div>
-
+    </div>
+</div>
+        <div class="text-right">
+            <div class="d-flex justify-content-end">
+                <a href="{{ route('admin.indicadores-sgsis.create') }}" type="button" class="btn btn-primary">Registrar Indicador</a> &nbsp;
+                <a class="btn btn-primary" href="{{ asset('admin/indicadores/dashboard') }}">Dashboard</a>
+            </div>
+        </div>
+    <div class="mt-5 card">
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
             <table class="table table-bordered w-100 datatable-IndicadoresSgsi">
@@ -93,9 +110,6 @@
                         <th>
                             Responsable
                         </th>
-                        {{--<th>
-                            Proceso
-                        </th>--}}
                         <th>
                             Año
                         </th>
@@ -114,114 +128,10 @@
                         <th>
                             Indicadores
                         </th>
-                        {{--<th>
-                            Meta
-                        </th>
-                        <th>
-                            No. revisiones
-                        </th>
-                        <th>
-                            Resultado
-                        </th>
-                        <th>
-                            Responsable
-                        </th>--}}
                         <th>
                             Opciones
                         </th>
                     </tr>
-                    {{-- <tr>
-                        <td>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <select class="search">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach ($users as $key => $item)
-                                    <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <select class="search" strict="true">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach (App\Models\IndicadoresSgsi::FRECUENCIA_SELECT as $key => $item)
-                                    <option value="{{ $key }}">{{ $item }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                            <select class="search" strict="true">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach (App\Models\IndicadoresSgsi::UNIDADMEDIDA_SELECT as $key => $item)
-                                    <option value="{{ $key }}">{{ $item }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <select class="search" strict="true">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach (App\Models\IndicadoresSgsi::SEMAFORO_SELECT as $key => $item)
-                                    <option value="{{ $key }}">{{ $item }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                        </td>
-                    </tr> --}}
                 </thead>
             </table>
         </div>
@@ -319,19 +229,6 @@
 
             ];
 
-            @can('indicadores_sgsi_agregar')
-                let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar indicador SGSI',
-                url: "{{ route('admin.indicadores-sgsis.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config){
-                let {url} = config;
-                window.location.href = url;
-                }
-                };
-                dtButtons.push(btnAgregar);
-            @endcan
             @can('indicadores_sgsi_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
@@ -387,7 +284,7 @@
                             let empleado = JSON.parse(row.responsable_name ? row.responsable_name : '{}');
                             if (type === "empleadoText") {
                                 return empleado.name;
-                            }      
+                            }
                             let responsable_name = "";
                             if (empleado) {
                                 responsable_name += `
@@ -395,16 +292,12 @@
                             `;
                             }
                             return responsable_name;
-                        }                        
+                        }
                     },
                     {
                         data: 'año',
                         name: 'año',
                     },
-                    /*{
-                        data: 'proceso',
-                        name: 'proceso'
-                    },*/
                     {
                         data: 'descripcion',
                         name: 'descripcion'
@@ -432,18 +325,6 @@
                             `;
                         }
                     },
-                    /*{
-                        data: 'meta',
-                        name: 'meta'
-                    },
-                    {
-                        data: 'revisiones',
-                        name: 'revisiones'
-                    },
-                    {
-                        data: 'responsable',
-                        name: 'responsable'
-                    },*/
                     {
                         data: 'actions',
                         name: '{{ trans('global.actions') }}'

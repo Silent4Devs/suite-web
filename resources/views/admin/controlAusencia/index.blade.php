@@ -82,7 +82,7 @@
 
     </div>
     <div class="card">
-        @include('flash::message')
+
         <div class="card-body">
             <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane mb-4 fade show active" id="nav-empleados" role="tabpanel"

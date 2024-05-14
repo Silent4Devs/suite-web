@@ -36,6 +36,6 @@ class HomeController extends Controller
             ]);
         }
 
-        return view('admin.Escuela.Admin.index', compact('cursoscategorias', 'categorias', 'categoriasLabel', 'cursosStatusBorrador', 'cursosStatusPublicado', 'nivelesLabel'));
+        return view('admin.escuela.admin.index', compact('cursoscategorias', 'categorias', 'categoriasLabel', 'cursosStatusBorrador', 'cursosStatusPublicado', 'nivelesLabel'));
     }
 }

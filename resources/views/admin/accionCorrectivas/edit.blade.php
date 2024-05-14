@@ -4,7 +4,7 @@
     {{ Breadcrumbs::render('admin.accion-correctivas.create') }}
 
 @section('styles')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/formularios_centro_atencion.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/formularios_centro_atencion.css') }}{{config('app.cssVersion')}}">
     <style type="text/css">
         sup {
             color: red;
@@ -137,13 +137,11 @@
             border-radius: 100px;
             margin-top: 6px;
         }
-
     </style>
 @endsection
 <h5 class="col-12 titulo_general_funcion">Registrar: Acción Correctiva</h5>
 <div class="mt-4 card">
     @include('layouts.errors')
-    @include('flash::message')
     <div class="card-body">
 
         <div class="container">
@@ -155,7 +153,7 @@
                     <a href="#" data-tabs="contenido2"><i class="mr-2 fab fa-medapps" style="font-size:30px;"
                             style="text-decoration:none;"></i> Ánalisis de causa raíz</a>
                     <a href="#" data-tabs="contenido3"><i class="mr-2 fas fa-file-alt" style="font-size:30px;"
-                            style="text-decoration:none;"></i>Plan de acción</a>
+                            style="text-decoration:none;"></i>Plan de Trabajo</a>
                 </div>
 
 
@@ -164,7 +162,7 @@
                         <button id="acollapseplan" data-toggle="collapse" onclick="closetabcollap2()"
                             data-target="#collapseplan" class="btn btn-primary">Análisis de causa raíz</button>
                         <button id="acollapseactividad" data-toggle="collapse" onclick="" data-target="#"
-                            class="btn btn-primary">Plan de acción</button> --}}
+                            class="btn btn-primary">Plan de Trabajo</button> --}}
                 <div class="caja_caja_secciones">
                     <div class="caja_secciones">
 
@@ -859,7 +857,7 @@
 
                     $('.modal-backdrop').hide();
 
-                    toastr.success('Plan de Acción creado con éxito');
+                    toastr.success('Plan de Trabajo creado con éxito');
 
                 });
 
@@ -893,7 +891,7 @@
                         if (planes.length > 0) {
                             Swal.fire({
                                 title: 'Desea vincular plan(es)?',
-                                text: "Esta acción se visualizara en planes de acción!",
+                                text: "Esta acción se visualizara en Planes de Trabajo!",
                                 icon: 'warning',
                                 showCancelButton: true,
                                 confirmButtonColor: '#3085d6',

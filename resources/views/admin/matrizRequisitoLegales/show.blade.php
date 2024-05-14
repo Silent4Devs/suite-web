@@ -61,7 +61,7 @@
                             {{ trans('cruds.matrizRequisitoLegale.fields.cumplerequisito') }}
                         </th>
                         <td>
-                            {{ $matrizRequisitoLegale->evaluaciones[0]->cumplerequisito }}
+                            {{ $matrizRequisitoLegale->evaluaciones[0]->cumplerequisito ?? '' }}
                         </td>
                     </tr>
                     <tr>
@@ -115,8 +115,20 @@
                                 {{-- <th scope="row">{{ $evaluacion->id }}</th> --}}
                                 <td>{{ $evaluacion->fechaverificacion }}</td>
                                 <td>{{ $evaluacion->cumplerequisito }}</td>
-                                <td>{{ $evaluacion->evaluador->name }}</td>
-                                <td>{{ $evaluacion->evaluador->puestoRelacionado->puesto }}</td>
+                                <td>
+                                    @if ($evaluacion->evaluador)
+                                        {{ $evaluacion->evaluador->name }}
+                                    @else
+                                        Sin evaluador
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($evaluacion->evaluador && $evaluacion->evaluador->puestoRelacionado)
+                                        {{ $evaluacion->evaluador->puestoRelacionado->puesto }}
+                                    @else
+                                        Sin evaluador
+                                    @endif
+                                </td>
                                 <td>
                                     <!-- Button trigger modal -->
                                     <button type="button" class="btn btn-primary" data-toggle="modal"
@@ -132,8 +144,7 @@
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="exampleModal{{ $evaluacion->id }}Label">
                                                 {{ $matrizRequisitoLegale->nombrerequisito }}</h5>
-                                            <button type="button" class="close" data-dismiss="modal"
-                                                aria-label="Close">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
@@ -175,7 +186,11 @@
                                                             Revisó
                                                         </div>
                                                         <div class="col-6">
-                                                            {{ $evaluacion->evaluador->name }}
+                                                            @if ($evaluacion->evaluador)
+                                                                {{ $evaluacion->evaluador->name }}
+                                                            @else
+                                                                Sin evaluador
+                                                            @endif
                                                         </div>
                                                     </div>
                                                 </li>
@@ -185,7 +200,11 @@
                                                             Puesto
                                                         </div>
                                                         <div class="col-6">
-                                                            {{ $evaluacion->evaluador->puestoRelacionado->puesto }}
+                                                            @if ($evaluacion->evaluador && $evaluacion->evaluador->puestoRelacionado)
+                                                                {{ $evaluacion->evaluador->puestoRelacionado->puesto }}
+                                                            @else
+                                                                Sin evaluador
+                                                            @endif
                                                         </div>
                                                     </div>
                                                 </li>
@@ -195,7 +214,11 @@
                                                             Área
                                                         </div>
                                                         <div class="col-6">
-                                                            {{ $evaluacion->evaluador->area->area }}
+                                                            @if ($evaluacion->evaluador && $evaluacion->evaluador->area)
+                                                                {{ $evaluacion->evaluador->area->area }}
+                                                            @else
+                                                                Sin evaluador
+                                                            @endif
                                                         </div>
                                                     </div>
                                                 </li>
@@ -242,7 +265,7 @@
                                                                     Documentos
                                                                 </span>
                                                             </div>
-                                
+
                                                             <div class="modal fade" id="largeModal{{ $evaluacion->id }}" tabindex="-1" role="dialog"
                                                                 aria-labelledby="basicModal{{ $evaluacion->id }}" aria-hidden="true">
                                                                 <div class="modal-dialog modal-lg">
@@ -257,7 +280,7 @@
                                                                                             <li data-target=#carouselExampleIndicators
                                                                                                 data-slide-to={{ $idx }}></li>
                                                                                         @endforeach
-                                
+
                                                                                     </ol>
                                                                                     <div class='carousel-inner'>
                                                                                         @foreach ($evaluacion->evidencias_matriz as $idx => $evidencia)
@@ -267,8 +290,8 @@
                                                                                                     src="{{ asset('storage/matriz_evidencias') }}/{{ $evidencia->evidencia }}"></iframe>
                                                                                             </div>
                                                                                         @endforeach
-                                
-                                
+
+
                                                                                     </div>
                                                                                     <a class='carousel-control-prev' href='#carouselExampleIndicators'
                                                                                         role='button' data-slide='prev'>
@@ -294,7 +317,7 @@
                                                                             <button type="button" class="btn btn-default"
                                                                                 data-dismiss="modal">Close</button>
                                                                         </div>
-                                
+
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -311,11 +334,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
-                          
-
-
                         @endforeach
                     </tbody>
                 </table>

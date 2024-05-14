@@ -79,7 +79,7 @@ class AnalisisBrechaController extends Controller
 
                 $cuentas = $gapunoPorc->GAPTotal($porcentajeGap1, $porcentajeGap2['Avance'], $porcentajeGap3['porcentaje']);
 
-                return $cuentas . '%' ? $cuentas . '%' : '';
+                return $cuentas.'%' ? $cuentas.'%' : '';
             });
 
             $table->editColumn('elaboro', function ($row) {
@@ -154,6 +154,10 @@ class AnalisisBrechaController extends Controller
 
         $analisisBrecha = AnalisisBrecha::find($id);
 
+        if (! $analisisBrecha) {
+            return redirect()->route('admin.analisisdebrechas-2022.index')->with('error', 'No existe el registro.');
+        }
+
         $gap1porcentaje = GapUno::latest()->select('id', 'valoracion', 'analisis_brechas_id')->get()->where('analisis_brechas_id', '=', $analisisBrecha->id)->skip(3)->take(12);
         $gap12porcentaje = GapUno::select('id', 'valoracion', 'analisis_brechas_id')->orderBy('id', 'asc')->get()->where('analisis_brechas_id', '=', $analisisBrecha->id)->take(3);
         $gap2porcentaje = GapDo::select('id', 'valoracion')->where('valoracion', '!=', '4')->where('analisis_brechas_id', '=', $analisisBrecha->id)->count();
@@ -191,6 +195,10 @@ class AnalisisBrechaController extends Controller
         ]);
 
         $analisisBrecha = AnalisisBrecha::find($id);
+
+        if (! $analisisBrecha) {
+            return redirect()->route('admin.analisisdebrechas-2022.index')->with('error', 'No existe el registro.');
+        }
 
         $analisisBrecha->update([
             'nombre' => $request->nombre,

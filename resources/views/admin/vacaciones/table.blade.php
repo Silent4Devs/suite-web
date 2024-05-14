@@ -1,4 +1,4 @@
-<table class="table table-bordered w-100 datatable datatable-vacaciones tblCSV" id="datatable-vacaciones">
+<table class="datatable datatable-vacaciones tblCSV" id="datatable-vacaciones">
     <thead class="thead-dark">
         <tr>
             <th style="min-width: 140px;">
@@ -8,10 +8,10 @@
                 Tipo de conteo
             </th>
             <th style="min-width: 75px;">
-               Año Inicio
+                Año Inicio
             </th>
             <th style="min-width: 75px;">
-             Año fin
+                Año fin
             </th>
             <th style="min-width: 90px;">
                 Días inicales
@@ -26,9 +26,9 @@
                 Aplica a
             </th>
             <th style="min-width: 200px;">
-                Descripcion
+                Descripción
             </th>
-           
+
             <th style="min-width: 150px;">
                 Opciones
             </th>

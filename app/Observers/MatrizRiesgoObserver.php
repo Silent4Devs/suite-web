@@ -10,7 +10,6 @@ class MatrizRiesgoObserver
     /**
      * Handle the MatrizRiesgo "created" event.
      *
-     * @param  \App\Models\MatrizRiesgo  $matrizRiesgo
      * @return void
      */
     public function created(MatrizRiesgo $matrizRiesgo)
@@ -21,7 +20,6 @@ class MatrizRiesgoObserver
     /**
      * Handle the MatrizRiesgo "updated" event.
      *
-     * @param  \App\Models\MatrizRiesgo  $matrizRiesgo
      * @return void
      */
     public function updated(MatrizRiesgo $matrizRiesgo)
@@ -32,7 +30,6 @@ class MatrizRiesgoObserver
     /**
      * Handle the MatrizRiesgo "deleted" event.
      *
-     * @param  \App\Models\MatrizRiesgo  $matrizRiesgo
      * @return void
      */
     public function deleted(MatrizRiesgo $matrizRiesgo)
@@ -43,7 +40,6 @@ class MatrizRiesgoObserver
     /**
      * Handle the MatrizRiesgo "restored" event.
      *
-     * @param  \App\Models\MatrizRiesgo  $matrizRiesgo
      * @return void
      */
     public function restored(MatrizRiesgo $matrizRiesgo)
@@ -54,7 +50,6 @@ class MatrizRiesgoObserver
     /**
      * Handle the MatrizRiesgo "force deleted" event.
      *
-     * @param  \App\Models\MatrizRiesgo  $matrizRiesgo
      * @return void
      */
     public function forceDeleted(MatrizRiesgo $matrizRiesgo)

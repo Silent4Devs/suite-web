@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\ClearsResponseCache;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
@@ -46,7 +47,7 @@ use OwenIt\Auditing\Contracts\Auditable;
  */
 class CartaAceptacion extends Model implements Auditable
 {
-    use \OwenIt\Auditing\Auditable;
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
 
     protected $table = 'carta_aceptacion';
 

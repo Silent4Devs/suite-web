@@ -30,6 +30,6 @@ class SeguimientoQuejaClienteEmail extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.quejasCliente.seguimiento')->subject('Su queja con folio ' . $this->quejas->folio . ' ha sido registrada');
+        return $this->view('mails.quejasCliente.seguimiento')->subject('Su queja con folio '.$this->quejas->folio.' ha sido registrada');
     }
 }

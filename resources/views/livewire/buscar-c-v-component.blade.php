@@ -1,6 +1,7 @@
+
 <div>
 
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/print_foda.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/print_foda.css') }}{{config('app.cssVersion')}}">
 
     <style>
         .timeline-header .userimage {
@@ -1013,6 +1014,12 @@
     </div>
 
 </div>
+<script>
+    window.addEventListener('popstate', function(event) {
+        // Recarga la página cuando el usuario intenta navegar hacia atrás
+        window.location.reload();
+    });
+</script>
 <script src="https://unpkg.com/@yaireo/tagify"></script>
 <script src="https://unpkg.com/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
 <script>

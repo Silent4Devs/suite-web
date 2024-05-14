@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Events\RegistroMejoraEvent;
 use App\Models\Registromejora;
+use Illuminate\Support\Facades\Queue;
 
 class RegistroMejoraObserver
 {
@@ -14,7 +15,10 @@ class RegistroMejoraObserver
      */
     public function created(Registromejora $registromejora)
     {
-        event(new RegistroMejoraEvent($registromejora, 'create', 'registro-mejora', 'Registro de Mejora'));
+        Queue::push(function () use ($registromejora) {
+            event(new RegistroMejoraEvent($registromejora, 'create', 'registro-mejora', 'Registro de Mejora'));
+        });
+
     }
 
     /**
@@ -24,7 +28,10 @@ class RegistroMejoraObserver
      */
     public function updated(Registromejora $registromejora)
     {
-        event(new RegistroMejoraEvent($registromejora, 'update', 'registro-mejora', 'Registro de Mejora'));
+        Queue::push(function () use ($registromejora) {
+            event(new RegistroMejoraEvent($registromejora, 'update', 'registro-mejora', 'Registro de Mejora'));
+        });
+
     }
 
     /**
@@ -34,7 +41,10 @@ class RegistroMejoraObserver
      */
     public function deleted(Registromejora $registromejora)
     {
-        event(new RegistroMejoraEvent($registromejora, 'delete', 'registro-mejora', 'Registro de Mejora'));
+        Queue::push(function () use ($registromejora) {
+            event(new RegistroMejoraEvent($registromejora, 'delete', 'registro-mejora', 'Registro de Mejora'));
+        });
+
     }
 
     /**

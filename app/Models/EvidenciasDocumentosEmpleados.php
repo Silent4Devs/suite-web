@@ -2,15 +2,17 @@
 
 namespace App\Models;
 
+use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class EvidenciasDocumentosEmpleados extends Model implements Auditable
 {
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
     use SoftDeletes;
-    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'evidencias_documentos_empleados';
 
@@ -37,18 +39,32 @@ class EvidenciasDocumentosEmpleados extends Model implements Auditable
 
     protected $appends = ['ruta_documento', 'ruta_absoluta_documento'];
 
+    public static function getAll()
+    {
+        return Cache::remember('EvidenciasDocumentos:revision_documentos_all', 3600 * 8, function () {
+            return self::get();
+        });
+    }
+
+    public static function getAllWithDocumento()
+    {
+        return Cache::remember('EvidenciasDocumentos:revision_documentos_all_documentos', 3600 * 8, function () {
+            return self::with('documento')->get();
+        });
+    }
+
     public function getRutaDocumentoAttribute()
     {
         $empleado = Empleado::select('id', 'name')->find($this->empleado_id);
 
-        return asset('storage/expedientes/' . Str::slug($empleado->name) . '/' . $this->documentos);
+        return asset('storage/expedientes/'.Str::slug($empleado->name).'/'.$this->documentos);
     }
 
     public function getRutaAbsolutaDocumentoAttribute()
     {
         $empleado = Empleado::select('id', 'name')->find($this->empleado_id);
 
-        return 'expedientes/' . Str::slug($empleado->name) . '/' . $this->documentos;
+        return 'expedientes/'.Str::slug($empleado->name).'/'.$this->documentos;
     }
 
     public function empleados_documentos()

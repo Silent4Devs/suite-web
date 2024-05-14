@@ -8,8 +8,8 @@
     <link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.css">
     <link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css">
 
-    <link rel="stylesheet" type="text/css" href="{{ asset('../css/calendar_tui/tui-calendar.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('../css/calendar_tui/default.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('../css/calendar_tui/tui-calendar.css') }}{{config('app.cssVersion')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('../css/calendar_tui/default.css') }}{{config('app.cssVersion')}}">
 
 
 
@@ -121,8 +121,7 @@
     <div class="card">
 
 
-        <div class="py-2 col-md-10 col-sm-9 card card-body bg-primary align-self-center "
-            style="margin-top:0px !important; ">
+        <div class="py-2 col-md-10 col-sm-9 card-body bg-primary align-self-center " style="margin-top:0px !important; ">
 
         </div>
         <div class="card-body" style="height: 700px;">

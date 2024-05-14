@@ -6,9 +6,9 @@
         <form method="POST" action="{{ route("contract_manager.sucursales.store") }}" enctype="multipart/form-data">
             @csrf
             <div class="row">
-                <div class="form-group col-md-6 col-sm-6">
-                    <label class="required" for="clave">&nbsp;&nbsp;Clave</label>
+                <div class="form-group col-md-6 col-sm-6 anima-focus">
                     <input  class="form-control  {{ $errors->has('clave') ? 'is-invalid' : '' }}" type="number" name="clave" id="clave" value="{{ old('clave') }}" required>
+                    {!! Form::label('clave', 'Clave*', ['class' => 'asterisco']) !!}
                     @if($errors->has('clave'))
                         <div class="invalid-feedback">
                             {{ $errors->first('clave') }}
@@ -16,9 +16,9 @@
                     @endif
                     <span class="help-block"></span>
                 </div>
-                <div class="form-group col-md-6 col-sm-6">
-                    <label class="required" for="descripcion">&nbsp;&nbsp;Descripción</label>
+                <div class="form-group col-md-6 col-sm-6 anima-focus">
                     <input   class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" type="text" name="descripcion" id="descripcion" required>
+                    {!! Form::label('descripcion', 'Descripción*', ['class' => 'asterisco']) !!}
                     @if($errors->has('descripcion'))
                         <div class="invalid-feedback">
                             {{ $errors->first('descripcion') }}
@@ -26,9 +26,9 @@
                     @endif
                     <span class="help-block"></span>
                 </div>
-                <div class="form-group col-md-6 col-sm-6">
-                    <label class="required" for="rfc">&nbsp;&nbsp;RFC</label>
+                <div class="form-group col-md-6 col-sm-6 anima-focus">
                     <input   class="form-control {{ $errors->has('rfc') ? 'is-invalid' : '' }}" type="text" name="rfc" id="rfc" required>
+                    {!! Form::label('rfc', 'RFC*', ['class' => 'asterisco']) !!}
                     @if($errors->has('rfc'))
                         <div class="invalid-feedback">
                             {{ $errors->first('rfc') }}
@@ -36,9 +36,9 @@
                     @endif
                     <span class="help-block"></span>
                 </div>
-                <div class="form-group col-md-6 col-sm-6">
-                    <label class="required" for="empresa">&nbsp;&nbsp;Empresa</label>
+                <div class="form-group col-md-6 col-sm-6 anima-focus">
                     <input   class="form-control {{ $errors->has('empresa') ? 'is-invalid' : '' }}" type="text" name="empresa" id="empresa" required>
+                    {!! Form::label('empresa', 'Empresa*', ['class' => 'asterisco']) !!}
                     @if($errors->has('empresa'))
                         <div class="invalid-feedback">
                             {{ $errors->first('empresa') }}
@@ -46,9 +46,9 @@
                     @endif
                     <span class="help-block"></span>
                 </div>
-                <div class="form-group col-md-6 col-sm-6">
-                    <label class="required" for="cuenta_contable">&nbsp;&nbsp;Cuenta Contable</label>
+                <div class="form-group col-md-6 col-sm-6 anima-focus">
                     <input   class="form-control {{ $errors->has('cuenta_contable') ? 'is-invalid' : '' }}" type="number" name="cuenta_contable" id="cuenta_contable" required>
+                    {!! Form::label('cuenta_contable', 'Cuenta Contable*', ['class' => 'asterisco']) !!}
                     @if($errors->has('cuenta_contable'))
                         <div class="invalid-feedback">
                             {{ $errors->first('cuenta_contable') }}
@@ -56,9 +56,9 @@
                     @endif
                     <span class="help-block"></span>
                 </div>
-                <div class="form-group col-md-6 col-sm-6">
-                    <label class="required" for="zona">&nbsp;&nbsp;Zona</label>
+                <div class="form-group col-md-6 col-sm-6 anima-focus">
                     <input class="form-control {{ $errors->has('zona') ? 'is-invalid' : '' }}" type="text" name="zona" id="zona" required>
+                    {!! Form::label('zona', 'Zona*', ['class' => 'asterisco']) !!}
                     @if($errors->has('zona'))
                         <div class="invalid-feedback">
                             {{ $errors->first('zona') }}
@@ -66,9 +66,9 @@
                     @endif
                     <span class="help-block"></span>
                 </div>
-                <div class="form-group col-md-6 col-sm-6">
-                    <label class="required" for="direccion">&nbsp;&nbsp;Dirección</label>
+                <div class="form-group col-md-6 col-sm-6 anima-focus">
                     <input  class="form-control {{ $errors->has('direccion') ? 'is-invalid' : '' }}" type="text" name="direccion" id="direccion" required>
+                    {!! Form::label('direccion', 'Dirección*', ['class' => 'asterisco']) !!}
                     @if($errors->has('direccion'))
                         <div class="invalid-feedback">
                             {{ $errors->first('direccion') }}
@@ -76,9 +76,9 @@
                     @endif
                     <span class="help-block"></span>
                 </div>
-                <div class="col s12 l6 distancia">
-                    <label for="myfile">Selecciona el logotipo: <font class="asterisco">*</font></label>
+                <div class="col s12 l6 distancia anima-focus">
                     <input type="file" id="myfile" class="form-control" name="mylogo" required  accept="image/png,image/jpeg"  >
+                    {!! Form::label('myfile', 'Selecciona el logotipo*', ['class' => 'asterisco']) !!}
                     @if ($errors->has('mylogo'))
                         <div class="invalid-feedback red-text">
                             {{ $errors->first('mylogo') }}

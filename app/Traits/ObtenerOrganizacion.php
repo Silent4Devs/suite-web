@@ -15,11 +15,15 @@ trait ObtenerOrganizacion
         } else {
             $logo_actual = $organizacion_actual->logotipo;
             $empresa_actual = $organizacion_actual->empresa;
+            $direccion = $organizacion_actual->direccion;
+            $rfc = $organizacion_actual->rfc;
         }
 
         $organizacion = (object) [
+            'direccion' => $direccion,
             'logo' => $logo_actual,
             'empresa' => $empresa_actual,
+            'rfc' => $rfc,
         ];
 
         return $organizacion;

@@ -10,10 +10,10 @@ use App\Models\CuestionarioProporcionaInformacion;
 use App\Models\CuestionarioRecibeInformacion;
 use App\Models\CuestionarioRecursosHumanos;
 use App\Traits\ObtenerOrganizacion;
-use Flash;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
+use RealRashid\SweetAlert\Facades\Alert;
 use Yajra\DataTables\Facades\DataTables;
 
 class AnalisisdeImpactoController extends Controller
@@ -143,7 +143,7 @@ class AnalisisdeImpactoController extends Controller
         $cuestionario = AnalisisImpacto::find($id);
 
         if (empty($cuestionario)) {
-            Flash::error('Cuestionario no encontrado');
+            Alert::warning('warning', 'Analisis not found');
 
             return redirect(route('admin.analisis-impacto.index'));
         }
@@ -348,7 +348,7 @@ class AnalisisdeImpactoController extends Controller
 
         $cuestionario = AnalisisImpacto::find($id);
         $cuestionario->update($request->all());
-        Flash::success('Cuestionario actualizado correctamente.');
+        Alert::success('éxito', 'Información añadida con éxito');
 
         return redirect(route('admin.analisis-impacto.index'));
     }
@@ -402,7 +402,7 @@ class AnalisisdeImpactoController extends Controller
         $id = 1;
         $cuestionario = ajustesMatrizBIA::find($id);
         if (empty($cuestionario)) {
-            Flash::error('Ajustes no encontrados');
+            Alert::warning('warning', 'Información añadida con éxito');
 
             return redirect(route('admin.analisis-impacto.matriz'));
         }
@@ -416,7 +416,7 @@ class AnalisisdeImpactoController extends Controller
 
         $cuestionario = ajustesMatrizBIA::find($id);
         $cuestionario->update($request->all());
-        Flash::success('Ajustes aplicados satisfactoriamente.');
+        Alert::success('éxito', 'Información añadida con éxito');
 
         return redirect()->route('admin.analisis-impacto.matriz');
     }

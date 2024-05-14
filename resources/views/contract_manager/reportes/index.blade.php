@@ -2,7 +2,7 @@
 @section('content')
 @section('titulo', 'Reportes')
 
-<link rel="stylesheet" type="text/css" href="{{ asset('css/reportes.css') }}"/>
+<link rel="stylesheet" type="text/css" href="{{ asset('css/reportes.css') }}{{config('app.cssVersion')}}"/>
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet"/>
 <link rel="stylesheet" type="text/css" href=" https://printjs-4de6.kxcdn.com/print.min.css">
@@ -152,11 +152,11 @@
 	                <div style="display: flex; justify-content: space-between; padding:10px; margin-bottom: 20px;">
 	                	<h4 class="sub-titulo-form">REPORTE ORGANIZACIÓN</h4>
 	                    <button class="btn imprimir" style="bottom: 60 !important;" onclick="printJS({
-	                        printable: 'miorganizacion_reporte',
-	                        type: 'html',
-	                        css: '{{ asset('css/reportes.css') }}',})">
-	                        <i class="fas fa-print"></i>
-	                        Imprimir Reporte
+                            printable: 'proveedor_reporte',
+                            type: 'html',
+                            css: '{{ asset('css/reportes.css') }}',})">
+                            <i class="fas fa-print"></i>
+                            Imprimir Reporte
 	                    </button>
 	                </div>
 
@@ -237,8 +237,8 @@
 											<th>Visión</th>
 										</tr>
 										<tr>
-											<td><div>{{$organizacion->mision}}</div></td>
-											<td><div>{{$organizacion->vision}}</div></td>
+											<td><div>{!! strip_tags($organizacion->mision) !!}</div></td>
+											<td><div>{!! strip_tags($organizacion->vision) !!}</div></td>
 										</tr>
 									</table>
 
@@ -248,8 +248,8 @@
 											<th> Antecedentes</th>
 										</tr>
 										<tr>
-											<td><div>{{$organizacion->valores}}</div></td>
-											<td><div>{{$organizacion->antecedentes}}</div></td>
+											<td><div>{!! strip_tags($organizacion->valores) !!} </div></td>
+											<td><div>{!! strip_tags($organizacion->antecedentes) !!}  </div></td>
 										</tr>
 									</table>
 			        			</div>

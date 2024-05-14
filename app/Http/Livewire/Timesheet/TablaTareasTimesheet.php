@@ -36,6 +36,7 @@ class TablaTareasTimesheet extends Component
     public function hydrate()
     {
         $this->emit('select2');
+        $this->emit('scriptTabla');
     }
 
     public function mount($proyecto_id, $origen)
@@ -55,22 +56,28 @@ class TablaTareasTimesheet extends Component
     public function render()
     {
         if ($this->origen == 'tareas') {
-            $this->proyectos = TimesheetProyecto::getAll();
+            // Eager load projects with their tasks
+            $this->proyectos = TimesheetProyecto::getAllWithData();
+            $this->proyectos = $this->proyectos->sortByDesc('is_num');
 
             if ($this->proyecto_filtro) {
-                $this->tareas = TimesheetTarea::getAll()->where('proyecto_id', $this->proyecto_filtro);
+                // Filter tasks by project if a project filter is applied
+                $this->tareas = $this->proyectos->firstWhere('id', $this->proyecto_filtro)->tareas;
             } else {
-                $this->tareas = TimesheetTarea::getAll();
+                // Otherwise, fetch all tasks
+                $this->tareas = TimesheetTarea::getIdTareasAll();
             }
         }
 
         if ($this->origen == 'tareas-proyectos') {
-            $this->proyecto_seleccionado = TimesheetProyecto::getAll()->find($this->proyecto_id);
-            $this->tareas = TimesheetTarea::getAll()->where('proyecto_id', $this->proyecto_id);
+            // Fetch the selected project along with its tasks
+            $this->proyecto_seleccionado = TimesheetProyecto::with('tareas:id,tarea,proyecto_id,area_id,todos')
+                ->find($this->proyecto_id);
+            // Assign tasks directly
+            $this->tareas = $this->proyecto_seleccionado->tareas;
+            // Assign selected area
             $this->area_seleccionar = $this->proyecto_seleccionado->areas;
         }
-
-        $this->emit('scriptTabla');
 
         return view('livewire.timesheet.tabla-tareas-timesheet');
     }
@@ -89,12 +96,19 @@ class TablaTareasTimesheet extends Component
         } else {
             $proyecto_procesado = $this->proyecto_seleccionado->id;
         }
+
+        if (empty($this->tarea_name)) {
+
+            return view('livewire.timesheet.tabla-tareas-timesheet')->with('error', 'Tarea nula. Intentelo de nuevo.');
+        }
+
         $nueva_tarea = TimesheetTarea::create([
             'tarea' => $this->tarea_name,
             'proyecto_id' => $proyecto_procesado,
             'area_id' => $area_id,
             'todos' => $todos,
         ]);
+
         $this->emit('tarea-actualizada', $nueva_tarea);
 
         $this->alert('success', 'Registro añadido!');
@@ -102,17 +116,30 @@ class TablaTareasTimesheet extends Component
 
     public function actualizarNameTarea($id, $value)
     {
-        $tarea_actualizada = TimesheetTarea::find($id);
+        $tarea_actualizada = TimesheetTarea::select(
+            'id',
+            'tarea',
+            'proyecto_id',
+            'area_id',
+            'todos'
+        )->find($id);
 
         $tarea_actualizada->update([
             'tarea' => $value,
         ]);
+
         $this->emit('tarea-actualizada', $tarea_actualizada);
     }
 
     public function actualizarAreaTarea($id, $value)
     {
-        $tarea_actualizada = TimesheetTarea::find($id);
+        $tarea_actualizada = TimesheetTarea::select(
+            'id',
+            'tarea',
+            'proyecto_id',
+            'area_id',
+            'todos',
+        )->find($id);
 
         if ($value == 0) {
             $area_id = null;
@@ -126,13 +153,14 @@ class TablaTareasTimesheet extends Component
             'area_id' => $area_id,
             'todos' => $todos,
         ]);
+
         $this->emit('tarea-actualizada', $tarea_actualizada);
     }
 
     public function llenarAreas($id)
     {
         if ($id) {
-            $this->proyecto_seleccionado = TimesheetProyecto::getAll()->find($id);
+            $this->proyecto_seleccionado = TimesheetProyecto::find($id);
             $this->area_seleccionar = $this->proyecto_seleccionado->areas;
         } else {
             $this->area_seleccionar = [];

@@ -16,15 +16,18 @@ class RespuestaVacaciones extends Mailable
 
     public $solicitud;
 
-    public function __construct($solicitante, $supervisor, $solicitud)
+    public $copias;
+
+    public function __construct($solicitante, $supervisor, $solicitud, $copias = [])
     {
         $this->solicitante = $solicitante;
         $this->supervisor = $supervisor;
         $this->solicitud = $solicitud;
+        $this->copias = $copias;
     }
 
     public function build()
     {
-        return $this->view('mails.Vacaciones.aprobacion')->subject('Respuesta de tu Solicitud de Vacaciones')->cc('gestiondetalento@silent4business.com');
+        return $this->view('mails.Vacaciones.aprobacion')->subject('Respuesta de tu Solicitud de Vacaciones')->cc($this->copias);
     }
 }

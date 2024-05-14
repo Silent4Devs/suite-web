@@ -1,57 +1,63 @@
 <div class="caja_anima_reporte">
-    <div class="card card-body">
-        <div class="row print-none" style="margin: 0 !important;">
-            <x-loading-indicator />
-            <div class="col-md-3 form-group" style="padding-left:0 !important;">
-                <label class="form-label">Colaboradores del Área: </label>
-                <select class="form-control" wire:model="area_id">
-                    <option selected value="0">Todas</option>
-                    @foreach ($areas as $area)
-                        <option value="{{ $area->id }}">{{ $area->area }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="col-md-3 form-group" wire:ignore>
-                <label class="form-label">Fecha de inicio</label>
-                <input id="fecha_dia_registros_inicio_empleados" class="form-control date_librery" type="date"
-                    name="fecha_inicio" wire:model="fecha_inicio">
-            </div>
-            <div class="col-md-3 form-group" wire:ignore>
-                <label class="form-label">Fecha de fin</label>
-                <input id="fecha_dia_registros_fin_empleados" class="form-control date_librery" type="date"
-                    name="fecha_fin" wire:model="fecha_fin">
-            </div>
-            <div class="col-md-2 form-group">
-                <label class="form-label">Horas totales</label>
-                <div class="form-control">{{ $horas_totales_filtros_empleados }} h</div>
-            </div>
-            <div class="col-md-1 form-group">
-                <label class="form-label" style="width:100%;">&nbsp;</label><br>
-                <a href="" class="btn btn-info"><i class="fa-solid fa-arrow-rotate-right"></i></a>
-            </div>
-            <div class="col-md-3 form-group" style="padding-left:0px !important;">
-                <label class="form-label">Estatus de Colaborador</label>
-                <div class="d-flex">
-                    <div class="btn btn-info mr-2" wire:click="updateEmpleadosEstatus('alta')"
-                        style="background-color: #69D552; border:none !important;">
-                        Alta
-                    </div>
-                    <div class="btn btn-info mr-2" wire:click="updateEmpleadosEstatus('baja')"
-                        style="background-color: #FF9D9D; border:none !important;">
-                        Baja
-                    </div>
-                    <div class="btn btn-info mr-2" wire:click="updateEmpleadosEstatus(null)"
-                        style="background-color: #42ADDC; border:none !important;">
-                        Todos
+    <div class="print-none" style="margin: 0 !important;">
+        <div class="card card-body">
+            <div class="row">
+                <x-loading-indicator />
+                <div class="col-md-3 form-group" style="padding-left:0 !important;">
+                    <label class="form-label">Colaboradores del Área: </label>
+                    <select class="form-control" wire:model="area_id">
+                        <option selected value="0">Todos</option>
+                        @foreach ($areas as $area)
+                            <option value="{{ $area->id }}">{{ $area->area }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-3 form-group" wire:ignore>
+                    <label class="form-label">Fecha de inicio</label>
+                    <input id="fecha_dia_registros_inicio_empleados" class="form-control date_librery" type="date"
+                        name="fecha_inicio" wire:model="fecha_inicio">
+                </div>
+                <div class="col-md-3 form-group" wire:ignore>
+                    <label class="form-label">Fecha de fin</label>
+                    <input id="fecha_dia_registros_fin_empleados" class="form-control date_librery" type="date"
+                        name="fecha_fin" wire:model="fecha_fin">
+                </div>
+                <div class="col-md-2 form-group">
+                    <label class="form-label">Horas totales</label>
+                    <div class="form-control">{{ $horas_totales_filtros_empleados }} h</div>
+                </div>
+                <div class="col-md-1 form-group">
+                    <label class="form-label" style="width:100%;">&nbsp;</label><br>
+                    <a href="" class="btn btn-secondary"><i class="fa-solid fa-arrow-rotate-right"></i></a>
+                </div>
+                <div class="col-12 form-group" style="padding-left:0px !important;">
+                    <label class="form-label">Estatus de Colaborador</label>
+                    <div class="d-flex">
+                        <div class="btn btn-info mr-2" wire:click="updateEmpleadosEstatus('alta')"
+                            style="background-color: #69D552; border:none !important;">
+                            Alta
+                        </div>
+                        <div class="btn btn-info mr-2" wire:click="updateEmpleadosEstatus('baja')"
+                            style="background-color: #FF9D9D; border:none !important;">
+                            Baja
+                        </div>
+                        <div class="btn btn-info mr-2" wire:click="updateEmpleadosEstatus(null)"
+                            style="background-color: #42ADDC; border:none !important;">
+                            Todos
+                        </div>
+                        <button class="btn btn-success" wire:click="correoMasivo()">
+                            Enviar correo a todos los colaboradores con horas faltantes de registrar
+                        </button>
                     </div>
                 </div>
             </div>
-            <div class="col-md-9 form-group text-right d-flex" style="align-items: flex-end;">
-                <button class="btn btn-success" wire:click="correoMasivo()"><i class="fa-solid fa-envelope mr-3"></i>
-                    Enviar
-                    correo a todos los colaboradores con horas faltantes de registrar</button>
+        </div>
+        <div class="card card-body">
+            <div>
+                <h3 class="title-card-time">Reportes por área</h3>
+                <hr class="my-4">
             </div>
-            <div class="datatable-fix w-100 mt-4">
+            <div class="datatable-fix w-100 tabla-calendar-time">
                 <table id="timesheet_empleados_lista"
                     class="table w-100 datatable_timesheet_empleados_reportes tabla-fixed"
                     data-semanas="{{ $semanas_totales_calendario }}">

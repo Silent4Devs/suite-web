@@ -21,14 +21,14 @@ class PerfilSelect extends Component
 
     public function render()
     {
-        $this->perfiles = PerfilEmpleado::get();
+        $this->perfiles = PerfilEmpleado::getAll();
 
         return view('livewire.perfil-select', ['perfiles' => $this->perfiles]);
     }
 
     public function PerfilStore()
     {
-        $this->perfiles = PerfilEmpleado::get();
+        $this->perfiles = PerfilEmpleado::getAll();
     }
 
     public function hydrate()

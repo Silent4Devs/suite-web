@@ -4,11 +4,17 @@
         <div class="mt-3">
             {{ Breadcrumbs::render('EV360-EntidadesCrediticeas') }}
         </div>
+
         <h5 class="col-12 titulo_general_funcion">Entidades crediticias</h5>
-        <div class="mt-5 card">
-        <div class="card-body datatable-fix">
-            @include('partials.flashMessages')
-            <table id="tblEntidadesCrediticias" class="table table-bordered w-100 datatable-ControlDocumento">
+        <div class="text-right">
+            <div class="d-flex justify-content-end">
+                <a href="{{ route('admin.entidades-crediticias.create') }}" type="button" class="btn btn-primary">Registrar Entidad crediticia</a>
+            </div>
+        </div>
+        @include('partials.flashMessages')
+        <div class="datatable-fix datatable-rds">
+            <h3 class="title-table-rds"> Entidades crediticias</h3>
+            <table class="datatable tblEntidadesCrediticias" id="tblEntidadesCrediticias">
                 <thead class="thead-dark">
                     <tr>
                         <th style="vertical-align: top">
@@ -25,12 +31,8 @@
                         </th>
                     </tr>
                 </thead>
-                <tbody>
-
-                </tbody>
             </table>
         </div>
-    </div>
 @endsection
 @section('scripts')
     @parent
@@ -103,23 +105,6 @@
                 }
 
             ];
-
-            let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar documento',
-                url: "{{ route('admin.entidades-crediticias.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config) {
-                    let {
-                        url
-                    } = config;
-                    window.location.href = url;
-                }
-            };
-
-            @can('entidades_crediticeas_agregar')
-                dtButtons.push(btnAgregar);
-            @endcan
             let dtOverrideGlobals = {
                 buttons: dtButtons,
                 processing: true,
@@ -149,28 +134,10 @@
                         }
                     },
                     {
-                        data: 'id',
-                        render: function(data, type, row, meta) {
-                            const urlEdit =
-                                `/admin/recursos-humanos/entidades-crediticias/${data}/edit`;
-                            const urlShowDelete =
-                                `/admin/recursos-humanos/entidades-crediticias/${data}`;
-                            const html = `
-                            @can('entidades_crediticeas_editar')
-                                <a class="btn btn-sm " title="Editar" href="${urlEdit}">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                            @endcan
-
-                            @can('entidades_crediticeas_eliminar')
-                                <button title="Eliminar" onclick="Eliminar(this,'${urlShowDelete}','${data}','${row.entidad}');return false;"
-                                    class="btn btn-sm text-danger">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
-                            @endcan`;
-                            return html;
-                        }
+                        data: 'actions',
+                        name: '{{ trans('global.actions') }}'
                     }
+
                 ],
                 orderCellsTop: true,
                 order: [
@@ -178,7 +145,7 @@
                 ]
             };
 
-            let table = $('#tblEntidadesCrediticias').DataTable(dtOverrideGlobals);
+            let table = $('.tblEntidadesCrediticias').DataTable(dtOverrideGlobals);
 
             window.Eliminar = function(boton, url, modelo_id, tipo) {
 

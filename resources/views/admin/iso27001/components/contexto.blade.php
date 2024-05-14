@@ -11,7 +11,7 @@
                     </div>
                 </a></li>
         @else
-            <li><a href="{{ url('/admin/analisisdebrechas-2022') }}">
+            <li><a href="{{ url('/admin/analisis-brechas-2022-inicio') }}">
                 <div>
                     <i class="bi bi-binoculars"></i><br>
                     Análisis de brechas

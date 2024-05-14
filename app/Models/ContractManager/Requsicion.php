@@ -2,13 +2,16 @@
 
 namespace App\Models\ContractManager;
 
+use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Requsicion extends Model
+class Requsicion extends Model implements Auditable
 {
-    use HasFactory;
+    use ClearsResponseCache, HasFactory;
+    use \OwenIt\Auditing\Auditable;
 
     protected $fillable = [
         'fecha',
@@ -63,6 +66,9 @@ class Requsicion extends Model
         'ids_proveedores',
         'proveedoroc_id',
         'email',
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     protected $appends = [
@@ -141,7 +147,7 @@ class Requsicion extends Model
             $tipo = 'RQ-';
         }
 
-        $codigo = $tipo . sprintf('%02d-%04d', $parte1, $parte2);
+        $codigo = $tipo.sprintf('%02d-%04d', $parte1, $parte2);
 
         return $codigo;
     }

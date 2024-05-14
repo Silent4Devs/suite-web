@@ -87,7 +87,6 @@
             width: 100%;
             display: flex;
         }
-
     </style>
 
 
@@ -95,11 +94,11 @@
         @if (count($mapas))
             <div class="col-md-3">
                 <p class="text-xl text-gray-700">Análisis de riesgo:</p>
-                <select class="form-control" wire:model="id_analisis">
+                <select class="form-control" wire:model.lazy="id_analisis">
                     <option value="" selected disabled>Seleccione una opción</option>
-                        @foreach ($mapas as $mapa)
-                        <option value="{{ $mapa?$mapa['id']:0}}">{{ $mapa?$mapa['nombre']:'' }}</option>
-                        @endforeach
+                    @foreach ($mapas as $mapa)
+                        <option value="{{ $mapa ? $mapa['id'] : 0 }}">{{ $mapa ? $mapa['nombre'] : '' }}</option>
+                    @endforeach
                 </select>
             </div>
         @endif
@@ -121,10 +120,10 @@
                 @endforeach
             </select>
         </div>
-        @if(!count($mapas))
+        @if (!count($mapas))
             <div class="col-md-3">
                 <p class="text-xl text-gray-700">Proceso:</p>
-                <select class="form-control" wire:model="proceso_id">
+                <select class="form-control" wire:model.lazy="proceso_id">
                     <option value="" selected disabled>Seleccione una proceso</option>
                     @foreach ($procesos as $proceso)
                         <option value="{{ $proceso->id }}">{{ $proceso->nombre }}</option>
@@ -231,27 +230,35 @@
                                         @case(0)
                                             <span class="text-green mayus">Baja ({{ $listado->nivelriesgo }})</span>
                                         @break
+
                                         @case(9)
                                             <span class="text-yellow mayus">Media ({{ $listado->nivelriesgo }})</span>
                                         @break
+
                                         @case(18)
                                             <span class="text-yellow mayus">Alta ({{ $listado->nivelriesgo }})</span>
                                         @break
+
                                         @case(27)
                                             <span class="text-orange mayus">Muy Alta
-                                                ({{ $listado->nivelriesgo }})</span>
+                                                ({{ $listado->nivelriesgo }})
+                                            </span>
                                         @break
+
                                         @case(36)
                                             <span class="text-danger mayus">Alta ({{ $listado->nivelriesgo }})</span>
                                         @break
+
                                         @case(54)
                                             <span class="text-danger mayus">Muy Alta
                                                 ({{ $listado->nivelriesgo }})</span>
                                         @break
+
                                         @case(81)
                                             <span class="text-danger mayus">Muy Alta
                                                 ({{ $listado->nivelriesgo }})</span>
                                         @break
+
                                         @default
                                     @endswitch
                                 </td>
@@ -460,7 +467,8 @@
                         @foreach ($listados_residual as $listado)
                             <tr class="con">
                                 <td>{{ $listado->id }}</td>
-                                <td data-toggle="tooltip" data-placement="top" title="Pulse aquí para más información">
+                                <td data-toggle="tooltip" data-placement="top"
+                                    title="Pulse aquí para más información">
                                     <a target="_blank"
                                         href="{{ route('admin.matriz-riesgos.show', [$listado->id]) }}">{{ wordwrap($listado->descripcionriesgo, 10, "\n", true) }}</a>
                                 </td>
@@ -470,32 +478,40 @@
                                     @switch($listado->nivelriesgo_residual)
                                         @case(0)
                                             <span class="text-green mayus">Baja
-                                                ({{ $listado->nivelriesgo_residual }})</span>
+                                                ({{ $listado->nivelriesgo_residual }})
+                                            </span>
                                         @break
+
                                         @case(9)
                                             <span class="text-yellow mayus">Media
                                                 ({{ $listado->nivelriesgo_residual }})</span>
                                         @break
+
                                         @case(18)
                                             <span class="text-yellow mayus">Alta
                                                 ({{ $listado->nivelriesgo_residual }})</span>
                                         @break
+
                                         @case(27)
                                             <span class="text-orange mayus">Muy Alta
                                                 ({{ $listado->nivelriesgo_residual }})</span>
                                         @break
+
                                         @case(36)
                                             <span class="text-danger mayus">Alta
                                                 ({{ $listado->nivelriesgo_residual }})</span>
                                         @break
+
                                         @case(54)
                                             <span class="text-danger mayus">Muy Alta
                                                 ({{ $listado->nivelriesgo_residual }})</span>
                                         @break
+
                                         @case(81)
                                             <span class="text-danger mayus">Muy Alta
                                                 ({{ $listado->nivelriesgo_residual }})</span>
                                         @break
+
                                         @default
                                     @endswitch
                                 </td>

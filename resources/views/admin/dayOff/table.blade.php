@@ -1,4 +1,4 @@
-<table class="table table-bordered w-100 datatable datatable-dayOffs tblCSV" id="datatable-dayOffs">
+<table class="datatable datatable-dayOffs" id="datatable-dayOffs">
     <thead class="thead-dark">
         <tr>
             <th style="min-width: 140px;">
@@ -25,7 +25,7 @@
             <th style="min-width: 200px;">
                 Descripcion
             </th>
-           
+
             <th style="min-width: 150px;">
                 Opciones
             </th>

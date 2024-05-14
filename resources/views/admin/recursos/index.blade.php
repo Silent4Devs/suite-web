@@ -46,57 +46,87 @@
 
     {{ Breadcrumbs::render('admin.recursos.index') }}
 
-        <h5 class="col-12 titulo_general_funcion">Capacitaciones</h5>
-        <div class="mt-5 card">
-            <div style="margin-bottom: 10px; margin-left:10px;" class="row">
-                <div class="col-lg-12">
-                    @include('csvImport.modalcapacitaciones', ['model' => 'Vulnerabilidad', 'route' =>
-                    'admin.vulnerabilidads.parseCsvImport'])
-                </div>
+    <h5 class="col-12 titulo_general_funcion">Transferencia de conocimiento</h5>
+    <div class="card card-body" style="background-color: #5397D5; color: #fff;">
+        <div class="d-flex" style="gap: 25px;">
+            <img src="{{ asset('img/audit_port.jpg') }}" alt="Auditoria" style="width: 200px;">
+            <div>
+                <br>
+                <h4>¿Qué es Transferencia de conocimiento?</h4>
+                <p>
+                    Garantizar que todos en la empresa tengan el conocimiento certificando que este se comparta y perdure.
+                </p>
+                <p>
+                    Esto asegura que todos los miembros del personal comprendan las prácticas y directrices establecidas por la organización.
+                </p>
             </div>
-
-
-        @include('partials.flashMessages')
-        <div class="card-body datatable-fix">
-            <table class="table table-bordered datatable-Recurso w-100">
-                <thead class="thead-dark">
-                    <tr>
-                        <th></th>
-                        <th>
-                            {{ trans('cruds.recurso.fields.id') }}
-                        </th>
-                        <th>
-                            Nombre
-                        </th>
-                        <th>
-                            Fecha&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        </th>
-                        <th>
-                            {{ trans('cruds.recurso.fields.participantes') }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        </th>
-                        <th>
-                            {{ trans('cruds.recurso.fields.instructor') }}
-                        </th>
-                        <th>
-                            Tipo
-                        </th>
-                        <th>
-                            Modalidad
-                        </th>
-                        <th>
-                            Estatus
-                        </th>
-                        <th>
-                            Opciones
-                        </th>
-                    </tr>
-                </thead>
-            </table>
         </div>
     </div>
+            <div class="text-right">
+                <div class="d-flex justify-content-end">
+                    <a href="{{ route('admin.recursos.create') }}" type="button" class="btn btn-primary">Registrar Capacitaciones</a>
+                </div>
+            </div>
+            @include('partials.flashMessages')
+            <div class="datatable-fix datatable-rds">
+                <div class="d-flex justify-content-end">
+                    <a class="boton-transparente boton-sin-borde" href="{{ route('descarga-categoriacapacitacion') }}">
+                        <img src="{{ asset('download_FILL0_wght300_GRAD0_opsz24.svg') }}" alt="Importar" class="icon">
+                    </a> &nbsp;&nbsp;&nbsp;
+                    <a class="boton-transparente boton-sin-borde" id="btnImport">
+                        <img src="{{ asset('upload_file_FILL0_wght300_GRAD0_opsz24.svg') }}" alt="Importar" class="icon">
+                    </a>
+                    @include('csvImport.modalcapacitaciones', [
+                        'model' => 'Vulnerabilidad',
+                        'route' => 'admin.vulnerabilidads.parseCsvImport',
+                    ])
+                </div>
+                <h3 class="title-table-rds"> Capacitaciones</h3>
+                <table class="datatable datatable-Recurso" id="datatable-Recurso">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th></th>
+                            <th>
+                                {{ trans('cruds.recurso.fields.id') }}
+                            </th>
+                            <th>
+                                Nombre
+                            </th>
+                            <th>
+                                Fecha&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </th>
+                            <th>
+                                {{ trans('cruds.recurso.fields.participantes') }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </th>
+                            <th>
+                                {{ trans('cruds.recurso.fields.instructor') }}
+                            </th>
+                            <th>
+                                Tipo
+                            </th>
+                            <th>
+                                Modalidad
+                            </th>
+                            <th>
+                                Estatus
+                            </th>
+                            <th>
+                                Opciones
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
 @endsection
 @section('scripts')
     @parent
+    <script>
+        $('#btnImport').on('click', function(e) {
+        e.preventDefault();
+        $('#xlsxImportModal').modal('show');
+     });
+    </script>
+
     <script src="https://unpkg.com/tippy.js@6/dist/tippy-bundle.umd.js"></script>
     <script>
         $(function() {
@@ -186,36 +216,25 @@
             ];
 
             @can('capacitaciones_agregar')
-                let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar curso y capacitación',
-                url: "{{ route('admin.recursos.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
-                action: function(e, dt, node, config){
-                let {url} = config;
-                window.location.href = url;
-                }
-                };
-                let btnExport = {
-                text: '<i class="fas fa-download"></i>',
-                titleAttr: 'Descargar plantilla',
-                className: "btn btn_cargar" ,
-                action: function(e, dt, node, config) {
-                $('#').modal('show');
-                }
-                };
-                let btnImport = {
-                text: '<i class="fas fa-file-upload"></i>',
-                titleAttr: 'Importar datos',
-                className: "btn btn_cargar",
-                action: function(e, dt, node, config) {
-                $('#xlsxImportModal').modal('show');
-                }
-                };
+                // let btnExport = {
+                // text: '<i class="fas fa-download"></i>',
+                // titleAttr: 'Descargar plantilla',
+                // className: "btn btn_cargar" ,
+                // action: function(e, dt, node, config) {
+                // $('#').modal('show');
+                // }
+                // };
+                // let btnImport = {
+                // text: '<i class="fas fa-file-upload"></i>',
+                // titleAttr: 'Importar datos',
+                // className: "btn btn_cargar",
+                // action: function(e, dt, node, config) {
+                // $('#xlsxImportModal').modal('show');
+                // }
+                // };
 
-                dtButtons.push(btnAgregar);
-                dtButtons.push(btnExport);
-                dtButtons.push(btnImport);
+                // dtButtons.push(btnExport);
+                // dtButtons.push(btnImport);
             @endcan
             @can('capacitaciones_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';

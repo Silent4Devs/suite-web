@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\ClearsResponseCache;
 use App\Traits\MultiTenantModelTrait;
 use Carbon\Carbon;
 use DateTimeInterface;
@@ -15,10 +16,10 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class Recurso extends Model implements HasMedia, Auditable
+class Recurso extends Model implements Auditable, HasMedia
 {
-    use SoftDeletes, MultiTenantModelTrait, InteractsWithMedia, HasFactory;
-    use \OwenIt\Auditing\Auditable;
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
+    use HasFactory, InteractsWithMedia, MultiTenantModelTrait, SoftDeletes;
 
     public $table = 'recursos';
 
@@ -90,6 +91,9 @@ class Recurso extends Model implements HasMedia, Auditable
         'configuracion_invitacion_envio',
         'lista_asistencia',
         'is_sync_elearning',
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     //Redis methods
@@ -217,7 +221,7 @@ class Recurso extends Model implements HasMedia, Auditable
         return $date->format('Y-m-d H:i:s');
     }
 
-    public function registerMediaConversions(Media $media = null): void
+    public function registerMediaConversions(?Media $media = null): void
     {
         $this->addMediaConversion('thumb')->fit('crop', 50, 50);
         $this->addMediaConversion('preview')->fit('crop', 120, 120);

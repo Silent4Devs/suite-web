@@ -2,21 +2,44 @@
 
 namespace App\Models\Escuela;
 
+use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Course extends Model
+class Course extends Model implements Auditable
 {
-    use SoftDeletes;
+    use ClearsResponseCache, SoftDeletes;
     use HasFactory;
+    use \OwenIt\Auditing\Auditable;
 
     protected $guarded = ['id', 'status'];
+
+    protected $table = 'courses';
+
     protected $withCount = ['students', 'reviews'];
 
+    protected $fillable = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
+
     const BORRADOR = 1;
+
     const REVISION = 2;
+
     const PUBLICADO = 3;
+
+    //query redis cache
+    public static function getAll()
+    {
+        return Cache::remember('Courses:courses_all', 3600 * 7, function () {
+            return self::get();
+        });
+    }
 
     // Calificación del curso
     public function getRatingAttribute()
@@ -73,13 +96,18 @@ class Course extends Model
 
     public function sections()
     {
-        return $this->hasMany('App\Models\Escuela\Section');
+        return $this->hasMany('App\Models\Escuela\Section')->orderBy('created_at', 'asc');
     }
 
     //Relacion uno a muchos inversa
     public function teacher()
     {
         return $this->belongsTo('App\Models\User', 'user_id');
+    }
+
+    public function instructor()
+    {
+        return $this->belongsTo('App\Models\User', 'empleado_id');
     }
 
     public function level()

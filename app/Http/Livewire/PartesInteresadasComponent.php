@@ -20,12 +20,13 @@ class PartesInteresadasComponent extends Component
 
     public function mount()
     {
-        $this->normas = Norma::get();
         $this->value == false;
     }
 
     public function render()
     {
+        $this->normas = Norma::get();
+
         return view('livewire.partes-interesadas-component');
     }
 

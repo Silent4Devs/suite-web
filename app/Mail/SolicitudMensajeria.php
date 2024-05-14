@@ -30,6 +30,6 @@ class SolicitudMensajeria extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.mensajeria.solicitud')->subject('Solicitud de Mensajería de: ' . $this->solicitante->name);
+        return $this->view('mails.mensajeria.solicitud')->subject('Solicitud de Mensajería de: '.$this->solicitante->name);
     }
 }

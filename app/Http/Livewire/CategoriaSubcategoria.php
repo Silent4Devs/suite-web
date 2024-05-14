@@ -28,7 +28,6 @@ class CategoriaSubcategoria extends Component
     public function mount($categoriasSeleccionado, $subcategoriaSeleccionado)
     {
         // dd($subcategoriaSeleccionado);
-        $this->categorias = Tipoactivo::select('id', 'tipo')->get();
         $this->subcategorias = collect();
         $this->categoriasSeleccionado = $categoriasSeleccionado;
         $this->subcategoriaSeleccionado = $subcategoriaSeleccionado;
@@ -36,6 +35,8 @@ class CategoriaSubcategoria extends Component
 
     public function render()
     {
+        $this->categorias = Tipoactivo::select('id', 'tipo')->get();
+
         return view('livewire.categoria-subcategoria');
     }
 

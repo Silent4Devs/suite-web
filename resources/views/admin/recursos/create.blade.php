@@ -2,7 +2,23 @@
 @section('content')
 
     {{ Breadcrumbs::render('admin.recursos.create') }}
-    <h5 class="col-12 titulo_general_funcion">Registrar: Capacitación</h5>
+    {{-- <h5 class="col-12 titulo_general_funcion">Registrar: Capacitación</h5> --}}
+    <h5 class="col-12 titulo_general_funcion">Transferencia de conocimiento</h5>
+    <div class="card card-body" style="background-color: #5397D5; color: #fff;">
+        <div class="d-flex" style="gap: 25px;">
+            <img src="{{ asset('img/audit_port.jpg') }}" alt="Auditoria" style="width: 200px;">
+            <div>
+                <br>
+                <h4>¿Qué es Transferencia de conocimiento?</h4>
+                <p>
+                    Garantizar que todos en la empresa tengan el conocimiento certificando que este se comparta y perdure.
+                </p>
+                <p>
+                    Esto asegura que todos los miembros del personal comprendan las prácticas y directrices establecidas por la organización.
+                </p>
+            </div>
+        </div>
+    </div>
     @include('admin.recursos.styles.style')
     <div class="mt-4 card">
         <div class="card-body">

@@ -2,7 +2,7 @@
 @section('content')
     @can('macroprocesos_agregar')
         <h5 class="col-12 titulo_general_funcion">Macroprocesos</h5>
-        @include('flash::message')
+
         <div class="mt-5 card">
         @endcan
         @include('partials.flashMessages')

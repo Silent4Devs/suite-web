@@ -32,6 +32,6 @@ class SolicitudSalidaVisitante extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.visitantes.solicitudSalida')->subject('Solicitud de Salida de ' . $this->visitante->nombre);
+        return $this->view('mails.visitantes.solicitudSalida')->subject('Solicitud de Salida de '.$this->visitante->nombre);
     }
 }

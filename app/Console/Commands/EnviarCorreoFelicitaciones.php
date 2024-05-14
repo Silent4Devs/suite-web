@@ -51,7 +51,7 @@ class EnviarCorreoFelicitaciones extends Command
         $cumplehoy = Carbon::today();
         $cumplehoy->toDateString();
         // dd($cumplehoy);
-        $cumpleañeros = Empleado::getaltaAll()
+        $cumpleañeros = Empleado::alta()
             ->whereMonth('cumpleaños', '=', $cumplehoy->format('m'))
             ->whereDay('cumpleaños', '=', $cumplehoy->format('d'))
             ->get();
@@ -62,12 +62,12 @@ class EnviarCorreoFelicitaciones extends Command
         if ($cumpleañeros != null) {
             foreach ($cumpleañeros as $cumpleañero) {
                 $filtro = CorreoCumpleanos::where('empleado_id', $cumpleañero->id)
-                    ->whereDate('fecha_envio', '=', $cumpleañero->cumpleaños);
+                    ->whereDate('fecha_envio', '=', $cumplehoy);
                 if ($filtro->exists() == false) {
                     // dd("Si aparece");
                     $empcump = CorreoCumpleanos::firstOrCreate([
                         'empleado_id' => $cumpleañero->id,
-                        'fecha_envio' => $cumpleañero->cumpleaños,
+                        'fecha_envio' => $cumplehoy,
                         'enviado' => false,
                     ]);
                     // dd("Si crea el registro");
@@ -75,7 +75,7 @@ class EnviarCorreoFelicitaciones extends Command
                     $correodestinatario = $cumpleañero->email;
 
                     $email = new FelicitacionesMail($nombre, $correodestinatario, $imgpastel, $imgtab);
-                    Mail::to(removeUnicodeCharacters($correodestinatario))->send($email);
+                    Mail::to(removeUnicodeCharacters($correodestinatario))->queue($email);
                     // dd('Si manda el correo');
                     $empcump->update([
                         'enviado' => true,

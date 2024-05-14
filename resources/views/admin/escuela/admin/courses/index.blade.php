@@ -26,21 +26,21 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($courses as $course )
-                            <tr>
-                                <td>{{$course->id}}</td>
-                                <td>{{$course->title}}</td>
-                                <td>{{$course->category->name}}</td>
-                                <td><a class="btn btn-primary" href="{{route('admin.courses.show',$course)}}">Revisar</a></td>
-                                <td></td>
-                            </tr>
+                    @foreach ($courses as $course)
+                        <tr>
+                            <td>{{ $course->id }}</td>
+                            <td>{{ $course->title }}</td>
+                            <td>{{ $course->category->name }}</td>
+                            <td><a class="btn btn-primary" href="{{ route('admin.courses.show', $course) }}">Revisar</a></td>
+                            <td></td>
+                        </tr>
                     @endforeach
                 </tbody>
             </table>
 
         </div>
         <div class="card-footer">
-            {{$courses->links('vendor.pagination.bootstrap-4')}}
+            {{ $courses->links('vendor.pagination.bootstrap-4') }}
         </div>
     </div>
 @stop
@@ -50,5 +50,7 @@
 @stop
 
 @section('js')
-    <script> console.log('Hi!'); </script>
+    <script>
+        console.log('Hi!');
+    </script>
 @stop

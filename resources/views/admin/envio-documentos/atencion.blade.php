@@ -1,7 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-   
-
     <style>
         .btn_cargar {
             border-radius: 100px !important;
@@ -90,35 +88,35 @@
             @endcan
         </div>
 
-        @include('flash::message')
+
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
             <table class="table table-bordered w-100 datatable datatable-envio-documentos tblCSV"
-            id="datatable-envio-documentos">
-            <thead class="thead-dark">
-                <tr>
-                    <th style="min-width: 30px;">
-                        ID
-                    </th>
-                    <th style="min-width: 100px;">
-                        Fecha de la solicitud
-                    </th>
-                    <th style="min-width: 110px;">
-                       Solicitante
-                    </th>
-                    <th style="min-width: 75px;">
-                        Estatus
-                    </th>
-                    <th style="min-width: 100px;">
-                        Notas
-                    </th>
-                    <th style="min-width: 50px;">
-                        Opciones
-                    </th>
-                </tr>
-            </thead>
-        </table>
-        
+                id="datatable-envio-documentos">
+                <thead class="thead-dark">
+                    <tr>
+                        <th style="min-width: 30px;">
+                            ID
+                        </th>
+                        <th style="min-width: 100px;">
+                            Fecha de la solicitud
+                        </th>
+                        <th style="min-width: 110px;">
+                            Solicitante
+                        </th>
+                        <th style="min-width: 75px;">
+                            Estatus
+                        </th>
+                        <th style="min-width: 100px;">
+                            Notas
+                        </th>
+                        <th style="min-width: 50px;">
+                            Opciones
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+
         </div>
     </div>
 @endsection
@@ -250,7 +248,7 @@
                             return `<div style="text-align:left">${data.name}</div>`;
                         }
                     },
-                    
+
                     {
                         data: 'status',
                         name: 'status',
@@ -311,7 +309,7 @@
                             let aprobacion = row.aprobacion;
                             let id = row.id;
 
-                            return `  
+                            return `
                             <div style="text-aling:center">
                             <a href="atencion/${row.id}/seguimiento"  title="Dar seguimiento"><i class="fas fa-mail-bulk text-align:center;"></i></a>
                             </div>
@@ -319,7 +317,7 @@
 
                         }
                     },
-                    
+
                 ],
                 orderCellsTop: true,
                 order: [

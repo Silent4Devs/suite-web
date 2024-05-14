@@ -102,7 +102,7 @@ class MatrizOctaveheatmap extends Component
     public function render()
     {
         $sedes = Sede::getAll(['id', 'sede']);
-        $areas = Area::getAll();
+        $areas = Area::getIdNameAll();
         $procesos = Proceso::select('id', 'nombre')->get();
         //Contadores
         $critico = MatrizOctave::select('id', 'vp', 'valor')->where('id_analisis', '=', $this->id_analisis)->whereIn('valor', ['25', '20']);

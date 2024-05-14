@@ -1,3 +1,4 @@
+
 <div class="create-requisicion">
     <div class="card card-body caja-blue">
 
@@ -24,9 +25,9 @@
                 Productos</a>
         </li>
         <li class="nav-item" role="presentation">
-            <a class="nav-link disable" id="profile-tab"
-                data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false"
-                style="pointer-events: none"><i class="number-icon">2</i> Proveedores</a>
+            <a class="nav-link disable" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                aria-controls="profile" aria-selected="false" style="pointer-events: none"><i class="number-icon">2</i>
+                Proveedores</a>
         </li>
         <li class="nav-item" role="presentation">
             <a class="nav-link disable" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
@@ -91,7 +92,7 @@
 
                                     Referencia (Título de la requisición) <font class="asterisco">*</font>
                                 </label>
-                                <input class="browser-default" type="text" value="" name="descripcion"
+                                <input class="browser-default" type="text" value="" maxlength="255" name="descripcion"
                                     required>
                             </div>
 
@@ -149,8 +150,8 @@
                                     <label for="" class="txt-tamaño">
                                         Cantidad <font class="asterisco">*</font>
                                     </label>
-                                    <input type="number" name="cantidad_1" min="1" max="9000000000"
-                                        class="model-cantidad browser-default" required>
+                                    <input type="text" name="cantidad_1" pattern="[0-9]+" title="Por favor, ingrese solo números enteros."
+                                    class="model-cantidad browser-default" required>
                                 </div>
                                 <div class="col s12 l8">
                                     <label for="" class="txt-tamaño">
@@ -172,7 +173,7 @@
 
                                         Especificaciones del producto o servicio <font class="asterisco">*</font>
                                     </label>
-                                    <textarea class="model-especificaciones browser-default" name="especificaciones_1" required></textarea>
+                                    <textarea class="model-especificaciones browser-default" maxlength="500" name="especificaciones_1" required></textarea>
                                 </div>
                             </div>
 
@@ -297,8 +298,8 @@
 
                                                             Detalles del producto <font class="asterisco">*</font>
                                                         </label>
-                                                        <input type="text" class="browser-default modal-detalles"
-                                                            name="detalles_{{ $i }}" required>
+                                                        <input type="text" required class="browser-default modal-detalles"
+                                                            name="detalles_{{ $i }}">
                                                     </div>
                                                     <div class="col s12 l3">
                                                         <input type="radio" class="modal-tipo"
@@ -378,7 +379,7 @@
                                                         <input type="file" required
                                                             class="modal-cotizacion form-control-file"
                                                             name="cotizacion_{{ $i }}"
-                                                            wire:model="cotizaciones.{{ $i }}"
+                                                            wire:model.lazy="cotizaciones.{{ $i }}"
                                                             data-count="{{ $i }}"
                                                             accept=".pdf, .docx, .pptx .point, .xml, .jpeg, .jpg, .png, .xlsx, .xlsm, .csv">
                                                     </div>

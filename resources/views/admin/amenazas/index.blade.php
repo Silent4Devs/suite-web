@@ -38,6 +38,7 @@
             margin: 0 !important;
             margin-right: 10px !important;
         }
+
         .agregar {
             margin-right: 15px;
         }
@@ -57,7 +58,7 @@
             @endcan
         </div>
 
-        @include('flash::message')
+
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
             @include('admin.amenazas.table')
@@ -99,7 +100,7 @@
                     customize: function(doc) {
                         let logo_actual = @json($logo_actual);
                         let empresa_actual = @json($empresa_actual);
-                        let empleado = @json(auth()->user()->empleado->name);
+                        let empleado = @json($empleado->name);
 
                         var now = new Date();
                         var jsDate = now.getDate() + '-' + (now.getMonth() + 1) + '-' + now.getFullYear();

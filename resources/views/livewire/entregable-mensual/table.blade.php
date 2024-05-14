@@ -2,7 +2,7 @@
     <div class="col l6">
         <label for="search">Busca por nombre o descripción del
             entregable</label>
-        <input type="text" wire:model="search" class="form-control" placeholder="Buscar entregable">
+        <input type="text" wire:model.debounce.800ms="search" class="form-control" placeholder="Buscar entregable">
         {{-- <span>Usted está buscando: <strong>{{ $search }}</strong></span> --}}
     </div>
 

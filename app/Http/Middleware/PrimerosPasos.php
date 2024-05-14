@@ -24,17 +24,17 @@ class PrimerosPasos
      */
     public function handle(Request $request, Closure $next)
     {
-        $existsEmpleado = Empleado::exists();
-        $existsOrganizacion = Organizacion::exists();
-        $existsAreas = Area::exists();
-        $existsPuesto = Puesto::exists();
-        $existsVinculoEmpleadoAdmin = User::orderBy('id')->first()->empleado_id != null ? true : false;
+        $existsEmpleado = Empleado::getExists();
+        $existsOrganizacion = Organizacion::getExists();
+        $existsAreas = Area::getExists();
+        $existsPuesto = Puesto::getExists();
+        $existsVinculoEmpleadoAdmin = User::getExists();
         if (
-            !$existsEmpleado ||
-            !$existsOrganizacion ||
-            !$existsAreas ||
-            !$existsPuesto ||
-            !$existsVinculoEmpleadoAdmin
+            ! $existsEmpleado ||
+            ! $existsOrganizacion ||
+            ! $existsAreas ||
+            ! $existsPuesto ||
+            ! $existsVinculoEmpleadoAdmin
         ) {
             return redirect()->route('admin.inicio-Usuario.index');
         }

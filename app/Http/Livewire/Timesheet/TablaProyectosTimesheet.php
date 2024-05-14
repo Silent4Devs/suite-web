@@ -44,26 +44,51 @@ class TablaProyectosTimesheet extends Component
 
     public $areas;
 
+    public $clientes;
+
+    public $timesheetproyectoquery;
+
+    public $estatus = 'todos';
+
     public function mount()
     {
         $this->tipos = TimesheetProyecto::TIPOS;
         $this->tipo = $this->tipos['Interno'];
-        $this->proyectos = TimesheetProyecto::getAllOrderByIdentificador()->where('estatus', 'proceso');
     }
 
     public function render()
     {
-        $this->proceso_count = TimesheetProyecto::getAll()->where('estatus', 'proceso')->count();
-        $this->cancelado_count = TimesheetProyecto::getAll()->where('estatus', 'cancelado')->count();
-        $this->terminado_count = TimesheetProyecto::getAll()->where('estatus', 'terminado')->count();
+        $this->timesheetproyectoquery = TimesheetProyecto::get();
+
+        $this->proceso_count = $this->timesheetproyectoquery->where('estatus', 'proceso')->count();
+        $this->cancelado_count = $this->timesheetproyectoquery->where('estatus', 'cancelado')->count();
+        $this->terminado_count = $this->timesheetproyectoquery->where('estatus', 'terminado')->count();
+
+        if ($this->estatus == 'procesos') {
+            $this->proyectos = TimesheetProyecto::getAllByProceso();
+        }
+
+        if ($this->estatus == 'cancelados') {
+            $this->proyectos = TimesheetProyecto::where('estatus', 'cancelado')->orderBy('identificador', 'ASC')->get();
+        }
+
+        if ($this->estatus == 'terminados') {
+            $this->proyectos = TimesheetProyecto::where('estatus', 'terminado')->orderBy('identificador', 'ASC')->get();
+        }
+
+        if ($this->estatus == 'todos') {
+            $this->proyectos = TimesheetProyecto::orderBy('identificador', 'ASC')->get();
+        }
+
+        $this->proyectos = $this->proyectos->sortByDesc('is_num');
 
         $this->emit('cerrarModal');
 
-        $this->sedes = Sede::getAll();
+        //$this->sedes = Sede::getAll();
 
-        $this->areas = Area::getAll();
+        //$this->areas = Area::getAll();
 
-        $this->clientes = TimesheetCliente::orderBy('nombre')->get();
+        $this->clientes = TimesheetCliente::getAllOrderBy('nombre');
 
         $this->emit('scriptTabla');
 
@@ -115,24 +140,9 @@ class TablaProyectosTimesheet extends Component
         $this->alert('success', 'Registro añadido!');
     }
 
-    public function procesos()
+    public function actualizarEstatus($estatus)
     {
-        $this->proyectos = TimesheetProyecto::getAllOrderByIdentificador()->where('estatus', 'proceso');
-    }
-
-    public function cancelados()
-    {
-        $this->proyectos = TimesheetProyecto::getAllOrderByIdentificador()->where('estatus', 'cancelado');
-    }
-
-    public function terminados()
-    {
-        $this->proyectos = TimesheetProyecto::getAllOrderByIdentificador()->where('estatus', 'terminado');
-    }
-
-    public function todos()
-    {
-        $this->proyectos = TimesheetProyecto::getAllOrderByIdentificador();
+        $this->estatus = $estatus;
     }
 
     public function destroy($id)

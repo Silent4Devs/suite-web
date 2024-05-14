@@ -15,7 +15,6 @@ use Carbon\Carbon;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 
 class PortalComunicacionController extends Controller
@@ -30,29 +29,33 @@ class PortalComunicacionController extends Controller
         abort_if(Gate::denies('portal_de_comunicaccion_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $hoy = Carbon::now();
         $hoy->toDateString();
-        $authId = Auth::user()->id;
 
-        $aniversarios = Cache::remember('portal_aniversarios_' . $authId, 3600 * 2, function () use ($hoy) {
+        $politica_existe = PoliticaSgsi::getAll()->count();
+        $getAlta = Empleado::alta();
+        $user = User::getCurrentUser();
+
+        $empleado_asignado = $user->n_empleado;
+        $authId = $user->id;
+
+        $documentos_publicados = Documento::getLastFiveWithMacroproceso();
+        $comite_existe = Comiteseguridad::getAll()->count();
+        $nuevos = Empleado::whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->get();
+        $comunicacionSgis = ComunicacionSgi::getAllwithImagenesBlog();
+        $comunicacionSgis_carrusel = ComunicacionSgi::getAllwithImagenesCarrousel();
+
+        $cumpleaños = Cache::remember('Portal_cumpleaños_'.$authId, 3600, function () use ($hoy, $getAlta) {
+            return $getAlta->whereMonth('cumpleaños', '=', $hoy->format('m'))->get();
+        });
+
+        $aniversarios = Cache::remember('Portal:portal_aniversarios', 3600 * 4, function () use ($hoy) {
             return Empleado::alta()->whereMonth('antiguedad', '=', $hoy->format('m'))->whereYear('antiguedad', '<', $hoy->format('Y'))->get();
         });
 
-        $aniversarios_contador_circulo = Cache::remember('portal_aniversarios_contador_circulo_' . $authId, 3600 * 2, function () use ($hoy) {
+        $aniversarios_contador_circulo = Cache::remember('Portal:portal_aniversarios_contador_circulo', 3600 * 4, function () use ($hoy) {
             return Empleado::alta()->whereMonth('antiguedad', '=', $hoy->format('m'))->whereYear('antiguedad', '<', $hoy->format('Y'))->count();
         });
 
-        $documentos_publicados = Documento::with('macroproceso')->where('estatus', Documento::PUBLICADO)->latest('updated_at')->get()->take(5);
-
-        $comunicacionSgis = ComunicacionSgi::with('imagenes_comunicacion')->where('publicar_en', '=', 'Blog')->orWhere('publicar_en', '=', 'Ambos')->where('fecha_programable', '<=', Carbon::now()->format('Y-m-d'))->where('fecha_programable_fin', '>=', Carbon::now()->format('Y-m-d'))->get();
-        // dd($comunicacionSgis);
-
-        $comunicacionSgis_carrusel = ComunicacionSgi::with('imagenes_comunicacion')->where('publicar_en', '=', 'Carrusel')->orWhere('publicar_en', '=', 'Ambos')->where('fecha_programable', '<=', Carbon::now()->format('Y-m-d'))->where('fecha_programable_fin', '>=', Carbon::now()->format('Y-m-d'))->get();
-
-        $empleado_asignado = User::getCurrentUser()->n_empleado;
-
-        $politica_existe = PoliticaSgsi::getAll()->count();
-        $comite_existe = Comiteseguridad::getAll()->count();
-
-        return view('admin.portal-comunicacion.index', compact('documentos_publicados', 'hoy', 'comunicacionSgis', 'comunicacionSgis_carrusel', 'empleado_asignado', 'aniversarios_contador_circulo', 'politica_existe', 'comite_existe'));
+        return view('admin.portal-comunicacion.index', compact('documentos_publicados', 'hoy', 'comunicacionSgis', 'comunicacionSgis_carrusel', 'empleado_asignado', 'aniversarios_contador_circulo', 'politica_existe', 'comite_existe', 'nuevos', 'cumpleaños', 'user'));
     }
 
     /**

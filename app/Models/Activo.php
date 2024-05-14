@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\ClearsResponseCache;
 use App\Traits\MultiTenantModelTrait;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,8 +13,8 @@ use OwenIt\Auditing\Contracts\Auditable;
 
 class Activo extends Model implements Auditable
 {
-    use SoftDeletes, MultiTenantModelTrait, HasFactory;
-    use \OwenIt\Auditing\Auditable;
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
+    use HasFactory, MultiTenantModelTrait, SoftDeletes;
 
     public $table = 'activos';
 
@@ -60,7 +61,7 @@ class Activo extends Model implements Auditable
     //Redis methods
     public static function getAll()
     {
-        return Cache::remember('activos_all', 3600 * 24, function () {
+        return Cache::remember('Activos:activos_all', 3600 * 7, function () {
             return self::get();
         });
     }

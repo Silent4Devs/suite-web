@@ -1,39 +1,24 @@
 pipeline {
     agent any
 
+    environment {
+        SSH_USER = 'desarrollo'
+        SSH_PASSWORD = 'S3cur3.qa'
+        SERVER_IP = '192.168.9.78'
+    }
+
     stages {
-        stage('Checkout') {
+        stage('Git Pull via SSH') {
             steps {
-                checkout scm
-            }
-        }
-
-        stage('Build') {
-            steps {
-                git 'https://gitlab.com/silent4business/tabantaj.git'
-                sh 'docker-compose up --build -d'
-                sh 'docker-compose exec php composer install'
-                sh 'docker-compose exec php php artisan key:generate'
-            }
-        }
-
-        stage('Docker Compose Build and Publish') {
-            steps {
-                sh 'docker-compose up --build -d'
-                sh 'docker-compose exec php php artisan migrate'
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                sh 'echo aqui deploya'
+                script {
+                   sh '''
+                       echo $SSH_PASSWORD | sshpass -p $SSH_PASSWORD ssh $SSH_USER@$SERVER_IP "cd /var/contenedor/suite-web && sudo -S git pull"
+                    '''
+                }
             }
         }
     }
 
-    post {
-        always {
-            sh 'docker-compose down'
-        }
-    }
 }
+
+

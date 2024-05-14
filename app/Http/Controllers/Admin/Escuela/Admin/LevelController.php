@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Escuela\Level;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
+use Yajra\DataTables\Facades\DataTables;
 
 class LevelController extends Controller
 {
@@ -14,11 +15,45 @@ class LevelController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $levels = Level::all();
+        if ($request->ajax()) {
+            $query = Level::get();
+            $table = Datatables::of($query);
 
-        return view('admin.Escuela.Admin.levels.index', compact('levels'));
+            $table->addColumn('placeholder', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+            $table->addIndexColumn();
+            $table->editColumn('actions', function ($row) {
+                $viewGate = 'capacitaciones_ver';
+                $editGate = 'capacitaciones_editar';
+                $deleteGate = 'capacitaciones_eliminar';
+                $crudRoutePart = 'recursos';
+
+                return view('partials.datatablesActions', compact(
+                    'viewGate',
+                    'editGate',
+                    'deleteGate',
+                    'crudRoutePart',
+                    'row'
+                ));
+            });
+
+            $table->editColumn('id', function ($row) {
+                return $row->id ? $row->id : '';
+            });
+            $table->editColumn('name', function ($row) {
+                return $row->name ? $row->name : '';
+            });
+
+            $table->rawColumns(['actions', 'placeholder']);
+
+            return $table->make(true);
+        }
+
+        $levels = Level::get();
+
+        return view('admin.escuela.admin.levels.index', compact('levels'));
     }
 
     /**
@@ -28,13 +63,12 @@ class LevelController extends Controller
      */
     public function create()
     {
-        return view('admin.Escuela.Admin.levels.create');
+        return view('admin.escuela.admin.levels.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -57,7 +91,7 @@ class LevelController extends Controller
      */
     public function show(Level $level)
     {
-        return view('admin.Escuela.Admin.levels.show', compact('level'));
+        return view('admin.escuela.admin.levels.show', compact('level'));
     }
 
     /**
@@ -68,20 +102,19 @@ class LevelController extends Controller
      */
     public function edit(Level $level)
     {
-        return view('admin.Escuela.Admin.levels.edit', compact('level'));
+        return view('admin.escuela.admin.levels.edit', compact('level'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  Level $level
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Level $level)
     {
         $request->validate([
-            'name' => 'required|unique:levels,name,' . $level->id,
+            'name' => 'required|unique:levels,name,'.$level->id,
         ]);
 
         $level->update($request->all());
@@ -96,9 +129,9 @@ class LevelController extends Controller
      * @param  int  $level
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Level $level)
+    public function destroy($id)
     {
-        $level->delete();
+        $level = Level::find($id)->delete();
 
         //Alert::toast('El nivel se eliminó con éxito', 'success');
         return redirect()->route('admin.levels.index');

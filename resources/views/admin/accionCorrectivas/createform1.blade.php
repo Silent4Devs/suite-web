@@ -6,11 +6,10 @@
 
 
 
-    <div class="form-group col-md-8 col-lg-8 col-sm-12">
-        <label class="required" for="tema"><i class="fas fa-text-width iconos-crear"></i>Título corto de la acción correctiva
-        </label>
-        <input class="form-control {{ $errors->has('tema') ? 'is-invalid' : '' }}" name="tema" id="tema"
+    <div class="form-group col-md-8 col-lg-8 col-sm-12 anima-focus ">
+        <input class="form-control {{ $errors->has('tema') ? 'is-invalid' : '' }}" placeholder="" name="tema" id="tema"
             maxlength="255" {{ old('tema') }} required>
+            {!! Form::label('tema', 'Título corto de la acción correctiva*', ['class' => 'asterisco']) !!}
         @if ($errors->has('tema'))
             <div class="invalid-feedback">
                 {{ $errors->first('tema') }}
@@ -30,10 +29,10 @@
         </select>
     </div> --}}
 
-    <div class="form-group col-sm-12 col-md-4 col-lg-4">
-        <label class="required" for="fecharegistro"> <i class="far fa-calendar-alt iconos-crear"></i> Fecha y hora de registro de la AC</label>
-        <input required class="form-control date {{ $errors->has('fecharegistro') ? 'is-invalid' : '' }}" type="datetime-local"
+    <div class="form-group col-sm-12 col-md-4 col-lg-4 anima-focus">
+        <input required class="form-control date {{ $errors->has('fecharegistro') ? 'is-invalid' : '' }}" type="datetime-local" placeholder=""
             min="1945-01-01T00:00" name="fecharegistro" id="fecharegistro" value="{{ old('fecharegistro') }}">
+            {!! Form::label('fecharegistro', 'Fecha y hora de registro de la AC*', ['class' => 'asterisco']) !!}
         @if ($errors->has('fecharegistro'))
             <div class="invalid-feedback">
                 {{ $errors->first('fecharegistro') }}
@@ -63,8 +62,7 @@
     </div>
 
 
-    <div class="form-group col-sm-12 col-md-4 col-lg-4">
-        <label class="required" for="id_reporto"><i class="fas fa-user-tie iconos-crear"></i>Nombre</label>
+    <div class="form-group col-sm-12 col-md-4 col-lg-4 anima-focus">
         <select class="form-control  {{ $errors->has('id_reporto') ? 'is-invalid' : '' }}" name="id_reporto"
             id="id_reporto" required>
             <option selected value="" disabled>-- Selecciona un empleado --</option>
@@ -76,6 +74,7 @@
 
             @endforeach
         </select>
+        {!! Form::label('id_reporto', 'Nombre*', ['class' => 'asterisco']) !!}
         @if ($errors->has('id_reporto'))
             <div class="invalid-feedback">
                 {{ $errors->first('id_reporto') }}
@@ -83,15 +82,15 @@
         @endif
     </div>
 
-    <div class="form-group col-md-4">
-        <label for="id_reporto_puesto"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
+    <div class="form-group col-md-4 anima-focus">
         <div class="form-control" id="reporto_puesto"></div>
+        {!! Form::label('reporto_puesto', 'Puesto*', ['class' => 'asterisco']) !!}
     </div>
 
 
-    <div class="form-group col-sm-12 col-md-4 col-lg-4">
-        <label for="id_reporto_area"><i class="fas fa-street-view iconos-crear"></i>Área</label>
+    <div class="form-group col-sm-12 col-md-4 col-lg-4 anima-focus">
         <div class="form-control" id="reporto_area"></div>
+        {!! Form::label('id_reporto_area', 'Área*', ['class' => 'asterisco']) !!}
     </div>
 
 
@@ -100,8 +99,7 @@
     </div>
 
 
-    <div class="form-group col-sm-12 col-md-4 col-lg-4">
-        <label class="required" for="id_registro"><i class="fas fa-user-tie iconos-crear"></i>Nombre</label>
+    <div class="form-group col-sm-12 col-md-4 col-lg-4 anima-focus">
         <select class="form-control  {{ $errors->has('id_registro') ? 'is-invalid' : '' }}" name="id_registro"
             id="id_registro" required>
             <option selected value="" disabled>-- Selecciona un empleado --</option>
@@ -114,6 +112,7 @@
 
             @endforeach
         </select>
+        {!! Form::label('id_reporto_area', 'Nombre*', ['class' => 'asterisco']) !!}
         @if ($errors->has('id_registro'))
             <div class="invalid-feedback">
                 {{ $errors->first('id_registro') }}
@@ -122,24 +121,21 @@
     </div>
 
 
-    <div class="form-group col-md-4">
-        <label for="id_registro_puesto"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
+    <div class="form-group col-md-4 anima-focus">
         <div class="form-control" id="registro_puesto"></div>
+        {!! Form::label('id_registro_puesto', 'Puesto*', ['class' => 'asterisco']) !!}
 
     </div>
 
 
-    <div class="form-group col-sm-12 col-md-4 col-lg-4">
-        <label for="id_registro_area"><i class="fas fa-street-view iconos-crear"></i>Área</label>
+    <div class="form-group col-sm-12 col-md-4 col-lg-4 anima-focus">
         <div class="form-control" id="registro_area"></div>
+        {!! Form::label('registro_area', 'Área*', ['class' => 'asterisco']) !!}
 
     </div>
 
 
-    <div class="form-group col-12">
-        <label class="required"><i
-                class="fas fa-project-diagram iconos-crear"></i>{{ trans('cruds.accionCorrectiva.fields.causaorigen') }}
-        </label>
+    <div class="form-group col-12 anima-focus">
         <select class="form-control {{ $errors->has('causaorigen') ? 'is-invalid' : '' }}" name="causaorigen"
             id="causaorigen" required>
             <option></option>
@@ -150,6 +146,7 @@
                     {{ old('causaorigen', '') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
             @endforeach
         </select>
+        {!! Form::label('causaorigen', 'Causas de origen*', ['class' => 'asterisco']) !!}
         @if ($errors->has('causaorigen'))
             <div class="invalid-feedback">
                 {{ $errors->first('causaorigen') }}
@@ -158,12 +155,10 @@
         <span class="help-block">{{ trans('cruds.accionCorrectiva.fields.causaorigen_helper') }}</span>
     </div>
 
-    <div class="form-group col-12">
-        <label class="required" for="descripcion"><i
-                class="far fa-file-alt iconos-crear"></i>{{ trans('cruds.accionCorrectiva.fields.descripcion') }}
-        </label>
+    <div class="form-group col-12 anima-focus">
         <textarea required class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" name="descripcion"
             id="descripcion">{{ old('descripcion') }}</textarea>
+            {!! Form::label('descripcion', 'Descripción*', ['class' => 'asterisco']) !!}
         @if ($errors->has('descripcion'))
             <div class="invalid-feedback">
                 {{ $errors->first('descripcion') }}

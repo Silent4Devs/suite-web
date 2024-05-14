@@ -1,0 +1,89 @@
+name: DevSecOps and Docker build
+on:
+  push:
+    branches:
+      - develop
+  pull_request:
+    branches:
+      - develop
+      - "feature/*"
+      - "hotfix/*"
+      - "release/*"
+      - "fix/*"
+      - "refactor/*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+
+    services:
+      docker:
+        image: docker:stable-dind
+        options: --privileged
+        ports:
+          - 2375:2375
+        volumes:
+          - /var/lib/docker:/var/lib/docker
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            /usr/local/bin/docker-compose
+            # Add other paths for caching dependencies if needed
+          key: dependencies-${{ runner.os }}-${{ hashFiles('**/docker-compose.yml') }}
+          restore-keys: |
+            dependencies-${{ runner.os }}-
+
+      - name: Install Docker Compose
+        if: steps.cache.outputs.cache-hit != 'true' # Install only if cache is not found
+        run: |
+          sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          sudo chmod +x /usr/local/bin/docker-compose
+
+      - name: Build and start services
+        run: |
+          cp .env.example .env
+          docker-compose up -d --build
+
+    # - name: Cache OWASP ZAP
+    #   uses: actions/cache@v2
+    #   with:
+    #     path: /root/.ZAP/
+    #     key: zap-cache-${{ runner.os }}-${{ hashFiles('**/gen.conf') }}
+    #     restore-keys: |
+    #       zap-cache-${{ runner.os }}-
+
+    # - name: Run security checks
+    #   run: |
+    #     docker run --rm -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable zap-baseline.py -t https://tabantaj.silent4business.com -g gen.conf -r report.html
+
+    # - name: Run OWASP Dependency-Check
+    #   uses: docker://owasp/dependency-check:latest
+    #   with:
+    #     entrypoint: /usr/share/dependency-check/bin/dependency-check.sh
+    #     args: --scan /
+
+    # - name: Run ESLint
+    #   run: |
+    #     docker-compose exec app npm run lint
+
+    # - name: Run Clair Container Scan
+    #   run: |
+    #     docker run --rm -v /var/run/docker.sock:/var/run/docker.sock arminc/clair-scanner --ip $(hostname -I | awk '{print $1}') my-laravel-app:latest
+
+    # - name: Run Snyk
+    #   run: |
+    #     docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -e SNYK_TOKEN=$SNYK_TOKEN snyk/snyk test --all-projects
+
+    # - name: Run OWASP ZAP
+    #   run: |
+    #     docker run --rm -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable zap-baseline.py -t https://tabantaj.silent4business.com -g gen.conf -r report.html

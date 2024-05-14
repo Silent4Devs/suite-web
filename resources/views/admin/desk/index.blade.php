@@ -19,11 +19,6 @@
             background-color: rgba(0, 0, 0, 0);
         }
 
-        .table {
-            width: 100% !important;
-        }
-
-
         table i {
             font-size: 15pt;
             margin-right: 7px;
@@ -64,13 +59,12 @@
         .caja_secciones section {
             overflow: unset !important;
         }
-
     </style>
 
 
     {{-- {{ Breadcrumbs::render('centro-atencion') }} --}}
     <h5 class="col-12 titulo_general_funcion">Centro de Atención</h5>
-    <div id="desk" class="mt-5 card" style="">
+    <div id="desk" class="mt-5 card" style="border: none;">
 
         @include('partials.flashMessages')
         <div class="caja_botones_secciones">
@@ -92,9 +86,9 @@
                     </a>
                 @endcan
                 @can('centro_atencion_quejas_clientes_acceder')
-                <a href="#" data-tabs="quejasClientes">
-                    <i class="fas fa-thumbs-down"></i> Quejas Clientes
-                </a>
+                    <a href="#" data-tabs="quejasClientes">
+                        <i class="fas fa-thumbs-down"></i> Quejas Clientes
+                    </a>
                 @endcan
                 @can('centro_atencion_denuncias_acceder')
                     <a href="#" data-tabs="denuncias">
@@ -138,119 +132,6 @@
                     <section id="sugerencias">
                         @include('admin.desk.sugerencias.sugerencias')
                     </section>
-
-
-                    {{-- <div class="text-center">
-                        @can('incidentes_seguridad_access')
-                            <section id="incidentes">
-                                @include('admin.desk.seguridad.seguridad')
-                            </section>
-                        @else
-                            <div class="mt-5 row" style="top:0;">
-                                <div class="mb-3 col-12">
-                                    <img src="{{ asset('img/not_access.svg') }}" width="400" />
-                                </div>
-                                <div class="col-12">
-                                    <strong style="font-size:12pt">
-                                        <i class="mr-1 fas fa-info-circle"></i>
-                                        No puedes acceder al módulo de Incidentes de Seguridad, solicita al administrador que te
-                                        otorge dichos permisos
-                                    </strong>
-                                </div>
-                            </div>
-                        @endcan
-                        @can('riesgos_access')
-                            <section id="riesgos" class="caja_tab_reveldada">
-                                @include('admin.desk.riesgos.riesgos')
-                            </section>
-                        @else
-                            <div class="mt-5 row" style="margin-left: -10px">
-                                <div class="mb-3 col-12">
-                                    <img src="{{ asset('img/not_access.svg') }}" width="400 " />
-                                </div>
-                                <div class="col-12">
-                                    <strong style="font-size:12pt">
-                                        <i class="mr-1 fas fa-info-circle"></i>
-                                        No puedes acceder al módulo de Riesgos, solicita al administrador que te
-                                        otorge dichos permisos
-                                    </strong>
-                                </div>
-                            </div>
-                        @endcan
-                        @can('quejas_access')
-                            <section id="quejas">
-                                @include('admin.desk.quejas.quejas')
-                            </section>
-                        @else
-                            <div class="mt-5 row" style="margin-left: -10px">
-                                <div class="mb-3 col-12">
-                                    <img src="{{ asset('img/not_access.svg') }}" width="400 " />
-                                </div>
-                                <div class="col-12">
-                                    <strong style="font-size:12pt">
-                                        <i class="mr-1 fas fa-info-circle"></i>
-                                        No puedes acceder al módulo de Quejas, solicita al administrador que te
-                                        otorge dichos permisos
-                                    </strong>
-                                </div>
-                            </div>
-                        @endcan
-                        @can('denuncias_access')
-                            <section id="denuncias">
-                                @include('admin.desk.denuncias.denuncias')
-                            </section>
-                        @else
-                            <div class="mt-5 row" style="margin-left: -10px">
-                                <div class="mb-3 col-12">
-                                    <img src="{{ asset('img/not_access.svg') }}" width="400 " />
-                                </div>
-                                <div class="col-12">
-                                    <strong style="font-size:12pt">
-                                        <i class="mr-1 fas fa-info-circle"></i>
-                                        No puedes acceder al módulo de Denuncias, solicita al administrador que te
-                                        otorge dichos permisos
-                                    </strong>
-                                </div>
-                            </div>
-                        @endcan
-                        @can('mejoras_access')
-                            <section id="mejoras">
-                                @include('admin.desk.mejoras.mejoras')
-                            </section>
-                        @else
-                            <div class="mt-5 row" style="margin-left: -10px">
-                                <div class="mb-3 col-12">
-                                    <img src="{{ asset('img/not_access.svg') }}" width="400 " />
-                                </div>
-                                <div class="col-12">
-                                    <strong style="font-size:12pt">
-                                        <i class="mr-1 fas fa-info-circle"></i>
-                                        No puedes acceder al módulo de Mejoras, solicita al administrador que te
-                                        otorge dichos permisos
-                                    </strong>
-                                </div>
-                            </div>
-                        @endcan
-                        @can('sugerencias_access')
-                            <section id="sugerencias">
-                                @include('admin.desk.sugerencias.sugerencias')
-                            </section>
-                        @else
-                            <div class="mt-5 row" style="margin-left: -10px">
-                                <div class="mb-3 col-12">
-                                    <img src="{{ asset('img/not_access.svg') }}" width="400 " />
-                                </div>
-                                <div class="col-12">
-                                    <strong style="font-size:12pt">
-                                        <i class="mr-1 fas fa-info-circle"></i>
-                                        No puedes acceder al módulo de Sugerencias, solicita al administrador que te
-                                        otorge dichos permisos
-                                    </strong>
-                                </div>
-                            </div>
-                        @endcan
-                    </div> --}}
-
                 </div>
 
             </div>
@@ -306,8 +187,8 @@
             }
             document.querySelector('.caja_botones_menu').addEventListener('click', function(e) {
                 let elemento = e.target;
-                if(elemento.tagName == 'I'){
-                elemento=elemento.closest('a');
+                if (elemento.tagName == 'I') {
+                    elemento = elemento.closest('a');
                 }
                 if (elemento.getAttribute('data-tabs')) {
                     localStorage.setItem('menu-desk', elemento.getAttribute('data-tabs'))

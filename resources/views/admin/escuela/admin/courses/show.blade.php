@@ -3,7 +3,8 @@
         <div class="container grid grid-cols-2 gap-6 lg:grid-cols-2 ">
             <figure>
                 @isset($course->image->url)
-                    <img class="object-cover object-center w-full h-64" src="{{ Storage::url($course->image->url) }}"
+                    
+                    <img class="object-cover object-center w-full h-64" src="{{ asset($course->image->url) }}"
                         id="picture" alt="">
                 @else
                     <img class="object-cover w-full h-36" src="{{ asset('img/home/imagen-estudiantes.jpg') }}" id="picture"

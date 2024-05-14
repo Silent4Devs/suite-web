@@ -7,7 +7,8 @@
                 {{ $puesto->puesto }}</option>
         @endforeach
     </select> --}}
-    <select class="form-control {{ $errors->has('puesto_id') ? 'is-invalid' : '' }}" name="puesto_id" id="puesto_id">
+    <select class="form-control {{ $errors->has('puesto_id') ? 'is-invalid' : '' }}" name="puesto_id" id="puesto_id"
+        required>
         <option value="" selected disabled>
             -- Selecciona un puesto --
         </option>

@@ -148,7 +148,7 @@ class PlanAuditoriaActividadesComponent extends Component
 
     public function render()
     {
-        $empleados = Empleado::alta()->with('area')->get();
+        $empleados = Empleado::getAltaEmpleadosWithArea();
 
         return view('livewire.plan-auditoria-actividades-component', compact('empleados'));
     }

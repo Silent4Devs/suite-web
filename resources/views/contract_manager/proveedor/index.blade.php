@@ -5,11 +5,11 @@
 
 
 @include('layouts.datatables_css')
-<link rel="stylesheet" type="text/css" href="{{ asset('css/botones.css') }}">
-<link rel="stylesheet" type="text/css" href="{{ asset('css/iconos.css') }}">
-<link rel="stylesheet" type="text/css" href="{{ asset('css/titulos.css') }}">
-<link rel="stylesheet" type="text/css" href="{{ asset('css/letra.css') }}">
-<link rel="stylesheet" type="text/css" href="{{ asset('css/formularios/organizacion.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('css/botones.css') }}{{config('app.cssVersion')}}">
+<link rel="stylesheet" type="text/css" href="{{ asset('css/iconos.css') }}{{config('app.cssVersion')}}">
+<link rel="stylesheet" type="text/css" href="{{ asset('css/titulos.css') }}{{config('app.cssVersion')}}">
+<link rel="stylesheet" type="text/css" href="{{ asset('css/letra.css') }}{{config('app.cssVersion')}}">
+<link rel="stylesheet" type="text/css" href="{{ asset('css/formularios/organizacion.css') }}{{config('app.cssVersion')}}">
 <style>
     div.dt-button-collection {
         max-height: 60vh;

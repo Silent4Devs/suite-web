@@ -2,6 +2,7 @@
 
 namespace App\Models\ContractManager;
 
+use App\Traits\ClearsResponseCache;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Auditable as AuditableTrait;
@@ -25,7 +26,7 @@ use OwenIt\Auditing\Contracts\Auditable;
  */
 class AmpliacionContrato extends Model implements Auditable
 {
-    use AuditableTrait;
+    use AuditableTrait, ClearsResponseCache;
 
     protected $table = 'ampliacion_contratos';
 

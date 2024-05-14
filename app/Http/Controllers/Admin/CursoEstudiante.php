@@ -3,11 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Escuela\Category;
 use App\Models\Escuela\Course;
 use App\Models\Escuela\CourseUser;
 use App\Models\Escuela\Evaluation;
-use App\Models\Escuela\Level;
 use App\Models\Escuela\UsuariosCursos;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -15,6 +13,7 @@ use Illuminate\Http\Request;
 class CursoEstudiante extends Controller
 {
     public $category_id;
+
     public $level_id;
 
     /**
@@ -27,27 +26,47 @@ class CursoEstudiante extends Controller
 
     public function misCursos()
     {
+        $usuario = User::getCurrentUser();
         $cursos_usuario = UsuariosCursos::with('cursos')->where('user_id', User::getCurrentUser()->id)->get();
-        // dd($cursos_usuario);
-        // $cursos = Course::get();
-        // $categories = Category::all();
-        // $levels = Level::all();
-        // $courses = Course::where('status', 3)
-        //     ->category($this->category_id)
-        //     ->level($this->level_id)
-        //     ->latest('id')->paginate(8);
-        // dd($categories, $levels, $courses);
+        //calculo el porcentaje del curso completado
+        foreach ($cursos_usuario as $cu) {
+            $i = 0;
+            $courses_lessons = $cu->cursos->lessons;
+            foreach ($courses_lessons as $cl) {
+                if ($cl->completed) {
+                    $i++;
+                }
+            }
+            $advance = ($i * 100) / ($courses_lessons->count());
+            $advance = round($advance, 2);
+            //agrego el porcentaje del curso a una propiedad
+            $cu->advance = $advance;
+        }
+        //last course
+        $lastCourse = $cursos_usuario->sortBy('last_review')->last();
+        //last three course
+        $lastThreeCourse = $cursos_usuario->sortByDesc('last_review')->take(3);
 
-        return view('admin.escuela.estudiante.mis-cursos', compact('cursos_usuario'));
+        return view('admin.escuela.estudiante.mis-cursos', compact('cursos_usuario', 'usuario', 'lastThreeCourse', 'lastCourse'));
     }
 
     public function cursoEstudiante($curso_id)
     {
-        $curso = Course::where('id', $curso_id)->first();
-        // dd($curso_id, $curso);
-        $evaluacionesLeccion = Evaluation::where('course_id', $curso_id)->get();
+        try {
+            $evaluacionesLeccion = Evaluation::where('course_id', $curso_id)->get();
 
-        return view('admin.escuela.estudiante.curso-estudiante', compact('curso', 'evaluacionesLeccion'));
+            $curso = Course::where('id', $curso_id)->first();
+
+            if (! $curso) {
+                abort(404);
+            }
+
+            $evaluacionesLeccion = Evaluation::where('course_id', $curso_id)->get();
+
+            return view('admin.escuela.estudiante.curso-estudiante', compact('curso', 'evaluacionesLeccion'));
+        } catch (\Throwable $th) {
+            abort(404);
+        }
     }
 
     public function evaluacionEstudiante($curso_id, $evaluacion_id)
@@ -95,6 +114,18 @@ class CursoEstudiante extends Controller
 
         $token = CourseUser::where('course_id', $course->id)->where('user_id', User::getCurrentUser()->id)->exists();
 
+        $lesson_introduction = $course->lessons->first();
+        // dump($courses_lessons->first());
+        if (! is_null($lesson_introduction)) {
+            if (is_null($lesson_introduction['iframe'])) {
+                $course->lesson_introduction = null;
+            } else {
+                $course->lesson_introduction = $lesson_introduction['iframe'];
+            }
+        } else {
+            $course->lesson_introduction = null;
+        }
+
         return view('admin.escuela.estudiante.show', compact('course', 'similares', 'token'));
     }
 
@@ -127,5 +158,32 @@ class CursoEstudiante extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function coursesInscribed()
+    {
+        $usuario = User::getCurrentUser();
+        $cursos_usuario = UsuariosCursos::with('cursos')->where('user_id', $usuario->id)->get();
+
+        //calculo el porcentaje del curso completado
+        foreach ($cursos_usuario as $cu) {
+            $i = 0;
+            $courses_lessons = $cu->cursos->lessons;
+            foreach ($courses_lessons as $cl) {
+                if ($cl->completed) {
+                    $i++;
+                }
+            }
+            $advance = ($i * 100) / ($courses_lessons->count());
+            $advance = round($advance, 2);
+
+            //agrego el porcentaje del curso a una propiedad
+            $cu->advance = $advance;
+        }
+
+        //last course
+        $lastCourse = $cursos_usuario->sortBy('last_review')->last();
+
+        return view('admin.escuela.estudiante.courses-inscribed', compact('usuario', 'cursos_usuario', 'lastCourse'));
     }
 }

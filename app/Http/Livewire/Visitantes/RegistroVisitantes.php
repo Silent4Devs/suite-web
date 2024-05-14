@@ -8,6 +8,7 @@ use App\Models\Empleado;
 use App\Models\Visitantes\RegistrarVisitante;
 use App\Models\Visitantes\ResponsableVisitantes;
 use App\Models\Visitantes\VisitantesDispositivo;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
@@ -90,13 +91,15 @@ class RegistroVisitantes extends Component
                 'serie' => '',
             ]]),
         ]);
-
-        $this->empleados = Empleado::alta()->orderBy('name')->get();
-        $this->areas = Area::orderBy('area')->get();
     }
 
     public function render()
     {
+
+        $this->empleados = DB::table('empleados')->select('id', 'name', 'foto')->get();
+
+        $this->areas = Area::getIdNameAll();
+
         return view('livewire.visitantes.registro-visitantes');
     }
 
@@ -141,8 +144,8 @@ class RegistroVisitantes extends Component
         $this->showStepByCurrent();
         $this->emit('increaseStepVisitantes', $this->currentStep);
         if ($this->currentStep == 4) {
-            $this->castEmpleado = Empleado::find($this->empleado_id);
-            $this->castArea = Area::find($this->area_id);
+            $this->castEmpleado = Empleado::getAll()->find($this->empleado_id);
+            $this->castArea = Area::getAll()->find($this->area_id);
         }
         if ($this->currentStep > $this->totalSteps) {
             $this->emit('finalizarRegistroVisitante');
@@ -284,7 +287,7 @@ class RegistroVisitantes extends Component
             $this->registrarDispositivos();
         }
         $this->enviarCorreoDeConfirmacion($this->correo, $this->registrarVisitante);
-        $this->alert('success', 'Bien Hecho ' . $this->nombre . ', te has registrado correctamente', [
+        $this->alert('success', 'Bien Hecho '.$this->nombre.', te has registrado correctamente', [
             'position' => 'top-end',
             'timer' => 3000,
             'toast' => true,
@@ -295,7 +298,7 @@ class RegistroVisitantes extends Component
 
     public function enviarCorreoDeConfirmacion($correo, $visitante)
     {
-        Mail::to(removeUnicodeCharacters($correo))->send(new NotificarIngresoVisitante($visitante));
+        Mail::to(removeUnicodeCharacters($correo))->queue(new NotificarIngresoVisitante($visitante));
     }
 
     public function registrarDispositivos()
@@ -318,12 +321,12 @@ class RegistroVisitantes extends Component
     public function imprimirCredencialImage($dataImage)
     {
         $pdf = \PDF::loadView('visitantes.credencial.index', ['credencial' => $dataImage])->output();
-        $fileName = 'Credencial de ' . $this->registrarVisitante->nombre . ' ' . $this->registrarVisitante->apellidos . '.pdf';
+        $fileName = 'Credencial de '.$this->registrarVisitante->nombre.' '.$this->registrarVisitante->apellidos.'.pdf';
 
         return response()->streamDownload(
             function () use ($pdf) {
                 echo $pdf;
-                $this->alert('success', 'Bien Hecho ' . $this->nombre . ', se ha imprimido correctamente la credencial', [
+                $this->alert('success', 'Bien Hecho '.$this->nombre.', se ha imprimido correctamente la credencial', [
                     'position' => 'top-end',
                     'timer' => 1000,
                     'toast' => true,
@@ -333,7 +336,7 @@ class RegistroVisitantes extends Component
             $fileName,
             [
                 'Content-Type' => 'application/pdf',
-                'Content-Disposition' => 'attachment; filename="' . $fileName . '"',
+                'Content-Disposition' => 'attachment; filename="'.$fileName.'"',
             ]
         );
     }

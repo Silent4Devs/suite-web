@@ -11,6 +11,7 @@ class FormatearFecha
      *
      * @param formatoInicial string example 'd-m-Y'
      * @param formatoRequerido string example 'Y-m-d'
+     *
      * @other format example Y-m-d H:i:s.u
      *
      * @return Fecha con nuevo formato
@@ -21,7 +22,7 @@ class FormatearFecha
             // $fecha = Carbon::parse($fecha)->format('d-m-Y');
             // dd($formatoInicial, $fecha);
             $formF = Carbon::createFromFormat($formatoInicial, $fecha)
-            ->format($formatoRequerido);
+                ->format($formatoRequerido);
 
             return $formF;
         } catch (Throwable $e) {

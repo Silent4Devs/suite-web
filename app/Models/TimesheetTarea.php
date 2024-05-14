@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\ClearsResponseCache;
 use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -10,9 +11,9 @@ use OwenIt\Auditing\Contracts\Auditable;
 
 class TimesheetTarea extends Model implements Auditable
 {
-    use HasFactory;
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
     use Filterable;
-    use \OwenIt\Auditing\Auditable;
+    use HasFactory;
 
     protected $table = 'timesheet_tareas';
 
@@ -28,8 +29,15 @@ class TimesheetTarea extends Model implements Auditable
     //Redis methods
     public static function getAll()
     {
-        return Cache::remember('timesheettarea_all', 3600 * 24, function () {
+        return Cache::remember('TimesheetTarea:timesheettarea_all', 3600 * 4, function () {
             return self::orderByDesc('id')->get();
+        });
+    }
+
+    public static function getIdTareasAll()
+    {
+        return Cache::remember('TimesheetTarea:getIdTareasAll', 3600 * 4, function () {
+            return self::select('id', 'tarea', 'proyecto_id', 'area_id', 'todos')->orderByDesc('id')->get();
         });
     }
 
@@ -41,12 +49,19 @@ class TimesheetTarea extends Model implements Auditable
     public function getAreasAttribute()
     {
         $areas = [];
-        if ($this->todos == true) {
-            foreach ($this->proyecto->areas as $key => $area) {
-                array_push($areas, $area);
+
+        // Verificar si $this->proyecto no es nulo
+        if ($this->proyecto !== null) {
+            // Verificar si $this->todos es true y si $this->proyecto->areas es un array
+            if ($this->todos && is_array($this->proyecto->areas)) {
+                foreach ($this->proyecto->areas as $key => $area) {
+                    array_push($areas, $area);
+                }
+            } else {
+                // Si $this->todos no es true o $this->proyecto->areas no es un array,
+                // agregar el área encontrada por su ID
+                $areas = [Area::find($this->area_id)];
             }
-        } else {
-            $areas = [Area::find($this->area_id)];
         }
 
         return $areas;

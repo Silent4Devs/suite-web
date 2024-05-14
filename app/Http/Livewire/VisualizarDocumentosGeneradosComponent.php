@@ -17,8 +17,8 @@ class VisualizarDocumentosGeneradosComponent extends Component
     {
         $ISO27001_SoA_PATH = 'storage/Normas/ISO27001/';
         $path = public_path($ISO27001_SoA_PATH);
-        $lista_archivos_declaracion_pdf = glob($path . $this->nombre_documento . '*.pdf');
-        $lista_archivos_declaracion_docx = glob($path . $this->nombre_documento . '*.docx');
+        $lista_archivos_declaracion_pdf = glob($path.$this->nombre_documento.'*.pdf');
+        $lista_archivos_declaracion_docx = glob($path.$this->nombre_documento.'*.docx');
 
         return view('livewire.visualizar-documentos-generados-component', compact('lista_archivos_declaracion_pdf', 'lista_archivos_declaracion_docx', 'ISO27001_SoA_PATH'));
     }

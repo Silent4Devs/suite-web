@@ -2,14 +2,16 @@
 
 namespace App\Models;
 
+use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class EnvioDocumentosAjustes extends Model implements Auditable
 {
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
     use HasFactory;
-    use \OwenIt\Auditing\Auditable;
 
     public $table = 'envio_documentos_ajustes';
 
@@ -21,6 +23,14 @@ class EnvioDocumentosAjustes extends Model implements Auditable
         'deleted_at',
         'team_id',
     ];
+
+    //Redis methods
+    public static function getFirstWithCoordinadorMensajero()
+    {
+        return Cache::remember('EnvioDocumentosAjustes:EnviodocumentosAjustes_with_coordinador_mensajero', 3600 * 7, function () {
+            return self::with(['coordinador', 'mensajero'])->first();
+        });
+    }
 
     public function coordinador()
     {

@@ -3,6 +3,23 @@
 
     {{ Breadcrumbs::render('admin.material-sgsis.create') }}
 
+    <h5 class="col-12 titulo_general_funcion">Material SGSI</h5>
+        <div class="card card-body" style="background-color: #5397D5; color: #fff;">
+            <div class="d-flex" style="gap: 25px;">
+                <img src="{{ asset('assets/Imagen 2@2x.png') }}" alt="jpg" style="width:200px;" class="mt-2 mb-2 ml-2 img-fluid">
+                <div>
+                    <br>
+                    <br>
+                    <h4>¿Qué es Material SGSI?   </h4>
+                    <p>
+                        Recursos educativos diseñados para enseñar.
+                    </p>
+                    <p>
+                        A los colaboradores sobre las prácticas y requisitos de seguridad de la información establecidos por la norma.
+                    </p>
+                </div>
+            </div>
+        </div>
 
 <div class="card">
     <div class="card-header">

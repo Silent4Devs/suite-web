@@ -20,16 +20,15 @@
             </div>
         </div>
     </div>
-    <div class=" form-group col-lg-2 col-md-2 col-sm-12">
-        <label class="form-label"><i class="fas fa-ticket-alt iconos-crear"></i>Folio</label>
+    <div class=" form-group col-lg-2 col-md-2 col-sm-12 anima-focus">
         <div class="form-control mt-2" readonly>{{ $accionCorrectiva->folio }}</div>
+        {!! Form::label('tema', 'Folio*', ['class' => 'asterisco']) !!}
     </div>
 
-    <div class="form-group col-md-6 col-lg-6 col-sm-12">
-        <label class="required" for="tema"><i class="fas fa-text-width iconos-crear"></i>Título corto de la acción correctiva
-        </label>
-        <input class="form-control mt-2 {{ $errors->has('tema') ? 'is-invalid' : '' }}" name="tema" id="tema"
+    <div class="form-group col-md-6 col-lg-6 col-sm-12 anima-focus">
+        <input class="form-control mt-2 {{ $errors->has('tema') ? 'is-invalid' : '' }}" placeholder="" name="tema" id="tema"
             maxlength="255" value="{{ old('tema', $accionCorrectiva->tema) }}" required>
+            {!! Form::label('tema', 'Título corto de la acción correctiva*', ['class' => 'asterisco']) !!}
         @if ($errors->has('tema'))
             <div class="invalid-feedback">
                 {{ $errors->first('tema') }}
@@ -41,8 +40,7 @@
 
 
     @if ($accionCorrectiva->es_externo)
-        <div class="form-group col-4">
-            <label class="form-label"><i class="fas fa-traffic-light iconos-crear"></i>Estatus</label>
+        <div class="form-group col-4 anima-focus">
             <select name="estatus" class="form-control select2" id="opciones" onchange='cambioOpciones();'>
                 <option {{ old('estatus', $accionCorrectiva->estatus) == 'Sin atender' ? 'selected' : '' }} value="Sin atender">
                     Sin atender
@@ -58,12 +56,12 @@
                 <option {{ old('estatus', $accionCorrectiva->estatus) == 'No procedente' ? 'selected' : '' }}
                     value="No procedente">No procedente</option>
             </select>
+            {!! Form::label('estatus', 'Estatus*', ['class' => 'asterisco']) !!}
         </div>
     @endif
 
     @if (!$accionCorrectiva->es_externo)
-        <div class="form-group col-4">
-            <label class="form-label"><i class="fas fa-traffic-light iconos-crear"></i>Estatus</label>
+        <div class="form-group col-4 anima-focus">
             <select required name="estatus" class="form-control select2" id="opciones" onchange='cambioOpciones();'>
                 <option {{ old('estatus', $accionCorrectiva->estatus) == 'Sin atender' ? 'selected' : '' }} value="Sin atender">
                     Sin atender
@@ -79,15 +77,15 @@
                 <option {{ old('estatus', $accionCorrectiva->estatus) == 'No procedente' ? 'selected' : '' }}
                     value="No procedente">Cancelado</option>
             </select>
+            {!! Form::label('estatus', 'Estatus*', ['class' => 'asterisco']) !!}
         </div>
     @endif
 
-    <div class="form-group col-sm-12 col-md-4 col-lg-4 ">
-        <label class="required" for="fecharegistro"><i class="far fa-calendar-alt iconos-crear"></i>Fecha y hora de
-            registro de la AC</label>
-        <input required class="form-control date {{ $errors->has('fecharegistro') ? 'is-invalid' : '' }}"
+    <div class="form-group col-sm-12 col-md-4 col-lg-4 anima-focus ">
+        <input placeholder="" required class="form-control date {{ $errors->has('fecharegistro') ? 'is-invalid' : '' }}"
             type="datetime-local" min="1945-01-01T00:00" disabled name="fecharegistro" id="fecharegistro"
             value="{{ old('fecharegistro', \Carbon\Carbon::parse($accionCorrectiva->fecharegistro)->format('Y-m-d\TH:i')) }}">
+            {!! Form::label('fecharegistro', 'Fecha y hora de registro de la AC*', ['class' => 'asterisco']) !!}
         @if ($errors->has('fecharegistro'))
             <div class="invalid-feedback">
                 {{ $errors->first('fecharegistro') }}
@@ -96,12 +94,11 @@
     </div>
 
 
-    <div class="form-group col-sm-12 col-md-4 col-lg-4">
-        <label for="fecha_verificacion"> <i class="far fa-calendar-alt iconos-crear"></i> Fecha y hora de recepción de
-            la AC</label>
-        <input class="form-control date {{ $errors->has('fecha_verificacion') ? 'is-invalid' : '' }}"
+    <div class="form-group col-sm-12 col-md-4 col-lg-4 anima-focus">
+        <input placeholder="" class="form-control date {{ $errors->has('fecha_verificacion') ? 'is-invalid' : '' }}"
             type="datetime-local" name="fecha_verificacion" id="fecha_verificacion"
             value="{{ old('fecha_verificacion', \Carbon\Carbon::parse($accionCorrectiva->fecha_verificacion)->format('Y-m-d\TH:i')) }}">
+            {!! Form::label('fecha_verificacion', 'Fecha y hora de registro de la VE*', ['class' => 'asterisco']) !!}
         @if ($errors->has('fecha_verificacion'))
             <div class="invalid-feedback">
                 {{ $errors->first('fecha_verificacion') }}
@@ -109,12 +106,10 @@
         @endif
     </div>
 
-    <div class="form-group col-4">
-        <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha y
-            hora
-            de cierre del ticket</label>
+    <div class="form-group col-4 anima-focus">
         <input class="form-control" name="fecha_cierre" readonly value="{{ $accionCorrectiva->fecha_cierre }}"
             id="solucion" type="datetime">
+            {!! Form::label('fecha_cierre', 'Fecha y hora de cierre del ticket*', ['class' => 'asterisco']) !!}
     </div>
 
 
@@ -125,8 +120,7 @@
             <b>Reportó Acción Correctiva:</b>
         </div>
 
-        <div class="form-group col-sm-12 col-md-4 col-lg-4">
-            <label class="required" for="id_reporto"><i class="fas fa-user-tie iconos-crear"></i>Nombre</label>
+        <div class="form-group col-sm-12 col-md-4 col-lg-4 anima-focus">
             <select class="form-control {{ $errors->has('id_reporto') ? 'is-invalid' : '' }}" name="id_reporto"
                 id="id_reporto" required>
                 @foreach ($empleados as $id => $empleado)
@@ -138,6 +132,7 @@
                     </option>
                 @endforeach
             </select>
+            {!! Form::label('id_reporto', 'Nombre*', ['class' => 'asterisco']) !!}
             @if ($errors->has('id_reporto'))
                 <div class="invalid-feedback">
                     {{ $errors->first('id_reporto') }}
@@ -145,15 +140,15 @@
             @endif
         </div>
 
-        <div class="form-group col-md-4">
-            <label for="id_reporto_puesto"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
+        <div class="form-group col-md-4 anima-focus">
             <div class="form-control" id="reporto_puesto"></div>
+            {!! Form::label('id_reporto_puesto', 'Puesto*', ['class' => 'asterisco']) !!}
         </div>
 
 
-        <div class="form-group col-sm-12 col-md-4 col-lg-4">
-            <label for="id_reporto_area"><i class="fas fa-street-view iconos-crear"></i>Área</label>
+        <div class="form-group col-sm-12 col-md-4 col-lg-4 anima-focus">
             <div class="form-control" id="reporto_area"></div>
+            {!! Form::label('reporto_area', 'Área*', ['class' => 'asterisco']) !!}
         </div>
 
     @endif

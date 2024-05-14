@@ -4,8 +4,8 @@ namespace App\Http\Controllers\ContractManager;
 
 use App\Http\Controllers\Controller;
 use App\Models\ContractManager\Contrato;
-use App\Models\Factura;
-use App\Models\FacturaFile;
+use App\Models\ContractManager\Factura;
+use App\Models\ContractManager\FacturaFile;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -36,7 +36,6 @@ class FacturaController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -81,7 +80,6 @@ class FacturaController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Factura  $factura
      * @return \Illuminate\Http\Response
      */
     public function show(Factura $factura)
@@ -92,7 +90,6 @@ class FacturaController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Factura  $factura
      * @return \Illuminate\Http\Response
      */
     public function edit(Factura $factura)
@@ -103,8 +100,6 @@ class FacturaController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Factura  $factura
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Factura $factura)
@@ -115,7 +110,6 @@ class FacturaController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Factura  $factura
      * @return \Illuminate\Http\Response
      */
     public function destroy(Factura $factura)
@@ -125,12 +119,20 @@ class FacturaController extends Controller
 
     public function ContratoInsert($id)
     {
-        abort_if(Gate::denies('katbol_contratos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        // dd($id);
-        $contrato = Contrato::find($id);
+        try {
+            abort_if(Gate::denies('katbol_contratos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.facturas.index')
-            ->with('ids', $id)
-            ->with('contratos', $contrato);
+            $contrato = Contrato::find($id);
+
+            if (! $contrato) {
+                abort(404);
+            }
+
+            return view('admin.facturas.index')
+                ->with('ids', $id)
+                ->with('contratos', $contrato);
+        } catch (\Throwable $th) {
+            abort(404);
+        }
     }
 }

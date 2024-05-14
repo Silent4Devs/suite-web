@@ -13,9 +13,12 @@ class CoursesStudents extends Component
 {
     use LivewireAlert;
     use WithPagination;
+
     public $course;
+
     public $search;
-    public $listeners = ['UserStore'=>'render'];
+
+    public $listeners = ['UserStore' => 'render'];
 
     public function mount(Course $course)
     {
@@ -24,7 +27,8 @@ class CoursesStudents extends Component
 
     public function render()
     {
-        $students = $this->course->students()->where('name', 'LIKE', "%{$this->search}%")->paginate(10);
+        $students = $this->course->students()->where('name', 'LIKE', "%{$this->search}%")->get();
+        // dd($students);
 
         return view('livewire.escuela.instructor.courses-students', compact('students'))->with('course', $this->course);
     }

@@ -16,15 +16,18 @@ class SolicitudPermisoGoceSueldo extends Mailable
 
     public $solicitud;
 
-    public function __construct($solicitante, $supervisor, $solicitud)
+    public $copias;
+
+    public function __construct($solicitante, $supervisor, $solicitud, $copias = [])
     {
         $this->solicitante = $solicitante;
         $this->supervisor = $supervisor;
         $this->solicitud = $solicitud;
+        $this->copias = $copias;
     }
 
     public function build()
     {
-        return $this->view('mails.PermisoGoceSueldo.solicitud')->subject('Solicitud de Permiso de: ' . $this->solicitante->name)->cc('gestiondetalento@silent4business.com');
+        return $this->view('mails.PermisoGoceSueldo.solicitud')->subject('Solicitud de Permiso de: '.$this->solicitante->name)->cc($this->copias);
     }
 }

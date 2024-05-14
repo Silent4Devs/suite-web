@@ -18,7 +18,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
-use Laracasts\Flash\Flash;
+use RealRashid\SweetAlert\Facades\Alert;
 use Yajra\DataTables\Facades\DataTables;
 
 class ProcesoController extends Controller
@@ -31,49 +31,50 @@ class ProcesoController extends Controller
     public function index(Request $request)
     {
         abort_if(Gate::denies('procesos_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        if ($request->ajax()) {
-            $query = Proceso::getAll();
-            $table = DataTables::of($query);
+        $query = Proceso::with('macroproceso')->get();
 
-            $table->addColumn('actions', '&nbsp;');
-            $table->addIndexColumn();
-            $table->editColumn('actions', function ($row) {
-                $viewGate = 'procesos_ver';
-                $editGate = 'procesos_editar';
-                $deleteGate = 'procesos_eliminar';
-                $crudRoutePart = 'procesos';
+        // dd($query);
+        // if ($request->ajax()) {
+        //     $query = Proceso::getAll();
+        //     $table = DataTables::of($query);
 
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
+        //     $table->addColumn('actions', '&nbsp;');
+        //     $table->addIndexColumn();
+        //     $table->editColumn('actions', function ($row) {
+        //         $viewGate = 'procesos_ver';
+        //         $editGate = 'procesos_editar';
+        //         $deleteGate = 'procesos_eliminar';
+        //         $crudRoutePart = 'procesos';
 
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->editColumn('codigo', function ($row) {
-                return $row->codigo ? $row->codigo : '';
-            });
-            $table->editColumn('nombre', function ($row) {
-                return $row->nombre ? $row->nombre : '';
-            });
-            $table->editColumn('macroproceso', function ($row) {
-                return $row->macroproceso->nombre ? $row->macroproceso->nombre : '';
-            });
-            $table->editColumn('descripcion', function ($row) {
-                return $row->descripcion ? $row->descripcion : '';
-            });
+        //         return view('partials.datatablesActions', compact(
+        //             'viewGate',
+        //             'editGate',
+        //             'deleteGate',
+        //             'crudRoutePart',
+        //             'row'
+        //         ));
+        //     });
 
-            // $table->rawColumns(['actions']);
+        //     $table->editColumn('id', function ($row) {
+        //         return $row->id ? $row->id : '';
+        //     });
+        //     $table->editColumn('codigo', function ($row) {
+        //         return $row->codigo ? $row->codigo : '';
+        //     });
+        //     $table->editColumn('nombre', function ($row) {
+        //         return $row->nombre ? $row->nombre : '';
+        //     });
+        //     $table->editColumn('macroproceso', function ($row) {
+        //         return $row->macroproceso->nombre ? $row->macroproceso->nombre : '';
+        //     });
+        //     $table->editColumn('descripcion', function ($row) {
+        //         return $row->descripcion ? $row->descripcion : '';
+        //     });
 
-            return $table->make(true);
-        }
+        //     return $table->make(true);
+        // }
 
-        return view('admin.procesos.index');
+        return view('admin.procesos.index', compact('query'));
     }
 
     /**
@@ -101,6 +102,7 @@ class ProcesoController extends Controller
             ],
         );
         Proceso::create($request->all());
+        Alert::success('éxito', 'Información añadida con éxito');
 
         return redirect()->route('admin.procesos.index');
     }
@@ -133,19 +135,26 @@ class ProcesoController extends Controller
             ],
         );
         $proceso->update($request->all());
-        Flash::success('<h5 class="text-center">Proceso actualizado satisfactoriamente</h5>');
+        Alert::success('éxito', 'Información añadida con éxito');
 
         return redirect()->route('admin.procesos.index');
     }
 
-    public function destroy($proceso)
+    public function destroy($id)
     {
-        abort_if(Gate::denies('procesos_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $proceso = Proceso::find($proceso);
-        $proceso->delete();
-        Flash::success('<h5 class="text-center">Proceso eliminado satisfactoriamente</h5>');
+        $proceso = Proceso::find($id);
 
-        return response()->json(['success' => true]);
+        if (! $proceso) {
+            return response()->json(['success' => false, 'message' => 'El proceso no existe.']);
+        }
+
+        try {
+            $proceso->delete();
+
+            return response()->json(['success' => true, 'message' => 'El proceso ha sido eliminado.']);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'No se pudo eliminar el proceso debido a relaciones existentes.']);
+        }
     }
 
     public function mapaProcesos()
@@ -155,7 +164,7 @@ class ProcesoController extends Controller
             $q->with('procesosWithDocumento');
         }])->orderBy('id')->get();
 
-        $macros_mapa = Macroproceso::get();
+        $macros_mapa = Macroproceso::getAll();
         $procesos_mapa = Proceso::getAll();
         $organizacion = Organizacion::getFirst();
         $exist_no_publicado = Proceso::select('estatus')->where('estatus', Proceso::NO_ACTIVO)->exists();

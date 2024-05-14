@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\ClearsResponseCache;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -21,8 +22,8 @@ use OwenIt\Auditing\Contracts\Auditable;
  */
 class Modelo extends Model implements Auditable
 {
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
     use SoftDeletes;
-    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'modelo';
 
@@ -45,7 +46,7 @@ class Modelo extends Model implements Auditable
 
     public static function getById($id)
     {
-        $cacheKey = 'Modelos_' . $id;
+        $cacheKey = 'Modelos_'.$id;
 
         return Cache::remember($cacheKey, 3600 * 24, function () use ($id) {
             return self::find($id);

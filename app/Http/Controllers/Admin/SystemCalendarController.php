@@ -17,6 +17,7 @@ use App\Models\PlanImplementacion;
 use App\Models\Recurso;
 use App\Models\User;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Gate;
 
 class SystemCalendarController extends Controller
@@ -61,20 +62,24 @@ class SystemCalendarController extends Controller
         }
         // $actividades = $actividades->flatten(1);
 
-        $plan_base = PlanBaseActividade::get();
+        $plan_base = PlanBaseActividade::getAll();
         $auditorias_anual = AuditoriaAnual::getAll();
         $auditoria_internas = AuditoriaInterna::get();
+        $audits = AuditoriaAnual::select('fechainicio', 'fechafin', 'nombre')->get();
         // dd($auditoria_internas);
 
         $recursos = collect();
         if ($usuario->empleado) {
-            $recursos = Recurso::whereHas('empleados', function ($query) use ($empleado) {
-                $query->where('empleados.id', $empleado->id);
-            })->get();
+            $cacheKeyRecursos = 'Recursos:recursos_'.$usuario->id;
+            $recursos = Cache::remember($cacheKeyRecursos, 3600 * 8, function () use ($empleado) {
+                return Recurso::whereHas('empleados', function ($query) use ($empleado) {
+                    $query->where('empleados.id', $empleado->id);
+                })->get();
+            });
         }
 
         $eventos = Calendario::getAll();
-        $oficiales = CalendarioOficial::get();
+        $oficiales = CalendarioOficial::getAll();
         $contratos = Contrato::select('nombre_servicio', 'fecha_inicio', 'fecha_fin')->get();
 
         $facturas = Factura::select('concepto', 'fecha_recepcion', 'fecha_liberacion')->get();

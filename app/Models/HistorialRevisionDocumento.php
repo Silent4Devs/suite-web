@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\ClearsResponseCache;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -10,9 +11,9 @@ use OwenIt\Auditing\Contracts\Auditable;
 
 class HistorialRevisionDocumento extends Model implements Auditable
 {
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
     use HasFactory;
     use SoftDeletes;
-    use \OwenIt\Auditing\Auditable;
 
     protected $fillable = [
         'documento_id',

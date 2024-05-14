@@ -14,7 +14,7 @@ use Livewire\WithPagination;
 
 class EvaluacionComponent extends Component
 {
-    use WithPagination, WithFileUploads, LivewireAlert;
+    use LivewireAlert, WithFileUploads, WithPagination;
 
     public $nivel_id;
 
@@ -41,8 +41,17 @@ class EvaluacionComponent extends Component
         // |lte:meta_servicio / se quito candado de meta
     ];
 
+    public function mount($nivel_id)
+    {
+        $this->nivel_id = $nivel_id;
+    }
+
     public function render()
     {
+        $this->meta_servicio = NivelesServicio::select('nombre', 'metrica', 'unidad', 'meta')
+            ->where('id', '=', $this->nivel_id)
+            ->first()->meta;
+
         $obj_evaluacion = EvaluacionServicio::select('id', 'servicio_id', 'fecha', 'promedio', 'evaluacion_day')
             ->where('servicio_id', '=', $this->nivel_id);
         $total_evaluaciones = count($obj_evaluacion->get());
@@ -62,14 +71,6 @@ class EvaluacionComponent extends Component
             'total_evaluaciones' => $total_evaluaciones,
             'promedio_evaluaciones' => $promedio_evaluaciones,
         ]);
-    }
-
-    public function mount($nivel_id)
-    {
-        $this->nivel_id = $nivel_id;
-        $this->meta_servicio = NivelesServicio::select('nombre', 'metrica', 'unidad', 'meta')
-            ->where('id', '=', $this->nivel_id)
-            ->first()->meta;
     }
 
     public function store()
@@ -135,7 +136,7 @@ class EvaluacionComponent extends Component
 
         //$this->validate();
 
-        if (!is_null($this->eval_id)) {
+        if (! is_null($this->eval_id)) {
             $evalservicio = EvaluacionServicio::find($this->eval_id);
 
             $evalservicio->update([

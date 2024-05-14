@@ -49,7 +49,11 @@ class TimesheetProyectoEmpleadoObserver
 
     private function forgetCache()
     {
-        Cache::forget('getAllByEmpleadoId_' . auth()->user()->empleado->id);
-        Cache::forget('getAllByEmpleadoIdExists_' . auth()->user()->empleado->id);
+
+        Cache::forget('GetAllByEmpleadoId_'.auth()->user()->empleado->id);
+        Cache::forget('GetAllByEmpleadoIdExists_'.auth()->user()->empleado->id);
+        Cache::forget('TimesheetProyectoEmpleado:timesheetproyectoempleado_all');
+        Cache::forget('TimesheetProyectoEmpleado:TimesheetProyectoEmpleado');
+        Cache::forget('TimesheetProyectoEmpleado:getProyectoEmpleadoTimesheetProyectosEmpleado');
     }
 }

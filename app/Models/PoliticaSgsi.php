@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\ClearsResponseCache;
 use App\Traits\MultiTenantModelTrait;
 use Carbon\Carbon;
 use DateTimeInterface;
@@ -13,8 +14,8 @@ use OwenIt\Auditing\Contracts\Auditable;
 
 class PoliticaSgsi extends Model implements Auditable
 {
-    use SoftDeletes, MultiTenantModelTrait, HasFactory;
-    use \OwenIt\Auditing\Auditable;
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
+    use HasFactory, MultiTenantModelTrait, SoftDeletes;
 
     public $table = 'politica_sgsis';
 
@@ -39,16 +40,18 @@ class PoliticaSgsi extends Model implements Auditable
         'fecha_entrada',
         'fecha_revision',
         'id_reviso_politica',
+        'estatus',
         'created_at',
         'updated_at',
         'deleted_at',
         'team_id',
+        'mostrar',
     ];
 
     public static function getAll()
     {
         return Cache::remember('politicas_sgsi_all', 3600 * 12, function () {
-            return self::get();
+            return self::with('reviso')->get();
         });
     }
 
@@ -80,5 +83,10 @@ class PoliticaSgsi extends Model implements Auditable
     public function reviso()
     {
         return $this->belongsTo(Empleado::class, 'id_reviso_politica', 'id')->alta();
+    }
+
+    public function revisobaja()
+    {
+        return $this->belongsTo(Empleado::class, 'id_reviso_politica', 'id');
     }
 }

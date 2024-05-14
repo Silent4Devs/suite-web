@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\ClearsResponseCache;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -30,9 +31,9 @@ use OwenIt\Auditing\Contracts\Auditable;
  */
 class Sede extends Model implements Auditable
 {
-    use SoftDeletes;
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
     use HasFactory;
-    use \OwenIt\Auditing\Auditable;
+    use SoftDeletes;
 
     protected $table = 'sedes';
 
@@ -56,14 +57,14 @@ class Sede extends Model implements Auditable
     public static function getAll($columns = ['id', 'sede'])
     {
         //retrieve all data or can pass columns to retrieve
-        return Cache::remember('sedes_all', 3600 * 24, function () use ($columns) {
+        return Cache::remember('Sede:sedes_all', 3600 * 8, function () use ($columns) {
             return self::select($columns)->get();
         });
     }
 
     public static function getbyId($id)
     {
-        return Cache::remember('sede_' . $id, 3600 * 24, function () use ($id) {
+        return Cache::remember('Sede:sede_'.$id, 3600 * 8, function () use ($id) {
             return self::find($id);
         });
     }

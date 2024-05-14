@@ -1,5 +1,5 @@
 <style type="text/css">
-    
+
 .accordion-container {
     width: 100%;
     margin-top: 5px;
@@ -138,7 +138,7 @@ table td{
 
     <div class="accordion-container">
         <a href="#" class="accordion-titulo">PLANEACIÓN<span class="toggle-icon"></span></a>
-        <div class="accordion-content">    
+        <div class="accordion-content">
             <table>
                 <thead class="">
                     <tr>
@@ -182,7 +182,7 @@ table td{
 
      <div class="accordion-container">
         <a href="#" class="accordion-titulo">SOPORTE<span class="toggle-icon"></span></a>
-        <div class="accordion-content">    
+        <div class="accordion-content">
             <table>
                 <thead class="">
                     <tr>
@@ -225,7 +225,7 @@ table td{
 
      <div class="accordion-container">
         <a href="#" class="accordion-titulo">OPERACIÓN DE SGSI<span class="toggle-icon"></span></a>
-        <div class="accordion-content">    
+        <div class="accordion-content">
             <table>
                 <thead class="">
                     <tr>
@@ -269,7 +269,7 @@ table td{
 
      <div class="accordion-container">
         <a href="#" class="accordion-titulo">EVALUACIÓN<span class="toggle-icon"></span></a>
-        <div class="accordion-content">    
+        <div class="accordion-content">
             <table>
                 <thead class="">
                     <tr>
@@ -310,7 +310,7 @@ table td{
 
      <div class="accordion-container">
         <a href="#" class="accordion-titulo">MEJORA CONTINUA<span class="toggle-icon"></span></a>
-        <div class="accordion-content">    
+        <div class="accordion-content">
             <table>
                 <thead class="">
                     <tr>
@@ -352,22 +352,22 @@ table td{
 
 
 
-  <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <script type="text/javascript">
     $(function(){
         $(".accordion-titulo").click(function(e){
-               
+
             e.preventDefault();
-        
+
             var contenido=$(this).next(".accordion-content");
 
-            if(contenido.css("display")=="none"){ //open        
-              contenido.slideDown(250);         
+            if(contenido.css("display")=="none"){ //open
+              contenido.slideDown(250);
               $(this).addClass("open");
             }
-            else{ //close       
+            else{ //close
               contenido.slideUp(250);
-              $(this).removeClass("open");  
+              $(this).removeClass("open");
             }
 
         });

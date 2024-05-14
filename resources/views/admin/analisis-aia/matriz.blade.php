@@ -96,7 +96,7 @@
             Mostrar Mátriz de Impacto
 
         </div>
-        @include('flash::message')
+
         <div class="row">
             <div class="col-sm-3 offset-9 mt-3">
                 <a class="btn btn-success" href="{{ route('admin.analisis-aia.ajustes') }}"><i class="bi bi-gear"></i>
@@ -211,7 +211,7 @@
                                         @foreach ($cuestionario as $data)
                                             <tr style="font-size: 11px;">
                                                 <th scope="row">
-                                                    <div style="text-align: left;">A0{{ $data->id}}</div>
+                                                    <div style="text-align: left;">A0{{ $data->id }}</div>
                                                 </th>
                                                 <td>
                                                     <div style="text-align: left;">
@@ -276,7 +276,7 @@
                                             <th colspan="4">SEMANAS</th>
                                             <th colspan="7">DIAS</th>
                                             <th colspan="24">HORAS</th>
-                                          
+
                                             <th colspan="5">TIEMPOS DE RECUPERACIÓN</th>
                                             <th colspan="5">IMPACTO OPERATIVO</th>
                                             <th colspan="5">IMPACTO REGULATORIO</th>
@@ -487,9 +487,9 @@
                                                 style="vertical-align:middle !important;">
                                                 <div class="box_rotate">24</div>
                                             </th>
-                                           
+
                                             </th>
-                                           
+
                                             <th scope="col">RPO (hrs)</th>
                                             <th scope="col">RTO (hrs)</th>
                                             <th scope="col">WRT (hrs)</th>
@@ -536,10 +536,18 @@
                                         @foreach ($cuestionario as $data)
                                             <tr style="text-align:left !important;font-size: 11px;">
                                                 <th scope="row">A0{{ $data->id ?: 'No definido' }}</th>
-                                                <td><div style="text-align: left;">{{ $data->id_aplicacion ?: 'No definido' }}</div></td>
-                                                <td><div style="text-align: left;">{{ $data->nombre_aplicacion ?: 'No definido' }}</div></td>
+                                                <td>
+                                                    <div style="text-align: left;">
+                                                        {{ $data->id_aplicacion ?: 'No definido' }}</div>
+                                                </td>
+                                                <td>
+                                                    <div style="text-align: left;">
+                                                        {{ $data->nombre_aplicacion ?: 'No definido' }}</div>
+                                                </td>
                                                 <td style="text-align: left !important;">
-                                                    <div style="text-align: left;">{{ $data->objetivo_aplicacion ?: 'No definido' }}</div></td>
+                                                    <div style="text-align: left;">
+                                                        {{ $data->objetivo_aplicacion ?: 'No definido' }}</div>
+                                                </td>
                                                 <td>{{ $data->app_datos_terceros ?: 'No definido' }}</td>
 
                                                 <td style="text-align: left !important;">
@@ -609,7 +617,7 @@
                                                 <td style="text-align:center !important;">{{ $data->h22 ?: '-' }}</td>
                                                 <td style="text-align:center !important;">{{ $data->h23 ?: '-' }}</td>
                                                 <td style="text-align:center !important;">{{ $data->h24 ?: '-' }}</td>
-                                              
+
                                                 <td>{{ $data->rpo_horas ?: '0' }}</td>
                                                 <td>{{ $data->rto_horas ?: '0' }}</td>
                                                 <td>{{ $data->wrt_horas ?: '0' }}</td>
@@ -1065,7 +1073,8 @@
                                             <th scope="col" style="min-width: 200px;">Responsable</th>
                                             <th scope="col" style="min-width: 200px;">Aplicación</th>
                                             <th scope="col" style="min-width: 25px;">Versión</th>
-                                            <th scope="col" style="min-width: 25px;">Estatus (productivo/desarrollo)</th>
+                                            <th scope="col" style="min-width: 25px;">Estatus (productivo/desarrollo)
+                                            </th>
                                             <th scope="col" style="min-width: 25px;">Publicación (interna/externa)</th>
                                             <th scope="col" style="min-width: 25px;">Administración o Soporte por
                                                 terceros: (SI / NO)</th>

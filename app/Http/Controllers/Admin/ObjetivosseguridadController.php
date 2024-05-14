@@ -64,7 +64,7 @@ class ObjetivosseguridadController extends Controller
             });
 
             $table->editColumn('meta', function ($row) {
-                return $row->meta . $row->unidadmedida ? $row->meta . $row->unidadmedida : '';
+                return $row->meta.$row->unidadmedida ? $row->meta.$row->unidadmedida : '';
             });
 
             $table->editColumn('frecuencia', function ($row) {

@@ -51,25 +51,25 @@
         <div class="col-4 px-2">
             <strong style="font-size:12px; color:#345183">Fecha de riesgo levantado</strong>
             <p style="font-size:12px; color:#345183">{{ $cartaAceptacion->fecharegistro }}</p>
-                <strong style="font-size:12px; color:#345183">
-                    @if($cartaAceptacion->fechaaprobacion !=null)
-                        @if($cartaAceptacion->aceptado)
-                            Fecha de aprobación del riesgo
-                            @else
-                            Fecha de rechazo del riesgo
-                        @endif
-                        @else
+            <strong style="font-size:12px; color:#345183">
+                @if ($cartaAceptacion->fechaaprobacion != null)
+                    @if ($cartaAceptacion->aceptado)
                         Fecha de aprobación del riesgo
+                    @else
+                        Fecha de rechazo del riesgo
                     @endif
-                    </strong>
+                @else
+                    Fecha de aprobación del riesgo
+                @endif
+            </strong>
             <br>
             <span style="font-size:12px; color:#345183">{{ $cartaAceptacion->fechaaprobacion }}</span>
             <br>
-            @if($cartaAceptacion->fechaaprobacion !=null)
-                 @if($cartaAceptacion->aceptado)
-                 <span style="font-size:12px; color:#32ba4d">Aceptado</span>
-                 @else
-                 <span style="font-size:12px; color:#d83232">Rechazado</span>
+            @if ($cartaAceptacion->fechaaprobacion != null)
+                @if ($cartaAceptacion->aceptado)
+                    <span style="font-size:12px; color:#32ba4d">Aceptado</span>
+                @else
+                    <span style="font-size:12px; color:#d83232">Rechazado</span>
                 @endif
             @endif
         </div>
@@ -232,8 +232,8 @@
     <table class="table w-100 mt-4 mb-4" id="contactos_externos_table" style="width:100%">
         <thead>
             <tr>
-                <th class="text-center" style="font-size:12px; color:#345183; background-color:#cccccc;" colspan="2"
-                    class="text-center">Descripción</th>
+                <th class="text-center" style="font-size:12px; color:#345183; background-color:#cccccc;"
+                    colspan="2" class="text-center">Descripción</th>
 
             </tr>
         </thead>
@@ -259,7 +259,8 @@
             </tr>
             <tr>
                 <th style="font-size:12px; color:#345183;">Bajo</th>
-                <th style="font-size:12px; color:#345183; background-color:rgb(240, 240, 150);">Riesgo tolerable para la
+                <th style="font-size:12px; color:#345183; background-color:rgb(240, 240, 150);">Riesgo tolerable para
+                    la
                     organización que no genera impactos significativos.
                 </th>
             </tr>
@@ -276,79 +277,86 @@
         <table class="table">
             <thead>
                 <tr style="background-color:#cccccc;">
-                    <th  style="color:#345183; font-size:12px; min-width: 100px;">ID Activo</th>
-                    <th  style="color:#345183; font-size:12px; min-width: 300px;">Nombre</th>
-                    <th  style="color:#345183; font-size:12px; min-width: 150px;">Criticidad</th>
-                    <th  style="color:#345183; font-size:12px; min-width: 150px;">Confidencialidad</th>
-                    <th  style="color:#345183; font-size:12px; min-width: 100px;">Revisión</th>
+                    <th style="color:#345183; font-size:12px; min-width: 100px;">ID Activo</th>
+                    <th style="color:#345183; font-size:12px; min-width: 300px;">Nombre</th>
+                    <th style="color:#345183; font-size:12px; min-width: 150px;">Criticidad</th>
+                    <th style="color:#345183; font-size:12px; min-width: 150px;">Confidencialidad</th>
+                    <th style="color:#345183; font-size:12px; min-width: 100px;">Revisión</th>
                 </tr>
             </thead>
             <tbody>
                 @php
-                $rechazado = false;
-                $contestado = false;
+                    $rechazado = false;
+                    $contestado = false;
                 @endphp
 
                 @if (is_array($activos) || is_object($activos))
                     @foreach ($activos as $activo)
-                         @foreach ( $aprobadores as $aprobador )
+                        @foreach ($aprobadores as $aprobador)
                             @foreach ($aprobador->aprobacionesActivo as $aprobacion)
-                            @php
-                            if($activo->id == $aprobacion->activoInformacion_id){
-                                if(!$aprobacion->aceptado){
-                                    $rechazado=true;
-                                    break;
-
-                                }else {
-                                    $rechazado = false;
-                                }
-                            }
-                            @endphp
+                                @php
+                                    if ($activo->id == $aprobacion->activoInformacion_id) {
+                                        if (!$aprobacion->aceptado) {
+                                            $rechazado = true;
+                                            break;
+                                        } else {
+                                            $rechazado = false;
+                                        }
+                                    }
+                                @endphp
                             @endforeach
                             @php
-                                if($aprobador->aprobador_id == auth()->user()->empleado->id){
-                                   if($aprobador->estado>0){
-                                    $contestado=true;
-                                   }
+                                if ($aprobador->aprobador_id == auth()->user()->empleado->id) {
+                                    if ($aprobador->estado > 0) {
+                                        $contestado = true;
+                                    }
                                 }
 
                             @endphp
-
-                    @endforeach
+                        @endforeach
 
                         <tr>
-                            {{-- @if(is_null($activo->aceptado))
+                            {{-- @if (is_null($activo->aceptado))
                             <th  scope="row"><i class="fas fa-info-circle" style="font-size:12pt; float: right;" title=""></i>{{ $activo->identificador }}
                             </th>
                             @else
                             <th  scope="row">{{ $activo->identificador }}</th>
                             @endif --}}
 
-                            <th  scope="row">
+                            <th scope="row">
 
                                 {{ $activo->identificador }}
 
                             </th>
                             <td>{{ $activo->activo_informacion }}</td>
                             <td>{{ $activo->valor_criticidad }}</td>
-                            <td>{{ $activo->confidencialidad_id }} - {{$activo->confidencialidad->confidencialidad}}</td>
+                            <td>{{ $activo->confidencialidad_id }} - {{ $activo->confidencialidad->confidencialidad }}
+                            </td>
 
-                            <td >
-                                @if(!$rechazado)
-                                <div class="form-check">
-                                    <input {{$contestado ? 'disabled': ''}} class="form-check-input " type="radio" name="aceptado{{$activo->id}}" id="aceptado1-{{$activo->id}}" value="true-{{$activo->id}}" checked>
-                                    <label class="form-check-label text-success" for="aceptado1-{{$activo->id}}">
-                                    <i style="font-size:10px;" class="fas fa-check mr-1"></i>Aceptar
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input {{$contestado ? 'disabled': ''}} class="form-check-input " type="radio" name="aceptado{{$activo->id}}" id="aceptado2-{{$activo->id}}" value="false-{{$activo->id}}">
-                                    <label class="form-check-label text-danger" for="aceptado2-{{$activo->id}}">
-                                        <i style="font-size:10px;" class="fas fa-times mr-1"></i>Rechazar
-                                    </label>
-                                </div>
+                            <td>
+                                @if (!$rechazado)
+                                    <div class="form-check">
+                                        <input {{ $contestado ? 'disabled' : '' }} class="form-check-input "
+                                            type="radio" name="aceptado{{ $activo->id }}"
+                                            id="aceptado1-{{ $activo->id }}" value="true-{{ $activo->id }}"
+                                            checked>
+                                        <label class="form-check-label text-success"
+                                            for="aceptado1-{{ $activo->id }}">
+                                            <i style="font-size:10px;" class="fas fa-check mr-1"></i>Aceptar
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input {{ $contestado ? 'disabled' : '' }} class="form-check-input "
+                                            type="radio" name="aceptado{{ $activo->id }}"
+                                            id="aceptado2-{{ $activo->id }}" value="false-{{ $activo->id }}">
+                                        <label class="form-check-label text-danger"
+                                            for="aceptado2-{{ $activo->id }}">
+                                            <i style="font-size:10px;" class="fas fa-times mr-1"></i>Rechazar
+                                        </label>
+                                    </div>
                                 @else
-                                     <i class="text-danger fas fa-times-circle mr-1" style="font-size:12pt;" title=""></i>Rechazado
+                                    <i class="text-danger fas fa-times-circle mr-1" style="font-size:12pt;"
+                                        title=""></i>Rechazado
                                 @endif
 
                                 {{-- <div>
@@ -367,7 +375,8 @@
         <thead>
             <tr class="negras">
 
-                <th class="text-center" style="font-size:12px; color:#345183; background-color:#cccccc;" colspan="2">
+                <th class="text-center" style="font-size:12px; color:#345183; background-color:#cccccc;"
+                    colspan="2">
                     2.Evaluación del Riesgo a Aceptar</th>
             </tr>
 
@@ -394,7 +403,8 @@
 
                     <div class="row">
                         <div class="col-4">
-                            <strong style="font-size:12px;color:#345183">Descripción del Impacto del al Negocio</strong>
+                            <strong style="font-size:12px;color:#345183">Descripción del Impacto del al
+                                Negocio</strong>
                         </div>
                         <div class="col-8">
                             <span style="font-size:12px;color:#345183">{!! $cartaAceptacion->descripcion_negocio !!}</span>
@@ -424,18 +434,22 @@
         <thead>
             <tr class="negras">
 
-                <th class="text-center" style="font-size:12px; color:#345183; background-color:#cccccc;" colspan="6">
+                <th class="text-center" style="font-size:12px; color:#345183; background-color:#cccccc;"
+                    colspan="6">
                     <div>
                         Tipo de Impacto del Riesgo
                     </div>
                 </th>
             </tr>
             <tr>
-                <th scope="col" style="font-size:12px; background-color:#fff; color:#345183; min-width: 200px;">Criterio
+                <th scope="col" style="font-size:12px; background-color:#fff; color:#345183; min-width: 200px;">
+                    Criterio
                 </th>
-                <th scope="col" style="font-size:12px; background-color:#fff; color:#345183; min-width: 100x;">Valor
+                <th scope="col" style="font-size:12px; background-color:#fff; color:#345183; min-width: 100x;">
+                    Valor
                 </th>
-                <th scope="col" style="font-size:12px; background-color:#fff; color:#345183; min-width: 400px;">Detalle
+                <th scope="col" style="font-size:12px; background-color:#fff; color:#345183; min-width: 400px;">
+                    Detalle
                 </th>
             </tr>
         </thead>
@@ -535,8 +549,9 @@
     <div class="form-group col-12">
         <div class="row">
             <div class="form-group col-sm-12 col-md-6 col-lg-6">
-                <label for="proceso_id"  class="required"> <i class="far fa-calendar-alt iconos-crear"></i>Proceso</label>
-                <select class="form-control" id="proceso_id" name="proceso_id" wire:model="procesoId" required>
+                <label for="proceso_id" class="required"> <i
+                        class="far fa-calendar-alt iconos-crear"></i>Proceso</label>
+                <select class="form-control" id="proceso_id" name="proceso_id" wire:model.lazy="procesoId" required>
                     <option value="">-- Seleccionar Proceso --</option>
                     @foreach ($procesos as $proceso)
                         <option value="{{ $proceso->id }}">{{ $proceso->proceso->codigo }}-
@@ -551,7 +566,8 @@
                 <label for="fecharegistro"> <i class="far fa-calendar-alt iconos-crear"></i> Fecha y hora de
                     levantamiento</label>
                 <input class="form-control date {{ $errors->has('fecharegistro') ? 'is-invalid' : '' }}"
-                    type="datetime-local" name="fecharegistro" id="fecharegistro" value="{{ old('fecharegistro') }}">
+                    type="datetime-local" name="fecharegistro" id="fecharegistro"
+                    value="{{ old('fecharegistro') }}">
                 @if ($errors->has('fecharegistro'))
                     <div class="invalid-feedback">
                         {{ $errors->first('fecharegistro') }}
@@ -562,13 +578,15 @@
 
         <div class="row">
             <div class="form-group col-md-6">
-                <label for="valor_criticidad"><i class="fas fa-exclamation-triangle iconos-crear"></i>Impacto del riesgo
+                <label for="valor_criticidad"><i class="fas fa-exclamation-triangle iconos-crear"></i>Impacto del
+                    riesgo
                     evaluado</label>
                 <div class="form-control" id="valorCriticidadTxt" style="text-align: center;"> {{ $impacto }}
                 </div>
             </div>
             <div class="form-group col-md-6">
-                <label for="valor_probabilidad"><i class="fas fa-exclamation-triangle iconos-crear"></i>Probabilidad del
+                <label for="valor_probabilidad"><i class="fas fa-exclamation-triangle iconos-crear"></i>Probabilidad
+                    del
                     riesgo evaluado</label>
                 <div class="form-control" id="valor_probabilidad"></div>
             </div>
@@ -752,7 +770,8 @@
                 </tr>
                 <tr>
                     <th>Bajo</th>
-                    <th style="background-color:rgb(240, 240, 150);">Riesgo tolerable para la organización que no genera
+                    <th style="background-color:rgb(240, 240, 150);">Riesgo tolerable para la organización que no
+                        genera
                         impactos significativos.
                     </th>
                 </tr>
@@ -785,16 +804,16 @@
 
                     @if (is_array($activos) || is_object($activos))
                         @foreach ($activos as $activo)
-                        @php
+                            @php
 
-                        $txtConfidencialidad = $this->obtenerTextoActivo($activo->confidencialidad_id);
+                                $txtConfidencialidad = $this->obtenerTextoActivo($activo->confidencialidad_id);
 
-                        @endphp
+                            @endphp
                             <tr>
                                 <th scope="row">{{ $activo->identificador }}</th>
                                 <td>{{ $activo->activo_informacion }}</td>
                                 <td>{{ $activo->valor_criticidad }}</td>
-                                <td>{{ $activo->confidencialidad_id }} - {{$txtConfidencialidad['txtvalor'] }}</td>
+                                <td>{{ $activo->confidencialidad_id }} - {{ $txtConfidencialidad['txtvalor'] }}</td>
                             </tr>
                         @endforeach
                     @endif
@@ -999,8 +1018,4 @@
         // });
 
     })
-
-
 </script>
-
-

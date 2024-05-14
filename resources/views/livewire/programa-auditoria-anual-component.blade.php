@@ -1,13 +1,9 @@
-<div
-    x-data="{ isUploading: false, progress: 0 }"
-    x-on:livewire-upload-start="isUploading = true"
-    x-on:livewire-upload-finish="isUploading = false"
-    x-on:livewire-upload-error="isUploading = false"
-    x-on:livewire-upload-progress="progress = $event.detail.progress"
->
+<div x-data="{ isUploading: false, progress: 0 }" x-on:livewire-upload-start="isUploading = true"
+    x-on:livewire-upload-finish="isUploading = false" x-on:livewire-upload-error="isUploading = false"
+    x-on:livewire-upload-progress="progress = $event.detail.progress">
     <x-loading-indicator></x-loading-indicator>
     <!-- File Input -->
-    <input type="file" wire:model="documento">
+    <input type="file" wire:model.lazy="documento">
     @error('documento')
         <span class="text-danger">{{ $message }}</span>
     @enderror
@@ -20,6 +16,5 @@
         <button type="button" class="btn btn-danger" wire:click.prevent="save">Guardar</button>
     </div>
 
-    
-</div>
 
+</div>

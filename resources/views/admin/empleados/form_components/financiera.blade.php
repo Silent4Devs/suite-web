@@ -7,11 +7,6 @@
         <input class="form-control {{ $errors->has('banco') ? 'is-invalid' : '' }}" type="text" name="banco" id="banco"
             value="{{ old('banco', $empleado->banco) }}">
         <small id="error_banco" class="text-danger"></small>
-        @if ($errors->has('banco'))
-            <div class="invalid-feedback">
-                {{ $errors->first('banco') }}
-            </div>
-        @endif
     </div>
     <div class="form-group col-sm-6">
         <label for="cuenta_bancaria"><i class="fas fa-credit-card iconos-crear"></i>Cuenta
@@ -20,11 +15,6 @@
             name="cuenta_bancaria" id="cuenta_bancaria"
             value="{{ old('cuenta_bancaria', $empleado->cuenta_bancaria) }}">
         <small id="error_cuenta_bancaria" class="text-danger"></small>
-        @if ($errors->has('cuenta_bancaria'))
-            <div class="invalid-feedback">
-                {{ $errors->first('cuenta_bancaria') }}
-            </div>
-        @endif
     </div>
     <div class="form-group col-sm-6">
         <label for="clabe_interbancaria"><i class="fas fa-barcode iconos-crear"></i>Clave
@@ -33,11 +23,6 @@
             name="clabe_interbancaria" id="clabe_interbancaria"
             value="{{ old('clabe_interbancaria', $empleado->clabe_interbancaria) }}">
         <small id="error_clabe_interbancaria" class="text-danger"></small>
-        @if ($errors->has('clabe_interbancaria'))
-            <div class="invalid-feedback">
-                {{ $errors->first('clabe_interbancaria') }}
-            </div>
-        @endif
     </div>
     <div class="form-group col-sm-6">
         <label for="centro_costos"><i class="fas fa-building iconos-crear"></i>Centro de
@@ -45,11 +30,6 @@
         <input class="form-control {{ $errors->has('centro_costos') ? 'is-invalid' : '' }}" type="text"
             name="centro_costos" id="centro_costos" value="{{ old('centro_costos', $empleado->centro_costos) }}">
         <small id="error_centro_costos" class="text-danger"></small>
-        @if ($errors->has('centro_costos'))
-            <div class="invalid-feedback">
-                {{ $errors->first('centro_costos') }}
-            </div>
-        @endif
     </div>
     <div class="form-group col-sm-6">
         <label for="salario_bruto"><i class="fas fa-dollar-sign iconos-crear"></i>Salario
@@ -58,11 +38,6 @@
             class="form-control {{ $errors->has('salario_bruto') ? 'is-invalid' : '' }}" type="text"
             name="salario_bruto" id="salario_bruto" value="{{ old('salario_bruto', $empleado->salario_bruto) }}">
         <small id="error_salario_bruto" class="text-danger"></small>
-        @if ($errors->has('salario_bruto'))
-            <div class="invalid-feedback">
-                {{ $errors->first('salario_bruto') }}
-            </div>
-        @endif
     </div>
     <div class="form-group col-sm-6">
         <label for="salario_diario"><i class="fas fa-dollar-sign iconos-crear"></i>Salario
@@ -71,11 +46,6 @@
             placeholder="$1,000,000.00" name="salario_diario" id="salario_diario" data-type='currency'
             value="{{ old('salario_diario', $empleado->salario_diario) }}">
         <small id="error_salario_diario" class="text-danger"></small>
-        @if ($errors->has('salario_diario'))
-            <div class="invalid-feedback">
-                {{ $errors->first('salario_diario') }}
-            </div>
-        @endif
     </div>
     <div class="form-group col-sm-6">
         <label for="salario_diario_integrado"><i class="fas fa-dollar-sign iconos-crear"></i>Salario Diario
@@ -84,11 +54,6 @@
             placeholder="$1,000,000.00" type="text" name="salario_diario_integrado" id="salario_diario_integrado"
             data-type='currency' value="{{ old('salario_diario_integrado', $empleado->salario_diario_integrado) }}">
         <small id="error_salario_diario_integrado" class="text-danger"></small>
-        @if ($errors->has('salario_diario_integrado'))
-            <div class="invalid-feedback">
-                {{ $errors->first('salario_diario_integrado') }}
-            </div>
-        @endif
     </div>
     <div class="form-group col-sm-6">
         <label for="salario_base_mensual"><i class="fas fa-dollar-sign iconos-crear"></i>Salario Base
@@ -97,11 +62,6 @@
             placeholder="$1,000,000.00" data-type='currency' name="salario_base_mensual" id="salario_base_mensual"
             value="{{ old('salario_base_mensual', $empleado->salario_base_mensual) }}">
         <small id="error_salario_base_mensual" class="text-danger"></small>
-        @if ($errors->has('salario_base_mensual'))
-            <div class="invalid-feedback">
-                {{ $errors->first('salario_base_mensual') }}
-            </div>
-        @endif
     </div>
     <div class="form-group col-sm-6">
         <label for="pagadora_actual"><i class="fas fa-hand-holding-usd iconos-crear"></i>Pagadora Actual</label>
@@ -109,11 +69,6 @@
             name="pagadora_actual" id="pagadora_actual"
             value="{{ old('pagadora_actual', $empleado->pagadora_actual) }}">
         <small id="error_pagadora_actual" class="text-danger"></small>
-        @if ($errors->has('pagadora_actual'))
-            <div class="invalid-feedback">
-                {{ $errors->first('pagadora_actual') }}
-            </div>
-        @endif
     </div>
     <div class="form-group col-sm-6">
         <label for="periodicidad_nomina"><i class="fas fa-sync-alt iconos-crear"></i>Periodicidad de
@@ -142,11 +97,6 @@
                 value="Anual">Anual</option>
         </select>
         <small id="error_periodicidad_nomina" class="text-danger"></small>
-        @if ($errors->has('periodicidad_nomina'))
-            <div class="invalid-feedback">
-                {{ $errors->first('periodicidad_nomina') }}
-            </div>
-        @endif
     </div>
     {{-- Componente Beneficiarios --}}
     <div class="col-sm-12">
@@ -170,22 +120,12 @@
             @endforeach
         </select>
         <small id="error_entidad_crediticias_id" class="text-danger"></small>
-        @if ($errors->has('entidad_crediticias_id'))
-            <div class="invalid-feedback">
-                {{ $errors->first('entidad_crediticias_id') }}
-            </div>
-        @endif
     </div>
     <div class="form-group col-sm-6">
         <label for="numero_credito"><i class="fas fa-barcode iconos-crear"></i>Número de crédito</label>
         <input class="form-control {{ $errors->has('numero_credito') ? 'is-invalid' : '' }}" type="text"
             name="numero_credito" id="numero_credito" value="{{ old('numero_credito', $empleado->numero_credito) }}">
         <small id="error_numero_credito" class="text-danger"></small>
-        @if ($errors->has('numero_credito'))
-            <div class="invalid-feedback">
-                {{ $errors->first('numero_credito') }}
-            </div>
-        @endif
     </div>
     <div class="form-group col-sm-12">
         <label for="descuento"><i class="fas fa-percentage iconos-crear"></i>Descuento</label>
@@ -193,10 +133,5 @@
             class="form-control {{ $errors->has('descuento') ? 'is-invalid' : '' }}" type="text" name="descuento"
             id="descuento" value="{{ old('descuento', $empleado->descuento) }}">
         <small id="error_descuento" class="text-danger"></small>
-        @if ($errors->has('descuento'))
-            <div class="invalid-feedback">
-                {{ $errors->first('descuento') }}
-            </div>
-        @endif
     </div>
 </div>

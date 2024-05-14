@@ -27,8 +27,8 @@ class DocumentoFactory extends Factory
         static $numero = 1;
 
         return [
-            'codigo' => 'DC' . $numero++,
-            'nombre' => 'Documento Proceso' . $numero,
+            'codigo' => 'DC'.$numero++,
+            'nombre' => 'Documento Proceso'.$numero,
             'tipo' => 'proceso',
             'macroproceso_id' => Macroproceso::all()->random()->id,
             'estatus' => Documento::PUBLICADO,

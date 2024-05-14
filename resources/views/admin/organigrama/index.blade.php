@@ -1,10 +1,10 @@
 @extends('layouts.admin')
 @section('styles')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/colores.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/colores.css') }}{{ config('app.cssVersion') }}">
     <link rel="stylesheet" href="{{ asset('orgchart/orgchart.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.0-canary.13/tailwind.min.css"
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.0-canary.13/tailwind.min.css"
         integrity="sha512-0mXZvQboEKApqdohlHGMJ/OZ09yeQa6UgZRkgG+b3t3JlcyIqvDnUMgpUm5CvlHT9HNtRm9xbRAJPlKaFCXzdQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+        crossorigin="anonymous" referrerpolicy="no-referrer" /> --}}
     <style>
         #chart-container {
             position: relative;
@@ -262,7 +262,7 @@
         .slider-zoom {
             position: absolute;
             top: 0;
-            right: 70px;
+            right: 30px;
         }
     </style>
     <style>
@@ -364,6 +364,11 @@
         .supervisor img {
             height: 80px !important;
         }
+
+        #chart-container .img-person {
+            width: 150px;
+            height: 150px;
+        }
     </style>
 @endsection
 
@@ -372,8 +377,6 @@
     <h5 class="col-12 titulo_general_funcion" style="font-size:20px; font-weight: bold;">Organigrama de
         {{ $organizacion }}
     </h5>
-
-
 
     <!-- component -->
     <div id="contenedorOrganigrama" style="position: relative" class="w-full px-8 py-4 mb-16 bg-white rounded-lg shadow-lg">
@@ -455,8 +458,8 @@
                                     </div>
                                     <div class="col-3">
                                         <div class="mt-2 d-flex justify-content-center">
-                                            <img src="{{ asset('orgchart/orientation_assests/top.png') }}"
-                                                alt="Orientacion" id="orientacion" style="cursor:pointer; width:20px;"
+                                            <img src="{{ asset('orgchart/orientation_assests/top.png') }}" alt="Orientacion"
+                                                id="orientacion" style="cursor:pointer; width:20px;"
                                                 title="Cambiar orientación del diagrama">
                                         </div>
                                     </div>
@@ -474,9 +477,9 @@
                             Control de zoom
                         </span>
                         <div class="d-flex justify-content-center align-items-center" style="height: 75%">
-                            <input id="zoomer" class="range-slider__range" type="range" value="70" min="10"
+                            <input id="zoomer" class="range-slider__range" type="range" value="30" min="10"
                                 max="200">
-                            <span id="output" class="range-slider__value">70</span>
+                            <span id="output" class="range-slider__value">30</span>
                         </div>
                     </div>
                 </div>
@@ -499,173 +502,157 @@
         import OrgChart from "{{ asset('orgchart/orgchart.js') }}"; // Se importan funcionalidades de OrgChart
 
         document.addEventListener('DOMContentLoaded', function() {
-            let orientaciones = ['t2b', 'l2r', 'r2l', 'b2t'];
-            let imagenOrientaciones = ['top.png', 'left.png', 'right.png', 'bottom.png']
-            let orientacion = orientaciones[0];
-            let img = document.getElementById('orientacion');
-            img.src = `{{ asset('orgchart/orientation_assests/') }}/${imagenOrientaciones[0]}`;
-            let contador = 0;
-            if (localStorage.getItem('orientationOrgChart') != null) {
-                orientacion = localStorage.getItem('orientationOrgChart');
-                let imgOrientacion = 'top.png';
-                switch (orientacion) {
-                    case 't2b':
-                        imgOrientacion = 'top.png';
-                        break;
-                    case 'l2r':
-                        imgOrientacion = 'left.png';
-                        break;
-                    case 'r2l':
-                        imgOrientacion = 'right.png';
-                        break;
-                    case 'b2t':
-                        imgOrientacion = 'bottom.png';
-                        break;
-                    default:
-                        imgOrientacion = 'top.png';
-                        break;
-                }
-                img.src = `{{ asset('orgchart/orientation_assests/') }}/${imgOrientacion}`;
-                const posicionIdx = (element) => element == orientacion;
-                contador = orientaciones.findIndex(posicionIdx);
+            const orientaciones = ['t2b', 'l2r', 'r2l', 'b2t'];
+            const imagenOrientaciones = {
+                't2b': 'top.png',
+                'l2r': 'left.png',
+                'r2l': 'right.png',
+                'b2t': 'bottom.png'
+            };
+
+            let orientacion = localStorage.getItem('orientationOrgChart') || orientaciones[0];
+            let contador = orientaciones.indexOf(orientacion);
+
+            function cargarImagen(orientacion) {
+                const imgOrientacion = imagenOrientaciones[orientacion];
+                const imgSrc = `{{ asset('orgchart/orientation_assests/') }}/${imgOrientacion}`;
+                document.getElementById('orientacion').src = imgSrc;
             }
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
+
+            $(document).ready(function() {
+                cargarImagen(orientacion);
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
             });
+
             renderOrganigrama(OrgChart, orientacion);
 
             $("#cargando_participantes").hide();
-            let url_empleados = "{{ route('admin.empleados.lista') }}";
+            const url_empleados = "{{ route('admin.empleados.lista') }}";
             let timeout = null;
-            let inputSearchEmpleados = document.getElementById('participantes_search');
-            $('#participantes_search').on('search', function() {
-                $("#participantes_sugeridos").hide();
-            });
-            $("#participantes_search").keyup(function() {
-                // Clear the timeout if it has already been set.
-                // This will prevent the previous task from executing
-                // if it has been less than <MILLISECONDS>
+            const inputSearchEmpleados = document.getElementById('participantes_search');
+            const participantesSugeridos = $("#participantes_sugeridos");
+
+            function cargarEmpleadosLista() {
                 clearTimeout(timeout);
-                // Make a new timeout set to go off in 1000ms (1 second)
-                // let textEscrito = $(this).val();
-                if (inputSearchEmpleados.value.trim() != '') {
+                if (inputSearchEmpleados.value.trim() !== '') {
                     timeout = setTimeout(function() {
                         $.ajax({
                             type: "POST",
                             url: url_empleados,
-                            data: 'nombre=' + inputSearchEmpleados.value,
+                            data: {
+                                nombre: inputSearchEmpleados.value
+                            },
                             beforeSend: function() {
                                 $("#cargando_participantes").show();
                             },
                             success: function(data) {
                                 $("#cargando_participantes").hide();
-                                $("#participantes_sugeridos").show();
-                                let sugeridos = document.querySelector(
-                                    "#participantes_sugeridos");
-                                let lista =
-                                    `<ul class='list-group' id='empleados-lista'>`;
-                                data ? JSON.parse(data).forEach(usuario => {
-                                        lista += `<button type='button' class='px-2 py-1 text-muted list-group-item list-group-item-action'
-                                    onClick='seleccionarUsuario("${usuario.id}","${usuario.name}","${usuario.email}");'>
-                                    <i class='mr-2 fas fa-user-circle'></i>
-                                    ${usuario.name}</button>
-                                `;
-                                    }) : lista +=
-                                    '<li class="list-group-item list-group-item-action">Sin coincidencias encontradas</li>';
-                                lista += `</ul>`;
-                                console.log(lista);
-                                sugeridos.innerHTML = lista;
-                                $("#participantes_search").css("background", "#FFF");
+                                participantesSugeridos.show();
+                                const sugeridos = $("#participantes_sugeridos ul");
+                                sugeridos.empty();
+                                if (data) {
+                                    const usuarios = JSON.parse(data);
+                                    usuarios.forEach(usuario => {
+                                        const listItem = $(`<button type='button' class='px-2 py-1 text-muted list-group-item list-group-item-action'>
+                                <i class='mr-2 fas fa-user-circle'></i>${usuario.name}
+                            </button>`);
+                                        listItem.on('click', function() {
+                                            seleccionarUsuario(usuario.id,
+                                                usuario.name, usuario.email);
+                                        });
+                                        sugeridos.append(listItem);
+                                    });
+                                } else {
+                                    sugeridos.append(
+                                        "<li class='list-group-item list-group-item-action'>Sin coincidencias encontradas</li>"
+                                    );
+                                }
                             }
                         });
-                        if (inputSearchEmpleados.value == '') {
-                            orientacion = localStorage.getItem('orientationOrgChart');
-                            renderOrganigrama(OrgChart, orientacion, null);
-                        }
                     }, 500);
                 } else {
-                    $("#participantes_sugeridos").hide();
+                    participantesSugeridos.hide();
                 }
+            }
+
+            $(document).ready(function() {
+                inputSearchEmpleados.addEventListener('input', cargarEmpleadosLista);
+                inputSearchEmpleados.addEventListener('search', function() {
+                    participantesSugeridos.hide();
+                });
             });
 
             window.seleccionarUsuario = function(id, name, email) {
                 $('.areas').val(null).trigger('change');
-                document.querySelector("#zoomer").value = 70;
-                document.querySelector("#output").innerHTML = 70;
-                orientacion = localStorage.getItem('orientationOrgChart');
+                document.querySelector("#zoomer").value = 30;
+                document.querySelector("#output").innerHTML = 30;
+                const orientacion = localStorage.getItem('orientationOrgChart');
                 document.getElementById("contenedorOrganigrama").style.pointerEvents = 'none';
                 renderOrganigrama(OrgChart, orientacion, id);
                 $("#participantes_search").val(name);
                 $("#id_empleado").val(id);
                 $("#email").val(email);
                 $("#participantes_sugeridos").hide();
-            }
+            };
 
             function renderOrganigrama(OrgChart, orientacion, id = null, area_filter = false, area_id = null) {
-                let organizacionTree = @json($organizacionTree);
-                let repositorioImagenes = @json($rutaImagenes);
-                let organizacion = @json($organizacion);
-                let chartContainer = document.querySelector('#chart-container');
+                const organizacionTree = @json($organizacionTree);
+                const repositorioImagenes = @json($rutaImagenes);
+                const organizacion = @json($organizacion);
+                const chartContainer = document.querySelector('#chart-container');
                 chartContainer.innerHTML = "";
-                let div = document.createElement('div');
+                const div = document.createElement('div');
                 div.id = 'chart-side';
                 div.classList.add('sidenav');
                 chartContainer.appendChild(div);
-                // let buttonExport = document.querySelector("#exportData");
-                // let buttonE = document.createElement('button');
-                // buttonE.classList.add('btn');
-                // buttonE.classList.add('btn-sm');
-                // buttonE.classList.add('btn-outline-primary');
-                // buttonE.innerHTML = "<i class='fas fa-file-code'></i>";
-                // buttonE.onclick = function(e) {
-                //     console.log("Exportando");
-                // }
-                // buttonExport.appendChild(buttonE);
-                let url_organigrama = "{{ route('admin.organigrama.index') }}";
-                let data = {
-                    "area_filter": false,
-                    id
+
+                const url_organigrama = "{{ route('admin.organigrama.index') }}";
+                const data = {
+                    "area_filter": area_filter,
+                    id,
+                    area_id
                 };
-                if (area_filter) {
-                    data = {
-                        "area_filter": true,
-                        area_id
-                    }
-                }
-                document.querySelector('#export_csv').innerHTML = "";
-                document.querySelector('#shot_screen').innerHTML = "";
+
+                const mostrarCargando = () => {
+                    const img = document.createElement('img');
+                    img.classList.add('imagen-search');
+                    img.src = "{{ asset('img/searching.svg') }}";
+                    img.width = 400;
+                    img.style.margin = 'auto';
+                    const texto = document.createElement('h3');
+                    texto.classList.add('texto-search');
+                    texto.innerText = "Buscando información...";
+                    texto.style.marginTop = '30px';
+                    texto.style.marginBottom = '20px';
+                    texto.style.fontSize = '12pt';
+                    texto.style.fontWeight = '600';
+                    chartContainer.appendChild(texto);
+                    chartContainer.appendChild(img);
+                    $('#participantes_search, #areas').prop('disabled', true);
+                };
+
+                const ocultarCargando = () => {
+                    chartContainer.querySelector('.imagen-search').remove();
+                    chartContainer.querySelector('.texto-search').remove();
+                    $('#participantes_search, #areas').prop('disabled', false);
+                };
+
+                mostrarCargando();
+
                 $.ajax({
                     type: "GET",
                     data,
                     url: url_organigrama,
-                    beforeSend: function() {
-                        let container = document.querySelector('#chart-container');
-                        let img = document.createElement('img');
-                        img.classList.add('imagen-search');
-                        img.src = "{{ asset('img/searching.svg') }}";
-                        img.width = 500;
-                        img.style.margin = 'auto';
-                        let texto = document.createElement('h3');
-                        texto.classList.add('texto-search');
-                        texto.innerText = "Buscando información...";
-                        texto.style.marginTop = '30px';
-                        texto.style.marginBottom = '20px';
-                        texto.style.fontSize = '12pt';
-                        texto.style.fontWeight = '600';
-                        container.appendChild(texto);
-                        container.appendChild(img);
-                        const empleado = document.querySelector('#participantes_search');
-                        const areas = document.querySelector('#areas');
-                        empleado.setAttribute('disabled');
-                        areas.setAttribute('disabled');
-                    },
                     success: function(response) {
-                        let container = document.querySelector('.imagen-search');
-                        container.src = "";
-                        document.querySelector('.texto-search').innerHTML = "";
-                        let orgchart = new OrgChart({
+                        ocultarCargando();
+                        var ejemplo = JSON.parse(response.replaceAll('children_organigrama',
+                                'children'));
+                        const orgchart = new OrgChart({
                             'chartContainer': '#chart-container',
                             'zoomSlider': '#zoomer',
                             'data': JSON.parse(response.replaceAll('children_organigrama',
@@ -683,125 +670,100 @@
                             'direction': orientacion,
                             'urlExportCSV': "{{ route('admin.organigrama.exportar') }}"
                         });
-                        const empleado = document.querySelector('#participantes_search');
-                        const areas = document.querySelector('#areas');
-                        empleado.removeAttribute('disabled');
-                        areas.removeAttribute('disabled');
-                        document.getElementById("contenedorOrganigrama").style.pointerEvents =
-                            'all';
+                        document.getElementById("contenedorOrganigrama").style.pointerEvents = 'all';
                     },
                     error: function(error) {
-                        let imagen = document.querySelector('.imagen-search');
-                        imagen.src = "";
-                        document.querySelector('.texto-search').innerHTML = "";
-                        let container = document.querySelector('#chart-container');
-                        let img = document.createElement('img');
+                        ocultarCargando();
+                        const img = document.createElement('img');
                         img.classList.add('imagen-search');
                         img.src = "{{ asset('img/empleados_no_encontrados.svg') }}";
-                        img.width = 350;
+                        img.width = 300;
                         img.style.margin = 'auto';
-                        let texto = document.createElement('h3');
+                        const texto = document.createElement('h3');
                         texto.classList.add('texto-search');
                         texto.innerText =
                             "No se encontraron empleados de acuerdo a los criterios de búsqueda";
-
                         texto.style.marginBottom = '20px';
                         texto.style.fontSize = '12pt';
                         texto.style.fontWeight = '600';
-                        container.appendChild(texto);
-                        container.appendChild(img);
-                        const empleado = document.querySelector('#participantes_search');
-                        const areas = document.querySelector('#areas');
-                        empleado.removeAttribute('disabled');
-                        areas.removeAttribute('disabled');
+                        chartContainer.appendChild(texto);
+                        chartContainer.appendChild(img);
                     }
                 });
             }
-
-            let areas = document.querySelector("#areas");
-            areas.addEventListener('change', function(event) {
-                if ($("#areas option:selected").attr("id") != "ver_todos_option") {
-                    let area_id = event.target.value;
-                    orientacion = localStorage.getItem('orientationOrgChart');
+            // Evento de cambio para el select de áreas
+            $('#areas').on('change', function() {
+                const area_id = $(this).val();
+                if (area_id !== "ver_todos_option") {
+                    const orientacion = localStorage.getItem('orientationOrgChart');
                     renderOrganigrama(OrgChart, orientacion, null, true, area_id);
                 }
             });
+
+            // Configuración de Select2 para el elemento de clase 'areas'
             $('.areas').select2({
                 theme: 'bootstrap4',
             });
+
+            // Evento de selección para el Select2 de áreas
             $('.areas').on('select2:select', function(e) {
-                let area_id = e.params.data.id;
-                if (document.querySelector("#participantes_search").value != "") {
-                    document.querySelector("#participantes_search").value = "";
-                }
-                document.querySelector("#zoomer").value = 70;
-                document.querySelector("#output").innerHTML = 70;
-                document.getElementById("contenedorOrganigrama").style.pointerEvents = 'none';
+                const area_id = e.params.data.id;
+                $('#participantes_search').val("");
+                $('#zoomer').val(30);
+                $('#output').text(30);
+                $('#contenedorOrganigrama').css('pointerEvents', 'none');
                 renderOrganigrama(OrgChart, orientacion, null, true, area_id);
             });
 
-
-            document.querySelector('#areas').addEventListener('change', function(e) {
+            // Evento de cambio para el select de áreas
+            $('#areas').on('change', function(e) {
                 e.preventDefault();
-                if ($("#areas option:selected").attr("id") == "ver_todos_option") {
-                    document.getElementById("contenedorOrganigrama").style.pointerEvents = 'none';
-                    $('.areas').val(null).trigger('change');
-                    document.querySelector("#participantes_search").value = "";
-                    document.querySelector("#zoomer").value = 70;
-                    document.querySelector("#output").innerHTML = 70;
-                    contador = 0;
-                    orientacion = orientaciones[contador];
-                    localStorage.setItem('orientationOrgChart', orientaciones[contador]);
-                    img.src =
-                        `{{ asset('orgchart/orientation_assests/') }}/${imagenOrientaciones[contador]}`;
-                    renderOrganigrama(OrgChart, orientacion);
+                if ($(this).find('option:selected').attr("id") === "ver_todos_option") {
+                    resetearOrganigrama();
                     console.log("funcion");
                 }
-
             });
 
-            $("#reloadOrg").click(function(e) {
-                e.preventDefault();
-                document.getElementById("contenedorOrganigrama").style.pointerEvents = 'none';
+            // Función para resetear el organigrama
+            function resetearOrganigrama() {
+                $('#contenedorOrganigrama').css('pointerEvents', 'none');
                 $('.areas').val(null).trigger('change');
-                document.querySelector("#participantes_search").value = "";
-                document.querySelector("#zoomer").value = 70;
-                document.querySelector("#output").innerHTML = 70;
+                $('#participantes_search').val("");
+                $('#zoomer').val(30);
+                $('#output').text(30);
                 contador = 0;
                 orientacion = orientaciones[contador];
-                localStorage.setItem('orientationOrgChart', orientaciones[contador]);
-                img.src =
+                localStorage.setItem('orientationOrgChart', orientacion);
+                const imgSrc = `{{ asset('orgchart/orientation_assests/') }}/${imagenOrientaciones[contador]}`;
+                $('#orientacion').attr('src', imgSrc);
+                renderOrganigrama(OrgChart, orientacion);
+            }
+
+            // Evento de clic para el botón de recargar organigrama
+            $('#reloadOrg').click(function(e) {
+                e.preventDefault();
+                resetearOrganigrama();
+            });
+
+            // Evento de clic para la imagen de orientación
+            $('#orientacion').click(function(e) {
+                e.preventDefault();
+                $('#contenedorOrganigrama').css('pointerEvents', 'none');
+                $('#zoomer').val(30);
+                $('#output').text(30);
+                if (contador < 3) {
+                    contador++;
+                } else {
+                    contador = 0;
+                }
+                orientacion = orientaciones[contador];
+                localStorage.setItem('orientationOrgChart', orientacion);
+                const imgSrc =
                     `{{ asset('orgchart/orientation_assests/') }}/${imagenOrientaciones[contador]}`;
+                $('#orientacion').attr('src', imgSrc);
                 renderOrganigrama(OrgChart, orientacion);
             });
 
-            $("#orientacion").click(function(e) {
-                e.preventDefault();
-                document.getElementById("contenedorOrganigrama").style.pointerEvents = 'none';
-                document.querySelector("#zoomer").value = 70;
-                document.querySelector("#output").innerHTML = 70;
-                let orientacion;
-                if (contador < 3) {
-                    ++contador;
-                    orientacion = orientaciones[contador];
-                    localStorage.setItem('orientationOrgChart', orientaciones[contador]);
-                    img.src =
-                        `{{ asset('orgchart/orientation_assests/') }}/${imagenOrientaciones[contador]}`;
-                } else if (contador == 3) {
-                    contador = 0;
-                    orientacion = orientaciones[contador];
-                    localStorage.setItem('orientationOrgChart', orientaciones[contador]);
-                    img.src =
-                        `{{ asset('orgchart/orientation_assests/') }}/${imagenOrientaciones[contador]}`;
-                } else {
-                    contador = 0;
-                    orientacion = orientaciones[contador];
-                    localStorage.setItem('orientationOrgChart', orientaciones[contador]);
-                    img.src =
-                        `{{ asset('orgchart/orientation_assests/') }}/${imagenOrientaciones[contador]}`;
-                }
-                renderOrganigrama(OrgChart, orientacion);
-            });
         });
     </script>
 @endsection

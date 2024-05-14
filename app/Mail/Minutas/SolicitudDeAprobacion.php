@@ -39,6 +39,6 @@ class SolicitudDeAprobacion extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.minutas.solicitud-aprobacion');
+        return $this->view('mails.minutas.solicitud-aprobacion')->subject('Solicitud Aprobación de Minuta: '.$this->minuta);
     }
 }

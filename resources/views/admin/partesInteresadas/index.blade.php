@@ -121,6 +121,28 @@
         }
     </style>
 
+<h5 class="col-12 titulo_general_funcion">Partes Interesadas</h5>
+<div class="card card-body" style="background-color: #5397D5; color: #fff;">
+    <div class="d-flex" style="gap: 25px;">
+        <img src="{{ asset('img/audit_port.jpg') }}" alt="Auditoria" style="width: 200px;">
+        <div>
+            <br>
+            <h4>¿Qué es Partes Interesadas?</h4>
+            <p>
+                Son aquellas personas o grupos que tienen algún interés o influencia en la seguridad de la información de la organización, Pueden ser clientes, empleados, proveedores, autoridades gubernamentales, entre otros.
+            </p>
+            <p>
+
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="text-right">
+    <div class="d-flex justify-content-end">
+        <a href="{{ route('admin.partes-interesadas.create') }}" type="button" class="btn btn-primary">Partes Interesadas</a>
+    </div>
+</div>
     <div class="mt-5 card">
         <div style="margin-bottom: 10px; margin-left:10px;" class="row">
             <div class="col-lg-12">
@@ -137,41 +159,25 @@
                 </div>
                 <div class="col-sm-8 align-content-center">
                     @include('layouts.errors')
-                    @include('flash::message')
+
                 </div>
                 <div class="col-sm-2">
                 </div>
             </div>
         </div>
 
-        {{-- @can('partes_interesada_create')
-
-            <div style="margin-bottom:10px; margin-left:12px;" class="row">
-                <div class="col-lg-12">
-                    <a class="btn btn-success" href="{{ route('admin.partes-interesadas.create') }}">
-                        Agregar <strong>+</strong>
-                    </a>
-                </div>
-            </div>
-        @endcan --}}
 
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
-            <table class="table datatable-PartesInteresada " style="width: 100%">
+            <h3 class="title-table-rds"> Partes Interesadas</h3>
+            <table class="datatable datatable-PartesInteresada " style="width: 100%">
                 <thead class="thead-dark dt-personalizada">
                     <tr>
-                        {{-- <th width="10">
-
-                        </th> --}}
-                        {{-- <th>
-                            {{ trans('cruds.partesInteresada.fields.id') }}
-                        </th> --}}
                         <th style="min-width:190px;">
                             {{ trans('cruds.partesInteresada.fields.parteinteresada') }}
                         </th>
                         <th style="min-width:210px!important">Expectativas</th>
                         <th style="min-width:210px!important">Necesidades</th>
-                        {{-- <th style="min-width:150px!important">Norma(s)</th> --}}
                         <th>
                             Opciones
                         </th>
@@ -184,6 +190,12 @@
 @endsection
 @section('scripts')
     @parent
+    <script>
+        $('#btnImport').on('click', function(e) {
+        e.preventDefault();
+        $('#xlsxImportModal').modal('show');
+     });
+    </script>
     <script>
         $(function() {
             //let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
@@ -320,43 +332,31 @@
                 //dtButtons.push(deleteButton);
             @endcan
 
-            @can('partes_interesadas_agregar')
-                let btnAgregar = {
-                    text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                    titleAttr: 'Agregar nueva parte interesada',
-                    url: "{{ route('admin.partes-interesadas.create') }}",
-                    className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
-                    action: function(e, dt, node, config) {
-                        let {
-                            url
-                        } = config;
-                        window.location.href = url;
-                    }
-                };
-                let btnExport = {
-                    text: '<i class="fas fa-download"></i>',
-                    titleAttr: 'Descargar plantilla',
-                    className: "btn btn_cargar",
-                    url: "{{ route('descarga-partes_interesadas') }}",
-                    action: function(e, dt, node, config) {
-                        let {
-                            url
-                        } = config;
-                        window.location.href = url;
-                    }
-                };
-                let btnImport = {
-                    text: '<i class="fas fa-file-upload"></i>',
-                    titleAttr: 'Importar datos',
-                    className: "btn btn_cargar",
-                    action: function(e, dt, node, config) {
-                        $('#csvImportModal').modal('show');
-                    }
-                };
-                dtButtons.push(btnAgregar);
-                dtButtons.push(btnExport);
-                dtButtons.push(btnImport);
-            @endcan
+
+            // @can('partes_interesadas_agregar')
+            //     let btnExport = {
+            //         text: '<i class="fas fa-download"></i>',
+            //         titleAttr: 'Descargar plantilla',
+            //         className: "btn btn_cargar",
+            //         url: "{{ route('descarga-partes_interesadas') }}",
+            //         action: function(e, dt, node, config) {
+            //             let {
+            //                 url
+            //             } = config;
+            //             window.location.href = url;
+            //         }
+            //     };
+            //     let btnImport = {
+            //         text: '<i class="fas fa-file-upload"></i>',
+            //         titleAttr: 'Importar datos',
+            //         className: "btn btn_cargar",
+            //         action: function(e, dt, node, config) {
+            //             $('#xlsxImportModal').modal('show');
+            //         }
+            //     };
+            //     dtButtons.push(btnExport);
+            //     dtButtons.push(btnImport);
+            // @endcan
 
             let dtOverrideGlobals = {
                 buttons: [dtButtons],

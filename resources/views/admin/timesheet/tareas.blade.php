@@ -1,17 +1,19 @@
 @extends('layouts.admin')
+@section('css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}{{config('app.cssVersion')}}">
+@endsection
 @section('content')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
-
     {{ Breadcrumbs::render('timesheet-tareas') }}
-
-    <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Tareas</font>
+    <h5 class="titulo_general_funcion">
+        Timesheet: <font style="font-weight:lighter;">Tareas</font>
     </h5>
 
+    {{-- @include('admin.timesheet.complementos.cards') --}}
+    @include('admin.timesheet.complementos.admin-aprob')
+    {{-- @include('admin.timesheet.complementos.blue-card-header') --}}
     <div class="card card-body">
         <div class="row">
-
             @livewire('timesheet.tabla-tareas-timesheet', ['proyecto_id' => null, 'origen' => 'tareas'])
-
         </div>
     </div>
 @endsection
@@ -58,7 +60,7 @@
 
                             var now = new Date();
                             var jsDate = now.getDate() + '-' + (now.getMonth() + 1) + '-' + now
-                            .getFullYear();
+                                .getFullYear();
                             $(doc.document.body).prepend(`
                                 <div class="row">
                                     <div class="col-4 text-center p-2" style="border:2px solid #CCCCCC">
@@ -123,9 +125,6 @@
                 };
                 let dtOverrideGlobals = {
                     buttons: dtButtons,
-                    order: [
-                        [0, 'desc']
-                    ],
                     destroy: true,
                     render: true,
                 };
@@ -136,7 +135,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 tablaLivewire('tabla_time_tareas');
-            }, 100);
+            }, 500);
         });
     </script>
 

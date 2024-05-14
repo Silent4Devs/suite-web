@@ -1,3 +1,9 @@
+@if (session('mensajeError'))
+<div class="alert alert-danger">
+    {{ session('mensajeError') }}
+</div>
+@endif
+
 <div class="create-requisicion">
     <div class="card card-body caja-blue">
 
@@ -88,7 +94,7 @@
                                 <label for="" class="txt-tamaño">
                                     Referencia (Título de la requisición) <font class="asterisco">*</font>
                                 </label>
-                                <input class="browser-default" type="text" name="descripcion" required
+                                <input class="browser-default" type="text" name="descripcion" maxlength="255" required
                                     value="{{ old('descripcion', $editrequisicion->referencia) }}">
                             </div>
 
@@ -173,14 +179,14 @@
                                         <label for="" class="txt-tamaño">
                                             Especificaciones del producto o servicio <font class="asterisco">*</font>
                                         </label>
-                                        <textarea class="model-especificaciones browser-default" name="especificaciones_{{ $count }}" required>{{ $edtprod->espesificaciones }}</textarea>
+                                        <textarea class="model-especificaciones browser-default" maxlength="500" name="especificaciones_{{ $count }}" required>{{ $edtprod->espesificaciones }}</textarea>
                                     </div>
                                 </div>
                             </div>
                         @endforeach
                     </div>
                     <div class="my-4" style="display:flex; justify-content: space-between;">
-                        <div class="btn btn-add-card" onclick="addCard('servicio')">
+                        <div class="btn btn-add-card" onclick="addCardProductos('servicio')">
                             <i class="fa-regular fa-square-plus"></i> AGREGAR SERVICIOS Y PRODUCTOS
                         </div>
 
@@ -344,7 +350,7 @@
                                                 <input type="file" class="modal-cotizacion form-control-file"
                                                     value="{{ $edtprov->cotizacion }}"
                                                     name="cotizacion_{{ $count }}"
-                                                    wire:model="cotizaciones.{{ $count }}"
+                                                    wire:model.lazy="cotizaciones.{{ $count }}"
                                                     data-count="{{ $count }}"
                                                     accept=".pdf, .docx, .power .point, .xml, .jpeg, .jpg, .png">
                                             </div>
@@ -484,7 +490,7 @@
                                             </label>
                                             <input type="file" class="modal-cotizacion form-control-file"
                                                 name="cotizacion_{{ $i }}"
-                                                wire:model="cotizaciones.{{ $i }}"
+                                                wire:model.lazy="cotizaciones.{{ $i }}"
                                                 data-count="{{ $i }}"
                                                 accept=".pdf, .docx, .power .point, .xml, .jpeg, .jpg, .png" required>
                                         </div>
@@ -887,11 +893,11 @@
                                                 Proveedor <font class="asterisco">*</font>
                                             </label>
                                             <select class="model-producto browser-default not-select2"
-                                                wire:model='selectedInput.{{ $count }}'
+                                                wire:model.lazy='selectedInput.{{ $count }}'
                                                 name="proveedor_{{ $count }}" required>
                                                 @isset($edtprov->provedores)
-                                                <option value="{{ $edtprov->provedores->id }}" selected> Actual:
-                                                    {{ $edtprov->provedores->nombre }}</option>
+                                                    <option value="{{ $edtprov->provedores->id }}" selected> Actual:
+                                                        {{ $edtprov->provedores->nombre }}</option>
                                                 @endisset
                                                 @foreach ($proveedores as $proveedor)
                                                     <option value="{{ $proveedor->id }}"> {{ $proveedor->nombre }}
@@ -1804,7 +1810,7 @@
             });
         </script>
         <script>
-             document.addEventListener("DOMContentLoaded", () => {
+            document.addEventListener("DOMContentLoaded", () => {
                 @this.set('products_servs_count', 1);
                 Livewire.on('cambiarTab', (id_tab) => {
                     // Activa la pestaña con ID 'profile'

@@ -15,10 +15,15 @@ class NuevoProyectoJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public $proyecto;
+
     public $identificador;
+
     public $cliente;
+
     public $empleado;
+
     public $email;
+
     public $id;
 
     /**
@@ -45,7 +50,9 @@ class NuevoProyectoJob implements ShouldQueue
     public function handle()
     {
         //
-        Mail::to(removeUnicodeCharacters($this->email))
-            ->send(new NotificacionNuevoProyecto($this->proyecto, $this->identificador, $this->cliente, $this->empleado, $this->id));
+        foreach ($this->email as $correo_participante) {
+            Mail::to(removeUnicodeCharacters($correo_participante))
+                ->queue(new NotificacionNuevoProyecto($this->proyecto, $this->identificador, $this->cliente, $this->empleado, $this->id));
+        }
     }
 }

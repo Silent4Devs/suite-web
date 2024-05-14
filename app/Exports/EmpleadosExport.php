@@ -8,7 +8,7 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 
-class EmpleadosExport implements FromCollection, WithMapping, WithHeadings
+class EmpleadosExport implements FromCollection, WithHeadings, WithMapping
 {
     /**
      * @return \Illuminate\Support\Collection
@@ -21,18 +21,18 @@ class EmpleadosExport implements FromCollection, WithMapping, WithHeadings
     public function map($empleado): array
     {
         $supervisor = 'Sin Supervisor';
-        if (!is_null($empleado->supervisor)) {
+        if (! is_null($empleado->supervisor)) {
             $supervisor = $empleado->supervisor->name;
         }
         $antiguedad = '';
         if (Carbon::parse($empleado->antiguedad)->diff()->y == 0) {
             if (Carbon::parse($empleado->antiguedad)->diff()->m == 0) {
-                $antiguedad = Carbon::parse($empleado->antiguedad)->diff()->d . 'día(s)';
+                $antiguedad = Carbon::parse($empleado->antiguedad)->diff()->d.'día(s)';
             } else {
-                $antiguedad = Carbon::parse($empleado->antiguedad)->diff()->m . 'mes(es)' . Carbon::parse($empleado->antiguedad)->diff()->d . 'día(s)';
+                $antiguedad = Carbon::parse($empleado->antiguedad)->diff()->m.'mes(es)'.Carbon::parse($empleado->antiguedad)->diff()->d.'día(s)';
             }
         } else {
-            $antiguedad = Carbon::parse($empleado->antiguedad)->diff()->y . ' año(s)' . Carbon::parse($empleado->antiguedad)->diff()->m . 'mes(es)' . Carbon::parse($empleado->antiguedad)->diff()->d . ' días';
+            $antiguedad = Carbon::parse($empleado->antiguedad)->diff()->y.' año(s)'.Carbon::parse($empleado->antiguedad)->diff()->m.'mes(es)'.Carbon::parse($empleado->antiguedad)->diff()->d.' días';
         }
 
         return [

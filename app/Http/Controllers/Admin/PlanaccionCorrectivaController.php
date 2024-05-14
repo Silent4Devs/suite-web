@@ -11,9 +11,9 @@ use App\Models\Puesto;
 use App\Models\Team;
 use App\Models\User;
 use Carbon\Carbon;
-use Flash;
 use Gate;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -71,7 +71,7 @@ class PlanaccionCorrectivaController extends Controller
             return $table->make(true);
         }
 
-        $accion_correctivas = AccionCorrectiva::get();
+        $accion_correctivas = AccionCorrectiva::getAll();
         $users = User::getAll();
         $teams = Team::get();
 
@@ -118,7 +118,7 @@ class PlanaccionCorrectivaController extends Controller
         $users = User::getAll();
         $tab = true;
 
-        Flash::success('Se ha registrado correctamente actividad del plan de acción');
+        Alert::success('éxito', 'Información añadida con éxito');
 
         return view('admin.accionCorrectivas.edit', compact('accionCorrectiva', 'responsables', 'planaccionCorrectiva', 'nombrereportas', 'puestoreportas', 'nombreregistras', 'puestoregistras', 'responsable_accions', 'nombre_autorizas', 'PlanAccion', 'id', 'Count', 'users', 'tab'));
     }
@@ -128,10 +128,10 @@ class PlanaccionCorrectivaController extends Controller
         $planaccionCorrectiva = PlanaccionCorrectiva::create($request->all());
         //dd($planaccionCorrectiva);
         $id = $request->get('accioncorrectiva_id');
-        Flash::success('Se ha registrado correctamente la actividad del plan de acción');
+        Alert::success('éxito', 'Información añadida con éxito');
 
         //return redirect()->route('admin.accionCorrectivas.edit');
-        return redirect('admin/plan-correctiva?param=' . $id);
+        return redirect('admin/plan-correctiva?param='.$id);
         //return view('admin.accionCorrectivas.plan_accion')->with('ids', $id)->with('users', $users);
     }
 
@@ -204,6 +204,7 @@ class PlanaccionCorrectivaController extends Controller
         //        abort_if(Gate::denies('planaccion_correctiva_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $planaccionCorrectiva->delete();
+        Alert::success('éxito', 'Información eliminada con éxito');
 
         return back();
     }

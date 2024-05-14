@@ -13,6 +13,7 @@ class ProveedorRequisicionsTableSeeder extends Seeder
      */
     public function run()
     {
+
         \DB::table('proveedor_requisicions')->delete();
 
         \DB::table('proveedor_requisicions')->insert([

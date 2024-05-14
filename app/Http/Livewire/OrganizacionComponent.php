@@ -64,6 +64,10 @@ class OrganizacionComponent extends Component
 
     public function mount()
     {
+    }
+
+    public function render()
+    {
         $this->panel = PanelOrganizacion::first();
         $this->empresa_id = $this->panel->empresa;
         $this->direccion_id = $this->panel->direccion;
@@ -89,10 +93,7 @@ class OrganizacionComponent extends Component
         $this->facebook_id = $this->panel->facebook;
         $this->youtube_id = $this->panel->youtube;
         $this->twitter_id = $this->panel->twitter;
-    }
 
-    public function render()
-    {
         return view('livewire.organizacion-component');
     }
 

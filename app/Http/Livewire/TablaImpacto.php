@@ -44,37 +44,7 @@ class TablaImpacto extends Component
 
     public function mount()
     {
-        $tipos = TipoImpacto::where('tabla_impacto_id', $this->tablaImpacto)->get();
-        $impactos = NivelesImpacto::where('tabla_impacto_id', $this->tablaImpacto)->get();
-        foreach ($impactos as $index => $impacto) {
-            // array_push($this->contenidos,["i{$impacto->id}"=>[]]);
-            // dd($this->contenidos);
-            // foreach($tipos as $tipo)
-            // {
-            //     $contenido = $this->obtenerContenido($tipo->id, $impacto->id);
-            //     // array_push($this->contenidos[$impacto->id],['contenido'=>$contenido]);
-            //     // $this->contenidos["i{$impacto->id}"]["t{$tipo->id}"]=['contenido'=>$contenido];
-            // }
-            $columna = [
-                'id' => $impacto->id,
-                'nivel' => $impacto->nivel,
-                'clasificacion' => $impacto->clasificacion,
-                'color' => $impacto->color,
-            ];
 
-            array_push($this->columnas, $columna);
-        }
-        // dd($this->contenidos);
-        foreach ($tipos as $tipo) {
-            $fila = [
-                'id' => $tipo->id,
-                'nombre_impacto' => $tipo->nombre_impacto,
-                'criterio' => $tipo->criterio,
-                'base' => $tipo->base,
-            ];
-
-            array_push($this->filas, $fila);
-        }
     }
 
     // public function addColumn($indexColumna)
@@ -194,6 +164,37 @@ class TablaImpacto extends Component
 
     public function render()
     {
+        $tipos = TipoImpacto::where('tabla_impacto_id', $this->tablaImpacto)->get();
+        $impactos = NivelesImpacto::where('tabla_impacto_id', $this->tablaImpacto)->get();
+        foreach ($impactos as $index => $impacto) {
+            // array_push($this->contenidos,["i{$impacto->id}"=>[]]);
+            // dd($this->contenidos);
+            // foreach($tipos as $tipo)
+            // {
+            //     $contenido = $this->obtenerContenido($tipo->id, $impacto->id);
+            //     // array_push($this->contenidos[$impacto->id],['contenido'=>$contenido]);
+            //     // $this->contenidos["i{$impacto->id}"]["t{$tipo->id}"]=['contenido'=>$contenido];
+            // }
+            $columna = [
+                'id' => $impacto->id,
+                'nivel' => $impacto->nivel,
+                'clasificacion' => $impacto->clasificacion,
+                'color' => $impacto->color,
+            ];
+
+            array_push($this->columnas, $columna);
+        }
+        foreach ($tipos as $tipo) {
+            $fila = [
+                'id' => $tipo->id,
+                'nombre_impacto' => $tipo->nombre_impacto,
+                'criterio' => $tipo->criterio,
+                'base' => $tipo->base,
+            ];
+
+            array_push($this->filas, $fila);
+        }
+
         return view('livewire.tabla-impacto');
     }
 }

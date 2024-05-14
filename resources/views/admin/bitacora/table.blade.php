@@ -1,7 +1,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    {{-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"> --}}
 </head>
 <style>
     .iconos-crear {
@@ -107,6 +107,11 @@
     }
 </style>
 
+@if (session('mensajeError'))
+<div class="alert alert-danger">
+    {{ session('mensajeError') }}
+</div>
+@endif
 <form method="POST" action="{{ route('contract_manager.contratos-katbol.store') }}" enctype="multipart/form-data">
     @csrf
     <div class="card card-content">
@@ -142,7 +147,7 @@
                         </font>
                     </label>
                     <input class="form-control" {{ $errors->has('no_contrato') ? 'is-invalid' : '' }} type="text"
-                        name="no_contrato" id="no_contrato" value="{{ old('no_contrato', '') }}" maxlength="250">
+                        name="no_contrato" id="no_contrato" value="{{ old('no_contrato', '') }}" maxlength="230">
                     <span id="existCode"></span>
                     {{-- @if ($errors->has('no_contrato'))
                         <span class="text-danger">{{ $errors->first('no_contrato') }}</span>
@@ -209,7 +214,7 @@
                 <label for="nombre_servicio" class="txt-tamaño">
                     Nombre del servicio<font class="asterisco">*</font></label>
                 <div class="form-floating">
-                    <textarea id="textarea1" class="form-control" name="nombre_servicio" required>{{ old('nombre_servicio') }}</textarea>
+                    <textarea id="textarea1" class="form-control" maxlength="550" name="nombre_servicio" required>{{ old('nombre_servicio') }}</textarea>
                 </div>
                 @if ($errors->has('nombre_servicio'))
                     <div class="invalid-feedback red-text">
@@ -342,7 +347,7 @@
             <div class="form-group col-md-12">
                 <label for="objetivo" class="txt-tamaño">
                     Objetivo del servicio<font class="asterisco">*</font></label>
-                <textarea id="textarea1" class="texto-linea form-control" name="objetivo" required>{{ old('objetivo') }}</textarea>
+                <textarea id="textarea1" class="texto-linea form-control" maxlength="500" name="objetivo" required>{{ old('objetivo') }}</textarea>
                 @if ($errors->has('objetivo'))
                     <div class="invalid-feedback red-text">
                         {{ $errors->first('nombre_servicio') }}
@@ -452,18 +457,14 @@
             <div class="form-group col-md-4">
                 <label for="no_contrato" class="txt-tamaño">
                     &nbsp;No. Pagos<font class="asterisco">*</font></label><br>
-                <input type="number" name="no_pagos" id="no_pagos" class="form-control required" min="1"
-                    max="500000">
-                {{-- {!! Form::number('no_pagos', null, ['class' => 'form-control', 'required'], ['min' => "1"] ) !!} --}}
+
+                {!! Form::number('no_pagos', null, ['class' => 'form-control', 'required'], ['min' => "1"] ) !!}
                 @if ($errors->has('no_pagos'))
                     <div class="invalid-feedback red-text">
                         {{ $errors->first('no_pagos') }}
                     </div>
                 @endif
             </div>
-
-            {{-- aqui --}}
-
 
 
             <div class="form-group col-md-4">
@@ -669,7 +670,7 @@
                         del Supervisor 1<font class="asterisco">*
                         </font></label>
                     <div>
-                        {!! Form::text('pmp_asignado', null, ['class' => 'form-control', 'required']) !!}
+                        {!! Form::text('pmp_asignado', null, ['class' => 'form-control', 'required', 'maxlength' => '250']) !!}
                         @if ($errors->has('pmp_asignado'))
                             <div class="invalid-feedback red-text">
                                 {{ $errors->first('pmp_asignado') }}
@@ -700,7 +701,7 @@
                     <label class="txt-tamaño">&nbsp;Nombre
                         del Supervisor 2</label>
                     <div>
-                        {!! Form::text('administrador_contrato', null, ['class' => 'form-control']) !!}
+                        {!! Form::text('administrador_contrato', null, ['class' => 'form-control','maxlength' => '250']) !!}
                         @if ($errors->has('administrador_contrato'))
                             <div class="invalid-feedback red-text">
                                 {{ $errors->first('administrador_contrato') }}
@@ -766,9 +767,9 @@
 
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/autonumeric/4.1.0/autoNumeric.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+{{-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script> --}}
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 

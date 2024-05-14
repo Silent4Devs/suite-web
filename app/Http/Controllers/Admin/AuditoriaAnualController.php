@@ -102,8 +102,8 @@ class AuditoriaAnualController extends Controller
 
         $request->validate([
             'nombre' => 'required|string',
-            'fechainicio' => 'nullable|date',
-            'fechafin' => 'nullable|date',
+            'fechainicio' => 'nullable|date|before_or_equal:fechafin',
+            'fechafin' => 'nullable|date|after_or_equal:fechainicio',
             'objetivo' => 'required|string',
             'alcance' => 'required|string',
         ]);
@@ -132,8 +132,8 @@ class AuditoriaAnualController extends Controller
 
         $request->validate([
             'nombre' => 'required|string',
-            'fechainicio' => 'nullable|date',
-            'fechafin' => 'nullable|date',
+            'fechainicio' => 'nullable|date|before_or_equal:fechafin',
+            'fechafin' => 'nullable|date|after_or_equal:fechainicio',
             'objetivo' => 'required|string',
             'alcance' => 'required|string',
         ]);
@@ -178,7 +178,7 @@ class AuditoriaAnualController extends Controller
         $auditoria = AuditoriaAnual::with('documentos_material')->find($request->auditoriaId);
         $paths = [];
         foreach ($auditoria->documentos_material as $documento) {
-            $path = asset('storage/programaAnualAuditoria/documentos/' . $auditoria->id . '/' . $documento->documento);
+            $path = asset('storage/programaAnualAuditoria/documentos/'.$auditoria->id.'/'.$documento->documento);
             $extension = pathinfo($path, PATHINFO_EXTENSION);
             array_push($paths, [
                 'path' => $path,

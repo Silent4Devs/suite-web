@@ -2,15 +2,29 @@
 @section('content')
 
     {{ Breadcrumbs::render('admin.control-accesos.create') }}
-<h5 class="col-12 titulo_general_funcion">Registrar: Control de Acceso</h5>
+    <h5 class="col-12 titulo_general_funcion">Control de Acceso</h5>
+    <div class="card card-body" style="background-color: #5397D5; color: #fff;">
+        <div class="d-flex" style="gap: 25px;">
+            <img src="{{ asset('img/audit_port.jpg') }}" alt="Auditoria" style="width: 200px;">
+            <div>
+                <br>
+                <h4>¿Qué es Control de Acceso?</h4>
+                <p>
+                    Garantiza que las personas adecuadas tengan el acceso adecuado a la información en un sistema de gestión de seguridad.
+                </p>
+                <p>
+                    Esencial para garantizar la seguridad y la integridad de la información, así como para proteger los activos críticos de una organización.
+                </p>
+            </div>
+        </div>
+    </div>
 <div class="card mt-4">
     <div class="card-body">
         <form method="POST" action="{{ route("admin.control-accesos.store") }}" enctype="multipart/form-data" class="row">
             @csrf
 
-                <div class="form-group col-sm-12">
-                    <label class="required" for="tipo"><i
-                            class="fas fa-file-signature iconos-crear"></i></i>Tipo</label>
+                <div class="form-group col-sm-12 ">
+                    <label class="required" for="tipo">Tipo</label>
                     <div style="float: right;">
                         <button id="btnAgregarTipo" onclick="event.preventDefault();"
                             class="text-white btn btn-sm" style="background:#3eb2ad;height: 32px;"
@@ -23,39 +37,36 @@
 
                 </div>
 
-                <div class="form-group col-sm-4 mt-3">
-                    <div class="form-group">
-                        <label class="required" for='responsable_id'><i
-                                class="fas fa-user-tie iconos-crear"></i>Responsable</label>
-                        <select
-                            class="form-control select2 {{ $errors->has('responsable_id') ? 'is-invalid' : '' }}"
-                            name='responsable_id' id='responsable_id' required>
-                            <option value="">Seleccione un responsable</option>
-                            @foreach ($responsables as $responsable)
-                                <option value="{{ $responsable->id }}"
-                                    data-area="{{ $responsable->area->area }}"
-                                    data-puesto="{{ $responsable->puesto }}"
-                                    {{ old('responsable_id') == $responsable->id ? 'selected' : '' }}>
-                                    {{ $responsable->name }}</option>
-                            @endforeach
-                        </select>
-                        @if ($errors->has('responsable_id'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('responsable_id') }}
-                            </div>
-                        @endif
-                    </div>
-                </div>
+                <div class="form-group col-sm-4 mt-3 anima-focus">
+                    <select
+                        class="form-control {{ $errors->has('responsable_id') ? 'is-invalid' : '' }}"
+                        name='responsable_id' id='responsable_id' required>
+                        <option value="">Seleccione un responsable</option>
+                        @foreach ($responsables as $responsable)
+                            <option value="{{ $responsable->id }}"
+                                data-area="{{ $responsable->area->area }}"
+                                data-puesto="{{ $responsable->puesto }}"
+                                {{ old('responsable_id') == $responsable->id ? 'selected' : '' }}>
+                                {{ $responsable->name }}</option>
+                        @endforeach
+                    </select>
+                    {!! Form::label('responsable_id', 'Responsable*', ['class' => 'asterisco']) !!}
+                    @if ($errors->has('responsable_id'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('responsable_id') }}
+                        </div>
+                    @endif
+            </div>
 
-                <div class="form-group col-md-4 mt-3">
-                    <label><i class="fas fa-briefcase iconos-crear"></i>Puesto<sup>*</sup></label>
+                <div class="form-group col-md-4 mt-3 anima-focus">
                     <div class="form-control" id="responsable_puesto" readonly></div>
+                    {!! Form::label('responsable_puesto', 'Puesto*', ['class' => 'asterisco']) !!}
                 </div>
 
 
-                <div class="form-group col-sm-12 col-md-4 col-lg-4 mt-3">
-                    <label><i class="fas fa-street-view iconos-crear"></i>Área<sup>*</sup></label>
+                <div class="form-group col-sm-12 col-md-4 col-lg-4 mt-3 anima-focus">
                     <div class="form-control" id="responsable_area" readonly></div>
+                    {!! Form::label('responsable_area', 'Área*', ['class' => 'asterisco']) !!}
                 </div>
 
             <div class=" mb-4 ml-3 w-100" style="border-bottom: solid 2px #345183;">
@@ -63,13 +74,10 @@
                     Periodo</span>
             </div>
 
-            <div class="form-group col-sm-12 col-md-12 col-lg-6">
-                <label class="required" for="fecha_inicio">
-                    <i class="fas fa-calendar-alt iconos-crear"></i>
-                    Fecha Inicio
-                </label>
-                <input required class="form-control" type="date" min="1945-01-01"
+            <div class="form-group col-sm-12 col-md-12 col-lg-6 anima-focus">
+                <input required placeholder="" class="form-control" type="date" min="1945-01-01"
                 id="fecha_inicio" name="fecha_inicio" value="{{ old('fecha_inicio')}}">
+                {!! Form::label('fecha_inicio', 'Fecha Inicio*', ['class' => 'asterisco']) !!}
                 <span class="fecha_inicio_error text-danger errores"></span>
                 @if ($errors->has('fecha_inicio'))
                     <div class="invalid-feedback">
@@ -78,13 +86,10 @@
                 @endif
             </div>
 
-            <div class="form-group col-sm-12 col-md-12 col-lg-6">
-                <label class="required" for="fecha_fin">
-                    <i class="fas fa-calendar-alt iconos-crear"></i>
-                    Fecha Fin
-                </label>
-                <input required class="form-control" type="date" min="1945-01-01"
+            <div class="form-group col-sm-12 col-md-12 col-lg-6  anima-focus">
+                <input required placeholder="" class="form-control" type="date" min="1945-01-01"
                 id="fecha_fin" name="fecha_fin" value="{{ old('fecha_fin') }}">
+                {!! Form::label('fecha_fin', 'Fecha Fin*', ['class' => 'asterisco']) !!}
                 <span class="fecha_fin_error text-danger errores"></span>
                 @if ($errors->has('fecha_fin'))
                     <div class="invalid-feedback">
@@ -92,10 +97,10 @@
                     </div>
                 @endif
             </div>
-            <div class="form-group col-md-12">
-                <label class="required"><i class="fas fa-align-left iconos-crear"></i>Justificación</label>
+            <div class="form-group col-md-12 anima-focus">
                 <textarea required class="form-control {{ $errors->has('justificacion') ? 'is-invalid' : '' }}"
                     name="justificacion" id="justificacion">{{ old('justificacion') }}</textarea>
+                    {!! Form::label('justificacion', 'Justificación*', ['class' => 'asterisco']) !!}
                 @if($errors->has('justificacion'))
                     <div class="invalid-feedback">
                         {{ $errors->first('justificacion') }}
@@ -104,10 +109,10 @@
                 <span class="help-block">{{ trans('cruds.controlAcceso.fields.descripcion_helper') }}</span>
             </div>
 
-            <div class="form-group col-md-12">
-                <label class="required" for="descripcion"><i class="fas fa-align-left iconos-crear"></i>{{ trans('cruds.controlAcceso.fields.descripcion') }}</label>
+            <div class="form-group col-md-12 anima-focus">
                 <textarea required class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}"
                     name="descripcion" id="descripcion">{{ old('descripcion') }}</textarea>
+                    {!! Form::label('descripcion', 'Descripción*', ['class' => 'asterisco']) !!}
                 @if($errors->has('descripcion'))
                     <div class="invalid-feedback">
                         {{ $errors->first('descripcion') }}
@@ -118,7 +123,7 @@
 
 
             <div class="form-group col-12">
-                <label for="documento"><i class="fas fa-folder-open iconos-crear"></i>Archivo</label>
+                <label for="documento">Archivo</label>
                 <input type="file" name="files[]" multiple class="form-control" id="documento" accept="application/pdf" value="{{ old('files[]') }}">
             </div>
 

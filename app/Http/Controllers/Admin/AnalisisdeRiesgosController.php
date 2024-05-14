@@ -10,7 +10,7 @@ use App\Traits\ObtenerOrganizacion;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
-use Laracasts\Flash\Flash;
+use RealRashid\SweetAlert\Facades\Alert;
 use Yajra\DataTables\Facades\DataTables;
 
 class AnalisisdeRiesgosController extends Controller
@@ -102,7 +102,7 @@ class AnalisisdeRiesgosController extends Controller
         abort_if(Gate::denies('matriz_de_riesgo_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $empleados = Empleado::getaltaAll();
 
-        //$tipoactivos = Tipoactivo::all()->pluck('tipo', 'id')->prepend(trans('global.pleaseSelect'), '');
+        //$tipoactivos = Tipoactivo::getAll()->pluck('tipo', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         return view('admin.analisis-riesgos.create', compact('empleados'));
     }
@@ -113,12 +113,12 @@ class AnalisisdeRiesgosController extends Controller
         $analisis = AnalisisDeRiesgo::create($request->all());
         switch ($request->tipo) {
             case 'Seguridad de la información':
-                Flash::success('<h5 class="text-center">Análisis de riesgo agregado</h5>');
+                Alert::success('éxito', 'Información añadida con éxito');
 
                 return redirect()->route('admin.matriz-seguridad', ['id' => $analisis->id]);
                 break;
             default:
-                Flash::error('<h5 class="text-center">Ocurrio un error intente de nuevo</h5>');
+                Alert::error('error', 'Intente de nuevo');
 
                 return redirect()->route('admin.analisis-riesgos.index');
         }
@@ -126,19 +126,37 @@ class AnalisisdeRiesgosController extends Controller
 
     public function show(Request $request, $id)
     {
-        abort_if(Gate::denies('matriz_de_riesgo_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $analisis = AnalisisDeRiesgo::find($id);
 
-        return view('admin.analisis-riesgos.show', compact('analisis'));
+        try {
+            abort_if(Gate::denies('matriz_de_riesgo_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            $analisis = AnalisisDeRiesgo::find($id);
+
+            if ($analisis) {
+                abort(404);
+            }
+
+            return view('admin.analisis-riesgos.show', compact('analisis'));
+        } catch (\Throwable $th) {
+            abort(404);
+        }
     }
 
     public function edit($id)
     {
-        abort_if(Gate::denies('matriz_de_riesgo_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $empleados = Empleado::getaltaAll();
-        $analisis = AnalisisDeRiesgo::find($id);
+        try {
+            abort_if(Gate::denies('matriz_de_riesgo_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            $empleados = Empleado::getaltaAll();
 
-        return view('admin.analisis-riesgos.edit', compact('empleados', 'analisis'));
+            if ($id) {
+                abort(404);
+            }
+
+            $analisis = AnalisisDeRiesgo::find($id);
+
+            return view('admin.analisis-riesgos.edit', compact('empleados', 'analisis'));
+        } catch (\Throwable $th) {
+            abort(404);
+        }
     }
 
     public function update(Request $request, $id)
@@ -160,11 +178,19 @@ class AnalisisdeRiesgosController extends Controller
 
     public function destroy($id)
     {
-        abort_if(Gate::denies('matriz_de_riesgo_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $analisis = AnalisisDeRiesgo::find($id);
-        $analisis->delete();
+        try {
+            abort_if(Gate::denies('matriz_de_riesgo_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            $analisis = AnalisisDeRiesgo::find($id);
 
-        return redirect()->route('admin.analisis-riesgos.index')->with('success', 'Eliminado con éxito');
+            if (! $analisis) {
+                abort(404);
+            }
+            $analisis->delete();
+
+            return redirect()->route('admin.analisis-riesgos.index')->with('success', 'Eliminado con éxito');
+        } catch (\Throwable $th) {
+            abort(404);
+        }
     }
 
     public function getEmployeeData(Request $request)

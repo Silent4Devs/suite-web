@@ -89,6 +89,8 @@ class OrganizacionesController extends Controller
     {
         $organizacione->update($request->all());
 
+        alert()->success('Post Created', 'Successfully')->toToast();
+
         return redirect()->route('admin.organizaciones.index');
     }
 

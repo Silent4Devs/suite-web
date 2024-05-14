@@ -17,7 +17,7 @@
 
     @include('livewire.factura.form')
 
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/botones.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/botones.css') }}{{config('app.cssVersion')}}">
 
 
     <div class="form-group col-12 text-right mt-4" style="margin-left: 10px; margin-right: 10px;">

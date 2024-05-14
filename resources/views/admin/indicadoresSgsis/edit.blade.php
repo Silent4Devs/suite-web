@@ -105,6 +105,22 @@
 
     {{ Breadcrumbs::render('admin.indicadores-sgsis.create') }}
 
+    <h5 class="col-12 titulo_general_funcion">Indicadores del Sistema de Gestión  </h5>
+<div class="card card-body" style="background-color: #5397D5; color: #fff;">
+    <div class="d-flex" style="gap: 25px;">
+        <img src="{{ asset('img/audit_port.jpg') }}" alt="Auditoria" style="width: 200px;">
+        <div>
+            <br>
+            <h4>¿Qué es Indicadores del Sistema de Gestión?</h4>
+            <p>
+                Medidas cuantitativas o cualitativas que se utilizan para evaluar el rendimiento y la eficacia de un Sistema de Gestión específico en una organización.
+            </p>
+            <p>
+                Los marcadores proporcionan la información necesaria para tomar decisiones y ajustar estrategias según sea necesario.
+            </p>
+        </div>
+    </div>
+</div>
     <form method="POST" action="{{ route('admin.indicadores-sgsis.update', [$indicadoresSgsi->id]) }}"
         enctype="multipart/form-data">
         @method('PUT')
@@ -113,11 +129,10 @@
         <div class="mt-4 card">
             <div class="card-body">
                 <div class="row">
-                    <div class="form-group col-sm-6">
-                        <label class="required" for="nombre"><i class="fas fa-file-signature iconos-crear"></i></i>Nombre
-                            del indicador</label>
-                        <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text"
+                    <div class="form-group col-sm-6 anima-focus">
+                        <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text" placeholder=""
                             name="nombre" id="nombre" value="{{ old('nombre', $indicadoresSgsi->nombre) }}" required>
+                            {!! Form::label('nombre', 'Nombre del indicador*', ['class' => 'asterisco']) !!}
                         @if ($errors->has('nombre'))
                             <div class="text-danger">
                                 {{ $errors->first('nombre') }}
@@ -126,8 +141,7 @@
                         <span class="help-block"></span>
                     </div>
 
-                    <div class="form-group col-sm-6 col-md-6 col-lg-6">
-                        <label for="id_area" class="required"><i class="fas fa-street-view iconos-crear"></i>Área</label>
+                    <div class="form-group col-sm-6 col-md-6 col-lg-6 anima-focus">
                         <select class="form-control {{ $errors->has('id_area') ? 'is-invalid' : '' }}"
                             name="id_area" id="id_area" required>
                             <option value="">Seleccione un responsable</option>
@@ -138,6 +152,7 @@
                                 </option>
                             @endforeach
                         </select>
+                        {!! Form::label('id_area', 'Área*', ['class' => 'asterisco']) !!}
                         @if ($errors->has('id_area'))
                             <div class="text-danger">
                                 {{ $errors->first('id_area') }}
@@ -148,11 +163,8 @@
 
 
                 <div class="row">
-                    <div class="form-group col-sm-4">
-                        <div class="form-group">
-                            <label class="required" for='id_empleado'><i
-                                    class="fas fa-user-tie iconos-crear"></i>Responsable</label>
-                            <select class="form-control select2 {{ $errors->has('id_empleado') ? 'is-invalid' : '' }}"
+                    <div class="form-group col-sm-4 anima-focus">
+                            <select class="form-control {{ $errors->has('id_empleado') ? 'is-invalid' : '' }}"
                                 name='id_empleado' id='responsable_id' required>
                                 <option value="">Seleccione un responsable</option>
                                 @foreach ($responsables as $responsable)
@@ -163,32 +175,29 @@
                                         {{ $responsable->name }} </option>
                                 @endforeach
                             </select>
+                            {!! Form::label('id_empleado', 'Responsable*', ['class' => 'asterisco']) !!}
                             @if ($errors->has('id_empleado'))
                                 <div class="text-danger">
                                     {{ $errors->first('id_empleado') }}
                                 </div>
                             @endif
-                        </div>
                     </div>
 
-                    <div class="form-group col-md-4">
-                        <label class="required"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
+                    <div class="form-group col-md-4 anima-focus">
                         <div class="form-control" id="responsable_puesto" readonly></div>
+                        {!! Form::label('responsable_puesto', 'Puesto*', ['class' => 'asterisco']) !!}
                     </div>
 
 
-                    <div class="form-group col-sm-12 col-md-4 col-lg-4">
-                        <label class="required"><i class="fas fa-street-view iconos-crear"></i>Área</label>
+                    <div class="form-group col-sm-12 col-md-4 col-lg-4 anima-focus">
                         <div class="form-control" id="responsable_area" readonly></div>
+                        {!! Form::label('responsable_area', 'Área*', ['class' => 'asterisco']) !!}
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="form-group col-sm-12">
-                        <div class="form-group">
-                            <label class="required" for="id_proceso"><i
-                                    class="fas fa-cogs iconos-crear"></i></i>Proceso</label>
-                            <select class="form-control select2 {{ $errors->has('id_proceso') ? 'is-invalid' : '' }}"
+                    <div class="form-group col-sm-12 anima-focus">
+                            <select class="form-control  {{ $errors->has('id_proceso') ? 'is-invalid' : '' }}"
                                 required name="id_proceso" id="id_proceso">
                                 <option value="">Seleccione un proceso</option>
                                 @foreach ($procesos as $proceso)
@@ -197,21 +206,19 @@
                                         {{ $proceso->codigo }} / {{ $proceso->nombre }}</option>
                                 @endforeach
                             </select>
+                            {!! Form::label('id_proceso', 'Proceso*', ['class' => 'asterisco']) !!}
                             @if ($errors->has('id_proceso'))
                                 <div class="text-danger">
                                     {{ $errors->first('id_proceso') }}
                                 </div>
                             @endif
-
-                        </div>
                     </div>
 
                 </div>
-                <div class="form-group">
-                    <label for="descripcion"><i
-                            class="fas fa-file-signature iconos-crear"></i>{{ trans('cruds.sede.fields.descripcion') }}</label>
+                <div class="form-group anima-focus">
                     <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" name="descripcion"
                         id="descripcion">{{ old('descripcion', $indicadoresSgsi->descripcion) }}</textarea>
+                        {!! Form::label('id_proceso', 'Descripción*', ['class' => 'asterisco']) !!}
                     @if ($errors->has('descripcion'))
                         <div class="text-danger">
                             {{ $errors->first('descripcion') }}
@@ -271,12 +278,11 @@
                 </div>
 
                 <div class="row">
-                    <div class="form-group col-sm-6 col-md-2 col-lg-2">
-                        <label class="required" for="unidad"><i
-                                class="fas fa-calculator iconos-crear"></i>Unidad</label>
-                        <input class="form-control {{ $errors->has('unidadmedida') ? 'is-invalid' : '' }}" type="text"
+                    <div class="form-group col-sm-6 col-md-2 col-lg-2 anima-focus">
+                        <input class="form-control {{ $errors->has('unidadmedida') ? 'is-invalid' : '' }}" type="text" placeholder=""
                             name="unidadmedida" id="unidadmedida"
                             value="{{ old('unidadmedida', $indicadoresSgsi->unidadmedida) }}" required>
+                            {!! Form::label('unidadmedida', 'Unidad*', ['class' => 'asterisco']) !!}
                         @if ($errors->has('unidadmedida'))
                             <div class="text-danger">
                                 {{ $errors->first('unidadmedida') }}
@@ -285,68 +291,56 @@
                         <span class="help-block"></span>
                     </div>
 
-                    <div class="form-group col-sm-6 col-md-2 col-lg-2">
-                        <div class="form-group">
-                            <label class="required" for="meta"><i
-                                    class="fas fa-flag-checkered iconos-crear"></i></i></i>Meta</label>
+                    <div class="form-group col-sm-6 col-md-2 col-lg-2 anima-focus">
                             <input class="form-control {{ $errors->has('meta') ? 'is-invalid' : '' }}" type="text"
-                                name="meta" id="meta" value="{{ old('meta', $indicadoresSgsi->meta) }}"
+                                name="meta" id="meta" placeholder=""  value="{{ old('meta', $indicadoresSgsi->meta) }}"
                                 required>
+                                {!! Form::label('meta', 'Meta*', ['class' => 'asterisco']) !!}
                             @if ($errors->has('meta'))
                                 <div class="text-danger">
                                     {{ $errors->first('meta') }}
                                 </div>
                             @endif
                             <span class="help-block"></span>
-                        </div>
                     </div>
 
-                    <div class="form-group col-sm-6 col-md-4 col-lg-4">
-                        <div class="form-group">
-                            <label class="required" for="frecuencia"><i
-                                    class="fas fa-wave-square iconos-crear"></i>Frecuencia</label>
+                    <div class="form-group col-sm-6 col-md-4 col-lg-4 anima-focus">
                             <input class="form-control {{ $errors->has('frecuencia') ? 'is-invalid' : '' }}" maxlength="255"
                                 type="text" name="frecuencia" id="frecuencia"
                                 value="{{ old('frecuencia', $indicadoresSgsi->frecuencia) }}" required>
+                                {!! Form::label('frecuencia', 'Frecuencia*', ['class' => 'asterisco']) !!}
                             @if ($errors->has('frecuencia'))
                                 <div class="text-danger">
                                     {{ $errors->first('frecuencia') }}
                                 </div>
                             @endif
                             <span class="help-block"></span>
-                        </div>
                     </div>
 
-                    <div class="form-group col-sm-6 col-md-2 col-lg-2">
-                        <div class="form-group">
-                            <label class="required" for="ano"><i
-                                    class="fas fa-calendar-alt iconos-crear"></i>Año</label>
+                    <div class="form-group col-sm-6 col-md-2 col-lg-2 anima-focus">
                             <input class="yearpicker form-control" {{ $errors->has('ano') ? 'is-invalid' : '' }}
                                 type="text" name="ano" id="ano"
                                 value="{{ old('ano', $indicadoresSgsi->ano) }}">
+                                {!! Form::label('ano', 'Año*', ['class' => 'asterisco']) !!}
                             @if ($errors->has('ano'))
                                 <div class="text-danger">
                                     {{ $errors->first('ano') }}
                                 </div>
                             @endif
                         <span class="help-block"></span>
-                        </div>
                     </div>
 
-                    <div class="form-group col-sm-6 col-md-2 col-lg-2">
-                        <div class="form-group">
-                            <label class="required" for="no_revisiones"><i
-                                    class="fas fa-clipboard-check iconos-crear"></i>Revisiones</label>
+                    <div class="form-group col-sm-6 col-md-2 col-lg-2 anima-focus">
                             <input class="form-control {{ $errors->has('no_revisiones') ? 'is-invalid' : '' }}"
-                                type="number" name="no_revisiones" id="no_revisiones" min="0"
+                                type="number" name="no_revisiones" id="no_revisiones" min="0" placeholder=""
                                 value="{{ old('no_revisiones', $indicadoresSgsi->no_revisiones) }}" required>
+                                {!! Form::label('no_revisiones', 'Revisiones*', ['class' => 'asterisco']) !!}
                             @if ($errors->has('no_revisiones'))
                                 <div class="text-danger">
                                     {{ $errors->first('no_revisiones') }}
                                 </div>
                             @endif
                             <span class="help-block"></span>
-                        </div>
                     </div>
                 </div>
 

@@ -10,10 +10,24 @@
 
     </style>
 
-    <div class="mt-4 card">
-        <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
-            <h3 class="mb-1 text-center text-white"><strong> Registrar: </strong> Comunicación SGSI </h3>
+<h5 class="col-12 titulo_general_funcion">Comunicados Generales</h5>
+    <div class="card card-body" style="background-color: #5397D5; color: #fff;">
+        <div class="d-flex" style="gap: 25px;">
+            <img src="{{ asset('img/audit_port.jpg') }}" alt="Auditoria" style="width: 200px;">
+            <div>
+                <br>
+                <h4>¿Qué es Comunicados Generales?</h4>
+                <p>
+                    Anuncios o mensajes importantes que la organización comparte con todos sus colaboradores para comunicar aspectos importantes.
+                </p>
+                <p>
+                    Son fundamentales ya que contribuye a la concientización y comprensión general.
+                </p>
+            </div>
         </div>
+    </div>
+
+    <div class="mt-4 card">
 
         <div class="card-body">
             <form method="POST" action="{{ route('admin.comunicacion-sgis.store') }}" enctype="multipart/form-data"

@@ -5,7 +5,9 @@ namespace App\Http\Controllers\ContractManager;
 use App\Http\Controllers\Controller;
 use App\Models\ContractManager\Sucursal;
 use Gate;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 
 class SucursalController extends Controller
@@ -18,8 +20,8 @@ class SucursalController extends Controller
     public function index()
     {
         abort_if(Gate::denies('katbol_sucursales_acceso'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $sucursales = Sucursal::select('id', 'clave', 'descripcion', 'rfc', 'empresa', 'cuenta_contable', 'estado', 'zona', 'archivo', 'direccion', 'mylogo')->where('archivo', false)->get();
-        $sucursales_id = Sucursal::get()->pluck('id');
+        $sucursales = Sucursal::getArchivoFalse();
+        $sucursales_id = Sucursal::getPluckId();
         $ids = [];
 
         foreach ($sucursales_id as $id) {
@@ -31,7 +33,7 @@ class SucursalController extends Controller
 
     public function getSucursalesIndex(Request $request)
     {
-        $query = Sucursal::select('id', 'clave', 'descripcion', 'rfc', 'empresa', 'cuenta_contable', 'estado', 'zona', 'archivo', 'direccion', 'mylogo')->where('archivo', false)->get();
+        $query = Sucursal::getArchivoFalse();
 
         return datatables()->of($query)->toJson();
     }
@@ -51,29 +53,37 @@ class SucursalController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $sucursales = new Sucursal();
-        $sucursales->descripcion = $request->descripcion;
-        $sucursales->rfc = $request->rfc;
-        $sucursales->empresa = $request->empresa;
-        $sucursales->cuenta_contable = $request->cuenta_contable;
-        $sucursales->zona = $request->zona;
-        $sucursales->direccion = $request->direccion;
+        try {
+            DB::beginTransaction();
 
-        $file = $request->file('mylogo');
+            $sucursales = new Sucursal();
+            $sucursales->descripcion = $request->descripcion;
+            $sucursales->rfc = $request->rfc;
+            $sucursales->empresa = $request->empresa;
+            $sucursales->cuenta_contable = $request->cuenta_contable;
+            $sucursales->zona = $request->zona;
+            $sucursales->direccion = $request->direccion;
 
-        if ($file != null) {
-            $nombre = uniqid() . '.' . $file->getClientOriginalExtension();
-            $file->move(base_path('public/razon_social'), $nombre);
-            $sucursales->mylogo = $nombre;
-            $sucursales->save();
+            $file = $request->file('mylogo');
+
+            if ($file != null) {
+                $nombre = uniqid().'.'.$file->getClientOriginalExtension();
+                $file->move(base_path('public/razon_social'), $nombre);
+                $sucursales->mylogo = $nombre;
+                $sucursales->save();
+            }
+            DB::commit();
+
+            return redirect('/contract_manager/sucursales');
+        } catch (QueryException $e) {
+            DB::rollback();
+
+            return 'Error al insertar el proveedor: '.$e->getMessage();
         }
-
-        return redirect('/contract_manager/sucursales');
     }
 
     /**
@@ -104,7 +114,6 @@ class SucursalController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -124,7 +133,7 @@ class SucursalController extends Controller
         $file = $request->file('mylogo');
 
         if ($file != null) {
-            $nombre = uniqid() . '.' . $file->getClientOriginalExtension();
+            $nombre = uniqid().'.'.$file->getClientOriginalExtension();
             $file->move(base_path('public/razon_social'), $nombre);
 
             $sucursal->update([
@@ -133,9 +142,9 @@ class SucursalController extends Controller
                 'empresa' => $request->empresa,
                 'cuenta_contable' => $request->cuenta_contable,
                 'estado' => $request->estado,
-                'zona' =>  $request->zona,
-                'direccion' =>  $request->direccion,
-                'mylogo' =>   $nombre,
+                'zona' => $request->zona,
+                'direccion' => $request->direccion,
+                'mylogo' => $nombre,
             ]);
         }
 
@@ -167,8 +176,8 @@ class SucursalController extends Controller
 
     public function view_archivados()
     {
-        $sucursales = Sucursal::select('id', 'clave', 'descripcion', 'rfc', 'empresa', 'cuenta_contable', 'estado', 'zona', 'archivo', 'direccion', 'mylogo')->where('archivo', true)->get();
-        $sucursales_id = Sucursal::get()->pluck('id');
+        $sucursales = Sucursal::getArchivoTrue();
+        $sucursales_id = Sucursal::getPluckId();
         $ids = [];
 
         foreach ($sucursales_id as $id) {
@@ -180,7 +189,7 @@ class SucursalController extends Controller
 
     public function getArchivadosIndex(Request $request)
     {
-        $query = Sucursal::select('id', 'clave', 'descripcion', 'rfc', 'empresa', 'cuenta_contable', 'estado', 'zona', 'archivo', 'direccion', 'mylogo')->where('archivo', true)->get();
+        $query = Sucursal::getArchivoTrue();
 
         return datatables()->of($query)->toJson();
     }

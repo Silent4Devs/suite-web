@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\ClearsResponseCache;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,12 +12,12 @@ use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
-class IncidentesSeguridad extends Model implements HasMedia, Auditable
+class IncidentesSeguridad extends Model implements Auditable, HasMedia
 {
-    use InteractsWithMedia;
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
     use HasFactory;
+    use InteractsWithMedia;
     use SoftDeletes;
-    use \OwenIt\Auditing\Auditable;
 
     const ARCHIVADO = '1';
 
@@ -30,6 +31,11 @@ class IncidentesSeguridad extends Model implements HasMedia, Auditable
 
     protected $guarded = [
         'id',
+    ];
+
+    protected $fillable = [
+        'empleado_reporto_id',
+        'empleado_asignado_id',
     ];
 
     protected $appends = ['folio', 'archivo', 'fecha_creacion', 'fecha_cerrado'];
@@ -55,12 +61,12 @@ class IncidentesSeguridad extends Model implements HasMedia, Auditable
 
     public function reporto()
     {
-        return $this->belongsTo(Empleado::class, 'empleado_reporto_id', 'id')->alta();
+        return $this->belongsTo(Empleado::class, 'empleado_reporto_id');
     }
 
     public function asignado()
     {
-        return $this->belongsTo(Empleado::class, 'empleado_asignado_id', 'id')->alta();
+        return $this->belongsTo(Empleado::class, 'empleado_asignado_id');
     }
 
     public function evidencias_seguridad()

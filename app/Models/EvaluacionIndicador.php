@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\ClearsResponseCache;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -24,9 +25,9 @@ use OwenIt\Auditing\Contracts\Auditable;
  */
 class EvaluacionIndicador extends Model implements Auditable
 {
-    use SoftDeletes;
+    use ClearsResponseCache, \OwenIt\Auditing\Auditable;
     use HasFactory;
-    use \OwenIt\Auditing\Auditable;
+    use SoftDeletes;
 
     protected $table = 'evaluacion_indicador';
 

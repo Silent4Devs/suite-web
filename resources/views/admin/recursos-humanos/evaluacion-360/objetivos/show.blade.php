@@ -19,13 +19,13 @@
             border: 1px solid #345183
         }
     </style>
-    <div class="mt-3">
+    @can('objetivos_estrategicos_acceder')
         {{ Breadcrumbs::render('EV360-Objetivos-Show', ['empleado' => $empleado]) }}
-    </div>
+    @endcan
+
+    <h5 class="col-12 titulo_general_funcion">Objetivos Estratégicos</h5>
+
     <div class="mt-5 card">
-        <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-            <h3 class="mb-2 text-center text-white"><strong>Objetivos Estratégicos</strong></h3>
-        </div>
         @include('partials.flashMessages')
         <div class="card-body">
             <div class="col-12">
@@ -65,6 +65,18 @@
                 <hr class="hr-custom-title">
                 <br>
             </div>
+            <div class="row mb-3">
+                <div class="col-10">
+
+                </div>
+                <div class="col-2">
+                    <a class="btn btn-outline-primary ml-auto"
+                        href="{{ route('admin.ev360-objetivos-empleado.create', ['empleado' => auth()->user()->empleado->id]) }}">
+                        + Agregar Objetivos
+                    </a>
+                </div>
+            </div>
+
             <div class="col-12 datatable-fix">
                 <table class="table table-bordered w-100 tblObjetivos ">
                     <thead class="thead-dark">

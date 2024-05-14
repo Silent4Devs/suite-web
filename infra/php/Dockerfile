@@ -15,35 +15,36 @@ RUN apk add --no-cache \
     icu-libs \
     libc-dev \
     libzip-dev \
+    libpq-dev \
     make \
-    mysql-client \
-    # nodejs \
-    # npm \
+    #mysql-client \
+    nodejs \
+    npm \
     oniguruma-dev \
     yarn \
     openssh-client \
     postgresql-libs \
+    postgresql-client \
     rsync \
     zlib-dev \
     sudo \
     zip \
     unzip \
-    libsodium-dev \
-    dcron
+    libsodium-dev
 
 # Install php extensions
 RUN chmod +x /usr/local/bin/install-php-extensions && \
     install-php-extensions \
     @composer \
     redis-stable \
-    imagick-stable \
+    #imagick-stable \
     #xdebug-stable \
     bcmath \
     calendar \
     exif \
     gd \
     intl \
-    pdo_mysql \
+    #pdo_mysql \
     pdo_pgsql \
     pcntl \
     soap \
@@ -52,7 +53,14 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
     opcache \
     sockets \
     sodium \
-    excimer
+    excimer \
+    pcntl \
+    posix \
+    amqp \
+    newrelic
+
+# Enable phpredis extension
+#RUN echo "extension=redis.so" > /usr/local/etc/php/conf.d/docker-php-ext-redis.ini
 
 # Copy custom php.ini
 COPY php.ini /usr/local/etc/php/php.ini
@@ -63,7 +71,9 @@ COPY www.conf /usr/local/etc/php-fpm.d/www.conf
 RUN chown -R www-data:www-data /var/www \
     && chmod 755 -R /var/www
 
+# Install npm
+RUN npm install -g npm@latest
+
 # Healthcheck
 HEALTHCHECK --interval=15m --timeout=3s \
     CMD curl --fail http://localhost/ || exit 1
-

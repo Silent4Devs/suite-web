@@ -16,6 +16,7 @@ class AuditoriaAnualObserver
     public function created(AuditoriaAnual $auditoriaAnual)
     {
         event(new AuditoriaAnualEvent($auditoriaAnual, 'create', 'auditoria-anual', 'Auditoria Anual'));
+
         $this->forgetCache();
     }
 
@@ -27,6 +28,7 @@ class AuditoriaAnualObserver
     public function updated(AuditoriaAnual $auditoriaAnual)
     {
         event(new AuditoriaAnualEvent($auditoriaAnual, 'update', 'auditoria-anual', 'Auditoria Anual'));
+
         $this->forgetCache();
     }
 
@@ -38,6 +40,7 @@ class AuditoriaAnualObserver
     public function deleted(AuditoriaAnual $auditoriaAnual)
     {
         event(new AuditoriaAnualEvent($auditoriaAnual, 'delete', 'auditoria-anual', 'Auditoria Anual'));
+
         $this->forgetCache();
     }
 
@@ -63,6 +66,6 @@ class AuditoriaAnualObserver
 
     private function forgetCache()
     {
-        Cache::forget('auditoriaanual_all');
+        Cache::forget('AuditoriaAnual:auditoriaanual_all');
     }
 }

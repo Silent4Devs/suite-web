@@ -7,12 +7,14 @@ use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\CreateAmenazaRequest;
 use App\Http\Requests\UpdateAmenazaRequest;
 use App\Models\Amenaza;
+use App\Models\Empleado;
+use App\Models\User;
 use App\Repositories\AmenazaRepository;
 use App\Traits\ObtenerOrganizacion;
-use Flash;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
+use RealRashid\SweetAlert\Facades\Alert;
 use Yajra\DataTables\Facades\DataTables;
 
 class AmenazaController extends AppBaseController
@@ -73,8 +75,10 @@ class AmenazaController extends AppBaseController
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
+        $usuario = User::getCurrentUser();
+        $empleado = Empleado::getMyEmpleadodata($usuario->empleado->id);
 
-        return view('admin.amenazas.index', compact('logo_actual', 'empresa_actual'));
+        return view('admin.amenazas.index', compact('logo_actual', 'empresa_actual', 'empleado'));
     }
 
     /**
@@ -103,7 +107,7 @@ class AmenazaController extends AppBaseController
 
         $amenaza = $this->amenazaRepository->create($input);
 
-        Flash::success('Amenaza añadida satisfactoriamente.');
+        Alert::success('éxito', 'Información añadida con éxito');
 
         return redirect(route('admin.amenazas.index'));
     }
@@ -121,7 +125,7 @@ class AmenazaController extends AppBaseController
         $amenaza = $this->amenazaRepository->find($id);
 
         if (empty($amenaza)) {
-            Flash::error('Amenaza not found');
+            Alert::error('error', 'Amenaza not found');
 
             return redirect(route('admin.amenazas.index'));
         }
@@ -135,14 +139,14 @@ class AmenazaController extends AppBaseController
         $amenaza = $this->amenazaRepository->find($id);
 
         if (empty($amenaza)) {
-            Flash::error('Amenaza not found');
+            Alert::error('error', 'Amenaza not found');
 
             return redirect(route('amenazas.index'));
         }
 
         $amenaza = $this->amenazaRepository->update($request->all(), $id);
 
-        Flash::success('Amenaza actualizada.');
+        Alert::success('éxito', 'Información añadida con éxito');
 
         return redirect(route('admin.amenazas.index'));
     }
@@ -159,14 +163,14 @@ class AmenazaController extends AppBaseController
         $amenaza = $this->amenazaRepository->find($id);
 
         if (empty($amenaza)) {
-            Flash::error('Amenaza not found');
+            Alert::error('error', 'Amenaza not found');
 
             return redirect(route('amenazas.index'));
         }
 
         $this->amenazaRepository->delete($id);
 
-        Flash::success('Amenaza eliminada satisfactoriamente.');
+        Alert::success('éxito', 'Información eliminada con éxito');
 
         return redirect(route('admin.amenazas.index'));
     }

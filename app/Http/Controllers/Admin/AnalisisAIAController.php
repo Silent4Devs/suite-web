@@ -6,10 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\AjustesAIA;
 use App\Models\AnalisisAIA;
 use App\Traits\ObtenerOrganizacion;
-use Flash;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
+use RealRashid\SweetAlert\Facades\Alert;
 use Yajra\DataTables\Facades\DataTables;
 
 class AnalisisAIAController extends Controller
@@ -132,7 +132,7 @@ class AnalisisAIAController extends Controller
         $cuestionario = AnalisisAIA::find($id);
 
         if (empty($cuestionario)) {
-            Flash::error('Cuestionario no encontrado');
+            Alert::error('error', 'Cuestionario not found');
 
             return redirect(route('admin.analisis-aia.index'));
         }
@@ -417,7 +417,7 @@ class AnalisisAIAController extends Controller
 
         $cuestionario = AnalisisAIA::find($id);
         $cuestionario->update($request->all());
-        Flash::success('Cuestionario actualizado correctamente.');
+        Alert::success('éxito', 'Información actualizada con éxito');
 
         return redirect(route('admin.analisis-aia.index'));
     }
@@ -445,7 +445,7 @@ class AnalisisAIAController extends Controller
         $id = 1;
         $cuestionario = AjustesAIA::find($id);
         if (empty($cuestionario)) {
-            Flash::error('Ajustes no encontrados');
+            Alert::error('error', 'Ajustes not found');
 
             return redirect(route('admin.analisis-aia.matriz'));
         }
@@ -458,7 +458,7 @@ class AnalisisAIAController extends Controller
         abort_if(Gate::denies('matriz_bia_matriz_ajustes_modificar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $cuestionario = AjustesAIA::find($id);
         $cuestionario->update($request->all());
-        Flash::success('Ajustes aplicados satisfactoriamente.');
+        Alert::success('éxito', 'Información actualizada con éxito');
 
         return redirect()->route('admin.analisis-aia.matriz');
     }

@@ -1,7 +1,8 @@
 <div class="row" style="margin-top: 30px; margin-left: 10px;">
     <div class="col l6">
         <label for="search">Busca un número de convenio</label>
-        <input type="text" wire:model="search" class="form-control" placeholder="Busca un número de convenio">
+        <input type="text" wire:model.debounce.800ms="search" class="form-control"
+            placeholder="Busca un número de convenio">
         {{-- <span>Usted está buscando: <strong>{{ $search }}</strong></span> --}}
     </div>
     <div wire:ignore class="input-field col l6 row"

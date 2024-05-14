@@ -14,7 +14,7 @@ use PhpOffice\PhpSpreadsheet\Style\Style;
 use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class VisitanteExport implements FromCollection, WithHeadings, WithMapping, WithColumnWidths, WithStyles
+class VisitanteExport implements FromCollection, WithColumnWidths, WithHeadings, WithMapping, WithStyles
 {
     public $visitantes;
 

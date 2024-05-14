@@ -11,13 +11,16 @@ use App\Models\Empleado;
 use App\Models\Grupo;
 use App\Models\Organizacion;
 use App\Models\Team;
+use App\Services\ImageService;
 use Gate;
 use Illuminate\Auth\Access\Gate as AccessGate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use Maatwebsite\Excel\Facades\Excel;
+use PDF;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -109,7 +112,7 @@ class AreasController extends Controller
             $validateReporta = 'required|exists:areas,id';
         }
         $request->validate([
-            'area' => 'required|string',
+            'area' => 'required|string|max:255',
             'id_reporta' => $validateReporta,
         ], [
             'id_reporta.required' => 'El área a la que reporta es requerido',
@@ -118,22 +121,36 @@ class AreasController extends Controller
         $area = Area::create($request->all());
 
         $image = null;
-        if ($request->file('foto_area') != null or !empty($request->file('foto_area'))) {
-            $extension = pathinfo($request->file('foto_area')->getClientOriginalName(), PATHINFO_EXTENSION);
-            $name_image = basename(pathinfo($request->file('foto_area')->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
-            $new_name_image = 'UID_' . $area->id . '_' . $name_image . '.' . $extension;
-            $route = storage_path() . '/app/public/areas/' . $new_name_image;
-            $image = $new_name_image;
-            //Usamos image_intervention para disminuir el peso de la imagen
-            $img_intervention = Image::make($request->file('foto_area'));
-            $img_intervention->resize(256, null, function ($constraint) {
-                $constraint->aspectRatio();
-            })->save($route);
-        }
 
-        $area->update([
-            'foto_area' => $image,
-        ]);
+        if ($request->hasFile('foto_area')) {
+            $file = $request->file('foto_area');
+            //$name_image = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+            $hash_name = pathinfo($file->hashName(), PATHINFO_FILENAME);
+            $new_name_image = 'UID_'.$area->id.'_'.$hash_name.'.png';
+
+            // Call the ImageService to consume the external API
+            $apiResponse = ImageService::consumeImageCompresorApi($file);
+
+            // Compress and save the image
+            if ($apiResponse['status'] == 200) {
+                $rutaGuardada = '/app/public/areas/'.$new_name_image;
+                file_put_contents(storage_path($rutaGuardada), $apiResponse['body']);
+
+                $area->update([
+                    'foto_area' => $new_name_image,
+                ]);
+
+            } else {
+                $mensajeError = 'Error al recibir la imagen de la API externa: '.$apiResponse['body'];
+
+                return Redirect::back()->with('error', $mensajeError);
+            }
+
+        } else {
+            $area->update([
+                'foto_area' => null,
+            ]);
+        }
 
         return redirect()->route('admin.areas.index')->with('success', 'Guardado con éxito');
     }
@@ -167,32 +184,47 @@ class AreasController extends Controller
         }
 
         $request->validate([
-            'area' => 'required|string',
+            'area' => 'required|string|max:255',
             'id_reporta' => $validateReporta,
         ], [
             'id_reporta.required' => 'El área a la que reporta es requerido',
         ]);
 
         $image = $area->foto_area;
-        if ($request->file('foto_area') != null or !empty($request->file('foto_area'))) {
-            //Si existe la imagen entonces se elimina al editarla
 
-            $isExists = Storage::disk('public')->exists('/app/public/areas/' . $area->foto_area);
-            if ($isExists) {
-                if ($area->foto_area != null) {
-                    unlink(storage_path('/app/public/areas/' . $area->foto_area));
-                }
+        if ($request->hasFile('foto_area')) {
+            //Si existe la imagen entonces se elimina al editarla
+            $file = $request->file('foto_area');
+
+            $filePath = '/app/public/areas/'.$area->foto_area;
+            $hash_name = pathinfo($file->hashName(), PATHINFO_FILENAME);
+            $new_name_image = 'UID_'.$area->id.'_'.$hash_name.'.png';
+
+            if (Storage::disk('public')->exists($filePath)) {
+                Storage::disk('public')->delete($filePath);
             }
-            $extension = pathinfo($request->file('foto_area')->getClientOriginalName(), PATHINFO_EXTENSION);
-            $name_image = basename(pathinfo($request->file('foto_area')->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
-            $new_name_image = 'UID_' . $area->id . '_' . $name_image . '.' . $extension;
-            $route = storage_path() . '/app/public/areas/' . $new_name_image;
-            $image = $new_name_image;
-            //Usamos image_intervention para disminuir el peso de la imagen
-            $img_intervention = Image::make($request->file('foto_area'));
-            $img_intervention->resize(256, null, function ($constraint) {
-                $constraint->aspectRatio();
-            })->save($route);
+
+            // Call the ImageService to consume the external API
+            $apiResponse = ImageService::consumeImageCompresorApi($file);
+
+            // Compress and save the image
+            if ($apiResponse['status'] == 200) {
+                $rutaGuardada = '/app/public/areas/'.$new_name_image;
+                file_put_contents(storage_path($rutaGuardada), $apiResponse['body']);
+
+                $area->update([
+                    'foto_area' => $new_name_image,
+                ]);
+
+            } else {
+                $mensajeError = 'Error al recibir la imagen de la API externa: '.$apiResponse['body'];
+
+                return Redirect::back()->with('error', $mensajeError);
+            }
+        } else {
+            $area->update([
+                'foto_area' => null,
+            ]);
         }
 
         $area->update([
@@ -201,7 +233,7 @@ class AreasController extends Controller
             'id_reporta' => $request->id_reporta,
             'descripcion' => $request->descripcion,
             'empleados_id' => $request->empleados_id,
-            'foto_area' => $image,
+            'foto_area' => $new_name_image ?? null,
 
         ]);
 
@@ -246,14 +278,14 @@ class AreasController extends Controller
         abort_if(Gate::denies('niveles_jerarquicos_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $numero_grupos = Grupo::count();
 
-        $areasTree = Area::exists(); //Eager loading
+        $areasTree = Area::getExists(); //Eager loading
         // dd($areasTree);
 
         $rutaImagenes = asset('storage/empleados/imagenes/');
         $grupos = Grupo::with('areas')->orderBy('id')->get();
         $organizacionDB = Organizacion::getFirst();
-        $organizacion = !is_null($organizacionDB) ? Organizacion::getFirst()->empresa : 'la organización';
-        $org_foto = !is_null($organizacionDB) ? url('images/' . DB::table('organizacions')->select('logotipo')->first()->logotipo) : url('img/Silent4Business-Logo-Color.png');
+        $organizacion = ! is_null($organizacionDB) ? Organizacion::getFirst()->empresa : 'la organización';
+        $org_foto = ! is_null($organizacionDB) ? url('images/'.DB::table('organizacions')->select('logotipo')->first()->logotipo) : url('img/Silent4Business-Logo-Color.png');
         $areas_sin_grupo = Area::whereDoesntHave('grupo')->get();
         $organizacion = Organizacion::getFirst();
 
@@ -267,7 +299,6 @@ class AreasController extends Controller
         $areasTree = Area::with(['lider', 'supervisor.children', 'supervisor.supervisor', 'grupo', 'children.supervisor', 'children.children'])->whereNull('id_reporta')->first(); //Eager loading
 
         return json_encode($areasTree);
-        // dd($areasTree);
     }
 
     public function exportTo()
@@ -275,5 +306,14 @@ class AreasController extends Controller
         // abort_if(AccessGate::denies('configuracion_area_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return Excel::download(new AreasExport, 'areas.csv');
+    }
+
+    public function pdf()
+    {
+        $areas = Area::get();
+        $pdf = PDF::loadView('areas', compact('areas'));
+        $pdf->setPaper('A4', 'portrait');
+
+        return $pdf->download('areas.pdf');
     }
 }

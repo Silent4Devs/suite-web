@@ -11,17 +11,19 @@ class LessonDescription extends Component
     use LivewireAlert;
 
     public $lesson;
+
     public $description;
+
     public $name;
 
     protected function rules()
     {
         if ($this->description) {
-            return[
+            return [
                 'description.name' => 'required',
             ];
         } else {
-            return[
+            return [
                 'name' => 'required',
             ];
         }

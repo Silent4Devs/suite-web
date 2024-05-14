@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Requisición</title>
 
-    <link rel="stylesheet" href="css/requisiciones_pdf.css">
+    <link rel="stylesheet" href="css/requisiciones_pdf.css{{config('app.cssVersion')}}">
 </head>
 <body>
 
@@ -15,9 +15,9 @@
             <tr>
                 <td class="td-img-doc">
                     @if ($requisiciones->sucursal->mylogo)
-                        <img style="width:100%; max-width:150px;" src="{{ url('razon_social/'.$requisiciones->sucursal->mylogo) }}">
+                        <img style="width:100%; max-width:150px;" src="{{ public_path('razon_social/'.$requisiciones->sucursal->mylogo) }}">
                     @else
-                        <img src="{{ asset('sinLogo.png') }}"  style="width:100%; max-width:150px;">
+                        <img src="{{ public_path('sinLogo.png') }}"  style="width:100%; max-width:150px;">
                     @endif
                 </td>
                 <td class="info-header">
@@ -52,7 +52,11 @@
             <tr>
                 <td style="color: white;" >
                     <strong> Proyecto: </strong> <br>
-                    {{ $requisiciones->contrato->no_proyecto }} / {{ $requisiciones->contrato->no_contrato }} - {{ $requisiciones->contrato->nombre_servicio }}
+                    @if($requisiciones->contrato === null)
+                    <strong>Contrato Eliminado!</strong>
+                    @else
+                    {{ optional($requisiciones->contrato)->no_proyecto }} - {{ optional($requisiciones->contrato)->no_contrato }} - {{ optional($requisiciones->contrato)->nombre_servicio }}
+                    @endif
                 </td>
                 <td style="color: white;" >
                     <strong> Comprador: </strong> <br>
@@ -173,12 +177,17 @@
                         <strong> Fecha Inicio: </strong> <br> <br>
                         @isset($prov->fecha_inicio)
                             {{ date('d-m-Y', strtotime($prov->fecha_inicio)) }}
+                        @else
+                            La fecha de inicio no está disponible.
                         @endisset
+
                     </td>
                     <td colspan="2">
                         <strong> Fecha Fin: </strong> <br> <br>
                         @isset($prov->fecha_fin)
                             {{ date('d-m-Y', strtotime($prov->fecha_fin)) }}
+                        @else
+                            La fecha fin no está disponible.
                         @endisset
                     </td>
                 </tr>
@@ -194,11 +203,20 @@
                 <tr>
                     <td>
                         <strong> Fecha Inicio: </strong> <br> <br>
+                        @isset($proveedor_indistinto->fecha_inicio)
                         {{ date('d-m-Y', strtotime($proveedor_indistinto->fecha_inicio))  }}
+                        @else
+                            La fecha de inicio no está disponible.
+                        @endisset
+
                     </td>
                     <td>
                         <strong> Fecha fin: </strong> <br> <br>
-                        {{ date('d-m-Y', strtotime($proveedor_indistinto->fecha_fin))  }}
+                        @isset($proveedor_indistinto->fecha_fin)
+                        {{ date('d-m-Y', strtotime($proveedor_indistinto->fecha_fin)) }}
+                        @else
+                            La fecha fin no está disponible.
+                        @endisset
                     </td>
                 </tr>
             </table>
@@ -233,7 +251,7 @@
             <td align="center">
                 @if ($requisiciones->firma_finanzas)
                     <img src="{{$requisiciones->firma_finanzas}}" class="img-firma"> <br>
-                    <small> Lourdes del Pilar Abadía Velasco | {{ $requisiciones->fecha_firma_finanzas_requi }} </small>
+                    <small> {{$firma_finanzas_name ?? ''}} | {{ $requisiciones->fecha_firma_finanzas_requi }} </small>
                 @else
                     <div style="height: 185px;"></div>
                 @endif

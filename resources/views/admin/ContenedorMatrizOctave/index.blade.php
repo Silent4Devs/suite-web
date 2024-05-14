@@ -6,7 +6,6 @@
             position: relative;
             padding: 0;
         }
-
     </style>
 
     <div class="mt-5 card">
@@ -26,7 +25,7 @@
                 </div>
                 <div class="col-sm-8 align-content-center">
                     @include('layouts.errors')
-                    @include('flash::message')
+
                 </div>
                 <div class="col-sm-2">
                 </div>
@@ -135,14 +134,16 @@
 
             @can('recurso_create')
                 let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar curso y capacitación',
-                url: "{{ route('admin.contenedores.create', $matriz) }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
-                action: function(e, dt, node, config){
-                let {url} = config;
-                window.location.href = url;
-                }
+                    text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                    titleAttr: 'Agregar curso y capacitación',
+                    url: "{{ route('admin.contenedores.create', $matriz) }}",
+                    className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
+                    action: function(e, dt, node, config) {
+                        let {
+                            url
+                        } = config;
+                        window.location.href = url;
+                    }
                 };
                 // let btnExport = {
                 // text: '<i class="fas fa-download"></i>',
@@ -164,7 +165,7 @@
                 // $('#xlsxImportModal').modal('show');
                 // }
                 // };
-            
+
                 dtButtons.push(btnAgregar);
                 // dtButtons.push(btnExport);
                 // dtButtons.push(btnImport);
@@ -173,29 +174,39 @@
             @can('competencium_delete')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
-                text: deleteButtonTrans,
-                url: "{{ route('admin.contenedores.massDestroy') }}",
-                className: 'btn-danger',
-                action: function (e, dt, node, config) {
-                var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-                return entry.id
-                });
-            
-                if (ids.length === 0) {
-                alert('{{ trans('global.datatables.zero_selected') }}')
-            
-                return
-                }
-            
-                if (confirm('{{ trans('global.areYouSure') }}')) {
-                $.ajax({
-                headers: {'x-csrf-token': _token},
-                method: 'POST',
-                url: config.url,
-                data: { ids: ids, _method: 'DELETE' }})
-                .done(function () { location.reload() })
-                }
-                }
+                    text: deleteButtonTrans,
+                    url: "{{ route('admin.contenedores.massDestroy') }}",
+                    className: 'btn-danger',
+                    action: function(e, dt, node, config) {
+                        var ids = $.map(dt.rows({
+                            selected: true
+                        }).data(), function(entry) {
+                            return entry.id
+                        });
+
+                        if (ids.length === 0) {
+                            alert('{{ trans('global.datatables.zero_selected') }}')
+
+                            return
+                        }
+
+                        if (confirm('{{ trans('global.areYouSure') }}')) {
+                            $.ajax({
+                                    headers: {
+                                        'x-csrf-token': _token
+                                    },
+                                    method: 'POST',
+                                    url: config.url,
+                                    data: {
+                                        ids: ids,
+                                        _method: 'DELETE'
+                                    }
+                                })
+                                .done(function() {
+                                    location.reload()
+                                })
+                        }
+                    }
                 }
                 //dtButtons.push(deleteButton)
             @endcan
