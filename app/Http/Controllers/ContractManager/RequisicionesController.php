@@ -39,7 +39,7 @@ class RequisicionesController extends Controller
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        $proveedor_indistinto = KatbolProveedorIndistinto::getFirst()->pluck('requisicion_id');
+        // $proveedor_indistinto = KatbolProveedorIndistinto::getFirst()->pluck('requisicion_id');
 
         $requisicion_id = KatbolRequsicion::get()->pluck('id');
         $ids = [];
@@ -55,14 +55,14 @@ class RequisicionesController extends Controller
             if ($rol->title === 'Admin') {
                 $requisiciones = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->orderByDesc('id')->where('archivo', false)->get();
 
-                return view('contract_manager.requisiciones.index', compact('ids', 'requisiciones', 'proveedor_indistinto', 'empresa_actual', 'logo_actual'));
+                return view('contract_manager.requisiciones.index', compact('ids', 'requisiciones', 'empresa_actual', 'logo_actual'));
             } else {
                 $requisiciones_solicitante = null;
                 $id = User::getCurrentUser()->id;
 
                 $requisiciones_solicitante = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->where('id_user', $id)->orderByDesc('id')->get();
 
-                return view('contract_manager.requisiciones.index_solicitante', compact('ids', 'requisiciones_solicitante', 'empresa_actual', 'logo_actual', 'proveedor_indistinto'));
+                return view('contract_manager.requisiciones.index_solicitante', compact('ids', 'requisiciones_solicitante', 'empresa_actual', 'logo_actual'));
             }
         }
     }

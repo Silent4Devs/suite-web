@@ -92,15 +92,15 @@ class DatabaseSeeder extends Seeder
                 // CentroCostosTableSeeder::class,
                 // ProductosTableSeeder::class,
                 // SucursalesTableSeeder::class,
-                // MonedasTableSeeder::class,
+                MonedasTableSeeder::class,
                 // ProveedorOCSTableSeeder::class,
                 // CompradoresSeeder::class,
-                // RequsicionesTableSeeder::class,
-                // ProductosRequisicionTableSeeder::class,
-                // ProveedoresRequisicionesCatalogosTableSeeder::class,
-                // ProveedorIndistintosTableSeeder::class,
-                // ProveedorRequisicionsTableSeeder::class,
-                // PermisosKatbol::class,
+                // RequsicionesTableSeeder::class, // datos internos de silent | no usar en otras empresas
+                // ProductosRequisicionTableSeeder::class,   // datos internos de silent | no usar en otras empresas
+                // ProveedoresRequisicionesCatalogosTableSeeder::class,   // datos internos de silent | no usar en otras empresas
+                // ProveedorIndistintosTableSeeder::class,  // datos internos de silent | no usar en otras empresas
+                // ProveedorRequisicionsTableSeeder::class,  // datos internos de silent | no usar en otras empresas
+                PermisosKatbol::class,
                 // DashboardGestionContratosSeeder::class,
 
                 ListaDistribucionSeeder::class,
