@@ -15,6 +15,7 @@ use Yajra\DataTables\Facades\DataTables;
 class TenantController extends Controller
 {
     use CsvImportTrait;
+
     /** @var TenantRepository */
     private $tenantRepository;
 
@@ -61,14 +62,14 @@ class TenantController extends Controller
     public function store(Request $request)
     {
         $tenant = Tenant::create([
-        'id' => $request->id,
-        'plan' => 'free',
+            'id' => $request->id,
+            'plan' => 'free',
         ]);
         $tenant->domains()->create([
-            'domain'=>$request->id . '.localhost',
+            'domain' => $request->id.'.localhost',
         ]);
-        $tenantDirectory = 'tenant' . $request->id;
-        Storage::disk('tenant')->makeDirectory($tenantDirectory . '/app/public');
+        $tenantDirectory = 'tenant'.$request->id;
+        Storage::disk('tenant')->makeDirectory($tenantDirectory.'/app/public');
 
         //File::makeDirectory("storage/".$tenantDirectory);
         return redirect()->route('admin.tenant.index');

@@ -22,7 +22,7 @@ class AgregarObjetivosParticipanteEv360Seeder extends Seeder
         $evaluadores_objetivos = EvaluadoEvaluador::where('evaluacion_id', $evaluacion->id)
             ->where('evaluado_id', $evaluado->id)->get();
         $objetivos = $evaluado->objetivos;
-        if (!is_null($objetivos)) {
+        if (! is_null($objetivos)) {
             foreach ($evaluadores_objetivos as $evaluador) {
                 foreach ($objetivos as $objetivo) {
                     ObjetivoRespuesta::create([

@@ -8,7 +8,7 @@ use Stancl\Tenancy\Database\Concerns\HasDatabase;
 use Stancl\Tenancy\Database\Concerns\HasDomains;
 use Stancl\Tenancy\Database\Models\Tenant as BaseTenant;
 
-class Tenant extends BaseTenant implements TenantWithDatabase, Auditable
+class Tenant extends BaseTenant implements Auditable, TenantWithDatabase
 {
     use HasDatabase, HasDomains;
     use \OwenIt\Auditing\Auditable;

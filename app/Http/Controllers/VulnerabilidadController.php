@@ -30,7 +30,6 @@ class VulnerabilidadController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -41,7 +40,6 @@ class VulnerabilidadController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Vulnerabilidad  $vulnerabilidad
      * @return \Illuminate\Http\Response
      */
     public function show(Vulnerabilidad $vulnerabilidad)
@@ -52,7 +50,6 @@ class VulnerabilidadController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Vulnerabilidad  $vulnerabilidad
      * @return \Illuminate\Http\Response
      */
     public function edit(Vulnerabilidad $vulnerabilidad)
@@ -63,8 +60,6 @@ class VulnerabilidadController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Vulnerabilidad  $vulnerabilidad
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Vulnerabilidad $vulnerabilidad)
@@ -75,7 +70,6 @@ class VulnerabilidadController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Vulnerabilidad  $vulnerabilidad
      * @return \Illuminate\Http\Response
      */
     public function destroy(Vulnerabilidad $vulnerabilidad)

@@ -6,6 +6,7 @@ use App\Models\Tenant;
 
 /**
  * Class AmenazaRepository.
+ *
  * @version August 5, 2021, 6:19 pm UTC
  */
 class TenantRepository extends BaseRepository
