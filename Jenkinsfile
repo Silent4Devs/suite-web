@@ -19,15 +19,15 @@ pipeline {
         }
     }
 
-    // stages {
-    //     stage('Execute unit test docker') {
-    //         steps {
-    //             script {
-    //                 sh '''
-    //                    echo $SSH_PASSWORD | sshpas -p $SSH_PASSWORD ssh $SSH_USER@$SERVER_IP "cd /var/contenedor/unittest-suit/unittest-suit && sudo -S git pull"
-    //                 '''
-    //             }
-    //         }
-    //     }
-    // }
+    stages {
+        stage('Execute unit test docker') {
+            steps {
+                script {
+                    sh '''
+                       echo $SSH_PASSWORD | sshpas -p $SSH_PASSWORD ssh $SSH_USER@$SERVER_IP "cd /var/contenedor/unittest-suit/unittest-suit && sudo -S git pull"
+                    '''
+                }
+            }
+        }
+    }
 }
