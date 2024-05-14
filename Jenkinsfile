@@ -24,7 +24,7 @@ pipeline {
             steps {
                 script {
                     sh '''
-                       echo $SSH_PASSWORD | sshpas -p $SSH_PASSWORD ssh $SSH_USER@$SERVER_IP "echo holamundo"
+                       echo "Ejecutando pruebas unitarias"
                     '''
                 }
             }
