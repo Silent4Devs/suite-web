@@ -12,6 +12,7 @@ use App\Models\TBSectionTemplateAr_QuestionTemplateArModel;
 use App\Models\TBTemplateAnalisisRiesgoModel;
 use App\Models\Template_Analisis_Riesgos;
 use App\Models\TBFormulaTemplateAnalisisRiesgoModel;
+use App\Services\ImageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
@@ -28,13 +29,30 @@ class templateAnalisisRiesgoController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CreateSectionQuestionTemplateRequest $request)
+    public function store(Request $request)
     {
-        $sections = $request->input('sections');
-        $questions = $request->input('questions');
+        // foreach($imagenes as $key => $imagen){
+        //     $extension = pathinfo($imagen->getClientOriginalName(), PATHINFO_EXTENSION);
+        //     $new_name_image = 'Template_AR_Question_Image'.$key.'.'.$extension;
+
+        //     $route = storage_path().'/app/public/analisis_riesgo/template/questions/'.$new_name_image;
+        //     $image = $new_name_image;
+
+        //     // Call the ImageService to consume the external API
+        //     $apiResponse = ImageService::consumeImageCompresorApi($imagenes[$key]);
+
+        //     // Compress and save the image
+        //     if ($apiResponse['status'] == 200) {
+        //         file_put_contents($route, $apiResponse['body']);
+        //     }
+        // }
+        $sections = json_decode($request->input('sections'));
+        $questions = json_decode($request->input('questions'));
+        $imagenes = $request->file('image');
+
         $this->saveSections($sections, $questions);
 
-        return json_encode(['data' => 'Se crearon exitosamente las secciones y las preguntas'], 200);
+        return json_encode(['data' => 'Sections and questions created successfully'], 200);
     }
 
     /**
@@ -91,8 +109,13 @@ class templateAnalisisRiesgoController extends Controller
      */
     public function update(Request $request)
     {
-        $requestSections = $request->input('sections');
-        $requestQuestions = $request->input('questions');
+
+        $requestSections = json_decode($request->input('sections'));
+        $requestQuestions = json_decode($request->input('questions'));
+        // dd($requestSections);
+        // dd($requestSections);
+        // $requestSections = json_decode($request->input('sections'));
+        // $requestQuestions = json_decode($request->input('questions'));
 
         $dataFilter = $this->filterData($requestSections, $requestQuestions);
         $sections = $dataFilter['sections'];
@@ -122,17 +145,17 @@ class templateAnalisisRiesgoController extends Controller
         DB::beginTransaction();
         try {
             foreach ($sections as $section) {
-                $sectionId = $section['id'];
+                // dd($section);
+                $sectionId = $section->id;
                 $questionsFilter = array_filter($questions, function ($item) use ($sectionId) {
-                    return $item['columnId'] === $sectionId;
+                    return $item->columnId === $sectionId;
                 });
 
                 $sectionCreate = TBSectionTemplateAnalisisRiesgoModel::create([
-                    'title' => $section['title'],
-                    'template_id' => $section['template_id'],
-                    'position' => $section['position'],
+                    'title' => $section->title,
+                    'template_id' => $section->template_id,
+                    'position' => $section->position,
                 ]);
-
                 $sectionId = $sectionCreate->id;
                 $this->saveQuestions($sectionId, $questionsFilter);
             }
@@ -147,17 +170,17 @@ class templateAnalisisRiesgoController extends Controller
     {
 
         foreach ($questions as $question) {
-            $id = $question['id'];
+            $id = $question->id;
             $exist = intval($id);
             if (! $exist) {
                 DB::beginTransaction();
                 try {
                     $questionCreate = TBQuestionTemplateAnalisisRiesgoModel::create([
-                        'title' => $question['title'],
-                        'size' => $question['size'],
-                        'type' => $question['type'],
-                        'position' => $question['position'],
-                        'obligatory' => $question['obligatory'],
+                        'title' => $question->title,
+                        'size' => $question->size,
+                        'type' => $question->type,
+                        'position' => $question->position,
+                        'obligatory' => $question->obligatory,
                     ]);
 
                     TBSectionTemplateAr_QuestionTemplateArModel::create([
@@ -168,7 +191,7 @@ class templateAnalisisRiesgoController extends Controller
                     DB::commit();
                 } catch (\Throwable $th) {
                     DB::rollback();
-
+                    // return json_encode(['error' => $th ], 500);
                     continue;
                 }
             } else {
@@ -200,18 +223,17 @@ class templateAnalisisRiesgoController extends Controller
     public function updateSections($sections)
     {
         foreach ($sections as $section) {
-            $id = $section['id'];
+            $id = $section->id;
             $sectionRegister = TBSectionTemplateAnalisisRiesgoModel::find($id);
             DB::beginTransaction();
             try {
                 $sectionRegister->update([
-                    'title' => $section['title'],
-                    'position' => $section['position'],
+                    'title' => $section->title,
+                    'position' => $section->position,
                 ]);
                 DB::commit();
             } catch (\Throwable $th) {
                 DB::rollback();
-
                 continue;
             }
         }
@@ -220,7 +242,7 @@ class templateAnalisisRiesgoController extends Controller
     public function updateQuestions($questions)
     {
         foreach ($questions as $question) {
-            $id = $question['id'];
+            $id = $question->id;
             $exist = intval($id);
 
             if ($exist) {
@@ -230,14 +252,14 @@ class templateAnalisisRiesgoController extends Controller
                 DB::beginTransaction();
                 try {
                     $register->update([
-                        'title' => $question['title'],
-                        'size' => $question['size'],
-                        'type' => $question['type'],
-                        'position' => $question['position'],
-                        'obligatory' => $question['obligatory'],
+                        'title' => $question->title,
+                        'size' => $question->size,
+                        'type' => $question->type,
+                        'position' => $question->position,
+                        'obligatory' => $question->obligatory,
                     ]);
                     $pivot->update(
-                        ['section_id' => $question['columnId']],
+                        ['section_id' => $question->columnId],
                     );
 
                     $this->filterUpdateDataQuestion($question, $id);
@@ -251,15 +273,15 @@ class templateAnalisisRiesgoController extends Controller
                 DB::beginTransaction();
                 try {
                     $questionCreate = TBQuestionTemplateAnalisisRiesgoModel::create([
-                        'title' => $question['title'],
-                        'size' => $question['size'],
-                        'type' => $question['type'],
-                        'position' => $question['position'],
-                        'obligatory' => $question['obligatory'],
+                        'title' => $question->title,
+                        'size' => $question->size,
+                        'type' => $question->type,
+                        'position' => $question->position,
+                        'obligatory' => $question->obligatory,
                     ]);
 
                     TBSectionTemplateAr_QuestionTemplateArModel::create([
-                        'section_id' => $question['columnId'],
+                        'section_id' => $question->columnId,
                         'question_id' => $questionCreate->id,
                     ]);
 
@@ -285,7 +307,7 @@ class templateAnalisisRiesgoController extends Controller
         $newQuestions = [];
 
         foreach ($requestSections as $requestSection) {
-            $id = intval($requestSection['id']);
+            $id = intval($requestSection->id);
             if ($id) {
                 $sections[] = $requestSection;
             } else {
@@ -295,8 +317,8 @@ class templateAnalisisRiesgoController extends Controller
         }
 
         foreach ($requestQuestions as $requestQuestion) {
-            $id = intval($requestQuestion['id']);
-            $columnId = intval($requestQuestion['columnId']);
+            $id = intval($requestQuestion->id);
+            $columnId = intval($requestQuestion->columnId);
 
             if ($id && $columnId) {
                 $questions[] = $requestQuestion;
@@ -313,19 +335,21 @@ class templateAnalisisRiesgoController extends Controller
 
     public function filterSaveDataQuestion($question, $questionCreate)
     {
-        switch ($question['type']) {
+        switch ($question->type) {
             case '3':
-                $this->saveDataQuestionMinMax($question['data'], $questionCreate->id);
+                $this->saveDataQuestionMinMax($question->data, $questionCreate->id);
                 break;
             case '5':
-                $this->saveMultipleDataQuestion($question['data'], $questionCreate->id);
+                $this->saveMultipleDataQuestion($question->data, $questionCreate->id);
                 break;
             case '6':
-                $this->saveMultipleDataQuestion($question['data'], $questionCreate->id);
+                $this->saveMultipleDataQuestion($question->data, $questionCreate->id);
                 break;
             case '7':
-                $this->saveSelectDataQuestion($question['data'], $questionCreate->id);
+                $this->saveSelectDataQuestion($question->data, $questionCreate->id);
                 break;
+            case '10':
+                $this->saveImageDataQuestion($question['data'], $questionCreate->id);
             default:
                 break;
         }
@@ -333,18 +357,18 @@ class templateAnalisisRiesgoController extends Controller
 
     public function filterUpdateDataQuestion($question, $questionCreate)
     {
-        switch ($question['type']) {
+        switch ($question->type) {
             case '3':
-                $this->updateDataQuestionMinMax($question['data'], $questionCreate);
+                $this->updateDataQuestionMinMax($question->data, $questionCreate);
                 break;
             case '5':
-                $this->updateMultipleDataQuestion($question['data'], $questionCreate);
+                $this->updateMultipleDataQuestion($question->data, $questionCreate);
                 break;
             case '6':
-                $this->updateMultipleDataQuestion($question['data'], $questionCreate);
+                $this->updateMultipleDataQuestion($question->data, $questionCreate);
                 break;
             case '7':
-                $this->updateSelectDataQuestion($question['data'], $questionCreate);
+                $this->updateSelectDataQuestion($question->data, $questionCreate);
                 break;
             default:
                 break;
@@ -356,8 +380,8 @@ class templateAnalisisRiesgoController extends Controller
         DB::beginTransaction();
         try {
             $dataQuestionCreate = TBDataQuestionTemplateAnalisisRiesgoModel::create([
-                'minimum' => intval($dataQuestion['minimo']),
-                'maximum' => intval($dataQuestion['maximo']),
+                'minimum' => intval($dataQuestion->minimo),
+                'maximum' => intval($dataQuestion->maximo),
             ]);
 
             TBQuestionTemplateAr_DataQuestionTemplateArModel::create([
@@ -377,12 +401,12 @@ class templateAnalisisRiesgoController extends Controller
     {
         // dd($dataQuestion);
         DB::beginTransaction();
-        $register = TBDataQuestionTemplateAnalisisRiesgoModel::find($dataQuestion['id']);
+        $register = TBDataQuestionTemplateAnalisisRiesgoModel::find($dataQuestion->id);
 
         try {
             $register->update([
-                'minimum' => intval($dataQuestion['minimo']),
-                'maximum' => intval($dataQuestion['maximo']),
+                'minimum' => intval($dataQuestion->minimo),
+                'maximum' => intval($dataQuestion->maximo),
             ]);
 
             DB::commit();
@@ -399,9 +423,9 @@ class templateAnalisisRiesgoController extends Controller
             DB::beginTransaction();
             try {
                 $dataQuestionCreate = TBDataQuestionTemplateAnalisisRiesgoModel::create([
-                    'title' => $dataQuestion['title'],
-                    'name' => $dataQuestion['name'],
-                    'status' => $dataQuestion['status'],
+                    'title' => $dataQuestion->title,
+                    'name' => $dataQuestion->name,
+                    'status' => $dataQuestion->status,
                 ]);
 
                 TBQuestionTemplateAr_DataQuestionTemplateArModel::create([
@@ -422,30 +446,29 @@ class templateAnalisisRiesgoController extends Controller
     public function updateMultipleDataQuestion($dataQuestions, $questionCreateId)
     {
         foreach ($dataQuestions as $dataQuestion) {
-            $id = $dataQuestion['id'];
+            $id = $dataQuestion->id;
             if (is_int($id)) {
                 DB::beginTransaction();
                 $register = TBDataQuestionTemplateAnalisisRiesgoModel::find($id);
                 try {
                     $register->update([
-                        'title' => $dataQuestion['title'],
-                        'name' => $dataQuestion['name'],
-                        'status' => $dataQuestion['status'],
+                        'title' => $dataQuestion->title,
+                        'name' => $dataQuestion->name,
+                        'status' => $dataQuestion->status,
                     ]);
                     DB::commit();
                 } catch (\Throwable $th) {
                     //throw $th;
                     DB::rollback();
-
                     continue;
                 }
             } else {
                 DB::beginTransaction();
                 try {
                     $dataQuestionCreate = TBDataQuestionTemplateAnalisisRiesgoModel::create([
-                        'title' => $dataQuestion['title'],
-                        'name' => $dataQuestion['name'],
-                        'status' => $dataQuestion['status'],
+                        'title' => $dataQuestion->title,
+                        'name' => $dataQuestion->name,
+                        'status' => $dataQuestion->status,
                     ]);
 
                     TBQuestionTemplateAr_DataQuestionTemplateArModel::create([
@@ -457,7 +480,6 @@ class templateAnalisisRiesgoController extends Controller
                 } catch (\Throwable $th) {
                     // throw $th;
                     DB::rollback();
-
                     continue;
                 }
             }
@@ -470,8 +492,8 @@ class templateAnalisisRiesgoController extends Controller
             DB::beginTransaction();
             try {
                 $dataQuestionCreate = TBDataQuestionTemplateAnalisisRiesgoModel::create([
-                    'title' => $dataQuestion['title'],
-                    'name' => $dataQuestion['name'],
+                    'title' => $dataQuestion->title,
+                    'name' => $dataQuestion->name,
                 ]);
 
                 TBQuestionTemplateAr_DataQuestionTemplateArModel::create([
@@ -483,7 +505,6 @@ class templateAnalisisRiesgoController extends Controller
             } catch (\Throwable $th) {
                 //throw $th;
                 DB::rollback();
-
                 continue;
             }
         }
@@ -492,29 +513,28 @@ class templateAnalisisRiesgoController extends Controller
     public function updateSelectDataQuestion($dataQuestions, $questionCreateId)
     {
         foreach ($dataQuestions as $dataQuestion) {
-            $id = $dataQuestion['id'];
+            $id = $dataQuestion->id;
             if (is_int($id)) {
                 DB::beginTransaction();
-                $register = TBDataQuestionTemplateAnalisisRiesgoModel::find($dataQuestion['id']);
+                $register = TBDataQuestionTemplateAnalisisRiesgoModel::find($id);
                 try {
                     $register->update([
-                        'title' => $dataQuestion['title'],
-                        'name' => $dataQuestion['name'],
+                        'title' => $dataQuestion->title,
+                        'name' => $dataQuestion->name,
                     ]);
 
                     DB::commit();
                 } catch (\Throwable $th) {
                     //throw $th;
                     DB::rollback();
-
                     continue;
                 }
             } else {
                 DB::beginTransaction();
                 try {
                     $dataQuestionCreate = TBDataQuestionTemplateAnalisisRiesgoModel::create([
-                        'title' => $dataQuestion['title'],
-                        'name' => $dataQuestion['name'],
+                        'title' => $dataQuestion->title,
+                        'name' => $dataQuestion->name,
                     ]);
 
                     TBQuestionTemplateAr_DataQuestionTemplateArModel::create([
@@ -526,11 +546,44 @@ class templateAnalisisRiesgoController extends Controller
                 } catch (\Throwable $th) {
                     //throw $th;
                     DB::rollback();
-
                     continue;
                 }
             }
         }
+    }
+
+    public function saveImageDataQuestion($dataQuestions, $questionCreateId)
+    {
+        $imageName = "hola";
+        DB::beginTransaction();
+        try {
+
+            $dataQuestionCreate = TBDataQuestionTemplateAnalisisRiesgoModel::create([
+                'title' => $imageName,
+            ]);
+            TBQuestionTemplateAr_DataQuestionTemplateArModel::create([
+                'question_id' => $questionCreateId,
+                'dataquestion_id' => $dataQuestionCreate->id,
+            ]);
+            DB::commit();
+        } catch (\Throwable $th) {
+            //throw $th;
+            DB::rollback();
+        }
+
+        // $extension = pathinfo($dataQuestions->file('file')->getClientOriginalName(), PATHINFO_EXTENSION);
+        // $new_name_image = 'Template_AR_Question_Image'.$extension;
+
+        // $route = storage_path().'/app/public/analisis_riesgo/template/questions/'.$new_name_image;
+        // $image = $new_name_image;
+
+        // // Call the ImageService to consume the external API
+        // $apiResponse = ImageService::consumeImageCompresorApi($dataQuestions->file('file'));
+
+        // // Compress and save the image
+        // if ($apiResponse['status'] == 200) {
+        //     file_put_contents($route, $apiResponse['body']);
+        // }
     }
 
     public function getDataQuestion($question)
@@ -643,13 +696,15 @@ class templateAnalisisRiesgoController extends Controller
                 Arr::forget($formula, 'template_id');
             }
 
+            $exists = $this->verifyInputsDefault($sections);
             $questions = [];
+
             $optionId = ([
                 'id'=> 'q-1',
                 'title' => 'ID',
                 'template' => $template->id,
                 'position' => 0,
-                'type' => "12",
+                'type' => "11",
                 'size' => 3,
                 'obligatory' => true,
                 'data' => [],
@@ -660,46 +715,63 @@ class templateAnalisisRiesgoController extends Controller
                 'title' => 'Descripcion del riesgo',
                 'template' => $template->id,
                 'position' => 1,
-                'type' => "12",
+                'type' => "11",
                 'size' => 3,
                 'obligatory' => true,
                 'data' => [],
             ]);
 
-            foreach ($sections as $index => $section) {
-                $data = $section->questions;
-                $sectionId = $section->id;
-                if($index === 0){
-                    $optionId['columnId'] = $sectionId;
-                    $optionDescription['columnId'] = $sectionId;
+            if($exists){
+                foreach ($sections as $index => $section) {
+                    $data = $section->questions;
+                    $sectionId = $section->id;
+                    $newQuestions = $data->map(function ($itm) use ($sectionId) {
+                        Arr::forget($itm, 'created_at');
+                        Arr::forget($itm, 'updated_at');
+                        Arr::forget($itm, 'pivot');
+                        Arr::forget($itm, 'deleted_at');
+                        $itm->columnId = $sectionId;
+                        $this->getDataQuestion($itm);
+                        return $itm;
+                    });
+
+                    $questions = $newQuestions;
+
+                    Arr::forget($section, 'questions');
                 }
-                $newQuestions = $data->map(function ($itm) use ($sectionId,$index, &$optionId) {
+            }else{
+                foreach ($sections as $index => $section) {
+                    $data = $section->questions;
+                    $sectionId = $section->id;
                     if($index === 0){
-                        $itm['type'] === "11" ? $itm['position'] = $itm['position'] + 2 : null;
-                        $itm['type'] !== "11" ? $itm['position'] = $itm['position'] + 2 : null;
+                        $optionId['columnId'] = $sectionId;
+                        $optionDescription['columnId'] = $sectionId;
                     }
-                    if($itm['type'] !== "11"){
-                        $position = $itm['position'];
-                        $itm['position'] = $position + 1;
-                    }
-                    Arr::forget($itm, 'created_at');
-                    Arr::forget($itm, 'updated_at');
-                    Arr::forget($itm, 'pivot');
-                    Arr::forget($itm, 'deleted_at');
-                    $itm->columnId = $sectionId;
-                    $this->getDataQuestion($itm);
-                    return $itm;
-                });
+                    $newQuestions = $data->map(function ($itm) use ($sectionId,$index, &$optionId) {
+                        if($index === 0){
+                            $itm['type'] === "11" ? $itm['position'] = $itm['position'] + 2 : null;
+                            $itm['type'] !== "11" ? $itm['position'] = $itm['position'] + 2 : null;
+                        }
+                        if($itm['type'] !== "11"){
+                            $position = $itm['position'];
+                            $itm['position'] = $position + 1;
+                        }
+                        Arr::forget($itm, 'created_at');
+                        Arr::forget($itm, 'updated_at');
+                        Arr::forget($itm, 'pivot');
+                        Arr::forget($itm, 'deleted_at');
+                        $itm->columnId = $sectionId;
+                        $this->getDataQuestion($itm);
+                        return $itm;
+                    });
 
-                Arr::forget($section, 'questions');
+                    $questions = $newQuestions;
 
-                foreach ($newQuestions as $newQuestion) {
-                    array_push($questions, $newQuestion);
+                    Arr::forget($section, 'questions');
                 }
-
+                $questions->push($optionId);
+                $questions->push($optionDescription);
             }
-            array_push($questions, $optionId);
-            array_push($questions, $optionDescription);
 
             return json_encode(['data' => ['sections' => $sections, 'questions' => $questions]], 200);
 
@@ -719,6 +791,27 @@ class templateAnalisisRiesgoController extends Controller
             'description' => $register->descripcion,
         ]);
         return json_encode(['data' => ['template' => $template]], 200);
+    }
+
+    public function verifyInputsDefault($sections){
+        $existInputId = false;
+
+        foreach ($sections as $index => $section) {
+            $existInputCreateBy = false;
+
+            $questions = $section->questions;
+
+            foreach($questions as $question){
+
+                if($question['type'] === "11"){
+                    $existInputId = true;
+                }
+
+            }
+        }
+
+        return $existInputId;
+
     }
 
 }

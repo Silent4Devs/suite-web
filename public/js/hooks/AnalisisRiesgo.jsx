@@ -229,6 +229,17 @@ export const useAnalisisRiesgo = () => {
                 });
                 setQuestions(updateQuestions);
                 break;
+            case 'image':
+                updateQuestions = questions.map((item)=>{
+                    if(item.id === id){
+                        const updateItem = item;
+                        item.data=props;
+                        return updateItem;
+                    }
+                    return item;
+                });
+                setQuestions(updateQuestions);
+                break;
             default:
                 // console.log("sin cambio")
         }
@@ -330,9 +341,16 @@ export const useAnalisisRiesgo = () => {
 
     const createData = async(dataSections,dataQuestions) =>{
         const url = 'http:///suite-web.test/api/api/v1/test'
+        const dataForm = new FormData();
+        // dataQuestions.forEach((item, index) => {
+        //     // dataForm.append(`questions[${index}]`, item);
+        //     dataForm.append(`image[${index}]`, item.data);
+        //   });
+        dataForm.append('sections', JSON.stringify(dataSections));
+        dataForm.append('questions', JSON.stringify(dataQuestions));
         try {
-            const response = await axios.post(url,{sections:dataSections,questions:dataQuestions});
-            console.log(response);
+            const response = await axios.post(url,dataForm);
+            console.log(response.data);
             if(response.status === 200){
                 setReload(reload+1);
             }
@@ -343,8 +361,16 @@ export const useAnalisisRiesgo = () => {
 
     const editData = async(dataSections,dataQuestions) => {
         const url = 'http:///suite-web.test/api/api/v1/test/edit'
+
+        const dataForm = new FormData();
+        // dataQuestions.forEach((item, index) => {
+        //     // dataForm.append(`questions[${index}]`, item);
+        //     dataForm.append(`image[${index}]`, item.data);
+        //   });
+        dataForm.append('sections', JSON.stringify(dataSections));
+        dataForm.append('questions', JSON.stringify(dataQuestions));
         try {
-            const response = await axios.put(url,{sections:dataSections,questions:dataQuestions});
+            const response = await axios.put(url,dataForm);
             console.log(response);
             if(response.status === 200){
                 setReload(reload+1);
@@ -777,6 +803,7 @@ export const useSettingsAnalisisRiesgos = () => {
         try {
             setLoading(true);
             const response = await axios.get('http:///suite-web.test/api/api/v1/ar/settings/1');
+            console.log(response)
             const dataSection = response.data.data.sections;
             const dataQuestion = response.data.data.questions;
             if(dataSection.length >0 ){

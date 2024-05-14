@@ -20,7 +20,7 @@ class TemplateARComponentFactory {
             case "9":
                 return <OptionTime id={id} changeQuestionProps={changeQuestionProps} data={data}/>;
             case "10":
-                return <OptionImage id={id}/>
+                return <OptionImage id={id} changeQuestionProps={changeQuestionProps} data={data}/>
             default :
                 return <div>Sin option</div>
 

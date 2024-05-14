@@ -683,13 +683,13 @@ export const OptionTime = ({id, data = {}, changeQuestionProps}) => {
     );
 };
 
-export const OptionImage = ({id}) => {
+export const OptionImage = ({id, data={}, changeQuestionProps}) => {
     const [file, setfile] = useState(null);
 
     const handleFile = (e) => {
         const file = e.target.files[0];
-        console.log(file)
         setfile(file);
+        changeQuestionProps(id,'image',file);
     };
 
 
@@ -698,7 +698,6 @@ export const OptionImage = ({id}) => {
         <div>
             <input type="file" id={`inputfile${id}`} onChange={handleFile} />
             <label className="lblFile" htmlFor={`inputfile${id}`}>Cargar Imagen</label>
-
             {
                 file ? (
                     <div className="fileContainer">
