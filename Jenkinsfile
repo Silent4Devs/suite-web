@@ -24,7 +24,7 @@ pipeline {
             steps {
                 script {
                     sh '''
-                       echo $SSH_PASSWORD | sshpas -p $SSH_PASSWORD ssh $SSH_USER@$SERVER_IP "cd /var/contenedor/unittest/unittest-suit && sudo -S git pull"
+                       echo $SSH_PASSWORD | sshpas -p $SSH_PASSWORD ssh $SSH_USER@$SERVER_IP "echo holamundo"
                     '''
                 }
             }
