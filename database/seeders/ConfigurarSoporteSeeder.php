@@ -22,7 +22,6 @@ class ConfigurarSoporteSeeder extends Seeder
                 'extension' => '151',
                 'tel_celular' => '5572480010',
                 'correo' => 'miguel.gaspar@silent4business.com',
-                'id_elaboro' => 6,
 
             ],
             [
@@ -32,7 +31,6 @@ class ConfigurarSoporteSeeder extends Seeder
                 'extension' => '',
                 'tel_celular' => '',
                 'correo' => 'luis.vargas@silent4business.com',
-                'id_elaboro' => 78,
 
             ],
             [
@@ -42,7 +40,6 @@ class ConfigurarSoporteSeeder extends Seeder
                 'extension' => '',
                 'tel_celular' => '',
                 'correo' => 'uriel.santiago@silent4business.com',
-                'id_elaboro' => 63,
 
             ],
             [
@@ -52,7 +49,6 @@ class ConfigurarSoporteSeeder extends Seeder
                 'extension' => '146',
                 'tel_celular' => '',
                 'correo' => 'alejandro.pacheco@silent4business.com',
-                'id_elaboro' => 18,
 
             ],
             [
@@ -62,8 +58,6 @@ class ConfigurarSoporteSeeder extends Seeder
                 'extension' => '158',
                 'tel_celular' => '',
                 'correo' => 'marco.luna@silent4business.com',
-                'id_elaboro' => 52,
-
             ],
         ];
         ConfigurarSoporteModel::insert($confSoporte);

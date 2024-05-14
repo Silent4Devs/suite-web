@@ -17,23 +17,8 @@ class UsersTableSeeder extends Seeder
                 'remember_token' => null,
                 'verification_token' => '',
                 'two_factor_code' => '',
+                'empleado_id' => 1,
             ],
-            [
-                'name' => 'John',
-                'email' => 'john@admin.com',
-                'password' => bcrypt('Administrador1'),
-                'remember_token' => null,
-                'verification_token' => '',
-                'two_factor_code' => '',
-            ],
-            // [
-            //     'name'               => 'Omar',
-            //     'email'              => 'omar@admin.com',
-            //     'password'           => bcrypt('password'),
-            //     'remember_token'     => null,
-            //     'verification_token' => '',
-            //     'two_factor_code'    => '',
-            // ],
         ];
 
         User::insert($users);

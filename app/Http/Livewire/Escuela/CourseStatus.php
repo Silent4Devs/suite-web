@@ -6,12 +6,12 @@ use App\Models\Escuela\Course;
 use App\Models\Escuela\Evaluation;
 use App\Models\Escuela\Lesson;
 use App\Models\Escuela\UserEvaluation;
+use App\Models\Escuela\UsuariosCursos;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
-use Carbon\Carbon;
-use App\Models\Escuela\UsuariosCursos;
 
 class CourseStatus extends Component
 {
@@ -56,12 +56,12 @@ class CourseStatus extends Component
         $usuario = User::getCurrentUser();
         $fecha = Carbon::now()->toDateString();
         $hora = Carbon::now()->format('H:i:s');
-        $fechaYHora = $fecha . ' ' . $hora;
-       $cursoLastReview = UsuariosCursos::where('course_id',$this->course->id)
-                            ->where('user_id',$usuario->id)->first();
-                            // dd($cursoLastReview);
+        $fechaYHora = $fecha.' '.$hora;
+        $cursoLastReview = UsuariosCursos::where('course_id', $this->course->id)
+            ->where('user_id', $usuario->id)->first();
+        // dd($cursoLastReview);
 
-        $this->updateLastReview($fechaYHora,$cursoLastReview);
+        $this->updateLastReview($fechaYHora, $cursoLastReview);
 
         //Evaluaciones para el curso en general
         $this->evaluacionesGenerales = Evaluation::where('course_id', $this->course->id)->get();
@@ -198,7 +198,8 @@ class CourseStatus extends Component
         ]);
     }
 
-    public function updateLastReview($time,$cursoLastReview){
+    public function updateLastReview($time, $cursoLastReview)
+    {
         $cursoLastReview->update([
             'last_review' => $time,
         ]);
