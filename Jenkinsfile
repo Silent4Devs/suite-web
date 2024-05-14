@@ -24,7 +24,7 @@ pipeline {
             steps {
                 script {
                     sh '''
-                       echo $SSH_PASSWORD | sshpas -p $SSH_PASSWORD ssh $SSH_USER@$SERVER_IP "cd /var/contenedor/unittest-suit/unittest-suit && sudo -S git pull && sudo -S docker-compose up -d && sudo -S docker run --rm -it --network unittest-suit_tabantajnetwork alpine ping 192.168.9.78"
+                       echo $SSH_PASSWORD | sshpas -p $SSH_PASSWORD ssh $SSH_USER@$SERVER_IP "cd /var/contenedor/unittest-suit/unittest-suit && sudo -S git pull"
                     '''
                 }
             }
