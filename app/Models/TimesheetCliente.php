@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\ClearsResponseCache;
+use App\Models\ContractManager\Contrato;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
@@ -48,7 +49,7 @@ class TimesheetCliente extends Model
 
     public static function getAllOrderBy($value)
     {
-        return Cache::remember('TimesheetCliente:timesheetcliente_order_by_'.$value, 3600, function () use ($value) {
+        return Cache::remember('TimesheetCliente:timesheetcliente_order_by_' . $value, 3600, function () use ($value) {
             return self::orderBy($value)->get();
         });
     }
@@ -56,5 +57,15 @@ class TimesheetCliente extends Model
     public function cliente()
     {
         return $this->hasMany(QuejasCliente::class, 'cliente_id');
+    }
+
+    public function proyectos()
+    {
+        return $this->hasMany(TimesheetProyecto::class, 'cliente_id');
+    }
+
+    public function contratos()
+    {
+        return $this->hasMany(Contrato::class, 'proveedor_id');
     }
 }

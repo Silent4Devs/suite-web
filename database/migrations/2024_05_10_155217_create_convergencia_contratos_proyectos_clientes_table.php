@@ -13,16 +13,16 @@ return new class extends Migration
     {
         Schema::create('convergencia_contratos_proyectos_clientes', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('contrato_id');
-            $table->unsignedBigInteger('timesheet_proyecto_id'); //Identificador?
             $table->unsignedBigInteger('timesheet_cliente_id');
+            $table->unsignedBigInteger('timesheet_proyecto_id');
+            $table->unsignedBigInteger('contrato_id')->nullable();
+            // Add additional fields as needed
             $table->timestamps();
-            $table->softDeletes();
 
-            // Define las claves foráneas
-            $table->foreign('contrato_id')->references('id')->on('contratos')->onDelete('cascade');
-            $table->foreign('timesheet_proyecto_id')->references('id')->on('timesheet_proyectos')->onDelete('cascade');
+            // Define foreign key constraints
             $table->foreign('timesheet_cliente_id')->references('id')->on('timesheet_clientes')->onDelete('cascade');
+            $table->foreign('timesheet_proyecto_id')->references('id')->on('timesheet_proyectos')->onDelete('cascade');
+            $table->foreign('contrato_id')->references('id')->on('contratos')->onDelete('cascade');
         });
     }
 

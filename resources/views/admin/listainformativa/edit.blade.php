@@ -25,7 +25,7 @@
     }
 </style>
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/listainformativa.css') }}{{config('app.cssVersion')}}" @endsection
+<link rel="stylesheet" href="{{ asset('css/listainformativa.css') }}{{ config('app.cssVersion') }}" @endsection
     @section('content')
     @include('admin.listainformativa.estilos')
 
@@ -80,42 +80,50 @@
                             @error('nivel_null')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
-                                <div class="form-row nivel1Div"">
-                                    <div class="mt-4 mb-1">
-                                        <i class="fas fa-circle" style="color: #007bff;"></i> Informados <br>
-                                       &nbsp; &nbsp; Asigna a los colaboradores que seran informados de los procesos en el modulo.
+                                <div class="nivel1Div">
+                                    <div class="row mt-4 mb-1">
+                                        <i class="fas fa-circle" style="color: #007bff;"></i><h4>Colaboradores Informados</h4>
                                     </div>
-                                    <div class="anima-focus" style="width: 100rem;">
-                                        <select id="nivel1" name="nivel1[]"
-                                            class="form-control" multiple="multiple">
-                                            @foreach ($empleados as $empleado)
-                                                <option value="{{ $empleado->id }}"
-                                                    data-avatar="{{ asset('storage/empleados/imagenes/' . $empleado->avatar) }}"
-                                                    {{ in_array($empleado->id, $nivelData1 ?? []) ? 'selected' : '' }}>
-                                                    {{ $empleado->name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        <label for="nivel1" style="color:#057BE2;">Usuarios</label>
+                                    <div class="row">
+                                        Asigna a los colaboradores que seran informados de los procesos en el modulo.
+                                    </div>
+                                    <div class="form-row mt-3">
+                                        <div class="anima-focus" style="width: 70rem;">
+                                            <select id="nivel1" name="nivel1[]"
+                                                class="form-control" multiple="multiple">
+                                                @foreach ($empleados as $empleado)
+                                                    <option value="{{ $empleado->id }}"
+                                                        data-avatar="{{ asset('storage/empleados/imagenes/' . $empleado->avatar) }}"
+                                                        {{ in_array($empleado->id, $nivelData1 ?? []) ? 'selected' : '' }}>
+                                                        {{ $empleado->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            <label for="nivel1" style="color:#057BE2;">Usuarios</label>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="form-row nivel2Div"">
-                                    <div class="mt-4 mb-1">
-                                        <i class="fas fa-circle" style="color: #007bff;"></i> Informados <br>
-                                       &nbsp; &nbsp; Asigna a los usuarios que seran informados de los procesos en el modulo.
+                                <div class="nivel2Div">
+                                    <div class="row mt-4 mb-1">
+                                        <i class="fas fa-circle" style="color: #007bff;"></i><h4>Usuarios Informados</h4>
                                     </div>
-                                    <div class="anima-focus" style="width: 100rem;">
-                                        <select id="nivel2" name="nivel2[]"
-                                            class="form-control" multiple="multiple">
-                                            @foreach ($usuarios as $usuario)
-                                                <option value="{{ $usuario->id }}"
-                                                    data-avatar="{{ asset('storage/empleados/imagenes/' . $usuario->avatar) }}"
-                                                    {{ in_array($usuario->id, $nivelData2 ?? []) ? 'selected' : '' }}>
-                                                    {{ $usuario->name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        <label for="nivel2" style="color:#057BE2;">Colaboradores</label>
+                                    <div class="row">
+                                        Asigna a los usuarios que seran informados de los procesos en el modulo.
+                                    </div>
+                                    <div class="form-row mt-3">
+                                        <div class="anima-focus" style="width: 70rem;">
+                                            <select id="nivel2" name="nivel2[]"
+                                                class="form-control" multiple="multiple">
+                                                @foreach ($usuarios as $usuario)
+                                                    <option value="{{ $usuario->id }}"
+                                                        data-avatar="{{ asset('storage/empleados/imagenes/' . $usuario->avatar) }}"
+                                                        {{ in_array($usuario->id, $nivelData2 ?? []) ? 'selected' : '' }}>
+                                                        {{ $usuario->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            <label for="nivel2" style="color:#057BE2;">Colaboradores</label>
+                                        </div>
                                     </div>
                                 </div>
                         </div>
