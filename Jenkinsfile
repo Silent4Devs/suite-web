@@ -14,15 +14,6 @@ pipeline {
                     sh '''
                        echo $SSH_PASSWORD | sshpass -p $SSH_PASSWORD ssh $SSH_USER@$SERVER_IP "cd /var/contenedor/suite-web && sudo -S git pull"
                     '''
-                }
-            }
-        }
-    }
-
-    stages {
-        stage('Execute unit test docker') {
-            steps {
-                script {
                     sh '''
                        echo "Ejecutando pruebas unitarias"
                     '''
