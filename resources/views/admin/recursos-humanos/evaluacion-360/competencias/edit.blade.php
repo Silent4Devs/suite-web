@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-    <link rel="stylesheet" href="{{ asset('css/menu-secciones.css') }}{{config('app.cssVersion')}}">
+    <link rel="stylesheet" href="{{ asset('css/menu/menuSections.css') }}{{config('app.cssVersion')}}">
     {{ Breadcrumbs::render('EV360-Competencias-Edit') }}
     <style>
         .alerta-error {

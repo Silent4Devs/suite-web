@@ -20,10 +20,6 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/dark_mode.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/yearpicker.css') }}">
     <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
-
-    {{-- botones y colores globales --}}
-    <link rel="stylesheet" href="{{ asset('css/global/TbButtons.css') }}{{ config('app.cssVersion') }}">
-    <link rel="stylesheet" href="{{ asset('css/global/TbColorsGlobal.css') }}{{ config('app.cssVersion') }}">
     @yield('css')
     @yield('styles')
     <!-- End Principal Styles -->
@@ -857,7 +853,7 @@
                     "<'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>",
                 buttons: [{
                         extend: 'selectAll',
-                        className: 'tb-btn-primary',
+                        className: 'btn-primary',
                         text: selectAllButtonTrans,
                         exportOptions: {
                             columns: ':visible'
@@ -872,7 +868,7 @@
                     },
                     {
                         extend: 'selectNone',
-                        className: 'tb-btn-primary',
+                        className: 'btn-primary',
                         text: selectNoneButtonTrans,
                         exportOptions: {
                             columns: ':visible'

@@ -1,5 +1,5 @@
 {{--  <link rel="stylesheet" type="text/css" href="{{ asset('css/dark_mode.css') }}">  --}}
-<link rel="stylesheet" type="text/css" href="{{ asset('css/menu.css') }}{{config('app.cssVersion')}}">
+<link rel="stylesheet" type="text/css" href="{{ asset('css/menu/menu.css') }}{{config('app.cssVersion')}}">
 
 <div id="sidebar" class="c-sidebar c-sidebar-fixed c-sidebar-lg-show c-sidebar-light" style=" border: none;">
     <div class="bg-transparent c-sidebar-brand d-md-down-none caja_caja_img_logo">
@@ -45,7 +45,7 @@
         @endcan
         @can('portal_de_comunicaccion_acceder')
             <li class="c-sidebar-nav-item">
-                <a href="{{ route('admin.portalCommunication.index') }}"
+                <a href="{{ route('admin.portal-comunicacion.index') }}"
                     class="c-sidebar-nav-link {{ request()->is('admin/portal-comunicacion') || request()->is('admin/portal-comunicacion/*') ? 'active' : '' }}">
                     <i class="bi bi-newspaper iconos_menu letra_blanca"></i>
                     <font class="letra_blanca"> Portal de Comunicación </font>

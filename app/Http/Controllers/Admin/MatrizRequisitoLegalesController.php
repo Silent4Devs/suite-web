@@ -245,7 +245,7 @@ class MatrizRequisitoLegalesController extends Controller
         $referencia = $modulo->nombrerequisito;
         $urlStore = route('admin.matriz-requisito-legales.storePlanAccion', $id);
 
-        return view('admin.planTrabajo.create', compact('planImplementacion', 'modulo_name', 'modulo', 'referencia', 'urlStore'));
+        return view('admin.workPlan.create', compact('planImplementacion', 'modulo_name', 'modulo', 'referencia', 'urlStore'));
     }
 
     public function storePlanAccion(Request $request, MatrizRequisitoLegale $id)

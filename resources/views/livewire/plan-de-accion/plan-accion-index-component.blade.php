@@ -394,7 +394,7 @@
             // Solo inicializa DataTables si no se ha inicializado previamente
             $('#TbTableUsuario').DataTable({
                 "language": {
-                    "url": "{{ asset('js/Spanish.json') }}"
+                    "url": "{{ asset('js/dataTables/Spanish.json') }}"
                 }
             });
         }
@@ -402,7 +402,7 @@
             // Solo inicializa DataTables si no se ha inicializado previamente
             $('#TbTableAsignado').DataTable({
                 "language": {
-                    "url": "{{ asset('js/Spanish.json') }}"
+                    "url": "{{ asset('js/dataTables/Spanish.json') }}"
                 }
             });
         }
@@ -410,7 +410,7 @@
             // Solo inicializa DataTables si no se ha inicializado previamente
             $('#TbTableArea').DataTable({
                 "language": {
-                    "url": "{{ asset('js/Spanish.json') }}"
+                    "url": "{{ asset('js/dataTables/Spanish.json') }}"
                 }
             });
         }

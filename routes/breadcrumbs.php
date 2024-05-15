@@ -161,43 +161,43 @@ Breadcrumbs::for('admin.roles-responsabilidades.create', function ($trail) {
 });
 
 Breadcrumbs::for('admin.amenazas.index', function ($trail) {
-    $trail->push('Análisis de Riesgos', route('admin.analisis-riesgos.menu'));
+    $trail->push('Análisis de Riesgos', route('admin.analysisRisk.menu'));
     $trail->push('Amenazas', route('admin.amenazas.index'));
 });
 
 Breadcrumbs::for('admin.vulnerabilidads.index', function ($trail) {
-    $trail->push('Análisis de Riesgos', route('admin.analisis-riesgos.menu'));
+    $trail->push('Análisis de Riesgos', route('admin.analysisRisk.menu'));
     $trail->push('Vulnerabilidades', route('admin.vulnerabilidads.index'));
 });
-Breadcrumbs::for('admin.analisis-riesgos.menu', function ($trail) {
+Breadcrumbs::for('admin.analysisRisk.menu', function ($trail) {
     $trail->push('Análisis de Riesgos');
     $trail->push('Menú');
 });
 
 Breadcrumbs::for('BIA', function ($trail) {
-    $trail->push('Análisis de Impacto', route('admin.analisis-impacto.menu'));
+    $trail->push('Análisis de Impacto', route('admin.analysisImpact.menu'));
     $trail->push('BIA');
 });
 
 Breadcrumbs::for('AIA', function ($trail) {
-    $trail->push('Análisis de Impacto', route('admin.analisis-impacto.menu'));
+    $trail->push('Análisis de Impacto', route('admin.analysisImpact.menu'));
     $trail->push('AIA');
 });
 
-Breadcrumbs::for('admin.analisis-riesgos.index', function ($trail) {
+Breadcrumbs::for('admin.analysisRisk.index', function ($trail) {
     $trail->push('Planificación', route('admin.iso27001.guia').'#planificacion');
-    $trail->push('Análisis de Riesgos', route('admin.analisis-riesgos.menu'));
+    $trail->push('Análisis de Riesgos', route('admin.analysisRisk.menu'));
     $trail->push('Matriz de Riesgo');
 });
 
 Breadcrumbs::for('cuestionario-AIA', function ($trail) {
-    $trail->push('Análisis de Impacto', route('admin.analisis-impacto.menu'));
-    $trail->push('AIA', route('admin.analisis-impacto.menu-AIA'));
-    $trail->push('Cuestionario', route('admin.analisis-impacto.index'));
+    $trail->push('Análisis de Impacto', route('admin.analysisImpact.menu'));
+    $trail->push('AIA', route('admin.analysisImpact.menu-AIA'));
+    $trail->push('Cuestionario', route('admin.analysisImpact.index'));
 });
 
 Breadcrumbs::for('admin.BIA.Cuestionario.index', function ($trail) {
-    $trail->push('Análisis de ', route('admin.analisis-riesgos.menu'));
+    $trail->push('Análisis de ', route('admin.analysisRisk.menu'));
     $trail->push('Amenazas', route('admin.amenazas.index'));
 });
 

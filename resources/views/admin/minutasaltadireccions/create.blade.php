@@ -338,7 +338,7 @@
 
 
         {{-- MODULO AGREGAR PLAN DE Trabajo --}}
-        @include('admin.planTrabajo.actividades.tabla', [
+        @include('admin.workPlan.actividades.tabla', [
             'empleados' => $responsablereunions,
         ])
         {{-- FIN MODULO AGREGAR PLAN DE Trabajo --}}

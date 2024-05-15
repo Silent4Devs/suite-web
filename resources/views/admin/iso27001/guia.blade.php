@@ -376,7 +376,7 @@
                                     <h4 class="title-card-img-iso">Análisis de riesgos</h4>
                                     {{-- <span>Completado</span> --}}
                                 </div>
-                                <a href="{{ route('admin.analisis-riesgos.index') }}" class="btn-entrar">
+                                <a href="{{ route('admin.analysisRisk.index') }}" class="btn-entrar">
                                     Entrar
                                     <i class="material-symbols-outlined"> arrow_right_alt</i>
                                 </a>

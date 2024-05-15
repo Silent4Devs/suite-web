@@ -2,7 +2,7 @@
 @section('content')
 @section('titulo', 'Reportes')
 
-<link rel="stylesheet" type="text/css" href="{{ asset('css/reportes.css') }}{{config('app.cssVersion')}}"/>
+<link rel="stylesheet" type="text/css" href="{{ asset('css/reports.css/reports.css') }}{{config('app.cssVersion')}}"/>
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet"/>
 <link rel="stylesheet" type="text/css" href=" https://printjs-4de6.kxcdn.com/print.min.css">
@@ -154,7 +154,7 @@
 	                    <button class="btn imprimir" style="bottom: 60 !important;" onclick="printJS({
                             printable: 'proveedor_reporte',
                             type: 'html',
-                            css: '{{ asset('css/reportes.css') }}',})">
+                            css: '{{ asset('css/reports.css/reports.css') }}',})">
                             <i class="fas fa-print"></i>
                             Imprimir Reporte
 	                    </button>
@@ -264,7 +264,7 @@
 	                    <button class="btn" style="bottom: 25px !important;" onclick="printJS({
                             printable: 'proveedor_reporte',
                             type: 'html',
-                            css: '{{ asset('css/reportes.css') }}',})">
+                            css: '{{ asset('css/reports.css/reports.css') }}',})">
                             <i class="fas fa-print"></i>
                             Imprimir Reporte
                         </button>
@@ -310,7 +310,7 @@
 	                    <button class="btn" style="bottom: 25px !important;" onclick="printJS({
                             printable: 'contrato_reporte',
                             type: 'html',
-                            css: '{{ asset('css/reportes.css') }}',})">
+                            css: '{{ asset('css/reports.css/reports.css') }}',})">
                             <i class="fas fa-print"></i>
                             Imprimir Reporte
                         </button>
