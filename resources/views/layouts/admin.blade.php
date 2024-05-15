@@ -111,7 +111,7 @@
             @if ($empleado)
                 <ul class="ml-auto c-header-nav">
                     <li style="position: relative; right:2rem;">
-                         @livewire('campana-notificaciones-component')
+                        @livewire('campana-notificaciones-component')
                     </li>
                     <li class="c-header-nav-item dropdown show">
                         <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button"
@@ -173,6 +173,15 @@
                                         onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
                                         <i class="bi bi-box-arrow-right"></i> Salir
                                     </a>
+                                </div>
+                                <div class="p-2 mt-1 d-flex justify-content-center">
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input" id="customSwitch1"
+                                            {{ $empleado->disponibilidad->disponibilidad == 1 ? 'checked' : '' }}
+                                            onchange="handleSwitchChange(event)">
+                                        <label class="custom-control-label"
+                                            for="customSwitch1">{{ $empleado->estado_disponibilidad }}</label>
+                                    </div>
                                 </div>
                             </div>
                         @endif
@@ -1075,6 +1084,43 @@
             line.style.left = offsetLeft + 25 + 'px';
             line.style.width = boundLink.width - 50 + 'px';
         });
+    </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        function handleSwitchChange(event) {
+            const isChecked = event.target.checked;
+            let cambiar = isChecked ? 1 : 2;
+
+            $.ajax({
+                url: '{{ route('admin.estado-disponibilidad') }}',
+                type: 'POST', // Change the request method to POST
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                data: {
+                    cambiar: cambiar
+                },
+                success: function(response) {
+                    // Handle success response
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: "Se ha cambiado su estado de disponibilidad con éxito.",
+                        showConfirmButton: false,
+                        timer: 1500,
+                        onClose: function() {
+                            // Reload the page after the alert disappears
+                            window.location.reload();
+                        }
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error('AJAX request failed:', error);
+                }
+
+            });
+        }
     </script>
 
 </body>

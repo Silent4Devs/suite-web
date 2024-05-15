@@ -520,6 +520,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
         Route::get('inicioUsuario/solicitud', [InicioUsuarioController::class, 'solicitud'])->name('solicitud');
 
+        Route::post('inicioUsuario/estado-disponibilidad', [InicioUsuarioController::class, 'cambiarEstadoDisponibilidad'])->name('estado-disponibilidad');
+
         Route::get('inicioUsuario/reportes/quejas', [InicioUsuarioController::class, 'quejas'])->name('reportes-quejas');
         Route::post('inicioUsuario/reportes/quejas', [InicioUsuarioController::class, 'storeQuejas'])->name('reportes-quejas-store');
 

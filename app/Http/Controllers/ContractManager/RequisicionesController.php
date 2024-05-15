@@ -104,7 +104,7 @@ class RequisicionesController extends Controller
 
             $requisicion = KatbolRequsicion::with('sucursal', 'comprador.user', 'contrato')->find($id);
 
-            if (! $requisicion) {
+            if (!$requisicion) {
                 abort(404);
             }
 
@@ -348,13 +348,13 @@ class RequisicionesController extends Controller
             if (removeUnicodeCharacters($user->email) === removeUnicodeCharacters($solicitante->email)) {
                 $tipo_firma = 'firma_solicitante';
             } else {
-                return view('contract_manager.requisiciones.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del solicitante directo: <br> <strong>'.$solicitante->name.'</strong>');
+                return view('contract_manager.requisiciones.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del solicitante directo: <br> <strong>' . $solicitante->name . '</strong>');
             }
         } elseif ($requisicion->firma_jefe === null) {
             if (removeUnicodeCharacters($supervisor_email) === removeUnicodeCharacters($user->email) || removeUnicodeCharacters($user->email) === 'aurora.soriano@silent4business.com') {
                 $tipo_firma = 'firma_jefe';
             } else {
-                return view('contract_manager.requisiciones.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del jefe directo: <br> <strong>'.$supervisor.'</strong>');
+                return view('contract_manager.requisiciones.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del jefe directo: <br> <strong>' . $supervisor . '</strong>');
             }
         } elseif ($requisicion->firma_finanzas === null) {
             if (removeUnicodeCharacters($user->email) === 'lourdes.abadia@silent4business.com' || removeUnicodeCharacters($user->email) === 'ldelgadillo@silent4business.com' || removeUnicodeCharacters($user->email) === 'aurora.soriano@silent4business.com') {
@@ -366,7 +366,7 @@ class RequisicionesController extends Controller
             if (removeUnicodeCharacters($comprador->user->email) === removeUnicodeCharacters($user->email)) {
                 $tipo_firma = 'firma_compras';
             } else {
-                return view('contract_manager.requisiciones.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>'.$comprador->user->name.'</strong>');
+                return view('contract_manager.requisiciones.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>' . $comprador->user->name . '</strong>');
             }
         } else {
             $tipo_firma = 'firma_final_aprobadores';
