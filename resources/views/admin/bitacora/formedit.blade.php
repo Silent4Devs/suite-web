@@ -883,7 +883,7 @@
     <div class="col s12 right-align btn-grd distancia">
         @if (!$show_contrato)
             <a href="{{ route('contract_manager.contratos-katbol.index') }}" class="btn btn_cancelar">Cancelar</a>
-            {!! Form::submit('Guardar', ['class' => 'btn btn-success']) !!}
+            {!! Form::submit('Guardar', ['class' => 'btn btn-success',  'onclick' => 'miFuncion()']) !!}
         @endif
     </div>
 </div>
@@ -909,6 +909,25 @@
 </div>
 
 
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script type="text/javascript">
+    function miFuncion() {
+        Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Registro actualizado con éxito.',
+            showConfirmButton: false,
+        }).then((result) => {
+            // Después de que el usuario interactúa con la alerta (o después de que se cierra),
+            // redirigir a la misma página
+            window.location.href = window.location.href;
+        });
+}
+
+</script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/autonumeric/4.0.3/autoNumeric.js"></script>
@@ -1336,3 +1355,36 @@
         });
     });
 </script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#miFormulario').on('submit', function(e) {
+            e.preventDefault();
+
+            $.ajax({
+                type: 'POST',
+                url: $(this).attr('action'),
+                data: $(this).serialize(),
+                success: function(response) {
+                    if(response.success) {
+                        Swal.fire(
+                            '¡Buen trabajo!',
+                            response.message,
+                            'success'
+                        );
+                    }
+                },
+                error: function(xhr) {
+                    // Manejo de errores
+                    Swal.fire(
+                        'Error',
+                        'Ocurrió un error al guardar los datos',
+                        'error'
+                    );
+                }
+            });
+        });
+    });
+</script>
+
