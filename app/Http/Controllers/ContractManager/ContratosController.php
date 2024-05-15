@@ -289,8 +289,14 @@ class ContratosController extends AppBaseController
             // Ruta completa donde se guardará el archivo
             $ruta = 'contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato;
 
+
             // Guardar el archivo en el disco 'public' con la ruta específica
             Storage::disk('public')->put($ruta . '/' . $nombre_f, file_get_contents($file));
+
+            $ruta_carpeta = storage_path('app/public/' . $ruta);
+
+            // Dar permisos chmod 777 a la carpeta
+            chmod($ruta_carpeta, 0777);
         }
 
         // Move file from tmp directory if name is send
