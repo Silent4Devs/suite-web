@@ -72,7 +72,7 @@
             <div class="card card-body mi-curso">
                 @if (isset($cu->cursos->image->url))
                     <img src="{{ asset($cu->cursos->image->url) }}" alt="" class="card-img"
-                        style="height: 161px; border-radius: 12px 12px 0px 0px;">
+                        style="min-height: 225px; border-radius: 12px 12px 0px 0px;">
                     <div class="caja-info-card-mc">
                         <p class="course-title">
                             {{ $cu->cursos->title }}

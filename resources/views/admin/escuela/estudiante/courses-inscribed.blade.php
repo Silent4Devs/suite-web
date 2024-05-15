@@ -64,7 +64,7 @@
             @endphp
             <div class="card card-body mi-curso">
 
-                    <img src="{{ asset($cu->cursos->image->url) }}" alt="" class="img-card" style="height: 161px;">
+                    <img src="{{ asset($cu->cursos->image->url) }}" alt="" class="img-card" style="height: 225px;">
 
                 <div class="caja-info-card-mc">
                     <p class="course-title">
