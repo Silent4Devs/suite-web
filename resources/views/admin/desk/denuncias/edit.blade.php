@@ -2,7 +2,7 @@
 @section('content')
 
 @section('styles')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/formularios_centro_atencion.css') }}{{config('app.cssVersion')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/centerAttention/forms.css') }}{{config('app.cssVersion')}}">
     <style type="text/css">
         sup {
             color: red;
@@ -23,7 +23,7 @@
         <a href="#" data-tabs="registro" class="btn_activo"><i class="mr-4 fas fa-hand-paper"></i>Registro de
             Denuncia</a>
         <a href="#" data-tabs="analisis"><i class="mr-4 fas fa-clipboard-list"></i>Análisis Causa Raíz</a>
-        <a href="#" data-tabs="plan"><i class="mr-4 fas fa-tasks"></i>Plan de Acción</a>
+        <a href="#" data-tabs="plan"><i class="mr-4 fas fa-tasks"></i>Plan de Trabajo</a>
     </div>
     <div class="card-body">
 
@@ -509,7 +509,7 @@
                                 <div class="text-center card-header" style="background-color: #345183;">
                                     <strong style="font-size: 16pt; color: #fff;"><i
                                             class="mr-4 fas fa-tasks"></i>Crear:
-                                        Plan de Acción</strong>
+                                            Plan de Trabajo</strong>
                                 </div>
                                 <div class="card-body">
                                     <div class="row">

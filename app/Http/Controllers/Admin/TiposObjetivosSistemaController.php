@@ -84,6 +84,10 @@ class TiposObjetivosSistemaController extends Controller
     {
         $tiposObjetivosSistema = TiposObjetivosSistema::find($tiposObjetivosSistema);
 
+        if (! $tiposObjetivosSistema) {
+            abort(404);
+        }
+
         // abort_if(Gate::denies('tipo_objetivo_sistema_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('admin.tipos_objetivos_sistema.show', compact('tiposObjetivosSistema'));
     }
@@ -97,6 +101,10 @@ class TiposObjetivosSistemaController extends Controller
     public function edit($tiposObjetivosSistema)
     {
         $tiposObjetivosSistema = TiposObjetivosSistema::find($tiposObjetivosSistema);
+
+        if (! $tiposObjetivosSistema) {
+            abort(404);
+        }
 
         //  abort_if(Gate::denies('tipo_objetivo_sistema_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('admin.tipos_objetivos_sistema.edit', compact('tiposObjetivosSistema'));

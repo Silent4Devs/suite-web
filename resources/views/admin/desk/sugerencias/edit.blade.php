@@ -5,7 +5,7 @@
 
 
 @section('styles')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/formularios_centro_atencion.css') }}{{config('app.cssVersion')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/centerAttention/forms.css') }}{{config('app.cssVersion')}}">
     <style type="text/css">
         sup {
             color: red;
@@ -28,7 +28,7 @@
         <a href="#" data-tabs="registro" class="btn_activo"><i class="mr-4 fas fa-lightbulb"></i>Registro de
             Sugerencia</a>
         <a href="#" data-tabs="analisis"><i class="mr-4 fas fa-clipboard-list"></i>Análisis Causa Raíz</a>
-        <a href="#" data-tabs="plan"><i class="mr-4 fas fa-tasks"></i>Plan de Acción</a>
+        <a href="#" data-tabs="plan"><i class="mr-4 fas fa-tasks"></i>Plan de Trabajo</a>
     </div>
     <div class="card-body">
 
@@ -190,7 +190,7 @@
                             <div class="mt-2 form-group col-12">
                                 <label class="form-label"><i class="fas fa-file-alt iconos-crear"></i> Describa
                                     detalladamente su sugerencia<sup>*</sup></label>
-                                <textarea name="descripcion"
+                                <textarea name="descripcion" maxlength="555"
                                     class="form-control" required>{{ $sugerencias->descripcion }}</textarea>
                             </div>
 
@@ -434,7 +434,7 @@
                                 <input type="hidden" name="sugerencia_id" value="{{ $sugerencias->id }}">
                                 <div class="text-center card-header" style="background-color: #345183;">
                                     <strong style="font-size: 16pt; color: #fff;"><i
-                                            class="mr-4 fas fa-tasks"></i>Crear: Plan de Acción</strong>
+                                            class="mr-4 fas fa-tasks"></i>Crear: Plan de Trabajo</strong>
                                 </div>
                                 <div class="card-body">
                                     <div class="row">

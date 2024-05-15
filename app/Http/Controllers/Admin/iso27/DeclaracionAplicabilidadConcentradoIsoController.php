@@ -338,10 +338,17 @@ class DeclaracionAplicabilidadConcentradoIsoController extends Controller
      */
     public function edit(Request $request, $control)
     {
-        $control = GapDosCatalogoIso::with('clasificacion')->find($control);
-        // dd($control);
+        try {
+            $control = GapDosCatalogoIso::with('clasificacion')->find($control);
 
-        return view('admin.declaracionaplicabilidad2022.tabla-edit', compact('control'));
+            if (! $control) {
+                abort(404);
+            }
+
+            return view('admin.declaracionaplicabilidad2022.tabla-edit', compact('control'));
+        } catch (\Throwable $th) {
+            abort(404);
+        }
     }
 
     /**

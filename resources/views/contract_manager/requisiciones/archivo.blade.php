@@ -63,7 +63,7 @@
             <br>
             <form class="text-right" action="{{ route('contract_manager.requisiciones') }}" method="GET">
                 @method('GET')
-                <button class="btn btn-primary" type="submit" title="Regresar">
+                <button class="btn tb-btn-primary" type="submit" title="Regresar">
                     Regresar
                 </button>
             </form>

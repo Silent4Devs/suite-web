@@ -7,7 +7,7 @@
                 <textarea wire:model.lazy="comment" class="form-control w-full" rows="3" placeholder="Ingrese una reseña del curso"></textarea>
 
                 <div class="d-flex mt-4 mb-4">
-                    <button class="btn btn-primary mr-4 " wire:click="store">Guardar</button>
+                    <button class="btn tb-btn-primary mr-4 " wire:click="store">Guardar</button>
 
                     <ul style="list-style: none;" class="d-flex pt-2">
                         <li class="mr-1 cursor-pointer" wire:click="$set('rating', 1)">

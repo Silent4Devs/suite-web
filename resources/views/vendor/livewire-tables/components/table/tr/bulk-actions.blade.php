@@ -80,7 +80,7 @@
                             wire:click="clearSelected"
                             wire:loading.attr="disabled"
                             type="button"
-                            class="btn btn-primary btn-sm"
+                            class="btn tb-btn-primary btn-sm"
                         >
                             @lang('Deselect All')
                         </button>
@@ -98,7 +98,7 @@
                             wire:click="setAllSelected"
                             wire:loading.attr="disabled"
                             type="button"
-                            class="btn btn-primary btn-sm"
+                            class="btn tb-btn-primary btn-sm"
                         >
                             @lang('Select All')
                         </button>
@@ -107,7 +107,7 @@
                             wire:click="clearSelected"
                             wire:loading.attr="disabled"
                             type="button"
-                            class="btn btn-primary btn-sm"
+                            class="btn tb-btn-primary btn-sm"
                         >
                             @lang('Deselect All')
                         </button>

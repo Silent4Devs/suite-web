@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
 
-    <link rel="stylesheet" type="text/css" href="{{ asset('../css/colores.css') }}{{config('app.cssVersion')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('../css/global/colores.css') }}{{config('app.cssVersion')}}">
     <h5 class="col-12 titulo_general_funcion"> Editar: Categoría</h5>
     <div class="mt-4 card">
          <div class="card-body">
@@ -22,7 +22,7 @@
                 </div>
                 <div class="text-right form-group col-12">
                     <a href="{{ route('admin.categoria-capacitacion.index') }}" class="btn" id="btn_cancelar" style="color:#057BE2;">Cancelar</a>
-                    <button class="btn btn-primary" type="submit">
+                    <button class="btn tb-btn-primary" type="submit">
                         {{ trans('global.save') }}
                     </button>
                 </div>

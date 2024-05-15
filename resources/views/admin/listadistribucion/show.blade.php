@@ -143,7 +143,7 @@
             </div>
         </div>
         <div  style="position: relative; left: 65rem;">
-            <a href="{{ route('admin.lista-distribucion.index') }}" type="button" class="btn btn-primary" id="btn_cancelar" style="color:#057BE2;">Regresar</a>
+            <a href="{{ route('admin.lista-distribucion.index') }}" type="button" class="btn tb-btn-primary" id="btn_cancelar" style="color:#057BE2;">Regresar</a>
         </div>
     </form>
 @endsection

@@ -39,8 +39,7 @@
                         </div>
                     @endif
                     @if ($origen == 'tareas')
-                        <select id="proyectos_select" class="mr-4 form-control" wire:model.lazy="proyecto_id"
-                            required>
+                        <select id="proyectos_select" class="mr-4 form-control" wire:model.lazy="proyecto_id" required>
                             <option selected value="">- -</option>
                             @foreach ($proyectos as $proyecto)
                                 <option value="{{ $proyecto->id }}">{{ $proyecto->identificador }} -
@@ -63,10 +62,12 @@
                 </div>
                 <div class="form-group w-100 mr-4">
                     <label> Tarea Nueva</label>
-                    <input class="form-control w-100 mr-4" maxlength="255" title="Por favor, no incluyas comas en el nombre de la tarea." placeholder="Nombre de la tarea" id="tarea_name" required pattern="[^\.,]*">
+                    <input class="form-control w-100 mr-4" maxlength="255"
+                        title="Por favor, no incluyas comas en el nombre de la tarea." placeholder="Nombre de la tarea"
+                        id="tarea_name" required pattern="[^\.,]*">
                 </div>
                 <div class="form-group" style="position:relative; min-width:150px;">
-                    <button class="btn btn-primary" style="position: absolute; bottom: 0;">
+                    <button class="btn tb-btn-primary" style="position: absolute; bottom: 0;">
                         Agregar</button>
                 </div>
             </div>
@@ -77,7 +78,7 @@
         @if ($origen == 'tareas')
             <div class="col-6 form-group">
                 <label>Filtrar por proyecto</label>
-                <select  id="proyecto_filtro" class="form-control">
+                <select id="proyecto_filtro" class="form-control">
                     <option value=""></option>
                     @foreach ($proyectos as $proyecto)
                         <option value="{{ $proyecto->id }}">{{ $proyecto->identificador }} -
@@ -91,7 +92,7 @@
         <table id="tabla_time_tareas" class="table w-100 tabla-animada tabla_time_tareas">
             <thead class="w-100">
                 <tr>
-                    <th style="min-width:600px;">Tarea </th>
+                    <th style="min-width:600px;">Tareas</th>
                     <th>Proyecto</th>
                     <th>Área</th>
                     <th style="max-width: 150px; width: 150px;">Opciones</th>
@@ -121,7 +122,9 @@
                                     style="font-size:15pt; cursor: pointer;">
                                     <ul class="modal-hover">
                                         @foreach ($tarea->areas as $key => $area)
-                                            <li>{{ $area->area }}</li>
+                                            @if ($area)
+                                                <li>{{ $area->area }}</li>
+                                            @endif
                                         @endforeach
                                     </ul>
                                 </i>

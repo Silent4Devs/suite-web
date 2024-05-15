@@ -337,17 +337,17 @@
                 </form> --}}
 
 
-        {{-- MODULO AGREGAR PLAN DE ACCIÓN --}}
-        @include('admin.planesDeAccion.actividades.tabla', [
+        {{-- MODULO AGREGAR PLAN DE Trabajo --}}
+        @include('admin.workPlan.actividades.tabla', [
             'empleados' => $responsablereunions,
         ])
-        {{-- FIN MODULO AGREGAR PLAN DE ACCIÓN --}}
+        {{-- FIN MODULO AGREGAR PLAN DE Trabajo --}}
 
 
         <div class="text-right form-group col-12">
             <a href="{{ route('admin.minutasaltadireccions.index') }}" class="btn_cancelar"
                 style="text-decoration: none;">Cancelar</a>
-            <button id="btnGuardar" class="btn btn-primary" type="submit" style="width: 13%;">
+            <button id="btnGuardar" class="btn tb-btn-primary" type="submit" style="width: 13%;">
                 {{ trans('global.save') }}
             </button>
         </div>
@@ -371,7 +371,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <a type="button" href="{{ route('admin.users.index') }}" class="btn btn-primary">Vincular</a>
+                    <a type="button" href="{{ route('admin.users.index') }}" class="btn tb-btn-primary">Vincular</a>
                 </div>
             </div>
         </div>
@@ -443,7 +443,7 @@
         Livewire.on('planStore', () => {
             $('#planAccionModal').modal('hide');
             $('.modal-backdrop').hide();
-            toastr.success('Plan de Acción creado con éxito');
+            toastr.success('Plan de Trabajo creado con éxito');
         });
         window.initSelect2 = () => {
             $('.select2').select2({

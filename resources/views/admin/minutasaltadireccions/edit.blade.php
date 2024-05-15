@@ -327,17 +327,17 @@
             </div>
         </div>
 
-        {{-- MODULO AGREGAR PLAN DE ACCIÓN --}}
+        {{-- MODULO AGREGAR PLAN DE Trabajo --}}
 
 
-        @include('admin.planesDeAccion.actividades.tabla', [
+        @include('admin.workPlan.actividades.tabla', [
             'empleados' => $responsablereunions,
             'actividades' => $actividades,
         ])
 
 
 
-        {{-- FIN MODULO AGREGAR PLAN DE ACCIÓN --}}
+        {{-- FIN MODULO AGREGAR PLAN DE Trabajo --}}
 
         <div class="text-right form-group col-12">
             <a href="{{ route('admin.minutasaltadireccions.index') }}" class="btn_cancelar"
@@ -434,7 +434,7 @@
         Livewire.on('planStore', () => {
             $('#planAccionModal').modal('hide');
             $('.modal-backdrop').hide();
-            toastr.success('Plan de Acción creado con éxito');
+            toastr.success('Plan de Trabajo creado con éxito');
         });
         window.initSelect2 = () => {
             $('.select2').select2({
@@ -670,7 +670,7 @@
         Livewire.on('planStore', () => {
             $('#planAccionModal').modal('hide');
             $('.modal-backdrop').hide();
-            toastr.success('Plan de Acción creado con éxito');
+            toastr.success('Plan de Trabajo creado con éxito');
         });
         window.initSelect2 = () => {
             $('.select2').select2({

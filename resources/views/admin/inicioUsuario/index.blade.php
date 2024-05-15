@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/inicio_usuario.css') }}{{ config('app.cssVersion') }}">
+    <link rel="stylesheet" href="{{ asset('css/user/user.css') }}{{ config('app.cssVersion') }}">
 @endsection
 @section('content')
     @include('partials.menu-slider')
@@ -103,58 +103,58 @@
                     <h3 class="title-user-card">Mi equipo</h3>
                     <hr class="mt-4">
                     <div class="caja-equipo content-mi-card scroll_estilo">
-                        @forelse ($equipo_a_cargo as $empleado)
+                        @forelse ($equipo_a_cargo as $empleado_cargo)
                             <div class="d-flex align-items-center mt-4" style="gap: 30px;">
                                 <div class="img-person" style="width: 90px; height:90px;">
-                                    <img src="{{ asset('storage/empleados/imagenes') }}/{{ $empleado->avatar }}"
+                                    <img src="{{ asset('storage/empleados/imagenes') }}/{{ $empleado_cargo->avatar }}"
                                         alt="">
                                 </div>
                                 <div>
                                     <p class="mb-1">
-                                        <strong>{{ $empleado->name }}</strong>
+                                        <strong>{{ $empleado_cargo->name }}</strong>
                                     </p>
                                     <p>
-                                        {{ $empleado->email }}
+                                        {{ $empleado_cargo->email }}
                                     </p>
                                     <div class="caja-btns-op-equipo-user">
                                         <a
-                                            href="tel:{{ $empleado->telefono_movil ? $empleado->telefono_movil : $empleado->telefono }}">
+                                            href="tel:{{ $empleado_cargo->telefono_movil ? $empleado_cargo->telefono_movil : $empleado_cargo->telefono }}">
                                             <i class="bi bi-phone"></i>
                                         </a>
                                         <a
-                                            href="https://wa.me/{{ $empleado->telefono_movil ? $empleado->telefono_movil : $empleado->telefono }}">
+                                            href="https://wa.me/{{ $empleado_cargo->telefono_movil ? $empleado_cargo->telefono_movil : $empleado_cargo->telefono }}">
                                             <i class="bi bi-whatsapp"></i>
                                         </a>
-                                        <a href="mailto:{{ $empleado->email }}">
+                                        <a href="mailto:{{ $empleado_cargo->email }}">
                                             <i class="bi bi-envelope"></i>
                                         </a>
                                     </div>
                                 </div>
                             </div>
                         @empty
-                            @foreach ($equipo_trabajo as $empleado)
+                            @foreach ($equipo_trabajo as $empleado_trabajo)
                                 <div class="d-flex align-items-center mt-4" style="gap: 30px;">
                                     <div class="img-person" style="width: 90px; height:90px;">
-                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $empleado->avatar }}"
+                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $empleado_trabajo->avatar }}"
                                             alt="">
                                     </div>
                                     <div>
                                         <p class="mb-1">
-                                            <strong>{{ $empleado->name }}</strong>
+                                            <strong>{{ $empleado_trabajo->name }}</strong>
                                         </p>
                                         <p>
-                                            {{ $empleado->email }}
+                                            {{ $empleado_trabajo->email }}
                                         </p>
                                         <div class="caja-btns-op-equipo-user">
                                             <a
-                                                href="tel:{{ $empleado->telefono_movil ? $empleado->telefono_movil : $empleado->telefono }}">
+                                                href="tel:{{ $empleado_trabajo->telefono_movil ? $empleado_trabajo->telefono_movil : $empleado_trabajo->telefono }}">
                                                 <i class="bi bi-phone"></i>
                                             </a>
                                             <a
-                                                href="https://wa.me/{{ $empleado->telefono_movil ? $empleado->telefono_movil : $empleado->telefono }}">
+                                                href="https://wa.me/{{ $empleado_trabajo->telefono_movil ? $empleado_trabajo->telefono_movil : $empleado_trabajo->telefono }}">
                                                 <i class="bi bi-whatsapp"></i>
                                             </a>
-                                            <a href="mailto:{{ $empleado->email }}">
+                                            <a href="mailto:{{ $empleado_trabajo->email }}">
                                                 <i class="bi bi-envelope"></i>
                                             </a>
                                         </div>
@@ -278,7 +278,7 @@
             @endif
 
             {{-- Inhabilitado temporalmente --}}
-            {{-- @if (isset($mis_evaluaciones->evaluacion))
+            @if (isset($mis_evaluaciones->evaluacion))
                 @if ($mis_evaluaciones->evaluacion->estatus == 2 || $mis_evaluaciones->evaluacion->estatus == 3)
                     <a
                         href="{{ route('admin.ev360-evaluaciones.autoevaluacion.consulta.evaluado', [$mis_evaluaciones->evaluacion->id, auth()->user()->empleado->id]) }}">
@@ -294,7 +294,7 @@
                         </div>
                     </a>
                 @endif
-            @endif --}}
+            @endif
 
         </div>
     </div>

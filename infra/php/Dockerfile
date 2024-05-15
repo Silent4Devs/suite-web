@@ -1,4 +1,4 @@
-FROM php:8.3-fpm-alpine
+FROM php:8.2-fpm-alpine
 
 # Add docker-php-extension-installer script
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
@@ -15,21 +15,22 @@ RUN apk add --no-cache \
     icu-libs \
     libc-dev \
     libzip-dev \
+    libpq-dev \
     make \
-    mysql-client \
-    # nodejs \
-    # npm \
+    #mysql-client \
+    nodejs \
+    npm \
     oniguruma-dev \
     yarn \
     openssh-client \
     postgresql-libs \
+    postgresql-client \
     rsync \
     zlib-dev \
     sudo \
     zip \
     unzip \
-    libsodium-dev \
-    dcron
+    libsodium-dev
 
 # Install php extensions
 RUN chmod +x /usr/local/bin/install-php-extensions && \
@@ -43,7 +44,7 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
     exif \
     gd \
     intl \
-    pdo_mysql \
+    #pdo_mysql \
     pdo_pgsql \
     pcntl \
     soap \
@@ -54,7 +55,9 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
     sodium \
     excimer \
     pcntl \
-    posix
+    posix \
+    amqp \
+    newrelic
 
 # Enable phpredis extension
 #RUN echo "extension=redis.so" > /usr/local/etc/php/conf.d/docker-php-ext-redis.ini
@@ -67,6 +70,9 @@ COPY www.conf /usr/local/etc/php-fpm.d/www.conf
 
 RUN chown -R www-data:www-data /var/www \
     && chmod 755 -R /var/www
+
+# Install npm
+RUN npm install -g npm@latest
 
 # Healthcheck
 HEALTHCHECK --interval=15m --timeout=3s \

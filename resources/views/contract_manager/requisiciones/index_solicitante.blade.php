@@ -13,14 +13,14 @@
             word-wrap: break-word
         }
     </style>
-    <h5 class="col-12 titulo_general_funcion">Requisiciónes</h5>
+    <h5 class="col-12 titulo_general_funcion">Requisiciones</h5>
     <div class="mt-5 card">
         <form class="text-right" action="{{ route('contract_manager.requisiciones.indexAprobadores') }}" method="GET">
             @method('GET')
-            <button class="btn btn-primary" type="submit" title="Aprobadores">
+            <button class="btn tb-btn-primary" type="submit" title="Aprobadores">
                 Aprobadores
             </button>
-            <a style="color: white;" class="btn btn-primary"
+            <a style="color: white;" class="btn tb-btn-primary"
                 href="{{ route('contract_manager.requisiciones.archivo') }}">Archivados</a>
         </form>
         <div class="card-body datatable-fix">
@@ -32,6 +32,7 @@
                         <th style="vertical-align: top">Referencia</th>
                         <th style="vertical-align: top">Proveedor</th>
                         <th style="vertical-align: top">Estatus</th>
+                        <th style="vertical-align: top">Turno en firmar</th>
                         <th style="vertical-align: top">Proyecto</th>
                         <th style="vertical-align: top">Área que Solicita</th>
                         <th style="vertical-align: top">Solicitante</th>
@@ -46,7 +47,72 @@
                             <td>{{ $requisicion->fecha }}</td>
                             <td>{{ $requisicion->referencia }}</td>
                             <td>{{ $requisicion->proveedor_catalogo }}</td>
-                            <td>{{ $requisicion->estado }}</td>
+                            <td>
+                                @switch($requisicion->estado)
+                                    @case('curso')
+                                        <h5><span class="badge badge-pill badge-primary">En curso</span></h5>
+                                    @break
+
+                                    @case('aprobado')
+                                        <h5><span class="badge badge-pill badge-success">Aprobado</span></h5>
+                                    @break
+
+                                    @case('rechazado')
+                                        <h5><span class="badge badge-pill badge-danger">Rechazado</span></h5>
+                                    @break
+
+                                    @case('firmada')
+                                    @case('firmada_final')
+                                        <h5><span class="badge badge-pill badge-success">Firmada</span></h5>
+                                    @break
+
+                                    @default
+                                        <h5><span class="badge badge-pill badge-info">Por iniciar</span></h5>
+                                @endswitch
+
+                            </td>
+                            @php
+                            $user = Illuminate\Support\Facades\DB::table('users')
+                              ->select('id', 'name')
+                              ->where('id', $requisicion->id_user)
+                              ->first();
+                            @endphp
+                            <td>
+                                @switch(true)
+                                    @case(is_null($requisicion->firma_solicitante))
+                                        <p>Solicitante: {{$user->name ?? ''}}</p>
+                                    @break
+
+                                    @case(is_null($requisicion->firma_jefe))
+
+                                    @php
+                                    $employee = App\Models\User::find($requisicion->id_user)->empleado;
+
+                                    if ($employee !== null && $employee->supervisor !== null) {
+                                        $supervisorName = $employee->supervisor->name;
+                                    } else {
+                                        $supervisorName = "N/A"; // Or any default value you prefer
+                                    }
+                                    @endphp
+                                        <p>Jefe: {{$supervisorName ?? ''}} </p>
+                                    @break
+
+                                    @case(is_null($requisicion->firma_finanzas))
+                                        <p>Finanzas</p>
+                                    @break
+
+                                    @case(is_null($requisicion->firma_compras))
+
+                                    @php
+                                     $comprador = App\Models\ContractManager\Comprador::with('user')->where('id', $requisicion->comprador_id)->first();
+                                    @endphp
+                                    <p>Comprador: {{  $comprador->name }}</p>
+                                    @break
+
+                                    @default
+                                        <h5><span class="badge badge-pill badge-success">Completado</span></h5>
+                                @endswitch
+                            </td>
                             <td>{{ $requisicion->contrato->nombre_servicio ?? 'Sin servicio disponible' }}</td>
                             <td>{{ $requisicion->area }}</td>
                             <td>{{ $requisicion->user }}</td>

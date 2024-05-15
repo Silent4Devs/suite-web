@@ -29,12 +29,6 @@
                             RFC
                         </th>
                         <th style="vertical-align: top">
-                            Fecha Inicio
-                        </th>
-                        <th style="vertical-align: top">
-                            Fecha Fin
-                        </th>
-                        <th style="vertical-align: top">
                             Opciones
                         </th>
                     </tr>
@@ -189,14 +183,6 @@
                         name: 'rfc'
                     },
                     {
-                        data: 'fecha_inicio',
-                        name: 'fecha_inicio'
-                    },
-                    {
-                        data: 'fecha_fin',
-                        name: 'fecha_fin'
-                    },
-                    {
                         data: 'id',
                         name: 'actions',
                         render: function(data, type, row, meta) {
@@ -224,13 +210,13 @@
 
             window.Archivar = function(url, nombre) {
                 Swal.fire({
-                    title: `¿Estás seguro de archivar el siguiente registro?`,
+                    title: `¿Estás seguro de desarchivar el siguiente registro?`,
                     html: `<strong><i class="mr-2 fas fa-exclamation-triangle"></i>${nombre}</strong>`,
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: '¡Sí, archivar!',
+                    confirmButtonText: '¡Sí, desarchivar!',
                     cancelButtonText: 'Cancelar'
                 }).then((result) => {
                     if (result.isConfirmed) {
@@ -242,17 +228,20 @@
                             url: url,
                             beforeSend: function() {
                                 Swal.fire(
-                                    '¡Estamos Archivar!',
-                                    `El proveedor: ${nombre} está siendo archivado`,
+                                    '¡Estamos Desarchivando!',
+                                    `El proveedor: ${nombre} está siendo desarchivado`,
                                     'info'
                                 )
                             },
                             success: function(response) {
                                 Swal.fire(
-                                    'Archivando!',
-                                    `El proveedor: ${nombre} ha sido archivado`,
+                                    'Desarchivado!',
+                                    `El proveedor: ${nombre} ha sido desarchivado`,
                                     'success'
-                                )
+                                ).then(() => {
+                                    window.location.href = '/contract_manager/proveedores'; // Replace '/index' with your actual index page URL
+                                });
+
                                 table.ajax.reload();
                             },
                             error: function(error) {

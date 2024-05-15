@@ -5,7 +5,7 @@
 
 {{-- {{ Breadcrumbs::render('proveedores_create') }} --}}
 
-<link rel="stylesheet" href="{{ asset('css/requisiciones.css') }}">
+<link rel="stylesheet" href="{{ asset('css/requisitions/requisitions.css') }}">
 
 
 <div class="create-requisicion">
@@ -81,7 +81,7 @@
                             Proyecto <font class="asterisco">*</font>
                         </label>
                         <input class="browser-default" disabled
-                            value="{{ isset($requisicion->contrato->no_proyecto) }} / {{ isset($requisicion->contrato->no_contrato) }} - {{ isset($requisicion->contrato->nombre_servicio )}}">
+                            value="{{ optional($requisicion->contrato)->no_proyecto }} / {{ optional($requisicion->contrato)->no_contrato }} - {{ optional($requisicion->contrato)->nombre_servicio }}">
                     </div>
                 </div>
                 <div class="row">
@@ -478,9 +478,9 @@
     </div>
 </div>
 <div class="flex" style="justify-content: flex-end; margin-top:50px; gap:10px;">
-    <a href="{{ route('contract_manager.orden-compra') }}" class="btn"
-        style="background: #959595 !important">Regresar</a>
-    <button class="btn btn-primary" onclick="mensaje()">Guardar</button>
+    <a href="{{ route('contract_manager.orden-compra') }}"
+    class="btn_cancelar" >Regresar</a>
+    <button class="btn tb-btn-primary" onclick="mensaje()">Guardar</button>
 </div>
 </form>
 </div>

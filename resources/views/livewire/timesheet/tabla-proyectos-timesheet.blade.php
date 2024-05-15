@@ -162,7 +162,7 @@
                 <hr class="my-4">
             </div>
             {{-- <div class="btn_estatus_caja">
-                <button class="btn btn-primary ml-3"
+                <button class="btn tb-btn-primary ml-3"
                     style="background-color: #F48C16; border:none !important; position: relative;" id="btn_todos"
                     wire:click="actualizarEstatus('procesos')">
                     @if ($proceso_count > 0)
@@ -170,7 +170,7 @@
                     @endif
                     En Proceso
                 </button>
-                <button class="btn btn-primary ml-3"
+                <button class="btn tb-btn-primary ml-3"
                     style="background-color: #aaa; border:none !important; position: relative;" id="btn_papelera"
                     wire:click="actualizarEstatus('cancelados')">
                     @if ($cancelado_count > 0)
@@ -178,7 +178,7 @@
                     @endif
                     Cancelados
                 </button>
-                <button class="btn btn-primary ml-3"
+                <button class="btn tb-btn-primary ml-3"
                     style="background-color: #61CB5C; border:none !important; position: relative;" id="btn_pendiente"
                     wire:click="actualizarEstatus('terminados')">
                     @if ($terminado_count > 0)
@@ -186,7 +186,7 @@
                     @endif
                     Terminados
                 </button>
-                <button class="btn btn-primary ml-3"
+                <button class="btn tb-btn-primary ml-3"
                     style="background-color: #1E88D7; border:none !important; position: relative;" id="btn_pendiente"
                     wire:click="actualizarEstatus('todos')">
                     <span class="indicador_numero"
@@ -206,9 +206,11 @@
                         <th>Fecha termino</th>
                         <th>Cliente</th>
                         <th style="max-width: 250px !important;">Área(s)</th>
+                        <th style="max-width: 250px !important;">Empleados participantes</th>
                         <th>Sede</th>
                         <th>Estatus</th>
                         <th>Tipo</th>
+                        <th>Horas totales</th>
                         <th style="max-width:150px !important; width:150px ;">Opciones</th>
                     </tr>
                 </thead>
@@ -216,7 +218,9 @@
                 <tbody style="position:relative;">
                     @foreach ($proyectos as $proyecto)
                         <tr>
-                            <td>{{ $proyecto->identificador }} </td>
+                            <td>
+                                <strong> {{ $proyecto->identificador }} </strong>
+                            </td>
                             <td>{{ $proyecto->proyecto }} </td>
                             <td>{{ $proyecto->fecha_inicio }} </td>
                             <td>{{ $proyecto->fecha_fin }} </td>
@@ -228,9 +232,19 @@
                                     @endforeach
                                 </ul>
                             </td>
+                            <td>
+                                <ul style="padding-left:10px; ">
+                                    @foreach ($proyecto->empleados as $empleado)
+                                        <li>
+                                            {{ $empleado['name'] }} - {{ $empleado['horas'] }} h
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </td>
                             <td>{{ $proyecto->sede_id ? $proyecto->sede->sede : '' }} </td>
                             <td>{{ $proyecto->estatus }} </td>
                             <td>{{ $proyecto->tipo ?? 'No Definido' }} </td>
+                            <td>{{ $proyecto->horas_totales_llenas }}</td>
                             <td>
                                 @can('timesheet_administrador_proyectos_delete')
                                     @php

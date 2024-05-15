@@ -68,7 +68,7 @@
     @can('revision_por_direccion_agregar')
         <div style="margin-bottom: 10px; text-align:end;" class="row">
             <div class="col-lg-12">
-                <a class="btn btn-primary" href="{{ route('admin.minutasaltadireccions.create') }}">
+                <a class="btn tb-btn-primary" href="{{ route('admin.minutasaltadireccions.create') }}">
                     Agregar Revisión
                 </a>
             </div>
@@ -201,7 +201,7 @@
                                     {{-- @foreach ($q->planes as $plan)
                                             @can('revision_por_direccion_plan_accion')
                                                 <li><a href="/admin/planes-de-accion/{{ $plan->id }}" class="btn btn-sm"
-                                                        title="Plan de Acción"><i class="fa fa-stream"></i></a>Plan de
+                                                        title="Plan de Trabajo"><i class="fa fa-stream"></i></a>Plan de
                                                     Accion
                                                 </li>
                                             @endcan

@@ -42,11 +42,27 @@ class Kernel extends ConsoleKernel
             ->withoutOverlapping()
             ->onOneServer()
             ->sentryMonitor();
-        $schedule->command('snapshot:create dump'.date('Y-m-d-H'))
+
+        //dump automatico de base de datos
+        $schedule->command('snapshot:create')
             ->timezone('America/Mexico_City')
             ->days([2, 5])
-            ->at('23:36')
+            ->at('23:00')
             ->withoutOverlapping()
+            ->onOneServer()
+            ->sentryMonitor();
+
+        // Limpiar los respaldos diariamente a las 11:00 PM
+        $schedule->command('backup:clean')
+            ->days([2, 5])
+            ->at('23:20')
+            ->onOneServer()
+            ->sentryMonitor();
+
+        // Ejecutar el respaldo diariamente a las 11:30 PM
+        $schedule->command('backup:run')
+            ->days([2, 5])
+            ->at('23:40')
             ->onOneServer()
             ->sentryMonitor();
     }

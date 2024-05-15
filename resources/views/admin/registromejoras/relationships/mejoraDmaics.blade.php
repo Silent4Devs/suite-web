@@ -82,7 +82,7 @@
                             </td>
                             <td>
                                 @can('dmaic_show')
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.dmaics.show', $dmaic->id) }}">
+                                    <a class="btn btn-xs tb-btn-primary" href="{{ route('admin.dmaics.show', $dmaic->id) }}">
                                         {{ trans('global.view') }}
                                     </a>
                                 @endcan

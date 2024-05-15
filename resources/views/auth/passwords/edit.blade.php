@@ -126,7 +126,7 @@
                         use App\Models\User;
                         use App\Models\Empleado;
                         $usuario = User::getCurrentUser();
-                        $empleado = Empleado::where('id', $usuario->empleado->id)->first();
+                        $empleado = Empleado::getMyEmpleadodata($usuario->empleado->id);
 
                     @endphp
 
@@ -377,7 +377,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary" id="crop">Cambiar</button>
+                        <button type="button" class="btn tb-btn-primary" id="crop">Cambiar</button>
                     </div>
                 </div>
             </div>

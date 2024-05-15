@@ -3,7 +3,7 @@
 @section('titulo', 'Ver Requisición')
 
 @include('layouts.datatables_css')
-<link rel="stylesheet" href="{{asset('css/requisiciones.css')}}{{config('app.cssVersion')}}">
+<link rel="stylesheet" href="{{asset('css/requisitions/requisitions.css')}}{{config('app.cssVersion')}}">
 <style>
     @media print{
         .card.card-item{
@@ -69,7 +69,11 @@
                         {{$requisicion->referencia }}
                         <br><br>
                         <strong>Proyecto:</strong><br>
-                        {{ isset($requisicion->contrato->no_proyecto) }} / {{ isset($requisicion->contrato->no_contrato) }} - {{ isset($requisicion->contrato->nombre_servicio) }}
+                        @if($requisicion->contrato === null)
+                        <strong>Contrato Eliminado!</strong>
+                        @else
+                        {{ optional($requisicion->contrato)->no_proyecto }} - {{ optional($requisicion->contrato)->no_contrato }} - {{ optional($requisicion->contrato)->nombre_servicio }}
+                        @endif
                     </div>
                     <div class="flex-item">
                         <strong>Área que solicita:</strong><br>
@@ -287,7 +291,7 @@
                         <div class="flex-item">
                             @if ($requisicion->firma_finanzas)
                                 <img src="{{$requisicion->firma_finanzas}}" class="img-firma">
-                                <p>Lourdes del Pilar Abadía Velasco </p>
+                                <p>{{ $firma_finanzas ?? '' }}</p>
                                 <p>{{ $requisicion->fecha_firma_finanzas_requi }}</p>
                             @else
                                 <div style="height: 137px;"></div>

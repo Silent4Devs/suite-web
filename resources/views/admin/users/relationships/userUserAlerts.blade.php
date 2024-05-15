@@ -66,7 +66,7 @@
                             </td>
                             <td>
                                 @can('user_alert_show')
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.user-alerts.show', $userAlert->id) }}">
+                                    <a class="btn btn-xs tb-btn-primary" href="{{ route('admin.user-alerts.show', $userAlert->id) }}">
                                         {{ trans('global.view') }}
                                     </a>
                                 @endcan

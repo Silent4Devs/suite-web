@@ -242,6 +242,8 @@ class ReportesProyectos extends Component
             $this->proyectos = TimesheetProyecto::getIdNameAll();
             $this->proyectos_select = $this->proyectos;
         }
+        $this->proyectos = $this->proyectos->sortByDesc('is_num');
+        $this->proyectos_select = $this->proyectos_select->sortByDesc('is_num');
 
         foreach ($this->proyectos as $proyecto) {
             // registros existenetes horas a la semana
@@ -264,6 +266,7 @@ class ReportesProyectos extends Component
             // registro de horas en calendario
             $times_registro_horas_array = collect();
             $calendario_tabla_proyectos = [];
+            $horas_totales_proyecto = 0;
             foreach ($calendario_array as $key => $año) {
                 foreach ($año['months'] as $key => $mes) {
                     foreach ($mes['weeks'] as $key => $semana) {
@@ -289,6 +292,7 @@ class ReportesProyectos extends Component
 
                         if ($horas_proyecto_times > 0) {
                             array_push($calendario_tabla_proyectos, $horas_proyecto_times);
+                            $horas_totales_proyecto += $horas_proyecto_times;
                         } else {
                             array_push($calendario_tabla_proyectos, '<span class="p-1" style="background-color:#FFF2CC;">Sin&nbsp;Registro</span>');
                         }
@@ -301,8 +305,10 @@ class ReportesProyectos extends Component
                 'identificador' => $proyecto->identificador,
                 'proyecto' => $proyecto->proyecto,
                 'areas' => $proyecto->areas,
+                'empleados' => $proyecto->empleados,
                 'cliente' => $proyecto->cliente ? $proyecto->cliente->nombre : '',
                 'calendario' => $calendario_tabla_proyectos,
+                'horas_totales' => $horas_totales_proyecto,
             ]);
         }
         if ($this->search) {
@@ -314,7 +320,7 @@ class ReportesProyectos extends Component
         }
 
         $this->totalRegistrosMostrando = count($proyectos_array);
-        $proyectos_array = $this->paginate($proyectos_array, $this->perPage);
+        //$proyectos_array = $this->paginate($proyectos_array, $this->perPage);
 
         $this->calendario_tabla = $calendario_array;
         $this->hoy_format = $this->hoy->format('d/m/Y');

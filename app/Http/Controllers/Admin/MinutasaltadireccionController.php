@@ -115,7 +115,7 @@ class MinutasaltadireccionController extends Controller
             Media::whereIn('id', $media)->update(['model_id' => $minutasaltadireccion->id]);
         }
 
-        //Vinculación Plan de acción
+        //Vinculación Plan de Trabajo
         $this->vincularActividadesPlanDeAccion($request, $minutasaltadireccion);
 
         // Almacenamiento de participantes relacionados
@@ -545,7 +545,7 @@ class MinutasaltadireccionController extends Controller
         abort_if(Gate::denies('revision_por_direccion_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $minutas = Minutasaltadireccion::with('responsable')->find($id);
-        $responsable = Empleado::where('id', $minutas->responsable_id)->first();
+        $responsable = Empleado::getMyEmpleadodata($minutas->responsable_id);
         $revision = RevisionMinuta::where('id', $minutas->id)->first();
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -561,7 +561,7 @@ class MinutasaltadireccionController extends Controller
         abort_if(Gate::denies('revision_por_direccion_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $minutas = Minutasaltadireccion::with('responsable')->find($id);
-        $responsable = Empleado::where('id', $minutas->responsable_id)->first();
+        $responsable = Empleado::getMyEmpleadodata($minutas->responsable_id);
         $revision = RevisionMinuta::where('id', $minutas->id)->first();
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -712,7 +712,7 @@ class MinutasaltadireccionController extends Controller
         $referencia = $modulo->nombrerequisito;
         $urlStore = route('admin.matriz-requisito-legales.storePlanAccion', $id);
 
-        return view('admin.planesDeAccion.create', compact('planImplementacion', 'modulo_name', 'modulo', 'referencia', 'urlStore'));
+        return view('admin.workPlan.create', compact('planImplementacion', 'modulo_name', 'modulo', 'referencia', 'urlStore'));
     }
 
     public function storePlanAccion(Request $request, Minutasaltadireccion $id)
@@ -723,10 +723,10 @@ class MinutasaltadireccionController extends Controller
             'modulo_origen' => 'required|string',
             'objetivo' => 'required|string',
         ], [
-            'parent.required' => 'Debes de definir un nombre para el plan de acción',
-            'norma.required' => 'Debes de definir una norma para el plan de acción',
-            'modulo_origen.required' => 'Debes de definir un módulo de origen para el plan de acción',
-            'objetivo.required' => 'Debes de definir un objetivo para el plan de acción',
+            'parent.required' => 'Debes de definir un nombre para el Plan de Trabajo',
+            'norma.required' => 'Debes de definir una norma para el Plan de Trabajo',
+            'modulo_origen.required' => 'Debes de definir un módulo de origen para el Plan de Trabajo',
+            'objetivo.required' => 'Debes de definir un objetivo para el Plan de Trabajo',
         ]);
 
         $planImplementacion = new PlanImplementacion(); // Necesario se carga inicialmente el Diagrama Universal de Gantt
@@ -746,14 +746,14 @@ class MinutasaltadireccionController extends Controller
         $minuta = $id;
         $minuta->planes()->save($planImplementacion);
 
-        return redirect()->route('admin.minutasaltadireccions.index')->with('success', 'Plan de Acción'.$planImplementacion->parent.' creado');
+        return redirect()->route('admin.minutasaltadireccions.index')->with('success', 'Plan de Trabajo'.$planImplementacion->parent.' creado');
     }
 
     public function pdf($id)
     {
         $minutas = Minutasaltadireccion::where('id', $id)->first();
         $organizacions = Organizacion::getFirst();
-        $responsable = Empleado::where('id', $minutas->responsable_id)->first();
+        $responsable = Empleado::getMyEmpleadodata($minutas->responsable_id);
         $revision = RevisionMinuta::where('id', $minutas->id)->first();
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;

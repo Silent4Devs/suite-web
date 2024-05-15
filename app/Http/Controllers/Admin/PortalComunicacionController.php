@@ -16,6 +16,7 @@ use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
+use VXM\Async\AsyncFacade as Async;
 
 class PortalComunicacionController extends Controller
 {
@@ -30,55 +31,30 @@ class PortalComunicacionController extends Controller
         $hoy = Carbon::now();
         $hoy->toDateString();
 
-        // $results = Fork::new()
-        //     ->run(
-        //         function () {
-        //             $user = User::getCurrentUser();
-
-        //             return $user;
-        //         },
-        //         function () {
-        //             $politica_existe = PoliticaSgsi::getAll()->count();
-
-        //             return $politica_existe;
-        //         },
-        //         function () {
-        //             $comite_existe = Comiteseguridad::getAll()->count();
-
-        //             return $comite_existe;
-        //         },
-        //         function () {
-        //             $documentos_publicados = Documento::getLastFiveWithMacroproceso();
-
-        //             return $documentos_publicados;
-        //         },
-
-        //         function () {
-        //             $comunicacionSgis = ComunicacionSgi::getAllwithImagenesBlog();
-
-        //             return $comunicacionSgis;
-        //         },
-        //         function () {
-        //             $comunicacionSgis_carrusel = ComunicacionSgi::getAllwithImagenesCarrousel();
-
-        //             return $comunicacionSgis_carrusel;
-        //         },
-        //     );
+        Async::batchRun(
+            function () use (&$politica_existe) {
+                $politica_existe = PoliticaSgsi::getAll()->count();
+            },
+            function () use (&$nuevos, $hoy) {
+                $nuevos = Empleado::whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->get();
+            },
+            function () use (&$getAlta) {
+                $getAlta = Empleado::alta();
+            },
+        );
 
         $user = User::getCurrentUser();
 
         $empleado_asignado = $user->n_empleado;
         $authId = $user->id;
-        $politica_existe = PoliticaSgsi::getAll()->count();
-        $comite_existe = Comiteseguridad::getAll()->count();
+
         $documentos_publicados = Documento::getLastFiveWithMacroproceso();
+        $comite_existe = Comiteseguridad::getAll()->count();
+
         $comunicacionSgis = ComunicacionSgi::getAllwithImagenesBlog();
         $comunicacionSgis_carrusel = ComunicacionSgi::getAllwithImagenesCarrousel();
-        $nuevos = Empleado::whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->get();
 
-        $getAlta = Empleado::alta();
-
-        $cumpleaños = Cache::remember('Portal_cumpleaños_' . $authId, 3600, function () use ($hoy, $getAlta) {
+        $cumpleaños = Cache::remember('Portal_cumpleaños_'.$authId, 3600, function () use ($hoy, $getAlta) {
             return $getAlta->whereMonth('cumpleaños', '=', $hoy->format('m'))->get();
         });
 
@@ -90,7 +66,7 @@ class PortalComunicacionController extends Controller
             return Empleado::alta()->whereMonth('antiguedad', '=', $hoy->format('m'))->whereYear('antiguedad', '<', $hoy->format('Y'))->count();
         });
 
-        return view('admin.portal-comunicacion.index', compact('documentos_publicados', 'hoy', 'comunicacionSgis', 'comunicacionSgis_carrusel', 'empleado_asignado', 'aniversarios_contador_circulo', 'politica_existe', 'comite_existe', 'nuevos', 'cumpleaños', 'user'));
+        return view('admin.portalCommunication.index', compact('documentos_publicados', 'hoy', 'comunicacionSgis', 'comunicacionSgis_carrusel', 'empleado_asignado', 'aniversarios_contador_circulo', 'politica_existe', 'comite_existe', 'nuevos', 'cumpleaños', 'user'));
     }
 
     /**
@@ -162,7 +138,7 @@ class PortalComunicacionController extends Controller
         abort_if(Gate::denies('portal_comunicacion_mostrar_reportar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $organizacions = Organizacione::first();
 
-        return view('admin.portal-comunicacion.reportes', compact('organizacions'));
+        return view('admin.portalCommunication.reportes', compact('organizacions'));
     }
 
     public function felicitarCumpleaños($cumpleañero_id)
@@ -173,7 +149,7 @@ class PortalComunicacionController extends Controller
             'like' => true,
         ]);
 
-        return redirect()->route('admin.portal-comunicacion.index')->with('success', 'Like generado');
+        return redirect()->route('admin.portalCommunication.index')->with('success', 'Like generado');
     }
 
     public function felicitarCumpleañosDislike($id)
@@ -183,7 +159,7 @@ class PortalComunicacionController extends Controller
             'like' => false,
         ]);
 
-        return redirect()->route('admin.portal-comunicacion.index')->with('success', 'DisLike generado');
+        return redirect()->route('admin.portalCommunication.index')->with('success', 'DisLike generado');
     }
 
     public function felicitarCumplesComentarios(Request $request, $cumpleañero_id)
@@ -194,7 +170,7 @@ class PortalComunicacionController extends Controller
             'comentarios' => $request->comentarios,
         ]);
 
-        return redirect()->route('admin.portal-comunicacion.index')->with('success', 'Comentario generado');
+        return redirect()->route('admin.portalCommunication.index')->with('success', 'Comentario generado');
     }
 
     public function felicitarCumplesComentariosUpdate(Request $request, $id)
@@ -204,6 +180,6 @@ class PortalComunicacionController extends Controller
             'comentarios' => $request->comentarios,
         ]);
 
-        return redirect()->route('admin.portal-comunicacion.index')->with('success', 'Comentario actualizado');
+        return redirect()->route('admin.portalCommunication.index')->with('success', 'Comentario actualizado');
     }
 }

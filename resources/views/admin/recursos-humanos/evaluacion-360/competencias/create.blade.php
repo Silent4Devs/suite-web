@@ -23,7 +23,7 @@ opacity: 1;
                 <div class="w-100">
                     <div class="d-flex justify-content-end w-100">
                         <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn" id="btn_cancelar" style="color:#057BE2;">Cancelar</a>
-                        <button type="submit" class="ml-2 btn btn-primary">Guardar</button>
+                        <button type="submit" class="ml-2 btn tb-btn-primary">Guardar</button>
                     </div>
                 </div>
             </form>

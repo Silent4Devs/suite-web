@@ -86,7 +86,7 @@
             <div class="container">
                 {{-- <div class="mb-4 row">
                     <div class="text-center col">
-                        <a href="#" class="btn btn-sm btn-primary tamaño" style="with:400px !important;" data-toggle="modal"
+                        <a href="#" class="btn btn-sm tb-btn-primary tamaño" style="with:400px !important;" data-toggle="modal"
                             data-target="#ResponsablesModal"><i class="mr-2 text-white fas fa-file"
                                 style="font-size:13pt"></i>Notificar&nbsp;usuario</a>
                     </div>
@@ -123,7 +123,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="mt-3 btn btn-primary btnEnviar"
+                                <button type="button" class="mt-3 btn tb-btn-primary btnEnviar"
                                     onclick="enviarCorreo(event,'responsable')">Enviar</button>
                                 <button type="button" class="mt-3 btn btn-default" data-dismiss="modal">Cerrar</button>
                             </div>
@@ -248,7 +248,7 @@
                     titleAttr: 'Restaurar a estado anterior',
                 },
                 {
-                    text: '<a href="#" class="btn btn-sm btn-primary tamaño" style="with:400px !important;" data-toggle="modal" data-target="#ResponsablesModal"><i class="mr-2 text-white fas fa-file" style="font-size:13pt"></i>Notificar&nbsp;usuario</a>',
+                    text: '<a href="#" class="btn btn-sm tb-btn-primary tamaño" style="with:400px !important;" data-toggle="modal" data-target="#ResponsablesModal"><i class="mr-2 text-white fas fa-file" style="font-size:13pt"></i>Notificar&nbsp;usuario</a>',
                     action: function(e, dt, node, config) {
 
                     }

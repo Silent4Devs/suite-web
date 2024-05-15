@@ -6,7 +6,7 @@
             Contenedores
         </a>
         <a class="nav-link {{ request()->is('admin/activosInformacion') || request()->is('admin/activosInformacion/*') ? 'active' : '' }}"
-            href="{{ route('admin.activosInformacion.index',$matriz) }}">
+            href="{{ route('admin.activeInformation.index',$matriz) }}">
             <i class="mr-2 fas fa-briefcase" style="font-size:20px;" style="text-decoration:none;"></i>
             Activos
         </a>

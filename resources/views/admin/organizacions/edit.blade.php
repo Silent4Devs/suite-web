@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
 
-    <link rel="stylesheet" type="text/css" href="{{ asset('../css/colores.css') }}{{config('app.cssVersion')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('../css/global/colores.css') }}{{config('app.cssVersion')}}">
     <h5 class="col-12 titulo_general_funcion"> Editar: </h5>
     <div class="mt-4 card">
         <div class="card-body">
@@ -23,7 +23,7 @@
                         <label class="required" for="empresa"><i class="far fa-building iconos-crear"></i> Nombre de la
                             Empresa</label>
                         <input class="form-control {{ $errors->has('empresa') ? 'is-invalid' : '' }}" type="text"
-                            name="empresa" id="empresa" value="{{ old('empresa', $organizacion->empresa) }}" required>
+                            name="empresa" id="empresa" maxlength="255" value="{{ old('empresa', $organizacion->empresa) }}" required>
                         @if ($errors->has('empresa'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('empresa') }}
@@ -49,7 +49,7 @@
                         <label class="required" for="direccion"><i
                                 class="fas fa-map-marker-alt iconos-crear"></i>{{ trans('cruds.organizacion.fields.direccion') }}</label>
                         <textarea class="form-control {{ $errors->has('direccion') ? 'is-invalid' : '' }}"
-                            name="direccion" id="direccion" required
+                            name="direccion" id="direccion" required maxlength="550"
                             style="min-height: 0px; max-height: 200px; height: 35px;">{{ old('direccion', $organizacion->direccion) }}</textarea>
                         @if ($errors->has('direccion'))
                             <div class="invalid-feedback">
@@ -87,7 +87,7 @@
                     <div class="form-group col-sm-4">
                         <label class="" for="razon_social">Razón Social</label>
                         <input class="form-control {{ $errors->has('razon_social') ? 'is-invalid' : '' }}" type="text"
-                            name="razon_social" id="razon_social"
+                            name="razon_social" maxlength="255" id="razon_social"
                             value="{{ old('razon_social', $organizacion->razon_social) }}">
                         @if ($errors->has('razon_social'))
                             <div class="invalid-feedback">
@@ -99,7 +99,7 @@
                     <div class="form-group col-sm-4">
                         <label class="" for="rfc">RFC</label>
                         <input class="form-control {{ $errors->has('empresa') ? 'is-invalid' : '' }}" type="text"
-                            name="rfc" id="rfc" value="{{ old('rfc', $organizacion->rfc) }}">
+                            name="rfc" id="rfc" maxlength="255" value="{{ old('rfc', $organizacion->rfc) }}">
                         @if ($errors->has('rfc'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('rfc') }}
@@ -110,7 +110,7 @@
                     <div class="form-group col-sm-4">
                         <label for="telefono"><i class="fas fa-phone iconos-crear"></i>Teléfono</label>
                         <input class="form-control {{ $errors->has('telefono') ? 'is-invalid' : '' }}" type="number"
-                            name="telefono" id="telefono" value="{{ old('telefono', $organizacion->telefono) }}"
+                            name="telefono" maxlength="255"  id="telefono" value="{{ old('telefono', $organizacion->telefono) }}"
                             step="1">
                         @if ($errors->has('telefono'))
                             <div class="invalid-feedback">
@@ -127,7 +127,7 @@
                     <div class="form-group col-sm-6">
                         <label for="correo"> <i
                                 class="far fa-envelope iconos-crear"></i>{{ trans('cruds.organizacion.fields.correo') }}</label>
-                        <input class="form-control {{ $errors->has('correo') ? 'is-invalid' : '' }}" type="email"
+                        <input class="form-control {{ $errors->has('correo') ? 'is-invalid' : '' }}" type="email" maxlength="255"
                             name="correo" id="correo" value="{{ old('correo', $organizacion->correo) }}">
                         @if ($errors->has('correo'))
                             <div class="invalid-feedback">
@@ -138,7 +138,7 @@
                     </div>
                     <div class="form-group col-sm-6">
                         <label for="pagina_web"><i class="fas fa-pager iconos-crear"></i>Página Web</label>
-                        <input class="form-control {{ $errors->has('pagina_web') ? 'is-invalid' : '' }}" type="text"
+                        <input class="form-control {{ $errors->has('pagina_web') ? 'is-invalid' : '' }}" type="text" maxlength="255"
                             name="pagina_web" id="pagina_web" value="{{ old('pagina_web', $organizacion->pagina_web) }}">
                         @if ($errors->has('pagina_web'))
                             <div class="invalid-feedback">
@@ -254,7 +254,7 @@
                 <div class="row">
                     <div class="form-group col-sm-6">
                         <label class="" for="num_empleados">Número de empleados</label>
-                        <input class="form-control {{ $errors->has('num_empleados') ? 'is-invalid' : '' }}" type="number"
+                        <input class="form-control {{ $errors->has('num_empleados') ? 'is-invalid' : '' }}" type="number" maxlength="255"
                             name="num_empleados" id="num_empleados" value="{{ old('num_empleados', $countEmpleados) }}"
                             readonly>
                         @if ($errors->has('num_empleados'))
@@ -266,7 +266,7 @@
                     </div>
                     <div class="form-group col-sm-6">
                         <label class="" for="tamano">Tamaño</label>
-                        <input class="form-control {{ $errors->has('tamano') ? 'is-invalid' : '' }}" type="text"
+                        <input class="form-control {{ $errors->has('tamano') ? 'is-invalid' : '' }}" type="text" maxlength="255"
                             name="tamano" id="tamano" value="{{ old('tamano', $tamanoEmpresa) }}" readonly>
                         @if ($errors->has('tamano'))
                             <div class="invalid-feedback">
@@ -281,7 +281,7 @@
                     <div class="form-group col-sm-6">
                         <label for="giro"><i
                                 class="fas fa-briefcase iconos-crear"></i>{{ trans('cruds.organizacion.fields.giro') }}</label>
-                        <input class="form-control {{ $errors->has('giro') ? 'is-invalid' : '' }}" type="text"
+                        <input class="form-control {{ $errors->has('giro') ? 'is-invalid' : '' }}" type="text" maxlength="255"
                             name="giro" id="giro" value="{{ old('giro', $organizacion->giro) }}">
                         @if ($errors->has('giro'))
                             <div class="invalid-feedback">
@@ -293,7 +293,7 @@
                     <div class="form-group col-sm-6">
                         <label for="servicios"><i class="fas fa-briefcase iconos-crear"></i>
                             {{ trans('cruds.organizacion.fields.servicios') }}</label>
-                        <input class="form-control {{ $errors->has('servicios') ? 'is-invalid' : '' }}" type="text"
+                        <input class="form-control {{ $errors->has('servicios') ? 'is-invalid' : '' }}" type="text" maxlength="255"
                             name="servicios" id="servicios" value="{{ old('servicios', $organizacion->servicios) }}">
                         @if ($errors->has('servicios'))
                             <div class="invalid-feedback">
@@ -307,7 +307,7 @@
                 <div class="row">
                     <div class="form-group col-sm-6">
                         <label for="mision"><i class="fas fa-flag iconos-crear"></i>Misión </label>
-                        <textarea class="form-control {{ $errors->has('mision') ? 'is-invalid' : '' }}" name="mision"
+                        <textarea class="form-control {{ $errors->has('mision') ? 'is-invalid' : '' }}" name="mision" maxlength="550"
                             id="mision">{{ old('mision', $organizacion->mision) }}</textarea>
                         @if ($errors->has('mision'))
                             <div class="invalid-feedback">
@@ -319,7 +319,7 @@
                     <div class="form-group col-sm-6">
                         <label for="vision"><i class="far fa-eye iconos-crear"></i>
                             {{ trans('cruds.organizacion.fields.vision') }}</label>
-                        <textarea class="form-control {{ $errors->has('vision') ? 'is-invalid' : '' }}" name="vision"
+                        <textarea class="form-control {{ $errors->has('vision') ? 'is-invalid' : '' }}" name="vision" maxlength="550"
                             id="vision">{{ old('vision', $organizacion->vision) }}</textarea>
                         @if ($errors->has('vision'))
                             <div class="invalid-feedback">
@@ -334,7 +334,7 @@
                     <div class="form-group col-sm-6">
                         <label for="valores"><i class="far fa-heart iconos-crear"></i>
                             {{ trans('cruds.organizacion.fields.valores') }}</label>
-                        <textarea class="form-control {{ $errors->has('valores') ? 'is-invalid' : '' }}" name="valores"
+                        <textarea class="form-control {{ $errors->has('valores') ? 'is-invalid' : '' }}" name="valores" maxlength="550"
                             id="valores">{{ old('valores', $organizacion->valores) }}</textarea>
                         @if ($errors->has('valores'))
                             <div class="invalid-feedback">
@@ -346,7 +346,7 @@
 
                     <div class="form-group col-sm-6">
                         <label for="antecedentes"> <i class="far fa-file-alt iconos-crear"></i>Antecedentes</label>
-                        <textarea class="form-control {{ $errors->has('antecedentes') ? 'is-invalid' : '' }}"
+                        <textarea class="form-control {{ $errors->has('antecedentes') ? 'is-invalid' : '' }}" maxlength="550"
                             name="antecedentes"
                             id="antecedentes">{{ old('antecedentes', $organizacion->antecedentes) }}</textarea>
                         @if ($errors->has('antecedentes'))

@@ -54,7 +54,7 @@
         </div>
     @endif
     <div class="d-flex" style="justify-content: end">
-        <button type="button" class="btn btn-primary" wire:click.prevent="registrarSalida">Finalizar</button>
+        <button type="button" class="btn tb-btn-primary" wire:click.prevent="registrarSalida">Finalizar</button>
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {

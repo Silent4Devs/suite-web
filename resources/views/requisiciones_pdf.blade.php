@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Requisición</title>
 
-    <link rel="stylesheet" href="css/requisiciones_pdf.css{{config('app.cssVersion')}}">
+    <link rel="stylesheet" href="css/requisitions/pdf.css{{config('app.cssVersion')}}">
 </head>
 <body>
 
@@ -52,7 +52,11 @@
             <tr>
                 <td style="color: white;" >
                     <strong> Proyecto: </strong> <br>
-                    {{ isset($requisiciones->contrato->no_proyecto) }} / {{ isset($requisiciones->contrato->no_contrato) }} - {{ isset($requisiciones->contrato->nombre_servicio) }}
+                    @if($requisiciones->contrato === null)
+                    <strong>Contrato Eliminado!</strong>
+                    @else
+                    {{ optional($requisiciones->contrato)->no_proyecto }} - {{ optional($requisiciones->contrato)->no_contrato }} - {{ optional($requisiciones->contrato)->nombre_servicio }}
+                    @endif
                 </td>
                 <td style="color: white;" >
                     <strong> Comprador: </strong> <br>
@@ -247,7 +251,7 @@
             <td align="center">
                 @if ($requisiciones->firma_finanzas)
                     <img src="{{$requisiciones->firma_finanzas}}" class="img-firma"> <br>
-                    <small> Lourdes del Pilar Abadía Velasco | {{ $requisiciones->fecha_firma_finanzas_requi }} </small>
+                    <small> {{$firma_finanzas_name ?? ''}} | {{ $requisiciones->fecha_firma_finanzas_requi }} </small>
                 @else
                     <div style="height: 185px;"></div>
                 @endif

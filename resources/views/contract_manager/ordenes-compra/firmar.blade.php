@@ -2,7 +2,7 @@
 
 @section('content')
 @section('titulo', 'Firmar Orden de Compra')
-<link rel="stylesheet" href="{{ asset('css/requisiciones.css') }}{{config('app.cssVersion')}}">
+<link rel="stylesheet" href="{{ asset('css/requisitions/requisitions.css') }}{{config('app.cssVersion')}}">
 <style>
     .row {
         padding-left: 30px;
@@ -106,60 +106,81 @@
                 </div>
                 <div class="col s12 l6">
                     <strong>Proyecto:</strong> <br>
-                    {{ isset($requisicion->contrato->no_proyecto) }} / {{ isset($requisicion->contrato->no_contrato) }} -
-                    {{ isset($requisicion->contrato->nombre_servicio) }}
+                        @if($requisicion->contrato === null)
+                        <strong>Contrato Eliminado!</strong>
+                        @else
+                        {{ optional($requisicion->contrato)->no_proyecto }} - {{ optional($requisicion->contrato)->no_contrato }} - {{ optional($requisicion->contrato)->nombre_servicio }}
+                        @endif
                 </div>
             </div>
         </div>
 
         <hr style="width: 80%; margin:auto;">
-        @foreach ($proveedores as $proveedor)
-            <div class="proveedores-doc" style="">
-                <div class="flex header-proveedor-doc">
-                    <div class="flex-item">
-                        <strong>Proveedor: </strong> {{ $proveedor->razon_social }}
-                    </div>
-                </div>
-                <div class="row" style="margin-top: 30px;">
-                    <div class="col s12 l3">
-                        <strong>Proveedor:</strong><br>
-                        {{ $proveedor->razon_social }}
-                    </div>
-                    <div class="col s12  l3">
-                        <strong>Nombre Comercial:</strong><br>
-                        {{ $proveedor->nombre }}
-                    </div>
-                    <div class="col s12 l6">
-                        <strong>RFC:</strong><br>
-                        {{ $proveedor->rfc }}
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col s12 l3">
-                        <strong>Nombre del contacto:</strong><br>
-                        {{ $proveedor->contacto }}
-                    </div>
-                    <div class="col s12 l9">
-                        <strong>Dirección:</strong><br>
-                        {{ $proveedor->direccion }}
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col s12 l6">
-                        <strong>Envío a:</strong><br>
-                        {{ $proveedor->envio }}
-                    </div>
-                    <div class="col s12 l3">
-                        <strong>Facturación a:</strong><br>
-                        {{ $proveedor->facturacion }}
-                    </div>
-                    <div class="col s12 l3">
-                        <strong>Crédito disponible:</strong><br>
-                        {{ $proveedor->credito }}
-                    </div>
+        @if ($proveedores_catalogo)
+        @foreach ($proveedores_catalogo as $proveedor)
+        <div class="proveedores-doc" style="">
+            <div class="flex header-proveedor-doc">
+                <div class="flex-item">
+                    <strong>Proveedor: </strong> {{ $proveedor->razon_social }}
                 </div>
             </div>
+            <div class="row" style="margin-top: 30px;">
+                <div class="col s12 l3">
+                    <strong>Proveedor:</strong><br>
+                    {{ $proveedor->razon_social }}
+                </div>
+                <div class="col s12  l3">
+                    <strong>Nombre Comercial:</strong><br>
+                    {{ $proveedor->nombre }}
+                </div>
+                <div class="col s12 l6">
+                    <strong>RFC:</strong><br>
+                    {{ $proveedor->rfc }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12 l3">
+                    <strong>Nombre del contacto:</strong><br>
+                    {{ $proveedor->contacto }}
+                </div>
+                <div class="col s12 l9">
+                    <strong>Dirección:</strong><br>
+                    {{ $proveedor->direccion }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12 l6">
+                    <strong>Envío a:</strong><br>
+                    {{ $proveedor->envio }}
+                </div>
+                <div class="col s12 l3">
+                    <strong>Facturación a:</strong><br>
+                    {{ $proveedor->facturacion }}
+                </div>
+                <div class="col s12 l3">
+                    <strong>Crédito disponible:</strong><br>
+                    {{ $proveedor->credito }}
+                </div>
+            </div>
+        </div>
         @endforeach
+            @else
+
+            @endif
+
+
+            @if ($proveedores_catalogo)
+            @foreach ($proveedores_catalogo as $proveedor)
+
+            @endforeach
+                @else
+
+                @endif
+
+
+
+
+
 
         @foreach ($requisicion->productos_requisiciones as $producto)
             <div class="flex header-proveedor-doc">
@@ -259,11 +280,7 @@
                 <div class="col s12 l4">
 
                     <strong> Centro de costo: </strong><br><br>
-                    @if ($producto->centro_costo->descripcion)
-                        {{ $producto->centro_costo->descripcion }}
-                    @else
-                        <small class="not-register">Sin registro</small>
-                    @endif
+                        {{ isset($producto->centro_costo->descripcion) }}
                 </div>
                 <div class="col s12 l4">
 
@@ -315,7 +332,7 @@
                     <div class="flex-item">
                         @if ($requisicion->firma_finanzas_orden)
                             <img src="{{ $requisicion->firma_finanzas_orden }}" class="img-firma">
-                            <p>Lourdes del Pilar Abadía Velasco </p>
+                            <p>{{ $firma_finanzas_name ?? '' }} </p>
                             <p>{{ $requisicion->fecha_firma_finanzas_orden }}</p>
                         @else
                             <div style="height: 137px;"></div>
@@ -414,13 +431,13 @@
             action="{{ route('contract_manager.orden-compra.rechazada', ['id' => $requisicion->id]) }}">
             @csrf
             <div class="flex" style="position: relative; top: -1rem; justify-content: space-between;">
-                @if ($requisicion->firma_comprador_orden)
-                    <button class="btn btn-primary" style="background: #454545 !important;">RECHAZAR ORDEN DE
+                @if (!$requisicion->firma_solicitante_orden && !$requisicion->firma_comprador_orden && !$requisicion->firma_finanzas_orden)
+                    <button class="btn tb-btn-primary" style="background: #454545 !important;">RECHAZAR ORDEN DE
                         COMPRA</button>
                 @else
                     <div>&nbsp;</div>
                 @endif
-                <div onclick="validar();" style="" class="btn btn-primary">Guardar</div>
+                <div onclick="validar();" style="" class="btn tb-btn-primary">Firmar</div>
             </div>
         </form>
     </div>

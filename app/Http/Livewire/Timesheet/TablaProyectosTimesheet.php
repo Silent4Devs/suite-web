@@ -58,7 +58,8 @@ class TablaProyectosTimesheet extends Component
 
     public function render()
     {
-        $this->timesheetproyectoquery = TimesheetProyecto::getAll();
+        $this->timesheetproyectoquery = TimesheetProyecto::get();
+
         $this->proceso_count = $this->timesheetproyectoquery->where('estatus', 'proceso')->count();
         $this->cancelado_count = $this->timesheetproyectoquery->where('estatus', 'cancelado')->count();
         $this->terminado_count = $this->timesheetproyectoquery->where('estatus', 'terminado')->count();
@@ -68,16 +69,18 @@ class TablaProyectosTimesheet extends Component
         }
 
         if ($this->estatus == 'cancelados') {
-            $this->proyectos = TimesheetProyecto::where('estatus', 'cancelado')->orderBy('id', 'desc')->get();
+            $this->proyectos = TimesheetProyecto::where('estatus', 'cancelado')->orderBy('identificador', 'ASC')->get();
         }
 
         if ($this->estatus == 'terminados') {
-            $this->proyectos = TimesheetProyecto::where('estatus', 'terminado')->orderBy('id', 'desc')->get();
+            $this->proyectos = TimesheetProyecto::where('estatus', 'terminado')->orderBy('identificador', 'ASC')->get();
         }
 
         if ($this->estatus == 'todos') {
-            $this->proyectos = TimesheetProyecto::orderBy('id', 'desc')->get();
+            $this->proyectos = TimesheetProyecto::orderBy('identificador', 'ASC')->get();
         }
+
+        $this->proyectos = $this->proyectos->sortByDesc('is_num');
 
         $this->emit('cerrarModal');
 

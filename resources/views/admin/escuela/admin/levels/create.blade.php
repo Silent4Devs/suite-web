@@ -15,7 +15,7 @@
                     <span class="text-danger">{{$message}}</span>
                 @enderror
                 <br>
-                {!! Form::submit('CREAR NIVEL  +', ['class' => 'btn btn-primary', 'style' => 'color: #ffff;']) !!}
+                {!! Form::submit('CREAR NIVEL  +', ['class' => 'btn tb-btn-primary', 'style' => 'color: #ffff;']) !!}
             </div>
         </div>
         {!! Form::close() !!}

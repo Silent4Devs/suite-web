@@ -2,7 +2,7 @@
 
 @section('content')
 @section('titulo', 'Firmar Requisicion')
-<link rel="stylesheet" href="{{ asset('css/requisiciones.css') }}{{config('app.cssVersion')}}">
+<link rel="stylesheet" href="{{ asset('css/requisitions/requisitions.css') }}{{config('app.cssVersion')}}">
 
 <div class="card card-content caja-blue">
 
@@ -48,8 +48,11 @@
                 <strong>Referencia:</strong><br>
                 {{ $requisicion->referencia }}<br><br>
                 <strong>Proyecto:</strong><br>
-                {{ isset($requisicion->contrato->no_proyecto) }} / {{ isset($requisicion->contrato->no_contrato) }} -
-                {{ isset($requisicion->contrato->nombre_servicio) }}
+                @if($requisicion->contrato === null)
+                <strong>Contrato Eliminado!</strong>
+                @else
+                {{ optional($requisicion->contrato)->no_proyecto }} - {{ optional($requisicion->contrato)->no_contrato }} - {{ optional($requisicion->contrato)->nombre_servicio }}
+                @endif
             </div>
             <div class="flex-item">
                 <strong>Área que solicita:</strong><br>
@@ -282,7 +285,7 @@
                 <div class="flex-item">
                     @if ($requisicion->firma_finanzas)
                         <img src="{{ $requisicion->firma_finanzas }}" class="img-firma">
-                        <p>Lourdes del Pilar Abadía Velasco </p>
+                        <p>{{$firma_finanzas_name ?? ''}} </p>
                         <p>{{ $requisicion->fecha_firma_finanzas_requi }}</p>
                     @else
                         <div style="height: 137px;"></div>
@@ -355,9 +358,11 @@
                 action="{{ route('contract_manager.requisiciones.rechazada', ['id' => $requisicion->id]) }}">
                 @csrf
                 <div class="flex" style="position: relative; top: -1rem;  justify-content: space-between;">
-                    <button class="btn btn-primary" style="background: #454545 !important;">RECHAZAR
+                    @if (!$requisicion->firma_solicitante &&  !$requisicion->firma_jefe && !$requisicion->firma_compras  && !$requisicion->firma_finanzas)
+                    <button class="btn tb-btn-primary" style="background: #454545 !important;">RECHAZAR
                         REQUISICIÓN</button>
-                    <div onclick="validar();" style="" class="btn btn-primary">Firmar</div>
+                    @endif
+                    <div onclick="validar();" style="" class="btn tb-btn-primary">Firmar</div>
                 </div>
             </form>
         </div>
