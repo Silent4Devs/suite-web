@@ -19,7 +19,7 @@
             background: #f1f1f1;
         }
     </style>
-    <link rel="stylesheet" href="{{ asset('css/loader.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/global/loader.css') }}">
     <style>
         .tb-btn-primary,
         .tb-btn-primary:hover {

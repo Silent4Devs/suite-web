@@ -2,7 +2,7 @@
 @section('content')
     {{ Breadcrumbs::render('admin.accion-correctivas.index') }}
 
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/centro_atencion_cards.css') }}{{config('app.cssVersion')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/centerAttention/cards.css') }}{{config('app.cssVersion')}}">
 
 
     <style>
@@ -83,10 +83,10 @@
             <section id="indexAc">
                 <div class="text-right">
                     <div class="d-flex justify-content-end">
-                        <a href="{{ route('admin.accion-correctivas.create') }}" type="button" class="btn tb-btn-primary">Registrar Acción</a> 
+                        <a href="{{ route('admin.accion-correctivas.create') }}" type="button" class="btn tb-btn-primary">Registrar Acción</a>
                     </div>
                 </div>
-                
+
                 <div class="mt-1 card">
                     <div class="container">
                         <div class="row">
@@ -169,7 +169,7 @@
             <section id="aprobaciones" class="caja_tab_reveldada">
                 <div class="text-right">
                     <div class="d-flex justify-content-end">
-                        <a href="{{ route('admin.accion-correctivas.create') }}" type="button" class="btn tb-btn-primary">Registrar Solicitud</a> 
+                        <a href="{{ route('admin.accion-correctivas.create') }}" type="button" class="btn tb-btn-primary">Registrar Solicitud</a>
                     </div>
                 </div>
                 <div class="mt-1 card">

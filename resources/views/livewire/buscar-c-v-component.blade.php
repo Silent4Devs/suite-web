@@ -1,7 +1,7 @@
 
 <div>
 
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/print_foda.css') }}{{config('app.cssVersion')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/global/foda/print.css') }}{{config('app.cssVersion')}}">
 
     <style>
         .timeline-header .userimage {

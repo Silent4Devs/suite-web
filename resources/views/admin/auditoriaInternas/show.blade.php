@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
     @include('layouts.datatables_css')
-    <link rel="stylesheet" href="{{ asset('css/requisiciones.css') }}{{config('app.cssVersion')}}">
+    <link rel="stylesheet" href="{{ asset('css/requisitions/requisitions.css') }}{{config('app.cssVersion')}}">
 
     <head>
         <meta charset="utf-8">

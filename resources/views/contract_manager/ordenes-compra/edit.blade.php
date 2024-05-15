@@ -5,7 +5,7 @@
 
 {{-- {{ Breadcrumbs::render('proveedores_create') }} --}}
 
-<link rel="stylesheet" href="{{ asset('css/requisiciones.css') }}">
+<link rel="stylesheet" href="{{ asset('css/requisitions/requisitions.css') }}">
 
 
 <div class="create-requisicion">
