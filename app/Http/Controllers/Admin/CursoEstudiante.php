@@ -27,24 +27,39 @@ class CursoEstudiante extends Controller
     public function misCursos()
     {
         $usuario = User::getCurrentUser();
-        $cursos_usuario = UsuariosCursos::with('cursos')->where('user_id', User::getCurrentUser()->id)->get();
+        $cursos_usuario = UsuariosCursos::with('cursos')->where('user_id', $usuario->id)->get();
         //calculo el porcentaje del curso completado
+        // foreach ($cursos_usuario as $cu) {
+        //     $i = 0;
+        //     $courses_lessons = $cu->cursos->lessons;
+        //     foreach ($courses_lessons as $cl) {
+        //         if ($cl->completed) {
+        //             $i++;
+        //         }
+        //     }
+        //     $advance = ($i * 100) / ($courses_lessons->count());
+        //     $advance = round($advance, 2);
+        //     //agrego el porcentaje del curso a una propiedad
+        //     $cu->advance = $advance;
+        // }
+        // //last course
+        // $lastCourse = $cursos_usuario->sortBy('last_review')->last();
+        // //last three course
+        // $lastThreeCourse = $cursos_usuario->sortByDesc('last_review')->take(3);
+
         foreach ($cursos_usuario as $cu) {
-            $i = 0;
-            $courses_lessons = $cu->cursos->lessons;
-            foreach ($courses_lessons as $cl) {
-                if ($cl->completed) {
-                    $i++;
-                }
-            }
-            $advance = ($i * 100) / ($courses_lessons->count());
-            $advance = round($advance, 2);
-            //agrego el porcentaje del curso a una propiedad
-            $cu->advance = $advance;
+            $completedLessonsCount = $cu->cursos->lessons->filter(function ($lesson) {
+                return $lesson->completed;
+            })->count();
+
+            $totalLessonsCount = $cu->cursos->lessons->count();
+
+            $advance = ($completedLessonsCount * 100) / ($totalLessonsCount > 0 ? $totalLessonsCount : 1);
+            $cu->advance = round($advance, 2);
         }
-        //last course
+
+        // Obtener el último curso y los últimos tres cursos
         $lastCourse = $cursos_usuario->sortBy('last_review')->last();
-        //last three course
         $lastThreeCourse = $cursos_usuario->sortByDesc('last_review')->take(3);
 
         return view('admin.escuela.estudiante.mis-cursos', compact('cursos_usuario', 'usuario', 'lastThreeCourse', 'lastCourse'));

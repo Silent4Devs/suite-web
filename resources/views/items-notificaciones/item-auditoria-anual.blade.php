@@ -6,9 +6,10 @@
                 {{-- Se concatena un espacio porque el autoformateado lo agrega en el case --}}
                 @case(' create')
                     <div class="d-flex align-items-center justify-content-start">
-                        @if(!empty($last_unread_notification->data['avatar_ruta']))
-                        <img src="{{ asset($last_unread_notification->data['avatar_ruta']) }}" alt="" class="rounded-circle" style="width: 50px; height: 50px;">
-                            {{ $last_unread_notification->data['name'] }}
+                        @if (!empty($last_unread_notification->data['avatar_ruta']))
+                            <img src="{{ asset($last_unread_notification->data['avatar_ruta']) }}" alt=""
+                                class="rounded-circle" style="width: 50px; height: 50px;">
+                            {{ $last_unread_notification->data['name'] }}.:
                         @else
                             <i class="pr-2 fas fa-tasks text-success"></i>
                         @endif
@@ -19,11 +20,12 @@
 
                 @case(' update')
                     <div class="d-flex align-items-center justify-content-start">
-                        @if(!empty($last_unread_notification->data['avatar_ruta']))
-                        <img src="{{ asset($last_unread_notification->data['avatar_ruta']) }}" alt="" class="rounded-circle" style="width: 50px; height: 50px;">
-                            {{ $last_unread_notification->data['name'] }}
+                        @if (!empty($last_unread_notification->data['avatar_ruta']))
+                            <img src="{{ asset($last_unread_notification->data['avatar_ruta']) }}" alt=""
+                                class="rounded-circle" style="width: 50px; height: 50px;">
+                            {{ $last_unread_notification->data['name'] }}.:
                         @else
-                        <i class="pr-2 fas fa-tools text-info"></i>
+                            <i class="pr-2 fas fa-tools text-info"></i>
                         @endif
                         &nbsp;&nbsp;
                         <p class="p-0 m-0">
@@ -36,16 +38,17 @@
 
                 @case(' delete')
                     <div class="d-flex align-items-center justify-content-start">
-                        @if(!empty($last_unread_notification->data['avatar_ruta']))
-                        <img src="{{ asset($last_unread_notification->data['avatar_ruta']) }}" alt="" class="rounded-circle" style="width: 50px; height: 50px;">
-                        {{ $last_unread_notification->data['name'] }}
+                        @if (!empty($last_unread_notification->data['avatar_ruta']))
+                            <img src="{{ asset($last_unread_notification->data['avatar_ruta']) }}" alt=""
+                                class="rounded-circle" style="width: 50px; height: 50px;">
+                            {{ $last_unread_notification->data['name'] }}.:
                         @else
-                        <i class="pr-2 fas fa-tools text-danger"></i>
+                            <i class="pr-2 fas fa-tools text-danger"></i>
                         @endif
                         &nbsp;&nbsp;
                         <p class="p-0 m-0">
-                            La {{ $last_unread_notification->data['slug']  }} con fecha
-                             {{ $last_unread_notification->data['deleted_at'] ?? '' }} ha
+                            La {{ $last_unread_notification->data['slug'] }} con fecha
+                            {{ $last_unread_notification->data['deleted_at'] ?? '' }} ha
                             sido eliminada
                         </p>
                     </div>

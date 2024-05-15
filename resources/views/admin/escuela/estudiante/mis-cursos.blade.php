@@ -7,12 +7,13 @@
     {{-- {{ Breadcrumbs::render('centro-atencion') }} --}}
 
     {{-- <h5 class="titulo_general_funcion">Centro de Atención</h5> --}}
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
-    @include('admin.escuela.estudiante.menu-side' , ['usuario' => $usuario])
+    @include('admin.escuela.estudiante.menu-side', ['usuario' => $usuario])
 
     <div class="card" style="max-height: 183px;">
-        <img src="{{ asset('img/escuela/imagenfondo.jpg') }} " class="card-img" alt="Imagen"
+        <img src="{{ asset('img/escuela/imagenfondo.webp') }} " class="card-img" alt="Imagen"
             style="height: 183px; border-radius: 8px; ">
         <div class="card-body" style="position: absolute; top: 0; left: 0; width: 100%; color: #fff;">
             <!-- Contenido del card-body -->
@@ -31,11 +32,12 @@
     <div class="card last-course">
         <div class="row g-0">
             <div class="col-md-4" style="padding-left:0px; padding-right:0px; ">
-                <img src="{{ asset($lastCourse->cursos->image->url) }}" alt="Imagen" class="card-img" style="min-height: 225px;">
+                <img src="{{ asset($lastCourse->cursos->image->url) }}" alt="Imagen" class="card-img"
+                    style="min-height: 225px;">
             </div>
             <div class="col-md-5">
                 <div class="card-body" style="padding-left:0px; padding-right:0px;">
-                    <h5 class="card-title" style="color:#000000;">{{$lastCourse->cursos->title}}</h5>
+                    <h5 class="card-title" style="color:#000000;">{{ $lastCourse->cursos->title }}</h5>
                     @if ($lastCourse->cursos->instructor)
                         <p class="course-teacher">Un curso de {{ $lastCourse->cursos->instructor->name }} </p>
                     @else
@@ -51,9 +53,9 @@
                 </div>
             </div>
             <div class="col-md-3 d-flex align-items-center justify-content-center">
-                    <a href="{{ route('admin.curso-estudiante', $lastCourse->cursos->id) }}" class="btn btn-last-course" >
-                        Reanudar Curso
-                    </a>
+                <a href="{{ route('admin.curso-estudiante', $lastCourse->cursos->id) }}" class="btn btn-last-course">
+                    Reanudar Curso
+                </a>
 
             </div>
         </div>
@@ -68,11 +70,12 @@
                 $instructor = $cu->cursos->instructor;
             @endphp
             <div class="card card-body mi-curso">
-                @if(isset($cu->cursos->image->url))
-                    <img src="{{ asset($cu->cursos->image->url) }}" alt="" class="card-img" style="height: 161px; border-radius: 12px 12px 0px 0px;">
+                @if (isset($cu->cursos->image->url))
+                    <img src="{{ asset($cu->cursos->image->url) }}" alt="" class="card-img"
+                        style="height: 161px; border-radius: 12px 12px 0px 0px;">
                     <div class="caja-info-card-mc">
                         <p class="course-title">
-                                {{ $cu->cursos->title }}
+                            {{ $cu->cursos->title }}
                         </p>
                         @if ($instructor)
                             <p class="course-teacher">Un curso de {{ $instructor->name }} </p>
@@ -88,25 +91,27 @@
                         </div>
 
                         <div class="d-flex justify-content-center">
-                            <a href="{{ route('admin.curso-estudiante', $cu->cursos->id) }}" class="btn btn-mi-course">Ir a mi
+                            <a href="{{ route('admin.curso-estudiante', $cu->cursos->id) }}" class="btn btn-mi-course">Ir a
+                                mi
                                 curso</a>
                         </div>
 
                     </div>
                 @else
-                 <p>Sin imagen de curso</p>
+                    <p>Sin imagen de curso</p>
                 @endif
             </div>
         @endforeach
     </div>
     <div class="d-flex justify-content-end">
-        <a href="{{ route('admin.courses-inscribed') }}" style="display: inline-block; vertical-align: middle; color:#006DDB; margin-top:21px;" >
+        <a href="{{ route('admin.courses-inscribed') }}"
+            style="display: inline-block; vertical-align: middle; color:#006DDB; margin-top:21px;">
             <span class="material-symbols-outlined" style="vertical-align: middle;">
                 add
             </span>
             Ver más cursos
         </a>
-        </div>
+    </div>
     </div>
 
     @livewire('escuela.course-index')
