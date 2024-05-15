@@ -11,7 +11,7 @@
 
 .card.mi-curso {
     max-width: 418px;
-    height: 421px;
+    height: auto;
     padding: 0px;
     padding-bottom: 15px;
     box-shadow: 0px 1px 4px #00000024;

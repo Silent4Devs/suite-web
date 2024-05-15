@@ -36,9 +36,9 @@
             $instructor = $c->instructor
         @endphp
 
-            <div class="card card-body mi-curso">
+            <div class="card card-body mi-curso" style="height: auto">
                 {{-- <div class="caja-img-mi-curso" > --}}
-                    <img src="{{ asset($c->image->url) }}" alt="" class="img-card" style="height: 161px; border-radius: 12px 12px 0px 0px;">
+                    <img src="{{ asset($c->image->url) }}" alt="" class="img-card" style="min-height: 225px; border-radius: 12px 12px 0px 0px;">
                 {{-- </div> --}}
                 <div class="caja-info-card-mc">
 
