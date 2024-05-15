@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/user/user.css') }}{{ config('app.cssVersion') }}">
+    <link rel="stylesheet" href="{{ asset('css/profile/inicio_usuario.css') }}{{ config('app.cssVersion') }}">
 @endsection
 @section('content')
     @include('partials.menu-slider')
@@ -85,15 +85,15 @@
 
         <div class="w-100" style="max-width: 600px;">
             <div class="header-card-iu d-flex caja-btn-user" style="padding: 20px 0px;">
-                <button class="btn" style="background-color: #B8DFE1;" onclick="miCard('#user-equipo')">
+                <button class="btn tab-my-team" onclick="miCard('#user-equipo')">
                     <i class="material-symbols-outlined">contacts</i>
                     Mi&nbsp;equipo
                 </button>
-                <button class="btn" style="background-color: #D3ECEC;" onclick="miCard('#user-activos')">
+                <button class="btn tab-my-actives"  onclick="miCard('#user-activos')">
                     <i class="material-symbols-outlined">devices</i>
                     Mis&nbsp;activos
                 </button>
-                <button class="btn" style="background-color: #CCE2E2;" onclick="miCard('#user-competencias')">
+                <button class="btn tab-my-actives" onclick="miCard('#user-competencias')">
                     <i class="material-symbols-outlined">star</i>
                     Mis&nbsp;Competencias
                 </button>
@@ -302,10 +302,5 @@
 @endsection
 
 @section('scripts')
-    <script>
-        function miCard(id) {
-            $('.mis-cards').removeClass('active');
-            $(id).addClass('active');
-        }
-    </script>
+<script src = {{asset('js/profile/tabs.js')}}></script>
 @endsection
