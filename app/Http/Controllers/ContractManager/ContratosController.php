@@ -291,18 +291,6 @@ class ContratosController extends AppBaseController
 
             // Guardar el archivo en el disco 'public' con la ruta específica
             Storage::disk('public')->put($ruta . '/' . $nombre_f, file_get_contents($file));
-
-            // Obtener la ruta completa de la carpeta
-            $ruta_carpeta = public_path($ruta);
-
-            // Verificar si la carpeta existe antes de cambiar los permisos
-            if (file_exists($ruta_carpeta)) {
-                // Dar permisos chmod 777 a la carpeta
-                chmod($ruta_carpeta, 0777);
-            } else {
-                // Si la carpeta no existe, imprimir un mensaje de error
-                echo "La carpeta no se pudo encontrar en la ruta especificada.";
-            }
         }
 
         // Move file from tmp directory if name is send
