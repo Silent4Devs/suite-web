@@ -75,13 +75,12 @@
         <script src="https://cdn.ckeditor.com/ckeditor5/31.1.0/classic/ckeditor.js"></script>
     @endsection
         <script>
-            document.addEventListener("DOMContentLoaded", function() {
-            var btnGoToTop = document.getElementById('edit-evaluations');
-
-                btnGoToTop.addEventListener('click', function() {
-
+            document.addEventListener("click", function(e) {
+                let btn = event.target;
+                if (btn.classList.contains('btn-top')) {
                     window.scrollTo({ top: 0, behavior: 'smooth' });
-                });
+                }
+
             });
         </script>
 
