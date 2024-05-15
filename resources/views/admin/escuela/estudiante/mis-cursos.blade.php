@@ -3,6 +3,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}{{ config('app.cssVersion') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/escuela/mis-cursos.css') }}{{ config('app.cssVersion') }}">
 @endsection
+//comienza contenido
 @section('content')
     {{-- {{ Breadcrumbs::render('centro-atencion') }} --}}
 
