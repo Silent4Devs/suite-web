@@ -25,6 +25,8 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
     public $periodo_seleccionado = 0;
     // public $array_periodos;
 
+    public $autoevaluacion = false;
+
     //Traer datos de la evaluación
     public $evaluacion;
     public $evaluado;
@@ -47,6 +49,14 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
     public $extension_arch;
     public $archivo_mostrado;
 
+    public $porcentajeCalificado;
+
+    //Se emite un evento que el livewire principal va a escuchar gracias a listeners
+    public function sendDataToParent()
+    {
+        //Enviamos el progreso para que el livewire principal haga la validación para terminar la evaluación
+        $this->emit('dataFromChild1', $this->porcentajeCalificado);
+    }
 
     public function mount($id_evaluacion, $id_evaluado, $id_periodo)
     {
@@ -55,10 +65,7 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
         $this->id_evaluacion = $id_evaluacion;
         $this->id_evaluado = $id_evaluado;
         $this->id_periodo = $id_periodo;
-    }
 
-    public function render()
-    {
         $this->evaluacion = EvaluacionDesempeno::find($this->id_evaluacion);
         $this->evaluado = $this->evaluacion->evaluados->find($this->id_evaluado);
         // $this->cuestionarioSecciones();
@@ -66,6 +73,15 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
             $this->buscarObjetivos();
         }
 
+        if ($this->evaluado->empleado->id == $this->evaluador->id) {
+            $this->autoevaluacion = true;
+        }
+
+        $this->progresoEvaluacion();
+    }
+
+    public function render()
+    {
         return view('livewire.cuestionario-evaluacion-desempeno-objetivos');
     }
 
@@ -225,6 +241,7 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
 
             $this->alertaGuardadoCorrecto('Respuesta');
             $this->buscarObjetivos();
+            $this->progresoEvaluacion();
         } catch (\Throwable $th) {
             $this->alertaGuardadoIncorrecto();
             $this->buscarObjetivos();
@@ -327,6 +344,7 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
 
             $this->alertaGuardadoCorrecto('Estatus');
             $this->buscarObjetivos();
+            $this->sendDataToParent();
         } catch (\Throwable $th) {
             $this->alertaGuardadoIncorrecto();
             $this->buscarObjetivos();
@@ -341,6 +359,7 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
             'toast' => true,
             'text' => 'La ' . $alerta . ' se ha guardado correctamente.',
         ]);
+        $this->sendDataToParent();
     }
 
     public function alertaGuardadoIncorrecto()
@@ -377,6 +396,15 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
     //         ];
     //     }
     // }
+
+    public function progresoEvaluacion()
+    {
+        $nPreguntas = $this->objetivos_evaluado->count();
+        $contestadas = $this->objetivos_evaluado->where('estatus_calificado', true)->count();
+        $this->porcentajeCalificado = round((($contestadas / $nPreguntas) * 100), 2);
+
+        $this->sendDataToParent();
+    }
 
     public function cambiarSeccion($llave)
     {

@@ -37,13 +37,20 @@ class CuestionarioEvaluacionDesempenoCompetencias extends Component
 
     public $porcentajeCalificado = 0;
 
+    //Se emite un evento que el livewire principal va a escuchar gracias a listeners
+    public function sendDataToParent()
+    {
+        //Enviamos el progreso para que el livewire principal haga la validación para terminar la evaluación
+        $this->emit('dataFromChild2', $this->porcentajeCalificado);
+    }
+
     public function mount($id_evaluacion, $id_evaluado, $id_periodo)
     {
         $this->evaluador = User::getCurrentUser()->empleado;
 
         $this->id_evaluacion = $id_evaluacion;
         $this->id_evaluado = $id_evaluado;
-        $this->$id_periodo = $id_periodo;
+        $this->id_periodo = $id_periodo;
 
         $this->evaluacion = EvaluacionDesempeno::find($this->id_evaluacion);
         $this->evaluado = $this->evaluacion->evaluados->find($this->id_evaluado);
@@ -110,6 +117,8 @@ class CuestionarioEvaluacionDesempenoCompetencias extends Component
         $nPreguntas = $this->competencias_evaluado->count();
         $contestadas = $this->competencias_evaluado->where('estatus_calificado', true)->count();
         $this->porcentajeCalificado = round((($contestadas / $nPreguntas) * 100), 2);
+
+        $this->sendDataToParent();
     }
 
     public function alertaGuardadoCorrecto()

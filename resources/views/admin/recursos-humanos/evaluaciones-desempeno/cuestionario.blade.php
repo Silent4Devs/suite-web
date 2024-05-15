@@ -437,4 +437,58 @@
             });
         });
     </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var canvas = document.getElementById('signature-pad');
+            var signaturePad = new SignaturePad(canvas);
+
+            document.getElementById('clear').addEventListener('click', function() {
+                signaturePad.clear();
+            });
+
+            document.getElementById('save').addEventListener('click', function() {
+                if (signaturePad.isEmpty()) {
+                    alert('Por favor firme el area designada.');
+                } else {
+                    var dataURL = signaturePad.toDataURL();
+                    var comentariosValue = document.getElementById('comentarios').value;
+                    var repId = this.getAttribute('data-reporte');
+
+                    // fetch('{{ route('admin.auditoria-internas.storeFirmaReporteLider', ['reporteid' => ':reporteauditoria']) }}'
+                    //         .replace(':reporteauditoria',
+                    //             repId), {
+                    //             method: 'POST',
+                    //             headers: {
+                    //                 'Content-Type': 'application/json',
+                    //                 'X-CSRF-Token': '{{ csrf_token() }}',
+                    //             },
+                    //             body: JSON.stringify({
+                    //                 signature: dataURL,
+                    //                 comentarios: comentariosValue
+                    //             }),
+                    //         })
+                    //     .then(response => response.json())
+                    //     .then(data => {
+                    //         if (data.success) {
+                    //             Swal.fire(
+                    //                 'El participante ha sido notificado',
+                    //             ).then(() => {
+                    //                 window.location.href =
+                    //                     '{{ route('admin.auditoria-internas.index') }}';
+                    //             });
+                    //         } else {
+                    //             Swal.fire(
+                    //                 'El correo no ha sido posible enviarlo debido a problemas de intermitencia con la red, favor de volver a intentar más tarde, o si esto persiste ponerse en contacto con el administrador',
+                    //             ).then(() => {
+                    //                 window.location.href =
+                    //                     '{{ route('admin.auditoria-internas.index') }}';
+                    //             });
+                    //         }
+                    //     })
+                    //     .catch(error => console.error('Error:', error));
+                }
+            });
+        });
+    </script>
 @endsection

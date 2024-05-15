@@ -257,22 +257,4 @@
             @endif
         </div>
     </div>
-    <div class="card">
-        <div class="card-body">
-            <div class="d-flex justify-content-center">
-                <h6>Por favor firma en el siguiente recuadro para confirmar tu evaluación.</h6>
-            </div>
-
-            <div class="d-flex justify-content-center" style="margin-top: 40px;">
-                <p>Firma del evaluador</p>
-            </div>
-
-            <div class="d-flex justify-content-center">
-                <div style="width: 510px; height: 178px; border: 1px solid #707070;"></div>
-            </div>
-            <div class="d-flex justify-content-center">
-                <button type="button" class="btn btn-link">Limpiar</button>
-            </div>
-        </div>
-    </div>
 </div>

@@ -2,7 +2,7 @@
     {{-- To attain knowledge, add things every day; To attain wisdom, subtract things every day. --}}
     @include('admin.recursos-humanos.evaluaciones-desempeno.components.status-cards')
 
-    <div>
+    <div wire:ignore>
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             @if ($evaluacionDesempeno->activar_objetivos && $acceso_objetivos)
                 <li class="nav-item" role="presentation">
@@ -48,5 +48,175 @@
             @endif
         </div>
 
+    </div>
+
+    <h1>Data from Child 1: {{ $dataFromChild1 }}</h1>
+
+    <!-- Output received data from Child2 -->
+    <h1>Data from Child 2: {{ $dataFromChild2 }}</h1>
+
+    <div class="card">
+        <div class="card-body">
+            @if (
+                $evaluacionDesempeno->activar_competencias &&
+                    $acceso_competencias &&
+                    $evaluacionDesempeno->activar_objetivos &&
+                    $acceso_objetivos)
+                @if ($autoevaluacion && $dataFromChild1 == 100 && $dataFromChild2 == 100)
+                    <div class="d-flex justify-content-center">
+                        <h6>Por favor firma en el siguiente recuadro para confirmar tu evaluación.</h6>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <h3>Firma del Evaluador</h3>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <button id="clear" class="btn btn-link">Limpiar Firma</button>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <canvas id="signature-pad" class="signature-pad" width="450" height="250"
+                            style="border: 1px solid black;"></canvas>
+                    </div>
+                @elseif (!$autoevaluacion && $dataFromChild1 == 100 && $dataFromChild2 == 100)
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="d-flex justify-content-center">
+                                <h6>Por favor firma en el siguiente recuadro para confirmar tu evaluación.</h6>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <h3>Firma del Evaluador</h3>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <button id="clear" class="btn btn-link">Limpiar Firma</button>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <canvas id="signature-pad" class="signature-pad" width="450" height="250"
+                                    style="border: 1px solid black;"></canvas>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="d-flex justify-content-center">
+                                <h6>Por favor firma en el siguiente recuadro para confirmar tu evaluación.</h6>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <h3>Firma del Evaluador</h3>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <button id="clear" class="btn btn-link">Limpiar Firma</button>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <canvas id="signature-pad" class="signature-pad" width="450" height="250"
+                                    style="border: 1px solid black;"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+            @elseif(
+                $evaluacionDesempeno->activar_competencias &&
+                    $acceso_competencias &&
+                    !$evaluacionDesempeno->activar_objetivos &&
+                    !$acceso_objetivos)
+                @if ($autoevaluacion && $dataFromChild2 == 100)
+                    <div class="d-flex justify-content-center">
+                        <h6>Por favor firma en el siguiente recuadro para confirmar tu evaluación.</h6>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <h3>Firma del Evaluador</h3>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <button id="clear" class="btn btn-link">Limpiar Firma</button>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <canvas id="signature-pad" class="signature-pad" width="450" height="250"
+                            style="border: 1px solid black;"></canvas>
+                    </div>
+                @elseif (!$autoevaluacion && $dataFromChild2 == 100)
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="d-flex justify-content-center">
+                                <h6>Por favor firma en el siguiente recuadro para confirmar tu evaluación.</h6>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <h3>Firma del Evaluador</h3>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <button id="clear" class="btn btn-link">Limpiar Firma</button>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <canvas id="signature-pad" class="signature-pad" width="450" height="250"
+                                    style="border: 1px solid black;"></canvas>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="d-flex justify-content-center">
+                                <h6>Por favor firma en el siguiente recuadro para confirmar tu evaluación.</h6>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <h3>Firma del Evaluador</h3>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <button id="clear" class="btn btn-link">Limpiar Firma</button>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <canvas id="signature-pad" class="signature-pad" width="450" height="250"
+                                    style="border: 1px solid black;"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+            @elseif(
+                !$evaluacionDesempeno->activar_competencias &&
+                    !$acceso_competencias &&
+                    $evaluacionDesempeno->activar_objetivos &&
+                    $acceso_objetivos)
+                @if ($autoevaluacion && $dataFromChild1 == 100)
+                    <div class="d-flex justify-content-center">
+                        <h6>Por favor firma en el siguiente recuadro para confirmar tu evaluación.</h6>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <h3>Firma del Evaluador</h3>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <button id="clear" class="btn btn-link">Limpiar Firma</button>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <canvas id="signature-pad" class="signature-pad" width="450" height="250"
+                            style="border: 1px solid black;"></canvas>
+                    </div>
+                @elseif (!$autoevaluacion && $dataFromChild1 == 100)
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="d-flex justify-content-center">
+                                <h6>Por favor firma en el siguiente recuadro para confirmar tu evaluación.</h6>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <h3>Firma del Evaluador</h3>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <button id="clear" class="btn btn-link">Limpiar Firma</button>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <canvas id="signature-pad" class="signature-pad" width="450" height="250"
+                                    style="border: 1px solid black;"></canvas>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="d-flex justify-content-center">
+                                <h6>Por favor firma en el siguiente recuadro para confirmar tu evaluación.</h6>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <h3>Firma del Evaluador</h3>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <button id="clear" class="btn btn-link">Limpiar Firma</button>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <canvas id="signature-pad" class="signature-pad" width="450" height="250"
+                                    style="border: 1px solid black;"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+            @endif
+        </div>
     </div>
 </div>
