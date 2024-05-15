@@ -25,15 +25,17 @@
     }
 </style>
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/listadistribucion.css') }}{{config('app.cssVersion')}}" @endsection
-    @section('content')
+    <link rel="stylesheet" href="{{ asset('css/listadistribucion.css') }}{{ config('app.cssVersion') }}">
+@endsection
+
+@section('content')
     @include('admin.listadistribucion.estilos')
 
     <div class="card instrucciones">
         <div class="">
             <div class="row">
                 <div class="col-2">
-                    <img src="{{ asset('politicas.png') }}" class="imgdoc"  alt="">
+                    <img src="{{ asset('politicas.png') }}" class="imgdoc" alt="">
                 </div>
                 <div class="col-10" style="position: relative; top: 3rem;">
                     <h5>Crea tu propio grupo de distribución de correo</h6>
@@ -56,14 +58,14 @@
                         <div class="anima-focus">
                             <input class="form-control" id="modulo" name="modulo" type="text"
                                 value="{{ $lista->modulo }}" placeholder="" disabled>
-                            <label  for="modulo">Módulo</label>
+                            <label for="modulo">Módulo</label>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="anima-focus">
                             <input class="form-control" id="submodulo" name="submodulo" type="text"
                                 value="{{ $lista->submodulo }}" placeholder="" disabled>
-                            <label  for="modulo">Submódulo</label>
+                            <label for="modulo">Submódulo</label>
                         </div>
                     </div>
                 </div>
@@ -80,13 +82,14 @@
                         <br>
                         <br>
                         <br>
-                        <p style="text-align:justify">Esta sección permite que las personas <br> seleccionadas puedan autorizar el flujo en <br> cualquier
+                        <p style="text-align:justify">Esta sección permite que las personas <br> seleccionadas puedan
+                            autorizar el flujo en <br> cualquier
                             momento, sin requerir la aprobación <br> de los niveles seleccionados.
                         </p>
 
                         <div class="col-8">
                             <div class="anima-focus">
-                                <select id="superaprobadores"  name="superaprobadores[]" class="form-control"
+                                <select id="superaprobadores" name="superaprobadores[]" class="form-control"
                                     multiple="multiple" placeholder="">
                                     @foreach ($empleados as $empleado)
                                         <option value="{{ $empleado->id }}" data-avatar="{{ $empleado->avatar }}">
@@ -101,8 +104,8 @@
                         <p>Seleccione cuantos niveles de aprobación tendra tu lista, para poder asignar por cada nivel el
                             numero
                             de colaboradores que se requiera.</p>
-                            <br>
-                            <br>
+                        <br>
+                        <br>
 
                         <div class="row mb-4">
                             <div class="anima-focus">
@@ -122,8 +125,10 @@
                             @for ($i = 1; $i < 6; $i++)
                                 <div class="form-row nivel{{ $i }}Div" style="display: none;">
                                     <div class="mt-4 mb-1">
-                                        <i class="fas fa-circle" style="color: #007bff;"></i>  Nivel {{ $i }} <br>
-                                       &nbsp; &nbsp; Asigna a los colaboradores que deben aprobar para pasar al siguiente nivel.
+                                        <i class="fas fa-circle" style="color: #007bff;"></i> Nivel {{ $i }}
+                                        <br>
+                                        &nbsp; &nbsp; Asigna a los colaboradores que deben aprobar para pasar al siguiente
+                                        nivel.
                                     </div>
                                     <div class="anima-focus" style="width: 100rem;">
                                         <select id="nivel{{ $i }}" name="nivel{{ $i }}[]"
@@ -146,14 +151,16 @@
             </div>
         </div>
         <div class="col-12">
-            <div  style="position: relative; text-align:end;">
-                <a href="{{ route('admin.lista-distribucion.index') }}" type="button" class="btn btn-primary" id="btn_cancelar" style="color:#057BE2;">Cancelar</a>
+            <div style="position: relative; text-align:end;">
+                <a href="{{ route('admin.lista-distribucion.index') }}" type="button" class="btn btn-primary"
+                    id="btn_cancelar" style="color:#057BE2;">Cancelar</a>
                 <button type="submit" class="btn btn-primary" style="width: 8rem;">Editar</button>
             </div>
         </div>
     </form>
 @endsection
-    @section('scripts') <script>
+@section('scripts')
+    <script>
         var superaprobadoresSeleccionados = {!! json_encode($superaprobadores_seleccionados) !!};
 
         $(document).ready(function() {
