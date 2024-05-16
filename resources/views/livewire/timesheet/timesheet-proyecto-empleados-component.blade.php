@@ -107,7 +107,7 @@
                 </div>
             </div>
 
-            <div class="modal fade" id="modalExternoTodos" tabindex="-1" role="dialog"
+            {{-- <div class="modal fade" id="modalExternoTodos" tabindex="-1" role="dialog"
                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -151,13 +151,13 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         @endif
 
         @if ($proyecto->tipo == 'Externo')
             <div class="row">
                 <div class="form-group col-md-4" style="display: flex; align-items: flex-end;">
-                    <button class="btn btn-success" onclick="confirmSeleccionarTodosExterno(event)">Seleccionar Todos
+                    <button class="btn btn-success" onclick="confirmSeleccionarTodos(event)">Seleccionar Todos
                         los
                         usuarios</button>
                 </div>
@@ -404,7 +404,7 @@
             }
         </script>
 
-        <script>
+        {{-- <script>
             function confirmSeleccionarTodosExterno(event) {
                 event.preventDefault(); // Prevent default form submission behavior
                 Swal.fire({
@@ -422,7 +422,7 @@
                     }
                 });
             }
-        </script>
+        </script> --}}
 
         <script>
             document.addEventListener('livewire:load', function() {
