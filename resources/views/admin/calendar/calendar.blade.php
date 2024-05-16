@@ -2,119 +2,18 @@
 @section('content')
 
 
-    {{ Breadcrumbs::render('admin.system-calendar') }}
+    {{-- {{ Breadcrumbs::render('admin.system-calendar') }} --}}
 
 
     <link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.css">
     <link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css">
 
-    <link rel="stylesheet" type="text/css" href="{{ asset('../css/global/calendar/tui-calendar.css') }}{{config('app.cssVersion')}}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('../css/global/calendar/default.css') }}{{config('app.cssVersion')}}">
-
-
-
-    <style type="text/css">
-        .caja {
-            width: 50% !important;
-            height: 740px;
-            padding: 0;
-            overflow: hidden !important;
-        }
-
-        #lnb {
-            background: rgba(0, 0, 0, 0) !important;
-            border: none !important;
-        }
-
-        #lnb div {
-            border: none !important;
-        }
-
-        #calendarList {
-            border: none !important;
-        }
-
-        #calendar {
-            width: 100%;
-            /*overflow: hidden;*/
-            /* overflow-y: scroll; */
-            border: none !important;
-            height: auto !important;
-        }
-
-        #calendarList span {
-            margin-left: 0px;
-            font-size: 8pt;
-            float: left;
-            width: 100px;
-        }
-
-        #calendarList span:nth-child(even) {
-            width: 20px;
-        }
-
-        span strong {
-            font-size: 15pt !important;
-        }
-
-        span:not(.lever)::before {
-            left: -30px !important;
-            top: -5px !important;
-            transform: scale(0.7);
-            display: none;
-        }
-
-        .tui-full-calendar-month-dayname {
-            border: none !important;
-        }
-
-        .tui-full-calendar-popup-section div {
-            border: none !important;
-            margin-top: 20px !important;
-        }
-
-        .tui-full-calendar-popup-section input {
-            border-bottom: 1px solid #eee !important;
-        }
-
-
-        .btn.btn-default.btn-sm.move-day {
-            width: 30px;
-            height: 30px;
-            position: relative;
-        }
-
-        a:hover {
-            text-decoration: none !important;
-        }
-
-        .tui-full-calendar-popup .tui-full-calendar-popup-container {
-            display: none;
-        }
-
-        .tui-full-calendar-popup.tui-full-calendar-popup-detail .tui-full-calendar-popup-container {
-            display: block;
-        }
-
-
-        .tui-full-calendar-weekday-schedule-title {
-            position: relative;
-        }
-
-        .dropdown-menu.show {
-            width: 250px !important;
-        }
-
-        .i_calendar {
-            font-size: 11pt;
-            width: 20px;
-            text-align: center;
-        }
-
-        .i_calendar_cuadro {
-            margin: 0px 8px;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css"
+        href="{{ asset('../css/global/calendar/tui-calendar.css') }}{{ config('app.cssVersion') }}">
+    <link rel="stylesheet" type="text/css"
+        href="{{ asset('../css/global/calendar/default.css') }}{{ config('app.cssVersion') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('../css/calendary/calendary.css') }}">
+    </link>
 
 
     <h5 class="col-12 titulo_general_funcion"> Calendario de {{ $nombre_organizacion }} </h5>
@@ -125,7 +24,7 @@
 
         </div>
         <div class="card-body" style="height: 700px;">
-            <div class="caja">
+            {{-- <div class="caja">
                 <div id="lnb">
 
                     <div id="lnb-calendars" class="lnb-calendars">
@@ -218,13 +117,19 @@
                     </div>
                     <div id="calendar"></div>
                 </div>
-            </div>
+            </div> --}}
 
 
+            <div id='calendar'></div>
 
 
         </div>
     </div>
+
+    {{-- <div class="cardCalendario" style="box-shadow: none; !important"> --}}
+    {{-- </div> --}}
+    {{-- <div class="card-body" style="height: 550px;">
+        </div> --}}
 
     {{-- <div class="row">
         <div class="col s12 m12 l6">
@@ -326,6 +231,12 @@
     <script src="{{ asset('../js/calendar_tui/tui-calendar.js') }}"></script>
     <script src="{{ asset('../js/calendar_tui/calendar_agenda.js') }}"></script>
     <script src="{{ asset('../js/calendar_tui/schedules.js') }}"></script>
+
+    <script src="{{ asset('../js/global/calendar/index.global.js') }}"></script>
+    <script src="{{ asset('../js/global/calendar/locales/locales-all.global.js') }}"></script>
+    <script src="{{ asset('../js/global/TbCommonUtilities.js') }}"></script>
+
+
     <script>
         ScheduleList = [
             @foreach ($recursos as $it_recursos)
@@ -455,15 +366,171 @@
         ];
     </script>
 
+    <script>
+        var calendar;
+
+        function renderCalendar() {
+            let eventsCalendar = [];
+            let events = @json($eventos);
+            events.forEach(item => {
+                const {
+                    id,
+                    nombre,
+                    fecha,
+                    categoria,
+                    descripcion
+                } = item;
+
+                const jsonEvents = {
+                    id: id,
+                    title: nombre,
+                    start: TbConvertStringToTimeStamp(fechaInicio(fecha),'MM/DD/YYYY'),
+                    end: TbConvertStringToTimeStamp(fechaFin(fecha),'MM/DD/YYYY')
+                };
+                eventsCalendar.push(jsonEvents);
+            });
+
+            var calendarEl = document.getElementById('calendar');
+
+            calendar = new FullCalendar.Calendar(calendarEl, {
+                expandRows: true,
+                locale: 'es',
+                slotMinTime: '09:00',
+                slotMaxTime: '19:00',
+                height: '100%',
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+                },
+                initialView: 'dayGridMonth',
+                initialDate: '2024-05-15',
+                navLinks: false,
+                editable: false,
+                selectable: false,
+                nowIndicator: true,
+                dayMaxEvents: true,
+                eventDidMount: function(info) {
+                    // $(info.el).popover({
+                    //     title: info.event.title,
+                    //     placement: 'top',
+                    //     trigger: 'hover',
+                    //     content: '<div style="font-family: Arial, sans-serif; font-size: 14px; padding: 5px;">' +
+                    //         '<p><strong>Estado:</strong> ' + info.event.extendedProps.status + '</p>' +
+                    //         '<p><strong>Fecha inicial:</strong> ' + convertirFecha(info.event.start) +
+                    //         '</p>' +
+                    //         '<p><strong>Fecha final:</strong> ' + convertirFecha(info.event.end) +
+                    //         '</p>' +
+                    //         '</div>',
+                    //     container: 'body',
+                    //     html: true
+                    // });
+                },
+                events: eventsCalendar,
+                eventClick: function(info) {
+                    // alert('Event: ' + info.event.title);
+                    // alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
+                    // alert('View: ' + info.view.type);
+
+                    // // change the border color just for fun
+                    // info.el.style.borderColor = 'red';
+                },
+                dateClick: function(arg) {
+                    console.log(arg.date.toUTCString()); // use *UTC* methods on the native Date Object
+                    // will output something like 'Sat, 01 Sep 2018 00:00:00 GMT'
+                }
+            });
+        }
+
+        function fechaInicio(fechaRango) {
+            const fechas = fechaRango.split(" - ");
+            return fechas[0];
+        }
+
+        function fechaFin(fechaRango) {
+            const fechas = fechaRango.split(" - ");
+            return fechas[1];
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                renderCalendar();
+                calendar.render();
+                calendar.setOption('locale', 'es');
+                console.log("first");
+            }, 1000);
+        });
+    </script>
+
     </script>
     <script src="{{ asset('../js/calendar_tui/app.js') }}"></script>
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(() => {
+            // setTimeout(() => {
+            //     let eventsCalendar = [];
+            // var calendarEl = document.getElementById('calendar');
 
+            // calendar = new FullCalendar.Calendar(calendarEl, {
+            //     expandRows: true,
+            //     locale: 'es',
+            //     slotMinTime: '09:00',
+            //     slotMaxTime: '19:00',
+            //     height: '100%',
+            //     headerToolbar: {
+            //         left: 'prev,next today',
+            //         center: 'title',
+            //         right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+            //     },
+            //     initialView: 'dayGridMonth',
+            //     initialDate: '2024-05-15',
+            //     navLinks: false,
+            //     editable: false,
+            //     selectable: false,
+            //     nowIndicator: true,
+            //     dayMaxEvents: true,
+            //     eventDidMount: function(info) {
+            //         // $(info.el).popover({
+            //         //     title: info.event.title,
+            //         //     placement: 'top',
+            //         //     trigger: 'hover',
+            //         //     content: '<div style="font-family: Arial, sans-serif; font-size: 14px; padding: 5px;">' +
+            //         //         '<p><strong>Estado:</strong> ' + info.event.extendedProps.status + '</p>' +
+            //         //         '<p><strong>Fecha inicial:</strong> ' + convertirFecha(info.event.start) +
+            //         //         '</p>' +
+            //         //         '<p><strong>Fecha final:</strong> ' + convertirFecha(info.event.end) +
+            //         //         '</p>' +
+            //         //         '</div>',
+            //         //     container: 'body',
+            //         //     html: true
+            //         // });
+            //     },
+            //     events: [{
+            //             title: 'simple event',
+            //             start: '2024-03-02'
+            //         },
+            //         {
+            //             title: 'event with URL',
+            //             url: '
+            //             https: //www.google.com/'
+            //             ,
+            //             start: '2024-03-03'
+            //         }
+            //     ],
+            //     eventClick: function(info) {
+            //         // alert('Event: ' + info.event.title);
+            //         // alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
+            //         // alert('View: ' + info.view.type);
 
+            //         // // change the border color just for fun
+            //         // info.el.style.borderColor = 'red';
+            //     },
+            //     dateClick: function(arg) {
+            //         console.log(arg.date.toUTCString()); // use *UTC* methods on the native Date Object
+            //         // will output something like 'Sat, 01 Sep 2018 00:00:00 GMT'
+            //     }
+            // });
+            // }, 7000);
 
-            }, 5000);
         })
     </script>
 
