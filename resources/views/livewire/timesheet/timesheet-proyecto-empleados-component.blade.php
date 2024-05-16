@@ -41,11 +41,17 @@
                         @foreach ($empleados as $key => $empleado)
                             <div class="dropdown-item">
                                 <div class="row mt-2 mb-2">
-                                    {{ $empleado['name'] }}
-                                    <input type="checkbox" id="empleado_{{ $empleado['id'] }}" class="form-check-input"
-                                        style="transform: scale(2);"
-                                        wire:model="empleados.{{ $key }}.seleccionado"
-                                        wire:change="asignacionEmpleados('{{ $empleado['id'] }}','{{ $key }}', $event.target.checked ? true : false)">
+                                    <div class="col-10">
+                                        <div class="text-wrap">
+                                            {{ $empleado['name'] }}
+                                        </div>
+                                    </div>
+                                    <div class="col-2">
+                                        <input type="checkbox" id="empleado_{{ $empleado['id'] }}"
+                                            class="form-check-input" style="transform: scale(2);"
+                                            wire:model="empleados.{{ $key }}.seleccionado"
+                                            wire:change="asignacionEmpleados('{{ $empleado['id'] }}','{{ $key }}', $event.target.checked ? true : false)">
+                                    </div>
                                 </div>
                             </div>
                         @endforeach
@@ -174,12 +180,12 @@
                     <th>Puesto </th>
                     @if ($proyecto->tipo === 'Externo')
                         <th>Horas Asignadas </th>
-                        <th>Horas Totales </th>
-                        <th>Horas Sobrepasadas </th>
                         <th>Costo por Hora </th>
                         <th>Costo Estimado</th>
+                        <th>Horas Totales </th>
+                        <th>Horas Sobrepasadas </th>
                         <th>Costo Real</th>
-                        <th>Variación</th>
+                        <th>Costo Horas Sobrepasadas</th>
                     @endif
                     <th style="max-width:150px !important; width:150px ;">Opciones</th>
                 </tr>
@@ -189,18 +195,12 @@
                     @php
                         $estimado = 0;
                         $real = 0;
-                        $variacion = 0;
+                        $costo_sobrepasado = 0;
 
                         $estimado = $proyect_empleado->horas_asignadas * $proyect_empleado->costo_hora;
                         $real = $proyect_empleado->total * $proyect_empleado->costo_hora;
 
-                        $variacion = $real - $estimado;
-
-                        if ($variacion <= 0) {
-                            $saldo = 'A Favor:';
-                        } else {
-                            $saldo = 'Sobrepasado:';
-                        }
+                        $costo_sobrepasado = $proyect_empleado->sobrepasadas * $proyect_empleado->costo_hora;
                     @endphp
 
                     <tr>
@@ -209,12 +209,12 @@
                         <td>{{ $proyect_empleado->empleado->puesto }} </td>
                         @if ($proyecto->tipo === 'Externo')
                             <td>{{ $proyect_empleado->horas_asignadas ?? '0' }} </td>
-                            <td>{{ $proyect_empleado->total ?? '0' }} </td>
-                            <td>{{ $proyect_empleado->sobrepasadas ?? '0' }} </td>
                             <td>{{ $proyect_empleado->costo_hora ?? '0' }} </td>
                             <td>{{ $estimado ?? '0' }} </td>
+                            <td>{{ $proyect_empleado->total ?? '0' }} </td>
+                            <td>{{ $proyect_empleado->sobrepasadas ?? '0' }} </td>
                             <td>{{ $real ?? '0' }}</td>
-                            <td>{{ $saldo }}&nbsp;{{ $variacion ?? '0' }}</td>
+                            <td>{{ $costo_sobrepasado }}</td>
                         @endif
                         <td>
                             <button class="btn" data-toggle="modal"

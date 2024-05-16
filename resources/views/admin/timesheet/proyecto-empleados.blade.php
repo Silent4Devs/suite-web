@@ -7,6 +7,11 @@
         .select2-dropdown {
             transform: translate(0) !important;
         }
+
+        .text-wrap {
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
     </style>
 @endsection
 @section('content')
