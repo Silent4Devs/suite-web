@@ -17,14 +17,6 @@ class EntendimientoOrganizacionObserver
         $this->forgetCache();
     }
 
-    /**
-     * Handle the EntendimientoOrganizacion "updated" event.
-     */
-    public function updated(EntendimientoOrganizacion $entendimiento): void
-    {
-        event(new EntendimientoOrganizacionEvent($entendimiento, 'update', 'entendimiento_organizacions', 'Entendimiento'));
-        $this->forgetCache();
-    }
 
     /**
      * Handle the EntendimientoOrganizacion "deleted" event.
