@@ -130,12 +130,12 @@ class TimesheetProyectoEmpleadosComponent extends Component
         }
     }
 
-    public function seleccionarTodosExterno()
-    {
-        foreach ($this->empleados as $empleado) {
-            $this->addEmpleadoIndividual($empleado['id'], true);
-        }
-    }
+    // public function seleccionarTodosExterno()
+    // {
+    //     foreach ($this->empleados as $empleado) {
+    //         $this->addEmpleadoIndividual($empleado['id'], true);
+    //     }
+    // }
 
     public function asignacionEmpleados($id_empleado, $key, $asignacion)
     {
@@ -191,7 +191,17 @@ class TimesheetProyectoEmpleadosComponent extends Component
                     $this->resetInput();
                 }
             } else {
-                $this->dehydrate();
+                $time_proyect_empleado = TimesheetProyectoEmpleado::firstOrCreate(
+                    [
+                        'proyecto_id' => $this->proyecto->id,
+                        'empleado_id' => $empleado_add_proyecto->id,
+                    ],
+                    [
+                        'area_id' => $empleado_add_proyecto->area_id,
+                        'horas_asignadas' => 0,
+                        'costo_hora' => 0,
+                    ]
+                );
             }
         }
 
