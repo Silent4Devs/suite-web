@@ -300,8 +300,14 @@ class ContratosController extends AppBaseController
             // Ruta completa donde se guardará el archivo
             $ruta = 'contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato;
 
+
             // Guardar el archivo en el disco 'public' con la ruta específica
             Storage::disk('public')->put($ruta . '/' . $nombre_f, file_get_contents($file));
+
+            $ruta_carpeta = storage_path('app/public/' . $ruta);
+
+            // Dar permisos chmod 777 a la carpeta
+            chmod($ruta_carpeta, 0777);
         }
 
         // Move file from tmp directory if name is send
@@ -528,12 +534,6 @@ class ContratosController extends AppBaseController
             return redirect()->route('contract_manager.contratos-katbol.index')->with('error', 'Ocurrio un error.');
         }
 
-        if (strlen($request->no_contrato) > 255) {
-            $mensajeError = 'Intentelo de nuevo, Ingrese  todos los campos con caracteres menores a 255';
-
-            return Redirect::back()->with('mensajeError', $mensajeError);
-        }
-
         $formatoFecha = new FormatearFecha;
         $fecha_inicio = $request->fecha_inicio;
         $fecha_fin = $request->fecha_fin;
@@ -638,19 +638,7 @@ class ContratosController extends AppBaseController
 
             $nombre = $request->file('file_contrato')->getClientOriginalName();
             $nombre_f = $contrato->id . $fecha_inicio . $nombre;
-            $archivo = $request->file('file_contrato')->storeAs('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato, $nombre_f);
-            if ($request->file('file_contrato') != null) {
-                $nombre = $request->file('file_contrato')->getClientOriginalName();
-                $nombre_f = $contrato->id . $fecha_inicio . $nombre;
-
-                $file = $request->file('file_contrato');
-
-                // Ruta completa donde se guardará el archivo
-                $ruta = 'contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/';
-
-                // Guardar el archivo en el disco 'public' con la ruta específica
-                Storage::disk('public')->put($ruta . '/' . $nombre_f, file_get_contents($file));
-            }
+            $request->file('file_contrato')->storeAs('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato, $nombre_f);
 
             // $ruta_file_contrato = Storage::url($archivo);
             $contrato->update([
@@ -686,7 +674,7 @@ class ContratosController extends AppBaseController
         //## FIN UPDATE REES####
         // notify()->success('¡Se ha actualizado la información del contrato satisfactoriamente!');
 
-        return redirect(route('contract_manager.contratos-katbol.index'));
+        return redirect("/contract_manager/contratos-katbol/{$contrato->id}/edit");
     }
 
     /**

@@ -1235,6 +1235,10 @@ class TimesheetController extends Controller
     {
         $proyecto = TimesheetProyecto::getAll('empleado_' . $id)->find($id);
 
+        if (!$proyecto) {
+            abort(404);
+        }
+
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;

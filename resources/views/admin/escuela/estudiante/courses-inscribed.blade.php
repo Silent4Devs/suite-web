@@ -4,16 +4,10 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/escuela/mis-cursos.css') }}{{ config('app.cssVersion') }}">
 @endsection
 @section('content')
-    {{-- {{ Breadcrumbs::render('centro-atencion') }} --}}
-
-    {{-- <h5 class="titulo_general_funcion">Centro de Atención</h5> --}}
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-
     @include('admin.escuela.estudiante.menu-side', ['usuario' => $usuario])
 
     <div class="card" style="max-height: 183px;">
-        <img src="{{ asset('img/escuela/imagenfondo.webp') }} " class="card-img" alt="Imagen"
+        <img src="{{ asset('img/escuela/imagenfondo.jpg') }} " class="card-img" alt="Imagen"
             style="height: 183px; border-radius: 8px; ">
         <div class="card-body" style="position: absolute; top: 0; left: 0; width: 100%; color: #fff;">
             <!-- Contenido del card-body -->
@@ -61,61 +55,41 @@
         </div>
     </div>
 
-
-    <h3 class="title-main-cursos" style="margin-top: 30px;">Mis Cursos</h3>
+    <h3 class="title-main-cursos">Mis Cursos</h3>
 
     <div class="caja-cards-mis-cursos">
-        @foreach ($lastThreeCourse as $cu)
+        @foreach ($cursos_usuario as $cu)
             @php
                 $instructor = $cu->cursos->instructor;
             @endphp
             <div class="card card-body mi-curso">
-                @if (isset($cu->cursos->image->url))
-                    <img src="{{ asset($cu->cursos->image->url) }}" alt="" class="card-img"
-                        style="min-height: 225px; border-radius: 12px 12px 0px 0px;">
-                    <div class="caja-info-card-mc">
-                        <p class="course-title">
+
+                    <img src="{{ asset($cu->cursos->image->url) }}" alt="" class="img-card" style="height: 225px;">
+
+                <div class="caja-info-card-mc">
+                    <p class="course-title">
                             {{ $cu->cursos->title }}
-                        </p>
-                        @if ($instructor)
-                            <p class="course-teacher">Un curso de {{ $instructor->name }} </p>
-                        @else
-                            <p class="course-teacher">Instructor no asignado </p>
-                        @endif
+                    </p>
+                    @if ($instructor)
+                        <p class="course-teacher">Un curso de {{ $instructor->name }} </p>
+                    @else
+                        <p class="course-teacher">Instructor no asignado </p>
+                    @endif
 
-                        <div class="caja-info-card-advance">
-                            <p class="title-advance">{{ $cu->advance . '%' }} completado</p>
-                            <div class="curso-progreso-barra">
-                                <div class="indicador-progreso-barra" style="width: {{ $cu->advance . '%' }};"></div>
-                            </div>
+                    <div class="caja-info-card-advance">
+                        <p class="title-advance">{{ $cu->advance . '%' }} completado</p>
+                        <div class="curso-progreso-barra">
+                            <div class="indicador-progreso-barra" style="width: {{ $cu->advance . '%' }};"></div>
                         </div>
-
-                        <div class="d-flex justify-content-center">
-                            <a href="{{ route('admin.curso-estudiante', $cu->cursos->id) }}" class="btn btn-mi-course">Ir a
-                                mi
-                                curso</a>
-                        </div>
-
                     </div>
-                @else
-                    <p>Sin imagen de curso</p>
-                @endif
+
+                    <div class="d-flex justify-content-center">
+                        <a href="{{ route('admin.curso-estudiante', $cu->cursos->id) }}" class="btn btn-mi-course">Ir a mi
+                            curso</a>
+                    </div>
+
+                </div>
             </div>
         @endforeach
     </div>
-    <div class="d-flex justify-content-end">
-        <a href="{{ route('admin.courses-inscribed') }}"
-            style="display: inline-block; vertical-align: middle; color:#006DDB; margin-top:21px;">
-            <span class="material-symbols-outlined" style="vertical-align: middle;">
-                add
-            </span>
-            Ver más cursos
-        </a>
-    </div>
-    </div>
-
-    @livewire('escuela.course-index')
-@endsection
-
-@section('scripts')
 @endsection

@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('css')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}{{config('app.cssVersion')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}{{ config('app.cssVersion') }}">
 @endsection
 @section('content')
     {{-- <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
@@ -44,6 +44,46 @@
                     titleAttr: 'Exportar Excel',
                     exportOptions: {
                         columns: ['th:not(:last-child):visible']
+                    },
+                    customizeData: function(data) {
+                        for (var i = 0; i < data.body.length; i++) {
+                            // Procesar columna B
+                            var columnB = data.body[i][1];
+                            columnB = columnB.replace(/\s{2,}/g,
+                                ' ');
+                            var arrayB = columnB.trim().split(' ');
+                            data.body[i][1] = arrayB;
+
+                            // Procesar columna C
+                            var columnC = data.body[i][2];
+                            columnC = columnC.replace(/\s{2,}/g,
+                                ' ');
+                            var arrayC = columnC.trim().split(' ');
+                            data.body[i][2] = arrayC;
+
+                            // Procesar columna D
+                            var columnaD = data.body[i][3];
+                            var elementosD = columnaD.split(/\s{2,}/);
+                            var arrayD = [];
+                            elementosD.forEach(function(elemento) {
+                                arrayD.push(elemento.trim());
+                            });
+                            data.body[i][3] = arrayD;
+                        }
+                    },
+                    customize: function(xlsx) {
+                        var sheet = xlsx.xl.worksheets[
+                            'Sheet1.xml'];
+                        $('col', sheet).each(function() {
+                            $(this).attr('width', '25');
+                        });
+                        $('row c[r^="B"], row c[r^="C"], row c[r^="D"]', sheet).each(function() {
+                            var cellText = $(this).find('is t').text();
+                            cellText = cellText.replace(/,/g, ',\n');
+                            $(this).find('is t').text(cellText);
+                            $(this).attr('s', '25');
+                            $(this).attr('style', 'mso-wrap-text: true;');
+                        });
                     }
                 },
                 {

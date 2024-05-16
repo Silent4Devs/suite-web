@@ -18,6 +18,7 @@ class UsuariosCursos extends Model implements Auditable
         // 'course_id',
         'user_id',
         'course_id',
+        'last_review',
 
     ];
 
