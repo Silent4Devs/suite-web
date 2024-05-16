@@ -15,12 +15,14 @@
     <script src="{{ asset('../js/global/calendar/index.global.js') }}"></script>
     <script src="{{ asset('../js/global/calendar/locales/locales-all.global.js') }}"></script>
     <script src="{{ asset('../js/global/TbCommonUtilities.js') }}"></script>
+    <script src="{{ asset('../js/calendary/renderCalendary.js')}}"></script>
 
     <script>
         @php
             $facturasData = [];
             $cumpleData = [];
             $aniversarioData = [];
+            $revisionesData = [];
         @endphp
 
         @foreach ($facturas as $facturas_iterado)
@@ -68,10 +70,26 @@
             @endphp
         @endforeach
 
+        @foreach ($niveles_servicio as $revisiones)
+                @php
+                    $revisionesData[] =[
+                        "id"=> $revisiones->id ,
+                        "calendarId" => '11',
+                        "title" => $revisiones->nombre_entregable ,
+                        "category" => 'allday',
+                        "dueDateClass" => '',
+                        "start" => \Carbon\Carbon::parse($revisiones->plazo_entrega_inicio)->format('Y-m-d') ,
+                        "end" => \Carbon\Carbon::parse($revisiones->plazo_entrega_termina)->format('Y-m-d'),
+                        "isReadOnly" => true,
+                    ];
+                @endphp
+            @endforeach
+
         @php
             $facturasJson = json_encode($facturasData);
             $cumpleJson = json_encode($cumpleData);
             $aniversarioJson = json_encode($aniversarioData);
+            $revisionesJson = json_encode($revisionesData);
         @endphp
 
         ScheduleList = [
@@ -212,149 +230,7 @@
         var facturas = {!! $facturasJson !!};
         var cumple = {!! $cumpleJson !!};
         var aniversario = {!! $aniversarioJson !!};
-
-
-        function renderCalendar() {
-
-            events.forEach(item => {
-                const {
-                    id,
-                    nombre,
-                    fecha,
-                    categoria,
-                    descripcion
-                } = item;
-
-                const jsonEvents = {
-                    id: id,
-                    title: nombre,
-                    start: TbConvertStringToTimeStamp(fechaInicio(fecha), 'MM/DD/YYYY'),
-                    end: TbConvertStringToTimeStamp(fechaFin(fecha), 'MM/DD/YYYY'),
-                    color: "#FF0000"
-                };
-                eventsCalendar.push(jsonEvents);
-            });
-
-            recursos.forEach(item => {
-                const {
-                    id,
-                    cursoscapacitaciones,
-                    fecha_curso,
-                    fecha_fin
-                } = item;
-
-                const jsonRecursos = {
-                    id: id,
-                    title: cursoscapacitaciones,
-                    start: TbConvertStringToTimeStamp(fecha_curso, 'DD-MM-YYYY hh:mm:ss'),
-                    end: TbConvertStringToTimeStamp(fecha_fin, 'DD-MM-YYYY hh:mm:ss'),
-                    color: "#08FF00"
-                };
-                eventsCalendar.push(jsonRecursos);
-            });
-
-            contratos.forEach((item, index) => {
-                const {
-                    nombre_servicio,
-                    fecha_inicio,
-                    fecha_fin
-                } = item;
-                let id = index;
-                const jsonContratos = {
-                    id: id,
-                    title: nombre_servicio,
-                    start: TbConvertStringToTimeStamp(fecha_inicio, 'YYYY-MM-DD'),
-                    end: TbConvertStringToTimeStamp(fecha_fin, 'YYYY-MM-DD'),
-                    color: "#0023FF"
-                };
-                eventsCalendar.push(jsonContratos);
-            });
-
-            facturas.forEach(item => {
-                const {
-                    calendarId,
-                    title,
-                    start,
-                    end
-                } = item;
-
-                const jsonFacturas = {
-                    id: calendarId,
-                    title: title,
-                    start: TbConvertStringToTimeStamp(start, 'YYYY-MM-DD'),
-                    end: TbConvertStringToTimeStamp(end, 'YYYY-MM-DD'),
-                    color: "#FF9900"
-                };
-                eventsCalendar.push(jsonFacturas);
-            });
-
-            var calendarEl = document.getElementById('calendar');
-
-            calendar = new FullCalendar.Calendar(calendarEl, {
-                expandRows: true,
-                locale: 'es',
-                slotMinTime: '09:00',
-                slotMaxTime: '19:00',
-                height: '100%',
-                headerToolbar: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-                },
-                initialView: 'dayGridMonth',
-                initialDate: '2024-05-15',
-                navLinks: false,
-                editable: false,
-                selectable: false,
-                nowIndicator: true,
-                dayMaxEvents: true,
-                eventDidMount: function(info) {
-                    // $(info.el).popover({
-                    //     title: info.event.title,
-                    //     placement: 'top',
-                    //     trigger: 'hover',
-                    //     content: '<div style="font-family: Arial, sans-serif; font-size: 14px; padding: 5px;">' +
-                    //         '<p><strong>Estado:</strong> ' + info.event.extendedProps.title + '</p>' +
-                    //         '</p>' +
-                    //         '</div>',
-                    //     container: 'body',
-                    //     html: true
-                    // });
-                },
-                events: eventsCalendar,
-                eventClick: function(info) {
-                    // alert('Event: ' + info.event.title);
-                    // alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
-                    // alert('View: ' + info.view.type);
-
-                    // // change the border color just for fun
-                    // info.el.style.borderColor = 'red';
-                },
-                dateClick: function(arg) {
-                    console.log(arg.date.toUTCString()); // use *UTC* methods on the native Date Object
-                    // will output something like 'Sat, 01 Sep 2018 00:00:00 GMT'
-                }
-            });
-        }
-
-        function fechaInicio(fechaRango) {
-            const fechas = fechaRango.split(" - ");
-            return fechas[0];
-        }
-
-        function fechaFin(fechaRango) {
-            const fechas = fechaRango.split(" - ");
-            return fechas[1];
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(() => {
-                renderCalendar();
-                calendar.render();
-                calendar.setOption('locale', 'es');
-                console.log("first");
-            }, 100);
-        });
+        var revisiones = {!! $revisionesJson !!};
     </script>
 
     </script>
