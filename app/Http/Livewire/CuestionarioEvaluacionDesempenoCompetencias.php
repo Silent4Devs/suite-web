@@ -55,7 +55,6 @@ class CuestionarioEvaluacionDesempenoCompetencias extends Component
         $this->evaluacion = EvaluacionDesempeno::find($this->id_evaluacion);
         $this->evaluado = $this->evaluacion->evaluados->find($this->id_evaluado);
 
-        // $this->cuestionarioSecciones();
         if ($this->evaluacion->activar_competencias == true) {
             $this->buscarCompetencias();
         }

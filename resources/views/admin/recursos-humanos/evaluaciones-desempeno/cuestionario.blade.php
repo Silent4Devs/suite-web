@@ -440,21 +440,69 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            var canvas = document.getElementById('signature-pad');
-            var signaturePad = new SignaturePad(canvas);
+            var canvasEvaluado = document.getElementById('signature-pad-evaluado');
+            var signaturePadEvaluado = new SignaturePad(canvasEvaluado);
 
-            document.getElementById('clear').addEventListener('click', function() {
-                signaturePad.clear();
+            var canvasEvaluador = document.getElementById('signature-pad-evaluador');
+            var signaturePadEvaluador = new SignaturePad(canvasEvaluador);
+
+            document.getElementById('clearEvaluado').addEventListener('click', function() {
+                signaturePadEvaluado.clear();
+            });
+
+            document.getElementById('clearEvaluador').addEventListener('click', function() {
+                signaturePadEvaluador.clear();
             });
 
             document.getElementById('save').addEventListener('click', function() {
-                if (signaturePad.isEmpty()) {
-                    alert('Por favor firme el area designada.');
+                if (signaturePadEvaluado.isEmpty() || signaturePadEvaluador.isEmpty()) {
+                    Swal.fire({
+                        title: 'Debe firmar de conformidad con la evaluación',
+                        text: "¡No podrá finalizar la evaluación sin firmar!",
+                        icon: 'warning',
+                        showCancelButton: false,
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: '¡Enterado!'
+                    });
                 } else {
-                    var dataURL = signaturePad.toDataURL();
-                    var comentariosValue = document.getElementById('comentarios').value;
-                    var repId = this.getAttribute('data-reporte');
+                    var dataURLEvaluado = signaturePadEvaluado.toDataURL();
+                    var dataURLEvaluador = signaturePadEvaluador.toDataURL();
 
+                    Swal.fire({
+                        title: '¿Estás seguro de finalizar la evaluación?',
+                        text: "¡No podrá revertirse!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: '¡Sí, aceptar!',
+                        cancelButtonText: "Cancelar",
+                    }).then((result) => {
+                        // if (result.isConfirmed) {
+                        //     $.ajax({
+                        //         type: "POST",
+                        //         url: "{{ route('admin.cartaaceptacion.aprobacion') }}",
+                        //         data: formDataAutorizacion,
+                        //         dataType: "JSON",
+                        //         processData: false,
+                        //         contentType: false,
+                        //         headers: {
+                        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                        //                 'content')
+                        //         },
+                        //         success: function(response) {
+                        //             if (response.status == 200) {
+                        //                 toastr.success('Respuesta enviada con éxito')
+                        //                 setTimeout(() => {
+                        //                     window.location.reload();
+                        //                 }, 1500);
+                        //             } else {
+                        //                 toastr.error('Ocurrio un error');
+                        //             }
+                        //         }
+                        //     });
+                        // }
+                    })
                     // fetch('{{ route('admin.auditoria-internas.storeFirmaReporteLider', ['reporteid' => ':reporteauditoria']) }}'
                     //         .replace(':reporteauditoria',
                     //             repId), {

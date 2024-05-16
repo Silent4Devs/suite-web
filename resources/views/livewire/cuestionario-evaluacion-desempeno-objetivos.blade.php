@@ -10,33 +10,134 @@
                 <h6>Fin: 20/02/2024</h6>
             </div>
             <div class="card-body">
-                <div class="row d-flex align-items-center" style="">
-                    <div class="col-3 col-sm-2 col-md-1" style="margin-left:16px;">
-                        <div class="img-person" style="width: 69px; height:69px;">
-                            <img src="" alt="">
+                @if ($autoevaluacion)
+                    <div class="row d-flex justify-content-center align-items-center">
+                        <div class="col-12 col-sm-2 d-flex flex-column justify-content-center align-items-center">
+                            <h6 class="title-nombre">Autoevaluacion</h6>
+                            <div class="img-person d-flex justify-content-center align-items-center"
+                                style="width: 69px; height:69px;">
+                                <img src="" alt="">
+                            </div>
+                            <div class="title-status status-procces">
+                                En proceso
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-6 col-sm-3">
-                        <div style="margin-left: 14px;">
-                            <h6 class="title-nombre">Nombre</h6>
-                            <p class="title-puesto m-0">Puesto</p>
+                        <div class="col-1 col-sm-1">
+                            <div class="vertical-line"></div>
                         </div>
-                    </div>
-                    <div class="col-9 col-sm-5">
-                        <div class="progress" style="border-radius: 29px; width:auto; height:12px; margin-left:71px;">
-                            <div class="progress-bar custom-progress" role="progressbar" style="width: 25%;"
-                                aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
-
+                        <div class="col-12 col-sm-2 d-flex flex-column justify-content-center align-items-center">
+                            <h6 class="title-nombre">Evaluar a:</h6>
+                            <div class="img-person d-flex justify-content-center align-items-center"
+                                style="width: 69px; height:69px;">
+                                <img src="" alt="">
+                            </div>
+                            <div class="title-status status-pendding">
+                                Pendiente
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-2 d-flex flex-column justify-content-center align-items-center">
+                            <h6 class="title-nombre">Evaluar a:</h6>
+                            <div class="img-person d-flex justify-content-center align-items-center"
+                                style="width: 69px; height:69px;">
+                                <img src="" alt="">
+                            </div>
+                            <div class="title-status status-pendding">
+                                Pendiente
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-2 d-flex flex-column justify-content-center align-items-center">
+                            <h6 class="title-nombre">Evaluar a:</h6>
+                            <div class="img-person d-flex justify-content-center align-items-center"
+                                style="width: 69px; height:69px;">
+                                <img src="" alt="">
+                            </div>
+                            <div class="title-status status-confirm">
+                                Evaluado
                             </div>
                         </div>
                     </div>
-                    <div class="col-3 col-sm-2">
-                        <p class="m-0">
-                            80%
-                        </p>
-                    </div>
-                </div>
+                @endif
+                <hr>
+                @if ($autoevaluacion)
+                    <div class="row d-flex align-items-center" style="">
+                        <div class="col-3 col-sm-2 col-md-1" style="margin-left:16px;">
+                            <div class="img-person" style="width: 69px; height:69px;">
+                                <img src="{{ $evaluado->empleado->avatar }}" alt="{{ $evaluado->empleado->name }}">
+                            </div>
+                        </div>
+                        <div class="col-6 col-sm-3">
+                            <div style="margin-left: 14px;">
+                                <h6 class="title-nombre">{{ $evaluado->empleado->name }}</h6>
+                                <p class="title-puesto m-0">{{ $evaluado->empleado->puesto }}</p>
+                            </div>
+                        </div>
+                        <div class="col-9 col-sm-5">
+                            <div class="progress"
+                                style="border-radius: 29px; width:auto; height:12px; margin-left:71px;">
+                                <div class="progress-bar custom-progress" role="progressbar"
+                                    style="width: {{ $porcentajeCalificado }}%;"
+                                    aria-valuenow="{{ $porcentajeCalificado }}" aria-valuemin="0" aria-valuemax="100">
 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3 col-sm-2">
+                            <p class="m-0">
+                                {{ $porcentajeCalificado }}%
+                            </p>
+                        </div>
+                    </div>
+                @else
+                    <div class="row d-flex align-items-center" style="">
+                        <div class="col-6">
+                            <div class="row">
+                                <div class="col-6 col-sm-5 col-md-1" style="margin-left:16px;">
+                                    <div class="img-person" style="width: 69px; height:69px;">
+                                        <img src="{{ $evaluado->empleado->avatar }}"
+                                            alt="{{ $evaluado->empleado->name }}">
+                                    </div>
+                                </div>
+                                <div class="col-6 col-sm-7">
+                                    <div style="margin-left: 30px;">
+                                        <h6 class="title-nombre">Evaluado: {{ $evaluado->empleado->name }}</h6>
+                                        <p class="title-puesto m-0">{{ $evaluado->empleado->puesto }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="row">
+                                <div class="col-3 col-sm-5 col-md-1" style="margin-left:16px;">
+                                    <div class="img-person" style="width: 69px; height:69px;">
+                                        <img src="{{ $evaluador->avatar }}" alt="{{ $evaluador->name }}">
+                                    </div>
+                                </div>
+                                <div class="col-6 col-sm-7">
+                                    <div style="margin-left: 30px;">
+                                        <h6 class="title-nombre">Evaluador: {{ $evaluador->name }}</h6>
+                                        <p class="title-puesto m-0">{{ $evaluador->puesto }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row d-flex align-items-center mt-5">
+                        <div class="col-11 col-sm-10">
+                            <div class="progress"
+                                style="border-radius: 29px; width:auto; height:12px; margin-left:71px;">
+                                <div class="progress-bar custom-progress" role="progressbar"
+                                    style="width: {{ $porcentajeCalificado }}%;"
+                                    aria-valuenow="{{ $porcentajeCalificado }}" aria-valuemin="0" aria-valuemax="100">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-1 col-sm-2">
+                            <p class="m-0">
+                                {{ $porcentajeCalificado }}%
+                            </p>
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
         <hr>

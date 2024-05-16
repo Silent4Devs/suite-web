@@ -50,11 +50,6 @@
 
     </div>
 
-    <h1>Data from Child 1: {{ $dataFromChild1 }}</h1>
-
-    <!-- Output received data from Child2 -->
-    <h1>Data from Child 2: {{ $dataFromChild2 }}</h1>
-
     <div class="card">
         <div class="card-body">
             @if (
@@ -67,13 +62,13 @@
                         <h6>Por favor firma en el siguiente recuadro para confirmar tu evaluación.</h6>
                     </div>
                     <div class="d-flex justify-content-center">
-                        <h3>Firma del Evaluador</h3>
+                        <h3>Firma del Evaluado</h3>
                     </div>
                     <div class="d-flex justify-content-center">
-                        <button id="clear" class="btn btn-link">Limpiar Firma</button>
+                        <button id="clearEvaluado" class="btn btn-link">Limpiar Firma</button>
                     </div>
                     <div class="d-flex justify-content-center">
-                        <canvas id="signature-pad" class="signature-pad" width="450" height="250"
+                        <canvas id="signature-pad-evaluado" class="signature-pad" width="450" height="250"
                             style="border: 1px solid black;"></canvas>
                     </div>
                 @elseif (!$autoevaluacion && $dataFromChild1 == 100 && $dataFromChild2 == 100)
@@ -86,10 +81,10 @@
                                 <h3>Firma del Evaluador</h3>
                             </div>
                             <div class="d-flex justify-content-center">
-                                <button id="clear" class="btn btn-link">Limpiar Firma</button>
+                                <button id="clearEvaluador" class="btn btn-link">Limpiar Firma</button>
                             </div>
                             <div class="d-flex justify-content-center">
-                                <canvas id="signature-pad" class="signature-pad" width="450" height="250"
+                                <canvas id="signature-pad-evaluador" class="signature-pad" width="450" height="250"
                                     style="border: 1px solid black;"></canvas>
                             </div>
                         </div>
@@ -98,13 +93,13 @@
                                 <h6>Por favor firma en el siguiente recuadro para confirmar tu evaluación.</h6>
                             </div>
                             <div class="d-flex justify-content-center">
-                                <h3>Firma del Evaluador</h3>
+                                <h3>Firma del Evaluado</h3>
                             </div>
                             <div class="d-flex justify-content-center">
-                                <button id="clear" class="btn btn-link">Limpiar Firma</button>
+                                <button id="clearEvaluado" class="btn btn-link">Limpiar Firma</button>
                             </div>
                             <div class="d-flex justify-content-center">
-                                <canvas id="signature-pad" class="signature-pad" width="450" height="250"
+                                <canvas id="signature-pad-evaluado" class="signature-pad" width="450" height="250"
                                     style="border: 1px solid black;"></canvas>
                             </div>
                         </div>
@@ -123,10 +118,10 @@
                         <h3>Firma del Evaluador</h3>
                     </div>
                     <div class="d-flex justify-content-center">
-                        <button id="clear" class="btn btn-link">Limpiar Firma</button>
+                        <button id="clearEvaluado" class="btn btn-link">Limpiar Firma</button>
                     </div>
                     <div class="d-flex justify-content-center">
-                        <canvas id="signature-pad" class="signature-pad" width="450" height="250"
+                        <canvas id="signature-pad-evaluado" class="signature-pad" width="450" height="250"
                             style="border: 1px solid black;"></canvas>
                     </div>
                 @elseif (!$autoevaluacion && $dataFromChild2 == 100)
@@ -139,11 +134,11 @@
                                 <h3>Firma del Evaluador</h3>
                             </div>
                             <div class="d-flex justify-content-center">
-                                <button id="clear" class="btn btn-link">Limpiar Firma</button>
+                                <button id="clearEvaluador" class="btn btn-link">Limpiar Firma</button>
                             </div>
                             <div class="d-flex justify-content-center">
-                                <canvas id="signature-pad" class="signature-pad" width="450" height="250"
-                                    style="border: 1px solid black;"></canvas>
+                                <canvas id="signature-pad-evaluador" class="signature-pad" width="450"
+                                    height="250" style="border: 1px solid black;"></canvas>
                             </div>
                         </div>
                         <div class="col-6">
@@ -151,14 +146,14 @@
                                 <h6>Por favor firma en el siguiente recuadro para confirmar tu evaluación.</h6>
                             </div>
                             <div class="d-flex justify-content-center">
-                                <h3>Firma del Evaluador</h3>
+                                <h3>Firma del Evaluado</h3>
                             </div>
                             <div class="d-flex justify-content-center">
-                                <button id="clear" class="btn btn-link">Limpiar Firma</button>
+                                <button id="clearEvaluado" class="btn btn-link">Limpiar Firma</button>
                             </div>
                             <div class="d-flex justify-content-center">
-                                <canvas id="signature-pad" class="signature-pad" width="450" height="250"
-                                    style="border: 1px solid black;"></canvas>
+                                <canvas id="signature-pad-evaluado" class="signature-pad" width="450"
+                                    height="250" style="border: 1px solid black;"></canvas>
                             </div>
                         </div>
                     </div>
@@ -173,13 +168,13 @@
                         <h6>Por favor firma en el siguiente recuadro para confirmar tu evaluación.</h6>
                     </div>
                     <div class="d-flex justify-content-center">
-                        <h3>Firma del Evaluador</h3>
+                        <h3>Firma del Evaluado</h3>
                     </div>
                     <div class="d-flex justify-content-center">
-                        <button id="clear" class="btn btn-link">Limpiar Firma</button>
+                        <button id="clearEvaluado" class="btn btn-link">Limpiar Firma</button>
                     </div>
                     <div class="d-flex justify-content-center">
-                        <canvas id="signature-pad" class="signature-pad" width="450" height="250"
+                        <canvas id="signature-pad-evaluado" class="signature-pad" width="450" height="250"
                             style="border: 1px solid black;"></canvas>
                     </div>
                 @elseif (!$autoevaluacion && $dataFromChild1 == 100)
@@ -192,11 +187,11 @@
                                 <h3>Firma del Evaluador</h3>
                             </div>
                             <div class="d-flex justify-content-center">
-                                <button id="clear" class="btn btn-link">Limpiar Firma</button>
+                                <button id="clearEvaluador" class="btn btn-link">Limpiar Firma</button>
                             </div>
                             <div class="d-flex justify-content-center">
-                                <canvas id="signature-pad" class="signature-pad" width="450" height="250"
-                                    style="border: 1px solid black;"></canvas>
+                                <canvas id="signature-pad-evaluador" class="signature-pad" width="450"
+                                    height="250" style="border: 1px solid black;"></canvas>
                             </div>
                         </div>
                         <div class="col-6">
@@ -204,19 +199,22 @@
                                 <h6>Por favor firma en el siguiente recuadro para confirmar tu evaluación.</h6>
                             </div>
                             <div class="d-flex justify-content-center">
-                                <h3>Firma del Evaluador</h3>
+                                <h3>Firma del Evaluado</h3>
                             </div>
                             <div class="d-flex justify-content-center">
-                                <button id="clear" class="btn btn-link">Limpiar Firma</button>
+                                <button id="clearEvaluado" class="btn btn-link">Limpiar Firma</button>
                             </div>
                             <div class="d-flex justify-content-center">
-                                <canvas id="signature-pad" class="signature-pad" width="450" height="250"
-                                    style="border: 1px solid black;"></canvas>
+                                <canvas id="signature-pad-evaluado" class="signature-pad" width="450"
+                                    height="250" style="border: 1px solid black;"></canvas>
                             </div>
                         </div>
                     </div>
                 @endif
             @endif
+            <div class="row" style="justify-content: center; display: flex; margin-top: 10px;">
+                <button id="save" type="button" class="btn btn-outline-primary">Confirmar</button>
+            </div>
         </div>
     </div>
 </div>
