@@ -43,7 +43,11 @@ class SystemCalendarController extends Controller
                     $task->canAdd = $task->canAdd == 'true' ? true : false;
                     $task->canWrite = $task->canWrite == 'true' ? true : false;
                     $task->duration = intval($task->duration);
-                    $task->progress = intval($task->progress);
+                    if (isset($task->progress)) {
+                        $task->progress = intval($task->progress);
+                    } else {
+                        $task->progress = 0;
+                    }
                     $task->canDelete = $task->canDelete == 'true' ? true : false;
                     isset($task->level) ? $task->level = intval($task->level) : $task->level = 0;
                     isset($task->collapsed) ? $task->collapsed = $task->collapsed == 'true' ? true : false : $task->collapsed = false;
@@ -89,7 +93,6 @@ class SystemCalendarController extends Controller
         $cumples_aniversarios = Empleado::getaltaAll();
         $nombre_organizacion = Organizacion::getFirst();
         $nombre_organizacion = $nombre_organizacion ? $nombre_organizacion->empresa : 'la Organización';
-
         return view('admin.calendar.calendar', compact(
             'plan_base',
             'auditorias_anual',
