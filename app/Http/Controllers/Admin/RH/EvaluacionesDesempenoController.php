@@ -9,6 +9,7 @@ use App\Models\EvaluacionDesempeno;
 use App\Models\Organizacion;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class EvaluacionesDesempenoController extends Controller
 {
@@ -131,5 +132,49 @@ class EvaluacionesDesempenoController extends Controller
         // dd($id_evaluacion);
         $evBorrar = EvaluacionDesempeno::find($id_evaluacion);
         $evBorrar->delete();
+    }
+
+    public function storeFirmasEvaluacion($id_ev, $id_evaluado, Request $request)
+    {
+        // dd("Llega", $id_ev, $id_evaluado, $request);
+
+        $evaluacion = EvaluacionDesempeno::find($id_ev);
+        $evaluador = auth()->user()->empleado->name;
+        $evaluado = Empleado::getAltaEmpleados()->find($id_evaluado);
+
+        $signatureEvaluado = $request->input('signatureEvaluado');
+        $signatureEvaluador = $request->input('signatureEvaluador');
+
+        $imageEvaluado = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $signatureEvaluado));
+        $imageEvaluador = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $signatureEvaluador));
+
+        if (!Storage::exists('public/evaluacionesDesempeno/evaluacion/' . $evaluacion->id . '/evaluados')) {
+            Storage::makeDirectory('public/evaluacionesDesempeno/evaluacion/' . $evaluacion->id . '/evaluados' . '/' . $evaluacion->id . '/nombre', 0755, true);
+        }
+
+        $filenameEvaluado = '/evaluacion' . $evaluacion->id . 'firmaevaluado' . '.png';
+        $filenameEvaluador = '/evaluacion' . $evaluacion->id . 'firmaevaluador' . '.png';
+
+        Storage::put('public/evaluacionesDesempeno/evaluacion/' . $evaluacion->id . '/reporte' . '/' . $evaluacion->id . '/nombre' . $filenameEvaluado, $imageEvaluado);
+        Storage::put('public/evaluacionesDesempeno/evaluacion/' . $evaluacion->id . '/reporte' . '/' . $evaluacion->id . '/nombre' . $filenameEvaluador, $imageEvaluador);
+
+        // dd($evaluacion);
+        // $evaluacion->update([
+        //     // "comentarios",
+        //     'estado' => 'enviado',
+        //     'firma_empleado' => $filename,
+        //     // "firma_lider",
+        // ]);
+
+        // $url = $evaluacion->id_auditoria;
+
+        // try {
+        //     $email = new NotificacionReporteAuditoria($nombre_colaborador, $url);
+        //     Mail::to(removeUnicodeCharacters($evaluacion->lider->email))->queue($email);
+
+        //     return response()->json(['success' => true]);
+        // } catch (Throwable $e) {
+        //     return response()->json(['success' => false]);
+        // }
     }
 }

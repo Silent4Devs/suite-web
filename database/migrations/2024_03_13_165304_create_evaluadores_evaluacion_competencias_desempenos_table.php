@@ -18,7 +18,8 @@ return new class extends Migration
             $table->unsignedBigInteger('periodo_id');
             $table->double('porcentaje_competencias');
             $table->boolean('finalizada')->default('false');
-            $table->text('firma_evaluacion')->nullable();
+            $table->text('firma_evaluador')->nullable();
+            $table->text('firma_evaluado')->nullable();
 
             $table->foreign('evaluado_desempeno_id')->references('id')->on('evaluados_evaluacion_desempenos')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('evaluador_desempeno_id')->references('id')->on('empleados')->onUpdate('cascade')->onDelete('cascade');

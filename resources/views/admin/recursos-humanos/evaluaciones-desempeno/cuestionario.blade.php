@@ -467,6 +467,8 @@
                 } else {
                     var dataURLEvaluado = signaturePadEvaluado.toDataURL();
                     var dataURLEvaluador = signaturePadEvaluador.toDataURL();
+                    var evaluacionID = this.getAttribute('identificador-evaluacion');
+                    var evaluadoID = this.getAttribute('identificador-evaluado');
 
                     Swal.fire({
                         title: '¿Estás seguro de finalizar la evaluación?',
@@ -482,25 +484,26 @@
                             // First confirmation is confirmed, show second confirmation
                             Swal.fire({
                                 title: '¿Esta realmente seguro de finalizar la evaluación?',
-                                text: '¡Esta acción es ireversible!',
+                                text: '¡Esta acción es irreversible!',
                                 icon: 'warning',
                                 showCancelButton: true,
                                 confirmButtonColor: '#3085d6',
                                 cancelButtonColor: '#d33',
-                                confirmButtonText: '¡Sí, estoy reguro!'
+                                confirmButtonText: '¡Sí, estoy seguro!'
                             }).then((result) => {
                                 if (result.isConfirmed) {
-                                    fetch('{{ route('admin.auditoria-internas.storeFirmaReporteLider', ['reporteid' => ':reporteauditoria']) }}'
-                                            .replace(':reporteauditoria',
-                                                repId), {
+                                    console.log('enviar info');
+                                    fetch('{{ route('admin.rh.evaluaciones-desempeno.storeFirmasEvaluacion', ['evaluacion' => ':evalID', 'evaluado' => ':evldID']) }}'
+                                            .replace(':evalID', evaluacionID)
+                                            .replace(':evldID', evaluadoID), {
                                                 method: 'POST',
                                                 headers: {
                                                     'Content-Type': 'application/json',
                                                     'X-CSRF-Token': '{{ csrf_token() }}',
                                                 },
                                                 body: JSON.stringify({
-                                                    signature: dataURL,
-                                                    comentarios: comentariosValue
+                                                    signatureEvaluado: dataURLEvaluado,
+                                                    signatureEvaluador: dataURLEvaluador,
                                                 }),
                                             })
                                         .then(response => response.json())
@@ -521,11 +524,19 @@
                                                 });
                                             }
                                         })
-                                        .catch(error => console.error('Error:', error));
+                                        .catch(error => {
+                                            console.error('Error:', error);
+                                            Swal.fire(
+                                                'Ha ocurrido un error, por favor intente nuevamente más tarde.',
+                                            ).then(() => {
+                                                window.location.href =
+                                                    '{{ route('admin.auditoria-internas.index') }}';
+                                            });
+                                        });
                                 }
                             });
                         }
-                    })
+                    });
                 }
             });
         });

@@ -17,7 +17,8 @@ class EvaluadoresEvaluacionCompetenciasDesempeno extends Model
         'periodo_id',
         'porcentaje_competencias',
         'finalizada',
-        'firma_evaluacion',
+        'firma_evaluador',
+        'firma_evaluado',
     ];
 
     public function empleado()

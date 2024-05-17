@@ -213,7 +213,9 @@
                 @endif
             @endif
             <div class="row" style="justify-content: center; display: flex; margin-top: 10px;">
-                <button id="save" type="button" class="btn btn-outline-primary">Confirmar</button>
+                <button id="save" type="button" class="btn btn-outline-primary"
+                    identificador-evaluacion="{{ $evaluacionDesempeno->id }}"
+                    identificador-evaluado="{{ $evaluado }}">Confirmar</button>
             </div>
         </div>
     </div>

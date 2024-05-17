@@ -17,7 +17,8 @@ class EvaluadoresEvaluacionObjetivosDesempeno extends Model
         'periodo_id',
         'porcentaje_objetivos',
         'finalizada',
-        'firma_evaluacion',
+        'firma_evaluador',
+        'firma_evaluado',
     ];
 
     public function empleado()
