@@ -24,4 +24,11 @@
 
     --color-background:#345183;
 
+    /*  Colores de los registros del calendario*/
+    /* Eventos,Cumpleaños, etc*/
+
+    --color-events: "#AFD6E5";
+    --color-recursos: "#D6E5A1";
+    --color-contratos: "#C0AEE5";
+
   }
