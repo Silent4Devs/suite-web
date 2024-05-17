@@ -14,7 +14,7 @@
     <div>
         <div class="text-right">
             @can('timesheet_administrador_configuracion_access')
-                <a href="{{ route('admin.timesheet-proyectos') }}" class="btn btn-success">Regresar</a>
+                <a href="{{ route('admin.timesheet-proyectos') }}" class="btn btn-success">Pagina Principal de Proyectos</a>
             @endcan
             @can('asignar_empleados')
                 <a href="{{ route('admin.timesheet-proyecto-empleados', $proyecto->id) }}" class="btn btn-success">Asignar
