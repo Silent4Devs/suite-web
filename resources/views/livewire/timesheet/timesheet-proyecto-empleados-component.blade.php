@@ -34,10 +34,10 @@
                     <button class="btn btn-secondary btn-lg dropdown-toggle form-control" type="button"
                         id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                         style="text-align: initial; background-color:#fff; color:#3086AF !important; border: 1px solid #ced4da !important">
-                        Asignar Empleados*
+                        Asignar Empleados
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
-                        style="width:300px; max-height: 200px; overflow-y: auto;">
+                        style="max-height: 200px; overflow-y: auto;">
                         @foreach ($empleados as $key => $empleado)
                             <div class="dropdown-item">
                                 <div class="row mt-2 mb-2">
@@ -183,8 +183,8 @@
                         <th>Costo por Hora </th>
                         <th>Costo Estimado</th>
                         <th>Horas Totales </th>
-                        <th>Horas Sobrepasadas </th>
                         <th>Costo Real</th>
+                        <th>Horas Sobrepasadas </th>
                         <th>Costo Horas Sobrepasadas</th>
                     @endif
                     <th style="max-width:150px !important; width:150px ;">Opciones</th>
@@ -212,8 +212,8 @@
                             <td>{{ $proyect_empleado->costo_hora ?? '0' }} </td>
                             <td>{{ $estimado ?? '0' }} </td>
                             <td>{{ $proyect_empleado->total ?? '0' }} </td>
-                            <td>{{ $proyect_empleado->sobrepasadas ?? '0' }} </td>
                             <td>{{ $real ?? '0' }}</td>
+                            <td>{{ $proyect_empleado->sobrepasadas ?? '0' }} </td>
                             <td>{{ $costo_sobrepasado }}</td>
                         @endif
                         <td>
@@ -245,12 +245,12 @@
             role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" wire:ignore>
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    {{-- <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Editar Asignación de Empleado</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                    </div>
+                    </div> --}}
                     <div class="modal-body">
                         <button class="btn btn-tache-cerrar" data-dismiss="modal"><i
                                 class="fa-solid fa-xmark"></i></button>
@@ -322,12 +322,12 @@
             role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    {{-- <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Remover Empleado</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                    </div>
+                    </div> --}}
                     <div class="modal-body">
                         <button class="btn btn-tache-cerrar" data-dismiss="modal"><i
                                 class="fa-solid fa-xmark"></i></button>
