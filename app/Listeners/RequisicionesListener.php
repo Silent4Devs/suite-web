@@ -32,7 +32,7 @@ class RequisicionesListener
 
         $supervisor = User::where('email', trim(removeUnicodeCharacters($user->empleado->supervisor->email)))->first();
         Notification::send($supervisor, new RequisicionesNotification($event->requisiciones, $event->tipo_consulta, $event->tabla, $event->slug));
-        $finanzas = User::where('email',  $email)->first();
+        $finanzas = User::where('email', $email)->first();
         Notification::send($finanzas, new RequisicionesNotification($event->requisiciones, $event->tipo_consulta, $event->tabla, $event->slug));
         $comprador = Comprador::where('id', $event->requisiciones->comprador_id)->first();
         $user_comprador = User::where('name', $comprador->nombre)->first();
