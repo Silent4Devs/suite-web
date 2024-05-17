@@ -8,7 +8,7 @@ use Maatwebsite\Excel\Facades\Excel;
 // use App\Http\Controllers\Storage;
 // use App\Http\Controllers\Response;
 
-class ExportExcel extends Controller
+class ExportExcelReport extends Controller
 {
     public function Amenaza()
     {
@@ -104,7 +104,38 @@ class ExportExcel extends Controller
 
     public function Puesto()
     {
-        $path = storage_path('app/public/exportExcel/puestos.xlsx');
+        dd("asd");
+        try {
+            // Call the ImageService to consume the external API
+            $apiResponse = ReportXlsxService::ReportEmpleadosPuestos("/Puestos");
+
+            if($apiResponse['status'] == 500){
+                $this->alert('error', 'Ocurrió un error al exportar el reporte. Por favor, inténtalo de nuevo más tarde.', [
+                    'position' => 'top-end',
+                    'timer' => 3000,
+                    'toast' => true,
+                    'timerProgressBar' => true,
+                   ]);
+            }else{
+                // Guardar el archivo en el escritorio del usuario
+            file_put_contents(public_path('reportfiles_tmp/'.$apiResponse['fileName']), $apiResponse['body']);
+
+            // Redirigir para descargar el archivo
+            return response()->download(public_path('reportfiles_tmp/'.$apiResponse['fileName']))->deleteFileAfterSend(true);
+            }
+
+        } catch (\Exception $e) {
+            
+            \Log::error('Error en exportación de reporte de empleados y puestos: '.$e->getMessage());
+            
+            $this->alert('error', '', [
+                'position' => 'top-end',
+                'timer' => 3000,
+                'toast' => true,
+                'text' => 'Ocurrió un error al exportar el reporte. Por favor, inténtalo de nuevo más tarde.',
+                'timerProgressBar' => true,
+               ]);
+        }
 
         return response()->download($path);
     }

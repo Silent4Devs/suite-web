@@ -65,11 +65,12 @@
             <div class="datatable-fix datatable-rds">
                 <div class="d-flex justify-content-end">
                     <a class="boton-transparente boton-sin-borde" href="{{ route('descarga-puesto') }}">
-                        <img src="{{ asset('download_FILL0_wght300_GRAD0_opsz24.svg') }}" alt="Importar" class="icon">
+                        <!-- <img src="{{ asset('download_FILL0_wght300_GRAD0_opsz24.svg') }}" alt="Importar" class="icon"> -->
+                        <i class="fas fa-file-excel icon" style="font-size: 1.5rem;color:#0f6935"></i>
                     </a> &nbsp;&nbsp;&nbsp;
-                    <a class="boton-transparente boton-sin-borde" id="btnImport">
+                    <!-- <a class="boton-transparente boton-sin-borde" id="btnImport">
                         <img src="{{ asset('upload_file_FILL0_wght300_GRAD0_opsz24.svg') }}" alt="Importar" class="icon">
-                    </a>
+                    </a> -->
                     @include('csvImport.modalperfilpuesto', [
                         'model' => 'Vulnerabilidad',
                         'route' => 'admin.vulnerabilidads.parseCsvImport',
@@ -109,7 +110,8 @@
     </script>
     <script>
         $(function() {
-            let dtButtons = [{
+            let dtButtons = [
+                /*{
                     extend: 'csvHtml5',
                     title: `Puestos ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
@@ -128,7 +130,7 @@
                     exportOptions: {
                         columns: ['th:not(:last-child):visible']
                     }
-                },
+                },*/
                 {
                     extend: 'pdfHtml5',
                     title: `Puestos ${new Date().toLocaleDateString().trim()}`,
