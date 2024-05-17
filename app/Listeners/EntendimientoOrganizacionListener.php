@@ -32,7 +32,6 @@ class EntendimientoOrganizacionListener
 
         $lista = ListaDistribucion::with('participantes')->where('id', $modulo_entend)->first();
 
-
         foreach ($lista->participantes as $participantes) {
             $empleados = Empleado::where('id', $participantes->empleado_id)->first();
 

@@ -35,7 +35,7 @@ class MatrizRequisitosListener
         foreach ($lista->participantes as $participantes) {
             $empleados = Empleado::where('id', $participantes->empleado_id)->first();
 
-            $user = User::where('email',  trim(removeUnicodeCharacters($empleados->email)))->first();
+            $user = User::where('email', trim(removeUnicodeCharacters($empleados->email)))->first();
 
             Notification::send($user, new MatrizRequisitosNotification($event->matriz, $event->tipo_consulta, $event->tabla, $event->slug));
         }
