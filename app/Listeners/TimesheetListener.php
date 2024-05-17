@@ -27,7 +27,7 @@ class TimesheetListener
     public function handle($event)
     {
         $user = auth()->user();
-        $supervisor = User::where('email', removeUnicodeCharacters($user->empleado->supervisor->email))->first();
+        $supervisor = User::where('email', trim(removeUnicodeCharacters($user->empleado->supervisor->email)))->first();
         Notification::send($supervisor, new TimesheetNotification($event->timeshet, $event->tipo_consulta, $event->tabla, $event->slug));
     }
 }
