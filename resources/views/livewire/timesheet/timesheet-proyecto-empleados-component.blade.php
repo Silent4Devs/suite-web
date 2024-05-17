@@ -217,23 +217,33 @@
                             <td>{{ $costo_sobrepasado }}</td>
                         @endif
                         <td>
-                            <button class="btn" data-toggle="modal"
-                                data-target="#modal_proyecto_empleado_editar_{{ $proyect_empleado->id }}">
-                                <i class="fa-solid fa-pen-to-square" style="color: rgb(62, 86, 246); font-size: 15pt;"
-                                    title="Editar"></i>
-                            </button>
-                            <a wire:click="bloquearEmpleado({{ $proyect_empleado->id }})" class="btn btn-sm">
-                                @if ($proyect_empleado->usuario_bloqueado == false)
-                                    <i class="fas fa-unlock"></i>
-                                @else
-                                    <i class="fas fa-lock"></i>
-                                @endif
-                            </a>
-                            <button class="btn" data-toggle="modal"
-                                data-target="#modal_proyecto_empleado_eliminar_{{ $proyect_empleado->id }}">
-                                <i class="fas fa-trash-alt" style="color: red; font-size: 15pt;"
-                                    title="Eliminar"></i>
-                            </button>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-ellipsis-vertical" style="color: #000000;"></i>
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#" data-toggle="modal"
+                                        data-target="#modal_proyecto_empleado_editar_{{ $proyect_empleado->id }}">
+                                        <i class="fa-solid fa-pen-to-square"
+                                            style="color: rgb(62, 86, 246); font-size: 15pt;" title="Editar"></i>
+                                        Editar
+                                    </a>
+                                    <a class="dropdown-item" href="#"
+                                        wire:click="bloquearEmpleado({{ $proyect_empleado->id }})">
+                                        @if ($proyect_empleado->usuario_bloqueado == false)
+                                            <i class="fas fa-unlock"></i> Desbloquear
+                                        @else
+                                            <i class="fas fa-lock"></i> Bloquear
+                                        @endif
+                                    </a>
+                                    <a class="dropdown-item" href="#" data-toggle="modal"
+                                        data-target="#modal_proyecto_empleado_eliminar_{{ $proyect_empleado->id }}">
+                                        <i class="fas fa-trash-alt" style="color: red; font-size: 15pt;"
+                                            title="Eliminar"></i> Eliminar
+                                    </a>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                 @endforeach
