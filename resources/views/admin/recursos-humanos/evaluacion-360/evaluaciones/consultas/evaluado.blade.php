@@ -576,7 +576,7 @@
                                         class="fas fa-chart-bar"></i></button>
                             </div>
                             <div x-show="show" x-transition>
-                                <canvas id="objetivosGrafica" height="500"></canvas>
+                                <canvas id="objetivosGrafica" width="400" height="500"></canvas>
                             </div>
                             <div x-show="!show" x-transition>
                                 <canvas id="barObjetivos" width="400" height="400"></canvas>
