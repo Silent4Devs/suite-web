@@ -11,9 +11,9 @@
 
     <!-- Principal Styles -->
     <link href="{{ asset('css/app.css') }}{{ config('app.cssVersion') }}" rel="stylesheet">
-    <link href="{{ asset('css/style.css') }}{{ config('app.cssVersion') }}" rel="stylesheet">
+    <link href="{{ asset('css/global/style.css') }}{{ config('app.cssVersion') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/global/loader.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/admin.css') }}{{ config('app.cssVersion') }}">
+    <link rel="stylesheet" href="{{ asset('css/global/admin.css') }}{{ config('app.cssVersion') }}">
     <link rel="stylesheet" href="{{ asset('css/rds.css') }}{{ config('app.cssVersion') }}">
     <link href="{{ asset('css/global/custom.css') }}{{ config('app.cssVersion') }}" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('vendor/file-manager/css/file-manager.css') }}">
