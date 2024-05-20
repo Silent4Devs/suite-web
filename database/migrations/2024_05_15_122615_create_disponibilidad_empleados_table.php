@@ -17,6 +17,8 @@ return new class extends Migration
             $table->integer('disponibilidad');
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('empleado_id')->references('id')->on('empleados')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
