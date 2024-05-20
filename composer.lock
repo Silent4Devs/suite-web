@@ -10254,16 +10254,16 @@
         },
         {
             "name": "vladimir-yuldashev/laravel-queue-rabbitmq",
-            "version": "v14.0.0",
+            "version": "v14.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vyuldashev/laravel-queue-rabbitmq.git",
-                "reference": "30cc317d4bcd3ee8314e717fc3cef09cffae8e73"
+                "reference": "3d58891479582ebe988df7c3303efa4784dabccd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vyuldashev/laravel-queue-rabbitmq/zipball/30cc317d4bcd3ee8314e717fc3cef09cffae8e73",
-                "reference": "30cc317d4bcd3ee8314e717fc3cef09cffae8e73",
+                "url": "https://api.github.com/repos/vyuldashev/laravel-queue-rabbitmq/zipball/3d58891479582ebe988df7c3303efa4784dabccd",
+                "reference": "3d58891479582ebe988df7c3303efa4784dabccd",
                 "shasum": ""
             },
             "require": {
@@ -10312,9 +10312,9 @@
             "description": "RabbitMQ driver for Laravel Queue. Supports Laravel Horizon.",
             "support": {
                 "issues": "https://github.com/vyuldashev/laravel-queue-rabbitmq/issues",
-                "source": "https://github.com/vyuldashev/laravel-queue-rabbitmq/tree/v14.0.0"
+                "source": "https://github.com/vyuldashev/laravel-queue-rabbitmq/tree/v14.1.0"
             },
-            "time": "2024-03-14T16:03:47+00:00"
+            "time": "2024-04-26T22:36:00+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
@@ -15016,5 +15016,5 @@
         "php": "^8.1"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }
