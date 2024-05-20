@@ -130,12 +130,12 @@ class TimesheetProyectoEmpleadosComponent extends Component
         }
     }
 
-    public function seleccionarTodosExterno()
-    {
-        foreach ($this->empleados as $empleado) {
-            $this->addEmpleadoIndividual($empleado['id'], true);
-        }
-    }
+    // public function seleccionarTodosExterno()
+    // {
+    //     foreach ($this->empleados as $empleado) {
+    //         $this->addEmpleadoIndividual($empleado['id'], true);
+    //     }
+    // }
 
     public function asignacionEmpleados($id_empleado, $key, $asignacion)
     {
@@ -168,7 +168,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
     {
         $empleado_add_proyecto = Empleado::find($empleado_añadido_id);
 
-        if (!$empleado_add_proyecto) {
+        if (! $empleado_add_proyecto) {
             return redirect()->route('admin.timesheet-proyecto-empleados', ['proyecto_id' => intval($this->proyecto_id)])
                 ->with('error', 'El registro fue eliminado');
         }
@@ -187,11 +187,21 @@ class TimesheetProyectoEmpleadosComponent extends Component
                     ]
                 );
                 $this->dispatchBrowserEvent('closeModal');
-                if (!$todosExt) {
+                if (! $todosExt) {
                     $this->resetInput();
                 }
             } else {
-                $this->dehydrate();
+                $time_proyect_empleado = TimesheetProyectoEmpleado::firstOrCreate(
+                    [
+                        'proyecto_id' => $this->proyecto->id,
+                        'empleado_id' => $empleado_add_proyecto->id,
+                    ],
+                    [
+                        'area_id' => $empleado_add_proyecto->area_id,
+                        'horas_asignadas' => 0,
+                        'costo_hora' => 0,
+                    ]
+                );
             }
         }
 

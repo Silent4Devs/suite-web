@@ -14,30 +14,18 @@
             <a href="{{ route('admin.timesheet-proyectos') }}" class="btn btn-info">Pagina Principal de Proyectos</a>
         </div>
     </div>
-    {{-- @dd($empleados) --}}
     <form wire:submit.prevent="addEmpleado" wire:ignore>
-        {{-- <div class="row mt-4">
-            <div class="form-group col-md-7">
-                <label for="">Empleado<sup>*</sup></label>
-                <select class="form-control" wire:model.lazy="empleado_añadido" name="empleado_añadido"
-                    id="empleado_añadido" required>
-                    <option value="" selected readonly>Seleccione los Colaboradores</option>
-                    @foreach ($empleados as $empleado)
-                        <option value="{{ $empleado['id'] }}">{{ $empleado['name'] }}</option>
-                    @endforeach
-                </select>
-            </div>
-        </div> --}}
         <div class="row mt-4">
             <div class="form-group col-md-3">
                 <div class="dropdown">
                     <button class="btn btn-secondary btn-lg dropdown-toggle form-control" type="button"
-                        id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                        id="dropdownMenuButtonEmpleados" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false"
                         style="text-align: initial; background-color:#fff; color:#3086AF !important; border: 1px solid #ced4da !important">
-                        Asignar Empleados*
+                        Asignar Empleados
                     </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
-                        style="width:300px; max-height: 200px; overflow-y: auto;">
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonEmpleados"
+                        style="max-height: 200px; overflow-y: auto;">
                         @foreach ($empleados as $key => $empleado)
                             <div class="dropdown-item">
                                 <div class="row mt-2 mb-2">
@@ -106,58 +94,12 @@
                     </div>
                 </div>
             </div>
-
-            <div class="modal fade" id="modalExternoTodos" tabindex="-1" role="dialog"
-                aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Asignar Horas y Costes</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="form-group col-md-12">
-                                    <label for="">Horas asignadas<sup>*</sup>(obligatorio)</label>
-                                    <input wire:model.defer="horas_asignadas" name="horas_asignadas"
-                                        id="horas_asignadas" type="number" step="0.01" min="0.01"
-                                        class="form-control">
-                                    @error('horas_asignadas')
-                                        <small class="text-danger"><i
-                                                class="fas fa-info-circle mr-2"></i>{{ $message }}</small>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group col-md-12">
-                                    <label for="">Costo por hora<sup>*</sup>(obligatorio)</label>
-                                    <input wire:model.defer="costo_hora" name="costo_hora" id="costo_hora"
-                                        type="number" min="0.01" step="0.01" class="form-control">
-                                    @error('costo_hora')
-                                        <small class="text-danger"><i
-                                                class="fas fa-info-circle mr-2"></i>{{ $message }}</small>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <div class="row">
-                                <button class="btn btn-success" wire:click.prevent="seleccionarTodosExterno">
-                                    Agregar
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         @endif
 
         @if ($proyecto->tipo == 'Externo')
             <div class="row">
                 <div class="form-group col-md-4" style="display: flex; align-items: flex-end;">
-                    <button class="btn btn-success" onclick="confirmSeleccionarTodosExterno(event)">Seleccionar Todos
+                    <button class="btn btn-success" onclick="confirmSeleccionarTodos(event)">Seleccionar Todos
                         los
                         usuarios</button>
                 </div>
@@ -183,15 +125,15 @@
                         <th>Costo por Hora </th>
                         <th>Costo Estimado</th>
                         <th>Horas Totales </th>
-                        <th>Horas Sobrepasadas </th>
                         <th>Costo Real</th>
+                        <th>Horas Sobrepasadas </th>
                         <th>Costo Horas Sobrepasadas</th>
                     @endif
                     <th style="max-width:150px !important; width:150px ;">Opciones</th>
                 </tr>
             </thead>
             <tbody style="position:relative;">
-                @foreach ($proyecto_empleados as $proyect_empleado)
+                @foreach ($proyecto_empleados as $key => $proyect_empleado)
                     @php
                         $estimado = 0;
                         $real = 0;
@@ -212,28 +154,56 @@
                             <td>{{ $proyect_empleado->costo_hora ?? '0' }} </td>
                             <td>{{ $estimado ?? '0' }} </td>
                             <td>{{ $proyect_empleado->total ?? '0' }} </td>
-                            <td>{{ $proyect_empleado->sobrepasadas ?? '0' }} </td>
                             <td>{{ $real ?? '0' }}</td>
+                            <td>{{ $proyect_empleado->sobrepasadas ?? '0' }} </td>
                             <td>{{ $costo_sobrepasado }}</td>
                         @endif
                         <td>
-                            <button class="btn" data-toggle="modal"
+                            {{-- <div class="dropdown" style="display: flex;justify-content: center;justify-items: center;">
+                                <button class="btn btn-option" type="button" id="dropdownMenuButton"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" data-toggle="modal"
+                                        data-target="#modal_proyecto_empleado_editar_{{ $proyect_empleado->id }}">
+                                        <i class="fa-solid fa-pen-to-square"
+                                            style="color: rgb(62, 86, 246); font-size: 15pt;" title="Editar"></i>
+                                        Editar
+                                    </a>
+                                    <a class="dropdown-item"
+                                        wire:click="bloquearEmpleado({{ $proyect_empleado->id }})">
+                                        @if ($proyect_empleado->usuario_bloqueado == false)
+                                            <i class="fas fa-unlock"></i> Desbloquear
+                                        @else
+                                            <i class="fas fa-lock"></i> Bloquear
+                                        @endif
+                                    </a>
+                                    <a class="dropdown-item" data-toggle="modal"
+                                        data-target="#modal_proyecto_empleado_eliminar_{{ $proyect_empleado->id }}">
+                                        <i class="fas fa-trash-alt" style="color: red; font-size: 15pt;"
+                                            title="Eliminar"></i> Eliminar
+                                    </a>
+                                </div>
+                            </div> --}}
+                            <a class="dropdown-item" data-toggle="modal"
                                 data-target="#modal_proyecto_empleado_editar_{{ $proyect_empleado->id }}">
                                 <i class="fa-solid fa-pen-to-square" style="color: rgb(62, 86, 246); font-size: 15pt;"
                                     title="Editar"></i>
-                            </button>
-                            <a wire:click="bloquearEmpleado({{ $proyect_empleado->id }})" class="btn btn-sm">
+                                Editar
+                            </a>
+                            <a class="dropdown-item" wire:click="bloquearEmpleado({{ $proyect_empleado->id }})">
                                 @if ($proyect_empleado->usuario_bloqueado == false)
-                                    <i class="fas fa-unlock"></i>
+                                    <i class="fas fa-unlock"></i> Desbloquear
                                 @else
-                                    <i class="fas fa-lock"></i>
+                                    <i class="fas fa-lock"></i> Bloquear
                                 @endif
                             </a>
-                            <button class="btn" data-toggle="modal"
+                            <a class="dropdown-item" data-toggle="modal"
                                 data-target="#modal_proyecto_empleado_eliminar_{{ $proyect_empleado->id }}">
                                 <i class="fas fa-trash-alt" style="color: red; font-size: 15pt;"
-                                    title="Eliminar"></i>
-                            </button>
+                                    title="Eliminar"></i> Eliminar
+                            </a>
                         </td>
                     </tr>
                 @endforeach
@@ -245,12 +215,6 @@
             role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" wire:ignore>
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Editar Asignación de Empleado</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
                     <div class="modal-body">
                         <button class="btn btn-tache-cerrar" data-dismiss="modal"><i
                                 class="fa-solid fa-xmark"></i></button>
@@ -322,12 +286,6 @@
             role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Remover Empleado</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
                     <div class="modal-body">
                         <button class="btn btn-tache-cerrar" data-dismiss="modal"><i
                                 class="fa-solid fa-xmark"></i></button>
@@ -399,26 +357,6 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         Livewire.emit('seleccionarTodos'); // Call Livewire method if confirmed
-                    }
-                });
-            }
-        </script>
-
-        <script>
-            function confirmSeleccionarTodosExterno(event) {
-                event.preventDefault(); // Prevent default form submission behavior
-                Swal.fire({
-                    title: '¿Estás seguro?',
-                    text: "¿Quieres seleccionar todos los usuarios?",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Sí',
-                    cancelButtonText: 'Cancelar'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $('#modalExternoTodos').modal('show');
                     }
                 });
             }
