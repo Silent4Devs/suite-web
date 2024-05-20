@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\AmenazaExport as ExportsAmenazaExport;
+use App\Services\ReportXlsxService;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\AmenazaExport as ExportsAmenazaExport;
 
 // use App\Http\Controllers\Storage;
 // use App\Http\Controllers\Response;
@@ -104,10 +105,9 @@ class ExportExcelReport extends Controller
 
     public function Puesto()
     {
-        dd("asd");
         try {
             // Call the ImageService to consume the external API
-            $apiResponse = ReportXlsxService::ReportEmpleadosPuestos("/Puestos");
+            $apiResponse = ReportXlsxService::ReportEmpleadosPuestos("/moduloPuestos");
 
             if($apiResponse['status'] == 500){
                 $this->alert('error', 'Ocurrió un error al exportar el reporte. Por favor, inténtalo de nuevo más tarde.', [
@@ -125,9 +125,9 @@ class ExportExcelReport extends Controller
             }
 
         } catch (\Exception $e) {
-            
+
             \Log::error('Error en exportación de reporte de empleados y puestos: '.$e->getMessage());
-            
+
             $this->alert('error', '', [
                 'position' => 'top-end',
                 'timer' => 3000,
@@ -137,7 +137,6 @@ class ExportExcelReport extends Controller
                ]);
         }
 
-        return response()->download($path);
     }
 
     public function GrupoArea()
