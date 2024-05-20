@@ -7,6 +7,7 @@ use App\Models\Area;
 use App\Models\Empleado;
 use App\Models\EvaluacionDesempeno;
 use App\Models\Organizacion;
+use App\Models\PeriodosEvaluacionDesempeno;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -134,47 +135,77 @@ class EvaluacionesDesempenoController extends Controller
         $evBorrar->delete();
     }
 
-    public function storeFirmasEvaluacion($id_ev, $id_evaluado, Request $request)
+    public function storeFirmasEvaluacion($id_ev, $id_evaluado, $id_periodo, Request $request)
     {
-        // dd("Llega", $id_ev, $id_evaluado, $request);
+        try {
+            $evaluacion = EvaluacionDesempeno::find($id_ev);
 
-        $evaluacion = EvaluacionDesempeno::find($id_ev);
-        $evaluador = auth()->user()->empleado->name;
-        $evaluado = Empleado::getAltaEmpleados()->find($id_evaluado);
+            $evaluador = auth()->user()->empleado;
+            $evaluado = Empleado::getAltaEmpleados()->find($id_evaluado);
+            $periodo = PeriodosEvaluacionDesempeno::find($id_periodo);
 
-        $signatureEvaluado = $request->input('signatureEvaluado');
-        $signatureEvaluador = $request->input('signatureEvaluador');
+            $evVal = $evaluacion->evaluados->where('evaluado_desempeno_id', $id_evaluado)->first();
 
-        $imageEvaluado = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $signatureEvaluado));
-        $imageEvaluador = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $signatureEvaluador));
+            $signatureEvaluado = $request->input('signatureEvaluado');
+            $signatureEvaluador = $request->input('signatureEvaluador');
 
-        if (!Storage::exists('public/evaluacionesDesempeno/evaluacion/' . $evaluacion->id . '/evaluados')) {
-            Storage::makeDirectory('public/evaluacionesDesempeno/evaluacion/' . $evaluacion->id . '/evaluados' . '/' . $evaluacion->id . '/nombre', 0755, true);
+            $imageEvaluado = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $signatureEvaluado));
+            $imageEvaluador = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $signatureEvaluador));
+
+            if (!Storage::exists('public/evaluacionesDesempeno/evaluacion/' . $evaluacion->id . '/firmas/periodo' . '/' . $periodo->nombre_evaluacion . '/evaluado' . '/' . $evaluado->name . '/evaluador' . '/' . $evaluador->name)) {
+                Storage::makeDirectory('public/evaluacionesDesempeno/evaluacion/' . $evaluacion->id . '/firmas/periodo' . '/' . $periodo->nombre_evaluacion . '/evaluado' . '/' . $evaluado->name . '/evaluador' . '/' . $evaluador->name, 0755, true);
+            }
+
+            $filenameEvaluado = '/evaluacion' . $evaluacion->id . 'firmaevaluado' . $evaluado->name . '.png';
+            $filenameEvaluador = '/evaluacion' . $evaluacion->id . 'firmaevaluador' . $evaluador->name . '.png';
+
+            Storage::put('public/evaluacionesDesempeno/evaluacion/' . $evaluacion->id . '/firmas/periodo' . '/' . $periodo->nombre_evaluacion . '/evaluado' . '/' . $evaluado->name . '/evaluador' . '/' . $evaluador->name  . $filenameEvaluado, $imageEvaluado);
+            Storage::put('public/evaluacionesDesempeno/evaluacion/' . $evaluacion->id . '/firmas/periodo' . '/' . $periodo->nombre_evaluacion . '/evaluado' . '/' . $evaluado->name . '/evaluador' . '/' . $evaluador->name  . $filenameEvaluador, $imageEvaluador);
+
+            if ($evaluacion->activar_competencias && $evaluacion->activar_objetivos) {
+                $evldrObj = $evVal->evaluadoresObjetivos->where('periodo_id', $id_periodo)
+                    ->where('evaluador_desempeno_id', $evaluador->id)
+                    ->where('evaluado_desempeno_id', $evVal->id)
+                    ->first();
+                $evldrComp = $evVal->evaluadoresCompetencias->where('periodo_id', $id_periodo)
+                    ->where('evaluador_desempeno_id', $evaluador->id)
+                    ->where('evaluado_desempeno_id', $evVal->id)
+                    ->first();
+
+                $evldrObj->update([
+                    'firma_evaluado' => $filenameEvaluado,
+                    'firma_evaluador' => $filenameEvaluador,
+                ]);
+                $evldrComp->update([
+                    'firma_evaluado' => $filenameEvaluado,
+                    'firma_evaluador' => $filenameEvaluador,
+                ]);
+            } elseif ($evaluacion->activar_competencias && !$evaluacion->activar_objetivos) {
+                $evldrObj = $evVal->evaluadoresObjetivos->where('periodo_id', $id_periodo)
+                    ->where('evaluador_desempeno_id', $evaluador->id)
+                    ->where('evaluado_desempeno_id', $evVal->id)
+                    ->first();
+
+                $evldrObj->update([
+                    'firma_evaluado' => $filenameEvaluado,
+                    'firma_evaluador' => $filenameEvaluador,
+                ]);
+            } elseif (!$evaluacion->activar_competencias && $evaluacion->activar_objetivos) {
+                $evldrComp = $evVal->evaluadoresCompetencias->where('periodo_id', $id_periodo)
+                    ->where('evaluador_desempeno_id', $evaluador->id)
+                    ->where('evaluado_desempeno_id', $evVal->id)
+                    ->first();
+
+                $evldrComp->update([
+                    'firma_evaluado' => $filenameEvaluado,
+                    'firma_evaluador' => $filenameEvaluador,
+                ]);
+            }
+            return response()->json(['success' => true]);
+        } catch (\Throwable $th) {
+            //throw $th;
+            // dd($th);
+            return response()->json(['success' => false]);
         }
-
-        $filenameEvaluado = '/evaluacion' . $evaluacion->id . 'firmaevaluado' . '.png';
-        $filenameEvaluador = '/evaluacion' . $evaluacion->id . 'firmaevaluador' . '.png';
-
-        Storage::put('public/evaluacionesDesempeno/evaluacion/' . $evaluacion->id . '/reporte' . '/' . $evaluacion->id . '/nombre' . $filenameEvaluado, $imageEvaluado);
-        Storage::put('public/evaluacionesDesempeno/evaluacion/' . $evaluacion->id . '/reporte' . '/' . $evaluacion->id . '/nombre' . $filenameEvaluador, $imageEvaluador);
-
-        // dd($evaluacion);
-        // $evaluacion->update([
-        //     // "comentarios",
-        //     'estado' => 'enviado',
-        //     'firma_empleado' => $filename,
-        //     // "firma_lider",
-        // ]);
-
-        // $url = $evaluacion->id_auditoria;
-
-        // try {
-        //     $email = new NotificacionReporteAuditoria($nombre_colaborador, $url);
-        //     Mail::to(removeUnicodeCharacters($evaluacion->lider->email))->queue($email);
-
-        //     return response()->json(['success' => true]);
-        // } catch (Throwable $e) {
-        //     return response()->json(['success' => false]);
-        // }
     }
 }

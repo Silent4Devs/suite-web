@@ -469,6 +469,7 @@
                     var dataURLEvaluador = signaturePadEvaluador.toDataURL();
                     var evaluacionID = this.getAttribute('identificador-evaluacion');
                     var evaluadoID = this.getAttribute('identificador-evaluado');
+                    var periodoID = this.getAttribute('identificador-periodo');
 
                     Swal.fire({
                         title: '¿Estás seguro de finalizar la evaluación?',
@@ -492,10 +493,11 @@
                                 confirmButtonText: '¡Sí, estoy seguro!'
                             }).then((result) => {
                                 if (result.isConfirmed) {
-                                    console.log('enviar info');
-                                    fetch('{{ route('admin.rh.evaluaciones-desempeno.storeFirmasEvaluacion', ['evaluacion' => ':evalID', 'evaluado' => ':evldID']) }}'
+                                    // console.log('enviar info', evaluacionID, evaluadoID);
+                                    fetch('{{ route('admin.rh.evaluaciones-desempeno.storeFirmasEvaluacion', ['evaluacion' => ':evalID', 'evaluado' => ':evldID', 'periodo' => ':prdID']) }}'
                                             .replace(':evalID', evaluacionID)
-                                            .replace(':evldID', evaluadoID), {
+                                            .replace(':evldID', evaluadoID)
+                                            .replace(':prdID', periodoID), {
                                                 method: 'POST',
                                                 headers: {
                                                     'Content-Type': 'application/json',
@@ -509,28 +511,31 @@
                                         .then(response => response.json())
                                         .then(data => {
                                             if (data.success) {
-                                                Swal.fire(
-                                                    'El participante ha sido notificado',
-                                                ).then(() => {
+                                                Swal.fire({
+                                                    title: 'Evaluación Guardada con exito',
+                                                    icon: 'success',
+                                                }).then(() => {
                                                     window.location.href =
-                                                        '{{ route('admin.auditoria-internas.index') }}';
+                                                        '{{ route('admin.inicio-Usuario.index') }}';
                                                 });
                                             } else {
-                                                Swal.fire(
-                                                    'El correo no ha sido posible enviarlo debido a problemas de intermitencia con la red, favor de volver a intentar más tarde, o si esto persiste ponerse en contacto con el administrador',
-                                                ).then(() => {
-                                                    window.location.href =
-                                                        '{{ route('admin.auditoria-internas.index') }}';
+                                                Swal.fire({
+                                                    title: 'Ha ocurrido un error, por favor intente nuevamente más tarde.',
+                                                    icon: 'error',
+                                                }).then(() => {
+                                                    // window.location.href =
+                                                    //     '{{ route('admin.inicio-Usuario.index') }}';
                                                 });
                                             }
                                         })
                                         .catch(error => {
                                             console.error('Error:', error);
-                                            Swal.fire(
-                                                'Ha ocurrido un error, por favor intente nuevamente más tarde.',
-                                            ).then(() => {
-                                                window.location.href =
-                                                    '{{ route('admin.auditoria-internas.index') }}';
+                                            Swal.fire({
+                                                title: 'Ha ocurrido un error, por favor intente nuevamente más tarde.',
+                                                icon: 'error',
+                                            }).then(() => {
+                                                // window.location.href =
+                                                //     '{{ route('admin.auditoria-internas.index') }}';
                                             });
                                         });
                                 }
