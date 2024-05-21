@@ -134,6 +134,8 @@ class ExportExcelReport extends Controller
 
             if($apiResponse['status'] == 500){
                    alert()->error('Error','Ocurrió un error al exportar el reporte. Por favor, inténtalo de nuevo más tarde.');
+
+                   return redirect()->back();
             }else{
                 // Guardar el archivo en el escritorio del usuario
                 file_put_contents(public_path('reportfiles_tmp/'.$apiResponse['fileName']), $apiResponse['body']);
@@ -147,6 +149,8 @@ class ExportExcelReport extends Controller
             \Log::error('Error en exportación de reporte de empleados y puestos: '.$e->getMessage());
 
             alert()->error('Error','Ocurrió un error al exportar el reporte. Por favor, inténtalo de nuevo más tarde.');
+
+            return redirect()->back();
         }
     }
 
@@ -158,6 +162,8 @@ class ExportExcelReport extends Controller
 
             if($apiResponse['status'] == 500){
                    alert()->error('Error','Ocurrió un error al exportar el reporte. Por favor, inténtalo de nuevo más tarde.');
+
+                   return redirect()->back();
             }else{
                 // Guardar el archivo en el escritorio del usuario
                 file_put_contents(public_path('reportfiles_tmp/'.$apiResponse['fileName']), $apiResponse['body']);
@@ -171,6 +177,8 @@ class ExportExcelReport extends Controller
             \Log::error('Error en exportación de reporte de empleados y puestos: '.$e->getMessage());
 
             alert()->error('Error','Ocurrió un error al exportar el reporte. Por favor, inténtalo de nuevo más tarde.');
+
+            return redirect()->back();
         }
         //$this->ConsumeTemplate("moduloPuestos");
     }
@@ -183,6 +191,8 @@ class ExportExcelReport extends Controller
 
             if($apiResponse['status'] == 500){
                    alert()->error('Error','Ocurrió un error al exportar el reporte. Por favor, inténtalo de nuevo más tarde.');
+
+                   return redirect()->back();
             }else{
                 // Guardar el archivo en el escritorio del usuario
                 file_put_contents(public_path('reportfiles_tmp/'.$apiResponse['fileName']), $apiResponse['body']);
@@ -196,6 +206,8 @@ class ExportExcelReport extends Controller
             \Log::error('Error en exportación de reporte de empleados y puestos: '.$e->getMessage());
 
             alert()->error('Error','Ocurrió un error al exportar el reporte. Por favor, inténtalo de nuevo más tarde.');
+
+            return redirect()->back();
         }
     }
 
@@ -207,6 +219,8 @@ class ExportExcelReport extends Controller
 
             if($apiResponse['status'] == 500){
                    alert()->error('Error','Ocurrió un error al exportar el reporte. Por favor, inténtalo de nuevo más tarde.');
+
+                   return redirect()->back();
             }else{
                 // Guardar el archivo en el escritorio del usuario
                 file_put_contents(public_path('reportfiles_tmp/'.$apiResponse['fileName']), $apiResponse['body']);
@@ -220,6 +234,8 @@ class ExportExcelReport extends Controller
             \Log::error('Error en exportación de reporte de empleados y puestos: '.$e->getMessage());
 
             alert()->error('Error','Ocurrió un error al exportar el reporte. Por favor, inténtalo de nuevo más tarde.');
+
+            return redirect()->back();
         }
     }
 
@@ -238,6 +254,8 @@ class ExportExcelReport extends Controller
 
             if($apiResponse['status'] == 500){
                    alert()->error('Error','Ocurrió un error al exportar el reporte. Por favor, inténtalo de nuevo más tarde.');
+
+                   return redirect()->back();
             }else{
                 // Guardar el archivo en el escritorio del usuario
                 file_put_contents(public_path('reportfiles_tmp/'.$apiResponse['fileName']), $apiResponse['body']);
@@ -251,6 +269,8 @@ class ExportExcelReport extends Controller
             \Log::error('Error en exportación de reporte de empleados y puestos: '.$e->getMessage());
 
             alert()->error('Error','Ocurrió un error al exportar el reporte. Por favor, inténtalo de nuevo más tarde.');
+
+            return redirect()->back();
         }
     }
 
