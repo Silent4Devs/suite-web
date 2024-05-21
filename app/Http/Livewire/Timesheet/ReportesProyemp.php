@@ -154,7 +154,7 @@ class ReportesProyemp extends Component
     public function exportEmpleadosPuestosReport(){
         try {
             // Call the ImageService to consume the external API
-            $apiResponse = ReportXlsxService::ReportEmpleadosPuestos("/empleadosPuestos");
+            $apiResponse = ReportXlsxService::ReportConsumer("empleadosPuestos");
 
             if($apiResponse['status'] == 500){
                 $this->alert('error', 'Ocurrió un error al exportar el reporte. Por favor, inténtalo de nuevo más tarde.', [
@@ -172,9 +172,9 @@ class ReportesProyemp extends Component
             }
 
         } catch (\Exception $e) {
-            
+
             \Log::error('Error en exportación de reporte de empleados y puestos: '.$e->getMessage());
-            
+
             $this->alert('error', '', [
                 'position' => 'top-end',
                 'timer' => 3000,

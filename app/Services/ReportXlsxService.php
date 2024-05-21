@@ -7,7 +7,7 @@ use Carbon\Carbon;
 
 class ReportXlsxService
 {
-    public static function ReportEmpleadosPuestos($Endpoint)
+    public static function ReportConsumer($Endpoint)
     {
         $apiEndpoint = env('REPORTSERVICE_API');
         // Endpoint where you want to send the file

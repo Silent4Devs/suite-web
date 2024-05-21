@@ -1616,7 +1616,15 @@ Route::group(['middleware' => ['auth', '2fa']], function () {
     // Route::post('CargaCategoria', 'SubidaExcel@CategoriaActivo')->name('carga-categoria');
 
     //Ruta ExportExcel
-    Route::get('ExportUsuario', [ExportExcelReport::class, 'Usuario'])->name('descarga-usuario');
+    Route::controller(ExportExcelReport::class)->group(function(){
+        Route::get('ExportUsuario' , 'Users')->name('descarga-usuario');
+        Route::get('ExportPuesto', 'Puesto')->name('descarga-puesto');
+        Route::get('ExportRoles', 'Roles')->name('descarga-roles');
+        Route::get('ExportSoporte', 'Soporte')->name('descarga-soporte');
+        Route::get('ExportEmpleado', 'Empleado')->name('descarga-empleado');
+    });
+
+
     Route::get('ExportAmenaza', 'ExportExcelReport@Amenaza')->name('descarga-amenaza');
     Route::get('ExportVulnerabilidad', 'ExportExcelReport@Vulnerabilidad')->name('descarga-vulnerabilidad');
     Route::get('ExportAnalisisRiesgo', 'ExportExcelReport@AnalisisRiesgo')->name('descarga-analisis_riego');
@@ -1629,12 +1637,10 @@ Route::group(['middleware' => ['auth', '2fa']], function () {
     Route::get('ExportCategoriaCapacitacion', 'ExportExcelReport@CategoriaCapacitacion')->name('descarga-categoriacapacitacion');
     Route::get('ExportRevisionDireccion', 'ExportExcelReport@RevisionDireccion')->name('descarga-revisiondireccion');
     // Route::get('ExportCategoria', 'ExportExcelReport@CategoriaActivo')->name('descarga-categoria');
-    Route::get('ExportPuesto', [ExportExcelReport::class, 'Puesto'])->name('descarga-puesto');
+
     // Route::get('ExportEstadoIncidente', 'ExportExcelReport@EstadoIncidente')->name('descarga-estadoincidente');
-    Route::get('ExportRole', 'ExportExcelReport@Roles')->name('descarga-roles');
     Route::get('ExportPoliticaSgsi', 'ExportExcelReport@PoliticaSgsi')->name('descarga-politica_sgi');
     Route::get('ExportGrupoArea', 'ExportExcelReport@GrupoArea')->name('descarga-grupo_area');
-    Route::get('ExportEmpleado', 'ExportExcelReport@Empleado')->name('descarga-empleado');
     Route::get('ExportActivos', 'ExportExcelReport@Activos')->name('descarga-activo_inventario');
 
     //  Route::get('ExportFormatoResponsivo', 'ActivosController@ExportFormato')->name('descarga-formato_reponsivo');

@@ -11,6 +11,29 @@ use App\Exports\AmenazaExport as ExportsAmenazaExport;
 
 class ExportExcelReport extends Controller
 {
+    public function ConsumeTemplate($endpoint){
+        try {
+            // Call the ImageService to consume the external API
+            $apiResponse = ReportXlsxService::ReportConsumer($endpoint);
+
+            if($apiResponse['status'] == 500){
+                dd("asd");
+                   alert()->error('Error','Ocurrió un error al exportar el reporte. Por favor, inténtalo de nuevo más tarde.');
+            }else{
+                // Guardar el archivo en el escritorio del usuario
+                file_put_contents(public_path('reportfiles_tmp/'.$apiResponse['fileName']), $apiResponse['body']);
+
+                // Redirigir para descargar el archivo
+                return response()->download(public_path('reportfiles_tmp/'.$apiResponse['fileName']))->deleteFileAfterSend(true);
+            }
+
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+            \Log::error('Error en exportación de reporte de empleados y puestos: '.$e->getMessage());
+
+            alert()->error('Error','Ocurrió un error al exportar el reporte. Por favor, inténtalo de nuevo más tarde.');
+        }
+    }
     public function Amenaza()
     {
         $path = storage_path('app/public/exportExcel/Amenaza.xlsx');
@@ -103,11 +126,11 @@ class ExportExcelReport extends Controller
         return response()->download($path);
     }
 
-    public function Puesto()
+    public function Users()
     {
         try {
             // Call the ImageService to consume the external API
-            $apiResponse = ReportXlsxService::ReportEmpleadosPuestos("moduloPuestos");
+            $apiResponse = ReportXlsxService::ReportConsumer("Users");
 
             if($apiResponse['status'] == 500){
                    alert()->error('Error','Ocurrió un error al exportar el reporte. Por favor, inténtalo de nuevo más tarde.');
@@ -125,7 +148,79 @@ class ExportExcelReport extends Controller
 
             alert()->error('Error','Ocurrió un error al exportar el reporte. Por favor, inténtalo de nuevo más tarde.');
         }
+    }
 
+    public function Puesto()
+    {
+        try {
+            // Call the ImageService to consume the external API
+            $apiResponse = ReportXlsxService::ReportConsumer("moduloPuestos");
+
+            if($apiResponse['status'] == 500){
+                   alert()->error('Error','Ocurrió un error al exportar el reporte. Por favor, inténtalo de nuevo más tarde.');
+            }else{
+                // Guardar el archivo en el escritorio del usuario
+                file_put_contents(public_path('reportfiles_tmp/'.$apiResponse['fileName']), $apiResponse['body']);
+
+                // Redirigir para descargar el archivo
+                return response()->download(public_path('reportfiles_tmp/'.$apiResponse['fileName']))->deleteFileAfterSend(true);
+            }
+
+        } catch (\Exception $e) {
+
+            \Log::error('Error en exportación de reporte de empleados y puestos: '.$e->getMessage());
+
+            alert()->error('Error','Ocurrió un error al exportar el reporte. Por favor, inténtalo de nuevo más tarde.');
+        }
+        //$this->ConsumeTemplate("moduloPuestos");
+    }
+
+    public function Roles()
+    {
+        try {
+            // Call the ImageService to consume the external API
+            $apiResponse = ReportXlsxService::ReportConsumer("moduloRoles");
+
+            if($apiResponse['status'] == 500){
+                   alert()->error('Error','Ocurrió un error al exportar el reporte. Por favor, inténtalo de nuevo más tarde.');
+            }else{
+                // Guardar el archivo en el escritorio del usuario
+                file_put_contents(public_path('reportfiles_tmp/'.$apiResponse['fileName']), $apiResponse['body']);
+
+                // Redirigir para descargar el archivo
+                return response()->download(public_path('reportfiles_tmp/'.$apiResponse['fileName']))->deleteFileAfterSend(true);
+            }
+
+        } catch (\Exception $e) {
+
+            \Log::error('Error en exportación de reporte de empleados y puestos: '.$e->getMessage());
+
+            alert()->error('Error','Ocurrió un error al exportar el reporte. Por favor, inténtalo de nuevo más tarde.');
+        }
+    }
+
+    public function Soporte()
+    {
+        try {
+            // Call the ImageService to consume the external API
+            $apiResponse = ReportXlsxService::ReportConsumer("soporte");
+
+            if($apiResponse['status'] == 500){
+                   alert()->error('Error','Ocurrió un error al exportar el reporte. Por favor, inténtalo de nuevo más tarde.');
+            }else{
+                // Guardar el archivo en el escritorio del usuario
+                file_put_contents(public_path('reportfiles_tmp/'.$apiResponse['fileName']), $apiResponse['body']);
+
+                // Redirigir para descargar el archivo
+                return response()->download(public_path('reportfiles_tmp/'.$apiResponse['fileName']))->deleteFileAfterSend(true);
+            }
+
+        } catch (\Exception $e) {
+
+            \Log::error('Error en exportación de reporte de empleados y puestos: '.$e->getMessage());
+
+            alert()->error('Error','Ocurrió un error al exportar el reporte. Por favor, inténtalo de nuevo más tarde.');
+        }
     }
 
     public function GrupoArea()
@@ -137,21 +232,31 @@ class ExportExcelReport extends Controller
 
     public function Empleado()
     {
-        $path = storage_path('app/public/exportExcel/empleado.xlsx');
+        try {
+            // Call the ImageService to consume the external API
+            $apiResponse = ReportXlsxService::ReportConsumer("moduloEmpleados");
 
-        return response()->download($path);
+            if($apiResponse['status'] == 500){
+                   alert()->error('Error','Ocurrió un error al exportar el reporte. Por favor, inténtalo de nuevo más tarde.');
+            }else{
+                // Guardar el archivo en el escritorio del usuario
+                file_put_contents(public_path('reportfiles_tmp/'.$apiResponse['fileName']), $apiResponse['body']);
+
+                // Redirigir para descargar el archivo
+                return response()->download(public_path('reportfiles_tmp/'.$apiResponse['fileName']))->deleteFileAfterSend(true);
+            }
+
+        } catch (\Exception $e) {
+
+            \Log::error('Error en exportación de reporte de empleados y puestos: '.$e->getMessage());
+
+            alert()->error('Error','Ocurrió un error al exportar el reporte. Por favor, inténtalo de nuevo más tarde.');
+        }
     }
 
     public function Activos()
     {
         $path = storage_path('app/public/exportExcel/Activos.xlsx');
-
-        return response()->download($path);
-    }
-
-    public function Roles()
-    {
-        $path = storage_path('app/public/exportExcel/users.xlsx');
 
         return response()->download($path);
     }
