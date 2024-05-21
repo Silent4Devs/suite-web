@@ -218,8 +218,7 @@ export const OptionRound = ({ id, data = [],  changeQuestionProps }) => {
                 return (
                     <React.Fragment key={index}>
                         <div
-                            className="col-10 col-md-8 mt-3"
-                            style={{ paddingRight: "0px" }}
+                            className="col-10 col-sm-8 col-md-8 mt-3"
                         >
                             <form className="d-flex align-items-center">
                                 <input
@@ -386,8 +385,7 @@ export const OptionSquard = ({ id, data = [],  changeQuestionProps }) => {
                 return (
                     <React.Fragment key={index}>
                         <div
-                            className="col-10 col-md-8 mt-3"
-                            style={{ paddingRight: "0px" }}
+                            className="col-10 col-sm-8 col-md-8 mt-3"
                         >
                             <form className="d-flex align-items-center">
                                 <input
@@ -540,8 +538,7 @@ export const OptionSelect = ({ id, data = [],  changeQuestionProps }) => {
                 return (
                     <React.Fragment key={index}>
                         <div
-                            className="col-10 col-md-8 mt-3"
-                            style={{ paddingRight: "0px" }}
+                            className="col-10 col-sm-8 col-md-8 mt-3"
                         >
                             <form className="d-flex align-items-center">
                                 <label
@@ -701,7 +698,14 @@ export const OptionImage = ({id, data={}, changeQuestionProps}) => {
             {
                 file ? (
                     <div className="fileContainer">
-                        <img src={URL.createObjectURL(file)} alt="" className="img-fluid" style={{height: "100%", objectFit: "contain", objectPosition: "center center"}}/>
+                        <img src={URL.createObjectURL(file)} alt="" className="img-fluid fileImg" />
+                    </div>
+                ):(<></>)
+            }
+            {
+                data.url && !file ? (
+                    <div className="fileContainer">
+                        <img src={data.url} alt="" className="img-fluid fileImg" />
                     </div>
                 ):(<></>)
             }

@@ -122,7 +122,7 @@ function Calculator({formula,setFormula}) {
 
   return (
     <>
-      <div className="container">
+      <div className="container" style={{width:"329px", height:"463px"}}>
 
           <Display input={formula} setInput={setFormula} answer={answer} />
           <Buttons

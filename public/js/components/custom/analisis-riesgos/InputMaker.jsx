@@ -11,7 +11,6 @@ export const InputMaker = ({ type, id, title, handleTileChange }) => {
                     title="Pregunta corta"
                     name={`pregunta-corta-${id}`}
                     size={8}
-                    styles="p-0"
                     value={title}
                     handleChange={handleTileChange}
                 />
@@ -22,7 +21,6 @@ export const InputMaker = ({ type, id, title, handleTileChange }) => {
                     title="Pregunta Larga"
                     name={`pregunta-larga-${id}`}
                     size={8}
-                    styles="p-0"
                     value={title}
                     handleChange={handleTileChange}
                 />
@@ -33,7 +31,6 @@ export const InputMaker = ({ type, id, title, handleTileChange }) => {
                     title="Pregunta Númerica"
                     name={`pregunta-numerica-${id}`}
                     size={8}
-                    styles="p-0"
                     value={title}
                     handleChange={handleTileChange}
                 />
@@ -44,7 +41,6 @@ export const InputMaker = ({ type, id, title, handleTileChange }) => {
                     title="Pregunta Opciones"
                     name={`pregunta-opciones-${id}`}
                     size={8}
-                    styles="p-0"
                     value={title}
                     handleChange={handleTileChange}
                 />
@@ -55,7 +51,6 @@ export const InputMaker = ({ type, id, title, handleTileChange }) => {
                     title="Pregunta Multiple"
                     name={`pregunta-multiple-${id}`}
                     size={8}
-                    styles="p-0"
                     value={title}
                     handleChange={handleTileChange}
                 />
@@ -66,7 +61,6 @@ export const InputMaker = ({ type, id, title, handleTileChange }) => {
                     title="Pregunta Desplegable"
                     name={`pregunta-desplegable-${id}`}
                     size={8}
-                    styles="p-0"
                     value={title}
                     handleChange={handleTileChange}
                 />
@@ -77,7 +71,6 @@ export const InputMaker = ({ type, id, title, handleTileChange }) => {
                     title="Fecha"
                     name={`pregunta-fecha-${id}`}
                     size={8}
-                    styles="p-0"
                     value={title}
                     handleChange={handleTileChange}
                 />
@@ -88,7 +81,6 @@ export const InputMaker = ({ type, id, title, handleTileChange }) => {
                     title="Hora"
                     name={`pregunta-hora-${id}`}
                     size={8}
-                    styles="p-0"
                     value={title}
                     handleChange={handleTileChange}
                 />
@@ -241,6 +233,15 @@ export const InputMakerSettings = ({question}) => {
                         {question.title} {question.obligatory ? "*":null}
                     </label>
                     <InputSimple title="" background="#EFEFEF" name={`input-disabled-${question.title}`} type="time" value=""/>
+                </>
+            );
+            break;
+        case "10":
+            return(
+                <>
+                    <div className="fileContainer" style={{marginBottom:"25px"}}>
+                        <img src={question.data.url} alt="" className="img-fluid fileImg"/>
+                    </div>
                 </>
             );
             break;

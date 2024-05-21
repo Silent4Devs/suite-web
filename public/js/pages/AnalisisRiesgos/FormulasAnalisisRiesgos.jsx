@@ -19,17 +19,18 @@ const FormulasAnalisisRiesgos = () => {
             <h2>Generación de formula</h2>
             <div className="row mb-4">
                 <div className="col-12 col-md-10">
-                <InputSimple title="" name="formula" value={formula} handleChange={handleChangeFormula} background="#F1F1F1"/>
+                    <InputSimple title="" name="formula" value={formula} handleChange={handleChangeFormula} background="#F1F1F1"/>
                 </div>
                 <div className="col-12 col-md-2 d-flex justify-content-start">
-                <BtnSimple title="AGREGAR" width="100%" onClick={()=>addFormula()}/>
+                    <BtnSimple title="AGREGAR" width="100%" onClick={()=>addFormula()}/>
                 </div>
             </div>
-            <div className="row">
-                <div className="col-12 col-md-6 d-flex justify-content-center main">
+            <div className="row d-flex justify-content-between">
+
+                <div className="col-12 col-md-4 d-flex justify-content-center main">
                     <Calculator formula={formula} setFormula={setFormula} />
                 </div>
-                <div className="col-12 col-md-6 d-flex align-items-evenly flex-column">
+                <div className="col-12 col-md-8 d-flex align-items-evenly flex-column">
                     <h3>Añadir variable</h3>
                     <p>Seleccionar los campos deseados</p>
                     <div className="row d-flex align-items-baseline" style={{marginBottom:"40px"}}>

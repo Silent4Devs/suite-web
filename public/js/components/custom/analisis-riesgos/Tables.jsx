@@ -6,28 +6,6 @@ import { InputSimpleDisabled } from '../../common/Inputs';
 export const TableFormulas = ({registers, addVariable, removeVariable}) => {
     return(
         <div style={{overflow:"auto"}}>
-            {/* <table className='tbl-formulas'>
-                <thead>
-                    <tr>
-                        <th className='title' style={{width:"10%"}}>ID</th>
-                        <th className='title' style={{width:"37%"}}>Variable</th>
-                        <th className='title' style={{width:"52%"}}>Utilizar</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr >
-                        <td className='title d-flex align-items-center'>1</td>
-                        <td>
-                        <InputSimpleDisabled title={""} name={`title-`} value={"test"} />
-                        </td>
-                        <td className='d-flex gap-2'>
-                        <BtnSimple title="AGREGAR" width="100%"/>
-                        <BtnSimple title="AGREGAR" width="100%" />
-                        </td>
-                    </tr>
-
-                </tbody>
-            </table> */}
             <table class="table table-borderless">
                 <thead>
                     <tr>
@@ -57,18 +35,29 @@ export const TableFormulas = ({registers, addVariable, removeVariable}) => {
     );
 }
 
-export const TableSettigs = () => {
+export const TableSettigs = ({data}) => {
+    console.log(data)
     return(
-        <CardContainer width="100%">
-            <div className="row d-flex align-items-center">
-                <div className="col-10">
-                    <h6 className='mb-0'>Respuestas</h6>
-                </div>
-                <div className="col-2 d-flex justify-content-end" style={{paddingRight:"2px"}}>
-                    <BtnIcon icon="lightbulb_circle"/>
-                </div>
+        <div>
+            <div className="row">
+                <di className="col-12 col-md-4">
+                    <div className="row">
+                        <div className="col-12 col-md-8">
+                            1.1
+                        </div>
+                        <div className="col-12 col-md-4">
+                            1.2
+                        </div>
+                    </div>
+                </di>
+                <di className="col-12 col-md-4">
+                    2
+                </di>
+                <di className="col-12 col-md-4">
+                    3
+                </di>
             </div>
-            <HrSimple/>
-        </CardContainer>
+
+        </div>
     )
 }

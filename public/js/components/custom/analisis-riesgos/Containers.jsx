@@ -5,6 +5,8 @@ import { CardContainer } from '../../common/Containers';
 import "../../../../css/templateAnalisisRiesgo/containerTemplate.css";
 import { BtnIcon } from '../../common/Buttons';
 import { PopoverTemplateSettings } from './Popovers';
+import { HrSimple } from '../../common/Hr';
+import {TableSettigs} from '../analisis-riesgos/Tables.jsx'
 
 export const Container = ({sections, questions, changeSize, deleteQuestion, changeQuestionProps,
                             duplicateQuestion,  changeTitle, deleteSection}) => {
@@ -57,6 +59,23 @@ export const ContainerInfoTemplate = ({template, icon=false}) => {
             <h2 className='template-title'>{template.title}</h2>
             <p className='template-norma'>{template.norma}</p>
             <p className='template-description'>{template.description}</p>
+        </CardContainer>
+    )
+}
+
+export const ContainerTableSettigs = ({data}) => {
+    return(
+        <CardContainer width="100%">
+            <div className="row d-flex align-items-center">
+                <div className="col-10">
+                    <h6 className='mb-0'>Respuestas</h6>
+                </div>
+                <div className="col-2 d-flex justify-content-end" style={{paddingRight:"2px"}}>
+                    <BtnIcon icon="lightbulb_circle"/>
+                </div>
+            </div>
+            <HrSimple/>
+            <TableSettigs/>
         </CardContainer>
     )
 }

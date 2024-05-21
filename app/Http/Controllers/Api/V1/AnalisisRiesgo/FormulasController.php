@@ -8,6 +8,7 @@ use App\Models\TBQuestionTemplateAnalisisRiesgoModel;
 use App\Models\TBFormulaTemplateAnalisisRiesgoModel;
 use App\Models\TBTemplateAnalisisRiesgoModel;
 use App\Models\TBSectionTemplateAr_QuestionTemplateArModel;
+use App\Models\TBSettingsTemplateAR_TBFormulaTemplateARModel;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -61,6 +62,8 @@ class FormulasController extends Controller
                 $register = TBFormulaTemplateAnalisisRiesgoModel::findOrFail($formula['id']);
                 $pivotQuestion = TBSectionTemplateAr_QuestionTemplateArModel::where('question_id',$formula['question_id'])->first();
                 $pivot = TBSectionTemplateAr_QuestionTemplateArModel::findOrFail($pivotQuestion->id);
+                $question = TBQuestionTemplateAnalisisRiesgoModel::findOrFail($register->question_id);
+
 
                 $register->update([
                     'title' => $formula['title'],
@@ -72,6 +75,9 @@ class FormulasController extends Controller
                     'section_id' => $formula['section_id'],
                 ]);
 
+                $question->update([
+                    'title' => $formula['title'],
+                ]);
                 DB::commit();
             } catch (\Throwable $th) {
                 //throw $th;
@@ -80,7 +86,7 @@ class FormulasController extends Controller
             }
         }
 
-        return json_encode(['data' => 'Se actualizaron exitosamente los registros']);
+        // return json_encode(['data' => 'Se actualizaron exitosamente los registros']);
     }
 
     /**
@@ -157,13 +163,19 @@ class FormulasController extends Controller
                     'question_id' => $questionCreate->id,
                 ]);
 
-                TBFormulaTemplateAnalisisRiesgoModel::create([
+                $formulaCreate = TBFormulaTemplateAnalisisRiesgoModel::create([
                     'title'=> $newFormula['title'],
                     'formula' => $newFormula['formula'],
                     'riesgo' => $newFormula['riesgo'],
                     'template_id' => $newFormula['template_id'],
                     'section_id' => $newFormula['section_id'],
                     'question_id' => $questionCreate->id,
+                ]);
+
+                TBSettingsTemplateAR_TBFormulaTemplateARModel::create([
+                    'template_id' => $newFormula['template_id'],
+                    'formula_id' => $formulaCreate->id,
+                    'is_show' => false,
                 ]);
                 DB::commit();
             } catch (\Throwable $th) {

@@ -2,15 +2,14 @@ import React from 'react'
 import { createPortal } from 'react-dom';
 import { useSettingsAnalisisRiesgos } from '../../hooks/AnalisisRiesgo'
 import { DndContext, closestCorners, DragOverlay } from '@dnd-kit/core';
-import { ContainerInfoTemplate, ContainerSettings } from '../../components/custom/analisis-riesgos/Containers';
+import { ContainerInfoTemplate, ContainerSettings, ContainerTableSettigs } from '../../components/custom/analisis-riesgos/Containers';
 import { SectionSettigns } from '../../components/custom/analisis-riesgos/Section';
-import { TableSettigs } from '../../components/custom/analisis-riesgos/Tables';
 
 
 
 const SettingsAnalisisRiesgos = () => {
     const {sections, questions, loading, activeSection, activeQuestion, handleDragStart,
-        handleDragEnd, handleDragOver, sensors, changeSize, handleSubmit, template} = useSettingsAnalisisRiesgos();
+        handleDragEnd, handleDragOver, sensors, changeSize, handleSubmit, template, tableSettings} = useSettingsAnalisisRiesgos();
 
     if(loading){
         return(<div>Cargando</div>)
@@ -41,7 +40,7 @@ const SettingsAnalisisRiesgos = () => {
                 )}
         </DndContext>
 
-        <TableSettigs/>
+        <ContainerTableSettigs data={tableSettings}/>
 
         <button onClick={handleSubmit}>Guardar</button>
     </div>

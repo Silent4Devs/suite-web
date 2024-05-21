@@ -92,7 +92,9 @@ export const QuestionTemplateAnalisisRiesgos = ({id, question, changeSize, chang
                                 <span className="material-icons" style={{color:"#FFBB00",fontVariationSettings:`'FILL' 1`,}} onMouseOver={()=>moreInfo(true)} onMouseOut={()=>moreInfo(false)}>
                                     lightbulb
                                 </span>
-                                <SwitchObligatory value={question.obligatory} id={id} handleSwitchChange={handleObligatoryChange}/>
+                                {option === "10" ? (<></>):(
+                                    <SwitchObligatory value={question.obligatory} id={id} handleSwitchChange={handleObligatoryChange}/>
+                                )}
 
                                 {
                                     showInfo ? (<ContainerMoreInfo/>):(<></>)

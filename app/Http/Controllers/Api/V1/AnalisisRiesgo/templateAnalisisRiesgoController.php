@@ -10,12 +10,17 @@ use App\Models\TBQuestionTemplateAr_DataQuestionTemplateArModel;
 use App\Models\TBSectionTemplateAnalisisRiesgoModel;
 use App\Models\TBSectionTemplateAr_QuestionTemplateArModel;
 use App\Models\TBTemplateAnalisisRiesgoModel;
+use App\Models\TBSettingsTemplateAR_TBQuestionTemplateARModel;
+use App\Models\TBSettingsTemplateAR_TBFormulaTemplateARModel;
 use App\Models\Template_Analisis_Riesgos;
 use App\Models\TBFormulaTemplateAnalisisRiesgoModel;
 use App\Services\ImageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
+
 
 class templateAnalisisRiesgoController extends Controller
 {
@@ -31,24 +36,14 @@ class templateAnalisisRiesgoController extends Controller
      */
     public function store(Request $request)
     {
-        // foreach($imagenes as $key => $imagen){
-        //     $extension = pathinfo($imagen->getClientOriginalName(), PATHINFO_EXTENSION);
-        //     $new_name_image = 'Template_AR_Question_Image'.$key.'.'.$extension;
 
-        //     $route = storage_path().'/app/public/analisis_riesgo/template/questions/'.$new_name_image;
-        //     $image = $new_name_image;
-
-        //     // Call the ImageService to consume the external API
-        //     $apiResponse = ImageService::consumeImageCompresorApi($imagenes[$key]);
-
-        //     // Compress and save the image
-        //     if ($apiResponse['status'] == 200) {
-        //         file_put_contents($route, $apiResponse['body']);
-        //     }
-        // }
         $sections = json_decode($request->input('sections'));
         $questions = json_decode($request->input('questions'));
         $imagenes = $request->file('image');
+
+        if(!empty($imagenes)){
+           $this->saveImage($questions,$imagenes);
+        }
 
         $this->saveSections($sections, $questions);
 
@@ -73,7 +68,7 @@ class templateAnalisisRiesgoController extends Controller
                 $sectionId = $section->id;
 
                 $filter = $data->reject(function ($registro) {
-                    if($registro['type'] === '11'){
+                    if($registro['type'] === '11' || $registro['type'] === '12' ){
                         return $registro;
                     }
                 });
@@ -107,26 +102,26 @@ class templateAnalisisRiesgoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request)
+    public function update(int $id,Request $request)
     {
-
+        $templateId = $id;
         $requestSections = json_decode($request->input('sections'));
         $requestQuestions = json_decode($request->input('questions'));
-        // dd($requestSections);
-        // dd($requestSections);
-        // $requestSections = json_decode($request->input('sections'));
-        // $requestQuestions = json_decode($request->input('questions'));
-
+        $imagenes = $request->file('image');
+        if(!empty($imagenes)){
+           $this->saveImage($requestQuestions,$imagenes);
+        }
         $dataFilter = $this->filterData($requestSections, $requestQuestions);
         $sections = $dataFilter['sections'];
         $newSections = $dataFilter['newSections'];
         $questions = $dataFilter['questions'];
         $newQuestions = $dataFilter['newQuestions'];
 
+
         $this->saveSections($newSections, $newQuestions);
 
         $this->updateSections($sections);
-        $this->updateQuestions($questions);
+        $this->updateQuestions($questions,$templateId);
 
         return json_encode(['data' => 'Se actualizaron exitosamente las secciones y las preguntas']);
 
@@ -147,17 +142,18 @@ class templateAnalisisRiesgoController extends Controller
             foreach ($sections as $section) {
                 // dd($section);
                 $sectionId = $section->id;
+                $templateId = $section->template_id;
                 $questionsFilter = array_filter($questions, function ($item) use ($sectionId) {
                     return $item->columnId === $sectionId;
                 });
 
                 $sectionCreate = TBSectionTemplateAnalisisRiesgoModel::create([
                     'title' => $section->title,
-                    'template_id' => $section->template_id,
+                    'template_id' => $templateId,
                     'position' => $section->position,
                 ]);
                 $sectionId = $sectionCreate->id;
-                $this->saveQuestions($sectionId, $questionsFilter);
+                $this->saveQuestions($sectionId, $questionsFilter, $templateId);
             }
             DB::commit();
         } catch (\Throwable $th) {
@@ -166,9 +162,8 @@ class templateAnalisisRiesgoController extends Controller
         }
     }
 
-    public function saveQuestions($sectionId, $questions)
+    public function saveQuestions($sectionId, $questions, $templateId)
     {
-
         foreach ($questions as $question) {
             $id = $question->id;
             $exist = intval($id);
@@ -187,6 +182,13 @@ class templateAnalisisRiesgoController extends Controller
                         'section_id' => $sectionId,
                         'question_id' => $questionCreate->id,
                     ]);
+
+                    TBSettingsTemplateAR_TBQuestionTemplateARModel::create([
+                        'template_id' => $templateId,
+                        'question_id' => $questionCreate->id,
+                        'is_show' => false,
+                    ]);
+
                     $this->filterSaveDataQuestion($question, $questionCreate);
                     DB::commit();
                 } catch (\Throwable $th) {
@@ -239,7 +241,7 @@ class templateAnalisisRiesgoController extends Controller
         }
     }
 
-    public function updateQuestions($questions)
+    public function updateQuestions($questions,$templateId)
     {
         foreach ($questions as $question) {
             $id = $question->id;
@@ -266,6 +268,7 @@ class templateAnalisisRiesgoController extends Controller
                     DB::commit();
                 } catch (\Throwable $th) {
                     DB::rollback();
+                    // dd($th);
                     continue;
                 }
             } else {
@@ -283,6 +286,12 @@ class templateAnalisisRiesgoController extends Controller
                     TBSectionTemplateAr_QuestionTemplateArModel::create([
                         'section_id' => $question->columnId,
                         'question_id' => $questionCreate->id,
+                    ]);
+
+                    TBSettingsTemplateAR_TBQuestionTemplateARModel::create([
+                        'template_id' => $templateId,
+                        'question_id' => $questionCreate->id,
+                        'is_show' => false,
                     ]);
 
                     $this->filterSaveDataQuestion($question, $questionCreate);
@@ -349,7 +358,8 @@ class templateAnalisisRiesgoController extends Controller
                 $this->saveSelectDataQuestion($question->data, $questionCreate->id);
                 break;
             case '10':
-                $this->saveImageDataQuestion($question['data'], $questionCreate->id);
+                $this->saveImageDataQuestion($question->data, $questionCreate->id);
+                break;
             default:
                 break;
         }
@@ -369,6 +379,9 @@ class templateAnalisisRiesgoController extends Controller
                 break;
             case '7':
                 $this->updateSelectDataQuestion($question->data, $questionCreate);
+                break;
+            case '10':
+                $this->updateImageDataQuestion($question->data, $questionCreate);
                 break;
             default:
                 break;
@@ -554,12 +567,12 @@ class templateAnalisisRiesgoController extends Controller
 
     public function saveImageDataQuestion($dataQuestions, $questionCreateId)
     {
-        $imageName = "hola";
+
         DB::beginTransaction();
         try {
 
             $dataQuestionCreate = TBDataQuestionTemplateAnalisisRiesgoModel::create([
-                'title' => $imageName,
+                'url' => $dataQuestions->name,
             ]);
             TBQuestionTemplateAr_DataQuestionTemplateArModel::create([
                 'question_id' => $questionCreateId,
@@ -586,9 +599,28 @@ class templateAnalisisRiesgoController extends Controller
         // }
     }
 
+    public function updateImageDataQuestion($dataQuestions, $questionId)
+    {
+        if (property_exists($dataQuestions, 'name')) {
+            // dd("si tiene propiedad");
+            DB::beginTransaction();
+            $register = TBDataQuestionTemplateAnalisisRiesgoModel::find($questionId);
+            try {
+                $register->update([
+                    'url' => $dataQuestions->name,
+                ]);
+
+                DB::commit();
+            } catch (\Throwable $th) {
+                //throw $th;
+                DB::rollback();
+            }
+        }
+
+    }
+
     public function getDataQuestion($question)
     {
-        // dd($questionId);
         $register = TBQuestionTemplateAnalisisRiesgoModel::findOrFail($question->id);
         $data = $register->dataQuestions;
         switch ($question->type) {
@@ -641,6 +673,22 @@ class templateAnalisisRiesgoController extends Controller
                     Arr::forget($item, 'status');
                 }
                 break;
+            case '10':
+                foreach($data as $item){
+                    Arr::forget($item, 'created_at');
+                    Arr::forget($item, 'updated_at');
+                    Arr::forget($item, 'deleted_at');
+                    Arr::forget($item, 'pivot');
+                    Arr::forget($item, 'minimum');
+                    Arr::forget($item, 'maximum');
+                    Arr::forget($item, 'title');
+                    Arr::forget($item, 'name');
+                    Arr::forget($item, 'status');
+
+                    $fileName = $item->url;
+                    $path = asset('storage/analisis_riesgo/template/questions/' . $fileName);
+                    $item->url = $path;
+                }
             default:
                 break;
         }
@@ -688,6 +736,7 @@ class templateAnalisisRiesgoController extends Controller
                 ->where('template_id', $template->id)->get();
 
             $formulas =TBFormulaTemplateAnalisisRiesgoModel::where('template_id',$id)->get();
+            // dd($sections[0]->questions);
 
             foreach($formulas as $formula){
                 Arr::forget($formula, 'created_at');
@@ -704,7 +753,7 @@ class templateAnalisisRiesgoController extends Controller
                 'title' => 'ID',
                 'template' => $template->id,
                 'position' => 0,
-                'type' => "11",
+                'type' => "12",
                 'size' => 3,
                 'obligatory' => true,
                 'data' => [],
@@ -715,7 +764,7 @@ class templateAnalisisRiesgoController extends Controller
                 'title' => 'Descripcion del riesgo',
                 'template' => $template->id,
                 'position' => 1,
-                'type' => "11",
+                'type' => "12",
                 'size' => 3,
                 'obligatory' => true,
                 'data' => [],
@@ -735,7 +784,7 @@ class templateAnalisisRiesgoController extends Controller
                         return $itm;
                     });
 
-                    $questions = $newQuestions;
+                    $questions = array_merge($questions, $newQuestions->toArray());
 
                     Arr::forget($section, 'questions');
                 }
@@ -764,13 +813,13 @@ class templateAnalisisRiesgoController extends Controller
                         $this->getDataQuestion($itm);
                         return $itm;
                     });
-
-                    $questions = $newQuestions;
+                    $questions = array_merge($questions, $newQuestions->toArray());
 
                     Arr::forget($section, 'questions');
                 }
-                $questions->push($optionId);
-                $questions->push($optionDescription);
+                $questions[] = ($optionId);
+                $questions[] = ($optionDescription);
+
             }
 
             return json_encode(['data' => ['sections' => $sections, 'questions' => $questions]], 200);
@@ -803,7 +852,7 @@ class templateAnalisisRiesgoController extends Controller
 
             foreach($questions as $question){
 
-                if($question['type'] === "11"){
+                if($question['type'] === "12"){
                     $existInputId = true;
                 }
 
@@ -814,4 +863,58 @@ class templateAnalisisRiesgoController extends Controller
 
     }
 
+    public function saveImage(&$questions, $imagenes){
+        $today = Carbon::now();
+        $date = $today->format('d-m-Y');
+        $filter = array_filter($questions, function ($item) use($imagenes) {
+            if($item->type === '10' && Arr::exists($imagenes,$item->id)){
+                return $item;
+            }
+        });
+
+        // dd($filter);
+
+        foreach($filter as $question){
+            $key = $question->id;
+            $imagen = $imagenes[$key];
+            // dump($imagen);
+
+            $name = pathinfo($imagen->getClientOriginalName(), PATHINFO_FILENAME);
+            $extension = pathinfo($imagen->getClientOriginalName(), PATHINFO_EXTENSION);
+            $new_name_image = 'Template_AR_Question_Image_' . $name . '_' . $date . '.' . $extension;
+
+            $route = storage_path().'/app/public/analisis_riesgo/template/questions/'.$new_name_image;
+            $image = $new_name_image;
+
+            // Call the ImageService to consume the external API
+            $apiResponse = ImageService::consumeImageCompresorApi($imagen);
+
+            // Compress and save the image
+            if ($apiResponse['status'] == 200) {
+                file_put_contents($route, $apiResponse['body']);
+                foreach($questions as $question){
+                    if($question->id === $key){
+                        $question->data->name = $new_name_image;
+                    }
+                }
+            }
+
+        }
+
+    }
+
+    public function getSettingsTable(int $id ){
+        $questionsRegisters = TBSettingsTemplateAR_TBQuestionTemplateARModel::select('id','question_id','is_show')->where('template_id',$id)->get();
+        $formulasRegisters = TBSettingsTemplateAR_TBFormulaTemplateARModel::select('id','formula_id','is_show')->where('template_id',$id)->get();
+        foreach($questionsRegisters as $questionRegister){
+            $questionRegister->title = $questionRegister->question->title;
+            Arr::forget($questionRegister,'question');
+        }
+        foreach($formulasRegisters as $formulaRegister){
+            $formulaRegister->title = $formulaRegister->formula->title;
+            Arr::forget($formulaRegister,'formula');
+        }
+
+        return json_encode(['data' => ['questions' => $questionsRegisters, 'formulas' => $formulasRegisters]], 200);
+    }
 }
