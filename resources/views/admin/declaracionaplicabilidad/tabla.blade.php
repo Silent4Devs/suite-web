@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-    <h5 class="col-12 titulo_general_funcion">Lista de Controles</h5>
+    <h5 class="col-12 titulo_general_funcion"> 1</h5>
     <div class="mt-5 card">
         <div class="px-1 py-2 mx-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
             <div class="row w-100">
