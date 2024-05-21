@@ -46,7 +46,7 @@
                             <td>RQ-00-00-{{ $requisicion->id }}</td>
                             <td>{{ $requisicion->fecha }}</td>
                             <td>{{ $requisicion->referencia }}</td>
-                            <td>{{ $requisicion->proveedor_catalogo }}</td>
+                            <td>{{$requisicion->proveedor_catalogo  ?? $requisicion->provedores_requisiciones->first()->contacto  ?? 'Indistinto'  }}</td>
                             <td>
                                 @switch($requisicion->estado)
                                     @case('curso')
@@ -117,10 +117,10 @@
                             <td>{{ $requisicion->area }}</td>
                             <td>{{ $requisicion->user }}</td>
                             <td>
-                                @if ($requisicion->estado === 'rechazado')
+                                {{-- @if ($requisicion->estado === 'rechazado')
                                     <a href="{{ route('contract_manager.requisiciones.edit', $requisicion->id) }}"><i
                                             class="fas fa-edit"></i></a>
-                                @endif
+                                @endif --}}
 
                                 <a href="{{ route('contract_manager.requisiciones.show', $requisicion->id) }}"><i
                                         class="fa-solid fa-print"></i></a>

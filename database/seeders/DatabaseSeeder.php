@@ -125,6 +125,7 @@ class DatabaseSeeder extends Seeder
                 // para aprobar los objetivos en caso de que sea necesario que algun otro usuario externo a los lideres deba revisarlos
                 AprobadorObjetivoEstrategicoSeeder::class,
                 PermisoTimesheetFinanciero::class,
+                PermisosTimesheetFaltantes::class,
             ]
         );
     }

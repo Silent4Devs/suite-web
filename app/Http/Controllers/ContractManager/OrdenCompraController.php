@@ -47,7 +47,7 @@ class OrdenCompraController extends Controller
 
         $proveedor_indistinto = KatbolProveedorIndistinto::getFirst()->pluck('requisicion_id');
 
-        $requisiciones = KatbolRequsicion::where([
+        $requisiciones = KatbolRequsicion::with('contrato', 'provedores_requisiciones')->where([
             ['firma_solicitante', '!=', null],
             ['firma_jefe', '!=', null],
             ['firma_finanzas', '!=', null],
@@ -62,7 +62,7 @@ class OrdenCompraController extends Controller
     {
         $id = User::getCurrentUser()->id;
 
-        $requisiciones = KatbolRequsicion::with('contrato')->where([
+        $requisiciones = KatbolRequsicion::with('contrato', 'provedores_requisiciones')->where([
             ['firma_solicitante', '!=', null],
             ['firma_jefe', '!=', null],
             ['firma_finanzas', '!=', null],
