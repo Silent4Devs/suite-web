@@ -68,7 +68,7 @@
                             <td>OC-00-00-{{ $requisicion->id }}</td>
                             <td>{{ $requisicion->fecha }}</td>
                             <td>{{ $requisicion->referencia }}</td>
-                            <td>{{ $requisicion->proveedor_catalogo }}</td>
+                            <td>{{$requisicion->proveedor_catalogo  ?? $requisicion->provedores_requisiciones->first()->contacto  ?? 'Indistinto'  }}</td>
                             <td>
                                 @if (!$requisicion->firma_solicitante_orden && !$requisicion->firma_comprador_orden && !$requisicion->firma_finanzas_orden)
                                     <h5><span class="badge badge-pill badge-primary">Por iniciar</span></h5>
