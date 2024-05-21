@@ -1616,6 +1616,7 @@ Route::group(['middleware' => ['auth', '2fa']], function () {
     // Route::post('CargaCategoria', 'SubidaExcel@CategoriaActivo')->name('carga-categoria');
 
     //Ruta ExportExcel
+    Route::get('ExportUsuario', [ExportExcelReport::class, 'Usuario'])->name('descarga-usuario');
     Route::get('ExportAmenaza', 'ExportExcelReport@Amenaza')->name('descarga-amenaza');
     Route::get('ExportVulnerabilidad', 'ExportExcelReport@Vulnerabilidad')->name('descarga-vulnerabilidad');
     Route::get('ExportAnalisisRiesgo', 'ExportExcelReport@AnalisisRiesgo')->name('descarga-analisis_riego');
