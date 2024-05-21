@@ -107,34 +107,23 @@ class ExportExcelReport extends Controller
     {
         try {
             // Call the ImageService to consume the external API
-            $apiResponse = ReportXlsxService::ReportEmpleadosPuestos("/moduloPuestos");
+            $apiResponse = ReportXlsxService::ReportEmpleadosPuestos("moduloPuestos");
 
             if($apiResponse['status'] == 500){
-                $this->alert('error', 'Ocurrió un error al exportar el reporte. Por favor, inténtalo de nuevo más tarde.', [
-                    'position' => 'top-end',
-                    'timer' => 3000,
-                    'toast' => true,
-                    'timerProgressBar' => true,
-                   ]);
+                   alert()->error('Error','Ocurrió un error al exportar el reporte. Por favor, inténtalo de nuevo más tarde.');
             }else{
                 // Guardar el archivo en el escritorio del usuario
-            file_put_contents(public_path('reportfiles_tmp/'.$apiResponse['fileName']), $apiResponse['body']);
+                file_put_contents(public_path('reportfiles_tmp/'.$apiResponse['fileName']), $apiResponse['body']);
 
-            // Redirigir para descargar el archivo
-            return response()->download(public_path('reportfiles_tmp/'.$apiResponse['fileName']))->deleteFileAfterSend(true);
+                // Redirigir para descargar el archivo
+                return response()->download(public_path('reportfiles_tmp/'.$apiResponse['fileName']))->deleteFileAfterSend(true);
             }
 
         } catch (\Exception $e) {
 
             \Log::error('Error en exportación de reporte de empleados y puestos: '.$e->getMessage());
 
-            $this->alert('error', '', [
-                'position' => 'top-end',
-                'timer' => 3000,
-                'toast' => true,
-                'text' => 'Ocurrió un error al exportar el reporte. Por favor, inténtalo de nuevo más tarde.',
-                'timerProgressBar' => true,
-               ]);
+            alert()->error('Error','Ocurrió un error al exportar el reporte. Por favor, inténtalo de nuevo más tarde.');
         }
 
     }

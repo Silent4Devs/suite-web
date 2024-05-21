@@ -12,14 +12,14 @@ class ReportXlsxService
         $apiEndpoint = env('REPORTSERVICE_API');
         // Endpoint where you want to send the file
 
-        $response = Http::get($apiEndpoint."/empleadosPuestos");
+        $response = Http::get($apiEndpoint."/".$Endpoint);
 
         if ($response->successful()) {
 
             $currentDate = Carbon::now()->format('Y-m-d');
-            
+
             // Nombre del archivo que deseas en el escritorio del usuario
-            $fileName = 'empleados_puestos__' . $currentDate . '.xlsx';
+            $fileName = $Endpoint . $currentDate . '.xlsx';
 
             return [
                 'status' => $response->status(),
@@ -35,7 +35,7 @@ class ReportXlsxService
                 'body' => $response->body(),
             ];
         }
-        
+
     }
 
 }
