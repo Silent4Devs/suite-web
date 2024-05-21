@@ -431,7 +431,7 @@
             action="{{ route('contract_manager.orden-compra.rechazada', ['id' => $requisicion->id]) }}">
             @csrf
             <div class="flex" style="position: relative; top: -1rem; justify-content: space-between;">
-                @if (!$requisicion->firma_solicitante_orden && !$requisicion->firma_comprador_orden && !$requisicion->firma_finanzas_orden)
+                @if (!$requisicion->firma_finanzas)
                     <button class="btn btn-primary" style="background: #454545 !important;">RECHAZAR ORDEN DE
                         COMPRA</button>
                 @else
