@@ -9,7 +9,7 @@ mypy==0.910
 pytest-cov==3.0.0
 pytest-timeout==1.5.1
 pytest-selenium==2.0.0
-requests==2.26.0
+requests==2.32.0
 beautifulsoup4==4.10.0
 allure-pytest==2.13.2
 coverage==6.3.2
