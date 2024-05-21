@@ -120,10 +120,10 @@
                             <td>{{ $requisicion->user }}</td>
                             <td>
 
-                                @if ($requisicion->estado === 'rechazado')
+                                {{-- @if ($requisicion->estado === 'rechazado')
                                     <a href="{{ route('contract_manager.requisiciones.edit', $requisicion->id) }}"><i
                                             class="fas fa-edit"></i></a>
-                                @endif
+                                @endif --}}
 
                                 <a href="{{ route('contract_manager.requisiciones.show', $requisicion->id) }}"><i
                                         class="fa-solid fa-print"></i></a>
