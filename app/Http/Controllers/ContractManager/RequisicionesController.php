@@ -36,17 +36,6 @@ class RequisicionesController extends Controller
      */
     public function index()
     {
-        $listaReq = ListaDistribucion::where('modelo', $this->modelo)->first();
-        $listaPart = $listaReq->participantes;
-        dump($listaPart);
-        for ($i = 0; $i <= $listaReq->niveles; $i++) {
-            $responsable = $listaPart->where('nivel', $i)->first();
-            dd($responsable);
-            if($responsable->empleado->){
-
-            }
-        }
-
         abort_if(Gate::denies('katbol_requisiciones_acceso'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -275,7 +264,22 @@ class RequisicionesController extends Controller
             $fecha = date('d-m-Y');
             $requisicion->fecha_firma_jefe_requi = $fecha;
             $requisicion->save();
-            $userEmail = 'lourdes.abadia@silent4business.com';
+
+            $listaReq = ListaDistribucion::where('modelo', $this->modelo)->first();
+            $listaPart = $listaReq->participantes;
+            // dump($listaPart);
+            for ($i = 0; $i <= $listaReq->niveles; $i++) {
+                $responsableNivel = $listaPart->where('nivel', $i)->first();
+
+                if ($responsableNivel->empleado->estado_disponibilidad == "Activo") {
+
+                    $responsable = $responsableNivel->empleado;
+                    $userEmail = $responsable->email;
+                    break;
+                }
+            }
+            // dd('No entro al if');
+            // $userEmail = 'lourdes.abadia@silent4business.com';
 
             $organizacion = Organizacion::getFirst();
 
@@ -283,8 +287,6 @@ class RequisicionesController extends Controller
         }
         if ($tipo_firma == 'firma_finanzas') {
 
-            $listaReq = ListaDistribucion::where('modelo', $this->modelo)->first();
-            $listaReq->participantes;
             $fecha = date('d-m-Y');
             $requisicion->fecha_firma_finanzas_requi = $fecha;
             $user = User::getCurrentUser();

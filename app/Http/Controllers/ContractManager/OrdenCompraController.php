@@ -14,6 +14,7 @@ use App\Models\ContractManager\ProvedorRequisicionCatalogo as KatbolProvedorRequ
 use App\Models\ContractManager\ProveedorIndistinto as KatbolProveedorIndistinto;
 use App\Models\ContractManager\ProveedorOC as KatbolProveedorOC;
 use App\Models\ContractManager\Requsicion as KatbolRequsicion;
+use App\Models\ListaDistribucion;
 use App\Models\ListaInformativa;
 use App\Models\Organizacion;
 use App\Models\User;
@@ -279,9 +280,23 @@ class OrdenCompraController extends Controller
             $fecha = date('d-m-Y');
             $requisicion->fecha_firma_solicitante_orden = $fecha;
             $requisicion->save();
-            $user = 'lourdes.abadia@silent4business.com';
-            $userEmail = $user;
 
+            $listaReq = ListaDistribucion::where('modelo', $this->modelo)->first();
+            $listaPart = $listaReq->participantes;
+            // dump($listaPart);
+            for ($i = 0; $i <= $listaReq->niveles; $i++) {
+                $responsableNivel = $listaPart->where('nivel', $i)->first();
+
+                if ($responsableNivel->empleado->estado_disponibilidad == "Activo") {
+
+                    $responsable = $responsableNivel->empleado;
+                    $user = $responsable->email;
+                    $userEmail = $user;
+                    break;
+                }
+            }
+
+            // $user = 'lourdes.abadia@silent4business.com';
             $organizacion = Organizacion::getFirst();
 
             Mail::to('ldelgadillo@silent4business.com')->cc('aurora.soriano@silent4business.com')->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
