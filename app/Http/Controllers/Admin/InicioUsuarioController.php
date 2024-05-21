@@ -1294,7 +1294,6 @@ class InicioUsuarioController extends Controller
             abort_if(Gate::denies('mi_perfil_mis_datos_ver_expediente'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         }
 
-
         $empleado = Empleado::getAll()->find($id_empleado);
 
         $evidendiasdocumentos = EvidenciasDocumentosEmpleados::getAll();
