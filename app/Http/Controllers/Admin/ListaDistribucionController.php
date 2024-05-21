@@ -109,7 +109,7 @@ class ListaDistribucionController extends Controller
             foreach ($lista->participantes as $participante) {
                 if ($participante->nivel == $i) {
 
-                    $participantes_seleccionados['nivel'.$i][] =
+                    $participantes_seleccionados['nivel' . $i][] =
                         [
                             'empleado_id' => $participante->empleado_id,
                             'numero_orden' => $participante->numero_orden,
@@ -129,12 +129,14 @@ class ListaDistribucionController extends Controller
     public function edit($id)
     {
         $lista = ListaDistribucion::with('participantes.empleado')->find($id);
+        $empleados = Empleado::getAltaDataColumns();
+
+        $tipo = "flujo";
 
         $superaprobadores_seleccionados = [];
 
         foreach ($lista->participantes as $participante) {
             if ($participante->nivel == 0) {
-                // dd('entra');
                 $superaprobadores_seleccionados[] =
                     [
                         'empleado_id' => $participante->empleado_id,
@@ -150,7 +152,7 @@ class ListaDistribucionController extends Controller
             foreach ($lista->participantes as $participante) {
                 if ($participante->nivel == $i) {
 
-                    $participantes_seleccionados['nivel'.$i][] =
+                    $participantes_seleccionados['nivel' . $i][] =
                         [
                             'empleado_id' => $participante->empleado_id,
                             'numero_orden' => $participante->numero_orden,
@@ -159,9 +161,13 @@ class ListaDistribucionController extends Controller
             }
         }
 
-        $empleados = Empleado::getAltaDataColumns();
+        if ($lista->modelo == "KatbolRequsicion" || $lista->modelo == "OrdenCompra") {
+            $tipo = "suplentes";
+        } else {
+            $tipo = "flujoAprobacion";
+        }
 
-        return view('admin.listadistribucion.edit', compact('lista', 'superaprobadores_seleccionados', 'participantes_seleccionados', 'empleados'));
+        return view('admin.listadistribucion.edit', compact('lista', 'superaprobadores_seleccionados', 'participantes_seleccionados', 'empleados', 'tipo'));
     }
 
     /**
@@ -176,7 +182,7 @@ class ListaDistribucionController extends Controller
         // dd($lista_id);
         // dd($request->all());
         $val_niv = $request->niveles;
-        $nom_niv = 'nivel'.$val_niv;
+        $nom_niv = 'nivel' . $val_niv;
 
         if (isset($request->$nom_niv)) {
             $participantes = ParticipantesListaDistribucion::where('modulo_id', '=', $lista->id)->delete();
@@ -186,7 +192,7 @@ class ListaDistribucionController extends Controller
 
             $data = [];
             for ($i = 1; $i <= $request->niveles; $i++) {
-                $nivelArrayName = 'nivel'.$i;
+                $nivelArrayName = 'nivel' . $i;
                 if (isset($nivelArrayName)) {
                     $data[$i] = $request->$nivelArrayName;
                     // $data[$nivelArrayName] = $nivelArrayName;
