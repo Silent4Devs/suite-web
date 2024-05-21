@@ -19,13 +19,13 @@ class ListaDistribucionRequisicionOrdenCompraSeeder extends Seeder
                 'modulo' => "Gestión Contractual",
                 'submodulo' => "Requisiciones",
                 "modelo" => "KatbolRequsicion",
-                "niveles" => 6,
+                "niveles" => 1,
             ],
             [
                 'modulo' => "Gestión Contractual",
                 'submodulo' => "Ordenes de Compra",
                 "modelo" => "OrdenCompra",
-                "niveles" => 6,
+                "niveles" => 1,
             ]
         ];
 
