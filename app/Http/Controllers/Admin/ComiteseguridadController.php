@@ -97,7 +97,7 @@ class ComiteseguridadController extends Controller
 
             $comiteseguridad = Comiteseguridad::find($comiteseguridad);
 
-            if (! $comiteseguridad) {
+            if (!$comiteseguridad) {
                 abort(404);
             }
 
@@ -169,14 +169,14 @@ class ComiteseguridadController extends Controller
 
     public function saveMember(Request $request, $id_comite)
     {
-        // Validar la existencia del comité de seguridad por su ID
-        $request->validate([
-            'id_asignada' => 'required',
-            'nombrerol' => 'required',
-            'responsabilidades' => 'required',
-        ]);
 
         try {
+            $request->validate([
+                'id_asignada' => 'required',
+                'nombrerol' => 'required',
+                'responsabilidades' => 'required',
+            ]);
+
             $comiteseguridad = Comiteseguridad::findOrFail($id_comite);
 
             $miembro = MiembrosComiteSeguridad::create([
@@ -195,12 +195,16 @@ class ComiteseguridadController extends Controller
     public function deleteMember($id)
     {
 
-        $miembros = MiembrosComiteSeguridad::find($id);
-        $miembros->forceDelete();
+        try {
+            $miembros = MiembrosComiteSeguridad::find($id);
+            $miembros->forceDelete();
 
-        $comiteseguridad = Comiteseguridad::find($miembros->comite_id);
+            $comiteseguridad = Comiteseguridad::find($miembros->comite_id);
 
-        return view('admin.comiteseguridads.edit', compact('comiteseguridad'));
+            return view('admin.comiteseguridads.edit', compact('comiteseguridad'));
+        } catch (\Exception $e) {
+            abort(404);
+        }
     }
 
     public function visualizacion(Request $request)
