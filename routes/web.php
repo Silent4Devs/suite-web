@@ -1626,6 +1626,10 @@ Route::group(['middleware' => ['auth', '2fa']], function () {
         Route::get('ExportNivelJerarquico', 'NivelJerarquico')->name('descarga-nivel-jerarquico');
         Route::get('ExportRegistroArea', 'RegistroArea')->name('descarga-registro-area');
         Route::get('ExportMacroproceso', 'Macroproceso')->name('descarga-macroproceso');
+        Route::get('ExportProceso', 'Proceso')->name('descarga-proceso');
+        Route::get('ExportTipoActivo', 'TipoActivo')->name('descarga-tipo-activo');
+        Route::get('ExportInventarioActivos', 'InventarioActivos')->name('descarga-inventario-activos');
+        Route::get('ExportGlosarios', 'Glosarios')->name('descarga-glosarios');
     });
 
 
@@ -1645,9 +1649,6 @@ Route::group(['middleware' => ['auth', '2fa']], function () {
     // Route::get('ExportEstadoIncidente', 'ExportExcelReport@EstadoIncidente')->name('descarga-estadoincidente');
     Route::get('ExportPoliticaSgsi', 'ExportExcelReport@PoliticaSgsi')->name('descarga-politica_sgi');
     Route::get('ExportGrupoArea', 'ExportExcelReport@GrupoArea')->name('descarga-grupo_area');
-    Route::get('ExportActivos', 'ExportExcelReport@Activos')->name('descarga-activo_inventario');
-
-    //  Route::get('ExportFormatoResponsivo', 'ActivosController@ExportFormato')->name('descarga-formato_reponsivo');
 });
 
 Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function () {
