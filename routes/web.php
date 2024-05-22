@@ -1630,6 +1630,7 @@ Route::group(['middleware' => ['auth', '2fa']], function () {
         Route::get('ExportTipoActivo', 'TipoActivo')->name('descarga-tipo-activo');
         Route::get('ExportInventarioActivos', 'InventarioActivos')->name('descarga-inventario-activos');
         Route::get('ExportGlosarios', 'Glosarios')->name('descarga-glosarios');
+        Route::get('ExportCategoriaCapacitaciones', 'CategoriaCapacitaciones')->name('descarga-categoria-capacitaciones');
     });
 
 

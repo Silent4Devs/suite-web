@@ -99,4 +99,9 @@ class ExportExcelReport extends Controller
     {
         return $this->exportReport("glosario");
     }
+
+    public function CategoriaCapacitaciones()
+    {
+        return $this->exportReport("categoriasCapacitaciones");
+    }
 }

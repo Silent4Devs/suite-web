@@ -65,8 +65,8 @@
             @include('partials.flashMessages')
             <div class="datatable-fix datatable-rds">
                 <div class="d-flex justify-content-end">
-                    <a class="boton-transparente boton-sin-borde" href="{{ route('descarga-categoriacapacitacion') }}">
-                        <img src="{{ asset('download_FILL0_wght300_GRAD0_opsz24.svg') }}" alt="Importar" class="icon">
+                    <a class="boton-transparente boton-sin-borde" href="{{ route('descarga-categoria-capacitaciones') }}">
+                        <i class="fas fa-file-excel icon" style="font-size: 1.5rem;color:#0f6935"></i>
                     </a> &nbsp;&nbsp;&nbsp;
                     <a class="boton-transparente boton-sin-borde" id="btnImport">
                         <img src="{{ asset('upload_file_FILL0_wght300_GRAD0_opsz24.svg') }}" alt="Importar" class="icon">
