@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 @section('css')
     <link rel="stylesheet" href="{{ asset('css/evaluaciones.css') }}{{ config('app.cssVersion') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/dashboardPersonal') }}{{ config('app.cssVersion') }}">
 @endsection
 @section('content')
     {{-- {{ Breadcrumbs::render('capital-humano') }} --}}

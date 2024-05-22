@@ -88,6 +88,22 @@ class EvDesempenoDashboardPersonal extends Component
 
         $this->evaluado = $evld_tabla->evaluados->find($this->id_evaluado);
 
+        $this->cargaDatos();
+
+        $this->arreglosEvaluadores();
+    }
+
+    public function render()
+    {
+        $modificar_empleados = Empleado::getAllDataColumns()->sortBy('name');
+
+        $this->cargarTablas();
+
+        return view('livewire.ev-desempeno-dashboard-personal', compact('modificar_empleados'));
+    }
+
+    public function cargaDatos()
+    {
         $this->secciones();
         $this->evaluadoTotales();
         $this->evaluadores();
@@ -106,15 +122,6 @@ class EvDesempenoDashboardPersonal extends Component
 
         $this->porcentajesTotalesPeriodos();
         $this->porcentajesTotales();
-    }
-
-    public function render()
-    {
-        $modificar_empleados = Empleado::getAllDataColumns()->sortBy('name');
-
-        $this->cargarTablas();
-
-        return view('livewire.ev-desempeno-dashboard-personal', compact('modificar_empleados'));
     }
 
     public function cambiarSeccion($llave)
@@ -189,7 +196,12 @@ class EvDesempenoDashboardPersonal extends Component
                     'final' => $evaluado->calificacionesCompetenciasEvaluadoPeriodo($periodo["id_periodo"])['promedio_total'] * ($this->evaluacion->porcentaje_competencias / 100) + $evaluado->calificacionesObjetivosEvaluadoPeriodo($periodo["id_periodo"])['promedio_total'] * ($this->evaluacion->porcentaje_objetivos / 100),
                 ];
             $this->promedio_evaluados_area[$key][$evaluado->empleado->area_id]["promedioEvdsObjs"][] = $this->totales_evaluado[$key][$evaluado->id]["objetivos"];
+        }
+    }
 
+    public function arreglosEvaluadores()
+    {
+        foreach ($this->array_periodos as $key => $periodo) {
             $evaluadoresObjetivos = $this->evaluado->evaluadoresObjetivos($periodo["id_periodo"])->where('evaluador_desempeno_id', '!=', $this->info_evaluado->empleado->id);
             $evaluadoresCompetencias = $this->evaluado->evaluadoresCompetencias($periodo["id_periodo"])->where('evaluador_desempeno_id', '!=', $this->info_evaluado->empleado->id);
 
@@ -213,7 +225,6 @@ class EvDesempenoDashboardPersonal extends Component
                     ];
             }
         }
-        // dd($this->array_mod_evaluadores_objetivos);
     }
 
     public function obtenerEscalas()
@@ -546,7 +557,6 @@ class EvDesempenoDashboardPersonal extends Component
                 'nombre_evaluador' => "Sin Asignar",
                 'porcentaje_objetivos' => 0,
             ];
-        $this->render();
     }
 
     public function agregarEvaluadorPeriodoCompetencias($keyPeriodo)
@@ -558,7 +568,6 @@ class EvDesempenoDashboardPersonal extends Component
                 'nombre_evaluador' => "Sin Asignar",
                 'porcentaje_competencias' => 0,
             ];
-        $this->render();
     }
 
     public function removeEvaluadorPeriodoObjetivos($idRegistroEvaluador, $keyPeriodo, $keyEvaluador)
@@ -593,7 +602,6 @@ class EvDesempenoDashboardPersonal extends Component
 
     public function modificarEvaluadoresPeriodoObjetivos($keyPeriodo)
     {
-        // dump($this->array_mod_evaluadores_objetivos[$keyPeriodo]);
         foreach ($this->array_mod_evaluadores_objetivos[$keyPeriodo] as $key => $evaluador) {
             EvaluadoresEvaluacionObjetivosDesempeno::updateOrCreate([
                 'id' => $evaluador['id_registro_evaluador'],
@@ -608,7 +616,6 @@ class EvDesempenoDashboardPersonal extends Component
 
     public function modificarEvaluadoresPeriodoCompetencias($keyPeriodo)
     {
-        // dd($this->array_mod_evaluadores_objetivos[$keyPeriodo]);
         foreach ($this->array_mod_evaluadores_competencias[$keyPeriodo] as $key => $evaluador) {
             EvaluadoresEvaluacionCompetenciasDesempeno::updateOrCreate([
                 'id' => $evaluador['id_registro_evaluador'],
