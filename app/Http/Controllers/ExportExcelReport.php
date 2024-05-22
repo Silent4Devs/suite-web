@@ -274,6 +274,90 @@ class ExportExcelReport extends Controller
         }
     }
 
+    public function Sede()
+    {
+        try {
+            // Call the ImageService to consume the external API
+            $apiResponse = ReportXlsxService::ReportConsumer("moduloSedes");
+
+            if($apiResponse['status'] == 500){
+                   alert()->error('Error','Ocurrió un error al exportar el reporte. Por favor, inténtalo de nuevo más tarde.');
+
+                   return redirect()->back();
+            }else{
+                // Guardar el archivo en el escritorio del usuario
+                file_put_contents(public_path('reportfiles_tmp/'.$apiResponse['fileName']), $apiResponse['body']);
+
+                // Redirigir para descargar el archivo
+                return response()->download(public_path('reportfiles_tmp/'.$apiResponse['fileName']))->deleteFileAfterSend(true);
+            }
+
+        } catch (\Exception $e) {
+
+            \Log::error('Error en exportación de reporte de empleados y puestos: '.$e->getMessage());
+
+            alert()->error('Error','Ocurrió un error al exportar el reporte. Por favor, inténtalo de nuevo más tarde.');
+
+            return redirect()->back();
+        }
+    }
+
+    public function NivelJerarquico()
+    {
+        try {
+            // Call the ImageService to consume the external API
+            $apiResponse = ReportXlsxService::ReportConsumer("nivelesJerarquicos");
+
+            if($apiResponse['status'] == 500){
+                   alert()->error('Error','Ocurrió un error al exportar el reporte. Por favor, inténtalo de nuevo más tarde.');
+
+                   return redirect()->back();
+            }else{
+                // Guardar el archivo en el escritorio del usuario
+                file_put_contents(public_path('reportfiles_tmp/'.$apiResponse['fileName']), $apiResponse['body']);
+
+                // Redirigir para descargar el archivo
+                return response()->download(public_path('reportfiles_tmp/'.$apiResponse['fileName']))->deleteFileAfterSend(true);
+            }
+
+        } catch (\Exception $e) {
+
+            \Log::error('Error en exportación de reporte de empleados y puestos: '.$e->getMessage());
+
+            alert()->error('Error','Ocurrió un error al exportar el reporte. Por favor, inténtalo de nuevo más tarde.');
+
+            return redirect()->back();
+        }
+    }
+
+    public function RegistroArea()
+    {
+        try {
+            // Call the ImageService to consume the external API
+            $apiResponse = ReportXlsxService::ReportConsumer("registroAreas");
+
+            if($apiResponse['status'] == 500){
+                   alert()->error('Error','Ocurrió un error al exportar el reporte. Por favor, inténtalo de nuevo más tarde.');
+
+                   return redirect()->back();
+            }else{
+                // Guardar el archivo en el escritorio del usuario
+                file_put_contents(public_path('reportfiles_tmp/'.$apiResponse['fileName']), $apiResponse['body']);
+
+                // Redirigir para descargar el archivo
+                return response()->download(public_path('reportfiles_tmp/'.$apiResponse['fileName']))->deleteFileAfterSend(true);
+            }
+
+        } catch (\Exception $e) {
+
+            \Log::error('Error en exportación de reporte de empleados y puestos: '.$e->getMessage());
+
+            alert()->error('Error','Ocurrió un error al exportar el reporte. Por favor, inténtalo de nuevo más tarde.');
+
+            return redirect()->back();
+        }
+    }
+
     public function Activos()
     {
         $path = storage_path('app/public/exportExcel/Activos.xlsx');

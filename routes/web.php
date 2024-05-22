@@ -1622,6 +1622,9 @@ Route::group(['middleware' => ['auth', '2fa']], function () {
         Route::get('ExportRoles', 'Roles')->name('descarga-roles');
         Route::get('ExportSoporte', 'Soporte')->name('descarga-soporte');
         Route::get('ExportEmpleado', 'Empleado')->name('descarga-empleado');
+        Route::get('ExportSede', 'Sede')->name('descarga-sedes');
+        Route::get('ExportNivelJerarquico', 'NivelJerarquico')->name('descarga-nivel-jerarquico');
+        Route::get('ExportRegistroArea', 'RegistroArea')->name('descarga-registro-area');
     });
 
 
