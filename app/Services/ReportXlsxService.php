@@ -19,7 +19,7 @@ class ReportXlsxService
             $currentDate = Carbon::now()->format('Y-m-d');
 
             // Nombre del archivo que deseas en el escritorio del usuario
-            $fileName = $Endpoint . $currentDate . '.xlsx';
+            $fileName = $Endpoint . '-' . $currentDate . '.xlsx';
 
             return [
                 'status' => $response->status(),
