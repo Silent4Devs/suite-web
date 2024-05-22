@@ -24,6 +24,8 @@
         @csrf
         @if ($tipo == 'flujoAprobacion')
             @include('admin.listadistribucion.flujoAprobacion')
+        @elseif ($tipo == 'suplentesLideres')
+            @include('admin.listadistribucion.lideresSuplentes')
         @elseif ($tipo == 'suplentes')
             @include('admin.listadistribucion.suplentes')
         @endif
@@ -39,6 +41,8 @@
 @section('scripts')
     @if ($tipo == 'flujoAprobacion')
         @include('admin.listadistribucion.scriptsflujoAprobacion')
+    @elseif ($tipo == 'suplentesLideres')
+        @include('admin.listadistribucion.scriptslideresSuplentes')
     @elseif ($tipo == 'suplentes')
         @include('admin.listadistribucion.scriptsSuplentes')
     @endif

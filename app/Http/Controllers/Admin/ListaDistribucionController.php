@@ -163,6 +163,8 @@ class ListaDistribucionController extends Controller
 
         if ($lista->modelo == "KatbolRequsicion" || $lista->modelo == "OrdenCompra") {
             $tipo = "suplentes";
+        } elseif ($lista->modelo == 'Empleado') {
+            $tipo = "suplentesLideres";
         } else {
             $tipo = "flujoAprobacion";
         }

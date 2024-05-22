@@ -326,16 +326,16 @@ class OrdenCompraController extends Controller
             // dd($listaInformativa, $listaInformativa->participantes, $listaInformativa->usuarios);
 
             foreach ($listaInformativa->participantes as $key => $informado) {
-                # code...
-                $correos_informados[] = $informado->email;
+                $correos_informados[] = $informado->empleado->email;
             }
 
             foreach ($listaInformativa->usuarios as $key => $informado) {
-                # code...
-                $correos_informados[] = $informado->email;
+                $correos_informados[] = $informado->empleado->email;
             }
 
-            Mail::to($correos_informados)->queue(new OrdenCompraAprobada($requisicion, $organizacion));
+            $organizacionInformado = Organizacion::getFirst();
+
+            Mail::to($correos_informados)->queue(new OrdenCompraAprobada($requisicion, $organizacionInformado));
 
             $userEmail = $requisicion->email;
         }
@@ -374,7 +374,6 @@ class OrdenCompraController extends Controller
 
     public function pdf($id)
     {
-
         $requisiciones = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->find($id);
         $user = User::find($requisiciones->id_finanzas_oc);
 
