@@ -92,7 +92,7 @@
                 <div class="d-flex align-items-center justify-content-between">
                     <div class="d-flex align-items-center">
                         <span>Mostrando</span>
-                        <select name="" id="" class="form-control ml-2" wire:model="perPage">
+                        <select name="" id="" class="form-control ml-2" wire:model.live="perPage">
                             <option value="5">5</option>
                             <option value="10">10</option>
                             <option value="20">20</option>
@@ -104,7 +104,7 @@
                             Excel
                         </button>
                     </div>
-                    <input type="text" class="form-control" placeholder="Buscar..." wire:model="search"
+                    <input type="text" class="form-control" placeholder="Buscar..." wire:model.live="search"
                         style="max-width: 150px;">
                 </div>
             </div>

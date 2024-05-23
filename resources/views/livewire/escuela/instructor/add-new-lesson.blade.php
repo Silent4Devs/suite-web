@@ -53,7 +53,7 @@
                         </div>
                         <div class="col-12">
                             <div class="mt-4 pl-4 d-flex justify-content-start align-items-center" style="min-height: 99px; border: 1px dashed #BEBEBE; border-radius: 2px;">
-                                <input wire:model="file" type="file" class="flex-1 form-input">
+                                <input wire:model.live="file" type="file" class="flex-1 form-input">
                             </div>
                             <div class="mt-1 font-bold text-blue-500" wire:loading wire:target="file">
                                 Cargando ...

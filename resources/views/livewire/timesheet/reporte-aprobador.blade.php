@@ -145,12 +145,12 @@
         <div class="col-md-4 form-group" wire:ignore>
             <label class="form-label">Fecha de inicio</label>
             <input id="fecha_dia_registros_inicio_empleados" class="form-control date_librery" type="date"
-                name="fecha_inicio" wire:model="fecha_inicio">
+                name="fecha_inicio" wire:model.live="fecha_inicio">
         </div>
         <div class="col-md-4 form-group" wire:ignore>
             <label class="form-label">Fecha de fin</label>
             <input id="fecha_dia_registros_fin_empleados" class="form-control date_librery" type="date"
-                name="fecha_fin" wire:model="fecha_fin">
+                name="fecha_fin" wire:model.live="fecha_fin">
         </div>
         <div class="col-md-2 form-group">
             <label class="form-label">Horas totales</label>
@@ -445,12 +445,12 @@
                 <div class="form-group col-6">
                     <label class="form-label">Rango inicial</label>
                     <input id="fecha_dia_registros_inicio_empleado_reporte" type="date" name="rango_inicial"
-                        class="form-control" wire:model="fecha_inicio_empleado">
+                        class="form-control" wire:model.live="fecha_inicio_empleado">
                 </div>
                 <div class="form-group col-6">
                     <label class="form-label">Rango final</label>
                     <input id="fecha_dia_registros_fin_empleado_reporte" type="date" name="rango_final"
-                        class="form-control" wire:model="fecha_fin_empleado">
+                        class="form-control" wire:model.live="fecha_fin_empleado">
                 </div>
             </div>
             <div class="row mt-5">
@@ -651,7 +651,7 @@
             <div class="row mt-5">
                 <div class="form-group col-md-4">
                     <label class="form-label">Área</label>
-                    <select class="form-control" wire:model="area_id">
+                    <select class="form-control" wire:model.live="area_id">
                         <option selected value="0">- -</option>
                         @foreach ($areas as $area)
                             <option value="{{ $area->id }}">{{ $area->area }}</option>
@@ -661,11 +661,11 @@
                 <div class="form-group col-md-4">
                     <label class="form-label">Fecha inicial</label>
                     <input type="date" name="rango_inicial" class="form-control"
-                        wire:model="fecha_inicio_general">
+                        wire:model.live="fecha_inicio_general">
                 </div>
                 <div class="form-group col-md-4">
                     <label class="form-label">Fecha final</label>
-                    <input type="date" name="rango_final" class="form-control" wire:model="fecha_fin_general">
+                    <input type="date" name="rango_final" class="form-control" wire:model.live="fecha_fin_general">
                 </div>
             </div>
             <div class="row mt-5">

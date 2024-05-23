@@ -223,7 +223,7 @@
             <div class="row print-none">
                 <div class="col-3">
                     <label for="perPage">Por página</label>
-                    <select class="custom-select" name="" id="perPage" wire:model="perPage">
+                    <select class="custom-select" name="" id="perPage" wire:model.live="perPage">
                         <option value="5">5</option>
                         <option value="10">10</option>
                         <option value="15">15</option>
@@ -240,7 +240,7 @@
                 <div class="col-8"></div>
                 <div class="col-4" style="text-align: end">
                     <label for="search"><i class="fas fa-search"></i> Buscar</label>
-                    <input type="text" class="form-control" id="search" wire:model="search">
+                    <input type="text" class="form-control" id="search" wire:model.live="search">
                 </div>
             </div>
         </div>

@@ -605,11 +605,11 @@
                                             <div>
                                                 <div class="mb-3 row">
                                                     <div class="col-8">
-                                                        <input class="form-control" type="text" wire:model="search"
+                                                        <input class="form-control" type="text" wire:model.live="search"
                                                             placeholder="Buscar competencia...">
                                                     </div>
                                                     <div class="col-4">
-                                                        <select wire:model="filter" class="form-control">
+                                                        <select wire:model.live="filter" class="form-control">
                                                             @foreach ($tipos as $tipo)
                                                                 <option value="{{ $tipo->id }}">
                                                                     {{ $tipo->nombre }}
@@ -631,7 +631,7 @@
                                                         <tbody>
                                                             @foreach ($competencias as $competencia)
                                                                 <tr>
-                                                                    <th scope="row"><input wire:model.prevent="selected"
+                                                                    <th scope="row"><input wire:model.live.prevent="selected"
                                                                             value="{{ $competencia->id }}"
                                                                             type="checkbox">
                                                                     </th>

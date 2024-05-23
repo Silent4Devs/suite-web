@@ -37,7 +37,7 @@
                                     <div class="col-2">
                                         <input type="checkbox" id="empleado_{{ $empleado['id'] }}"
                                             class="form-check-input" style="transform: scale(2);"
-                                            wire:model="empleados.{{ $key }}.seleccionado"
+                                            wire:model.live="empleados.{{ $key }}.seleccionado"
                                             wire:change="asignacionEmpleados('{{ $empleado['id'] }}','{{ $key }}', $event.target.checked ? true : false)">
                                     </div>
                                 </div>

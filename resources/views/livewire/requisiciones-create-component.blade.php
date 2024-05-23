@@ -379,7 +379,7 @@
                                                         <input type="file" required
                                                                class="modal-cotizacion form-control-file"
                                                                name="cotizaciones[{{ $i }}]"
-                                                               wire:model="cotizaciones.{{ $i }}"
+                                                               wire:model.live="cotizaciones.{{ $i }}"
                                                                data-count="{{ $i }}"
                                                                accept=".pdf, .docx, .pptx, .point, .xml, .jpeg, .jpg, .png, .xlsx, .xlsm, .csv">
                                                     </div>

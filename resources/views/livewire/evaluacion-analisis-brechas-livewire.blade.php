@@ -358,7 +358,7 @@
                                         <td>{{ $pregunta->pregunta }}</td>
                                         <td>
                                             <select class="link-like-select" style="border: none;"
-                                                wire:model="selectedValues.{{ $pregunta->id }}.option1"
+                                                wire:model.live="selectedValues.{{ $pregunta->id }}.option1"
                                                 wire:change="saveDataParametros('{{ $pregunta->id }}', $event.target.value)"
                                                 name="respuesta_pregunta_{{ $pregunta->id }}"
                                                 id="respuesta_pregunta_{{ $pregunta->id }}">

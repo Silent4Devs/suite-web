@@ -673,7 +673,7 @@
                                                             <input type="file" required
                                                                 class="modal-cotizacion form-control-file"
                                                                 name="cotizacion_{{ $count }}"
-                                                                wire:model="cotizaciones.{{ $count }}"
+                                                                wire:model.live="cotizaciones.{{ $count }}"
                                                                 data-count="{{ $count }}"
                                                                 accept=".pdf, .docx, .pptx .point, .xml, .jpeg, .jpg, .png, .xlsx, .xlsm, .csv">
                                                         </div>
@@ -854,7 +854,7 @@
                                                                     <input type="file" required
                                                                         class="modal-cotizacion form-control-file"
                                                                         name="cotizacion_{{ $count }}"
-                                                                        wire:model="cotizaciones.{{ $count }}"
+                                                                        wire:model.live="cotizaciones.{{ $count }}"
                                                                         data-count="{{ $count }}"
                                                                         accept=".pdf, .docx, .pptx .point, .xml, .jpeg, .jpg, .png, .xlsx, .xlsm, .csv">
                                                                 </div>
@@ -1047,7 +1047,7 @@
                                                             <input type="file" required
                                                                 class="modal-cotizacion form-control-file"
                                                                 name="cotizacion_{{ $count }}"
-                                                                wire:model="cotizaciones.{{ $count }}"
+                                                                wire:model.live="cotizaciones.{{ $count }}"
                                                                 data-count="{{ $count }}"
                                                                 accept=".pdf, .docx, .pptx .point, .xml, .jpeg, .jpg, .png, .xlsx, .xlsm, .csv">
                                                         </div>
@@ -1075,7 +1075,7 @@
                                                 {{-- <i class="fa-regular fa-trash-can btn-deleted-card btn-deletd-proveedor" title="Eliminar proveedor" onclick="deleteProveedor()"></i> --}}
                                             </div>
                                             <select class="model-producto browser-default not-select2"
-                                                wire:model='selectedInput.{{ $i }}'
+                                                wire:model.live='selectedInput.{{ $i }}'
                                                 name="proveedor_{{ $i }}" required>
                                                 <option value="{{ $editrequisicion->proveedoroc_id }}" selected>
                                                     Actual1: {{ $editrequisicion->proveedor_catalogo }}</option>
@@ -1230,7 +1230,7 @@
                                                                     <input type="file" required
                                                                         class="modal-cotizacion form-control-file"
                                                                         name="cotizacion_{{ $count }}"
-                                                                        wire:model="cotizaciones.{{ $count }}"
+                                                                        wire:model.live="cotizaciones.{{ $count }}"
                                                                         data-count="{{ $count }}"
                                                                         accept=".pdf, .docx, .pptx .point, .xml, .jpeg, .jpg, .png, .xlsx, .xlsm, .csv">
                                                                 </div>

@@ -15,7 +15,7 @@
         <div class="card card-body">
             <div class="row">
                 <div class="col-md-6 form-group anima-focus">
-                    <select name="publico" id="" class="form-control" wire:model="publico">
+                    <select name="publico" id="" class="form-control" wire:model.live="publico">
                         <option value="" selected disabled></option>
                         <option value="todos">Toda la empresa</option>
                         <option value="area">Por área(s)</option>
@@ -50,7 +50,7 @@
                                     style="color:red">*</span></p>
                             <select
                                 class="form-input  block w-full mt-2 mb-2 {{ $errors->has('user_id') ? 'is-invalid' : '' }}"
-                                name="user_id" id="user_id" wire:model="user_id">
+                                name="user_id" id="user_id" wire:model.live="user_id">
                                 <option value="" selected>
                                     Selecciona una opción
                                 </option>

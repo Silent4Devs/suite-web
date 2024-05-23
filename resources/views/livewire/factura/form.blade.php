@@ -89,7 +89,7 @@
                                     </font>
                                 </p>
                             </small>
-                            <select id="estatus" name="estatus" wire:model.debounce.800ms="estatus" class="form-control select_ajax_live estatus"
+                            <select id="estatus" name="estatus" wire:model.live.debounce.800ms="estatus" class="form-control select_ajax_live estatus"
                                 style="margin-bottom: 0px">
                                 <option value="" disabled selected>Elige una opción</option>
                                 <option value="recibido">Recibido</option>
@@ -168,7 +168,7 @@
                         <div class="switch">
                             <label>
                                 No
-                                <input type="checkbox" id="cumple" name="cumple" wire:model.debounce.800ms="cumple">
+                                <input type="checkbox" id="cumple" name="cumple" wire:model.live.debounce.800ms="cumple">
 
                                 <span class="lever"></span>
                                 Si
@@ -182,7 +182,7 @@
                                     class="fas fa-clipboard-list iconos-crear"></i>No. revisiones<font
                                     class="asterisco">* </font>
                             </p>
-                        </small> <input type="number"wire:model.debounce.800ms="no_revisiones" class="form-control" min="0">
+                        </small> <input type="number"wire:model.live.debounce.800ms="no_revisiones" class="form-control" min="0">
                         @error('no_revisiones') <span class="red-text">{​​{​​ $message }​​}​​</span> @enderror
                     </div>
                     <div class="input-field col s12 m4">
@@ -190,7 +190,7 @@
                             <p class="grey-text" style="font-size:17px;font-weight:bold;"><i
                                     class="fas fa-clipboard-list iconos-crear"></i>No de CXL
                             </p>
-                        </small> <input type="number" wire:model.debounce.800ms="n_cxl" class="form-control" min="0">
+                        </small> <input type="number" wire:model.live.debounce.800ms="n_cxl" class="form-control" min="0">
                         @error('n_cxl') <span class="red-text">{​​{​​ $message }​​}​​</span> @enderror
                     </div>
                 </div>
@@ -205,7 +205,7 @@
                             <div class="switch">
                                 <label>
                                     No
-                                    <input type="checkbox" id="conformidad" name="conformidad" wire:model.debounce.800ms="conformidad">
+                                    <input type="checkbox" id="conformidad" name="conformidad" wire:model.live.debounce.800ms="conformidad">
 
                                     <span class="lever"></span>
                                     Si
@@ -222,7 +222,7 @@
                             <div class="switch">
                                 <label>
                                     No
-                                    <input type="checkbox" id="firma" name="firma" wire:model.debounce.800ms="firma">
+                                    <input type="checkbox" id="firma" name="firma" wire:model.live.debounce.800ms="firma">
 
                                     <span class="lever"></span>
                                     Si
@@ -236,7 +236,7 @@
                             <p class="grey-text" style="font-size:17px;font-weight:bold;"><i
                                     class="fas fa-search iconos-crear"></i>Hallazgos / Comentarios</p>
                         </small>
-                        <textarea style="padding:15px;" type="text" maxlength="255" wire:model.debounce.800ms="hallazgos_comentarios"
+                        <textarea style="padding:15px;" type="text" maxlength="255" wire:model.live.debounce.800ms="hallazgos_comentarios"
                             class="text_area"></textarea>
                         @error('hallazgos_comentarios') <span class="red-text">{{ $message }}</span> @enderror
                     </div>

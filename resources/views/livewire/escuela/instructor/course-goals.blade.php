@@ -5,7 +5,7 @@
                 @if ($goal->id == $item->id)
                         <div class="registro rounded p-2">
                             <form wire:submit.prevent='update'>
-                                <input wire:model="goal.name" class="form-control">
+                                <input wire:model.live="goal.name" class="form-control">
                                 @error('goal.name') <span class="text-danger">{{ $message }}</span> @enderror
                             </form>
                         </div>
@@ -32,7 +32,7 @@
                     <div class="form-group col-9 pl-0 anima-focus">
                         {{-- {!! Form::label('title', 'Agregar el nombre de la meta*',[
                         'class' => 'pl-0']) !!} --}}
-                        <input wire:model="name" class="form-control" placeholder="">
+                        <input wire:model.live="name" class="form-control" placeholder="">
                         <label for="name">Agregar el nombre de la meta*</label>
                         @error('name') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
