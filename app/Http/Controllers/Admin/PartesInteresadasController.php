@@ -90,15 +90,17 @@ class PartesInteresadasController extends Controller
 
     public function edit(Request $request, $id)
     {
-        abort_if(Gate::denies('partes_interesadas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $partesInteresada = PartesInteresada::find($id);
-        if (! $partesInteresada) {
-            return redirect()->route('admin.partes-interesadas.index')->with('success', 'El registro  no existe!');
-        }
-        $clausulas = Clausula::get();
-        $partesInteresada->load('team');
+        try {
+            abort_if(Gate::denies('partes_interesadas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.partesInteresadas.edit', ['id' => $partesInteresada], compact('partesInteresada', 'clausulas'));
+            $partesInteresada = PartesInteresada::find($id);
+            $clausulas = Clausula::get();
+            $partesInteresada->load('team');
+
+            return view('admin.partesInteresadas.edit', ['id' => $partesInteresada], compact('partesInteresada', 'clausulas'));
+        } catch (\Throwable $th) {
+            abort(404);
+        }
     }
 
     public function update(Request $request, $partesInteresada)

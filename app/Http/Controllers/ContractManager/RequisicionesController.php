@@ -242,9 +242,11 @@ class RequisicionesController extends Controller
         if ($tipo_firma == 'firma_solicitante') {
             $fecha = date('d-m-Y');
             $requisicion->fecha_firma_solicitante_requi = $fecha;
+            $requisicion->update([
+                'estado' => 'curso',
+            ]);
             $requisicion->save();
-            $user = User::find($requisicion->id_user);
-            $userEmail = $user->email;
+            $userEmail = User::find($requisicion->id_user)->empleado->supervisor->email;
 
             $organizacion = Organizacion::getFirst();
         }
