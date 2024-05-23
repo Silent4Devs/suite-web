@@ -12,7 +12,7 @@
                      <div class="col-sm-12 col-lg-6">
                          <div class="form-group">
                              <label for="parent">Nombre:</label>
-                             <input type="text" class="form-control {{ $errors->has('parent') ? 'is-invalid' : '' }}" id="parent" aria-describedby="parent" wire:model.defer="parent" value="{{  old('parent')  }}}}" autocomplete="off">
+                             <input type="text" class="form-control {{ $errors->has('parent') ? 'is-invalid' : '' }}" id="parent" aria-describedby="parent" wire:model="parent" value="{{  old('parent')  }}}}" autocomplete="off">
                              @if ($errors->has('parent'))
                              <span class="invalid-feedback">{{ $errors->first('parent') }}</span>
                              @endif
@@ -22,7 +22,7 @@
                      <div class="col-sm-12 col-lg-6">
                          <div class="form-group">
                              <label for="norma">Norma:</label>
-                             <select class="custom-select {{ $errors->has('norma') ? 'is-invalid' : '' }}" id="norma" wire:model.defer="norma">
+                             <select class="custom-select {{ $errors->has('norma') ? 'is-invalid' : '' }}" id="norma" wire:model="norma">
                                 <option selected>-- Selecciona una Norma --</option>
                                 @foreach (App\Models\PlanImplementacion::NORMAS as $key =>$norma)
                                     <option value="{{ $key }}" {{ old('norma') == $norma ? 'selected' : '' }}>{{ $norma }}</option>
@@ -39,7 +39,7 @@
                      <div class="col-sm-12 col-lg-6">
                          <div class="form-group">
                              <label for="modulo_origen">Modulo de Origen:</label>
-                             <input type="text" class="form-control {{ $errors->has('modulo_origen') ? 'is-invalid' : '' }}" id="modulo_origen" aria-describedby="modulo_origen" wire:model.defer="modulo_origen" value="{{ $modulo_origen }}" autocomplete="off" readonly>
+                             <input type="text" class="form-control {{ $errors->has('modulo_origen') ? 'is-invalid' : '' }}" id="modulo_origen" aria-describedby="modulo_origen" wire:model="modulo_origen" value="{{ $modulo_origen }}" autocomplete="off" readonly>
                              @if ($errors->has('modulo_origen'))
                              <span class="invalid-feedback">{{ $errors->first('modulo_origen') }}</span>
                              @endif
@@ -49,7 +49,7 @@
                      <div class="col-sm-12 col-lg-6">
                          <div class="form-group">
                              <label for="objetivo">Objetivo:</label>
-                             <textarea class="form-control {{ $errors->has('objetivo') ? 'is-invalid' : '' }}" id="objetivo" wire:model.defer="objetivo">{{ old('objetivo') }}</textarea>
+                             <textarea class="form-control {{ $errors->has('objetivo') ? 'is-invalid' : '' }}" id="objetivo" wire:model="objetivo">{{ old('objetivo') }}</textarea>
                              @if ($errors->has('objetivo'))
                              <div class="invalid-feedback">{{ $errors->first('objetivo') }}</div>
                              @endif

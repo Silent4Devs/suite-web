@@ -24,7 +24,7 @@
             <label for="fecha_baja"><i class="fas fa-calendar-day mr-2"></i>Fecha
                 de Baja <small class="text-danger">*</small></label>
             <div class="input-group mb-2">
-                <input wire:ignore type="date" id="fecha_baja" wire:model.defer="fechaBaja"
+                <input wire:ignore type="date" id="fecha_baja" wire:model="fechaBaja"
                     class="fecha_flatpickr form-control">
                 {{-- errors --}}
                 @error('fechaBaja')
@@ -38,7 +38,7 @@
             <div class="w-100" wire:ignore>
                 <label for="fecha_baja"><i class="fas fa-info-circle mr-2"></i>Razón de Baja <small
                         class="text-danger">*</small></label>
-                <textarea name="razonBaja" id="razonBaja" cols="30" rows="10" wire:model.defer="razonBaja"></textarea>
+                <textarea name="razonBaja" id="razonBaja" cols="30" rows="10" wire:model="razonBaja"></textarea>
             </div>
             @error('razonBaja')
                 <small class="invalid-feedback d-block">

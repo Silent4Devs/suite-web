@@ -46,7 +46,7 @@
         <input class="mt-2 form-control {{ $errors->has('evaluación_riesgo') ? 'is-invalid' : '' }}" type="text"
             style="background: {{ $colorReglaTipo }};color:{{ $colorTextoTipo }};" name="evaluación_riesgo"
             value="{{ old('evaluación_riesgo', '') }}" id="evaluación_riesgo_informacion"
-            wire:model.defer="evaluacion">
+            wire:model="evaluacion">
         <small class="text-danger errores evaluacion_riesgo_error"></small>
     </div>
 </div>

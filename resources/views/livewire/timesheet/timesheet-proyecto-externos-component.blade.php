@@ -15,19 +15,19 @@
         <div class="row">
             <div class="form-group col-md-8">
                 <label for="">Externo<sup>*</sup>(obligatorio)</label><br>
-                <input wire:model.defer="externo_añadido" name="" maxlength="255" id=""type="text" class="form-control"
+                <input wire:model="externo_añadido" name="" maxlength="255" id=""type="text" class="form-control"
                     required>
             </div>
         </div>
         <div class="row">
             <div class="form-group col-md-4">
                 <label for="">Horas asignadas<sup>*</sup>(obligatorio)</label>
-                <input wire:model.defer="horas_tercero" name="" id="" step="0.01" type="number"
+                <input wire:model="horas_tercero" name="" id="" step="0.01" type="number"
                     min="0.01" class="form-control">
             </div>
             <div class="form-group col-md-4">
                 <label for="">Costo por hora<sup>*</sup>(obligatorio)</label>
-                <input wire:model.defer="costo_tercero" name="" id="" step="0.01" type="number"
+                <input wire:model="costo_tercero" name="" id="" step="0.01" type="number"
                     min="0.01" class="form-control">
             </div>
             <div class="form-group col-md-4" style="display: flex; align-items: flex-end;">

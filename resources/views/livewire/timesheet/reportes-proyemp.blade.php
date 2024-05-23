@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-md-3 form-group" style="padding-left:0px !important;">
                 <label class="form-label">Colaborador</label>
-                <select class="form-control" wire:model.defer="emp_id">
+                <select class="form-control" wire:model="emp_id">
                     <option selected value="0">Todos</option>
                     @foreach ($emp as $em)
                         <option value="{{ $em->id }}">{{ $em->name }}</option>
@@ -13,7 +13,7 @@
             </div>
             <div class="col-md-3 form-group" style="padding-left:0px !important;" wire:ignore>
                 <label class="form-label">Proyecto</label>
-                <select class="form-control" wire:model.defer="proy_id">
+                <select class="form-control" wire:model="proy_id">
                     <option selected value="0">Todos</option>
                     @foreach ($proy as $pro)
                         <option value="{{ $pro->id }}">{{ $pro->identificador }} - {{ $pro->proyecto }}</option>
@@ -23,11 +23,11 @@
             <div class="col-md-3 form-group">
                 <label class="form-label">Fecha de inicio</label>
                 <input class="form-control date_librery" type="date" name="fecha_inicio"
-                    wire:model.defer="fecha_inicio">
+                    wire:model="fecha_inicio">
             </div>
             <div class="col-md-3 form-group">
                 <label class="form-label">Fecha de fin</label>
-                <input class="form-control date_librery" type="date" name="fecha_fin" wire:model.defer="fecha_fin">
+                <input class="form-control date_librery" type="date" name="fecha_fin" wire:model="fecha_fin">
             </div>
         </div>
     </div>

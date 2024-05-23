@@ -31,7 +31,7 @@
                 <div wire:ignore>
                     <label for="" class="txt-tamaño">Fecha
                         entrega inicial<font class="asterisco">*</font></label>
-                    <input type="date" wire:model.defer="plazo_entrega_inicio" class="form-control" min="1945-01-01"
+                    <input type="date" wire:model="plazo_entrega_inicio" class="form-control" min="1945-01-01"
                         required>
                 </div>
                 @error('plazo_entrega_inicio')
@@ -42,7 +42,7 @@
                 <div wire:ignore>
                     <label for="" class="txt-tamaño">Fecha
                         entrega final<font class="asterisco">*</font></label>
-                    <input type="date" wire:model.defer="plazo_entrega_termina" class="form-control" min="1945-01-01"
+                    <input type="date" wire:model="plazo_entrega_termina" class="form-control" min="1945-01-01"
                         required>
                 </div>
                 @error('plazo_entrega_termina')
@@ -84,7 +84,7 @@
                 <label for="" class="txt-tamaño">Factura Relacionada
                     <font class="asterisco">*</font>
                 </label>
-                <select name="factura_id" id="factura_id" class="form-control" wire:model.defer="factura_id">
+                <select name="factura_id" id="factura_id" class="form-control" wire:model="factura_id">
                     <option value="" selected>Sin factura</option>
                     @foreach ($facturas_entregables as $facturas)
                         <option value="{{ $facturas->id }}">{{ $facturas->no_factura }}</option>
@@ -116,7 +116,7 @@
                     <div class="custom-file">
                         {{-- <div class="btn" style="margin-right: 8px"> --}}
                         <span>PDF</span>
-                        <input class="form-control" type="file" wire:model.defer="pdf" accept=".pdf"
+                        <input class="form-control" type="file" wire:model="pdf" accept=".pdf"
                             id="upload{{ $iteration1 }}" readonly>
                         {{-- </div> --}}
                         {{-- <div class="file-path-wrapper">
@@ -191,7 +191,7 @@
                             <label for="" class="txt-tamaño">Factura
                                 Relacionada<font class="asterisco">*</font></label>
                             <select name="deductiva_factura_id" id="deductiva_factura_id" class="form-control"
-                                wire:model.defer="deductiva_factura_id">
+                                wire:model="deductiva_factura_id">
                                 <option value="">Sin factura</option>
                                 @foreach ($facturas_entregables as $facturas)
                                     }

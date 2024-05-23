@@ -63,7 +63,7 @@
                             <div class="row">
                                 <div class="form-group col-md-12">
                                     <label for="">Horas asignadas<sup>*</sup>(obligatorio)</label>
-                                    <input wire:model.defer="horas_asignadas" name="horas_asignadas"
+                                    <input wire:model="horas_asignadas" name="horas_asignadas"
                                         id="horas_asignadas" type="number" step="0.01" min="0.01"
                                         class="form-control">
                                     @error('horas_asignadas')
@@ -75,7 +75,7 @@
                             <div class="row">
                                 <div class="form-group col-md-12">
                                     <label for="">Costo por hora<sup>*</sup>(obligatorio)</label>
-                                    <input wire:model.defer="costo_hora" name="costo_hora" id="costo_hora"
+                                    <input wire:model="costo_hora" name="costo_hora" id="costo_hora"
                                         type="number" min="0.01" step="0.01" class="form-control">
                                     @error('costo_hora')
                                         <small class="text-danger"><i

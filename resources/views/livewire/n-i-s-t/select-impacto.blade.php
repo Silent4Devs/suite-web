@@ -56,7 +56,7 @@
         <div class="form-group col-sm-6 col-md-6 col-lg-6" wire:ignore.self>
             <label for="valor"><i class="fas fa-exclamation-circle iconos-crear"></i>Valor del impacto</label>
             <input class="form-control mt-2 {{ $errors->has('valor') ? 'is-invalid' : '' }}" type="number"
-                name="valor" id="valor" value="{{ old('valor', '') }}" wire:model.defer="valor" readonly
+                name="valor" id="valor" value="{{ old('valor', '') }}" wire:model="valor" readonly
                 style="background: {{ $colorReglaTipo }};color:{{ $colorTextoTipo }};">
             @if ($errors->has('valor'))
                 <div class="invalid-feedback">

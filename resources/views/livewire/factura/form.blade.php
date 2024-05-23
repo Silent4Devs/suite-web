@@ -16,12 +16,12 @@
     <section id="form_factura">
         <div>
             <!-- No Contrato Field -->
-            <input wire:model.defer="contrato_id" type="hidden" value="{{ $contrato_id }}">
+            <input wire:model="contrato_id" type="hidden" value="{{ $contrato_id }}">
             <div class="row" style="margin-left: 10px;margin-right: 10px;">
                 <div class="distancia form-group col-md-6">
                     <label for="no_contrato" class="txt-tamaño">No.
                         factura<font class="asterisco">*</font></label>
-                    <input type="text" maxlength="250" wire:model.defer="no_factura" class="form-control" required>
+                    <input type="text" maxlength="250" wire:model="no_factura" class="form-control" required>
                     @error('no_factura')
                         <span class="red-text">{{ $message }}</span>
                     @enderror
@@ -31,7 +31,7 @@
                     {{-- Monto Factura --}}
                     <label for="no_contrato" class="txt-tamaño">Monto
                         factura<font class="asterisco">*</font></label>
-                    <input type="number" maxlength="250" min="0" wire:model.defer="monto_factura" id="monto_factura"
+                    <input type="number" maxlength="250" min="0" wire:model="monto_factura" id="monto_factura"
                         class="form-control" required>
                     @error('monto_factura')
                         <span class="red-text">{{ $message }}</span>
@@ -46,7 +46,7 @@
                         <label for="no_contrato" class="txt-tamaño">Fecha
                             recepción<font class="asterisco">*
                             </font></label>
-                        <input id="" type="date"  min="1945-01-01" wire:model.defer="fecha_recepcion"
+                        <input id="" type="date"  min="1945-01-01" wire:model="fecha_recepcion"
                             class="form-control" style="margin-bottom: 0" required>
                     </div>
                     @error('fecha_recepcion')
@@ -59,7 +59,7 @@
                         <label for="no_contrato" class="txt-tamaño">Fecha
                             liberación<font class="asterisco">*
                             </font></label>
-                        <input id="" type="date" min="1945-01-01" wire:model.defer="fecha_liberacion"
+                        <input id="" type="date" min="1945-01-01" wire:model="fecha_liberacion"
                             class="form-control" style="margin-bottom: 0" required>
                     </div>
                     @error('fecha_liberacion')
@@ -73,7 +73,7 @@
                     <label for="no_contrato" class="txt-tamaño">Concepto
                         <font class="asterisco">*</font>
                     </label><br>
-                    <textarea class="form-control" maxlength="550" wire:model.defer="concepto" required></textarea>
+                    <textarea class="form-control" maxlength="550" wire:model="concepto" required></textarea>
                     @error('concepto')
                         <span class="red-text">{{ $message }}</span>
                     @enderror
@@ -105,11 +105,11 @@
                 <div class="custom-file">
                     {{-- <div class="btn"> --}}
                     <span>PDF</span>
-                    <input class="form-control" type="file" wire:model.defer="pdf" accept=".pdf"
+                    <input class="form-control" type="file" wire:model="pdf" accept=".pdf"
                         id="upload{{ $iteration }}" readonly>
                     {{-- </div> --}}
                     {{-- <div class="file-path-wrapper">
-                        <input class="file-path validate" wire:model.defer="pdf" placeholder="Elegir factura pdf"
+                        <input class="file-path validate" wire:model="pdf" placeholder="Elegir factura pdf"
                             readonly>
                     </div> --}}
                 </div>
@@ -132,11 +132,11 @@
                 <div class="custom-file">
                     {{-- <div class="btn"> --}}
                     <span>XML</span>
-                    <input type="file" class="form-control" wire:model.defer="xml" accept=".xml, text"
+                    <input type="file" class="form-control" wire:model="xml" accept=".xml, text"
                         id="upload{{ $iteration1 }}" readonly>
                     {{-- </div> --}}
                     {{-- <div class="file-path-wrapper">
-                        <input class="file-path validate" wire:model.defer="xml" placeholder="Elegir factura xml"
+                        <input class="file-path validate" wire:model="xml" placeholder="Elegir factura xml"
                             readonly>
                     </div> --}}
                 </div>

@@ -11,7 +11,7 @@
             @foreach ($currentQuestion->answers as $answer)
                 <div class="px-3 py-3 m-3 text-sm text-gray-800 border-2 border-gray-300 rounded-lg max-w-auto form">
                     <input class="form-check-input" type="radio" name="flexRadioDefault"
-                        id="flexRadioDefault{{ $answer->id }}" value="{{ $answer->id }}" wire:model.defer="answer">
+                        id="flexRadioDefault{{ $answer->id }}" value="{{ $answer->id }}" wire:model="answer">
                     <label class="form-check-label" for="flexRadioDefault{{ $answer->id }}">
                         {{ $answer->answer }}
                     </label>

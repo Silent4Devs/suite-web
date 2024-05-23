@@ -156,7 +156,7 @@
             </div>
             <div class="col-md-3 form-group">
                 <label class="form-label">Proyecto</label>
-                <select class="form-control" wire:model.defer="proyecto_id">
+                <select class="form-control" wire:model="proyecto_id">
                     <option selected value="0">
                         Mostrar todos los proyectos
                         @if ($area_id)
@@ -174,12 +174,12 @@
             <div class="col-md-2 form-group" wire:ignore>
                 <label class="form-label">Fecha de inicio</label>
                 <input id="fecha_dia_registros_inicio_proyectos" class="form-control date_librery" type="date"
-                    name="fecha_inicio" wire:model.defer="fecha_inicio">
+                    name="fecha_inicio" wire:model="fecha_inicio">
             </div>
             <div class="col-md-2 form-group" wire:ignore>
                 <label class="form-label">Fecha de fin</label>
                 <input id="fecha_dia_registros_fin_proyectos" class="form-control date_librery" type="date"
-                    name="fecha_fin" wire:model.defer="fecha_fin">
+                    name="fecha_fin" wire:model="fecha_fin">
             </div>
             <div class="col-md-2">
                 <label for="">&nbsp;</label>

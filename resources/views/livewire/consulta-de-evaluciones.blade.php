@@ -86,7 +86,7 @@
         </div>
         <div class="col-5">
             <label for="evaluacion1"><i class="mr-2 fas fa-book"></i>Evaluación 1</label>
-            <select class="form-control" name="" wire:model.defer="evaluacion1" id="evaluacion1">
+            <select class="form-control" name="" wire:model="evaluacion1" id="evaluacion1">
                 <option value="">-- Selecciona evaluación 1 --</option>
                 @foreach ($evaluaciones as $evaluacion)
                     <option value="{{ $evaluacion->id }}">{{ $evaluacion->nombre }}</option>
@@ -95,7 +95,7 @@
         </div>
         <div class="col-5">
             <label for="evaluacion2"><i class="mr-2 fas fa-book"></i>Evaluación 2</label>
-            <select class="form-control" name="" wire:model.defer="evaluacion2" id="evaluacion2">
+            <select class="form-control" name="" wire:model="evaluacion2" id="evaluacion2">
                 <option value="">-- Selecciona evaluación 2 --</option>
                 @foreach ($evaluaciones as $evaluacion)
                     <option value="{{ $evaluacion->id }}">{{ $evaluacion->nombre }}</option>
