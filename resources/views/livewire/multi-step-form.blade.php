@@ -529,7 +529,7 @@
                                                             {{-- Evaluación de Desempeño Jun-Dic 2021 --}}
                                                             {{-- Evaluación de desempeño realizada en el segundo periodo del año 2021 para los empleados de S4B sede Torre Murano. --}}
                                                             <input type="checkbox" type="checkbox"
-                                                                wire:model.lazy="includeCompetencias"
+                                                                wire:model.blur="includeCompetencias"
                                                                 wire:change.prevent="$set('showPesoGeneralCompetencias',{{ !$showPesoGeneralCompetencias }})">
                                                             <span class="checkmark"></span>
                                                         </label>
@@ -555,7 +555,7 @@
                                                                     ({{ $errors->first('includeObjetivos') }})
                                                                 </small>
                                                             @endif
-                                                            <input type="checkbox" wire:model.lazy="includeObjetivos"
+                                                            <input type="checkbox" wire:model.blur="includeObjetivos"
                                                                 class="form-check-input" type="checkbox"
                                                                 wire:change.prevent="$set('showPesoGeneralObjetivos',{{ !$showPesoGeneralObjetivos }})">
                                                             <span class="checkmark"></span>
@@ -722,7 +722,7 @@
                                                 </label>
                                                 <select
                                                     class="mt-2 form-control {{ $errors->has('evaluados_objetivo') ? 'is-invalid' : '' }}"
-                                                    wire:model.lazy="evaluados_objetivo" id="evaluados_objetivo"
+                                                    wire:model.blur="evaluados_objetivo" id="evaluados_objetivo"
                                                     name="evaluados_objetivo"
                                                     wire:change="habilitarSelectAlternativo()">
                                                     <option value="" selected>-- Seleciona una opción --</option>
@@ -848,7 +848,7 @@
                                         <article class="ml-5 feature1">
                                             <input readonly disabled type="checkbox"
                                                 wire:change="restarGrados('jefe_inmediato')"
-                                                wire:model.lazy="evaluado_por_jefe" wire:target="evaluado_por_jefe"
+                                                wire:model.blur="evaluado_por_jefe" wire:target="evaluado_por_jefe"
                                                 id="feature1" wire:loading.attr="readonly" />
                                             <div>
                                                 <span class="text-center">
@@ -880,7 +880,7 @@
                                         <article class="feature2">
                                             <input readonly disabled type="checkbox"
                                                 wire:change="restarGrados('misma_area')"
-                                                wire:model.lazy="evaluado_por_misma_area" id="feature2"
+                                                wire:model.blur="evaluado_por_misma_area" id="feature2"
                                                 wire:target="evaluado_por_misma_area" wire:loading.attr="readonly" />
                                             <div>
                                                 <div>
@@ -913,7 +913,7 @@
                                         <article class="mt-4 ml-5 feature3">
                                             <input readonly disabled type="checkbox"
                                                 wire:change="restarGrados('equipo_a_cargo')"
-                                                wire:model.lazy="evaluado_por_equipo_a_cargo" id="feature3"
+                                                wire:model.blur="evaluado_por_equipo_a_cargo" id="feature3"
                                                 wire:target="evaluado_por_equipo_a_cargo"
                                                 wire:loading.attr="readonly" />
                                             <div>
@@ -945,7 +945,7 @@
                                         <article class="mt-4 feature4">
                                             <input readonly disabled type="checkbox"
                                                 wire:change="restarGrados('autoevaluacion')"
-                                                wire:model.lazy="autoevaluacion" id="feature4"
+                                                wire:model.blur="autoevaluacion" id="feature4"
                                                 wire:target="autoevaluacion" wire:loading.attr="readonly" />
                                             <div>
                                                 <span class="text-center">

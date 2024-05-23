@@ -177,7 +177,7 @@
                 </div>
                 {{-- Establece cuantas secciones habra --}}
                 <div class="col-md-1">
-                    <select id="secciones" name="secciones" wire:model.lazy="secciones" class="form-control">
+                    <select id="secciones" name="secciones" wire:model.blur="secciones" class="form-control">
                         <option value=1 selected>1</option>
                         <option value=2>2</option>
                         <option value=3>3</option>

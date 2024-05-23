@@ -12,7 +12,7 @@
                     @if ($enrolled)
                         <article>
                             @if (!$review)
-                                <textarea wire:model.lazy="comment" class="form-control w-full" rows="3" placeholder="Ingrese una reseña del curso"></textarea>
+                                <textarea wire:model.blur="comment" class="form-control w-full" rows="3" placeholder="Ingrese una reseña del curso"></textarea>
 
                                     <ul class="d-flex" style="list-style: none; padding-top:15px; padding-left: 0px !important;">
                                         <li class="mr-1 cursor-pointer" wire:click="$set('rating', 1)">

@@ -123,7 +123,7 @@
         @if (!count($mapas))
             <div class="col-md-3">
                 <p class="text-xl text-gray-700">Proceso:</p>
-                <select class="form-control" wire:model.lazy="proceso_id">
+                <select class="form-control" wire:model.blur="proceso_id">
                     <option value="" selected disabled>Seleccione una proceso</option>
                     @foreach ($procesos as $proceso)
                         <option value="{{ $proceso->id }}">{{ $proceso->nombre }}</option>
