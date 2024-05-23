@@ -106,7 +106,6 @@ export const useAnalisisRiesgo = () => {
         }
       }
 
-
     const addSection = () => {
         let nextSection = sections.length + 1;
         let nextQuestion = questions.length +1;
@@ -275,6 +274,13 @@ export const useAnalisisRiesgo = () => {
                         item.columnId = `ss-${columnId}`
                         if(item.type === "3"){
                             const data = item.data[0];
+                            const propMin = `minimo-${item.id}`
+                            const propMax = `maximo-${item.id}`
+                            data[propMin] = data.minimo
+                            data[propMax] = data.maximo
+                            delete data.minimo
+                            delete data.maximo
+                            console.log(data)
                             item.data = data;
                         }
                         if(item.type === "10"){
@@ -323,6 +329,17 @@ export const useAnalisisRiesgo = () => {
                 const newColumnId = columnId.slice(3);
                 item.columnId = parseInt(newColumnId,10);
             }
+            if(item.type === "3"){
+                const propMin = `minimo-${id}`
+                const propMax = `maximo-${id}`
+
+                item.data.minimo = item.data[propMin]
+                item.data.maximo = item.data[propMax]
+
+                delete item.data[propMin]
+                delete item.data[propMax]
+
+            }
         })
 
         dataSections.map(item => {
@@ -333,8 +350,6 @@ export const useAnalisisRiesgo = () => {
                 dataQuestions[itemIdFound] = {...item}
             });
         });
-
-        // console.log(dataQuestions);
 
         if(edit){
             editData(dataSections,dataQuestions);
@@ -353,7 +368,6 @@ export const useAnalisisRiesgo = () => {
           });
         dataForm.append('sections', JSON.stringify(dataSections));
         dataForm.append('questions', JSON.stringify(dataQuestions));
-
         try {
             const response = await axios.post(url,dataForm);
             console.log(response.data);
@@ -444,7 +458,6 @@ export const useGenerateTemplateAnalisisRiesgo = (item, changeQuestionProps,chan
     const [inputTitle, setInputTitle] = useState(item.title);
     const [showSize, setShowSize] = useState(false)
     const [showInfo, setShowInfo] = useState(false)
-
 
     const {
         attributes,
@@ -574,12 +587,12 @@ export const useFormulasAnalisisRiesgos = () => {
     }
 
     const addOption = () => {
-        // console.log(option, options);
-        const id = parseInt(option);
+        if(option !== ""){
+            const id = parseInt(option);
+            const newRegister = options.filter(item => item.id === id);
+            setRegisters([...registers, newRegister[0]]);
+        }
 
-        // const newRegister =
-        const newRegister = options.filter(item => item.id === id);
-        setRegisters([...registers, newRegister[0]]);
     }
 
     const addVariable = (item) => {
@@ -699,8 +712,9 @@ export const useFormulasAnalisisRiesgos = () => {
 }
 
 export const useSettingsAnalisisRiesgos = () => {
-
-    const [loading, setLoading] = useState(true);
+    const [loadingInfoTemplate, setLoadingInfoTemplate] = useState(true)
+    const [loadingQuestions, setLoadingQuestions] = useState(true)
+    const [loadingTableSettigns, setLoadingTableSettigns] = useState(true)
 
     const [sections, setSections] = useState();
     const [questions, setQuestions] = useState();
@@ -820,7 +834,7 @@ export const useSettingsAnalisisRiesgos = () => {
 
     const getData = async() => {
         try {
-            setLoading(true);
+            setLoadingQuestions(true);
             const response = await axios.get('http:///suite-web.test/api/api/v1/ar/settings/1');
             const dataSection = response.data.data.sections;
             const dataQuestion = response.data.data.questions;
@@ -852,34 +866,43 @@ export const useSettingsAnalisisRiesgos = () => {
                 setSections(dataSection);
                 setQuestions(dataQuestion);
             }
-            setLoading(false);
         } catch (error) {
             console.log(error);
+        } finally {
+            setLoadingQuestions(false)
         }
     }
 
     const getInfoTemplate = async() => {
         try {
+            setLoadingInfoTemplate(true)
             const response = await axios.get('http:///suite-web.test/api/api/v1/ar/template/1');
+            console.log(response)
             if(response.status === 200){
                 const register = response.data.data.template
                 setTemplate(register)
             }
         } catch (error) {
-
+            console.log(error)
+        } finally {
+            setLoadingInfoTemplate(false)
         }
     }
 
     const getTableSettings = async() => {
         try {
+            setLoadingTableSettigns(true);
             const response = await axios.get('http:///suite-web.test/api/api/v1/template/ar/settings/table/1');
-
+            console.log("settigs")
+            console.log(response.data.data)
             if(response.status === 200){
                 const register = response.data.data
                 setTableSettings(register);
             }
         } catch (error) {
-
+            // console.log(error)
+        } finally{
+            setLoadingTableSettigns(false);
         }
      }
 
@@ -889,7 +912,8 @@ export const useSettingsAnalisisRiesgos = () => {
         dataForm.append('sections', JSON.stringify(dataSections));
         dataForm.append('questions', JSON.stringify(dataQuestions));
 
-        const url = 'http:///suite-web.test/api/api/v1/test/edit'
+        const url = 'http:///suite-web.test/api/api/v1/test/1'
+        const url2 = 'http:///suite-web.test/api/api/v1/template/ar/settings/table/edit'
 
         try {
             const response = await axios.post(url,dataForm,{
@@ -897,10 +921,10 @@ export const useSettingsAnalisisRiesgos = () => {
                     '_method' : "PUT"
                 }
               });
-            console.log(response);
-            if(response.status === 200){
-                // setReload(reload+1);
-            }
+            // const response2 = await axios.put(url2,tableSettings);
+            console.log(response)
+            // console.log(response2)
+
         } catch (error) {
             console.log(error)
         }
@@ -941,9 +965,7 @@ export const useSettingsAnalisisRiesgos = () => {
             });
         });
 
-        // console.log(dataQuestions);
-
-            editData(dataSections,dataQuestions);
+        editData(dataSections,dataQuestions);
     }
 
     useEffect(() => {
@@ -952,7 +974,7 @@ export const useSettingsAnalisisRiesgos = () => {
         getTableSettings();
       }, [])
 
-    return {loading,sections,questions, activeSection, activeQuestion, handleDragStart,
+    return {loadingInfoTemplate,loadingTableSettigns, loadingQuestions ,sections,questions, activeSection, activeQuestion, handleDragStart,
         handleDragEnd, handleDragOver, sensors, changeSize, handleSubmit, template, tableSettings}
 }
 
@@ -998,14 +1020,15 @@ export const useSettingsQuestionAnalisisRiesgo = (item, changeSize) =>{
 }
 
 export const useTemplateViewPrevAnalisisRiesgo = () => {
-    const [loading, setLoading] = useState(true);
+    const [loadingInfoTemplate, setLoadingInfoTemplate] = useState(true)
+    const [loadingQuestions, setLoadingQuestions] = useState(true)
     const [template, setTemplate] = useState({});
     const [sections, setSections] = useState();
     const [questions, setQuestions] = useState();
 
     const getData = async() => {
         try {
-            setLoading(true);
+            setLoadingQuestions(true);
             const response = await axios.get('http:///suite-web.test/api/api/v1/ar/settings/1');
             const dataSection = response.data.data.sections;
             const dataQuestion = response.data.data.questions;
@@ -1028,21 +1051,24 @@ export const useTemplateViewPrevAnalisisRiesgo = () => {
                 setSections(dataSection);
                 setQuestions(dataQuestion);
             }
-            setLoading(false);
         } catch (error) {
             console.log(error);
+        } finally {
+            setLoadingQuestions(false)
         }
     }
 
     const getInfoTemplate = async() => {
         try {
+            setLoadingInfoTemplate(true);
             const response = await axios.get('http:///suite-web.test/api/api/v1/ar/template/1');
             if(response.status === 200){
                 const register = response.data.data.template
                 setTemplate(register)
             }
         } catch (error) {
-
+        } finally{
+            setLoadingInfoTemplate(false)
         }
     }
 
@@ -1051,5 +1077,5 @@ export const useTemplateViewPrevAnalisisRiesgo = () => {
         getInfoTemplate();
     }, []);
 
-    return {loading,sections,questions,template}
+    return {loadingInfoTemplate,loadingQuestions,sections,questions,template}
 }

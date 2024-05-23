@@ -8,16 +8,18 @@ import { SectionSettigns } from '../../components/custom/analisis-riesgos/Sectio
 
 
 const SettingsAnalisisRiesgos = () => {
-    const {sections, questions, loading, activeSection, activeQuestion, handleDragStart,
+    const {sections, questions, loadingInfoTemplate,loadingTableSettigns,loadingQuestions, activeSection, activeQuestion, handleDragStart,
         handleDragEnd, handleDragOver, sensors, changeSize, handleSubmit, template, tableSettings} = useSettingsAnalisisRiesgos();
 
-    if(loading){
+    if(loadingInfoTemplate || loadingTableSettigns || loadingQuestions){
         return(<div>Cargando</div>)
     }
 
   return (
     <div style={{display: "flex", flexDirection:"column", justifyContent:"flex-start", alignItems:"flex-start" }}>
         <ContainerInfoTemplate template={template} icon={true}/>
+        {
+            sections ? (
         <DndContext sensors={sensors} collisionDetection={closestCorners} onDragEnd={handleDragEnd} onDragStart={handleDragStart} onDragOver={handleDragOver}>
                 <ContainerSettings sections={sections} questions={questions} changeSize={changeSize} />
                 {createPortal(
@@ -39,6 +41,9 @@ const SettingsAnalisisRiesgos = () => {
                     document.body
                 )}
         </DndContext>
+            ):
+            <></>
+        }
 
         <ContainerTableSettigs data={tableSettings}/>
 

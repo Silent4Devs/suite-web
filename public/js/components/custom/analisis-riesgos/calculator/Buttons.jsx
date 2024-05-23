@@ -1,7 +1,7 @@
 import React from "react";
 import "../../../../../css/templateAnalisisRiesgo/calculator/buttons.css"
 
-const Buttons = ({ inputHandler, clearInput, backspace, changePlusMinus, calculateAns }) => {
+const Buttons = ({ inputHandler, clearInput, backspace, changePlusMinus, addFormula }) => {
   document.addEventListener("keydown", function (event) {
     if (event.key === "Enter") {
       event.preventDefault();
@@ -12,16 +12,19 @@ const Buttons = ({ inputHandler, clearInput, backspace, changePlusMinus, calcula
   return (
     <div className="show-btn-calculator">
       <button className="btn-calculator exp" onClick={inputHandler}>
-        (
+        ()
       </button>
-      <button className="btn-calculator exp" onClick={inputHandler}>
+      {/* <button className="btn-calculator exp" onClick={inputHandler}>
         )
-      </button>
+      </button> */}
       <button className="btn-calculator clr" onClick={clearInput}>
         AC
       </button>
       <button className="btn-calculator clr" onClick={backspace}>
         ⌫
+      </button>
+      <button className="btn-calculator exp" onClick={inputHandler}>
+        ÷
       </button>
       <button className="btn-calculator" onClick={inputHandler}>
         7
@@ -32,8 +35,8 @@ const Buttons = ({ inputHandler, clearInput, backspace, changePlusMinus, calcula
       <button className="btn-calculator" onClick={inputHandler}>
         9
       </button>
-       <button className="btn-calculator exp" onClick={inputHandler}>
-        ÷
+      <button className="btn-calculator exp" onClick={inputHandler}>
+        x
       </button>
       <button className="btn-calculator" onClick={inputHandler}>
         4
@@ -45,7 +48,7 @@ const Buttons = ({ inputHandler, clearInput, backspace, changePlusMinus, calcula
         6
       </button>
       <button className="btn-calculator exp" onClick={inputHandler}>
-        x
+        +
       </button>
       <button className="btn-calculator" onClick={inputHandler}>
         1
@@ -57,7 +60,7 @@ const Buttons = ({ inputHandler, clearInput, backspace, changePlusMinus, calcula
         3
       </button>
       <button className="btn-calculator exp" onClick={inputHandler}>
-        +
+        -
       </button>
       <button className="btn-calculator exp" onClick={changePlusMinus}>
         ±
@@ -68,12 +71,9 @@ const Buttons = ({ inputHandler, clearInput, backspace, changePlusMinus, calcula
       <button className="btn-calculator exp" onClick={inputHandler}>
         .
       </button>
-      <button className="btn-calculator exp" onClick={inputHandler}>
-        -
-      </button>
-      {/* <button className="btn-calculator exp equal" id="equalbtn" onClick={calculateAns}>
+      <button className="btn-calculator exp equal" id="equalbtn" onClick={()=>addFormula()}>
         =
-      </button> */}
+      </button>
     </div>
   );
 };

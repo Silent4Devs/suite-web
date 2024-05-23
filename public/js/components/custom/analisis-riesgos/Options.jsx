@@ -52,15 +52,19 @@ export const OptionParrafo = ({id, data = {}, changeQuestionProps}) => {
 };
 
 export const OptionNumber = ({id, data = {}, changeQuestionProps}) => {
-    const dataDefault = {
-        minimo: '0',
-        maximo: '0',
-      };
 
-    const [inputValues, setInputValues] = useState( Object.hasOwn(data, "minimo") || Object.hasOwn(data, "maximo") ? data : dataDefault);
+    const propMax = `maximo-${id}`
+
+    const dataDefault = {};
+    dataDefault[`minimo-${id}`] = 0;
+    dataDefault[`maximo-${id}`] = 0;
+
+
+    const [inputValues, setInputValues] = useState( Object.hasOwn(data,`minimo-${id}`) || Object.hasOwn(data, `maximo-${id}`) ? data : dataDefault);
 
       const handleInputChange = async(event) => {
         const { name, value } = event.target;
+        // console.log(event.target)
         data[name] = value;
         setInputValues({
           ...inputValues,
@@ -72,7 +76,7 @@ export const OptionNumber = ({id, data = {}, changeQuestionProps}) => {
 
       useEffect(() => {
 
-        if(Object.hasOwn(data, "minimo") || Object.hasOwn(data, "maximo")){
+        if(Object.hasOwn(data, `minimo-${id}`) || Object.hasOwn(data, `maximo-${id}`)){
                     changeQuestionProps(id,'minMax', data);
         }else{
                 data = {}
@@ -106,8 +110,8 @@ export const OptionNumber = ({id, data = {}, changeQuestionProps}) => {
                     type="number"
                         className="form-control"
                         placeholder=""
-                        name="minimo"
-                        value={inputValues.minimo}
+                        name={`minimo-${id}`}
+                        value={inputValues[`minimo-${id}`]}
                         onChange={handleInputChange}
                     />
                     <label >Minimo</label>
@@ -117,8 +121,8 @@ export const OptionNumber = ({id, data = {}, changeQuestionProps}) => {
                     type="number"
                         className="form-control"
                         placeholder=""
-                        name="maximo"
-                        value={inputValues.maximo}
+                        name={`maximo-${id}`}
+                        value={inputValues[`maximo-${id}`]}
                         onChange={handleInputChange}
                     />
                     <label >Máximo</label>
@@ -127,6 +131,12 @@ export const OptionNumber = ({id, data = {}, changeQuestionProps}) => {
         </div>
     );
 };
+
+export const OptionCatalog = ({id, data={}, changeQuestionProps}) => {
+    return(
+        <>Catalogo</>
+    )
+}
 
 export const OptionRound = ({ id, data = [],  changeQuestionProps }) => {
     const dataDefault = [

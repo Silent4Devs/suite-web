@@ -79,7 +79,7 @@ export const Section = ({
                             {editMode && (<InputSection title={title} id={id} onChangeTitle={onChangeTitle} setEditMode={setEditMode}/>
                             )}
                             <div className="mr-2">
-                                <i className="material-symbols-outlined" onClick={()=>deleteSection(id)} style={{cursor:"pointer", userSelect:"none"}}>
+                                <i className="material-symbols-outlined" onClick={()=>deleteSection(id)} style={{cursor:"pointer", userSelect:"none", fontSize:"22px"}}>
                                     delete
                                 </i>
                             </div>

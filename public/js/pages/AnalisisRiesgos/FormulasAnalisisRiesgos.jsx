@@ -16,7 +16,7 @@ const FormulasAnalisisRiesgos = () => {
   return (
     <div className='mb-3'>
         <CardContainer>
-            <h2>Generación de formula</h2>
+            <h3>Generación de formula</h3>
             <div className="row mb-4">
                 <div className="col-12 col-md-10">
                     <InputSimple title="" name="formula" value={formula} handleChange={handleChangeFormula} background="#F1F1F1"/>
@@ -28,10 +28,10 @@ const FormulasAnalisisRiesgos = () => {
             <div className="row d-flex justify-content-between">
 
                 <div className="col-12 col-md-4 d-flex justify-content-center main">
-                    <Calculator formula={formula} setFormula={setFormula} />
+                    <Calculator formula={formula} setFormula={setFormula} addFormula={addFormula} />
                 </div>
                 <div className="col-12 col-md-8 d-flex align-items-evenly flex-column">
-                    <h3>Añadir variable</h3>
+                    <h4>Añadir variable</h4>
                     <p>Seleccionar los campos deseados</p>
                     <div className="row d-flex align-items-baseline" style={{marginBottom:"40px"}}>
                         <SelectAnalisisRiesgo options={options} size={9} name="options-formulas" value={option} handleChangeOption={handleChangeOption}/>

@@ -698,7 +698,7 @@ class templateAnalisisRiesgoController extends Controller
     public function destroySection($id)
     {
         $section = TBSectionTemplateAnalisisRiesgoModel::find($id);
-
+        // dd($section->id);
         $section->delete();
 
         return json_encode(['data' => 'Se elimino el registro exitosamente'], 200);
@@ -872,13 +872,9 @@ class templateAnalisisRiesgoController extends Controller
             }
         });
 
-        // dd($filter);
-
         foreach($filter as $question){
             $key = $question->id;
             $imagen = $imagenes[$key];
-            // dump($imagen);
-
             $name = pathinfo($imagen->getClientOriginalName(), PATHINFO_FILENAME);
             $extension = pathinfo($imagen->getClientOriginalName(), PATHINFO_EXTENSION);
             $new_name_image = 'Template_AR_Question_Image_' . $name . '_' . $date . '.' . $extension;
@@ -904,8 +900,8 @@ class templateAnalisisRiesgoController extends Controller
     }
 
     public function getSettingsTable(int $id ){
-        $questionsRegisters = TBSettingsTemplateAR_TBQuestionTemplateARModel::select('id','question_id','is_show')->where('template_id',$id)->get();
-        $formulasRegisters = TBSettingsTemplateAR_TBFormulaTemplateARModel::select('id','formula_id','is_show')->where('template_id',$id)->get();
+        $questionsRegisters = TBSettingsTemplateAR_TBQuestionTemplateARModel::select('id','question_id','is_show')->where('template_id',$id)->orderBy('id','asc')->get();
+        $formulasRegisters = TBSettingsTemplateAR_TBFormulaTemplateARModel::select('id','formula_id','is_show')->where('template_id',$id)->orderBy('id','asc')->get();
         foreach($questionsRegisters as $questionRegister){
             $questionRegister->title = $questionRegister->question->title;
             Arr::forget($questionRegister,'question');
@@ -916,5 +912,46 @@ class templateAnalisisRiesgoController extends Controller
         }
 
         return json_encode(['data' => ['questions' => $questionsRegisters, 'formulas' => $formulasRegisters]], 200);
+    }
+
+    public function updateSettingsTable(Request $request){
+        $questions = $request['questions'];
+        $formulas = $request['formulas'];
+
+        foreach($questions as $question){
+            try {
+                $questionRegister = TBSettingsTemplateAR_TBQuestionTemplateARModel::findOrFail($question['question_id']);
+                DB::beginTransaction();
+
+                $questionRegister->update([
+                    'is_show' => $question['is_show'],
+                ]);
+
+                DB::commit();
+            } catch (\Throwable $th) {
+                //throw $th;
+                DB::rollback();
+                continue;
+            }
+        }
+
+        foreach($formulas as $formula){
+            try {
+                $formulaRegister = TBSettingsTemplateAR_TBFormulaTemplateARModel::findOrFail($formula['formula_id']);
+                DB::beginTransaction();
+
+                $formulaRegister->update([
+                    'is_show' => $formula['is_show'],
+                ]);
+
+                DB::commit();
+            } catch (\Throwable $th) {
+                //throw $th;
+                DB::rollback();
+                continue;
+            }
+        }
+
+        return json_encode(['data' => 'Table Settigns updated successfully']);
     }
 }

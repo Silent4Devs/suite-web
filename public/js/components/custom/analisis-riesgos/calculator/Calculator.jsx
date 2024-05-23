@@ -5,23 +5,28 @@ import Buttons from "./Buttons";
 // import "./styles/Calculator.css";
 // import { evaluate, round } from "mathjs";
 
-function Calculator({formula,setFormula}) {
-//   const [input, setInput] = useState("");
+function Calculator({formula,setFormula, addFormula}) {
   const [answer, setAnswer] = useState("");
 
-  //input
   const inputHandler = (event) => {
     if (answer === "Invalid Input!!") return;
     let val = event.target.innerText;
+    if(val === "()"){
+        const openParens = (formula.match(/\(/g) || []).length;
+        const closeParens = (formula.match(/\)/g) || []).length;
+        if(openParens > closeParens){
+            val = ")"
+        }else{
+            val = "("
+        }
+    }
 
     let str = formula + val;
-    // if (str.length > 14) return;
 
     if (answer !== "") {
       setFormula(answer + val);
       setAnswer("");
     } else setFormula(str);
-    // setInput(str);
   };
 
   //Clear screen
@@ -131,6 +136,7 @@ function Calculator({formula,setFormula}) {
             backspace={backspace}
             changePlusMinus={changePlusMinus}
             calculateAns={calculateAns}
+            addFormula={addFormula}
           />
 
       </div>

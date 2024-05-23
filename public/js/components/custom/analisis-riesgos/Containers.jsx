@@ -4,9 +4,10 @@ import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import { CardContainer } from '../../common/Containers';
 import "../../../../css/templateAnalisisRiesgo/containerTemplate.css";
 import { BtnIcon } from '../../common/Buttons';
-import { PopoverTemplateSettings } from './Popovers';
+import { PopoverTableSettings, PopoverTemplateSettings } from './Popovers';
 import { HrSimple } from '../../common/Hr';
 import {TableSettigs} from '../analisis-riesgos/Tables.jsx'
+import { RegisterNotFound } from '../../common/RegistersNotFound.jsx';
 
 export const Container = ({sections, questions, changeSize, deleteQuestion, changeQuestionProps,
                             duplicateQuestion,  changeTitle, deleteSection}) => {
@@ -51,12 +52,12 @@ export const ContainerInfoTemplate = ({template, icon=false}) => {
     return(
         <CardContainer width="100%">
             {icon ? (
-                <div className='d-flex justify-content-end'>
-                    <BtnIcon icon="lightbulb_circle" colorIcon="#006DDB" sizeIcon={29} fill={true} onClick={handleInfo}/>
+                <div style={{position:"absolute", right:30, top:22}}>
+                    <BtnIcon icon="lightbulb" colorIcon="#006DDB" sizeIcon={29} fill={true} onClick={handleInfo} family='material-icons'/>
                     {showInfo ? <PopoverTemplateSettings/>:<></>}
                 </div>
             ): <></> }
-            <h2 className='template-title'>{template.title}</h2>
+            <h4 className='template-title' style={{marginTop:'33px'}}>{template.title}</h4>
             <p className='template-norma'>{template.norma}</p>
             <p className='template-description'>{template.description}</p>
         </CardContainer>
@@ -64,6 +65,10 @@ export const ContainerInfoTemplate = ({template, icon=false}) => {
 }
 
 export const ContainerTableSettigs = ({data}) => {
+    const [showInfo, setShowInfo] = useState(false);
+    const handleInfo = () => {
+        setShowInfo(!showInfo);
+    }
     return(
         <CardContainer width="100%">
             <div className="row d-flex align-items-center">
@@ -71,11 +76,14 @@ export const ContainerTableSettigs = ({data}) => {
                     <h6 className='mb-0'>Respuestas</h6>
                 </div>
                 <div className="col-2 d-flex justify-content-end" style={{paddingRight:"2px"}}>
-                    <BtnIcon icon="lightbulb_circle"/>
+                    <BtnIcon icon="lightbulb" colorIcon="#006DDB" sizeIcon={29} onClick={handleInfo} family='material-icons' />
+                    {showInfo ? <PopoverTableSettings/>:<></>}
                 </div>
             </div>
             <HrSimple/>
-            <TableSettigs/>
+            {
+                data.questions.length >= 1 || data.formulas.length >= 1 ? (<TableSettigs data={data}/>) : (<><RegisterNotFound/></>)
+            }
         </CardContainer>
     )
 }

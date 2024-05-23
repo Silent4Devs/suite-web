@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 
 export const InputSimple = ({ title, name, type="text", value, handleChange, background=null, color=null, width=null } ) => {
+    const [error, setError] = useState('');
     const inputStyle = {
         background: background ? background : "#FFFFFF",
         color: color ? color : "#575757",
@@ -16,6 +17,7 @@ export const InputSimple = ({ title, name, type="text", value, handleChange, bac
                     name={name}
                     value={value}
                     onChange={(e)=>handleChange(e.target.value)}
+
                 />
                 <label >{title}</label>
             </div>

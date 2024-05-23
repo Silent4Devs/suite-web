@@ -43,7 +43,7 @@ export const BtnSecondary = ({title, onClick=null ,background=null, color=null, 
     )
   }
 
-export const BtnIcon = ({onClick=null, icon, title=null, colorIcon=null, sizeIcon=null }) => {
+export const BtnIcon = ({onClick=null, icon, title=null, colorIcon=null, sizeIcon=null, family='material-symbols-outlined' }) => {
     const styleIcon = {
         color: colorIcon ? colorIcon : null,
         fontSize: sizeIcon ? sizeIcon: '24px',
@@ -51,7 +51,7 @@ export const BtnIcon = ({onClick=null, icon, title=null, colorIcon=null, sizeIco
 
     return(
         <button className="btn" style={{textAlign:"center"}} onClick={onClick}>
-            <span className="material-symbols-outlined" style={styleIcon}>
+            <span className={family} style={styleIcon}>
                 {icon}
             </span>
             {title}
