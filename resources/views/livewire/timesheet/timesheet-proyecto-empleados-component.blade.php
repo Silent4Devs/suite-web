@@ -363,7 +363,7 @@
         </script>
 
         <script>
-            document.addEventListener('livewire:load', function() {
+            document.addEventListener('livewire:init', function() {
                 console.log('1');
                 Livewire.on('openModal', empleadoId => {
                     console.log('2', empleadoId);
@@ -373,7 +373,7 @@
         </script>
 
         <script>
-            document.addEventListener('livewire:load', function() {
+            document.addEventListener('livewire:init', function() {
                 Livewire.on('modalProyectosExternos', function() {
                     // Show the modal when the event is received
                     $('#modalExterno').modal('show');

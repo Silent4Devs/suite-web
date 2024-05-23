@@ -509,7 +509,7 @@
     });
 </script>
 <script>
-    document.addEventListener('livewire:load', function() {
+    document.addEventListener('livewire:init', function() {
         setTimeout(function() {
             tablaLivewire('datatabletimesheetproyectos');
         }, 100);

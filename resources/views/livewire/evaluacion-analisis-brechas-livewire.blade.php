@@ -681,7 +681,7 @@
         {{-- grafica de total cuando cambia de seccion --}}
 
         <script>
-            document.addEventListener('livewire:load', function() {
+            document.addEventListener('livewire:init', function() {
                 console.log('cambio de seccion');
                 Livewire.on('renderAreas', (grafica_cuentas, grafica_colores) => {
                     // console.log(cuentas);
@@ -718,7 +718,7 @@
         {{-- script para graficas total y del modal cuando se carga la primera vez --}}
         <script>
             console.log("cargando");
-            document.addEventListener('livewire:load', function () {
+            document.addEventListener('livewire:init', function () {
 
             const data = @json($grafica_cuentas2);
             const colores = @json($grafica_colores2);
@@ -776,7 +776,7 @@
 
         {{-- script para graficas del modal cuando se cambia de seccion --}}
         <script>
-             document.addEventListener('livewire:load', function() {
+             document.addEventListener('livewire:init', function() {
                 Livewire.on('renderGraficsModal', (data,resultskeys) => {
                     console.log(resultskeys);
                     const colores = @json($grafica_colores2);

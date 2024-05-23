@@ -371,7 +371,7 @@
 
 
 <script>
-    document.addEventListener('livewire:load', function() {
+    document.addEventListener('livewire:init', function() {
         Livewire.hook('element.updated', (el, component) => {
             // Después de actualizar el componente, verifica si hay nuevos requisitos
             const btns = el.querySelectorAll('.nuevo-requisito-btn');
