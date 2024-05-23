@@ -373,18 +373,17 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col s12 l12">
-                                                        <label for="" class="txt-tamaño">
+                                                        <label for="cotizacion_{{ $i }}" class="txt-tamaño">
                                                             Carga de cotizaciones <font class="asterisco">*</font>
                                                         </label>
                                                         <input type="file" required
-                                                            class="modal-cotizacion form-control-file"
-                                                            name="cotizacion_{{ $i }}"
-                                                            wire:model.lazy="cotizaciones.{{ $i }}"
-                                                            data-count="{{ $i }}"
-                                                            accept=".pdf, .docx, .pptx .point, .xml, .jpeg, .jpg, .png, .xlsx, .xlsm, .csv">
+                                                               class="modal-cotizacion form-control-file"
+                                                               name="cotizaciones[{{ $i }}]"
+                                                               wire:model="cotizaciones.{{ $i }}"
+                                                               data-count="{{ $i }}"
+                                                               accept=".pdf, .docx, .pptx, .point, .xml, .jpeg, .jpg, .png, .xlsx, .xlsm, .csv">
                                                     </div>
                                                 </div>
-                                            @else
                                             @endif
                                         @endisset
                                     @endif
