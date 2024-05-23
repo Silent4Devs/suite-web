@@ -1,13 +1,11 @@
 <section>
+    <x-loading-indicator />
+
     <div class="" x-data="{ open: @entangle('open') }">
         <!-- Button (blue), duh! -->
 
         <div class="d-flex justify-content-between align-items-center mt-5">
             <h4>Agregar estudiantes</h4>
-
-            <button class="btn btn-primary" data-toggle="modal" data-target="#addStudentDataModal">
-                Agregar Estudiante <i class="fa-solid fa-plus"></i>
-            </button>
         </div>
 
         <hr class="mt-2 mb-6 bg-primary">
@@ -16,14 +14,49 @@
             <div class="row">
                 <div class="col-md-6 form-group anima-focus">
                     <select name="publico" id="" class="form-control" wire:model="publico">
-                        <option value="" selected disabled></option>
+                        <option value="" selected></option>
                         <option value="todos">Toda la empresa</option>
                         <option value="area">Por área(s)</option>
                         <option value="manual">Manualmente</option>
                     </select>
                     <label for="user_id">Publico objetivo</label>
                 </div>
+                @if ($publico == 'todos')
+                    <div class="col-md-6">
+                        <button class="btn btn-primary" wire:click="save();">
+                            Registrar a todos
+                        </button>
+                    </div>
+                @endif
             </div>
+            @if ($publico == 'area')
+                <form wire:submit.prevent="save()">
+                    <div class="row">
+                        <div class="col-md-6 anima-focus form-group">
+                            <select name="" id="" class="form-control" required
+                                wire:model="area_seleccionada">
+                                <option value="" selected></option>
+                                @foreach ($areas as $area)
+                                    <option value="{{ $area->id }}">{{ $area->area }}</option>
+                                @endforeach
+                            </select>
+                            <label for="">Seleccione Área</label>
+                        </div>
+                        <div class="col-md-4">
+                            <button class="btn btn-primary">Inscribir todos en el área</button>
+                        </div>
+                    </div>
+                </form>
+            @endif
+            @if ($publico == 'manual')
+                <div class="row">
+                    <div class="col-12">
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#addStudentDataModal">
+                            Agregar Estudiante <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            @endif
         </div>
 
         <div class="row justify-content-start mt-5">
