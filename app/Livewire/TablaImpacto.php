@@ -92,7 +92,7 @@ class TablaImpacto extends Component
         // $indexColumna=$indexColumna+1;
         $this->indexColumna = $indexColumna;
         array_push($this->columnas, $columna);
-        $this->emit('cerrarModal');
+        $this->dispatch('cerrarModal');
         $this->reset(['nivelImpacto', 'clasificacionImpacto', 'colorImpacto']);
     }
 
@@ -126,7 +126,7 @@ class TablaImpacto extends Component
         $this->indexRow = $indexRow;
         array_push($this->filas, $fila);
 
-        $this->emit('cerrarModalImpacto');
+        $this->dispatch('cerrarModalImpacto');
         $this->reset(['nombreImpacto', 'criterioImpacto', 'baseImpacto']);
     }
 
@@ -139,7 +139,7 @@ class TablaImpacto extends Component
             'tabla_impacto_id' => $tabla_impacto,
 
         ]);
-        $this->emit('cerrarModalImpacto');
+        $this->dispatch('cerrarModalImpacto');
 
         return $tipoImpacto;
     }

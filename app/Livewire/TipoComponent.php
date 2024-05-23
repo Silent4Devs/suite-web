@@ -29,8 +29,8 @@ class TipoComponent extends Component
             'slug' => Str::slug($this->nombre, '-'),
             'descripcion' => $this->descripcion,
         ]);
-        $this->emit('tipoStore');
-        $this->emit('render-tipo-select-component');
+        $this->dispatch('tipoStore');
+        $this->dispatch('render-tipo-select-component');
     }
 
     public function render()

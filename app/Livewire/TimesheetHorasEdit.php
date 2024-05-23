@@ -28,7 +28,7 @@ class TimesheetHorasEdit extends Component
 
     public function hydrate()
     {
-        $this->emit('select2');
+        $this->dispatch('select2');
     }
 
     public function mount($proyectos, $tareas, $origen, $timesheet_id)
@@ -45,12 +45,12 @@ class TimesheetHorasEdit extends Component
             TimesheetHoras::find($id)->delete();
         }
 
-        $this->emit('removeTr', $tr);
+        $this->dispatch('removeTr', $tr);
     }
 
     public function updatedContador($value)
     {
-        $this->emit('calcularSumatoriasFacturables');
+        $this->dispatch('calcularSumatoriasFacturables');
     }
 
     public function render()
@@ -59,7 +59,7 @@ class TimesheetHorasEdit extends Component
 
         $this->timesheet = Timesheet::find($this->timesheet_id);
 
-        $this->emit('calcularSumatoriasFacturables');
+        $this->dispatch('calcularSumatoriasFacturables');
 
         return view('livewire.timesheet-horas-edit');
     }

@@ -31,8 +31,8 @@ class ServicioComponent extends Component
             'descripcion' => $this->descripcion,
             'created_at' => Carbon::now(),
         ]);
-        $this->emit('servicioStore');
-        $this->emit('render-servicio-select-component');
+        $this->dispatch('servicioStore');
+        $this->dispatch('render-servicio-select-component');
     }
 
     public function render()

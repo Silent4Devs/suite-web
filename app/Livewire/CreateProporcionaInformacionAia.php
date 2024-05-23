@@ -47,7 +47,7 @@ class CreateProporcionaInformacionAia extends Component
     public function create()
     {
         $this->default();
-        $this->emit('abrir-modal');
+        $this->dispatch('abrir-modal');
     }
 
     public function save()
@@ -65,8 +65,8 @@ class CreateProporcionaInformacionAia extends Component
         ]);
 
         $this->reset('id', 'nombre', 'puesto', 'correo_electronico', 'extencion', 'ubicacion', 'interno_externo');
-        $this->emit('render');
-        $this->emit('cerrar-modal', ['editar' => false]);
+        $this->dispatch('render');
+        $this->dispatch('cerrar-modal', ['editar' => false]);
     }
 
     public function edit($id)
@@ -81,7 +81,7 @@ class CreateProporcionaInformacionAia extends Component
         $this->ubicacion = $model->ubicacion;
         $this->cuestionario_id = $model->cuestionario_id;
         $this->interno_externo = $model->interno_externo;
-        $this->emit('abrir-modal');
+        $this->dispatch('abrir-modal');
     }
 
     public function default()
@@ -110,16 +110,16 @@ class CreateProporcionaInformacionAia extends Component
             'cuestionario_id' => $this->cuestionario_id,
             'interno_externo' => $this->interno_externo,
         ]);
-        $this->emit('cerrar-modal', ['editar' => true]);
+        $this->dispatch('cerrar-modal', ['editar' => true]);
         $this->default();
-        $this->emit('render');
+        $this->dispatch('render');
     }
 
     public function destroy($id)
     {
         $model = CuestionarioProporcionaInformacionAIA::find($id);
         $model->delete();
-        $this->emit('render');
+        $this->dispatch('render');
     }
 
     public function render()

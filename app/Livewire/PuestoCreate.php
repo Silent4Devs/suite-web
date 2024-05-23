@@ -33,8 +33,8 @@ class PuestoCreate extends Component
         ]);
 
         $this->reset(['puesto', 'descripcion']);
-        $this->emit('PuestoStore');
-        $this->emit('render-puesto-select');
+        $this->dispatch('PuestoStore');
+        $this->dispatch('render-puesto-select');
     }
 
     public function render()

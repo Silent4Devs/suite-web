@@ -51,7 +51,7 @@ class DebilidadesComponent extends Component
 
         // dd($fort);
 
-        $this->emit('recargar-debilidades');
+        $this->dispatch('recargar-debilidades');
         $this->default();
     }
 

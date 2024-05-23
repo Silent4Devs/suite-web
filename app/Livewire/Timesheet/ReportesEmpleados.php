@@ -389,7 +389,7 @@ class ReportesEmpleados extends Component
         $this->calendario_tabla = $calendario_array;
         $this->hoy_format = $this->hoy->format('d/m/Y');
 
-        $this->emit('scriptTabla');
+        $this->dispatch('scriptTabla');
 
         return view('livewire.timesheet.reportes-empleados');
     }

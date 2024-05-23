@@ -49,7 +49,7 @@ class EstudiantesCrear extends Component
             'course_id' => $this->course->id,
         ]);
         // $this->open = false;
-        $this->emit('UserStore');
+        $this->dispatch('UserStore');
         $this->render_alerta('success', 'El estudiante se ha agregado exitosamente');
         $this->dispatchBrowserEvent('closeModal');
     }
@@ -75,7 +75,7 @@ class EstudiantesCrear extends Component
 
     public function hydrate()
     {
-        $this->emit('select2');
+        $this->dispatch('select2');
     }
 
     public function cancel()

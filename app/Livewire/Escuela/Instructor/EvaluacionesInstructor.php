@@ -74,7 +74,7 @@ class EvaluacionesInstructor extends Component
 
     public function hydrate()
     {
-        $this->emit('select2');
+        $this->dispatch('select2');
     }
 
     public function mount(Course $course)
@@ -95,7 +95,7 @@ class EvaluacionesInstructor extends Component
             'course_id' => $this->course_id,
             'section_id' => $this->section_id,
         ]);
-        $this->emit('evaluationStore');
+        $this->dispatch('evaluationStore');
         $this->render_alerta('success', 'El registro se ha agregado exitosamente');
         $this->default();
     }
@@ -127,7 +127,7 @@ class EvaluacionesInstructor extends Component
             'is_active' => $this->is_active,
             'section_id' => $this->section_id,
         ]);
-        $this->emit('evaluationStore');
+        $this->dispatch('evaluationStore');
         $this->render_alerta('success', 'Actualizado con éxito');
         $this->default();
     }

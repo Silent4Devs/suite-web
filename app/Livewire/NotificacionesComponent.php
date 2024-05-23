@@ -88,7 +88,7 @@ class NotificacionesComponent extends Component
             ->when($notificationId, function ($query) use ($notificationId) {
                 return $query->where('id', $notificationId)->markAsRead();
             });
-        $this->emit('NotificationMarkedAsReadList');
+        $this->dispatch('NotificationMarkedAsReadList');
 
         return response()->noContent();
     }
@@ -99,7 +99,7 @@ class NotificacionesComponent extends Component
         foreach ($notificaciones_campana as $notificacion_campana) {
             $notificacion_campana->markAsRead();
         }
-        $this->emit('NotificationMarkedAsReadList');
+        $this->dispatch('NotificationMarkedAsReadList');
 
         return response()->noContent();
     }

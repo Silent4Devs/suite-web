@@ -42,7 +42,7 @@ class CreateRecursosMaterialesAia extends Component
     public function createMateriales()
     {
         $this->default();
-        $this->emit('abrir-modal-materiales');
+        $this->dispatch('abrir-modal-materiales');
     }
 
     public function saveMateriales()
@@ -62,8 +62,8 @@ class CreateRecursosMaterialesAia extends Component
         ]);
 
         $this->reset('id', 'escenario', 'impresoras', 'telefono', 'otro', 'equipos', 'otro_numero');
-        $this->emit('render');
-        $this->emit('cerrar-modal-materiales', ['editarMateriales' => false]);
+        $this->dispatch('render');
+        $this->dispatch('cerrar-modal-materiales', ['editarMateriales' => false]);
     }
 
     public function edit($id)
@@ -79,7 +79,7 @@ class CreateRecursosMaterialesAia extends Component
         $this->otro_numero = $model->otro_numero;
 
         $this->cuestionario_id = $model->cuestionario_id;
-        $this->emit('abrir-modal-materiales');
+        $this->dispatch('abrir-modal-materiales');
     }
 
     public function default()
@@ -109,16 +109,16 @@ class CreateRecursosMaterialesAia extends Component
             'cuestionario_id' => $this->cuestionario_id,
             'otro_numero' => $this->otro_numero,
         ]);
-        $this->emit('cerrar-modal-materiales', ['editar' => true]);
+        $this->dispatch('cerrar-modal-materiales', ['editar' => true]);
         $this->default();
-        $this->emit('render');
+        $this->dispatch('render');
     }
 
     public function destroy($id)
     {
         $model = CuestionarioRecursosMaterialesAIA::find($id);
         $model->delete();
-        $this->emit('render');
+        $this->dispatch('render');
     }
 
     public function render()

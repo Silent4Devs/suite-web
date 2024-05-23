@@ -32,14 +32,14 @@ class EvaluationsTable extends Component
     {
         $evaluaciones = Evaluation::find($evaluacion_id)->delete();
         $this->render_alerta('success', 'El registro fue eliminado exitosamente');
-        $this->emit('evaluationStore');
-        $this->emit('evaluationDestroy');
+        $this->dispatch('evaluationStore');
+        $this->dispatch('evaluationDestroy');
     }
 
     public function edit($evaluacion_id)
     {
         $evaluacion = Evaluation::find($evaluacion_id);
-        $this->emit('editarEvaluacion', $evaluacion);
+        $this->dispatch('editarEvaluacion', $evaluacion);
     }
 
     public function render_alerta($type, $message)

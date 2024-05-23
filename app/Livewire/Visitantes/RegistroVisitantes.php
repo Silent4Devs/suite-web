@@ -79,7 +79,7 @@ class RegistroVisitantes extends Component
 
     public function hydrate()
     {
-        $this->emit('select2');
+        $this->dispatch('select2');
     }
 
     public function mount()
@@ -116,7 +116,7 @@ class RegistroVisitantes extends Component
     // {
     //TODO:Buscador de coincidencias
     //     $coincidencias = RegistrarVisitante::where('nombre', 'ILIKE', "{$value}")->orWhere('apellidos', 'ILIKE', "{$value}")->get();
-    //     $this->emit('coincidenciasNombreVisitantes', $coincidencias);
+    //     $this->dispatch('coincidenciasNombreVisitantes', $coincidencias);
     // }
 
     public function removeInput($key)
@@ -142,20 +142,20 @@ class RegistroVisitantes extends Component
         $this->validateData();
         $this->currentStep++;
         $this->showStepByCurrent();
-        $this->emit('increaseStepVisitantes', $this->currentStep);
+        $this->dispatch('increaseStepVisitantes', $this->currentStep);
         if ($this->currentStep == 4) {
             $this->castEmpleado = Empleado::getAll()->find($this->empleado_id);
             $this->castArea = Area::getAll()->find($this->area_id);
         }
         if ($this->currentStep > $this->totalSteps) {
-            $this->emit('finalizarRegistroVisitante');
+            $this->dispatch('finalizarRegistroVisitante');
         }
     }
 
     public function decreaseStep()
     {
         $this->resetErrorBag();
-        $this->emit('decreaseStep');
+        $this->dispatch('decreaseStep');
         $this->currentStep--;
         $this->showStepByCurrent();
     }
@@ -293,7 +293,7 @@ class RegistroVisitantes extends Component
             'toast' => true,
         ]);
 
-        $this->emit('guardarRegistroVisitante', $this->registrarVisitante);
+        $this->dispatch('guardarRegistroVisitante', $this->registrarVisitante);
     }
 
     public function enviarCorreoDeConfirmacion($correo, $visitante)
@@ -315,7 +315,7 @@ class RegistroVisitantes extends Component
 
     public function imprimirCredencial()
     {
-        $this->emit('imprimirCredencialSelf');
+        $this->dispatch('imprimirCredencialSelf');
     }
 
     public function imprimirCredencialImage($dataImage)
@@ -331,7 +331,7 @@ class RegistroVisitantes extends Component
                     'timer' => 1000,
                     'toast' => true,
                 ]);
-                $this->emit('credencialImpresa');
+                $this->dispatch('credencialImpresa');
             },
             $fileName,
             [

@@ -49,7 +49,7 @@ class TableQuestions extends Component
             $answer->delete();
         }
 
-        $this->emit('QuestionEvent');
+        $this->dispatch('QuestionEvent');
         // $this->render_alerta('success','El registro fue eliminado exitosamente');
     }
 }

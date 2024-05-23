@@ -135,7 +135,7 @@ class ReportesRegistros extends Component
         //Funcion para pintar contadores en los filtros de estatus
         $this->establecerContadores();
 
-        $this->emit('scriptTabla');
+        $this->dispatch('scriptTabla');
 
         return view('livewire.timesheet.reportes-registros', compact('timesExcel', 'times', 'empleados'));
     }

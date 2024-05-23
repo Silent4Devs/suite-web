@@ -199,7 +199,7 @@ class ObjetivosSeguridadComponent extends Component
             }
         }
         $this->dispatchBrowserEvent('contentChanged');
-        $this->emit('limpiarSlugs');
+        $this->dispatch('limpiarSlugs');
 
         $this->view = 'create';
     }

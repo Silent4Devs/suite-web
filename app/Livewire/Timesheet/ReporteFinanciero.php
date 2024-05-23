@@ -101,7 +101,7 @@ class ReporteFinanciero extends Component
 
             $this->proyectos = $empleados;
         }
-        $this->emit('scriptTabla');
+        $this->dispatch('scriptTabla');
 
         return view('livewire.timesheet.reporte-financiero', compact('logo_actual', 'empresa_actual'));
     }

@@ -83,7 +83,7 @@ class BuscarCVComponent extends Component
             $this->empleado_id = null;
             $this->empleados = Empleado::getaltaAll()->where('area_id', $this->area_id);
         }
-        $this->emit('tagify');
+        $this->dispatch('tagify');
     }
 
     public function updatedEmpleadoId($value)
@@ -93,22 +93,22 @@ class BuscarCVComponent extends Component
         } else {
             $this->empleado_id = $value;
         }
-        $this->emit('tagify');
+        $this->dispatch('tagify');
     }
 
     public function updatedGeneral()
     {
-        $this->emit('tagify');
+        $this->dispatch('tagify');
     }
 
     public function updatedCurso()
     {
-        $this->emit('tagify');
+        $this->dispatch('tagify');
     }
 
     public function updatedCertificacion()
     {
-        $this->emit('tagify');
+        $this->dispatch('tagify');
     }
 
     public function mount()
@@ -195,7 +195,7 @@ class BuscarCVComponent extends Component
     public function mostrarCurriculum($empleadoID)
     {
         $this->empleadoModel = Empleado::getEmpleadoCurriculum($empleadoID)->find($empleadoID);
-        $this->emit('tagify');
+        $this->dispatch('tagify');
     }
 
     public function callAlert($tipo, $mensaje, $bool, $test = '')

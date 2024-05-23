@@ -62,7 +62,7 @@ class ReportesSemanas extends Component
         $this->horas_time = $timeSheetHorasCollection;
         // dd($this->horas_time);
 
-        $this->emit('scriptTabla');
+        $this->dispatch('scriptTabla');
 
         return view('livewire.timesheet.reportes-semanas');
     }

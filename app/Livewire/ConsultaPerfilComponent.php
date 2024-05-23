@@ -103,7 +103,7 @@ class ConsultaPerfilComponent extends Component
             $this->reporta_id = null;
             $this->puestos = Puesto::where('area_id', $this->area_id)->get();
         }
-        $this->emit('tagify');
+        $this->dispatch('tagify');
     }
 
     public function updatedPuestoId($value)
@@ -113,22 +113,22 @@ class ConsultaPerfilComponent extends Component
         } else {
             $this->puesto_id = $value;
         }
-        $this->emit('tagify');
+        $this->dispatch('tagify');
     }
 
     public function updatedGeneral()
     {
-        $this->emit('tagify');
+        $this->dispatch('tagify');
     }
 
     public function updatedCurso()
     {
-        $this->emit('tagify');
+        $this->dispatch('tagify');
     }
 
     public function updatedCertificacion()
     {
-        $this->emit('tagify');
+        $this->dispatch('tagify');
     }
 
     public function mount()
@@ -174,7 +174,7 @@ class ConsultaPerfilComponent extends Component
         $this->puestoModel = Puesto::with(['contactos', 'area', 'certificados', 'language' => function ($q) {
             $q->with('language');
         }])->find($puestoID);
-        $this->emit('tagify');
+        $this->dispatch('tagify');
     }
 
     public function callAlert($tipo, $mensaje, $bool, $test = '')

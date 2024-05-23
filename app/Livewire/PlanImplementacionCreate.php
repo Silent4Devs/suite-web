@@ -68,8 +68,8 @@ class PlanImplementacionCreate extends Component
             'objetivo' => $this->objetivo,
             'elaboro_id' => User::getCurrentUser()->empleado->id,
         ]);
-        $this->emit('planStore');
-        $this->emit('render-select');
+        $this->dispatch('planStore');
+        $this->dispatch('render-select');
     }
 
     public function render()

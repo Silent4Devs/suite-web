@@ -51,7 +51,7 @@ class OportunidadesComponent extends Component
 
         // dd($fort);
 
-        $this->emit('recargar-oportunidades');
+        $this->dispatch('recargar-oportunidades');
         $this->default();
     }
 

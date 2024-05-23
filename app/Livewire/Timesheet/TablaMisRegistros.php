@@ -75,30 +75,30 @@ class TablaMisRegistros extends Component
     public function todos()
     {
         $this->times = Timesheet::getPersonalTimesheet();
-        $this->emit('scriptTabla');
+        $this->dispatch('scriptTabla');
     }
 
     public function papelera()
     {
         $this->times = Timesheet::getPersonalTimesheet()->where('estatus', 'papelera');
-        $this->emit('scriptTabla');
+        $this->dispatch('scriptTabla');
     }
 
     public function pendientes()
     {
         $this->times = Timesheet::getPersonalTimesheet()->where('estatus', 'pendiente');
-        $this->emit('scriptTabla');
+        $this->dispatch('scriptTabla');
     }
 
     public function aprobados()
     {
         $this->times = Timesheet::getPersonalTimesheet()->where('estatus', 'aprobado');
-        $this->emit('scriptTabla');
+        $this->dispatch('scriptTabla');
     }
 
     public function rechazos()
     {
         $this->times = Timesheet::getPersonalTimesheet()->where('estatus', 'rechazado');
-        $this->emit('scriptTabla');
+        $this->dispatch('scriptTabla');
     }
 }

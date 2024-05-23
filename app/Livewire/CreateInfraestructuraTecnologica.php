@@ -45,7 +45,7 @@ class CreateInfraestructuraTecnologica extends Component
     public function createInfraestructura()
     {
         $this->default();
-        $this->emit('abrir-modal-infraestructura');
+        $this->dispatch('abrir-modal-infraestructura');
     }
 
     public function saveInfraestructura()
@@ -61,8 +61,8 @@ class CreateInfraestructuraTecnologica extends Component
         ]);
 
         $this->reset('id', 'sistemas', 'aplicativos', 'base_datos', 'otro', 'escenario');
-        $this->emit('render');
-        $this->emit('cerrar-modal-infraestructura', ['editarInfraestructura' => false]);
+        $this->dispatch('render');
+        $this->dispatch('cerrar-modal-infraestructura', ['editarInfraestructura' => false]);
     }
 
     public function editInfraestructura($id)
@@ -76,7 +76,7 @@ class CreateInfraestructuraTecnologica extends Component
         $this->otro = $model->otro;
         $this->escenario = $model->escenario;
         $this->cuestionario_id = $model->cuestionario_id;
-        $this->emit('abrir-modal-infraestructura');
+        $this->dispatch('abrir-modal-infraestructura');
     }
 
     public function default()
@@ -102,16 +102,16 @@ class CreateInfraestructuraTecnologica extends Component
             'escenario' => $this->escenario,
             'cuestionario_id' => $this->cuestionario_id,
         ]);
-        $this->emit('cerrar-modal-infraestructura', ['editarInfraestructura' => true]);
+        $this->dispatch('cerrar-modal-infraestructura', ['editarInfraestructura' => true]);
         $this->default();
-        $this->emit('render');
+        $this->dispatch('render');
     }
 
     public function destroy($id)
     {
         $model = CuestionarioInfraestructuraTecnologica::find($id);
         $model->delete();
-        $this->emit('render');
+        $this->dispatch('render');
     }
 
     public function render()

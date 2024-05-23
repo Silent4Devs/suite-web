@@ -30,6 +30,6 @@ class RegistrarSalida extends Component
     public function openModal($visitanteId)
     {
         $this->visitante = RegistrarVisitante::find($visitanteId);
-        $this->emit('openModal', $this->visitante);
+        $this->dispatch('openModal', $this->visitante);
     }
 }
