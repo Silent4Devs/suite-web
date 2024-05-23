@@ -39,7 +39,13 @@
                 <div class="card-body" style="padding-left:0px; padding-right:0px;">
                     <h5 class="card-title" style="color:#000000;">{{ $lastCourse->cursos->title }}</h5>
                     @if ($lastCourse->cursos->instructor)
-                        <p class="course-teacher">Un curso de {{ $lastCourse->cursos->instructor->name }} </p>
+                        <div class="d-flex align-items-center gap-1 my-4">
+                            <div class="img-person">
+                                <img src="{{ $lastCourse->cursos->instructor->avatar_ruta }}"
+                                    alt="{{ $lastCourse->cursos->instructor->name }}">
+                            </div>
+                            <span class="course-teacher"> {{ $lastCourse->cursos->instructor->name }} </span>
+                        </div>
                     @else
                         <p class="course-teacher">Instructor no asignado </p>
                     @endif
