@@ -146,7 +146,7 @@
         </div>
 
         <div class="row" style="margin-left: 10px;margin-right: 10px;">
-            <div class="input-field col l12 m12 s12" x-data="{ show: @entangle('aplica_deductiva') }">
+            <div class="input-field col l12 m12 s12" x-data="{ show: @entangle('aplica_deductiva').live }">
                 <div class="distancia form-group col-md-12" wire:ignore>
                     <label for="" class="txt-tamaño">¿Aplica
                         deductiva/penalización?<font class="asterisco">*</font></label>

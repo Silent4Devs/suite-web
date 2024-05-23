@@ -2,7 +2,7 @@
 
     @forelse ($section->lessons as $item)
 
-        <div class="card shadow-none " x-data="{ openElementId: @entangle('openElementId') }" id="card{{$item->id}}" style="border: 1px solid #D8D8D8; border-radius:16px;" @close-collapse.window="openElementId = null">
+        <div class="card shadow-none " x-data="{ openElementId: @entangle('openElementId').live }" id="card{{$item->id}}" style="border: 1px solid #D8D8D8; border-radius:16px;" @close-collapse.window="openElementId = null">
             <div class="card-header " style="border: none;">
                 <div class="row">
                     <div class="col-11 d-flex align-items-baseline" style="padding: 0px;">

@@ -1,5 +1,5 @@
 <section>
-    <div class="" x-data="{ open: @entangle('open') }">
+    <div class="" x-data="{ open: @entangle('open').live }">
         <!-- Button (blue), duh! -->
 
         <div class="d-flex justify-content-between align-items-center mt-5">
