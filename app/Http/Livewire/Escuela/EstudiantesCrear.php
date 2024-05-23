@@ -20,6 +20,8 @@ class EstudiantesCrear extends Component
 
     public $open = false;
 
+    public $publico;
+
     protected $rules = [
         'user_id' => 'required',
     ];
@@ -27,6 +29,12 @@ class EstudiantesCrear extends Component
     protected $messages = [
         'user_id.required' => 'Debe seleccionar un usuario',
     ];
+
+    public function updatePublico($value)
+    {
+        $this->publico = $value;
+        dd($this->publico);
+    }
 
     public function mount(Course $course)
     {
