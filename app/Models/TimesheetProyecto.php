@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 use OwenIt\Auditing\Contracts\Auditable;
+use App\Models\ContractManager\Contrato;
 
 class TimesheetProyecto extends Model implements Auditable
 {
@@ -44,7 +45,7 @@ class TimesheetProyecto extends Model implements Auditable
                 return self::orderBy('identificador', 'ASC')->get();
             });
         } else {
-            return Cache::remember('TimesheetProyecto:timesheetproyecto_show_'.$proyecto_id, 3600, function () {
+            return Cache::remember('TimesheetProyecto:timesheetproyecto_show_' . $proyecto_id, 3600, function () {
                 return self::orderBy('identificador', 'ASC')->get();
             });
         }
@@ -74,7 +75,7 @@ class TimesheetProyecto extends Model implements Auditable
                 return self::select('id', 'identificador', 'proyecto', 'cliente_id', 'tipo')->orderBy('identificador', 'ASC')->get();
             });
         } else {
-            return Cache::remember('TimesheetProyecto:timesheetproyecto_show_'.$proyecto_id, 3600, function () {
+            return Cache::remember('TimesheetProyecto:timesheetproyecto_show_' . $proyecto_id, 3600, function () {
                 return self::select('id', 'identificador', 'proyecto', 'cliente_id', 'tipo')->orderBy('identificador', 'ASC')->get();
             });
         }
@@ -204,5 +205,17 @@ class TimesheetProyecto extends Model implements Auditable
     public function proveedores()
     {
         return $this->hasMany(TimesheetProyectoProveedor::class, 'proyecto_id', 'id');
+    }
+
+    public function clientes()
+    {
+        return $this->belongsToMany(TimesheetCliente::class, 'convergencia_contratos_proyectos_clientes', 'timesheet_proyecto_id', 'timesheet_cliente_id')
+            ->withPivot('contrato_id'); // Include additional pivot fields as needed
+    }
+
+    public function contratos()
+    {
+        return $this->belongsToMany(Contrato::class, 'convergencia_contratos_proyectos_clientes', 'timesheet_proyecto_id', 'contrato_id')
+            ->withPivot('timesheet_cliente_id'); // Include additional pivot fields as needed
     }
 }

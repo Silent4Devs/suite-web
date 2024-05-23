@@ -1,3 +1,5 @@
+option
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -108,9 +110,9 @@
 </style>
 
 @if (session('mensajeError'))
-<div class="alert alert-danger">
-    {{ session('mensajeError') }}
-</div>
+    <div class="alert alert-danger">
+        {{ session('mensajeError') }}
+    </div>
 @endif
 <form method="POST" action="{{ route('contract_manager.contratos-katbol.store') }}" enctype="multipart/form-data">
     @csrf
@@ -251,7 +253,14 @@
                 <label for="no_proyecto" class="txt-tamaño">&nbsp;Número
                     de
                     proyecto</label>
-                <input class="form-control" type="text" name="no_proyecto" id="no_proyecto" maxlength="250">
+                <select class="form-control" name="no_proyecto" id="no_proyecto">
+                    <option value="" selected>Seleccione un Numero de proyecto</option>
+                    @foreach ($proyectos as $proyecto)
+                        <option value="{{ $proyecto->identificador }}">
+                            {{ $proyecto->identificador }}-{{ $proyecto->proyecto }}</option>
+                    @endforeach
+                </select>
+                {{-- <input class="form-control" type="text" name="no_proyecto" id="no_proyecto" maxlength="250"> --}}
                 @if ($errors->has('no_proyecto'))
                     <div class="invalid-feedback red-text">
                         {{ $errors->first('no_proyecto') }}
@@ -458,7 +467,7 @@
                 <label for="no_contrato" class="txt-tamaño">
                     &nbsp;No. Pagos<font class="asterisco">*</font></label><br>
 
-                {!! Form::number('no_pagos', null, ['class' => 'form-control', 'required'], ['min' => "1"] ) !!}
+                {!! Form::number('no_pagos', null, ['class' => 'form-control', 'required'], ['min' => '1']) !!}
                 @if ($errors->has('no_pagos'))
                     <div class="invalid-feedback red-text">
                         {{ $errors->first('no_pagos') }}
@@ -701,7 +710,7 @@
                     <label class="txt-tamaño">&nbsp;Nombre
                         del Supervisor 2</label>
                     <div>
-                        {!! Form::text('administrador_contrato', null, ['class' => 'form-control','maxlength' => '250']) !!}
+                        {!! Form::text('administrador_contrato', null, ['class' => 'form-control', 'maxlength' => '250']) !!}
                         @if ($errors->has('administrador_contrato'))
                             <div class="invalid-feedback red-text">
                                 {{ $errors->first('administrador_contrato') }}

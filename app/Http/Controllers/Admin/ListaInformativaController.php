@@ -18,7 +18,6 @@ class ListaInformativaController extends Controller
     public function index(Request $request)
     {
         $query = ListaInformativa::with('participantes.empleado')->orderByDesc('id')->get();
-        // dd($query);
 
         $participantes = ListaInformativa::with('participantes.empleado')->get();
 
@@ -109,12 +108,12 @@ class ListaInformativaController extends Controller
                 ];
         }
         // dd($participantes_seleccionados);
-        $empleados = Empleado::getAltaDataColumns();
+        $empleados = Empleado::getAltaDataColumns()->sortBy('name');
 
         $usuarios = User::getAllWithEmpleado()
             ->filter(function ($user) {
                 return $user->empleado == null;
-            });
+            })->sortBy('name');
 
         // dd($usuarios);
         return view('admin.listainformativa.edit', compact('lista', 'participantes_seleccionados', 'empleados', 'usuarios'));

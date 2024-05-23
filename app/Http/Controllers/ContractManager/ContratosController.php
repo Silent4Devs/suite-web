@@ -17,9 +17,11 @@ use App\Models\ContractManager\ConveniosModificatorios;
 use App\Models\ContractManager\DolaresContrato;
 use App\Models\ContractManager\EntregaMensual;
 use App\Models\ContractManager\Factura;
+use App\Models\ConvergenciaContratos;
 use App\Models\Empleado;
 use App\Models\Organizacion;
 use App\Models\TimesheetCliente;
+use App\Models\TimesheetProyecto;
 use App\Models\User;
 use App\Repositories\ContratoRepository;
 use App\Rules\NumeroContrato;
@@ -77,11 +79,12 @@ class ContratosController extends AppBaseController
         $contratos = new Contrato;
         $areas = Area::getAll();
         $organizacion = Organizacion::getFirst();
+        $proyectos = TimesheetProyecto::getAll()->where('estatus', 'proceso');
         // $dolares = DolaresContrato::where('contrato_id', $id)->first();
         $dolares = null;
         $proveedores = TimesheetCliente::select('id', 'razon_social', 'nombre')->get();
 
-        return view('contract_manager.contratos-katbol.create', compact('dolares', 'organizacion', 'areas'))->with('proveedores', $proveedores)->with('contratos', $contratos);
+        return view('contract_manager.contratos-katbol.create', compact('dolares', 'organizacion', 'areas', 'proyectos'))->with('proveedores', $proveedores)->with('contratos', $contratos);
     }
 
     /**
@@ -199,6 +202,8 @@ class ContratosController extends AppBaseController
             $num_contrato = $no_contrato_sin_slashes;
         }
 
+        $proyecto = TimesheetProyecto::select('id', 'identificador')->where('identificador', $request->no_proyecto)->first();
+
         $contrato = $this->contratoRepository->create([
             'tipo_contrato' => $request->tipo_contrato,
             'identificador_privado' => $request->identificador_privado,
@@ -228,7 +233,14 @@ class ContratosController extends AppBaseController
             'no_proyecto' => $request->no_proyecto,
             'area_id' => $request->area_id,
             // 'firma1' => $firma,
+            'timesheet_proyecto_id' => $proyecto->id,
         ], $input);
+
+        $convergencia = ConvergenciaContratos::create([
+            'timesheet_proyecto_id' => $proyecto->id,
+            'timesheet_cliente_id' => $request->proveedor_id,
+            'contrato_id' => $contrato->id,
+        ]);
 
         $dolares = DolaresContrato::create([
             'contrato_id' => $contrato->id,
@@ -281,12 +293,12 @@ class ContratosController extends AppBaseController
         $nombre_f = null;
         if ($request->file('file_contrato') != null) {
             $nombre = $request->file('file_contrato')->getClientOriginalName();
-            $nombre_f = $contrato->id.$fecha_inicio.$nombre;
+            $nombre_f = $contrato->id . $fecha_inicio . $nombre;
 
             $file = $request->file('file_contrato');
 
             // Ruta completa donde se guardará el archivo
-            $ruta = 'contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato;
+            $ruta = 'contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato;
 
             // Guardar el archivo en el disco 'public' con la ruta específica
             Storage::disk('public')->put($ruta.'/'.$nombre_f, file_get_contents($file));
@@ -345,6 +357,10 @@ class ContratosController extends AppBaseController
     {
         try {
             $contrato = $this->contratoRepository->find($id);
+            dd(
+                $contrato->timesheetCliente,
+                $contrato->timesheetProyecto
+            );
             $formatoFecha = new FormatearFecha;
             $organizacion = Organizacion::getFirst();
             $areas = Area::getIdNameAll();
