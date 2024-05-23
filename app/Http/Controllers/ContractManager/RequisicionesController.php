@@ -248,7 +248,33 @@ class RequisicionesController extends Controller
                 'estado' => 'curso',
             ]);
             $requisicion->save();
-            $userEmail = User::find($requisicion->id_user)->empleado->supervisor->email;
+            //Buscamos supervisor
+            $supervisor = User::find($requisicion->id_user)->empleado->supervisor;
+
+            //Buscamos modelo correspondiente a lideres
+            $listaReq = ListaDistribucion::where('modelo', 'Empleado')->first();
+            //Traemos participantes
+            $listaPart = $listaReq->participantes;
+
+            //Buscamos al supervisor por su id
+            $supList = $listaPart->where('empleado_id', $supervisor->id)->first();
+
+            //Buscamos en que nivel se encuentra el supervisor
+            $nivel = $supList->nivel;
+
+            //traemos a todos los participantes correspondientes a ese nivel
+            $participantesNivel = $listaPart->where('nivel', $nivel)->sortBy('numero_orden');
+
+            //Buscamos 1 por 1 los participantes del nivel (area)
+            foreach ($participantesNivel as $key => $partNiv) {
+                //Si su estado esta activo se le manda el correo
+                if ($partNiv->empleado->estado_disponibilidad == "Activo") {
+
+                    $responsable = $partNiv->empleado;
+                    $userEmail = $responsable->email;
+                    break;
+                }
+            }
 
             $organizacion = Organizacion::getFirst();
         }
@@ -271,8 +297,6 @@ class RequisicionesController extends Controller
                     break;
                 }
             }
-            // dd('No entro al if');
-            // $userEmail = 'lourdes.abadia@silent4business.com';
 
             $organizacion = Organizacion::getFirst();
 
