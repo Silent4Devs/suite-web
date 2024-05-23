@@ -15,6 +15,7 @@ use App\Models\ContractManager\Requsicion as KatbolRequsicion;
 use App\Models\ContractManager\Sucursal as KatbolSucursal;
 use App\Models\Organizacion;
 use App\Models\User;
+use App\Services\RequisicionService;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -85,13 +86,25 @@ class RequisicionesCreateComponent extends Component
 
     protected $listeners = ['actualizarCountProveedores' => 'actualizarCountProveedores'];
 
+    public $filename;
+
+    protected $requisicionService;
+
+    public function __construct($id = null)
+    {
+        parent::__construct($id);
+        $this->requisicionService = app(RequisicionService::class);
+    }
+
+    public function postData()
+    {
+        $result = $this->requisicionService->postDataToPythonAPI($this->filename);
+        dd($result);
+    }
+
     public function actualizarCountProveedores()
     {
         $this->proveedores_count = $this->proveedores_count + 1;
-    }
-
-    public function mount()
-    {
     }
 
     public function render()
@@ -169,8 +182,8 @@ class RequisicionesCreateComponent extends Component
     public function proveedoresStore($data)
     {
         $this->habilitar_firma = false;
-        $cotizacion_count = 0;
         $prove_count = 0;
+        $cotizacion_count = 0;
         $this->provedores_colllection = collect();
 
         for ($i = 0; $i <= $this->proveedores_count; $i++) {
@@ -196,18 +209,20 @@ class RequisicionesCreateComponent extends Component
                         $proveedor_req->fecha_fin = isset($data['contacto_fecha_fin_'.$i]) ? $data['contacto_fecha_fin_'.$i] : null;
                         $proveedor_req->requisiciones_id = $this->requisicion_id;
 
-                        // cotizacion y validacion
+                        //cotizacion y validacion
                         $cotizacion_actual = $this->cotizaciones[$cotizacion_count];
-                        if (
-                            $cotizacion_actual->getClientOriginalExtension() === 'pdf' || $cotizacion_actual->getClientOriginalExtension() === 'docx'
-                            || $cotizacion_actual->getClientOriginalExtension() === 'pptx' || $cotizacion_actual->getClientOriginalExtension() === 'point'
-                            || $cotizacion_actual->getClientOriginalExtension() === 'xml' || $cotizacion_actual->getClientOriginalExtension() === 'jpeg'
-                            || $cotizacion_actual->getClientOriginalExtension() === 'jpg' || $cotizacion_actual->getClientOriginalExtension() === 'png'
-                            || $cotizacion_actual->getClientOriginalExtension() === 'xlsx' || $cotizacion_actual->getClientOriginalExtension() === 'xlsm'
-                            || $cotizacion_actual->getClientOriginalExtension() === 'csv'
-                        ) {
+
+                        $extensiones_permitidas = [
+                            'pdf', 'docx', 'pptx', 'point', 'xml', 'jpeg', 'jpg', 'png', 'xlsx', 'xlsm', 'csv',
+                        ];
+
+                        $extension = $cotizacion_actual->getClientOriginalExtension();
+
+                        if (in_array($extension, $extensiones_permitidas)) {
                             $this->habilitar_alerta = false;
-                            $name_cotizacion = 'requisicion_'.$this->requisicion_id.'cotizazcion_'.$cotizacion_count.'_'.uniqid().'.'.$cotizacion_actual->getClientOriginalExtension();
+                            $name_cotizacion = 'requisicion_'.$this->requisicion_id.'_cotizacion_'.$cotizacion_count.'_'.uniqid().'.'.$extension;
+                            $this->filename = $name_cotizacion;
+                            $this->postData();
                             $ruta_cotizacion = $cotizacion_actual->storeAs('public/cotizaciones_requisiciones_proveedores/', $name_cotizacion);
                             $proveedor_req->cotizacion = $name_cotizacion;
                             $proveedor_req->save();
