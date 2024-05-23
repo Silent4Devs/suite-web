@@ -126,49 +126,44 @@
 </script>
 
 <script>
-    var selectedOptions = []; // Array to store selected options in order
+    var niveles = @json($lista->niveles);
+    var selectedOptions = {}; // Object to store selected options for each nivel in order
 
+    for (var i = 1; i <= niveles; i++) {
+        selectedOptions['nivel' + i] = [];
 
-    $('#nivel1').on('select2:select', function(e) {
-        var selectedOptionId = e.params.data.id;
+        (function(nivel) {
+            $('#nivel' + nivel).on('select2:select', function(e) {
+                var selectedOptionId = e.params.data.id;
 
-        // if (selectedOptions.length >= 5 && !selectedOptions.includes(selectedOptionId)) {
-        //     Swal.fire('Solo se permiten seleccionar un maximo de 5 aprobadores por nivel',
-        //         'Se reemplazara uno de los aprobadores ya seleccionados', 'info');
-        //     $('#nivel1').find(`option[value="${selectedOptions[0]}"]`).prop('selected', false);
-        //     selectedOptions.shift();
-        // }
+                if (!selectedOptions['nivel' + nivel].includes(selectedOptionId)) {
+                    selectedOptions['nivel' + nivel].push(selectedOptionId);
+                }
 
-        if (!selectedOptions.includes(selectedOptionId)) {
-            selectedOptions.push(selectedOptionId);
-        }
+                $('#nivel' + nivel).find('option').sort(function(a, b) {
+                    return selectedOptions['nivel' + nivel].indexOf(a.value) - selectedOptions[
+                        'nivel' + nivel].indexOf(b.value);
+                }).appendTo('#nivel' + nivel);
+            });
 
-        $('#nivel1').find('option').sort(function(a, b) {
-            return selectedOptions.indexOf(a.value) - selectedOptions.indexOf(b.value);
-        }).appendTo('#nivel1');
-    });
-
-    $('#nivel1').on('select2:unselect', function(e) {
-        var unselectedOptionId = e.params.data.id;
-        var index = selectedOptions.indexOf(unselectedOptionId);
-        if (index !== -1) {
-            selectedOptions.splice(index, 1);
-        }
-    });
+            $('#nivel' + nivel).on('select2:unselect', function(e) {
+                var unselectedOptionId = e.params.data.id;
+                var index = selectedOptions['nivel' + nivel].indexOf(unselectedOptionId);
+                if (index !== -1) {
+                    selectedOptions['nivel' + nivel].splice(index, 1);
+                }
+            });
+        })(i);
+    }
 </script>
 
-<script>
+{{-- <script>
     var selectedOptions = []; // Array to store selected options in order
 
     $('#nivel2').on('select2:select', function(e) {
         var selectedOptionId = e.params.data.id;
 
-        // if (selectedOptions.length >= 5 && !selectedOptions.includes(selectedOptionId)) {
-        //     Swal.fire('Solo se permiten seleccionar un maximo de 5 aprobadores por nivel',
-        //         'Se reemplazara uno de los aprobadores ya seleccionados', 'info');
-        //     $('#nivel2').find(`option[value="${selectedOptions[0]}"]`).prop('selected', false);
-        //     selectedOptions.shift();
-        // }
+
 
         if (!selectedOptions.includes(selectedOptionId)) {
             selectedOptions.push(selectedOptionId);
@@ -194,12 +189,7 @@
     $('#nivel3').on('select2:select', function(e) {
         var selectedOptionId = e.params.data.id;
 
-        // if (selectedOptions.length >= 5 && !selectedOptions.includes(selectedOptionId)) {
-        //     Swal.fire('Solo se permiten seleccionar un maximo de 5 aprobadores por nivel',
-        //         'Se reemplazara uno de los aprobadores ya seleccionados', 'info');
-        //     $('#nivel3').find(`option[value="${selectedOptions[0]}"]`).prop('selected', false);
-        //     selectedOptions.shift();
-        // }
+
 
         if (!selectedOptions.includes(selectedOptionId)) {
             selectedOptions.push(selectedOptionId);
@@ -225,12 +215,7 @@
     $('#nivel4').on('select2:select', function(e) {
         var selectedOptionId = e.params.data.id;
 
-        // if (selectedOptions.length >= 5 && !selectedOptions.includes(selectedOptionId)) {
-        //     Swal.fire('Solo se permiten seleccionar un maximo de 5 aprobadores por nivel',
-        //         'Se reemplazara uno de los aprobadores ya seleccionados', 'info');
-        //     $('#nivel4').find(`option[value="${selectedOptions[0]}"]`).prop('selected', false);
-        //     selectedOptions.shift();
-        // }
+
 
         if (!selectedOptions.includes(selectedOptionId)) {
             selectedOptions.push(selectedOptionId);
@@ -255,12 +240,7 @@
     $('#nivel5').on('select2:select', function(e) {
         var selectedOptionId = e.params.data.id;
 
-        // if (selectedOptions.length >= 5 && !selectedOptions.includes(selectedOptionId)) {
-        //     Swal.fire('Solo se permiten seleccionar un maximo de 5 aprobadores por nivel',
-        //         'Se reemplazara uno de los aprobadores ya seleccionados', 'info');
-        //     $('#nivel5').find(`option[value="${selectedOptions[0]}"]`).prop('selected', false);
-        //     selectedOptions.shift();
-        // }
+
 
         if (!selectedOptions.includes(selectedOptionId)) {
             selectedOptions.push(selectedOptionId);
@@ -287,12 +267,7 @@
     $('#nivel1').on('select2:select', function(e) {
         var selectedOptionId = e.params.data.id;
 
-        // if (selectedOptions.length >= 5 && !selectedOptions.includes(selectedOptionId)) {
-        //     Swal.fire('Solo se permiten seleccionar un maximo de 5 aprobadores por nivel',
-        //         'Se reemplazara uno de los aprobadores ya seleccionados', 'info');
-        //     $('#nivel1').find(`option[value="${selectedOptions[0]}"]`).prop('selected', false);
-        //     selectedOptions.shift();
-        // }
+
 
         if (!selectedOptions.includes(selectedOptionId)) {
             selectedOptions.push(selectedOptionId);
@@ -318,13 +293,6 @@
     $('#nivel2').on('select2:select', function(e) {
         var selectedOptionId = e.params.data.id;
 
-        // if (selectedOptions.length >= 5 && !selectedOptions.includes(selectedOptionId)) {
-        //     Swal.fire('Solo se permiten seleccionar un maximo de 5 aprobadores por nivel',
-        //         'Se reemplazara uno de los aprobadores ya seleccionados', 'info');
-        //     $('#nivel2').find(`option[value="${selectedOptions[0]}"]`).prop('selected', false);
-        //     selectedOptions.shift();
-        // }
-
         if (!selectedOptions.includes(selectedOptionId)) {
             selectedOptions.push(selectedOptionId);
         }
@@ -348,13 +316,6 @@
 
     $('#nivel3').on('select2:select', function(e) {
         var selectedOptionId = e.params.data.id;
-
-        // if (selectedOptions.length >= 5 && !selectedOptions.includes(selectedOptionId)) {
-        //     Swal.fire('Solo se permiten seleccionar un maximo de 5 aprobadores por nivel',
-        //         'Se reemplazara uno de los aprobadores ya seleccionados', 'info');
-        //     $('#nivel3').find(`option[value="${selectedOptions[0]}"]`).prop('selected', false);
-        //     selectedOptions.shift();
-        // }
 
         if (!selectedOptions.includes(selectedOptionId)) {
             selectedOptions.push(selectedOptionId);
@@ -380,12 +341,7 @@
     $('#nivel4').on('select2:select', function(e) {
         var selectedOptionId = e.params.data.id;
 
-        // if (selectedOptions.length >= 5 && !selectedOptions.includes(selectedOptionId)) {
-        //     Swal.fire('Solo se permiten seleccionar un maximo de 5 aprobadores por nivel',
-        //         'Se reemplazara uno de los aprobadores ya seleccionados', 'info');
-        //     $('#nivel4').find(`option[value="${selectedOptions[0]}"]`).prop('selected', false);
-        //     selectedOptions.shift();
-        // }
+
 
         if (!selectedOptions.includes(selectedOptionId)) {
             selectedOptions.push(selectedOptionId);
@@ -410,12 +366,7 @@
     $('#nivel5').on('select2:select', function(e) {
         var selectedOptionId = e.params.data.id;
 
-        // if (selectedOptions.length >= 5 && !selectedOptions.includes(selectedOptionId)) {
-        //     Swal.fire('Solo se permiten seleccionar un maximo de 5 aprobadores por nivel',
-        //         'Se reemplazara uno de los aprobadores ya seleccionados', 'info');
-        //     $('#nivel5').find(`option[value="${selectedOptions[0]}"]`).prop('selected', false);
-        //     selectedOptions.shift();
-        // }
+
 
         if (!selectedOptions.includes(selectedOptionId)) {
             selectedOptions.push(selectedOptionId);
@@ -442,12 +393,7 @@
     $('#nivel1').on('select2:select', function(e) {
         var selectedOptionId = e.params.data.id;
 
-        // if (selectedOptions.length >= 5 && !selectedOptions.includes(selectedOptionId)) {
-        //     Swal.fire('Solo se permiten seleccionar un maximo de 5 aprobadores por nivel',
-        //         'Se reemplazara uno de los aprobadores ya seleccionados', 'info');
-        //     $('#nivel1').find(`option[value="${selectedOptions[0]}"]`).prop('selected', false);
-        //     selectedOptions.shift();
-        // }
+
 
         if (!selectedOptions.includes(selectedOptionId)) {
             selectedOptions.push(selectedOptionId);
@@ -473,12 +419,7 @@
     $('#nivel2').on('select2:select', function(e) {
         var selectedOptionId = e.params.data.id;
 
-        // if (selectedOptions.length >= 5 && !selectedOptions.includes(selectedOptionId)) {
-        //     Swal.fire('Solo se permiten seleccionar un maximo de 5 aprobadores por nivel',
-        //         'Se reemplazara uno de los aprobadores ya seleccionados', 'info');
-        //     $('#nivel2').find(`option[value="${selectedOptions[0]}"]`).prop('selected', false);
-        //     selectedOptions.shift();
-        // }
+
 
         if (!selectedOptions.includes(selectedOptionId)) {
             selectedOptions.push(selectedOptionId);
@@ -504,12 +445,7 @@
     $('#nivel3').on('select2:select', function(e) {
         var selectedOptionId = e.params.data.id;
 
-        // if (selectedOptions.length >= 5 && !selectedOptions.includes(selectedOptionId)) {
-        //     Swal.fire('Solo se permiten seleccionar un maximo de 5 aprobadores por nivel',
-        //         'Se reemplazara uno de los aprobadores ya seleccionados', 'info');
-        //     $('#nivel3').find(`option[value="${selectedOptions[0]}"]`).prop('selected', false);
-        //     selectedOptions.shift();
-        // }
+
 
         if (!selectedOptions.includes(selectedOptionId)) {
             selectedOptions.push(selectedOptionId);
@@ -535,12 +471,7 @@
     $('#nivel4').on('select2:select', function(e) {
         var selectedOptionId = e.params.data.id;
 
-        // if (selectedOptions.length >= 5 && !selectedOptions.includes(selectedOptionId)) {
-        //     Swal.fire('Solo se permiten seleccionar un maximo de 5 aprobadores por nivel',
-        //         'Se reemplazara uno de los aprobadores ya seleccionados', 'info');
-        //     $('#nivel4').find(`option[value="${selectedOptions[0]}"]`).prop('selected', false);
-        //     selectedOptions.shift();
-        // }
+
 
         if (!selectedOptions.includes(selectedOptionId)) {
             selectedOptions.push(selectedOptionId);
@@ -565,12 +496,7 @@
     $('#nivel5').on('select2:select', function(e) {
         var selectedOptionId = e.params.data.id;
 
-        // if (selectedOptions.length >= 5 && !selectedOptions.includes(selectedOptionId)) {
-        //     Swal.fire('Solo se permiten seleccionar un maximo de 5 aprobadores por nivel',
-        //         'Se reemplazara uno de los aprobadores ya seleccionados', 'info');
-        //     $('#nivel5').find(`option[value="${selectedOptions[0]}"]`).prop('selected', false);
-        //     selectedOptions.shift();
-        // }
+
 
         if (!selectedOptions.includes(selectedOptionId)) {
             selectedOptions.push(selectedOptionId);
@@ -597,12 +523,7 @@
     $('#nivel1').on('select2:select', function(e) {
         var selectedOptionId = e.params.data.id;
 
-        // if (selectedOptions.length >= 5 && !selectedOptions.includes(selectedOptionId)) {
-        //     Swal.fire('Solo se permiten seleccionar un maximo de 5 aprobadores por nivel',
-        //         'Se reemplazara uno de los aprobadores ya seleccionados', 'info');
-        //     $('#nivel1').find(`option[value="${selectedOptions[0]}"]`).prop('selected', false);
-        //     selectedOptions.shift();
-        // }
+
 
         if (!selectedOptions.includes(selectedOptionId)) {
             selectedOptions.push(selectedOptionId);
@@ -628,12 +549,7 @@
     $('#nivel2').on('select2:select', function(e) {
         var selectedOptionId = e.params.data.id;
 
-        // if (selectedOptions.length >= 5 && !selectedOptions.includes(selectedOptionId)) {
-        //     Swal.fire('Solo se permiten seleccionar un maximo de 5 aprobadores por nivel',
-        //         'Se reemplazara uno de los aprobadores ya seleccionados', 'info');
-        //     $('#nivel2').find(`option[value="${selectedOptions[0]}"]`).prop('selected', false);
-        //     selectedOptions.shift();
-        // }
+
 
         if (!selectedOptions.includes(selectedOptionId)) {
             selectedOptions.push(selectedOptionId);
@@ -659,12 +575,7 @@
     $('#nivel3').on('select2:select', function(e) {
         var selectedOptionId = e.params.data.id;
 
-        // if (selectedOptions.length >= 5 && !selectedOptions.includes(selectedOptionId)) {
-        //     Swal.fire('Solo se permiten seleccionar un maximo de 5 aprobadores por nivel',
-        //         'Se reemplazara uno de los aprobadores ya seleccionados', 'info');
-        //     $('#nivel3').find(`option[value="${selectedOptions[0]}"]`).prop('selected', false);
-        //     selectedOptions.shift();
-        // }
+
 
         if (!selectedOptions.includes(selectedOptionId)) {
             selectedOptions.push(selectedOptionId);
@@ -690,12 +601,7 @@
     $('#nivel4').on('select2:select', function(e) {
         var selectedOptionId = e.params.data.id;
 
-        // if (selectedOptions.length >= 5 && !selectedOptions.includes(selectedOptionId)) {
-        //     Swal.fire('Solo se permiten seleccionar un maximo de 5 aprobadores por nivel',
-        //         'Se reemplazara uno de los aprobadores ya seleccionados', 'info');
-        //     $('#nivel4').find(`option[value="${selectedOptions[0]}"]`).prop('selected', false);
-        //     selectedOptions.shift();
-        // }
+
 
         if (!selectedOptions.includes(selectedOptionId)) {
             selectedOptions.push(selectedOptionId);
@@ -720,12 +626,7 @@
     $('#nivel5').on('select2:select', function(e) {
         var selectedOptionId = e.params.data.id;
 
-        // if (selectedOptions.length >= 5 && !selectedOptions.includes(selectedOptionId)) {
-        //     Swal.fire('Solo se permiten seleccionar un maximo de 5 aprobadores por nivel',
-        //         'Se reemplazara uno de los aprobadores ya seleccionados', 'info');
-        //     $('#nivel5').find(`option[value="${selectedOptions[0]}"]`).prop('selected', false);
-        //     selectedOptions.shift();
-        // }
+
 
         if (!selectedOptions.includes(selectedOptionId)) {
             selectedOptions.push(selectedOptionId);
@@ -743,4 +644,4 @@
             selectedOptions.splice(index, 1);
         }
     });
-</script>
+</script> --}}

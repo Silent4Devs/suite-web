@@ -16,12 +16,12 @@ class ListaInformativaOrdenesdeCompraSeeder extends Seeder
         //
         $modulos = [
             [
-                'modulo' => 'Ordenes De Compra',
+                'modulo' => 'Gestión Contractual',
                 'submodulo' => 'Ordenes de Compra - Internas',
                 'modelo' => 'OrdenCompra',
             ],
             [
-                'modulo' => 'Ordenes De Compra',
+                'modulo' => 'Gestión Contractual',
                 'submodulo' => 'Ordenes de Compra - Externas',
                 'modelo' => 'OrdenCompra',
             ],
