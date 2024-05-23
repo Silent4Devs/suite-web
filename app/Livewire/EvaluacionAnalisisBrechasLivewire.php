@@ -107,7 +107,7 @@ class EvaluacionAnalisisBrechasLivewire extends Component
                     $grafica_colores[] = $parametro->color;
                 }
             }
-            $this->dispatch('renderAreas', $grafica_cuentas, $grafica_colores);
+            $this->dispatch('renderAreas', graficaCuentas: $grafica_cuentas, graficaColores: $grafica_colores);
         } else {
             $template = $template_general;
             $result = $this->sumaParametrosTotal();
@@ -150,8 +150,10 @@ class EvaluacionAnalisisBrechasLivewire extends Component
             $this->grafica_colores2 = $grafica_colores;
             $this->resultskeys = $resultskeys;
 
-            $this->dispatch('renderAreas', $grafica_cuentas, $grafica_colores);
-            $this->dispatch('renderGraficsModal', $this->grafica_cuentas2, $resultskeys);
+            $this->dispatch('renderAreas', graficaCuentas: $grafica_cuentas, graficaColores: $grafica_colores);
+
+            $this->dispatch('renderGraficsModal', graficaCuentas2: $this->grafica_cuentas2, resultsKeys: $resultskeys);
+
         }
 
         $this->totalAnalisis = $this->porcentajeTotal()[0]['percentage'];

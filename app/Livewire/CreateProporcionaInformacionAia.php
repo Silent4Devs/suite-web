@@ -66,7 +66,7 @@ class CreateProporcionaInformacionAia extends Component
 
         $this->reset('id', 'nombre', 'puesto', 'correo_electronico', 'extencion', 'ubicacion', 'interno_externo');
         $this->dispatch('render');
-        $this->dispatch('cerrar-modal', ['editar' => false]);
+        $this->dispatch('cerrar-modal', editar: false);
     }
 
     public function edit($id)
@@ -110,7 +110,7 @@ class CreateProporcionaInformacionAia extends Component
             'cuestionario_id' => $this->cuestionario_id,
             'interno_externo' => $this->interno_externo,
         ]);
-        $this->dispatch('cerrar-modal', ['editar' => true]);
+        $this->dispatch('cerrar-modal', editar: true);
         $this->default();
         $this->dispatch('render');
     }

@@ -63,7 +63,7 @@ class CreateRecursosMaterialesAia extends Component
 
         $this->reset('id', 'escenario', 'impresoras', 'telefono', 'otro', 'equipos', 'otro_numero');
         $this->dispatch('render');
-        $this->dispatch('cerrar-modal-materiales', ['editarMateriales' => false]);
+        $this->dispatch('cerrar-modal-materiales', editarMateriales: false);
     }
 
     public function edit($id)
@@ -109,7 +109,7 @@ class CreateRecursosMaterialesAia extends Component
             'cuestionario_id' => $this->cuestionario_id,
             'otro_numero' => $this->otro_numero,
         ]);
-        $this->dispatch('cerrar-modal-materiales', ['editar' => true]);
+        $this->dispatch('cerrar-modal-materiales', editar: true);
         $this->default();
         $this->dispatch('render');
     }

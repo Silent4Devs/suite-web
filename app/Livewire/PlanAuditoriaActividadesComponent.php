@@ -70,7 +70,7 @@ class PlanAuditoriaActividadesComponent extends Component
 
         $this->reset('nombre_auditor', 'horario_termino', 'horario_inicio', 'fecha_auditoria', 'actividad_auditar');
         $this->dispatch('render');
-        $this->dispatch('cerrar-modal', ['editar' => false]);
+        $this->dispatch('cerrar-modal', editar: false);
         $this->alert('success', 'Bien hecho', [
             'position' => 'top-end',
             'timer' => 3000,
@@ -93,7 +93,7 @@ class PlanAuditoriaActividadesComponent extends Component
         $this->horario_termino = $plan->horario_termino;
         $this->plan_auditoria_id = $plan->plan_auditoria_id;
         $this->dispatch('abrir-modal');
-        $this->dispatch('cargar-puesto', $id);
+        $this->dispatch('cargar-puesto', id: $id);
     }
 
     public function default()
@@ -122,7 +122,7 @@ class PlanAuditoriaActividadesComponent extends Component
             'plan_auditoria_id' => $this->plan_auditoria_id,
         ]);
 
-        $this->dispatch('cerrar-modal', ['editar' => true]);
+        $this->dispatch('cerrar-modal', editar: true);
         $this->default();
         $this->dispatch('render');
         $this->alert('success', 'Bien hecho', [

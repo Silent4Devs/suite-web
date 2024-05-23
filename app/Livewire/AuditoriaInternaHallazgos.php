@@ -69,7 +69,7 @@ class AuditoriaInternaHallazgos extends Component
 
         $this->reset('descripcion', 'incumplimiento_requisito', 'clasificacion_hallazgo', 'proceso', 'area');
         $this->dispatch('render');
-        $this->dispatch('cerrar-modal', ['editar' => false]);
+        $this->dispatch('cerrar-modal', editar: false);
         $this->alert('success', 'Bien hecho', [
             'position' => 'top-end',
             'timer' => 3000,
@@ -117,7 +117,7 @@ class AuditoriaInternaHallazgos extends Component
             'auditoria_internas_id' => $this->auditoria_internas_id,
         ]);
 
-        $this->dispatch('cerrar-modal', ['editar' => true]);
+        $this->dispatch('cerrar-modal', editar: false);
         $this->default();
         $this->dispatch('render');
         $this->alert('success', 'Bien hecho', [

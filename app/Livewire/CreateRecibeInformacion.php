@@ -62,7 +62,7 @@ class CreateRecibeInformacion extends Component
 
         $this->reset('id', 'nombre', 'puesto', 'correo_electronico', 'extencion', 'ubicacion', 'interno_externo');
         $this->dispatch('render');
-        $this->dispatch('cerrar-modal-recibe', ['editarRecibe' => false]);
+        $this->dispatch('cerrar-modal-recibe', editarRecibe: false);
     }
 
     public function editRecibe($id)
@@ -106,7 +106,7 @@ class CreateRecibeInformacion extends Component
             'cuestionario_id' => $this->cuestionario_id,
             'interno_externo' => $this->interno_externo,
         ]);
-        $this->dispatch('cerrar-modal-recibe', ['editar' => true]);
+        $this->dispatch('cerrar-modal-recibe', editar:true);
         $this->default();
         $this->dispatch('render');
     }

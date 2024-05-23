@@ -59,7 +59,7 @@ class CreateRecursosMateriales extends Component
 
         $this->reset('id', 'escenario', 'impresoras', 'telefono', 'otro', 'equipos');
         $this->dispatch('render');
-        $this->dispatch('cerrar-modal-materiales', ['editarMateriales' => false]);
+        $this->dispatch('cerrar-modal-materiales', editarMateriales: false);
     }
 
     public function edit($id)
@@ -103,7 +103,7 @@ class CreateRecursosMateriales extends Component
             'otro' => $this->otro,
             'cuestionario_id' => $this->cuestionario_id,
         ]);
-        $this->dispatch('cerrar-modal-materiales', ['editar' => true]);
+        $this->dispatch('cerrar-modal-materiales', editar: true);
         $this->default();
         $this->dispatch('render');
     }

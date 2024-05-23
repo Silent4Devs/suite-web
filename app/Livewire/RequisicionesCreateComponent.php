@@ -175,7 +175,7 @@ class RequisicionesCreateComponent extends Component
         ]);
 
         $this->habilitar_proveedores = true;
-        $this->dispatch('cambiarTab', 'profile');
+        $this->dispatch('cambiarTab', profile: 'profile');
         $this->active = 'desActive';
     }
 
@@ -232,7 +232,7 @@ class RequisicionesCreateComponent extends Component
                             return false;
                         }
 
-                        $this->dispatch('cambiarTab', 'contact');
+                        $this->dispatch('cambiarTab', contact: 'contact');
 
                         $this->dataFirma();
 
@@ -245,7 +245,7 @@ class RequisicionesCreateComponent extends Component
                             'fecha_fin' => $data['contacto_fecha_fin_'.$i],
                         ]);
 
-                        $this->dispatch('cambiarTab', 'contact');
+                        $this->dispatch('cambiarTab', contact: 'contact');
 
                         $this->dataFirma();
 
@@ -275,7 +275,7 @@ class RequisicionesCreateComponent extends Component
 
                     $this->proveedores_show = KatbolProveedorOC::whereIn('id', $proveedores_escogidos)->get();
 
-                    $this->dispatch('cambiarTab', 'contact');
+                    $this->dispatch('cambiarTab', contact: 'contact');
 
                     $this->dataFirma();
                     $this->disabled = 'disabled';

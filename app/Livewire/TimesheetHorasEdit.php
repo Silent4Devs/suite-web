@@ -45,7 +45,7 @@ class TimesheetHorasEdit extends Component
             TimesheetHoras::find($id)->delete();
         }
 
-        $this->dispatch('removeTr', $tr);
+        $this->dispatch('removeTr', removeTr: $tr);
     }
 
     public function updatedContador($value)

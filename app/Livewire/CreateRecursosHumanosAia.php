@@ -72,7 +72,7 @@ class CreateRecursosHumanosAia extends Component
 
         $this->reset('id', 'escenario', 'nombre', 'a_paterno', 'a_materno', 'puesto', 'rol', 'tel', 'correo');
         $this->dispatch('render');
-        $this->dispatch('cerrar-modal-recursos', ['editarRecursos' => false]);
+        $this->dispatch('cerrar-modal-recursos', editarRecursos: false);
     }
 
     public function edit($id)
@@ -124,7 +124,7 @@ class CreateRecursosHumanosAia extends Component
             'correo' => $this->correo,
             'cuestionario_id' => $this->cuestionario_id,
         ]);
-        $this->dispatch('cerrar-modal-recursos', ['editar' => true]);
+        $this->dispatch('cerrar-modal-recursos', editar: true);
         $this->default();
         $this->dispatch('render');
     }

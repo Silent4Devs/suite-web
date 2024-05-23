@@ -169,7 +169,7 @@ class RequisicionesEditComponent extends Component
         $this->requisicion_id = $this->editar_requisicion->id;
 
         $this->habilitar_proveedores = true;
-        $this->dispatch('cambiarTab', 'profile');
+        $this->dispatch('cambiarTab', profile: 'profile');
         $this->active = 'desActive';
     }
 
@@ -209,7 +209,7 @@ class RequisicionesEditComponent extends Component
                     'fecha_fin' => $data['contacto_fecha_fin_'.$i],
                 ]);
 
-                $this->dispatch('cambiarTab', 'contact');
+                $this->dispatch('cambiarTab', contact: 'contact');
 
                 $this->dataFirma($editrequisicion);
             }
@@ -249,7 +249,7 @@ class RequisicionesEditComponent extends Component
 
                     $cotizacion_count = $cotizacion_count + 1;
 
-                    $this->dispatch('cambiarTab', 'contact');
+                    $this->dispatch('cambiarTab', contact: 'contact');
 
                     $this->dataFirma($editrequisicion);
 
@@ -292,7 +292,7 @@ class RequisicionesEditComponent extends Component
 
                 $prove_count = $prove_count + 1;
 
-                $this->dispatch('cambiarTab', 'contact');
+                $this->dispatch('cambiarTab', contact: 'contact');
 
                 $this->dataFirma($editrequisicion);
             }

@@ -65,7 +65,7 @@ class CreateMiembrosComiteSeguridad extends Component
 
         $this->reset('nombre_rol', 'colaborador', 'fecha_vigor', 'responsabilidades');
         $this->dispatch('render');
-        $this->dispatch('cerrar-modal', ['editar' => false]);
+        $this->dispatch('cerrar-modal', editar: false);
     }
 
     public function edit($id)
@@ -80,8 +80,8 @@ class CreateMiembrosComiteSeguridad extends Component
         $this->id_comite = $model->comite_id;
         $this->miembroID = $model->id;
         $this->dispatch('abrir-modal');
-        $this->dispatch('editar-modal', $model->responsabilidades);
-        $this->dispatch('cargar-puesto', $id);
+        $this->dispatch('editar-modal', responsabilidades: $model->responsabilidades);
+        $this->dispatch('cargar-puesto', id: $id);
     }
 
     public function default()
@@ -105,7 +105,7 @@ class CreateMiembrosComiteSeguridad extends Component
             'responsabilidades' => $this->responsabilidades,
             'comite_id' => $this->id_comite,
         ]);
-        $this->dispatch('cerrar-modal', ['editar' => true]);
+        $this->dispatch('cerrar-modal', editar: true);
         $this->default();
         $this->dispatch('render');
     }

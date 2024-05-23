@@ -71,7 +71,7 @@ class RegistrarSalidaVisitante extends Component
         $responsable_model = ResponsableVisitantes::with('empleado')->first();
         $responsable = $responsable_model->empleado;
         Mail::to(removeUnicodeCharacters($responsable->email))->queue(new SolicitudSalidaVisitante($registroVisitante, $responsable));
-        $this->emitTo('visitantes.registrar-salida', 'salidaRegistrada', $this->visitante->id);
+        $this->dispatch('salidaRegistrada', $this->visitante->id)->to('visitantes.registrar-salida');
         if ($this->tipo == 'full') {
             $this->dispatch('salidaRegistradaSelf');
         }

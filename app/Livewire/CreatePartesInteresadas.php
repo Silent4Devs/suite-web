@@ -52,7 +52,7 @@ class CreatePartesInteresadas extends Component
         $model->normas()->sync($this->normasModel);
         $this->reset('necesidades', 'expectativas');
         $this->dispatch('render');
-        $this->dispatch('cerrar-modal', ['editar' => false]);
+        $this->dispatch('cerrar-modal', editar: false);
     }
 
     public function edit($id)
@@ -85,7 +85,7 @@ class CreatePartesInteresadas extends Component
             'id_interesada' => $this->id_interesado,
         ]);
         $model->normas()->sync($this->normasModel);
-        $this->dispatch('cerrar-modal', ['editar' => true]);
+        $this->dispatch('cerrar-modal', editar: true);
         $this->default();
         $this->dispatch('render');
     }

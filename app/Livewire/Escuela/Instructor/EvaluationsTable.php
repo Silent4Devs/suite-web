@@ -39,7 +39,7 @@ class EvaluationsTable extends Component
     public function edit($evaluacion_id)
     {
         $evaluacion = Evaluation::find($evaluacion_id);
-        $this->dispatch('editarEvaluacion', $evaluacion);
+        $this->dispatch('editarEvaluacion', evaluacion: $evaluacion);
     }
 
     public function render_alerta($type, $message)

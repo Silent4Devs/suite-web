@@ -147,6 +147,7 @@ class BajaEmpleadoComponent extends Component
             $user->delete();
         }
         $this->dispatch('select2');
-        $this->dispatch('baja', $this->empleado);
+        $this->dispatch('baja', empleado: $this->empleado);
+
     }
 }
