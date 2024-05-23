@@ -217,6 +217,8 @@ class RequisicionesCreateComponent extends Component
                         //cotizacion y validacion
                         if (!$this->cotizaciones) {
                             $this->habilitar_alerta_cotizacion = true;
+                        } else {
+                            $this->habilitar_alerta_cotizacion = false;
                         }
 
                         $cotizacion_actual = $this->cotizaciones[$cotizacion_count];
