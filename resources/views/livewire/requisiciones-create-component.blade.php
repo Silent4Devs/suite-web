@@ -703,6 +703,12 @@
         </div>
     </div>
 
+    @if ($habilitar_alerta_cotizacion)
+    <b>
+        <H1>Ocurrio algo Inesperado Intentelo nuevamente</H1>
+    </b>
+@endif
+
     @if ($habilitar_alerta)
         <b>
             <H1>LA EXTENCIÓN DE ARCHIVO NO ES VALIDA</H1>
