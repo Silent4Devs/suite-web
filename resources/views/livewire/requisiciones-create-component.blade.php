@@ -707,7 +707,7 @@
     <b>
         <H1>Ocurrio algo Inesperado Intentelo nuevamente</H1>
     </b>
-@endif
+   @endif
 
     @if ($habilitar_alerta)
         <b>

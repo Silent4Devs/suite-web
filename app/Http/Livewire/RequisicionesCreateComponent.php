@@ -62,6 +62,8 @@ class RequisicionesCreateComponent extends Component
     // tabs
     public $habilitar_firma = false;
 
+    public $habilitar_alerta_cotizacion = false;
+
     public $habilitar_alerta = false;
 
     public $habilitar_proveedores = false;
@@ -213,6 +215,10 @@ class RequisicionesCreateComponent extends Component
                         $proveedor_req->requisiciones_id = $this->requisicion_id;
 
                         //cotizacion y validacion
+                        if (!$this->cotizaciones) {
+                            $this->habilitar_alerta_cotizacion = true;
+                        }
+
                         $cotizacion_actual = $this->cotizaciones[$cotizacion_count];
 
 
