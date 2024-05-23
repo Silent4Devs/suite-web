@@ -5,13 +5,13 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Escuela\Course;
 use App\Traits\ObtenerOrganizacion;
-use Illuminate\Http\Request;
 
 class PanelCursosController extends Controller
 {
     use ObtenerOrganizacion;
 
-    public function index() {
+    public function index()
+    {
 
         $cursos = Course::get();
 

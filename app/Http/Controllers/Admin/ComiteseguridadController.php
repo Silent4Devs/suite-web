@@ -97,7 +97,7 @@ class ComiteseguridadController extends Controller
 
             $comiteseguridad = Comiteseguridad::find($comiteseguridad);
 
-            if (!$comiteseguridad) {
+            if (! $comiteseguridad) {
                 abort(404);
             }
 
