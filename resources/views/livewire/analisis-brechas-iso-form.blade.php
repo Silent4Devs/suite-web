@@ -119,7 +119,7 @@
     </div>
 
     <div class="mt-4 card card-body shadow-sm" style="border-radius:16px;">
-        <form wire:submit.prevent={{ $view == 'create' ? 'save' : 'update' }}>
+        <form wire:submit={{ $view == 'create' ? 'save' : 'update' }}>
             {{-- @csrf --}}
             <h5 class="form-group col-12">Datos generales</h5>
             <hr>

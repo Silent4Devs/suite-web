@@ -5,7 +5,7 @@
     @foreach ($course->requirements as $item)
                 @if ($requirement->id == $item->id)
                 <div class="registro rounded p-2">
-                    <form wire:submit.prevent='update'>
+                    <form wire:submit='update'>
                         <input wire:model.live="requirement.name" class="form-control">
                         @error('requirement.name') <span class="text-danger">{{ $message }}</span> @enderror
                     </form>
@@ -29,7 +29,7 @@
 
     <article class="card shadow-none">
         <div class="card-body">
-            <form wire:submit.prevent="store" class="form-group">
+            <form wire:submit="store" class="form-group">
                 <div class="mt-2 row justify-content-start align-items-baseline">
                     <div class="form-group col-9 pl-0 anima-focus">
                         {{-- {!! Form::label('title', 'Agregar el nombre del requisito*',[

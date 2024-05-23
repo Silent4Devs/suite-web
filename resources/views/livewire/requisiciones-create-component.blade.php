@@ -40,7 +40,7 @@
         <div class="tab-pane fade show {{ $active }}" id="home" role="tabpanel" aria-labelledby="home-tab">
             <div id="home" class="tab-content">
                 <form method="POST"
-                    wire:submit.prevent="servicioStore(Object.fromEntries(new FormData($event.target)))"
+                    wire:submit="servicioStore(Object.fromEntries(new FormData($event.target)))"
                     enctype="multipart/form-data">
                     <div class="card card-body">
                         <h3 class="titulo-form">Solicitud de requisición</h3>
@@ -197,7 +197,7 @@
         <div class="tab-pane fade active show" id="profile" role="tabpanel" aria-labelledby="profile-tab">
             <div id="profile" class="tab-content" {{ !$habilitar_proveedores ? ' style=display:none; ' : '' }}>
                 <form id="form-proveedores"
-                    wire:submit.prevent="proveedoresStore(Object.fromEntries(new FormData($event.target)))"
+                    wire:submit="proveedoresStore(Object.fromEntries(new FormData($event.target)))"
                     action="POST" enctype="multipart/form-data">
                     <div class="card card-body">
                         <h3 class="titulo-form">Solicitud de requisición</h3>
@@ -665,7 +665,7 @@
                             </div>
                         </div>
                     </div>
-                    <form method="POST" wire:submit.prevent="Firmar(Object.fromEntries(new FormData($event.target)))"
+                    <form method="POST" wire:submit="Firmar(Object.fromEntries(new FormData($event.target)))"
                         enctype="multipart/form-data">
                         <div class="card card-body">
                             <div class="">

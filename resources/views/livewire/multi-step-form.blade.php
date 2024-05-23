@@ -415,7 +415,7 @@
     </style>
     <div class="container row justify-content-center">
         <div class="mt-3 col-12" style="position: relative;">
-            <form wire:submit.prevent="register">
+            <form wire:submit="register">
                 {{-- STEP 1 --}}
                 @if ($currentStep == 1)
                     <div class="step-one">

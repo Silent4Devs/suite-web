@@ -8,7 +8,7 @@
                 <hr class="my-2">
 
                 @if ($lesson->description)
-                    <form wire:submit.prevent="update">
+                    <form wire:submit="update">
                         <textarea wire:model.live="description.name" class="w-full form-input"></textarea>
 
                         @error('description.name')

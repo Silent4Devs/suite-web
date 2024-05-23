@@ -7,7 +7,7 @@
         {{--  <div class="w-100">
             <h5 id="titulo_estatus">Crear Proyecto</h5>
         </div>
-        <form wire:submit.prevent="store()" class="w-100">
+        <form wire:submit="store()" class="w-100">
             <div class="row">
                 <div class="form-group col-md-2">
                     <label><i class="fas fa-list iconos-crear"></i> ID</label>

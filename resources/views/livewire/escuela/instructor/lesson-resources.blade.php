@@ -14,7 +14,7 @@
                 </p>
             </div>
         @else
-            {{-- <form wire:submit.prevent="save"> --}}
+            {{-- <form wire:submit="save"> --}}
             <div class="flex items-center">
                 <input wire:model.live="file" type="file" class="flex-1 form-input">
                 <button type="button" wire:click="save" style="background-color:#333;"

@@ -1,4 +1,4 @@
-{{-- <form wire:submit.prevent="store" enctype="multipart/form-data"> --}}
+{{-- <form wire:submit="store" enctype="multipart/form-data"> --}}
 <div class="row">
 
     <div class="form-group col-sm-6">

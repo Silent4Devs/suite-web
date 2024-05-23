@@ -37,7 +37,7 @@
                     </div>
                 </div>
                 <div wire:loading.remove>
-                    <form wire:submit.prevent="update" class="px-3 py-2 ">
+                    <form wire:submit="update" class="px-3 py-2 ">
                         <div class="row">
                             <div class="form-group col-8 anima-focus">
                                 <input wire:model="lesson.name" id="edit-lesson-name-{{ $section->id }}-{{$item->id}}"

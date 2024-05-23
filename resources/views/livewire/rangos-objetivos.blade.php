@@ -1,5 +1,5 @@
 <div>
-    <form wire:submit.prevent="submitForm(Object.fromEntries(new FormData($event.target)))">
+    <form wire:submit="submitForm(Object.fromEntries(new FormData($event.target)))">
         <div class="card card-body mt-5">
             <div style="color:#306BA9; font-size:16px;">Datos Generales</div>
             <hr style="">

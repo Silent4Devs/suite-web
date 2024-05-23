@@ -10,7 +10,7 @@
         </div>
     </div>
 
-    <form wire:submit.prevent="addExterno" wire:ignore>
+    <form wire:submit="addExterno" wire:ignore>
         <x-loading-indicator />
         <div class="row">
             <div class="form-group col-md-8">
@@ -121,7 +121,7 @@
                                     <small>{{ $proyecto_proveedor->proveedor_tercero }}</small>
                                 </h1>
                                 <form
-                                    wire:submit.prevent="editExterno({{ $proyecto_proveedor->id }}, Object.fromEntries(new FormData($event.target)))">
+                                    wire:submit="editExterno({{ $proyecto_proveedor->id }}, Object.fromEntries(new FormData($event.target)))">
                                     <div class="row">
                                         <div class="form-group col-md-12">
                                             <label for="">Externo<sup>*</sup>(obligatorio)</label>
