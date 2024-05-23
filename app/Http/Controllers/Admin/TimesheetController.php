@@ -54,6 +54,7 @@ class TimesheetController extends Controller
      */
     public function index($estatus = 'todos')
     {
+        abort_if(Gate::denies('timesheet_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $cacheKey = 'timesheet-'.User::getCurrentUser()->empleado->id;
 
         // $times = Timesheet::getPersonalTimesheet()->sortBy('fecha_dia');
@@ -169,6 +170,7 @@ class TimesheetController extends Controller
 
     public function createCopia($id)
     {
+        abort_if(Gate::denies('timesheet_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $empleado = Empleado::find(User::getCurrentUser()->empleado->id);
 
         // areas proyectos
@@ -374,18 +376,24 @@ class TimesheetController extends Controller
      */
     public function show($id)
     {
+        $id_empleado = User::getCurrentUser()->empleado->id;
+
         try {
-            $timesheet = Timesheet::find($id);
+            $timesheet = Timesheet::findOrFail($id);
 
-            $horas = TimesheetHoras::where('timesheet_id', $id)->get();
-            $horas_count = $horas->count();
+            if ($timesheet->empleado_id == $id_empleado || Gate::allows('timesheet_show')) { //Nuevo permiso
+                $horas = TimesheetHoras::where('timesheet_id', $id)->get();
+                $horas_count = $horas->count();
 
-            $hoy = Carbon::now();
-            $hoy_format = $hoy->format('d/m/Y');
+                $hoy = Carbon::now();
+                $hoy_format = $hoy->format('d/m/Y');
 
-            return view('admin.timesheet.show', compact('timesheet', 'horas', 'hoy_format', 'horas_count'));
+                return view('admin.timesheet.show', compact('timesheet', 'horas', 'hoy_format', 'horas_count'));
+            } else {
+                abort(Response::HTTP_FORBIDDEN, '403 Forbidden');
+            }
         } catch (\Exception $e) {
-            return redirect('admin/timesheet/proyectos')->with('error', 'No se localizo  ningun id  en la ruta');
+            return redirect('admin/timesheet')->with('error', 'No tienes permitido el acceso a estos registros.');
         }
     }
 
@@ -397,39 +405,49 @@ class TimesheetController extends Controller
      */
     public function edit($id)
     {
+        // abort_if(Gate::denies('timesheet_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $empleado = Empleado::find(User::getCurrentUser()->empleado->id);
         // areas proyectos
-        $proyectos_array = collect();
 
-        $proyectos_totales = TimesheetProyecto::getAll();
+        try {
+            $timesheet = Timesheet::findOrFail($id);
 
-        foreach ($proyectos_totales as $key => $proyecto) {
-            if ($proyecto->estatus == 'proceso') {
-                foreach ($proyecto->areas as $key => $area) {
-                    if ($area['id'] == $empleado->area_id) {
-                        $proyectos_array->push([
-                            'id' => $proyecto->id,
-                            'identificador' => $proyecto->identificador,
-                            'proyecto' => $proyecto->proyecto,
-                        ]);
+            if ($timesheet->empleado_id == $empleado->id || Gate::allows('timesheet_edit')) { //Nuevo Permiso
+                $proyectos_array = collect();
+
+                $proyectos_totales = TimesheetProyecto::getAll();
+
+                foreach ($proyectos_totales as $key => $proyecto) {
+                    if ($proyecto->estatus == 'proceso') {
+                        foreach ($proyecto->areas as $key => $area) {
+                            if ($area['id'] == $empleado->area_id) {
+                                $proyectos_array->push([
+                                    'id' => $proyecto->id,
+                                    'identificador' => $proyecto->identificador,
+                                    'proyecto' => $proyecto->proyecto,
+                                ]);
+                            }
+                        }
                     }
                 }
+
+                $proyectos = $proyectos_array->unique();
+
+                $tareas = TimesheetTarea::getAll();
+
+                $fechasRegistradas = Timesheet::getPersonalTimesheet()->pluck('fecha_dia')->toArray();
+
+                $organizacion = Organizacion::getFirst();
+
+                $horas_count = TimesheetHoras::select('id')->where('timesheet_id', $id)->count();
+
+                return view('admin.timesheet.edit', compact('timesheet', 'proyectos', 'tareas', 'fechasRegistradas', 'organizacion', 'horas_count'));
+            } else {
+                abort(Response::HTTP_FORBIDDEN, '403 Forbidden');
             }
+        } catch (\Exception $e) {
+            return redirect('admin/timesheet')->with('error', 'No tienes permitido el acceso a estos registros.');
         }
-
-        $proyectos = $proyectos_array->unique();
-
-        $tareas = TimesheetTarea::getAll();
-
-        $timesheet = Timesheet::find($id);
-
-        $fechasRegistradas = Timesheet::getPersonalTimesheet()->pluck('fecha_dia')->toArray();
-
-        $organizacion = Organizacion::getFirst();
-
-        $horas_count = TimesheetHoras::select('id')->where('timesheet_id', $id)->count();
-
-        return view('admin.timesheet.edit', compact('timesheet', 'proyectos', 'tareas', 'fechasRegistradas', 'organizacion', 'horas_count'));
     }
 
     /**
@@ -440,7 +458,7 @@ class TimesheetController extends Controller
      */
     public function update(Request $request, $id)
     {
-        abort_if(Gate::denies('timesheet_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('timesheet_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden'); //Nuevbo permiso, necesario?
 
         $organizacion_semana = Organizacion::getFirst();
 
@@ -611,6 +629,7 @@ class TimesheetController extends Controller
 
     public function eliminar($id)
     {
+        abort_if(Gate::denies('timesheet_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden'); //Nuevo permiso, vale la pena?
         $timesheet_eliminar = Timesheet::find($id);
 
         $timesheet_eliminar->delete();
@@ -620,6 +639,7 @@ class TimesheetController extends Controller
 
     public function proyectos()
     {
+        abort_if(Gate::denies('timesheet_administrador_proyectos_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $clientes = TimesheetCliente::getAll();
 
         $organizacion_actual = $this->obtenerOrganizacion();
@@ -631,6 +651,7 @@ class TimesheetController extends Controller
 
     public function createProyectos()
     {
+        abort_if(Gate::denies('timesheet_administrador_proyectos_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $clientes = TimesheetCliente::getAll();
         $sedes = Sede::getAll();
         $areas = Area::getAll();
@@ -642,6 +663,7 @@ class TimesheetController extends Controller
 
     public function storeProyectos(Request $request)
     {
+        abort_if(Gate::denies('timesheet_administrador_proyectos_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $request->validate(
                 [
@@ -740,6 +762,7 @@ class TimesheetController extends Controller
 
     public function showProyectos($id)
     {
+        abort_if(Gate::denies('timesheet_administrador_proyectos_show'), Response::HTTP_FORBIDDEN, '403 Forbidden'); //Nuevo permiso
         $proyecto = TimesheetProyecto::getAll($id)->find($id);
 
         if (! $proyecto) {
@@ -764,6 +787,7 @@ class TimesheetController extends Controller
 
     public function updateProyectos(Request $request, $id)
     {
+        abort_if(Gate::denies('timesheet_administrador_proyectos_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden'); //Nuevo permiso
         $request->validate([
             'identificador' => [
                 'required',
@@ -1007,12 +1031,15 @@ class TimesheetController extends Controller
 
     public function clientesCreate()
     {
+        abort_if(Gate::denies('timesheet_administrador_clientes_create'), Response::HTTP_FORBIDDEN, '403 Forbidden'); //Nuevo Permiso
+
         // $personas = Fiscale::get();
         return view('admin.timesheet.clientes.create');
     }
 
     public function clientesEdit($id)
     {
+        abort_if(Gate::denies('timesheet_administrador_clientes_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden'); //Nuevo Permiso
         try {
 
             $cliente = TimesheetCliente::find($id);
@@ -1029,6 +1056,7 @@ class TimesheetController extends Controller
 
     public function clientesStore(Request $request)
     {
+        abort_if(Gate::denies('timesheet_administrador_clientes_create'), Response::HTTP_FORBIDDEN, '403 Forbidden'); //Nuevo Permiso
         $request->validate(
             [
                 'identificador' => 'required|max:255|unique:timesheet_clientes,identificador',
@@ -1068,6 +1096,7 @@ class TimesheetController extends Controller
 
     public function clientesUpdate(Request $request, $id)
     {
+        abort_if(Gate::denies('timesheet_administrador_clientes_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden'); //Nuevo Permiso
         $request->validate(
             [
                 'identificador' => 'required|max:255|unique:timesheet_clientes,identificador',
@@ -1108,6 +1137,7 @@ class TimesheetController extends Controller
 
     public function clientesDelete($id)
     {
+        abort_if(Gate::denies('timesheet_administrador_clientes_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden'); //Nuevo Permiso
         $cliente_borrado = TimesheetCliente::find($id);
 
         $cliente_borrado->forceDelete();
@@ -1233,6 +1263,7 @@ class TimesheetController extends Controller
 
     public function proyectosEmpleados($id)
     {
+        abort_if(Gate::denies('asignar_empleados'), Response::HTTP_FORBIDDEN, '403 Forbidden'); //Nuevo permiso
         $proyecto = TimesheetProyecto::getAll('empleado_'.$id)->find($id);
 
         if (! $proyecto) {
@@ -1248,6 +1279,7 @@ class TimesheetController extends Controller
 
     public function proyectosExternos($id)
     {
+        abort_if(Gate::denies('asignar_externos'), Response::HTTP_FORBIDDEN, '403 Forbidden'); //Nuevo permiso
         $proyecto = TimesheetProyecto::getAll('externos_'.$id)->find($id);
 
         $organizacion_actual = $this->obtenerOrganizacion();
@@ -1259,6 +1291,7 @@ class TimesheetController extends Controller
 
     public function editProyectos($id)
     {
+        abort_if(Gate::denies('timesheet_administrador_proyectos_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden'); //Nuevo permiso
         $proyecto = TimesheetProyecto::getAll()->find($id);
         if (! $proyecto) {
             return redirect()->route('admin.timesheet-proyectos')->with('error', 'El registro fue eliminado ');

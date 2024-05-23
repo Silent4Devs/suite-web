@@ -1,18 +1,39 @@
 <section>
     <div class="" x-data="{ open: @entangle('open') }">
         <!-- Button (blue), duh! -->
-        <div class="row justify-content-start">
+
+        <div class="d-flex justify-content-between align-items-center mt-5">
+            <h4>Agregar estudiantes</h4>
+
+            <button class="btn btn-primary" data-toggle="modal" data-target="#addStudentDataModal">
+                Agregar Estudiante <i class="fa-solid fa-plus"></i>
+            </button>
+        </div>
+
+        <hr class="mt-2 mb-6 bg-primary">
+
+        <div class="card card-body">
+            <div class="row">
+                <div class="col-md-6 form-group anima-focus">
+                    <select name="publico" id="" class="form-control" wire:model="publico">
+                        <option value="" selected disabled></option>
+                        <option value="todos">Toda la empresa</option>
+                        <option value="area">Por área(s)</option>
+                        <option value="manual">Manualmente</option>
+                    </select>
+                    <label for="user_id">Publico objetivo</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-start mt-5">
             <div class="col-9">
                 <h4>Estudiantes del curso</h4>
-            </div>
-            <div class="col-3 d-flex justify-content-end">
-                <button class="btn btn-light text-primary border border-primary" data-toggle="modal"
-                data-target="#addStudentDataModal">Agregar Estudiante <i class="fa-solid fa-plus"></i></button>
             </div>
         </div>
         <hr class="mt-2 mb-6 bg-primary">
 
-        @include("livewire.escuela.instructor.addstudent")
+        @include('livewire.escuela.instructor.addstudent')
         {{-- <div class="absolute top-0 left-0 flex items-center justify-center w-full h-full"
             style="background-color: rgba(0,0,0,.5);" x-show="open">
             <div class="h-auto p-4 mx-2 text-left bg-white rounded shadow-xl md:max-w-xl md:p-6 lg:p-8 md:mx-0"
@@ -74,10 +95,9 @@
     {{-- @section('scripts') --}}
     <script>
         window.addEventListener('closeModal', event => {
-                $('.modal').modal('hide');
-                $('.modal-backdrop').remove();
-            })
+            $('.modal').modal('hide');
+            $('.modal-backdrop').remove();
+        })
     </script>
     {{-- @endsection --}}
 </section>
-

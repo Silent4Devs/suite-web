@@ -87,8 +87,39 @@ class OrganizacionController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->working);
-        // abort_if(Gate::denies('mi_organizacion_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $request->validate([
+            'empresa' => 'required|max:255',
+            'direccion' => 'required|max:255',
+            'telefono' => 'required|max:255',
+            'correo' => 'required|max:255',
+            'pagina_web' => 'required|max:255',
+            'servicios' => 'required|max:255',
+            'giro' => 'required|max:255',
+            'mision' => 'required|max:255',
+            'vision' => 'required|max:255',
+            'valores' => 'required|max:255',
+            'antecedentes' => 'required|max:255',
+            'razon_social' => 'required|max:255',
+            'rfc' => 'required|max:255',
+            'representante_legal' => 'required|max:255',
+        ], [
+            'empresa.max' => 'La empresa no debe exceder de 255 caracteres',
+            'direccion.max' => 'La direccion no debe exceder de 255 caracteres',
+            'telefono.max' => 'El telefono no debe exceder de 255 caracteres',
+            'correo.max' => 'El correo no debe exceder de 255 caracteres',
+            'pagina_web.max' => 'La pagina_web no debe exceder de 255 caracteres',
+            'servicios' => 'El servicios no debe exceder de 255 caracteres',
+            'giro' => 'El giro no debe exceder de 255 caracteres',
+            'mision' => 'La mision no debe exceder de 255 caracteres',
+            'vision' => 'La vision no debe exceder de 255 caracteres',
+            'valores' => 'Los valores no debe exceder de 255 caracteres',
+            'antecedentes' => 'Los antecedentes no debe exceder de 255 caracteres',
+            'razon_social' => 'La razon_social no debe exceder de 255 caracteres',
+            'rfc' => 'El rfc no debe exceder de 255 caracteres',
+            'representante_legal' => 'La representante_legal no debe exceder de 255 caracteres',
+
+        ]);
 
         $organizacions = Organizacion::create([
             'empresa' => $request->empresa,
@@ -184,6 +215,40 @@ class OrganizacionController extends Controller
     public function update(UpdateOrganizacionRequest $request, Organizacion $organizacion)
     {
         abort_if(Gate::denies('mi_organizacion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $request->validate([
+            'empresa' => 'required|max:255',
+            'direccion' => 'required|max:255',
+            'telefono' => 'required|max:255',
+            'correo' => 'required|max:255',
+            'pagina_web' => 'required|max:255',
+            'servicios' => 'required|max:255',
+            'giro' => 'required|max:255',
+            'mision' => 'required|max:255',
+            'vision' => 'required|max:255',
+            'valores' => 'required|max:255',
+            'antecedentes' => 'required|max:255',
+            'razon_social' => 'required|max:255',
+            'rfc' => 'required|max:255',
+            'representante_legal' => 'required|max:255',
+        ], [
+            'empresa.max' => 'La empresa no debe exceder de 255 caracteres',
+            'direccion.max' => 'La direccion no debe exceder de 255 caracteres',
+            'telefono.max' => 'El telefono no debe exceder de 255 caracteres',
+            'correo.max' => 'El correo no debe exceder de 255 caracteres',
+            'pagina_web.max' => 'La pagina_web no debe exceder de 255 caracteres',
+            'servicios' => 'El servicios no debe exceder de 255 caracteres',
+            'giro' => 'El giro no debe exceder de 255 caracteres',
+            'mision' => 'La mision no debe exceder de 255 caracteres',
+            'vision' => 'La vision no debe exceder de 255 caracteres',
+            'valores' => 'Los valores no debe exceder de 255 caracteres',
+            'antecedentes' => 'Los antecedentes no debe exceder de 255 caracteres',
+            'razon_social' => 'La razon_social no debe exceder de 255 caracteres',
+            'rfc' => 'El rfc no debe exceder de 255 caracteres',
+            'representante_legal' => 'La representante_legal no debe exceder de 255 caracteres',
+
+        ]);
+
         $organizacion->update($request->all());
 
         if ($request->hasFile('logotipo')) {
