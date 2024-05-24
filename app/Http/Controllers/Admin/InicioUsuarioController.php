@@ -129,7 +129,11 @@ class InicioUsuarioController extends Controller
                     $task->canAdd = $task->canAdd == 'true' ? true : false;
                     $task->canWrite = $task->canWrite == 'true' ? true : false;
                     $task->duration = intval($task->duration);
-                    $task->progress = intval($task->progress);
+                    if (!isset($task->progress) || empty($task->progress)) {
+                        $task->progress = 0;
+                    } else {
+                        $task->progress = intval($task->progress);
+                    }
                     $task->canDelete = $task->canDelete == 'true' ? true : false;
                     isset($task->level) ? $task->level = intval($task->level) : $task->level = 0;
                     isset($task->collapsed) ? $task->collapsed = $task->collapsed == 'true' ? true : false : $task->collapsed = false;

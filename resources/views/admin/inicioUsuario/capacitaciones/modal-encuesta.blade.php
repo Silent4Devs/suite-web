@@ -590,7 +590,7 @@
                 <div class="modal-footer" id="botonesContestarEncuesta">
                     {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal"
                         id="btnCancelarEvaluacion">Cancelar</button>
-                    <button type="button" class="btn btn-primary" id="btnGuadarEvaluacion">Guardar</button> --}}
+                    <button type="button" class="btn tb-btn-primary" id="btnGuadarEvaluacion">Guardar</button> --}}
                 </div>
             </div>
         </div>

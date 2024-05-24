@@ -108,7 +108,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" wire:click.prevent="imprimirCredencial"><i
+                        <button type="button" class="btn tb-btn-primary" wire:click.prevent="imprimirCredencial"><i
                                 class="bi bi-printer"></i> Imprimir</button>
                     </div>
                 </div>

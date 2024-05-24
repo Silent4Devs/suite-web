@@ -77,7 +77,7 @@ class AnalisisAIAController extends Controller
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.analisis-aia.index', compact('logo_actual', 'empresa_actual'));
+        return view('admin.analysisAia.index', compact('logo_actual', 'empresa_actual'));
     }
 
     public function create()
@@ -85,7 +85,7 @@ class AnalisisAIAController extends Controller
         abort_if(Gate::denies('matriz_bia_cuestionario_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $cuestionario = new AnalisisAIA();
 
-        return view('admin.analisis-aia.create', compact('cuestionario'));
+        return view('admin.analysisAia.create', compact('cuestionario'));
     }
 
     public function store(Request $request)
@@ -117,7 +117,7 @@ class AnalisisAIAController extends Controller
 
         $cuestionario = AnalisisAIA::create($request->all());
 
-        return redirect()->route('admin.analisis-aia.edit', ['id' => $cuestionario]);
+        return redirect()->route('admin.analysisAia.edit', ['id' => $cuestionario]);
     }
 
     public function show($id)
@@ -134,10 +134,10 @@ class AnalisisAIAController extends Controller
         if (empty($cuestionario)) {
             Alert::error('error', 'Cuestionario not found');
 
-            return redirect(route('admin.analisis-aia.index'));
+            return redirect(route('admin.analysisAia.index'));
         }
 
-        return view('admin.analisis-aia.edit', ['id' => $cuestionario], compact('cuestionario'));
+        return view('admin.analysisAia.edit', ['id' => $cuestionario], compact('cuestionario'));
     }
 
     public function update(Request $request, $id)
@@ -419,7 +419,7 @@ class AnalisisAIAController extends Controller
         $cuestionario->update($request->all());
         Alert::success('éxito', 'Información actualizada con éxito');
 
-        return redirect(route('admin.analisis-aia.index'));
+        return redirect(route('admin.analysisAia.index'));
     }
 
     public function destroy($id)
@@ -436,7 +436,7 @@ class AnalisisAIAController extends Controller
         abort_if(Gate::denies('matriz_bia_matriz'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $cuestionario = AnalisisAIA::with('proporcionaInformacion', 'proporcionaMantenimientos')->get();
 
-        return view('admin.analisis-aia.matriz', compact('cuestionario'));
+        return view('admin.analysisAia.matriz', compact('cuestionario'));
     }
 
     public function ajustes()
@@ -447,10 +447,10 @@ class AnalisisAIAController extends Controller
         if (empty($cuestionario)) {
             Alert::error('error', 'Ajustes not found');
 
-            return redirect(route('admin.analisis-aia.matriz'));
+            return redirect(route('admin.analysisAia.matriz'));
         }
 
-        return view('admin.analisis-aia.ajustes', compact('cuestionario'));
+        return view('admin.analysisAia.ajustes', compact('cuestionario'));
     }
 
     public function updateAjustesAIA(Request $request, $id)
@@ -460,6 +460,6 @@ class AnalisisAIAController extends Controller
         $cuestionario->update($request->all());
         Alert::success('éxito', 'Información actualizada con éxito');
 
-        return redirect()->route('admin.analisis-aia.matriz');
+        return redirect()->route('admin.analysisAia.matriz');
     }
 }

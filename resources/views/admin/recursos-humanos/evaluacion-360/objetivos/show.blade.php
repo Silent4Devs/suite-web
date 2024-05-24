@@ -42,7 +42,7 @@
                                 <h4>{{ $empleado->name }}</h4>
                                 <p class="mb-1 text-secondary">{{ $empleado->puesto }}</p>
                                 <p class="m-0 text-muted font-size-sm">{{ $empleado->area->area }}</p>
-                                {{-- <button class="btn btn-primary">Follow</button>
+                                {{-- <button class="btn tb-btn-primary">Follow</button>
                                         <button class="btn btn-outline-primary">Message</button> --}}
                             </div>
                         </div>

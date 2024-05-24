@@ -211,7 +211,7 @@
                             printable: 'impreso_row',
                             type: 'html',
                             css: 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css',
-                            css: '{{ asset('css/print_dashboard.css') }}',
+                            css: '{{ asset('css/dashboard/printDashboard.css') }}',
                             })">
                 <i class="mr-2 fas fa-print"></i>
                 Imprimir

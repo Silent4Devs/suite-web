@@ -6,7 +6,7 @@
 
         <div class="text-right">
             <div class="d-flex justify-content-end">
-                <a href="{{ route('admin.tipos-contratos-empleados.create') }}" type="button" class="btn btn-primary">Registrar Contrato</a>
+                <a href="{{ route('admin.tipos-contratos-empleados.create') }}" type="button" class="btn tb-btn-primary">Registrar Contrato</a>
             </div>
     </div>
             @include('partials.flashMessages')

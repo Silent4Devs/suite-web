@@ -21,7 +21,7 @@
                 </div>
                 <div class="col-md-2 form-group">
                     <br>
-                    <button class="btn btn-primary">
+                    <button class="btn tb-btn-primary">
                         Buscar
                     </button>
                 </div>

@@ -101,7 +101,7 @@
             <div class="row justify-content-end">
                 @if ($obtener_FODA)
                     <a href="{{ route('admin.entendimiento-organizacions.edit', $obtener_FODA->id) }}"
-                        class="mr-5 btn btn-primary"><i class="fas fa-pen"></i> Editar Análisis FODA</a>
+                        class="mr-5 btn tb-btn-primary"><i class="fas fa-pen"></i> Editar Análisis FODA</a>
                 @else
 
                     <a href="{{ route('admin.entendimiento-organizacions.create') }}" class="mr-5 btn btn-success"><i

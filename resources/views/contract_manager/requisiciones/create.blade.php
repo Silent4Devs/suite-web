@@ -2,7 +2,8 @@
 
 @section('titulo', 'Crear Requisicion')
 
-@section('content')
+    <link rel="stylesheet" href="{{asset('css/requisitions/requisitions.css')}}{{config('app.cssVersion')}}">
+    <link rel="stylesheet" href="{{asset('css/jquery.signature.css')}}{{config('app.cssVersion')}}">
 
     <link rel="stylesheet" href="{{ asset('css/requisiciones.css') }}{{ config('app.cssVersion') }}">
     <link rel="stylesheet" href="{{ asset('css/jquery.signature.css') }}{{ config('app.cssVersion') }}">

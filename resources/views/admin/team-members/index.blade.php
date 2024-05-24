@@ -13,7 +13,7 @@
                     <label for="email" class="sr-only">Email</label>
                     <input type="email" class="mr-2 form-control" id="email" placeholder="email@example.com">
                 </div>
-                <button type="submit" class="mb-2 btn btn-primary">Invitar</button>
+                <button type="submit" class="mb-2 btn tb-btn-primary">Invitar</button>
             </form>
             <div class="table-responsive">
                 <table class="table table-bordered w-100 datatable-User">

@@ -120,7 +120,7 @@ class PlanaccionCorrectivaController extends Controller
 
         Alert::success('éxito', 'Información añadida con éxito');
 
-        return view('admin.accionCorrectivas.edit', compact('accionCorrectiva', 'responsables', 'planaccionCorrectiva', 'nombrereportas', 'puestoreportas', 'nombreregistras', 'puestoregistras', 'responsable_accions', 'nombre_autorizas', 'PlanAccion', 'id', 'Count', 'users', 'tab'));
+        return view('admin.actionsCorrective.edit', compact('accionCorrectiva', 'responsables', 'planaccionCorrectiva', 'nombrereportas', 'puestoreportas', 'nombreregistras', 'puestoregistras', 'responsable_accions', 'nombre_autorizas', 'PlanAccion', 'id', 'Count', 'users', 'tab'));
     }
 
     public function store(StorePlanaccionCorrectivaRequest $request)
@@ -130,9 +130,9 @@ class PlanaccionCorrectivaController extends Controller
         $id = $request->get('accioncorrectiva_id');
         Alert::success('éxito', 'Información añadida con éxito');
 
-        //return redirect()->route('admin.accionCorrectivas.edit');
+        //return redirect()->route('admin.actionsCorrective.edit');
         return redirect('admin/plan-correctiva?param='.$id);
-        //return view('admin.accionCorrectivas.plan_accion')->with('ids', $id)->with('users', $users);
+        //return view('admin.actionsCorrective.plan_accion')->with('ids', $id)->with('users', $users);
     }
 
     public function edit(PlanaccionCorrectiva $planaccionCorrectiva)
@@ -228,7 +228,7 @@ class PlanaccionCorrectivaController extends Controller
             ->get();
         $Count = $PlanAccion->count();
 
-        return view('admin.accionCorrectivas.plan_accion')->with('ids', $id)->with('users', $users)->with('Count', $Count)->with('Planaccion', $PlanAccion);
+        return view('admin.actionsCorrective.plan_accion')->with('ids', $id)->with('users', $users)->with('Count', $Count)->with('Planaccion', $PlanAccion);
     }
 
     public function changeplanact(Request $request)

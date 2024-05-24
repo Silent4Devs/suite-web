@@ -1,13 +1,13 @@
 <div>
     @if()
-        {{ Breadcrumbs::render('admin.portal-comunicacion.reportes') }}
+        {{ Breadcrumbs::render('admin.portalCommunication.reportes') }}
     @endif
 
     @if()
-        {{ Breadcrumbs::render('admin.portal-comunicacion.reportes') }}
+        {{ Breadcrumbs::render('admin.portalCommunication.reportes') }}
     @endif
 
     @if()
-        {{ Breadcrumbs::render('admin.portal-comunicacion.reportes') }}
+        {{ Breadcrumbs::render('admin.portalCommunication.reportes') }}
     @endif
 </div>
