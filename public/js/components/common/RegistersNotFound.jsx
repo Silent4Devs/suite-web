@@ -1,11 +1,16 @@
-export const RegisterNotFound = (message = null) => {
+export const RegisterNotFound = (message=null) => {
+    const showText = () => {
+        if(message){
+            return "No hay Elementos registrados"
+        }else{
+            return message
+        }
+    }
     return (
         <div>
-            <h5>
-                {
-                    message ? message : "No hay elementos registrados"
-                }
-            </h5>
+            <h6>
+                {showText()}
+            </h6>
         </div>
     )
  }

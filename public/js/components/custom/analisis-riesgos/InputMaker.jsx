@@ -95,12 +95,12 @@ export const InputMakerSettings = ({question}) => {
     switch(type){
         case "1":
             return(
-                <>
+                <div className={'col-12 col-sm-12'}>
                     <label>
                         {question.title} {question.obligatory ? "*":null}
                     </label>
                     <InputSimpleDisabled title="" name={`input-disabled-${question.title}`} type="text" value=""/>
-                </>
+                </div>
             );
             break;
         case "2":
@@ -114,7 +114,6 @@ export const InputMakerSettings = ({question}) => {
             );
             break;
         case "3":
-            // console.log(question)
             return(
                 <>
                     <label>
@@ -122,6 +121,16 @@ export const InputMakerSettings = ({question}) => {
                     </label>
                     <InputSimpleDisabled title="" name={`input-disabled-${question.title}`} type="text" value=""/>
                     <p>Tu valor debe encontrase entre {question.data.minimo} y el {question.data.maximo}</p>
+                </>
+            );
+            break;
+        case "4":
+            return(
+                <>
+                    <label>
+                        {question.data[0].title} {question.obligatory ? "*":null}
+                    </label>
+                    <InputSimpleDisabled title="" name={`input-disabled-${question.data[0].title}`} type="text" value=""/>
                 </>
             );
             break;
@@ -256,6 +265,26 @@ export const InputMakerSettings = ({question}) => {
             );
             break;
         case "12":
+            return(
+                <>
+                    <label>
+                        {question.title} {question.obligatory ? "*":null}
+                    </label>
+                    <InputSimpleDisabled title="" name={`input-disabled-${question.title}`} type="text" value=""/>
+                </>
+            );
+            break;
+        case "13":
+            return(
+                <>
+                    <label>
+                        {question.title} {question.obligatory ? "*":null}
+                    </label>
+                    <InputSimpleDisabled title="" name={`input-disabled-${question.title}`} type="text" value=""/>
+                </>
+            );
+            break;
+        case '14':
             return(
                 <>
                     <label>

@@ -54,7 +54,7 @@ export const ContainerMoreInfo = () => {
   return(
     <div  style={{
         position:"absolute",
-        maxWidth: "250px",
+        maxWidth: "350px",
         minHeight: "51px",
         right:90,
        background: "#FFFFFF 0% 0% no-repeat padding-box",

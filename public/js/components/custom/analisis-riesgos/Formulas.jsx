@@ -2,6 +2,7 @@ import React from 'react'
 import { BtnIcon } from "../../common/Buttons"
 import { InputSimple, InputSimpleDisabled } from "../../common/Inputs"
 import { SelectSimple } from '../../common/Selects'
+import { RegisterNotFound } from '../../common/RegistersNotFound'
 
 export const RecordFormulas = ({formulas, handleChangeStatus, handleChangeTitle ,deleteFormula, options, handleChangeSection}) => {
     return(
@@ -18,7 +19,7 @@ export const RecordFormulas = ({formulas, handleChangeStatus, handleChangeTitle 
                         })
                     }
                 </>
-            ): <>No hay registros</>}
+            ): <RegisterNotFound/>}
         </div>
     )
  }

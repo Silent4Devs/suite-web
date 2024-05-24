@@ -239,6 +239,18 @@ export const useAnalisisRiesgo = () => {
                 });
                 setQuestions(updateQuestions);
                 break;
+            case 'catalog':
+                // console.log(props[0])
+                updateQuestions = questions.map((item)=>{
+                    if(item.id === id){
+                        const updateItem = item;
+                        item.data=props[0];
+                        return updateItem;
+                    }
+                    return item;
+                });
+                setQuestions(updateQuestions);
+                break;
             default:
                 // console.log("sin cambio")
         }
@@ -281,6 +293,10 @@ export const useAnalisisRiesgo = () => {
                             delete data.minimo
                             delete data.maximo
                             console.log(data)
+                            item.data = data;
+                        }
+                        if(item.type === "4"){
+                            const data = item.data[0];
                             item.data = data;
                         }
                         if(item.type === "10"){
@@ -361,6 +377,7 @@ export const useAnalisisRiesgo = () => {
     const createData = async(dataSections,dataQuestions) =>{
         const url = 'http:///suite-web.test/api/api/v1/test'
         const dataForm = new FormData();
+        console.log(dataQuestions)
         dataQuestions.forEach((item, index) => {
             if(item.type === '10'){
                 dataForm.append(`image[${item.id}]`, item.data.file);
@@ -858,6 +875,7 @@ export const useSettingsAnalisisRiesgos = () => {
                         const data = item.data[0];
                         item.data = data;
                     }
+
                 });
 
                 dataSection.sort((a, b) => a.position - b.position);

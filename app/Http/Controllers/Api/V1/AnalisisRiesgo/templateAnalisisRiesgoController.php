@@ -40,12 +40,16 @@ class templateAnalisisRiesgoController extends Controller
         $sections = json_decode($request->input('sections'));
         $questions = json_decode($request->input('questions'));
         $imagenes = $request->file('image');
+        $templateId = $sections[0]->template_id;
+        $sectionId = $sections[0]->id;
 
         if(!empty($imagenes)){
            $this->saveImage($questions,$imagenes);
         }
 
         $this->saveSections($sections, $questions);
+
+        $this->createQuestionsDefault($templateId,$sectionId);
 
         return json_encode(['data' => 'Sections and questions created successfully'], 200);
     }
@@ -68,7 +72,7 @@ class templateAnalisisRiesgoController extends Controller
                 $sectionId = $section->id;
 
                 $filter = $data->reject(function ($registro) {
-                    if($registro['type'] === '11' || $registro['type'] === '12' ){
+                    if($registro['type'] === '11' || $registro['type'] === '12' || $registro['type'] === '13' || $registro['type'] === '14' ){
                         return $registro;
                     }
                 });
@@ -348,6 +352,9 @@ class templateAnalisisRiesgoController extends Controller
             case '3':
                 $this->saveDataQuestionMinMax($question->data, $questionCreate->id);
                 break;
+            case '4':
+                $this->saveDataQuestionCatalog($question->data, $questionCreate->id);
+                break;
             case '5':
                 $this->saveMultipleDataQuestion($question->data, $questionCreate->id);
                 break;
@@ -370,6 +377,9 @@ class templateAnalisisRiesgoController extends Controller
         switch ($question->type) {
             case '3':
                 $this->updateDataQuestionMinMax($question->data, $questionCreate);
+                break;
+            case '4':
+                $this->updateDataQuestionCatalog($question->data);
                 break;
             case '5':
                 $this->updateMultipleDataQuestion($question->data, $questionCreate);
@@ -420,6 +430,48 @@ class templateAnalisisRiesgoController extends Controller
             $register->update([
                 'minimum' => intval($dataQuestion->minimo),
                 'maximum' => intval($dataQuestion->maximo),
+            ]);
+
+            DB::commit();
+        } catch (\Throwable $th) {
+            //throw $th;
+            DB::rollback();
+        }
+
+    }
+
+    public function saveDataQuestionCatalog($dataQuestion, $questionCreateId)
+    {
+        DB::beginTransaction();
+        try {
+            $dataQuestionCreate = TBDataQuestionTemplateAnalisisRiesgoModel::create([
+                'title' => ($dataQuestion->title),
+                'catalog' => intval($dataQuestion->catalog),
+            ]);
+
+            TBQuestionTemplateAr_DataQuestionTemplateArModel::create([
+                'question_id' => $questionCreateId,
+                'dataquestion_id' => $dataQuestionCreate->id,
+            ]);
+
+            DB::commit();
+        } catch (\Throwable $th) {
+            //throw $th;
+            DB::rollback();
+        }
+
+    }
+
+    public function updateDataQuestionCatalog($dataQuestion)
+    {
+        // dd($dataQuestion);
+        DB::beginTransaction();
+        $register = TBDataQuestionTemplateAnalisisRiesgoModel::find($dataQuestion->id);
+
+        try {
+            $register->update([
+                'title' => $dataQuestion->title,
+                'catalog' => intval($dataQuestion->catalog),
             ]);
 
             DB::commit();
@@ -642,6 +694,24 @@ class templateAnalisisRiesgoController extends Controller
 
                 }
                 break;
+            case '4':
+                foreach ($data as $item) {
+                    Arr::forget($item, 'created_at');
+                    Arr::forget($item, 'updated_at');
+                    Arr::forget($item, 'deleted_at');
+                    Arr::forget($item, 'pivot');
+                    Arr::forget($item, 'name');
+                    Arr::forget($item, 'status');
+                    Arr::forget($item, 'minimum');
+                    Arr::forget($item, 'maximum');
+                    Arr::forget($item, 'url');
+
+                    // $item->id = $item->catalog;
+
+                    // Arr::forget($item, 'catalog');
+
+                }
+                break;
             case '5':
                 foreach ($data as $item) {
                     Arr::forget($item, 'created_at');
@@ -736,7 +806,6 @@ class templateAnalisisRiesgoController extends Controller
                 ->where('template_id', $template->id)->get();
 
             $formulas =TBFormulaTemplateAnalisisRiesgoModel::where('template_id',$id)->get();
-            // dd($sections[0]->questions);
 
             foreach($formulas as $formula){
                 Arr::forget($formula, 'created_at');
@@ -770,11 +839,32 @@ class templateAnalisisRiesgoController extends Controller
                 'data' => [],
             ]);
 
+            $optionOwner = ([
+                'id'=> 'q-3',
+                'title' => 'Dueño del riesgo',
+                'template' => $template->id,
+                'position' => 2,
+                'type' => "13",
+                'size' => 3,
+                'obligatory' => true,
+                'data' => [],
+            ]);
+
             if($exists){
                 foreach ($sections as $index => $section) {
                     $data = $section->questions;
                     $sectionId = $section->id;
-                    $newQuestions = $data->map(function ($itm) use ($sectionId) {
+                    $newQuestions = $data->map(function ($itm) use ($sectionId,$index) {
+                        if($index === 0){
+                            $itm['type'] === "11" ? $itm['position'] = $itm['position'] + 5 : null;
+                            if($itm['type'] !== "11" && $itm['type'] !== "12" && $itm['type'] !== "13" && $itm['type'] !== "14" ){
+                                $itm['position'] = $itm['position'] + 6;
+                            }
+                            // if($itm['type'] !== "11" && $itm['type'] !== "12" $itm['type'] !== "13"){
+                            //     $itm['position'] = $itm['position'] + 4;
+                            // }
+                            // $itm['type'] !== "11" & ? $itm['position'] = $itm['position'] + 4 : null;
+                        }
                         Arr::forget($itm, 'created_at');
                         Arr::forget($itm, 'updated_at');
                         Arr::forget($itm, 'pivot');
@@ -795,16 +885,17 @@ class templateAnalisisRiesgoController extends Controller
                     if($index === 0){
                         $optionId['columnId'] = $sectionId;
                         $optionDescription['columnId'] = $sectionId;
+                        $optionOwner['columnId'] = $sectionId;
                     }
                     $newQuestions = $data->map(function ($itm) use ($sectionId,$index, &$optionId) {
                         if($index === 0){
-                            $itm['type'] === "11" ? $itm['position'] = $itm['position'] + 2 : null;
-                            $itm['type'] !== "11" ? $itm['position'] = $itm['position'] + 2 : null;
+                            $itm['type'] === "11" ? $itm['position'] = $itm['position'] + 5 : null;
+                            $itm['type'] !== "11" ? $itm['position'] = $itm['position'] + 6 : null;
                         }
-                        if($itm['type'] !== "11"){
-                            $position = $itm['position'];
-                            $itm['position'] = $position + 1;
-                        }
+                        // if($itm['type'] !== "11"){
+                        //     $position = $itm['position'];
+                        //     $itm['position'] = $position + 1;
+                        // }
                         Arr::forget($itm, 'created_at');
                         Arr::forget($itm, 'updated_at');
                         Arr::forget($itm, 'pivot');
@@ -819,6 +910,7 @@ class templateAnalisisRiesgoController extends Controller
                 }
                 $questions[] = ($optionId);
                 $questions[] = ($optionDescription);
+                $questions[] = ($optionOwner);
 
             }
 
@@ -953,5 +1045,123 @@ class templateAnalisisRiesgoController extends Controller
         }
 
         return json_encode(['data' => 'Table Settigns updated successfully']);
+    }
+
+    public function createQuestionsDefault($templateId,$sectionId)
+    {
+        $sectionRegister = TBSectionTemplateAnalisisRiesgoModel::where('template_id',$templateId)->first();
+
+
+        $optionId = ([
+            'title' => 'ID',
+            'position' => 0,
+            'type' => "12",
+            'size' => 3,
+            'obligatory' => true,
+            'data' => [],
+        ]);
+
+        $optionDescription = ([
+            'title' => 'Descripcion del riesgo',
+            'position' => 1,
+            'type' => "12",
+            'size' => 3,
+            'obligatory' => true,
+            'data' => [],
+        ]);
+
+        $optionOwner = ([
+            'title' => 'Dueño del riesgo',
+            'position' => 2,
+            'type' => "13",
+            'size' => 3,
+            'obligatory' => true,
+            'data' => [],
+        ]);
+
+        $optionProb = ([
+            'title' => 'Probabilidad',
+            'position' => 3,
+            'type' => "14",
+            'size' => 3,
+            'obligatory' => true,
+            'data' => [],
+        ]);
+
+        $optionImpa = ([
+            'title' => 'Impacto',
+            'position' => 4,
+            'type' => "14",
+            'size' => 3,
+            'obligatory' => true,
+            'data' => [],
+        ]);
+
+        $questionOptionId = TBQuestionTemplateAnalisisRiesgoModel::create($optionId);
+
+        TBSectionTemplateAr_QuestionTemplateArModel::create([
+            'section_id' => $sectionRegister->id,
+            'question_id' => $questionOptionId->id,
+        ]);
+
+        TBSettingsTemplateAR_TBQuestionTemplateARModel::create([
+            'template_id' => $sectionRegister->id,
+            'question_id' => $questionOptionId->id,
+            'is_show' => false,
+        ]);
+
+        $questionOptionDescription = TBQuestionTemplateAnalisisRiesgoModel::create($optionDescription);
+
+        TBSectionTemplateAr_QuestionTemplateArModel::create([
+            'section_id' => $sectionRegister->id,
+            'question_id' => $questionOptionDescription->id,
+        ]);
+
+        TBSettingsTemplateAR_TBQuestionTemplateARModel::create([
+            'template_id' => $sectionRegister->id,
+            'question_id' => $questionOptionDescription->id,
+            'is_show' => false,
+        ]);
+
+        $questionOptionOwner = TBQuestionTemplateAnalisisRiesgoModel::create($optionOwner);
+
+        TBSectionTemplateAr_QuestionTemplateArModel::create([
+            'section_id' => $sectionRegister->id,
+            'question_id' => $questionOptionOwner->id,
+        ]);
+
+        TBSettingsTemplateAR_TBQuestionTemplateARModel::create([
+            'template_id' => $sectionRegister->id,
+            'question_id' => $questionOptionOwner->id,
+            'is_show' => false,
+        ]);
+
+        $questionOptionProb = TBQuestionTemplateAnalisisRiesgoModel::create($optionProb);
+
+        TBSectionTemplateAr_QuestionTemplateArModel::create([
+            'section_id' => $sectionRegister->id,
+            'question_id' => $questionOptionProb->id,
+        ]);
+
+        TBSettingsTemplateAR_TBQuestionTemplateARModel::create([
+            'template_id' => $sectionRegister->id,
+            'question_id' => $questionOptionProb->id,
+            'is_show' => false,
+        ]);
+
+        $questionOptionImpa = TBQuestionTemplateAnalisisRiesgoModel::create($optionImpa);
+
+        TBSectionTemplateAr_QuestionTemplateArModel::create([
+            'section_id' => $sectionRegister->id,
+            'question_id' => $questionOptionImpa->id,
+        ]);
+
+        TBSettingsTemplateAR_TBQuestionTemplateARModel::create([
+            'template_id' => $sectionRegister->id,
+            'question_id' => $questionOptionImpa->id,
+            'is_show' => false,
+        ]);
+
+
     }
 }

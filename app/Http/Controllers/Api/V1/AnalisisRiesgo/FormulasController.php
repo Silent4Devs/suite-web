@@ -127,6 +127,9 @@ class FormulasController extends Controller
                     Arr::forget($newQuestion, 'type');
                     array_push($options, $newQuestion);
                     break;
+                case '14':
+                    Arr::forget($newQuestion, 'type');
+                    array_push($options, $newQuestion);
                 default:
             }
         }

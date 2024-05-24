@@ -9,7 +9,6 @@ import { ContainerMoreInfo, ContainerShowSizes } from './Popovers';
 import { SwitchObligatory } from './Switches';
 
 export const QuestionTemplateAnalisisRiesgos = ({id, question, changeSize, changeQuestionProps, deleteQuestion, duplicateQuestion}) => {
-    // const styleSelect = {background: "#F8FAFC"}
 
     const options = [
         {id:"1" , title:'Respuesta corta'},
@@ -35,7 +34,7 @@ export const QuestionTemplateAnalisisRiesgos = ({id, question, changeSize, chang
     const templateARComponentFactory = new TemplateARComponentFactory();
     let templateComponent = ""
     if(option){
-        templateComponent = templateARComponentFactory.createTemplateARComponent(option, id, changeQuestionProps, question.data);
+        templateComponent = templateARComponentFactory.createTemplateARComponent(option, id, changeQuestionProps, question.data, handleTileChange);
     }
 
     if (isDragging) {
@@ -137,7 +136,9 @@ export const QuestionSettings = ({id, question, changeSize}) => {
                 </div>
                 </div>
                 <div className="card-body" style={{paddingTop:"17px", paddingBottom:"17px"}}>
-                    <InputMakerSettings question={question}/>
+                    {/* <div className="row"> */}
+                        <InputMakerSettings question={question}/>
+                    {/* </div> */}
                     <div className="row">
                         <div className="col-12">
                             <div className="d-flex flex-row-reverse flex-wrap align-items-center" style={{gap:"10px 8px"}}>

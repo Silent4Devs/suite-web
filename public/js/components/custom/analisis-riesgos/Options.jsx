@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import '../../../../css/templateAnalisisRiesgo/inputFile.css'
 import { AlertSimple } from "../../common/Alerts";
+import { SelectCatalog } from "./Selects";
 
 
 export const OptionTextSimple = ({id, data = {}, changeQuestionProps}) => {
@@ -132,9 +133,37 @@ export const OptionNumber = ({id, data = {}, changeQuestionProps}) => {
     );
 };
 
-export const OptionCatalog = ({id, data={}, changeQuestionProps}) => {
+export const OptionCatalog = ({id, data={}, changeQuestionProps, handleTileChange}) => {
+    const [value, setValue] = useState(data ? data.catalog: "");
+
+    const options=[
+        {id:1, title:"Sede"},
+        {id:2, title:"Proceso"},
+        {id:3, title:"Activo"},
+        {id:4, title:"Colaborador"},
+        {id:5, title:"Área"},
+        {id:6, title:"Puesto"},
+        {id:7, title:"Amenaza"},
+        {id:8, title:"Vulnerabilidad"},
+        {id:9, title:"Clientes"},
+        {id:10, title:"Proyectos"}
+    ]
+    const handleChangeOption = (e) => {
+        const registerId = parseInt(e.target.value)
+        const option = options.filter(item => item.id === registerId);
+        const newOption = [{
+            'id': data.id,
+            'title':option[0].title,
+            'catalog':option[0].id,
+        }]
+        // console.log(option[0].title)
+        changeQuestionProps(id,'catalog', newOption);
+        setValue(option[0].id);
+        handleTileChange(option[0].title)
+
+    }
     return(
-        <>Catalogo</>
+        <SelectCatalog options={options} size={8} name={`select-catalog-${id}`} value={value} handleChangeOption={handleChangeOption} />
     )
 }
 

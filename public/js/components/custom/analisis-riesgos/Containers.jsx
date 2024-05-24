@@ -53,7 +53,7 @@ export const ContainerInfoTemplate = ({template, icon=false}) => {
         <CardContainer width="100%">
             {icon ? (
                 <div style={{position:"absolute", right:30, top:22}}>
-                    <BtnIcon icon="lightbulb" colorIcon="#006DDB" sizeIcon={29} fill={true} onClick={handleInfo} family='material-icons'/>
+                    <BtnIcon icon="lightbulb" colorIcon="#FFBB00" sizeIcon={29} fill={true} onClick={handleInfo} family='material-icons'/>
                     {showInfo ? <PopoverTemplateSettings/>:<></>}
                 </div>
             ): <></> }
@@ -76,13 +76,13 @@ export const ContainerTableSettigs = ({data}) => {
                     <h6 className='mb-0'>Respuestas</h6>
                 </div>
                 <div className="col-2 d-flex justify-content-end" style={{paddingRight:"2px"}}>
-                    <BtnIcon icon="lightbulb" colorIcon="#006DDB" sizeIcon={29} onClick={handleInfo} family='material-icons' />
+                    <BtnIcon icon="lightbulb" colorIcon="#FFBB00" sizeIcon={29} onClick={handleInfo} family='material-icons' />
                     {showInfo ? <PopoverTableSettings/>:<></>}
                 </div>
             </div>
             <HrSimple/>
             {
-                data.questions.length >= 1 || data.formulas.length >= 1 ? (<TableSettigs data={data}/>) : (<><RegisterNotFound/></>)
+                data.questions.length >= 1 || data.formulas.length >= 1 ? (<TableSettigs data={data}/>) : (<RegisterNotFound/>)
             }
         </CardContainer>
     )
