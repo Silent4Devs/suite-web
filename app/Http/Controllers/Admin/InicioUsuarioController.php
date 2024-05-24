@@ -129,7 +129,7 @@ class InicioUsuarioController extends Controller
                     $task->canAdd = $task->canAdd == 'true' ? true : false;
                     $task->canWrite = $task->canWrite == 'true' ? true : false;
                     $task->duration = intval($task->duration);
-                    if (!isset($task->progress) || empty($task->progress)) {
+                    if (! isset($task->progress) || empty($task->progress)) {
                         $task->progress = 0;
                     } else {
                         $task->progress = intval($task->progress);

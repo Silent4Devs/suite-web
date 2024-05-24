@@ -30,7 +30,6 @@ class RequisicionService
         }
     }
 
-
     public function postDataLoadPythonAPI($path)
     {
         // Define la URL del endpoint de la API de Python, incluyendo el nombre del archivo dinámico
@@ -47,7 +46,6 @@ class RequisicionService
             return ['error' => $e->getMessage()];
         }
     }
-
 
     public function postDataCleanPythonAPI($path)
     {
@@ -66,7 +64,6 @@ class RequisicionService
         }
     }
 
-
     public function postDataScanedPythonAPI($path)
     {
         // Define la URL del endpoint de la API de Python, incluyendo el nombre del archivo dinámico
@@ -83,7 +80,6 @@ class RequisicionService
             return ['error' => $e->getMessage()];
         }
     }
-
 
     public function postDataExtractPythonAPI($image)
     {
@@ -102,23 +98,22 @@ class RequisicionService
         }
     }
 
-
     public function postDataTextPythonAPI()
     {
         $filePath = storage_path('app/public/ejemplo3.pdf');
         $fileName = 'ejemplo3.pdf';
 
-        $url = "http://127.0.0.1:8000/text_to_chromadb/";
+        $url = 'http://127.0.0.1:8000/text_to_chromadb/';
 
         try {
             $response = $this->client->post($url, [
                 'multipart' => [
                     [
-                        'name'     => 'pdf',
+                        'name' => 'pdf',
                         'contents' => fopen($filePath, 'r'),
-                        'filename' => $fileName
+                        'filename' => $fileName,
                     ],
-                ]
+                ],
             ]);
 
             return json_decode($response->getBody()->getContents(), true);

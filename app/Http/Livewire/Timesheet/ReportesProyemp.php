@@ -144,7 +144,6 @@ class ReportesProyemp extends Component
     {
         $export = new ReporteColaboradorTarea($this->fecha_inicio, $this->fecha_fin, $this->area_id, $this->emp_id, $this->proy_id);
 
-
         return Excel::download($export, 'reporte_colaborador_tarea.xlsx');
     }
 
