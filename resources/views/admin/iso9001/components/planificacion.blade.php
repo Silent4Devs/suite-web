@@ -24,7 +24,7 @@
                             Vulnerabilidades
                         </div>
                     </a></li>
-                <li><a href="{{ route('admin.analisis-riesgos.index') }}">
+                <li><a href="{{ route('admin.analysisRisk.index') }}">
                         <div>
                             <i class="fas fa-table"></i>
                             Matriz de Riesgos

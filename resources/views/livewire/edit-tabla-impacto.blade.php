@@ -46,7 +46,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-              <button type="button" class="btn btn-primary" id="guardarNivel" >Guardar</button>
+              <button type="button" class="btn tb-btn-primary" id="guardarNivel" >Guardar</button>
             </div>
           </div>
         </div>

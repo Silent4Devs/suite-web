@@ -46,7 +46,7 @@
 
     <div class="text-right">
         <div class="d-flex justify-content-end">
-            <a href="{{ route('admin.objetivosseguridads.create') }}" type="button" class="btn btn-primary">Registrar Objetivo</a>
+            <a href="{{ route('admin.objetivosseguridads.create') }}" type="button" class="btn tb-btn-primary">Registrar Objetivo</a>
               &nbsp; &nbsp;
             <a class="btn btn-danger" href="{{ asset('admin/objetivos/dashboard') }}">Dashboard</a>
         </div>

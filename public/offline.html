@@ -51,6 +51,8 @@
             color: #787878;
         }
     </style>
+    <link rel="stylesheet" href="{{ asset('css/global/TbButtons.css') }}{{ config('app.cssVersion') }}">
+    <link rel="stylesheet" href="{{ asset('css/global/TbColorsGlobal.css') }}{{ config('app.cssVersion') }}">
 </head>
 <body>
 <div class="error_body">
@@ -60,7 +62,7 @@
         <p class="error_paragraph text-center mb-5">
             Please check your network connection and try again.
         </p>
-        <a href="/" class="btn btn-primary error_btn">Back to Home Page</a>
+        <a href="/" class="btn tb-btn-primary error_btn">Back to Home Page</a>
     </div>
 </div>
 </body>

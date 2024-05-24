@@ -31,7 +31,7 @@
                             <div class="text-center" style="font-size: 60px">
                                 <i class="fas fa-poll-h"></i>
                             </div>
-                            <a class="btn btn-sm btn-primary"
+                            <a class="btn btn-sm tb-btn-primary"
                                 href="{{ route('admin.ev360-evaluaciones.autoevaluacion.consulta.evaluado', [
     'evaluacion' => $evaluacion['id'],
     'evaluado' => $empleado->id,

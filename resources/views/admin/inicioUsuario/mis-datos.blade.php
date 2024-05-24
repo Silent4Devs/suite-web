@@ -396,7 +396,7 @@ if (!is_null($organizacion)) {
                                         </h5>
                                         <p class="mb-1 text-secondary">{{ $usuario->empleado->puesto }}</p>
                                         <p class="text-muted font-size-sm">{{ $usuario->empleado->area->area }}</p>
-                                        {{-- <button class="btn btn-primary">Follow</button>
+                                        {{-- <button class="btn tb-btn-primary">Follow</button>
                                         <button class="btn btn-outline-primary">Message</button> --}}
                                     </div>
                                     @if ($cumpleaños_usuario != null && $cumpleaños_usuario == \Carbon\Carbon::now()->format('d-m'))

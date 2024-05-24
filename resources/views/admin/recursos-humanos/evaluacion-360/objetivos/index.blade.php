@@ -116,7 +116,7 @@
                                     <div class="d-flex">
                                         @can('objetivos_estrategicos_agregar')
                                             <a href="{{ url('/admin/recursos-humanos/evaluacion-360/' . $empleado->id . '/objetivos') }}"
-                                                title="Editar" class="btn btn-sm btn-primary">
+                                                title="Editar" class="btn btn-sm tb-btn-primary">
                                                 <i class="fas fa-user-tag"></i> Agregar
                                             </a>
                                         @endcan
@@ -354,7 +354,7 @@
             //     //             let html = `
         // //             <div class="d-flex">
         // //             @can('objetivos_estrategicos_agregar')
-        // //                 <a href="${urlAsignar}" title="Editar" class="btn btn-sm btn-primary">
+        // //                 <a href="${urlAsignar}" title="Editar" class="btn btn-sm tb-btn-primary">
         // //                     <i class="fas fa-user-tag"></i> Agregar
         // //                 </a>
         // //             @endcan

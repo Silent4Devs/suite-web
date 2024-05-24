@@ -45,7 +45,7 @@ class OrdenCompraController extends Controller
         $buttonFinanzas = false;
         $buttonCompras = false;
 
-        $proveedor_indistinto = KatbolProveedorIndistinto::getFirst()->pluck('requisicion_id');
+        // $proveedor_indistinto = KatbolProveedorIndistinto::getFirst()->pluck('requisicion_id');
 
         $requisiciones = KatbolRequsicion::with('contrato', 'provedores_requisiciones')->where([
             ['firma_solicitante', '!=', null],
@@ -55,7 +55,7 @@ class OrdenCompraController extends Controller
         ])->where('archivo', false)->orderByDesc('id')
             ->get();
 
-        return view('contract_manager.ordenes-compra.index', compact('buttonSolicitante', 'buttonFinanzas', 'buttonCompras', 'requisiciones', 'empresa_actual', 'logo_actual', 'proveedor_indistinto'));
+        return view('contract_manager.ordenes-compra.index', compact('buttonSolicitante', 'buttonFinanzas', 'buttonCompras', 'requisiciones', 'empresa_actual', 'logo_actual'));
     }
 
     public function getRequisicionIndex(Request $request)

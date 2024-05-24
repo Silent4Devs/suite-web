@@ -1,6 +1,6 @@
 <div>
     <div>
-        <button id="btnModalOpen" wire:click.prevent="openModal()" class="btn btn-sm btn-primary"><i
+        <button id="btnModalOpen" wire:click.prevent="openModal()" class="btn btn-sm tb-btn-primary"><i
                 class="mr-2 fas fa-plus-circle"></i>
             Crear Grupo
         </button>

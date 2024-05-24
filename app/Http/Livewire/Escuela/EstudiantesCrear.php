@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\Escuela;
 
 use App\Models\Area;
-use App\Models\Empleado;
 use App\Models\Escuela\Course;
 use App\Models\Escuela\UsuariosCursos;
 use App\Models\User;
@@ -49,7 +48,7 @@ class EstudiantesCrear extends Component
     public function save()
     {
 
-        if ($this->publico == 'todos'){
+        if ($this->publico == 'todos') {
             foreach ($this->usuarios as $usuario) {
                 UsuariosCursos::create([
                     'user_id' => $usuario->id,
@@ -61,7 +60,7 @@ class EstudiantesCrear extends Component
             $this->dispatchBrowserEvent('closeModal');
         }
 
-        if ($this->publico == 'area'){
+        if ($this->publico == 'area') {
             foreach ($this->usuarios as $usuario) {
                 if ($usuario->empleado->area_id == $this->area_seleccionada) {
                     UsuariosCursos::create([
@@ -71,7 +70,7 @@ class EstudiantesCrear extends Component
                 }
                 $this->emit('UserStore');
             }
-            $this->render_alerta('success', 'Los estudiantes del área '. Area::where('id', $this->area_seleccionada)->first()->area .' se han agregado exitosamente');
+            $this->render_alerta('success', 'Los estudiantes del área '.Area::where('id', $this->area_seleccionada)->first()->area.' se han agregado exitosamente');
             $this->dispatchBrowserEvent('closeModal');
         }
 

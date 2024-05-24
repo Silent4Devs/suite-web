@@ -20,7 +20,7 @@
                             <span class="text-danger">{{$message}}</span>
                             @enderror
                             <br>
-                            {!! Form::submit('ACTUALIZAR CATEGORIA', ['class' => 'btn btn-primary']) !!}
+                            {!! Form::submit('ACTUALIZAR CATEGORIA', ['class' => 'btn tb-btn-primary']) !!}
                 </div>
         {!! Form::close() !!}
     </div>

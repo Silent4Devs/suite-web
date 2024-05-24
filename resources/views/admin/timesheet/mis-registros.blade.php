@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('css')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}{{config('app.cssVersion')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet/timesheet.css') }}{{config('app.cssVersion')}}">
 @endsection
 @section('content')
     <style type="text/css">
@@ -8,7 +8,7 @@
             opacity: 1 !important;
         }
 
-        .btn-primary {
+        .tb-btn-primary {
             opacity: 0.6;
         }
 

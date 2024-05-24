@@ -570,7 +570,7 @@
                             <p class="text-muted m-0 text-center mt-2">
                                 <strong>${puesto_usuario}</strong>    
                             </p>
-                            <button class="remover-elemento text-center btn btn-primary btn-sm" data-empleado-id="${empleadoID}"><i class="fas fa-trash-alt"></i></button>
+                            <button class="remover-elemento text-center btn tb-btn-primary btn-sm" data-empleado-id="${empleadoID}"><i class="fas fa-trash-alt"></i></button>
                         </div>
                     </div>
                 </div>

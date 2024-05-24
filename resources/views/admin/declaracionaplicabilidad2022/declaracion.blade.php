@@ -64,7 +64,7 @@
                                 <i class="far fa-file"></i>
                                 Notificar responsable
                             </button> --}}
-                            {{-- <a href="#" class="btn btn-sm btn-primary tamaño" style="with:400px !important;" data-toggle="modal" data-target="#ResponsablesModal">Notificar&nbsp;responsable</a> --}}
+                            {{-- <a href="#" class="btn btn-sm tb-btn-primary tamaño" style="with:400px !important;" data-toggle="modal" data-target="#ResponsablesModal">Notificar&nbsp;responsable</a> --}}
                         </div>
 
                         @php
