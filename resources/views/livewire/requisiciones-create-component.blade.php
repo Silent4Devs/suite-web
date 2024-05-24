@@ -199,6 +199,7 @@
                 <form id="form-proveedores"
                     wire:submit.prevent="proveedoresStore(Object.fromEntries(new FormData($event.target)))"
                     action="POST" enctype="multipart/form-data">
+                    @csrf
                     <div class="card card-body">
                         <h3 class="titulo-form">Solicitud de requisición</h3>
                         <hr style="margin: 20px 0px;">
@@ -228,7 +229,7 @@
 
                                             Proveedor <font class="asterisco">*</font>
                                         </label>
-                                        <select class="model-producto browser-default not-select2"
+                                        <select class="browser-default not-select2"
                                             wire:model.lazy='selectedInput.{{ $i }}'
                                             name="proveedor_{{ $i }}" required>
                                             <option value="">Seleccione una opción</option>
@@ -260,7 +261,7 @@
                                         </div>
                                         <div>
                                             <div>
-                                                <div class="preloader-wrapper big active">
+                                                <div wire:loading class="preloader-wrapper big active">
                                                     <div class="spinner-layer spinner-red">
                                                         <div class="circle-clipper left">
                                                             <div class="circle"></div>
@@ -282,7 +283,7 @@
                                     @if ($this->selectedInput[$i] == 'otro')
                                         <div class="row">
                                             <div class="col s12 l12">
-                                                <select class="model-producto browser-default not-select2"
+                                                <select class="browser-default"
                                                     wire:model.lazy='selectOption.{{ $i }}'
                                                     name="proveedor_otro{{ $i }}" required>
                                                     <option selected value="indistinto">Indistinto</option>
@@ -373,13 +374,13 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col s12 l12">
-                                                        <label for="cotizacion_{{ $i }}" class="txt-tamaño">
+                                                        <label for="" class="txt-tamaño">
                                                             Carga de cotizaciones <font class="asterisco">*</font>
                                                         </label>
                                                         <input type="file" required
                                                                class="modal-cotizacion form-control-file"
-                                                               name="cotizaciones[{{ $i }}]"
-                                                               wire:model="cotizaciones.{{ $i }}"
+                                                               name="cotizacion_{{ $i }}"
+                                                               wire:model="cotizaciones[{{ $i }}]"
                                                                data-count="{{ $i }}"
                                                                accept=".pdf, .docx, .pptx, .point, .xml, .jpeg, .jpg, .png, .xlsx, .xlsm, .csv">
                                                     </div>
@@ -952,6 +953,14 @@
                 });
             });
 
+            // document.addEventListener("DOMContentLoaded", () => {
+            //     @this.set('proveedores_count', 1);
+            //     Livewire.on('cambiarTab', (id_tab) => {
+            //         // Activa la pestaña con ID 'profile'
+            //         $('#myTab a[href="#' + id_tab + '"]').tab('show');
+            //     });
+            // });
+
             function printArea() {
                 let area = $('#select_solicitante option:selected').attr("data-area");
                 document.querySelector('#area_print').value = area;
@@ -1017,28 +1026,53 @@
                     confirmButtonText: 'Si, Seguro!'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        if (tipo_card === 'servicio') {
-                            let card = document.querySelector('.card-product');
+                        if (tipo_card === 'proveedor') {
+                            let card = document.querySelector('.card-proveedor');
                             let nueva_card = document.createElement("div");
                             nueva_card.classList.add("card");
                             nueva_card.classList.add("card-body");
-                            nueva_card.classList.add("card-product");
-                            let cards_count = document.querySelectorAll('.card-product').length + 1;
+                            nueva_card.classList.add("card-proveedor");
+                            let cards_count = document.querySelectorAll('.card-proveedor').length + 1;
                             nueva_card.setAttribute("data-count", cards_count);
-                            let id_nueva_card = 'product-serv-' + cards_count;
+                            let id_nueva_card = 'proveedor-card-' + cards_count;
                             nueva_card.setAttribute('id', id_nueva_card);
 
-                            let caja_cards = document.querySelector('.caja-card-product');
+                            let caja_cards = document.querySelector('.caja-card-proveedor');
                             caja_cards.appendChild(nueva_card);
-                            document.querySelector('.card-product:last-child').innerHTML += card.innerHTML;
 
-                            document.querySelector('#' + id_nueva_card + ' .model-cantidad').setAttribute('name',
-                                'cantidad_' + cards_count);
-                            document.querySelector('#' + id_nueva_card + ' .model-producto').setAttribute('name',
-                                'producto_' + cards_count);
-                            document.querySelector('#' + id_nueva_card + ' .model-especificaciones').setAttribute(
-                                'name', 'especificaciones_' + cards_count);
-                            @this.set('products_servs_count', cards_count);
+                            document.querySelector('.card-proveedor:last-child').innerHTML += card.innerHTML;
+
+                            document.querySelector('#' + id_nueva_card + ' .modal-detalles').setAttribute('name',
+                                'detalles_' + cards_count);
+
+                            document.querySelector('#' + id_nueva_card + ' .modal-tipo').setAttribute('name',
+                                'tipo_' + cards_count);
+
+                            document.querySelector('#' + id_nueva_card + ' .modal-tipo-2').setAttribute(
+                                'name', 'tipo_' + cards_count);
+
+
+                            document.querySelector('#' + id_nueva_card + ' .modal-comentario').setAttribute(
+                            'name', 'comentarios_' + cards_count);
+
+                            document.querySelector('#' + id_nueva_card + ' .modal-nombre').setAttribute(
+                            'name', 'contacto_' + cards_count);
+
+                            document.querySelector('#' + id_nueva_card + ' .modal-telefono').setAttribute(
+                            'name', 'contacto_telefono_' + cards_count);
+
+
+                            document.querySelector('#' + id_nueva_card + ' .modal-correo').setAttribute(
+                            'name', 'contacto_correo_' + cards_count);
+
+                            document.querySelector('#' + id_nueva_card + ' .modal-url').setAttribute(
+                            'name', 'contacto_url_' + cards_count);
+
+                            document.querySelector('#' + id_nueva_card + ' .modal-cotizacion').setAttribute(
+                            'name', 'cotizacion_' + cards_count);
+
+
+                            @this.set('proveedores_count', cards_count);
                         }
 
                         if (tipo_card === 'proveedor') {

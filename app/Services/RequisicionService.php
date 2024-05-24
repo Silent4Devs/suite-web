@@ -18,23 +18,111 @@ class RequisicionService
         // Define la URL del endpoint de la API de Python, incluyendo el nombre del archivo dinámico
         $url = "http://127.0.0.1:8000/save_name_files/archivos.txt/{$filename}";
 
-        // Aquí puedes definir los datos que deseas enviar en el cuerpo de la solicitud POST
-        $postData = [
-            'key1' => 'value1',
-            'key2' => 'value2',
-            // Añade más datos según tus necesidades
-        ];
-
         try {
-            // Realiza la solicitud POST
-            $response = $this->client->post($url, [
-                'json' => $postData, // Envía los datos como JSON
-            ]);
+            // Realiza la solicitud POST sin enviar datos en el cuerpo
+            $response = $this->client->post($url);
 
             // Decodifica la respuesta JSON
             return json_decode($response->getBody()->getContents(), true);
         } catch (\Exception $e) {
             // Maneja las excepciones según sea necesario
+            return ['error' => $e->getMessage()];
+        }
+    }
+
+
+    public function postDataLoadPythonAPI($path)
+    {
+        // Define la URL del endpoint de la API de Python, incluyendo el nombre del archivo dinámico
+        $url = "http://127.0.0.1:8000/load_name_files/{$path}";
+
+        try {
+            // Realiza la solicitud POST sin enviar datos en el cuerpo
+            $response = $this->client->post($url);
+
+            // Decodifica la respuesta JSON
+            return json_decode($response->getBody()->getContents(), true);
+        } catch (\Exception $e) {
+            // Maneja las excepciones según sea necesario
+            return ['error' => $e->getMessage()];
+        }
+    }
+
+
+    public function postDataCleanPythonAPI($path)
+    {
+        // Define la URL del endpoint de la API de Python, incluyendo el nombre del archivo dinámico
+        $url = "http://127.0.0.1:8000/clean_files/{$path}";
+
+        try {
+            // Realiza la solicitud POST sin enviar datos en el cuerpo
+            $response = $this->client->post($url);
+
+            // Decodifica la respuesta JSON
+            return json_decode($response->getBody()->getContents(), true);
+        } catch (\Exception $e) {
+            // Maneja las excepciones según sea necesario
+            return ['error' => $e->getMessage()];
+        }
+    }
+
+
+    public function postDataScanedPythonAPI($path)
+    {
+        // Define la URL del endpoint de la API de Python, incluyendo el nombre del archivo dinámico
+        $url = "http://127.0.0.1:8000/is_scanned_pdf/{$path}";
+
+        try {
+            // Realiza la solicitud POST sin enviar datos en el cuerpo
+            $response = $this->client->post($url);
+
+            // Decodifica la respuesta JSON
+            return json_decode($response->getBody()->getContents(), true);
+        } catch (\Exception $e) {
+            // Maneja las excepciones según sea necesario
+            return ['error' => $e->getMessage()];
+        }
+    }
+
+
+    public function postDataExtractPythonAPI($image)
+    {
+        // Define la URL del endpoint de la API de Python, incluyendo el nombre del archivo dinámico
+        $url = "http://127.0.0.1:8000/extract_text_from_image/{$image}";
+
+        try {
+            // Realiza la solicitud POST sin enviar datos en el cuerpo
+            $response = $this->client->post($url);
+
+            // Decodifica la respuesta JSON
+            return json_decode($response->getBody()->getContents(), true);
+        } catch (\Exception $e) {
+            // Maneja las excepciones según sea necesario
+            return ['error' => $e->getMessage()];
+        }
+    }
+
+
+    public function postDataTextPythonAPI()
+    {
+        $filePath = storage_path('app/public/ejemplo3.pdf');
+        $fileName = 'ejemplo3.pdf';
+
+        $url = "http://127.0.0.1:8000/text_to_chromadb/";
+
+        try {
+            $response = $this->client->post($url, [
+                'multipart' => [
+                    [
+                        'name'     => 'pdf',
+                        'contents' => fopen($filePath, 'r'),
+                        'filename' => $fileName
+                    ],
+                ]
+            ]);
+
+            return json_decode($response->getBody()->getContents(), true);
+        } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }
     }
