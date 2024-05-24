@@ -90,6 +90,10 @@ class RequisicionesCreateComponent extends Component
 
     public $filename;
 
+    public $path;
+
+    // public $pdf;
+
     protected $requisicionService;
 
     public function __construct($id = null)
@@ -102,6 +106,44 @@ class RequisicionesCreateComponent extends Component
     {
         $result = $this->requisicionService->postDataToPythonAPI($this->filename);
         return $result;
+    }
+
+
+    public function postDataLoad()
+    {
+        $result = $this->requisicionService->postDataLoadPythonAPI($this->path);
+        return $result;
+    }
+
+
+    public function postDataClean()
+    {
+        $result = $this->requisicionService->postDataCleanPythonAPI($this->path);
+        dd($result);
+    }
+
+
+
+    public function postDataScaned()
+    {
+        $result = $this->requisicionService->postDataScanedPythonAPI($this->path);
+        dd($result);
+    }
+
+
+
+    public function postDataExtract()
+    {
+        $result = $this->requisicionService->postDataExtractPythonAPI($this->image);
+        dd($result);
+    }
+
+
+
+    public function postDataText()
+    {
+        $result = $this->requisicionService->postDataTextPythonAPI();
+        dd($result);
     }
 
 
@@ -214,15 +256,8 @@ class RequisicionesCreateComponent extends Component
                         $proveedor_req->fecha_fin = isset($data['contacto_fecha_fin_' . $i]) ? $data['contacto_fecha_fin_' . $i] : null;
                         $proveedor_req->requisiciones_id = $this->requisicion_id;
 
-                        //cotizacion y validacion
-                        if (!$this->cotizaciones) {
-                            $this->habilitar_alerta_cotizacion = true;
-                        } else {
-                            $this->habilitar_alerta_cotizacion = false;
-                        }
 
                         $cotizacion_actual = $this->cotizaciones[$cotizacion_count];
-
 
                         if (
                             $cotizacion_actual->getClientOriginalExtension() === 'pdf' || $cotizacion_actual->getClientOriginalExtension() === 'docx'
@@ -234,9 +269,7 @@ class RequisicionesCreateComponent extends Component
                         ) {
                             $this->habilitar_alerta = false;
                             $name_cotizacion = 'requisicion_' . $this->requisicion_id . 'cotizazcion_' . $cotizacion_count . '_' . uniqid() . '.' . $cotizacion_actual->getClientOriginalExtension();
-                            $this->filename = $name_cotizacion;
-                            $this->postData();
-                            $ruta_cotizacion = $cotizacion_actual->storeAs('public/cotizaciones_requisiciones_proveedores/', $name_cotizacion);
+                            $cotizacion_actual->storeAs('public/cotizaciones_requisiciones_proveedores/', $name_cotizacion);
                             $proveedor_req->cotizacion = $name_cotizacion;
                             $proveedor_req->save();
                         } else {
@@ -244,6 +277,7 @@ class RequisicionesCreateComponent extends Component
 
                             return false;
                         }
+
 
                         $this->emit('cambiarTab', 'contact');
 
