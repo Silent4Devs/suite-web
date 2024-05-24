@@ -172,15 +172,18 @@
                     {
                         data: 'proveedor_catalogo',
                         render: function(data, type, row) {
-                            // Verifica si 'data' es null
-                            if (data === null) {
-                                return 'Indistinto'; // Puedes personalizar el mensaje
+                            // Verifica si 'data' es null o undefined
+                            if (data === null || typeof data === 'undefined') {
+                                // Verifica si 'proveedores_requisiciones' está definido y tiene al menos un contacto
+                                if (row.proveedores_requisiciones && row.proveedores_requisiciones.length > 0) {
+                                    return row.proveedores_requisiciones[0].contacto;
+                                } else {
+                                    return 'Indistinto'; // Puedes personalizar el mensaje
+                                }
                             } else {
-                                return data; // Valor no es null
+                                return data; // Valor no es null ni undefined
                             }
-
                         }
-
                     },
                     {
                         data: null,

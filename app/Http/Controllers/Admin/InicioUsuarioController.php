@@ -292,6 +292,8 @@ class InicioUsuarioController extends Controller
             $supervisor = $empleado->supervisor;
         }
 
+        $panel_rules = PanelInicioRule::getAll();
+
         if (! is_null($empleado)) {
             $activos = Activo::select('*')->where('id_responsable', '=', $empleado->id)->get();
             if ($empleado->cumpleaños) {
@@ -1290,6 +1292,12 @@ class InicioUsuarioController extends Controller
 
     public function expediente($id_empleado)
     {
+        $user = User::getCurrentUser();
+
+        if ($user->empleado->id != $id_empleado) {
+            abort_if(Gate::denies('mi_perfil_mis_datos_ver_expediente'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        }
+
         $empleado = Empleado::getAll()->find($id_empleado);
 
         $evidendiasdocumentos = EvidenciasDocumentosEmpleados::getAll();
@@ -1380,6 +1388,8 @@ class InicioUsuarioController extends Controller
 
     public function solicitud()
     {
+        abort_if(Gate::denies('mi_perfil_modulo_solicitud_ausencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $solicitudes_pendientes = 0;
 
         return view('admin.inicioUsuario.solicitudesv2', compact('solicitudes_pendientes'));

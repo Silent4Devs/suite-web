@@ -2,13 +2,11 @@
 
 namespace App\Listeners;
 
-use App\Events\IncidentesDeSeguridadEvent;
 use App\Models\User;
 use App\Notifications\IncidentesDeSeguridadNotification;
 use Illuminate\Support\Facades\Notification;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
-class IncidentesDeSeguridadListener implements ShouldQueue
+class IncidentesDeSeguridadListener
 {
     /**
      * Create the event listener.
@@ -26,20 +24,7 @@ class IncidentesDeSeguridadListener implements ShouldQueue
      * @param  object  $event
      * @return void
      */
-    // public function handle($event)
-    // {
-    //     User::select('users.id', 'users.name', 'users.email', 'role_user.role_id')
-    //         ->join('role_user', 'role_user.user_id', '=', 'users.id')
-    //         ->where('role_user.role_id', '=', '1')
-    //         ->where('users.id', '!=', auth()->id())
-    //         ->get()
-
-    //         ->each(function (User $user) use ($event) {
-    //             Notification::send($user, new IncidentesDeSeguridadNotification($event->incidentesDeSeguridad, $event->tipo_consulta, $event->tabla, $event->slug));
-    //         });
-    // }
-
-    public function handle(IncidentesDeSeguridadEvent $event)
+    public function handle($event)
     {
         User::select('users.id', 'users.name', 'users.email', 'role_user.role_id')
             ->join('role_user', 'role_user.user_id', '=', 'users.id')
@@ -47,7 +32,7 @@ class IncidentesDeSeguridadListener implements ShouldQueue
             ->where('users.id', '!=', auth()->id())
             ->get()
             ->each(function (User $user) use ($event) {
-                $user->notify(new IncidentesDeSeguridadNotification($event->incidentesDeSeguridad, $event->tipo_consulta, $event->tabla, $event->slug));
+                Notification::send($user, new IncidentesDeSeguridadNotification($event->incidentesDeSeguridad, $event->tipo_consulta, $event->tabla, $event->slug));
             });
     }
 }

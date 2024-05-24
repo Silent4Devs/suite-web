@@ -164,6 +164,38 @@ services:
     networks:
       - tabantajnetwork
 
+  mailhog-service:
+    image: mailhog/mailhog # Reemplaza "imagen:tag" con la imagen y etiqueta correctas de Maihog
+    container_name: maihog-container # El nombre del contenedor
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "1025:1025" # Reemplaza "puerto_host" y "puerto_contenedor" con los puertos necesarios
+      - "8025:8025"
+    volumes:
+      - mailhog_data:/mailhog_data # Reemplaza "./ruta/local" con la ruta local y "/ruta/contenedor" con la ruta dentro del contenedor
+    networks:
+      - tabantajnetwork
+
+volumes:
+  tabantaj-db:
+    driver: local
+  rabbitmq_data:
+    driver: local
+  pgadmin-data:
+    driver: local
+  goservices_data:
+    driver: local
+  mailhog_data:
+    driver: local
+  # elasticsearch:
+  #   driver: local
+  # elasticsearch-logs:
+  #   driver: local
+
+networks:
+  tabantajnetwork:
+
   # prometheus-tabantaj:
   #   image: prom/prometheus
   #   container_name: prometheus-tabantaj
@@ -320,20 +352,3 @@ services:
   #     - 8081:8080
   #   networks:
   #     - tabantajnetwork
-
-volumes:
-  tabantaj-db:
-    driver: local
-  rabbitmq_data:
-    driver: local
-  pgadmin-data:
-    driver: local
-  goservices_data:
-    driver: local
-  # elasticsearch:
-  #   driver: local
-  # elasticsearch-logs:
-  #   driver: local
-
-networks:
-  tabantajnetwork:

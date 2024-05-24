@@ -95,7 +95,8 @@ class ReportesProyemp extends Component
         //     }
         // });
 
-        $query = TimesheetHoras::join('timesheet', 'timesheet.id', '=', 'timesheet_horas.timesheet_id')
+        $query = TimesheetHoras::with(['timesheet', 'timesheet.empleado', 'timesheet.aprobador'])
+            ->join('timesheet', 'timesheet.id', '=', 'timesheet_horas.timesheet_id')
             ->join('timesheet_proyectos', 'timesheet_proyectos.id', '=', 'timesheet_horas.proyecto_id')
             ->join('timesheet_tareas', 'timesheet_tareas.id', '=', 'timesheet_horas.tarea_id')
             ->join('empleados as empleados', 'empleados.id', '=', 'timesheet.empleado_id')
@@ -103,15 +104,14 @@ class ReportesProyemp extends Component
             ->select(
                 'timesheet.*',
                 'timesheet.fecha_dia',
-                'empleados.name as empleado_name',
-                'aprobadores.name as supervisor_name',
+                //'empleados.name as empleado_name',
+                //'aprobadores.name as supervisor_name',
                 'timesheet_proyectos.proyecto',
                 'timesheet_tareas.tarea',
                 'timesheet_horas.*',
             )
             ->distinct()
             ->where(function ($query) {
-
                 if ($this->fecha_inicio || $this->fecha_fin) {
                     $query->where('timesheet.fecha_dia', '>=', $this->fecha_inicio ?? '1900-01-01')
                         ->where('timesheet.fecha_dia', '<=', $this->fecha_fin ?? now()->format('Y-m-d'));
@@ -124,8 +124,8 @@ class ReportesProyemp extends Component
                 if ($this->proy_id != 0) {
                     $query->where('timesheet_proyectos.id', $this->proy_id);
                 }
-                // Otras condiciones que ya tenías
-            })->where('timesheet_proyectos.estatus', '!=', 'papelera')
+            })
+            ->where('timesheet_proyectos.estatus', '!=', 'papelera')
             ->where('timesheet_proyectos.estatus', '!=', 'rechazado')
             ->where('timesheet_proyectos.estatus', '!=', 'Rechazada')
             ->where('timesheet.estatus', '!=', 'rechazado')
@@ -134,6 +134,7 @@ class ReportesProyemp extends Component
             ->orderByDesc('fecha_dia');
 
         $this->totalRegistrosMostrando = $query->count();
+
         $times = $query->paginate($this->perPage);
 
         return view('livewire.timesheet.reportes-proyemp', compact('times'));

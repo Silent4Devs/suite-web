@@ -5,7 +5,6 @@ namespace App\Observers;
 use App\Events\PoliticasSgiEvent;
 use App\Models\PoliticaSgsi;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Queue;
 
 class PoliticaSgsiObserver
 {
@@ -16,9 +15,7 @@ class PoliticaSgsiObserver
      */
     public function created(PoliticaSgsi $politicaSgsi)
     {
-        Queue::push(function () use ($politicaSgsi) {
-            event(new PoliticasSgiEvent($politicaSgsi, 'create', 'politica_sgsis', 'Politicas'));
-        });
+        event(new PoliticasSgiEvent($politicaSgsi, 'create', 'politica_sgsis', 'Politica'));
 
         $this->forgetCache();
     }
@@ -30,10 +27,7 @@ class PoliticaSgsiObserver
      */
     public function updated(PoliticaSgsi $politicaSgsi)
     {
-        Queue::push(function () use ($politicaSgsi) {
-            event(new PoliticasSgiEvent($politicaSgsi, 'update', 'politica_sgsis', 'Politicas'));
-        });
-
+        event(new PoliticasSgiEvent($politicaSgsi, 'update', 'politica_sgsis', 'Politica'));
 
         $this->forgetCache();
     }
@@ -45,10 +39,7 @@ class PoliticaSgsiObserver
      */
     public function deleted(PoliticaSgsi $politicaSgsi)
     {
-        Queue::push(function () use ($politicaSgsi) {
-            event(new PoliticasSgiEvent($politicaSgsi, 'delete', 'politica_sgsis', 'Politicas'));
-        });
-
+        event(new PoliticasSgiEvent($politicaSgsi, 'delete', 'politica_sgsis', 'Politica'));
 
         $this->forgetCache();
     }

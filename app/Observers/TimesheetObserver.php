@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Events\TimesheetEvent;
 use App\Models\Timesheet;
 use Illuminate\Support\Facades\Cache;
 
@@ -14,6 +15,7 @@ class TimesheetObserver
      */
     public function created(Timesheet $timesheet)
     {
+        event(new TimesheetEvent($timesheet, 'create', 'timesheet', 'Timesheet'));
         $this->forgetCache();
     }
 
@@ -24,6 +26,7 @@ class TimesheetObserver
      */
     public function updated(Timesheet $timesheet)
     {
+        event(new TimesheetEvent($timesheet, 'update', 'timesheet', 'Timesheet'));
         $this->forgetCache();
     }
 
@@ -34,26 +37,7 @@ class TimesheetObserver
      */
     public function deleted(Timesheet $timesheet)
     {
-        $this->forgetCache();
-    }
-
-    /**
-     * Handle the Timesheet "restored" event.
-     *
-     * @return void
-     */
-    public function restored(Timesheet $timesheet)
-    {
-        $this->forgetCache();
-    }
-
-    /**
-     * Handle the Timesheet "force deleted" event.
-     *
-     * @return void
-     */
-    public function forceDeleted(Timesheet $timesheet)
-    {
+        event(new TimesheetEvent($timesheet, 'delete', 'timesheet', 'Timesheet'));
         $this->forgetCache();
     }
 

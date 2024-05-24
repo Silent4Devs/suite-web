@@ -540,8 +540,6 @@
             <div class="__template__" type="TASKBAR">
                 <!-- @include('admin.workPlan.diagramas-implementacion.code-coment-gantt.taskBox') -->
             </div>
-
-
             <div class="__template__" type="CHANGE_STATUS">
                 <!-- @include('admin.workPlan.diagramas-implementacion.code-coment-gantt.taskStatusBox') -->
 
@@ -553,7 +551,7 @@
                     <h2 class="taskData">Tarea</h2>
                     <table cellspacing="1" cellpadding="5" width="100%" class="table taskData" border="0">
                         <tr>
-                            <td colspan="3" valign="top">
+                            <td colspan="3" valign="top" style="padding-top: 50px;">
                                 <div class="form-group anima-focus">
                                     <input type="text" class="form-control" id="name" name="name" placeholder=""
                                         required="true">
@@ -593,12 +591,10 @@
                         <tr>
                             <td colspan="2">
                                 <label for="status" class="">Estatus</label><br>
-                                <select readonly disabled style="color:black; text-align:center" id="status"
-                                    name="status" class="taskStatus" status="(#=obj.status#)"
+                                <select readonly style="color:black; text-align:center" id="status" name="status"
+                                    class="taskStatus" status="(#=obj.status#)"
                                     onchange="$(this).attr('STATUS',$(this).val());">
                                     <option value="STATUS_ACTIVE" class="taskStatus" status="STATUS_ACTIVE">En Proceso
-                                    </option>
-                                    <option value="STATUS_WAITING" class="taskStatus" status="STATUS_WAITING">En Espera
                                     </option>
                                     <option value="STATUS_SUSPENDED" class="taskStatus" status="STATUS_SUSPENDED">
                                         Suspendida</option>
@@ -610,33 +606,24 @@
                                         Iniciar</option>
                                 </select>
 
-
                                 {{-- <div class="taskDivStatus" status="(#=obj.status#)" >(#=obj.status#)</div> --}}
-
-
-                            </td>
-                            <td valign="top" nowrap>
-                                <label>Progreso(%)</label><br>
-                                <input type="text" name="progress" id="progress" size="7"
-                                    class="formElements validated percentile" autocomplete="off" maxlength="255"
-                                    value="" oldvalue="1" entrytype="PERCENTILE">
                             </td>
                         </tr>
                     </table>
 
                     <h2>Asignaciones</h2>
                     <table cellspacing="1" cellpadding="0" width="100%" id="assigsTable">
-                        <tr>
+                        <tr style="background-color: #FFEEEE;">
                             <th style="width:100px;">Nombre</th>
                             <th style="width:70px;">Rol</th>
-                            <th style="width:30px;">est.wklg.</th>
-                            <th style="width:30px;" id="addAssig"><span class="teamworkIcon"
-                                    style="cursor: pointer">+</span></th>
+                            <th style="width:5px;">Tiempo Aproxiamdo</th>
+                            <th style="width:5px;"></th>
                         </tr>
                     </table>
+                    <div id="addAssig"><span class="teamworkIcon" style="cursor: pointer">+</span></div>
 
                     <div style="text-align: right; padding-top: 20px">
-                        <span id="saveButton" class="button first"
+                        <span id="saveButton" class="btn btn-xs btn-primary"
                             onClick="$(this).trigger('saveFullEditor.gantt');">Guardar</span>
                     </div>
 
@@ -645,13 +632,13 @@
             </div>
             <div class="__template__" type="ASSIGNMENT_ROW">
                 <!--
-                                                                                <tr taskId="(#=obj.task.id#)" assId="(#=obj.assig.id#)" class="assigEditRow" >
-                                                                                <td ><select name="resourceId"  class="formElements" (#=obj.assig.id.indexOf("tmp_")==0?"":"disabled"#) ></select></td>
-                                                                                <td ><select type="select" name="roleId"  class="formElements"></select></td>
-                                                                                <td ><input type="text" name="effort" value="(#=getMillisInHoursMinutes(obj.assig.effort)#)" size="5" class="formElements"></td>
-                                                                                <td align="center"><span class="teamworkIcon delAssig del" style="cursor: pointer">d</span></td>
-                                                                                </tr>
-                                                                                -->
+                                                                                                                                                                                    <tr taskId="(#=obj.task.id#)" assId="(#=obj.assig.id#)" class="assigEditRow" >
+                                                                                                                                                                                    <td ><select name="resourceId"  class="formElements" (#=obj.assig.id.indexOf("tmp_")==0?"":"disabled"#) ></select></td>
+                                                                                                                                                                                    <td ><select type="select" name="roleId"  class="formElements"></select></td>
+                                                                                                                                                                                    <td ><input type="text" name="effort" value="(#=getMillisInHoursMinutes(obj.assig.effort)#)" size="5" class="formElements"></td>
+                                                                                                                                                                                    <td align="center"><span class="teamworkIcon delAssig del" style="cursor: pointer">d</span></td>
+                                                                                                                                                                                    </tr>
+                                                                                                                                                                                    -->
             </div>
             <div class="__template__" type="RESOURCE_EDITOR">
                 {{-- <!-- --}}
@@ -661,7 +648,7 @@
                     <table cellspacing="1" cellpadding="0" width="100%" id="resourcesTable">
                         <tr>
                             <th style="width:100px;">Nombre</th>
-                            <th style="width:30px;" id="addResource"><span class="teamworkIcon"
+                            <th style="width:50px;" id="addResource"><span class="teamworkIcon"
                                     style="cursor: pointer">+</span></th>
                         </tr>
                     </table>
@@ -681,6 +668,8 @@
                 {{-- --> --}}
             </div>
         </div>
+
+
 
         <script type="text/javascript">
             $.JST.loadDecorator("RESOURCE_ROW", function(resTr, res) {
@@ -783,4 +772,322 @@
                 upload(uploadedFile);
             });
         </script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const cards = document.querySelectorAll(".item");
+                const indicatorsContainer = document.querySelector(".indicators");
+                let currentCardIndex = 0;
+
+                // Crea indicadores
+                for (let i = 0; i < cards.length; i++) {
+                    const indicator = document.createElement("div");
+                    indicator.classList.add("indicator");
+                    indicatorsContainer.appendChild(indicator);
+                }
+                const indicators = document.querySelectorAll(".indicator");
+
+                // Muestra la primera card y el indicador activo
+                showCard(currentCardIndex);
+
+                // Función para mostrar una card específica
+                function showCard(index) {
+                    // Oculta todas las cards y desactiva todos los indicadores
+                    cards.forEach((card) => card.classList.remove("active"));
+                    indicators.forEach((indicator) => indicator.classList.remove("active"));
+
+                    // Muestra la card actual y activa el indicador correspondiente
+                    cards[index].classList.add("active");
+                    indicators[index].classList.add("active");
+
+                    // Desactiva el botón "Anterior" cuando estamos en el primer indicador
+                    document.querySelector(".prev-btn").disabled = index === 0;
+
+                    // Si llegamos al último indicador, cambia el texto del botón de "Siguiente" a "Finalizar"
+                    const nextBtn = document.querySelector(".next-btn");
+                    nextBtn.textContent = index === cards.length - 1 ? "Finalizar" : "Siguiente \u25B9";
+
+                    // Actualiza el índice actual
+                    currentCardIndex = index;
+                }
+
+                // Evento para el botón de siguiente
+                document.querySelector(".next-btn").addEventListener("click", function() {
+                    if (currentCardIndex === cards.length - 1) {
+                        // Abre el modal cuando se hace clic en "Finalizar"
+                        $('#modalTutorial').modal('hide');
+                        $('body').removeClass('modal-open');
+                        $('.modal-backdrop').remove();
+                        resetCardsAndIndicators();
+                    } else {
+                        currentCardIndex++;
+                        showCard(currentCardIndex);
+                    }
+                });
+
+                // Evento para el botón de anterior
+                document.querySelector(".prev-btn").addEventListener("click", function() {
+                    if (currentCardIndex > 0) {
+                        currentCardIndex--;
+                        showCard(currentCardIndex);
+                    }
+                });
+
+                // Eventos para los indicadores
+                indicators.forEach((indicator, index) => {
+                    indicator.addEventListener("click", function() {
+                        showCard(index);
+                    });
+                });
+
+                // Cierra el modal cuando se hace clic en la "x"
+                document.querySelector(".close").addEventListener("click", function() {
+                    $('#modalTutorial').modal('hide');
+                    resetCardsAndIndicators();
+                });
+
+                // Cierra el modal cuando se hace clic fuera del contenido del modal
+                window.onclick = function(event) {
+                    if (event.target == document.getElementById("modalTutorial")) {
+                        $('#modalTutorial').modal('hide');
+                        resetCardsAndIndicators();
+                    }
+                };
+
+                function resetCardsAndIndicators() {
+                    currentCardIndex = 0;
+                    showCard(currentCardIndex);
+                }
+            });
+        </script>
     @endsection
+    <style>
+        .slider-container {
+            width: 100%;
+            position: relative;
+        }
+
+        .cards-wrapper {
+            display: flex;
+            overflow-x: hidden;
+            align-items: center;
+        }
+
+        .item {
+            width: 100%;
+            flex: 0 0 auto;
+            background: transparent;
+            border-radius: 8px;
+            margin-right: 10px;
+            justify-content: center;
+            display: none;
+        }
+
+        .item.active {
+            display: flex;
+        }
+
+        .indicators {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: #818181;
+            border-radius: 50%;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+
+        .indicator.active {
+            background: #467BD3;
+        }
+
+        .indicator.visited {
+            background: #467BD3;
+        }
+
+        .next-btn {
+            font-size: 16px;
+            background-color: transparent;
+            color: #467BD3;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: auto;
+            padding-right: 50px;
+        }
+
+        .prev-btn {
+            font-size: 16px;
+            background-color: transparent;
+            color: #467BD3;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: auto;
+            padding-left: 50px;
+        }
+
+        .titleGrantTutorial {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #467BD3;
+            font-size: 20px;
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+
+        .contentItem {
+            width: 350px;
+            height: 367px;
+            border: none !important;
+
+        }
+
+        .card-text {
+            color: #575757;
+            font-size: 14px;
+        }
+
+        .pulse {
+            animation: pulse-animation 2s infinite;
+        }
+
+        @keyframes pulse-animation {
+            0% {
+                box-shadow: 0 0 0 0px rgba(0, 0, 0, 0.2);
+            }
+
+            100% {
+                box-shadow: 0 0 0 20px rgba(0, 0, 0, 0);
+            }
+        }
+    </style>
+    {{-- modal de instrucciones --}}
+    <div class="modal fade" id="modalTutorial" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content" style="width: 440px;height: 575px;border-radius: 20px;">
+                <div class="modal-body">
+                    <div class="slider-container">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <div class="indicators"></div>
+                        <div class="titleGrantTutorial">Tutorial</div>
+                        <div class="cards-wrapper">
+                            <div class="item active">
+                                <div class="card contentItem">
+                                    <div class="card-body">
+                                        <p class="card-text">Para iniciar con este proceso debemos seleccionar la
+                                            opción “Gantt” la cual se encuentra en la parte superior derecha de la
+                                            pantalla.</p>
+                                        <p class="card-text">En la parte inferior izquierda de la pantalla se
+                                            encuentran una serie de botones, los cuales están ordenados de la siguiente
+                                            forma</p>
+
+                                        <li class="card-text" style="list-style-type: none;">1.Rehacer, Deshacer</li>
+                                        <li class="card-text" style="list-style-type: none;">2.Insertar arriba,
+                                            Insertar abajo</li>
+                                        <li class="card-text" style="list-style-type: none;">3.Quitar indentación,
+                                            Indentar</li>
+                                        <li class="card-text" style="list-style-type: none;">4.Mover hacia arriba,
+                                            Mover hacia abajo</li>
+                                        <li class="card-text" style="list-style-type: none;">5.Eliminar</li>
+                                        <li class="card-text" style="list-style-type: none;">6.Incrementar Zoom,
+                                            Decrementar Zoom</li>
+                                        <li class="card-text" style="list-style-type: none;">7.Posicionar a la
+                                            izquierda, en medio y a la derecha</li>
+                                        <li class="card-text" style="list-style-type: none;">8.Guardar cambios.</li>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="card contentItem">
+                                    <div class="card-body">
+                                        <p class="card-text">Para aumentar o disminuir el zoom en el apartado, debemos
+                                            seleccionar los siguientes botónes.</p>
+                                        <i class="material-symbols-outlined">zoom_in</i>
+                                        <i class="material-symbols-outlined">zoom_out</i>
+                                        <hr>
+                                        <p class="card-text">Para guardar los cambios realizados en el apartado,
+                                            debemos seleccionar el siguiente botón.</p>
+                                        <i class="material-symbols-outlined">save</i>
+                                        <hr>
+                                        <p class="card-text">Para posicionar la pantalla a la izquierda, centro o
+                                            derecha, debemos seleccionar los siguientes botones.</p>
+                                        <i class="teamworkIcon"
+                                            style="color: #818181 !important;font-size: 20px !important;">F</i>
+                                        <i class="teamworkIcon"
+                                            style="color: #818181 !important;font-size: 20px !important;">O</i>
+                                        <i class="teamworkIcon"
+                                            style="color: #818181 !important;font-size: 20px !important;">R</i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="card contentItem">
+                                    <div class="card-body">
+                                        <p class="card-text">Para identar una tarea en el apartado, debemos seleccionar
+                                            el siguiente botón.</p>
+                                        <i class="material-symbols-outlined"> arrow_left_alt</i>
+                                        <i class="material-symbols-outlined"> arrow_right_alt</i>
+                                        <hr>
+                                        <p class="card-text">Para mover una tarea hacia arriba o hacia abajo en el
+                                            apartado, debemos seleccionar el siguiente botón.</p>
+                                        <i class="material-symbols-outlined">north</i>
+                                        <i class="material-symbols-outlined">south</i>
+                                        <hr>
+                                        <p class="card-text">Para eliminar una tarea en el apartado, debemos
+                                            seleccionar el siguiente botón.</p>
+                                        <i class="material-symbols-outlined">delete</i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="card contentItem">
+                                    <div class="card-body">
+                                        <p class="card-text">Para insertar una tarea debajo de la fila, debemos
+                                            seleccionar el siguiente botón.</p>
+                                        <i class="material-symbols-outlined">keyboard_capslock</i>
+                                        <hr>
+                                        <p class="card-text">Para quitar una identación en una tarea en el apartado,
+                                            debemos seleccionar el siguiente botón.</p>
+                                        <i class="material-symbols-outlined"> arrow_left_alt</i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="card contentItem">
+                                    <div class="card-body">
+                                        <p class="card-text">Para deshacer una acción realizada en el apartado, debemos
+                                            seleccionar el siguiente botón.</p>
+                                        <i class="material-symbols-outlined"
+                                            style="transform:rotateY(190deg);">prompt_suggestion </i>
+                                        <hr>
+                                        <p class="card-text">Para rehacer una acción realizada en el apartado, debemos
+                                            seleccionar el siguiente botón.</p>
+                                        <i class="material-symbols-outlined">prompt_suggestion </i>
+                                        <hr>
+                                        <p class="card-text">Para insertar una tarea hacia arriba de la fila, debemos
+                                            seleccionar el siguiente botón.</p>
+                                        <i class="material-symbols-outlined"
+                                            style="transform: rotateX(190deg)">keyboard_capslock</i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display:flex;">
+                            <button class="prev-btn">&#10094; Anterior</button>
+                            <button class="next-btn">Siguiente &#10095;</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

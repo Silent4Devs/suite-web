@@ -214,13 +214,13 @@
     <div class="mt-5">
         <div class="card-body">
             @include('partials.flashMessages')
-            @if (Auth::user()->can('mis_cursos_acceder'))
+            @if (Auth::user()->can('mi_perfil_modulo_solicitud_ausencia'))
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane mb-4 fade show active" id="nav-contexto" role="tabpanel"
                         aria-labelledby="nav-contexto-tab">
                         <ul class="mt-4">
 
-                            @can('mi_perfil_modulo_solicitud_ausencia')
+                            @can('solicitud_vacaciones_acceder')
                                 <li>
                                     <a href="{{ asset('admin/solicitud-vacaciones') }}" class="btn_reporte">
                                         <div>
@@ -229,7 +229,7 @@
                                     </a>
                                 </li>
                             @endcan
-                            @can('mi_perfil_modulo_solicitud_ausencia')
+                            @can('solicitud_dayoff_acceder')
                                 <li>
                                     <a href="{{ asset('admin/solicitud-dayoff') }}" class="btn_reporte">
                                         <i class="bi bi-bicycle"></i> <br><br><span
@@ -237,7 +237,7 @@
                                     </a>
                                 </li>
                             @endcan
-                            @can('mi_perfil_modulo_solicitud_ausencia')
+                            @can('solicitud_goce_sueldo_acceder')
                                 <li>
                                     <a href="{{ asset('admin/solicitud-permiso-goce-sueldo') }}" class="btn_reporte">
                                         <i class="bi bi-coin"></i><span>Permisos</span>

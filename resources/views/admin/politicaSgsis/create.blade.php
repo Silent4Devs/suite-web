@@ -71,7 +71,7 @@
                         compromisos con respecto al sistema de gestión implementado en la organización.
                 </p>
                 <p>
-                    La Política del Sistema de Gestión sirve como un documento fundamental para alinear a toda la
+                    Nos sirve como un documento fundamental para alinear a toda la
                     organización en torno a los objetivos y compromisos relacionados con la calidad, el medio ambiente u
                     otros ámbitos específicos.
                 </p>

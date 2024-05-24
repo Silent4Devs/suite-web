@@ -2,11 +2,13 @@
 
 namespace App\Listeners;
 
+use App\Models\Empleado;
+use App\Models\ListaDistribucion;
 use App\Models\User;
 use App\Notifications\MatrizRequisitosNotification;
 use Illuminate\Support\Facades\Notification;
-use Illuminate\Contracts\Queue\ShouldQueue;
-class MatrizRequisitosListener implements ShouldQueue
+
+class MatrizRequisitosListener
 {
     /**
      * Create the event listener.
@@ -26,12 +28,16 @@ class MatrizRequisitosListener implements ShouldQueue
      */
     public function handle($event)
     {
-        User::select('users.id', 'users.name', 'users.email', 'role_user.role_id')
-            ->join('role_user', 'role_user.user_id', '=', 'users.id')
-            ->where('role_user.role_id', '=', '1')->where('users.id', '!=', auth()->id())
-            ->get()
-            ->each(function (User $user) use ($event) {
-                Notification::send($user, new MatrizRequisitosNotification($event->matriz, $event->tipo_consulta, $event->tabla, $event->slug));
-            });
+        $modulo_matriz = 4;
+
+        $lista = ListaDistribucion::with('participantes')->where('id', $modulo_matriz)->first();
+
+        foreach ($lista->participantes as $participantes) {
+            $empleados = Empleado::where('id', $participantes->empleado_id)->first();
+
+            $user = User::where('email', trim(removeUnicodeCharacters($empleados->email)))->first();
+
+            Notification::send($user, new MatrizRequisitosNotification($event->matriz, $event->tipo_consulta, $event->tabla, $event->slug));
+        }
     }
 }

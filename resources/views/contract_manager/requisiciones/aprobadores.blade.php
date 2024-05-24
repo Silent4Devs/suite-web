@@ -66,7 +66,7 @@
                             <td>RQ-00-00-{{ $requisicion->id }}</td>
                             <td>{{ $requisicion->fecha }}</td>
                             <td>{{ $requisicion->referencia }}</td>
-                            <td>{{ $requisicion->proveedor_catalogo }}</td>
+                            <td>{{$requisicion->proveedor_catalogo  ?? $requisicion->provedores_requisiciones->first()->contacto  ?? 'Indistinto'  }}</td>
                             <td>
                                 @switch($requisicion->estado)
                                     @case('curso')

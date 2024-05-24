@@ -11,12 +11,23 @@ pipeline {
         stage('Git Pull via SSH') {
             steps {
                 script {
-                   sh '''
+                    sh '''
                        echo $SSH_PASSWORD | sshpass -p $SSH_PASSWORD ssh $SSH_USER@$SERVER_IP "cd /var/contenedor/suite-web && sudo -S git pull"
                     '''
                 }
             }
         }
-    }
 
+        // stage('Execute unit test docker') {
+        //     steps {
+        //         script {
+        //             echo 'Ejecutando pruebas unitarias'
+        //             sh '''
+        //                echo $SSH_PASSWORD | sshpass -p $SSH_PASSWORD ssh $SSH_USER@$SERVER_IP "cd /var/contenedor/unittest/unittest-suit && sudo -S git pull && sudo -S docker compose up"
+        //             '''
+        //             echo 'entro a carpeta y ejecuto pruebas unitarias'
+        //         }
+        //     }
+        // }
+    }
 }
