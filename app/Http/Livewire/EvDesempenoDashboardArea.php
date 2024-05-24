@@ -236,7 +236,13 @@ class EvDesempenoDashboardArea extends Component
                             break; // Exit the loop once we find the correct position
                         }
                     }
+                    $arreglo_cuenta = array_count_values($this->escalas['resultados'][$key_periodo]);
+                    $cuenta = $arreglo_cuenta[0];
 
+                    // dd(array_count_values($this->escalas['resultados'][$key_periodo]));
+                    if ($index == $cuenta) {
+                        $index--;
+                    }
                     // $index now represents the position where $promedio falls in the sorted array
                     // You can use $index to determine which $escala $promedio belongs to
                     $this->escalas['resultados'][$key_periodo][$index]++;

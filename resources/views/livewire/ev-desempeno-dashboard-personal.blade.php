@@ -661,7 +661,17 @@
                             <tr>
                                 <td></td>
                                 <td>{{ $evaluado->empleado->name }}</td>
-                                <td>{{ $evaluado->empleado->puestoRelacionado->puesto }}/{{ $evaluado->empleado->area->area }}
+                                <td>
+                                    {{ $evaluado->empleado->puestoRelacionado->puesto }}/{{ $evaluado->empleado->area->area }}
+                                    <br>
+                                    @foreach ($evaluado->empleado->registrosHistorico as $key => $historico)
+                                        @if (isset($historico->relacion['puesto']->puesto))
+                                            Puesto Anterior:{{ $historico->relacion['puesto']->puesto }}
+                                        @elseif (isset($historico->relacion['area']->area))
+                                            Area
+                                            Anterior:{{ $historico->relacion['area']->area }}
+                                        @endif
+                                    @endforeach
                                 </td>
                                 <td>
                                     <ul>

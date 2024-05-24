@@ -28,12 +28,16 @@ class HistoricoEmpleados extends Model
 
     public function areaHistorico($id)
     {
-        return Area::withTrashed()->find($id);
+        $area = Area::withTrashed()->find($id);
+        return [
+            'area' => $area,
+        ];
     }
 
     public function puestoHistorico($id)
     {
-        return Puesto::withTrashed()->find($id);
+        $puesto = Puesto::withTrashed()->find($id);
+        return ['puesto' => $puesto];
     }
 
     public function getRelacionAttribute()

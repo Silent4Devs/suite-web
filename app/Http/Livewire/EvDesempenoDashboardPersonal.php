@@ -87,7 +87,7 @@ class EvDesempenoDashboardPersonal extends Component
         $evld_tabla = EvaluacionDesempeno::with('evaluados')->find($this->id_evaluacion);
 
         $this->evaluado = $evld_tabla->evaluados->find($this->id_evaluado);
-
+        // dd($this->evaluado->empleado->registrosHistorico);
         $this->cargaDatos();
 
         $this->arreglosEvaluadores();

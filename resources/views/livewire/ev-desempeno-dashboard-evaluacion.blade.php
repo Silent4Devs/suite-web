@@ -540,10 +540,20 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            @foreach ($evaluados_tabla->evaluados as $evaluado)
+                        @foreach ($evaluados_tabla->evaluados as $evaluado)
+                            <tr>
                                 <td>{{ $evaluado->empleado->name }}</td>
-                                <td>{{ $evaluado->empleado->area->area }}</td>
+                                <td>{{ $evaluado->empleado->puestoRelacionado->puesto }}/{{ $evaluado->empleado->area->area }}
+                                    @foreach ($evaluado->empleado->registrosHistorico as $key => $historico)
+                                        <br>
+                                        @if (isset($historico->relacion['puesto']->puesto))
+                                            Puesto Anterior:{{ $historico->relacion['puesto']->puesto }}
+                                        @elseif (isset($historico->relacion['area']->area))
+                                            Area
+                                            Anterior:{{ $historico->relacion['area']->area }}
+                                        @endif
+                                    @endforeach
+                                </td>
                                 <td>
                                     <div class="row">
                                         <div class="col-12">
@@ -565,8 +575,8 @@
                                     <a href="{{ route('admin.rh.evaluaciones-desempeno.dashboard-evaluado', [$evaluacion->id, $evaluado->id]) }}"
                                         class="btn btn-evaluacion">Evaluacion</a>
                                 </td>
-                            @endforeach
-                        </tr>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
 
@@ -620,8 +630,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($evaluados_tabla->evaluados as $evaluado)
-                                <tr>
+                            <tr>
+                                @foreach ($evaluados_tabla->evaluados as $evaluado)
                                     <td>
                                         <a
                                             href="{{ route('admin.rh.evaluaciones-desempeno.dashboard-evaluado', [$evaluacion->id, $evaluado->id]) }}">
@@ -632,8 +642,23 @@
                                     </td>
                                     <td>{{ $evaluado->empleado->name }}</td>
                                     <td>{{ $evaluado->empleado->puesto }}
+                                        @foreach ($evaluado->empleado->registrosHistorico as $key => $historico)
+                                            <br>
+                                            @if (isset($historico->relacion['puesto']->puesto))
+                                                Puesto Anterior:{{ $historico->relacion['puesto']->puesto }}
+                                            @endif
+                                        @endforeach
                                     </td>
-                                    <td>{{ $evaluado->empleado->area->area }}</td>
+
+                                    <td>{{ $evaluado->empleado->area->area }}
+                                        @foreach ($evaluado->empleado->registrosHistorico as $key => $historico)
+                                            <br>
+                                            @if (isset($historico->relacion['area']->area))
+                                                Area
+                                                Anterior:{{ $historico->relacion['area']->area }}
+                                            @endif
+                                        @endforeach
+                                    </td>
                                     <td>
                                         <ul>
                                             @foreach ($this->evaluadores_evaluado[$evaluado->id] as $evaluador)
@@ -742,8 +767,8 @@
                                             </table>
                                         </td> --}}
                                     @endif
-                                </tr>
-                            @endforeach
+                                @endforeach
+                            </tr>
                         </tbody>
                     </table>
                 </div>
