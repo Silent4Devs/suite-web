@@ -220,7 +220,7 @@ class Empleado extends Model implements Auditable
     public static function getEmpleadoCurriculum($id)
     {
         return
-            Cache::remember('Empleados:EmpleadoCurriculum_'.$id, 3600 * 8, function () use ($id) {
+            Cache::remember('Empleados:EmpleadoCurriculum_' . $id, 3600 * 8, function () use ($id) {
                 return self::alta()->with('empleado_certificaciones', 'empleado_cursos', 'empleado_experiencia')->findOrFail($id);
             });
     }
@@ -379,6 +379,21 @@ class Empleado extends Model implements Auditable
         });
     }
 
+    public static function getaltaAllObjetivosGenerales()
+    {
+        return Cache::remember('Empleados:empleados_alta_all_objetivos_generales', 3600 * 6, function () {
+            return self::alta()->select(
+                'n_empleado',
+                'name',
+                'puesto_id',
+                'area_id',
+                'perfil_empleado_id',
+                'id',
+                'foto'
+            )->with(['objetivos', 'area', 'perfil', 'puestoRelacionado'])->get();
+        });
+    }
+
     public static function getaltaAllObjetivoSupervisorChildren()
     {
         return Cache::remember('Empleados:empleados_alta_all_evaluaciones', 3600 * 6, function () {
@@ -427,14 +442,14 @@ class Empleado extends Model implements Auditable
 
     public function getActualBirdthdayAttribute()
     {
-        $birdthday = date('Y').'-'.Carbon::parse($this->cumpleaños)->format('m-d');
+        $birdthday = date('Y') . '-' . Carbon::parse($this->cumpleaños)->format('m-d');
 
         return $birdthday;
     }
 
     public function getActualAniversaryAttribute()
     {
-        $aniversario = date('Y').'-'.Carbon::parse($this->antiguedad)->format('m-d');
+        $aniversario = date('Y') . '-' . Carbon::parse($this->antiguedad)->format('m-d');
 
         return $aniversario;
     }
@@ -520,7 +535,7 @@ class Empleado extends Model implements Auditable
             }
         }
 
-        return asset('storage/empleados/imagenes/'.$this->foto);
+        return asset('storage/empleados/imagenes/' . $this->foto);
     }
 
     public function area()
@@ -562,12 +577,12 @@ class Empleado extends Model implements Auditable
 
     public function getCompetenciasAsignadasAttribute()
     {
-        return ! is_null($this->puestoRelacionado) ? $this->puestoRelacionado->competencias->count() : 0;
+        return !is_null($this->puestoRelacionado) ? $this->puestoRelacionado->competencias->count() : 0;
     }
 
     public function getObjetivosAsignadosAttribute()
     {
-        $cuenta_objetivos = ! is_null($this->objetivos) ? $this->objetivos->count() : 0;
+        $cuenta_objetivos = !is_null($this->objetivos) ? $this->objetivos->count() : 0;
         $objetivos = $this->objetivos;
 
         $objetivo_pendiente = false;
@@ -772,7 +787,25 @@ class Empleado extends Model implements Auditable
 
     public function objetivos()
     {
-        return $this->hasMany('App\Models\RH\ObjetivoEmpleado', 'empleado_id', 'id');
+        return $this->hasMany('App\Models\RH\ObjetivoEmpleado', 'empleado_id', 'id')
+            ->where('papelera', false)
+            ->where('ev360', true);
+    }
+
+    public function objetivosGenerales()
+    {
+        return $this->hasMany('App\Models\RH\ObjetivoEmpleado', 'empleado_id', 'id')
+            ->where('papelera', false)
+            ->get();
+    }
+
+    public function objetivosPeriodo($periodo)
+    {
+        return $this->hasMany('App\Models\RH\ObjetivoEmpleado', 'empleado_id', 'id')
+            ->with('objetivo.tipo', 'objetivo.metrica', 'objetivo.escalas')
+            ->where($periodo, true)
+            ->where('papelera', false)
+            ->get();
     }
 
     public function perfil()
@@ -933,5 +966,10 @@ class Empleado extends Model implements Auditable
     public function responsableTratamiento()
     {
         return $this->hasMany(TratamientoRiesgo::class, 'id_dueno', 'id')->alta()->with('area');
+    }
+
+    public function registrosHistorico()
+    {
+        return $this->hasMany(HistoricoEmpleados::class, 'empleado_id', 'id');
     }
 }
