@@ -315,7 +315,7 @@ class MultiStepForm extends Component
 
         // Define the URL you want to redirect to
         // $url = route('admin.ev360-competencias-por-puesto.index');
-        // $this->dispatchBrowserEvent('openNewTab', ['url' => $url]);
+        // $this->dispatch('openNewTab', ['url' => $url]);
 
         $this->decreaseStep();
         // $this->openNewTab();

@@ -78,14 +78,14 @@ class DebilidadesComponent extends Component
         ]);
 
         $this->default();
-        $this->dispatchBrowserEvent('contentChanged');
+        $this->dispatch('contentChanged');
     }
 
     public function default()
     {
         $this->debilidad = '';
         $this->riesgo = '';
-        $this->dispatchBrowserEvent('contentChanged');
+        $this->dispatch('contentChanged');
         $this->view = 'create';
     }
 }

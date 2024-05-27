@@ -57,7 +57,7 @@ class EstudiantesCrear extends Component
                 $this->dispatch('UserStore');
             }
             $this->render_alerta('success', 'Los estudiantes de la organización se han agregado exitosamente');
-            $this->dispatchBrowserEvent('closeModal');
+            $this->dispatch('closeModal');
         }
 
         if ($this->publico == 'area') {
@@ -71,7 +71,7 @@ class EstudiantesCrear extends Component
                 $this->dispatch('UserStore');
             }
             $this->render_alerta('success', 'Los estudiantes del área '.Area::where('id', $this->area_seleccionada)->first()->area.' se han agregado exitosamente');
-            $this->dispatchBrowserEvent('closeModal');
+            $this->dispatch('closeModal');
         }
 
         if ($this->publico == 'manual') {
@@ -83,7 +83,7 @@ class EstudiantesCrear extends Component
             // $this->open = false;
             $this->dispatch('UserStore');
             $this->render_alerta('success', 'El estudiante se ha agregado exitosamente');
-            $this->dispatchBrowserEvent('closeModal');
+            $this->dispatch('closeModal');
         }
     }
 

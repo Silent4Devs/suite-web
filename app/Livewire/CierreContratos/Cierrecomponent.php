@@ -48,7 +48,7 @@ class Cierrecomponent extends Component
             ->orderBy($this->sort, $this->direction)
             ->fastPaginate(intval($this->pagination));
 
-        $this->dispatchBrowserEvent('paginador-cierre-contrato');
+        $this->dispatch('paginador-cierre-contrato');
 
         return view('livewire.cierre-contratos.cierrecomponent', [
             'cierrecontratos' => $cierre_contratos,
@@ -74,7 +74,7 @@ class Cierrecomponent extends Component
 
         //$this->edit($post->id);
         $this->dispatch('recargar-cumplimiento');
-        $this->dispatchBrowserEvent('contentChanged');
+        $this->dispatch('contentChanged');
         $this->default();
 
         $this->alert('success', 'Registro añadido!');
@@ -87,7 +87,7 @@ class Cierrecomponent extends Component
         $this->aspectos = $cierrC->aspectos;
         $this->cumple = $cierrC->cumple;
         $this->observaciones = $cierrC->observaciones;
-        $this->dispatchBrowserEvent('contentChanged');
+        $this->dispatch('contentChanged');
         $this->view = 'edit';
     }
 
@@ -109,13 +109,13 @@ class Cierrecomponent extends Component
         ]);
         $this->dispatch('recargar-cumplimiento');
         $this->default();
-        //$this->dispatchBrowserEvent('contentChanged');
+        //$this->dispatch('contentChanged');
         $this->alert('success', 'Registro actualizado!');
     }
 
     public function confirmDelete($em_id)
     {
-        $this->dispatchBrowserEvent('confirmDeleteCierreEvent', ['em_id' => $em_id]);
+        $this->dispatch('confirmDeleteCierreEvent', ['em_id' => $em_id]);
     }
 
     public function destroy($id)
@@ -144,7 +144,7 @@ class Cierrecomponent extends Component
         $this->aspectos = '';
         $this->cumple = true;
         $this->observaciones = '';
-        $this->dispatchBrowserEvent('contentChanged');
+        $this->dispatch('contentChanged');
         $this->view = 'create';
     }
 }

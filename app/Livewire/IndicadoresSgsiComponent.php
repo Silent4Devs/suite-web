@@ -215,7 +215,7 @@ class IndicadoresSgsiComponent extends Component
     {
         $this->evaluacion = '';
         $this->fecha = '';
-        $this->dispatchBrowserEvent('contentChanged');
+        $this->dispatch('contentChanged');
 
         $this->view = 'create';
     }

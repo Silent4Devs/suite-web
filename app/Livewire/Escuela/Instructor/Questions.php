@@ -139,7 +139,7 @@ class Questions extends Component
             $this->Destroy($answerDelete);
         }
 
-        $this->dispatchBrowserEvent('closeModal');
+        $this->dispatch('closeModal');
         $this->dispatch('questionStore');
         $this->open = false;
     }
@@ -217,7 +217,7 @@ class Questions extends Component
             ]);
         }
         // $this->render_alerta('success', 'El registro se ha agregado exitosamente');
-        $this->dispatchBrowserEvent('closeModal');
+        $this->dispatch('closeModal');
         $this->dispatch('questionStore');
         $this->default();
     }

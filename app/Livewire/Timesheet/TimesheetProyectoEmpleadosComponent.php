@@ -186,7 +186,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
                         'costo_hora' => $this->costo_hora,
                     ]
                 );
-                $this->dispatchBrowserEvent('closeModal');
+                $this->dispatch('closeModal');
                 if (! $todosExt) {
                     $this->resetInput();
                 }
@@ -261,7 +261,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
             ]);
         }
 
-        $this->dispatchBrowserEvent('closeModal');
+        $this->dispatch('closeModal');
         $this->alert('success', 'Editado exitosamente', [
             'position' => 'top-end',
             'timer' => 3000,

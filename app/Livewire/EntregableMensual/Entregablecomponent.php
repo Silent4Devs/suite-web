@@ -111,7 +111,7 @@ class Entregablecomponent extends Component
                 ->orderBy($this->sort, $this->direction)
                 ->paginate(intval($this->pagination));
 
-        $this->dispatchBrowserEvent('paginador-entregables');
+        $this->dispatch('paginador-entregables');
 
         $this->facturas_entregables = Factura::where('contrato_id', $this->contrato->id)->get();
 
@@ -188,7 +188,7 @@ class Entregablecomponent extends Component
         }
 
         $this->dispatch('recargar-cumplimiento');
-        $this->dispatchBrowserEvent('contentChanged');
+        $this->dispatch('contentChanged');
         $this->default();
     }
 
@@ -233,7 +233,7 @@ class Entregablecomponent extends Component
         $this->deductiva_factura_id = $entM->deductiva_factura_id;
         $this->justificacion_deductiva_penalizacion = $entM->justificacion_deductiva_penalizacion;
         $this->nota_credito = $entM->nota_credito;
-        $this->dispatchBrowserEvent('contentChanged');
+        $this->dispatch('contentChanged');
         $this->view = 'edit';
     }
 
@@ -327,13 +327,13 @@ class Entregablecomponent extends Component
 
         $this->dispatch('recargar-cumplimiento');
         $this->default();
-        $this->dispatchBrowserEvent('contentChanged');
+        $this->dispatch('contentChanged');
         $this->alert('success', 'Registro actualizado!');
     }
 
     public function confirmDelete($em_id)
     {
-        $this->dispatchBrowserEvent('confirmDeleteEntregableEvent', ['em_id' => $em_id]);
+        $this->dispatch('confirmDeleteEntregableEvent', ['em_id' => $em_id]);
     }
 
     public function destroy($id)
@@ -373,7 +373,7 @@ class Entregablecomponent extends Component
         $this->deductiva_factura_id = null;
         $this->nota_credito = '';
         $this->iteration1++;
-        $this->dispatchBrowserEvent('contentChanged');
+        $this->dispatch('contentChanged');
         $this->view = 'create';
     }
 

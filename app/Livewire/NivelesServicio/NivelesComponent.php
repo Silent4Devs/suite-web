@@ -73,7 +73,7 @@ class NivelesComponent extends Component
             ->orderBy($this->sort, $this->direction)
             ->paginate(intval($this->pagination));
 
-        $this->dispatchBrowserEvent('paginador-niveles');
+        $this->dispatch('paginador-niveles');
 
         return view('livewire.niveles-servicio.niveles-component', [
             'nivelesServicio' => $niveles_servicio,
@@ -115,7 +115,7 @@ class NivelesComponent extends Component
         ]);
 
         $this->evaluacion($nivelesservicio->id, $nivelesservicio->periodo_evaluacion, $nivelesservicio->revisiones, $nivelesservicio->nombre, $nivelesservicio->metrica, $nivelesservicio->unidad);
-        //$this->dispatchBrowserEvent('contentChanged');
+        //$this->dispatch('contentChanged');
         $this->dispatch('recargar-cumplimiento');
         $this->default();
 
@@ -136,7 +136,7 @@ class NivelesComponent extends Component
         $this->revisiones = $nivelesservicio->revisiones;
         $this->area = $nivelesservicio->area;
         $this->descripcion = $nivelesservicio->descripcion;
-        $this->dispatchBrowserEvent('contentChanged');
+        $this->dispatch('contentChanged');
         $this->view = 'edit';
     }
 
@@ -158,7 +158,7 @@ class NivelesComponent extends Component
         $this->revisiones = $nivelesservicio->revisiones;
         $this->area = $nivelesservicio->area;
         $this->descripcion = $nivelesservicio->descripcion;
-        $this->dispatchBrowserEvent('contentChanged');
+        $this->dispatch('contentChanged');
         $this->view = 'show';
     }
 
@@ -191,13 +191,13 @@ class NivelesComponent extends Component
         ]);
         $this->dispatch('recargar-cumplimiento');
         $this->default();
-        //$this->dispatchBrowserEvent('contentChanged');
+        //$this->dispatch('contentChanged');
         $this->alert('success', 'Registro actualizado!');
     }
 
     public function confirmDelete($tem_id)
     {
-        $this->dispatchBrowserEvent('confirmDeleteNivelesEvent', ['tem_id' => $tem_id]);
+        $this->dispatch('confirmDeleteNivelesEvent', ['tem_id' => $tem_id]);
     }
 
     public function destroy($id)
@@ -232,7 +232,7 @@ class NivelesComponent extends Component
         $this->revisiones = '';
         $this->area = '';
         $this->descripcion = '';
-        $this->dispatchBrowserEvent('contentChanged');
+        $this->dispatch('contentChanged');
         $this->view = 'create';
     }
 

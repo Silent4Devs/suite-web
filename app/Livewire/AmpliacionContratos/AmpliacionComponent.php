@@ -82,7 +82,7 @@ class AmpliacionComponent extends Component
                 ]);
 
                 $this->default();
-                $this->dispatchBrowserEvent('contentChanged');
+                $this->dispatch('contentChanged');
                 $this->alert('success', 'Registro añadido!');
             } else {
                 $this->default();
@@ -150,7 +150,7 @@ class AmpliacionComponent extends Component
             ]);
 
             $this->default();
-            $this->dispatchBrowserEvent('contentChanged');
+            $this->dispatch('contentChanged');
             $this->alert('success', 'Registro actualizado!');
         } else {
             $this->default();
@@ -169,7 +169,7 @@ class AmpliacionComponent extends Component
         $this->importe = '';
         $this->fecha_inicio = '';
         $this->fecha_fin = '';
-        $this->dispatchBrowserEvent('contentChanged');
+        $this->dispatch('contentChanged');
         $this->view = 'create';
     }
 }
