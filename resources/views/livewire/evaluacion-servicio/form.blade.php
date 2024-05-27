@@ -35,7 +35,7 @@
 <section id="form_evaluacion">
     <div>
         <!-- No Contrato Field -->
-        <input wire:model="nivel_id" type="hidden" value="{{ $nivel_id }}">
+        <input wire:model.live="nivel_id" type="hidden" value="{{ $nivel_id }}">
         <div class="mb-4 row">
             <!-- Nombre Servicio Field -->
             @if (!is_null($evaluacion_props))
@@ -51,7 +51,7 @@
             <div wire:ignore class="input-field col s12 m4">
                 <small class="grey-text" style="font-size:17px;font-weight:bold;">Fecha<font class="asterisco">*</font>
                     </small>
-                <input type="date" wire:model.debounce.800ms="fecha" class="form-control" min="1945-01-01" required>
+                <input type="date" wire:model.live.debounce.800ms="fecha" class="form-control" min="1945-01-01" required>
                 @error('fecha')
                     <span class="red-text">{{ $message }}</span>
                 @enderror
@@ -59,7 +59,7 @@
             <div class="input-field col s12 m4" style="margin-left: 15px">
                 <small class="grey-text" style="font-size:17px;font-weight:bold;">SLA Alcanzado<font class="asterisco">*
                     </font></small>
-                <input type="number" wire:model.debounce.800ms="resultado" class="form-control" min="0"
+                <input type="number" wire:model.live.debounce.800ms="resultado" class="form-control" min="0"
                     max="{{ is_null($evauacion_props) ? 0 : $evauacion_props['meta'] }}" required>
                 @error('resultado')
                     <span class="red-text">{{ $message }}</span>

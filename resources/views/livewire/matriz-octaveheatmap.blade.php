@@ -103,7 +103,7 @@
         @endif
         {{-- <div class="col-md-3">
             <p class="text-xl text-gray-700">Sede:</p>
-            <select class="form-control" wire:model.debounce.500ms="sede_id">
+            <select class="form-control" wire:model.live.debounce.500ms="sede_id">
                 <option value="" selected disabled>Seleccione una sede</option>
                 @foreach ($sedes as $sede)
                     <option value="{{ $sede->id }}">{{ $sede->sede }}</option>
@@ -112,7 +112,7 @@
         </div>
         <div class="col-md-3">
             <p class="text-xl text-gray-700">Area:</p>
-            <select class="form-control" wire:model.debounce.500ms="area_id">
+            <select class="form-control" wire:model.live.debounce.500ms="area_id">
                 <option value="" selected disabled>Seleccione un área</option>
                 @foreach ($areas as $area)
                     <option value="{{ $area->id }}">{{ $area->area }}</option>
@@ -132,7 +132,7 @@
         @endif
         <div class="col-md-3">
             <p class="text-xl text-gray-700">Activo de Información:</p>
-            <select class="form-control" wire:model.debounce.500ms="area_id">
+            <select class="form-control" wire:model.live.debounce.500ms="area_id">
                 <option value="" selected disabled>Seleccione un área</option>
                 {{-- @foreach ($areas as $area)
                     <option value="{{ $area->id }}">{{ $area->area }}</option>
@@ -141,7 +141,7 @@
         </div>
         <div class="col-md-3">
             <p class="text-xl text-gray-700">Vicepresidencia:</p>
-            <select class="form-control" wire:model.debounce.500ms="area_id">
+            <select class="form-control" wire:model.live.debounce.500ms="area_id">
                 <option value="" selected disabled>Seleccione un área</option>
                 {{-- @foreach ($areas as $area)
                     <option value="{{ $area->id }}">{{ $area->area }}</option>

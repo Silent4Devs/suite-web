@@ -30,7 +30,7 @@
                         <div class="row ">
                             <div class="col-10">
                                 <form class="flex-1" wire:submit.prevent="update">
-                                    <input wire:model="section.name" type="text"
+                                    <input wire:model.live="section.name" type="text"
                                         class="form-control w-full @if ($errors->has('section.name')) invalid @endif"
                                         placeholder="Escribir...">
                                     @error('section.name')

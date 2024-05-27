@@ -510,7 +510,7 @@
                                 </label>
                             </div>
                         </div>
-                        <input wire:model="foto" type="file" accept="image/png, image/jpeg" class="form-control-file"
+                        <input wire:model.live="foto" type="file" accept="image/png, image/jpeg" class="form-control-file"
                             id="foto" hidden="">
                     </div>
                 </div>
@@ -539,7 +539,7 @@
                             class="fas fa-image"></i></button>
                 </div>
             </div>
-            <input type="hidden" id="snapshoot" readonly autocomplete="off" wire:model="snap_foto">
+            <input type="hidden" id="snapshoot" readonly autocomplete="off" wire:model.live="snap_foto">
         </div>
         <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
             INFORMACIÓN FINANCIERA

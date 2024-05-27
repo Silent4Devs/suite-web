@@ -327,7 +327,7 @@
                 <div class="col s12">
                     <div class="form-group col-sm-12 right " style="margin: 0; text-align: end">
                         <div><span>Mostrar</span>
-                            <select class="select_pagination" wire:model="pagination">
+                            <select class="select_pagination" wire:model.live="pagination">
                                 <option value="5">5</option>
                                 <option value="10">10</option>
                                 <option value="20">20</option>

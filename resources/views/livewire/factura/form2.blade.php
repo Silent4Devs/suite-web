@@ -146,7 +146,7 @@
         </small>
         <br>
         <div class="custom-control custom-switch">
-            <input type="checkbox" wire:model="cumple_revision" class="custom-control-input" id="cumple_revision"
+            <input type="checkbox" wire:model.live="cumple_revision" class="custom-control-input" id="cumple_revision"
                 name="cumple_revision">
             <label class="custom-control-label" for="cumple_revision">No/Sí</label>
         </div>
