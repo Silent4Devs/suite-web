@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\RH;
 
+use App\Exports\EvaluacionesDesempenoReportExport;
 use App\Http\Controllers\Controller;
 use App\Models\Area;
 use App\Models\Empleado;
@@ -11,6 +12,7 @@ use App\Models\PeriodosEvaluacionDesempeno;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
 
 class EvaluacionesDesempenoController extends Controller
 {
@@ -207,5 +209,81 @@ class EvaluacionesDesempenoController extends Controller
             // dd($th);
             return response()->json(['success' => false]);
         }
+    }
+
+    public function descargaEvaluacion($id)
+    {
+        $evaluacion = EvaluacionDesempeno::find($id);
+
+        foreach ($evaluacion->periodos as $key_periodo => $periodo) {
+            foreach ($evaluacion->evaluados as $key => $evaluado) {
+                if ($evaluacion->activar_objetivos && $evaluacion->activar_competencias) {
+                    $totales_evaluado[$key][$evaluado->id] =
+                        [
+                            'competencias' => $evaluado->calificacionesCompetenciasEvaluadoPeriodo($periodo->id),
+                            'objetivos' => $evaluado->calificacionesObjetivosEvaluadoPeriodo($periodo->id),
+                        ];
+
+                    $empleadoId = $evaluado->empleado->id;
+
+                    $evObj = $evaluado->evaluadoresObjetivos($periodo->id);
+                    $evComp = $evaluado->evaluadoresCompetencias($periodo->id);
+
+                    $evaluadoresObjetivos = $evObj->reject(function ($item) use ($empleadoId) {
+                        return $item['evaluador_desempeno_id'] == $empleadoId;
+                    });
+
+                    $evaluadoresCompetencias = $evComp->reject(function ($item) use ($empleadoId) {
+                        return $item['evaluador_desempeno_id'] == $empleadoId;
+                    });
+
+                    dd(
+                        $evaluadoresObjetivos->all(),
+                        $evaluadoresCompetencias->all(),
+                    );
+
+                    // $totales_evaluado[$key][$evaluado->id]["informacion_evaluado"] = [
+
+                    // ];
+                } elseif ($evaluacion->activar_objetivos && !$evaluacion->activar_competencias) {
+                    $totales_evaluado[$key][$evaluado->id] =
+                        [
+                            'objetivos' => $evaluado->calificacionesObjetivosEvaluadoPeriodo($periodo->id),
+                        ];
+
+                    $evaluadoresObjetivos = $evaluado->evaluadoresObjetivos($periodo->id);
+                } elseif (!$evaluacion->activar_objetivos && $evaluacion->activar_competencias) {
+                    $totales_evaluado[$key][$evaluado->id] =
+                        [
+                            'competencias' => $evaluado->calificacionesCompetenciasEvaluadoPeriodo($periodo->id),
+                        ];
+
+                    $evaluadoresCompetencias = $evaluado->evaluadoresCompetencias($periodo->id);
+                }
+
+                $totales_evaluado[$key][$evaluado->id]["informacion_evaluado"] = [
+                    "nombre" => $evaluado->empleado->name,
+                    "puesto" => $evaluado->empleado->puestoRelacionado->puesto,
+                    "area" => $evaluado->empleado->area->area,
+                ];
+
+                // Use reject to remove items with 'evaluador_desempeno_id' equal to $empleadoId
+                $collection = $collection->reject(function ($item) use ($empleadoId) {
+                    return $item['evaluador_desempeno_id'] == $empleadoId;
+                });
+
+                dump(
+                    $evaluado,
+                    $evaluadoresObjetivos,
+                    $evaluadoresCompetencias
+                );
+            }
+        }
+
+        dd($totales_evaluado);
+
+        $export = new EvaluacionesDesempenoReportExport($id);
+        // dd($export);
+        return Excel::download($export, 'Evaluaciones_desempeño.xlsx');
     }
 }
