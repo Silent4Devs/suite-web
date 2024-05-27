@@ -152,7 +152,7 @@
 
                 {{-- <div class="form-group col-md-6 col-lg-6 col-sm-12 anima-focus">
                     <select class="form-control {{ $errors->has('estatus') ? 'is-invalid' : '' }}" name="estatus"
-                        id="estatus" required wire:model.defer="estatus" >
+                        id="estatus" required wire:model="estatus" >
                         <option value disabled {{ old('estatus', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
                         @foreach (App\Models\AnalisisDeRiesgo::EstatusSelect as $key => $label)
@@ -170,7 +170,7 @@
                 </div> --}}
                 <div class="form-group col-md-6 col-lg-6 col-sm-12 anima-focus">
                     {{-- <select class="form-control {{ $errors->has('norma') ? 'is-invalid' : '' }}" name="norma"
-                        id="estatus" required wire:model.defer="norma" >
+                        id="estatus" required wire:model="norma" >
                         <option value disabled {{ old('norma', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
                         @foreach ($normas as $key => $label)

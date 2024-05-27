@@ -466,7 +466,7 @@
                                                 <i class="mr-1 fas fa-user-circle iconos-crear"></i> Nombre <span
                                                     class="text-danger">*</span>
                                             </label>
-                                            <input type="text" wire:model.defer="nombre"
+                                            <input type="text" wire:model="nombre"
                                                 class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}"
                                                 id="nombre" aria-describedby="nombreHelp" name="nombre"
                                                 maxlength="250" value="{{ old('nombre') }}">
@@ -486,7 +486,7 @@
                                                 <i class="mr-1 fas fa-file-signature iconos-crear"></i> Descripción
                                             </label>
                                             <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" name="descripcion" id=""
-                                                cols="1" wire:model.defer="descripcion" rows="1">{{ old('descripcion') }}</textarea>
+                                                cols="1" wire:model="descripcion" rows="1">{{ old('descripcion') }}</textarea>
                                             <small id="descripcionHelp" class="form-text text-muted">Ingresa la
                                                 descripción de la evaluación</small>
                                             @if ($errors->has('descripcion'))
@@ -538,7 +538,7 @@
                                                 <div class="col-7 {{ $showPesoGeneralCompetencias ? '' : 'd-none' }}"
                                                     style="position: relative;">
                                                     <input style="width: 120px;text-align: center;padding-right: 20px;"
-                                                        wire:model.defer="pesoGeneralCompetencias"
+                                                        wire:model="pesoGeneralCompetencias"
                                                         id="pesoGeneralCompetencias" class="form-control" type="text"
                                                         pattern="[0-9]*"
                                                         oninput="this.value = this.value.replace(/[^0-9]/g, '');"
@@ -564,7 +564,7 @@
                                                 </div>
                                                 <div class="col-3 {{ $showPesoGeneralObjetivos ? '' : 'd-none' }}">
                                                     <input style="width: 120px;text-align: center;padding-right: 20px;"
-                                                        wire:model.defer="pesoGeneralObjetivos"
+                                                        wire:model="pesoGeneralObjetivos"
                                                         id="pesoGeneralOnjetivos" class="form-control" type="text"
                                                         pattern="[0-9]*"
                                                         oninput="this.value = this.value.replace(/[^0-9]/g, '');"
@@ -573,7 +573,7 @@
                                                 </div>
                                                 <div class="col-4 {{ $showPesoGeneralObjetivos ? '' : 'd-none' }}">
                                                     <select class="form-control" name="catalogoObjetivos"
-                                                        id="catalogoObjetivos" wire:model.defer="catalogoObjetivos">
+                                                        id="catalogoObjetivos" wire:model="catalogoObjetivos">
                                                         <option value="" selected>Seleccione el Catalogo
                                                             de
                                                             Parametros que utilizara la Evaluacion</option>
@@ -749,7 +749,7 @@
                                                 @if ($habilitarSelectAreas)
                                                     <select
                                                         class="mt-3 form-control {{ $errors->has('by_area') ? 'is-invalid' : '' }}"
-                                                        id="by_area" wire:model.defer="by_area">
+                                                        id="by_area" wire:model="by_area">
                                                         <option value="" selected>-- Seleciona el área a evaluar
                                                             --
                                                         </option>
@@ -770,7 +770,7 @@
                                                         evaluar</label>
                                                     <select
                                                         class="mt-3 form-control {{ $errors->has('by_manual') ? 'is-invalid' : '' }}"
-                                                        multiple id="by_manual" wire:model.defer="by_manual">
+                                                        multiple id="by_manual" wire:model="by_manual">
                                                         @foreach ($empleados as $empleado)
                                                             <option value="{{ $empleado->id }}">
                                                                 {{ $empleado->name }}
@@ -864,7 +864,7 @@
                                                 </span>
                                             </div>
                                             @if ($evaluado_por_jefe)
-                                                <input class="ml-4" wire:model.defer="pesoEvaluacionJefe"
+                                                <input class="ml-4" wire:model="pesoEvaluacionJefe"
                                                     type="number" placeholder="Define peso..." max="100"
                                                     min="0">
                                                 <span
@@ -898,7 +898,7 @@
                                                 </div>
                                             </div>
                                             @if ($evaluado_por_misma_area)
-                                                <input class="ml-4" wire:model.defer="pesoEvaluacionArea"
+                                                <input class="ml-4" wire:model="pesoEvaluacionArea"
                                                     type="number" placeholder="Define peso..." max="100"
                                                     min="0">
                                                 <span
@@ -930,7 +930,7 @@
                                                 </span>
                                             </div>
                                             @if ($evaluado_por_equipo_a_cargo)
-                                                <input class="ml-4" wire:model.defer="pesoEvaluacionEquipo"
+                                                <input class="ml-4" wire:model="pesoEvaluacionEquipo"
                                                     type="number" placeholder="Define peso..." max="100"
                                                     min="0">
                                                 <span
@@ -961,7 +961,7 @@
                                                 </span>
                                             </div>
                                             @if ($autoevaluacion)
-                                                <input class="ml-4" wire:model.defer="pesoAutoevaluacion"
+                                                <input class="ml-4" wire:model="pesoAutoevaluacion"
                                                     type="number" placeholder="Define peso..." max="100"
                                                     min="0">
                                                 <span
@@ -1006,7 +1006,7 @@
                                                     <td style="text-align: left !important;">
                                                         {{-- <p>{{$listaEvaluado['evaluadores']['autoevaluacion']['id']}}</p> --}}
                                                         <select name="" id="" class="form-control"
-                                                            wire:model.defer="listaEvaluados.{{ $index }}.evaluadores.autoevaluacion.id"
+                                                            wire:model="listaEvaluados.{{ $index }}.evaluadores.autoevaluacion.id"
                                                             style="pointer-events: none; -webkit-appearance: none;">
                                                             <option value="" selected>Selecciona un evaluador
                                                             </option>
@@ -1024,7 +1024,7 @@
                                                     <td style="text-align: left !important;">
                                                         {{-- <p>{{$listaEvaluado['evaluadores']['autoevaluacion']['id']}}</p> --}}
                                                         <select name="" id="" class="form-control"
-                                                            wire:model.defer="listaEvaluados.{{ $index }}.evaluadores.autoevaluacion.id"
+                                                            wire:model="listaEvaluados.{{ $index }}.evaluadores.autoevaluacion.id"
                                                             style="pointer-events: none; -webkit-appearance: none;">
                                                             <option value="" selected>Selecciona un evaluador
                                                             </option>
@@ -1043,7 +1043,7 @@
                                                     <td style="text-align: left !important;">
                                                         {{-- <p>{{$listaEvaluado['evaluadores']['jefe']['id']}}</p> --}}
                                                         <select name="" id="" class="form-control"
-                                                            wire:model.defer="listaEvaluados.{{ $index }}.evaluadores.jefe.id">
+                                                            wire:model="listaEvaluados.{{ $index }}.evaluadores.jefe.id">
                                                             {{-- <option value="" selected>Selecciona un evaluador</option> --}}
                                                             @foreach ($empleados as $empleado)
                                                                 <option value="{{ $empleado->id }}">
@@ -1059,7 +1059,7 @@
                                                     <td style="text-align: left !important;">
                                                         {{-- <p>{{$listaEvaluado['evaluadores']['jefe']['id']}}</p> --}}
                                                         <select name="" id="" class="form-control"
-                                                            wire:model.defer="listaEvaluados.{{ $index }}.evaluadores.jefe.id">
+                                                            wire:model="listaEvaluados.{{ $index }}.evaluadores.jefe.id">
                                                             {{-- <option value="" selected>Selecciona un evaluador</option> --}}
                                                             @foreach ($empleados as $empleado)
                                                                 <option value="{{ $empleado->id }}">
@@ -1076,7 +1076,7 @@
                                                     <td style="text-align: left !important;">
                                                         {{-- <p>{{$listaEvaluado['evaluadores']['par']['id']}}</p> --}}
                                                         <select name="" id="" class="form-control"
-                                                            wire:model.defer="listaEvaluados.{{ $index }}.evaluadores.par.id">
+                                                            wire:model="listaEvaluados.{{ $index }}.evaluadores.par.id">
                                                             {{-- <option value="" selected>Selecciona un evaluador</option> --}}
                                                             @foreach ($empleados as $empleado)
                                                                 <option value="{{ $empleado->id }}">
@@ -1092,7 +1092,7 @@
                                                     <td style="text-align: left !important;">
                                                         {{-- <p>{{$listaEvaluado['evaluadores']['par']['id']}}</p> --}}
                                                         <select name="" id="" class="form-control"
-                                                            wire:model.defer="listaEvaluados.{{ $index }}.evaluadores.par.id">
+                                                            wire:model="listaEvaluados.{{ $index }}.evaluadores.par.id">
                                                             <option value="" selected>Selecciona un evaluador
                                                             </option>
                                                             @foreach ($empleados as $empleado)
@@ -1110,7 +1110,7 @@
                                                     <td style="text-align: left !important;">
                                                         {{-- <p>{{$listaEvaluado['evaluadores']['subordinado']['id']}}</p> --}}
                                                         <select name="" id="" class="form-control"
-                                                            wire:model.defer="listaEvaluados.{{ $index }}.evaluadores.subordinado.id">
+                                                            wire:model="listaEvaluados.{{ $index }}.evaluadores.subordinado.id">
                                                             <option value="" selected>Selecciona un evaluador
                                                             </option>
                                                             @foreach ($empleados as $empleado)
@@ -1127,7 +1127,7 @@
                                                     <td style="text-align: left !important;">
                                                         {{-- <p>{{$listaEvaluado['evaluadores']['subordinado']['id']}}</p> --}}
                                                         <select name="" id="" class="form-control"
-                                                            wire:model.defer="listaEvaluados.{{ $index }}.evaluadores.subordinado.id">
+                                                            wire:model="listaEvaluados.{{ $index }}.evaluadores.subordinado.id">
                                                             <option value="" selected>Selecciona un evaluador
                                                             </option>
                                                             @foreach ($empleados as $empleado)
@@ -1291,13 +1291,13 @@
                                         <div class="pl-0 col-3">
                                             <p class="m-0 text-muted">Fecha Inicio</p>
                                             <input class="form-control" type="date"
-                                                wire:model.defer="periodos.{{ $idx }}.fecha_inicio"
+                                                wire:model="periodos.{{ $idx }}.fecha_inicio"
                                                 value="{{ $periodo['fecha_inicio'] }}">
                                         </div>
                                         <div class="pl-0 col-3">
                                             <p class="m-0 text-muted">Fecha Fin</p>
                                             <input class="form-control" type="date"
-                                                wire:model.defer="periodos.{{ $idx }}.fecha_fin"
+                                                wire:model="periodos.{{ $idx }}.fecha_fin"
                                                 value="{{ $periodo['fecha_fin'] }}">
                                         </div>
                                         <div class="col-2">
@@ -1314,7 +1314,7 @@
                                 <hr>
                                 <label class="container-check">Enviar notificación por email a los evaluadores
                                     <input class="form-check-input" type="checkbox" id="sendEmail"
-                                        wire:model.defer="sendEmail">
+                                        wire:model="sendEmail">
                                     <span class="checkmark"></span>
                                 </label>
                             </div>

@@ -15,7 +15,7 @@
                         <div class="form-group">
                             <label for="nombre">Nombre: <span class="text-danger">*</span></label>
                             <input type="text" class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}"
-                                id="nombre_cat_cap" aria-describedby="nombre" wire:model.defer="nombre"
+                                id="nombre_cat_cap" aria-describedby="nombre" wire:model="nombre"
                                 value="{{ old('nombre') }}" autocomplete="off">
                             <small>Ingresa el nombre de la categoría</small>
                             @if ($errors->has('nombre'))

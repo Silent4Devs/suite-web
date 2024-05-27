@@ -30,7 +30,7 @@
                     evaluación</small>
                 @if ($habilitarSelectAreas)
                     <select class="mt-3 form-control {{ $errors->has('by_area') ? 'is-invalid' : '' }}" id="by_area"
-                        wire:model.defer="by_area" name="by_area">
+                        wire:model="by_area" name="by_area">
                         <option value="" selected>-- Seleciona el área a evaluar --
                         </option>
                         @foreach ($areas as $area)
@@ -48,7 +48,7 @@
                     <label class="m-0 mt-2" for="">Selecciona a los empleados a
                         evaluar</label>
                     <select class="mt-3 form-control {{ $errors->has('by_manual') ? 'is-invalid' : '' }}" multiple
-                        id="by_manual" wire:model.defer="by_manual" name="by_manual[]">
+                        id="by_manual" wire:model="by_manual" name="by_manual[]">
                         @foreach ($empleados as $empleado)
                             <option value="{{ $empleado->id }}">
                                 {{ $empleado->name }}

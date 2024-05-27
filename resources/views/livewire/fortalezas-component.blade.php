@@ -17,7 +17,7 @@
                 <div class="line"></div>
                 <div class="modal-body">
                     <div class="mt-2 form-group anima-focus">
-                        <textarea class="form-control {{ $errors->has('fortaleza') ? 'is-invalid' : '' }}" wire:model.defer="fortaleza"></textarea>
+                        <textarea class="form-control {{ $errors->has('fortaleza') ? 'is-invalid' : '' }}" wire:model="fortaleza"></textarea>
                         @error('fortaleza')
                             <small class="text-danger"><i class="fas fa-info-circle mr-2"></i>{{ $message }}</small>
                         @enderror
@@ -102,7 +102,7 @@
 
     {{-- <div class="mt-2">
         <label for="fortaleza"><i class="fas fa-thumbs-up iconos-crear"></i>Nombre</label>
-        <input class="form-control {{ $errors->has('fortaleza') ? 'is-invalid' : '' }}" wire:model.defer="fortaleza">
+        <input class="form-control {{ $errors->has('fortaleza') ? 'is-invalid' : '' }}" wire:model="fortaleza">
         @error('fortaleza')
             <small class="text-danger"><i class="fas fa-info-circle mr-2"></i>{{ $message }}</small>
         @enderror
@@ -110,7 +110,7 @@
 
     {{-- <div class="mt-2">
             <label for="contacto"><i class="fas fa-clipboard-list iconos-crear"></i>Riesgo Asociado</label>
-            <textarea class="form-control {{ $errors->has('contacto') ? 'is-invalid' : '' }}" wire:model.defer="riesgo">{{ old('riesgo') }}</textarea>
+            <textarea class="form-control {{ $errors->has('contacto') ? 'is-invalid' : '' }}" wire:model="riesgo">{{ old('riesgo') }}</textarea>
             <small class="text-danger errores descripcion_contacto_error"></small>
     </div> --}}
 
