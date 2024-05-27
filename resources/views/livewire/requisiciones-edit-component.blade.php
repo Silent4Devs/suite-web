@@ -350,7 +350,7 @@
                                                 <input type="file" class="modal-cotizacion form-control-file"
                                                     value="{{ $edtprov->cotizacion }}"
                                                     name="cotizacion_{{ $count }}"
-                                                    wire:model.lazy="cotizaciones.{{ $count }}"
+                                                    wire:model.blur="cotizaciones.{{ $count }}"
                                                     data-count="{{ $count }}"
                                                     accept=".pdf, .docx, .power .point, .xml, .jpeg, .jpg, .png">
                                             </div>
@@ -490,7 +490,7 @@
                                             </label>
                                             <input type="file" class="modal-cotizacion form-control-file"
                                                 name="cotizacion_{{ $i }}"
-                                                wire:model.lazy="cotizaciones.{{ $i }}"
+                                                wire:model.blur="cotizaciones.{{ $i }}"
                                                 data-count="{{ $i }}"
                                                 accept=".pdf, .docx, .power .point, .xml, .jpeg, .jpg, .png" required>
                                         </div>
@@ -522,7 +522,7 @@
                                                 Proveedor <font class="asterisco">*</font>
                                             </label>
                                             <select class="model-producto browser-default not-select2"
-                                                wire:model.lazy='selectedInput.{{ $count }}'
+                                                wire:model.blur='selectedInput.{{ $count }}'
                                                 name="proveedor_{{ $count }}" required>
                                                 <option selected>Indistinto</option>
                                                 @foreach ($proveedores as $proveedor)
@@ -577,7 +577,7 @@
                                             <div class="row">
                                                 <div class="col s12 l12">
                                                     <select class="model-producto browser-default not-select2"
-                                                        wire:model.lazy='selectOption.{{ $count }}'
+                                                        wire:model.blur='selectOption.{{ $count }}'
                                                         name="proveedor_otro{{ $count }}" required>
                                                         <option selected value="indistinto">Indistinto</option>
                                                         <option value="sugerido">Sugerido</option>
@@ -700,7 +700,7 @@
                                                 {{-- <i class="fa-regular fa-trash-can btn-deleted-card btn-deletd-proveedor" title="Eliminar proveedor" onclick="deleteProveedor()"></i> --}}
                                             </div>
                                             <select class="model-producto browser-default not-select2"
-                                                wire:model.lazy='selectedInput.{{ $i }}'
+                                                wire:model.blur='selectedInput.{{ $i }}'
                                                 name="proveedor_{{ $i }}" required>
                                                 <option selected>Indistinto</option>
                                                 @foreach ($proveedores as $proveedor)
@@ -753,7 +753,7 @@
                                                     <div class="row">
                                                         <div class="col s12 l12">
                                                             <select class="model-producto browser-default not-select2"
-                                                                wire:model.lazy='selectOption.{{ $count }}'
+                                                                wire:model.blur='selectOption.{{ $count }}'
                                                                 name="proveedor_otro{{ $count }}" required>
                                                                 <option selected value="indistinto">Indistinto</option>
                                                                 <option value="sugerido">Sugerido</option>
@@ -893,7 +893,7 @@
                                                 Proveedor <font class="asterisco">*</font>
                                             </label>
                                             <select class="model-producto browser-default not-select2"
-                                                wire:model.lazy='selectedInput.{{ $count }}'
+                                                wire:model.blur='selectedInput.{{ $count }}'
                                                 name="proveedor_{{ $count }}" required>
                                                 @isset($edtprov->provedores)
                                                     <option value="{{ $edtprov->provedores->id }}" selected> Actual:
@@ -951,7 +951,7 @@
                                             <div class="row">
                                                 <div class="col s12 l12">
                                                     <select class="model-producto browser-default not-select2"
-                                                        wire:model.lazy='selectOption.{{ $count }}'
+                                                        wire:model.blur='selectOption.{{ $count }}'
                                                         name="proveedor_otro{{ $count }}" required>
                                                         <option selected value="indistinto">Indistinto</option>
                                                         <option value="sugerido">Sugerido</option>
@@ -1129,7 +1129,7 @@
                                                     <div class="row">
                                                         <div class="col s12 l12">
                                                             <select class="model-producto browser-default not-select2"
-                                                                wire:model.lazy='selectOption.{{ $count }}'
+                                                                wire:model.blur='selectOption.{{ $count }}'
                                                                 name="proveedor_otro{{ $count }}" required>
                                                                 <option selected value="indistinto">Indistinto</option>
                                                                 <option value="sugerido">Sugerido</option>

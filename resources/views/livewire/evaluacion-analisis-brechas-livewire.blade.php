@@ -370,13 +370,13 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <textarea  wire:model.lazy="evidenciaValues.{{ $pregunta->id }}"
+                                            <textarea  wire:model.blur="evidenciaValues.{{ $pregunta->id }}"
                                                 wire:change="saveEvidencia('{{ $pregunta->id }}')"
                                                 value="{{ isset($oldEvidenciaValues[$pregunta->id]) ? $oldEvidenciaValues[$pregunta->id] : $pregunta->respuesta->evidencia ?? '' }}" style="height:100%; width: 100%;"></textarea>
                                         </td>
                                         <td>
                                             <textarea
-                                                wire:model.lazy="recomendacionValues.{{ $pregunta->id }}"
+                                                wire:model.blur="recomendacionValues.{{ $pregunta->id }}"
                                                 wire:change="saveRecomendacion('{{ $pregunta->id }}')"
                                                 value="{{ isset($oldRecomendacionValues[$pregunta->id]) ? $oldRecomendacionValues[$pregunta->id] : $pregunta->respuesta->recomendacion ?? '' }}" style="height:100%; width: 100%;"></textarea>
                                         </td>

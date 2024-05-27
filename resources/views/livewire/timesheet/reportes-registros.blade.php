@@ -50,7 +50,7 @@
         <div class="row">
             <div class="col-md-3 form-group">
                 <label class="form-label">Área</label>
-                <select class="form-control" wire:model.lazy="area_id">
+                <select class="form-control" wire:model.blur="area_id">
                     <option selected value="0">Todas</option>
                     @foreach ($areas as $area)
                         <option value="{{ $area->id }}">{{ $area->area }}</option>
@@ -59,7 +59,7 @@
             </div>
             <div class="col-md-3 form-group">
                 <label class="form-label">Colaborador</label>
-                <select class="form-control" wire:model.lazy="emp_id">
+                <select class="form-control" wire:model.blur="emp_id">
                     <option selected value="0">Todos</option>
                     @foreach ($emp as $em)
                         <option value="{{ $em->id }}">{{ $em->name }}</option>
@@ -69,11 +69,11 @@
             <div class="col-md-3 form-group">
                 <label class="form-label">Fecha de inicio</label>
                 <input class="form-control date_librery" type="date" name="fecha_inicio"
-                    wire:model.lazy="fecha_inicio">
+                    wire:model.blur="fecha_inicio">
             </div>
             <div class="col-md-3 form-group">
                 <label class="form-label">Fecha de fin</label>
-                <input class="form-control date_librery" type="date" name="fecha_fin" wire:model.lazy="fecha_fin">
+                <input class="form-control date_librery" type="date" name="fecha_fin" wire:model.blur="fecha_fin">
             </div>
         </div>
     </div>

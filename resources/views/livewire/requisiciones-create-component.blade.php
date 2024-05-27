@@ -230,7 +230,7 @@
                                             Proveedor <font class="asterisco">*</font>
                                         </label>
                                         <select class="browser-default not-select2"
-                                            wire:model.lazy='selectedInput.{{ $i }}'
+                                            wire:model.blur='selectedInput.{{ $i }}'
                                             name="proveedor_{{ $i }}" required>
                                             <option value="">Seleccione una opción</option>
                                             @foreach ($proveedores as $proveedor)
@@ -284,7 +284,7 @@
                                         <div class="row">
                                             <div class="col s12 l12">
                                                 <select class="browser-default"
-                                                    wire:model.lazy='selectOption.{{ $i }}'
+                                                    wire:model.blur='selectOption.{{ $i }}'
                                                     name="proveedor_otro{{ $i }}" required>
                                                     <option selected value="indistinto">Indistinto</option>
                                                     <option value="sugerido">Sugerido</option>

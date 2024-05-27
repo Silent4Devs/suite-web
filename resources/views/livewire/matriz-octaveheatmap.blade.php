@@ -93,7 +93,7 @@
         @if (count($mapas))
             <div class="col-md-3">
                 <p class="text-xl text-gray-700">Análisis de riesgo:</p>
-                <select class="form-control" wire:model.lazy="id_analisis">
+                <select class="form-control" wire:model.blur="id_analisis">
                     <option value="" selected disabled>Seleccione una opción</option>
                     @foreach ($mapas as $mapa)
                         <option value="{{ $mapa ? $mapa['id'] : 0 }}">{{ $mapa ? $mapa['nombre'] : '' }}</option>
@@ -122,7 +122,7 @@
         @if (!count($mapas))
             <div class="col-md-3">
                 <p class="text-xl text-gray-700">Proceso:</p>
-                <select class="form-control" wire:model.lazy="proceso_id">
+                <select class="form-control" wire:model.blur="proceso_id">
                     <option value="" selected disabled>Seleccione una proceso</option>
                     @foreach ($procesos as $proceso)
                         <option value="{{ $proceso->id }}">{{ $proceso->nombre }}</option>

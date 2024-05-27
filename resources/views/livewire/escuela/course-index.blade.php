@@ -10,7 +10,7 @@
         </form>
 
         <form wire:submit.prevent="categoryFilter" id="formularioC">
-            <select name="category" wire:model.lazy="selectioncategory" id="categorySelect">
+            <select name="category" wire:model.blur="selectioncategory" id="categorySelect">
                 <option value="0" selected="true">Categorias</option>
                 @foreach ($categories as $category)
                     <option value="{{ $category->id }}" type="submit">{{ $category->name }}</option>
@@ -20,7 +20,7 @@
         </form>
 
         <form wire:submit.prevent="levelFilter" id="formularioL">
-            <select name="level" id="levelSelect" wire:model.lazy="selectionlevel">
+            <select name="level" id="levelSelect" wire:model.blur="selectionlevel">
                 <option value="0">Niveles</option>
                 @foreach ($levels as $level)
                     <option value="{{ $level->id }}">{{ $level->name }}</option>

@@ -40,7 +40,7 @@
             </div>
             <div class="d-flex align-items-center" style="gap: 20px;">
                 <label for="">Mostrar registros</label>
-                <select name="" id="" class="form-control" wire:model.lazy="perPage">
+                <select name="" id="" class="form-control" wire:model.blur="perPage">
                     <option value="5">5</option>
                     <option value="10">10</option>
                     <option value="20">20</option>
