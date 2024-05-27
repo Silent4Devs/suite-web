@@ -100,8 +100,8 @@ class RequisicionService
 
     public function postDataTextPythonAPI()
     {
-        $filePath = storage_path('app/public/ejemplo3.pdf');
-        $fileName = 'ejemplo3.pdf';
+        $filePath = storage_path('app/public/requisicion.pdf');
+        $fileName = 'requisicion.pdf';
 
         $url = 'http://127.0.0.1:8000/text_to_chromadb/';
 

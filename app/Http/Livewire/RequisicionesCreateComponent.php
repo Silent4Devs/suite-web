@@ -92,7 +92,7 @@ class RequisicionesCreateComponent extends Component
 
     public $path;
 
-    // public $pdf;
+    public $pdf;
 
     protected $requisicionService;
 
@@ -196,11 +196,11 @@ class RequisicionesCreateComponent extends Component
         // }
 
         for ($i = 1; $i <= $this->products_servs_count; $i++) {
-            if (isset($data['especificaciones_'.$i])) {
+            if (isset($data['especificaciones_' . $i])) {
                 $producto_req = new KatbolProductoRequisicion();
-                $producto_req->espesificaciones = $data['especificaciones_'.$i];
-                $producto_req->cantidad = $data['cantidad_'.$i];
-                $producto_req->producto_id = $data['producto_'.$i];
+                $producto_req->espesificaciones = $data['especificaciones_' . $i];
+                $producto_req->cantidad = $data['cantidad_' . $i];
+                $producto_req->producto_id = $data['producto_' . $i];
                 $producto_req->requisiciones_id = $this->nueva_requisicion->id;
                 $producto_req->save();
             }
@@ -219,15 +219,16 @@ class RequisicionesCreateComponent extends Component
 
     public function proveedoresStore($data)
     {
+
         $this->habilitar_firma = false;
         $prove_count = 0;
         $cotizacion_count = 0;
         $this->provedores_colllection = collect();
 
         for ($i = 0; $i <= $this->proveedores_count; $i++) {
-            if (isset($data['proveedor_'.$i])) {
+            if (isset($data['proveedor_' . $i])) {
                 if ($this->selectedInput[$prove_count] === 'otro') {
-                    if (! empty($this->selectOption[$prove_count]) && isset($this->selectOption[$prove_count])) {
+                    if (!empty($this->selectOption[$prove_count]) && isset($this->selectOption[$prove_count])) {
                     } else {
                         $this->selectOption[$prove_count] = 'indistinto';
                     }
@@ -235,17 +236,18 @@ class RequisicionesCreateComponent extends Component
                     if ($this->selectOption[$prove_count] === 'sugerido') {
                         // nuevo proveedor
                         $proveedor_req = new KatbolProveedorRequisicion();
-                        $proveedor_req->proveedor = isset($data['proveedor_'.$i]) ? $data['proveedor_'.$i] : null;
-                        $proveedor_req->detalles = isset($data['detalles_'.$i]) ? $data['detalles_'.$i] : null;
-                        $proveedor_req->tipo = isset($data['tipo_'.$i]) ? $data['tipo_'.$i] : null;
-                        $proveedor_req->comentarios = isset($data['comentarios_'.$i]) ? $data['comentarios_'.$i] : null;
-                        $proveedor_req->contacto = isset($data['contacto_'.$i]) ? $data['contacto_'.$i] : null;
-                        $proveedor_req->cel = isset($data['contacto_telefono_'.$i]) ? $data['contacto_telefono_'.$i] : null;
-                        $proveedor_req->contacto_correo = isset($data['contacto_correo_'.$i]) ? $data['contacto_correo_'.$i] : null;
-                        $proveedor_req->url = isset($data['contacto_url_'.$i]) ? $data['contacto_url_'.$i] : null;
-                        $proveedor_req->fecha_inicio = isset($data['contacto_fecha_inicio_'.$i]) ? $data['contacto_fecha_inicio_'.$i] : null;
-                        $proveedor_req->fecha_fin = isset($data['contacto_fecha_fin_'.$i]) ? $data['contacto_fecha_fin_'.$i] : null;
+                        $proveedor_req->proveedor = isset($data['proveedor_' . $i]) ? $data['proveedor_' . $i] : null;
+                        $proveedor_req->detalles = isset($data['detalles_' . $i]) ? $data['detalles_' . $i] : null;
+                        $proveedor_req->tipo = isset($data['tipo_' . $i]) ? $data['tipo_' . $i] : null;
+                        $proveedor_req->comentarios = isset($data['comentarios_' . $i]) ? $data['comentarios_' . $i] : null;
+                        $proveedor_req->contacto = isset($data['contacto_' . $i]) ? $data['contacto_' . $i] : null;
+                        $proveedor_req->cel = isset($data['contacto_telefono_' . $i]) ? $data['contacto_telefono_' . $i] : null;
+                        $proveedor_req->contacto_correo = isset($data['contacto_correo_' . $i]) ? $data['contacto_correo_' . $i] : null;
+                        $proveedor_req->url = isset($data['contacto_url_' . $i]) ? $data['contacto_url_' . $i] : null;
+                        $proveedor_req->fecha_inicio = isset($data['contacto_fecha_inicio_' . $i]) ? $data['contacto_fecha_inicio_' . $i] : null;
+                        $proveedor_req->fecha_fin = isset($data['contacto_fecha_fin_' . $i]) ? $data['contacto_fecha_fin_' . $i] : null;
                         $proveedor_req->requisiciones_id = $this->requisicion_id;
+
 
                         $cotizacion_actual = $this->cotizaciones[$cotizacion_count];
 
@@ -258,7 +260,7 @@ class RequisicionesCreateComponent extends Component
                             || $cotizacion_actual->getClientOriginalExtension() === 'csv'
                         ) {
                             $this->habilitar_alerta = false;
-                            $name_cotizacion = 'requisicion_'.$this->requisicion_id.'cotizazcion_'.$cotizacion_count.'_'.uniqid().'.'.$cotizacion_actual->getClientOriginalExtension();
+                            $name_cotizacion = 'requisicion_' . $this->requisicion_id . 'cotizazcion_' . $cotizacion_count . '_' . uniqid() . '.' . $cotizacion_actual->getClientOriginalExtension();
                             $cotizacion_actual->storeAs('public/cotizaciones_requisiciones_proveedores/', $name_cotizacion);
                             $proveedor_req->cotizacion = $name_cotizacion;
                             $proveedor_req->save();
@@ -277,8 +279,8 @@ class RequisicionesCreateComponent extends Component
                         $this->provedores_indistinto_catalogo = collect();
                         $this->provedores_indistinto_catalogo = KatbolProveedorIndistinto::create([
                             'requisicion_id' => $this->nueva_requisicion->id,
-                            'fecha_inicio' => $data['contacto_fecha_inicio_'.$i],
-                            'fecha_fin' => $data['contacto_fecha_fin_'.$i],
+                            'fecha_inicio' => $data['contacto_fecha_inicio_' . $i],
+                            'fecha_fin' => $data['contacto_fecha_fin_' . $i],
                         ]);
 
                         $this->emit('cambiarTab', 'contact');
@@ -293,13 +295,13 @@ class RequisicionesCreateComponent extends Component
                     $this->provedores_colllection_catalogo = KatbolProvedorRequisicionCatalogo::create([
                         'requisicion_id' => $this->nueva_requisicion->id,
                         'proveedor_id' => $this->selectedInput[$prove_count],
-                        'fecha_inicio' => $data['contacto_fecha_inicio_'.$i],
-                        'fecha_fin' => $data['contacto_fecha_fin_'.$i],
+                        'fecha_inicio' => $data['contacto_fecha_inicio_' . $i],
+                        'fecha_fin' => $data['contacto_fecha_fin_' . $i],
                     ]);
 
                     $this->proveedores_catalogo->update([
-                        'fecha_inicio' => $data['contacto_fecha_inicio_'.$i],
-                        'fecha_fin' => $data['contacto_fecha_fin_'.$i],
+                        'fecha_inicio' => $data['contacto_fecha_inicio_' . $i],
+                        'fecha_fin' => $data['contacto_fecha_fin_' . $i],
                     ]);
 
                     $this->nueva_requisicion->update([
