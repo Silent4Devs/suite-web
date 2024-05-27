@@ -315,7 +315,7 @@
     </div>
 
     <script>
-        document.addEventListener('livewire:load', function() {
+        document.addEventListener('livewire:init', function() {
             Livewire.on('limpiarNameInput', function() {
                 // Limpiar el campo de entrada de "name" utilizando JavaScript
                 document.getElementById('id_area').textContent = "";

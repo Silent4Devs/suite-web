@@ -109,7 +109,7 @@
         });
     </script>
     <script>
-        document.addEventListener('livewire:load', function () {
+        document.addEventListener('livewire:init', function () {
             Livewire.on('closeCollapse', function () {
                 window.dispatchEvent(new Event('close-collapse'));
             });
