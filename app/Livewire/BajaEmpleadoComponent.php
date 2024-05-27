@@ -52,7 +52,7 @@ class BajaEmpleadoComponent extends Component
 
     public function hydrate()
     {
-        $this->emit('select2');
+        $this->dispatch('select2');
     }
 
     //mount
@@ -131,7 +131,7 @@ class BajaEmpleadoComponent extends Component
             //     'supervisor_id' => $this->nuevoSupervisor
             // ]);
         });
-        $this->emit('select2');
+        $this->dispatch('select2');
     }
 
     public function darDeBaja()
@@ -146,7 +146,7 @@ class BajaEmpleadoComponent extends Component
         if ($user) {
             $user->delete();
         }
-        $this->emit('select2');
-        $this->emit('baja', $this->empleado);
+        $this->dispatch('select2');
+        $this->dispatch('baja', empleado: $this->empleado);
     }
 }

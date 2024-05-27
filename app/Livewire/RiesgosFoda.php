@@ -28,7 +28,7 @@ class RiesgosFoda extends Component
 
     public function hydrate()
     {
-        $this->emit('select2');
+        $this->dispatch('select2');
     }
 
     public function updatedAnalisisSeleccionado()
@@ -79,7 +79,7 @@ class RiesgosFoda extends Component
             $this->globalModel->riesgos()->sync($this->riesgosSeleccionados);
         }
         $this->default();
-        // $this->emit('cerrarModal');
+        // $this->dispatch('cerrarModal');
     }
 
     public function default()

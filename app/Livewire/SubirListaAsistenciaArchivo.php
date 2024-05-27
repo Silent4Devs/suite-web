@@ -36,7 +36,7 @@ class SubirListaAsistenciaArchivo extends Component
         $this->recurso->update([
             'lista_asistencia' => $archivo,
         ]);
-        $this->emit('listaGuardada');
+        $this->dispatch('listaGuardada');
     }
 
     public function remove()
@@ -46,9 +46,9 @@ class SubirListaAsistenciaArchivo extends Component
             $this->recurso->update([
                 'lista_asistencia' => null,
             ]);
-            $this->emit('listaEliminada', ['estatus' => 200, 'mensaje' => 'La lista de asistencia ha sido eliminada']);
+            $this->dispatch('listaEliminada', estatus: 200, mensaje: 'La lista de asistencia ha sido eliminada');
         } else {
-            $this->emit('listaEliminada', ['estatus' => 500, 'mensaje' => 'No se pudo eliminar el archivo']);
+            $this->dispatch('listaEliminada', estatus: 500, mensaje: 'No se pudo eliminar el archivo');
         }
     }
 

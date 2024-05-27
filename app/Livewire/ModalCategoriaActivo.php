@@ -15,8 +15,8 @@ class ModalCategoriaActivo extends Component
             'created_at' => Carbon::now(),
         ]);
 
-        $this->emit('tipoObjetivoStore');
-        $this->emit('render-tipo-objetivo-select');
+        $this->dispatch('tipoObjetivoStore');
+        $this->dispatch('render-tipo-objetivo-select');
     }
 
     public function render()

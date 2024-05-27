@@ -43,7 +43,7 @@ class SelectVulnerabilidadComponent extends Component
         ]);
         // dd($model);
         $this->reset('nombre', 'descripcion', 'valorAmenaza');
-        $this->emit('render');
-        $this->emit('cerrar-VulnerabilidadModal');
+        $this->dispatch('render');
+        $this->dispatch('cerrar-VulnerabilidadModal');
     }
 }

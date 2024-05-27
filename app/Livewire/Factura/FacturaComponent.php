@@ -285,7 +285,7 @@ class FacturaComponent extends Component
                 ]);
             }
 
-            $this->emit('recargar-cumplimiento');
+            $this->dispatch('recargar-cumplimiento');
             //$this->dispatchBrowserEvent('contentChanged');
             $this->default();
             $this->dispatchBrowserEvent('cumple');
@@ -443,7 +443,7 @@ class FacturaComponent extends Component
                 ]);
             }
 
-            $this->emit('recargar-cumplimiento');
+            $this->dispatch('recargar-cumplimiento');
             //$this->dispatchBrowserEvent('contentChanged');
             $this->default();
             $this->dispatchBrowserEvent('cumple');
@@ -465,7 +465,7 @@ class FacturaComponent extends Component
 
         //generacion de log
         //DB::select('call actualiza_user(?, ?, ?)', array('facturacion', auth()->id(), $id));
-        $this->emit('recargar-cumplimiento');
+        $this->dispatch('recargar-cumplimiento');
         $this->alert('success', 'Registro eliminado!');
     }
 

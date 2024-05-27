@@ -19,7 +19,7 @@ class EstudiantesEdit extends Component
     {
         UsuariosCursos::destroy($id);
         // Alert::toast('El rol fue eliminado exitosamente', 'success');
-        $this->emit('UserStore');
+        $this->dispatch('UserStore');
     }
 
     public function render()

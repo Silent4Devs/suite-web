@@ -29,7 +29,7 @@ class TimesheetHorasFilas extends Component
 
     public function hydrate()
     {
-        $this->emit('select2');
+        $this->dispatch('select2');
     }
 
     public function mount($origen, $timesheet_id)
@@ -42,12 +42,12 @@ class TimesheetHorasFilas extends Component
     public function removerFila()
     {
         $this->contador = $this->contador - 1;
-        // $this->emit('calcularSumatoriasFacturables');
+        // $this->dispatch('calcularSumatoriasFacturables');
     }
 
     public function updatedContador($value)
     {
-        $this->emit('calcularSumatoriasFacturables');
+        $this->dispatch('calcularSumatoriasFacturables');
     }
 
     public function render()

@@ -54,7 +54,7 @@ class GenerarPdfComponent extends Component
         }
 
         if (! $organizacion) {
-            $this->emit('showErrorAlert', 'Aún no has registrado tu organización');
+            $this->dispatch('showErrorAlert', message: 'Aún no has registrado tu organización');
 
             return response()->noContent();
         }
@@ -62,7 +62,7 @@ class GenerarPdfComponent extends Component
         $matriz_requisitos_legales = MatrizRequisitoLegale::get();
         $foda = EntendimientoOrganizacion::getFirst();
         if (! $foda) {
-            $this->emit('showErrorAlert', 'Aún no has realizado en análisis FODA');
+            $this->dispatch('showErrorAlert', message: 'Aún no has registrado tu organización');
 
             return response()->noContent();
         }
@@ -73,12 +73,12 @@ class GenerarPdfComponent extends Component
             case 'Contexto de la organización':
                 $control_documento = ControlDocumento::where('nombre', '=', 'Contexto de la organización')->first();
                 if (! $control_documento) {
-                    $this->emit('showErrorAlert', 'No existe el control de documento:'.$control_documento->nombre);
+                    $this->dispatch('showErrorAlert', message: 'No existe el control de documento:'.$control_documento->nombre);
 
                     return response()->noContent();
                 } else {
                     if (is_null($control_documento->clave) || is_null($control_documento->fecha_creacion) || is_null($control_documento->elaboro_id) || is_null($control_documento->reviso_id)) {
-                        $this->emit('showErrorAlert', 'Tienes que llenar los campos faltantes del control de documento: '.$control_documento->nombre);
+                        $this->dispatch('showErrorAlert', message: 'Tienes que llenar los campos faltantes del control de documento: '.$control_documento->nombre);
 
                         return response()->noContent();
                     }
@@ -95,15 +95,15 @@ class GenerarPdfComponent extends Component
                     $filename = 'Contexto de la organización v'.$control_documento->version.'.docx';
                     $this->generarWord('contexto', $filename, $organizacion, $logotipo, $matriz_requisitos_legales, $foda, $partes_interesadas, $control_documento);
 
-                    $this->emit('showSuccessAlert', 'Documento PDF y Word generados con éxito');
+                    $this->dispatch('showSuccessAlert', message: 'Documento PDF y Word generados con éxito');
                 }
                 break;
             case 'Test':
                 $control_documento = ControlDocumento::where('nombre', '=', 'Test')->first();
-                $this->emit('showSuccessAlert', 'En construcción');
+                $this->dispatch('showSuccessAlert', message: 'En construcción');
                 break;
             default:
-                $this->emit('showErrorAlert', 'Algo salió, no existe el control de documento con el nombre: '.$this->nombre_documento);
+                $this->dispatch('showErrorAlert', message: 'Algo salió, no existe el control de documento con el nombre: '.$this->nombre_documento);
                 break;
         }
 
@@ -124,7 +124,7 @@ class GenerarPdfComponent extends Component
                     $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($documento, 'Word2007');
                     $objWriter->save(storage_path('app/public/Normas/ISO27001/').$file_name);
                     // session()->flash('success', 'Archivo Word Generado con éxito');
-                    $this->emit('showSuccessAlert', 'Archivo Word Generado con éxito');
+                    $this->dispatch('showSuccessAlert', message: 'Archivo Word Generado con éxito');
                 }
                 break;
             default:

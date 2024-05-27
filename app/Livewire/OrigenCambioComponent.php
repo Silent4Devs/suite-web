@@ -28,8 +28,8 @@ class OrigenCambioComponent extends Component
             'nombre' => $this->nombre,
             'descripcion' => $this->descripcion,
         ]);
-        $this->emit('OrigenCambioStore');
-        $this->emit('render-origen-select-component');
+        $this->dispatch('OrigenCambioStore');
+        $this->dispatch('render-origen-select-component');
     }
 
     public function render()

@@ -85,7 +85,7 @@ class Entregablecomponent extends Component
 
     public function hydrate()
     {
-        $this->emit('select2');
+        $this->dispatch('select2');
     }
 
     public function mount($contrato_id, $show_contrato)
@@ -187,7 +187,7 @@ class Entregablecomponent extends Component
             $this->pdf->storeAs('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/entregables/pdf', $entregableFile->id.$entregables_filename);
         }
 
-        $this->emit('recargar-cumplimiento');
+        $this->dispatch('recargar-cumplimiento');
         $this->dispatchBrowserEvent('contentChanged');
         $this->default();
     }
@@ -325,7 +325,7 @@ class Entregablecomponent extends Component
             }
         }
 
-        $this->emit('recargar-cumplimiento');
+        $this->dispatch('recargar-cumplimiento');
         $this->default();
         $this->dispatchBrowserEvent('contentChanged');
         $this->alert('success', 'Registro actualizado!');
@@ -339,7 +339,7 @@ class Entregablecomponent extends Component
     public function destroy($id)
     {
         EntregaMensual::destroy($id);
-        $this->emit('recargar-cumplimiento');
+        $this->dispatch('recargar-cumplimiento');
         $this->alert('success', 'Registro eliminado!');
     }
 

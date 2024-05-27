@@ -33,8 +33,8 @@ class PerfilCreate extends Component
         ]);
 
         $this->reset(['nombre', 'descripcion']);
-        $this->emit('PerfilStore');
-        $this->emit('render-perfil-select');
+        $this->dispatch('PerfilStore');
+        $this->dispatch('render-perfil-select');
         $this->emitTo('perfilSelect', 'perfilEvent');
     }
 

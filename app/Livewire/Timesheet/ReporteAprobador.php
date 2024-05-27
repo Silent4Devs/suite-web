@@ -365,7 +365,7 @@ class ReporteAprobador extends Component
 
         $this->hoy_format = $this->hoy->format('d/m/Y');
 
-        $this->emit('scriptTabla');
+        $this->dispatch('scriptTabla');
 
         return view('livewire.timesheet.reporte-aprobador');
     }
@@ -574,9 +574,12 @@ class ReporteAprobador extends Component
 
         $this->times_empleado = Timesheet::where('fecha_dia', '>=', $fecha_inicio_timesheet_empleado)->where('fecha_dia', '<=', $fecha_fin_timesheet_empleado)->where('empleado_id', $this->empleado_seleccionado_id)->get();
 
-        $this->emit('scriptTabla');
+        $this->dispatch('scriptTabla');
 
-        $this->emit('scriptCharts', $this->proyectos_detalle, $this->times_empleado_horas);
+        $this->dispatch('scriptCharts',
+            proyectos_detalle: $this->proyectos_detalle,
+            times_empleado_horas: $this->times_empleado_horas
+        );
     }
 
     public function reporteGeneral()

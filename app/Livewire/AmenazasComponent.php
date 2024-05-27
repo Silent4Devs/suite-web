@@ -51,7 +51,7 @@ class AmenazasComponent extends Component
 
         // dd($fort);
 
-        $this->emit('recargar-amenazas');
+        $this->dispatch('recargar-amenazas');
         $this->default();
     }
 

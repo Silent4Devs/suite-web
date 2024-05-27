@@ -116,7 +116,7 @@ class NivelesComponent extends Component
 
         $this->evaluacion($nivelesservicio->id, $nivelesservicio->periodo_evaluacion, $nivelesservicio->revisiones, $nivelesservicio->nombre, $nivelesservicio->metrica, $nivelesservicio->unidad);
         //$this->dispatchBrowserEvent('contentChanged');
-        $this->emit('recargar-cumplimiento');
+        $this->dispatch('recargar-cumplimiento');
         $this->default();
 
         $this->alert('success', 'Registro añadido!');
@@ -189,7 +189,7 @@ class NivelesComponent extends Component
             'area' => $this->area,
             'descripcion' => $this->descripcion,
         ]);
-        $this->emit('recargar-cumplimiento');
+        $this->dispatch('recargar-cumplimiento');
         $this->default();
         //$this->dispatchBrowserEvent('contentChanged');
         $this->alert('success', 'Registro actualizado!');
@@ -203,7 +203,7 @@ class NivelesComponent extends Component
     public function destroy($id)
     {
         NivelesServicio::destroy($id);
-        $this->emit('recargar-cumplimiento');
+        $this->dispatch('recargar-cumplimiento');
         $this->alert('success', 'Registro eliminado!');
     }
 

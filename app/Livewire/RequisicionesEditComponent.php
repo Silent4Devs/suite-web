@@ -126,7 +126,7 @@ class RequisicionesEditComponent extends Component
 
     public function hydrate()
     {
-        $this->emit('select2');
+        $this->dispatch('select2');
     }
 
     public function servicioUpdate($data, $editrequisicion)
@@ -169,7 +169,7 @@ class RequisicionesEditComponent extends Component
         $this->requisicion_id = $this->editar_requisicion->id;
 
         $this->habilitar_proveedores = true;
-        $this->emit('cambiarTab', 'profile');
+        $this->dispatch('cambiarTab', profile: 'profile');
         $this->active = 'desActive';
     }
 
@@ -209,7 +209,7 @@ class RequisicionesEditComponent extends Component
                     'fecha_fin' => $data['contacto_fecha_fin_'.$i],
                 ]);
 
-                $this->emit('cambiarTab', 'contact');
+                $this->dispatch('cambiarTab', contact: 'contact');
 
                 $this->dataFirma($editrequisicion);
             }
@@ -249,7 +249,7 @@ class RequisicionesEditComponent extends Component
 
                     $cotizacion_count = $cotizacion_count + 1;
 
-                    $this->emit('cambiarTab', 'contact');
+                    $this->dispatch('cambiarTab', contact: 'contact');
 
                     $this->dataFirma($editrequisicion);
 
@@ -292,7 +292,7 @@ class RequisicionesEditComponent extends Component
 
                 $prove_count = $prove_count + 1;
 
-                $this->emit('cambiarTab', 'contact');
+                $this->dispatch('cambiarTab', contact: 'contact');
 
                 $this->dataFirma($editrequisicion);
             }
@@ -310,7 +310,7 @@ class RequisicionesEditComponent extends Component
         $requisicion = $this->requisicion = ContractManagerRequsicion::find($editrequisicion);
         $comprador = ContractManagerComprador::where('id', $requisicion->comprador_id)->first();
         $contrato = ContractManagerContrato::where('id', $requisicion->contrato_id)->first();
-        $this->emit('render_firma');
+        $this->dispatch('render_firma');
         $this->habilitar_firma = true;
     }
 

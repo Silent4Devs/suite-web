@@ -33,7 +33,7 @@ class CreateMiembrosComiteSeguridad extends Component
 
     public function hydrate()
     {
-        $this->emit('select2');
+        $this->dispatch('select2');
     }
 
     public function validarMiembro()
@@ -49,7 +49,7 @@ class CreateMiembrosComiteSeguridad extends Component
     public function create()
     {
         $this->default();
-        $this->emit('abrir-modal');
+        $this->dispatch('abrir-modal');
     }
 
     public function save()
@@ -64,8 +64,8 @@ class CreateMiembrosComiteSeguridad extends Component
         ]);
 
         $this->reset('nombre_rol', 'colaborador', 'fecha_vigor', 'responsabilidades');
-        $this->emit('render');
-        $this->emit('cerrar-modal', ['editar' => false]);
+        $this->dispatch('render');
+        $this->dispatch('cerrar-modal', edita: false);
     }
 
     public function edit($id)
@@ -79,9 +79,9 @@ class CreateMiembrosComiteSeguridad extends Component
         $this->responsabilidades = $model->responsabilidades;
         $this->id_comite = $model->comite_id;
         $this->miembroID = $model->id;
-        $this->emit('abrir-modal');
-        $this->emit('editar-modal', $model->responsabilidades);
-        $this->emit('cargar-puesto', $id);
+        $this->dispatch('abrir-modal');
+        $this->dispatch('editar-modal', responsabilidades: $model->responsabilidades);
+        $this->dispatch('cargar-puesto', id: $id);
     }
 
     public function default()
@@ -105,16 +105,16 @@ class CreateMiembrosComiteSeguridad extends Component
             'responsabilidades' => $this->responsabilidades,
             'comite_id' => $this->id_comite,
         ]);
-        $this->emit('cerrar-modal', ['editar' => true]);
+        $this->dispatch('cerrar-modal', editar: true);
         $this->default();
-        $this->emit('render');
+        $this->dispatch('render');
     }
 
     public function destroy($id)
     {
         $model = MiembrosComiteSeguridad::find($id);
         $model->delete();
-        $this->emit('render');
+        $this->dispatch('render');
     }
 
     public function render()

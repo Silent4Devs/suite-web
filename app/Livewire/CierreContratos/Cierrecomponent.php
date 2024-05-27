@@ -73,7 +73,7 @@ class Cierrecomponent extends Component
         ]);
 
         //$this->edit($post->id);
-        $this->emit('recargar-cumplimiento');
+        $this->dispatch('recargar-cumplimiento');
         $this->dispatchBrowserEvent('contentChanged');
         $this->default();
 
@@ -107,7 +107,7 @@ class Cierrecomponent extends Component
             'cumple' => $cumple,
             'observaciones' => $this->observaciones,
         ]);
-        $this->emit('recargar-cumplimiento');
+        $this->dispatch('recargar-cumplimiento');
         $this->default();
         //$this->dispatchBrowserEvent('contentChanged');
         $this->alert('success', 'Registro actualizado!');
@@ -121,7 +121,7 @@ class Cierrecomponent extends Component
     public function destroy($id)
     {
         CierreContrato::destroy($id);
-        $this->emit('recargar-cumplimiento');
+        $this->dispatch('recargar-cumplimiento');
         $this->alert('success', 'Registro eliminado!');
     }
 

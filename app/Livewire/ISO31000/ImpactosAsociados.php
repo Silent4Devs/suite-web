@@ -76,7 +76,7 @@ class ImpactosAsociados extends Component
             $this->reputacional +
             $this->tecnologico;
         $this->calcularReglaColoresTipo($this->valor);
-        $this->emit('impactoObtenido31', $this->valor);
+        $this->dispatch('impactoObtenido31', valor: $this->valor);
     }
 
     private function calcularReglaColoresTipo($valor)

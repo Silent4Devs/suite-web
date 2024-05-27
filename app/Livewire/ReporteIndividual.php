@@ -161,7 +161,7 @@ class ReporteIndividual extends Component
     {
         $this->view = 'create';
         $this->default();
-        $this->emit('abrir-modal');
+        $this->dispatch('abrir-modal');
     }
 
     public function save()
@@ -182,8 +182,8 @@ class ReporteIndividual extends Component
         ]);
 
         $this->reset('descripcion', 'incumplimiento_requisito', 'clasificacion_id', 'proceso', 'area');
-        $this->emit('render');
-        $this->emit('cerrar-modal');
+        $this->dispatch('render');
+        $this->dispatch('cerrar-modal');
         $this->alert('success', 'Bien hecho', [
             'position' => 'top-end',
             'timer' => 3000,
@@ -210,7 +210,7 @@ class ReporteIndividual extends Component
         // $this->area = $hallazgo->area_id;
         $this->incumplimiento_requisito = $hallazgo->incumplimiento_requisito;
         $this->id_auditoria = $hallazgo->auditoria_internas_id;
-        $this->emit('abrir-modal');
+        $this->dispatch('abrir-modal');
     }
 
     public function update()
@@ -229,9 +229,9 @@ class ReporteIndividual extends Component
             'titulo' => $this->titulo,
         ]);
 
-        $this->emit('cerrar-modal');
+        $this->dispatch('cerrar-modal');
         $this->default();
-        $this->emit('render');
+        $this->dispatch('render');
         $this->alert('success', 'Bien hecho', [
             'position' => 'top-end',
             'timer' => 3000,
@@ -244,7 +244,7 @@ class ReporteIndividual extends Component
     {
         $model = AuditoriaInternasHallazgos::find($id);
         $model->delete();
-        $this->emit('render');
+        $this->dispatch('render');
         $this->alert('success', 'Bien hecho', [
             'position' => 'top-end',
             'timer' => 3000,

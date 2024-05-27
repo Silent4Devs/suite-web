@@ -155,7 +155,7 @@ class MultiStepForm extends Component
 
     public function hydrate()
     {
-        $this->emit('select2');
+        $this->dispatch('select2');
     }
 
     public function render()
@@ -226,7 +226,7 @@ class MultiStepForm extends Component
     {
         $this->resetErrorBag();
         $this->validateData();
-        $this->emit('increaseStep');
+        $this->dispatch('increaseStep');
         $this->currentStep++;
         if ($this->currentStep == 3) {
             $this->listaEvaluados = $this->obtenerEvaluadosConEvaluadores($this->evaluados_objetivo);
@@ -311,7 +311,7 @@ class MultiStepForm extends Component
 
     public function redirigirCompetencias()
     {
-        // $this->emit('openNewTab', ['url' => route('admin.ev360-competencias-por-puesto.index')]);
+        // $this->dispatch('openNewTab', ['url' => route('admin.ev360-competencias-por-puesto.index')]);
 
         // Define the URL you want to redirect to
         // $url = route('admin.ev360-competencias-por-puesto.index');
@@ -324,7 +324,7 @@ class MultiStepForm extends Component
     public function decreaseStep()
     {
         $this->resetErrorBag();
-        $this->emit('decreaseStep');
+        $this->dispatch('decreaseStep');
         $this->currentStep--;
         if ($this->currentStep == 3) {
             $this->listaEvaluados = $this->obtenerEvaluadosConEvaluadores($this->evaluados_objetivo);

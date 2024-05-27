@@ -48,6 +48,6 @@ class CoursesStudents extends Component
         $cursoUsuario = UsuariosCursos::where('course_id', $this->course->id)->where('user_id', $student)->first();
         $cursoUsuario->delete();
         $this->render_alerta('success', 'El estudiante fue eliminado exitosamente');
-        $this->emit('UserStore');
+        $this->dispatch('UserStore');
     }
 }

@@ -28,6 +28,6 @@ class TipoSelectComponent extends Component
 
     public function hydrate()
     {
-        $this->emit('select2');
+        $this->dispatch('select2');
     }
 }

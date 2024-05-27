@@ -28,7 +28,7 @@ class TimesheetHorasCreateCopia extends Component
 
     public function hydrate()
     {
-        $this->emit('select2');
+        $this->dispatch('select2');
     }
 
     public function mount($proyectos, $tareas, $origen, $timesheet_id)
@@ -45,14 +45,14 @@ class TimesheetHorasCreateCopia extends Component
             $this->horas_excluidas[] = $id;
             $this->horas = $this->horas->except($this->horas_excluidas);
 
-            $this->emit('removeTr', $tr);
+            $this->dispatch('removeTr', tr: $tr);
         }
-        $this->emit('calcularSumatoriasFacturables');
+        $this->dispatch('calcularSumatoriasFacturables');
     }
 
     public function updatedContador($value)
     {
-        $this->emit('calcularSumatoriasFacturables');
+        $this->dispatch('calcularSumatoriasFacturables');
     }
 
     public function render()

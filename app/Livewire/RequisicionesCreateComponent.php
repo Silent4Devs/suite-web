@@ -159,7 +159,7 @@ class RequisicionesCreateComponent extends Component
 
     public function hydrate()
     {
-        $this->emit('select2');
+        $this->dispatch('select2');
     }
 
     public function servicioStore($data)
@@ -213,7 +213,7 @@ class RequisicionesCreateComponent extends Component
         ]);
 
         $this->habilitar_proveedores = true;
-        $this->emit('cambiarTab', 'profile');
+        $this->dispatch('cambiarTab', profile: 'profile');
         $this->active = 'desActive';
     }
 
@@ -270,7 +270,7 @@ class RequisicionesCreateComponent extends Component
                             return false;
                         }
 
-                        $this->emit('cambiarTab', 'contact');
+                        $this->dispatch('cambiarTab', contact: 'contact');
 
                         $this->dataFirma();
 
@@ -283,7 +283,7 @@ class RequisicionesCreateComponent extends Component
                             'fecha_fin' => $data['contacto_fecha_fin_' . $i],
                         ]);
 
-                        $this->emit('cambiarTab', 'contact');
+                        $this->dispatch('cambiarTab', contact: 'contact');
 
                         $this->dataFirma();
 
@@ -313,7 +313,7 @@ class RequisicionesCreateComponent extends Component
 
                     $this->proveedores_show = KatbolProveedorOC::whereIn('id', $proveedores_escogidos)->get();
 
-                    $this->emit('cambiarTab', 'contact');
+                    $this->dispatch('cambiarTab', contact: 'contact');
 
                     $this->dataFirma();
                     $this->disabled = 'disabled';
@@ -336,7 +336,7 @@ class RequisicionesCreateComponent extends Component
         $requisicion = $this->requisicion = KatbolRequsicion::with('comprador.user', 'sucursal')->find($this->requisicion_id);
         $comprador = KatbolComprador::where('id', $requisicion->comprador_id)->first();
         $contrato = KatbolContrato::where('id', $requisicion->contrato_id)->first();
-        $this->emit('render_firma');
+        $this->dispatch('render_firma');
         $this->habilitar_firma = true;
     }
 

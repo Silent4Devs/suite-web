@@ -26,8 +26,8 @@ class CategoriaCapacitacionCreate extends Component
             'nombre' => $this->nombre,
             'created_at' => Carbon::now(),
         ]);
-        $this->emit('categoriaCapacitacionStore');
-        $this->emit('render-categorias-capacitacion-select');
+        $this->dispatch('categoriaCapacitacionStore');
+        $this->dispatch('render-categorias-capacitacion-select');
     }
 
     public function render()

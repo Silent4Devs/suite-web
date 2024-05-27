@@ -53,7 +53,7 @@ class FortalezasComponent extends Component
 
         // dd($fort);
 
-        $this->emit('recargar-fortalezas');
+        $this->dispatch('recargar-fortalezas');
         $this->default();
     }
 
