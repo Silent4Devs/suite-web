@@ -13,7 +13,7 @@
 {{-- <div class="card card-content row"> --}}
 <h4 class="sub-titulo-form col s12">AGREGAR FACTURA</h4>
 
-<form wire:submit.prevent="store" enctype="multipart/form-data">
+<form wire:submit="store" enctype="multipart/form-data">
 
     @include('livewire.factura.form')
 

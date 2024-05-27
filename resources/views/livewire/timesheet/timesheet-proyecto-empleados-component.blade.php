@@ -14,7 +14,7 @@
             <a href="{{ route('admin.timesheet-proyectos') }}" class="btn btn-info">Pagina Principal de Proyectos</a>
         </div>
     </div>
-    <form wire:submit.prevent="addEmpleado" wire:ignore>
+    <form wire:submit="addEmpleado" wire:ignore>
         <div class="row mt-4">
             <div class="form-group col-md-3">
                 <div class="dropdown">
@@ -227,7 +227,7 @@
                                 </h1>
                             </div>
                             <form
-                                wire:submit.prevent="editEmpleado({{ $proyect_empleado->id }}, Object.fromEntries(new FormData($event.target)))">
+                                wire:submit="editEmpleado({{ $proyect_empleado->id }}, Object.fromEntries(new FormData($event.target)))">
                                 <div class="row">
                                     <div class="form-group col-md-8">
                                         <label for="">Empleado<sup>*</sup>(obligatorio)</label>

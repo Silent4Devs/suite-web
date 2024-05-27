@@ -1,7 +1,7 @@
 <section>
     <x-loading-indicator />
 
-    <div class="" x-data="{ open: @entangle('open') }">
+    <div class="" x-data="{ open: @entangle('open').live }">
         <!-- Button (blue), duh! -->
 
         <div class="d-flex justify-content-between align-items-center mt-5">
@@ -30,7 +30,7 @@
                 @endif
             </div>
             @if ($publico == 'area')
-                <form wire:submit.prevent="save()">
+                <form wire:submit="save()">
                     <div class="row">
                         <div class="col-md-6 anima-focus form-group">
                             <select name="" id="" class="form-control" required
@@ -71,7 +71,7 @@
             style="background-color: rgba(0,0,0,.5);" x-show="open">
             <div class="h-auto p-4 mx-2 text-left bg-white rounded shadow-xl md:max-w-xl md:p-6 lg:p-8 md:mx-0"
                 @click.away="open = false">
-                <form wire:submit.prevent="save()">
+                <form wire:submit="save()">
 
                     <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left" style="min-width:500px;">
                         <h3 class="text-lg font-medium leading-6 text-gray-900">
