@@ -4,7 +4,7 @@
             <div class="row m-0 p-0">
                 <div class="col-12">
                     <h5 class="title-grafics">
-                        Porcentaje Total del Análisis
+                        Escalas de Probabilidad e Impacto
                     </h5>
                 </div>
             </div>
@@ -39,7 +39,7 @@
                     </div>
 
                     <h6 class="title-rango">Escalas</h6>
-                    <p class="subtitle-rango">Define las escalas de medición, asigna su Color, Valor y Nombre para indetificarlos</p>
+                    <p class="subtitle-rango">Define las escalas de medición, asigna su color, valor y nombre para indetificarlos</p>
 
                     @if (!$edit)
                         @foreach ($prob_imp as $key => $probImp)

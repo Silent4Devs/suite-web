@@ -46,7 +46,8 @@ const FormulasAnalisisRiesgos = () => {
             <h3>Historial de formulas</h3>
             <RecordFormulas formulas={formulas} handleChangeStatus={handleChangeStatus} handleChangeTitle={handleChangeTitle} deleteFormula={deleteFormula} options={sections} handleChangeSection={handleChangeSection}/>
         </CardContainer>
-        <button onClick={handleSubmit}>Guardar</button>
+        <BtnSimple title="guardar" onClick={handleSubmit}/>
+        {/* <button onClick={handleSubmit}>Guardar</button> */}
 
     </div>
   )

@@ -85,6 +85,16 @@ export const InputMaker = ({ type, id, title, handleTileChange }) => {
                     handleChange={handleTileChange}
                 />
             );
+        case "15":
+            return (
+                <ContainerInputAnalisisRiesgo
+                    title="Divisa"
+                    name={`pregunta-currency-${id}`}
+                    size={8}
+                    value={title}
+                    handleChange={handleTileChange}
+                />
+            );
         default:
             return <></>;
     }
@@ -291,6 +301,19 @@ export const InputMakerSettings = ({question}) => {
                         {question.title} {question.obligatory ? "*":null}
                     </label>
                     <InputSimpleDisabled title="" name={`input-disabled-${question.title}`} type="text" value=""/>
+                </>
+            );
+            break;
+        case '15':
+            let minimo = question.data.minimo ? question.data.minimo : "";
+            minimo.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+            return(
+                <>
+                    <label>
+                        {question.title} {question.obligatory ? "*":null}
+                    </label>
+                    <InputSimpleDisabled title="" name={`input-disabled-${question.title}`} type="text" value=""/>
+                    <p>Tu valor debe encontrase entre {minimo} y el {question.data.maximo}</p>
                 </>
             );
             break;

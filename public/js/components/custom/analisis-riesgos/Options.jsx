@@ -53,9 +53,6 @@ export const OptionParrafo = ({id, data = {}, changeQuestionProps}) => {
 };
 
 export const OptionNumber = ({id, data = {}, changeQuestionProps}) => {
-
-    const propMax = `maximo-${id}`
-
     const dataDefault = {};
     dataDefault[`minimo-${id}`] = 0;
     dataDefault[`maximo-${id}`] = 0;
@@ -65,7 +62,6 @@ export const OptionNumber = ({id, data = {}, changeQuestionProps}) => {
 
       const handleInputChange = async(event) => {
         const { name, value } = event.target;
-        // console.log(event.target)
         data[name] = value;
         setInputValues({
           ...inputValues,
@@ -156,7 +152,6 @@ export const OptionCatalog = ({id, data={}, changeQuestionProps, handleTileChang
             'title':option[0].title,
             'catalog':option[0].id,
         }]
-        // console.log(option[0].title)
         changeQuestionProps(id,'catalog', newOption);
         setValue(option[0].id);
         handleTileChange(option[0].title)
@@ -167,10 +162,11 @@ export const OptionCatalog = ({id, data={}, changeQuestionProps, handleTileChang
     )
 }
 
-export const OptionRound = ({ id, data = [],  changeQuestionProps }) => {
+export const OptionRound = ({ id, data = [],  changeQuestionProps, isNumeric }) => {
+    const [numeric, setNumeric] = useState(isNumeric);
     const dataDefault = [
-        { id: uuidv4(), title: "respuesta 1", name: "respuesta1", exist: true, status:true },
-        { id: uuidv4(), title: "respuesta 2", name: "respuesta2", exist: true, status:false },
+        { id: uuidv4(), title: "respuesta 1", value:0, name: "respuesta1", exist: true, status:true },
+        { id: uuidv4(), title: "respuesta 2", value:0, name: "respuesta2", exist: true, status:false },
     ]
     const [options, setOptions] = useState(data.length > 0 ? data : dataDefault);
 
@@ -204,23 +200,37 @@ export const OptionRound = ({ id, data = [],  changeQuestionProps }) => {
         changeQuestionProps(id,'round',updateOptions);
     };
 
+    const handleValueChange = (optionId, newValue) => {
+        const updateOptions = options.map((item) => {
+            if(item.id === optionId){
+                const updateItem = item;
+                updateItem.value=newValue;
+                return updateItem;
+            }
+            return item;
+        });
+        setOptions(updateOptions);
+        changeQuestionProps(id,'round',updateOptions);
+    }
+
     const addOption = () => {
-        const lastOption = options.length + 1;
-        const newOption = {
-            id: uuidv4(),
-            title: "Sin respuesta",
-            name: `respuesta${lastOption}`,
-            exist: true,
-            status:false,
-        };
+        if(options.length <=4){
+            const lastOption = options.length + 1;
+            const newOption = {
+                id: uuidv4(),
+                title: "Sin respuesta",
+                name: `respuesta${lastOption}`,
+                exist: true,
+                status:false,
+            };
 
-        setOptions(prevObjetos => {
-            const newOptions = [...prevObjetos, newOption]
-            changeQuestionProps(id,'round',newOptions);
-            return newOptions;
+            setOptions(prevObjetos => {
+                const newOptions = [...prevObjetos, newOption]
+                changeQuestionProps(id,'round',newOptions);
+                return newOptions;
+            }
+            );
         }
-        );
-
     };
 
     const deleteOption = async(deleteId) => {
@@ -242,6 +252,12 @@ export const OptionRound = ({ id, data = [],  changeQuestionProps }) => {
         }
     };
 
+    const handleNumeric = () => {
+        const newValue = !numeric
+        setNumeric(newValue);
+        changeQuestionProps(id,'numeric',newValue);
+    }
+
     useEffect(() => {
         if(data.length > 0){
             changeQuestionProps(id,'round',data);
@@ -253,11 +269,16 @@ export const OptionRound = ({ id, data = [],  changeQuestionProps }) => {
 
     return (
         <div className="row ">
+            <div className="col-12 d-flex align-items-center">
+                <input style={{ width: "24px",height: "24px",}} className="form-control mr-3" type="checkbox" value="" id="flexCheckDefault" checked={numeric} onChange={handleNumeric}></input>
+                <h6  className="m-0">Númerico</h6>
+            </div>
+
             {options.map((item, index) => {
                 return (
                     <React.Fragment key={index}>
                         <div
-                            className="col-10 col-sm-8 col-md-8 mt-3"
+                            className="col-12 col-sm-12 col-md-12 col-lg-8 mt-3"
                         >
                             <form className="d-flex align-items-center">
                                 <input
@@ -277,12 +298,26 @@ export const OptionRound = ({ id, data = [],  changeQuestionProps }) => {
                                     type={"text"}
                                     className="form-control"
                                     placeholder="Respuesta"
+                                    style={{minWidth:100}}
                                     name={item.name}
                                     value={item.title}
                                     onChange={(e) =>
                                         handleTextChange(item.id, e.target.value)
                                     }
                                 />
+                                {
+                                    numeric ? (<input
+                                        type={"number"}
+                                        className="form-control ml-3"
+                                        style={{maxWidth:100, minWidth:50}}
+                                        placeholder="Valor"
+                                        name={`numeric-${id}-${item.name}`}
+                                        value={item.value}
+                                        onChange={(e) =>
+                                            handleValueChange(item.id, e.target.value)
+                                        }
+                                    />): <></>
+                                }
                                 {options.length > 2 ? (
                                     <div>
                                         <i
@@ -327,23 +362,15 @@ export const OptionRound = ({ id, data = [],  changeQuestionProps }) => {
     );
 };
 
-export const OptionSquard = ({ id, data = [],  changeQuestionProps }) => {
+export const OptionSquard = ({ id, data = [],  changeQuestionProps, isNumeric }) => {
+    // console.log(isNumeric)
+    const [numeric, setNumeric] = useState(isNumeric);
+
     const dataDefault = [
-        {
-            id: uuidv4(),
-            title: "respuesta 1",
-            name: "respuesta1",
-            status: true,
-            exist: true,
-        },
-        {
-            id: uuidv4(),
-            title: "respuesta 2",
-            name: "respuesta2",
-            status: false,
-            exist: true,
-        },
+        { id: uuidv4(), title: "respuesta 1", value:0, name: "respuesta1", status: true, exist: true, },
+        { id: uuidv4(), title: "respuesta 2", value:0, name: "respuesta2", status: false, exist: true, },
     ];
+
     const [options, setOptions] = useState(data.length > 0 ? data : dataDefault);
 
     const handleTextChange = (optionId, newValue) => {
@@ -359,22 +386,37 @@ export const OptionSquard = ({ id, data = [],  changeQuestionProps }) => {
         changeQuestionProps(id,'round',updateOptions);
     };
 
-    const addOption = () => {
-        const lastOption = options.length + 1;
-        const newOption = {
-            id: uuidv4(),
-            title: "Sin respuesta",
-            name: `respuesta${lastOption}`,
-            status:false,
-            exist: true,
-        };
+    const handleValueChange = (optionId, newValue) => {
+        const updateOptions = options.map((item) => {
+            if(item.id === optionId){
+                const updateItem = item;
+                updateItem.value=newValue;
+                return updateItem;
+            }
+            return item;
+        });
+        setOptions(updateOptions);
+        changeQuestionProps(id,'round',updateOptions);
+    }
 
-        setOptions(prevObjetos => {
-            const newOptions = [...prevObjetos, newOption]
-            changeQuestionProps(id,'round',newOptions);
-            return newOptions;
+    const addOption = () => {
+        if(options.length <=4){
+            const lastOption = options.length + 1;
+            const newOption = {
+                id: uuidv4(),
+                title: "Sin respuesta",
+                name: `respuesta${lastOption}`,
+                status:false,
+                exist: true,
+            };
+
+            setOptions(prevObjetos => {
+                const newOptions = [...prevObjetos, newOption]
+                changeQuestionProps(id,'round',newOptions);
+                return newOptions;
+            }
+            );
         }
-        );
     };
 
     const deleteOption = async(deleteId) => {
@@ -410,6 +452,12 @@ export const OptionSquard = ({ id, data = [],  changeQuestionProps }) => {
         changeQuestionProps(id,'round',updateOptions);
     };
 
+    const handleNumeric = () => {
+        const newValue = !numeric
+        setNumeric(newValue);
+        changeQuestionProps(id,'numeric',newValue);
+    }
+
     useEffect(() => {
         if(data.length > 0){
             changeQuestionProps(id,'round',data);
@@ -420,6 +468,10 @@ export const OptionSquard = ({ id, data = [],  changeQuestionProps }) => {
 
     return (
         <div className="row ">
+            <div className="col-12 d-flex align-items-center">
+                <input style={{ width: "24px",height: "24px",}} className="form-control mr-3" type="checkbox" value="" id={`isNumeric-${id}`} checked={numeric} onChange={handleNumeric}></input>
+                <h6  className="m-0">Númerico</h6>
+            </div>
             {options.map((item, index) => {
                 return (
                     <React.Fragment key={index}>
@@ -454,6 +506,19 @@ export const OptionSquard = ({ id, data = [],  changeQuestionProps }) => {
                                         )
                                     }
                                 />
+                                {
+                                    numeric ? (<input
+                                        type={"number"}
+                                        className="form-control ml-3"
+                                        style={{maxWidth:100, minWidth:50}}
+                                        placeholder="Valor"
+                                        name={`numeric-${item.name}`}
+                                        value={item.value}
+                                        onChange={(e) =>
+                                            handleValueChange(item.id, e.target.value)
+                                        }
+                                    />): <></>
+                                }
                                 {options.length > 2 ? (
                                     <div>
                                         <i
@@ -498,7 +563,8 @@ export const OptionSquard = ({ id, data = [],  changeQuestionProps }) => {
     );
 };
 
-export const OptionSelect = ({ id, data = [],  changeQuestionProps }) => {
+export const OptionSelect = ({ id, data = [],  changeQuestionProps, isNumeric }) => {
+    const [numeric, setNumeric] = useState(isNumeric);
     const dataDefault = [
         {
             id: uuidv4(),
@@ -529,19 +595,21 @@ export const OptionSelect = ({ id, data = [],  changeQuestionProps }) => {
     };
 
     const addOption = () => {
-        const lastOption = options.length + 1;
-        const newOption = {
-            id: uuidv4(),
-            title: "Sin respuesta",
-            name: `respuesta${lastOption}`,
-            exist: true,
-        };
-        setOptions(prevObjetos => {
-            const newOptions = [...prevObjetos, newOption]
-            changeQuestionProps(id,'round',newOptions);
-            return newOptions;
+        if(options.length <= 4){
+            const lastOption = options.length + 1;
+            const newOption = {
+                id: uuidv4(),
+                title: "Sin respuesta",
+                name: `respuesta${lastOption}`,
+                exist: true,
+            };
+            setOptions(prevObjetos => {
+                const newOptions = [...prevObjetos, newOption]
+                changeQuestionProps(id,'round',newOptions);
+                return newOptions;
+            }
+            );
         }
-        );
     };
 
     const deleteOption = async(deleteId) => {
@@ -563,6 +631,12 @@ export const OptionSelect = ({ id, data = [],  changeQuestionProps }) => {
         }
     };
 
+    const handleNumeric = () => {
+        const newValue = !numeric
+        setNumeric(newValue);
+        changeQuestionProps(id,'numeric',newValue);
+    }
+
     useEffect(() => {
         if(data.length > 0){
             changeQuestionProps(id,'round',data);
@@ -573,6 +647,10 @@ export const OptionSelect = ({ id, data = [],  changeQuestionProps }) => {
 
     return (
         <div className="row ">
+            <div className="col-12 d-flex align-items-center">
+                <input style={{ width: "24px",height: "24px",}} className="form-control mr-3" type="checkbox" value="" id="flexCheckDefault" checked={numeric} onChange={handleNumeric}></input>
+                <h6  className="m-0">Númerico</h6>
+            </div>
             {options.map((item, index) => {
                 return (
                     <React.Fragment key={index}>
@@ -599,6 +677,19 @@ export const OptionSelect = ({ id, data = [],  changeQuestionProps }) => {
                                         )
                                     }
                                 />
+                                {
+                                    numeric ? (<input
+                                        type={"number"}
+                                        className="form-control ml-3"
+                                        style={{maxWidth:100, minWidth:50}}
+                                        placeholder="Valor"
+                                        name={`numeric-${item.name}`}
+                                        value={item.value}
+                                        onChange={(e) =>
+                                            handleValueChange(item.id, e.target.value)
+                                        }
+                                    />): <></>
+                                }
                                 {options.length > 2 ? (
                                     <div>
                                         <i
@@ -748,6 +839,91 @@ export const OptionImage = ({id, data={}, changeQuestionProps}) => {
                     </div>
                 ):(<></>)
             }
+        </div>
+    );
+}
+
+export const OptionCurrency = ({id, data = {}, changeQuestionProps}) => {
+    const dataDefault = {};
+    dataDefault[`minimo-${id}`] = "$";
+    dataDefault[`maximo-${id}`] = "$";
+
+
+    const [inputValues, setInputValues] = useState( Object.hasOwn(data,`minimo-${id}`) || Object.hasOwn(data, `maximo-${id}`) ? data : dataDefault);
+
+    const formatNumber = (number) => {
+        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      };
+
+    const handleInputChange = async(e) => {
+        const { name, value } = e.target;
+        const newValue = value.replace(/,/g, '').replace('$', '')
+        // console.log(newValue.replace(/\B(?=(\d{3})+(?!\d))/g, ','))
+        data[name] = value;
+        setInputValues({
+          ...inputValues,
+          [name]:  "$" + formatNumber(newValue)
+        });
+
+        // changeQuestionProps(id,'minMax', data);
+    };
+
+    useEffect(() => {
+
+        if(Object.hasOwn(data, `minimo-${id}`) || Object.hasOwn(data, `maximo-${id}`)){
+                    changeQuestionProps(id,'minMax', data);
+        }else{
+                data = {}
+                data = dataDefault;
+                changeQuestionProps(id,'minMax', dataDefault);
+            }
+    }, []);
+
+    return (
+        <div className="row d-flex justify-content-between d-flex align-items-baseline">
+            <div className="col-12 col-md-8">
+                <label> Campo divisa</label>
+                <HrSimple
+                    styles={{
+                        width: "100%",
+                        borderWidth: "1px",
+                        borderColor: "#C5C5C5",
+                        borderStyle: "dashed",
+                        marginTop: "0px",
+                        marginLeft:"0px",
+                    }}
+                />
+            </div>
+
+            <div className="col-12 col-md-12">
+                <p>Definir el rango aceptado</p>
+            </div>
+            <div className="col-12 col-md-12 d-flex align-items-baseline gap-1">
+                <div className="form-group pl-0 anima-focus">
+                    <input
+                        type="text"
+                        className="form-control"
+                        placeholder=""
+                        name={`minimo-${id}`}
+                        value={inputValues[`minimo-${id}`]}
+                        onChange={handleInputChange}
+                        inputMode="numeric"
+                    />
+                    <label >Minimo</label>
+                </div>
+                <div className="form-group pl-0 anima-focus">
+                    <input
+                        type="text"
+                        className="form-control"
+                        placeholder=""
+                        name={`maximo-${id}`}
+                        value={inputValues[`maximo-${id}`]}
+                        onChange={handleInputChange}
+                        inputMode="numeric"
+                    />
+                    <label >Máximo</label>
+                </div>
+            </div>
         </div>
     );
 }

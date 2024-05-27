@@ -21,6 +21,7 @@ export const QuestionTemplateAnalisisRiesgos = ({id, question, changeSize, chang
         {id:"8", title:'Fecha'},
         {id:"9", title:'Hora'},
         {id:"10", title:'Imagen'},
+        {id:"15", title:"Divisa ($)"}
 
     ];
     const {option, handleChangeOption,attributes, listeners, setNodeRef, transform, transition,
@@ -34,7 +35,7 @@ export const QuestionTemplateAnalisisRiesgos = ({id, question, changeSize, chang
     const templateARComponentFactory = new TemplateARComponentFactory();
     let templateComponent = ""
     if(option){
-        templateComponent = templateARComponentFactory.createTemplateARComponent(option, id, changeQuestionProps, question.data, handleTileChange);
+        templateComponent = templateARComponentFactory.createTemplateARComponent(option, id, changeQuestionProps, question.data, handleTileChange, question.isNumeric);
     }
 
     if (isDragging) {

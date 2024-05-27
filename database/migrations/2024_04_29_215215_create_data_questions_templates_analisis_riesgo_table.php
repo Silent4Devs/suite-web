@@ -20,6 +20,7 @@ return new class extends Migration
             $table->boolean('status')->nullable()->default(false);
             $table->string('url')->nullable();
             $table->integer('catalog')->nullable();
+            $table->integer('value')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

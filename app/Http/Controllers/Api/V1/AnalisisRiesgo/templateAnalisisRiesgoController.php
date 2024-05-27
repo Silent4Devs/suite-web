@@ -83,6 +83,9 @@ class templateAnalisisRiesgoController extends Controller
                     Arr::forget($itm, 'pivot');
                     Arr::forget($itm, 'deleted_at');
                     $itm->columnId = $sectionId;
+                    $itm->isNumeric = $itm->is_numeric;
+
+                    Arr::forget($itm, 'is_numeric');
                     $this->getDataQuestion($itm);
                     return $itm;
                 });
@@ -144,7 +147,6 @@ class templateAnalisisRiesgoController extends Controller
         DB::beginTransaction();
         try {
             foreach ($sections as $section) {
-                // dd($section);
                 $sectionId = $section->id;
                 $templateId = $section->template_id;
                 $questionsFilter = array_filter($questions, function ($item) use ($sectionId) {
@@ -180,6 +182,7 @@ class templateAnalisisRiesgoController extends Controller
                         'type' => $question->type,
                         'position' => $question->position,
                         'obligatory' => $question->obligatory,
+                        'is_numeric' => $question->isNumeric,
                     ]);
 
                     TBSectionTemplateAr_QuestionTemplateArModel::create([
@@ -211,6 +214,7 @@ class templateAnalisisRiesgoController extends Controller
                         'type' => $question['type'],
                         'position' => $question['position'],
                         'obligatory' => $question['obligatory'],
+                        'is_numeric' => $question->isNumeric,
                     ]);
                     $pivot->update(
                         ['section_id' => $sectionId],
@@ -252,7 +256,6 @@ class templateAnalisisRiesgoController extends Controller
             $exist = intval($id);
 
             if ($exist) {
-                // dd($question);
                 $pivot = TBSectionTemplateAr_QuestionTemplateArModel::where('question_id', $id)->first();
                 $register = TBQuestionTemplateAnalisisRiesgoModel::where('id', $id)->first();
                 DB::beginTransaction();
@@ -263,6 +266,7 @@ class templateAnalisisRiesgoController extends Controller
                         'type' => $question->type,
                         'position' => $question->position,
                         'obligatory' => $question->obligatory,
+                        'is_numeric' => $question->isNumeric,
                     ]);
                     $pivot->update(
                         ['section_id' => $question->columnId],
@@ -272,7 +276,6 @@ class templateAnalisisRiesgoController extends Controller
                     DB::commit();
                 } catch (\Throwable $th) {
                     DB::rollback();
-                    // dd($th);
                     continue;
                 }
             } else {
@@ -285,6 +288,7 @@ class templateAnalisisRiesgoController extends Controller
                         'type' => $question->type,
                         'position' => $question->position,
                         'obligatory' => $question->obligatory,
+                        'is_numeric' => $question->isNumeric,
                     ]);
 
                     TBSectionTemplateAr_QuestionTemplateArModel::create([
@@ -367,6 +371,9 @@ class templateAnalisisRiesgoController extends Controller
             case '10':
                 $this->saveImageDataQuestion($question->data, $questionCreate->id);
                 break;
+            case '15':
+                $this->saveDataQuestionMinMax($question->data, $questionCreate->id);
+                break;
             default:
                 break;
         }
@@ -392,6 +399,9 @@ class templateAnalisisRiesgoController extends Controller
                 break;
             case '10':
                 $this->updateImageDataQuestion($question->data, $questionCreate);
+                break;
+            case '15':
+                $this->updateDataQuestionMinMax($question->data, $questionCreate);
                 break;
             default:
                 break;
@@ -422,7 +432,7 @@ class templateAnalisisRiesgoController extends Controller
 
     public function updateDataQuestionMinMax($dataQuestion)
     {
-        // dd($dataQuestion);
+
         DB::beginTransaction();
         $register = TBDataQuestionTemplateAnalisisRiesgoModel::find($dataQuestion->id);
 
@@ -464,7 +474,7 @@ class templateAnalisisRiesgoController extends Controller
 
     public function updateDataQuestionCatalog($dataQuestion)
     {
-        // dd($dataQuestion);
+
         DB::beginTransaction();
         $register = TBDataQuestionTemplateAnalisisRiesgoModel::find($dataQuestion->id);
 
@@ -491,6 +501,7 @@ class templateAnalisisRiesgoController extends Controller
                     'title' => $dataQuestion->title,
                     'name' => $dataQuestion->name,
                     'status' => $dataQuestion->status,
+                    'value' => $dataQuestion->value,
                 ]);
 
                 TBQuestionTemplateAr_DataQuestionTemplateArModel::create([
@@ -520,6 +531,7 @@ class templateAnalisisRiesgoController extends Controller
                         'title' => $dataQuestion->title,
                         'name' => $dataQuestion->name,
                         'status' => $dataQuestion->status,
+                        'value' => $dataQuestion->value,
                     ]);
                     DB::commit();
                 } catch (\Throwable $th) {
@@ -559,6 +571,7 @@ class templateAnalisisRiesgoController extends Controller
                 $dataQuestionCreate = TBDataQuestionTemplateAnalisisRiesgoModel::create([
                     'title' => $dataQuestion->title,
                     'name' => $dataQuestion->name,
+                    'value' => $dataQuestion->value,
                 ]);
 
                 TBQuestionTemplateAr_DataQuestionTemplateArModel::create([
@@ -586,6 +599,8 @@ class templateAnalisisRiesgoController extends Controller
                     $register->update([
                         'title' => $dataQuestion->title,
                         'name' => $dataQuestion->name,
+                        'value' => $dataQuestion->value,
+
                     ]);
 
                     DB::commit();
@@ -654,7 +669,6 @@ class templateAnalisisRiesgoController extends Controller
     public function updateImageDataQuestion($dataQuestions, $questionId)
     {
         if (property_exists($dataQuestions, 'name')) {
-            // dd("si tiene propiedad");
             DB::beginTransaction();
             $register = TBDataQuestionTemplateAnalisisRiesgoModel::find($questionId);
             try {
@@ -759,6 +773,28 @@ class templateAnalisisRiesgoController extends Controller
                     $path = asset('storage/analisis_riesgo/template/questions/' . $fileName);
                     $item->url = $path;
                 }
+                break;
+            case '15':
+                foreach ($data as $item) {
+                    Arr::forget($item, 'created_at');
+                    Arr::forget($item, 'updated_at');
+                    Arr::forget($item, 'deleted_at');
+                    Arr::forget($item, 'pivot');
+                    Arr::forget($item, 'title');
+                    Arr::forget($item, 'name');
+                    Arr::forget($item, 'status');
+                    Arr::forget($item, 'catalog');
+                    Arr::forget($item, 'value');
+                    Arr::forget($item, 'url');
+
+                    $item->minimo = $item->minimum;
+                    $item->maximo = $item->maximum;
+
+                    Arr::forget($item, 'minimum');
+                    Arr::forget($item, 'maximum');
+
+                }
+                break;
             default:
                 break;
         }
@@ -768,7 +804,6 @@ class templateAnalisisRiesgoController extends Controller
     public function destroySection($id)
     {
         $section = TBSectionTemplateAnalisisRiesgoModel::find($id);
-        // dd($section->id);
         $section->delete();
 
         return json_encode(['data' => 'Se elimino el registro exitosamente'], 200);
@@ -860,16 +895,16 @@ class templateAnalisisRiesgoController extends Controller
                             if($itm['type'] !== "11" && $itm['type'] !== "12" && $itm['type'] !== "13" && $itm['type'] !== "14" ){
                                 $itm['position'] = $itm['position'] + 6;
                             }
-                            // if($itm['type'] !== "11" && $itm['type'] !== "12" $itm['type'] !== "13"){
-                            //     $itm['position'] = $itm['position'] + 4;
-                            // }
-                            // $itm['type'] !== "11" & ? $itm['position'] = $itm['position'] + 4 : null;
                         }
                         Arr::forget($itm, 'created_at');
                         Arr::forget($itm, 'updated_at');
                         Arr::forget($itm, 'pivot');
                         Arr::forget($itm, 'deleted_at');
                         $itm->columnId = $sectionId;
+
+                        $itm->isNumeric = $itm->is_numeric;
+                        Arr::forget($itm, 'is_numeric');
+
                         $this->getDataQuestion($itm);
                         return $itm;
                     });

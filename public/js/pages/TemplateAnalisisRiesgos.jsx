@@ -5,6 +5,7 @@ import { Section } from '../components/custom/analisis-riesgos/Section';
 import { createPortal } from 'react-dom';
 import { useAnalisisRiesgo } from '../hooks/AnalisisRiesgo';
 import { BtnAddSection } from '../components/custom/analisis-riesgos/Buttons';
+import { BtnSimple } from '../components/common/Buttons';
 
 const TemplateAnalisisRiesgos = () => {
 
@@ -16,7 +17,7 @@ const TemplateAnalisisRiesgos = () => {
         return(<div>Cargando</div>)
     }
     return (
-    <div style={{display: "flex", flexDirection:"column", justifyContent:"flex-start", alignItems:"flex-start" }}>
+    <form onSubmit={handleSubmit} style={{display: "flex", flexDirection:"column", justifyContent:"flex-start", alignItems:"flex-start" }}>
 
         <DndContext sensors={sensors} collisionDetection={closestCorners} onDragEnd={handleDragEnd} onDragStart={handleDragStart} onDragOver={handleDragOver}>
 
@@ -47,10 +48,11 @@ const TemplateAnalisisRiesgos = () => {
         <BtnAddSection onClick={addQuestion} title="AGREGAR CAMPO NUEVO" icon="add_box"/>
         <BtnAddSection onClick={addSection} title="AGREGAR SECCIÓN" icon="view_agenda"/>
         </div>
-        <button onClick={handleSubmit}>Guardar</button>
+        <BtnSimple title="Guardar" type='submit'/>
+        {/* <button onClick={handleSubmit}>Guardar</button> */}
 
 
-    </div>
+    </form>
   )
 }
 

@@ -111,7 +111,9 @@
         </div>
     </div>
 
-    <button id="miBoton">Haz clic aquí</button>
+    {{-- <button id="miBoton">Haz clic aquí</button> --}}
+
+    <button id="miBoton" type="button" class="btn btn-primary mt-3 ml-0">Haz clic aquí</button>
 
 
 @endsection

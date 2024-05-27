@@ -13,7 +13,7 @@ export const useAnalisisRiesgo = () => {
     const [questions, setQuestions] = useState();
 
     const sectionDefault = [{id:'sec-1', title:"Sección 1", template_id:1},];
-    const questionDefault = [{ id: "q-1", columnId: "sec-1", size:12, type:"1", obligatory:true, title:"Pregunta 1", data:{}}];
+    const questionDefault = [{ id: "q-1", columnId: "sec-1", size:12, type:"1", obligatory:true, title:"Pregunta 1", isNumeric:false, data:{}}];
 
     const [activeSection, setActiveSection] = useState(null);
     const [activeQuestion, setActiveQuestion] = useState(null);
@@ -76,12 +76,9 @@ export const useAnalisisRiesgo = () => {
           setQuestions((questions) => {
             const activeIndex = questions.findIndex((item) => item.id === activeId);
             const overIndex = questions.findIndex((item) => item.id === overId);
-            // console.log(overIndex)
 
             if (questions[activeIndex].columnId != questions[overIndex].columnId) {
-              // Fix introduced after video recording
               questions[activeIndex].columnId = questions[overIndex].columnId;
-            //   questions[activeIndex].position = overIndex;
 
               return arrayMove(questions, activeIndex, overIndex - 1);
             }
@@ -97,10 +94,10 @@ export const useAnalisisRiesgo = () => {
         // Im dropping a Task over a column
         if (isActiveAQuestion && isOverASection) {
           setQuestions((questions) => {
-            // console.log(questions)
+
             const activeIndex = questions.findIndex((item) => item.id === activeId);
             questions[activeIndex].columnId = overId;
-            // console.log("DROPPING TASK OVER COLUMN", { activeIndex });
+
             return arrayMove(questions, activeIndex, activeIndex);
           });
         }
@@ -142,12 +139,12 @@ export const useAnalisisRiesgo = () => {
         const register = questions.find(item => item.id === id);
         const duplicateQuestion = {...register}
         duplicateQuestion.id = `q-${nextQuestion}`;
+        duplicateQuestion.data = {};
         setQuestions([...questions,duplicateQuestion]);
 
     }
 
     const changeSize = (id, newSize) => {
-        console.log(questions)
         const updateQuestions = questions.map((item)=>{
             if(item.id === id){
                 const updateItem = item
@@ -183,6 +180,7 @@ export const useAnalisisRiesgo = () => {
                     }
                     return item;
                 });
+                setQuestions(updateQuestions);
                 break;
             case 'obligatory':
                 updateQuestions = questions.map((item)=>{
@@ -240,7 +238,6 @@ export const useAnalisisRiesgo = () => {
                 setQuestions(updateQuestions);
                 break;
             case 'catalog':
-                // console.log(props[0])
                 updateQuestions = questions.map((item)=>{
                     if(item.id === id){
                         const updateItem = item;
@@ -251,8 +248,18 @@ export const useAnalisisRiesgo = () => {
                 });
                 setQuestions(updateQuestions);
                 break;
+            case 'numeric':
+                updateQuestions = questions.map((item)=>{
+                    if(item.id === id){
+                        const updateItem = item;
+                        updateItem.isNumeric=props;
+                        return updateItem;
+                    }
+                    return item;
+                });
+                setQuestions(updateQuestions);
+                break;
             default:
-                // console.log("sin cambio")
         }
     }
 
@@ -292,7 +299,6 @@ export const useAnalisisRiesgo = () => {
                             data[propMax] = data.maximo
                             delete data.minimo
                             delete data.maximo
-                            console.log(data)
                             item.data = data;
                         }
                         if(item.type === "4"){
@@ -301,6 +307,16 @@ export const useAnalisisRiesgo = () => {
                         }
                         if(item.type === "10"){
                             const data = item.data[0];
+                            item.data = data;
+                        }
+                        if(item.type === "15"){
+                            const data = item.data[0];
+                            const propMin = `minimo-${item.id}`
+                            const propMax = `maximo-${item.id}`
+                            data[propMin] = "$" + data.minimo
+                            data[propMax] = "$" + data.maximo
+                            delete data.minimo
+                            delete data.maximo
                             item.data = data;
                         }
                     });
@@ -321,7 +337,8 @@ export const useAnalisisRiesgo = () => {
         }
     }
 
-    const handleSubmit = async() => {
+    const handleSubmit = async(e) => {
+        e.preventDefault();
         const dataSections = sections.map((item) => ({...item}));
         const dataQuestions = questions.map((item)=> ({...item}));
         dataSections.map((item, index)=>{
@@ -356,6 +373,20 @@ export const useAnalisisRiesgo = () => {
                 delete item.data[propMax]
 
             }
+            if(item.type === "15"){
+                const propMin = `minimo-${id}`
+                const propMax = `maximo-${id}`
+
+                item.data.minimo = item.data[propMin]
+                item.data.maximo = item.data[propMax]
+
+                item.data.minimo = parseInt(item.data.minimo.replace(/[$,]/g, ''));
+
+                item.data.maximo = parseInt(item.data.maximo.replace(/[$,]/g, ''));
+
+                delete item.data[propMin]
+                delete item.data[propMax]
+            }
         })
 
         dataSections.map(item => {
@@ -377,7 +408,6 @@ export const useAnalisisRiesgo = () => {
     const createData = async(dataSections,dataQuestions) =>{
         const url = 'http:///suite-web.test/api/api/v1/test'
         const dataForm = new FormData();
-        console.log(dataQuestions)
         dataQuestions.forEach((item, index) => {
             if(item.type === '10'){
                 dataForm.append(`image[${item.id}]`, item.data.file);
@@ -387,7 +417,6 @@ export const useAnalisisRiesgo = () => {
         dataForm.append('questions', JSON.stringify(dataQuestions));
         try {
             const response = await axios.post(url,dataForm);
-            console.log(response.data);
             if(response.status === 200){
                 setReload(reload+1);
             }
@@ -399,7 +428,6 @@ export const useAnalisisRiesgo = () => {
     const editData = async(dataSections,dataQuestions) => {
         const url = 'http:///suite-web.test/api/api/v1/test/1'
         const dataForm = new FormData();
-        console.log(dataQuestions);
         dataQuestions.forEach((item) => {
             if(item.type === '10'){
                 const isFile = item.data.file instanceof File;
@@ -418,7 +446,6 @@ export const useAnalisisRiesgo = () => {
                     '_method' : "PUT"
                 }
               });
-            console.log(response);
             if(response.status === 200){
                 setReload(reload+1);
             }
@@ -444,7 +471,6 @@ export const useAnalisisRiesgo = () => {
     const deleteSection = async(id) => {
         let newId ="";
         const destroyElement = () => {
-            console.log("destroyElement")
             const newSections = sections.filter((item) => item.id !== id);
             const newQuestions = questions.filter((item) => item.columnId !== id);
             setSections(newSections);
@@ -492,6 +518,7 @@ export const useGenerateTemplateAnalisisRiesgo = (item, changeQuestionProps,chan
             type:item.type
         },
         title:item.title,
+        isNumeric:item.isNumeric,
     }});
 
     const handleChangeOption = (e) => {
@@ -613,10 +640,7 @@ export const useFormulasAnalisisRiesgos = () => {
     }
 
     const addVariable = (item) => {
-        console.log(item)
-        const question = item.title;
         const id = `$fv${item.id}`
-        const element = `${id}${question}`
         setFormula(`${formula}${id}`);
     }
 
@@ -661,7 +685,6 @@ export const useFormulasAnalisisRiesgos = () => {
             const response = await axios.get('http:///suite-web.test/api/api/v1/ar/formulas/options/1');
             if(response.status === 200){
                 const data = response.data.data.options
-                // console.log(data);
                 setOptions(data);
             }
         } catch (error) {
@@ -695,7 +718,6 @@ export const useFormulasAnalisisRiesgos = () => {
     }
 
     const handleSaveFormula = async (newFormula) => {
-        // console.log(newFormula);
         const response = await axios.post('http:///suite-web.test/api/api/v1/ar/formulas',{formula:newFormula});
         if(response.status === 200){
             setReload(!reload);
@@ -704,9 +726,7 @@ export const useFormulasAnalisisRiesgos = () => {
     }
 
     const handleSubmit = async() =>{
-        // console.log(formulas)
         const response = await axios.put('http:///suite-web.test/api/api/v1/ar/formulas/edit',{formulas:formulas});
-        console.log(response.data.data)
         if(response.status === 200){
             setReload(!reload);
         }
@@ -798,12 +818,11 @@ export const useSettingsAnalisisRiesgos = () => {
           setQuestions((questions) => {
             const activeIndex = questions.findIndex((item) => item.id === activeId);
             const overIndex = questions.findIndex((item) => item.id === overId);
-            // console.log(overIndex)
+
 
             if (questions[activeIndex].columnId != questions[overIndex].columnId) {
-              // Fix introduced after video recording
+
               questions[activeIndex].columnId = questions[overIndex].columnId;
-            //   questions[activeIndex].position = overIndex;
 
               return arrayMove(questions, activeIndex, overIndex - 1);
             }
@@ -819,10 +838,9 @@ export const useSettingsAnalisisRiesgos = () => {
         // Im dropping a Task over a column
         if (isActiveAQuestion && isOverASection) {
           setQuestions((questions) => {
-            // console.log(questions)
             const activeIndex = questions.findIndex((item) => item.id === activeId);
             questions[activeIndex].columnId = overId;
-            // console.log("DROPPING TASK OVER COLUMN", { activeIndex });
+
             return arrayMove(questions, activeIndex, activeIndex);
           });
         }
@@ -875,7 +893,12 @@ export const useSettingsAnalisisRiesgos = () => {
                         const data = item.data[0];
                         item.data = data;
                     }
-
+                    if(item.type === "15"){
+                        const data = item.data[0];
+                        // data.minimo = "$" + data.minimo.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                        // data.maximo = "$" + data.maximo.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                        item.data = data;
+                    }
                 });
 
                 dataSection.sort((a, b) => a.position - b.position);
@@ -895,7 +918,6 @@ export const useSettingsAnalisisRiesgos = () => {
         try {
             setLoadingInfoTemplate(true)
             const response = await axios.get('http:///suite-web.test/api/api/v1/ar/template/1');
-            console.log(response)
             if(response.status === 200){
                 const register = response.data.data.template
                 setTemplate(register)
@@ -911,14 +933,12 @@ export const useSettingsAnalisisRiesgos = () => {
         try {
             setLoadingTableSettigns(true);
             const response = await axios.get('http:///suite-web.test/api/api/v1/template/ar/settings/table/1');
-            console.log("settigs")
-            console.log(response.data.data)
+
             if(response.status === 200){
                 const register = response.data.data
                 setTableSettings(register);
             }
         } catch (error) {
-            // console.log(error)
         } finally{
             setLoadingTableSettigns(false);
         }
@@ -939,9 +959,8 @@ export const useSettingsAnalisisRiesgos = () => {
                     '_method' : "PUT"
                 }
               });
-            // const response2 = await axios.put(url2,tableSettings);
-            console.log(response)
-            // console.log(response2)
+            const response2 = await axios.put(url2,tableSettings);
+            console.log(response.data)
 
         } catch (error) {
             console.log(error)
@@ -972,6 +991,7 @@ export const useSettingsAnalisisRiesgos = () => {
                 const newColumnId = columnId.slice(3);
                 item.columnId = parseInt(newColumnId,10);
             }
+
         })
 
         dataSections.map(item => {

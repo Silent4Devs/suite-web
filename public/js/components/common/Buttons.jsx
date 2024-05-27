@@ -1,5 +1,5 @@
 import "../../../css/common/buttons.css";
-export const BtnSimple = ({title ,onClick = null, background=null, color=null, height=null, width=null}) => {
+export const BtnSimple = ({title ,onClick = null, background=null, color=null, height=null, width=null, type="button"}) => {
     const btnStyle = {
         background: background ? background : "#006AD6",
         color : color ? color : "#FFFFFF",
@@ -7,7 +7,7 @@ export const BtnSimple = ({title ,onClick = null, background=null, color=null, h
         width: width ? width : "154px",
     }
     return(
-        <button type="button" className="btn btn-simple" style={btnStyle} onClick={onClick}>
+        <button type={type} className="btn btn-simple" style={btnStyle} onClick={onClick}>
             {title}
         </button>
     )

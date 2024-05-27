@@ -4,6 +4,7 @@ import { useSettingsAnalisisRiesgos } from '../../hooks/AnalisisRiesgo'
 import { DndContext, closestCorners, DragOverlay } from '@dnd-kit/core';
 import { ContainerInfoTemplate, ContainerSettings, ContainerTableSettigs } from '../../components/custom/analisis-riesgos/Containers';
 import { SectionSettigns } from '../../components/custom/analisis-riesgos/Section';
+import { BtnSimple } from '../../components/common/Buttons';
 
 
 
@@ -47,7 +48,8 @@ const SettingsAnalisisRiesgos = () => {
 
         <ContainerTableSettigs data={tableSettings}/>
 
-        <button onClick={handleSubmit}>Guardar</button>
+        <BtnSimple title="Guardar" onClick={handleSubmit}/>
+        {/* <button onClick={handleSubmit}>Guardar</button> */}
     </div>
   )
 }

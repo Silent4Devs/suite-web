@@ -4,7 +4,7 @@
             <div class="row m-0 p-0">
                 <div class="col-12">
                     <h5 class="title-grafics">
-                        Analisis de riesgos
+                        Análisis de riesgos
                     </h5>
                 </div>
             </div>

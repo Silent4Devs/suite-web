@@ -70,7 +70,7 @@ export const Section = ({
     }
 
     return (
-        <div style={{width:"100%"}} ref={setNodeRef} {...attributes} {...listeners} >
+        <div style={{width:"100%"}}  >
             <div className="encabezado">
                 <div className="section d-flex justify-content-between">
                         <h5 className="m-0 enc-title" onClick={()=>setEditMode(true)}>

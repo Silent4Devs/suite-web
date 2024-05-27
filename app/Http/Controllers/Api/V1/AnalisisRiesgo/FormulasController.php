@@ -121,14 +121,33 @@ class FormulasController extends Controller
             switch($question->type){
                 case '3':
                     Arr::forget($newQuestion, 'type');
+                    Arr::forget($newQuestion, 'is_numeric');
                     array_push($options, $newQuestion);
                     break;
+                case '5':
+                    if($newQuestion->is_numeric){
+                        Arr::forget($newQuestion, 'type');
+                        Arr::forget($newQuestion, 'is_numeric');
+                        array_push($options, $newQuestion);
+                    }
+                    break;
                 case '6':
-                    Arr::forget($newQuestion, 'type');
-                    array_push($options, $newQuestion);
+                    if($newQuestion->is_numeric){
+                        Arr::forget($newQuestion, 'type');
+                        Arr::forget($newQuestion, 'is_numeric');
+                        array_push($options, $newQuestion);
+                    }
+                    break;
+                case '7':
+                    if($newQuestion->is_numeric){
+                        Arr::forget($newQuestion, 'type');
+                        Arr::forget($newQuestion, 'is_numeric');
+                        array_push($options, $newQuestion);
+                    }
                     break;
                 case '14':
                     Arr::forget($newQuestion, 'type');
+                    Arr::forget($newQuestion, 'is_numeric');
                     array_push($options, $newQuestion);
                 default:
             }

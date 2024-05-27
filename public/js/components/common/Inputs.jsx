@@ -17,6 +17,7 @@ export const InputSimple = ({ title, name, type="text", value, handleChange, bac
                     name={name}
                     value={value}
                     onChange={(e)=>handleChange(e.target.value)}
+                    required
 
                 />
                 <label >{title}</label>
