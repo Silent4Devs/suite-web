@@ -592,7 +592,8 @@ class ContratosController extends AppBaseController
             'timesheet_proyecto_id' => $proyecto->id,
         ], $id);
 
-        $convergencia = ConvergenciaContratos::create([
+        $convergencia = ConvergenciaContratos::where('contrato_id', $id)->first();
+        $convergencia->update([
             'timesheet_proyecto_id' => $proyecto->id,
             'timesheet_cliente_id' => $request->proveedor_id,
             'contrato_id' => $contrato->id,
