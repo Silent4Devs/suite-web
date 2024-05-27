@@ -18,12 +18,12 @@
         <div class="card-body datatable-fix">
             <form class="text-right" action="{{ route('contract_manager.requisiciones.indexAprobadores') }}" method="GET">
                 @method('GET')
-                <a style="color: white;" class="btn tb-btn-primary"
+                <a style="color: white;" class="btn btn-primary"
                     href="{{ route('contract_manager.requisiciones.create') }}">Agregar</a>
-                <button class="btn tb-btn-primary" type="submit" title="Aprobadores">
+                <button class="btn btn-primary" type="submit" title="Aprobadores">
                     Aprobadores
                 </button>
-                <a style="color: white;" class="btn tb-btn-primary"
+                <a style="color: white;" class="btn btn-primary"
                     href="{{ route('contract_manager.requisiciones.archivo') }}">Archivados</a>
             </form>
             <table id="dom" class="table table-bordered w-100 datatable-perspectiva" style="width: 100%">
