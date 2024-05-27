@@ -85,7 +85,7 @@ export const OptionNumber = ({id, data = {}, changeQuestionProps}) => {
     return (
         <div className="row d-flex justify-content-between d-flex align-items-baseline">
             <div className="col-12 col-md-8">
-                <label> Campo numérico</label>
+                <label> Campo númerico</label>
                 <HrSimple
                     styles={{
                         width: "100%",
@@ -111,7 +111,7 @@ export const OptionNumber = ({id, data = {}, changeQuestionProps}) => {
                         value={inputValues[`minimo-${id}`]}
                         onChange={handleInputChange}
                     />
-                    <label >Minimo</label>
+                    <label >Mínimo</label>
                 </div>
                 <div className="form-group pl-0 anima-focus">
                     <input
@@ -355,7 +355,7 @@ export const OptionRound = ({ id, data = [],  changeQuestionProps, isNumeric }) 
                     className="btn btn-link"
                     onClick={addOption}
                 >
-                    Agregar opcion o añadir respuesta
+                    Agregar opción o añadir respuesta
                 </button>
             </div>
         </div>
@@ -556,7 +556,7 @@ export const OptionSquard = ({ id, data = [],  changeQuestionProps, isNumeric })
                     className="btn btn-link"
                     onClick={addOption}
                 >
-                    Agregar opcion o añadir respuesta
+                    Agregar opción o añadir respuesta
                 </button>
             </div>
         </div>
@@ -719,7 +719,7 @@ export const OptionSelect = ({ id, data = [],  changeQuestionProps, isNumeric })
                     className="btn btn-link"
                     onClick={addOption}
                 >
-                    Agregar opcion o añadir respuesta
+                    Agregar opción o añadir respuesta
                 </button>
             </div>
         </div>
@@ -803,7 +803,7 @@ export const OptionTime = ({id, data = {}, changeQuestionProps}) => {
                     className="material-symbols-outlined"
                     style={{ marginRight: "13px", color: "#D5D5D5" }}
                 >
-                    calendar_month
+                    schedule
                 </i>
             </div>
         </div>

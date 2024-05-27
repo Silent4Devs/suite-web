@@ -16,7 +16,7 @@ const FormulasAnalisisRiesgos = () => {
   return (
     <div className='mb-3'>
         <CardContainer>
-            <h3>Generación de formula</h3>
+            <h3>Generación de fórmula</h3>
             <div className="row mb-4">
                 <div className="col-12 col-md-10">
                     <InputSimple title="" name="formula" value={formula} handleChange={handleChangeFormula} background="#F1F1F1"/>
@@ -43,7 +43,7 @@ const FormulasAnalisisRiesgos = () => {
                 </div>
             </div>
             <HrSimple styles={hrStyle}/>
-            <h3>Historial de formulas</h3>
+            <h3>Historial de fórmulas</h3>
             <RecordFormulas formulas={formulas} handleChangeStatus={handleChangeStatus} handleChangeTitle={handleChangeTitle} deleteFormula={deleteFormula} options={sections} handleChangeSection={handleChangeSection}/>
         </CardContainer>
         <BtnSimple title="guardar" onClick={handleSubmit}/>

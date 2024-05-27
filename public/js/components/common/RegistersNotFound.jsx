@@ -1,7 +1,7 @@
 export const RegisterNotFound = (message=null) => {
     const showText = () => {
         if(message){
-            return "No hay Elementos registrados"
+            return "No hay elementos registrados"
         }else{
             return message
         }

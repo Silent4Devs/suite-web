@@ -12,7 +12,7 @@ export const QuestionTemplateAnalisisRiesgos = ({id, question, changeSize, chang
 
     const options = [
         {id:"1" , title:'Respuesta corta'},
-        {id:"2", title:'Parrafo'},
+        {id:"2", title:'Párrafo'},
         {id:"3", title:'Númerico'},
         {id:"4", title:'Catálogo Interno'},
         {id:"5", title:'Varias opciones'},
