@@ -159,7 +159,7 @@
                                 </a>
                             </td>
                             <td class="alineacion">
-                                <button wire:click="$emit('triggerDeleteEntregable',{{ $em->entregable_id }})"
+                                <button wire:click="$dispatch('triggerDeleteEntregable',{{ $em->entregable_id }})"
                                     class="btn red">
                                     <i class="material-icons">delete</i>
                                 </button>

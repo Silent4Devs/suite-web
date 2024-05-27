@@ -58,7 +58,7 @@
                                                             Editar
                                                         </div>
                                                     </a>
-                                                    <a class="dropdown-item" wire:click="$emit('deleteA',{{$amenaza->id}})">
+                                                    <a class="dropdown-item" wire:click="$dispatch('deleteA',{{$amenaza->id}})">
                                                         <div class="d-flex align-items-start">
                                                             <i class="material-icons-outlined" style="width: 24px;font-size:18px;">delete_outlined</i>
                                                             Eliminar
@@ -69,7 +69,7 @@
                                             {{-- <i wire:click="destroy({{ $amenaza->id }})" class="fas fa-trash-alt text-danger"></i>
                                             <i class="fas fa-edit text-primary  ml-2" wire:click="edit({{ $amenaza->id }})"></i>
                                             <i class="text-danger ml-2 fas fa-exclamation-triangle"
-                                                wire:click="$emit('modalRiesgoFoda',{{ $amenaza->id }},'amenaza')" data-toggle="modal"
+                                                wire:click="$dispatch('modalRiesgoFoda',{{ $amenaza->id }},'amenaza')" data-toggle="modal"
                                                 data-target="#marcaslec" title="Asociar un Riesgo"></i> --}}
                                         </td>
                                     </tr>
@@ -191,7 +191,7 @@
                             <i wire:click="destroy({{ $amenaza->id }})" class="fas fa-trash-alt text-danger"></i>
                             <i class="fas fa-edit text-primary  ml-2" wire:click="edit({{ $amenaza->id }})"></i>
                             <i class="text-danger ml-2 fas fa-exclamation-triangle"
-                                wire:click="$emit('modalRiesgoFoda',{{ $amenaza->id }},'amenaza')" data-toggle="modal"
+                                wire:click="$dispatch('modalRiesgoFoda',{{ $amenaza->id }},'amenaza')" data-toggle="modal"
                                 data-target="#marcaslec" title="Asociar un Riesgo"></i>
                         </td>
                     </tr>

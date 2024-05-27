@@ -99,7 +99,7 @@
                                 </a>
                             </td>
                             <td>
-                                <button wire:click="$emit('triggerDeleteCierre',{{ $em->id }})" class="btn red">
+                                <button wire:click="$dispatch('triggerDeleteCierre',{{ $em->id }})" class="btn red">
                                     <i class="material-icons">delete</i>
                                 </button>
                             </td>

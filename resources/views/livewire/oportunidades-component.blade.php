@@ -61,7 +61,7 @@
                                                     Editar
                                                 </div>
                                             </a>
-                                            <a class="dropdown-item" wire:click="$emit('deleteO',{{$oportunidad->id}})">
+                                            <a class="dropdown-item" wire:click="$dispatch('deleteO',{{$oportunidad->id}})">
                                                 <div class="d-flex align-items-start">
                                                     <i class="material-icons-outlined" style="width: 24px;font-size:18px;">delete_outlined</i>
                                                     Eliminar
@@ -71,7 +71,7 @@
                                         </div>
                                         {{-- <i wire:click="destroy({{ $oportunidad->id }})" class="fas fa-trash-alt text-danger"></i>
                                         <i class="fas fa-edit text-primary ml-2" wire:click="edit({{ $oportunidad->id }})"></i>
-                                        <i class="text-danger ml-2 fas fa-exclamation-triangle" wire:click="$emit('modalRiesgoFoda',{{$oportunidad->id}},'oportunidad')" data-toggle="modal"
+                                        <i class="text-danger ml-2 fas fa-exclamation-triangle" wire:click="$dispatch('modalRiesgoFoda',{{$oportunidad->id}},'oportunidad')" data-toggle="modal"
                                             data-target="#marcaslec" title="Asociar un Riesgo"></i> --}}
                                     </td>
                                 </tr>
@@ -193,7 +193,7 @@
                     <td>
                         <i wire:click="destroy({{ $oportunidad->id }})" class="fas fa-trash-alt text-danger"></i>
                         <i class="fas fa-edit text-primary ml-2" wire:click="edit({{ $oportunidad->id }})"></i>
-                        <i class="text-danger ml-2 fas fa-exclamation-triangle" wire:click="$emit('modalRiesgoFoda',{{$oportunidad->id}},'oportunidad')" data-toggle="modal"
+                        <i class="text-danger ml-2 fas fa-exclamation-triangle" wire:click="$dispatch('modalRiesgoFoda',{{$oportunidad->id}},'oportunidad')" data-toggle="modal"
                             data-target="#marcaslec" title="Asociar un Riesgo"></i>
                     </td>
                 </tr>

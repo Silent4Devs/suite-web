@@ -47,12 +47,12 @@
                     </td>
                     <td style="min-width:40px;">
                         <i class="fas fa-edit"
-                            wire:click.prevent="$emit('editarInfraestructura',{{ $data->id }})">
+                            wire:click.prevent="$dispatch('editarInfraestructura',{{ $data->id }})">
                         </i>
                         {{-- <i class="fas fa-project-diagram"
-                            wire:click.prevent="$emit('agregarNormas',{{ $data->id }})"> </i> --}}
+                            wire:click.prevent="$dispatch('agregarNormas',{{ $data->id }})"> </i> --}}
                         <i class="fas fa-trash-alt text-danger"
-                            wire:click.prevent="$emit('eliminarInfraestructura',{{ $data->id }})"> </i>
+                            wire:click.prevent="$dispatch('eliminarInfraestructura',{{ $data->id }})"> </i>
                     </td>
                     {{-- <td> @livewire('edit-partes-interesadas',['id_requisito'=>$data->id])</td> --}}
                 </tr>
