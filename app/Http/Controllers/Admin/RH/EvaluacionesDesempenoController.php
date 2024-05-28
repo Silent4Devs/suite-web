@@ -216,71 +216,64 @@ class EvaluacionesDesempenoController extends Controller
         $evaluacion = EvaluacionDesempeno::find($id);
 
         foreach ($evaluacion->periodos as $key_periodo => $periodo) {
+            $coleccion = collect();
             foreach ($evaluacion->evaluados as $key => $evaluado) {
-                if ($evaluacion->activar_objetivos && $evaluacion->activar_competencias) {
-                    $totales_evaluado[$key][$evaluado->id] =
-                        [
-                            'competencias' => $evaluado->calificacionesCompetenciasEvaluadoPeriodo($periodo->id),
-                            'objetivos' => $evaluado->calificacionesObjetivosEvaluadoPeriodo($periodo->id),
-                        ];
+                $empleadoId = $evaluado->empleado->id;
+                $evaluadores = collect();
 
-                    $empleadoId = $evaluado->empleado->id;
-
+                if ($evaluacion->activar_objetivos) {
+                    $totales_evaluado[$key_periodo][$evaluado->id]['objetivos'] = $evaluado->calificacionesObjetivosEvaluadoPeriodo($periodo->id);
                     $evObj = $evaluado->evaluadoresObjetivos($periodo->id);
-                    $evComp = $evaluado->evaluadoresCompetencias($periodo->id);
 
                     $evaluadoresObjetivos = $evObj->reject(function ($item) use ($empleadoId) {
                         return $item['evaluador_desempeno_id'] == $empleadoId;
                     });
 
+                    $evO = $evaluadoresObjetivos->map(function ($eO) {
+                        return [
+                            'id' => $eO->empleado->id,
+                            'nombre' => $eO->empleado->name
+                        ];
+                    });
+
+                    $evaluadores = $evaluadores->merge($evO);
+                }
+
+                if ($evaluacion->activar_competencias) {
+                    $totales_evaluado[$key_periodo][$evaluado->id]['competencias'] = $evaluado->calificacionesCompetenciasEvaluadoPeriodo($periodo->id);
+                    $evComp = $evaluado->evaluadoresCompetencias($periodo->id);
+
                     $evaluadoresCompetencias = $evComp->reject(function ($item) use ($empleadoId) {
                         return $item['evaluador_desempeno_id'] == $empleadoId;
                     });
 
-                    dd(
-                        $evaluadoresObjetivos->all(),
-                        $evaluadoresCompetencias->all(),
-                    );
-
-                    // $totales_evaluado[$key][$evaluado->id]["informacion_evaluado"] = [
-
-                    // ];
-                } elseif ($evaluacion->activar_objetivos && !$evaluacion->activar_competencias) {
-                    $totales_evaluado[$key][$evaluado->id] =
-                        [
-                            'objetivos' => $evaluado->calificacionesObjetivosEvaluadoPeriodo($periodo->id),
+                    $evC = $evaluadoresCompetencias->map(function ($eC) {
+                        return [
+                            'id' => $eC->empleado->id,
+                            'nombre' => $eC->empleado->name
                         ];
+                    });
 
-                    $evaluadoresObjetivos = $evaluado->evaluadoresObjetivos($periodo->id);
-                } elseif (!$evaluacion->activar_objetivos && $evaluacion->activar_competencias) {
-                    $totales_evaluado[$key][$evaluado->id] =
-                        [
-                            'competencias' => $evaluado->calificacionesCompetenciasEvaluadoPeriodo($periodo->id),
-                        ];
-
-                    $evaluadoresCompetencias = $evaluado->evaluadoresCompetencias($periodo->id);
+                    $evaluadores = $evaluadores->merge($evC);
                 }
 
-                $totales_evaluado[$key][$evaluado->id]["informacion_evaluado"] = [
-                    "nombre" => $evaluado->empleado->name,
-                    "puesto" => $evaluado->empleado->puestoRelacionado->puesto,
-                    "area" => $evaluado->empleado->area->area,
-                ];
+                // Keep only 'nombre' after ensuring uniqueness based on 'id'
+                $totales_evaluado[$key_periodo][$evaluado->id]['evaluadores'] = $evaluadores->unique('id')->pluck('nombre')->values()->all();
 
-                // Use reject to remove items with 'evaluador_desempeno_id' equal to $empleadoId
-                $collection = $collection->reject(function ($item) use ($empleadoId) {
-                    return $item['evaluador_desempeno_id'] == $empleadoId;
-                });
+                // $totales_evaluado[$key_periodo][$evaluado->id]['informacion_evaluado'] = [
+                //     'nombre' => $evaluado->empleado->name,
+                //     'puesto' => $evaluado->empleado->puestoRelacionado->puesto,
+                //     'area' => $evaluado->empleado->area->area,
+                // ];
 
-                dump(
-                    $evaluado,
-                    $evaluadoresObjetivos,
-                    $evaluadoresCompetencias
-                );
+                $coleccion =
+                    [
+                        'nombre' => $evaluado->empleado->name,
+                        'puesto' => $evaluado->empleado->puestoRelacionado->puesto,
+                        'area' => $evaluado->empleado->area->area,
+                    ];
             }
         }
-
-        dd($totales_evaluado);
 
         $export = new EvaluacionesDesempenoReportExport($id);
         // dd($export);

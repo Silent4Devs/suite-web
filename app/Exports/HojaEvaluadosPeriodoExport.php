@@ -26,36 +26,85 @@ class HojaEvaluadosPeriodoExport implements FromCollection, WithHeadings,  WithT
     public function collection()
     {
         $evaluacion = EvaluacionDesempeno::find($this->id);
-        dd($evaluacion);
-        if ($evaluacion->activar_objetivos) {
-        }
-
-        if ($evaluacion->activar_competencias) {
-        }
-
+        $coleccion = collect();
         foreach ($evaluacion->evaluados as $key => $evaluado) {
-            dd($evaluado);
-            // $totales_evaluado[$key][$evaluado->id] =
-            //     [
-            //         'competencias' => $evaluado->calificacionesCompetenciasEvaluadoPeriodo($this->periodo_id)['promedio_total'] * ($this->evaluacion->porcentaje_competencias / 100),
-            //         'objetivos' => $evaluado->calificacionesObjetivosEvaluadoPeriodo($this->periodo_id)['promedio_total'] * ($this->evaluacion->porcentaje_objetivos / 100),
-            //         'final' => $evaluado->calificacionesCompetenciasEvaluadoPeriodo($this->periodo_id)['promedio_total'] * ($this->evaluacion->porcentaje_competencias / 100) + $evaluado->calificacionesObjetivosEvaluadoPeriodo($periodo["id_periodo"])['promedio_total'] * ($this->evaluacion->porcentaje_objetivos / 100),
-            //     ];
+            $empleadoId = $evaluado->empleado->id;
+            $evaluadores = collect();
 
-            // $promedio_evaluados_area[$key][$evaluado->empleado->area_id]["promedioEvdsObjs"][] = $this->totales_evaluado[$key][$evaluado->id]["objetivos"];
+            if ($evaluacion->activar_objetivos) {
+                $totales_evaluado[$this->periodo_id][$evaluado->id]['objetivos'] = $evaluado->calificacionesObjetivosEvaluadoPeriodo($this->periodo_id);
+                $evObj = $evaluado->evaluadoresObjetivos($this->periodo_id);
+
+                $evaluadoresObjetivos = $evObj->reject(function ($item) use ($empleadoId) {
+                    return $item['evaluador_desempeno_id'] == $empleadoId;
+                });
+
+                $evO = $evaluadoresObjetivos->map(function ($eO) {
+                    return [
+                        'id' => $eO->empleado->id,
+                        'nombre' => $eO->empleado->name
+                    ];
+                });
+
+                $evaluadores = $evaluadores->merge($evO);
+            }
+
+            if ($evaluacion->activar_competencias) {
+                $totales_evaluado[$this->periodo_id][$evaluado->id]['competencias'] = $evaluado->calificacionesCompetenciasEvaluadoPeriodo($this->periodo_id);
+                $evComp = $evaluado->evaluadoresCompetencias($this->periodo_id);
+
+                $evaluadoresCompetencias = $evComp->reject(function ($item) use ($empleadoId) {
+                    return $item['evaluador_desempeno_id'] == $empleadoId;
+                });
+
+                $evC = $evaluadoresCompetencias->map(function ($eC) {
+                    return [
+                        'id' => $eC->empleado->id,
+                        'nombre' => $eC->empleado->name
+                    ];
+                });
+
+                $evaluadores = $evaluadores->merge($evC);
+            }
+
+            // Keep only 'nombre' after ensuring uniqueness based on 'id'
+            // $totales_evaluado[$this->periodo_id][$evaluado->id]['evaluadores'] = $evaluadores->unique('id')->pluck('nombre')->values()->all();
+
+            // Ensure uniqueness and concatenate 'nombre' values with "/"
+            $concatenatedEvaluadores = $evaluadores->unique('id')->pluck('nombre')->implode(' , ');
+
+            // $totales_evaluado[$this->periodo_id][$evaluado->id]['informacion_evaluado'] = [
+            //     'nombre' => $evaluado->empleado->name,
+            //     'puesto' => $evaluado->empleado->puestoRelacionado->puesto,
+            //     'area' => $evaluado->empleado->area->area,
+            // ];
+
+            $coleccion->push(
+                [
+                    'nombre' => $evaluado->empleado->name,
+                    'puesto' => $evaluado->empleado->puestoRelacionado->puesto,
+                    'area' => $evaluado->empleado->area->area,
+                    'evaluadores' => $concatenatedEvaluadores,
+                    'estatus' => $evaluado->empleado->estatus,
+                    'porcentajeObjetivos' => $evaluacion->porcentaje_objetivos,
+                    'porcentajeCompetencias' => $evaluacion->porcentaje_competencias,
+
+                ]
+            );
         }
+        return $coleccion;
     }
 
     public function headings(): array
     {
         return [
-            'Solicitante',
-            'Descripcion',
-            'Periodo',
-            'Dias solicitados',
-            'Fecha Inicio',
-            'Fecha Fin',
-            'Aprobacion',
+            'Nombre',
+            'Puesto',
+            'Area',
+            'Evaluadores',
+            'Estatus',
+            'Porcentaje Objetivos',
+            'Porcentaje Competencias',
         ];
     }
 
@@ -74,6 +123,6 @@ class HojaEvaluadosPeriodoExport implements FromCollection, WithHeadings,  WithT
 
     public function title(): string
     {
-        return 'Vacaciones';
+        return 'Evaluacion';
     }
 }

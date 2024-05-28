@@ -33,15 +33,19 @@ class EvaluacionesDesempenoReportExport implements FromCollection, WithMultipleS
 
         $datos = new HojaDatosEvaluacionesExport($this->id);
 
-        foreach ($this->evaluacion->periodos as $key_periodo => $periodo) {
-            $evldsPer = [
-                'evldsPer' . $key_periodo => new HojaEvaluadosPeriodoExport($this->id, $periodo->id),
-            ];
-        }
+        // foreach ($this->evaluacion->periodos as $key_periodo => $periodo) {
+        //     $evldsPer = [
+        //         'evldsPer' . $key_periodo => new HojaEvaluadosPeriodoExport($this->id, $periodo->id),
+        //     ];
+        // }
+
+        // foreach ($this->evaluacion->periodos as $key_periodo => $periodo) {
+        $evldsPer = new HojaEvaluadosPeriodoExport($this->id, 9);
+        // }
 
         return [
-            'Datos' => new HojaDatosEvaluacionesExport($this->id),
-            // 'Vacaciones' => new VistaGlobalVacacionesHojaExport($this->id),
+            'Datos' => $datos,
+            'Evaluacion' => $evldsPer,
         ];
     }
 }
