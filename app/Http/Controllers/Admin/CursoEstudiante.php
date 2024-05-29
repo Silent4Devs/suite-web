@@ -72,7 +72,7 @@ class CursoEstudiante extends Controller
 
             $curso = Course::where('id', $curso_id)->first();
 
-            if (! $curso) {
+            if (!$curso) {
                 abort(404);
             }
 
@@ -131,7 +131,7 @@ class CursoEstudiante extends Controller
 
         $lesson_introduction = $course->lessons->first();
         // dump($courses_lessons->first());
-        if (! is_null($lesson_introduction)) {
+        if (!is_null($lesson_introduction)) {
             if (is_null($lesson_introduction['iframe'])) {
                 $course->lesson_introduction = null;
             } else {

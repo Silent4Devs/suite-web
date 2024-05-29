@@ -72,41 +72,44 @@
 
     <div class="caja-cards-mis-cursos">
         @foreach ($lastThreeCourse as $cu)
-            @php
-                $instructor = $cu->cursos->instructor;
-            @endphp
-            <div class="card card-body mi-curso">
-                @if (isset($cu->cursos->image->url))
-                    <img src="{{ asset($cu->cursos->image->url) }}" alt="" class="card-img"
-                        style="min-height: 225px; border-radius: 12px 12px 0px 0px;">
-                    <div class="caja-info-card-mc">
-                        <p class="course-title">
-                            {{ $cu->cursos->title }}
-                        </p>
-                        @if ($instructor)
-                            <p class="course-teacher">Un curso de {{ $instructor->name }} </p>
-                        @else
-                            <p class="course-teacher">Instructor no asignado </p>
-                        @endif
+            @if ($cu->status != '4')
+                @php
+                    $instructor = $cu->cursos->instructor;
+                @endphp
+                <div class="card card-body mi-curso">
+                    @if (isset($cu->cursos->image->url))
+                        <img src="{{ asset($cu->cursos->image->url) }}" alt="" class="card-img"
+                            style="min-height: 225px; border-radius: 12px 12px 0px 0px;">
+                        <div class="caja-info-card-mc">
+                            <p class="course-title">
+                                {{ $cu->cursos->title }}
+                            </p>
+                            @if ($instructor)
+                                <p class="course-teacher">Un curso de {{ $instructor->name }} </p>
+                            @else
+                                <p class="course-teacher">Instructor no asignado </p>
+                            @endif
 
-                        <div class="caja-info-card-advance">
-                            <p class="title-advance">{{ $cu->advance . '%' }} completado</p>
-                            <div class="curso-progreso-barra">
-                                <div class="indicador-progreso-barra" style="width: {{ $cu->advance . '%' }};"></div>
+                            <div class="caja-info-card-advance">
+                                <p class="title-advance">{{ $cu->advance . '%' }} completado</p>
+                                <div class="curso-progreso-barra">
+                                    <div class="indicador-progreso-barra" style="width: {{ $cu->advance . '%' }};"></div>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="d-flex justify-content-center">
-                            <a href="{{ route('admin.curso-estudiante', $cu->cursos->id) }}" class="btn btn-mi-course">Ir a
-                                mi
-                                curso</a>
-                        </div>
+                            <div class="d-flex justify-content-center">
+                                <a href="{{ route('admin.curso-estudiante', $cu->cursos->id) }}"
+                                    class="btn btn-mi-course">Ir a
+                                    mi
+                                    curso</a>
+                            </div>
 
-                    </div>
-                @else
-                    <p>Sin imagen de curso</p>
-                @endif
-            </div>
+                        </div>
+                    @else
+                        <p>Sin imagen de curso</p>
+                    @endif
+                </div>
+            @endif
         @endforeach
     </div>
     <div class="d-flex justify-content-end">
