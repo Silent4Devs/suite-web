@@ -8,7 +8,7 @@
         <div class="card-body">
             <div class="form-group">
                 <div class="form-group">
-                    <a class="btn btn-default" href="{{ route('admin.analysisRisk.index') }}">
+                    <a class="btn btn-default" href="{{ route('admin.analisis-riesgos.index') }}">
                         {{ trans('global.back_to_list') }}
                     </a>
                 </div>
@@ -44,9 +44,9 @@
                             </th>
                             <td>
                                 @if ($analisis->porcentaje_implementacion == 0)
-                                <p>Sin evaluar</p>
+                                    <p>Sin evaluar</p>
                                 @else
-                                <p>{{ $analisis->porcentaje_implementacion }} %</p>
+                                    <p>{{ $analisis->porcentaje_implementacion }} %</p>
                                 @endif
                             </td>
                         </tr>
@@ -55,12 +55,12 @@
                                 Elaboró:
                             </th>
                             <td>
-                                @if($analisis->empleado)
-                                @if($analisis->empleado->name)
-                                <p>{{$analisis->empleado->name}}</p>
-                                @endif
+                                @if ($analisis->empleado)
+                                    @if ($analisis->empleado->name)
+                                        <p>{{ $analisis->empleado->name }}</p>
+                                    @endif
                                 @else
-                                No se ha asociado colaborador
+                                    No se ha asociado colaborador
                                 @endif
                             </td>
                         </tr>
@@ -83,7 +83,7 @@
                     </tbody>
                 </table>
                 <div class="form-group">
-                    <a class="btn btn-default" href="{{ route('admin.analysisRisk.index') }}">
+                    <a class="btn btn-default" href="{{ route('admin.analisis-riesgos.index') }}">
                         {{ trans('global.back_to_list') }}
                     </a>
                 </div>

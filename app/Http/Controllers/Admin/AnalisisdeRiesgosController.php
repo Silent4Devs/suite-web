@@ -120,7 +120,7 @@ class AnalisisdeRiesgosController extends Controller
             default:
                 Alert::error('error', 'Intente de nuevo');
 
-                return redirect()->route('admin.analysisRisk.index');
+                return redirect()->route('admin.analisis-riesgos.index');
         }
     }
 
@@ -131,7 +131,7 @@ class AnalisisdeRiesgosController extends Controller
             abort_if(Gate::denies('matriz_de_riesgo_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
             $analisis = AnalisisDeRiesgo::find($id);
 
-            if (! $analisis) {
+            if (!$analisis) {
                 abort(404);
             }
 
@@ -147,7 +147,7 @@ class AnalisisdeRiesgosController extends Controller
             abort_if(Gate::denies('matriz_de_riesgo_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
             $empleados = Empleado::getaltaAll();
 
-            if (! $id) {
+            if (!$id) {
                 abort(404);
             }
 
@@ -173,7 +173,7 @@ class AnalisisdeRiesgosController extends Controller
             'estatus' => $request->estatus,
         ]);
 
-        return redirect()->route('admin.analysisRisk.index')->with('success', 'Editado con éxito');
+        return redirect()->route('admin.analisis-riesgos.index')->with('success', 'Editado con éxito');
     }
 
     public function destroy($id)
@@ -182,12 +182,12 @@ class AnalisisdeRiesgosController extends Controller
             abort_if(Gate::denies('matriz_de_riesgo_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
             $analisis = AnalisisDeRiesgo::find($id);
 
-            if (! $analisis) {
+            if (!$analisis) {
                 abort(404);
             }
             $analisis->delete();
 
-            return redirect()->route('admin.analysisRisk.index')->with('success', 'Eliminado con éxito');
+            return redirect()->route('admin.analisis-riesgos.index')->with('success', 'Eliminado con éxito');
         } catch (\Throwable $th) {
             abort(404);
         }
