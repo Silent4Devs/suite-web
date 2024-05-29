@@ -217,4 +217,23 @@
             </ul>
     </div>
 
+    @section('scripts')
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                setInterval(() => {
+                    var iframe = document.querySelector("iframe");
+                    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+                    console.log(innerDoc.body);
+
+                    // console.log(videoCurso);
+                    // if (videoCurso && videoCurso.classList.contains('ended-mode')) {
+                    //     console.log('si tiene');
+                    // } else {
+                    //     console.log('no tiene');
+                    // }
+
+                }, 1000);
+            });
+        </script>
+    @endsection
 </div>
