@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-    {{ Breadcrumbs::render('admin.analysisRisk.index') }}
+    {{ Breadcrumbs::render('admin.analisis-riesgos.index') }}
 
     <style>
         .btn_cargar {

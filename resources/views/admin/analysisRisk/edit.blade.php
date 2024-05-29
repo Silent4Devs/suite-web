@@ -3,14 +3,14 @@
 @section('content')
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="{!! route('admin.analysisRisk.index') !!}">Análisis de Riesgo</a>
+            <a href="{!! route('admin.analisis-riesgos.index') !!}">Análisis de Riesgo</a>
         </li>
         <li class="breadcrumb-item active">Editar</li>
     </ol>
     <h5 class="col-12 titulo_general_funcion">Editar: Análisis de Riesgo</h5>
     <div class="mt-4 card">
         <div class="card-body">
-            <form method="POST" action="{{ route('admin.analysisRisk.update', [$analisis->id]) }}"
+            <form method="POST" action="{{ route('admin.analisis-riesgos.update', [$analisis->id]) }}"
                 enctype="multipart/form-data">
                 @method('PUT')
                 @csrf
@@ -37,7 +37,8 @@
 
                     <div class="form-group col-md-4 col-sm-4">
                         <label for="tipo"><i class="fab fa-elementor iconos-crear"></i>Tipo </label>
-                        <select class="form-control {{ $errors->has('tipo') ? 'is-invalid' : '' }}" name="tipo" id="tipo">
+                        <select class="form-control {{ $errors->has('tipo') ? 'is-invalid' : '' }}" name="tipo"
+                            id="tipo">
                             <option value disabled {{ old('tipo', null) === null ? 'selected' : '' }}>
                                 Selecciona una opción</option>
                             @foreach (App\Models\AnalisisDeRiesgo::TipoSelect as $key => $label)
@@ -72,8 +73,8 @@
 
                     <div class="form-group col-md-4">
                         <label for="id_elaboro"><i class="fas fa-user-tie iconos-crear"></i>Elaboró</label>
-                        <select class="form-control {{ $errors->has('id_elaboro') ? 'is-invalid' : '' }}"
-                            name="id_elaboro" id="id_elaboro">
+                        <select class="form-control {{ $errors->has('id_elaboro') ? 'is-invalid' : '' }}" name="id_elaboro"
+                            id="id_elaboro">
                             <option value="">Seleccione una opción</option>
                             @foreach ($empleados as $id => $empleado)
                                 <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}"
@@ -110,7 +111,7 @@
                         <label for="porcentaje_implementacion"><i class="fas fa-percentage iconos-crear"></i>
                             Implementacion</label>
                         <input class="form-control {{ $errors->has('porcentaje_implementacion') ? 'is-invalid' : '' }}"
-                        type="number" step=".1" name="porcentaje_implementacion" id="porcentaje_implementacion"
+                            type="number" step=".1" name="porcentaje_implementacion" id="porcentaje_implementacion"
                             value="{{ old('porcentaje_implementacion', $analisis->porcentaje_implementacion) }}">
                         @if ($errors->has('porcentaje_implementacion'))
                             <div class="invalid-feedback">
@@ -147,7 +148,6 @@
             </form>
         </div>
     </div>
-
 @endsection
 
 @section('scripts')
@@ -178,7 +178,7 @@
     </script>
 
     <script>
-document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function() {
             let elaboro = document.querySelector('#id_elaboro');
             let area_init = elaboro.options[elaboro.selectedIndex].getAttribute('data-area');
             let puesto_init = elaboro.options[elaboro.selectedIndex].getAttribute('data-puesto');

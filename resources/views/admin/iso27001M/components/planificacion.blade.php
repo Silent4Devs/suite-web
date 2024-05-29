@@ -31,7 +31,7 @@
                             </a></li>
                     @endcan
                     @can('matriz_de_riesgo_acceder')
-                        <li><a href="{{ route('admin.analysisRisk.index') }}">
+                        <li><a href="{{ route('admin.analisis-riesgos.index') }}">
                                 <div>
                                     <i class="fas fa-table"></i>
                                     Matriz de Riesgos

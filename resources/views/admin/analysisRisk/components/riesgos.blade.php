@@ -21,7 +21,7 @@
     @endcan
     @can('matriz_de_riesgo_acceder')
         <li>
-            <a href="{{ route('admin.analysisRisk.index') }}">
+            <a href="{{ route('admin.analisis-riesgos.index') }}">
                 <div>
                     <i class="bi bi-table"></i> <br>
                     Matríz de Riesgos
@@ -30,7 +30,7 @@
         </li>
     @endcan
 
-        {{-- <li>
+    {{-- <li>
             <a href="{{ route('admin.carta-aceptacion.index') }}">
                 <div>
                     <i class="far fa-file-alt" style="font-size: 35pt;"></i><br>
@@ -39,7 +39,7 @@
             </a>
         </li> --}}
 
-        {{-- <li>
+    {{-- <li>
             <a href="{{ route('admin.tabla-impacto.index') }}">
                 <div>
                 <i class="fa-solid fa-chart-line"></i>
