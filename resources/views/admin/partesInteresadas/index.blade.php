@@ -140,7 +140,7 @@
 
 <div class="text-right">
     <div class="d-flex justify-content-end">
-        <a href="{{ route('admin.partes-interesadas.create') }}" type="button" class="btn btn-primary">Partes Interesadas</a>
+        <a href="{{ route('admin.partes-interesadas.create') }}" type="button" class="btn tb-btn-primary">Partes Interesadas</a>
     </div>
 </div>
     <div class="mt-5 card">

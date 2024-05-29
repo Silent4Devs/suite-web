@@ -67,7 +67,7 @@
                         id="tarea_name" required pattern="[^\.,]*">
                 </div>
                 <div class="form-group" style="position:relative; min-width:150px;">
-                    <button class="btn btn-primary" style="position: absolute; bottom: 0;">
+                    <button class="btn tb-btn-primary" style="position: absolute; bottom: 0;">
                         Agregar</button>
                 </div>
             </div>

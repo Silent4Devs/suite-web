@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <link rel="stylesheet" href="dist/css/bs-stepper.min.css">
+    <link rel="stylesheet" href="{{ asset('css/global/TbButtons.css') }}{{ config('app.cssVersion') }}">
+    <link rel="stylesheet" href="{{ asset('css/global/TbColorsGlobal.css') }}{{ config('app.cssVersion') }}">
     <title>Bootstrap stepper</title>
   </head>
   <body class="d-flex flex-column min-vh-100 bg-light">
@@ -67,19 +69,19 @@
                   <label for="exampleInputEmail1">Email address</label>
                   <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
                 </div>
-                <button class="btn btn-primary" onclick="stepper1.next()">Next</button>
+                <button class="btn tb-btn-primary" onclick="stepper1.next()">Next</button>
               </div>
               <div id="test-l-2" role="tabpanel" class="bs-stepper-pane" aria-labelledby="stepper1trigger2">
                 <div class="form-group">
                   <label for="exampleInputPassword1">Password</label>
                   <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
                 </div>
-                <button class="btn btn-primary" onclick="stepper1.previous()">Previous</button>
-                <button class="btn btn-primary" onclick="stepper1.next()">Next</button>
+                <button class="btn tb-btn-primary" onclick="stepper1.previous()">Previous</button>
+                <button class="btn tb-btn-primary" onclick="stepper1.next()">Next</button>
               </div>
               <div id="test-l-3" role="tabpanel" class="bs-stepper-pane text-center" aria-labelledby="stepper1trigger3">
-                <button class="btn btn-primary mt-5" onclick="stepper1.previous()">Previous</button>
-                <button type="submit" class="btn btn-primary mt-5">Submit</button>
+                <button class="btn tb-btn-primary mt-5" onclick="stepper1.previous()">Previous</button>
+                <button type="submit" class="btn tb-btn-primary mt-5">Submit</button>
               </div>
             </form>
           </div>
@@ -123,17 +125,17 @@
                   <label for="exampleInputName1">Name</label>
                   <input type="email" class="form-control" id="exampleInputName1" placeholder="Enter your name">
                 </div>
-                <button class="btn btn-primary" onclick="stepper2.next()">Next</button>
+                <button class="btn tb-btn-primary" onclick="stepper2.next()">Next</button>
               </div>
               <div id="test-nl-2" role="tabpanel" class="bs-stepper-pane" aria-labelledby="stepper2trigger2">
                 <div class="form-group">
                   <label for="exampleInpuAddress1">Address</label>
                   <input type="email" class="form-control" id="exampleInpuAddress1" placeholder="Enter your address">
                 </div>
-                <button class="btn btn-primary" onclick="stepper2.next()">Next</button>
+                <button class="btn tb-btn-primary" onclick="stepper2.next()">Next</button>
               </div>
               <div id="test-nl-3" role="tabpanel" class="bs-stepper-pane text-center" aria-labelledby="stepper2trigger3">
-                <button type="submit" class="btn btn-primary mt-5">Submit</button>
+                <button type="submit" class="btn tb-btn-primary mt-5">Submit</button>
               </div>
             </form>
           </div>
@@ -177,17 +179,17 @@
                   <label for="exampleInputName2">Name</label>
                   <input type="email" class="form-control" id="exampleInputName2" placeholder="Enter your name">
                 </div>
-                <button class="btn btn-primary" onclick="stepper3.next()">Next</button>
+                <button class="btn tb-btn-primary" onclick="stepper3.next()">Next</button>
               </div>
               <div id="test-nlf-2" role="tabpanel" class="bs-stepper-pane fade" aria-labelledby="stepper3trigger2">
                 <div class="form-group">
                   <label for="exampleInpuAddress2">Address</label>
                   <input type="email" class="form-control" id="exampleInpuAddress2" placeholder="Enter your address">
                 </div>
-                <button class="btn btn-primary" onclick="stepper3.next()">Next</button>
+                <button class="btn tb-btn-primary" onclick="stepper3.next()">Next</button>
               </div>
               <div id="test-nlf-3" role="tabpanel" class="bs-stepper-pane fade text-center" aria-labelledby="stepper3trigger3">
-                <button type="submit" class="btn btn-primary mt-5">Submit</button>
+                <button type="submit" class="btn tb-btn-primary mt-5">Submit</button>
               </div>
             </form>
           </div>
@@ -225,19 +227,19 @@
                   <label for="exampleInputEmailV1">Email address</label>
                   <input type="email" class="form-control" id="exampleInputEmailV1" placeholder="Enter email">
                 </div>
-                <button class="btn btn-primary" onclick="stepper4.next()">Next</button>
+                <button class="btn tb-btn-primary" onclick="stepper4.next()">Next</button>
               </div>
               <div id="test-vl-2" role="tabpanel" class="bs-stepper-pane fade" aria-labelledby="stepper4trigger2">
                 <div class="form-group">
                   <label for="exampleInputPasswordV1">Password</label>
                   <input type="password" class="form-control" id="exampleInputPasswordV1" placeholder="Password">
                 </div>
-                <button class="btn btn-primary" onclick="stepper4.previous()">Previous</button>
-                <button class="btn btn-primary" onclick="stepper4.next()">Next</button>
+                <button class="btn tb-btn-primary" onclick="stepper4.previous()">Previous</button>
+                <button class="btn tb-btn-primary" onclick="stepper4.next()">Next</button>
               </div>
               <div id="test-vl-3" role="tabpanel" class="bs-stepper-pane fade" aria-labelledby="stepper4trigger3">
-                <button class="btn btn-primary mt-5" onclick="stepper4.previous()">Previous</button>
-                <button type="submit" class="btn btn-primary mt-5">Submit</button>
+                <button class="btn tb-btn-primary mt-5" onclick="stepper4.previous()">Previous</button>
+                <button type="submit" class="btn tb-btn-primary mt-5">Submit</button>
               </div>
             </form>
           </div>
@@ -276,7 +278,7 @@
                   <input id="inputMailForm" type="email" class="form-control" placeholder="Enter email" required>
                   <div class="invalid-feedback">Please fill the email field</div>
                 </div>
-                <button class="btn btn-primary btn-next-form">Next</button>
+                <button class="btn tb-btn-primary btn-next-form">Next</button>
               </div>
               <div id="test-form-2" role="tabpanel" class="bs-stepper-pane fade" aria-labelledby="stepperFormTrigger2">
                 <div class="form-group">
@@ -284,10 +286,10 @@
                   <input id="inputPasswordForm" type="password" class="form-control" placeholder="Password" required>
                   <div class="invalid-feedback">Please fill the password field</div>
                 </div>
-                <button class="btn btn-primary btn-next-form">Next</button>
+                <button class="btn tb-btn-primary btn-next-form">Next</button>
               </div>
               <div id="test-form-3" role="tabpanel" class="bs-stepper-pane fade text-center" aria-labelledby="stepperFormTrigger3">
-                <button type="submit" class="btn btn-primary mt-5">Submit</button>
+                <button type="submit" class="btn tb-btn-primary mt-5">Submit</button>
               </div>
             </form>
           </div>

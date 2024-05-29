@@ -35,7 +35,7 @@
                 </div>
             </div>
             <div class="col-12 d-flex flex-row-reverse">
-                <button type="submit" wire:click.prevent="findEvaluation" class="btn btn-primary mx-4 my-4">
+                <button type="submit" wire:click.prevent="findEvaluation" class="btn tb-btn-primary mx-4 my-4">
                     {{ __('Buscar') }}
                 </button>
             </div>

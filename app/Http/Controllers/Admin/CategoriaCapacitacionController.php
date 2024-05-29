@@ -59,7 +59,7 @@ class CategoriaCapacitacionController extends Controller
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.categoria-capacitacion.index', compact('organizacion_actual', 'logo_actual', 'empresa_actual'));
+        return view('admin.categoriaCapacitacion.index', compact('organizacion_actual', 'logo_actual', 'empresa_actual'));
     }
 
     /**
@@ -71,7 +71,7 @@ class CategoriaCapacitacionController extends Controller
     {
         abort_if(Gate::denies('capacitaciones_categorias_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.categoria-capacitacion.create');
+        return view('admin.categoriaCapacitacion.create');
     }
 
     /**
@@ -87,7 +87,7 @@ class CategoriaCapacitacionController extends Controller
         ], ['nombre.unique' => 'Esta categoria ya ha sido utilizada']);
         CategoriaCapacitacion::create($request->all());
 
-        return redirect()->route('admin.categoria-capacitacion.index')->with('success', 'Registro creado con exito');
+        return redirect()->route('admin.categoriaCapacitacion.index')->with('success', 'Registro creado con exito');
     }
 
     /**
@@ -99,7 +99,7 @@ class CategoriaCapacitacionController extends Controller
     {
         abort_if(Gate::denies('capacitaciones_categorias_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.categoria-capacitacion.show', compact('categoriaCapacitacion'));
+        return view('admin.categoriaCapacitacion.show', compact('categoriaCapacitacion'));
     }
 
     /**
@@ -111,7 +111,7 @@ class CategoriaCapacitacionController extends Controller
     {
         abort_if(Gate::denies('capacitaciones_categorias_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.categoria-capacitacion.edit', compact('categoriaCapacitacion'));
+        return view('admin.categoriaCapacitacion.edit', compact('categoriaCapacitacion'));
     }
 
     /**
@@ -127,7 +127,7 @@ class CategoriaCapacitacionController extends Controller
         ], ['nombre.unique' => 'Esta categoria ya ha sido utilizada']);
         $categoriaCapacitacion->update($request->all());
 
-        return redirect()->route('admin.categoria-capacitacion.index')->with('success', 'Registro actualizado con exito');
+        return redirect()->route('admin.categoriaCapacitacion.index')->with('success', 'Registro actualizado con exito');
     }
 
     /**
@@ -140,6 +140,6 @@ class CategoriaCapacitacionController extends Controller
         abort_if(Gate::denies('capacitaciones_categorias_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $categoriaCapacitacion->delete();
 
-        return redirect()->route('admin.categoria-capacitacion.index');
+        return redirect()->route('admin.categoriaCapacitacion.index');
     }
 }

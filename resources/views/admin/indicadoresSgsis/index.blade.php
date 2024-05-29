@@ -88,8 +88,8 @@
 </div>
         <div class="text-right">
             <div class="d-flex justify-content-end">
-                <a href="{{ route('admin.indicadores-sgsis.create') }}" type="button" class="btn btn-primary">Registrar Indicador</a> &nbsp;
-                <a class="btn btn-primary" href="{{ asset('admin/indicadores/dashboard') }}">Dashboard</a>
+                <a href="{{ route('admin.indicadores-sgsis.create') }}" type="button" class="btn tb-btn-primary">Registrar Indicador</a> &nbsp;
+                <a class="btn tb-btn-primary" href="{{ asset('admin/indicadores/dashboard') }}">Dashboard</a>
             </div>
         </div>
     <div class="mt-5 card">

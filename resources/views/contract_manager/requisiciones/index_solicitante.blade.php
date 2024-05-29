@@ -17,10 +17,10 @@
     <div class="mt-5 card">
         <form class="text-right" action="{{ route('contract_manager.requisiciones.indexAprobadores') }}" method="GET">
             @method('GET')
-            <button class="btn btn-primary" type="submit" title="Aprobadores">
+            <button class="btn tb-btn-primary" type="submit" title="Aprobadores">
                 Aprobadores
             </button>
-            <a style="color: white;" class="btn btn-primary"
+            <a style="color: white;" class="btn tb-btn-primary"
                 href="{{ route('contract_manager.requisiciones.archivo') }}">Archivados</a>
         </form>
         <div class="card-body datatable-fix">

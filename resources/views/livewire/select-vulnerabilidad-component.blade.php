@@ -70,7 +70,7 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" wire:click.prevent="save">Guardar</button>
+                    <button type="button" class="btn tb-btn-primary" wire:click.prevent="save">Guardar</button>
                 </div>
             </div>
         </div>

@@ -130,8 +130,8 @@
 
 
                     <div class="mt-2 form-group col-4 areas_multiselect">
-                        <label class="form-label"><i class="fas fa-puzzle-piece iconos-crear"></i>Áreas afectadas 1</label>
-                        <select class="form-control" id="activos">
+                        <label class="form-label"><i class="fas fa-puzzle-piece iconos-crear"></i>Áreas afectadas</label>
+                        <select class="form-control" id="activos_areas">
                             <option disabled selected>Seleccionar áreas</option>
                             @foreach ($areas as $area)
                                 <option value="{{ $area->area }}">{{ $area->area }}
@@ -143,7 +143,7 @@
 
                     <div class="mt-2 form-group col-4 procesos_multiselect">
                         <label class="form-label"><i class="fas fa-dice-d20 iconos-crear"></i>Procesos afectados</label>
-                        <select class="form-control" id="activos">
+                        <select class="form-control" id="activos_procesos">
                             <option disabled selected>Seleccionar procesos</option>
                             @foreach ($procesos as $proceso)
                                 <option value="{{ $proceso->nombre }}">{{ $proceso->nombre }}
@@ -155,7 +155,7 @@
 
                     <div class="mt-2 form-group col-4 activos_multiselect">
                         <label class="form-label"><i class="fa-fw fas fa-laptop iconos-crear"></i>Activos afectados</label>
-                        <select class="form-control" id="activos">
+                        <select class="form-control" id="activos_afectados_id">
                             <option disabled selected>Seleccionar afectados</option>
                             @foreach ($activos as $activo)
                                 <option value="{{ $activo->nombreactivo }}">{{ $activo->nombreactivo }}
@@ -302,7 +302,7 @@
 
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function() {
-        let select_activos = document.querySelector('.areas_multiselect #activos');
+        let select_activos = document.querySelector('.areas_multiselect #activos_areas');
         let texto_activos = document.querySelector('.areas_multiselect #texto_activos');
 
         select_activos.addEventListener('change', function(e) {
@@ -323,7 +323,7 @@
 
 
         document.addEventListener('DOMContentLoaded', function() {
-        let select_activos = document.querySelector('.procesos_multiselect #activos');
+        let select_activos = document.querySelector('.procesos_multiselect #activos_procesos');
         let texto_activos = document.querySelector('.procesos_multiselect #texto_activos');
 
         select_activos.addEventListener('change', function(e) {
@@ -343,7 +343,7 @@
 
 
     document.addEventListener('DOMContentLoaded', function() {
-    let select_activos = document.querySelector('.activos_multiselect #activos');
+    let select_activos = document.querySelector('.activos_multiselect #activos_afectados_id');
     let texto_activos = document.querySelector('.activos_multiselect #texto_activos');
 
     select_activos.addEventListener('change', function(e) {

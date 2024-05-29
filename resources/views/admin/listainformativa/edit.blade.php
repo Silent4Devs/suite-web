@@ -133,8 +133,8 @@
         </div>
         <div class="col-12">
             <div  style="position: relative; text-align:end;">
-                <a href="{{ route('admin.lista-informativa.index') }}" type="button" class="btn btn-primary" id="btn_cancelar" style="color:#057BE2;">Cancelar</a>
-                <button type="submit" class="btn btn-primary" style="width: 8rem;">Editar</button>
+                <a href="{{ route('admin.lista-informativa.index') }}" type="button" class="btn tb-btn-primary" id="btn_cancelar" style="color:#057BE2;">Cancelar</a>
+                <button type="submit" class="btn tb-btn-primary" style="width: 8rem;">Editar</button>
             </div>
         </div>
     </form>

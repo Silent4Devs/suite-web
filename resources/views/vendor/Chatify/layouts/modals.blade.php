@@ -42,7 +42,7 @@
                       style="background-image: url('{{ Chatify::getUserWithAvatar(Auth::user())->avatar }}');"
                       ></div>
                       <p class="upload-avatar-details"></p>
-                      <label class="app-btn a-btn-primary update" style="background-color:{{$messengerColor}}">
+                      <label class="app-btn a-tb-btn-primary update" style="background-color:{{$messengerColor}}">
                           Upload New
                           <input class="upload-avatar chatify-d-none" accept="image/*" name="avatar" type="file" />
                       </label>

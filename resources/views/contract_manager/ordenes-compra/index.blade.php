@@ -12,8 +12,8 @@
 
     @include('partials.flashMessages')
     <h5 class="col-12 titulo_general_funcion">Orden De Compra</h5>
-    <button type="button" class="btn  btn-primary" id="filtrarBtn4"
-        style="position: relative; left: 75rem;">Aprobadores</button>
+        <button type="button" class="btn  tb-btn-primary"
+        id="filtrarBtn4" style="position: relative; left: 75rem;">Aprobadores</button>
     <div class="mt-5 card">
         <div class="card-body datatable-fix">
 

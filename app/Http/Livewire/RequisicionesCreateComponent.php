@@ -62,6 +62,8 @@ class RequisicionesCreateComponent extends Component
     // tabs
     public $habilitar_firma = false;
 
+    public $habilitar_alerta_cotizacion = false;
+
     public $habilitar_alerta = false;
 
     public $habilitar_proveedores = false;
@@ -88,6 +90,10 @@ class RequisicionesCreateComponent extends Component
 
     public $filename;
 
+    public $path;
+
+    public $pdf;
+
     protected $requisicionService;
 
     public function __construct($id = null)
@@ -99,6 +105,38 @@ class RequisicionesCreateComponent extends Component
     public function postData()
     {
         $result = $this->requisicionService->postDataToPythonAPI($this->filename);
+
+        return $result;
+    }
+
+    public function postDataLoad()
+    {
+        $result = $this->requisicionService->postDataLoadPythonAPI($this->path);
+
+        return $result;
+    }
+
+    public function postDataClean()
+    {
+        $result = $this->requisicionService->postDataCleanPythonAPI($this->path);
+        dd($result);
+    }
+
+    public function postDataScaned()
+    {
+        $result = $this->requisicionService->postDataScanedPythonAPI($this->path);
+        dd($result);
+    }
+
+    public function postDataExtract()
+    {
+        $result = $this->requisicionService->postDataExtractPythonAPI($this->image);
+        dd($result);
+    }
+
+    public function postDataText()
+    {
+        $result = $this->requisicionService->postDataTextPythonAPI();
         dd($result);
     }
 
@@ -181,6 +219,7 @@ class RequisicionesCreateComponent extends Component
 
     public function proveedoresStore($data)
     {
+
         $this->habilitar_firma = false;
         $prove_count = 0;
         $cotizacion_count = 0;
@@ -209,19 +248,20 @@ class RequisicionesCreateComponent extends Component
                         $proveedor_req->fecha_fin = isset($data['contacto_fecha_fin_' . $i]) ? $data['contacto_fecha_fin_' . $i] : null;
                         $proveedor_req->requisiciones_id = $this->requisicion_id;
 
-                        //cotizacion y validacion
+
                         $cotizacion_actual = $this->cotizaciones[$cotizacion_count];
 
-                        $extensiones_permitidas = [
-                            'pdf', 'docx', 'pptx', 'point', 'xml', 'jpeg', 'jpg', 'png', 'xlsx', 'xlsm', 'csv',
-                        ];
-
-                        $extension = $cotizacion_actual->getClientOriginalExtension();
-
-                        if (in_array($extension, $extensiones_permitidas)) {
+                        if (
+                            $cotizacion_actual->getClientOriginalExtension() === 'pdf' || $cotizacion_actual->getClientOriginalExtension() === 'docx'
+                            || $cotizacion_actual->getClientOriginalExtension() === 'pptx' || $cotizacion_actual->getClientOriginalExtension() === 'point'
+                            || $cotizacion_actual->getClientOriginalExtension() === 'xml' || $cotizacion_actual->getClientOriginalExtension() === 'jpeg'
+                            || $cotizacion_actual->getClientOriginalExtension() === 'jpg' || $cotizacion_actual->getClientOriginalExtension() === 'png'
+                            || $cotizacion_actual->getClientOriginalExtension() === 'xlsx' || $cotizacion_actual->getClientOriginalExtension() === 'xlsm'
+                            || $cotizacion_actual->getClientOriginalExtension() === 'csv'
+                        ) {
                             $this->habilitar_alerta = false;
                             $name_cotizacion = 'requisicion_' . $this->requisicion_id . 'cotizazcion_' . $cotizacion_count . '_' . uniqid() . '.' . $cotizacion_actual->getClientOriginalExtension();
-                            $ruta_cotizacion = $cotizacion_actual->storeAs('public/cotizaciones_requisiciones_proveedores/', $name_cotizacion);
+                            $cotizacion_actual->storeAs('public/cotizaciones_requisiciones_proveedores/', $name_cotizacion);
                             $proveedor_req->cotizacion = $name_cotizacion;
                             $proveedor_req->save();
                         } else {

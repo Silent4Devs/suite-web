@@ -24,7 +24,7 @@ class TiposObjetivosSistemaController extends Controller
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.tipos_objetivos_sistema.index', compact('organizacion_actual', 'logo_actual', 'empresa_actual'));
+        return view('admin.tiposObjetivosSistema.index', compact('organizacion_actual', 'logo_actual', 'empresa_actual'));
     }
 
     public function getDataForDataTable()
@@ -44,7 +44,7 @@ class TiposObjetivosSistemaController extends Controller
         // abort_if(Gate::denies('tipo_objetivo_sistema_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $tiposObjetivosSistema = new TiposObjetivosSistema();
 
-        return view('admin.tipos_objetivos_sistema.create', compact('tiposObjetivosSistema'));
+        return view('admin.tiposObjetivosSistema.create', compact('tiposObjetivosSistema'));
     }
 
     /**
@@ -89,7 +89,7 @@ class TiposObjetivosSistemaController extends Controller
         }
 
         // abort_if(Gate::denies('tipo_objetivo_sistema_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        return view('admin.tipos_objetivos_sistema.show', compact('tiposObjetivosSistema'));
+        return view('admin.tiposObjetivosSistema.show', compact('tiposObjetivosSistema'));
     }
 
     /**
@@ -107,7 +107,7 @@ class TiposObjetivosSistemaController extends Controller
         }
 
         //  abort_if(Gate::denies('tipo_objetivo_sistema_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        return view('admin.tipos_objetivos_sistema.edit', compact('tiposObjetivosSistema'));
+        return view('admin.tiposObjetivosSistema.edit', compact('tiposObjetivosSistema'));
     }
 
     /**

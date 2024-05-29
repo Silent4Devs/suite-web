@@ -2,7 +2,7 @@
 
 @section('content')
 @section('titulo', 'Firmar Requisicion')
-<link rel="stylesheet" href="{{ asset('css/requisiciones.css') }}{{config('app.cssVersion')}}">
+<link rel="stylesheet" href="{{ asset('css/requisitions/requisitions.css') }}{{config('app.cssVersion')}}">
 
 <div class="card card-content caja-blue">
 
@@ -358,11 +358,11 @@
                 action="{{ route('contract_manager.requisiciones.rechazada', ['id' => $requisicion->id]) }}">
                 @csrf
                 <div class="flex" style="position: relative; top: -1rem;  justify-content: space-between;">
-                    @if (!$requisicion->firma_finanzas)
-                    <button class="btn btn-primary" style="background: #454545 !important;">RECHAZAR
+                    @if (!$requisicion->firma_solicitante &&  !$requisicion->firma_jefe && !$requisicion->firma_compras  && !$requisicion->firma_finanzas)
+                    <button class="btn tb-btn-primary" style="background: #454545 !important;">RECHAZAR
                         REQUISICIÓN</button>
                     @endif
-                    <div onclick="validar();" style="" class="btn btn-primary">Firmar</div>
+                    <div onclick="validar();" style="" class="btn tb-btn-primary">Firmar</div>
                 </div>
             </form>
         </div>

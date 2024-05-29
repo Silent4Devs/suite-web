@@ -46,7 +46,7 @@
             } else if (number == 1) {
                 html += `
                         <td>
-                            <button class="btn btn-primary btn-xs" name="addBeneficiario" id="addBeneficiario">
+                            <button class="btn tb-btn-primary btn-xs" name="addBeneficiario" id="addBeneficiario">
                                 <i class="fas fa-plus-circle" style="font-size: 12px;text-align: center;margin: 0;"></i>
                             </button>
                         </td>
@@ -82,7 +82,7 @@
                             <small class="text-danger" id="error_beneficiarios_${index}_porcentaje"></small>
                         </td>
                         <td>
-                            <button class="btn btn-primary btn-xs" name="addBeneficiario" id="addBeneficiario">
+                            <button class="btn tb-btn-primary btn-xs" name="addBeneficiario" id="addBeneficiario">
                                 <i class="fas fa-plus-circle" style="font-size: 12px;text-align: center;margin: 0;"></i>
                             </button>
                         </td>

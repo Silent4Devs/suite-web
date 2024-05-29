@@ -114,7 +114,7 @@
 
     <div class="text-right">
         <div class="d-flex justify-content-end">
-            <a href="{{ route('admin.evidencias-sgsis.create') }}" type="button" class="btn btn-primary">Registrar
+            <a href="{{ route('admin.evidencias-sgsis.create') }}" type="button" class="btn tb-btn-primary">Registrar
                 Evidencia</a>
         </div>
     </div>
@@ -347,7 +347,7 @@
                                     <div class="mb-4 row">
                                     <div class="text-center col">
                                         @can('evidencia_asignacion_recursos_sgsi_ver_evidencia')
-                                         <a href="#" class="btn btn-sm btn-primary tamaño" data-toggle="modal" data-target="#largeModal${row.id}"><i class="mr-2 text-white fas fa-file" style="font-size:13pt"></i>Visualizar&nbsp;evidencias</a>
+                                         <a href="#" class="btn btn-sm tb-btn-primary tamaño" data-toggle="modal" data-target="#largeModal${row.id}"><i class="mr-2 text-white fas fa-file" style="font-size:13pt"></i>Visualizar&nbsp;evidencias</a>
                                          @endcan
                                     </div>
                                     </div>

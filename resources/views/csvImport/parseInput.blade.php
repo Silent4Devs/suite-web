@@ -48,7 +48,7 @@
                         </tr>
                     </table>
 
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="btn tb-btn-primary">
                         @lang('global.app_import_data')
                     </button>
                 </form>
