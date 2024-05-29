@@ -112,7 +112,7 @@ class AlcanceSgsiController extends Controller
 
         $modulo = ListaDistribucion::with('participantes.empleado')->where('modelo', '=', $this->modelo)->first();
 
-        if (! isset($modulo)) {
+        if (!isset($modulo)) {
             $listavacia = 'vacia';
         } elseif ($modulo->participantes->isEmpty()) {
             $listavacia = 'vacia';
@@ -167,15 +167,19 @@ class AlcanceSgsiController extends Controller
 
     public function edit(AlcanceSgsi $alcanceSgsi)
     {
-        abort_if(Gate::denies('determinacion_alcance_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        try {
+            abort_if(Gate::denies('determinacion_alcance_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $alcanceSgsi->load('normas');
-        $normas_seleccionadas = $alcanceSgsi->normas->pluck('id')->toArray();
+            $alcanceSgsi->load('normas');
+            $normas_seleccionadas = $alcanceSgsi->normas->pluck('id')->toArray();
 
-        $normas = Norma::get();
-        $empleados = Empleado::getAltaEmpleadosWithArea();
+            $normas = Norma::get();
+            $empleados = Empleado::getAltaEmpleadosWithArea();
 
-        return view('admin.alcanceSgsis.edit', compact('alcanceSgsi', 'empleados', 'normas', 'normas_seleccionadas'));
+            return view('admin.alcanceSgsis.edit', compact('alcanceSgsi', 'empleados', 'normas', 'normas_seleccionadas'));
+        } catch (\Throwable $th) {
+            abort(404);
+        }
     }
 
     public function aprove(AlcanceSgsi $alcanceSgsi)
@@ -214,14 +218,29 @@ class AlcanceSgsiController extends Controller
         return redirect()->route('admin.alcance-sgsis.index')->with('success', 'Editado con éxito');
     }
 
-    public function show(AlcanceSgsi $alcanceSgsi)
+    public function show($id)
     {
-        abort_if(Gate::denies('determinacion_alcance_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        try {
+            // Validar permiso
+            abort_if(Gate::denies('determinacion_alcance_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $alcanceSgsi->load('team');
-        $normas = Norma::get();
+            // Buscar el modelo usando el ID
+            $alcanceSgsi = AlcanceSgsi::findOrFail($id);
 
-        return view('admin.alcanceSgsis.show', compact('alcanceSgsi', 'normas'));
+            if (!$alcanceSgsi) {
+                abort(404);
+            }
+
+            // Cargar las relaciones necesarias
+            $alcanceSgsi->load('team');
+            $normas = Norma::get();
+
+            // Devolver la vista con los datos
+            return view('admin.alcanceSgsis.show', compact('alcanceSgsi', 'normas'));
+        } catch (\Throwable $th) {
+            // Capturar cualquier excepción y devolver un error 404
+            abort(404);
+        }
     }
 
     public function destroy(AlcanceSgsi $alcanceSgsi)
@@ -255,14 +274,22 @@ class AlcanceSgsiController extends Controller
 
     public function pdfShow($id)
     {
-        $alcances = AlcanceSgsi::find($id);
-        $organizacions = Organizacion::getFirst();
-        $logo_actual = $organizacions->logo;
+        try {
+            $alcances = AlcanceSgsi::find($id);
 
-        $pdf = PDF::loadView('alcances_show', compact('alcances', 'organizacions', 'logo_actual'));
-        $pdf->setPaper('A4', 'portrait');
+            if (!$alcances) {
+                abort(404);
+            }
+            $organizacions = Organizacion::getFirst();
+            $logo_actual = $organizacions->logo;
 
-        return $pdf->download('alcances.pdf');
+            $pdf = PDF::loadView('alcances_show', compact('alcances', 'organizacions', 'logo_actual'));
+            $pdf->setPaper('A4', 'portrait');
+
+            return $pdf->download('alcances.pdf');
+        } catch (\Throwable $th) {
+            abort(404);
+        }
     }
 
     public function solicitudAprobacion($id_alcance)
@@ -540,11 +567,15 @@ class AlcanceSgsiController extends Controller
 
     public function visualizacion()
     {
-        $alcances = AlcanceSgsi::where('estatus', 'Aprobado')->get();
+        try {
+            $alcances = AlcanceSgsi::where('estatus', 'Aprobado')->get();
 
-        $organizacions = Organizacion::getFirst();
+            $organizacions = Organizacion::getFirst();
 
-        return view('admin.alcanceSgsis.visualizacion', compact('alcances', 'organizacions'));
+            return view('admin.alcanceSgsis.visualizacion', compact('alcances', 'organizacions'));
+        } catch (\Throwable $th) {
+            abort(404);
+        }
     }
 
     public function siguienteCorreo($proceso, $alcance)
