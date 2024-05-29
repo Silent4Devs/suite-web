@@ -222,7 +222,7 @@ class EvaluacionesDesempenoController extends Controller
                 $evaluadores = collect();
 
                 if ($evaluacion->activar_objetivos) {
-                    $totales_evaluado[$key_periodo][$evaluado->id]['objetivos'] = $evaluado->calificacionesObjetivosEvaluadoPeriodo($periodo->id);
+                    $totales_evaluado[$periodo->id][$evaluado->id]['objetivos'] = $evaluado->calificacionesObjetivosEvaluadoPeriodo($periodo->id);
                     $evObj = $evaluado->evaluadoresObjetivos($periodo->id);
 
                     $evaluadoresObjetivos = $evObj->reject(function ($item) use ($empleadoId) {
@@ -240,7 +240,7 @@ class EvaluacionesDesempenoController extends Controller
                 }
 
                 if ($evaluacion->activar_competencias) {
-                    $totales_evaluado[$key_periodo][$evaluado->id]['competencias'] = $evaluado->calificacionesCompetenciasEvaluadoPeriodo($periodo->id);
+                    $totales_evaluado[$periodo->id][$evaluado->id]['competencias'] = $evaluado->calificacionesCompetenciasEvaluadoPeriodo($periodo->id);
                     $evComp = $evaluado->evaluadoresCompetencias($periodo->id);
 
                     $evaluadoresCompetencias = $evComp->reject(function ($item) use ($empleadoId) {
@@ -258,22 +258,37 @@ class EvaluacionesDesempenoController extends Controller
                 }
 
                 // Keep only 'nombre' after ensuring uniqueness based on 'id'
-                $totales_evaluado[$key_periodo][$evaluado->id]['evaluadores'] = $evaluadores->unique('id')->pluck('nombre')->values()->all();
+                // $totales_evaluado[$periodo->id][$evaluado->id]['evaluadores'] = $evaluadores->unique('id')->pluck('nombre')->values()->all();
 
-                // $totales_evaluado[$key_periodo][$evaluado->id]['informacion_evaluado'] = [
+                // Ensure uniqueness and concatenate 'nombre' values with "/"
+                $concatenatedEvaluadores = $evaluadores->unique('id')->pluck('nombre')->implode(' , ');
+
+                $total_competencias = ($totales_evaluado[$periodo->id][$evaluado->id]['competencias']['promedio_total'] * $evaluacion->porcentaje_competencias) / 100;
+                $total_objetivos = ($totales_evaluado[$periodo->id][$evaluado->id]['objetivos']['promedio_total'] * $evaluacion->porcentaje_objetivos) / 100;
+
+                // $totales_evaluado[$periodo->id][$evaluado->id]['informacion_evaluado'] = [
                 //     'nombre' => $evaluado->empleado->name,
                 //     'puesto' => $evaluado->empleado->puestoRelacionado->puesto,
                 //     'area' => $evaluado->empleado->area->area,
                 // ];
 
-                $coleccion =
+                $coleccion->push(
                     [
                         'nombre' => $evaluado->empleado->name,
                         'puesto' => $evaluado->empleado->puestoRelacionado->puesto,
                         'area' => $evaluado->empleado->area->area,
-                    ];
+                        'evaluadores' => $concatenatedEvaluadores,
+                        'estatus' => $evaluado->empleado->estatus,
+                        'porcentajeObjetivos' => $evaluacion->porcentaje_objetivos,
+                        'porcentajeCompetencias' => $evaluacion->porcentaje_competencias,
+                        'competencias' => $total_competencias,
+                        'objetivos' => $total_objetivos,
+                    ]
+                );
             }
         }
+
+        // dd($coleccion);
 
         $export = new EvaluacionesDesempenoReportExport($id);
         // dd($export);
