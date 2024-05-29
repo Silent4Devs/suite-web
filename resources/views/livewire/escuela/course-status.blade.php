@@ -217,4 +217,36 @@
             </ul>
     </div>
 
+    <script>
+        document.querySelector('iframe').onload = function() {
+            // Obtén el iframe por su ID
+            var iframe = document.getElementById('iframe');
+
+            // Accede al documento del iframe
+            var iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+
+            // Ahora puedes manipular el contenido del iframe como lo harías con el documento principal
+            var elemento = iframeDoc.querySelector(
+                '.html5-video-player .video-click-tracking, .html5-video-player .video-stream');
+
+            console.log('from');
+
+            elemento.addEventListener('ended', function() {
+                // Envía una alerta cuando el video termine
+                alert('El video ha terminado de reproducirse');
+            });
+
+        };
+    </script>
+    @section('scripts')
+        <script>
+            $(document).ready(function() {
+                let videoVurso = $('iframe').contents().find('video.video-stream');
+                console.log(videoVurso);
+                videoVurso.on('ended', function() {
+                    console.log('Video has ended!');
+                });
+            });
+        </script>
+    @endsection
 </div>
