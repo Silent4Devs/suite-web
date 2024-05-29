@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\ContractManager\Requsicion;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,6 +13,7 @@ class FirmasRequisiciones extends Model
     protected $table = 'firmas_requisiciones';
 
     protected $fillable = [
+        'requisicion_id',
         'solicitante_id',
         'firma_solicitante',
         'fecha_firma_solicitante',
@@ -25,6 +27,11 @@ class FirmasRequisiciones extends Model
         'firma_comprador',
         'fecha_firma_comprador_requi',
     ];
+
+    public function requisicion()
+    {
+        return $this->belongsTo(Requsicion::class, 'requisicion_id', 'id');
+    }
 
     public function solicitante()
     {
