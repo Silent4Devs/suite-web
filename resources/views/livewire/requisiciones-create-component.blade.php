@@ -187,7 +187,7 @@
                             AGREGAR SERVICIOS Y PRODUCTOS
                         </div>
 
-                        <button class="btn tb-btn-primary" type="submit">
+                        <button class="btn btn-primary" type="submit">
                             Siguiente <i class="fa-solid fa-chevron-right icon-next"></i>
                         </button>
                     </div>
@@ -259,22 +259,8 @@
                                                     name="contacto_fecha_fin_{{ $i }}" required>
                                             </div>
                                         </div>
-                                        <div>
-                                            <div>
-                                                <div wire:loading class="preloader-wrapper big active">
-                                                    <div class="spinner-layer spinner-red">
-                                                        <div class="circle-clipper left">
-                                                            <div class="circle"></div>
-                                                        </div>
-                                                        <div class="gap-patch">
-                                                            <div class="circle"></div>
-                                                        </div>
-                                                        <div class="circle-clipper right">
-                                                            <div class="circle"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                        <div wire:loading>
+                                            <i class="fas fa-spinner fa-spin"></i> Cargando...
                                         </div>
                                     </div>
                                 </div>
@@ -372,6 +358,7 @@
                                                             name="contacto_url_{{ $i }}">
                                                     </div>
                                                 </div>
+                                                <br>
                                                 <div class="row">
                                                     <div class="col s12 l12">
                                                         <label for="" class="txt-tamaño">
@@ -380,11 +367,37 @@
                                                         <input type="file" required
                                                                class="modal-cotizacion form-control-file"
                                                                name="cotizacion_{{ $i }}"
-                                                               wire:model="cotizaciones{{ $i }}"
+                                                               wire:model="cotizaciones.{{ $i }}"
                                                                data-count="{{ $i }}"
                                                                accept=".pdf, .docx, .pptx, .point, .xml, .jpeg, .jpg, .png, .xlsx, .xlsm, .csv">
                                                     </div>
                                                 </div>
+                                                <br>
+                                                <button class="btn btn-primary" wire:click.prevent="robot">
+                                                    Robot
+                                                    <i class="fa-solid fa-robot"></i>
+                                                    <span wire:loading wire:target="robot">
+                                                        <i class="fas fa-spinner fa-spin"></i> Cargando...
+                                                    </span>
+                                                </button>
+                                                <br>
+                                                @if ($bandera)
+                                                <div>
+                                                    <label for="question">Pregunta:</label>
+                                                    <input type="text" id="question" wire:model.debounce="question">
+                                                    <button type="submit" wire:click.prevent="askQuestion">Enviar Pregunta</button>
+                                                    <span wire:loading wire:target="askQuestion">
+                                                        <i class="fas fa-spinner fa-spin"></i> Cargando...
+                                                    </span>
+                                                </div>
+                                                <br>
+                                                @if ($respuesta = $this->respuesta['response'] ?? null)
+                                                    <div class="response">
+                                                        <h3>Respuesta:</h3>
+                                                        <p>{{ $respuesta }}</p>
+                                                    </div>
+                                                @endif
+                                                @endif
                                             @endif
                                         @endisset
                                     @endif
@@ -400,7 +413,7 @@
                             AGREGAR PROVEEDOR
                         </div>
 
-                        <button class="btn tb-btn-primary" type="submit">
+                        <button class="btn btn-primary" type="submit">
                             Siguiente <i class="fa-solid fa-chevron-right icon-next"></i>
                         </button>
                     </div>
@@ -695,7 +708,7 @@
                                 </div>
                             </div>
                             <div class="flex my-4" style="justify-content: end;">
-                                <button onclick="validar()" class="btn tb-btn-primary" type="submit">Firmar</button>
+                                <button onclick="validar()" class="btn btn-primary" type="submit">Firmar</button>
                             </div>
                         </div>
                     </form>
@@ -706,9 +719,9 @@
 
     @if ($habilitar_alerta_cotizacion)
     <b>
-        <H1>Ocurrio algo Inesperado Intentelo nuevamente</H1>
+        <H1>Ocurrio algo Inesperado Intentelo Nuevamente</H1>
     </b>
-   @endif
+    @endif
 
     @if ($habilitar_alerta)
         <b>

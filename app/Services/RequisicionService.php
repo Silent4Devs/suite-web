@@ -98,11 +98,8 @@ class RequisicionService
         }
     }
 
-    public function postDataTextPythonAPI()
+    public function postDataTextPythonAPI($filePath, $fileName)
     {
-        $filePath = storage_path('app/public/requisicion.pdf');
-        $fileName = 'requisicion.pdf';
-
         $url = 'http://127.0.0.1:8000/text_to_chromadb/';
 
         try {
@@ -113,6 +110,26 @@ class RequisicionService
                         'contents' => fopen($filePath, 'r'),
                         'filename' => $fileName,
                     ],
+                ],
+            ]);
+
+            return json_decode($response->getBody()->getContents(), true);
+        } catch (\Exception $e) {
+            return ['error' => $e->getMessage()];
+        }
+    }
+
+    public function postQuestionToPythonAPI($question)
+    {
+        $url = 'http://127.0.0.1:8000/ask-question/';
+
+        try {
+            $response = $this->client->post($url, [
+                'json' => [
+                    'user_question' => $question,
+                ],
+                'headers' => [
+                    'Content-Type' => 'application/json',
                 ],
             ]);
 

@@ -17,6 +17,7 @@ use App\Models\Organizacion;
 use App\Models\User;
 use App\Services\RequisicionService;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -94,6 +95,14 @@ class RequisicionesCreateComponent extends Component
 
     public $pdf;
 
+    public $filePath;
+
+    public $question;
+
+    public $respuesta;
+
+    public $bandera = false;
+
     protected $requisicionService;
 
     public function __construct($id = null)
@@ -119,26 +128,36 @@ class RequisicionesCreateComponent extends Component
     public function postDataClean()
     {
         $result = $this->requisicionService->postDataCleanPythonAPI($this->path);
-        dd($result);
+        return $result;
     }
 
     public function postDataScaned()
     {
         $result = $this->requisicionService->postDataScanedPythonAPI($this->path);
-        dd($result);
+        return $result;
     }
 
     public function postDataExtract()
     {
         $result = $this->requisicionService->postDataExtractPythonAPI($this->image);
-        dd($result);
+        return $result;
     }
 
     public function postDataText()
     {
-        $result = $this->requisicionService->postDataTextPythonAPI();
-        dd($result);
+        $result = $this->requisicionService->postDataTextPythonAPI($this->filePath, $this->filename);
+        return $result;
     }
+
+    public function askQuestion()
+    {
+        $response = $this->requisicionService->postQuestionToPythonAPI($this->question);
+
+        $this->respuesta = response()->json($response);
+
+        $this->respuesta = $response;
+    }
+
 
     public function actualizarCountProveedores()
     {
@@ -248,24 +267,30 @@ class RequisicionesCreateComponent extends Component
                         $proveedor_req->fecha_fin = isset($data['contacto_fecha_fin_' . $i]) ? $data['contacto_fecha_fin_' . $i] : null;
                         $proveedor_req->requisiciones_id = $this->requisicion_id;
 
+                        if (isset($this->cotizaciones[$cotizacion_count])) {
+                            $cotizacion_actual = $this->cotizaciones[$cotizacion_count];
 
-                        $cotizacion_actual = $this->cotizaciones[$cotizacion_count];
+                            if (
+                                $cotizacion_actual->getClientOriginalExtension() === 'pdf' || $cotizacion_actual->getClientOriginalExtension() === 'docx'
+                                || $cotizacion_actual->getClientOriginalExtension() === 'pptx' || $cotizacion_actual->getClientOriginalExtension() === 'point'
+                                || $cotizacion_actual->getClientOriginalExtension() === 'xml' || $cotizacion_actual->getClientOriginalExtension() === 'jpeg'
+                                || $cotizacion_actual->getClientOriginalExtension() === 'jpg' || $cotizacion_actual->getClientOriginalExtension() === 'png'
+                                || $cotizacion_actual->getClientOriginalExtension() === 'xlsx' || $cotizacion_actual->getClientOriginalExtension() === 'xlsm'
+                                || $cotizacion_actual->getClientOriginalExtension() === 'csv'
+                            ) {
+                                $this->habilitar_alerta = false;
+                                $this->bandera = false;
+                                $name_cotizacion = 'requisicion_' . $this->requisicion_id . 'cotizazcion_' . $cotizacion_count . '_' . uniqid() . '.' . $cotizacion_actual->getClientOriginalExtension();
+                                $cotizacion_actual->storeAs('public/cotizaciones_requisiciones_proveedores/', $name_cotizacion);
+                                $proveedor_req->cotizacion = $name_cotizacion;
+                                $proveedor_req->save();
+                            } else {
+                                $this->habilitar_alerta = true;
 
-                        if (
-                            $cotizacion_actual->getClientOriginalExtension() === 'pdf' || $cotizacion_actual->getClientOriginalExtension() === 'docx'
-                            || $cotizacion_actual->getClientOriginalExtension() === 'pptx' || $cotizacion_actual->getClientOriginalExtension() === 'point'
-                            || $cotizacion_actual->getClientOriginalExtension() === 'xml' || $cotizacion_actual->getClientOriginalExtension() === 'jpeg'
-                            || $cotizacion_actual->getClientOriginalExtension() === 'jpg' || $cotizacion_actual->getClientOriginalExtension() === 'png'
-                            || $cotizacion_actual->getClientOriginalExtension() === 'xlsx' || $cotizacion_actual->getClientOriginalExtension() === 'xlsm'
-                            || $cotizacion_actual->getClientOriginalExtension() === 'csv'
-                        ) {
-                            $this->habilitar_alerta = false;
-                            $name_cotizacion = 'requisicion_' . $this->requisicion_id . 'cotizazcion_' . $cotizacion_count . '_' . uniqid() . '.' . $cotizacion_actual->getClientOriginalExtension();
-                            $cotizacion_actual->storeAs('public/cotizaciones_requisiciones_proveedores/', $name_cotizacion);
-                            $proveedor_req->cotizacion = $name_cotizacion;
-                            $proveedor_req->save();
+                                return false;
+                            }
                         } else {
-                            $this->habilitar_alerta = true;
+                            $this->habilitar_alerta_cotizacion = true;
 
                             return false;
                         }
@@ -273,6 +298,8 @@ class RequisicionesCreateComponent extends Component
                         $this->emit('cambiarTab', 'contact');
 
                         $this->dataFirma();
+
+                        $this->habilitar_alerta_cotizacion = false;
 
                         $this->disabled = 'disabled';
                     } else {
@@ -338,6 +365,52 @@ class RequisicionesCreateComponent extends Component
         $contrato = KatbolContrato::where('id', $requisicion->contrato_id)->first();
         $this->emit('render_firma');
         $this->habilitar_firma = true;
+    }
+
+
+    // public function robot($filename)
+    // {
+    //     // Asegúrate de que el archivo existe y es accesible
+    //     if (Storage::disk('public')->exists('cotizaciones_requisiciones_proveedores/' . $filename)) {
+    //         $this->filename = $filename;
+
+    //         // Establecer la bandera para mostrar el formulario de preguntas
+    //         $this->bandera = true;
+
+    //         // Ruta completa del archivo
+    //         $this->filePath = storage_path('app/public/cotizaciones_requisiciones_proveedores/' . $filename);
+
+    //         // Simula la postData y postDataText con el contenido del archivo
+    //         $this->postData();
+    //         $this->postDataText();
+
+    //         // Pregunta predeterminada
+    //         $this->question = 'De que habla el documento';
+
+    //         // Llama a la función para hacer la pregunta
+    //         $this->askQuestion();
+    //     } else {
+    //         // Maneja el caso donde el archivo no existe
+    //         $this->bandera = false;
+    //         session()->flash('error', 'Archivo no encontrado.');
+    //     }
+    // }
+
+
+    public function robot()
+    {
+        $this->filename = 'test.pdf';
+        $this->postData();
+
+        $this->bandera = true;
+
+        $this->filePath = storage_path('app/public/requisicion.pdf');
+
+        $this->postDataText();
+
+        $this->question = 'El presente documento trata de...';
+
+        $this->askQuestion();
     }
 
     public function removeUnicodeCharacters($string)
