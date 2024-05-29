@@ -2,11 +2,12 @@
 @section('content')
     <h5 class="col-12 titulo_general_funcion">Registrar: Matríz de Riesgos</h5>
     <div class="mt-4 card">
-         <div class="card-body">
-            <form method="POST" action="{{ route('admin.analysisRisk.store') }}" enctype="multipart/form-data">
+        <div class="card-body">
+            <form method="POST" action="{{ route('admin.analisis-riesgos.store') }}" enctype="multipart/form-data">
                 @csrf
 
-                <div class="py-1 text-center form-group col-12" style="background-color:#345183; border-radius:100px; color: white;">DATOS GENERALES</div>
+                <div class="py-1 text-center form-group col-12"
+                    style="background-color:#345183; border-radius:100px; color: white;">DATOS GENERALES</div>
 
                 <div class="form-group">
                     <p class="font-weight-bold" style="font-size:11pt;">Llene los siguientes campos según corresponda:</p>
@@ -26,7 +27,8 @@
 
                     <div class="form-group col-md-4 col-sm-4">
                         <label for="tipo" class="required"><i class="fab fa-elementor iconos-crear"></i>Tipo </label>
-                        <select class="form-control {{ $errors->has('tipo') ? 'is-invalid' : '' }}" name="tipo" id="tipo" required>
+                        <select class="form-control {{ $errors->has('tipo') ? 'is-invalid' : '' }}" name="tipo"
+                            id="tipo" required>
                             <option value disabled {{ old('tipo', null) === null ? 'selected' : '' }}>
                                 Selecciona una opción</option>
                             @foreach (App\Models\AnalisisDeRiesgo::TipoSelect as $key => $label)
@@ -57,15 +59,15 @@
 
                 <div class="row">
                     <div class="form-group col-md-4 col-sm-4">
-                        <label for="id_elaboro" class="required"><i class="fas fa-user-tie iconos-crear"></i>Elaboró </label>
-                        <select class="form-control {{ $errors->has('id_elaboro') ? 'is-invalid' : '' }}"
-                            name="id_elaboro" id="id_elaboro" required>
+                        <label for="id_elaboro" class="required"><i class="fas fa-user-tie iconos-crear"></i>Elaboró
+                        </label>
+                        <select class="form-control {{ $errors->has('id_elaboro') ? 'is-invalid' : '' }}" name="id_elaboro"
+                            id="id_elaboro" required>
                             <option value="" {{ old('id_elaboro', null) === null ? 'selected' : '' }}>
                                 Selecciona una opción</option>
                             @foreach ($empleados as $key => $label)
                                 <option data-puesto="{{ $label->puesto }}" value="{{ $label->id }}"
-                                data-area="{{$label->area->area}}"
-                                >{{ $label->name }}
+                                    data-area="{{ $label->area->area }}">{{ $label->name }}
                                 </option>
                             @endforeach
                         </select>
@@ -94,8 +96,8 @@
                         <label for="porcentaje_implementacion"><i class="fas fa-percentage iconos-crear"></i>
                             Implementación</label>
                         <input class="form-control {{ $errors->has('porcentaje_implementacion') ? 'is-invalid' : '' }}"
-                            type="number" step="1" value="0" name="porcentaje_implementacion" id="porcentaje_implementacion"
-                            value="{{ old('porcentaje_implementacion', '') }}" required>
+                            type="number" step="1" value="0" name="porcentaje_implementacion"
+                            id="porcentaje_implementacion" value="{{ old('porcentaje_implementacion', '') }}" required>
                         @if ($errors->has('porcentaje_implementacion'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('porcentaje_implementacion') }}
@@ -104,7 +106,8 @@
                     </div>
 
                     <div class="form-group col-md-4 col-sm-4">
-                        <label for="estatus" class="required"><i class="fas fa-traffic-light iconos-crear"></i>Estatus</label>
+                        <label for="estatus" class="required"><i
+                                class="fas fa-traffic-light iconos-crear"></i>Estatus</label>
                         <select class="form-control {{ $errors->has('estatus') ? 'is-invalid' : '' }}" name="estatus"
                             id="estatus" required>
                             <option value disabled {{ old('estatus', null) === null ? 'selected' : '' }}>
@@ -125,9 +128,9 @@
 
                 <div class="text-right form-group col-12">
                     <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-                            <button class="btn btn-danger" type="submit">
-                                {{ trans('global.save') }}
-                            </button>
+                    <button class="btn btn-danger" type="submit">
+                        {{ trans('global.save') }}
+                    </button>
                 </div>
             </form>
         </div>
@@ -161,7 +164,7 @@
         });
     </script>
 
-         <script>
+    <script>
         document.addEventListener('DOMContentLoaded', function() {
             let elaboro = document.querySelector('#id_elaboro');
             let area_init = elaboro.options[elaboro.selectedIndex].getAttribute('data-area');
@@ -185,6 +188,4 @@
             }
         });
     </script>
-
-
 @endsection

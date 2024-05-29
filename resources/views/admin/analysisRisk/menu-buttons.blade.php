@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-{{ Breadcrumbs::render('admin.analysisRisk.menu') }}
+    {{ Breadcrumbs::render('admin.analisis-riesgos.menu') }}
     {{-- menus horizontales --}}
     <style type="text/css">
         div.nav .nav-link {
@@ -61,7 +61,6 @@
         a:hover {
             text-decoration: none !important;
         }
-
     </style>
     <style>
         .ventana_menu {
@@ -75,7 +74,6 @@
             height: calc(100% - 40px);
 
         }
-
     </style>
 
     {{-- {{ Breadcrumbs::render('capital-humano') }} --}}
@@ -102,7 +100,7 @@
             <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane mb-2 fade show active" id="nav-riesgo" role="tabpanel"
                     aria-labelledby="nav-riesgo-tab">
-                    @include('admin.analysisRisk.components.riesgos')
+                    @include('admin.analisis-riesgos.components.riesgos')
                 </div>
             </div>
         </div>

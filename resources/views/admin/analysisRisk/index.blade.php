@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-    {{ Breadcrumbs::render('admin.analysisRisk.index') }}
+    {{ Breadcrumbs::render('admin.analisis-riesgos.index') }}
 
 
     <style>
@@ -41,10 +41,10 @@
         }
 
         /* th {
-                background-color: #345183;
-                color: #ffff;
+                    background-color: #345183;
+                    color: #ffff;
 
-            } */
+                } */
 
         .iconos-tabla {
             color: #fff;
@@ -87,11 +87,12 @@
 
     <h5 class="col-12 titulo_general_funcion">Matriz de Riesgo </h5>
 
-        <div class="text-right">
-            <div class="d-flex justify-content-end">
-                <a href="{{ route('admin.analysisRisk.create') }}" type="button" class="btn tb-btn-primary">Registrar Matriz</a>
-            </div>
+    <div class="text-right">
+        <div class="d-flex justify-content-end">
+            <a href="{{ route('admin.analisis-riesgos.create') }}" type="button" class="btn tb-btn-primary">Registrar
+                Matriz</a>
         </div>
+    </div>
 
     <div class="mt-5 card">
         @include('partials.flashMessages')
@@ -247,7 +248,7 @@
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                     text: deleteButtonTrans,
-                    url: "{{ route('admin.analysisRisk.massDestroy') }}",
+                    url: "{{ route('admin.analisis-riesgos.massDestroy') }}",
                     className: 'btn-danger',
                     action: function(e, dt, node, config) {
                         var ids = $.map(dt.rows({
@@ -286,7 +287,7 @@
             // let btnAgregar = {
             //     text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
             //     titleAttr: 'Agregar nuevo analisis de riesgos',
-            //     url: "{{ route('admin.analysisRisk.create') }}",
+            //     url: "{{ route('admin.analisis-riesgos.create') }}",
             //     className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
             //     action: function(e, dt, node, config) {
             //         let {
@@ -333,7 +334,7 @@
                 dom: "<'row align-items-center justify-content-center'<'col-12 col-sm-12 col-md-3 col-lg-3 m-0'l><'text-center col-12 col-sm-12 col-md-6 col-lg-6'B><'col-md-3 col-12 col-sm-12 m-0'f>>" +
                     "<'row'<'col-sm-12'tr>>" +
                     "<'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>",
-                ajax: "{{ route('admin.analysisRisk.index') }}",
+                ajax: "{{ route('admin.analisis-riesgos.index') }}",
                 columns: [{
                         data: 'id',
                         name: 'id',
