@@ -100,7 +100,7 @@
             <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane mb-2 fade show active" id="nav-riesgo" role="tabpanel"
                     aria-labelledby="nav-riesgo-tab">
-                    @include('admin.analisis-riesgos.components.riesgos')
+                    @include('admin.analysisRisk.components.riesgos')
                 </div>
             </div>
         </div>
