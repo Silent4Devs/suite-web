@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
 
-    {{ Breadcrumbs::render('admin.portalCommunication.sedes-organizacion') }}
+    {{ Breadcrumbs::render('admin.portal-comunicacion.sedes-organizacion') }}
     <h5 class="col-12 titulo_general_funcion">Sedes</h5>
     <div class="">
 
@@ -10,12 +10,12 @@
         </div> --}}
 
         @if ($numero_sedes > 0)
-
             <div class="row justify-content-center">
                 @foreach ($sede as $sedes)
                     <div class="col-4 justify-content-center">
                         <div class="card justify-content-center">
-                            <div class="" style="background-color: #fff; overflow: hidden; display:flex; justify-content: center; align-items:center;">
+                            <div class=""
+                                style="background-color: #fff; overflow: hidden; display:flex; justify-content: center; align-items:center;">
                                 @if (is_null($sedes->foto_sedes))
                                     {{-- <img class="card justify-content-center" style="height: 165px; margin:auto;"
                                         src="{{ asset('storage/sedes/imagenes/organizacion.png') }}" alt=""
@@ -25,9 +25,8 @@
                                         class="img-fluid">
                                 @else
                                     <img class="card justify-content-center" style="height: 165px; margin:auto;"
-                                        src="{{asset("storage/sedes/imagenes/".$sedes->foto_sedes)}}" alt=""
+                                        src="{{ asset('storage/sedes/imagenes/' . $sedes->foto_sedes) }}" alt=""
                                         class="img-fluid">
-
                                 @endif
 
                             </div>
@@ -37,11 +36,12 @@
 
                                 <div class="row">
                                     <div class="col-9">
-                                    <h5 style="font-size:17px;"><strong>Sede:</strong> {{ $sedes->sede }}</h5>
+                                        <h5 style="font-size:17px;"><strong>Sede:</strong> {{ $sedes->sede }}</h5>
                                     </div>
                                     <div class="col-3">
-                                        <p><a href="sede-ubicacionorganizacion/{{ $sedes->id }}" target="_blank"  title="cómo llegar a la sede">
-                                            <i class="bi bi-geo-alt" style="color:#fff; font-size:20px;"></i></a></p>
+                                        <p><a href="sede-ubicacionorganizacion/{{ $sedes->id }}" target="_blank"
+                                                title="cómo llegar a la sede">
+                                                <i class="bi bi-geo-alt" style="color:#fff; font-size:20px;"></i></a></p>
                                     </div>
                                 </div>
                                 <div style="display:flex;">
@@ -57,7 +57,6 @@
 
                         </div>
                     </div>
-
                 @endforeach
 
                 <div class=" col-12 d-flex justify-content-center">
@@ -65,10 +64,7 @@
                 </div>
 
             </div>
-
-
         @else
-
             <div class="px-1 py-2 mx-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
 
                 <div class="row w-100">
