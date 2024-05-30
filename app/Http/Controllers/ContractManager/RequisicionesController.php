@@ -290,7 +290,7 @@ class RequisicionesController extends Controller
             for ($i = 0; $i <= $listaReq->niveles; $i++) {
                 $responsableNivel = $listaPart->where('nivel', $i)->first();
 
-                if ($responsableNivel->empleado->estado_disponibilidad == "Activo") {
+                if ($responsableNivel->empleado->dsiponibilidad->disponibilidad == 1) {
 
                     $responsable = $responsableNivel->empleado;
                     $userEmail = $responsable->email;

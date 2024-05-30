@@ -89,7 +89,7 @@ class Empleado extends Model implements Auditable
     protected $appends = [
         'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
         'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet',
-        'estado_disponibilidad',
+        // 'disposicion',
     ];
 
     protected $with = ['area', 'supervisor'];
@@ -941,8 +941,8 @@ class Empleado extends Model implements Auditable
         return $this->hasOne(DisponibilidadEmpleados::class, 'empleado_id', 'id');
     }
 
-    public function getEstadoDisponibilidadAttribute()
-    {
-        return $this->disponibilidad->estado;
-    }
+    // public function getDisposicionAttribute()
+    // {
+    //     return $this->disponibilidad->disposicion;
+    // }
 }

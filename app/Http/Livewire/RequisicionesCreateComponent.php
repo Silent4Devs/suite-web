@@ -13,6 +13,8 @@ use App\Models\ContractManager\ProveedorOC as KatbolProveedorOC;
 use App\Models\ContractManager\ProveedorRequisicion as KatbolProveedorRequisicion;
 use App\Models\ContractManager\Requsicion as KatbolRequsicion;
 use App\Models\ContractManager\Sucursal as KatbolSucursal;
+use App\Models\FirmasRequisiciones;
+use App\Models\ListaDistribucion;
 use App\Models\Organizacion;
 use App\Models\User;
 use App\Services\RequisicionService;
@@ -24,9 +26,11 @@ class RequisicionesCreateComponent extends Component
 {
     use WithFileUploads;
 
+    public $paso = 1;
+
     public $sucursales;
 
-    // public $compradores; //Causaba problemas con el layout.admin
+    public $compradores;
 
     public $contratos;
 
@@ -149,12 +153,12 @@ class RequisicionesCreateComponent extends Component
     {
         $this->sucursales = KatbolSucursal::where('archivo', false)->get();
         $this->proveedores = KatbolProveedorOC::where('estado', false)->get();
-        $compradores = KatbolComprador::with('user')->where('archivo', false)->get(); //De la forma $this causaba problemas con el layout.admin
+        $this->compradores = KatbolComprador::with('user')->where('archivo', false)->get();
         $this->contratos = KatbolContrato::get();
         $this->productos = KatbolProducto::where('archivo', false)->get();
         $this->organizacion = Organizacion::getFirst();
 
-        return view('livewire.requisiciones-create-component', compact('compradores'));
+        return view('livewire.requisiciones-create-component');
     }
 
     public function hydrate()
@@ -188,6 +192,30 @@ class RequisicionesCreateComponent extends Component
             ]);
         }
 
+        $listaReq = ListaDistribucion::where('modelo', 'KatbolRequsicion')->first();
+        $listaPart = $listaReq->participantes;
+        // dump($listaPart);
+        for ($i = 0; $i <= $listaReq->niveles; $i++) {
+            $responsable = null;
+            $responsableNivel = $listaPart->where('nivel', $i)->first();
+
+            if ($responsableNivel->empleado->disponibilidad->disponibilidad == 1) {
+
+                $responsable = $responsableNivel->empleado;
+                break;
+            }
+        }
+
+        $comprador = KatbolComprador::where('id', $data['comprador_id'])->with('user')->first();
+
+        $firmas_requi = FirmasRequisiciones::create([
+            'requisicion_id' => $this->nueva_requisicion->id,
+            'solicitante_id' => $usuario->empleado->id,
+            'jefe_id' => $usuario->empleado->supervisor->id,
+            'responsable_finanzas_id' => $responsable->id,
+            'comprador_id' => $comprador->user->empleado->id,
+        ]);
+
         // $productos_existentes = KatbolProductoRequisicion::where('requisiciones_id', $this->nueva_requisicion->id)->get();
         // if ($productos_existentes->count() > 0) {
         //     foreach ($productos_existentes as $product) {
@@ -215,11 +243,12 @@ class RequisicionesCreateComponent extends Component
         $this->habilitar_proveedores = true;
         $this->emit('cambiarTab', 'profile');
         $this->active = 'desActive';
+        $this->paso = 2;
     }
 
     public function proveedoresStore($data)
     {
-
+        $this->emit('render_firma');
         $this->habilitar_firma = false;
         $prove_count = 0;
         $cotizacion_count = 0;
@@ -247,7 +276,6 @@ class RequisicionesCreateComponent extends Component
                         $proveedor_req->fecha_inicio = isset($data['contacto_fecha_inicio_' . $i]) ? $data['contacto_fecha_inicio_' . $i] : null;
                         $proveedor_req->fecha_fin = isset($data['contacto_fecha_fin_' . $i]) ? $data['contacto_fecha_fin_' . $i] : null;
                         $proveedor_req->requisiciones_id = $this->requisicion_id;
-
 
                         $cotizacion_actual = $this->cotizaciones[$cotizacion_count];
 
@@ -325,6 +353,7 @@ class RequisicionesCreateComponent extends Component
 
         $this->provedores_colllection->push($this->proveedores_catalogo);
         $this->habilitar_proveedores = true;
+        $this->paso = 3;
     }
 
     public function dataFirma()

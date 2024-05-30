@@ -287,7 +287,7 @@ class OrdenCompraController extends Controller
             for ($i = 0; $i <= $listaReq->niveles; $i++) {
                 $responsableNivel = $listaPart->where('nivel', $i)->first();
 
-                if ($responsableNivel->empleado->estado_disponibilidad == "Activo") {
+                if ($responsableNivel->empleado->dsiponibilidad->disponibilidad == 1) {
 
                     $responsable = $responsableNivel->empleado;
                     $user = $responsable->email;
@@ -322,8 +322,6 @@ class OrdenCompraController extends Controller
             ]);
 
             $listaInformativa = ListaInformativa::where('modelo', $this->modelo)->first();
-
-            // dd($listaInformativa, $listaInformativa->participantes, $listaInformativa->usuarios);
 
             foreach ($listaInformativa->participantes as $key => $informado) {
                 $correos_informados[] = $informado->empleado->email;

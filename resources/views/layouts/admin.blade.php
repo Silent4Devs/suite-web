@@ -186,8 +186,20 @@
                                         <input type="checkbox" class="custom-control-input" id="customSwitch1"
                                             {{ $empleado->disponibilidad->disponibilidad == 1 ? 'checked' : '' }}
                                             onchange="handleSwitchChange(event)">
-                                        <label class="custom-control-label"
-                                            for="customSwitch1">{{ $empleado->estado_disponibilidad }}</label>
+                                        <label class="custom-control-label" for="customSwitch1">
+                                            @switch($empleado->disponibilidad->disponibilidad)
+                                                @case(1)
+                                                    Activo
+                                                @break
+
+                                                @case(2)
+                                                    Ausente
+                                                @break
+
+                                                @default
+                                                    Activo
+                                            @endswitch
+                                        </label>
                                     </div>
                                 </div>
                             </div>

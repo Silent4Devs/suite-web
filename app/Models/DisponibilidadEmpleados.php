@@ -17,7 +17,7 @@ class DisponibilidadEmpleados extends Model
         'disponibilidad',
     ];
 
-    protected $appends = ['estado'];
+    // protected $appends = ['disposicion'];
 
     const ACTIVO = '1';
 
@@ -28,15 +28,15 @@ class DisponibilidadEmpleados extends Model
         return $this->belongsTo(Empleado::class, 'empleado_id', 'id');
     }
 
-    public function getEstadoAttribute()
-    {
-        switch ($this->disponibilidad) {
-            case strval(DisponibilidadEmpleados::ACTIVO):
-                return 'Activo';
-                break;
-            case strval(DisponibilidadEmpleados::AUSENTE):
-                return 'Ausente';
-                break;
-        }
-    }
+    // public function getDisposicionAttribute()
+    // {
+    //     switch ($this->disponibilidad) {
+    //         case strval(DisponibilidadEmpleados::ACTIVO):
+    //             return 'Activo';
+    //             break;
+    //         case strval(DisponibilidadEmpleados::AUSENTE):
+    //             return 'Ausente';
+    //             break;
+    //     }
+    // }
 }
