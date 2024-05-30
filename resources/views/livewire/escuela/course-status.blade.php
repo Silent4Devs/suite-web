@@ -114,8 +114,8 @@
     <div class="card card-body" style="width: 320px;">
         <h4>{{ $course->title }}</h6>
             <div class="d-flex align-items-start">
-                <div class="circulo">
-                    <img src="{{ asset('img/avatars/escuela-instructor.png') }}">
+                <div class="img-person" style="min-width: 40px; min-height: 40px;">
+                    <img src="{{ $course->teacher->avatar_ruta }}" alt="{{ $course->teacher->name }}">
                 </div>
                 <div>
                     <p class="ml-2">{{ $course->teacher->name }}</p>
