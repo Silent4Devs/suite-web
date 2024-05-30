@@ -538,7 +538,7 @@
                             "name":"${usuario.name}",
                             "email":"${usuario.email}",
                             "puesto":"${usuario.puesto}",
-                            "area":"${usuario.area.area}"
+                            "area":"${usuario.area}"
                             }`;
                             lista +=
                                 "<button type='button' class='px-2 py-1 text-muted list-group-item list-group-item-action' onClick='seleccionarUsuario(" +
