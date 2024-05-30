@@ -131,7 +131,7 @@ class AnalisisdeRiesgosController extends Controller
             abort_if(Gate::denies('matriz_de_riesgo_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
             $analisis = AnalisisDeRiesgo::find($id);
 
-            if (!$analisis) {
+            if (! $analisis) {
                 abort(404);
             }
 
@@ -147,7 +147,7 @@ class AnalisisdeRiesgosController extends Controller
             abort_if(Gate::denies('matriz_de_riesgo_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
             $empleados = Empleado::getaltaAll();
 
-            if (!$id) {
+            if (! $id) {
                 abort(404);
             }
 
@@ -182,7 +182,7 @@ class AnalisisdeRiesgosController extends Controller
             abort_if(Gate::denies('matriz_de_riesgo_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
             $analisis = AnalisisDeRiesgo::find($id);
 
-            if (!$analisis) {
+            if (! $analisis) {
                 abort(404);
             }
             $analisis->delete();
