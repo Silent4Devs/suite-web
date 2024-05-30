@@ -116,6 +116,10 @@ class VulnerabilidadController extends AppBaseController
 
             $vulnerabilidad = Vulnerabilidad::with('idAmenaza')->find($id);
 
+            if (!$vulnerabilidad) {
+                abort(404);
+            }
+
             // dd($vulnerabilidad);
             return view('admin.vulnerabilidads.show')->with('vulnerabilidad', $vulnerabilidad);
         } catch (\Throwable $th) {
