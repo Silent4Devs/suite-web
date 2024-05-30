@@ -215,6 +215,18 @@ class EvaluacionesDesempenoController extends Controller
     {
         $evaluacion = EvaluacionDesempeno::find($id);
 
+        // $headersBasicos = [
+        //     'Nombre',
+        //     'Puesto',
+        //     'Area',
+        //     'Evaluadores',
+        //     'Estatus',
+        //     'Porcentaje Objetivos',
+        //     'Porcentaje Competencias',
+        //     'Objetivos',
+        //     'Competencias',
+        // ];
+        // dd($headersBasicos);
         foreach ($evaluacion->periodos as $key_periodo => $periodo) {
             $coleccion = collect();
             foreach ($evaluacion->evaluados as $key => $evaluado) {
@@ -266,13 +278,7 @@ class EvaluacionesDesempenoController extends Controller
                 $total_competencias = ($totales_evaluado[$periodo->id][$evaluado->id]['competencias']['promedio_total'] * $evaluacion->porcentaje_competencias) / 100;
                 $total_objetivos = ($totales_evaluado[$periodo->id][$evaluado->id]['objetivos']['promedio_total'] * $evaluacion->porcentaje_objetivos) / 100;
 
-                // $totales_evaluado[$periodo->id][$evaluado->id]['informacion_evaluado'] = [
-                //     'nombre' => $evaluado->empleado->name,
-                //     'puesto' => $evaluado->empleado->puestoRelacionado->puesto,
-                //     'area' => $evaluado->empleado->area->area,
-                // ];
-
-                $coleccion->push(
+                $data =
                     [
                         'nombre' => $evaluado->empleado->name,
                         'puesto' => $evaluado->empleado->puestoRelacionado->puesto,
@@ -283,12 +289,43 @@ class EvaluacionesDesempenoController extends Controller
                         'porcentajeCompetencias' => $evaluacion->porcentaje_competencias,
                         'competencias' => $total_competencias,
                         'objetivos' => $total_objetivos,
-                    ]
-                );
+                    ];
+
+                $filtro_competencias = $totales_evaluado[$periodo->id][$evaluado->id]['competencias']['calif_total'];
+                $filtro_objetivos = $totales_evaluado[$periodo->id][$evaluado->id]['objetivos']['calif_total'];
+
+                foreach ($filtro_competencias as $key_c => $comp) {
+                    $data[$comp["competencia"]] = $comp["calificacion_total"];
+                    $nombres_competencia[] = $comp["competencia"];
+                }
+
+
+                foreach ($filtro_objetivos as $key_o => $obj) {
+                    $data['nombre_objetivo' . ($key_o + 1)] = $obj["nombre"];
+                    $data['calif_objetivo' . ($key_o + 1)] = $obj["calificacion_total"];
+                }
+
+                $coleccion->push($data);
             }
         }
 
-        // dd($coleccion);
+        $headers_competencias = $nombres_competencia;
+
+        $headersBasicos = [
+            'Nombre',
+            'Puesto',
+            'Area',
+            'Evaluadores',
+            'Estatus',
+            'Porcentaje Objetivos',
+            'Porcentaje Competencias',
+            'Objetivos',
+            'Competencias',
+        ];
+
+        $merge = array_merge($headersBasicos, $headers_competencias);
+
+        // dd($merge);
 
         $export = new EvaluacionesDesempenoReportExport($id);
         // dd($export);

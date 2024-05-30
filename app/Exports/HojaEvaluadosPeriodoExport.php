@@ -3,7 +3,6 @@
 namespace App\Exports;
 
 use App\Models\EvaluacionDesempeno;
-use App\Models\SolicitudVacaciones;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithTitle;
@@ -17,6 +16,8 @@ class HojaEvaluadosPeriodoExport implements FromCollection, WithHeadings,  WithT
     public $id;
     public $periodo_id;
 
+    public $headers_competencias;
+
     public function __construct($id_evaluacion, $id_periodo)
     {
         $this->id = $id_evaluacion;
@@ -25,6 +26,9 @@ class HojaEvaluadosPeriodoExport implements FromCollection, WithHeadings,  WithT
 
     public function collection()
     {
+
+        $headers_competencias = ['test1'];
+
         $evaluacion = EvaluacionDesempeno::find($this->id);
         $coleccion = collect();
         foreach ($evaluacion->periodos as $key_periodo => $periodo) {
@@ -78,13 +82,7 @@ class HojaEvaluadosPeriodoExport implements FromCollection, WithHeadings,  WithT
                 $total_competencias = ($totales_evaluado[$periodo->id][$evaluado->id]['competencias']['promedio_total'] * $evaluacion->porcentaje_competencias) / 100;
                 $total_objetivos = ($totales_evaluado[$periodo->id][$evaluado->id]['objetivos']['promedio_total'] * $evaluacion->porcentaje_objetivos) / 100;
 
-                // $totales_evaluado[$periodo->id][$evaluado->id]['informacion_evaluado'] = [
-                //     'nombre' => $evaluado->empleado->name,
-                //     'puesto' => $evaluado->empleado->puestoRelacionado->puesto,
-                //     'area' => $evaluado->empleado->area->area,
-                // ];
-
-                $coleccion->push(
+                $data =
                     [
                         'nombre' => $evaluado->empleado->name,
                         'puesto' => $evaluado->empleado->puestoRelacionado->puesto,
@@ -95,16 +93,31 @@ class HojaEvaluadosPeriodoExport implements FromCollection, WithHeadings,  WithT
                         'porcentajeCompetencias' => $evaluacion->porcentaje_competencias,
                         'competencias' => $total_competencias,
                         'objetivos' => $total_objetivos,
-                    ]
-                );
+                    ];
+
+                $filtro_competencias = $totales_evaluado[$periodo->id][$evaluado->id]['competencias']['calif_total'];
+                $filtro_objetivos = $totales_evaluado[$periodo->id][$evaluado->id]['objetivos']['calif_total'];
+
+                foreach ($filtro_competencias as $key_c => $comp) {
+                    $data[$comp["competencia"]] = $comp["calificacion_total"];
+                }
+
+
+                foreach ($filtro_objetivos as $key_o => $obj) {
+                    $data['nombre_objetivo' . ($key_o + 1)] = $obj["nombre"];
+                    $data['calif_objetivo' . ($key_o + 1)] = $obj["calificacion_total"];
+                }
+
+                $coleccion->push($data);
             }
         }
+
         return $coleccion;
     }
 
     public function headings(): array
     {
-        return [
+        $headersBasicos = [
             'Nombre',
             'Puesto',
             'Area',
@@ -115,6 +128,9 @@ class HojaEvaluadosPeriodoExport implements FromCollection, WithHeadings,  WithT
             'Objetivos',
             'Competencias',
         ];
+
+        // $merge = array_merge($headersBasicos, $this->headers_competencias);
+        return $headersBasicos;
     }
 
     public function headingsStyle(): array
