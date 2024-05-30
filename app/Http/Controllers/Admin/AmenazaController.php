@@ -126,7 +126,6 @@ class AmenazaController extends AppBaseController
         }
     }
 
-
     public function edit($id)
     {
         abort_if(Gate::denies('amenazas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');

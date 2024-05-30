@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin\Escuela\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Traits\ObtenerOrganizacion;
 
 class ReportesIndividualesController extends Controller

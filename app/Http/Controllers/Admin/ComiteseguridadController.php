@@ -97,7 +97,7 @@ class ComiteseguridadController extends Controller
 
             $comiteseguridad = Comiteseguridad::find($comiteseguridad);
 
-            if (!$comiteseguridad) {
+            if (! $comiteseguridad) {
                 abort(404);
             }
 
@@ -143,7 +143,6 @@ class ComiteseguridadController extends Controller
     //     return view('admin.comiteseguridads.show', compact('comiteseguridad', 'datas'));
     // }
 
-
     public function show($id)
     {
         try {
@@ -161,7 +160,6 @@ class ComiteseguridadController extends Controller
             abort(404);
         }
     }
-
 
     public function destroy(Comiteseguridad $comiteseguridad)
     {
