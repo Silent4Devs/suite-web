@@ -132,9 +132,9 @@ class PanelDeclaracionIsoController extends Controller
         if ($readyExistResponsable) {
             return response()->json(['estatus' => 'ya_es_aprobador', 'message' => 'Ya fue asignado como aprobador'], 200);
         } else {
-            if (! $existResponsable) {
+            if (!$existResponsable) {
                 $exists = DeclaracionAplicabilidadResponsableIso::where('declaracion_id', $declaracion)->where('empleado_id', $responsable)->exists();
-                if (! $exists) {
+                if (!$exists) {
                     DeclaracionAplicabilidadResponsableIso::where('declaracion_id', $declaracion)
                         ->update([
                             'declaracion_id' => $declaracion,
@@ -187,7 +187,7 @@ class PanelDeclaracionIsoController extends Controller
         } else {
             if ($existAprobador) {
                 $exists = DeclaracionAplicabilidadAprobarIso::where('declaracion_id', $declaracion)->where('empleado_id', $aprobador)->exists();
-                if (! $exists) {
+                if (!$exists) {
                     DeclaracionAplicabilidadAprobarIso::where('declaracion_id', $declaracion)
                         ->update(
                             [
@@ -232,7 +232,7 @@ class PanelDeclaracionIsoController extends Controller
         if ($request->enviarTodos) {
             $destinatarios = DeclaracionAplicabilidadResponsableIso::distinct('empleado_id')->pluck('empleado_id')->toArray();
         } elseif ($request->enviarNoNotificados) {
-            $destinatarios = DeclaracionAplicabilidadResponsableIso::where('esta_correo_enviado', false)->distinct('empleado_id')->pluck('empleado_id')->toArray();
+            $destinatarios = DeclaracionAplicabilidadResponsableIso::distinct('empleado_id')->pluck('empleado_id')->toArray();
         } else {
             $destinatarios = json_decode($request->responsables);
         }
