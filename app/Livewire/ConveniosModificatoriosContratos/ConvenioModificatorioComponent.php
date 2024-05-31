@@ -71,7 +71,7 @@ class ConvenioModificatorioComponent extends Component
             ->orderBy($this->sort, $this->direction)
             ->paginate(intval($this->pagination));
 
-        // $this->dispatchBrowserEvent('paginadorConvenios');
+        // $this->dispatch('paginadorConvenios');
 
         return view('livewire.convenios-modificatorios-contratos.convenio-modificatorio-component', [
             'convenio' => $convenios, 'organizacion' => $organizacion,
@@ -123,7 +123,7 @@ class ConvenioModificatorioComponent extends Component
 
         // } else {
         $this->default();
-        $this->dispatchBrowserEvent('contentChanged');
+        $this->dispatch('contentChanged');
         $this->alert('success', 'Registro actualizado!');
         // }
     }
@@ -199,7 +199,7 @@ class ConvenioModificatorioComponent extends Component
         }
         // dd($convenioFile);
         $this->default();
-        $this->dispatchBrowserEvent('contentChanged');
+        $this->dispatch('contentChanged');
         $this->alert('success', 'Registro actualizado!');
 
         // } else {
@@ -248,7 +248,7 @@ class ConvenioModificatorioComponent extends Component
         $this->descripcion = '';
         $this->convenios_file = null;
         $this->iteration++;
-        $this->dispatchBrowserEvent('contentChanged');
+        $this->dispatch('contentChanged');
 
         $this->view = 'create';
     }

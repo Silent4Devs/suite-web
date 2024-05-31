@@ -43,7 +43,7 @@ class CreateRecibeInformacion extends Component
     public function createRecibe()
     {
         $this->default();
-        $this->emit('abrir-modal-recibe');
+        $this->dispatch('abrir-modal-recibe');
     }
 
     public function saveRecibe()
@@ -61,8 +61,8 @@ class CreateRecibeInformacion extends Component
         ]);
 
         $this->reset('id', 'nombre', 'puesto', 'correo_electronico', 'extencion', 'ubicacion', 'interno_externo');
-        $this->emit('render');
-        $this->emit('cerrar-modal-recibe', ['editarRecibe' => false]);
+        $this->dispatch('render');
+        $this->dispatch('cerrar-modal-recibe', editarRecibe:false);
     }
 
     public function editRecibe($id)
@@ -77,7 +77,7 @@ class CreateRecibeInformacion extends Component
         $this->ubicacion = $model->ubicacion;
         $this->cuestionario_id = $model->cuestionario_id;
         $this->interno_externo = $model->interno_externo;
-        $this->emit('abrir-modal-recibe');
+        $this->dispatch('abrir-modal-recibe');
     }
 
     public function default()
@@ -106,16 +106,16 @@ class CreateRecibeInformacion extends Component
             'cuestionario_id' => $this->cuestionario_id,
             'interno_externo' => $this->interno_externo,
         ]);
-        $this->emit('cerrar-modal-recibe', ['editar' => true]);
+        $this->dispatch('cerrar-modal-recibe', editar:true);
         $this->default();
-        $this->emit('render');
+        $this->dispatch('render');
     }
 
     public function destroy($id)
     {
         $model = CuestionarioRecibeInformacion::find($id);
         $model->delete();
-        $this->emit('render');
+        $this->dispatch('render');
     }
 
     public function render()

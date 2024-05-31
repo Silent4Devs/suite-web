@@ -133,7 +133,7 @@ class FacturaComponent extends Component
             ->where('contrato_id', '=', $this->contrato_id)
             ->orderBy($this->sort, $this->direction)
             ->paginate(intval($this->pagination));
-        $this->dispatchBrowserEvent('paginadorFacturas');
+        $this->dispatch('paginadorFacturas');
         //   ->orWhere('fecha_recepcion', 'like', '%' . $this->search . '%')
         // ->orWhere('fecha_liberacion', 'like', '%' . $this->search . '%')
         // ->orWhere('no_revisiones', 'like', '%' . $this->search . '%')
@@ -285,12 +285,12 @@ class FacturaComponent extends Component
                 ]);
             }
 
-            $this->emit('recargar-cumplimiento');
-            //$this->dispatchBrowserEvent('contentChanged');
+            $this->dispatch('recargar-cumplimiento');
+            //$this->dispatch('contentChanged');
             $this->default();
-            $this->dispatchBrowserEvent('cumple');
-            $this->dispatchBrowserEvent('firma');
-            $this->dispatchBrowserEvent('conformidad');
+            $this->dispatch('cumple');
+            $this->dispatch('firma');
+            $this->dispatch('conformidad');
             $this->alert('success', 'Registro añadido!');
         } //termina else
     }
@@ -318,7 +318,7 @@ class FacturaComponent extends Component
         $this->monto_factura = $factura->monto_factura;
         // $this->hallazgos_comentarios = $factura->hallazgos_comentarios;
         // $this->estatus = $factura->estatus;
-        $this->dispatchBrowserEvent('contentChanged');
+        $this->dispatch('contentChanged');
 
         $this->view = 'edit';
     }
@@ -443,19 +443,19 @@ class FacturaComponent extends Component
                 ]);
             }
 
-            $this->emit('recargar-cumplimiento');
-            //$this->dispatchBrowserEvent('contentChanged');
+            $this->dispatch('recargar-cumplimiento');
+            //$this->dispatch('contentChanged');
             $this->default();
-            $this->dispatchBrowserEvent('cumple');
-            $this->dispatchBrowserEvent('firma');
-            $this->dispatchBrowserEvent('conformidad');
+            $this->dispatch('cumple');
+            $this->dispatch('firma');
+            $this->dispatch('conformidad');
             $this->alert('success', 'Registro añadido!');
         } //terminar else
     }
 
     public function confirmDelete($factura_id)
     {
-        $this->dispatchBrowserEvent('confirmDeleteEventFactura', ['factura_id' => $factura_id]);
+        $this->dispatch('confirmDeleteEventFactura', factura_id:$factura_id );
     }
 
     public function destroy($id)
@@ -465,7 +465,7 @@ class FacturaComponent extends Component
 
         //generacion de log
         //DB::select('call actualiza_user(?, ?, ?)', array('facturacion', auth()->id(), $id));
-        $this->emit('recargar-cumplimiento');
+        $this->dispatch('recargar-cumplimiento');
         $this->alert('success', 'Registro eliminado!');
     }
 
@@ -578,7 +578,7 @@ class FacturaComponent extends Component
         $this->iteration++;
         $this->xml = null;
         $this->iteration1++;
-        $this->dispatchBrowserEvent('contentChanged');
+        $this->dispatch('contentChanged');
 
         $this->no_revisiones = '';
         $this->estatus_revision = '';

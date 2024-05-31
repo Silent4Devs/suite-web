@@ -53,7 +53,7 @@ class FortalezasComponent extends Component
 
         // dd($fort);
 
-        $this->emit('recargar-fortalezas');
+        $this->dispatch('recargar-fortalezas');
         $this->default();
     }
 
@@ -80,14 +80,14 @@ class FortalezasComponent extends Component
         ]);
 
         $this->default();
-        $this->dispatchBrowserEvent('contentChanged');
+        $this->dispatch('contentChanged');
     }
 
     public function default()
     {
         $this->fortaleza = '';
         $this->riesgo = '';
-        $this->dispatchBrowserEvent('contentChanged');
+        $this->dispatch('contentChanged');
         $this->view = 'create';
     }
 }

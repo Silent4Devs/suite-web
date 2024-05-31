@@ -140,9 +140,9 @@ class ReportesProyectos extends Component
 
         $this->hoy = Carbon::now();
 
-        $this->emit('resize');
+        $this->dispatch('resize');
 
-        $this->emit('scriptTabla');
+        $this->dispatch('scriptTabla');
 
         $this->areas = Area::getIdNameAll();
 
@@ -425,7 +425,7 @@ class ReportesProyectos extends Component
             }
         }
 
-        $this->emit('scriptChartsProyect', $this->tareas_array, $this->empleados_proyecto);
+        $this->dispatch('scriptChartsProyect', tareas_array:$this->tareas_array,empleados_proyecto: $this->empleados_proyecto);
     }
 
     public function buscarEnArray($search, $array)

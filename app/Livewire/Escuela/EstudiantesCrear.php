@@ -54,10 +54,10 @@ class EstudiantesCrear extends Component
                     'user_id' => $usuario->id,
                     'course_id' => $this->course->id,
                 ]);
-                $this->emit('UserStore');
+                $this->dispatch('UserStore');
             }
             $this->render_alerta('success', 'Los estudiantes de la organización se han agregado exitosamente');
-            $this->dispatchBrowserEvent('closeModal');
+            $this->dispatch('closeModal');
         }
 
         if ($this->publico == 'area') {
@@ -68,10 +68,10 @@ class EstudiantesCrear extends Component
                         'course_id' => $this->course->id,
                     ]);
                 }
-                $this->emit('UserStore');
+                $this->dispatch('UserStore');
             }
             $this->render_alerta('success', 'Los estudiantes del área '.Area::where('id', $this->area_seleccionada)->first()->area.' se han agregado exitosamente');
-            $this->dispatchBrowserEvent('closeModal');
+            $this->dispatch('closeModal');
         }
 
         if ($this->publico == 'manual') {
@@ -81,9 +81,9 @@ class EstudiantesCrear extends Component
                 'course_id' => $this->course->id,
             ]);
             // $this->open = false;
-            $this->emit('UserStore');
+            $this->dispatch('UserStore');
             $this->render_alerta('success', 'El estudiante se ha agregado exitosamente');
-            $this->dispatchBrowserEvent('closeModal');
+            $this->dispatch('closeModal');
         }
     }
 
@@ -112,7 +112,7 @@ class EstudiantesCrear extends Component
 
     public function hydrate()
     {
-        $this->emit('select2');
+        $this->dispatch('select2');
     }
 
     public function cancel()

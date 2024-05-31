@@ -8,7 +8,7 @@
             <div class="modal-body">
                 <div class="mt-2 form-group anima-focus">
                     <select class="form-control  block w-full mb-2 {{ $errors->has('user_id') ? 'is-invalid' : '' }}"
-                        name="user_id" id="user_id" wire:model.defer="user_id" placeholder="">
+                        name="user_id" id="user_id" wire:model="user_id" placeholder="">
                         <option value="" selected>
                             Selecciona una opción
                         </option>

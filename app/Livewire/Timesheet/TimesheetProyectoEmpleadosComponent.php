@@ -113,7 +113,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
 
     public function hydrate()
     {
-        $this->emit('scriptTabla');
+        $this->dispatch('scriptTabla');
     }
 
     private function resetInput()
@@ -141,7 +141,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
     {
         if ($asignacion && $this->proyecto->tipo == 'Externo') {
             $this->empleado_añadido = $id_empleado;
-            $this->emit('modalProyectosExternos');
+            $this->dispatch('modalProyectosExternos');
         } elseif ($asignacion) {
             $this->addEmpleadoIndividual($id_empleado);
         } else {
@@ -155,7 +155,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
                 ->where('empleado_id', $id_empleado)
                 ->first();
 
-            $this->emit('openModal', $empleado_proyecto->id);
+            $this->dispatch('openModal', $empleado_proyecto->id);
         }
     }
 
@@ -186,7 +186,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
                         'costo_hora' => $this->costo_hora,
                     ]
                 );
-                $this->dispatchBrowserEvent('closeModal');
+                $this->dispatch('closeModal');
                 if (! $todosExt) {
                     $this->resetInput();
                 }
@@ -261,7 +261,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
             ]);
         }
 
-        $this->dispatchBrowserEvent('closeModal');
+        $this->dispatch('closeModal');
         $this->alert('success', 'Editado exitosamente', [
             'position' => 'top-end',
             'timer' => 3000,

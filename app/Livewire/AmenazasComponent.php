@@ -51,7 +51,7 @@ class AmenazasComponent extends Component
 
         // dd($fort);
 
-        $this->emit('recargar-amenazas');
+        $this->dispatch('recargar-amenazas');
         $this->default();
     }
 
@@ -77,14 +77,14 @@ class AmenazasComponent extends Component
         ]);
 
         $this->default();
-        $this->dispatchBrowserEvent('contentChanged');
+        $this->dispatch('contentChanged');
     }
 
     public function default()
     {
         $this->amenaza = '';
         $this->riesgo = '';
-        $this->dispatchBrowserEvent('contentChanged');
+        $this->dispatch('contentChanged');
         $this->view = 'create';
     }
 }

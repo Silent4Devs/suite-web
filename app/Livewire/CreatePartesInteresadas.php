@@ -24,7 +24,7 @@ class CreatePartesInteresadas extends Component
 
     public function hydrate()
     {
-        $this->emit('select2');
+        $this->dispatch('select2');
     }
 
     public function validarParteInteresada()
@@ -38,7 +38,7 @@ class CreatePartesInteresadas extends Component
     public function create()
     {
         $this->default();
-        $this->emit('abrir-modal');
+        $this->dispatch('abrir-modal');
     }
 
     public function save()
@@ -51,8 +51,8 @@ class CreatePartesInteresadas extends Component
         ]);
         $model->normas()->sync($this->normasModel);
         $this->reset('necesidades', 'expectativas');
-        $this->emit('render');
-        $this->emit('cerrar-modal', ['editar' => false]);
+        $this->dispatch('render');
+        $this->dispatch('cerrar-modal', editar: false);
     }
 
     public function edit($id)
@@ -64,7 +64,7 @@ class CreatePartesInteresadas extends Component
         $this->expectativas = $model->expectativas;
         $this->id_interesado = $model->id_interesada;
         $this->parteInteresadaIdEN = $model->id;
-        $this->emit('abrir-modal');
+        $this->dispatch('abrir-modal');
     }
 
     public function default()
@@ -85,16 +85,16 @@ class CreatePartesInteresadas extends Component
             'id_interesada' => $this->id_interesado,
         ]);
         $model->normas()->sync($this->normasModel);
-        $this->emit('cerrar-modal', ['editar' => true]);
+        $this->dispatch('cerrar-modal', editar: true);
         $this->default();
-        $this->emit('render');
+        $this->dispatch('render');
     }
 
     public function destroy($id)
     {
         $model = ParteInteresadaExpectativaNecesidad::find($id);
         $model->delete();
-        $this->emit('render');
+        $this->dispatch('render');
     }
 
     public function agregarNormas($id)
@@ -103,15 +103,15 @@ class CreatePartesInteresadas extends Component
         $model = ParteInteresadaExpectativaNecesidad::with('normas')->find($id);
         $this->normasModel = $model->normas->pluck('id')->toArray();
 
-        $this->emit('abrirModalPartesInteresadas');
+        $this->dispatch('abrirModalPartesInteresadas');
     }
 
     public function saveNorma($id)
     {
         $model = ParteInteresadaExpectativaNecesidad::with('normas')->find($this->parteInteresadaIdEN);
         $model->normas()->sync($this->normasModel);
-        $this->emit('cerrarModalPartesInteresadas');
-        $this->emit('render');
+        $this->dispatch('cerrarModalPartesInteresadas');
+        $this->dispatch('render');
         $this->normasModel = [];
     }
 

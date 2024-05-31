@@ -73,11 +73,11 @@ class AnalisisBrechasIsoForm extends Component
             $this->evaluacion();
 
             $this->resetInput();
-            $this->emit('limpiarNameInput');
+            $this->dispatch('limpiarNameInput');
 
             return redirect('admin/analisisdebrechas-2022/create');
         } else {
-            $this->emit('selectedCardAlert');
+            $this->dispatch('selectedCardAlert');
 
             return redirect('admin/analisisdebrechas-2022/create');
         }
@@ -101,7 +101,7 @@ class AnalisisBrechasIsoForm extends Component
         $this->id_elaboro = $analisis_brechas->empleado->id;
         $this->view = 'edit';
         $this->analisis_id = $id;
-        $this->emit('edit');
+        $this->dispatch('edit');
     }
 
     public function update()
@@ -123,7 +123,7 @@ class AnalisisBrechasIsoForm extends Component
             ]);
             $this->resetInput();
         } else {
-            $this->emit('selectedCardAlert');
+            $this->dispatch('selectedCardAlert');
         }
     }
 

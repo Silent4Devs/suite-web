@@ -29,8 +29,8 @@ class PermisoComponent extends Component
             'slug' => Str::slug($this->nombre, '-'),
             'descripcion' => $this->descripcion,
         ]);
-        $this->emit('tipoStore');
-        $this->emit('render-tipo-permiso-select-component');
+        $this->dispatch('tipoStore');
+        $this->dispatch('render-tipo-permiso-select-component');
     }
 
     public function render()

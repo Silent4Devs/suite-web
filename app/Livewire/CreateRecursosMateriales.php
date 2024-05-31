@@ -39,7 +39,7 @@ class CreateRecursosMateriales extends Component
     public function createMateriales()
     {
         $this->default();
-        $this->emit('abrir-modal-materiales');
+        $this->dispatch('abrir-modal-materiales');
     }
 
     public function saveMateriales()
@@ -58,8 +58,8 @@ class CreateRecursosMateriales extends Component
         ]);
 
         $this->reset('id', 'escenario', 'impresoras', 'telefono', 'otro', 'equipos');
-        $this->emit('render');
-        $this->emit('cerrar-modal-materiales', ['editarMateriales' => false]);
+        $this->dispatch('render');
+        $this->dispatch('cerrar-modal-materiales', editarMateriales:false);
     }
 
     public function edit($id)
@@ -74,7 +74,7 @@ class CreateRecursosMateriales extends Component
         $this->otro = $model->otro;
 
         $this->cuestionario_id = $model->cuestionario_id;
-        $this->emit('abrir-modal-materiales');
+        $this->dispatch('abrir-modal-materiales');
     }
 
     public function default()
@@ -103,16 +103,16 @@ class CreateRecursosMateriales extends Component
             'otro' => $this->otro,
             'cuestionario_id' => $this->cuestionario_id,
         ]);
-        $this->emit('cerrar-modal-materiales', ['editar' => true]);
+        $this->dispatch('cerrar-modal-materiales', editar:true);
         $this->default();
-        $this->emit('render');
+        $this->dispatch('render');
     }
 
     public function destroy($id)
     {
         $model = CuestionarioRecursosMateriales::find($id);
         $model->delete();
-        $this->emit('render');
+        $this->dispatch('render');
     }
 
     public function render()

@@ -1,7 +1,7 @@
 <section>
     <x-loading-indicator />
 
-    <div class="" x-data="{ open: @entangle('open') }">
+    <div class="" x-data="{ open: @entangle('open').live }">
         <!-- Button (blue), duh! -->
 
         <div class="d-flex justify-content-between align-items-center mt-5">
@@ -13,7 +13,7 @@
         <div class="card card-body">
             <div class="row">
                 <div class="col-md-6 form-group anima-focus">
-                    <select name="publico" id="" class="form-control" wire:model="publico">
+                    <select name="publico" id="" class="form-control" wire:model.live="publico">
                         <option value="" selected></option>
                         <option value="todos">Toda la empresa</option>
                         <option value="area">Por área(s)</option>
@@ -30,11 +30,11 @@
                 @endif
             </div>
             @if ($publico == 'area')
-                <form wire:submit.prevent="save()">
+                <form wire:submit="save()">
                     <div class="row">
                         <div class="col-md-6 anima-focus form-group">
                             <select name="" id="" class="form-control" required
-                                wire:model="area_seleccionada">
+                                wire:model.live="area_seleccionada">
                                 <option value="" selected></option>
                                 @foreach ($areas as $area)
                                     <option value="{{ $area->id }}">{{ $area->area }}</option>
@@ -71,7 +71,7 @@
             style="background-color: rgba(0,0,0,.5);" x-show="open">
             <div class="h-auto p-4 mx-2 text-left bg-white rounded shadow-xl md:max-w-xl md:p-6 lg:p-8 md:mx-0"
                 @click.away="open = false">
-                <form wire:submit.prevent="save()">
+                <form wire:submit="save()">
 
                     <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left" style="min-width:500px;">
                         <h3 class="text-lg font-medium leading-6 text-gray-900">
@@ -83,7 +83,7 @@
                                     style="color:red">*</span></p>
                             <select
                                 class="form-input  block w-full mt-2 mb-2 {{ $errors->has('user_id') ? 'is-invalid' : '' }}"
-                                name="user_id" id="user_id" wire:model="user_id">
+                                name="user_id" id="user_id" wire:model.live="user_id">
                                 <option value="" selected>
                                     Selecciona una opción
                                 </option>

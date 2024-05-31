@@ -35,8 +35,8 @@ class TablaTareasTimesheet extends Component
 
     public function hydrate()
     {
-        $this->emit('select2');
-        $this->emit('scriptTabla');
+        $this->dispatch('select2');
+        $this->dispatch('scriptTabla');
     }
 
     public function mount($proyecto_id, $origen)
@@ -50,7 +50,7 @@ class TablaTareasTimesheet extends Component
     {
         $this->proyecto_filtro = $value;
 
-        $this->emit('updateProyecto');
+        $this->dispatch('updateProyecto');
     }
 
     public function render()
@@ -109,7 +109,7 @@ class TablaTareasTimesheet extends Component
             'todos' => $todos,
         ]);
 
-        $this->emit('tarea-actualizada', $nueva_tarea);
+        $this->dispatch('tarea-actualizada', nueva_tarea:$nueva_tarea);
 
         $this->alert('success', 'Registro añadido!');
     }
@@ -128,7 +128,7 @@ class TablaTareasTimesheet extends Component
             'tarea' => $value,
         ]);
 
-        $this->emit('tarea-actualizada', $tarea_actualizada);
+        $this->dispatch('tarea-actualizada', tarea_actualizada:$tarea_actualizada);
     }
 
     public function actualizarAreaTarea($id, $value)
@@ -154,7 +154,7 @@ class TablaTareasTimesheet extends Component
             'todos' => $todos,
         ]);
 
-        $this->emit('tarea-actualizada', $tarea_actualizada);
+        $this->dispatch('tarea-actualizada', tarea_actualizada:$tarea_actualizada);
     }
 
     public function llenarAreas($id)

@@ -51,7 +51,7 @@ class CreateRecursosHumanos extends Component
     public function createRecursos()
     {
         $this->default();
-        $this->emit('abrir-modal-recursos');
+        $this->dispatch('abrir-modal-recursos');
     }
 
     public function saveRecursos()
@@ -71,8 +71,8 @@ class CreateRecursosHumanos extends Component
         ]);
 
         $this->reset('id', 'escenario', 'nombre', 'a_paterno', 'a_materno', 'puesto', 'rol', 'tel', 'correo');
-        $this->emit('render');
-        $this->emit('cerrar-modal-recursos', ['editarRecursos' => false]);
+        $this->dispatch('render');
+        $this->dispatch('cerrar-modal-recursos', editarRecursos:false);
     }
 
     public function edit($id)
@@ -91,7 +91,7 @@ class CreateRecursosHumanos extends Component
         $this->correo = $model->correo;
 
         $this->cuestionario_id = $model->cuestionario_id;
-        $this->emit('abrir-modal-recursos');
+        $this->dispatch('abrir-modal-recursos');
     }
 
     public function default()
@@ -124,16 +124,16 @@ class CreateRecursosHumanos extends Component
             'correo' => $this->correo,
             'cuestionario_id' => $this->cuestionario_id,
         ]);
-        $this->emit('cerrar-modal-recursos', ['editar' => true]);
+        $this->dispatch('cerrar-modal-recursos', editar:true);
         $this->default();
-        $this->emit('render');
+        $this->dispatch('render');
     }
 
     public function destroy($id)
     {
         $model = CuestionarioRecursosHumanos::find($id);
         $model->delete();
-        $this->emit('render');
+        $this->dispatch('render');
     }
 
     public function render()

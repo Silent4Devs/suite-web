@@ -51,7 +51,7 @@ class OportunidadesComponent extends Component
 
         // dd($fort);
 
-        $this->emit('recargar-oportunidades');
+        $this->dispatch('recargar-oportunidades');
         $this->default();
     }
 
@@ -78,14 +78,14 @@ class OportunidadesComponent extends Component
         ]);
 
         $this->default();
-        $this->dispatchBrowserEvent('contentChanged');
+        $this->dispatch('contentChanged');
     }
 
     public function default()
     {
         $this->oportunidad = '';
         $this->riesgo = '';
-        $this->dispatchBrowserEvent('contentChanged');
+        $this->dispatch('contentChanged');
         $this->view = 'create';
     }
 }

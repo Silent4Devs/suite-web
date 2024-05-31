@@ -40,7 +40,7 @@ class SelectAmenazaComponent extends Component
             'descripcion' => $this->descripcion,
         ]);
         $this->reset('nombre', 'categoria', 'descripcion');
-        $this->emit('render');
-        $this->emit('cerrar-modal');
+        $this->dispatch('render');
+        $this->dispatch('cerrar-modal');
     }
 }

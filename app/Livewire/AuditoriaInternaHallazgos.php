@@ -34,7 +34,7 @@ class AuditoriaInternaHallazgos extends Component
 
     public function hydrate()
     {
-        $this->emit('select2');
+        $this->dispatch('select2');
     }
 
     public function validarHallazgos()
@@ -49,7 +49,7 @@ class AuditoriaInternaHallazgos extends Component
     public function create()
     {
         $this->default();
-        $this->emit('abrir-modal');
+        $this->dispatch('abrir-modal');
     }
 
     public function save()
@@ -68,8 +68,8 @@ class AuditoriaInternaHallazgos extends Component
         ]);
 
         $this->reset('descripcion', 'incumplimiento_requisito', 'clasificacion_hallazgo', 'proceso', 'area');
-        $this->emit('render');
-        $this->emit('cerrar-modal', ['editar' => false]);
+        $this->dispatch('render');
+        $this->dispatch('cerrar-modal', editar: false);
         $this->alert('success', 'Bien hecho', [
             'position' => 'top-end',
             'timer' => 3000,
@@ -90,7 +90,7 @@ class AuditoriaInternaHallazgos extends Component
         $this->area = $hallazgo->area_id;
         $this->incumplimiento_requisito = $hallazgo->incumplimiento_requisito;
         $this->auditoria_internas_id = $hallazgo->auditoria_internas_id;
-        $this->emit('abrir-modal');
+        $this->dispatch('abrir-modal');
     }
 
     public function default()
@@ -117,9 +117,9 @@ class AuditoriaInternaHallazgos extends Component
             'auditoria_internas_id' => $this->auditoria_internas_id,
         ]);
 
-        $this->emit('cerrar-modal', ['editar' => true]);
+        $this->dispatch('cerrar-modal', editar: true);
         $this->default();
-        $this->emit('render');
+        $this->dispatch('render');
         $this->alert('success', 'Bien hecho', [
             'position' => 'top-end',
             'timer' => 3000,
@@ -132,7 +132,7 @@ class AuditoriaInternaHallazgos extends Component
     {
         $model = AuditoriaInternasHallazgos::find($id);
         $model->delete();
-        $this->emit('render');
+        $this->dispatch('render');
         $this->alert('success', 'Bien hecho', [
             'position' => 'top-end',
             'timer' => 3000,

@@ -28,7 +28,7 @@ class FileRevisionDireecionComponent extends Component
     {
         $model = FilesRevisonDireccion::find($id);
         $model->delete();
-        $this->emit('render');
+        $this->dispatch('render');
     }
 
     public function save()
@@ -41,8 +41,8 @@ class FileRevisionDireecionComponent extends Component
                 ]);
             }
         }
-        $this->emit('render');
+        $this->dispatch('render');
         $this->files = [];
-        $this->emit('archivosGuardados');
+        $this->dispatch('archivosGuardados');
     }
 }

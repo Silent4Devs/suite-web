@@ -46,7 +46,7 @@ class RegistrarSalidaVisitante extends Component
     public function limpiarFirma()
     {
         $this->firma = null;
-        $this->emit('limpiarFirma', $this->visitante->id);
+        $this->dispatch('limpiarFirma', visitante:$this->visitante->id);
     }
 
     public function registrarSalida()
@@ -71,10 +71,10 @@ class RegistrarSalidaVisitante extends Component
         $responsable_model = ResponsableVisitantes::with('empleado')->first();
         $responsable = $responsable_model->empleado;
         Mail::to(removeUnicodeCharacters($responsable->email))->queue(new SolicitudSalidaVisitante($registroVisitante, $responsable));
-        $this->emitTo('visitantes.registrar-salida', 'salidaRegistrada', $this->visitante->id);
+        $this->dispatch('salidaRegistrada', visitanteId:$this->visitante->id)->to('visitantes.registrar-salida');
         if ($this->tipo == 'full') {
-            $this->emit('salidaRegistradaSelf');
+            $this->dispatch('salidaRegistradaSelf');
         }
-        $this->emit('closeModal', $this->visitante);
+        $this->dispatch('closeModal', visitante:$this->visitante);
     }
 }

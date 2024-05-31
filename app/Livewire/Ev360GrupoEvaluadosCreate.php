@@ -27,7 +27,7 @@ class Ev360GrupoEvaluadosCreate extends Component
 
     public function openModal()
     {
-        $this->emit('openModalClick');
+        $this->dispatch('openModalClick');
     }
 
     public function save()
@@ -40,8 +40,8 @@ class Ev360GrupoEvaluadosCreate extends Component
 
         $grupo->empleados()->sync($this->empleados);
 
-        $this->emit('grupoEvaluadosSaved');
-        $this->emit('select2');
+        $this->dispatch('grupoEvaluadosSaved');
+        $this->dispatch('select2');
     }
 
     public function render()
@@ -53,6 +53,6 @@ class Ev360GrupoEvaluadosCreate extends Component
 
     public function hydrate()
     {
-        $this->emit('select2');
+        $this->dispatch('select2');
     }
 }

@@ -74,7 +74,7 @@ class ConsultaDeEvaluciones extends Component
         $this->calificaciones_meta_competencias = $this->calificaciones['calificaciones_meta_competencias'];
         $this->competencias_lista_nombre = $this->calificaciones['competencias_lista_nombre'];
         $evaluaciones = Evaluacion::getAll();
-        $this->emit('renderCharts');
+        $this->dispatch('renderCharts');
 
         if ($this->equipo) {
             $jefe = Empleado::select('id', 'name')->with('children')->find($this->evaluador);
@@ -113,7 +113,7 @@ class ConsultaDeEvaluciones extends Component
         $this->competencias_lista_nombre_max = $this->calificaciones_compare_first['competencias_lista_nombre'];
         $this->showCompare = true;
 
-        // $this->emit('comparar');
+        // $this->dispatch('comparar');
     }
 
     public function resetComparar()

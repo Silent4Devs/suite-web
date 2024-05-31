@@ -180,7 +180,7 @@ class DashboardProyectos extends Component
                     }
                 }
                 // dd($this->datos_areas);
-                $this->emit('renderAreas', $this->datos_areas, $this->datos_empleados);
+                $this->dispatch('renderAreas', datos_areas:$this->datos_areas, datos_empleados:$this->datos_empleados);
             } else {
                 $datos_dash = TimesheetProyecto::getAll($this->proy_id)->where('id', '=', $this->proy_id);
                 $area_individual = Area::where('id', '=', $this->area_id);
@@ -282,7 +282,7 @@ class DashboardProyectos extends Component
                 }
 
                 // dd($this->datos_areas);
-                $this->emit('renderAreas', $this->datos_areas, $this->datos_empleados);
+                $this->dispatch('renderAreas', datos_areas:$this->datos_areas, datos_empleados:$this->datos_empleados);
             }
         }
         // dd($datos_areas);

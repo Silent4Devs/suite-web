@@ -36,16 +36,16 @@ class PartesInteresadasComponent extends Component
             case '1':
                 $this->value = true;
                 $this->clausulas = Clausula::where('modulo', 'iso27001')->get();
-                $this->dispatchBrowserEvent('norma-updated');
+                $this->dispatch('norma-updated');
                 break;
             case '2':
                 $this->value = true;
                 $this->clausulas = Clausula::where('modulo', 'iso9001')->get();
-                $this->dispatchBrowserEvent('norma-updated');
+                $this->dispatch('norma-updated');
                 break;
             default:
                 $this->value = false;
-                $this->dispatchBrowserEvent('norma-updated');
+                $this->dispatch('norma-updated');
                 break;
         }
     }

@@ -198,8 +198,8 @@ class ObjetivosSeguridadComponent extends Component
                 $this->formSlugs[$idx][$key] = null;
             }
         }
-        $this->dispatchBrowserEvent('contentChanged');
-        $this->emit('limpiarSlugs');
+        $this->dispatch('contentChanged');
+        $this->dispatch('limpiarSlugs');
 
         $this->view = 'create';
     }

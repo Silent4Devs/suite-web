@@ -98,7 +98,7 @@ class Questions extends Component
             'is_correct' => false,
             'answer' => '',
         ]);
-        $this->emit('renderQuestion');
+        $this->dispatch('renderQuestion');
         // dd($this->answers);
     }
 
@@ -139,8 +139,8 @@ class Questions extends Component
             $this->Destroy($answerDelete);
         }
 
-        $this->dispatchBrowserEvent('closeModal');
-        $this->emit('questionStore');
+        $this->dispatch('closeModal');
+        $this->dispatch('questionStore');
         $this->open = false;
     }
 
@@ -149,7 +149,7 @@ class Questions extends Component
     //     $question=Question::find($question_id);
     //     dd($question);
     //     $this->render_alerta('success','El registro fue eliminado exitosamente');
-    //     $this->emit('questionStore');
+    //     $this->dispatch('questionStore');
 
     // }
 
@@ -217,8 +217,8 @@ class Questions extends Component
             ]);
         }
         // $this->render_alerta('success', 'El registro se ha agregado exitosamente');
-        $this->dispatchBrowserEvent('closeModal');
-        $this->emit('questionStore');
+        $this->dispatch('closeModal');
+        $this->dispatch('questionStore');
         $this->default();
     }
 }

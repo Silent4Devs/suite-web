@@ -107,7 +107,7 @@ class EvaluacionAnalisisBrechasLivewire extends Component
                     $grafica_colores[] = $parametro->color;
                 }
             }
-            $this->emit('renderAreas', $grafica_cuentas, $grafica_colores);
+            $this->dispatch('renderAreas', grafica_cuentas:$grafica_cuentas, grafica_colores:$grafica_colores);
         } else {
             $template = $template_general;
             $result = $this->sumaParametrosTotal();
@@ -150,15 +150,15 @@ class EvaluacionAnalisisBrechasLivewire extends Component
             $this->grafica_colores2 = $grafica_colores;
             $this->resultskeys = $resultskeys;
 
-            $this->emit('renderAreas', $grafica_cuentas, $grafica_colores);
-            $this->emit('renderGraficsModal', $this->grafica_cuentas2, $resultskeys);
+            $this->dispatch('renderAreas', grafica_cuentas:$grafica_cuentas, grafica_colores:$grafica_colores);
+            $this->dispatch('renderGraficsModal', grafica_cuentas2:$this->grafica_cuentas2, resultskeys:$resultskeys);
         }
 
         $this->totalAnalisis = $this->porcentajeTotal()[0]['percentage'];
         //sirve para mostrar las respuesta ya existentes, no se pudo poner en hydrate()
 
-        // $this->emit('renderAreas', $grafica_cuentas, $grafica_colores);
-        // $this->emit('mounted');
+        // $this->dispatch('renderAreas', $grafica_cuentas, $grafica_colores);
+        // $this->dispatch('mounted');
         // dd($cuentas);
         // dd($sectionPercentages);
         $organizacion_actual = $this->obtenerOrganizacion();
@@ -171,7 +171,7 @@ class EvaluacionAnalisisBrechasLivewire extends Component
 
         // $this->imageImprimir = public_path('imprimir.svg');
 
-        $this->emit('renderAreas1');
+        $this->dispatch('renderAreas1');
 
         return view('livewire.evaluacion-analisis-brechas-livewire', compact(
             'template',

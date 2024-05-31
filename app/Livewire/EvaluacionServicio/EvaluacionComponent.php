@@ -100,7 +100,7 @@ class EvaluacionComponent extends Component
             ]);
         }
 
-        $this->dispatchBrowserEvent('contentChanged');
+        $this->dispatch('contentChanged');
         $this->default();
 
         $this->alert('success', 'Registro añadido!');
@@ -121,7 +121,7 @@ class EvaluacionComponent extends Component
             'evaluacion' => $this->evaluacion,
             'meta' => intval($this->meta_servicio),
         ];
-        $this->dispatchBrowserEvent('contentChanged');
+        $this->dispatch('contentChanged');
         $this->view = 'edit';
     }
 
@@ -146,7 +146,7 @@ class EvaluacionComponent extends Component
             ]);
 
             $this->default();
-            //$this->dispatchBrowserEvent('contentChanged');
+            //$this->dispatch('contentChanged');
             $this->alert('success', '¡Registro actualizado!');
         } else {
             $this->alert('error', '¡No has seleccionado ninguna evaluación!, presiona editar en el registro que desees modificar');
@@ -164,7 +164,7 @@ class EvaluacionComponent extends Component
         $this->fecha = '';
         $this->evaluacion = '';
         $this->resultado = '';
-        $this->dispatchBrowserEvent('contentChanged');
+        $this->dispatch('contentChanged');
         $this->view = 'create';
     }
 }

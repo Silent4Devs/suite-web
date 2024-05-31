@@ -46,7 +46,7 @@ class CreateMatrizRequisitosLegales extends Component
         $this->alcance_s1->push([
             'nombrerequisito' => '',
         ]);
-        $this->emit('renderMatriz');
+        $this->dispatch('renderMatriz');
 
         $this->bandera = false;
         $this->bandera2 = false;

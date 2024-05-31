@@ -26,8 +26,8 @@ class MetricaObjetivoCreate extends Component
             'definicion' => $this->definicion,
             'created_at' => Carbon::now(),
         ]);
-        $this->emit('metricaObjetivoStore');
-        $this->emit('render-metrica-objetivo-select');
+        $this->dispatch('metricaObjetivoStore');
+        $this->dispatch('render-metrica-objetivo-select');
     }
 
     public function render()

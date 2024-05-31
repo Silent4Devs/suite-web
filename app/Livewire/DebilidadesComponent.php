@@ -51,7 +51,7 @@ class DebilidadesComponent extends Component
 
         // dd($fort);
 
-        $this->emit('recargar-debilidades');
+        $this->dispatch('recargar-debilidades');
         $this->default();
     }
 
@@ -78,14 +78,14 @@ class DebilidadesComponent extends Component
         ]);
 
         $this->default();
-        $this->dispatchBrowserEvent('contentChanged');
+        $this->dispatch('contentChanged');
     }
 
     public function default()
     {
         $this->debilidad = '';
         $this->riesgo = '';
-        $this->dispatchBrowserEvent('contentChanged');
+        $this->dispatch('contentChanged');
         $this->view = 'create';
     }
 }

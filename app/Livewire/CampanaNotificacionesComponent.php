@@ -49,6 +49,6 @@ class CampanaNotificacionesComponent extends Component
     public function getTotalNotificaciones()
     {
         $this->notificaciones_sin_leer = Auth::user()->unreadNotifications()->where('data', 'not like', '%"tipo_notificacion":"task"%')->count();
-        $this->dispatchBrowserEvent('campana-notificaciones');
+        $this->dispatch('campana-notificaciones');
     }
 }

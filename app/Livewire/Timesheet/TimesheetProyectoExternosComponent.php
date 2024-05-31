@@ -48,7 +48,7 @@ class TimesheetProyectoExternosComponent extends Component
         $this->proyecto = TimesheetProyecto::getIdNameAll()->find($proyecto_id);
         $this->proyecto_proveedores = TimesheetProyectoProveedor::where('proyecto_id', $proyecto_id)->orderBy('id')->get();
         // dd($this->proyecto, $this->proyecto_proveedores);
-        $this->emit('scriptTabla');
+        $this->dispatch('scriptTabla');
 
         return view('livewire.timesheet.timesheet-proyecto-externos-component');
     }
@@ -90,7 +90,7 @@ class TimesheetProyectoExternosComponent extends Component
         if ($this->proyecto->tipo === 'Externo') {
             if (empty($datos['horas_tercero_edit']) || empty($datos['costo_tercero_edit']) || empty($datos['externo_editado'])) {
                 // dd('Llega nulo');
-                // $this->dispatchBrowserEvent('closeModal');
+                // $this->dispatch('closeModal');
                 $this->alert('error', 'No debe contener datos vacios', [
                     'position' => 'top-end',
                     'timer' => 3000,
@@ -107,7 +107,7 @@ class TimesheetProyectoExternosComponent extends Component
             'horas_tercero' => $datos['horas_tercero_edit'],
             'costo_tercero' => $datos['costo_tercero_edit'],
         ]);
-        $this->dispatchBrowserEvent('closeModal');
+        $this->dispatch('closeModal');
         // $this->resetInput();
         $this->alert('success', 'Editado exitosamente', [
             'position' => 'top-end',

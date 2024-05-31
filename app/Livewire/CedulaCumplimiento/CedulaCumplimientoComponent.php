@@ -99,7 +99,7 @@ class CedulaCumplimientoComponent extends Component
 
         $cierre_contratos = CierreContrato::where('contrato_id', $this->contrato_id)
             ->get();
-        $this->dispatchBrowserEvent('cedulaEventChanged');
+        $this->dispatch('cedulaEventChanged');
 
         return view('livewire.cedula-cumplimiento.cedula-cumplimiento-component', compact(
             'facturas',
@@ -127,7 +127,7 @@ class CedulaCumplimientoComponent extends Component
             ]);
             $this->default();
             $this->alert('success', 'Registro añadido!');
-            $this->dispatchBrowserEvent('cedulaEventChanged');
+            $this->dispatch('cedulaEventChanged');
         } else {
             $this->default();
             $this->alert('error', 'Solo se puede regisrar una cedula de cumplimiento por contrato');
@@ -163,15 +163,15 @@ class CedulaCumplimientoComponent extends Component
             'autorizo' => $this->autorizo,
             'cumple' => $this->cumple_cedula,
         ]);
-        //$this->emit('renderHistorico');
+        //$this->dispatch('renderHistorico');
         $this->default();
         $this->alert('success', 'Registro actualizado!');
-        $this->dispatchBrowserEvent('cedulaEventChanged');
+        $this->dispatch('cedulaEventChanged');
     }
 
     public function confirmDelete($cedula_id)
     {
-        $this->dispatchBrowserEvent('confirmDeleteCedulaEvent', ['cedula_id' => $cedula_id]);
+        $this->dispatch('confirmDeleteCedulaEvent', cedula_id: $cedula_id);
     }
 
     public function destroy($id)
@@ -186,7 +186,7 @@ class CedulaCumplimientoComponent extends Component
         $this->reviso = '';
         $this->autorizo = '';
         $this->cumple_cedula = true;
-        $this->dispatchBrowserEvent('cedulaEventChanged');
+        $this->dispatch('cedulaEventChanged');
         $this->view = 'create';
     }
 }

@@ -15,7 +15,7 @@
                          <div class="form-group">
                              <label for="nombre">Nombre: <span class="text-danger">*</span></label>
                              <input type="text" class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}"
-                                 id="nombre" aria-describedby="nombre" wire:model.defer="nombre"
+                                 id="nombre" aria-describedby="nombre" wire:model="nombre"
                                  value="{{ old('nombre') }}" autocomplete="off">
                              <small>Ingresa el nombre del tipo de competencia</small>
                              @if ($errors->has('nombre'))
@@ -28,7 +28,7 @@
                          <div class="form-group">
                              <label for="descripcion">Descripción:</label>
                              <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}"
-                                 id="descripcion" wire:model.defer="descripcion">{{ old('descripcion') }}</textarea>
+                                 id="descripcion" wire:model="descripcion">{{ old('descripcion') }}</textarea>
                              <small>Ingresa la descripción del tipo de competencia</small>
                              @if ($errors->has('descripcion'))
                                  <div class="invalid-feedback">{{ $errors->first('descripcion') }}</div>

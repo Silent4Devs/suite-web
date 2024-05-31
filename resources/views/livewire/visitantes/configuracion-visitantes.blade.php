@@ -23,7 +23,7 @@
             <br>
         @endif
         <label for="responsable"><i class="bi bi-person mr-2"></i> Responsable</label>
-        <select id="selectResponsable" wire:model="responsable" class="custom-select">
+        <select id="selectResponsable" wire:model.live="responsable" class="custom-select">
             <option value="" disabled>-- Selecciona un responsable --</option>
             @foreach ($empleados as $empleado)
                 <option value="{{ $empleado->id }}" {{ $empleado->id == $responsable ? 'selected' : '' }}>
@@ -34,7 +34,7 @@
         <div class="mt-4">
             <label for="fotografiaRequerida"><i class="bi bi-camera mr-2"></i>¿Es requerida la fotografía al momento de
                 ingresar?</label>
-            <select wire:model="fotografiaRequerida" class="custom-select">
+            <select wire:model.live="fotografiaRequerida" class="custom-select">
                 <option value="false" {{ !$fotografiaRequerida ? 'selected' : '' }}>No</option>
                 <option value="true" {{ $fotografiaRequerida ? 'selected' : '' }}>Sí</option>
 
@@ -43,7 +43,7 @@
         <div class="mt-4">
             <label for="firmaRequerida"><i class="bi bi-pen"></i>¿Es requerida la firma al momento de
                 salir de la organización?</label>
-            <select wire:model="firmaRequerida" class="custom-select">
+            <select wire:model.live="firmaRequerida" class="custom-select">
                 <option value="false" {{ !$firmaRequerida ? 'selected' : '' }}>No</option>
                 <option value="true" {{ $firmaRequerida ? 'selected' : '' }}>Sí</option>
 

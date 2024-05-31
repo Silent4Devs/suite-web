@@ -31,8 +31,8 @@ class TipoCompetenciaCreate extends Component
             'descripcion' => $this->descripcion,
             'created_at' => Carbon::now(),
         ]);
-        $this->emit('tipoCompetenciaStore');
-        $this->emit('render-tipo-competencia-select');
+        $this->dispatch('tipoCompetenciaStore');
+        $this->dispatch('render-tipo-competencia-select');
     }
 
     public function render()
