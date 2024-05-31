@@ -1,5 +1,10 @@
 @extends('layouts.admin')
 @section('content')
+    <style>
+        table.dataTable {
+            margin: 0px !important;
+        }
+    </style>
     <h5 class="titulo_general_funcion">Cursos</h5>
 
     <div class="card card-body">
