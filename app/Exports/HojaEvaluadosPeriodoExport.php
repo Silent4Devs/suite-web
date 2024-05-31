@@ -16,8 +16,6 @@ class HojaEvaluadosPeriodoExport implements FromCollection, WithHeadings,  WithT
     public $id;
     public $periodo_id;
 
-    public $headers_competencias;
-
     public function __construct($id_evaluacion, $id_periodo)
     {
         $this->id = $id_evaluacion;
@@ -26,9 +24,6 @@ class HojaEvaluadosPeriodoExport implements FromCollection, WithHeadings,  WithT
 
     public function collection()
     {
-
-        $headers_competencias = ['test1'];
-
         $evaluacion = EvaluacionDesempeno::find($this->id);
         $coleccion = collect();
         foreach ($evaluacion->periodos as $key_periodo => $periodo) {
@@ -36,6 +31,9 @@ class HojaEvaluadosPeriodoExport implements FromCollection, WithHeadings,  WithT
             foreach ($evaluacion->evaluados as $key => $evaluado) {
                 $empleadoId = $evaluado->empleado->id;
                 $evaluadores = collect();
+                $total_objetivos = 0;
+                $total_competencias = 0;
+                $calificacion_evaluacion = 0;
 
                 if ($evaluacion->activar_objetivos) {
                     $totales_evaluado[$periodo->id][$evaluado->id]['objetivos'] = $evaluado->calificacionesObjetivosEvaluadoPeriodo($periodo->id);
@@ -53,6 +51,8 @@ class HojaEvaluadosPeriodoExport implements FromCollection, WithHeadings,  WithT
                     });
 
                     $evaluadores = $evaluadores->merge($evO);
+
+                    $total_objetivos = ($totales_evaluado[$periodo->id][$evaluado->id]['objetivos']['promedio_total'] * $evaluacion->porcentaje_objetivos) / 100;
                 }
 
                 if ($evaluacion->activar_competencias) {
@@ -71,6 +71,8 @@ class HojaEvaluadosPeriodoExport implements FromCollection, WithHeadings,  WithT
                     });
 
                     $evaluadores = $evaluadores->merge($evC);
+
+                    $total_competencias = ($totales_evaluado[$periodo->id][$evaluado->id]['competencias']['promedio_total'] * $evaluacion->porcentaje_competencias) / 100;
                 }
 
                 // Keep only 'nombre' after ensuring uniqueness based on 'id'
@@ -79,8 +81,7 @@ class HojaEvaluadosPeriodoExport implements FromCollection, WithHeadings,  WithT
                 // Ensure uniqueness and concatenate 'nombre' values with "/"
                 $concatenatedEvaluadores = $evaluadores->unique('id')->pluck('nombre')->implode(' , ');
 
-                $total_competencias = ($totales_evaluado[$periodo->id][$evaluado->id]['competencias']['promedio_total'] * $evaluacion->porcentaje_competencias) / 100;
-                $total_objetivos = ($totales_evaluado[$periodo->id][$evaluado->id]['objetivos']['promedio_total'] * $evaluacion->porcentaje_objetivos) / 100;
+                $calificacion_evaluacion = $total_objetivos + $total_competencias;
 
                 $data =
                     [
@@ -93,13 +94,15 @@ class HojaEvaluadosPeriodoExport implements FromCollection, WithHeadings,  WithT
                         'porcentajeCompetencias' => $evaluacion->porcentaje_competencias,
                         'competencias' => $total_competencias,
                         'objetivos' => $total_objetivos,
+                        'total' => $calificacion_evaluacion,
                     ];
 
                 $filtro_competencias = $totales_evaluado[$periodo->id][$evaluado->id]['competencias']['calif_total'];
                 $filtro_objetivos = $totales_evaluado[$periodo->id][$evaluado->id]['objetivos']['calif_total'];
 
                 foreach ($filtro_competencias as $key_c => $comp) {
-                    $data[$comp["competencia"]] = $comp["calificacion_total"];
+                    $data['nombre_competencia' . ($key_c + 1)] = $comp["competencia"];
+                    $data['calif_competencia' . ($key_c + 1)] = $comp["calificacion_total"];
                 }
 
 
@@ -107,7 +110,6 @@ class HojaEvaluadosPeriodoExport implements FromCollection, WithHeadings,  WithT
                     $data['nombre_objetivo' . ($key_o + 1)] = $obj["nombre"];
                     $data['calif_objetivo' . ($key_o + 1)] = $obj["calificacion_total"];
                 }
-
                 $coleccion->push($data);
             }
         }
@@ -117,20 +119,48 @@ class HojaEvaluadosPeriodoExport implements FromCollection, WithHeadings,  WithT
 
     public function headings(): array
     {
-        $headersBasicos = [
-            'Nombre',
-            'Puesto',
-            'Area',
-            'Evaluadores',
-            'Estatus',
-            'Porcentaje Objetivos',
-            'Porcentaje Competencias',
-            'Objetivos',
-            'Competencias',
-        ];
+        $evaluacion = EvaluacionDesempeno::find($this->id);
 
-        // $merge = array_merge($headersBasicos, $this->headers_competencias);
-        return $headersBasicos;
+        if ($evaluacion->activar_objetivos && $evaluacion->activar_competencias) {
+            $allHeaders = [
+                'Nombre',
+                'Puesto',
+                'Area',
+                'Evaluadores',
+                'Estatus',
+                'Porcentaje Objetivos',
+                'Porcentaje Competencias',
+                'Total Competencias',
+                'Total Objetivos',
+                'Calificacion'
+            ];
+        } elseif ($evaluacion->activar_objetivos && !$evaluacion->activar_competencias) {
+            $allHeaders = [
+                'Nombre',
+                'Puesto',
+                'Area',
+                'Evaluadores',
+                'Estatus',
+                'Porcentaje Objetivos',
+                'Porcentaje Competencias',
+                'Total Objetivos',
+                'Calificacion'
+            ];
+        } elseif (!$evaluacion->activar_objetivos && $evaluacion->activar_competencias) {
+            $allHeaders = [
+                'Nombre',
+                'Puesto',
+                'Area',
+                'Evaluadores',
+                'Estatus',
+                'Porcentaje Objetivos',
+                'Porcentaje Competencias',
+                'Total Competencias',
+                'Calificacion'
+            ];
+        }
+
+        return $allHeaders;
     }
 
     public function headingsStyle(): array
