@@ -1746,6 +1746,7 @@ Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'name
     Route::get('requisiciones/filtrar_jefe', 'RequisicionesController@filtrarPorEstado1')->name('requisiciones.filtrarPorEstado1');
     Route::get('requisiciones/filtrar_solicitante', 'RequisicionesController@filtrarPorEstado2')->name('requisiciones.filtrarPorEstado2');
     Route::get('requisiciones/filtrar_compras', 'RequisicionesController@filtrarPorEstado3')->name('requisiciones.filtrarPorEstado3');
+    Route::post('requisiciones/cambiarResponsable', 'RequisicionesController@cambiarResponsable')->name('requisiciones.cambiarResponsable');
 
     // ordenes de compra
     Route::get('orden-compra', 'OrdenCompraController@index')->name('orden-compra');

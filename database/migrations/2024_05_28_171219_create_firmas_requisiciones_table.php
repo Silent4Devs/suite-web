@@ -17,13 +17,13 @@ return new class extends Migration
             $table->unsignedBigInteger('solicitante_id');
             $table->longText('firma_solicitante')->nullable();
             $table->date('fecha_firma_solicitante')->nullable();
-            $table->unsignedBigInteger('jefe_id');
+            $table->unsignedBigInteger('jefe_id')->nullable();
             $table->longText('firma_jefe')->nullable();
             $table->date('fecha_firma_jefe')->nullable();
-            $table->unsignedBigInteger('responsable_finanzas_id');
+            $table->unsignedBigInteger('responsable_finanzas_id')->nullable();
             $table->longText('firma_responsable_finanzas')->nullable();
             $table->date('fecha_firma_responsable_finanzas')->nullable();
-            $table->unsignedBigInteger('comprador_id');
+            $table->unsignedBigInteger('comprador_id')->nullable();
             $table->longText('firma_comprador')->nullable();
             $table->date('fecha_firma_comprador_requi')->nullable();
 

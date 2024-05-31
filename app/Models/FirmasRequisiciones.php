@@ -52,4 +52,18 @@ class FirmasRequisiciones extends Model
     {
         return $this->belongsTo(Empleado::class, 'comprador_id', 'id');
     }
+
+    public function duplicados($id_empleado)
+    {
+        $columns = ['solicitante_id', 'jefe_id', 'responsable_finanzas_id', 'comprador_id'];
+        $count = 0;
+
+        foreach ($columns as $column) {
+            if ($this->$column == $id_empleado) {
+                $count++;
+            }
+        }
+
+        return $count >= 2;
+    }
 }

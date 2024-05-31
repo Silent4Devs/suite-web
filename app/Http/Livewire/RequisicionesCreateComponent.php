@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Mail\RequisicionesEmail;
+use App\Mail\RequisicionesFirmaDuplicadaEmail;
 use App\Models\ContractManager\Comprador as KatbolComprador;
 use App\Models\ContractManager\Contrato as KatbolContrato;
 use App\Models\ContractManager\Producto as KatbolProducto;
@@ -192,30 +193,6 @@ class RequisicionesCreateComponent extends Component
             ]);
         }
 
-        $listaReq = ListaDistribucion::where('modelo', 'KatbolRequsicion')->first();
-        $listaPart = $listaReq->participantes;
-        // dump($listaPart);
-        for ($i = 0; $i <= $listaReq->niveles; $i++) {
-            $responsable = null;
-            $responsableNivel = $listaPart->where('nivel', $i)->first();
-
-            if ($responsableNivel->empleado->disponibilidad->disponibilidad == 1) {
-
-                $responsable = $responsableNivel->empleado;
-                break;
-            }
-        }
-
-        $comprador = KatbolComprador::where('id', $data['comprador_id'])->with('user')->first();
-
-        $firmas_requi = FirmasRequisiciones::create([
-            'requisicion_id' => $this->nueva_requisicion->id,
-            'solicitante_id' => $usuario->empleado->id,
-            'jefe_id' => $usuario->empleado->supervisor->id,
-            'responsable_finanzas_id' => $responsable->id,
-            'comprador_id' => $comprador->user->empleado->id,
-        ]);
-
         // $productos_existentes = KatbolProductoRequisicion::where('requisiciones_id', $this->nueva_requisicion->id)->get();
         // if ($productos_existentes->count() > 0) {
         //     foreach ($productos_existentes as $product) {
@@ -394,9 +371,46 @@ class RequisicionesCreateComponent extends Component
             $tipo_firma = 'firma_solicitante';
             $organizacion = Organizacion::first();
 
-            $supervisor = User::find($this->nueva_requisicion->id_user)->empleado->supervisor->email;
+            $listaReq = ListaDistribucion::where('modelo', 'Empleado')->first();
+            //Traemos participantes
+            $listaPart = $listaReq->participantes;
 
-            Mail::to(trim($this->removeUnicodeCharacters($supervisor)))->queue(new RequisicionesEmail($this->nueva_requisicion, $organizacion, $tipo_firma));
+            $jefe = $user->empleado->supervisor;
+            //Buscamos al supervisor por su id
+            $supList = $listaPart->where('empleado_id', $jefe->id)->first();
+
+            //Buscamos en que nivel se encuentra el supervisor
+            $nivel = $supList->nivel;
+
+            //traemos a todos los participantes correspondientes a ese nivel
+            $participantesNivel = $listaPart->where('nivel', $nivel)->sortBy('numero_orden');
+
+            //Buscamos 1 por 1 los participantes del nivel (area)
+            foreach ($participantesNivel as $key => $partNiv) {
+                //Si su estado esta activo se le manda el correo
+                if ($partNiv->empleado->disponibilidad->disponibilidad == 1) {
+
+                    $responsable = $partNiv->empleado;
+                    $supervisor = $responsable->email;
+
+                    break;
+                }
+            }
+
+            $firmas_requi = FirmasRequisiciones::create([
+                'requisicion_id' => $this->nueva_requisicion->id,
+                'solicitante_id' => $user->empleado->id,
+                'jefe_id' => $responsable->id,
+                // 'responsable_finanzas_id' => $responsable->id,
+                // 'comprador_id' => $comprador->user->empleado->id,
+            ]);
+
+
+            if ($responsable->id == $user->empleado->id) {
+                Mail::to(trim($this->removeUnicodeCharacters($supervisor)))->queue(new RequisicionesFirmaDuplicadaEmail($this->nueva_requisicion, $organizacion, $tipo_firma));
+            } else {
+                Mail::to(trim($this->removeUnicodeCharacters($supervisor)))->queue(new RequisicionesEmail($this->nueva_requisicion, $organizacion, $tipo_firma));
+            }
 
             return redirect(route('contract_manager.requisiciones'));
         }
