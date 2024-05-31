@@ -3981,7 +3981,7 @@ namespace Illuminate\Support\Facades {
          * @static 
          */        public static function lock($name, $seconds = 0, $owner = null)
         {
-                        /** @var \Illuminate\Cache\FileStore $instance */
+                        /** @var \Illuminate\Cache\RedisStore $instance */
                         return $instance->lock($name, $seconds, $owner);
         }
                     /**
@@ -3993,7 +3993,7 @@ namespace Illuminate\Support\Facades {
          * @static 
          */        public static function restoreLock($name, $owner)
         {
-                        /** @var \Illuminate\Cache\FileStore $instance */
+                        /** @var \Illuminate\Cache\RedisStore $instance */
                         return $instance->restoreLock($name, $owner);
         }
                     /**
@@ -4003,50 +4003,70 @@ namespace Illuminate\Support\Facades {
          * @static 
          */        public static function flush()
         {
-                        /** @var \Illuminate\Cache\FileStore $instance */
+                        /** @var \Illuminate\Cache\RedisStore $instance */
                         return $instance->flush();
         }
                     /**
-         * Get the full path for the given cache key.
+         * Remove all expired tag set entries.
          *
-         * @param string $key
-         * @return string 
+         * @return void 
          * @static 
-         */        public static function path($key)
+         */        public static function flushStaleTags()
         {
-                        /** @var \Illuminate\Cache\FileStore $instance */
-                        return $instance->path($key);
+                        /** @var \Illuminate\Cache\RedisStore $instance */
+                        $instance->flushStaleTags();
         }
                     /**
-         * Get the Filesystem instance.
+         * Get the Redis connection instance.
          *
-         * @return \Illuminate\Filesystem\Filesystem 
+         * @return \Illuminate\Redis\Connections\Connection 
          * @static 
-         */        public static function getFilesystem()
+         */        public static function connection()
         {
-                        /** @var \Illuminate\Cache\FileStore $instance */
-                        return $instance->getFilesystem();
+                        /** @var \Illuminate\Cache\RedisStore $instance */
+                        return $instance->connection();
         }
                     /**
-         * Get the working directory of the cache.
+         * Get the Redis connection instance that should be used to manage locks.
          *
-         * @return string 
+         * @return \Illuminate\Redis\Connections\Connection 
          * @static 
-         */        public static function getDirectory()
+         */        public static function lockConnection()
         {
-                        /** @var \Illuminate\Cache\FileStore $instance */
-                        return $instance->getDirectory();
+                        /** @var \Illuminate\Cache\RedisStore $instance */
+                        return $instance->lockConnection();
         }
                     /**
-         * Set the cache directory where locks should be stored.
+         * Specify the name of the connection that should be used to store data.
          *
-         * @param string|null $lockDirectory
-         * @return \Illuminate\Cache\FileStore 
+         * @param string $connection
+         * @return void 
          * @static 
-         */        public static function setLockDirectory($lockDirectory)
+         */        public static function setConnection($connection)
         {
-                        /** @var \Illuminate\Cache\FileStore $instance */
-                        return $instance->setLockDirectory($lockDirectory);
+                        /** @var \Illuminate\Cache\RedisStore $instance */
+                        $instance->setConnection($connection);
+        }
+                    /**
+         * Specify the name of the connection that should be used to manage locks.
+         *
+         * @param string $connection
+         * @return \Illuminate\Cache\RedisStore 
+         * @static 
+         */        public static function setLockConnection($connection)
+        {
+                        /** @var \Illuminate\Cache\RedisStore $instance */
+                        return $instance->setLockConnection($connection);
+        }
+                    /**
+         * Get the Redis database instance.
+         *
+         * @return \Illuminate\Contracts\Redis\Factory 
+         * @static 
+         */        public static function getRedis()
+        {
+                        /** @var \Illuminate\Cache\RedisStore $instance */
+                        return $instance->getRedis();
         }
                     /**
          * Get the cache key prefix.
@@ -4055,8 +4075,19 @@ namespace Illuminate\Support\Facades {
          * @static 
          */        public static function getPrefix()
         {
-                        /** @var \Illuminate\Cache\FileStore $instance */
+                        /** @var \Illuminate\Cache\RedisStore $instance */
                         return $instance->getPrefix();
+        }
+                    /**
+         * Set the cache key prefix.
+         *
+         * @param string $prefix
+         * @return void 
+         * @static 
+         */        public static function setPrefix($prefix)
+        {
+                        /** @var \Illuminate\Cache\RedisStore $instance */
+                        $instance->setPrefix($prefix);
         }
             }
             /**
@@ -9311,6 +9342,86 @@ namespace Illuminate\Support\Facades {
                         return $instance->setConnectionName($name);
         }
                     /**
+         * Migrate the delayed jobs that are ready to the regular queue.
+         *
+         * @param string $from
+         * @param string $to
+         * @param int $limit
+         * @return array 
+         * @static 
+         */        public static function migrateExpiredJobs($from, $to)
+        {
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
+                        return $instance->migrateExpiredJobs($from, $to);
+        }
+                    /**
+         * Delete a reserved job from the queue.
+         *
+         * @param string $queue
+         * @param \Illuminate\Queue\Jobs\RedisJob $job
+         * @return void 
+         * @static 
+         */        public static function deleteReserved($queue, $job)
+        {
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
+                        $instance->deleteReserved($queue, $job);
+        }
+                    /**
+         * Delete a reserved job from the reserved queue and release it.
+         *
+         * @param string $queue
+         * @param \Illuminate\Queue\Jobs\RedisJob $job
+         * @param int $delay
+         * @return void 
+         * @static 
+         */        public static function deleteAndRelease($queue, $job, $delay)
+        {
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
+                        $instance->deleteAndRelease($queue, $job, $delay);
+        }
+                    /**
+         * Delete all of the jobs from the queue.
+         *
+         * @param string $queue
+         * @return int 
+         * @static 
+         */        public static function clear($queue)
+        {
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
+                        return $instance->clear($queue);
+        }
+                    /**
+         * Get the queue or return the default.
+         *
+         * @param string|null $queue
+         * @return string 
+         * @static 
+         */        public static function getQueue($queue)
+        {
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
+                        return $instance->getQueue($queue);
+        }
+                    /**
+         * Get the connection for the queue.
+         *
+         * @return \Illuminate\Redis\Connections\Connection 
+         * @static 
+         */        public static function getConnection()
+        {
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
+                        return $instance->getConnection();
+        }
+                    /**
+         * Get the underlying Redis instance.
+         *
+         * @return \Illuminate\Contracts\Redis\Factory 
+         * @static 
+         */        public static function getRedis()
+        {
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
+                        return $instance->getRedis();
+        }
+                    /**
          * Get the maximum number of attempts for an object-based queue handler.
          *
          * @param mixed $job
@@ -9318,7 +9429,7 @@ namespace Illuminate\Support\Facades {
          * @static 
          */        public static function getJobTries($job)
         {            //Method inherited from \Illuminate\Queue\Queue         
-                        /** @var \Illuminate\Queue\SyncQueue $instance */
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
                         return $instance->getJobTries($job);
         }
                     /**
@@ -9329,7 +9440,7 @@ namespace Illuminate\Support\Facades {
          * @static 
          */        public static function getJobBackoff($job)
         {            //Method inherited from \Illuminate\Queue\Queue         
-                        /** @var \Illuminate\Queue\SyncQueue $instance */
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
                         return $instance->getJobBackoff($job);
         }
                     /**
@@ -9340,7 +9451,7 @@ namespace Illuminate\Support\Facades {
          * @static 
          */        public static function getJobExpiration($job)
         {            //Method inherited from \Illuminate\Queue\Queue         
-                        /** @var \Illuminate\Queue\SyncQueue $instance */
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
                         return $instance->getJobExpiration($job);
         }
                     /**
@@ -9351,7 +9462,7 @@ namespace Illuminate\Support\Facades {
          * @static 
          */        public static function createPayloadUsing($callback)
         {            //Method inherited from \Illuminate\Queue\Queue         
-                        \Illuminate\Queue\SyncQueue::createPayloadUsing($callback);
+                        \Illuminate\Queue\RedisQueue::createPayloadUsing($callback);
         }
                     /**
          * Get the container instance being used by the connection.
@@ -9360,7 +9471,7 @@ namespace Illuminate\Support\Facades {
          * @static 
          */        public static function getContainer()
         {            //Method inherited from \Illuminate\Queue\Queue         
-                        /** @var \Illuminate\Queue\SyncQueue $instance */
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
                         return $instance->getContainer();
         }
                     /**
@@ -9371,7 +9482,7 @@ namespace Illuminate\Support\Facades {
          * @static 
          */        public static function setContainer($container)
         {            //Method inherited from \Illuminate\Queue\Queue         
-                        /** @var \Illuminate\Queue\SyncQueue $instance */
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
                         $instance->setContainer($container);
         }
             }
@@ -19246,6 +19357,302 @@ namespace Laragear\Preload\Facades {
             }
     }
 
+namespace Laravel\Pulse\Facades {
+            /**
+     * 
+     *
+     * @method static void store(\Illuminate\Support\Collection $items)
+     * @method static void trim()
+     * @method static void purge(array $types = null)
+     * @method static \Illuminate\Support\Collection values(string $type, array $keys = null)
+     * @method static \Illuminate\Support\Collection graph(array $types, string $aggregate, \Carbon\CarbonInterval $interval)
+     * @method static \Illuminate\Support\Collection aggregate(string $type, string|array $aggregates, \Carbon\CarbonInterval $interval, string|null $orderBy = null, string $direction = 'desc', int $limit = 101)
+     * @method static \Illuminate\Support\Collection aggregateTypes(string|array $types, string $aggregate, \Carbon\CarbonInterval $interval, string|null $orderBy = null, string $direction = 'desc', int $limit = 101)
+     * @method static float|\Illuminate\Support\Collection aggregateTotal(string|array $types, string $aggregate, \Carbon\CarbonInterval $interval)
+     * @see \Laravel\Pulse\Pulse
+     */        class Pulse {
+                    /**
+         * Register a recorder.
+         *
+         * @param array<class-string, array<mixed>|bool> $recorders
+         * @static 
+         */        public static function register($recorders)
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->register($recorders);
+        }
+                    /**
+         * Record an entry.
+         *
+         * @static 
+         */        public static function record($type, $key, $value = null, $timestamp = null)
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->record($type, $key, $value, $timestamp);
+        }
+                    /**
+         * Record a value.
+         *
+         * @static 
+         */        public static function set($type, $key, $value, $timestamp = null)
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->set($type, $key, $value, $timestamp);
+        }
+                    /**
+         * Lazily capture items.
+         *
+         * @static 
+         */        public static function lazy($closure)
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->lazy($closure);
+        }
+                    /**
+         * Report the throwable exception to Pulse.
+         *
+         * @static 
+         */        public static function report($e)
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->report($e);
+        }
+                    /**
+         * Start recording.
+         *
+         * @static 
+         */        public static function startRecording()
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->startRecording();
+        }
+                    /**
+         * Stop recording.
+         *
+         * @static 
+         */        public static function stopRecording()
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->stopRecording();
+        }
+                    /**
+         * Execute the given callback without recording.
+         *
+         * @template TReturn
+         * @param \Laravel\Pulse\(callable():  TReturn)  $callback
+         * @return \Laravel\Pulse\TReturn 
+         * @static 
+         */        public static function ignore($callback)
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->ignore($callback);
+        }
+                    /**
+         * Flush the queue.
+         *
+         * @static 
+         */        public static function flush()
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->flush();
+        }
+                    /**
+         * Filter items before storage using the provided filter.
+         *
+         * @param \Laravel\Pulse\(callable(\Laravel\Pulse\Entry|\Laravel\Pulse\Value):  bool)  $filter
+         * @static 
+         */        public static function filter($filter)
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->filter($filter);
+        }
+                    /**
+         * Ingest the entries.
+         *
+         * @static 
+         */        public static function ingest()
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->ingest();
+        }
+                    /**
+         * Digest the entries.
+         *
+         * @static 
+         */        public static function digest()
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->digest();
+        }
+                    /**
+         * Determine if Pulse wants to ingest entries.
+         *
+         * @static 
+         */        public static function wantsIngesting()
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->wantsIngesting();
+        }
+                    /**
+         * Get the registered recorders.
+         *
+         * @return \Illuminate\Support\Collection<int, object> 
+         * @static 
+         */        public static function recorders()
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->recorders();
+        }
+                    /**
+         * Resolve the user details for the given user IDs.
+         *
+         * @param \Illuminate\Support\Collection<int, string> $keys
+         * @static 
+         */        public static function resolveUsers($keys)
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->resolveUsers($keys);
+        }
+                    /**
+         * Resolve the users' details using the given closure.
+         *
+         * @deprecated 
+         * @param \Laravel\Pulse\callable(\Illuminate\Support\Collection<int, mixed>):  ?iterable<int|string, array{name: string, email?: ?string, avatar?: ?string, extra?: ?string}>  $callback
+         * @static 
+         */        public static function users($callback)
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->users($callback);
+        }
+                    /**
+         * Resolve the user's details using the given closure.
+         *
+         * @param \Laravel\Pulse\callable(\Illuminate\Contracts\Auth\Authenticatable):  array{name: string, email?: ?string, avatar?: ?string, extra?: ?string}  $callback
+         * @static 
+         */        public static function user($callback)
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->user($callback);
+        }
+                    /**
+         * Get the authenticated user ID resolver.
+         *
+         * @return \Laravel\Pulse\callable(): (int|string|null)
+         * @static 
+         */        public static function authenticatedUserIdResolver()
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->authenticatedUserIdResolver();
+        }
+                    /**
+         * Resolve the authenticated user id.
+         *
+         * @static 
+         */        public static function resolveAuthenticatedUserId()
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->resolveAuthenticatedUserId();
+        }
+                    /**
+         * Remember the authenticated user's ID.
+         *
+         * @static 
+         */        public static function rememberUser($user)
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->rememberUser($user);
+        }
+                    /**
+         * Register or return CSS for the Pulse dashboard.
+         *
+         * @param string|\Illuminate\Contracts\Support\Htmlable|\Laravel\Pulse\list<string|Htmlable>|null $css
+         * @static 
+         */        public static function css($css = null)
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->css($css);
+        }
+                    /**
+         * Return the compiled JavaScript from the vendor directory.
+         *
+         * @static 
+         */        public static function js()
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->js();
+        }
+                    /**
+         * The default "vendor" cache keys that should be ignored by Pulse.
+         *
+         * @return \Laravel\Pulse\list<string> 
+         * @static 
+         */        public static function defaultVendorCacheKeys()
+        {
+                        return \Laravel\Pulse\Pulse::defaultVendorCacheKeys();
+        }
+                    /**
+         * Determine if Pulse may register routes.
+         *
+         * @static 
+         */        public static function registersRoutes()
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->registersRoutes();
+        }
+                    /**
+         * Configure Pulse to not register its routes.
+         *
+         * @static 
+         */        public static function ignoreRoutes()
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->ignoreRoutes();
+        }
+                    /**
+         * Handle exceptions using the given callback.
+         *
+         * @param \Laravel\Pulse\(callable(\Throwable):  mixed)  $callback
+         * @static 
+         */        public static function handleExceptionsUsing($callback)
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->handleExceptionsUsing($callback);
+        }
+                    /**
+         * Execute the given callback handling any exceptions.
+         *
+         * @template TReturn
+         * @param \Laravel\Pulse\(callable():  TReturn)  $callback
+         * @return \Laravel\Pulse\TReturn|null 
+         * @static 
+         */        public static function rescue($callback)
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->rescue($callback);
+        }
+                    /**
+         * Set the container instance.
+         *
+         * @param \Illuminate\Contracts\Foundation\Application $container
+         * @return \Laravel\Pulse\Pulse 
+         * @static 
+         */        public static function setContainer($container)
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->setContainer($container);
+        }
+                    /**
+         * Configure the class after resolving.
+         *
+         * @static 
+         */        public static function afterResolving($app, $class, $callback)
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->afterResolving($app, $class, $callback);
+        }
+            }
+    }
+
 namespace Livewire {
             /**
      * 
@@ -20747,7 +21154,7 @@ namespace Illuminate\Console\Scheduling {
                     /**
          * 
          *
-         * @see \Sentry\Laravel\Features\ConsoleSchedulingIntegration::onBootInactive()
+         * @see \Sentry\Laravel\Features\ConsoleSchedulingIntegration::onBoot()
          * @param string|null $monitorSlug
          * @param int|null $checkInMargin
          * @param int|null $maxRuntime
@@ -24596,6 +25003,7 @@ namespace  {
             class Pdf extends \Barryvdh\DomPDF\Facade\Pdf {}
             class Breadcrumbs extends \DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs {}
             class Preload extends \Laragear\Preload\Facades\Preload {}
+            class Pulse extends \Laravel\Pulse\Facades\Pulse {}
             class Livewire extends \Livewire\Livewire {}
             class Sentry extends \Sentry\Laravel\Facade {}
             class Flare extends \Spatie\LaravelIgnition\Facades\Flare {}
