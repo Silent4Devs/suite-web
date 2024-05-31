@@ -35,7 +35,13 @@
             <div>
                 @if ($current && $current->iframe)
                     <div>
-                        {!! $current->iframe !!}
+                        {{-- {!! $current->iframe !!} --}}
+
+                        <iframe width="100%" height="381" src="https://www.youtube.com/embed/OAAQjnOr554"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen="true" allowscriptaccess="always" frameborder="0"></iframe>
+
                     </div>
                 @else
                     <p>Sin registro</p>
@@ -58,9 +64,9 @@
                             <i class="d-inline fas fa-toggle-on"
                                 style="font-size: 30px; color: #006DDB; cursor: pointer;"></i>
                         @else
-                            <h4 class="mr-2">Marcar esta lección como terminada</h4>
+                            {{-- <h4 class="mr-2">Marcar esta lección como terminada</h4>
                             <i class="text-2xl text-gray-600 fas fa-toggle-off"
-                                style="font-size: 30px; cursor: pointer;"></i>
+                                style="font-size: 30px; cursor: pointer;"></i> --}}
                         @endif
                     </div>
                 </div>
@@ -218,7 +224,7 @@
     </div>
 
     @section('scripts')
-        <script>
+        {{-- <script>
             document.addEventListener("DOMContentLoaded", () => {
                 setInterval(() => {
                     var iframe = document.querySelector("iframe");
@@ -232,8 +238,16 @@
                     //     console.log('no tiene');
                     // }
 
-                }, 1000);
+                }, 10000);
             });
+        </script> --}}
+
+        <!-- Incluir la API de iframe de YouTube -->
+        <script>
+            setTimeout(() => {
+                @this.completed();
+                console.log("list");
+            }, 30000);
         </script>
     @endsection
 </div>

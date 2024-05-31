@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Traits\ObtenerOrganizacion;
 use App\Models\Escuela\Course;
-use App\Models\Escuela\CourseUser;
+use App\Models\Escuela\UsuariosCursos;
 
 class ReportesIndividualesController extends Controller
 {
@@ -20,7 +20,8 @@ class ReportesIndividualesController extends Controller
 
 
 
-        $cursos_usuario = CourseUser::where('course_id', $id)->get();
+        $cursos_usuario = UsuariosCursos::with('cursos')->where('course_id', $id)->get();
+
         foreach ($cursos_usuario as $cu) {
             $completedLessonsCount = $cu->cursos->lessons->filter(function ($lesson) {
                 return $lesson->completed;
