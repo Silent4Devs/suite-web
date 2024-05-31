@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use Illuminate\Support\Facades\Route;
 use Livewire\Component;
+use Livewire\Livewire;
 
 class GlobalSearchComponent extends Component
 {
