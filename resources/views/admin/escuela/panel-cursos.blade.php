@@ -94,8 +94,8 @@
                             <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
                                 <a href="{{ route('admin.courses.edit', $curso) }}" class="fas fa-edit mr-2" title="Editar"
                                     style="color:#747474"></a>
-                                <a href="{{ route('admin.courses-quizdetails', $curso) }}" class="mr-2 fas fa-file-alt"
-                                    title="Consultar Evaluaciones" style="color:#747474"></a>
+                                <a href="{{ route('admin.courses-reportes-individuales', $curso->id) }}"
+                                    class="mr-2 fas fa-file-alt" title="Reportes" style="color:#747474"></a>
                             </td>
                         </tr>
                     @endforeach

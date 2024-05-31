@@ -43,9 +43,21 @@
                     <div class="caja-info-card-mc">
 
                         <p style="font-size: 18px; color:#000000">{{ $c->title }}</p>
-                        <p style="margin-top: 0px;">Creado: {{ $c->teacher->name }} </p>
+                        <p>Creado:</p>
+                        <div class="d-flex align-items-center gap-1">
+                            <div class="img-person">
+                                <img src="{{ $c->teacher->avatar_ruta }}" alt="{{ $c->teacher->name }}">
+                            </div>
+                            {{ $c->teacher->name }}
+                        </div>
                         @if ($instructor)
-                            <p style="margin-top: 0px;">Instructor: {{ $instructor->name }}</p>
+                            <p>Instructor: </p>
+                            <div class="d-flex align-items-center gap-1">
+                                <div class="img-person">
+                                    <img src="{{ $instructor->avatar_ruta }}" alt="{{ $instructor->name }}">
+                                </div>
+                                {{ $instructor->name }}
+                            </div>
                         @else
                             <p style="margin-top: 0px;">Instructor no asignado</p>
                         @endif

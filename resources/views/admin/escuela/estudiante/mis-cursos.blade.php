@@ -85,7 +85,14 @@
                                 {{ $cu->cursos->title }}
                             </p>
                             @if ($instructor)
-                                <p class="course-teacher">Un curso de {{ $instructor->name }} </p>
+                                <span>Un curso de: </span><br>
+                                <div class="d-flex align-items-center gap-1 mt-2">
+                                    <div class="img-person">
+                                        <img src="{{ $lastCourse->cursos->instructor->avatar_ruta }}"
+                                            alt="{{ $lastCourse->cursos->instructor->name }}">
+                                    </div>
+                                    <span class="course-teacher"> {{ $lastCourse->cursos->instructor->name }} </span>
+                                </div>
                             @else
                                 <p class="course-teacher">Instructor no asignado </p>
                             @endif

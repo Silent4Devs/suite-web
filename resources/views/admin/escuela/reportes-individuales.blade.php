@@ -9,13 +9,44 @@
             <table class="table datatable-reportes-individuales">
                 <thead>
                     <tr>
-                        <th>Nombre</th>
+                        <th>Colaborador</th>
+                        <th>Avance del curso</th>
+                        <th>Sección evaluada</th>
+                        {{-- <th>Calificación gral.</th> --}}
+                        <th>Fecha de evaluacón</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td></td>
-                    </tr>
+                    @foreach ($cursos_usuario as $cu)
+                        @if ($cu->usuarios)
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center gap-1 mt-2">
+                                        <div class="img-person">
+                                            <img src="{{ $cu->usuarios->avatar_ruta }}" alt="{{ $cu->usuarios->name }}">
+                                        </div>
+                                        <span class="course-teacher"> {{ $cu->usuarios->name }} </span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center gap-1">
+                                        <div class="progress w-100">
+                                            <div class="progress-bar bg-warning" role="progressbar"
+                                                style="width: {{ $cu->advance }}%" aria-valuenow="{{ $cu->advance }}"
+                                                aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <small> {{ $cu->advance }} </small>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span>Sección {{ $cu->cursos->lessons->count() }}</span> <br>
+                                    <span></span>
+                                </td>
+                                {{-- <td>{{ $cu->last_review }}</td> --}}
+                                <td>{{ Carbon\Carbon::parse($cu->cursos->created_at)->format('d/m/Y') }}</td>
+                            </tr>
+                        @endif
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -59,21 +90,22 @@
                         let empresa_actual = @json($empresa_actual);
 
                         var now = new Date();
-                        var jsDate = now.getDate() + '-' + (now.getMonth() + 1) + '-' + now.getFullYear();
+                        var jsDate = now.getDate() + '-' + (now.getMonth() + 1) + '-' + now
+                            .getFullYear();
                         $(doc.document.body).prepend(`
-                    <div class="row mt-5 mb-4 col-12 ml-0" style="border: 2px solid #ccc; border-radius: 5px">
-                        <div class="col-2 p-2" style="border-right: 2px solid #ccc">
-                                <img class="img-fluid" style="max-width:120px" src="${logo_actual}"/>
+                        <div class="row mt-5 mb-4 col-12 ml-0" style="border: 2px solid #ccc; border-radius: 5px">
+                            <div class="col-2 p-2" style="border-right: 2px solid #ccc">
+                                    <img class="img-fluid" style="max-width:120px" src="${logo_actual}"/>
+                                </div>
+                                <div class="col-7 p-2" style="text-align: center; border-right: 2px solid #ccc">
+                                    <p>${empresa_actual}</p>
+                                    <strong style="color:#345183">CONFORMACIÓN DEL COMITÉ</strong>
+                                </div>
+                                <div class="col-3 p-2">
+                                    Fecha: ${jsDate}
+                                </div>
                             </div>
-                            <div class="col-7 p-2" style="text-align: center; border-right: 2px solid #ccc">
-                                <p>${empresa_actual}</p>
-                                <strong style="color:#345183">CONFORMACIÓN DEL COMITÉ</strong>
-                            </div>
-                            <div class="col-3 p-2">
-                                Fecha: ${jsDate}
-                            </div>
-                        </div>
-                    `);
+                        `);
 
                         $(doc.document.body).find('table')
                             .css('font-size', '12px')
@@ -114,6 +146,7 @@
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,
+                retrieve: true,
                 order: [
                     [0, 'desc']
                 ],
