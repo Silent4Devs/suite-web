@@ -59,6 +59,47 @@
         .caja_secciones section {
             overflow: unset !important;
         }
+
+        .tarjetas_seguridad_indicadores {
+            width: 100%;
+            height: 80px;
+            color: #fff;
+            margin-bottom: 40px;
+            font-size: 12pt;
+            border-radius: 6px;
+        }
+
+        .tarjetas_seguridad_indicadores i {
+            position: relative;
+            font-size: 20pt;
+            margin-right: 10px;
+        }
+
+        .far.fa-circle:after {
+            content: "-";
+            position: absolute;
+            top: -18%;
+            left: 33%;
+            transform: scale(1.3);
+        }
+
+        .tarjetas_seguridad_indicadores div {
+            width: 100%;
+            text-align: center;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .numero {
+            font-size: 16pt;
+        }
+
+        .botones_tabla {
+            width: 100%;
+            display: flex;
+        }
     </style>
 
 
@@ -110,28 +151,42 @@
             <div class="caja_caja_secciones">
 
                 <div class="caja_secciones">
-                    <section id="incidentes"
-                        class="{{ Auth::user()->can('incidentes_seguridad_access') ? 'caja_tab_reveldada' : '' }}">
-                        @include('admin.desk.seguridad.seguridad')
-                    </section>
-                    <section id="riesgos">
-                        @include('admin.desk.riesgos.riesgos')
-                    </section>
-                    <section id="quejas">
-                        @include('admin.desk.quejas.quejas')
-                    </section>
-                    <section id="quejasClientes">
-                        @include('admin.desk.clientes.clientes')
-                    </section>
-                    <section id="denuncias">
-                        @include('admin.desk.denuncias.denuncias')
-                    </section>
-                    <section id="mejoras">
-                        @include('admin.desk.mejoras.mejoras')
-                    </section>
-                    <section id="sugerencias">
-                        @include('admin.desk.sugerencias.sugerencias')
-                    </section>
+                    @can('centro_atencion_incidentes_de_seguridad_acceder')
+                        <section id="incidentes"
+                            class="{{ Auth::user()->can('incidentes_seguridad_access') ? 'caja_tab_reveldada' : '' }}">
+                            @include('admin.desk.seguridad.seguridad')
+                        </section>
+                    @endcan
+                    @can('centro_atencion_riesgos_acceder')
+                        <section id="riesgos">
+                            @include('admin.desk.riesgos.riesgos')
+                        </section>
+                    @endcan
+                    @can('centro_atencion_quejas_acceder')
+                        <section id="quejas">
+                            @include('admin.desk.quejas.quejas')
+                        </section>
+                    @endcan
+                    @can('centro_atencion_quejas_clientes_acceder')
+                        <section id="quejasClientes">
+                            @include('admin.desk.clientes.clientes')
+                        </section>
+                    @endcan
+                    @can('centro_atencion_denuncias_acceder')
+                        <section id="denuncias">
+                            @include('admin.desk.denuncias.denuncias')
+                        </section>
+                    @endcan
+                    @can('centro_atencion_mejoras_acceder')
+                        <section id="mejoras">
+                            @include('admin.desk.mejoras.mejoras')
+                        </section>
+                    @endcan
+                    @can('centro_atencion_sugerencias_acceder')
+                        <section id="sugerencias">
+                            @include('admin.desk.sugerencias.sugerencias')
+                        </section>
+                    @endcan
                 </div>
 
             </div>

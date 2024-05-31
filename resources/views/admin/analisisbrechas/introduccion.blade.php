@@ -15,7 +15,7 @@
 
                       </p>
                       <!-- Button -->
-                      <a id="profile-tab-classic" data-toggle="tab" a href="#test2" role="tab" aria-controls="profile-classic" aria-selected="true" class="btn btn-primary">Siguiente</a>
+                      <a id="profile-tab-classic" data-toggle="tab" a href="#test2" role="tab" aria-controls="profile-classic" aria-selected="true" class="btn tb-btn-primary">Siguiente</a>
 
                   </div>
 

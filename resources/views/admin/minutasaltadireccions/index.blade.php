@@ -68,7 +68,7 @@
     @can('revision_por_direccion_agregar')
         <div style="margin-bottom: 10px; text-align:end;" class="row">
             <div class="col-lg-12">
-                <a class="btn btn-primary" href="{{ route('admin.minutasaltadireccions.create') }}">
+                <a class="btn tb-btn-primary" href="{{ route('admin.minutasaltadireccions.create') }}">
                     Agregar Revisión
                 </a>
             </div>

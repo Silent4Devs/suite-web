@@ -93,7 +93,7 @@
                                             value="{{ $valor }}">
                                     </div>
                                 @endforeach
-                                <button id="resetValues" type="button" class="btn btn-primary">Restablecer Valores</button>
+                                <button id="resetValues" type="button" class="btn tb-btn-primary">Restablecer Valores</button>
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                                 <button type="submit" class="btn btn-success" style="float: right;">Normalizar</button>
                             </form>

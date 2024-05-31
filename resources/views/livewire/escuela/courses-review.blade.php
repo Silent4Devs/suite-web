@@ -14,33 +14,8 @@
                             @if (!$review)
                                 <textarea wire:model.lazy="comment" class="form-control w-full" rows="3" placeholder="Ingrese una reseña del curso"></textarea>
 
-                                    <ul class="d-flex" style="list-style: none; padding-top:15px; padding-left: 0px !important;">
-                                        <li class="mr-1 cursor-pointer" wire:click="$set('rating', 1)">
-                                            <i class="fas fa-star"
-                                                style="color: {{ $rating >= 1 ? '#E3A008' : 'gray' }}; font-size: 18px;">
-                                            </i>
-                                        </li>
-                                        <li class="mr-1 cursor-pointer" wire:click="$set('rating', 2)">
-                                            <i class="fas fa-star"
-                                                style="color: {{ $rating >= 2 ? '#E3A008' : 'gray' }}; font-size: 18px;">
-                                            </i>
-                                        </li>
-                                        <li class="mr-1 cursor-pointer" wire:click="$set('rating', 3)">
-                                            <i class="fas fa-star"
-                                                style="color: {{ $rating >= 3 ? '#E3A008' : 'gray' }}; font-size: 18px;">
-                                            </i>
-                                        </li>
-                                        <li class="mr-1 cursor-pointer" wire:click="$set('rating', 4)">
-                                            <i class="fas fa-star"
-                                                style="color: {{ $rating >= 4 ? '#E3A008' : 'gray' }}; font-size: 18px;">
-                                            </i>
-                                        </li>
-                                        <li class="mr-1 cursor-pointer" wire:click="$set('rating', 5)">
-                                            <i class="fas fa-star"
-                                                style="color: {{ $rating >= 5 ? '#E3A008' : 'gray' }}; font-size: 18px;">
-                                            </i>
-                                        </li>
-                                    </ul>
+                <div class="d-flex mt-4 mb-4">
+                    <button class="btn tb-btn-primary mr-4 " wire:click="store">Guardar</button>
 
                                 <div class="d-flex justify-content-end">
                                     <button class="btn btn-evaluar" wire:click="store">Valorar curso</button>

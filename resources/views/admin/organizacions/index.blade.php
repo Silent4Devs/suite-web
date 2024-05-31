@@ -2,7 +2,7 @@
 @section('content')
 
 
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/colores.css') }}{{config('app.cssVersion')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/global/colores.css') }}{{config('app.cssVersion')}}">
 
     <style>
         .tarjeta {

@@ -78,7 +78,7 @@
     </div>
         <div class="text-right">
             <div class="d-flex justify-content-end">
-                <a href="{{ route('admin.comunicacion-sgis.create') }}" type="button" class="btn btn-primary">Registrar Comunicado</a>
+                <a href="{{ route('admin.comunicacion-sgis.create') }}" type="button" class="btn tb-btn-primary">Registrar Comunicado</a>
             </div>
         </div>
 
@@ -268,7 +268,7 @@
                                     <div class="mb-4 row">
                                     <div class="text-center col">
                                         @can('comunicados_generales_vinculo')
-                                        <a href="#" class="btn btn-sm btn-primary tamaño" style="with:400px !important;" data-toggle="modal" data-target="#largeModal${row.id}"><i class="mr-2 text-white fas fa-file" style="font-size:13pt"></i>Visualizar&nbsp;archivos</a>
+                                        <a href="#" class="btn btn-sm tb-btn-primary tamaño" style="with:400px !important;" data-toggle="modal" data-target="#largeModal${row.id}"><i class="mr-2 text-white fas fa-file" style="font-size:13pt"></i>Visualizar&nbsp;archivos</a>
                                         @endcan
                                     </div>
                                     </div>

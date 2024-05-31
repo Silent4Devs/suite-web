@@ -59,7 +59,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn cancel" data-dismiss="modal"
                     wire:click.prevent="cancel()">Cerrar</button>
-                <button wire:click.prevent="update({{ $questionModel->id }})" class="btn btn-primary close-modal"
+                <button wire:click.prevent="update({{ $questionModel->id }})" class="btn tb-btn-primary close-modal"
                     style="background-color: #345183">
                     Actualizar
                 </button>

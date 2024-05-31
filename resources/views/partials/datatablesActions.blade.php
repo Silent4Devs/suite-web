@@ -37,7 +37,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                    <button type="button" class="btn btn-primary"
+                                    <button type="button" class="btn tb-btn-primary"
                                         onclick="VincularEmpleado(this);">Vincular</button>
                                 </div>
                             </div>
