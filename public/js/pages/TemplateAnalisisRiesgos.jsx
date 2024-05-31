@@ -7,17 +7,17 @@ import { useAnalisisRiesgo } from '../hooks/AnalisisRiesgo';
 import { BtnAddSection } from '../components/custom/analisis-riesgos/Buttons';
 import { BtnSimple } from '../components/common/Buttons';
 
-const TemplateAnalisisRiesgos = () => {
+const TemplateAnalisisRiesgos = ({template}) => {
 
     const { sections,questions, activeSection, activeQuestion, handleDragStart, handleDragOver, handleDragEnd,
         addSection, addQuestion,deleteQuestion,changeSize,changeQuestionProps,sensors,loading,
-        handleSubmit, duplicateQuestion, changeTitle, deleteSection} = useAnalisisRiesgo();
+        handleSubmit, duplicateQuestion, changeTitle, deleteSection, btnSaveTemplate} = useAnalisisRiesgo(template);
 
     if(loading){
         return(<div>Cargando</div>)
     }
     return (
-    <form onSubmit={handleSubmit} style={{display: "flex", flexDirection:"column", justifyContent:"flex-start", alignItems:"flex-start" }}>
+    <form id="generateTemplateForm" onSubmit={handleSubmit}  style={{display: "flex", flexDirection:"column", justifyContent:"flex-start", alignItems:"flex-start" }}>
 
         <DndContext sensors={sensors} collisionDetection={closestCorners} onDragEnd={handleDragEnd} onDragStart={handleDragStart} onDragOver={handleDragOver}>
 
@@ -48,10 +48,7 @@ const TemplateAnalisisRiesgos = () => {
         <BtnAddSection onClick={addQuestion} title="AGREGAR CAMPO NUEVO" icon="add_box"/>
         <BtnAddSection onClick={addSection} title="AGREGAR SECCIÓN" icon="view_agenda"/>
         </div>
-        <BtnSimple title="Guardar" type='submit'/>
-        {/* <button onClick={handleSubmit}>Guardar</button> */}
-
-
+        <button ref={btnSaveTemplate} type='submit' style={{visibility:"hidden"}}>Guardar</button>
     </form>
   )
 }

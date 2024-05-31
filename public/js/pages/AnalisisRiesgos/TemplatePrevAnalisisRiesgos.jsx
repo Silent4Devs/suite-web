@@ -3,8 +3,8 @@ import { useTemplateViewPrevAnalisisRiesgo } from '../../hooks/AnalisisRiesgo'
 import { ContainerInfoTemplate } from '../../components/custom/analisis-riesgos/Containers';
 import { SectionViewPrev } from '../../components/custom/analisis-riesgos/Section';
 
-export const TemplatePrevAnalisisRiesgos = () => {
-    const {loadingInfoTemplate, loadingQuestions,sections,questions,template} = useTemplateViewPrevAnalisisRiesgo();
+export const TemplatePrevAnalisisRiesgos = ({templateId}) => {
+    const {loadingInfoTemplate, loadingQuestions,sections,questions,template} = useTemplateViewPrevAnalisisRiesgo(templateId);
     if(loadingInfoTemplate || loadingQuestions){
         return (
             <>Cargando</>

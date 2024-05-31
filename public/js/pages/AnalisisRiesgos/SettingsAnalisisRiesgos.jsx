@@ -8,16 +8,16 @@ import { BtnSimple } from '../../components/common/Buttons';
 
 
 
-const SettingsAnalisisRiesgos = () => {
+const SettingsAnalisisRiesgos = ({templateId}) => {
     const {sections, questions, loadingInfoTemplate,loadingTableSettigns,loadingQuestions, activeSection, activeQuestion, handleDragStart,
-        handleDragEnd, handleDragOver, sensors, changeSize, handleSubmit, template, tableSettings} = useSettingsAnalisisRiesgos();
+        handleDragEnd, handleDragOver, sensors, changeSize, handleSubmit, template, tableSettings, btnSaveSettigns} = useSettingsAnalisisRiesgos(templateId);
 
     if(loadingInfoTemplate || loadingTableSettigns || loadingQuestions){
         return(<div>Cargando</div>)
     }
 
   return (
-    <div style={{display: "flex", flexDirection:"column", justifyContent:"flex-start", alignItems:"flex-start" }}>
+    <form id="generateTemplateSettigns" onSubmit={handleSubmit} style={{display: "flex", flexDirection:"column", justifyContent:"flex-start", alignItems:"flex-start" }}>
         <ContainerInfoTemplate template={template} icon={true}/>
         {
             sections ? (
@@ -48,9 +48,10 @@ const SettingsAnalisisRiesgos = () => {
 
         <ContainerTableSettigs data={tableSettings}/>
 
-        <BtnSimple title="Guardar" onClick={handleSubmit}/>
+        <button ref={btnSaveSettigns} type='submit' style={{visibility:"hidden"}}>Guardar</button>
+        {/* <BtnSimple title="Guardar" onClick={handleSubmit}/> */}
         {/* <button onClick={handleSubmit}>Guardar</button> */}
-    </div>
+    </form>
   )
 }
 

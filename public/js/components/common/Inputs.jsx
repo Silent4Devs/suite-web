@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export const InputSimple = ({ title, name, type="text", value, handleChange, background=null, color=null, width=null } ) => {
+export const InputSimple = ({ title, name, type="text", value, handleChange, background=null, color=null, width=null, required=true } ) => {
     const [error, setError] = useState('');
     const inputStyle = {
         background: background ? background : "#FFFFFF",
@@ -17,7 +17,7 @@ export const InputSimple = ({ title, name, type="text", value, handleChange, bac
                     name={name}
                     value={value}
                     onChange={(e)=>handleChange(e.target.value)}
-                    required
+                    required={required}
 
                 />
                 <label >{title}</label>

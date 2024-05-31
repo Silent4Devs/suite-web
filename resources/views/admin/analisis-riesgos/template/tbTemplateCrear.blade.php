@@ -65,6 +65,25 @@
             color: #575757;
             opacity: 1;
         }
+
+        .btnBack{
+            width: 142px;
+            height: 48.5px;
+            text-align: "center";
+            background: #FFFFFF 0% 0% no-repeat padding-box;
+            border: 1px solid #006DDB;
+            border-radius: 6px;
+            opacity: 1;
+            margin-right: 12px;
+            color: #006DDB;
+        }
+
+        .btnDraft{
+            background: 'none';
+            color : #006DDB;
+            height: 45px;
+            border: "none";
+        }
     </style>
 
     <h5>Análisis de Riesgo</h5>
@@ -98,34 +117,53 @@
             @include('admin.analisis-riesgos.components.tbEscalasPrincipal',['template_id' => $id])
         </div>
         <div class="select-option">
-            @include('admin.analisis-riesgos.components.tbGenerateTemplate')
+            @include('admin.analisis-riesgos.components.tbGenerateTemplate', ['template_id' => $id])
         </div>
         <div class="select-option">
-            @include('admin.analisis-riesgos.components.tbGenerateFormulas')
+            @include('admin.analisis-riesgos.components.tbGenerateFormulas', ['template_id' => $id])
         </div>
         <div class="select-option">
-            @include('admin.analisis-riesgos.components.tbGenerateSettings')
+            @include('admin.analisis-riesgos.components.tbGenerateSettings', ['template_id' => $id])
         </div>
         <div class="select-option">
-            @include('admin.analisis-riesgos.components.tbTemplateViewPrev')
+            @include('admin.analisis-riesgos.components.tbTemplateViewPrev', ['template_id' => $id])
         </div>
     </div>
 
     {{-- <button id="miBoton">Haz clic aquí</button> --}}
-
-    <button id="miBoton" type="button" class="btn btn-primary mt-3 ml-0">Haz clic aquí</button>
+<div class="row">
+    <div class="col-12 col-sm-6">
+        <button id="btnDraft" type="button" class="btn btnDraft mt-3 ml-0">GUARDAR EN BORRADOR</button>
+    </div>
+    <div class="col-12 col-sm-6">
+        <div class="d-flex justify-content-end">
+            <button id="btnBack" type="button" class="btn btnBack mt-3 ml-0">Atras</button>
+            <button id="miBoton" type="button" class="btn btn-primary mt-3 ml-0">GUARDAR Y CONTINUAR</button>
+        </div>
+    </div>
+</div>
 
 
 @endsection
 
 @section('scripts')
-    <script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+    $('#btnDraft').on('click', function() {
+        Swal.fire({
+        title: "Se ha guardado tu template como borrador.",
+        icon: "success"
+        });
+    })
+   })
+</script>
+    {{-- <script>
         var sortable = new Sortable(document.getElementById('sortable-container'), {
             animation: 150, // Animation speed (in milliseconds)
             handle: '.drag-handle', // Selector for the drag handle
             // Additional options if needed
         });
-    </script>
+    </script> --}}
 
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.0/echarts.min.js"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
@@ -164,66 +202,156 @@
 
         });
     </script>
+
+     {{-- Reload and save functions for node stepper  --}}
+     <script>
+        // node template
+        function reloadGenerateFormTemplate(reload) {
+            let reloadGenerateFormTemplate = new CustomEvent('updateReload', {
+                detail: { reload: reload }
+            });
+            window.dispatchEvent(reloadGenerateFormTemplate);
+        }
+        function saveGenerateFormTemplate(save){
+            let saveGenerateFormTemplate = new CustomEvent('saveFormTemplate',{
+                detail: { save: save }
+            });
+            window.dispatchEvent(saveGenerateFormTemplate);
+        }
+        //node formulas
+        function reloadGenerateFormulas(reload){
+            let reloadGenerateFormulas = new CustomEvent('reloadModuleFormulas',{
+                detail: { reload: reload }
+            });
+            window.dispatchEvent(reloadGenerateFormulas);
+        }
+        function saveGenerateFormulas(save){
+            let saveGenerateFormulas = new CustomEvent('saveFormTemplateFormulas',{
+                detail: { save: save }
+            });
+            window.dispatchEvent(saveGenerateFormulas);
+        }
+        //node settigns
+        function reloadGenerateSettigns(reload){
+            let reloadGenerateSettigns = new CustomEvent('reloadModuleSettigns',{
+                detail: { reload: reload }
+            });
+            window.dispatchEvent(reloadGenerateSettigns);
+        }
+        function saveGenerateSettigns(save){
+            let saveGenerateSettins = new CustomEvent('saveFormTemplateSettigns',{
+                detail:{ save: save}
+            });
+            window.dispatchEvent(saveGenerateSettins);
+        }
+        //module Preview
+        function reloadGeneratePreview(reload){
+            let reloadGeneratePreview = new CustomEvent('reloadModulePreview',{
+                detail: { reload: reload }
+            });
+            window.dispatchEvent(reloadGeneratePreview);
+        }
+    </script>
+
     {{-- script para avanzar en el stepper mediante un boton  --}}
     <script>
         $(document).ready(function() {
+            let template_id = "{{ $id }}"
+            const save = true;
             $('#miBoton').on('click', function() {
-                // Livewire.emit('renderSaveEscala', flag = 1);
-                let getTotalPoints = $('.point').length,
+                    let getTotalPoints = $('.point').length,
                     getIndex = $('.point--active').index();
                     getAdvance = getIndex + 1;
-                    if(getIndex !== 1){
-                        $('.select-option').hide();
-                        $('.select-option:nth-child(' + (getAdvance) + ')').show();
+                    switch(getIndex){
+                        case 1:
+                            Livewire.emit('renderSaveDataGeneral');
+                            Livewire.emit('renderSaveEscala');
+                            Livewire.emit('renderSaveProbImp');
+                            Livewire.emit('renderReloadEscala',template_id);
+                            Livewire.emit('renderReloadProbImp',template_id);
+                            break;
+                        case 2:
+                            saveGenerateFormTemplate(save);
+                            break;
+                        case 3:
+                            saveGenerateFormulas(save);
+                            break;
+                        case 4:
 
-                        TweenMax.to($('.bar__fill'), 0.6, {
-                            width: (getIndex) / (getTotalPoints - 1) * 100 + '%'
-                        });
-
-                        $('.point--active').addClass('point--complete');
-                        $('.point--active').next().addClass('point--active')
-                        $('.point--active').prev().removeClass('point--active')
+                            saveGenerateSettigns(save);
+                            break;
+                        default:
+                            console.log('default btn');
                     }
-
             });
+
+            $('#btnBack').on('click', function(){
+                let getTotalPoints = $('.point').length,
+                        getIndex = $('.point--active').index();
+                        getback = getIndex - 1;
+
+                        console.log(getIndex)
+                        if(getback !== 0 ){
+                            $('.select-option').hide();
+                            $('.select-option:nth-child(' + (getback) + ')').show();
+                            TweenMax.to($('.bar__fill'), 0.6, {
+                                width: (getIndex - 2) / (getTotalPoints - 1) * 100 + '%'
+                            });
+                            $('.point--active').prev().removeClass('point--complete');
+                            $('.point--active').prev().addClass('point--active');
+                            $('.point--active').next().removeClass('point--active');
+
+                            switch(getback){
+                            case 4:
+                                reloadGenerateSettigns(true);
+                                // reloadGenerateFormulas(true);
+                                break;
+                            case 3:
+                                reloadGenerateFormulas(true);
+                                // reloadGenerateSettigns(true);
+                                break;
+                            case 2:
+                                reloadGenerateFormTemplate(true);
+                                break;
+                            default:
+                            window.scrollTo({top: 0,behavior: 'smooth' });
+                                break;
+                        }
+                    }
+                    window.scrollTo({top: 0,behavior: 'smooth' });
+
+            })
         });
     </script>
+
     {{-- script con logica para acciones al darle click al stepper de los livewire asociados --}}
     <script>
         $(document).ready(function() {
             let template_id = "{{ $id }}"
+            const reload = true;
             $('.point').on('click', function(e) {
               let getIndex = $('.point--active').index();
               switch(getIndex){
                 case 1:
-                Livewire.emit('renderReloadEscala',template_id);
-                Livewire.emit('renderReloadProbImp',template_id);
-
-                break;
-                case 3:
-                    console.log("first")
+                    Livewire.emit('renderReloadEscala',template_id);
+                    Livewire.emit('renderReloadProbImp',template_id);
                     break;
+                case 2:
+                    reloadGenerateFormTemplate(reload)
+                    break;
+                case 3:
+                    reloadGenerateFormulas(reload);
+                    break;
+                case 4:
+                    reloadGenerateSettigns(reload);
+                    break;
+                case 5:
+                reloadGeneratePreview(reload);
                 default:
                     console.log('default');
               }
             });
 
-            $('#miBoton').on('click', function() {
-               let getIndex = $('.point--active').index();
-              switch(getIndex){
-                case 1:
-                Livewire.emit('renderSaveDataGeneral');
-                Livewire.emit('renderSaveEscala');
-                Livewire.emit('renderSaveProbImp');
-
-                Livewire.emit('renderReloadEscala',template_id);
-                Livewire.emit('renderReloadProbImp',template_id);
-
-                break;
-                default:
-                    console.log('default');
-              }
-            });
         });
     </script>
 
@@ -349,7 +477,7 @@
             }
 
             const advanceStepper = () => {
-                let getTotalPoints = $('.point').length,
+                    let getTotalPoints = $('.point').length,
                     getIndex = $('.point--active').index();
                     getAdvance = getIndex + 1;
                     if(getIndex === 1){
@@ -364,6 +492,8 @@
                         $('.point--active').next().addClass('point--active')
                         $('.point--active').prev().removeClass('point--active')
                     }
+                    window.scrollTo({top: 0,behavior: 'smooth' });
+                    reloadGenerateFormTemplate(true)
             }
 
             const resetValidate = () => {
@@ -373,5 +503,52 @@
 
         });
     </script>
+
+    {{--Script para avanzar y recargar el siguiente modulo desde reactjs  --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const advanceStepper = () => {
+                        let getTotalPoints = $('.point').length,
+                        getIndex = $('.point--active').index();
+                        getAdvance = getIndex + 1;
+
+                        $('.select-option').hide();
+                        $('.select-option:nth-child(' + (getAdvance) + ')').show();
+
+                        TweenMax.to($('.bar__fill'), 0.6, {
+                            width: (getIndex) / (getTotalPoints - 1) * 100 + '%'
+                        });
+
+                        $('.point--active').addClass('point--complete');
+                        $('.point--active').next().addClass('point--active')
+                        $('.point--active').prev().removeClass('point--active')
+                        switch(getAdvance){
+                            case 3:
+                                reloadGenerateFormulas(true);
+                                break;
+                            case 4:
+                                reloadGenerateSettigns(true);
+                                break;
+                            case 5:
+                                reloadGeneratePreview(true);
+                                break;
+                            default:
+                                break;
+                        }
+                        window.scrollTo({top: 0,behavior: 'smooth' });
+                }
+
+                window.addEventListener('advanceModuleTemplate', function(event) {
+                    var message = event.detail.message;
+                    if(message === true){
+                        advanceStepper();
+                    }
+
+                });
+        });
+    </script>
+
+
+
 
 @endsection

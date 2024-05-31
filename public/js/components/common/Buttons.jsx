@@ -13,7 +13,7 @@ export const BtnSimple = ({title ,onClick = null, background=null, color=null, h
     )
  }
 
-export const BtnSecondary = ({title, onClick=null ,background=null, color=null, height=null, width=null, borderColor=null}) => {
+export const BtnSecondary = ({title, onClick=null ,background=null, color=null, height=null, width=null, borderColor=null,}) => {
     const btnStyle = {
         background: background ? background : "#FFFFFF",
         color : color ? color : "#006DDB",

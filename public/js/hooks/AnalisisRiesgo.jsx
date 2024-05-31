@@ -1,18 +1,21 @@
-import React, {useState,useEffect} from 'react'
+import React, {useState,useEffect, useRef} from 'react'
 import { useSortable } from '@dnd-kit/sortable';
 import { useSensor, useSensors,  PointerSensor } from '@dnd-kit/core';
 import { arrayMove } from '@dnd-kit/sortable';
 import axios from 'axios';
 import { AlertSimple } from '../components/common/Alerts';
+import { instance } from '../services/base';
+import { analysisRiskTemplateEditFormulas, analysisRiskTemplateFormulas, analysisRiskTemplateOptions, analysisRiskTemplateSaveFormula, analysisRiskTemplateSections, deleteAnalysisRiskTemplateFormulas, deleteQuestionTemplateGenerateAR, deleteSectionTemplateGenerateAR, generateSettignsTableTemplateAR, generateTemplateCreate, generateTemplateEdit, getInfoTemplateAR, getSettingsTemplateAR, getTableSettignsTemplateAR, getTemplateSectionsQuestion } from '../services/url/templateAnalisisRiesgos';
 
-export const useAnalisisRiesgo = () => {
+export const useAnalisisRiesgo = (template) => {
     const [loading, setLoading] = useState(true);
-    const [reload, setReload] = useState(0);
+    const [reload, setReload] = useState(false);
+    const btnSaveTemplate = useRef(0);
     const [edit, setEdit] = useState(false);
     const [sections, setSections] = useState();
     const [questions, setQuestions] = useState();
 
-    const sectionDefault = [{id:'sec-1', title:"Sección 1", template_id:1},];
+    const sectionDefault = [{id:'sec-1', title:"Sección 1", template_id:template},];
     const questionDefault = [{ id: "q-1", columnId: "sec-1", size:12, type:"1", obligatory:true, title:"Pregunta 1", isNumeric:false, data:{}}];
 
     const [activeSection, setActiveSection] = useState(null);
@@ -106,15 +109,15 @@ export const useAnalisisRiesgo = () => {
     const addSection = () => {
         let nextSection = sections.length + 1;
         let nextQuestion = questions.length +1;
-        setSections((sections) => [...sections, { id: `sec-${nextSection}`, template_id:1 , title:`Sección ${nextSection}` }]);
-        setQuestions((questions) => [...questions, {id: `q-${nextQuestion}`, columnId:`sec-${nextSection}`, size:12, title:`Pregunta ${nextQuestion}`, type:"1", obligatory:true, data:{}}])
+        setSections((sections) => [...sections, { id: `sec-${nextSection}`, template_id:template , title:`Sección ${nextSection}` }]);
+        setQuestions((questions) => [...questions, {id: `q-${nextQuestion}`, columnId:`sec-${nextSection}`, size:12, title:`Pregunta ${nextQuestion}`, type:"1", obligatory:true, isNumeric:false, data:{}}])
     }
 
     const addQuestion = () => {
         const lastPositionSection = sections.length - 1;
         const lastSection = sections.find((element,index) => index === lastPositionSection);
         const nextQuestion = questions.length +1;
-        setQuestions((questions) => [...questions, {id: `q-${nextQuestion}`, columnId: lastSection.id, size:12, title:`Pregunta ${nextQuestion}`, type:"1", obligatory:true, data:{}}])
+        setQuestions((questions) => [...questions, {id: `q-${nextQuestion}`, columnId: lastSection.id, size:12, title:`Pregunta ${nextQuestion}`, type:"1", obligatory:true, isNumeric:false, data:{}}])
     }
 
     const deleteQuestion = async(id) => {
@@ -124,7 +127,7 @@ export const useAnalisisRiesgo = () => {
             setQuestions(newQuestions)
         }
         const destroyRegister = async() => {
-            await axios.delete(`http:///suite-web.test/api/api/v1/test/question/delete/${newId}`);
+            await instance.delete(deleteQuestionTemplateGenerateAR + newId);
         }
         if(expQuestions.test(id)){
             newId = id.slice(3);
@@ -274,7 +277,7 @@ export const useAnalisisRiesgo = () => {
     const getData = async() => {
         try {
             setLoading(true);
-            const response = await axios.get('http:///suite-web.test/api/api/v1/test/1');
+            const response = await instance.get(getTemplateSectionsQuestion + template);
             if(response.status === 200){
                 const dataSection = response.data.data.sections;
                 const dataQuestion = response.data.data.questions;
@@ -406,7 +409,6 @@ export const useAnalisisRiesgo = () => {
     }
 
     const createData = async(dataSections,dataQuestions) =>{
-        const url = 'http:///suite-web.test/api/api/v1/test'
         const dataForm = new FormData();
         dataQuestions.forEach((item, index) => {
             if(item.type === '10'){
@@ -416,9 +418,10 @@ export const useAnalisisRiesgo = () => {
         dataForm.append('sections', JSON.stringify(dataSections));
         dataForm.append('questions', JSON.stringify(dataQuestions));
         try {
-            const response = await axios.post(url,dataForm);
+            const response = await instance.post(generateTemplateCreate,dataForm);
             if(response.status === 200){
-                setReload(reload+1);
+                const event = new CustomEvent('advanceModuleTemplate', { detail: { message:true } });
+                window.dispatchEvent(event);
             }
         } catch (error) {
             console.log(error)
@@ -426,7 +429,6 @@ export const useAnalisisRiesgo = () => {
     }
 
     const editData = async(dataSections,dataQuestions) => {
-        const url = 'http:///suite-web.test/api/api/v1/test/1'
         const dataForm = new FormData();
         dataQuestions.forEach((item) => {
             if(item.type === '10'){
@@ -441,13 +443,14 @@ export const useAnalisisRiesgo = () => {
         dataForm.append('sections', JSON.stringify(dataSections));
         dataForm.append('questions', JSON.stringify(dataQuestions));
         try {
-            const response = await axios.post(url,dataForm,{
+            const response = await instance.post(generateTemplateEdit + template,dataForm,{
                 params: {
                     '_method' : "PUT"
                 }
               });
             if(response.status === 200){
-                setReload(reload+1);
+                const event = new CustomEvent('advanceModuleTemplate', { detail: { message:true } });
+                window.dispatchEvent(event);
             }
         } catch (error) {
             console.log(error)
@@ -477,7 +480,7 @@ export const useAnalisisRiesgo = () => {
             setQuestions(newQuestions);
         }
         const destroyRegister = async() => {
-            await axios.delete(`http:///suite-web.test/api/api/v1/test/section/delete/${newId}`);
+            await instance.delete(deleteSectionTemplateGenerateAR + newId);
         }
         if(expSections.test(id)){
             newId = id.slice(3);
@@ -489,11 +492,28 @@ export const useAnalisisRiesgo = () => {
 
     useEffect(() => {
       getData();
-    }, [reload])
+      setReload(false);
+    }, [reload]);
+
+    //useEfect para cuando se recarge el modulo (click en el stepper)
+    useEffect(() => {
+        const handleUpdateReload = (event) => {
+            setReload(event.detail.reload);
+        };
+        window.addEventListener('updateReload', handleUpdateReload);
+    }, []);
+
+    //useEfect para cuando se avanza al siguiente modulo (click avanzar)
+    useEffect(() => {
+        const handleSaveForm = (e) => {
+            btnSaveTemplate.current.click();
+        };
+        window.addEventListener('saveFormTemplate',handleSaveForm );
+    }, []);
 
     return { sections,questions, activeSection, activeQuestion, handleDragStart, handleDragOver,
         handleDragEnd, addSection, addQuestion,deleteQuestion,changeSize,changeQuestionProps,
-        sensors, loading, handleSubmit, duplicateQuestion, changeTitle, deleteSection}
+        sensors, loading, handleSubmit, duplicateQuestion, changeTitle, deleteSection, btnSaveTemplate}
 }
 
 export const useGenerateTemplateAnalisisRiesgo = (item, changeQuestionProps,changeSize) => {
@@ -563,7 +583,12 @@ export const useGenerateTemplateAnalisisRiesgo = (item, changeQuestionProps,chan
             handleShowSizes, handleChangeSize, moreInfo, handleObligatoryChange}
  }
 
-export const useFormulasAnalisisRiesgos = () => {
+export const useFormulasAnalisisRiesgos = (template) => {
+    const [loading, setLoading] = useState({
+        options:true,
+        sections:true,
+        formulas:true,
+    });
     const [options, setOptions] = useState([]);
     const [option, setOption] = useState("");
     const [registers, setRegisters] = useState([]);
@@ -571,9 +596,9 @@ export const useFormulasAnalisisRiesgos = () => {
     const [formulas, setFormulas] = useState([]);
     const [sections, setSections] = useState([]);
     const [reload, setReload] = useState(false);
-
+    const [reloadFormulas, setReloadFormulas] = useState(false);
+    const btnEditFormulas = useRef(0);
     const expFormulas = /^rf-\d+$/;
-
 
     const handleChangeFormula = (newValue) =>{
         setFormula(newValue);
@@ -653,14 +678,13 @@ export const useFormulasAnalisisRiesgos = () => {
         if(formula !== ""){
             const lastFormula = formulas.length + 1;
             const newId = `nf-${lastFormula}`;
-
             const newFormula = {
                 id:newId,
                 riesgo:false,
                 title:`Formula ${lastFormula}`,
                 formula:formula,
                 section_id:sections[0].id,
-                template_id:1,
+                template_id:template,
             }
             handleSaveFormula(newFormula);
         }
@@ -673,7 +697,7 @@ export const useFormulasAnalisisRiesgos = () => {
             setFormulas(newElements);
         }
         const destroyRegister = async() => {
-            await axios.delete(`http:///suite-web.test/api/api/v1/ar/formulas/${id}`);
+            await instance.delete(deleteAnalysisRiskTemplateFormulas + id);
         }
 
         AlertSimple(()=>destroyElement(), ()=>destroyRegister());
@@ -682,32 +706,39 @@ export const useFormulasAnalisisRiesgos = () => {
 
     const getOptions = async() => {
         try {
-            const response = await axios.get('http:///suite-web.test/api/api/v1/ar/formulas/options/1');
+            setLoading(prevLoading => ({ ...prevLoading, options: true }));
+            const response = await instance.get(analysisRiskTemplateOptions + template);
+            console.log(response)
             if(response.status === 200){
                 const data = response.data.data.options
                 setOptions(data);
             }
         } catch (error) {
-
+            console.log(error)
+        } finally {
+            setLoading(prevLoading => ({ ...prevLoading, options: false }));
         }
     }
 
     const getFormulas = async() => {
         try {
-            const response = await axios.get('http:///suite-web.test/api/api/v1/ar/formulas/1');
+            setLoading(prevLoading => ({ ...prevLoading, formulas: true }));
+            const response = await instance.get(analysisRiskTemplateFormulas + template);
             if(response.status === 200){
                 const registerFormulas = response.data.data.formulas;
                 setFormulas(registerFormulas);
             }
 
         } catch (error) {
-
+            console.log(error)
+        } finally {
+            setLoading(prevLoading => ({ ...prevLoading, formulas:false }));
         }
     }
 
     const getSections = async() => {
         try {
-            const response = await axios.get('http:///suite-web.test/api/api/v1/test/1');
+            const response = await instance.get(analysisRiskTemplateSections + template);
             if(response.status === 200){
                 const newSections = response.data.data.sections;
                 setSections(newSections);
@@ -718,17 +749,20 @@ export const useFormulasAnalisisRiesgos = () => {
     }
 
     const handleSaveFormula = async (newFormula) => {
-        const response = await axios.post('http:///suite-web.test/api/api/v1/ar/formulas',{formula:newFormula});
+        const response = await instance.post(analysisRiskTemplateSaveFormula,{formula:newFormula});
         if(response.status === 200){
-            setReload(!reload);
+            setReloadFormulas(!reload);
             setFormula("");
         }
     }
 
-    const handleSubmit = async() =>{
-        const response = await axios.put('http:///suite-web.test/api/api/v1/ar/formulas/edit',{formulas:formulas});
+    const handleSubmit = async(e) =>{
+        e.preventDefault();
+        const response = await instance.put(analysisRiskTemplateEditFormulas,{formulas:formulas});
+        console.log(response)
         if(response.status === 200){
-            setReload(!reload);
+            const event = new CustomEvent('advanceModuleTemplate', { detail: { message:true } });
+            window.dispatchEvent(event);
         }
     }
 
@@ -736,23 +770,39 @@ export const useFormulasAnalisisRiesgos = () => {
       getOptions();
       getFormulas();
       getSections();
-    }, [])
+      setReload(false);
+    }, [reload])
 
     useEffect(()=>{
         getFormulas();
-    },[reload])
+    },[reloadFormulas])
+
+    useEffect(() => {
+        const handleUpdateReload = (event) => {
+            setReload(event.detail.reload);
+        };
+        window.addEventListener('reloadModuleFormulas', handleUpdateReload);
+    }, []);
+
+    useEffect(() => {
+        const handleSaveForm = (e) => {
+            btnEditFormulas.current.click();
+        };
+        window.addEventListener('saveFormTemplateFormulas',handleSaveForm );
+    }, []);
 
 
     return { formula,setFormula,formulas, handleChangeFormula, handleChangeStatus, handleChangeTitle,
              hrStyle, options, handleChangeOption, option, addOption, registers, addVariable,
-             removeVariable, addFormula, deleteFormula, sections, handleChangeSection, handleSubmit }
+             removeVariable, addFormula, deleteFormula, sections, handleChangeSection, handleSubmit, loading, btnEditFormulas }
 }
 
-export const useSettingsAnalisisRiesgos = () => {
+export const useSettingsAnalisisRiesgos = (templateId) => {
     const [loadingInfoTemplate, setLoadingInfoTemplate] = useState(true)
     const [loadingQuestions, setLoadingQuestions] = useState(true)
     const [loadingTableSettigns, setLoadingTableSettigns] = useState(true)
-
+    const [reload, setReload] = useState(false);
+    const btnSaveSettigns = useRef(0);
     const [sections, setSections] = useState();
     const [questions, setQuestions] = useState();
     const [activeSection, setActiveSection] = useState(null);
@@ -870,7 +920,7 @@ export const useSettingsAnalisisRiesgos = () => {
     const getData = async() => {
         try {
             setLoadingQuestions(true);
-            const response = await axios.get('http:///suite-web.test/api/api/v1/ar/settings/1');
+            const response = await instance.get(getSettingsTemplateAR + templateId);
             const dataSection = response.data.data.sections;
             const dataQuestion = response.data.data.questions;
             if(dataSection.length >0 ){
@@ -917,7 +967,7 @@ export const useSettingsAnalisisRiesgos = () => {
     const getInfoTemplate = async() => {
         try {
             setLoadingInfoTemplate(true)
-            const response = await axios.get('http:///suite-web.test/api/api/v1/ar/template/1');
+            const response = await instance.get(getInfoTemplateAR + templateId);
             if(response.status === 200){
                 const register = response.data.data.template
                 setTemplate(register)
@@ -932,7 +982,7 @@ export const useSettingsAnalisisRiesgos = () => {
     const getTableSettings = async() => {
         try {
             setLoadingTableSettigns(true);
-            const response = await axios.get('http:///suite-web.test/api/api/v1/template/ar/settings/table/1');
+            const response = await instance.get(getTableSettignsTemplateAR + templateId);
 
             if(response.status === 200){
                 const register = response.data.data
@@ -950,24 +1000,26 @@ export const useSettingsAnalisisRiesgos = () => {
         dataForm.append('sections', JSON.stringify(dataSections));
         dataForm.append('questions', JSON.stringify(dataQuestions));
 
-        const url = 'http:///suite-web.test/api/api/v1/test/1'
-        const url2 = 'http:///suite-web.test/api/api/v1/template/ar/settings/table/edit'
-
         try {
-            const response = await axios.post(url,dataForm,{
+            const response = await instance.post(generateTemplateEdit + templateId ,dataForm,{
                 params: {
                     '_method' : "PUT"
-                }
+                },
               });
-            const response2 = await axios.put(url2,tableSettings);
-            console.log(response.data)
+            const response2 = await instance.put(generateSettignsTableTemplateAR,tableSettings);
+
+            if(response.status === 200 && response2.status === 200){
+                const event = new CustomEvent('advanceModuleTemplate', { detail: { message:true } });
+                window.dispatchEvent(event);
+            }
 
         } catch (error) {
             console.log(error)
         }
     }
 
-    const handleSubmit = async() => {
+    const handleSubmit = async(e) => {
+        e.preventDefault();
         const dataSections = sections.map((item) => ({...item}));
         const dataQuestions = questions.map((item)=> ({...item}));
         dataSections.map((item, index)=>{
@@ -1010,10 +1062,27 @@ export const useSettingsAnalisisRiesgos = () => {
         getData();
         getInfoTemplate();
         getTableSettings();
-      }, [])
+        setReload(false);
+      }, [reload])
+
+    //useEfect para cuando se recarge el modulo (click en el stepper)
+    useEffect(() => {
+        const handleUpdateReload = (event) => {
+            setReload(event.detail.reload);
+        };
+        window.addEventListener('reloadModuleSettigns', handleUpdateReload);
+    }, []);
+
+    // useEfect para cuando se avanza al siguiente modulo (click avanzar)
+    useEffect(() => {
+        const handleSaveForm = (e) => {
+            btnSaveSettigns.current.click();
+        };
+        window.addEventListener('saveFormTemplateSettigns',handleSaveForm );
+    }, []);
 
     return {loadingInfoTemplate,loadingTableSettigns, loadingQuestions ,sections,questions, activeSection, activeQuestion, handleDragStart,
-        handleDragEnd, handleDragOver, sensors, changeSize, handleSubmit, template, tableSettings}
+        handleDragEnd, handleDragOver, sensors, changeSize, handleSubmit, template, tableSettings, btnSaveSettigns }
 }
 
 export const useSettingsQuestionAnalisisRiesgo = (item, changeSize) =>{
@@ -1057,9 +1126,10 @@ export const useSettingsQuestionAnalisisRiesgo = (item, changeSize) =>{
             transition, isDragging, }
 }
 
-export const useTemplateViewPrevAnalisisRiesgo = () => {
+export const useTemplateViewPrevAnalisisRiesgo = (templateId) => {
     const [loadingInfoTemplate, setLoadingInfoTemplate] = useState(true)
     const [loadingQuestions, setLoadingQuestions] = useState(true)
+    const [reload, setReload] = useState(false);
     const [template, setTemplate] = useState({});
     const [sections, setSections] = useState();
     const [questions, setQuestions] = useState();
@@ -1067,7 +1137,7 @@ export const useTemplateViewPrevAnalisisRiesgo = () => {
     const getData = async() => {
         try {
             setLoadingQuestions(true);
-            const response = await axios.get('http:///suite-web.test/api/api/v1/ar/settings/1');
+            const response = await instance.get(getSettingsTemplateAR + templateId);
             const dataSection = response.data.data.sections;
             const dataQuestion = response.data.data.questions;
             if(dataSection.length >0 ){
@@ -1099,7 +1169,7 @@ export const useTemplateViewPrevAnalisisRiesgo = () => {
     const getInfoTemplate = async() => {
         try {
             setLoadingInfoTemplate(true);
-            const response = await axios.get('http:///suite-web.test/api/api/v1/ar/template/1');
+            const response = await instance.get(getInfoTemplateAR + templateId);
             if(response.status === 200){
                 const register = response.data.data.template
                 setTemplate(register)
@@ -1113,6 +1183,15 @@ export const useTemplateViewPrevAnalisisRiesgo = () => {
     useEffect(() => {
         getData();
         getInfoTemplate();
+        setReload(false)
+    }, [reload]);
+
+    //useEfect para cuando se recarge el modulo (click en el stepper)
+    useEffect(() => {
+        const handleUpdateReload = (event) => {
+            setReload(event.detail.reload);
+        };
+        window.addEventListener('reloadModulePreview', handleUpdateReload);
     }, []);
 
     return {loadingInfoTemplate,loadingQuestions,sections,questions,template}

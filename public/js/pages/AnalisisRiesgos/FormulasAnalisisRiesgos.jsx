@@ -9,17 +9,21 @@ import { RecordFormulas } from '../../components/custom/analisis-riesgos/Formula
 import { useFormulasAnalisisRiesgos } from '../../hooks/AnalisisRiesgo';
 import { SelectAnalisisRiesgo } from '../../components/custom/analisis-riesgos/Selects';
 
-const FormulasAnalisisRiesgos = () => {
+const FormulasAnalisisRiesgos = ({template}) => {
     const { formula,setFormula, formulas, handleChangeFormula, handleChangeStatus, handleChangeTitle, hrStyle,
             options, handleChangeOption, option, addOption, registers, addVariable, removeVariable, addFormula,
-            deleteFormula, sections, handleChangeSection, handleSubmit} = useFormulasAnalisisRiesgos();
+            deleteFormula, sections, handleChangeSection, handleSubmit,loading, btnEditFormulas} = useFormulasAnalisisRiesgos(template);
+
+    if(loading.options && loading.formulas){
+        return(<div>Cargando</div>)
+    }
   return (
-    <div className='mb-3'>
+    <form id='generateTemplateFormulas' onSubmit={handleSubmit} className='mb-3'>
         <CardContainer>
             <h3>Generación de fórmula</h3>
             <div className="row mb-4">
                 <div className="col-12 col-md-10">
-                    <InputSimple title="" name="formula" value={formula} handleChange={handleChangeFormula} background="#F1F1F1"/>
+                    <InputSimple title="" name="formula" value={formula} handleChange={handleChangeFormula} background="#F1F1F1" required={false}/>
                 </div>
                 <div className="col-12 col-md-2 d-flex justify-content-start">
                     <BtnSimple title="AGREGAR" width="100%" onClick={()=>addFormula()}/>
@@ -46,10 +50,9 @@ const FormulasAnalisisRiesgos = () => {
             <h3>Historial de fórmulas</h3>
             <RecordFormulas formulas={formulas} handleChangeStatus={handleChangeStatus} handleChangeTitle={handleChangeTitle} deleteFormula={deleteFormula} options={sections} handleChangeSection={handleChangeSection}/>
         </CardContainer>
-        <BtnSimple title="guardar" onClick={handleSubmit}/>
-        {/* <button onClick={handleSubmit}>Guardar</button> */}
+        <button ref={btnEditFormulas} type='submit' style={{visibility:"hidden"}}>Guardar</button>
 
-    </div>
+    </form>
   )
 }
 

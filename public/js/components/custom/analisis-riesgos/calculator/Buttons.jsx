@@ -17,61 +17,61 @@ const Buttons = ({ inputHandler, clearInput, backspace, changePlusMinus, addForm
       {/* <button className="btn-calculator exp" onClick={inputHandler}>
         )
       </button> */}
-      <button className="btn-calculator clr" onClick={clearInput}>
+      <button type="button" className="btn-calculator clr" onClick={clearInput}>
         AC
       </button>
-      <button className="btn-calculator clr" onClick={backspace}>
+      <button type="button" className="btn-calculator clr" onClick={backspace}>
         ⌫
       </button>
-      <button className="btn-calculator exp" onClick={inputHandler}>
+      <button type="button" className="btn-calculator exp" onClick={inputHandler}>
         ÷
       </button>
-      <button className="btn-calculator" onClick={inputHandler}>
+      <button type="button" className="btn-calculator" onClick={inputHandler}>
         7
       </button>
-      <button className="btn-calculator" onClick={inputHandler}>
+      <button type="button" className="btn-calculator" onClick={inputHandler}>
         8
       </button>
-      <button className="btn-calculator" onClick={inputHandler}>
+      <button type="button" className="btn-calculator" onClick={inputHandler}>
         9
       </button>
-      <button className="btn-calculator exp" onClick={inputHandler}>
+      <button type="button" className="btn-calculator exp" onClick={inputHandler}>
         x
       </button>
-      <button className="btn-calculator" onClick={inputHandler}>
+      <button type="button" className="btn-calculator" onClick={inputHandler}>
         4
       </button>
-      <button className="btn-calculator" onClick={inputHandler}>
+      <button type="button" className="btn-calculator" onClick={inputHandler}>
         5
       </button>
-      <button className="btn-calculator" onClick={inputHandler}>
+      <button type="button" className="btn-calculator" onClick={inputHandler}>
         6
       </button>
-      <button className="btn-calculator exp" onClick={inputHandler}>
+      <button type="button" className="btn-calculator exp" onClick={inputHandler}>
         +
       </button>
-      <button className="btn-calculator" onClick={inputHandler}>
+      <button type="button" className="btn-calculator" onClick={inputHandler}>
         1
       </button>
-      <button className="btn-calculator" onClick={inputHandler}>
+      <button type="button" className="btn-calculator" onClick={inputHandler}>
         2
       </button>
-      <button className="btn-calculator" onClick={inputHandler}>
+      <button type="button" className="btn-calculator" onClick={inputHandler}>
         3
       </button>
-      <button className="btn-calculator exp" onClick={inputHandler}>
+      <button type="button" className="btn-calculator exp" onClick={inputHandler}>
         -
       </button>
-      <button className="btn-calculator exp" onClick={changePlusMinus}>
+      <button type="button" className="btn-calculator exp" onClick={changePlusMinus}>
         ±
       </button>
-      <button className="btn-calculator" onClick={inputHandler}>
+      <button type="button" className="btn-calculator" onClick={inputHandler}>
         0
       </button>
-      <button className="btn-calculator exp" onClick={inputHandler}>
+      <button type="button" className="btn-calculator exp" onClick={inputHandler}>
         .
       </button>
-      <button className="btn-calculator exp equal" id="equalbtn" onClick={()=>addFormula()}>
+      <button type="button" className="btn-calculator exp equal" id="equalbtn" onClick={()=>addFormula()}>
         =
       </button>
     </div>
