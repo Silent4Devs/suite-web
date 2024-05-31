@@ -29,6 +29,14 @@ class CourseStatus extends Component
 
     public $evaluationsUser;
 
+    public $completado;
+
+    public function updatedCompletado($value){
+        dd('ser');
+        $this->completado = $value;
+        $this->completed();
+    }
+
     //metodo mount se carga una unica vez y esto sucede cuando se carga la página
     public function mount(Course $course, $evaluacionesLeccion)
     {

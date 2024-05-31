@@ -1550,7 +1550,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('levels/destroy/{id}', 'Escuela\Admin\LevelController@destroy');
     Route::resource('dashboardescuela', 'Escuela\Admin\HomeController');
 
-    Route::get('courses-reportes-individuales', 'Escuela\Admin\ReportesIndividualesController@index');
+    Route::get('courses-reportes-individuales/{id}', 'Escuela\Admin\ReportesIndividualesController@index')->name('courses-reportes-individuales');
 });
 
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth', '2fa', 'active']], function () {
