@@ -35,13 +35,7 @@
             <div>
                 @if ($current && $current->iframe)
                     <div>
-                        {{-- {!! $current->iframe !!} --}}
-
-                        <iframe width="100%" height="381" src="https://www.youtube.com/embed/OAAQjnOr554"
-                            frameborder="0"
-                            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen="true" allowscriptaccess="always" frameborder="0"></iframe>
-
+                        {!! $current->iframe !!}
                     </div>
                 @else
                     <p>Sin registro</p>
@@ -60,9 +54,9 @@
                     <div class="cursor-pointer d-flex justify-content-end align-items-center" wire:click="completed"
                         style="cursor: pointer;">
                         @if ($current->completed)
-                            <h4 class="mr-2 text-primary">Lección terminada</h4>
+                            {{-- <h4 class="mr-2 text-primary">Lección terminada</h4>
                             <i class="d-inline fas fa-toggle-on"
-                                style="font-size: 30px; color: #006DDB; cursor: pointer;"></i>
+                                style="font-size: 30px; color: #006DDB; cursor: pointer;"></i> --}}
                         @else
                             {{-- <h4 class="mr-2">Marcar esta lección como terminada</h4>
                             <i class="text-2xl text-gray-600 fas fa-toggle-off"
@@ -121,7 +115,7 @@
         <h4>{{ $course->title }}</h6>
             <div class="d-flex align-items-start">
                 <div class="img-person" style="min-width: 40px; min-height: 40px;">
-                    <img src="{{ $course->teacher->avatar_ruta }}" alt="{{ $course->teacher->name }}">
+                    <img src="{{ $course->teacher->empleado->avatar_ruta }}" alt="{{ $course->teacher->name }}">
                 </div>
                 <div>
                     <p class="ml-2">{{ $course->teacher->name }}</p>
@@ -224,25 +218,6 @@
     </div>
 
     @section('scripts')
-        {{-- <script>
-            document.addEventListener("DOMContentLoaded", () => {
-                setInterval(() => {
-                    var iframe = document.querySelector("iframe");
-                    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
-                    console.log(innerDoc.body);
-
-                    // console.log(videoCurso);
-                    // if (videoCurso && videoCurso.classList.contains('ended-mode')) {
-                    //     console.log('si tiene');
-                    // } else {
-                    //     console.log('no tiene');
-                    // }
-
-                }, 10000);
-            });
-        </script> --}}
-
-        <!-- Incluir la API de iframe de YouTube -->
         <script>
             setTimeout(() => {
                 @this.completed();
