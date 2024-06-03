@@ -16,7 +16,7 @@ class RequisicionService
     public function postDataToPythonAPI($filename)
     {
         // Define la URL del endpoint de la API de Python, incluyendo el nombre del archivo dinámico
-        $url = "http://localhost:8080/save_name_files/archivos.txt/{$filename}";
+        $url = "http://192.168.9.87:8080/save_name_files/archivos.txt/{$filename}";
 
         try {
             // Realiza la solicitud POST sin enviar datos en el cuerpo
@@ -33,7 +33,7 @@ class RequisicionService
     public function postDataLoadPythonAPI($path)
     {
         // Define la URL del endpoint de la API de Python, incluyendo el nombre del archivo dinámico
-        $url = "http://localhost:8080/load_name_files/{$path}";
+        $url = "http://192.168.9.87:8080/load_name_files/{$path}";
 
         try {
             // Realiza la solicitud POST sin enviar datos en el cuerpo
@@ -50,7 +50,7 @@ class RequisicionService
     public function postDataCleanPythonAPI($path)
     {
         // Define la URL del endpoint de la API de Python, incluyendo el nombre del archivo dinámico
-        $url = "http://localhost:8080/clean_files/{$path}";
+        $url = "http://192.168.9.87:8080/clean_files/{$path}";
 
         try {
             // Realiza la solicitud POST sin enviar datos en el cuerpo
@@ -67,7 +67,7 @@ class RequisicionService
     public function postDataScanedPythonAPI($path)
     {
         // Define la URL del endpoint de la API de Python, incluyendo el nombre del archivo dinámico
-        $url = "http://localhost:8080/is_scanned_pdf/{$path}";
+        $url = "http://192.168.9.87:8080/is_scanned_pdf/{$path}";
 
         try {
             // Realiza la solicitud POST sin enviar datos en el cuerpo
@@ -84,7 +84,7 @@ class RequisicionService
     public function postDataExtractPythonAPI($image)
     {
         // Define la URL del endpoint de la API de Python, incluyendo el nombre del archivo dinámico
-        $url = "http://localhost:8080/extract_text_from_image/{$image}";
+        $url = "http://192.168.9.87:8080/extract_text_from_image/{$image}";
 
         try {
             // Realiza la solicitud POST sin enviar datos en el cuerpo
@@ -100,7 +100,7 @@ class RequisicionService
 
     public function postDataTextPythonAPI($filePath, $fileName)
     {
-        $url = 'http://localhost:8080/text_to_chromadb/';
+        $url = 'http://192.168.9.87:8080/text_to_chromadb/';
 
         try {
             $response = $this->client->post($url, [
@@ -121,7 +121,7 @@ class RequisicionService
 
     public function postQuestionToPythonAPI($question)
     {
-        $url = 'http://localhost:8080/ask-question/';
+        $url = 'http://192.168.9.87:8080/ask-question/';
 
         try {
             $response = $this->client->post($url, [
