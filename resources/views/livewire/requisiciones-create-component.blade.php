@@ -369,7 +369,7 @@
                                                                wire:model="cotizaciones.{{ $i }}"
                                                                data-count="{{ $i }}"
                                                                accept=".pdf, .docx, .pptx, .point, .xml, .jpeg, .jpg, .png, .xlsx, .xlsm, .csv"
-                                                               wire:change="archivoCargado('{{ $i }}')">
+                                                               >
                                                     </div>
                                                 </div>
                                                 <br>
