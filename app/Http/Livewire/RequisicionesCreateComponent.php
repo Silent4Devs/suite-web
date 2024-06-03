@@ -93,6 +93,8 @@ class RequisicionesCreateComponent extends Component
 
     public $path;
 
+    public $chatOpen = false;
+
     public $pdf;
 
     public $filePath;
@@ -102,6 +104,8 @@ class RequisicionesCreateComponent extends Component
     public $respuesta;
 
     public $bandera = false;
+
+    public $saludo = true;
 
     protected $requisicionService;
 
@@ -279,7 +283,6 @@ class RequisicionesCreateComponent extends Component
                                 || $cotizacion_actual->getClientOriginalExtension() === 'csv'
                             ) {
                                 $this->habilitar_alerta = false;
-                                $this->bandera = false;
                                 $name_cotizacion = 'requisicion_' . $this->requisicion_id . 'cotizazcion_' . $cotizacion_count . '_' . uniqid() . '.' . $cotizacion_actual->getClientOriginalExtension();
                                 $cotizacion_actual->storeAs('public/cotizaciones_requisiciones_proveedores/', $name_cotizacion);
                                 $proveedor_req->cotizacion = $name_cotizacion;
@@ -354,6 +357,48 @@ class RequisicionesCreateComponent extends Component
         $this->habilitar_proveedores = true;
     }
 
+
+    public function openChat()
+    {
+        $this->chatOpen = true;
+
+        $this->saludo = true;
+
+        $this->question = 'El presente documento trata de...';
+
+        $this->askQuestion();
+    }
+
+
+    public function archivoCargado($index)
+    {
+        $cotizacion_actual = $this->cotizaciones[$index];
+
+
+        $this->filename = 'requisicion_' . $this->requisicion_id . 'cotizazcion_' . $index . '_' . uniqid() . '.' . $cotizacion_actual->getClientOriginalExtension();
+
+        $this->postData();
+
+        $this->filePath = $cotizacion_actual->storeAs('public/cotizaciones_requisiciones_proveedores/',  $this->filename);
+
+        $this->postDataText();
+
+        // También puedes enviar mensajes de éxito o error al usuario
+        session()->flash('message', 'Archivo cargado exitosamente!');
+    }
+
+
+    public function closeChat()
+    {
+        $this->chatOpen = false;
+
+        $this->bandera = false;
+
+        $this->path = $this->filename;
+
+        $this->postDataClean();
+    }
+
     public function dataFirma()
     {
         $this->habilitar_proveedores = false;
@@ -368,50 +413,6 @@ class RequisicionesCreateComponent extends Component
     }
 
 
-    // public function robot($filename)
-    // {
-    //     // Asegúrate de que el archivo existe y es accesible
-    //     if (Storage::disk('public')->exists('cotizaciones_requisiciones_proveedores/' . $filename)) {
-    //         $this->filename = $filename;
-
-    //         // Establecer la bandera para mostrar el formulario de preguntas
-    //         $this->bandera = true;
-
-    //         // Ruta completa del archivo
-    //         $this->filePath = storage_path('app/public/cotizaciones_requisiciones_proveedores/' . $filename);
-
-    //         // Simula la postData y postDataText con el contenido del archivo
-    //         $this->postData();
-    //         $this->postDataText();
-
-    //         // Pregunta predeterminada
-    //         $this->question = 'De que habla el documento';
-
-    //         // Llama a la función para hacer la pregunta
-    //         $this->askQuestion();
-    //     } else {
-    //         // Maneja el caso donde el archivo no existe
-    //         $this->bandera = false;
-    //         session()->flash('error', 'Archivo no encontrado.');
-    //     }
-    // }
-
-
-    public function robot()
-    {
-        $this->filename = 'test.pdf';
-        $this->postData();
-
-        $this->bandera = true;
-
-        $this->filePath = storage_path('app/public/requisicion.pdf');
-
-        $this->postDataText();
-
-        $this->question = 'El presente documento trata de...';
-
-        $this->askQuestion();
-    }
 
     public function removeUnicodeCharacters($string)
     {
