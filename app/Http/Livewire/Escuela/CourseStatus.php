@@ -29,14 +29,6 @@ class CourseStatus extends Component
 
     public $evaluationsUser;
 
-    public $completado;
-
-    public function updatedCompletado($value){
-        dd('ser');
-        $this->completado = $value;
-        $this->completed();
-    }
-
     //metodo mount se carga una unica vez y esto sucede cuando se carga la página
     public function mount(Course $course, $evaluacionesLeccion)
     {
@@ -125,7 +117,7 @@ class CourseStatus extends Component
     public function getIndexProperty()
     {
         // Check if $this->course exists and is not null
-        if ($this->course && $this->course->lessons) {
+        if ($this->course && $this->course->lessons && $this->current) {
             // Use optional() to safely access 'id' property of each lesson and search for $this->current->id
             return optional($this->course->lessons->pluck('id'))->search($this->current->id);
         }

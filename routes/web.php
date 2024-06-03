@@ -1551,6 +1551,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('dashboardescuela', 'Escuela\Admin\HomeController');
 
     Route::get('courses-reportes-individuales/{id}', 'Escuela\Admin\ReportesIndividualesController@index')->name('courses-reportes-individuales');
+
+    // pasarela de pago
+    Route::get('pasarela-pago/', 'PasarelaPagoController@index')->name('pasarela-pago.inicio');
 });
 
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth', '2fa', 'active']], function () {
