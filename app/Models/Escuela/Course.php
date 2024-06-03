@@ -27,6 +27,8 @@ class Course extends Model implements Auditable
 
     const PUBLICADO = 3;
 
+    const CERRADO = 4;
+
     //query redis cache
     public static function getAll()
     {

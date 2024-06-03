@@ -181,6 +181,39 @@ iframe {
     margin-top: 41px !important;
 }
 
+.option-fixed-admin {
+    width: 90px;
+    height: 150px;
+    position: fixed;
+    top: 50%;
+    left: 0;
+    margin-top: -80px;
+    z-index: 10;
+    background-color: #7195C9;
+    border: 1px solid #bdbdbd;
+    color: #fff;
+    border-top-right-radius: 18px;
+    border-bottom-right-radius: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    transition: 0.3s;
+    transform: translateX(calc(-100% + 25px));
+}
+
+.option-fixed-admin:hover {
+    transform: translateX(0px);
+    border: 1px solid #25ACC1;
+    background-color: #fff;
+    color: #656565;
+}
+
+.option-fixed-admin img {
+    width: 30px;
+    transition: 0.07s;
+}
+
 .option-fixed-admin a {
     display: flex;
     flex-direction: column;
@@ -196,6 +229,18 @@ iframe {
 .option-fixed-admin:hover a {
     transition: 0.3s;
     opacity: 1;
+}
+
+.option-fixed-admin img:hover {
+    transform: scale(1.1);
+}
+
+.option-fixed-admin i {
+    font-size: 20px;
+}
+
+.option-fixed-admin:hover i {
+    opacity: 0;
 }
 
 .last-course {

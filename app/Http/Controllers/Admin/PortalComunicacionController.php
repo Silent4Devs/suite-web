@@ -138,7 +138,7 @@ class PortalComunicacionController extends Controller
             'like' => true,
         ]);
 
-        return redirect()->route('admin.portalCommunication.index')->with('success', 'Like generado');
+        return redirect()->route('admin.portal-comunicacion.index')->with('success', 'Like generado');
     }
 
     public function felicitarCumpleañosDislike($id)
@@ -148,7 +148,7 @@ class PortalComunicacionController extends Controller
             'like' => false,
         ]);
 
-        return redirect()->route('admin.portalCommunication.index')->with('success', 'DisLike generado');
+        return redirect()->route('admin.portal-comunicacion.index')->with('success', 'DisLike generado');
     }
 
     public function felicitarCumplesComentarios(Request $request, $cumpleañero_id)
@@ -159,7 +159,7 @@ class PortalComunicacionController extends Controller
             'comentarios' => $request->comentarios,
         ]);
 
-        return redirect()->route('admin.portalCommunication.index')->with('success', 'Comentario generado');
+        return redirect()->route('admin.portal-comunicacion.index')->with('success', 'Comentario generado');
     }
 
     public function felicitarCumplesComentariosUpdate(Request $request, $id)
@@ -169,6 +169,6 @@ class PortalComunicacionController extends Controller
             'comentarios' => $request->comentarios,
         ]);
 
-        return redirect()->route('admin.portalCommunication.index')->with('success', 'Comentario actualizado');
+        return redirect()->route('admin.portal-comunicacion.index')->with('success', 'Comentario actualizado');
     }
 }

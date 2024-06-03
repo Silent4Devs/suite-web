@@ -21,6 +21,7 @@ class PublicarCourse extends Component
     public function updatedStatusId($statusId)
     {
         $this->course->status = $statusId;
+
         $this->course->save();
         $this->render_alerta('success', 'Estatus actualizado exitosamente');
     }

@@ -120,7 +120,7 @@ class AnalisisdeRiesgosController extends Controller
             default:
                 Alert::error('error', 'Intente de nuevo');
 
-                return redirect()->route('admin.analysisRisk.index');
+                return redirect()->route('admin.analisis-riesgos.index');
         }
     }
 
@@ -173,7 +173,7 @@ class AnalisisdeRiesgosController extends Controller
             'estatus' => $request->estatus,
         ]);
 
-        return redirect()->route('admin.analysisRisk.index')->with('success', 'Editado con éxito');
+        return redirect()->route('admin.analisis-riesgos.index')->with('success', 'Editado con éxito');
     }
 
     public function destroy($id)
@@ -187,7 +187,7 @@ class AnalisisdeRiesgosController extends Controller
             }
             $analisis->delete();
 
-            return redirect()->route('admin.analysisRisk.index')->with('success', 'Eliminado con éxito');
+            return redirect()->route('admin.analisis-riesgos.index')->with('success', 'Eliminado con éxito');
         } catch (\Throwable $th) {
             abort(404);
         }

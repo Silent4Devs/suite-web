@@ -265,7 +265,7 @@
                                                 </a>
                                             @endcan
                                             {{-- @can('portal_de_comunicaccion_acceder')
-                                            <a href="{{ route('admin.portalCommunication.index') }}">
+                                            <a href="{{ route('admin.portal-comunicacion.index') }}">
                                                 <div class="item-menu-portal active">
                                                     <i class="material-symbols-outlined">home</i>
                                                     <span>Inicio</span>

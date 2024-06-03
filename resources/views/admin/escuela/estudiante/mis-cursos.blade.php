@@ -27,86 +27,99 @@
         </div>
     </div>
 
-    <h3 class="title-main-cursos">Continuar aprendiendo</h3>
 
-    <div class="card last-course">
-        <div class="row g-0">
-            <div class="col-md-4" style="padding-left:0px; padding-right:0px; ">
-                <img src="{{ asset($lastCourse->cursos->image->url) }}" alt="Imagen" class="card-img"
-                    style="min-height: 225px;">
-            </div>
-            <div class="col-md-5">
-                <div class="card-body" style="padding-left:0px; padding-right:0px;">
-                    <h5 class="card-title" style="color:#000000;">{{ $lastCourse->cursos->title }}</h5>
-                    @if ($lastCourse->cursos->instructor)
-                        <div class="d-flex align-items-center gap-1 my-4">
-                            <div class="img-person">
-                                <img src="{{ $lastCourse->cursos->instructor->avatar_ruta }}"
-                                    alt="{{ $lastCourse->cursos->instructor->name }}">
+    @if ($lastCourse->cursos->status != '4')
+        <h3 class="title-main-cursos">Continuar aprendiendo</h3>
+        <div class="card last-course">
+            <div class="row g-0">
+                <div class="col-md-4" style="padding-left:0px; padding-right:0px; ">
+                    <img src="{{ asset($lastCourse->cursos->image->url) }}" alt="Imagen" class="card-img"
+                        style="min-height: 225px;">
+                </div>
+                <div class="col-md-5">
+                    <div class="card-body" style="padding-left:0px; padding-right:0px;">
+                        <h5 class="card-title" style="color:#000000;">{{ $lastCourse->cursos->title }}</h5>
+                        @if ($lastCourse->cursos->instructor)
+                            <div class="d-flex align-items-center gap-1 my-4">
+                                <div class="img-person">
+                                    <img src="{{ asset('storage/empleados/imagenes/' . '/' . $lastCourse->cursos->instructor->empleado->avatar) }}"
+                                        alt="{{ $lastCourse->cursos->instructor->name }}">
+                                </div>
+                                <span class="course-teacher"> {{ $lastCourse->cursos->instructor->name }} </span>
                             </div>
-                            <span class="course-teacher"> {{ $lastCourse->cursos->instructor->name }} </span>
-                        </div>
-                    @else
-                        <p class="course-teacher">Instructor no asignado </p>
-                    @endif
+                        @else
+                            <p class="course-teacher">Instructor no asignado </p>
+                        @endif
 
-                    <div class="caja-info-card-advance">
-                        <p class="title-advance">{{ $lastCourse->advance . '%' }} completado</p>
-                        <div class="curso-progreso-barra">
-                            <div class="indicador-progreso-barra" style="width: {{ $lastCourse->advance . '%' }};"></div>
+                        <div class="caja-info-card-advance">
+                            <p class="title-advance">{{ $lastCourse->advance . '%' }} completado</p>
+                            <div class="curso-progreso-barra">
+                                <div class="indicador-progreso-barra" style="width: {{ $lastCourse->advance . '%' }};">
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-3 d-flex align-items-center justify-content-center">
-                <a href="{{ route('admin.curso-estudiante', $lastCourse->cursos->id) }}" class="btn btn-last-course">
-                    Reanudar Curso
-                </a>
+                <div class="col-md-3 d-flex align-items-center justify-content-center">
+                    <a href="{{ route('admin.curso-estudiante', $lastCourse->cursos->id) }}" class="btn btn-last-course">
+                        Reanudar Curso
+                    </a>
 
+                </div>
             </div>
         </div>
-    </div>
+    @endif
 
 
     <h3 class="title-main-cursos" style="margin-top: 30px;">Mis Cursos</h3>
 
     <div class="caja-cards-mis-cursos">
         @foreach ($lastThreeCourse as $cu)
-            @php
-                $instructor = $cu->cursos->instructor;
-            @endphp
-            <div class="card card-body mi-curso">
-                @if (isset($cu->cursos->image->url))
-                    <img src="{{ asset($cu->cursos->image->url) }}" alt="" class="card-img"
-                        style="min-height: 225px; border-radius: 12px 12px 0px 0px;">
-                    <div class="caja-info-card-mc">
-                        <p class="course-title">
-                            {{ $cu->cursos->title }}
-                        </p>
-                        @if ($instructor)
-                            <p class="course-teacher">Un curso de {{ $instructor->name }} </p>
-                        @else
-                            <p class="course-teacher">Instructor no asignado </p>
-                        @endif
+            @if ($cu->cursos->status != '4')
+                @php
+                    $instructor = $cu->cursos->instructor;
+                @endphp
+                <div class="card card-body mi-curso">
+                    @if (isset($cu->cursos->image->url))
+                        <img src="{{ asset($cu->cursos->image->url) }}" alt="" class="card-img"
+                            style="min-height: 225px; border-radius: 12px 12px 0px 0px;">
+                        <div class="caja-info-card-mc">
+                            <p class="course-title">
+                                {{ $cu->cursos->title }}
+                            </p>
+                            @if ($instructor)
+                                <span>Un curso de: </span><br>
+                                <div class="d-flex align-items-center gap-1 mt-2">
+                                    <div class="img-person">
+                                        <img src="{{ $lastCourse->cursos->instructor->empleado->avatar_ruta }}"
+                                            alt="{{ $lastCourse->cursos->instructor->name }}">
+                                    </div>
+                                    <span class="course-teacher"> {{ $lastCourse->cursos->instructor->name }} </span>
+                                </div>
+                            @else
+                                <p class="course-teacher">Instructor no asignado </p>
+                            @endif
 
-                        <div class="caja-info-card-advance">
-                            <p class="title-advance">{{ $cu->advance . '%' }} completado</p>
-                            <div class="curso-progreso-barra">
-                                <div class="indicador-progreso-barra" style="width: {{ $cu->advance . '%' }};"></div>
+                            <div class="caja-info-card-advance">
+                                <p class="title-advance">{{ $cu->advance . '%' }} completado</p>
+                                <div class="curso-progreso-barra">
+                                    <div class="indicador-progreso-barra" style="width: {{ $cu->advance . '%' }};"></div>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="d-flex justify-content-center">
-                            <a href="{{ route('admin.curso-estudiante', $cu->cursos->id) }}" class="btn btn-mi-course">Ir a
-                                mi
-                                curso</a>
-                        </div>
+                            <div class="d-flex justify-content-center">
+                                <a href="{{ route('admin.curso-estudiante', $cu->cursos->id) }}"
+                                    class="btn btn-mi-course">Ir a
+                                    mi
+                                    curso</a>
+                            </div>
 
-                    </div>
-                @else
-                    <p>Sin imagen de curso</p>
-                @endif
-            </div>
+                        </div>
+                    @else
+                        <p>Sin imagen de curso</p>
+                    @endif
+                </div>
+            @endif
         @endforeach
     </div>
     <div class="d-flex justify-content-end">
