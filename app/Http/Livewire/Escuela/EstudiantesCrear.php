@@ -62,7 +62,7 @@ class EstudiantesCrear extends Component
 
         if ($this->publico == 'area') {
             foreach ($this->usuarios as $usuario) {
-                if(isset($usuario->empleado->area_id)){
+                if (isset($usuario->empleado->area_id)) {
                     if ($usuario->empleado->area_id == $this->area_seleccionada) {
                         UsuariosCursos::create([
                             'user_id' => $usuario->id,

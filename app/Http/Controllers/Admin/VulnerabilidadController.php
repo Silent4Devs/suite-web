@@ -116,7 +116,7 @@ class VulnerabilidadController extends AppBaseController
 
             $vulnerabilidad = Vulnerabilidad::with('idAmenaza')->find($id);
 
-            if (!$vulnerabilidad) {
+            if (! $vulnerabilidad) {
                 abort(404);
             }
 

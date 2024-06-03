@@ -2,10 +2,10 @@
 
 namespace App\Models\Escuela;
 
+use App\Models\User;
 use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\User;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class UsuariosCursos extends Model implements Auditable
