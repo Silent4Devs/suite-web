@@ -67,6 +67,7 @@ services:
     #uncomment this if you will use only docker compose
     #image: johnvo95/tabantaj_php-tabantaj:latest
     container_name: php-tabantaj
+    command: php artisan pulse:check
     restart: unless-stopped
     tty: true
     volumes:
