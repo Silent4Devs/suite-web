@@ -22,6 +22,7 @@ class TBQuestionTemplateAnalisisRiesgoModel extends Model
         'type',
         'position',
         'obligatory',
+        'is_numeric',
     ];
 
     public function sections()

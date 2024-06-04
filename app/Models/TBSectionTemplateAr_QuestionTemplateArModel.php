@@ -20,4 +20,7 @@ class TBSectionTemplateAr_QuestionTemplateArModel extends Model
         'section_id',
         'question_id',
     ];
+
+
+
 }

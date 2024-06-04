@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('type');
             $table->integer('position');
             $table->boolean('obligatory')->default(false);
+            $table->boolean('is_numeric')->default(false);
             $table->timestamps();
             $table->softDeletes();
         });

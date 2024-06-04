@@ -22,6 +22,9 @@ class TBDataQuestionTemplateAnalisisRiesgoModel extends Model
         'title',
         'name',
         'status',
+        'url',
+        'catalog',
+        'value',
     ];
 
     public function questions()
