@@ -724,32 +724,16 @@
                     </div>
                 </td>
                 <td>
-                    <div class="td_fianza">
-                        @if (is_null($organizacion))
-                        @else
-                            <div class="row">
-                                PDF:
-                                <div class="file-field input-field">
-                                    <div class="btn">
-                                        <input class="input_file_validar form-control" type="file"
-                                            name="documento" accept=".pdf" readonly>
-                                        {{-- <input type="hidden" id="" name="" value=""> --}}
-                                    </div>
-                                    {{-- <div class="file-path-wrapper">
-                                    <input class="file-path validate" type="text"
-                                        placeholder="Elegir documento pdf" readonly>
-                                </div> --}}
-                                </div>
-                            </div>
-                        @endif
-
+                        <div class="td_fianza">
+                            <input class="form-control" type="file"
+                                name="documento" accept=".pdf" readonly>
+                        </div>
                         <div class="ml-4 display-flex">
                             <label class="red-text">{{ $errors->first('Type') }}</label>
                         </div>
                         @if ($contrato->documento != null)
                             <a href="{{ asset(trim('storage/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/penalizaciones/' . $contrato->documento)) }}"
-                                target="_blank" class=" descarga_archivo" style="margin-left:20px;">
-
+                                target="_blank" class="descarga_archivo" style="margin-left:20px;">
                                 Descargar
                             </a>
                         @endif
@@ -883,7 +867,7 @@
     <div class="col s12 right-align btn-grd distancia">
         @if (!$show_contrato)
             <a href="{{ route('contract_manager.contratos-katbol.index') }}" class="btn btn_cancelar">Cancelar</a>
-            {!! Form::submit('Guardar', ['class' => 'btn btn-success',  'onclick' => 'miFuncion()']) !!}
+            {!! Form::submit('Guardar', ['class' => 'btn btn-success']) !!}
         @endif
     </div>
 </div>
@@ -908,26 +892,6 @@
     </div>
 </div>
 
-
-
-
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-<script type="text/javascript">
-    function miFuncion() {
-        Swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            title: 'Registro actualizado con éxito.',
-            showConfirmButton: false,
-        }).then((result) => {
-            // Después de que el usuario interactúa con la alerta (o después de que se cierra),
-            // redirigir a la misma página
-            window.location.href = window.location.href;
-        });
-}
-
-</script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/autonumeric/4.0.3/autoNumeric.js"></script>
@@ -1099,6 +1063,7 @@
         }
     });
 </script>
+
 
 
 
@@ -1274,117 +1239,84 @@
         $('.input-field').click(function(e) {
             $('.input-field:hover').addClass('caja_input_file_activa');
         });
-        $('.input_file_validar').change(function(e) {
+        // $('.input_file_validar').change(function(e) {
 
-            $('.caja_input_file_activa .errors').remove();
-            let loader_file = $('<div>');
-            loader_file.addClass('progress');
-            loader_file.addClass('d-none');
-            $('.caja_input_file_activa').append(loader_file);
-            let loader_progres_file = $('<div>');
-            loader_progres_file.addClass('indeterminate');
-            $('.caja_input_file_activa .progress').append(loader_progres_file);
+        //     $('.caja_input_file_activa .errors').remove();
+        //     let loader_file = $('<div>');
+        //     loader_file.addClass('progress');
+        //     loader_file.addClass('d-none');
+        //     $('.caja_input_file_activa').append(loader_file);
+        //     let loader_progres_file = $('<div>');
+        //     loader_progres_file.addClass('indeterminate');
+        //     $('.caja_input_file_activa .progress').append(loader_progres_file);
 
-            let file = e.target.files[0];
-            let formData = new FormData();
-            formData.append('file', file);
-            $.ajax({
-                xhr: function() {
-                    let xhr = new window.XMLHttpRequest();
-                    xhr.upload.addEventListener("progress", function(evt) {
+        //     let file = e.target.files[0];
+        //     let formData = new FormData();
+        //     formData.append('file', file);
+        //     $.ajax({
+        //         xhr: function() {
+        //             let xhr = new window.XMLHttpRequest();
+        //             xhr.upload.addEventListener("progress", function(evt) {
 
 
-                        if (evt.lengthComputable) {
-                            let percentComplete = (evt.loaded / evt.total) * 100;
-                            // Place upload progress bar visibility code here
-                            $('.caja_input_file_activa .progress').removeClass(
-                                'd-none');
-                            if (percentComplete == 100) {
+        //                 if (evt.lengthComputable) {
+        //                     let percentComplete = (evt.loaded / evt.total) * 100;
+        //                     // Place upload progress bar visibility code here
+        //                     $('.caja_input_file_activa .progress').removeClass(
+        //                         'd-none');
+        //                     if (percentComplete == 100) {
 
-                            }
-                        }
-                    }, false);
-                    return xhr;
-                },
+        //                     }
+        //                 }
+        //             }, false);
+        //             return xhr;
+        //         },
 
-                url: url,
+        //         url: url,
 
-                data: formData,
+        //         data: formData,
 
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
+        //         headers: {
+        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //         },
 
-                type: 'POST',
+        //         type: 'POST',
 
-                dataType: 'json',
+        //         dataType: 'json',
 
-                contentType: false,
-                processData: false,
+        //         contentType: false,
+        //         processData: false,
 
-                success: function(json) {
-                    console.log('json');
-                },
+        //         success: function(json) {
+        //             console.log('json');
+        //         },
 
-                error: function(request, status, error) {
-                    console.log('Disculpe, existió un problema');
-                    $.each(request.responseJSON.errors, function(indexInArray,
-                        valueOfElement) {
-                        console.log(indexInArray);
+        //         error: function(request, status, error) {
+        //             console.log('Disculpe, existió un problema');
+        //             $.each(request.responseJSON.errors, function(indexInArray,
+        //                 valueOfElement) {
+        //                 console.log(indexInArray);
 
-                        let error_small = $('<small>');
-                        error_small.addClass(`${indexInArray}_error`);
-                        error_small.addClass('errors');
-                        $('.caja_input_file_activa').append(error_small);
+        //                 let error_small = $('<small>');
+        //                 error_small.addClass(`${indexInArray}_error`);
+        //                 error_small.addClass('errors');
+        //                 $('.caja_input_file_activa').append(error_small);
 
-                        document.querySelector(
-                                `.caja_input_file_activa .${indexInArray}_error`)
-                            .innerHTML =
-                            ` ${valueOfElement[0]}`;
+        //                 document.querySelector(
+        //                         `.caja_input_file_activa .${indexInArray}_error`)
+        //                     .innerHTML =
+        //                     ` ${valueOfElement[0]}`;
 
-                        e.target.value = '';
-                    });
-                },
+        //                 e.target.value = '';
+        //             });
+        //         },
 
-                complete: function(jqXHR, status) {
-                    console.log('Petición realizada');
-                    $('.caja_input_file_activa .progress').remove();
-                    $('.caja_input_file_activa').removeClass('caja_input_file_activa');
-                }
-            });
-        });
+        //         complete: function(jqXHR, status) {
+        //             console.log('Petición realizada');
+        //             $('.caja_input_file_activa .progress').remove();
+        //             $('.caja_input_file_activa').removeClass('caja_input_file_activa');
+        //         }
+        //     });
+        // });
     });
 </script>
-
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $('#miFormulario').on('submit', function(e) {
-            e.preventDefault();
-
-            $.ajax({
-                type: 'POST',
-                url: $(this).attr('action'),
-                data: $(this).serialize(),
-                success: function(response) {
-                    if(response.success) {
-                        Swal.fire(
-                            '¡Buen trabajo!',
-                            response.message,
-                            'success'
-                        );
-                    }
-                },
-                error: function(xhr) {
-                    // Manejo de errores
-                    Swal.fire(
-                        'Error',
-                        'Ocurrió un error al guardar los datos',
-                        'error'
-                    );
-                }
-            });
-        });
-    });
-</script>
-
