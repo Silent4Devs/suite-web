@@ -42,7 +42,7 @@
                         @if ($lastCourse->cursos->instructor)
                             <div class="d-flex align-items-center gap-1 my-4">
                                 <div class="img-person">
-                                    <img src="{{ asset('storage/empleados/imagenes/' . '/' . $lastCourse->cursos->instructor->empleado->avatar) }}"
+                                    <img src="{{ asset('storage/empleados/imagenes/' . $lastCourse->cursos->instructor->empleado->avatar) }}"
                                         alt="{{ $lastCourse->cursos->instructor->name }}">
                                 </div>
                                 <span class="course-teacher"> {{ $lastCourse->cursos->instructor->name }} </span>
@@ -91,7 +91,7 @@
                                 <span>Un curso de: </span><br>
                                 <div class="d-flex align-items-center gap-1 mt-2">
                                     <div class="img-person">
-                                        <img src="{{ $lastCourse->cursos->instructor->empleado->avatar_ruta }}"
+                                        <img src="{{ asset('storage/empleados/imagenes/' . $lastCourse->cursos->instructor->empleado->avatar) }}"
                                             alt="{{ $lastCourse->cursos->instructor->name }}">
                                     </div>
                                     <span class="course-teacher"> {{ $lastCourse->cursos->instructor->name }} </span>
