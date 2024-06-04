@@ -244,6 +244,10 @@ class RequisicionesController extends Controller
             $tipo_firma => $request->firma,
         ]);
 
+        $copiasNivel = [];
+        $responsablesAusentes = [];
+        $correosCopia = [];
+
         if ($tipo_firma == 'firma_solicitante') {
             $fecha = date('d-m-Y');
             $requisicion->fecha_firma_solicitante_requi = $fecha;
@@ -310,15 +314,26 @@ class RequisicionesController extends Controller
             $listaPart = $listaReq->participantes;
 
             for ($i = 0; $i <= $listaReq->niveles; $i++) {
-                $responsableNivel = $listaPart->where('nivel', $i)->first();
+                $responsableNivel = $listaPart->where('nivel', $i)->where('numero_orden', 1)->first();
 
                 if ($responsableNivel->empleado->disponibilidad->disponibilidad == 1) {
 
                     $responsable = $responsableNivel->empleado;
                     $userEmail = $responsable->email;
+
+                    $cN = $listaPart->where('nivel', $i)->where('numero_orden', '!=', 1);
+
+                    foreach ($cN as $key => $c) {
+                        $copiasNivel[] = $c->empleado->email;
+                    }
+
                     break;
+                } else {
+                    $responsablesAusentes[] = $responsableNivel->empleado->email;
                 }
             }
+
+            $correosCopia = array_merge($copiasNivel, $responsablesAusentes);
 
             $organizacion = Organizacion::getFirst();
 
@@ -335,7 +350,7 @@ class RequisicionesController extends Controller
             if ($responsable->id == $firmas_requi->jefe_id || $responsable->id == $firmas_requi->solicitante_id) {
                 Mail::to(trim($this->removeUnicodeCharacters($userEmail)))->queue(new RequisicionesFirmaDuplicadaEmail($requisicion, $organizacion, $tipo_firma));
             } else {
-                Mail::to(trim($this->removeUnicodeCharacters($userEmail)))->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
+                Mail::to(trim($this->removeUnicodeCharacters($userEmail)))->cc($correosCopia)->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
             }
 
             // Mail::to('ldelgadillo@silent4business.com')->cc('aurora.soriano@silent4business.com')->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));

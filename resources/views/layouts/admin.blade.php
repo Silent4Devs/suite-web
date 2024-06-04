@@ -404,9 +404,11 @@
                                         <i class="material-symbols-outlined i-direct">keyboard_arrow_down</i>
                                     </a>
                                     <ul>
-                                        <li><a href="{{ asset('admin/lista-distribucion') }}">Lista de
-                                                distribución</a>
-                                        </li>
+                                        @can('lista_distribucion_acceder')
+                                            <li><a href="{{ asset('admin/lista-distribucion') }}">Lista de
+                                                    distribución</a>
+                                            </li>
+                                        @endcan
                                         @can('clausulas_auditorias_acceder')
                                             <li><a href="{{ route('admin.auditoria-clasificacion') }}">Clasificación</a>
                                             </li>
@@ -437,9 +439,11 @@
                                         @can('crear_area_acceder')
                                             <li><a href="{{ route('admin.areas.index') }}">Crear Áreas</a></li>
                                         @endcan
-                                        <li>
-                                            <a href="{{ route('admin.lista-informativa.index') }}">Lista Informativa</a>
-                                        </li>
+                                        @can('lista_informativa_acceder')
+                                            <li>
+                                                <a href="{{ route('admin.lista-informativa.index') }}">Lista Informativa</a>
+                                            </li>
+                                        @endcan
                                         @can('macroprocesos_acceder')
                                             <li><a href="{{ route('admin.macroprocesos.index') }}">Macroprocesos</a></li>
                                         @endcan
@@ -1105,7 +1109,6 @@
         });
     </script>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         function handleSwitchChange(event) {
             const isChecked = event.target.checked;

@@ -27,8 +27,6 @@ class RequisicionesCreateComponent extends Component
 {
     use WithFileUploads;
 
-    public $paso = 1;
-
     public $sucursales;
 
     public $compradores;
@@ -220,12 +218,10 @@ class RequisicionesCreateComponent extends Component
         $this->habilitar_proveedores = true;
         $this->emit('cambiarTab', 'profile');
         $this->active = 'desActive';
-        $this->paso = 2;
     }
 
     public function proveedoresStore($data)
     {
-        $this->emit('render_firma');
         $this->habilitar_firma = false;
         $prove_count = 0;
         $cotizacion_count = 0;
@@ -330,7 +326,6 @@ class RequisicionesCreateComponent extends Component
 
         $this->provedores_colllection->push($this->proveedores_catalogo);
         $this->habilitar_proveedores = true;
-        $this->paso = 3;
     }
 
     public function dataFirma()

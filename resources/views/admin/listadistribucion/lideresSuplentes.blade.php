@@ -41,18 +41,20 @@
                                 siguiente
                                 nivel.
                             </div>
-                            <div class="anima-focus" style="width: 100rem;">
-                                <select id="nivel{{ $i }}" name="nivel{{ $i }}[]"
-                                    class="form-control" multiple="multiple">
-                                    @foreach ($empleados as $empleado)
-                                        <option value="{{ $empleado->id }}"
-                                            data-avatar="{{ asset('storage/empleados/imagenes/' . $empleado->avatar) }}"
-                                            {{ in_array($empleado->id, $nivelData[$i - 1] ?? []) ? 'selected' : '' }}>
-                                            {{ $empleado->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                <label for="nivel{{ $i }}" style="color:#057BE2;">Colaboradores</label>
+                            <div class="mt-4 col-12">
+                                <div class="anima-focus">
+                                    <select id="nivel{{ $i }}" name="nivel{{ $i }}[]"
+                                        class="form-control" multiple="multiple">
+                                        @foreach ($empleados as $empleado)
+                                            <option value="{{ $empleado->id }}"
+                                                data-avatar="{{ asset('storage/empleados/imagenes/' . $empleado->avatar) }}"
+                                                {{ in_array($empleado->id, $nivelData[$i - 1] ?? []) ? 'selected' : '' }}>
+                                                {{ $empleado->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <label for="nivel{{ $i }}" style="color:#057BE2;">Colaboradores</label>
+                                </div>
                             </div>
                         </div>
                     @endfor

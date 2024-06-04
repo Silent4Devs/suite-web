@@ -8,7 +8,9 @@ use App\Models\ListaInformativa;
 use App\Models\ParticipantesListaInformativa;
 use App\Models\User;
 use App\Models\UsuariosListaInformativa;
+use Gate;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class ListaInformativaController extends Controller
 {
@@ -17,7 +19,9 @@ class ListaInformativaController extends Controller
      */
     public function index(Request $request)
     {
-        $query = ListaInformativa::with('participantes.empleado')->orderByDesc('id')->get();
+        abort_if(Gate::denies('lista_informativa_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $query = ListaInformativa::getAll();
 
         $participantes = ListaInformativa::with('participantes.empleado')->get();
 
@@ -48,6 +52,8 @@ class ListaInformativaController extends Controller
      */
     public function show($id)
     {
+        abort_if(Gate::denies('lista_informativa_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $lista = ListaInformativa::with('participantes.empleado', 'usuarios.usuario')->find($id);
 
         $participantes_seleccionados = [];
@@ -86,6 +92,8 @@ class ListaInformativaController extends Controller
      */
     public function edit($id)
     {
+        abort_if(Gate::denies('lista_informativa_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $lista = ListaInformativa::with('participantes.empleado', 'usuarios.usuario')->find($id);
 
         $participantes_seleccionados = [];
@@ -124,6 +132,7 @@ class ListaInformativaController extends Controller
      */
     public function update(Request $request, $id)
     {
+        abort_if(Gate::denies('lista_informativa_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         //
         $lista = ListaInformativa::select('id')->find($id);
 

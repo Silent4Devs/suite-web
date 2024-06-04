@@ -81,24 +81,35 @@
                     @for ($i = 1; $i < 6; $i++)
                         <div class="form-row nivel{{ $i }}Div" style="display: none;">
                             <div class="mt-4 mb-1">
-                                <i class="fas fa-circle" style="color: #007bff;"></i> Sustituto
+                                <i class="fas fa-circle" style="color: #007bff;"></i>
+                                Sustituto
                                 {{ $i }}
                                 <br>
-                                &nbsp; &nbsp; Asigna al colaborador que servira como suplente en caso de que el
-                                responsable no se encuentre disponible.
+                                <div class="row">
+                                    Asigna al colaborador que servira como suplente en caso de que el
+                                    responsable no se encuentre disponible.
+                                </div>
+                                <div class="row">
+                                    La primera posición que asigne será la responsable de firmar u rechazar la
+                                    ordenen de compra la segunda y/o tercera posición del colaborador que asigne en el
+                                    mismo
+                                    campo sólo serán notificadas por corrreo en copia.
+                                </div>
                             </div>
-                            <div class="anima-focus" style="width: 100rem;">
-                                <select id="nivel{{ $i }}" name="nivel{{ $i }}[]"
-                                    class="form-control" multiple="multiple">
-                                    @foreach ($empleados as $empleado)
-                                        <option value="{{ $empleado->id }}"
-                                            data-avatar="{{ asset('storage/empleados/imagenes/' . $empleado->avatar) }}"
-                                            {{ in_array($empleado->id, $nivelData[$i - 1] ?? []) ? 'selected' : '' }}>
-                                            {{ $empleado->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                <label for="nivel{{ $i }}" style="color:#057BE2;">Colaboradores</label>
+                            <div class="mt-4 col-12">
+                                <div class="anima-focus">
+                                    <select id="nivel{{ $i }}" name="nivel{{ $i }}[]"
+                                        class="form-control" multiple="multiple">
+                                        @foreach ($empleados as $empleado)
+                                            <option value="{{ $empleado->id }}"
+                                                data-avatar="{{ asset('storage/empleados/imagenes/' . $empleado->avatar) }}"
+                                                {{ in_array($empleado->id, $nivelData[$i - 1] ?? []) ? 'selected' : '' }}>
+                                                {{ $empleado->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <label for="nivel{{ $i }}" style="color:#057BE2;">Colaboradores</label>
+                                </div>
                             </div>
                         </div>
                     @endfor

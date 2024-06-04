@@ -276,6 +276,10 @@ class OrdenCompraController extends Controller
             'estado_orden' => 'curso',
         ]);
 
+        $copiasNivel = [];
+        $responsablesAusentes = [];
+        $correosCopia = [];
+
         if ($tipo_firma == 'firma_solicitante_orden') {
             $fecha = date('d-m-Y');
             $requisicion->fecha_firma_solicitante_orden = $fecha;
@@ -285,21 +289,32 @@ class OrdenCompraController extends Controller
             $listaPart = $listaReq->participantes;
             // dump($listaPart);
             for ($i = 0; $i <= $listaReq->niveles; $i++) {
-                $responsableNivel = $listaPart->where('nivel', $i)->first();
+                $responsableNivel = $listaPart->where('nivel', $i)->where('numero_orden', 1)->first();
 
-                if ($responsableNivel->empleado->dsiponibilidad->disponibilidad == 1) {
+                if ($responsableNivel->empleado->disponibilidad->disponibilidad == 1) {
 
                     $responsable = $responsableNivel->empleado;
                     $user = $responsable->email;
                     $userEmail = $user;
+
+                    $cN = $listaPart->where('nivel', $i)->where('numero_orden', '!=', 1);
+
+                    foreach ($cN as $key => $c) {
+                        $copiasNivel[] = $c->empleado->email;
+                    }
+
                     break;
+                } else {
+                    $responsablesAusentes[] = $responsableNivel->empleado->email;
                 }
             }
+
+            $correosCopia = array_merge($copiasNivel, $responsablesAusentes);
 
             // $user = 'lourdes.abadia@silent4business.com';
             $organizacion = Organizacion::getFirst();
 
-            Mail::to('ldelgadillo@silent4business.com')->cc('aurora.soriano@silent4business.com')->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
+            // Mail::to('ldelgadillo@silent4business.com')->cc('aurora.soriano@silent4business.com')->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
         }
         if ($tipo_firma == 'firma_comprador_orden') {
             $fecha = date('d-m-Y');
@@ -328,7 +343,7 @@ class OrdenCompraController extends Controller
             }
 
             foreach ($listaInformativa->usuarios as $key => $informado) {
-                $correos_informados[] = $informado->empleado->email;
+                $correos_informados[] = $informado->usuario->email;
             }
 
             $organizacionInformado = Organizacion::getFirst();
@@ -339,7 +354,7 @@ class OrdenCompraController extends Controller
         }
 
         $organizacion = Organizacion::getFirst();
-        Mail::to($userEmail)->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
+        Mail::to($userEmail)->cc($correosCopia)->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
 
         return redirect(route('contract_manager.orden-compra'));
     }

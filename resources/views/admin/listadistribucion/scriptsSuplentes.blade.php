@@ -98,10 +98,10 @@
                 $('.nivel' + i + 'Div')
                     .show(); // Show the selected nivel and preceding nivel's select boxes
                 $('.nivel' + i + 'Div select').select2({
-                    maximumSelectionLength: 1,
+                    maximumSelectionLength: 3,
                     language: {
                         maximumSelected: function(maximumSelect) {
-                            return 'Solo puede seleccionarse un maximo de 1 sustituto por nivel.';
+                            return 'Solo puede seleccionarse un maximo de 1 sustituto y 2 colaboradores en copia por nivel.';
                             // Customize the message according to your preference
                         }
                     },
@@ -114,10 +114,10 @@
         for (var i = 1; i <= initialNivel; i++) {
             $('.nivel' + i + 'Div').show(); // Show the preselected nivel and preceding nivel's select boxes
             $('.nivel' + i + 'Div select').select2({
-                maximumSelectionLength: 1,
+                maximumSelectionLength: 3,
                 language: {
                     maximumSelected: function(maximumSelect) {
-                        return 'Solo puede seleccionarse un maximo de 1 sustituto por nivel.';
+                        return 'Solo puede seleccionarse un maximo de 1 sustituto y 2 colaboradores en copia por nivel.';
                         // Customize the message according to your preference
                     }
                 },
@@ -132,10 +132,10 @@
     $('#superaprobadores').select2({
         templateResult: formatAvatar, // Format avatar in options
         templateSelection: formatAvatar, // Format avatar in selected options
-        maximumSelectionLength: 1,
+        maximumSelectionLength: 3,
         language: {
             maximumSelected: function(maximumSelect) {
-                return 'Solo puede seleccionarse un maximo de 1 responsable.';
+                return 'Solo puede seleccionarse un maximo de 1 sustituto y 2 colaboradores en copia por nivel.';
                 // Customize the message according to your preference
             }
         },
@@ -193,10 +193,10 @@
             $('#nivel' + i).select2({
                 templateResult: formatAvatar,
                 templateSelection: formatAvatar,
-                maximumSelectionLength: 1,
+                maximumSelectionLength: 3,
                 language: {
                     maximumSelected: function(maximumSelect) {
-                        return 'Solo puede seleccionarse un maximo de 1 sustituto por nivel.';
+                        return 'Solo puede seleccionarse un maximo de 1 sustituto y 2 colaboradores en copia por nivel.';
                         // Customize the message according to your preference
                     }
                 },
