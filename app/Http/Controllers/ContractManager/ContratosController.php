@@ -272,12 +272,12 @@ class ContratosController extends AppBaseController
                 Storage::makeDirectory('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/penalizaciones');
             }
 
-            $ruta = 'contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/penalizaciones';
+            $ruta = 'contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/penalizaciones';
 
             // Guardar el archivo en el disco 'public' con la ruta específica
-            Storage::disk('public')->put($ruta . '/' . $contrato->id . $fecha_inicio . $nombre, file_get_contents($file));
+            Storage::disk('public')->put($ruta.'/'.$contrato->id.$fecha_inicio.$nombre, file_get_contents($file));
 
-            $ruta_carpeta = storage_path('app/public/' . $ruta);
+            $ruta_carpeta = storage_path('app/public/'.$ruta);
 
             // Dar permisos chmod 777 a la carpeta
             chmod($ruta_carpeta, 0777);
@@ -606,19 +606,17 @@ class ContratosController extends AppBaseController
             }
 
             $nombre = $request->file('file_contrato')->getClientOriginalName();
-            $nombre_f = $contrato->id . $fecha_inicio . $nombre;
+            $nombre_f = $contrato->id.$fecha_inicio.$nombre;
 
-            $ruta = 'contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato;
-
+            $ruta = 'contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato;
 
             // Guardar el archivo en el disco 'public' con la ruta específica
-            Storage::disk('public')->put($ruta . '/' . $nombre_f, file_get_contents($request->file('file_contrato')));
+            Storage::disk('public')->put($ruta.'/'.$nombre_f, file_get_contents($request->file('file_contrato')));
 
-            $ruta_carpeta = storage_path('app/public/' . $ruta);
+            $ruta_carpeta = storage_path('app/public/'.$ruta);
 
             // Dar permisos chmod 777 a la carpeta
             chmod($ruta_carpeta, 0777);
-
 
             // $ruta_file_contrato = Storage::url($archivo);
             $contrato->update([
@@ -636,7 +634,7 @@ class ContratosController extends AppBaseController
             $isExists = Storage::disk('public')->exists('contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/penalizaciones'.'/'.$contrato->documento);
             if ($isExists) {
                 if ($contrato->documento != null) {
-                    unlink(storage_path('app/public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/penalizaciones' . '/' . $contrato->documento));
+                    unlink(storage_path('app/public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/penalizaciones'.'/'.$contrato->documento));
                 }
             }
             $nombre = $file->getClientOriginalName();
@@ -645,13 +643,12 @@ class ContratosController extends AppBaseController
                 Storage::makeDirectory('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/penalizaciones');
             }
 
-            $ruta = 'contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/penalizaciones';
-
+            $ruta = 'contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/penalizaciones';
 
             // Guardar el archivo en el disco 'public' con la ruta específica
-            Storage::disk('public')->put($ruta . '/' . $contrato->id . $fecha_inicio . $nombre, file_get_contents($file));
+            Storage::disk('public')->put($ruta.'/'.$contrato->id.$fecha_inicio.$nombre, file_get_contents($file));
 
-            $ruta_carpeta = storage_path('app/public/' . $ruta);
+            $ruta_carpeta = storage_path('app/public/'.$ruta);
 
             // Dar permisos chmod 777 a la carpeta
             chmod($ruta_carpeta, 0777);
