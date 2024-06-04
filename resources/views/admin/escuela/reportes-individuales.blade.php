@@ -18,7 +18,7 @@
                         <th>Avance del curso</th>
                         <th>Sección evaluada</th>
                         <th>Calificación gral.</th>
-                        <th>Fecha de evaluacón</th>
+                        <th>Ultima clase</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -30,7 +30,7 @@
                                         <div class="img-person">
                                             <img src="{{ $cu->usuarios->avatar_ruta }}" alt="{{ $cu->usuarios->name }}">
                                         </div>
-                                        <span class="course-teacher"> {{ $cu->usuarios->name }} </span>
+                                        <span class="course-teacher"> {{ $cu->usuarios->name }}</span>
                                     </div>
                                 </td>
                                 <td>
@@ -48,9 +48,9 @@
                                     <span></span>
                                 </td>
                                 <td>
-                                    {{ $cu->calificacion }}
+                                    {{ $cu->calificacion }}%
                                 </td>
-                                <td>{{ Carbon\Carbon::parse($cu->cursos->created_at)->format('d/m/Y') }}</td>
+                                <td>{{ Carbon\Carbon::parse($cu->last_review)->diffForHumans() }}</td>
                             </tr>
                         @endif
                     @endforeach
