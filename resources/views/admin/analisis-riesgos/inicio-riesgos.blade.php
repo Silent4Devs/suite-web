@@ -67,7 +67,7 @@
                 <img src="{{ asset('img/brechas-inicio-b.png') }}" alt="">
                 <div class="d-flex flex-column align-items-center">
                     <h4>Análisis de Riesgos</h4>
-                    <a href="{{route('admin.analisisdebrechas-2022.create')}}" class="btn btn-info">Generar</a>
+                    <a href="{{route('admin.risk-analysis-index')}}" class="btn btn-info">Generar</a>
                 </div>
             </div>
         </div>

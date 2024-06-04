@@ -16,11 +16,11 @@ class Cors
     {
         // header('Access-Control-Allow-Origin:  *');
         //header('Access-Control-Allow-Origin:  http://localhost:4200');
-        header('Access-Control-Allow-Origin', '*');
-        header('Access-Control-Allow-Methods', '*');
-        header('Access-Control-Allow-Credentials', true);
-        header('Access-Control-Allow-Headers', 'X-Requested-With,Content-Type,X-Token-Auth,Authorization');
-        header('Accept', 'application/json');
+        // header('Access-Control-Allow-Origin', '*');
+        // header('Access-Control-Allow-Methods', '*');
+        // header('Access-Control-Allow-Credentials', true);
+        // header('Access-Control-Allow-Headers', 'X-Requested-With,Content-Type,X-Token-Auth,Authorization');
+        // header('Accept', 'application/json');
         $IlluminateResponse = 'Illuminate\Http\Response';
         $SymfonyResopnse = 'Symfony\Component\HttpFoundation\Response';
         $headers = [

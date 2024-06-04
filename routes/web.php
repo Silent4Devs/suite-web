@@ -1378,6 +1378,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::resource('analisis-riesgos', 'AnalisisdeRiesgosController');
         Route::get('analisis-riesgos-inicio', 'AnalisisdeRiesgosController@inicioRiesgos');
         Route::get('top-template-analisis-riegos', 'TopController@topAnalisisRiegos')->name('top-template-analisis-riesgos');
+        Route::get('risk-analysis', 'AnalisisdeRiesgosController@RiskAnalysis')->name('risk-analysis-index');
         // Route::get('template-analisis-riesgo/create', 'TBTemplateAnalisisRiesgosController@create')->name('template-create-analisis-riesgos');
         Route::resource('template-analisis-riesgo', 'TBTemplateAnalisisRiesgosController');
         Route::get('getEmployeeData', 'AnalisisdeRiesgosController@getEmployeeData')->name('getEmployeeData');

@@ -205,4 +205,9 @@ class AnalisisdeRiesgosController extends Controller
     {
         return view('admin.analisis-riesgos.inicio-riesgos');
     }
+
+    public function RiskAnalysis()
+    {
+        return view('admin.analisis-riesgos.tbAltaAnalisisRiesgos');
+    }
 }
