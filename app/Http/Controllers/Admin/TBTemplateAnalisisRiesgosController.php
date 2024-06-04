@@ -49,7 +49,7 @@ class TBTemplateAnalisisRiesgosController extends Controller
             DB::commit();
             $id = $template->id;
 
-            return view('admin.analisis-riesgos.template.tbTemplateCrear', compact('id'));
+            return view('admin.analisis-riesgos.template.tbTemplateCrear.blade.php', compact('id'));
         } catch (\Throwable $th) {
             throw $th;
             DB::rollback();
@@ -82,7 +82,7 @@ class TBTemplateAnalisisRiesgosController extends Controller
         $template = TBTemplateAnalisisRiesgoModel::findOrFail($id);
         $id = $template->id;
 
-        return view('admin.analisis-riesgos.template.tbTemplateCrear', compact('id'));
+        return view('admin.analisis-riesgos.template.tbTemplateCrear.blade.php', compact('id'));
     }
 
     /**
