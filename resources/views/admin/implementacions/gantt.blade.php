@@ -599,7 +599,7 @@ function showBaselineInfo (event,element){
       &nbsp; &nbsp; &nbsp; &nbsp;
       <button onclick="saveGanttOnServer();" class="first big requireWrite btn btn-sm btn-success" title="Guardar"><i class="mr-1 fas fa-check-circle"></i>Guardar</button>
       <div class="ml-2 btn-group dropright">
-      <button type="button" class="rounded btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown"
+      <button type="button" class="rounded btn btn-sm tb-btn-primary dropdown-toggle" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false" title="Cargar proyecto">
           <i class="fas fa-folder"></i>
       </button>

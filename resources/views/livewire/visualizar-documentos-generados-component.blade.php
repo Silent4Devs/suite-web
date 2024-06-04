@@ -1,5 +1,5 @@
     <div class="ml-2 btn-group dropright">
-        <button type="button" class="rounded btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown"
+        <button type="button" class="rounded btn btn-sm tb-btn-primary dropdown-toggle" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false" wire:click="obtenerDocumentosGenerados('Estudio de Contexto')">
             <i class="far fa-eye"></i>
         </button>

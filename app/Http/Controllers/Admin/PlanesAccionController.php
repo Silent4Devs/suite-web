@@ -35,7 +35,7 @@ class PlanesAccionController extends Controller
         //     return datatables()->of($planImplementacions)->toJson();
         // }
 
-        return view('admin.planesDeAccion.index');
+        return view('admin.workPlan.index');
     }
 
     /**
@@ -49,7 +49,7 @@ class PlanesAccionController extends Controller
 
         $planImplementacion = new PlanImplementacion();
 
-        return view('admin.planesDeAccion.create', compact('planImplementacion', 'modulo', 'referencia'));
+        return view('admin.workPlan.create', compact('planImplementacion', 'modulo', 'referencia'));
     }
 
     public function createPlanTrabajoBase($modulo, $referencia = null)
@@ -57,7 +57,7 @@ class PlanesAccionController extends Controller
         abort_if(Gate::denies('planes_de_accion_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $planImplementacion = new PlanImplementacion();
 
-        return view('admin.planesDeAccion.createPlanTrabajoBase', compact('planImplementacion', 'modulo', 'referencia'));
+        return view('admin.workPlan.createPlanTrabajoBase', compact('planImplementacion', 'modulo', 'referencia'));
     }
 
     public function store(Request $request)
@@ -173,14 +173,18 @@ class PlanesAccionController extends Controller
 
     public function show($planImplementacion)
     {
-        $planImplementacion = PlanImplementacion::find($planImplementacion);
+        try {
+            $planImplementacion = PlanImplementacion::find($planImplementacion);
 
-        if (! $planImplementacion) {
-            // Si no existe, redirigir o mostrar un mensaje de error
+            if (! $planImplementacion) {
+                // Si no existe, redirigir o mostrar un mensaje de error
+                abort(404);
+            }
+
+            return view('admin.workPlan.show', compact('planImplementacion'));
+        } catch (\Throwable $th) {
             abort(404);
         }
-
-        return view('admin.planesDeAccion.show', compact('planImplementacion'));
     }
 
     /**
@@ -195,7 +199,7 @@ class PlanesAccionController extends Controller
         try {
             abort_if(Gate::denies('planes_de_accion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-            $planImplementacion = PlanImplementacion::find($planImplementacion);
+            $planImplementacion = PlanImplementacion::findOrFail($planImplementacion);
 
             if (! $planImplementacion) {
                 abort(404);
@@ -203,7 +207,7 @@ class PlanesAccionController extends Controller
 
             $referencia = null;
 
-            return view('admin.planesDeAccion.edit', compact('planImplementacion', 'referencia'));
+            return view('admin.workPlan.edit', compact('planImplementacion', 'referencia'));
         } catch (\Throwable $th) {
             abort(404);
         }

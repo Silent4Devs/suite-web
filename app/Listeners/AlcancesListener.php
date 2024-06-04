@@ -2,6 +2,8 @@
 
 namespace App\Listeners;
 
+use App\Models\Empleado;
+use App\Models\ListaDistribucion;
 use App\Models\User;
 use App\Notifications\AlcancesNotification;
 use Illuminate\Support\Facades\Notification;
@@ -26,12 +28,16 @@ class AlcancesListener
      */
     public function handle($event)
     {
-        User::select('users.id', 'users.name', 'users.email', 'role_user.role_id')
-            ->join('role_user', 'role_user.user_id', '=', 'users.id')
-            ->where('role_user.role_id', '=', '1')->where('users.id', '!=', auth()->id())
-            ->get()
-            ->each(function (User $user) use ($event) {
-                Notification::send($user, new AlcancesNotification($event->alcances, $event->tipo_consulta, $event->tabla, $event->slug));
-            });
+        $modulo_alcances = 2;
+
+        $lista = ListaDistribucion::with('participantes')->where('id', $modulo_alcances)->first();
+
+        foreach ($lista->participantes as $participantes) {
+            $empleados = Empleado::where('id', $participantes->empleado_id)->first();
+
+            $user = User::where('email', trim(removeUnicodeCharacters($empleados->email)))->first();
+
+            Notification::send($user, new AlcancesNotification($event->alcances, $event->tipo_consulta, $event->tabla, $event->slug));
+        }
     }
 }

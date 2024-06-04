@@ -11,15 +11,19 @@
 
     <!-- Principal Styles -->
     <link href="{{ asset('css/app.css') }}{{ config('app.cssVersion') }}" rel="stylesheet">
-    <link href="{{ asset('css/style.css') }}{{ config('app.cssVersion') }}" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/loader.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/admin.css') }}{{ config('app.cssVersion') }}">
+    <link href="{{ asset('css/global/style.css') }}{{ config('app.cssVersion') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/global/loader.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/global/admin.css') }}{{ config('app.cssVersion') }}">
     <link rel="stylesheet" href="{{ asset('css/rds.css') }}{{ config('app.cssVersion') }}">
-    <link href="{{ asset('css/custom.css') }}{{ config('app.cssVersion') }}" rel="stylesheet" />
+    <link href="{{ asset('css/global/custom.css') }}{{ config('app.cssVersion') }}" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('vendor/file-manager/css/file-manager.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/dark_mode.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/global/darkMode.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/yearpicker.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/global/responsive.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('css/global/TbButtons.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/global/TbColorsGlobal.css') }}">
+
     @yield('css')
     @yield('styles')
     <!-- End Principal Styles -->
@@ -66,6 +70,9 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- End Extra Styles -->
 
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}{{ config('app.cssVersion') }}">
+    <link rel="stylesheet" href="{{ asset('css/rds.css') }}{{ config('app.cssVersion') }}">
+    @yield('styles')
     @livewireStyles
 
     {{-- Laravel vite --}}
@@ -260,7 +267,7 @@
                     <span class="title-item-menu-header">MÓDULOS TABANTAJ</span>
                     <div class="menu-blocks-mod-header">
                         @can('mis_cursos_acceder')
-                            <a href="{{ asset('admin/capacitaciones-inicio') }}">
+                            <a href="{{ route('admin.mis-cursos') }}">
                                 <div class="caja-icon-mod-header" style="background: #9CEBFF;">
                                     <i class="material-symbols-outlined">school</i>
                                 </div>

@@ -2,7 +2,7 @@
 
 @section('content')
 @section('titulo', 'Firmar Orden de Compra')
-<link rel="stylesheet" href="{{ asset('css/requisiciones.css') }}{{config('app.cssVersion')}}">
+<link rel="stylesheet" href="{{ asset('css/requisitions/requisitions.css') }}{{config('app.cssVersion')}}">
 <style>
     .row {
         padding-left: 30px;
@@ -432,12 +432,12 @@
             @csrf
             <div class="flex" style="position: relative; top: -1rem; justify-content: space-between;">
                 @if (!$requisicion->firma_solicitante_orden && !$requisicion->firma_comprador_orden && !$requisicion->firma_finanzas_orden)
-                    <button class="btn btn-primary" style="background: #454545 !important;">RECHAZAR ORDEN DE
+                    <button class="btn tb-btn-primary" style="background: #454545 !important;">RECHAZAR ORDEN DE
                         COMPRA</button>
                 @else
                     <div>&nbsp;</div>
                 @endif
-                <div onclick="validar();" style="" class="btn btn-primary">Firmar</div>
+                <div onclick="validar();" style="" class="btn tb-btn-primary">Firmar</div>
             </div>
         </form>
     </div>

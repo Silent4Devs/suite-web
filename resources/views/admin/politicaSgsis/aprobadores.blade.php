@@ -95,7 +95,7 @@
 
     <div class="text-right">
         <div class="d-flex justify-content-end">
-            <a href="{{ route('admin.politica-sgsis.create') }}" type="button" class="btn btn-primary">Aprobar Politica</a>
+            <a href="{{ route('admin.politica-sgsis.create') }}" type="button" class="btn tb-btn-primary">Aprobar Politica</a>
         </div>
     </div>
        @include('partials.flashMessages')

@@ -5,7 +5,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 10.48.10.
+ * Generated for Laravel 10.48.11.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -16722,13 +16722,12 @@ namespace Barryvdh\DomPDF\Facade {
                     /**
          * Replace all the Options from DomPDF
          *
-         * @deprecated Use setOption to override individual options.
          * @param array<string, mixed> $options
          * @static 
-         */        public static function setOptions($options)
+         */        public static function setOptions($options, $mergeWithDefaults = false)
         {
                         /** @var \Barryvdh\DomPDF\PDF $instance */
-                        return $instance->setOptions($options);
+                        return $instance->setOptions($options, $mergeWithDefaults);
         }
                     /**
          * Output the PDF as a string.
@@ -16882,13 +16881,12 @@ namespace Barryvdh\DomPDF\Facade {
                     /**
          * Replace all the Options from DomPDF
          *
-         * @deprecated Use setOption to override individual options.
          * @param array<string, mixed> $options
          * @static 
-         */        public static function setOptions($options)
+         */        public static function setOptions($options, $mergeWithDefaults = false)
         {
                         /** @var \Barryvdh\DomPDF\PDF $instance */
-                        return $instance->setOptions($options);
+                        return $instance->setOptions($options, $mergeWithDefaults);
         }
                     /**
          * Output the PDF as a string.
@@ -20044,10 +20042,10 @@ namespace Spatie\LaravelIgnition\Facades {
          * 
          *
          * @static 
-         */        public static function registerErrorHandler()
+         */        public static function registerErrorHandler($errorLevels = null)
         {
                         /** @var \Spatie\FlareClient\Flare $instance */
-                        return $instance->registerErrorHandler();
+                        return $instance->registerErrorHandler($errorLevels);
         }
                     /**
          * 
@@ -20372,6 +20370,53 @@ namespace Spatie\SignalAwareCommand\Facades {
         {
                         /** @var \Spatie\SignalAwareCommand\Signal $instance */
                         return $instance->clearHandlers($signal);
+        }
+            }
+    }
+
+namespace VXM\Async {
+            /**
+     * 
+     *
+     * @author Vuong Minh <vuongxuongminh@gmail.com>
+     * @since 1.0.0
+     */        class AsyncFacade {
+                    /**
+         * 
+         *
+         * @static 
+         */        public static function run($job, $events = [], $outputLength = null)
+        {
+                        /** @var \VXM\Async\Async $instance */
+                        return $instance->run($job, $events, $outputLength);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */        public static function batchRun(...$jobs)
+        {
+                        /** @var \VXM\Async\Async $instance */
+                        return $instance->batchRun(...$jobs);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */        public static function wait()
+        {
+                        /** @var \VXM\Async\Async $instance */
+                        return $instance->wait();
+        }
+                    /**
+         * Get current pool.
+         *
+         * @since 2.1.0
+         * @static 
+         */        public static function getPool()
+        {
+                        /** @var \VXM\Async\Async $instance */
+                        return $instance->getPool();
         }
             }
     }
@@ -24619,6 +24664,7 @@ namespace  {
             class Flare extends \Spatie\LaravelIgnition\Facades\Flare {}
             class ResponseCache extends \Spatie\ResponseCache\Facades\ResponseCache {}
             class Signal extends \Spatie\SignalAwareCommand\Facades\Signal {}
+            class Async extends \VXM\Async\AsyncFacade {}
             class DataTables extends \Yajra\DataTables\Facades\DataTables {}
     }
 

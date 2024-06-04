@@ -4,14 +4,14 @@
 
      <div class="text-right">
         <div class="d-flex justify-content-end">
-            <a href="{{ route('admin.empleados.create') }}" type="button" class="btn btn-primary">Registrar Empleados</a>
+            <a href="{{ route('admin.empleados.create') }}" type="button" class="btn tb-btn-primary">Registrar Empleados</a>
 
             <a href="{{ url('admin/panel-inicio') }}" style="text-align: right;padding-right: 20px;"
-            class="btn btn-primary btn-sm active" role="button" aria-pressed="true"><i
+            class="btn tb-btn-primary btn-sm active" role="button" aria-pressed="true"><i
                 class="pl-2 pr-3 fas fa-plus"></i> Configurar vista datos</a>
 
                 <a href="{{ route('admin.empleado.importar') }}" style="text-align: right;padding-right: 20px;"
-                        class="btn btn-primary btn-sm active" role="button" aria-pressed="true"><i
+                        class="btn tb-btn-primary btn-sm active" role="button" aria-pressed="true"><i
                             class="fas fa-file-upload"></i> Importar datos</a>
         </div>
     </div>

@@ -3,7 +3,7 @@
 @section('titulo', 'Ver Requisición')
 
 @include('layouts.datatables_css')
-<link rel="stylesheet" href="{{asset('css/requisiciones.css')}}{{config('app.cssVersion')}}">
+<link rel="stylesheet" href="{{asset('css/requisitions/requisitions.css')}}{{config('app.cssVersion')}}">
 <style>
     @media print{
         .card.card-item{
@@ -164,6 +164,16 @@
                                 <br><br>
                                 <strong>URL:</strong><br><br>
                                 {{$provedores->url}}
+                            </div>
+                            <div class="col s12 14">
+                                    <label for="" class="txt-tamaño">
+                                        Cotizaciones <font class="asterisco">*</font>
+                                    </label>
+                                    <div class="flex" style="gap: 25px;">
+                                        <div style="min-width: 300px;">Cotizacion actual: <a
+                                                href="{{ asset('storage/cotizaciones_requisiciones_proveedores/' . $provedores->cotizacion) }}"
+                                                style="text-decoration: underline; color: deepskyblue;"
+                                                target="_blank">Descargar cotización <i class="fa-regular fa-circle-down"></i></a></div></div>
                             </div>
                         </div>
                     </div>

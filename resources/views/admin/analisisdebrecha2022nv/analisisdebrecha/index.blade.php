@@ -81,7 +81,7 @@
                     <div class="text-center" style="font:16px Roboto;color:#606060;">Templates</div>
                     <div class="text-center">
                         <a href="{{ route('admin.templates') }}" style="font:17px Roboto;color: #FFFFFF;">
-                            <button type="button" class="btn btn-primary mt-3 mb-3">Generar</button>
+                            <button type="button" class="btn tb-btn-primary mt-3 mb-3">Generar</button>
                         </a>
                     </div>
                 </div>
@@ -92,7 +92,7 @@
                     <div class="text-center" style="font:16px Roboto;color:#606060;">Análisis de brechas</div>
                     <div class="text-center">
                         <a href="{{ route('admin.formulario') }}" style="font:17px Roboto;color: #FFFFFF;">
-                            <button type="button" class="btn btn-primary mt-3 mb-3">Generar</button>
+                            <button type="button" class="btn tb-btn-primary mt-3 mb-3">Generar</button>
                         </a>
                     </div>
                 </div>

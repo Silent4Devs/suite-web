@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('css')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}{{ config('app.cssVersion') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet/timesheet.css') }}{{ config('app.cssVersion') }}">
 @endsection
 @section('content')
 
@@ -13,6 +13,9 @@
 
     <div>
         <div class="text-right">
+            @can('timesheet_administrador_configuracion_access')
+                <a href="{{ route('admin.timesheet-proyectos') }}" class="btn btn-success">Pagina Principal de Proyectos</a>
+            @endcan
             @can('asignar_empleados')
                 <a href="{{ route('admin.timesheet-proyecto-empleados', $proyecto->id) }}" class="btn btn-success">Asignar
                     Empleados</a>

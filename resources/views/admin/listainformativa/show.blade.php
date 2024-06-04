@@ -123,7 +123,7 @@
         </div>
         <div class="col-12">
             <div  style="position: relative; text-align:end;">
-                <a href="{{ route('admin.lista-informativa.index') }}" type="button" class="btn btn-primary" id="btn_cancelar" style="color:#057BE2;">Cancelar</a>
+                <a href="{{ route('admin.lista-informativa.index') }}" type="button" class="btn tb-btn-primary" id="btn_cancelar" style="color:#057BE2;">Cancelar</a>
             </div>
         </div>
 @endsection

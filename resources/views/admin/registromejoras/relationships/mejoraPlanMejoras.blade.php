@@ -70,7 +70,7 @@
                             </td>
                             <td>
                                 @can('plan_mejora_show')
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.plan-mejoras.show', $planMejora->id) }}">
+                                    <a class="btn btn-xs tb-btn-primary" href="{{ route('admin.plan-mejoras.show', $planMejora->id) }}">
                                         {{ trans('global.view') }}
                                     </a>
                                 @endcan

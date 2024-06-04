@@ -14,15 +14,8 @@ class AreaSeeder extends Seeder
      */
     public function run()
     {
-        $areas = Area::factory(10)->create();
-        foreach ($areas as $idx => $area) {
-            if ($idx != 0) {
-                $area->update(
-                    [
-                        'id_reporta' => Area::all()->random()->id,
-                    ]
-                );
-            }
-        }
+        Area::create([
+            'area' => 'Direccion General',
+        ]);
     }
 }

@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('css')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/evaluaciones.css') }}{{ config('app.cssVersion') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/evaluations/evaluations.css') }}{{ config('app.cssVersion') }}">
 @endsection
 @section('content')
     @php

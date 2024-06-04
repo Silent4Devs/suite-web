@@ -1,0 +1,6 @@
+.icono_oculto_print{
+	display: none;
+}
+.card, .shadow-propia{
+	box-shadow: 0px 0px 0px rgba(0, 0, 0, 0) !important;
+}

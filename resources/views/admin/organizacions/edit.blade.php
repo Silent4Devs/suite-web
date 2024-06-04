@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
 
-    <link rel="stylesheet" type="text/css" href="{{ asset('../css/colores.css') }}{{config('app.cssVersion')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('../css/global/colores.css') }}{{config('app.cssVersion')}}">
     <h5 class="col-12 titulo_general_funcion"> Editar: </h5>
     <div class="mt-4 card">
         <div class="card-body">
@@ -153,7 +153,7 @@
                     <div class="form-group col-sm-3">
                         <label for="linkedln"> <i class="fab fa-linkedin iconos-crear"></i>Linkedln</label>
                         <input class="form-control {{ $errors->has('linkedln') ? 'is-invalid' : '' }}" type="url"
-                            name="linkedln" id="linkedln" value="{{ old('linkedln', $organizacion->linkedln) }}">
+                            name="linkedln" id="linkedln" maxlength="250" value="{{ old('linkedln', $organizacion->linkedln) }}">
                         @if ($errors->has('linkedln'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('linkedln') }}
@@ -164,7 +164,7 @@
                     <div class="form-group col-sm-3">
                         <label for="youtube"><i class="fab fa-youtube iconos-crear"></i>YouTube</label>
                         <input class="form-control {{ $errors->has('youtube') ? 'is-invalid' : '' }}" type="url"
-                            name="youtube" id="youtube" value="{{ old('youtube', $organizacion->youtube) }}">
+                            name="youtube" id="youtube" maxlength="250" value="{{ old('youtube', $organizacion->youtube) }}">
                         @if ($errors->has('youtube'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('youtube') }}
@@ -175,7 +175,7 @@
                     <div class="form-group col-sm-3">
                         <label for="facebook"><i class="fab fa-facebook-square iconos-crear"></i>Facebook</label>
                         <input class="form-control {{ $errors->has('facebook') ? 'is-invalid' : '' }}" type="url"
-                            name="facebook" id="facebook" value="{{ old('facebook', $organizacion->facebook) }}">
+                            name="facebook" id="facebook" maxlength="250" value="{{ old('facebook', $organizacion->facebook) }}">
                         @if ($errors->has('facebook'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('facebook') }}
@@ -186,7 +186,7 @@
                     <div class="form-group col-sm-3">
                         <label for="twitter"><i class="fab fa-twitter-square iconos-crear"></i>Twitter</label>
                         <input class="form-control {{ $errors->has('twitter') ? 'is-invalid' : '' }}" type="url"
-                            name="twitter" id="twitter" value="{{ old('twitter', $organizacion->twitter) }}">
+                            name="twitter" id="twitter" maxlength="250" value="{{ old('twitter', $organizacion->twitter) }}">
                         @if ($errors->has('twitter'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('twitter') }}
@@ -229,7 +229,7 @@
                     <div class="form-group col-sm-6">
                         <label class="" for="representante_legal">Representante Legal</label>
                         <input class="form-control {{ $errors->has('representante_legal') ? 'is-invalid' : '' }}"
-                            type="text" name="representante_legal" id="representante_legal"
+                            type="text" name="representante_legal" id="representante_legal" maxlength="250"
                             value="{{ old('representante_legal', $organizacion->representante_legal) }}">
                         @if ($errors->has('representante_legal'))
                             <div class="invalid-feedback">

@@ -17,6 +17,8 @@ class Course extends Model implements Auditable
 
     protected $guarded = ['id', 'status'];
 
+    protected $table = 'courses';
+
     protected $withCount = ['students', 'reviews'];
 
     const BORRADOR = 1;
@@ -24,6 +26,8 @@ class Course extends Model implements Auditable
     const REVISION = 2;
 
     const PUBLICADO = 3;
+
+    const CERRADO = 4;
 
     //query redis cache
     public static function getAll()
@@ -95,6 +99,11 @@ class Course extends Model implements Auditable
     public function teacher()
     {
         return $this->belongsTo('App\Models\User', 'user_id');
+    }
+
+    public function instructor()
+    {
+        return $this->belongsTo('App\Models\User', 'empleado_id');
     }
 
     public function level()

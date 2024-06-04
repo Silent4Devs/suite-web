@@ -16,6 +16,7 @@ class AlcancesObserver
     public function created(AlcanceSgsi $alcances)
     {
         event(new AlcancesEvent($alcances, 'create', 'alcance_sgsis', 'Alcances'));
+
         $this->forgetCache();
     }
 
@@ -27,6 +28,7 @@ class AlcancesObserver
     public function updated(AlcanceSgsi $alcances)
     {
         event(new AlcancesEvent($alcances, 'update', 'alcance_sgsis', 'Alcances'));
+
         $this->forgetCache();
     }
 
@@ -38,6 +40,7 @@ class AlcancesObserver
     public function deleted(AlcanceSgsi $alcances)
     {
         event(new AlcancesEvent($alcances, 'delete', 'alcance_sgsis', 'Alcances'));
+
         $this->forgetCache();
     }
 

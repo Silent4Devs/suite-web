@@ -1,0 +1,34 @@
+:root {
+    --color-primary: #3498db;
+    --color-succes: #12C724;
+    --color-cancel: #FB5E5E;
+    --color-white: #FFFFFF;
+    --color-secondary-1: #E5E5E5;
+    --color-secondary-2: #818181;
+    --color-text: #575757;
+
+    /* project status colors */
+    --color-background-STATUS_UNDEFINED: #FFECAF;
+    --color-background-STATUS_ACTIVE: #DEEFFF;
+    --color-background-STATUS_DONE: #DEFFE6;
+    --color-background-STATUS_FAILED: #FFDFDF;
+    --color-background-STATUS_SUSPENDED: #EEEEEE;
+
+    --color-text-STATUS_UNDEFINED: #FF9900;
+    --color-text-STATUS_ACTIVE: #0080FF;
+    --color-text-STATUS_DONE: #42A500;
+    --color-text-STATUS_FAILED: #FF5C3A;
+    --color-text-STATUS_SUSPENDED: #818181;
+
+    /*  */
+
+    --color-background:#345183;
+
+    /*  Colores de los registros del calendario*/
+    /* Eventos,Cumpleaños, etc*/
+
+    --color-events: "#AFD6E5";
+    --color-recursos: "#D6E5A1";
+    --color-contratos: "#C0AEE5";
+
+  }

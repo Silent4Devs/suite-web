@@ -5,24 +5,42 @@ namespace App\Providers;
 use App\Events\AccionCorrectivaEvent;
 use App\Events\AlcancesEvent;
 use App\Events\AuditoriaAnualEvent;
+use App\Events\CoursesEvent;
+use App\Events\DocumentoEvent;
+use App\Events\EntendimientoOrganizacionEvent;
+use App\Events\EvaluacionEvent;
 use App\Events\IncidentesDeSeguridadEvent;
 use App\Events\MatrizRequisitosEvent;
+use App\Events\PlanImplementacionEvent;
 use App\Events\PoliticasSgiEvent;
 use App\Events\RecursosEvent;
 use App\Events\RegistroMejoraEvent;
 use App\Events\RequisicionesEvent;
+use App\Events\SolicitudDayofEvent;
+use App\Events\SolicitudPermisoEvent;
+use App\Events\SolicitudVacacionesEvent;
 use App\Events\TaskRecursosEvent;
+use App\Events\TimesheetEvent;
 use App\Listeners\AccionCorrectivaListener;
 use App\Listeners\AlcancesListener;
 use App\Listeners\AuditoriaAnualListener;
 use App\Listeners\BroadcastUserLoginNotification;
+use App\Listeners\CoursesListener;
+use App\Listeners\DocumentoListener;
+use App\Listeners\EntendimientoOrganizacionListener;
+use App\Listeners\EvaluacionListener;
 use App\Listeners\IncidentesDeSeguridadListener;
 use App\Listeners\MatrizRequisitosListener;
+use App\Listeners\PlanImplementacionListener;
 use App\Listeners\PoliticasSgiListener;
 use App\Listeners\RecursosListener;
 use App\Listeners\RegistroMejoraListener;
 use App\Listeners\RequisicionesListener;
+use App\Listeners\SolicitudDayofListener;
+use App\Listeners\SolicitudPermisoListener;
+use App\Listeners\SolicitudVacacionesListener;
 use App\Listeners\TaskRecursosListener;
+use App\Listeners\TimesheetListener;
 use App\Models\AccionCorrectiva;
 use App\Models\Activo;
 use App\Models\activoConfidencialidad;
@@ -226,6 +244,33 @@ class EventServiceProvider extends ServiceProvider
         ],
         RequisicionesEvent::class => [
             RequisicionesListener::class,
+        ],
+        EntendimientoOrganizacionEvent::class => [
+            EntendimientoOrganizacionListener::class,
+        ],
+        DocumentoEvent::class => [
+            DocumentoListener::class,
+        ],
+        TimesheetEvent::class => [
+            TimesheetListener::class,
+        ],
+        CoursesEvent::class => [
+            CoursesListener::class,
+        ],
+        SolicitudVacacionesEvent::class => [
+            SolicitudVacacionesListener::class,
+        ],
+        SolicitudDayofEvent::class => [
+            SolicitudDayofListener::class,
+        ],
+        SolicitudPermisoEvent::class => [
+            SolicitudPermisoListener::class,
+        ],
+        PlanImplementacionEvent::class => [
+            PlanImplementacionListener::class,
+        ],
+        EvaluacionEvent::class => [
+            EvaluacionListener::class,
         ],
     ];
 

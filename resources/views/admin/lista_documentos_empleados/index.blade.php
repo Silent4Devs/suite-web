@@ -33,7 +33,7 @@
 
     <div class="text-right">
         <div class="d-flex justify-content-end">
-            <div class="btn btn-primary" data-toggle="modal" data-target="#modal_crear_doc_e">Agregar</div>
+            <div class="btn tb-btn-primary" data-toggle="modal" data-target="#modal_crear_doc_e">Agregar</div>
         </div>
     </div>
         @include('partials.flashMessages')
@@ -108,7 +108,7 @@
                 </div>
                 <div class="modal-footer">
                     <div type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</div>
-                    <button class="btn btn-primary">Guardar</button>
+                    <button class="btn tb-btn-primary">Guardar</button>
                 </div>
             </form>
         </div>

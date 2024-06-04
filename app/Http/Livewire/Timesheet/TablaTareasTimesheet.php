@@ -116,6 +116,7 @@ class TablaTareasTimesheet extends Component
 
     public function actualizarNameTarea($id, $value)
     {
+
         $tarea_actualizada = TimesheetTarea::select(
             'id',
             'tarea',
@@ -133,6 +134,7 @@ class TablaTareasTimesheet extends Component
 
     public function actualizarAreaTarea($id, $value)
     {
+
         $tarea_actualizada = TimesheetTarea::select(
             'id',
             'tarea',

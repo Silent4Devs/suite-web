@@ -25,6 +25,12 @@ class Evaluacion extends Model implements Auditable
         'fecha_fin' => 'date:d-m-Y',
     ];
 
+    protected $fillable = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
+
     const DRAFT = '1';
 
     const ACTIVE = '2';

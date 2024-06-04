@@ -1,0 +1,67 @@
+/* boton para todo lo que sea aceptar, en boton azul */
+.tb-btn-primary{
+    background-color: var(--color-primary);
+    transition: 0.2s;
+    display: inline-block;
+    text-align: center;
+    color: var(--color-white);
+    padding: 12px 25px !important;
+    border-radius: 6px !important;
+    cursor: pointer;
+}
+
+.tb-btn-primary:hover{
+    color: var(--color-white) !important;
+}
+
+.tb-btn-secondary {
+    background-color: var(--color-white);
+    transition: 0.2s;
+    display: inline-block;
+    text-align: center;
+    border: 1px solid var(--color-primary);
+    color: var(--color-primary);
+    box-sizing: border-box;
+    padding: 12px 25px !important;
+    border-radius: 6px !important;
+    cursor: pointer;
+}
+
+.tb-btn-secondary:hover{
+    color: var(--color-primary);
+}
+
+.tb-btn-secondary-fill{
+    background-color: var(--color-white);
+    transition: 0.2s;
+    display: inline-block;
+    text-align: center;
+    border: 1px solid var(--color-primary);
+    color: var(--color-primary);
+    padding: 12px 25px !important;
+    border-radius: 6px !important;
+    cursor: pointer;
+}
+
+.tb-btn-secondary-fill:hover{
+    background-color: var(--color-primary);
+    color: var(--color-white);
+}
+
+.tb-btn-back{
+    background-color: var(--color-secondary-1);
+    transition: 0.2s;
+    display: inline-block;
+    text-align: center;
+    color: var(--color-text);
+    box-sizing: border-box;
+    padding: 12px 25px !important;
+    border-radius: 6px !important;
+    cursor: pointer;
+}
+
+.tb-btn-back:hover{
+    color: var(--color-text);
+}
+
+
