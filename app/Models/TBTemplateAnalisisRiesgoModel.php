@@ -37,6 +37,4 @@ class TBTemplateAnalisisRiesgoModel extends Model
     {
         return $this->belongsTo(TBTemplateArProbImpArModel::class, 'id');
     }
-
-
 }

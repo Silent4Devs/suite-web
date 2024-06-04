@@ -2,8 +2,8 @@
 
 use App\Http\Controllers\API\Auth\AuthController;
 use App\Http\Controllers\Api\InicioUsuario\InicioUsuarioController;
-use App\Http\Controllers\Api\V1\AnalisisRiesgo\templateAnalisisRiesgoController;
 use App\Http\Controllers\Api\v1\AnalisisRiesgo\FormulasController;
+use App\Http\Controllers\Api\V1\AnalisisRiesgo\templateAnalisisRiesgoController;
 
 Route::post('v1/login', [AuthController::class, 'login']);
 
@@ -26,8 +26,6 @@ Route::get('api/v1/ar/settings/{id}', [templateAnalisisRiesgoController::class, 
 Route::apiResource('api/v1/ar/formulas', FormulasController::class);
 Route::get('api/v1/ar/formulas/options/{id}', [FormulasController::class, 'getOptionsFormulas']);
 Route::get('api/v1/ar/formulas/sections/{id}', [FormulasController::class, 'getSections']);
-
-
 
 Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', 'middleware' => ['auth:api']], function () {
     // Permissions
