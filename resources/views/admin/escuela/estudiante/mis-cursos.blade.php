@@ -40,13 +40,15 @@
                     <div class="card-body" style="padding-left:0px; padding-right:0px;">
                         <h5 class="card-title" style="color:#000000;">{{ $lastCourse->cursos->title }}</h5>
                         @if ($lastCourse->cursos->instructor)
-                            <div class="d-flex align-items-center gap-1 my-4">
-                                <div class="img-person">
-                                    <img src="{{ asset('storage/empleados/imagenes/' . isset($lastCourse->cursos->instructor->empleado) ? $lastCourse->cursos->instructor->empleado->avatar : '') }}"
-                                        alt="{{ $lastCourse->cursos->instructor->name }}">
+                            @if (isset($lastCourse->cursos->instructor))
+                                <div class="d-flex align-items-center gap-1 my-4">
+                                    <div class="img-person">
+                                        <img src="{{ asset('storage/empleados/imagenes/' . isset($lastCourse->cursos->instructor->empleado) ? $lastCourse->cursos->instructor->empleado->avatar : '') }}"
+                                            alt="{{ $lastCourse->cursos->instructor->name }}">
+                                    </div>
+                                    <span class="course-teacher"> {{ $lastCourse->cursos->instructor->name }} </span>
                                 </div>
-                                <span class="course-teacher"> {{ $lastCourse->cursos->instructor->name }} </span>
-                            </div>
+                            @endif
                         @else
                             <p class="course-teacher">Instructor no asignado </p>
                         @endif
@@ -88,14 +90,16 @@
                                 {{ $cu->cursos->title }}
                             </p>
                             @if ($instructor)
-                                <span>Un curso de: </span><br>
-                                <div class="d-flex align-items-center gap-1 mt-2">
-                                    <div class="img-person">
-                                        <img src="{{ asset('storage/empleados/imagenes/' . isset($lastCourse->cursos->instructor->empleado) ? $lastCourse->cursos->instructor->empleado->avatar : '') }}"
-                                            alt="{{ $lastCourse->cursos->instructor->name }}">
+                                @if (isset($lastCourse->cursos->instructor))
+                                    <span>Un curso de: </span><br>
+                                    <div class="d-flex align-items-center gap-1 mt-2">
+                                        <div class="img-person">
+                                            <img src="{{ asset('storage/empleados/imagenes/' . isset($lastCourse->cursos->instructor->empleado) ? $lastCourse->cursos->instructor->empleado->avatar : '') }}"
+                                                alt="{{ $lastCourse->cursos->instructor->name }}">
+                                        </div>
+                                        <span class="course-teacher"> {{ $lastCourse->cursos->instructor->name }} </span>
                                     </div>
-                                    <span class="course-teacher"> {{ $lastCourse->cursos->instructor->name }} </span>
-                                </div>
+                                @endif
                             @else
                                 <p class="course-teacher">Instructor no asignado </p>
                             @endif
