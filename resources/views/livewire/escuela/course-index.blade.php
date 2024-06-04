@@ -46,7 +46,8 @@
                         <p>Creado:</p>
                         <div class="d-flex align-items-center gap-1">
                             <div class="img-person">
-                                <img src="{{ $c->teacher->avatar_ruta }}" alt="{{ $c->teacher->name }}">
+                                <img src="{{ asset('storage/empleados/imagenes/' . $c->teacher->avatar) }}"
+                                    alt="{{ $c->teacher->name }}">
                             </div>
                             {{ $c->teacher->name }}
                         </div>
@@ -54,7 +55,8 @@
                             <p>Instructor: </p>
                             <div class="d-flex align-items-center gap-1">
                                 <div class="img-person">
-                                    <img src="{{ $instructor->avatar_ruta }}" alt="{{ $instructor->name }}">
+                                    <img src="{{ asset('storage/empleados/imagenes/' . $instructor->avatar) }}"
+                                        alt="{{ $instructor->name }}">
                                 </div>
                                 {{ $instructor->name }}
                             </div>

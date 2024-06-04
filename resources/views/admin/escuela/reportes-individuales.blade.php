@@ -17,7 +17,7 @@
                         <th>Colaborador</th>
                         <th>Avance del curso</th>
                         <th>Sección evaluada</th>
-                        {{-- <th>Calificación gral.</th> --}}
+                        <th>Calificación gral.</th>
                         <th>Fecha de evaluacón</th>
                     </tr>
                 </thead>
@@ -47,7 +47,9 @@
                                     <span>Sección {{ $cu->cursos->lessons->count() }}</span> <br>
                                     <span></span>
                                 </td>
-                                {{-- <td>{{ $cu->last_review }}</td> --}}
+                                <td>
+                                    {{ $cu->calificacion }}
+                                </td>
                                 <td>{{ Carbon\Carbon::parse($cu->cursos->created_at)->format('d/m/Y') }}</td>
                             </tr>
                         @endif
@@ -63,6 +65,7 @@
             let dtButtons = [{
                     extend: 'csvHtml5',
                     title: `Comite Seguridad ${new Date().toLocaleDateString().trim()}`,
+
                     text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar CSV',

@@ -115,7 +115,8 @@
         <h4>{{ $course->title }}</h6>
             <div class="d-flex align-items-start">
                 <div class="img-person" style="min-width: 40px; min-height: 40px;">
-                    <img src="{{ $course->teacher->empleado->avatar_ruta }}" alt="{{ $course->teacher->name }}">
+                    <img src="{{ isset($course->teacher->empleado->avatar_ruta) ? $course->teacher->empleado->avatar_ruta : '' }}"
+                        alt="{{ $course->teacher->name }}">
                 </div>
                 <div>
                     <p class="ml-2">{{ $course->teacher->name }}</p>
