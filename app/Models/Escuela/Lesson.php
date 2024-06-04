@@ -22,7 +22,6 @@ class Lesson extends Model implements Auditable
         return $this->users->contains(auth()->user()->id);
     }
 
-
     public function getCompletedUserAttribute($id)
     {
         return $this->users->contains($id);
