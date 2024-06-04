@@ -25,7 +25,10 @@
             <form id="timesheet-proyectos-form" method="POST" action="{{ route('admin.timesheet-proyectos-store') }}">
                 @csrf
                 <div class="row">
-                    <div class="form-group col-md-2 anima-focus">
+                    <div class="col-8">
+                        @livewire('identificador-proyectos-int-ext')
+                    </div>
+                    {{-- <div class="form-group col-md-2 anima-focus">
                         <input type="text" id="identificador_proyect" placeholder=""
                             title="Por favor, no incluyas comas en el nombre de la tarea." name="identificador"
                             pattern="[^\.,]*" class="form-control" maxlength="254" required>
@@ -38,13 +41,15 @@
                         @error('identificador')
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
-                    </div>
-                    <div class="form-group col-md-6 anima-focus">
+                    </div> --}}
+                    <div class="form-group col-md-4 anima-focus">
                         <input type="text" id="name_proyect" placeholder="" name="proyecto_name" class="form-control"
                             maxlength="254" required>
                         {!! Form::label('name_proyect', 'Nombre del proyecto*', ['class' => 'asterisco']) !!}
                         <span id="alertaGenerica" style="color: red; display: none;"></span>
                     </div>
+                </div>
+                <div class="row">
                     <div class="form-group col-md-4 anima-focus">
                         <select name="cliente_id" id="cliente_id" class="form-control" required>
                             <option selected value="">Seleccione cliente</option>
@@ -55,8 +60,6 @@
                         </select>
                         {!! Form::label('cliente_id', 'Cliente*', ['class' => 'asterisco']) !!}
                     </div>
-                </div>
-                <div class="row">
                     <div class="form-group col-md-4 anima-focus" style="position: relative; top: -1.5rem;"
                         id="caja_areas_seleccionadas_create">
                         <select class="select2-multiple form-control" multiple="multiple" id="areas_seleccionadas"
@@ -72,6 +75,17 @@
                             <input id="chkall" name="chkall" type="checkbox" value="todos"> Seleccionar Todas
                         </div>
                     </div>
+                    <div class="form-group col-md-4 anima-focus">
+                        <select class="form-control" name="sede_id" id="sede_id">
+                            <option selected value="">Seleccione sede</option>
+                            @foreach ($sedes as $sede)
+                                <option value="{{ $sede->id }}">{{ $sede->sede }}</option>
+                            @endforeach
+                        </select>
+                        {!! Form::label('sede_id', 'Sede', ['class' => 'asterisco']) !!}
+                    </div>
+                </div>
+                <div class="row">
                     <div class="form-group col-md-4 anima-focus">
                         <input type="date" name="fecha_inicio" placeholder="" id="fecha_inicio" class="form-control">
                         {!! Form::label('fecha_inicio', 'Fecha de inicio', ['class' => 'asterisco']) !!}
@@ -96,18 +110,7 @@
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
                     </div>
-                </div>
-                <div class="row">
-                    <div class="form-group col-md-4 anima-focus">
-                        <select class="form-control" name="sede_id" id="sede_id">
-                            <option selected value="">Seleccione sede</option>
-                            @foreach ($sedes as $sede)
-                                <option value="{{ $sede->id }}">{{ $sede->sede }}</option>
-                            @endforeach
-                        </select>
-                        {!! Form::label('sede_id', 'Sede', ['class' => 'asterisco']) !!}
-                    </div>
-                    <div class="form-group col-md-4 anima-focus">
+                    {{-- <div class="form-group col-md-4 anima-focus">
                         <select class="form-control" name="tipo" id="tipo" required>
                             @foreach ($tipos as $tipo_it)
                                 <option value="{{ $tipo_it }}" {{ $tipo == $tipo_it ? 'selected' : '' }}>
@@ -116,7 +119,7 @@
                             @endforeach
                         </select>
                         {!! Form::label('tipo', 'Tipo*', ['class' => 'asterisco']) !!}
-                    </div>
+                    </div> --}}
                     <div class="form-group col-md-4 anima-focus">
                         <input type="text" pattern="[0-9]+" title="Por favor, ingrese solo números enteros." placeholder=""
                             name="horas_proyecto" maxlength="250" id="horas_asignadas" class="form-control">
@@ -173,7 +176,7 @@
                                 icon: 'success',
                                 title: 'Proyecto Creado!',
                                 text: data
-                                .message, // Assuming the response contains a 'message' key
+                                    .message, // Assuming the response contains a 'message' key
                                 allowOutsideClick: false // Prevent dismissing by clicking outside the dialog
                             }).then((result) => {
                                 if (result.isConfirmed) {
