@@ -3,14 +3,10 @@
 namespace App\Http\Controllers\Admin\Escuela\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Traits\ObtenerOrganizacion;
-use App\Models\Escuela\Course;
+use App\Models\Escuela\Evaluation;
 use App\Models\Escuela\Instructor\UserAnswer;
 use App\Models\Escuela\UsuariosCursos;
-use App\Models\Escuela\Evaluation;
-use App\Models\Escuela\UserEvaluation;
-use App\Models\User;
-
+use App\Traits\ObtenerOrganizacion;
 
 class ReportesIndividualesController extends Controller
 {
@@ -18,16 +14,6 @@ class ReportesIndividualesController extends Controller
 
     public function index($id)
     {
-
-
-
-
-
-
-
-
-
-
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -37,7 +23,7 @@ class ReportesIndividualesController extends Controller
 
         foreach ($cursos_usuario as $cu) {
             $id_user = $cu->user_id;
-            $completedLessonsCount = $cu->cursos->lessons->filter(function ($lesson) use($id_user) {
+            $completedLessonsCount = $cu->cursos->lessons->filter(function ($lesson) use ($id_user) {
                 return $lesson->getCompletedUserAttribute($id_user);
             })->count();
 

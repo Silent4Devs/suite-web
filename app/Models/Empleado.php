@@ -520,7 +520,7 @@ class Empleado extends Model implements Auditable
             }
         }
 
-        return asset('storage/empleados/imagenes/' . $this->foto);
+        return asset('storage/empleados/imagenes/'.$this->foto);
     }
 
     public function area()
