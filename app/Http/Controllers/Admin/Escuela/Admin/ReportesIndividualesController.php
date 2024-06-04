@@ -21,8 +21,6 @@ class ReportesIndividualesController extends Controller
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-
-
         $cursos_usuario = UsuariosCursos::with('cursos')->where('course_id', $id)->get();
 
         foreach ($cursos_usuario as $cu) {
@@ -46,7 +44,6 @@ class ReportesIndividualesController extends Controller
             }
             $cu->calificacion = $calificacion;
         }
-
 
         return view('admin.escuela.reportes-individuales', compact('logo_actual', 'empresa_actual', 'cursos_usuario'));
     }
