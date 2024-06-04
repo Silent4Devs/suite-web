@@ -24,7 +24,7 @@
     <div id="lista-secciones">
         @forelse($course->sections as $item)
             {{--  <div class="card shadow-none" x-data="{ open: {{ $loop->first ? 'true' : 'false' }} }">  --}}
-            <div class="card shadow-none" id="secction{{ $item->id }}">
+            <div class="card shadow-none" id="secction{{ $item->id }}" data-id="seccion-{{ $item->id }}">
                 @if ($section->id == $item->id)
                     <div class="card-header" style="background: #306BA9; color: #FFFFFF;">
                         <div class="row ">
@@ -42,8 +42,6 @@
                     </div>
                 @else
                     {{-- show section --}}
-                    {{--  <div class="card-header"
-                        style="background: #306BA9; color: #FFFFFF; border-top-left-radius: 10px; border-top-right-radius: 10px;">  --}}
                     <div class="card-header"
                         style="background: #306BA9; color: #FFFFFF; border-top-left-radius: 10px; border-top-right-radius: 10px;"
                         id="secction-show-{{ $item->id }}">
@@ -87,5 +85,20 @@
         animation: 150,
         choseClass: "seleccionado",
         dragClass: "fantasma",
+
+        ondEnd: () => {
+            console.log();
+        },
+        group: "lista",
+        store: {
+            set: (sortable) => {
+                const orden = sortable.toArray();
+                localStorage.setItem(sortable.options.group.name, orden.join('|'));
+            },
+            get: (sortable) => {
+                const orden = localStorage.getItem(sortable.options.group.name);
+                return orden ? orden.split('|') : [];
+            }
+        },
     });
 </script>

@@ -5,7 +5,11 @@ namespace App\Http\Controllers\Admin\Escuela\Admin;
 use App\Http\Controllers\Controller;
 use App\Traits\ObtenerOrganizacion;
 use App\Models\Escuela\Course;
+use App\Models\Escuela\Instructor\UserAnswer;
 use App\Models\Escuela\UsuariosCursos;
+use App\Models\Escuela\Evaluation;
+use App\Models\Escuela\UserEvaluation;
+
 
 class ReportesIndividualesController extends Controller
 {
@@ -30,6 +34,17 @@ class ReportesIndividualesController extends Controller
 
             $advance = ($completedLessonsCount * 100) / ($totalLessonsCount > 0 ? $totalLessonsCount : 1);
             $cu->advance = round($advance, 2);
+
+            $calificacion = 0;
+            $evaluaciones = Evaluation::where('course_id', $id)->get();
+            foreach ($evaluaciones as $evaluation) {
+                $correctQuestions = UserAnswer::Questions($evaluation->id)->where('is_correct', true)->count();
+                $totalQuizQuestions = count($evaluation->questions);
+                $totalQuestions = $totalQuizQuestions == 0 ? 1 : $totalQuizQuestions;
+                $percentage = ($correctQuestions * 100) / $totalQuestions;
+                $calificacion += $percentage;
+            }
+            $cu->calificacion = $calificacion;
         }
 
 
