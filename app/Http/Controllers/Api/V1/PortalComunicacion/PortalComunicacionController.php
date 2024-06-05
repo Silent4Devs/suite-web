@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace app\Http\Controllers\Api\V1\PortalComunicacion;
 
 use App\Http\Controllers\Controller;
 use App\Models\Comiteseguridad;
@@ -24,38 +24,55 @@ class PortalComunicacionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(int $id)
     {
-        abort_if(Gate::denies('portal_de_comunicaccion_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $hoy = Carbon::now();
-        $hoy->toDateString();
+        // abort_if(Gate::denies('portal_de_comunicaccion_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $politica_existe = PoliticaSgsi::getAll()->count();
-        $getAlta = Empleado::alta();
-        $user = User::getCurrentUser();
+        $hoy = Carbon::now();
+        $fecha_hoy = $hoy->toDateString();
+
+        // $politica_existe = PoliticaSgsi::getAll()->count();
+        $empleados = Empleado::alta()->select('id', 'name', 'area_id', 'puesto_id', 'foto', 'antiguedad', 'cumpleaños', 'estatus');
+        $user = User::find($id);
 
         $empleado_asignado = $user->n_empleado;
         $authId = $user->id;
 
         $documentos_publicados = Documento::getLastFiveWithMacroproceso();
-        $comite_existe = Comiteseguridad::getAll()->count();
-        $nuevos = Empleado::whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->get();
-        $comunicacionSgis = ComunicacionSgi::getAllwithImagenesBlog();
-        $comunicacionSgis_carrusel = ComunicacionSgi::getAllwithImagenesCarrousel();
+        // $comite_existe = Comiteseguridad::getAll()->count();
+        $nuevos = $empleados->whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->get();
+        $comunicacionSgis = ComunicacionSgi::getAllwithImagenesBlog()->take(3);
+        $comunicacionSgis_carrusel = ComunicacionSgi::getAllwithImagenesCarrousel()->take(3);
 
-        $cumpleaños = Cache::remember('Portal_cumpleaños_' . $authId, 3600, function () use ($hoy, $getAlta) {
-            return $getAlta->whereMonth('cumpleaños', '=', $hoy->format('m'))->get();
+        $cumpleaños = Cache::remember('Portal_cumpleaños_' . $authId, 3600, function () use ($hoy, $empleados) {
+            return Empleado::alta()->select('id', 'name', 'area_id', 'puesto_id', 'foto', 'cumpleaños', 'estatus')->whereMonth('cumpleaños', '=', $hoy->format('m'))->get();
         });
+        // dd($cumpleaños);
+        // $aniversarios = Cache::remember('Portal:portal_aniversarios', 3600 * 4, function () use ($hoy, $empleados) {
+        //     return $empleados->whereMonth('antiguedad', '=', $hoy->format('m'))->whereYear('antiguedad', '<', $hoy->format('Y'))->get();
+        // });
 
-        $aniversarios = Cache::remember('Portal:portal_aniversarios', 3600 * 4, function () use ($hoy) {
-            return Empleado::alta()->whereMonth('antiguedad', '=', $hoy->format('m'))->whereYear('antiguedad', '<', $hoy->format('Y'))->get();
-        });
-
-        $aniversarios_contador_circulo = Cache::remember('Portal:portal_aniversarios_contador_circulo', 3600 * 4, function () use ($hoy) {
-            return Empleado::alta()->whereMonth('antiguedad', '=', $hoy->format('m'))->whereYear('antiguedad', '<', $hoy->format('Y'))->count();
-        });
-        dd($cumpleaños);
-        return view('admin.portalCommunication.index', compact('documentos_publicados', 'hoy', 'comunicacionSgis', 'comunicacionSgis_carrusel', 'empleado_asignado', 'aniversarios_contador_circulo', 'politica_existe', 'comite_existe', 'nuevos', 'cumpleaños', 'user'));
+        // $aniversarios_contador_circulo = Cache::remember('Portal:portal_aniversarios_contador_circulo', 3600 * 4, function () use ($hoy, $empleados) {
+        //     return $empleados->whereMonth('antiguedad', '=', $hoy->format('m'))->whereYear('antiguedad', '<', $hoy->format('Y'))->count();
+        // });
+        // dd($comunicacionSgis, $comunicacionSgis_carrusel, $empleado_asignado, $aniversarios_contador_circulo, $politica_existe, $comite_existe, $nuevos, $cumpleaños, $user);
+        // dd($cumpleaños);
+        return response()->json(
+            [
+                'documentos' => $documentos_publicados,
+                'hoy' => $fecha_hoy,
+                'comunicacionSgis' => $comunicacionSgis,
+                'comunicacionSgis_carrusel' => $comunicacionSgis_carrusel,
+                'empleado_asignado' => $empleado_asignado,
+                // 'aniversarios' => $aniversarios,
+                // 'aniversarios_contador_circulo' => $aniversarios_contador_circulo,
+                // 'politica_existe' => $politica_existe,
+                // 'comite_existe' => $comite_existe,
+                'nuevos' => $nuevos,
+                'cumpleaños' => $cumpleaños,
+                // 'user' => $user
+            ]
+        );
     }
 
     /**
