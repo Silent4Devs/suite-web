@@ -43,7 +43,7 @@ class ReportesIndividualesController extends Controller
                 $percentage = ($correctQuestions * 100) / $totalQuestions;
                 $calificacion += $percentage;
             }
-            $cu->calificacion = $calificacion / $evaluaciones->count();
+            $cu->calificacion = $calificacion / ($evaluaciones->count() == 0 ? 1 : $evaluaciones->count());
         }
 
         return view('admin.escuela.reportes-individuales', compact('logo_actual', 'empresa_actual', 'cursos_usuario'));
