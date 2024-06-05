@@ -60,3 +60,4 @@ public/mix-manifest.json
 storage/app/katbol-contratos-tmp/
 dump.sql
 preload.php
+package-lock.json
