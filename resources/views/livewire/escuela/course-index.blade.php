@@ -55,7 +55,7 @@
                             <p>Instructor: </p>
                             <div class="d-flex align-items-center gap-1">
                                 <div class="img-person">
-                                    <img src="{{ asset('storage/empleados/imagenes/' . isset($instructor->empleado) ? $instructor->empleado->foto : '') }}"
+                                    <img src="{{ asset('storage/empleados/imagenes/' . isset($instructor->empleado->foto) ? $instructor->empleado->foto : '') }}"
                                         alt="{{ $instructor->name }}">
                                 </div>
                                 {{ $instructor->name }}
