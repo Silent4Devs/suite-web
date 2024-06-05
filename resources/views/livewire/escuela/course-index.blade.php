@@ -46,7 +46,7 @@
                         <p>Creado:</p>
                         <div class="d-flex align-items-center gap-1">
                             <div class="img-person">
-                                <img src="{{ asset('storage/empleados/imagenes/' . $c->teacher->empleado->avatar) }}"
+                                <img src="{{ asset('storage/empleados/imagenes/' . isset($c->teacher->empleado->avatar) ? $c->teacher->empleado->avatar : '') }}"
                                     alt="{{ $c->teacher->name }}">
                             </div>
                             {{ $c->teacher->name }}
@@ -55,7 +55,7 @@
                             <p>Instructor: </p>
                             <div class="d-flex align-items-center gap-1">
                                 <div class="img-person">
-                                    <img src="{{ asset('storage/empleados/imagenes/' . $instructor->empleado->avatar) }}"
+                                    <img src="{{ asset('storage/empleados/imagenes/' . isset($instructor->empleado->avatar) ? $instructor->empleado->avatar : '') }}"
                                         alt="{{ $instructor->name }}">
                                 </div>
                                 {{ $instructor->name }}
