@@ -5,8 +5,10 @@ namespace App\Http\Livewire;
 use App\Models\TimesheetProyecto;
 use Livewire\Component;
 
-class IdentificadorProyectosIntExt extends Component
+class EditIdentificadorProyectosIntExt extends Component
 {
+    public $proyecto;
+
     public $identificador_proyect;
 
     public $select_tipos = [];
@@ -17,16 +19,41 @@ class IdentificadorProyectosIntExt extends Component
 
     public $class = "success";
 
-    public function mount()
+    public function mount($id_proyecto)
     {
+        $this->proyecto = TimesheetProyecto::where('id', $id_proyecto)->first();
+
+        $this->identificador_proyect = $this->proyecto->identificador;
+
+        $busqueda = TimesheetProyecto::select('tipo')->where('identificador', $this->proyecto->identificador)->get()->pluck('tipo')->toArray();
+
+        $this->select_tipos = TimesheetProyecto::TIPOS;
+
+        // dd($this->select_tipos);
+
+        if (count($busqueda) == 1) {
+            if (!empty($busqueda) && $busqueda[0] == "Interno") {
+                $this->mensaje = "Esta Identificador se encuentra en uso por un proyecto interno.";
+            } elseif (!empty($busqueda) && $busqueda[0] == "Externo") {
+                $this->mensaje = "Esta Identificador se encuentra en uso por un proyecto externo.";
+            } else {
+                $this->mensaje = "Este Identificador no esta disponible.";
+                $this->class = "error";
+            }
+        } elseif (count($busqueda) == 2) {
+            $this->mensaje = "Este Identificador no esta disponible.";
+            $this->class = "error";
+        } elseif (count($busqueda) == 0) {
+            $this->mensaje = "El Identificador esta disponible.";
+            $this->class = "error";
+        }
+
+        $this->tipo = $this->proyecto->tipo;
     }
 
     public function render()
     {
-
-        // dd($this->select_tipos);
-
-        return view('livewire.identificador-proyectos-int-ext');
+        return view('livewire.edit-identificador-proyectos-int-ext');
     }
 
     public function updatedIdentificadorProyect($text)
@@ -54,8 +81,6 @@ class IdentificadorProyectosIntExt extends Component
             $this->mensaje = "El Identificador esta disponible.";
             $this->class = "error";
         }
-
-
         // dd($busqueda);
     }
 }

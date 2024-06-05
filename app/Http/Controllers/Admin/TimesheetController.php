@@ -798,9 +798,11 @@ class TimesheetController extends Controller
             'identificador' => [
                 'max:255',
                 'required',
-                Rule::unique('timesheet_proyectos')->where(function ($query) use ($request) {
-                    return $query->where('tipo', $request->tipo);
-                })
+                Rule::unique('timesheet_proyectos')
+                    ->where(function ($query) use ($request) {
+                        return $query->where('tipo', $request->tipo);
+                    })
+                    ->ignore($id)  // Ignora el ID del proyecto actual
             ],
             'proyecto_name' => 'required|max:255',
             'cliente_id' => 'required',

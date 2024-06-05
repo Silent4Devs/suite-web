@@ -4,6 +4,21 @@
 @endsection
 @section('content')
 
+    <style>
+        div.recuadro-instruccion {
+            width: 488px;
+            height: 46px;
+            background: #FFFBEE;
+            border: 1px solid #FFA200;
+            border-radius: 9px;
+            opacity: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #FF8000;
+        }
+    </style>
+
     <h5 class="col-12 titulo_general_funcion">Timesheet: <font style="font-weight:lighter;">Proyecto</font>
     </h5>
 
@@ -26,7 +41,9 @@
                 @csrf
 
                 <div class="row mb-4">
-                    Debe Ingresar un Identificador antes de poder seleccionar el tipo.
+                    <div class="recuadro-instruccion">
+                        <strong>!</strong> &nbsp; Debe Ingresar un Identificador antes de poder seleccionar el tipo.
+                    </div>
                 </div>
 
                 <div class="row">

@@ -52,19 +52,24 @@
                                         <img class="img-firts" width="150" height="150" src="{{ $img_requi }}"
                                             style="margin: auto; margin-top: 30px;">
 
-                                        <h4 style="color: #0BD140; font-size: 26px;">Firma Duplicada</h4>
+                                        <h4 style="color: #0BD140; font-size: 26px;">Delegar Firma (Firma Duplicada)
+                                        </h4><br>
                                         <p style="font-size: 16px;">
-                                            Se detecto que ya ha firmado la requisición No[{{ $requisicion->id }}]
-                                            ¿desea
-                                            delegar la siguiente
-                                            firma del proceso?. En el caso de delegar firma
+                                            Se detecto que ya ha firmado la requisición No. {{ $requisicion->id }} con
+                                            un rol diferente. <br>
+
+                                            <br><strong>
+                                                ¿Desea
+                                                delegar la siguiente
+                                                firma del proceso?
+                                            </strong><br>
                                             <a class="link"
                                                 href="{{ route('contract_manager.requisiciones.indexAprobadores') }}"
                                                 style="display: block; font-size: 13px;">
                                                 “Ingrese aquí”
-                                            </a>
+                                            </a><br>
 
-                                            de lo
+                                            <br>De lo
                                             contrario dé clic en el siguiente link.
                                             <a class="link"
                                                 href="{{ route('contract_manager.requisiciones.firmar', ['tipo_firma' => $tipo_firma_siguiente, 'id' => $requisicion->id]) }}"
