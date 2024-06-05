@@ -27,7 +27,7 @@ class EditIdentificadorProyectosIntExt extends Component
 
         $busqueda = TimesheetProyecto::select('tipo')->where('identificador', $this->proyecto->identificador)->get()->pluck('tipo')->toArray();
 
-        $this->select_tipos = TimesheetProyecto::TIPOS;
+        $this->select_tipos = array_diff(TimesheetProyecto::TIPOS, $busqueda);
 
         // dd($this->select_tipos);
 
@@ -48,6 +48,7 @@ class EditIdentificadorProyectosIntExt extends Component
             $this->class = "error";
         }
 
+        $this->select_tipos = [$this->proyecto->tipo => $this->proyecto->tipo];
         $this->tipo = $this->proyecto->tipo;
     }
 
@@ -60,6 +61,7 @@ class EditIdentificadorProyectosIntExt extends Component
     {
         // $busqueda = TimesheetProyecto::select('tipo')->where('identificador', $text)->get()->toArray();
         $busqueda = TimesheetProyecto::select('tipo')->where('identificador', $text)->get()->pluck('tipo')->toArray();
+        $busquedaID = TimesheetProyecto::select('id')->where('identificador', $text)->get()->pluck('id')->toArray();
 
         $this->select_tipos = array_diff(TimesheetProyecto::TIPOS, $busqueda);
 
@@ -80,6 +82,12 @@ class EditIdentificadorProyectosIntExt extends Component
         } elseif (count($busqueda) == 0) {
             $this->mensaje = "El Identificador esta disponible.";
             $this->class = "error";
+        }
+
+        foreach ($busquedaID as $key_busqueda => $b) {
+            if ($this->proyecto->id == $b) {
+                $this->select_tipos = [$this->proyecto->tipo => $this->proyecto->tipo];
+            }
         }
         // dd($busqueda);
     }
