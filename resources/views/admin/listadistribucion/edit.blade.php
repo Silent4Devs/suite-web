@@ -30,8 +30,9 @@
             @include('admin.listadistribucion.suplentes')
         @endif
         <div class="col-12">
-            <div  style="position: relative; text-align:end;">
-                <a href="{{ route('admin.lista-distribucion.index') }}" type="button" class="btn tb-btn-primary" id="btn_cancelar" style="color:#057BE2;">Cancelar</a>
+            <div style="position: relative; text-align:end;">
+                <a href="{{ route('admin.lista-distribucion.index') }}" type="button" class="btn tb-btn-primary"
+                    id="btn_cancelar" style="color:#057BE2;">Cancelar</a>
                 <button type="submit" class="btn tb-btn-primary" style="width: 8rem;">Editar</button>
             </div>
         </div>

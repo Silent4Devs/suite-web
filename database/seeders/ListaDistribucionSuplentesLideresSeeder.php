@@ -20,8 +20,8 @@ class ListaDistribucionSuplentesLideresSeeder extends Seeder
         $cuentaArea = $areas->count();
 
         $modulo = ListaDistribucion::create([
-            'modulo' => 'Gestion Talento',
-            'submodulo' => 'Lideres',
+            'modulo' => 'Gestión Contractual',
+            'submodulo' => 'Requisiciones-Lideres',
             'modelo' => 'Empleado',
             'niveles' => $cuentaArea,
         ]);

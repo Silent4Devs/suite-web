@@ -64,8 +64,27 @@ class TimesheetCliente extends Model
         return $this->hasMany(TimesheetProyecto::class, 'cliente_id');
     }
 
-    public function contratos()
+    public function proyectosConvergencia()
     {
-        return $this->hasMany(Contrato::class, 'proveedor_id');
+        return $this->hasManyThrough(
+            TimesheetProyecto::class,
+            ConvergenciaContratos::class,
+            'timesheet_cliente_id', // Foreign key on the convergence table...
+            'id', // Foreign key on the contratos table...
+            'id', // Local key on the timesheet proyectos table...
+            'timesheet_proyecto_id' // Local key on the convergence table...
+        );
+    }
+
+    public function contratosConvergencia()
+    {
+        return $this->hasManyThrough(
+            Contrato::class,
+            ConvergenciaContratos::class,
+            'timesheet_cliente_id', // Foreign key on the convergence table...
+            'id', // Foreign key on the contratos table...
+            'id', // Local key on the timesheet proyectos table...
+            'contrato_id' // Local key on the convergence table...
+        );
     }
 }

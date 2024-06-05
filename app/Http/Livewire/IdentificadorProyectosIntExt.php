@@ -3,7 +3,6 @@
 namespace App\Http\Livewire;
 
 use App\Models\TimesheetProyecto;
-use Jantinnerezo\LivewireAlert\LivewireAlertServiceProvider;
 use Livewire\Component;
 
 class IdentificadorProyectosIntExt extends Component

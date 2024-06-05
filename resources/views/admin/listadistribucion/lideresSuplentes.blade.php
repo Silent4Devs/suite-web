@@ -1,3 +1,9 @@
+<style>
+    .form-row[class*="nivel"] {
+        display: block !important;
+    }
+</style>
+
 <div class="card">
     <div class="card-body">
         <h4 style="color:#057BE2; title-table-rds">Módulo asignado</h4>
@@ -33,7 +39,7 @@
 
                 <div>
                     @for ($i = 1; $i <= $lista->niveles; $i++)
-                        <div class="form-row nivel{{ $i }}Div" style="display: none;">
+                        <div class="form-row nivel{{ $i }}Div">
                             <div class="mt-4 mb-1">
                                 <i class="fas fa-circle" style="color: #007bff;"></i> Nivel {{ $i }}
                                 <br>

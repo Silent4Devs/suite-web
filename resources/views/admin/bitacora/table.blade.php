@@ -256,7 +256,7 @@ option
                 <select class="form-control" name="no_proyecto" id="no_proyecto">
                     <option value="" selected>Seleccione un Numero de proyecto</option>
                     @foreach ($proyectos as $proyecto)
-                        <option value="{{ $proyecto->identificador }}">
+                        <option data-id="{{ $proyecto->id }}" value="{{ $proyecto->identificador }}">
                             {{ $proyecto->identificador }}-{{ $proyecto->proyecto }}</option>
                     @endforeach
                 </select>

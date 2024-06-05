@@ -183,7 +183,6 @@ class Contrato extends Model implements Auditable
         'updated_by',
         'identificador_privado',
         'firma1',
-        'timesheet_proyecto_id',
     ];
 
     /**
@@ -303,13 +302,32 @@ class Contrato extends Model implements Auditable
         return $this->no_contrato . '-' . $this->nombre_servicio;
     }
 
-    public function timesheetCliente()
+    public function cliente()
     {
         return $this->belongsTo(TimesheetCliente::class, 'proveedor_id');
     }
 
-    public function timesheetProyecto()
+    public function clienteConvergencia()
     {
-        return $this->belongsTo(TimesheetProyecto::class, 'timesheet_proyecto_id');
+        return $this->hasOneThrough(
+            TimesheetCliente::class,
+            ConvergenciaContratos::class,
+            'contrato_id', // Foreign key on the convergence table...
+            'id', // Foreign key on the timesheet proyectos table...
+            'id', // Local key on the contratos table...
+            'timesheet_cliente_id' // Local key on the convergence table...
+        );
+    }
+
+    public function proyectoConvergencia()
+    {
+        return $this->hasOneThrough(
+            TimesheetProyecto::class,
+            ConvergenciaContratos::class,
+            'contrato_id', // Foreign key on the convergence table...
+            'id', // Foreign key on the timesheet proyectos table...
+            'id', // Local key on the contratos table...
+            'timesheet_proyecto_id' // Local key on the convergence table...
+        );
     }
 }

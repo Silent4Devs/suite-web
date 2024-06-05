@@ -24,6 +24,11 @@
             </div>
             <form id="timesheet-proyectos-form" method="POST" action="{{ route('admin.timesheet-proyectos-store') }}">
                 @csrf
+
+                <div class="row mb-4">
+                    Debe Ingresar un Identificador antes de poder seleccionar el tipo.
+                </div>
+
                 <div class="row">
                     <div class="col-8">
                         @livewire('identificador-proyectos-int-ext')
@@ -179,12 +184,37 @@
                                     .message, // Assuming the response contains a 'message' key
                                 allowOutsideClick: false // Prevent dismissing by clicking outside the dialog
                             }).then((result) => {
-                                if (result.isConfirmed) {
-                                    const id_proyecto = data.id_proyecto;
-                                    window.location.href =
-                                        "{{ route('admin.timesheet-proyectos-edit', 'id') }}"
-                                        .replace('id', id_proyecto);
-                                }
+                                Swal.fire({
+                                    icon: 'question',
+                                    title: '¿Desea Crear un Contrato para este Proyecto?',
+                                    text: 'Ir a vista de Creación de Contratos',
+                                    showCancelButton: true,
+                                    confirmButtonText: 'Sí.',
+                                    cancelButtonText: 'No.'
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+
+                                        // Redirigir a la ruta deseada después de la confirmación
+                                        const id_proyecto = data
+                                            .id_proyecto;
+                                        window.location.href =
+                                            "{{ route('contract_manager.contratos-katbol.create') }}"
+                                    } else {
+                                        // Si el usuario cancela
+                                        Swal.fire({
+                                            icon: 'info',
+                                            title: 'Cancelado',
+                                            text: 'La acción ha sido cancelada.',
+                                        }).then(() => {
+                                            // Redirigir a la ruta de edición
+                                            const id_proyecto = data
+                                                .id_proyecto;
+                                            window.location.href =
+                                                "{{ route('admin.timesheet-proyectos-edit', 'id') }}"
+                                                .replace('id', id_proyecto);
+                                        });
+                                    }
+                                });
                             });
                         } else {
                             Swal.fire({

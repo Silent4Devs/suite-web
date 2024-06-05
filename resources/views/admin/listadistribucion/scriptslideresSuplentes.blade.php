@@ -93,7 +93,7 @@
 
 <script>
     $(document).ready(function() {
-        for (let i = 1; i < {{ $lista->niveles }}; i++) {
+        for (let i = 1; i <= {{ $lista->niveles }}; i++) {
             $('#nivel' + i).select2({
                 templateResult: formatAvatar,
                 templateSelection: formatAvatar,

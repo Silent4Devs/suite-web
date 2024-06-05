@@ -207,15 +207,27 @@ class TimesheetProyecto extends Model implements Auditable
         return $this->hasMany(TimesheetProyectoProveedor::class, 'proyecto_id', 'id');
     }
 
-    public function clientes()
+    public function clienteConvergencia()
     {
-        return $this->belongsToMany(TimesheetCliente::class, 'convergencia_contratos_proyectos_clientes', 'timesheet_proyecto_id', 'timesheet_cliente_id')
-            ->withPivot('contrato_id'); // Include additional pivot fields as needed
+        return $this->hasOneThrough(
+            TimesheetCliente::class,
+            ConvergenciaContratos::class,
+            'timesheet_cliente_id', // Foreign key on the convergence table...
+            'id', // Foreign key on the timesheet proyectos table...
+            'id', // Local key on the contratos table...
+            'timesheet_proyecto_id' // Local key on the convergence table...
+        );
     }
 
-    public function contratos()
+    public function contratosConvergencia()
     {
-        return $this->belongsToMany(Contrato::class, 'convergencia_contratos_proyectos_clientes', 'timesheet_proyecto_id', 'contrato_id')
-            ->withPivot('timesheet_cliente_id'); // Include additional pivot fields as needed
+        return $this->hasManyThrough(
+            Contrato::class,
+            ConvergenciaContratos::class,
+            'timesheet_proyecto_id', // Foreign key on the convergence table...
+            'id', // Foreign key on the contratos table...
+            'id', // Local key on the timesheet proyectos table...
+            'contrato_id' // Local key on the convergence table...
+        );
     }
 }

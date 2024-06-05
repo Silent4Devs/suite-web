@@ -2,13 +2,6 @@
     {{-- Care about people's approval and you will be their prisoner. --}}
     <div class="row">
         <div class="col-md-6">
-
-            <div class="mb-3">
-                <span>
-                    Debe Ingresar un Identificador antes de poder seleccionar el tipo.
-                </span>
-            </div>
-
             <div class="form-group anima-focus">
                 <input type="text" id="identificador_proyect" placeholder=""
                     wire:model.debounce2000ms="identificador_proyect"

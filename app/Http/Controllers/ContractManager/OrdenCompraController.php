@@ -294,8 +294,7 @@ class OrdenCompraController extends Controller
                 if ($responsableNivel->empleado->disponibilidad->disponibilidad == 1) {
 
                     $responsable = $responsableNivel->empleado;
-                    $user = $responsable->email;
-                    $userEmail = $user;
+                    $userEmail = $responsable->email;
 
                     $cN = $listaPart->where('nivel', $i)->where('numero_orden', '!=', 1);
 
@@ -324,6 +323,7 @@ class OrdenCompraController extends Controller
             // correo de finanzas
             $userEmail = $requisicion->email;
         }
+
         if ($tipo_firma == 'firma_finanzas_orden') {
             $fecha = date('d-m-Y');
             $requisicion->fecha_firma_finanzas_orden = $fecha;
