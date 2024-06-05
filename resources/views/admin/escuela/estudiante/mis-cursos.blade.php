@@ -43,7 +43,7 @@
                             @if (isset($lastCourse->cursos->instructor))
                                 <div class="d-flex align-items-center gap-1 my-4">
                                     <div class="img-person">
-                                        <img src="{{ asset('storage/empleados/imagenes/' . isset($lastCourse->cursos->instructor->empleado) ? $lastCourse->cursos->instructor->empleado->avatar : '') }}"
+                                        <img src="{{ $lastCourse->cursos->instructor->empleado->avatar_ruta }}"
                                             alt="{{ $lastCourse->cursos->instructor->name }}">
                                     </div>
                                     <span class="course-teacher"> {{ $lastCourse->cursos->instructor->name }} </span>
@@ -94,7 +94,7 @@
                                     <span>Un curso de: </span><br>
                                     <div class="d-flex align-items-center gap-1 mt-2">
                                         <div class="img-person">
-                                            <img src="{{ asset('storage/empleados/imagenes/' . isset($lastCourse->cursos->instructor->empleado) ? $lastCourse->cursos->instructor->empleado->avatar : '') }}"
+                                            <img src="{{ $lastCourse->cursos->instructor->empleado->avatar_ruta }}"
                                                 alt="{{ $lastCourse->cursos->instructor->name }}">
                                         </div>
                                         <span class="course-teacher"> {{ $lastCourse->cursos->instructor->name }} </span>
