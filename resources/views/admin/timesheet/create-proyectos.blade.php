@@ -196,7 +196,7 @@
                         if (data.success) {
                             Swal.fire({
                                 icon: 'success',
-                                title: 'Proyecto Creado!',
+                                title: 'Proyecto Creado',
                                 text: data
                                     .message, // Assuming the response contains a 'message' key
                                 allowOutsideClick: false // Prevent dismissing by clicking outside the dialog
@@ -204,10 +204,10 @@
                                 Swal.fire({
                                     icon: 'question',
                                     title: '¿Desea Crear un Contrato para este Proyecto?',
-                                    text: 'Ir a vista de Creación de Contratos',
+                                    text: 'Ir a vista de creación de Contratos',
                                     showCancelButton: true,
-                                    confirmButtonText: 'Sí.',
-                                    cancelButtonText: 'No.'
+                                    confirmButtonText: 'Sí',
+                                    cancelButtonText: 'No'
                                 }).then((result) => {
                                     if (result.isConfirmed) {
 

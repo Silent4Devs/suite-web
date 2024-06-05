@@ -744,7 +744,7 @@ class TimesheetController extends Controller
             } catch (\Throwable $th) {
                 return response()->json([
                     'success' => true,
-                    'message' => 'Ha Ocurrido un Error al enviar el correo.',
+                    'message' => 'Al intentar enviar el correo de notificación al usuario responsable ha ocurrido un error.',
                     'id_proyecto' => $nuevo_proyecto->id,
                 ]);
             }
