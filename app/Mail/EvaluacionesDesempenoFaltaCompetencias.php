@@ -37,7 +37,7 @@ class EvaluacionesDesempenoFaltaCompetencias extends Mailable
         return $this->from(env('# MAIL_FROM_ADDRESS'), env('# MAIL_FROM_NAME'))
             ->subject('Evaluacion ' . $this->nombre_evaluacion . ':Colaboradores sin Competencias')
             ->view(
-                'mails.competenciasFaltantes',
+                'mails.evaluaciones.competencias.competenciasFaltantes',
                 [
                     'nombre_evaluacion' => $this->nombre_evaluacion,
                     'nombre_periodo' => $this->nombre_periodo,

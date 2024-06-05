@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Mail\CreacionEvaluacionDesempenoMailable;
 use App\Models\Area;
 use App\Models\CatalogoCompetenciasEvDesempeno;
 use App\Models\CatalogoObjetivosEvDesempeno;
@@ -16,10 +17,12 @@ use App\Models\EvaluacionDesempeno;
 use App\Models\EvaluadoresEvaluacionCompetenciasDesempeno;
 use App\Models\EvaluadoresEvaluacionObjetivosDesempeno;
 use App\Models\EvaluadosEvaluacionDesempeno;
+use App\Models\ListaInformativa;
 use App\Models\PeriodosEvaluacionDesempeno;
 use App\Models\User;
 use Livewire\Component;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Mail;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class CreateEvaluacionDesempeno extends Component
@@ -288,6 +291,25 @@ class CreateEvaluacionDesempeno extends Component
 
 
         $this->crearCuestionario($evaluacion);
+
+        $informados = ListaInformativa::with('participantes.empleado', 'usuarios.usuario')->where('modelo', '=', 'EvaluacionDesempeno')->first();
+
+        if (isset($informados->participantes[0]) || isset($informados->usuarios[0])) {
+
+            if (isset($informados->participantes[0])) {
+                foreach ($informados->participantes as $participante) {
+                    $correos[] = $participante->empleado->email;
+                }
+            }
+
+            if (isset($informados->usuarios[0])) {
+                foreach ($informados->usuarios as $usuario) {
+                    $correos[] = $usuario->usuario->email;
+                }
+            }
+
+            Mail::to(removeUnicodeCharacters($correos))->queue(new CreacionEvaluacionDesempenoMailable($evaluacion->nombre, $evaluacion->autor->name));
+        }
 
         return redirect(route('admin.rh.evaluaciones-desempeno.index'));
     }
@@ -695,7 +717,6 @@ class CreateEvaluacionDesempeno extends Component
                 ];
             }
         }
-        // dd($this->array_evaluados, $this->array_evaluadores);
     }
 
     public function agregarEvaluadorObjetivos($posicion)
