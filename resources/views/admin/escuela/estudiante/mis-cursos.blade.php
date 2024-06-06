@@ -39,8 +39,8 @@
                 <div class="col-md-5">
                     <div class="card-body" style="padding-left:0px; padding-right:0px;">
                         <h5 class="card-title" style="color:#000000;">{{ $lastCourse->cursos->title }}</h5>
-                        @if ($lastCourse->cursos->instructor)
-                            @if (isset($lastCourse->cursos->instructor))
+                        @if (isset($lastCourse->cursos->instructor))
+                            @if (isset($lastCourse->cursos->instructor->empleado))
                                 <div class="d-flex align-items-center gap-1 my-4">
                                     <div class="img-person">
                                         <img src="{{ $lastCourse->cursos->instructor->empleado->avatar_ruta }}"
@@ -95,25 +95,22 @@
                     @endphp
                     <div class="card card-body mi-curso" style="overflow: hidden">
                         @if (isset($cu->cursos->image->url))
-                            {{-- <img src="{{ asset($cu->cursos->image->url) }}" alt="" class="card-img"
-                                style="min-height: 225px; border-radius: 12px 12px 0px 0px;"> --}}
                             <div class="content-img">
-                                <img src="https://cdn-jcgml.nitrocdn.com/IiKJPWEbyiSpjVgFYhFrOvslBhxMUoxL/assets/images/optimized/rev-b2c5040/go.uvm.mx/static/Banner_UVMGo_Mobile_Ingles1.webp"
-                                    alt="">
+                                <img src="{{ asset($cu->cursos->image->url) }}" alt="">
                             </div>
                             <div class="caja-info-card-mc">
                                 <p class="course-title">
                                     {{ $cu->cursos->title }}
                                 </p>
-                                @if ($instructor)
-                                    @if (isset($lastCourse->cursos->instructor))
+                                @if ($instructor && isset($instructor->empleado))
+                                    @if (isset($cu->cursos->instructor->empleado->avatar_ruta))
                                         <span>Un curso de: </span><br>
                                         <div class="d-flex align-items-center gap-1 mt-2">
                                             <div class="img-person">
-                                                <img src="{{ $lastCourse->cursos->instructor->empleado->avatar_ruta }}"
-                                                    alt="{{ $lastCourse->cursos->instructor->name }}">
+                                                <img src="{{ $instructor->empleado->avatar_ruta }}"
+                                                    alt="{{ $cu->cursos->instructor->name }}">
                                             </div>
-                                            <span class="course-teacher"> {{ $lastCourse->cursos->instructor->name }}
+                                            <span class="course-teacher"> {{ $cu->cursos->instructor->name }}
                                             </span>
                                         </div>
                                     @endif
