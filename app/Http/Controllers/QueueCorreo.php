@@ -29,11 +29,11 @@ class QueueCorreo extends Controller
         // Now, $data contains all the values from the Redis table
         // dd('al ready sent');
 
-        $documentos = Contrato::select('id', 'no_contrato', 'file_contrato')->get();
+        $documentos = Contrato::select('id', 'no_contrato', 'file_contrato')->where('deleted_at', null)->get();
         $tabla = "";
         foreach ($documentos as $key => $documento) {
             # code...
-            $validacion = Storage::exists('/public/storage/contratos/' . $documento->id . '_contrato_' . $documento->no_contrato . '/' . $documento->file_contrato);
+            $validacion = Storage::exists('/public/contratos/' . $documento->id . '_contrato_' . $documento->no_contrato . '/' . $documento->file_contrato);
 
             if (!$validacion) {
                 $contratos_faltantes[] = [
@@ -45,10 +45,8 @@ class QueueCorreo extends Controller
             }
             echo $tabla;
         }
-
-
-
-        // dd($contratos_faltantes);
+        echo "<hr>";
+        echo $documentos->count();
     }
 
     public function insertarFirmadoresFinanzas()
