@@ -43,14 +43,16 @@
                     <div class="caja-info-card-mc">
 
                         <p style="font-size: 18px; color:#000000">{{ $c->title }}</p>
-                        <p>Creado:</p>
-                        <div class="d-flex align-items-center gap-1">
-                            <div class="img-person">
-                                <img src="{{ $c->teacher->empleado->avatar_ruta }}" alt="{{ $c->teacher->name }}">
+                        @if (isset($c->teacher) && isset($c->teacher->empleado) && isset($c->teacher->empleado->avatar_ruta))
+                            <p>Creado:</p>
+                            <div class="d-flex align-items-center gap-1">
+                                <div class="img-person">
+                                    <img src="{{ $c->teacher->empleado->avatar_ruta }}" alt="{{ $c->teacher->name }}">
+                                </div>
+                                {{ $c->teacher->name }}
                             </div>
-                            {{ $c->teacher->name }}
-                        </div>
-                        @if ($instructor)
+                        @endif
+                        @if ($instructor && isset($instructor->empleado) && isset($instructor->empleado->avatar_ruta))
                             <p>Instructor: </p>
                             <div class="d-flex align-items-center gap-1">
                                 <div class="img-person">
