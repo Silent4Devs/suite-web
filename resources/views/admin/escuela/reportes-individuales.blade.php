@@ -28,7 +28,8 @@
                                 <td>
                                     <div class="d-flex align-items-center gap-1 mt-2">
                                         <div class="img-person">
-                                            <img src="{{ $cu->usuarios->avatar_ruta }}" alt="{{ $cu->usuarios->name }}">
+                                            <img src="{{ $cu->usuarios->empleado->avatar_ruta }}"
+                                                alt="{{ $cu->usuarios->name }}">
                                         </div>
                                         <span class="course-teacher"> {{ $cu->usuarios->name }}</span>
                                     </div>
