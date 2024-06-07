@@ -17,7 +17,7 @@
 @section('content')
     <h5 class="col-12 titulo_general_funcion">PLAN DE TRABAJO</h5>
     <div class="text-right">
-        <button type="button" class="btn tb-btn-primary" data-toggle="modal" data-target="#modalPlanAccion">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalPlanAccion">
             Agregar nuevo
             <i class="material-symbols-outlined">add</i>
         </button>
@@ -133,7 +133,7 @@
                                     </div>
                             </div>
                             <div class="text-right form-group col-12" style="margin-left:-5px;">
-                                <button class="btn btn-xs tb-btn-primary" type="submit">
+                                <button class="btn btn-xs btn-primary" type="submit">
                                     {{ trans('global.save') }}
                                 </button>
                             </div>
