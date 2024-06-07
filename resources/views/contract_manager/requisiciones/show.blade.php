@@ -131,15 +131,15 @@
                             <strong>Proveedor:</strong><br><br>
                             {{$provedores->proveedor}}
                         </div>
-                        <div class="col s12 l6" style="position: relative; left: 10rem;">
+                        <div style="position: relative; left: 10rem;">
                             <strong>Detalle del producto:</strong><br><br>
                             {{$provedores->detalles}}
                         </div>
-                        <div class="col s12 l6" style="position: relative; left: 10rem;">
+                        <div style="position: relative; left: 10rem;">
                             <strong>Comentarios:</strong><br><br>
                             {{ $provedores->comentarios }}
                         </div>
-                        <div class="col s12 l6" style="position: relative; left: 10rem;">
+                        <div style="position: relative; left: 10rem;">
                             <strong>Nombre del contacto:</strong><br><br>
                             {{$provedores->contacto}}
                         </div>
