@@ -11,6 +11,7 @@ use App\Models\FelicitarCumpleaños;
 use App\Models\Organizacione;
 use App\Models\PoliticaSgsi;
 use App\Models\User;
+use Illuminate\Support\Arr;
 use Carbon\Carbon;
 use Gate;
 use Illuminate\Http\Request;
@@ -27,7 +28,6 @@ class PortalComunicacionController extends Controller
     public function index(int $id)
     {
         // abort_if(Gate::denies('portal_de_comunicaccion_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
         $hoy = Carbon::now();
         $fecha_hoy = $hoy->toDateString();
 
@@ -41,12 +41,25 @@ class PortalComunicacionController extends Controller
         $documentos_publicados = Documento::getLastFiveWithMacroproceso();
         // $comite_existe = Comiteseguridad::getAll()->count();
         $nuevos = $empleados->whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->get();
-        $comunicacionSgis = ComunicacionSgi::getAllwithImagenesBlog()->take(3);
-        $comunicacionSgis_carrusel = ComunicacionSgi::getAllwithImagenesCarrousel()->take(3);
+        $comunicados = ComunicacionSgi::getAllwithImagenesBlog();
+        $noticias = ComunicacionSgi::getAllwithImagenesCarrousel()->take(3);
 
         $cumpleaños = Cache::remember('Portal_cumpleaños_' . $authId, 3600, function () use ($hoy, $empleados) {
-            return Empleado::alta()->select('id', 'name', 'area_id', 'puesto_id', 'foto', 'cumpleaños', 'estatus')->whereMonth('cumpleaños', '=', $hoy->format('m'))->get();
+            return Empleado::alta()->select('id', 'name', 'area_id', 'puesto_id', 'foto', 'cumpleaños', 'estatus')->whereMonth('cumpleaños', '=', $hoy->format('m'))->get()->makeHidden([
+                'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
+                'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet',
+                'area', 'supervisor'
+            ]);
         });
+
+        foreach ($cumpleaños as $key => $cumple) {
+            $cumple->nombre_area = $cumple->area->area;
+            $cumple->makeHidden([
+                'area_id',
+                'puesto_id'
+            ]);
+        }
+
         // dd($cumpleaños);
         // $aniversarios = Cache::remember('Portal:portal_aniversarios', 3600 * 4, function () use ($hoy, $empleados) {
         //     return $empleados->whereMonth('antiguedad', '=', $hoy->format('m'))->whereYear('antiguedad', '<', $hoy->format('Y'))->get();
@@ -61,8 +74,8 @@ class PortalComunicacionController extends Controller
             [
                 'documentos' => $documentos_publicados,
                 'hoy' => $fecha_hoy,
-                'comunicacionSgis' => $comunicacionSgis,
-                'comunicacionSgis_carrusel' => $comunicacionSgis_carrusel,
+                'comunicados' => $comunicados,
+                'noticias' => $noticias,
                 'empleado_asignado' => $empleado_asignado,
                 // 'aniversarios' => $aniversarios,
                 // 'aniversarios_contador_circulo' => $aniversarios_contador_circulo,
@@ -70,7 +83,6 @@ class PortalComunicacionController extends Controller
                 // 'comite_existe' => $comite_existe,
                 'nuevos' => $nuevos,
                 'cumpleaños' => $cumpleaños,
-                // 'user' => $user
             ]
         );
     }

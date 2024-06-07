@@ -20,7 +20,7 @@ class AuthController extends Controller
         ]);
 
         //valida las credenciales del usuario
-        if (! Auth::attempt($request->only('email', 'password'))) {
+        if (!Auth::attempt($request->only('email', 'password'))) {
             return response()->json([
                 'message' => 'Invalid access credentials',
             ], 401);
@@ -51,7 +51,7 @@ class AuthController extends Controller
         //     'data' => $token,
         // ], 204);
 
-        if (! $token) {
+        if (!$token) {
             return response()->json([
                 'status' => 'Error',
                 'message' => 'Token not provided',
