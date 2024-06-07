@@ -107,9 +107,9 @@
 
 
 @if (session('mensajeError'))
-<div class="alert alert-danger">
-    {{ session('mensajeError') }}
-</div>
+    <div class="alert alert-danger">
+        {{ session('mensajeError') }}
+    </div>
 @endif
 
 {{-- <form method="PATH" action="{{ route('contratos.update', $contrato->id) }}" enctype="multipart/form-data"> --}}
@@ -222,8 +222,9 @@
             <label for="nombre_servicio" class="txt-tamaño">
                 Nombre del servicio<font class="asterisco">*</font></label><br>
             <div class="form-floating">
-                <textarea id="textarea1"  maxlength="550"  class="form-control" value="{{ $contrato->nombre_servicio }}" name="nombre_servicio"
-                    {{ $show_contrato ? 'readonly' : '' }} @if ($show_contrato) disabled @endif required>{{ $contrato->nombre_servicio }}</textarea>
+                <textarea id="textarea1" maxlength="550" class="form-control" value="{{ $contrato->nombre_servicio }}"
+                    name="nombre_servicio" {{ $show_contrato ? 'readonly' : '' }} @if ($show_contrato) disabled @endif
+                    required>{{ $contrato->nombre_servicio }}</textarea>
             </div>
             @if ($errors->has('nombre_servicio'))
                 <div class="invalid-feedback red-text">
@@ -251,10 +252,22 @@
         </div>
 
         <div class="distancia form-group col-md-4">
-            <label for="no_proyecto" class="txt-tamaño">
-                Número de proyecto</label>
-            <input type="text" maxlength="250" name="no_proyecto" id="no_proyecto" class="form-control"
-                value="{{ $contrato->no_proyecto }}" @if ($show_contrato) disabled @endif>
+            <label for="no_proyecto" class="txt-tamaño">Número de proyecto</label>
+            <select class="form-control" name="no_proyecto" id="no_proyecto"
+                @if ($show_contrato) disabled @endif>
+                <option value="" selected>Seleccione un Número de proyecto</option>
+                @foreach ($proyectos as $proyecto)
+                    <option data-id="{{ $proyecto->id }}" value="{{ $proyecto->identificador }}"
+                        @if ($contrato->no_proyecto == $proyecto->identificador) selected @endif>
+                        {{ $proyecto->identificador }} - {{ $proyecto->proyecto }}
+                    </option>
+                @endforeach
+            </select>
+            @if ($errors->has('no_proyecto'))
+                <div class="invalid-feedback red-text">
+                    {{ $errors->first('no_proyecto') }}
+                </div>
+            @endif
         </div>
 
         @if ($areas->count() > 0)
@@ -328,8 +341,8 @@
         <div class="form-group col-md-12">
             <label for="objetivo" class="txt-tamaño">
                 Objetivo del servicio<font class="asterisco">*</font></label>
-            <textarea style="text-align:justify" maxlength="500" id="textarea1" class="form-control" value="{{ $contrato->objetivo }}"
-                name="objetivo" @if ($show_contrato) disabled @endif required>{{ $contrato->objetivo }}</textarea>
+            <textarea style="text-align:justify" maxlength="500" id="textarea1" class="form-control"
+                value="{{ $contrato->objetivo }}" name="objetivo" @if ($show_contrato) disabled @endif required>{{ $contrato->objetivo }}</textarea>
             @if ($errors->has('objetivo'))
                 <div class="invalid-feedback red-text">
                     {{ $errors->first('objetivo') }}
@@ -339,29 +352,28 @@
     </div>
 
     <div class="row" style="margin-left: 10px; margin-right: 10px;">
-        <div class="distancia form-group col-md-6">
-            <label for="" class="txt-tamaño">
-                Adjuntar Contrato
-                <font class="asterisco">*</font>
-            </label>
-            <div class="file-field input-field">
+        @if ($contrato->file_contrato != null)
+            <div class="distancia form-group col-md-6">
+                <label for="" class="txt-tamaño">
+                    Adjuntar Contrato
+                    <font class="asterisco">*</font>
+                </label>
+                <div class="file-field input-field">
+                    <div class="btn" {{ !$show_contrato ? 'onclick=mostrarAlerta()' : '' }}>
+                        <span>Documento Actual:</span>
+                    </div>
 
-                <div class="btn" {{ !$show_contrato ? 'onclick=mostrarAlerta()' : '' }}>
-                    <span>Documento Actual:</span>
-                </div>
-
-                <div class="file-path-wrapper">
-                    <input value="{{ $contrato->file_contrato }}" class="file-path validate form-control"
-                        type="text" placeholder="Elegir documento" {{ $show_contrato ? 'readonly' : '' }}
-                        readonly>
+                    <div class="file-path-wrapper">
+                        <input value="{{ $contrato->file_contrato }}" class="file-path validate form-control"
+                            type="text" placeholder="Elegir documento" {{ $show_contrato ? 'readonly' : '' }}
+                            readonly>
+                    </div>
+                    <a href="{{ asset(trim('storage/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/' . $contrato->file_contrato)) }}"
+                        target="_blank" class=" descarga_archivo" style="margin-left:20px;">
+                        Descargar archivo actual</a>
                 </div>
             </div>
-            @if ($contrato->file_contrato != null)
-                <a href="{{ asset(trim('storage/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/' . $contrato->file_contrato)) }}"
-                    target="_blank" class=" descarga_archivo" style="margin-left:20px;">
-                    Descargar archivo actual</a>
-            @endif
-        </div>
+        @endif
         <div class="distancia form-group col-md-6">
             @if (!$show_contrato)
                 <div class="fondo_delete">
@@ -486,14 +498,14 @@
         <div class="form-group col-md-4">
             <label for="no_contrato" class="txt-tamaño">
                 No. Pagos<font class="asterisco">*</font></label>
-                {!! Form::number('no_pagos', $contrato->no_pagos, [
-                    'class' => 'form-control',
-                    'required',
-                    'pattern' => '[0-9]+',
-                    'min' => 0, // Opcional: especifica el valor mínimo permitido
-                    'step' => 1, // Opcional: especifica el paso de incremento/decremento
-                    $show_contrato ? 'readonly' : '',
-                ]) !!}
+            {!! Form::number('no_pagos', $contrato->no_pagos, [
+                'class' => 'form-control',
+                'required',
+                'pattern' => '[0-9]+',
+                'min' => 0, // Opcional: especifica el valor mínimo permitido
+                'step' => 1, // Opcional: especifica el paso de incremento/decremento
+                $show_contrato ? 'readonly' : '',
+            ]) !!}
             @if ($errors->has('no_pagos'))
                 <div class="invalid-feedback red-text">
                     {{ $errors->first('no_pagos') }}
@@ -883,7 +895,7 @@
     <div class="col s12 right-align btn-grd distancia">
         @if (!$show_contrato)
             <a href="{{ route('contract_manager.contratos-katbol.index') }}" class="btn btn_cancelar">Cancelar</a>
-            {!! Form::submit('Guardar', ['class' => 'btn btn-success',  'onclick' => 'miFuncion()']) !!}
+            {!! Form::submit('Guardar', ['class' => 'btn btn-success', 'onclick' => 'miFuncion()']) !!}
         @endif
     </div>
 </div>
@@ -925,8 +937,7 @@
             // redirigir a la misma página
             window.location.href = window.location.href;
         });
-}
-
+    }
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -1086,7 +1097,7 @@
     $(document).ready(function() {
 
         if ($('#check_fianza').checked) {
-           $(".td_fianza").fadeOut(0);
+            $(".td_fianza").fadeOut(0);
         } else {
             $(".td_fianza").fadeIn(0);
         }
@@ -1367,7 +1378,7 @@
                 url: $(this).attr('action'),
                 data: $(this).serialize(),
                 success: function(response) {
-                    if(response.success) {
+                    if (response.success) {
                         Swal.fire(
                             '¡Buen trabajo!',
                             response.message,
@@ -1387,4 +1398,3 @@
         });
     });
 </script>
-

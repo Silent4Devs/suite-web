@@ -4,7 +4,7 @@
         <div class="col-md-6">
             <div class="form-group anima-focus">
                 <input type="text" id="identificador_proyect" placeholder=""
-                    wire:model.debounce2000ms="identificador_proyect"
+                    wire:model.debounce.1000ms="identificador_proyect"
                     title="Por favor, no incluyas comas en el nombre de la tarea." name="identificador" pattern="[^\.,]*"
                     class="form-control" maxlength="254" required>
                 {!! Form::label('identificador', 'ID*', ['class' => 'asterisco']) !!}

@@ -22,6 +22,7 @@ use App\Models\Empleado;
 use App\Models\Organizacion;
 use App\Models\TimesheetCliente;
 use App\Models\TimesheetProyecto;
+use App\Models\TimesheetProyectoArea;
 use App\Models\User;
 use App\Repositories\ContratoRepository;
 use App\Rules\NumeroContrato;
@@ -121,6 +122,14 @@ class ContratosController extends AppBaseController
             'maximo' => ['nullable', "regex:/(^[$](?!0+\\\.00)(?=.{1,14}(\.|$))(?!0(?!\.))\d{1,3}(,\d{3})*(\.\d{1,2})?)/", 'required'],
             'pmp_asignado' => 'required',
             // 'signed' => 'required',
+            // "creacion_proyecto" => "nullable|boolean",
+            "identificador" => "required_if:creacion_proyecto,true|string|max:255",
+            "tipo" => "required_if:creacion_proyecto,true|string|max:255",
+            "proyecto_name" => "required_if:creacion_proyecto,true|string|max:255",
+            "sede_id" => "required_if:creacion_proyecto,true|integer|exists:sedes,id",
+            "fecha_inicio_proyecto" => "required_if:creacion_proyecto,true|date",
+            "fecha_fin_proyecto" => "required_if:creacion_proyecto,true|date|after_or_equal:fecha_inicio_proyecto",
+            "horas_proyecto" => "nullable|integer|min:0",
         ], [
             'monto_pago.regex' => 'El monto total debe ser menor a 99,999,999,999.99',
             'maximo.regex' => 'El monto total debe ser menor a 99,999,999,999.99',
@@ -201,7 +210,25 @@ class ContratosController extends AppBaseController
             $num_contrato = $no_contrato_sin_slashes;
         }
 
-        $proyecto = TimesheetProyecto::select('id', 'identificador')->where('identificador', $request->no_proyecto)->first();
+        if ($request->creacion_proyecto) {
+            $proyecto = TimesheetProyecto::create([
+                "identificador" => $request->identificador,
+                "tipo" => $request->tipo,
+                "proyecto" => $request->proyecto_name,
+                "sede_id" => $request->sede_id,
+                "fecha_inicio" => $request->fecha_inicio_proyecto,
+                "fecha_fin" => $request->fecha_fin_proyecto,
+                "horas_proyecto" => $request->horas_proyecto,
+                "cliente_id" => $request->proveedor_id,
+            ]);
+
+            $proyecto_area = TimesheetProyectoArea::create([
+                'area_id' => $request->area_id,
+                'proyecto_id' => $proyecto->id,
+            ]);
+        } else {
+            $proyecto = TimesheetProyecto::select('id', 'identificador')->where('identificador', $request->no_proyecto)->first();
+        }
 
         $contrato = $this->contratoRepository->create([
             'tipo_contrato' => $request->tipo_contrato,
@@ -420,7 +447,9 @@ class ContratosController extends AppBaseController
 
             $organizacion = Organizacion::getFirst();
 
-            return view('contract_manager.contratos-katbol.edit', compact('proveedor_id', 'dolares', 'organizacion', 'areas'))->with('contrato', $contrato)->with('proveedores', $proveedores)->with('contratos', $contratos)->with('ids', $id)->with('descargar_archivo', $descargar_archivo)->with('convenios', $convenios)->with('organizacion', $organizacion);
+            $proyectos = TimesheetProyecto::getAll()->where('estatus', 'proceso');
+
+            return view('contract_manager.contratos-katbol.edit', compact('proyectos', 'proveedor_id', 'dolares', 'organizacion', 'areas'))->with('contrato', $contrato)->with('proveedores', $proveedores)->with('contratos', $contratos)->with('ids', $id)->with('descargar_archivo', $descargar_archivo)->with('convenios', $convenios)->with('organizacion', $organizacion);
         } catch (\Exception $e) {
             return redirect()->route('contract_manager.contratos-katbol.index')->with('error', $e->getMessage());
         }
@@ -438,6 +467,7 @@ class ContratosController extends AppBaseController
         // dd($request->signed);
         $validatedData = $request->validate([
             'no_contrato' => ['required', new NumeroContrato($id)],
+            'no_proyecto' => 'required',
             'nombre_servicio' => 'required|max:500',
             'tipo_contrato' => 'required',
             'proveedor_id' => 'required',
@@ -545,6 +575,8 @@ class ContratosController extends AppBaseController
 
         $areas = Area::getIdNameAll();
 
+        $proyecto = TimesheetProyecto::select('id', 'identificador')->where('identificador', $request->no_proyecto)->first();
+
         $contrato = $this->contratoRepository->update([
             'tipo_contrato' => $request->tipo_contrato,
             'no_contrato' => $no_contrato_sin_slashes,
@@ -573,6 +605,13 @@ class ContratosController extends AppBaseController
             'no_proyecto' => $request->no_proyecto,
             'updated_by' => User::getCurrentUser()->empleado->id,
         ], $id);
+
+        $convergencia = ConvergenciaContratos::where('contrato_id', $contrato->id)->first();
+
+        $convergencia->update([
+            'timesheet_proyecto_id' => $proyecto->id,
+            'timesheet_cliente_id' => $request->proveedor_id,
+        ]);
 
         $dolares = DolaresContrato::where('contrato_id', $id)->first();
         if ($dolares) {
@@ -618,23 +657,30 @@ class ContratosController extends AppBaseController
         $ruta_file_contrato = null;
         $nombre_f = $contrato->file_contrato;
         if ($request->file('file_contrato') != null) {
-            //esto agregamos 25-03-2021//
-            $isExists = Storage::disk('public')->exists('contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/' . $contrato->file_contrato);
-            if ($isExists) {
-                if ($contrato->file_contrato != null) {
-                    //dd(Storage::disk('public'));
-                    unlink(storage_path('app/public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/' . $contrato->file_contrato));
-                }
+            $storagePath = 'public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato;
+            $currentFilePath = $storagePath . '/' . $contrato->file_contrato;
+
+            // Verificar si el archivo ya existe y eliminarlo
+            if (Storage::disk('public')->exists($currentFilePath)) {
+                Storage::disk('public')->delete($currentFilePath);
             }
 
+            // Obtener el nombre original del archivo
             $nombre = $request->file('file_contrato')->getClientOriginalName();
             $nombre_f = $contrato->id . $fecha_inicio . $nombre;
-            $request->file('file_contrato')->storeAs('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato, $nombre_f);
 
-            // $ruta_file_contrato = Storage::url($archivo);
-            $contrato->update([
-                'file_contrato' => $nombre_f,
-            ]);
+            $file = $request->file('file_contrato');
+
+            // Ruta completa donde se guardará el archivo
+            $ruta = 'contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato;
+
+            // Guardar el archivo en el disco 'public' con la ruta específica
+            Storage::disk('public')->put($ruta . '/' . $nombre_f, file_get_contents($file));
+
+            $ruta_carpeta = storage_path('app/public/' . $ruta);
+
+            // Dar permisos chmod 777 a la carpeta
+            chmod($ruta_carpeta, 0777);
         }
 
         // dd($request->file('documento'));
