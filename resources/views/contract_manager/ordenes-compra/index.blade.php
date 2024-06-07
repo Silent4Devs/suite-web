@@ -12,8 +12,8 @@
 
     @include('partials.flashMessages')
     <h5 class="col-12 titulo_general_funcion">Orden De Compra</h5>
-        <button type="button" class="btn  tb-btn-primary"
-        id="filtrarBtn4" style="position: relative; left: 75rem;">Aprobadores</button>
+    <button type="button" class="btn  tb-btn-primary" id="filtrarBtn4"
+        style="position: relative; left: 75rem;">Aprobadores</button>
     <div class="mt-5 card">
         <div class="card-body datatable-fix">
 
@@ -65,22 +65,22 @@
                         columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] // Include indexes of all columns
                     }
                 },
-                {
-                    extend: 'pdfHtml5',
-                    title: `Ordenes_Compra ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Exportar PDF',
-                    orientation: 'landscape',
-                    exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8]
-                    },
-                    customize: function(doc) {
-                        doc.pageMargins = [5, 20, 5, 20];
-                        // doc.styles.tableHeader.fontSize = 6.5;
-                        // doc.defaultStyle.fontSize = 6.5; //<-- set fontsize to 16 instead of 10
-                    }
-                },
+                // {
+                //     extend: 'pdfHtml5',
+                //     title: `Ordenes_Compra ${new Date().toLocaleDateString().trim()}`,
+                //     text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
+                //     className: "btn-sm rounded pr-2",
+                //     titleAttr: 'Exportar PDF',
+                //     orientation: 'landscape',
+                //     exportOptions: {
+                //         columns: [0, 1, 2, 3, 4, 6, 7, 8]
+                //     },
+                //     customize: function(doc) {
+                //         doc.pageMargins = [5, 20, 5, 20];
+                //         // doc.styles.tableHeader.fontSize = 6.5;
+                //         // doc.defaultStyle.fontSize = 6.5; //<-- set fontsize to 16 instead of 10
+                //     }
+                // },
                 {
                     extend: 'print',
                     title: `Ordenes_Compra ${new Date().toLocaleDateString().trim()}`,
