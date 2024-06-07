@@ -90,6 +90,7 @@
                         <br><br>
                     </div>
                 </div>
+
                 @foreach ($requisicion->productos_requisiciones as $producto )
                 <div class="flex">
                     <div class="flex-item">
@@ -111,63 +112,69 @@
                         </div>
                     </div>
                 @endforeach
-                @foreach ($requisicion->provedores_requisiciones as $provedores )
-                    <div class="proveedores-doc" style="background-color: #EEEEEE;">
-                        <div class="flex header-proveedor-doc">
-                            <div class="flex-item">
-                                <strong>Proveedor</strong>
-                            </div>
-                        </div>
-                        <div class="flex">
-                            <div class="flex-item">
-                                <small> -Provea contexto detallado de su necesidad de adquisición, es importante mencionar si es que la solicitud está ligada a algún proyecto en particular. <br> -En caso de que no se brinde detalle suficiente que sustente la compra, esto no procedera </small>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col s12 l4">
-                                <strong>Proveedor:</strong><br><br>
-                                {{$provedores->proveedor}}
-                            </div>
-                            <div class="col s12  l4">
-                                <strong>Detalle del producto:</strong><br><br>
-                                {{$provedores->detalles}}
-                            </div>
-                            <div class="col s12 l4">
-                                <strong>Comentarios:</strong><br><br>
-                                {{ $provedores->comentarios }}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col s12 l4">
-                                <strong>Nombre del contacto:</strong><br><br>
-                                {{$provedores->contacto}}
-                            </div>
-                            <div class="col s12 l4">
-                                <strong>Fecha Inicio:</strong><br><br>
-                                {{ date('d-m-Y', strtotime($provedores->fecha_inicio)) }}
-                            </div>
-                            <div class="col s12 l4">
-                                <strong>Teléfono:</strong><br><br>
-                                {{$provedores->cel}}
-                            </div>
-                            <div class="col s12 l4">
-                                <br><br>
-                                <strong>Correo Electrónico:</strong><br><br>
-                                {{$provedores->contacto_correo}}
-                            </div>
-                            <div class="col s12 l4">
-                                <br><br>
-                                <strong>Fecha Fin:</strong><br><br>
-                                {{ date('d-m-Y', strtotime($provedores->fecha_fin)) }}
-                            </div>
-                            <div class="col s12 l4">
-                                <br><br>
-                                <strong>URL:</strong><br><br>
-                                {{$provedores->url}}
-                            </div>
+
+                @foreach ($requisicion->provedores_requisiciones->take(1) as $provedores)
+                <div class="proveedores-doc" style="background-color: #EEEEEE;">
+                    <div class="flex header-proveedor-doc">
+                        <div class="flex-item">
+                            <strong>Proveedor</strong>
                         </div>
                     </div>
-                @endforeach
+                    <div class="flex">
+                        <div class="flex-item">
+                            <small> -Provea contexto detallado de su necesidad de adquisición, es importante mencionar si es que la solicitud está ligada a algún proyecto en particular. <br> -En caso de que no se brinde detalle suficiente que sustente la compra, esto no procedera </small>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col s12 l6">
+                            <strong>Proveedor:</strong><br><br>
+                            {{$provedores->proveedor}}
+                        </div>
+                        <div class="col s12 l6" style="position: relative; left: .5rem;">
+                            <strong>Detalle del producto:</strong><br><br>
+                            {{$provedores->detalles}}
+                        </div>
+                        <div class="col s12 l6" style="position: relative; left: .7rem;">
+                            <strong>Comentarios:</strong><br><br>
+                            {{ $provedores->comentarios }}
+                        </div>
+                        <div class="col s12 l6" style="position: relative; left: .5rem;">
+                            <strong>Nombre del contacto:</strong><br><br>
+                            {{$provedores->contacto}}
+                        </div>
+                        <div style="position: relative; left: -4rem;">Cotizacion actual: <a
+                            href="{{ asset('storage/cotizaciones_requisiciones_proveedores/' . $provedores->cotizacion) }}"
+                            style="text-decoration: underline; color: deepskyblue;"
+                            target="_blank">Descargar cotización <i
+                                class="fa-regular fa-circle-down"></i></a></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col s12 l6">
+                            <strong>Fecha Inicio:</strong><br><br>
+                            {{ date('d-m-Y', strtotime($provedores->fecha_inicio)) }}
+                        </div>
+                        <div class="col s12 l6">
+                            <strong>Teléfono:</strong><br><br>
+                            {{$provedores->cel}}
+                        </div>
+                        <div class="col s12 l6">
+                            <strong>Correo Electrónico:</strong><br><br>
+                            {{$provedores->contacto_correo}}
+                        </div>
+                        <div class="col s12 l6">
+                            <strong>Fecha Fin:</strong><br><br>
+                            {{ date('d-m-Y', strtotime($provedores->fecha_fin)) }}
+                        </div>
+                        <div class="col s12 l6">
+                            <strong>URL:</strong><br><br>
+                            {{$provedores->url}}
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+
 
 
                 @if ($requisicion->proveedor_catalogo != null)
