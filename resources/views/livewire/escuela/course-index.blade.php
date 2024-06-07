@@ -36,14 +36,13 @@
                 @endphp
 
                 <div class="card card-body mi-curso" style="height: auto">
-                    {{-- <div class="caja-img-mi-curso" > --}}
-                    <img src="{{ asset($c->image->url) }}" alt="" class="img-card"
-                        style="min-height: 225px; border-radius: 12px 12px 0px 0px;">
-                    {{-- </div> --}}
+                    <div class="content-img">
+                        <img src="{{ asset($c->image->url) }}" alt="">
+                    </div>
                     <div class="caja-info-card-mc">
 
                         <p style="font-size: 18px; color:#000000">{{ $c->title }}</p>
-                        @if (isset($c->teacher) && isset($c->teacher->empleado) && isset($c->teacher->empleado->avatar_ruta))
+                        {{-- @if (isset($c->teacher) && isset($c->teacher->empleado) && isset($c->teacher->empleado->avatar_ruta))
                             <p>Creado:</p>
                             <div class="d-flex align-items-center gap-1">
                                 <div class="img-person">
@@ -51,7 +50,7 @@
                                 </div>
                                 {{ $c->teacher->name }}
                             </div>
-                        @endif
+                        @endif --}}
                         @if ($instructor && isset($instructor->empleado) && isset($instructor->empleado->avatar_ruta))
                             <p>Instructor: </p>
                             <div class="d-flex align-items-center gap-1">
