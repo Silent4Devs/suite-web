@@ -187,9 +187,15 @@
 
                 // Perform AJAX request
                 const formData = new FormData(form);
+                const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                formData.append('_token', csrfToken);
+
                 fetch(form.action, {
                         method: 'POST',
-                        body: formData
+                        body: formData,
+                        headers: {
+                            'X-CSRF-TOKEN': csrfToken
+                        }
                     })
                     .then(response => response.json())
                     .then(data => {
@@ -210,20 +216,131 @@
                                     cancelButtonText: 'No'
                                 }).then((result) => {
                                     if (result.isConfirmed) {
+                                        // Show modal for additional inputs
+                                        Swal.fire({
+                                            title: 'Datos del Contrato',
+                                            html:
+                                                // '<input type="checkbox" id="contrato_privado" class="swal2-input"> Contrato Privado<br>' +
+                                                '<input type="text" id="no_contrato" class="swal2-input" placeholder="No. contrato">' +
+                                                '<textarea id="nombre_servicio" class="swal2-textarea" placeholder="Nombre del servicio"></textarea>',
+                                            focusConfirm: false,
+                                            preConfirm: () => {
+                                                return {
+                                                    // contrato_privado: document
+                                                    //     .getElementById(
+                                                    //         'contrato_privado'
+                                                    //     ).checked,
+                                                    no_contrato: document
+                                                        .getElementById(
+                                                            'no_contrato')
+                                                        .value,
+                                                    nombre_servicio: document
+                                                        .getElementById(
+                                                            'nombre_servicio'
+                                                        ).value
+                                                };
+                                            }
+                                        }).then((result) => {
+                                            if (result.value) {
+                                                // Redirect to the desired route with additional data
+                                                const id_proyecto = data
+                                                    .id_proyecto;
+                                                const additionalData =
+                                                    new FormData();
+                                                // additionalData.append(
+                                                //     'contrato_privado',
+                                                //     result.value
+                                                //     .contrato_privado);
+                                                additionalData.append(
+                                                    'no_contrato', result
+                                                    .value.no_contrato);
+                                                additionalData.append(
+                                                    'nombre_servicio',
+                                                    result.value
+                                                    .nombre_servicio);
+                                                additionalData.append(
+                                                    'id_proyecto',
+                                                    id_proyecto);
+                                                additionalData.append('_token',
+                                                    csrfToken);
 
-                                        // Redirigir a la ruta deseada después de la confirmación
-                                        const id_proyecto = data
-                                            .id_proyecto;
-                                        window.location.href =
-                                            "{{ route('contract_manager.contratos-katbol.create') }}"
+                                                fetch("{{ route('admin.timesheet.creacionContratoProyecto') }}", {
+                                                        method: 'POST',
+                                                        body: additionalData,
+                                                        headers: {
+                                                            'X-CSRF-TOKEN': csrfToken
+                                                        }
+                                                    }).then(response => response
+                                                        .json())
+                                                    .then(data => {
+                                                        if (data.success) {
+                                                            Swal.fire({
+                                                                icon: 'success',
+                                                                title: 'Contrato Creado',
+                                                                text: data
+                                                                    .message
+                                                            }).then(
+                                                                () => {
+                                                                    // Redirect to the edit route
+                                                                    window
+                                                                        .location
+                                                                        .href =
+                                                                        "{{ route('admin.timesheet-proyectos-edit', 'id') }}"
+                                                                        .replace(
+                                                                            'id',
+                                                                            id_proyecto
+                                                                        );
+                                                                });
+                                                        } else {
+                                                            Swal.fire({
+                                                                icon: 'error',
+                                                                title: 'Error!',
+                                                                text: data
+                                                                    .message
+                                                            }).then(
+                                                                () => {
+                                                                    // Redirect to the edit route
+                                                                    window
+                                                                        .location
+                                                                        .href =
+                                                                        "{{ route('admin.timesheet-proyectos-edit', 'id') }}"
+                                                                        .replace(
+                                                                            'id',
+                                                                            id_proyecto
+                                                                        );
+                                                                });
+                                                        }
+                                                    }).catch(error => {
+                                                        console.error(
+                                                            'Error:',
+                                                            error);
+                                                        Swal.fire({
+                                                            icon: 'error',
+                                                            title: 'Error!',
+                                                            text: 'Se ha producido un error al intentar crear el contrato.'
+                                                        }).then(
+                                                            () => {
+                                                                // Redirect to the edit route
+                                                                window
+                                                                    .location
+                                                                    .href =
+                                                                    "{{ route('admin.timesheet-proyectos-edit', 'id') }}"
+                                                                    .replace(
+                                                                        'id',
+                                                                        id_proyecto
+                                                                    );
+                                                            });
+                                                    });
+                                            }
+                                        });
                                     } else {
-                                        // Si el usuario cancela
+                                        // If the user cancels
                                         Swal.fire({
                                             icon: 'info',
                                             title: 'Cancelado',
                                             text: 'La acción ha sido cancelada.',
                                         }).then(() => {
-                                            // Redirigir a la ruta de edición
+                                            // Redirect to the edit route
                                             const id_proyecto = data
                                                 .id_proyecto;
                                             window.location.href =
@@ -253,7 +370,6 @@
                         });
                     });
             });
-
         });
     </script>
 @endsection

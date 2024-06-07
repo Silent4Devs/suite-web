@@ -16,30 +16,25 @@
                 @error('identificador')
                     <small class="text-danger">{{ $message }}</small>
                 @enderror
-            </div>
-
-            <div class="mb-4">
-                @if ($mensaje != null)
-                    <span class="{{ $class }}">{{ $mensaje }}</span>
-                @endif
-            </div>
-        </div>
-
-        <div class="form-group col-md-6" wire:loading wire:target="identificador_proyect">
-            <div class="spinner-border text-primary" role="status">
-                <span class="sr-only">Loading...</span>
+                <div>
+                    @if ($mensaje != null)
+                        <span class="{{ $class }}" style="color: {{ $colorTexto }}">{{ $mensaje }}</span>
+                    @endif
+                </div>
             </div>
         </div>
 
-        <div class="form-group col-md-4 anima-focus" wire:loading.remove>
-            <select class="form-control" name="tipo" id="tipo" wire:model="tipo" required>
-                @foreach ($select_tipos as $tipo_it)
-                    <option value="{{ $tipo_it }}" {{ $tipo == $tipo_it ? 'selected' : '' }}>
-                        {{ $tipo_it }}
-                    </option>
-                @endforeach
-            </select>
-            {!! Form::label('tipo', 'Tipo*', ['class' => 'asterisco']) !!}
+        <div class="col-md-6">
+            <div class="form-group anima-focus">
+                <select class="form-control" name="tipo" id="tipo" wire:model="tipo" required>
+                    @foreach ($select_tipos as $tipo_it)
+                        <option value="{{ $tipo_it }}" {{ $tipo == $tipo_it ? 'selected' : '' }}>
+                            {{ $tipo_it }}
+                        </option>
+                    @endforeach
+                </select>
+                {!! Form::label('tipo', 'Tipo*', ['class' => 'asterisco']) !!}
+            </div>
         </div>
     </div>
 </div>

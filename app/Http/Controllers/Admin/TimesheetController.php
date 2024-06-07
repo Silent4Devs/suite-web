@@ -9,7 +9,9 @@ use App\Mail\TimesheetHorasSolicitudAprobacion;
 use App\Mail\TimesheetSolicitudAprobada;
 use App\Mail\TimesheetSolicitudRechazada;
 use App\Models\Area;
+use App\Models\ContractManager\Contrato;
 use App\Models\ContractManager\Fiscale;
+use App\Models\ConvergenciaContratos;
 use App\Models\Empleado;
 use App\Models\ListaInformativa;
 use App\Models\Organizacion;
@@ -763,6 +765,44 @@ class TimesheetController extends Controller
                 'success' => false,
                 'message' => 'Se ha producido un error al intentar crear el proyecto.',
             ]);
+        }
+    }
+
+    public function creacionContratoProyecto(Request $request)
+    {
+        try {
+            $proyecto = TimesheetProyecto::getAll($request->id_proyecto)->find($request->id_proyecto);
+
+            if (!$proyecto) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Proyecto no encontrado.',
+                ], 404);
+            }
+
+            $nuevoContrato = Contrato::create([
+                'no_contrato' => $request->no_contrato,
+                'proveedor_id' => $proyecto->cliente_id,
+                'nombre_servicio' => $request->nombre_servicio,
+                'no_proyecto' => $proyecto->identificador,
+            ]);
+
+            $convergencia = ConvergenciaContratos::create([
+                'contrato_id' => $nuevoContrato->id,
+                'timesheet_proyecto_id' => $proyecto->id,
+                'timesheet_cliente_id' => $proyecto->cliente_id,
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Contrato creado exitosamente.',
+            ]);
+        } catch (Throwable $th) {
+            // Puedes usar $e->getMessage() para obtener el mensaje de error si es necesario
+            return response()->json([
+                'success' => false,
+                'message' => 'Se ha producido un error al intentar crear el contrato.',
+            ], 500);
         }
     }
 
