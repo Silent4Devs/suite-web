@@ -131,19 +131,19 @@
                             <strong>Proveedor:</strong><br><br>
                             {{$provedores->proveedor}}
                         </div>
-                        <div class="col s12 l6" style="position: relative; left: 4rem;">
+                        <div class="col s12 l6" style="position: relative; left: 5rem;">
                             <strong>Detalle del producto:</strong><br><br>
                             {{$provedores->detalles}}
                         </div>
-                        <div class="col s12 l6" style="position: relative; left: 4rem;">
+                        <div class="col s12 l6" style="position: relative; left: 5rem;">
                             <strong>Comentarios:</strong><br><br>
                             {{ $provedores->comentarios }}
                         </div>
-                        <div class="col s12 l6" style="position: relative; left: 4rem;">
+                        <div class="col s12 l6" style="position: relative; left: 5rem;">
                             <strong>Nombre del contacto:</strong><br><br>
                             {{$provedores->contacto}}
                         </div>
-                        <div style="position: relative; left: 4rem;">Cotizacion actual: <a
+                        <div style="position: relative; left: 5rem;">Cotizacion actual: <a
                             href="{{ asset('storage/cotizaciones_requisiciones_proveedores/' . $provedores->cotizacion) }}"
                             style="text-decoration: underline; color: deepskyblue;"
                             target="_blank">Descargar cotización <i
