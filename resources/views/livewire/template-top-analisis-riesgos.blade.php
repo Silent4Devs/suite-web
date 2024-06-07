@@ -92,7 +92,7 @@
     <div class="row d-flex justify-content-end">
         <div>
             <a class="btn btn-light text-primary border border-primary"
-                href="{{ route('admin.analisisdebrechas-2022.create') }}" style="width: 136px;">
+                href="{{ route('admin.risk-analysis-index') }}" style="width: 136px; margin-bottom:64px;">
                 Regresar
             </a>
         </div>
