@@ -35,6 +35,10 @@ class PortalComunicacionController extends Controller
         $empleados = Empleado::alta()->select('id', 'name', 'area_id', 'puesto_id', 'foto', 'antiguedad', 'cumpleaños', 'estatus');
         $user = User::find($id);
 
+        $user->foto_empleado = $user->empleado->avatar;
+        $user->makeHidden([
+            'empleado'
+        ]);
         $empleado_asignado = $user->n_empleado;
         $authId = $user->id;
 
@@ -83,6 +87,7 @@ class PortalComunicacionController extends Controller
                 // 'comite_existe' => $comite_existe,
                 'nuevos' => $nuevos,
                 'cumpleaños' => $cumpleaños,
+                'user' => $user,
             ]
         );
     }
