@@ -542,7 +542,12 @@
                     <tbody>
                         @foreach ($evaluados_tabla->evaluados as $evaluado)
                             <tr>
-                                <td>{{ $evaluado->empleado->name }}</td>
+                                <td>{{ $evaluado->empleado->name }}
+                                    @if ($evaluado->empleado->estatus == 'baja')
+                                        <br>
+                                        <span class="badge badge-danger">Baja</span>
+                                    @endif
+                                </td>
                                 <td>{{ $evaluado->empleado->puestoRelacionado->puesto }}/{{ $evaluado->empleado->area->area }}
                                     @foreach ($evaluado->empleado->registrosHistorico as $key => $historico)
                                         <br>
@@ -640,7 +645,12 @@
                                             </i>
                                         </a>
                                     </td>
-                                    <td>{{ $evaluado->empleado->name }}</td>
+                                    <td>{{ $evaluado->empleado->name }}
+                                        @if ($evaluado->empleado->estatus == 'baja')
+                                            <br>
+                                            <span class="badge badge-danger">Baja</span>
+                                        @endif
+                                    </td>
                                     <td>{{ $evaluado->empleado->puesto }}
                                         @foreach ($evaluado->empleado->registrosHistorico as $key => $historico)
                                             <br>

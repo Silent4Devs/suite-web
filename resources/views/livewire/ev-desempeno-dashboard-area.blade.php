@@ -388,21 +388,26 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            @foreach ($evaluados_tabla->evaluados as $evaluado)
-                                <td>{{ $evaluado->empleado->name }}</td>
+                        @foreach ($evaluados_tabla->evaluados as $evaluado)
+                            <tr>
+                                <td>{{ $evaluado->empleado->name }}
+                                    @if ($evaluado->empleado->estatus == 'baja')
+                                        <br>
+                                        <span class="badge badge-danger">Baja</span>
+                                    @endif
+                                </td>
                                 <td>{{ $evaluado->empleado->area->area }}</td>
                                 <td>
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="d-flex" style="position:relative">
-                                                @foreach ($this->evaluadores_evaluado[$evaluado->id] as $evaluador)
+                                                {{-- @foreach ($this->evaluadores_evaluado[$evaluado->id] as $evaluador)
                                                     <img style=""
                                                         src="{{ asset('storage/empleados/imagenes/') }}/{{ $evaluador['foto'] }}"
                                                         class="rounded-circle" alt="{{ $evaluador['nombre'] }}"
                                                         title="{{ $evaluador['nombre'] }}" width="40"
                                                         height="37">
-                                                @endforeach
+                                                @endforeach --}}
                                             </div>
                                         </div>
                                     </div>
@@ -413,8 +418,8 @@
                                     <a href="{{ route('admin.rh.evaluaciones-desempeno.dashboard-evaluado', [$evaluacion->id, $evaluado->id]) }}"
                                         class="btn btn-evaluacion">Evaluacion</a>
                                 </td>
-                            @endforeach
-                        </tr>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
 
@@ -452,7 +457,12 @@
                             <tr>
                                 @foreach ($evaluados_tabla->evaluados as $evaluado)
                                     <td></td>
-                                    <td>{{ $evaluado->empleado->name }}</td>
+                                    <td>{{ $evaluado->empleado->name }}
+                                        @if ($evaluado->empleado->estatus == 'baja')
+                                            <br>
+                                            <span class="badge badge-danger">Baja</span>
+                                        @endif
+                                    </td>
                                     <td>{{ $evaluado->empleado->puestoRelacionado->puesto }}/{{ $evaluado->empleado->area->area }}
                                         @foreach ($evaluado->empleado->registrosHistorico as $key => $historico)
                                             <br>
@@ -466,20 +476,23 @@
                                     </td>
                                     <td>
                                         <ul>
-                                            @foreach ($this->evaluadores_evaluado[$evaluado->id] as $evaluador)
+                                            {{-- @foreach ($this->evaluadores_evaluado[$evaluado->id] as $evaluador)
                                                 <li>{{ $evaluador['nombre'] }}</li>
-                                            @endforeach
+                                            @endforeach --}}
                                         </ul>
                                     </td>
                                     @if ($evaluacion->activar_competencias)
-                                        <td>{{ $totales_evaluado[$periodo_seleccionado][$evaluado->id]['competencias'] }}
+                                        <td>
+                                            {{-- {{ $totales_evaluado[$periodo_seleccionado][$evaluado->id]['competencias'] }} --}}
                                         </td>
                                     @endif
                                     @if ($evaluacion->activar_objetivos)
-                                        <td>{{ $totales_evaluado[$periodo_seleccionado][$evaluado->id]['objetivos'] }}
+                                        <td>
+                                            {{-- {{ $totales_evaluado[$periodo_seleccionado][$evaluado->id]['objetivos'] }} --}}
                                         </td>
                                     @endif
-                                    <td>{{ $totales_evaluado[$periodo_seleccionado][$evaluado->id]['final'] }}
+                                    <td>
+                                        {{-- {{ $totales_evaluado[$periodo_seleccionado][$evaluado->id]['final'] }} --}}
                                     </td>
                                     <td>Nivel</td>
                                     @if ($evaluacion->activar_competencias)

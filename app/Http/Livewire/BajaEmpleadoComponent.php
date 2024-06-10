@@ -5,6 +5,8 @@ namespace App\Http\Livewire;
 use App\Models\Activo;
 use App\Models\Documento;
 use App\Models\Empleado;
+use App\Models\EvaluadoresEvaluacionCompetenciasDesempeno;
+use App\Models\EvaluadoresEvaluacionObjetivosDesempeno;
 use App\Models\Recurso;
 use App\Models\RevisionDocumento;
 use App\Models\User;
@@ -113,7 +115,7 @@ class BajaEmpleadoComponent extends Component
     public function obtenerCapacitaciones()
     {
         $empleado = $this->empleado->id;
-        $cacheKeyRecursos = 'Recursos:recursos_'.User::getCurrentUser()->id;
+        $cacheKeyRecursos = 'Recursos:recursos_' . User::getCurrentUser()->id;
         $recursos = Cache::remember($cacheKeyRecursos, 3600 * 8, function () use ($empleado) {
             return Recurso::whereHas('empleados', function ($query) use ($empleado) {
                 $query->where('empleados.id', $empleado);
@@ -136,6 +138,8 @@ class BajaEmpleadoComponent extends Component
 
     public function darDeBaja()
     {
+        $this->empleadoEvaluador($this->empleado->id);
+
         $this->validate($this->rules, $this->messages);
         $this->empleado->update([
             'estatus' => Empleado::BAJA,
@@ -148,5 +152,14 @@ class BajaEmpleadoComponent extends Component
         }
         $this->emit('select2');
         $this->emit('baja', $this->empleado);
+    }
+
+    public function empleadoEvaluador($id_empleado)
+    {
+        $evaluadorDeCompetencias = EvaluadoresEvaluacionCompetenciasDesempeno::where('evaluador_desempeno_id', $id_empleado)->get();
+
+
+
+        $evaluadorDeObjetivos = EvaluadoresEvaluacionObjetivosDesempeno::where('evaluador_desempeno_id', $id_empleado)->get();
     }
 }
