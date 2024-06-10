@@ -308,7 +308,7 @@ class CreateEvaluacionDesempeno extends Component
                 }
             }
 
-            Mail::to(removeUnicodeCharacters($correos))->queue(new CreacionEvaluacionDesempenoMailable($evaluacion->nombre, $evaluacion->autor->name));
+            Mail::to($correos)->queue(new CreacionEvaluacionDesempenoMailable($evaluacion->nombre, $evaluacion->autor->name));
         }
 
         return redirect(route('admin.rh.evaluaciones-desempeno.index'));

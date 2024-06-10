@@ -155,30 +155,20 @@
                                         </div>
 
                                         <strong>
-                                            <h1 style="text-align: center;"> Evaluacion {{ $nombre_evaluacion }}</h1>
+                                            <h1 style="text-align: center;"> Evaluación Creada</h1>
                                             <br>
-                                            <h3 style="text-align: center;"> Competencias Faltantes</h3>
+                                            <h3 style="text-align: center;">{{ $nombre_evaluacion }}</h3>
                                         </strong>
 
                                         <div style="width: 100%; margin-top: 10px;">
                                             <p style="font-size:11pt; color:#153643;text-align: left;">
 
                                             <div>
-                                                Se le informa que los siguientes puestos no cuentan con competencias
-                                                relacionadas para ser evaluadas en el proximo periodo
-                                                {{ $nombre_periodo }}
+                                                Se le informa que el colaborador {{ $autor }} ha creado la
+                                                evaluación: {{ $nombre_evaluacion }}
                                             </div>
 
                                             <br>
-
-                                            <div>
-                                                <ul>
-                                                    @foreach ($puestos as $puesto)
-                                                        <li>{{ $puesto }}</li>
-                                                    @endforeach
-
-                                                </ul>
-                                            </div>
                                             </p>
                                         </div>
                                     </td>
