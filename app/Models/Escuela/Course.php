@@ -75,14 +75,18 @@ class Course extends Model implements Auditable
             $sections = $this->order_section;
             $string = str_replace('"','', $sections);
             $string = str_replace('seccion-','', $sections);
-            // Convertir el string en un array usando coma como delimitador
             $array = explode(',', $string);
             $sectionsRegisters = collect();
             foreach($array as $section){
                 $sectionConsult = Section::find($section);
-                $sectionsRegisters->push($sectionConsult);
+                if (isset($sectionConsult)) {
+                    $sectionsRegisters->push($sectionConsult);
+                }
             }
-            return $sectionsRegisters;
+
+            $querys_unidos = $sectionsRegisters->merge($this->sections)->unique();
+
+            return $querys_unidos;
         }
         else{
             $secciones = $this->sections;
