@@ -139,9 +139,9 @@
                 </div>
             </div>
 
-            <ul style="list-style: none; cursor: pointer;">
+            <ul id="secciones-curso" style="list-style: none; cursor: pointer;">
                 @foreach ($course->sections as $section)
-                    <li>
+                    <li class="seccion-li-orden" id="seccion-{{ $section->id }}">
                         <i style="font-size:10pt; cursor: pointer;" class="d-inline text-black-500 fas fa-play-circle">
                         </i>
                         <a class="inline mb-2 text-base font-bold">{{ $section->name }}</a>
@@ -224,6 +224,41 @@
                 @this.completed();
                 console.log("list");
             }, 30000);
+        </script>
+
+        <script>
+            Livewire.on('renderJS', () => {
+                setTimeout(() => {
+                    const newOrder = @json($course->order_section).split(",");
+
+                    // Obtén una referencia a la lista
+                    const list = document.getElementById("secciones-curso");
+
+                    // Obtén todos los elementos de la lista
+                    const items = Array.from(list.children);
+
+                    // Verifica los IDs de los elementos
+                    // console.log('IDs originales:', items.map(item => item.id));
+
+                    // Crea un nuevo arreglo con los elementos ordenados según el array de IDs
+                    const orderedItems = newOrder.map(id => {
+                        const element = items.find(item => item.id === id);
+                        if (!element) {
+                            console.error(`No se encontró un elemento con el ID: ${id}`);
+                        }
+                        return element;
+                    }).filter(item => item !== undefined);
+
+                    // Verifica los IDs ordenados
+                    // console.log('IDs ordenados:', orderedItems.map(item => item.id));
+
+                    // Vacía la lista
+                    list.innerHTML = "";
+
+                    // Agrega los elementos ordenados de vuelta a la lista
+                    orderedItems.forEach(item => list.appendChild(item));
+                }, 500);
+            });
         </script>
     @endsection
 </div>

@@ -24,35 +24,37 @@
                 <tbody>
                     @foreach ($cursos_usuario as $cu)
                         @if ($cu->usuarios)
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center gap-1 mt-2">
-                                        <div class="img-person">
-                                            <img src="{{ $cu->usuarios->empleado->avatar_ruta }}"
-                                                alt="{{ $cu->usuarios->name }}">
+                            @if (isset($cu->usuarios->empleado))
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-1 mt-2">
+                                            <div class="img-person">
+                                                <img src="{{ $cu->usuarios->empleado->avatar_ruta }}"
+                                                    alt="{{ $cu->usuarios->name }}">
+                                            </div>
+                                            <span class="course-teacher"> {{ $cu->usuarios->name }}</span>
                                         </div>
-                                        <span class="course-teacher"> {{ $cu->usuarios->name }}</span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="d-flex align-items-center gap-1">
-                                        <div class="progress w-100">
-                                            <div class="progress-bar bg-warning" role="progressbar"
-                                                style="width: {{ $cu->advance }}%" aria-valuenow="{{ $cu->advance }}"
-                                                aria-valuemin="0" aria-valuemax="100"></div>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-1">
+                                            <div class="progress w-100">
+                                                <div class="progress-bar bg-warning" role="progressbar"
+                                                    style="width: {{ $cu->advance }}%" aria-valuenow="{{ $cu->advance }}"
+                                                    aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <small> {{ $cu->advance }} </small>
                                         </div>
-                                        <small> {{ $cu->advance }} </small>
-                                    </div>
-                                </td>
-                                <td>
-                                    <span>Sección {{ $cu->cursos->lessons->count() }}</span> <br>
-                                    <span></span>
-                                </td>
-                                <td>
-                                    {{ $cu->calificacion }}%
-                                </td>
-                                <td>{{ Carbon\Carbon::parse($cu->last_review)->diffForHumans() }}</td>
-                            </tr>
+                                    </td>
+                                    <td>
+                                        <span>Sección {{ $cu->cursos->lessons->count() }}</span> <br>
+                                        <span></span>
+                                    </td>
+                                    <td>
+                                        {{ $cu->calificacion }}%
+                                    </td>
+                                    <td>{{ Carbon\Carbon::parse($cu->last_review)->diffForHumans() }}</td>
+                                </tr>
+                            @endif
                         @endif
                     @endforeach
                 </tbody>
