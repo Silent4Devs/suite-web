@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\ContractManager\Contrato;
 use App\Traits\ClearsResponseCache;
 use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -204,5 +205,29 @@ class TimesheetProyecto extends Model implements Auditable
     public function proveedores()
     {
         return $this->hasMany(TimesheetProyectoProveedor::class, 'proyecto_id', 'id');
+    }
+
+    public function clienteConvergencia()
+    {
+        return $this->hasOneThrough(
+            TimesheetCliente::class,
+            ConvergenciaContratos::class,
+            'timesheet_cliente_id', // Foreign key on the convergence table...
+            'id', // Foreign key on the timesheet proyectos table...
+            'id', // Local key on the contratos table...
+            'timesheet_proyecto_id' // Local key on the convergence table...
+        );
+    }
+
+    public function contratosConvergencia()
+    {
+        return $this->hasManyThrough(
+            Contrato::class,
+            ConvergenciaContratos::class,
+            'timesheet_proyecto_id', // Foreign key on the convergence table...
+            'id', // Foreign key on the contratos table...
+            'id', // Local key on the timesheet proyectos table...
+            'contrato_id' // Local key on the convergence table...
+        );
     }
 }

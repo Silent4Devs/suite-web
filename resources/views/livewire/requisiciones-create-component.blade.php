@@ -91,8 +91,8 @@
 
                                     Referencia (Título de la requisición) <font class="asterisco">*</font>
                                 </label>
-                                <input class="browser-default" type="text" value="" maxlength="255" name="descripcion"
-                                    required>
+                                <input class="browser-default" type="text" value="" maxlength="255"
+                                    name="descripcion" required>
                             </div>
 
                             <div class="col s12 l3">
@@ -149,8 +149,9 @@
                                     <label for="" class="txt-tamaño">
                                         Cantidad <font class="asterisco">*</font>
                                     </label>
-                                    <input type="text" name="cantidad_1" pattern="[0-9]+" title="Por favor, ingrese solo números enteros."
-                                    class="model-cantidad browser-default" required>
+                                    <input type="text" name="cantidad_1" pattern="[0-9]+"
+                                        title="Por favor, ingrese solo números enteros."
+                                        class="model-cantidad browser-default" required>
                                 </div>
                                 <div class="col s12 l8">
                                     <label for="" class="txt-tamaño">
@@ -846,6 +847,8 @@
                 </div>
             @endif
         </div>
+
+
     </div>
 
     @if ($habilitar_alerta_cotizacion)
@@ -907,7 +910,7 @@
         <script>
             Livewire.on('render_firma', (id_tab) => {
                 (function() {
-
+                    console.log('firma');
 
                     window.requestAnimFrame = (function(callback) {
                         return window.requestAnimationFrame ||
@@ -921,6 +924,7 @@
                     })();
 
                     if (document.getElementById('firma_requi')) {
+                        console.log('if de firma_requi')
                         renderCanvas("firma_requi", "clear");
                     }
 
@@ -933,7 +937,7 @@
                 });
 
                 function renderCanvas(contenedor, clearBtnCanvas) {
-
+                    console.log('rendercanvas')
                     var canvas = document.getElementById(contenedor);
                     console.log(canvas);
                     var ctx = canvas.getContext("2d");
@@ -1197,23 +1201,23 @@
 
 
                             document.querySelector('#' + id_nueva_card + ' .modal-comentario').setAttribute(
-                            'name', 'comentarios_' + cards_count);
+                                'name', 'comentarios_' + cards_count);
 
                             document.querySelector('#' + id_nueva_card + ' .modal-nombre').setAttribute(
-                            'name', 'contacto_' + cards_count);
+                                'name', 'contacto_' + cards_count);
 
                             document.querySelector('#' + id_nueva_card + ' .modal-telefono').setAttribute(
-                            'name', 'contacto_telefono_' + cards_count);
+                                'name', 'contacto_telefono_' + cards_count);
 
 
                             document.querySelector('#' + id_nueva_card + ' .modal-correo').setAttribute(
-                            'name', 'contacto_correo_' + cards_count);
+                                'name', 'contacto_correo_' + cards_count);
 
                             document.querySelector('#' + id_nueva_card + ' .modal-url').setAttribute(
-                            'name', 'contacto_url_' + cards_count);
+                                'name', 'contacto_url_' + cards_count);
 
                             document.querySelector('#' + id_nueva_card + ' .modal-cotizacion').setAttribute(
-                            'name', 'cotizacion_' + cards_count);
+                                'name', 'cotizacion_' + cards_count);
 
 
                             @this.set('proveedores_count', cards_count);

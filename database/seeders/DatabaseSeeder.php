@@ -126,6 +126,10 @@ class DatabaseSeeder extends Seeder
                 AprobadorObjetivoEstrategicoSeeder::class,
                 PermisoTimesheetFinanciero::class,
                 PermisosTimesheetFaltantes::class,
+
+                ListaDistribucionRequisicionOrdenCompraSeeder::class,
+                ListaDistribucionSuplentesLideresSeeder::class,
+                ListaInformativaOrdenesdeCompraSeeder::class,
             ]
         );
     }

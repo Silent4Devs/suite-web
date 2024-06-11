@@ -2,6 +2,7 @@
 
 namespace App\Models\ContractManager;
 
+use App\Models\FirmasRequisiciones;
 use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -132,6 +133,11 @@ class Requsicion extends Model implements Auditable
     public function proveedor()
     {
         return $this->belongsTo(ProveedorOC::class, 'proveedor_id', 'id');
+    }
+
+    public function registroFirmas()
+    {
+        return $this->hasOne(FirmasRequisiciones::class, 'requisicion_id', 'id');
     }
 
     public function getFolioAttribute()
