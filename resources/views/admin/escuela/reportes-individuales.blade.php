@@ -6,11 +6,11 @@
         }
 
         .seccion-par {
-            background-color: #f5f5f5;
+            /* background-color: #f5f5f5; */
         }
 
         .seccion-impar {
-            background-color: #e9e9e9;
+            /* background-color: #e9e9e9; */
         }
     </style>
     <h5 class="titulo_general_funcion">Cursos</h5>
