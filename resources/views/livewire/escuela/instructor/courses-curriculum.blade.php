@@ -98,7 +98,9 @@
                 @this.set('order', orden.join(','));
             },
             get: (sortable) => {
-                return @json($course->order_section).split(',');
+                if (@json($course->order_section)) {
+                    return @json($course->order_section).split(',');
+                }
             }
         },
     });
