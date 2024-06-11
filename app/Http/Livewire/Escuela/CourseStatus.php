@@ -69,8 +69,6 @@ class CourseStatus extends Component
 
         //dd($this->course);
 
-        $this->emit('renderJS');
-
         return view('livewire.escuela.course-status');
     }
 
@@ -78,6 +76,8 @@ class CourseStatus extends Component
     //cambiamos la lección actual
     public function changeLesson(Lesson $lesson, $atras = null)
     {
+        $this->emit('completado');
+
         if ($atras == 'previous') {
             $this->current = $lesson;
 
