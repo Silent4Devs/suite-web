@@ -4,6 +4,14 @@
         table.dataTable {
             margin: 0px !important;
         }
+
+        .seccion-par {
+            background-color: #f5f5f5;
+        }
+
+        .seccion-impar {
+            background-color: #e9e9e9;
+        }
     </style>
     <h5 class="titulo_general_funcion">Cursos</h5>
 
@@ -16,9 +24,12 @@
                     <tr>
                         <th>Colaborador</th>
                         <th>Avance del curso</th>
-                        <th>Sección evaluada</th>
-                        <th>Calificación gral.</th>
-                        <th>Ultima clase</th>
+                        @foreach ($evaluaciones as $key => $evaluacion)
+                            <th class="seccion-{{ ($key + 1) % 2 == 0 ? 'par' : 'impar' }}">Sección</th>
+                            <th class="seccion-{{ ($key + 1) % 2 == 0 ? 'par' : 'impar' }}">Calificacion</th>
+                            <th class="seccion-{{ ($key + 1) % 2 == 0 ? 'par' : 'impar' }}">Fecha de evaluación</th>
+                        @endforeach
+                        <th>Calificación final.</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -45,14 +56,23 @@
                                             <small> {{ $cu->advance }} </small>
                                         </div>
                                     </td>
+
+                                    {{-- <td>{{ Carbon\Carbon::parse($cu->last_review)->diffForHumans() }}</td> --}}
+
+                                    @foreach ($cu->evaluaciones_usuario as $key => $evaluacion)
+                                        <td class="seccion-{{ ($key + 1) % 2 == 0 ? 'par' : 'impar' }}">
+                                            {{ $evaluacion['name'] }}
+                                        </td>
+                                        <td class="seccion-{{ ($key + 1) % 2 == 0 ? 'par' : 'impar' }}">
+                                            {{ $evaluacion['calificacion'] == 0 ? 'No aplica' : $evaluacion['calificacion'] }}
+                                        </td>
+                                        <td class="seccion-{{ ($key + 1) % 2 == 0 ? 'par' : 'impar' }}">
+                                            {{ $evaluacion['fecha'] }}</td>
+                                    @endforeach
+
                                     <td>
-                                        <span>Sección {{ $cu->cursos->lessons->count() }}</span> <br>
-                                        <span></span>
+                                        {{ $cu->calificacion }}
                                     </td>
-                                    <td>
-                                        {{ $cu->calificacion }}%
-                                    </td>
-                                    <td>{{ Carbon\Carbon::parse($cu->last_review)->diffForHumans() }}</td>
                                 </tr>
                             @endif
                         @endif
