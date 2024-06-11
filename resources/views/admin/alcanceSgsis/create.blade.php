@@ -182,7 +182,7 @@
             </div>
         </div>
         {{-- <a href="{{ route('admin.alcance-sgsis.index') }}"> --}}
-        <button onclick="redirigirARuta()" type="button" class="btn btn-primary boton-enviar mr-2" data-bs-toggle="modal"
+        <button onclick="redirigirARuta()" type="button" class="btn tb-btn-primary boton-enviar mr-2" data-bs-toggle="modal"
             data-bs-target="#aprobacion" style="font-size:14px;width:250px;">
             {{ trans('global.save') }} y enviar a aprobación
         </button>

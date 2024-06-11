@@ -23,7 +23,7 @@
     </div>
         <div class="text-right">
                 <div class="d-flex justify-content-end">
-                    <a href="{{ route('admin.comiteseguridads.create') }}" type="button" class="btn btn-primary">Registrar Comité</a>
+                    <a href="{{ route('admin.comiteseguridads.create') }}" type="button" class="btn tb-btn-primary">Registrar Comité</a>
                 </div>
         </div>
                 @include('partials.flashMessages')

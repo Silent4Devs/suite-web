@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/evaluaciones.css') }}{{ config('app.cssVersion') }}">
+    <link rel="stylesheet" href="{{ asset('css/evaluations/evaluations.css') }}{{ config('app.cssVersion') }}">
 @endsection
 @section('content')
     {{-- {{ Breadcrumbs::render('capital-humano') }} --}}
@@ -58,10 +58,10 @@
                         <input id="unidad-medida" type="text" class="form-control" placeholder="">
                         <label for="unidad-medida">Unidad de medida</label>
                     </div>
-                    <button class="btn btn-primary" style="height: 45px;">
+                    <button class="btn tb-btn-primary" style="height: 45px;">
                         <i class="fa-solid fa-plus"></i>
                     </button>
-                    <button class="btn btn-primary" style="height: 45px;">
+                    <button class="btn tb-btn-primary" style="height: 45px;">
                         <i class="fa-solid fa-plus"></i>
                     </button>
                 </div>

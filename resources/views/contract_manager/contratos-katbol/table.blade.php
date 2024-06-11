@@ -171,7 +171,7 @@
         </tbody>
     </table>
     {{-- <p class="lead">
-        <button id="json" class="btn btn-primary">TO JSON</button>
+        <button id="json" class="btn tb-btn-primary">TO JSON</button>
         <button id="csv" class="btn btn-info">TO CSV</button>
         <button id="pdf" class="btn btn-danger">TO PDF</button>
         <button id="txt" class="btn btn-success">TO TXT</button>
@@ -219,7 +219,7 @@
                             <tr>
                                 <td>${contrato.no_contrato}</td>
                                 <td>${contrato.tipo_contrato}</td>
-                                <td><a href='${contrato.archivo}' download class="btn btn-primary">Download</a></td>
+                                <td><a href='${contrato.archivo}' download class="btn tb-btn-primary">Download</a></td>
                             </tr>
 
                         </tbody>
@@ -243,7 +243,7 @@
                                 <tr>
                                     <td>${factura.no_factura}</td>
                                     <td>${factura.concepto}</td>
-                                    <td><a href='${factura.archivo}' download class="btn btn-primary">Download</a></td>
+                                    <td><a href='${factura.archivo}' download class="btn tb-btn-primary">Download</a></td>
                                 </tr>
                                 `
                         });
@@ -268,7 +268,7 @@
                                 <tr>
                                     <td>${entregable.nombre_entregable}</td>
                                     <td>${entregable.descripcion}</td>
-                                    <td><a href='${entregable.archivo}' download class="btn btn-primary">Download</a></td>
+                                    <td><a href='${entregable.archivo}' download class="btn tb-btn-primary">Download</a></td>
                                 </tr>
                                 `
                         });
@@ -292,7 +292,7 @@
                                 <tr>
                                     <td>${convenio.no_convenio}</td>
                                     <td>${convenio.descripcion}</td>
-                                    <td><a href='${convenio.archivo}' download class="btn btn-primary">Download</a></td>
+                                    <td><a href='${convenio.archivo}' download class="btn tb-btn-primary">Download</a></td>
                                 </tr>
                                 `
                         });

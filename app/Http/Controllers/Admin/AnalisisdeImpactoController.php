@@ -85,7 +85,7 @@ class AnalisisdeImpactoController extends Controller
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.analisis-impacto.index', compact('logo_actual', 'empresa_actual'));
+        return view('admin.analysisImpact.index', compact('logo_actual', 'empresa_actual'));
     }
 
     public function create()
@@ -93,7 +93,7 @@ class AnalisisdeImpactoController extends Controller
         abort_if(Gate::denies('matriz_bia_cuestionario_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $cuestionario = new AnalisisImpacto();
 
-        return view('admin.analisis-impacto.create', compact('cuestionario'));
+        return view('admin.analysisImpact.create', compact('cuestionario'));
     }
 
     public function store(Request $request)
@@ -125,7 +125,7 @@ class AnalisisdeImpactoController extends Controller
 
         $cuestionario = AnalisisImpacto::create($request->all());
 
-        return redirect()->route('admin.analisis-impacto.edit', ['id' => $cuestionario]);
+        return redirect()->route('admin.analysisImpact.edit', ['id' => $cuestionario]);
     }
 
     public function show($id)
@@ -133,7 +133,7 @@ class AnalisisdeImpactoController extends Controller
         abort_if(Gate::denies('matriz_bia_cuestionario_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $cuestionario = AnalisisImpacto::find($id);
 
-        return view('admin.analisis-impacto.show', compact('cuestionario'));
+        return view('admin.analysisImpact.show', compact('cuestionario'));
     }
 
     public function edit(Request $request, $id)
@@ -145,10 +145,10 @@ class AnalisisdeImpactoController extends Controller
         if (empty($cuestionario)) {
             Alert::warning('warning', 'Analisis not found');
 
-            return redirect(route('admin.analisis-impacto.index'));
+            return redirect(route('admin.analysisImpact.index'));
         }
 
-        return view('admin.analisis-impacto.edit', ['id' => $cuestionario], compact('cuestionario'));
+        return view('admin.analysisImpact.edit', ['id' => $cuestionario], compact('cuestionario'));
     }
 
     public function update(Request $request, $id)
@@ -350,7 +350,7 @@ class AnalisisdeImpactoController extends Controller
         $cuestionario->update($request->all());
         Alert::success('éxito', 'Información añadida con éxito');
 
-        return redirect(route('admin.analisis-impacto.index'));
+        return redirect(route('admin.analysisImpact.index'));
     }
 
     public function destroy($id)
@@ -371,28 +371,28 @@ class AnalisisdeImpactoController extends Controller
         $proporciona_informacion = CuestionarioProporcionaInformacion::with('cuestionario')->orderByDesc('cuestionario_id')->get();
         $recibe_informacion = CuestionarioRecibeInformacion::with('cuestionario')->orderByDesc('cuestionario_id')->get();
 
-        return view('admin.analisis-impacto.matriz', compact('cuestionario', 'tecnologica', 'personas_contingencia', 'proporciona_informacion', 'recibe_informacion'));
+        return view('admin.analysisImpact.matriz', compact('cuestionario', 'tecnologica', 'personas_contingencia', 'proporciona_informacion', 'recibe_informacion'));
     }
 
     public function menu()
     {
         abort_if(Gate::denies('matriz_bia_menu_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.analisis-impacto.menu-buttons');
+        return view('admin.analysisImpact.menu-buttons');
     }
 
     public function menuBIA()
     {
         abort_if(Gate::denies('matriz_bia_menu_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.analisis-impacto.menu-bia');
+        return view('admin.analysisImpact.menu-bia');
     }
 
     public function menuAIA()
     {
         abort_if(Gate::denies('matriz_bia_menu_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.analisis-impacto.menu-aia');
+        return view('admin.analysisImpact.menu-aia');
     }
 
     public function ajustes()
@@ -404,10 +404,10 @@ class AnalisisdeImpactoController extends Controller
         if (empty($cuestionario)) {
             Alert::warning('warning', 'Información añadida con éxito');
 
-            return redirect(route('admin.analisis-impacto.matriz'));
+            return redirect(route('admin.analysisImpact.matriz'));
         }
 
-        return view('admin.analisis-impacto.ajustes', compact('cuestionario'));
+        return view('admin.analysisImpact.ajustes', compact('cuestionario'));
     }
 
     public function updateAjustesBIA(Request $request, $id)
@@ -418,6 +418,6 @@ class AnalisisdeImpactoController extends Controller
         $cuestionario->update($request->all());
         Alert::success('éxito', 'Información añadida con éxito');
 
-        return redirect()->route('admin.analisis-impacto.matriz');
+        return redirect()->route('admin.analysisImpact.matriz');
     }
 }

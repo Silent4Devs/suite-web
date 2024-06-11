@@ -1,6 +1,6 @@
 <div class="form-group col-md-12">
     {{-- <button type="button" class="btn-xs btn-outline-success rounded ml-2 pr-3 offset-4"><i class="pl-2 pr-3 fas fa-plus"></i> Agregar</button> --}}
-    <button type="button" class="btn btn-primary offset-11" style="text-align:center;" wire:click.prevent="create">
+    <button type="button" class="btn tb-btn-primary offset-11" style="text-align:center;" wire:click.prevent="create">
         Agregar
     </button>
 
@@ -115,7 +115,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary"
+                    <button type="button" class="btn tb-btn-primary"
                         wire:click.prevent="{{ $view == 'create' ? 'save' : 'update' }}">{{ $view == 'create' ? 'Guardar' : 'Actualizar' }}</button>
                 </div>
             </div>

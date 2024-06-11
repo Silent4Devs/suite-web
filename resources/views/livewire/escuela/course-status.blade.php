@@ -54,13 +54,13 @@
                     <div class="cursor-pointer d-flex justify-content-end align-items-center" wire:click="completed"
                         style="cursor: pointer;">
                         @if ($current->completed)
-                            <h4 class="mr-2 text-primary">Lección terminada</h4>
+                            {{-- <h4 class="mr-2 text-primary">Lección terminada</h4>
                             <i class="d-inline fas fa-toggle-on"
-                                style="font-size: 30px; color: #006DDB; cursor: pointer;"></i>
+                                style="font-size: 30px; color: #006DDB; cursor: pointer;"></i> --}}
                         @else
-                            <h4 class="mr-2">Marcar esta lección como terminada</h4>
+                            {{-- <h4 class="mr-2">Marcar esta lección como terminada</h4>
                             <i class="text-2xl text-gray-600 fas fa-toggle-off"
-                                style="font-size: 30px; cursor: pointer;"></i>
+                                style="font-size: 30px; cursor: pointer;"></i> --}}
                         @endif
                     </div>
                 </div>
@@ -114,8 +114,9 @@
     <div class="card card-body" style="width: 320px;">
         <h4>{{ $course->title }}</h6>
             <div class="d-flex align-items-start">
-                <div class="circulo">
-                    <img src="{{ asset('img/avatars/escuela-instructor.png') }}">
+                <div class="img-person" style="min-width: 40px; min-height: 40px;">
+                    <img src="{{ isset($course->teacher->empleado->avatar_ruta) ? $course->teacher->empleado->avatar_ruta : '' }}"
+                        alt="{{ $course->teacher->name }}">
                 </div>
                 <div>
                     <p class="ml-2">{{ $course->teacher->name }}</p>
@@ -138,9 +139,9 @@
                 </div>
             </div>
 
-            <ul style="list-style: none; cursor: pointer;">
+            <ul id="secciones-curso" style="list-style: none; cursor: pointer;">
                 @foreach ($course->sections as $section)
-                    <li>
+                    <li class="seccion-li-orden" id="seccion-{{ $section->id }}">
                         <i style="font-size:10pt; cursor: pointer;" class="d-inline text-black-500 fas fa-play-circle">
                         </i>
                         <a class="inline mb-2 text-base font-bold">{{ $section->name }}</a>
@@ -217,4 +218,47 @@
             </ul>
     </div>
 
+    @section('scripts')
+        <script>
+            setTimeout(() => {
+                @this.completed();
+                console.log("list");
+            }, 30000);
+        </script>
+
+        <script>
+            Livewire.on('renderJS', () => {
+                setTimeout(() => {
+                    const newOrder = @json($course->order_section).split(",");
+
+                    // Obtén una referencia a la lista
+                    const list = document.getElementById("secciones-curso");
+
+                    // Obtén todos los elementos de la lista
+                    const items = Array.from(list.children);
+
+                    // Verifica los IDs de los elementos
+                    // console.log('IDs originales:', items.map(item => item.id));
+
+                    // Crea un nuevo arreglo con los elementos ordenados según el array de IDs
+                    const orderedItems = newOrder.map(id => {
+                        const element = items.find(item => item.id === id);
+                        if (!element) {
+                            console.error(`No se encontró un elemento con el ID: ${id}`);
+                        }
+                        return element;
+                    }).filter(item => item !== undefined);
+
+                    // Verifica los IDs ordenados
+                    // console.log('IDs ordenados:', orderedItems.map(item => item.id));
+
+                    // Vacía la lista
+                    list.innerHTML = "";
+
+                    // Agrega los elementos ordenados de vuelta a la lista
+                    orderedItems.forEach(item => list.appendChild(item));
+                }, 500);
+            });
+        </script>
+    @endsection
 </div>

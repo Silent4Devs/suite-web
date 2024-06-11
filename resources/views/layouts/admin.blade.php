@@ -11,15 +11,19 @@
 
     <!-- Principal Styles -->
     <link href="{{ asset('css/app.css') }}{{ config('app.cssVersion') }}" rel="stylesheet">
-    <link href="{{ asset('css/style.css') }}{{ config('app.cssVersion') }}" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/loader.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/admin.css') }}{{ config('app.cssVersion') }}">
+    <link href="{{ asset('css/global/style.css') }}{{ config('app.cssVersion') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/global/loader.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/global/admin.css') }}{{ config('app.cssVersion') }}">
     <link rel="stylesheet" href="{{ asset('css/rds.css') }}{{ config('app.cssVersion') }}">
-    <link href="{{ asset('css/custom.css') }}{{ config('app.cssVersion') }}" rel="stylesheet" />
+    <link href="{{ asset('css/global/custom.css') }}{{ config('app.cssVersion') }}" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('vendor/file-manager/css/file-manager.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/dark_mode.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/global/darkMode.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/yearpicker.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/global/responsive.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('css/global/TbButtons.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/global/TbColorsGlobal.css') }}">
+
     @yield('css')
     @yield('styles')
     <!-- End Principal Styles -->
@@ -176,6 +180,27 @@
                                         onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
                                         <i class="bi bi-box-arrow-right"></i> Salir
                                     </a>
+                                </div>
+                                <div class="p-2 mt-1 d-flex justify-content-center">
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input" id="customSwitch1"
+                                            {{ $empleado->disponibilidad->disponibilidad == 1 ? 'checked' : '' }}
+                                            onchange="handleSwitchChange(event)">
+                                        <label class="custom-control-label" for="customSwitch1">
+                                            @switch($empleado->disponibilidad->disponibilidad)
+                                                @case(1)
+                                                    Activo
+                                                @break
+
+                                                @case(2)
+                                                    Ausente
+                                                @break
+
+                                                @default
+                                                    Activo
+                                            @endswitch
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                         @endif
@@ -379,9 +404,11 @@
                                         <i class="material-symbols-outlined i-direct">keyboard_arrow_down</i>
                                     </a>
                                     <ul>
-                                        <li><a href="{{ asset('admin/lista-distribucion') }}">Lista de
-                                                distribución</a>
-                                        </li>
+                                        @can('lista_distribucion_acceder')
+                                            <li><a href="{{ asset('admin/lista-distribucion') }}">Lista de
+                                                    distribución</a>
+                                            </li>
+                                        @endcan
                                         @can('clausulas_auditorias_acceder')
                                             <li><a href="{{ route('admin.auditoria-clasificacion') }}">Clasificación</a>
                                             </li>
@@ -412,9 +439,11 @@
                                         @can('crear_area_acceder')
                                             <li><a href="{{ route('admin.areas.index') }}">Crear Áreas</a></li>
                                         @endcan
-                                        <li>
-                                            <a href="{{ route('admin.lista-informativa.index') }}">Lista Informativa</a>
-                                        </li>
+                                        @can('lista_informativa_acceder')
+                                            <li>
+                                                <a href="{{ route('admin.lista-informativa.index') }}">Lista Informativa</a>
+                                            </li>
+                                        @endcan
                                         @can('macroprocesos_acceder')
                                             <li><a href="{{ route('admin.macroprocesos.index') }}">Macroprocesos</a></li>
                                         @endcan
@@ -1078,6 +1107,42 @@
             line.style.left = offsetLeft + 25 + 'px';
             line.style.width = boundLink.width - 50 + 'px';
         });
+    </script>
+
+    <script>
+        function handleSwitchChange(event) {
+            const isChecked = event.target.checked;
+            let cambiar = isChecked ? 1 : 2;
+
+            $.ajax({
+                url: '{{ route('admin.estado-disponibilidad') }}',
+                type: 'POST', // Change the request method to POST
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                data: {
+                    cambiar: cambiar
+                },
+                success: function(response) {
+                    // Handle success response
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: "Se ha cambiado su estado de disponibilidad con éxito.",
+                        showConfirmButton: false,
+                        timer: 1500,
+                        onClose: function() {
+                            // Reload the page after the alert disappears
+                            window.location.reload();
+                        }
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error('AJAX request failed:', error);
+                }
+
+            });
+        }
     </script>
 
 </body>

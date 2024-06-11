@@ -1,5 +1,5 @@
 {{-- <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#bienvenidoTABANTAJ">
+<button type="button" class="btn tb-btn-primary" data-toggle="modal" data-target="#bienvenidoTABANTAJ">
     Launch static backdrop modal
 </button> --}}
 

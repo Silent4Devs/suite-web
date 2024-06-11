@@ -67,9 +67,9 @@
     <div class="contenido_modal card">
         <i class="fas fa-times" id="btn_closed_modal"></i>
         <div class="modal_header">
-            <img src="{{ asset('img/silent4business.png') }}">
+            <img src="{{ asset('img/global/silent4business.png') }}">
             <h4>SILENT4BUSINESS S.A. DE C.V.</h4>
-            <img src="{{ asset('img/logo_policromatico.png') }}" style="height: 85px;">
+            <img src="{{ asset('img/auth/TBLogoPolicromatico.png') }}" style="height: 85px;">
         </div>
         <hr>
         <div class="modal_body">

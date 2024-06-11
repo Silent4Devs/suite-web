@@ -1,7 +1,7 @@
 
 <div>
 
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/print_foda.css') }}{{config('app.cssVersion')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/global/foda/print.css') }}{{config('app.cssVersion')}}">
 
     <style>
         .timeline-header .userimage {
@@ -619,7 +619,7 @@
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal"
                                                     onclick="limpiarForm();event.preventDefault()">Cancelar</button>
                                                 <button id="btnCargarDocumento" type="button"
-                                                    class="btn btn-primary"><i
+                                                    class="btn tb-btn-primary"><i
                                                         class="fas fa-upload mr-2"></i>Cargar</button>
                                             </div>
                                         </div>
@@ -766,7 +766,7 @@
                                                     onclick="limpiarForm();event.preventDefault()"
                                                     x-on:click="open = false">Cancelar</button>
                                                 <button id="btnCargarCertificado" type="button"
-                                                    class="btn btn-primary"><i
+                                                    class="btn tb-btn-primary"><i
                                                         class="fas fa-upload mr-2"></i>Cargar</button>
                                             </div>
                                         </div>
@@ -942,7 +942,7 @@
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal"
                                                     onclick="limpiarForm();event.preventDefault()"
                                                     x-on:click="open = false">Cancelar</button>
-                                                <button id="btnCargarCurso" type="button" class="btn btn-primary"><i
+                                                <button id="btnCargarCurso" type="button" class="btn tb-btn-primary"><i
                                                         class="fas fa-upload mr-2"></i>Cargar</button>
                                             </div>
                                         </div>

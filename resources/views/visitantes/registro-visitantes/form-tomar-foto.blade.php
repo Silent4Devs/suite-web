@@ -11,5 +11,5 @@
     </div>
 </div>
 <div class="col-12" style="text-align: end">
-    <button class="btn btn-primary" wire:click.prevent="increaseStep()">Siguiente</button>
+    <button class="btn tb-btn-primary" wire:click.prevent="increaseStep()">Siguiente</button>
 </div>

@@ -15,6 +15,7 @@
                         <th>Matriculados</th>
                         <th>Calificación</th>
                         <th>Estatus</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -60,35 +61,37 @@
                             <td>
                                 @switch($curso->status)
                                     @case(1)
-                                        <span
-                                            class="inline-flex px-2 text-xs font-semibold leading-5 text-red-800 bg-red-100 rounded-full">
+                                        <span class="bg-warning p-2 rounded-lg" style="color: #a74b00;">
                                             Borrador
                                         </span>
                                     @break
 
                                     @case(2)
-                                        <span
-                                            class="inline-flex px-2 text-xs font-semibold leading-5 text-yellow-800 bg-yellow-100 rounded-full">
+                                        <span class="bg-info color-white p-2 rounded-lg">
                                             Revisión
                                         </span>
                                     @break
 
                                     @case(3)
-                                        <span
-                                            class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
+                                        <span class="bg-success color-white p-2 rounded-lg">
                                             Publicado
                                         </span>
                                     @break
 
                                     @case(4)
-                                        <span
-                                            class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
+                                        <span class="bg-secondary color-white p-2 rounded-lg">
                                             Cerrado
                                         </span>
                                     @break
 
                                     @default
                                 @endswitch
+                            </td>
+                            <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
+                                <a href="{{ route('admin.courses.edit', $curso) }}" class="fas fa-edit mr-2" title="Editar"
+                                    style="color:#747474"></a>
+                                <a href="{{ route('admin.courses-reportes-individuales', $curso->id) }}"
+                                    class="mr-2 fas fa-file-alt" title="Reportes" style="color:#747474"></a>
                             </td>
                         </tr>
                     @endforeach
@@ -190,9 +193,6 @@
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,
-                serverSide: true,
-                retrieve: true,
-                orderCellsTop: true,
                 order: [
                     [0, 'desc']
                 ],

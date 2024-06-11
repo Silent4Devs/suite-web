@@ -16,8 +16,8 @@
         color: var(--prm-color-alternative);
     }
 
-    .btn-primary,
-    .btn-primary:hover {
+    .tb-btn-primary,
+    .tb-btn-primary:hover {
         background: var(--prm-color-alternative);
         border: none;
         border-radius: 2px;

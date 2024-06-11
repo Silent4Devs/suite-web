@@ -21,10 +21,10 @@
             </button>
         </div>
     </div>
-    <div id="lista-secciones">
+    <div id="lista-secciones" wire:ignore>
         @forelse($course->sections as $item)
             {{--  <div class="card shadow-none" x-data="{ open: {{ $loop->first ? 'true' : 'false' }} }">  --}}
-            <div class="card shadow-none" id="secction{{ $item->id }}">
+            <div class="card shadow-none" id="secction{{ $item->id }}" data-id="seccion-{{ $item->id }}">
                 @if ($section->id == $item->id)
                     <div class="card-header" style="background: #306BA9; color: #FFFFFF;">
                         <div class="row ">
@@ -42,8 +42,6 @@
                     </div>
                 @else
                     {{-- show section --}}
-                    {{--  <div class="card-header"
-                        style="background: #306BA9; color: #FFFFFF; border-top-left-radius: 10px; border-top-right-radius: 10px;">  --}}
                     <div class="card-header"
                         style="background: #306BA9; color: #FFFFFF; border-top-left-radius: 10px; border-top-right-radius: 10px;"
                         id="secction-show-{{ $item->id }}">
@@ -83,9 +81,27 @@
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 <script>
     const lista = document.getElementById('lista-secciones');
+
+
     Sortable.create(lista, {
         animation: 150,
         choseClass: "seleccionado",
         dragClass: "fantasma",
+
+        ondEnd: () => {
+            console.log();
+        },
+        group: "lista",
+        store: {
+            set: (sortable) => {
+                let orden = sortable.toArray();
+                @this.set('order', orden.join(','));
+            },
+            get: (sortable) => {
+                if (@json($course->order_section)) {
+                    return @json($course->order_section).split(',');
+                }
+            }
+        },
     });
 </script>

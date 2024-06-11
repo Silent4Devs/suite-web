@@ -40,7 +40,7 @@
             } else if (number == 1) {
                 html += `
                         <td>
-                            <button class="btn btn-primary btn-xs" name="addContactoEmergencia" id="addContactoEmergencia">
+                            <button class="btn tb-btn-primary btn-xs" name="addContactoEmergencia" id="addContactoEmergencia">
                                 <i class="fas fa-plus-circle"></i>
                             </button>
                         </td>
@@ -71,7 +71,7 @@
                         <small class="text-danger" id="error_contactos_emergencia_${index}_parentesco"></small>
                     </td>
                     <td>
-                            <button class="btn btn-primary btn-xs" name="addContactoEmergencia" id="addContactoEmergencia">
+                            <button class="btn tb-btn-primary btn-xs" name="addContactoEmergencia" id="addContactoEmergencia">
                                 <i class="fas fa-plus-circle"></i>
                             </button>
                         </td>
