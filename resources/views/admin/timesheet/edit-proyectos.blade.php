@@ -44,7 +44,7 @@
             <form method="POST" action="{{ route('admin.timesheet-proyectos-update', $proyecto->id) }}">
                 @csrf
                 <div class="row mt-4">
-                    <div class="col-md-8">
+                    <div class="col-md-8" style="padding-left: 0px !important; padding-right: 0px !important">
                         @livewire('edit-identificador-proyectos-int-ext', ['id_proyecto' => $proyecto->id])
                     </div>
                     <div class="form-group col-md-4 anima-focus">

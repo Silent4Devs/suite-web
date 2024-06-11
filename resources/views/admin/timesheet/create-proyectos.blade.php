@@ -47,7 +47,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-8">
+                    <div class="col-md-8" style="padding-left: 0px !important; padding-right: 0px !important">
                         @livewire('identificador-proyectos-int-ext')
                     </div>
                     {{-- <div class="form-group col-md-2 anima-focus">

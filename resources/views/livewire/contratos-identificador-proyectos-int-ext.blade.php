@@ -36,7 +36,7 @@
         @if ($creacion_proyecto)
             <div class="row mb-4">
                 <div class="recuadro-instruccion">
-                    <strong>!</strong> &nbsp; Debe Ingresar un Identificador antes de poder seleccionar el tipo de
+                    <strong>!</strong> &nbsp; Debe Ingresar un Identificador antes de poder seleccionar la categoria del
                     Proyecto.
                 </div>
             </div>
@@ -69,7 +69,7 @@
 
                 <div class="col-md-4">
                     <div class="form-group ">
-                        {!! Form::label('tipo', 'Tipo*', ['class' => 'asterisco']) !!}
+                        {!! Form::label('tipo', 'Categoria del Proyecto*', ['class' => 'asterisco']) !!}
                         <select class="form-control" name="tipo" id="tipo" wire:model="tipo" required>
                             <option value="" selected>Seleccione una opción</option>
                             @foreach ($select_tipos as $tipo_it)
