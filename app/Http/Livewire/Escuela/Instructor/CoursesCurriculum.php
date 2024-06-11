@@ -23,6 +23,7 @@ class CoursesCurriculum extends Component
         'section.name' => 'required',
     ];
 
+
     public function mount(Course $course)
     {
         $this->course = $course;
@@ -31,7 +32,12 @@ class CoursesCurriculum extends Component
 
     public function render()
     {
+        $test = $this->course->sections_order;
+
+        // $this->emit('renderJS');
+        $this->emit('renderJS');
         return view('livewire.escuela.instructor.courses-curriculum')->with('course', $this->course);
+
     }
 
     public function store()
@@ -105,6 +111,7 @@ class CoursesCurriculum extends Component
 
     public function updatedOrder($value)
     {
+        // dd($value);
         $this->order = $value;
 
         $this->course->update([
