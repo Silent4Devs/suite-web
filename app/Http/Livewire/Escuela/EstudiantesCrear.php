@@ -62,13 +62,15 @@ class EstudiantesCrear extends Component
 
         if ($this->publico == 'area') {
             foreach ($this->usuarios as $usuario) {
-                if ($usuario->empleado->area_id == $this->area_seleccionada) {
-                    UsuariosCursos::create([
-                        'user_id' => $usuario->id,
-                        'course_id' => $this->course->id,
-                    ]);
+                if (isset($usuario->empleado->area_id)) {
+                    if ($usuario->empleado->area_id == $this->area_seleccionada) {
+                        UsuariosCursos::create([
+                            'user_id' => $usuario->id,
+                            'course_id' => $this->course->id,
+                        ]);
+                    }
+                    $this->emit('UserStore');
                 }
-                $this->emit('UserStore');
             }
             $this->render_alerta('success', 'Los estudiantes del área '.Area::where('id', $this->area_seleccionada)->first()->area.' se han agregado exitosamente');
             $this->dispatchBrowserEvent('closeModal');

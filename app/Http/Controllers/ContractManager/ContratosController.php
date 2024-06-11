@@ -308,7 +308,17 @@ class ContratosController extends AppBaseController
             if (!Storage::exists('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/penalizaciones')) {
                 Storage::makeDirectory('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/penalizaciones');
             }
-            $file->storeAs('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/penalizaciones', $contrato->id . $fecha_inicio . $nombre);
+
+            $ruta = 'contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/penalizaciones';
+
+            // Guardar el archivo en el disco 'public' con la ruta específica
+            Storage::disk('public')->put($ruta.'/'.$contrato->id.$fecha_inicio.$nombre, file_get_contents($file));
+
+            $ruta_carpeta = storage_path('app/public/'.$ruta);
+
+            // Dar permisos chmod 777 a la carpeta
+            chmod($ruta_carpeta, 0777);
+
             $contratos = Contrato::find($contrato->id);
             $contratos->documento = $contrato->id . $fecha_inicio . $nombre;
             $contratos->save();
@@ -464,7 +474,6 @@ class ContratosController extends AppBaseController
      */
     public function update($id, Request $request)
     {
-        // dd($request->signed);
         $validatedData = $request->validate([
             'no_contrato' => ['required', new NumeroContrato($id)],
             'no_proyecto' => 'required',
@@ -631,29 +640,6 @@ class ContratosController extends AppBaseController
             ]);
         }
 
-        // firma
-        // if($request->signed != null){
-        //     $ruta_firma_ant = storage_path('app/public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/firmas/'.$contrato->firma1);
-        //     if(File::exists($ruta_firma_ant)){
-        //         // dd($ruta_firma_ant);
-        //         File::delete($ruta_firma_ant);
-
-        //         $folderPath = storage_path('app/public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/firmas/');
-        //         $image_parts = explode(";base64,", $request->signed);
-        //         $image_type_aux = explode("image/", $image_parts[0]);
-        //         $image_type = $image_type_aux[1];
-        //         $image_base64 = base64_decode($image_parts[1]);
-        //         $firma = uniqid() . '.'.$image_type;
-        //         $file = $folderPath . $firma;
-
-        //         file_put_contents($file, $image_base64);
-
-        //         $contrato = $this->contratoRepository->update([
-        //             'firma1' => $firma,
-        //         ], $id);
-        //     }
-        // }
-
         $ruta_file_contrato = null;
         $nombre_f = $contrato->file_contrato;
         if ($request->file('file_contrato') != null) {
@@ -667,20 +653,22 @@ class ContratosController extends AppBaseController
 
             // Obtener el nombre original del archivo
             $nombre = $request->file('file_contrato')->getClientOriginalName();
-            $nombre_f = $contrato->id . $fecha_inicio . $nombre;
+            $nombre_f = $contrato->id.$fecha_inicio.$nombre;
 
-            $file = $request->file('file_contrato');
-
-            // Ruta completa donde se guardará el archivo
-            $ruta = 'contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato;
+            $ruta = 'contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato;
 
             // Guardar el archivo en el disco 'public' con la ruta específica
-            Storage::disk('public')->put($ruta . '/' . $nombre_f, file_get_contents($file));
+            Storage::disk('public')->put($ruta.'/'.$nombre_f, file_get_contents($request->file('file_contrato')));
 
-            $ruta_carpeta = storage_path('app/public/' . $ruta);
+            $ruta_carpeta = storage_path('app/public/'.$ruta);
 
             // Dar permisos chmod 777 a la carpeta
             chmod($ruta_carpeta, 0777);
+
+            // $ruta_file_contrato = Storage::url($archivo);
+            $contrato->update([
+                'file_contrato' => $nombre_f,
+            ]);
         }
 
         // dd($request->file('documento'));
@@ -693,8 +681,7 @@ class ContratosController extends AppBaseController
             $isExists = Storage::disk('public')->exists('contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/penalizaciones' . '/' . $contrato->documento);
             if ($isExists) {
                 if ($contrato->documento != null) {
-                    //dd(Storage::disk('public'));
-                    unlink(storage_path('app/public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/penalizaciones' . '/' . $contrato->documento));
+                    unlink(storage_path('app/public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/penalizaciones'.'/'.$contrato->documento));
                 }
             }
             $nombre = $file->getClientOriginalName();
@@ -703,15 +690,22 @@ class ContratosController extends AppBaseController
                 Storage::makeDirectory('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/penalizaciones');
             }
 
-            $file->storeAs('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/penalizaciones', $contrato->id . $fecha_inicio . $nombre);
+            $ruta = 'contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/penalizaciones';
+
+            // Guardar el archivo en el disco 'public' con la ruta específica
+            Storage::disk('public')->put($ruta.'/'.$contrato->id.$fecha_inicio.$nombre, file_get_contents($file));
+
+            $ruta_carpeta = storage_path('app/public/'.$ruta);
+
+            // Dar permisos chmod 777 a la carpeta
+            chmod($ruta_carpeta, 0777);
+
             $contratos = Contrato::find($contrato->id);
             $contratos->documento = $contrato->id . $fecha_inicio . $nombre;
             $contratos->save();
         }
-        //## FIN UPDATE REES####
-        // notify()->success('¡Se ha actualizado la información del contrato satisfactoriamente!');
 
-        return redirect("/contract_manager/contratos-katbol/{$contrato->id}/edit");
+        return redirect(route('contract_manager.contratos-katbol.index'));
     }
 
     /**

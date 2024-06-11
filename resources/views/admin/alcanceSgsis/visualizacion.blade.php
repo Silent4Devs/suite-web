@@ -58,12 +58,17 @@
         }
     </style>
 @endsection
-<h5 class="col-12 titulo_general_funcion">Alcances: <strong> {{ $organizacions->empresa }}</h5>
-    @if ($alcances)
-        @foreach ($alcances as $data)
+<h5 class="col-12 titulo_general_funcion">Alcances: <strong> {{ $organizacions->empresa }}</strong></h5>
+
+@if ($alcances->isEmpty())
+    <div class="row">
+        <h4 class="alert-heading">¡Aún no hay alcances aprobadas!</h4>
+    </div>
+@else
+    @foreach ($alcances as $data)
         <div class="encabezado">
             <h6><strong>{{ $data->nombre ?: 'Nombre: No definido' }}</strong></h6>
-            <p  class="quitar">Fecha de publicación : {{ $data->fecha_publicacion ?: 'fecha_publicacion: No definido' }}</p>
+            <p class="quitar">Fecha de publicación : {{ $data->fecha_publicacion ?: 'Fecha de publicación: No definido' }}</p>
             <br>
             <div class="d-flex justify-content-end" style="position: relative; top: -2rem; right: 2rem;">@livewire('aceptar-alcance', ['id_alcance' => $data->id])</div>
         </div>
@@ -73,15 +78,12 @@
                     <p class="quitar">{!! \Illuminate\Support\Str::limit(strip_tags($data->alcancesgsi), 1050) !!}</p>
                 </div>
                 <div class="ml-auto">
-                    <img src="{{ asset('comite.png') }}" alt="Comite Image">
+                    <img src="{{ asset('comite.png') }}" alt="Imagen del Comité">
                 </div>
             </div>
         </div>
-        @endforeach
-    @else
-        <div class="row">
-            <h3>Sin registro</h3>
-        </div>
-    @endif
+    @endforeach
+@endif
+
 
 @endsection

@@ -310,48 +310,53 @@ class SolicitudVacacionesController extends Controller
 
     public function update(Request $request, $id)
     {
-        abort_if(Gate::denies('solicitud_vacaciones_aprobar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $empleado = User::getCurrentUser()->empleado;
 
-        $request->validate([
-            'fecha_inicio' => 'required|date',
-            'fecha_fin' => 'required|date',
-            'empleado_id' => 'required|int',
-            'dias_solicitados' => 'required|int',
-            'año' => 'required|int',
-            'autoriza' => 'required|int',
-            'aprobacion' => 'required|int',
-        ]);
+        if ($empleado->es_supervisor || Gate::allows('solicitud_vacaciones_aprobar')) {
 
-        $solicitud = SolicitudVacaciones::find($id);
-        $empleados = Empleado::getAll();
-        $supervisor = $empleados->find($request->autoriza);
-        $solicitante = $empleados->find($request->empleado_id);
+            $request->validate([
+                'fecha_inicio' => 'required|date',
+                'fecha_fin' => 'required|date',
+                'empleado_id' => 'required|int',
+                'dias_solicitados' => 'required|int',
+                'año' => 'required|int',
+                'autoriza' => 'required|int',
+                'aprobacion' => 'required|int',
+            ]);
 
-        $solicitud->update($request->all());
+            $solicitud = SolicitudVacaciones::find($id);
+            $empleados = Empleado::getAll();
+            $supervisor = $empleados->find($request->autoriza);
+            $solicitante = $empleados->find($request->empleado_id);
 
-        $informados = ListaInformativa::with('participantes.empleado', 'usuarios.usuario')->where('modelo', '=', $this->modelo)->first();
+            $solicitud->update($request->all());
 
-        if (isset($informados->participantes[0]) || isset($informados->usuarios[0])) {
+            $informados = ListaInformativa::with('participantes.empleado', 'usuarios.usuario')->where('modelo', '=', $this->modelo)->first();
 
-            if (isset($informados->participantes[0])) {
-                foreach ($informados->participantes as $participante) {
-                    $correos[] = $participante->empleado->email;
+            if (isset($informados->participantes[0]) || isset($informados->usuarios[0])) {
+
+                if (isset($informados->participantes[0])) {
+                    foreach ($informados->participantes as $participante) {
+                        $correos[] = $participante->empleado->email;
+                    }
                 }
+
+                if (isset($informados->usuarios[0])) {
+                    foreach ($informados->usuarios as $usuario) {
+                        $correos[] = $usuario->usuario->email;
+                    }
+                }
+                Mail::to(trim(removeUnicodeCharacters($solicitante->email)))->queue(new MailRespuestaVacaciones($solicitante, $supervisor, $solicitud, $correos));
+            } else {
+                Mail::to(trim(removeUnicodeCharacters($solicitante->email)))->queue(new MailRespuestaVacaciones($solicitante, $supervisor, $solicitud));
             }
 
-            if (isset($informados->usuarios[0])) {
-                foreach ($informados->usuarios as $usuario) {
-                    $correos[] = $usuario->usuario->email;
-                }
-            }
-            Mail::to(trim(removeUnicodeCharacters($solicitante->email)))->queue(new MailRespuestaVacaciones($solicitante, $supervisor, $solicitud, $correos));
+            Alert::success('éxito', 'Información añadida con éxito');
+
+            return redirect(route('admin.solicitud-vacaciones.aprobacion'));
         } else {
-            Mail::to(trim(removeUnicodeCharacters($solicitante->email)))->queue(new MailRespuestaVacaciones($solicitante, $supervisor, $solicitud));
+            abort(Response::HTTP_FORBIDDEN, '403 Forbidden');
         }
-
-        Alert::success('éxito', 'Información añadida con éxito');
-
-        return redirect(route('admin.solicitud-vacaciones.aprobacion'));
     }
 
     public function destroy(Request $request)

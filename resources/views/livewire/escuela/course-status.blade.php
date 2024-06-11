@@ -54,13 +54,13 @@
                     <div class="cursor-pointer d-flex justify-content-end align-items-center" wire:click="completed"
                         style="cursor: pointer;">
                         @if ($current->completed)
-                            <h4 class="mr-2 text-primary">Lección terminada</h4>
+                            {{-- <h4 class="mr-2 text-primary">Lección terminada</h4>
                             <i class="d-inline fas fa-toggle-on"
-                                style="font-size: 30px; color: #006DDB; cursor: pointer;"></i>
+                                style="font-size: 30px; color: #006DDB; cursor: pointer;"></i> --}}
                         @else
-                            <h4 class="mr-2">Marcar esta lección como terminada</h4>
+                            {{-- <h4 class="mr-2">Marcar esta lección como terminada</h4>
                             <i class="text-2xl text-gray-600 fas fa-toggle-off"
-                                style="font-size: 30px; cursor: pointer;"></i>
+                                style="font-size: 30px; cursor: pointer;"></i> --}}
                         @endif
                     </div>
                 </div>
@@ -114,8 +114,9 @@
     <div class="card card-body" style="width: 320px;">
         <h4>{{ $course->title }}</h6>
             <div class="d-flex align-items-start">
-                <div class="circulo">
-                    <img src="{{ asset('img/avatars/escuela-instructor.png') }}">
+                <div class="img-person" style="min-width: 40px; min-height: 40px;">
+                    <img src="{{ isset($course->teacher->empleado->avatar_ruta) ? $course->teacher->empleado->avatar_ruta : '' }}"
+                        alt="{{ $course->teacher->name }}">
                 </div>
                 <div>
                     <p class="ml-2">{{ $course->teacher->name }}</p>
@@ -217,4 +218,12 @@
             </ul>
     </div>
 
+    @section('scripts')
+        <script>
+            setTimeout(() => {
+                @this.completed();
+                console.log("list");
+            }, 30000);
+        </script>
+    @endsection
 </div>

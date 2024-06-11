@@ -117,7 +117,7 @@ class CourseStatus extends Component
     public function getIndexProperty()
     {
         // Check if $this->course exists and is not null
-        if ($this->course && $this->course->lessons) {
+        if ($this->course && $this->course->lessons && $this->current) {
             // Use optional() to safely access 'id' property of each lesson and search for $this->current->id
             return optional($this->course->lessons->pluck('id'))->search($this->current->id);
         }
