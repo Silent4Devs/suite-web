@@ -70,6 +70,8 @@ use App\Models\IncidentesDayoff;
 use App\Models\IncidentesDeSeguridad;
 use App\Models\IncidentesSeguridad;
 use App\Models\IncidentesVacaciones;
+use App\Models\ListaDistribucion;
+use App\Models\ListaInformativa;
 use App\Models\Macroproceso;
 use App\Models\Marca;
 use App\Models\MatrizRequisitoLegale;
@@ -147,6 +149,8 @@ use App\Observers\IncidentesSeguridadObserver;
 use App\Observers\IncidentesVacacionesObserver;
 use App\Observers\KatbolProveedorIndistintoObserver;
 use App\Observers\LessonObserver;
+use App\Observers\ListaDistribucionObserver;
+use App\Observers\ListaInformtivaObserver;
 use App\Observers\MacroprocesoObserver;
 use App\Observers\MarcasObserver;
 use App\Observers\MastrizRequisitosObserver;
@@ -360,5 +364,7 @@ class EventServiceProvider extends ServiceProvider
         Sucursal::observe(SucursalObserver::class);
         CatalogoRangosObjetivos::observe(CatalogoRangosObjetivosObserver::class);
         Vulnerabilidad::observe(VulnerabilidadObserver::class);
+        ListaInformativa::observe(ListaInformtivaObserver::class);
+        ListaDistribucion::observe(ListaDistribucionObserver::class);
     }
 }

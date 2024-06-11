@@ -30,22 +30,22 @@ class QueueCorreo extends Controller
         // dd('al ready sent');
 
         $documentos = Contrato::select('id', 'no_contrato', 'file_contrato')->where('deleted_at', null)->get();
-        $tabla = "";
+        $tabla = '';
         foreach ($documentos as $key => $documento) {
-            # code...
-            $validacion = Storage::exists('/public/contratos/' . $documento->id . '_contrato_' . $documento->no_contrato . '/' . $documento->file_contrato);
+            // code...
+            $validacion = Storage::exists('/public/contratos/'.$documento->id.'_contrato_'.$documento->no_contrato.'/'.$documento->file_contrato);
 
-            if (!$validacion) {
+            if (! $validacion) {
                 $contratos_faltantes[] = [
                     'no_contrato' => $documento->no_contrato,
                     'archivo' => $documento->file_contrato,
                 ];
 
-                $tabla = "<html><ul><li>" . $documento->id . "&nbsp;-&nbsp;" . $documento->no_contrato . "&nbsp;-&nbsp;" . $documento->file_contrato . "</li></ul></html>";
+                $tabla = '<html><ul><li>'.$documento->id.'&nbsp;-&nbsp;'.$documento->no_contrato.'&nbsp;-&nbsp;'.$documento->file_contrato.'</li></ul></html>';
             }
             echo $tabla;
         }
-        echo "<hr>";
+        echo '<hr>';
         echo $documentos->count();
     }
 
@@ -281,7 +281,7 @@ class QueueCorreo extends Controller
             }
         }
 
-        dd('Proceso finalizado', 'total: ' . count($datos));
+        dd('Proceso finalizado', 'total: '.count($datos));
     }
 
     /**
