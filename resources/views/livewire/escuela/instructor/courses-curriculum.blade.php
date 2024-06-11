@@ -21,7 +21,7 @@
             </button>
         </div>
     </div>
-    <div id="lista-secciones" >
+    <div id="lista-secciones">
         @forelse($course->sections_order as $item)
             {{--  <div class="card shadow-none" x-data="{ open: {{ $loop->first ? 'true' : 'false' }} }">  --}}
             <div class="card shadow-none" id="seccion-{{ $item['id'] }}" data-id="seccion-{{ $item['id'] }}">
@@ -103,5 +103,3 @@
         },
     });
 </script>
-
-

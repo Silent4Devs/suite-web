@@ -71,7 +71,7 @@ class Course extends Model implements Auditable
 
     public function getSectionsOrderAttribute()
     {
-        if (isset($this->order_section) ) {
+        if ($this->order_section ) {
             $sections = $this->order_section;
             $string = str_replace('"','', $sections);
             $string = str_replace('seccion-','', $sections);
@@ -85,7 +85,8 @@ class Course extends Model implements Auditable
             return $sectionsRegisters;
         }
         else{
-            return $this->hasMany('App\Models\Escuela\Section')->orderBy('created_at', 'asc');
+            $secciones = $this->sections;
+            return $secciones;
         }
     }
 
