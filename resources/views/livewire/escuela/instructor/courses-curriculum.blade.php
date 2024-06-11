@@ -21,7 +21,7 @@
             </button>
         </div>
     </div>
-    <div id="lista-secciones">
+    <div id="lista-secciones" wire:ignore>
         @forelse($course->sections as $item)
             {{--  <div class="card shadow-none" x-data="{ open: {{ $loop->first ? 'true' : 'false' }} }">  --}}
             <div class="card shadow-none" id="secction{{ $item->id }}" data-id="seccion-{{ $item->id }}">
@@ -81,6 +81,8 @@
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 <script>
     const lista = document.getElementById('lista-secciones');
+
+
     Sortable.create(lista, {
         animation: 150,
         choseClass: "seleccionado",
@@ -92,12 +94,11 @@
         group: "lista",
         store: {
             set: (sortable) => {
-                const orden = sortable.toArray();
-                localStorage.setItem(sortable.options.group.name, orden.join('|'));
+                let orden = sortable.toArray();
+                @this.set('order', orden.join(','));
             },
             get: (sortable) => {
-                const orden = localStorage.getItem(sortable.options.group.name);
-                return orden ? orden.split('|') : [];
+                return @json($course->order_section).split(',');
             }
         },
     });

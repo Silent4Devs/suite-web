@@ -87,15 +87,17 @@
                             {{ $cu->cursos->title }}
                         </p>
                         @if ($instructor)
-                            <span>Un curso de: </span><br>
-                            <div class="d-flex align-items-center gap-1 mt-2">
-                                <div class="img-person">
-                                    <img src="{{ $instructor->empleado->avatar_ruta }}"
-                                        alt="{{ $cu->cursos->instructor->name }}">
+                            @if (isset($instructor->empleado))
+                                <span>Un curso de: </span><br>
+                                <div class="d-flex align-items-center gap-1 mt-2">
+                                    <div class="img-person">
+                                        <img src="{{ $instructor->empleado->avatar_ruta }}"
+                                            alt="{{ $cu->cursos->instructor->name }}">
+                                    </div>
+                                    <span class="course-teacher"> {{ $cu->cursos->instructor->name }}
+                                    </span>
                                 </div>
-                                <span class="course-teacher"> {{ $cu->cursos->instructor->name }}
-                                </span>
-                            </div>
+                            @endif
                         @else
                             <p class="course-teacher">Instructor no asignado </p>
                         @endif

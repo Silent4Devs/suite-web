@@ -69,6 +69,8 @@ class CourseStatus extends Component
 
         //dd($this->course);
 
+        $this->emit('renderJS');
+
         return view('livewire.escuela.course-status');
     }
 
