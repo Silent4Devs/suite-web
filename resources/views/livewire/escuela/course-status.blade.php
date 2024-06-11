@@ -112,153 +112,122 @@
     </div>
 
     <div class="card card-body" style="width: 320px;">
-        <h4>{{ $course->title }}</h6>
-            <div class="d-flex align-items-start">
-                <div class="img-person" style="min-width: 40px; min-height: 40px;">
-                    <img src="{{ isset($course->teacher->empleado->avatar_ruta) ? $course->teacher->empleado->avatar_ruta : '' }}"
-                        alt="{{ $course->teacher->name }}">
-                </div>
-                <div>
-                    <p class="ml-2">{{ $course->teacher->name }}</p>
-                    <p class="ml-2" style="color: #E3A008;">{{ strtoupper($course->category->name) }}</p>
+        <h4>{{ $course->title }}</h4>
+        <div class="d-flex align-items-start">
+            <div class="img-person" style="min-width: 40px; min-height: 40px;">
+                <img src="{{ isset($course->teacher->empleado->avatar_ruta) ? $course->teacher->empleado->avatar_ruta : '' }}"
+                    alt="{{ $course->teacher->name }}">
+            </div>
+            <div>
+                <p class="ml-2">{{ $course->teacher->name }}</p>
+                <p class="ml-2" style="color: #E3A008;">{{ strtoupper($course->category->name) }}</p>
 
+            </div>
+        </div>
+
+        <div class="caja-info-card-mc">
+            <p class="mt-2 text-primary">{{ $this->advance . '%' }} completado</p>
+            <div class="curso-progreso-barra">
+                <div class="indicador-progreso-barra" style="width: {{ $this->advance . '%' }};"></div>
+            </div>
+        </div>
+        <div class="relative pt-1">
+            <div class="flex h-2 mb-4 overflow-hidden text-xs bg-gray-200 rounded">
+                <div style="width:{{ $this->advance . '%' }}"
+                    class="flex flex-col justify-center text-center text-white transition-all duration-500 bg-blue-500 shadow-none whitespace-nowrap">
                 </div>
             </div>
+        </div>
 
-            <div class="caja-info-card-mc">
-                <p class="mt-2 text-primary">{{ $this->advance . '%' }} completado</p>
-                <div class="curso-progreso-barra">
-                    <div class="indicador-progreso-barra" style="width: {{ $this->advance . '%' }};"></div>
-                </div>
-            </div>
-            <div class="relative pt-1">
-                <div class="flex h-2 mb-4 overflow-hidden text-xs bg-gray-200 rounded">
-                    <div style="width:{{ $this->advance . '%' }}"
-                        class="flex flex-col justify-center text-center text-white transition-all duration-500 bg-blue-500 shadow-none whitespace-nowrap">
-                    </div>
-                </div>
-            </div>
+        <ul id="secciones-curso" style="list-style: none; cursor: pointer;">
+            @foreach ($course->sections_order as $section)
+                <li class="seccion-li-orden" id="seccion-{{ $section->id }}">
+                    <i style="font-size:10pt; cursor: pointer;" class="d-inline text-black-500 fas fa-play-circle">
+                    </i>
+                    <a class="inline mb-2 text-base font-bold">{{ $section->name }}</a>
 
-            <ul id="secciones-curso" style="list-style: none; cursor: pointer;">
-                @foreach ($course->sections as $section)
-                    <li class="seccion-li-orden" id="seccion-{{ $section->id }}">
-                        <i style="font-size:10pt; cursor: pointer;" class="d-inline text-black-500 fas fa-play-circle">
-                        </i>
-                        <a class="inline mb-2 text-base font-bold">{{ $section->name }}</a>
-
-                        <ul style="list-style: none;">
-                            @foreach ($section->lessons as $lesson)
-                                <li>
-                                    <div>
-                                        @if ($lesson->completed)
-                                            @if ($current->id == $lesson->id)
-                                                <span style="color:green;">
-                                                    <a class="cursor:pointer;"
-                                                        wire:click="changeLesson({{ $lesson }})">{{ $lesson->name }}</a>
-                                                </span>
-                                            @else
-                                                <span style="color:rgb(0, 179, 0);">
-                                                    <a class="cursor:pointer;"
-                                                        wire:click="changeLesson({{ $lesson }})">{{ $lesson->name }}</a>
-                                                </span>
-                                            @endif
+                    <ul style="list-style: none;">
+                        @foreach ($section->lessons as $lesson)
+                            <li>
+                                <div>
+                                    @if ($lesson->completed)
+                                        @if ($current->id == $lesson->id)
+                                            <span style="color:green;">
+                                                <a class="cursor:pointer;"
+                                                    wire:click="changeLesson({{ $lesson }})">{{ $lesson->name }}</a>
+                                            </span>
                                         @else
-                                            @if ($current->id == $lesson->id)
-                                                <span class="text-primary">
-                                                    <a class="cursor:pointer;"
-                                                        wire:click="changeLesson({{ $lesson }})">{{ $lesson->name }}</a>
-                                                </span>
-                                            @else
-                                                <span class="">
-                                                    <a class="cursor:pointer;"
-                                                        wire:click="changeLesson({{ $lesson }})">{{ $lesson->name }}</a>
-                                                </span>
-                                            @endif
+                                            <span style="color:rgb(0, 179, 0);">
+                                                <a class="cursor:pointer;"
+                                                    wire:click="changeLesson({{ $lesson }})">{{ $lesson->name }}</a>
+                                            </span>
                                         @endif
+                                    @else
+                                        @if ($current->id == $lesson->id)
+                                            <span class="text-primary">
+                                                <a class="cursor:pointer;"
+                                                    wire:click="changeLesson({{ $lesson }})">{{ $lesson->name }}</a>
+                                            </span>
+                                        @else
+                                            <span class="">
+                                                <a class="cursor:pointer;"
+                                                    wire:click="changeLesson({{ $lesson }})">{{ $lesson->name }}</a>
+                                            </span>
+                                        @endif
+                                    @endif
+                                </div>
+                            </li>
+                        @endforeach
+
+                        @foreach ($section->evaluations as $evaluation)
+                            @php
+                                $totalLectionSection = $section->lessons->count();
+                                $completedLectionSection = $section->lessons->where('completed', true)->count();
+                            @endphp
+                            @if ($totalLectionSection != $completedLectionSection)
+                                <li style="list-style-type: disc;">
+                                    <div>
+                                        <span class="inline-block rounded-full border-2 border-gray-500"></span>
+                                        <a class="cursor:pointer;" wire:click="alertSection()">{{ $evaluation->name }}
+                                        </a>
                                     </div>
                                 </li>
-                            @endforeach
-
-                            @foreach ($section->evaluations as $evaluation)
-                                @php
-                                    $totalLectionSection = $section->lessons->count();
-                                    $completedLectionSection = $section->lessons->where('completed', true)->count();
-                                @endphp
-                                @if ($totalLectionSection != $completedLectionSection)
+                            @else
+                                @if ($evaluation->questions->count() > 0)
+                                    @php
+                                        $completed = in_array($evaluation->id, $evaluationsUser);
+                                    @endphp
                                     <li style="list-style-type: disc;">
                                         <div>
-                                            <span class="inline-block rounded-full border-2 border-gray-500"></span>
+                                            <span
+                                                class="inline-block rounded-full border-2 {{ $completed ? 'bg-green-500  border-green-500' : 'border-gray-500' }}"></span>
                                             <a class="cursor:pointer;"
-                                                wire:click="alertSection()">{{ $evaluation->name }}
+                                                href="{{ route('admin.curso.evaluacion', ['course' => $course->id, 'evaluation' => $evaluation->id]) }}"
+                                                wire:click="changeLesson({{ $lesson }})">{{ $evaluation->name }}
                                             </a>
                                         </div>
                                     </li>
-                                @else
-                                    @if ($evaluation->questions->count() > 0)
-                                        @php
-                                            $completed = in_array($evaluation->id, $evaluationsUser);
-                                        @endphp
-                                        <li style="list-style-type: disc;">
-                                            <div>
-                                                <span
-                                                    class="inline-block rounded-full border-2 {{ $completed ? 'bg-green-500  border-green-500' : 'border-gray-500' }}"></span>
-                                                <a class="cursor:pointer;"
-                                                    href="{{ route('admin.curso.evaluacion', ['course' => $course->id, 'evaluation' => $evaluation->id]) }}"
-                                                    wire:click="changeLesson({{ $lesson }})">{{ $evaluation->name }}
-                                                </a>
-                                            </div>
-                                        </li>
-                                    @endif
                                 @endif
-                            @endforeach
-                        </ul>
-
-                    </li>
-                @endforeach
-            </ul>
+                            @endif
+                        @endforeach
+                    </ul>
+                </li>
+            @endforeach
+        </ul>
     </div>
-
     @section('scripts')
         <script>
-            setTimeout(() => {
-                @this.completed();
-                console.log("list");
-            }, 30000);
-        </script>
-
-        <script>
-            Livewire.on('renderJS', () => {
+            Livewire.on('completado', () => {
                 setTimeout(() => {
-                    const newOrder = @json($course->order_section).split(",");
-
-                    // Obtén una referencia a la lista
-                    const list = document.getElementById("secciones-curso");
-
-                    // Obtén todos los elementos de la lista
-                    const items = Array.from(list.children);
-
-                    // Verifica los IDs de los elementos
-                    // console.log('IDs originales:', items.map(item => item.id));
-
-                    // Crea un nuevo arreglo con los elementos ordenados según el array de IDs
-                    const orderedItems = newOrder.map(id => {
-                        const element = items.find(item => item.id === id);
-                        if (!element) {
-                            console.error(`No se encontró un elemento con el ID: ${id}`);
-                        }
-                        return element;
-                    }).filter(item => item !== undefined);
-
-                    // Verifica los IDs ordenados
-                    // console.log('IDs ordenados:', orderedItems.map(item => item.id));
-
-                    // Vacía la lista
-                    list.innerHTML = "";
-
-                    // Agrega los elementos ordenados de vuelta a la lista
-                    orderedItems.forEach(item => list.appendChild(item));
-                }, 500);
+                    @this.completed();
+                }, 7000);
             });
+
+            if (!@json($lesson->completed)) {
+                setTimeout(() => {
+                    @this.completed();
+                }, 7000);
+            }
         </script>
     @endsection
 </div>
