@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
+use App\Models\ContractManager\Contrato;
 use App\Traits\ClearsResponseCache;
 use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 use OwenIt\Auditing\Contracts\Auditable;
-use App\Models\ContractManager\Contrato;
 
 class TimesheetProyecto extends Model implements Auditable
 {
@@ -45,7 +45,7 @@ class TimesheetProyecto extends Model implements Auditable
                 return self::orderBy('identificador', 'ASC')->get();
             });
         } else {
-            return Cache::remember('TimesheetProyecto:timesheetproyecto_show_' . $proyecto_id, 3600, function () {
+            return Cache::remember('TimesheetProyecto:timesheetproyecto_show_'.$proyecto_id, 3600, function () {
                 return self::orderBy('identificador', 'ASC')->get();
             });
         }
@@ -75,7 +75,7 @@ class TimesheetProyecto extends Model implements Auditable
                 return self::select('id', 'identificador', 'proyecto', 'cliente_id', 'tipo')->orderBy('identificador', 'ASC')->get();
             });
         } else {
-            return Cache::remember('TimesheetProyecto:timesheetproyecto_show_' . $proyecto_id, 3600, function () {
+            return Cache::remember('TimesheetProyecto:timesheetproyecto_show_'.$proyecto_id, 3600, function () {
                 return self::select('id', 'identificador', 'proyecto', 'cliente_id', 'tipo')->orderBy('identificador', 'ASC')->get();
             });
         }

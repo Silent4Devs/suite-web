@@ -5,7 +5,6 @@ namespace App\Http\Controllers\ContractManager;
 use App\Http\Controllers\Controller;
 use App\Mail\RequisicionesEmail;
 use App\Mail\RequisicionesFirmaDuplicadaEmail;
-use App\Models\Empleado;
 use App\Models\ContractManager\Comprador as KatbolComprador;
 use App\Models\ContractManager\Contrato as KatbolContrato;
 use App\Models\ContractManager\ProvedorRequisicionCatalogo as KatbolProvedorRequisicionCatalogo;
@@ -13,6 +12,7 @@ use App\Models\ContractManager\ProveedorIndistinto as KatbolProveedorIndistinto;
 use App\Models\ContractManager\ProveedorOC as KatbolProveedorOC;
 use App\Models\ContractManager\Requsicion as KatbolRequsicion;
 use App\Models\ContractManager\Sucursal as KatbolSucursal;
+use App\Models\Empleado;
 use App\Models\FirmasRequisiciones;
 use App\Models\ListaDistribucion;
 use App\Models\Organizacion;
@@ -31,7 +31,8 @@ class RequisicionesController extends Controller
 
     public $bandera = true;
 
-    public $modelo = "KatbolRequsicion";
+    public $modelo = 'KatbolRequsicion';
+
     /**
      * Display a listing of the resource.
      *
@@ -100,7 +101,7 @@ class RequisicionesController extends Controller
 
             $requisicion = KatbolRequsicion::with('sucursal', 'comprador.user', 'contrato')->find($id);
 
-            if (!$requisicion) {
+            if (! $requisicion) {
                 abort(404);
             }
 
@@ -288,7 +289,7 @@ class RequisicionesController extends Controller
 
             $firmas_requi = FirmasRequisiciones::updateOrCreate(
                 [
-                    'requisicion_id' => $requisicion->id
+                    'requisicion_id' => $requisicion->id,
                 ],
                 [
                     'solicitante_id' => $user->empleado->id,
@@ -339,7 +340,7 @@ class RequisicionesController extends Controller
 
             $firmas_requi = FirmasRequisiciones::updateOrCreate(
                 [
-                    'requisicion_id' => $requisicion->id
+                    'requisicion_id' => $requisicion->id,
                 ],
                 [
                     'responsable_finanzas_id' => $responsable->id,
@@ -369,7 +370,7 @@ class RequisicionesController extends Controller
 
             $firmas_requi = FirmasRequisiciones::updateOrCreate(
                 [
-                    'requisicion_id' => $requisicion->id
+                    'requisicion_id' => $requisicion->id,
                 ],
                 [
                     'comprador_id' => $comprador->user->empleado->id,
@@ -465,13 +466,13 @@ class RequisicionesController extends Controller
             if (removeUnicodeCharacters($user->email) === removeUnicodeCharacters($solicitante->email)) {
                 $tipo_firma = 'firma_solicitante';
             } else {
-                return view('contract_manager.requisiciones.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del solicitante directo: <br> <strong>' . $solicitante->name . '</strong>');
+                return view('contract_manager.requisiciones.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del solicitante directo: <br> <strong>'.$solicitante->name.'</strong>');
             }
         } elseif ($requisicion->firma_jefe === null) {
             if (removeUnicodeCharacters($supervisor_email) === removeUnicodeCharacters($user->email) || removeUnicodeCharacters($user->email) === 'aurora.soriano@silent4business.com') {
                 $tipo_firma = 'firma_jefe';
             } else {
-                return view('contract_manager.requisiciones.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del jefe directo: <br> <strong>' . $supervisor . '</strong>');
+                return view('contract_manager.requisiciones.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del jefe directo: <br> <strong>'.$supervisor.'</strong>');
             }
         } elseif ($requisicion->firma_finanzas === null) {
             if (removeUnicodeCharacters($user->email) === 'lourdes.abadia@silent4business.com' || removeUnicodeCharacters($user->email) === 'ldelgadillo@silent4business.com' || removeUnicodeCharacters($user->email) === 'aurora.soriano@silent4business.com') {
@@ -483,7 +484,7 @@ class RequisicionesController extends Controller
             if (removeUnicodeCharacters($comprador->user->email) === removeUnicodeCharacters($user->email)) {
                 $tipo_firma = 'firma_compras';
             } else {
-                return view('contract_manager.requisiciones.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>' . $comprador->user->name . '</strong>');
+                return view('contract_manager.requisiciones.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>'.$comprador->user->name.'</strong>');
             }
         } else {
             $tipo_firma = 'firma_final_aprobadores';
@@ -648,22 +649,22 @@ class RequisicionesController extends Controller
             $firmasRequisicion = $requisicion->registroFirmas;
 
             if ($firmasRequisicion->solicitante_id == $idEmpleadoActual) {
-                $posicion = "solicitante_id";
+                $posicion = 'solicitante_id';
             }
 
             if ($firmasRequisicion->jefe_id == $idEmpleadoActual) {
-                $posicion = "jefe_id";
-                $posicion_firma = "firma_solicitante";
+                $posicion = 'jefe_id';
+                $posicion_firma = 'firma_solicitante';
             }
 
             if ($firmasRequisicion->responsable_finanzas_id == $idEmpleadoActual) {
-                $posicion = "responsable_finanzas_id";
-                $posicion_firma = "firma_jefe";
+                $posicion = 'responsable_finanzas_id';
+                $posicion_firma = 'firma_jefe';
             }
 
             if ($firmasRequisicion->comprador_id == $idEmpleadoActual) {
-                $posicion = "comprador_id";
-                $posicion_firma = "firma_finanzas";
+                $posicion = 'comprador_id';
+                $posicion_firma = 'firma_finanzas';
             }
 
             $nuevoResponsableId = $request->nuevo_responsable;

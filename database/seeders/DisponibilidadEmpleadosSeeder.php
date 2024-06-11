@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\DisponibilidadEmpleados;
 use App\Models\Empleado;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DisponibilidadEmpleadosSeeder extends Seeder

@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\Area;
 use App\Models\ListaDistribucion;
 use App\Models\ParticipantesListaDistribucion;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class ListaDistribucionSuplentesLideresSeeder extends Seeder

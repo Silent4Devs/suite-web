@@ -12,10 +12,10 @@ class DisponibilidadEmpleados extends Model
     protected $table = 'disponibilidad_empleados';
 
     protected $fillable =
-    [
-        'empleado_id',
-        'disponibilidad',
-    ];
+        [
+            'empleado_id',
+            'disponibilidad',
+        ];
 
     // protected $appends = ['disposicion'];
 

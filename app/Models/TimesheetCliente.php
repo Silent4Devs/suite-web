@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\Traits\ClearsResponseCache;
 use App\Models\ContractManager\Contrato;
+use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
@@ -49,7 +49,7 @@ class TimesheetCliente extends Model
 
     public static function getAllOrderBy($value)
     {
-        return Cache::remember('TimesheetCliente:timesheetcliente_order_by_' . $value, 3600, function () use ($value) {
+        return Cache::remember('TimesheetCliente:timesheetcliente_order_by_'.$value, 3600, function () use ($value) {
             return self::orderBy($value)->get();
         });
     }

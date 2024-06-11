@@ -2,7 +2,6 @@
 
 namespace App\Mail;
 
-use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -34,18 +33,18 @@ class OrdenCompraAprobada extends Mailable
         try {
             $img_route = $url;
             $logo_base = file_get_contents($img_route);
-            $img = 'data:image/png;base64,' . base64_encode($logo_base);
+            $img = 'data:image/png;base64,'.base64_encode($logo_base);
 
             return $img;
         } catch (\Exception $e) {
             try {
                 $img_route = $url;
                 $logo_base = Storage::get($img_route);
-                $img = 'data:image/png;base64,' . base64_encode($logo_base);
+                $img = 'data:image/png;base64,'.base64_encode($logo_base);
 
                 return $img;
             } catch (\Throwable $th) {
-                $img = 'data:image/png;base64,' . '';
+                $img = 'data:image/png;base64,'.'';
 
                 return $img;
             }
@@ -68,6 +67,6 @@ class OrdenCompraAprobada extends Mailable
             'img_linkedin' => $this->getBase64(asset('img/linkedin.png')),
             'img_facebook' => $this->getBase64(asset('img/facebook.png')),
             'img_requi' => $this->getBase64(asset('img/img_req.png')),
-        ])->subject('Orden de Compra Aprobada: ' . $this->requisicion->referencia);
+        ])->subject('Orden de Compra Aprobada: '.$this->requisicion->referencia);
     }
 }

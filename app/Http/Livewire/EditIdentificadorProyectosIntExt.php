@@ -17,9 +17,9 @@ class EditIdentificadorProyectosIntExt extends Component
 
     public $mensaje = null;
 
-    public $class = "success";
+    public $class = 'success';
 
-    public $colorTexto = "";
+    public $colorTexto = '';
 
     public function mount($id_proyecto)
     {
@@ -34,25 +34,25 @@ class EditIdentificadorProyectosIntExt extends Component
         // dd($this->select_tipos);
 
         if (count($busqueda) == 1) {
-            if (!empty($busqueda) && $busqueda[0] == "Interno") {
-                $this->mensaje = "Esta Identificador se encuentra en uso por un proyecto interno.";
-                $this->colorTexto = "orange";
-            } elseif (!empty($busqueda) && $busqueda[0] == "Externo") {
-                $this->mensaje = "Esta Identificador se encuentra en uso por un proyecto externo.";
-                $this->colorTexto = "orange";
+            if (! empty($busqueda) && $busqueda[0] == 'Interno') {
+                $this->mensaje = 'Esta Identificador se encuentra en uso por un proyecto interno.';
+                $this->colorTexto = 'orange';
+            } elseif (! empty($busqueda) && $busqueda[0] == 'Externo') {
+                $this->mensaje = 'Esta Identificador se encuentra en uso por un proyecto externo.';
+                $this->colorTexto = 'orange';
             } else {
-                $this->mensaje = "Este Identificador no esta disponible.";
-                $this->colorTexto = "red";
-                $this->class = "error";
+                $this->mensaje = 'Este Identificador no esta disponible.';
+                $this->colorTexto = 'red';
+                $this->class = 'error';
             }
         } elseif (count($busqueda) == 2) {
-            $this->mensaje = "Este Identificador no esta disponible.";
-            $this->colorTexto = "red";
-            $this->class = "error";
+            $this->mensaje = 'Este Identificador no esta disponible.';
+            $this->colorTexto = 'red';
+            $this->class = 'error';
         } elseif (count($busqueda) == 0) {
-            $this->mensaje = "El Identificador esta disponible.";
-            $this->colorTexto = "green";
-            $this->class = "error";
+            $this->mensaje = 'El Identificador esta disponible.';
+            $this->colorTexto = 'green';
+            $this->class = 'error';
         }
 
         $this->select_tipos = [$this->proyecto->tipo => $this->proyecto->tipo];
@@ -75,25 +75,25 @@ class EditIdentificadorProyectosIntExt extends Component
         // dd($this->select_tipos);
 
         if (count($busqueda) == 1) {
-            if (!empty($busqueda) && $busqueda[0] == "Interno") {
-                $this->mensaje = "Esta Identificador se encuentra en uso por un proyecto interno.";
-                $this->colorTexto = "orange";
-            } elseif (!empty($busqueda) && $busqueda[0] == "Externo") {
-                $this->mensaje = "Esta Identificador se encuentra en uso por un proyecto externo.";
-                $this->colorTexto = "orange";
+            if (! empty($busqueda) && $busqueda[0] == 'Interno') {
+                $this->mensaje = 'Esta Identificador se encuentra en uso por un proyecto interno.';
+                $this->colorTexto = 'orange';
+            } elseif (! empty($busqueda) && $busqueda[0] == 'Externo') {
+                $this->mensaje = 'Esta Identificador se encuentra en uso por un proyecto externo.';
+                $this->colorTexto = 'orange';
             } else {
-                $this->mensaje = "Este Identificador no esta disponible.";
-                $this->colorTexto = "red";
-                $this->class = "error";
+                $this->mensaje = 'Este Identificador no esta disponible.';
+                $this->colorTexto = 'red';
+                $this->class = 'error';
             }
         } elseif (count($busqueda) == 2) {
-            $this->mensaje = "Este Identificador no esta disponible.";
-            $this->colorTexto = "red";
-            $this->class = "error";
+            $this->mensaje = 'Este Identificador no esta disponible.';
+            $this->colorTexto = 'red';
+            $this->class = 'error';
         } elseif (count($busqueda) == 0) {
-            $this->mensaje = "El Identificador esta disponible.";
-            $this->colorTexto = "green";
-            $this->class = "success";
+            $this->mensaje = 'El Identificador esta disponible.';
+            $this->colorTexto = 'green';
+            $this->class = 'success';
         }
 
         foreach ($busquedaID as $key_busqueda => $b) {

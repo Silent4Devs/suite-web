@@ -59,7 +59,7 @@ class FirmasRequisiciones extends Model
         $count = 0;
 
         foreach ($columns as $column) {
-            if ($this->$column == $id_empleado) {
+            if ($id_empleado == $this->$column) {
                 $count++;
             }
         }

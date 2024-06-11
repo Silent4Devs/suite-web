@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\ConvergenciaContratos;
 use App\Models\TimesheetProyecto;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class ClientesdeProyectosSeeder extends Seeder
