@@ -17,6 +17,8 @@ class CoursesCurriculum extends Component
 
     public $name;
 
+    public $order;
+
     protected $rules = [
         'section.name' => 'required',
     ];
@@ -99,5 +101,16 @@ class CoursesCurriculum extends Component
             'toast' => true,
             'timerProgressBar' => true,
         ]);
+    }
+
+    public function updatedOrder($value)
+    {
+        $this->order = $value;
+
+        $this->course->update([
+            'order_section' => $this->order,
+        ]);
+
+        // dump($this->course->order_section);
     }
 }
