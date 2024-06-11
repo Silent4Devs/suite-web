@@ -75,12 +75,8 @@ class CourseController extends Controller
 
         if ($request->hasFile('file')) {
             $image = $request->file('file');
-            $ruta = 'public/cursos';
-
-            // Guardar el archivo en el disco 'public' con la ruta específica
-            Storage::disk('public')->put($ruta, file_get_contents($image));
+            Storage::put('public/cursos', $image);
             $url = '/storage/cursos/'.$image->hashName();
-
             $course->image()->create([
                 'url' => $url,
             ]);

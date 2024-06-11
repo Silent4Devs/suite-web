@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Cache;
 use OwenIt\Auditing\Contracts\Auditable;
+use App\Models\Escuela\Section;
 
 class Course extends Model implements Auditable
 {
@@ -66,6 +67,21 @@ class Course extends Model implements Auditable
     public function getRouteKeyName()
     {
         return 'slug';
+    }
+
+    public function getSectionsOrderAttribute()
+    {
+        $sections = $this->order_section;
+        $string = str_replace('"','', $sections);
+        $string = str_replace('seccion-','', $sections);
+        // Convertir el string en un array usando coma como delimitador
+        $array = explode(',', $string);
+        $sectionsRegisters = collect();
+        foreach($array as $section){
+            $sectionConsult = Section::find($section);
+            $sectionsRegisters->push($sectionConsult);
+        }
+        return $sectionsRegisters;
     }
 
     //Relacion uno a muchos
