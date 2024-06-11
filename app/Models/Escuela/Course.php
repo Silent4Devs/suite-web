@@ -71,17 +71,22 @@ class Course extends Model implements Auditable
 
     public function getSectionsOrderAttribute()
     {
-        $sections = $this->order_section;
-        $string = str_replace('"','', $sections);
-        $string = str_replace('seccion-','', $sections);
-        // Convertir el string en un array usando coma como delimitador
-        $array = explode(',', $string);
-        $sectionsRegisters = collect();
-        foreach($array as $section){
-            $sectionConsult = Section::find($section);
-            $sectionsRegisters->push($sectionConsult);
+        if (isset($this->order_section) ) {
+            $sections = $this->order_section;
+            $string = str_replace('"','', $sections);
+            $string = str_replace('seccion-','', $sections);
+            // Convertir el string en un array usando coma como delimitador
+            $array = explode(',', $string);
+            $sectionsRegisters = collect();
+            foreach($array as $section){
+                $sectionConsult = Section::find($section);
+                $sectionsRegisters->push($sectionConsult);
+            }
+            return $sectionsRegisters;
         }
-        return $sectionsRegisters;
+        else{
+            return $this->hasMany('App\Models\Escuela\Section')->orderBy('created_at', 'asc');
+        }
     }
 
     //Relacion uno a muchos
