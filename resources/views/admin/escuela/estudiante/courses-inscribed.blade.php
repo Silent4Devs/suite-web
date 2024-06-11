@@ -74,49 +74,52 @@
     <div class="caja-cards-mis-cursos">
         @if (isset($cursos_usuario))
             @foreach ($cursos_usuario as $cu)
-                @php
-                    $instructor = $cu->cursos->instructor;
-                @endphp
-                <div class="card card-body mi-curso">
+                @if ($cu->cursos->status != '4')
+                    @php
+                        $instructor = $cu->cursos->instructor;
+                    @endphp
+                    <div class="card card-body mi-curso">
 
-                    <div class="content-img">
-                        <img src="{{ asset($cu->cursos->image->url) }}" alt="">
-                    </div>
-                    <div class="caja-info-card-mc">
-                        <p class="course-title">
-                            {{ $cu->cursos->title }}
-                        </p>
-                        @if ($instructor)
-                            @if (isset($instructor->empleado))
-                                <span>Un curso de: </span><br>
-                                <div class="d-flex align-items-center gap-1 mt-2">
-                                    <div class="img-person">
-                                        <img src="{{ $instructor->empleado->avatar_ruta }}"
-                                            alt="{{ $cu->cursos->instructor->name }}">
+                        <div class="content-img">
+                            <img src="{{ asset($cu->cursos->image->url) }}" alt="">
+                        </div>
+                        <div class="caja-info-card-mc">
+                            <p class="course-title">
+                                {{ $cu->cursos->title }}
+                            </p>
+                            @if ($instructor)
+                                @if (isset($instructor->empleado))
+                                    <span>Un curso de: </span><br>
+                                    <div class="d-flex align-items-center gap-1 mt-2">
+                                        <div class="img-person">
+                                            <img src="{{ $instructor->empleado->avatar_ruta }}"
+                                                alt="{{ $cu->cursos->instructor->name }}">
+                                        </div>
+                                        <span class="course-teacher"> {{ $cu->cursos->instructor->name }}
+                                        </span>
                                     </div>
-                                    <span class="course-teacher"> {{ $cu->cursos->instructor->name }}
-                                    </span>
-                                </div>
+                                @endif
+                            @else
+                                <p class="course-teacher">Instructor no asignado </p>
                             @endif
-                        @else
-                            <p class="course-teacher">Instructor no asignado </p>
-                        @endif
 
-                        <div class="caja-info-card-advance">
-                            <p class="title-advance">{{ $cu->advance . '%' }} completado</p>
-                            <div class="curso-progreso-barra">
-                                <div class="indicador-progreso-barra" style="width: {{ $cu->advance . '%' }};"></div>
+                            <div class="caja-info-card-advance">
+                                <p class="title-advance">{{ $cu->advance . '%' }} completado</p>
+                                <div class="curso-progreso-barra">
+                                    <div class="indicador-progreso-barra" style="width: {{ $cu->advance . '%' }};"></div>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="d-flex justify-content-center">
-                            <a href="{{ route('admin.curso-estudiante', $cu->cursos->id) }}" class="btn btn-mi-course">Ir a
-                                mi
-                                curso</a>
-                        </div>
+                            <div class="d-flex justify-content-center">
+                                <a href="{{ route('admin.curso-estudiante', $cu->cursos->id) }}"
+                                    class="btn btn-mi-course">Ir a
+                                    mi
+                                    curso</a>
+                            </div>
 
+                        </div>
                     </div>
-                </div>
+                @endif
             @endforeach
         @endif
     </div>
