@@ -251,24 +251,33 @@
             </select>
         </div>
 
-        <div class="distancia form-group col-md-4">
-            <label for="no_proyecto" class="txt-tamaño">Número de proyecto</label>
-            <select class="form-control" name="no_proyecto" id="no_proyecto"
-                @if ($show_contrato) disabled @endif>
-                <option value="" selected>Seleccione un Número de proyecto</option>
-                @foreach ($proyectos as $proyecto)
-                    <option data-id="{{ $proyecto->id }}" value="{{ $proyecto->identificador }}"
-                        @if ($contrato->no_proyecto == $proyecto->identificador) selected @endif>
-                        {{ $proyecto->identificador }} - {{ $proyecto->proyecto }}
-                    </option>
-                @endforeach
-            </select>
-            @if ($errors->has('no_proyecto'))
-                <div class="invalid-feedback red-text">
-                    {{ $errors->first('no_proyecto') }}
-                </div>
-            @endif
-        </div>
+        @if ($contrato->proyectoConvergencia)
+            <div class="distancia form-group col-md-4">
+                <label for="no_proyecto" class="txt-tamaño">Número de proyecto</label>
+                <select class="form-control" name="no_proyecto" id="no_proyecto"
+                    @if ($show_contrato) disabled @endif>
+                    <option value="" selected>Seleccione un Número de proyecto</option>
+                    @foreach ($proyectos as $proyecto)
+                        <option data-id="{{ $proyecto->id }}" value="{{ $proyecto->identificador }}"
+                            @if ($contrato->proyectoConvergencia->id == $proyecto->id) selected @endif>
+                            {{ $proyecto->identificador }} - {{ $proyecto->proyecto }}
+                        </option>
+                    @endforeach
+                </select>
+                @if ($errors->has('no_proyecto'))
+                    <div class="invalid-feedback red-text">
+                        {{ $errors->first('no_proyecto') }}
+                    </div>
+                @endif
+            </div>
+        @else
+            <div class="distancia form-group col-md-4">
+                <label for="no_proyecto" class="txt-tamaño">
+                    Número de proyecto</label>
+                <input type="text" maxlength="250" name="no_proyecto" id="no_proyecto" class="form-control"
+                    value="{{ $contrato->no_proyecto }}" @if ($show_contrato) disabled @endif>
+            </div>
+        @endif
 
         @if ($areas->count() > 0)
             <div class="distancia form-group col-md-4">
@@ -736,28 +745,27 @@
                     </div>
                 </td>
                 <td>
-                        <div class="td_fianza">
-                            <input class="form-control" type="file"
-                                name="documento" accept=".pdf" readonly>
-                        </div>
-                        <div class="ml-4 display-flex">
-                            <label class="red-text">{{ $errors->first('Type') }}</label>
-                        </div>
-                        @if ($contrato->documento != null)
-                            <a href="{{ asset(trim('storage/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/penalizaciones/' . $contrato->documento)) }}"
-                                target="_blank" class="descarga_archivo" style="margin-left:20px;">
-                                Descargar
-                            </a>
-                        @endif
-                        <div class="ml-4 display-flex">
-                            <label class="red-text">{{ $errors->first('Type') }}</label>
-                        </div>
+                    <div class="td_fianza">
+                        <input class="form-control" type="file" name="documento" accept=".pdf" readonly>
                     </div>
-                </td>
-
-            </tbody>
-        </table>
+                    <div class="ml-4 display-flex">
+                        <label class="red-text">{{ $errors->first('Type') }}</label>
+                    </div>
+                    @if ($contrato->documento != null)
+                        <a href="{{ asset(trim('storage/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/penalizaciones/' . $contrato->documento)) }}"
+                            target="_blank" class="descarga_archivo" style="margin-left:20px;">
+                            Descargar
+                        </a>
+                    @endif
+                    <div class="ml-4 display-flex">
+                        <label class="red-text">{{ $errors->first('Type') }}</label>
+                    </div>
     </div>
+    </td>
+
+    </tbody>
+    </table>
+</div>
 </div>
 
 <div class="row">
