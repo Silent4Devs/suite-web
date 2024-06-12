@@ -9,7 +9,6 @@ use App\Models\Escuela\UsuariosCursos;
 use App\Traits\ObtenerOrganizacion;
 use Carbon\Carbon;
 
-
 class ReportesIndividualesController extends Controller
 {
     use ObtenerOrganizacion;
@@ -51,7 +50,7 @@ class ReportesIndividualesController extends Controller
 
                 $evaluacion_usuario_collect->push(
                     [
-                        'name'=> $evaluation->name,
+                        'name' => $evaluation->name,
                         'calificacion' => isset($percentage) ? $percentage : 'No aplica',
                         'fecha' => $last_quest_response ? Carbon::parse($last_quest_response->created_at)->format('d/m/Y') : 'No contestada',
                     ],
