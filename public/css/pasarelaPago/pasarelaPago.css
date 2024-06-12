@@ -1,0 +1,28 @@
+.c-wrapper {
+    max-width: 100% !important;
+}
+
+.menu-pasarela {
+    width: 300px;
+    height: 100%;
+    background-color: #fff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding-top: 100px;
+
+}
+
+.menu-pasarela li {
+    list-style: none;
+    margin-bottom: 20px;
+
+}
+
+.menu-pasarela li i {
+    width: 30px;
+}
+
+.content-pasarela {
+    margin-left: 340px;
+}
