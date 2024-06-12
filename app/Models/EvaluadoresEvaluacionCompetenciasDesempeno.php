@@ -26,6 +26,18 @@ class EvaluadoresEvaluacionCompetenciasDesempeno extends Model
         return $this->belongsTo(Empleado::class, 'evaluador_desempeno_id', 'id')->select('id', 'name', 'email', 'area_id', 'puesto_id', 'foto');
     }
 
+    // public function evaluacion()
+    // {
+    //     return $this->hasManyThrough(
+    //         EvaluadosEvaluacionDesempeno::class,
+    //         ConvergenciaContratos::class,
+    //         'evaluacion_desempeno_id', // Foreign key on the convergence table...
+    //         'id', // Foreign key on the contratos table...
+    //         'evaluado_desempeno_id', // Local key on the timesheet proyectos table...
+    //         'contrato_id' // Local key on the convergence table...
+    //     );
+    // }
+
     public function preguntasCuestionario()
     {
         return $this->hasMany(CuestionarioCompetenciaEvDesempeno::class, 'evaluador_desempeno_id', 'id');

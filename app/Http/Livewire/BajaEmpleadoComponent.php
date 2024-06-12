@@ -140,26 +140,29 @@ class BajaEmpleadoComponent extends Component
     {
         $this->empleadoEvaluador($this->empleado->id);
 
-        $this->validate($this->rules, $this->messages);
-        $this->empleado->update([
-            'estatus' => Empleado::BAJA,
-            'fecha_baja' => $this->fechaBaja,
-            'razon_baja' => $this->razonBaja,
-        ]);
-        $user = User::where('email', trim(preg_replace('/\s/u', ' ', $this->empleado->email)))->first();
-        if ($user) {
-            $user->delete();
-        }
-        $this->emit('select2');
-        $this->emit('baja', $this->empleado);
+        // $this->validate($this->rules, $this->messages);
+        // $this->empleado->update([
+        //     'estatus' => Empleado::BAJA,
+        //     'fecha_baja' => $this->fechaBaja,
+        //     'razon_baja' => $this->razonBaja,
+        // ]);
+        // $user = User::where('email', trim(preg_replace('/\s/u', ' ', $this->empleado->email)))->first();
+        // if ($user) {
+        //     $user->delete();
+        // }
+        // $this->emit('select2');
+        // $this->emit('baja', $this->empleado);
     }
 
-    public function empleadoEvaluador($id_empleado)
-    {
-        $evaluadorDeCompetencias = EvaluadoresEvaluacionCompetenciasDesempeno::where('evaluador_desempeno_id', $id_empleado)->get();
+    // public function empleadoEvaluador($id_empleado)
+    // {
+    //     $evaluadorDeCompetencias = EvaluadoresEvaluacionCompetenciasDesempeno::where('evaluador_desempeno_id', $id_empleado)->get();
 
-
-
-        $evaluadorDeObjetivos = EvaluadoresEvaluacionObjetivosDesempeno::where('evaluador_desempeno_id', $id_empleado)->get();
-    }
+    //     $evaluadorDeObjetivos = EvaluadoresEvaluacionObjetivosDesempeno::where('evaluador_desempeno_id', $id_empleado)->get();
+    //     dd(
+    //         $id_empleado,
+    //         $evaluadorDeCompetencias,
+    //         $evaluadorDeObjetivos
+    //     );
+    // }
 }
