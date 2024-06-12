@@ -39,16 +39,22 @@ class CourseStatus extends Component
         //determinamos cual es la lección actual
         foreach ($course->sections_order as $secciones_lecciones) {
             foreach ($secciones_lecciones->lessons as $lesson) {
-                if (! $lesson->completed) {
+                if (!$lesson->completed) {
+                    // dd($lesson);
                     $this->current = $lesson;
                     //break para que salga del bucle
                     break;
                 }
             }
+            if ($this->current) {
+                // dd($lesson);
+                //break para que salga del bucle
+                break;
+            }
         }
 
         // En caso de que ya hayan sido culminadas todas las lecciones en la propiedas current se le va asignar la ultima lección
-        if (! $this->current) {
+        if (!$this->current) {
             $this->current = $course->lessons->last();
         }
 
@@ -61,7 +67,7 @@ class CourseStatus extends Component
         $usuario = User::getCurrentUser();
         $fecha = Carbon::now()->toDateString();
         $hora = Carbon::now()->format('H:i:s');
-        $fechaYHora = $fecha.' '.$hora;
+        $fechaYHora = $fecha . ' ' . $hora;
         $cursoLastReview = UsuariosCursos::where('course_id', $this->course->id)
             ->where('user_id', $usuario->id)->first();
         // dd($cursoLastReview);
@@ -83,8 +89,6 @@ class CourseStatus extends Component
     {
         // dd($this->previous);
 
-        $this->emit('completado');
-
         if ($atras == 'previous') {
             $this->current = $lesson;
 
@@ -92,12 +96,15 @@ class CourseStatus extends Component
         }
 
         if ($this->current->completed) {
+
+            $this->emit('completado');
+
             $this->current = $lesson;
 
             return;
         }
 
-        if (! $this->current->completed) {
+        if (!$this->current->completed) {
             $this->alertaEmergente('Es necesario terminar esta lección para poder seguir avanzando en tu curso');
 
             return;
@@ -198,7 +205,7 @@ class CourseStatus extends Component
     public function download()
     {
         // dd($this->current->resource);
-        return response()->download(storage_path('app/'.$this->current->resource->url));
+        return response()->download(storage_path('app/' . $this->current->resource->url));
     }
 
     public function alertSection()

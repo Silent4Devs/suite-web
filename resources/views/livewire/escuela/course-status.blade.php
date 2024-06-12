@@ -28,6 +28,8 @@
         }
     </style>
 
+    {{-- <x-loading-indicator /> --}}
+
     <div style="width: 100%; ">
         <div style="position: sticky; top:80px;">
             {{-- <h5 class="col-12 titulo_general_funcion">Mis Cursos</h5> --}}
@@ -218,19 +220,20 @@
     @section('scripts')
         <script>
             Livewire.on('completado', () => {
-                if (!@json($lesson->completed)) {
+                if (!@json($current->completed)) {
+
                     setTimeout(() => {
                         @this.completed();
                         console.log('live');
-                    }, 30000);
+                    }, 25000);
                 }
             });
 
-            if (!@json($lesson->completed)) {
+            if (!@json($current->completed)) {
                 setTimeout(() => {
                     @this.completed();
                     console.log('mouse');
-                }, 30000);
+                }, 25000);
             }
         </script>
     @endsection
