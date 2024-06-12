@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\Auth\AuthController;
 use App\Http\Controllers\Api\InicioUsuario\InicioUsuarioController;
+use App\Http\Controllers\Api\V1\SolicitudDayOff\SolicitudDayOffApiController;
 use App\Http\Controllers\Api\V1\PortalComunicacion\PortalComunicacionController;
 use App\Http\Controllers\Api\v1\AnalisisRiesgo\FormulasController;
 use App\Http\Controllers\Api\V1\AnalisisRiesgo\templateAnalisisRiesgoController;
@@ -28,6 +29,12 @@ Route::get('api/v1/ar/formulas/options/{id}', [FormulasController::class, 'getOp
 Route::get('api/v1/ar/formulas/sections/{id}', [FormulasController::class, 'getSections']);
 
 Route::get('portal-comunicacion/{id}', [PortalComunicacionController::class, 'index']);
+
+Route::get('solicitud-dayoff/{id}', [SolicitudDayOffApiController::class, 'index']);
+Route::get('solicitud-dayoff/create/{id}', [SolicitudDayOffApiController::class, 'create']);
+Route::post('solicitud-dayoff/store', [SolicitudDayOffApiController::class, 'store']);
+Route::get('solicitud-dayoff/{id}/respuesta', [SolicitudDayOffApiController::class, 'respuesta']);
+Route::post('solicitud-dayoff/{id}/update', [SolicitudDayOffApiController::class, 'update']);
 
 Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', 'middleware' => ['auth:api']], function () {
     // Permissions
