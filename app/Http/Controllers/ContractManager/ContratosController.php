@@ -123,6 +123,7 @@ class ContratosController extends AppBaseController
             'pmp_asignado' => 'required',
             // 'signed' => 'required',
             // "creacion_proyecto" => "nullable|boolean",
+            'no_proyecto' => 'required_if:creacion_proyecto,false|int',
             'identificador' => 'required_if:creacion_proyecto,true|string|max:255',
             'tipo' => 'required_if:creacion_proyecto,true|string|max:255',
             'proyecto_name' => 'required_if:creacion_proyecto,true|string|max:255',
@@ -131,6 +132,7 @@ class ContratosController extends AppBaseController
             'fecha_fin_proyecto' => 'required_if:creacion_proyecto,true|date|after_or_equal:fecha_inicio_proyecto',
             'horas_proyecto' => 'nullable|integer|min:0',
         ], [
+            'no_proyecto.int' => 'Debe seleccionar un proyecto o crear uno.',
             'monto_pago.regex' => 'El monto total debe ser menor a 99,999,999,999.99',
             'maximo.regex' => 'El monto total debe ser menor a 99,999,999,999.99',
             'minimo.regex' => 'El monto total debe ser menor a 99,999,999,999.99',

@@ -1,7 +1,7 @@
 <div>
     <div style="margin-left: 20px; margin-right: 10px;">
         <div class="row">
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-2">
                 <br>
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" name="creacion_proyecto" id="creacion_proyecto"
@@ -16,8 +16,8 @@
                 <div class="form-group col-md-6">
                     <label for="no_proyecto" class="txt-tamaño">&nbsp;Número
                         de
-                        proyecto</label>
-                    <select class="form-control" name="no_proyecto" id="no_proyecto">
+                        proyecto*</label>
+                    <select class="form-control" name="no_proyecto" id="no_proyecto" required>
                         <option value="" selected>Seleccione un Numero de proyecto</option>
                         @foreach ($proyectos as $proyecto)
                             <option data-id="{{ $proyecto->id }}" value="{{ $proyecto->identificador }}">

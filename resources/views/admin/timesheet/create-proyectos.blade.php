@@ -221,7 +221,9 @@
                                             title: 'Datos del Contrato',
                                             html:
                                                 // '<input type="checkbox" id="contrato_privado" class="swal2-input"> Contrato Privado<br>' +
+                                                '<label for="no_contrato">No.Contrato</label>' +
                                                 '<input type="text" id="no_contrato" class="swal2-input" placeholder="No. contrato">' +
+                                                '<label for="nombre_servicio">Nombre del Servicio.</label>' +
                                                 '<textarea id="nombre_servicio" class="swal2-textarea" placeholder="Nombre del servicio"></textarea>',
                                             focusConfirm: false,
                                             preConfirm: () => {
