@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Cache;
 use OwenIt\Auditing\Contracts\Auditable;
-use App\Models\Escuela\Section;
 
 class Course extends Model implements Auditable
 {
@@ -71,13 +70,13 @@ class Course extends Model implements Auditable
 
     public function getSectionsOrderAttribute()
     {
-        if ($this->order_section ) {
+        if ($this->order_section) {
             $sections = $this->order_section;
-            $string = str_replace('"','', $sections);
-            $string = str_replace('seccion-','', $sections);
+            $string = str_replace('"', '', $sections);
+            $string = str_replace('seccion-', '', $sections);
             $array = explode(',', $string);
             $sectionsRegisters = collect();
-            foreach($array as $section){
+            foreach ($array as $section) {
                 $sectionConsult = Section::find($section);
                 if (isset($sectionConsult)) {
                     $sectionsRegisters->push($sectionConsult);
@@ -87,9 +86,9 @@ class Course extends Model implements Auditable
             $querys_unidos = $sectionsRegisters->merge($this->sections)->unique();
 
             return $querys_unidos;
-        }
-        else{
+        } else {
             $secciones = $this->sections;
+
             return $secciones;
         }
     }
