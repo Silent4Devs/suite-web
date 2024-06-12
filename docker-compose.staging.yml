@@ -72,7 +72,7 @@ services:
     volumes:
       - .:/var/www/html
     ports:
-      - 80:9804
+      - 9000:80
     networks:
       - tabantajnetwork
 
