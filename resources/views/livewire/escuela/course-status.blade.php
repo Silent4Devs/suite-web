@@ -32,7 +32,7 @@
         <div style="position: sticky; top:80px;">
             {{-- <h5 class="col-12 titulo_general_funcion">Mis Cursos</h5> --}}
             <!--Para que me traiga correctamente el video hay que agregar -->
-            <div>
+            <div class="video-curso-box">
                 @if ($current && $current->iframe)
                     <div>
                         {!! $current->iframe !!}
@@ -218,15 +218,19 @@
     @section('scripts')
         <script>
             Livewire.on('completado', () => {
-                setTimeout(() => {
-                    @this.completed();
-                }, 7000);
+                if (!@json($lesson->completed)) {
+                    setTimeout(() => {
+                        @this.completed();
+                        console.log('live');
+                    }, 30000);
+                }
             });
 
             if (!@json($lesson->completed)) {
                 setTimeout(() => {
                     @this.completed();
-                }, 7000);
+                    console.log('mouse');
+                }, 30000);
             }
         </script>
     @endsection
