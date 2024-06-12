@@ -59,7 +59,7 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
     amqp
 
 COPY . /var/www
-COPY .env.example /var/www/.env
+#COPY .env.example /var/www/.env
 
 WORKDIR /var/www
 
