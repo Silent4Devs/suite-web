@@ -10,20 +10,15 @@
     <title>{{ trans('panel.site_title') }}</title>
 
     <!-- Principal Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/loader.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/rds.css') }}">
-    <link href="{{ asset('css/custom.css') }}" rel="stylesheet" />
-    <link rel="stylesheet" href="{{ asset('vendor/file-manager/css/file-manager.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/global/darkMode.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/loader.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/custom.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/file-manager/css/file-manager.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/yearpicker.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/global/responsive.css') }}">
-
-    <link rel="stylesheet" href="{{ asset('css/global/TbButtons.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/global/TbColorsGlobal.css') }}">
-
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/admin.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/rds.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/responsive.css') }}">
     @yield('css')
     @yield('styles')
     <!-- End Principal Styles -->
