@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\Auth\AuthController;
 use App\Http\Controllers\Api\InicioUsuario\InicioUsuarioController;
 use App\Http\Controllers\Api\V1\SolicitudDayOff\SolicitudDayOffApiController;
+use App\Http\Controllers\Api\V1\SolicitudVacaciones\SolicitudVacacionesApiController;
 use App\Http\Controllers\Api\V1\PortalComunicacion\PortalComunicacionController;
 use App\Http\Controllers\Api\v1\AnalisisRiesgo\FormulasController;
 use App\Http\Controllers\Api\V1\AnalisisRiesgo\templateAnalisisRiesgoController;
@@ -33,8 +34,18 @@ Route::get('portal-comunicacion/{id}', [PortalComunicacionController::class, 'in
 Route::get('solicitud-dayoff/{id}', [SolicitudDayOffApiController::class, 'index']);
 Route::get('solicitud-dayoff/create/{id}', [SolicitudDayOffApiController::class, 'create']);
 Route::post('solicitud-dayoff/store', [SolicitudDayOffApiController::class, 'store']);
+Route::get('solicitud-dayoff/{id}/show', [SolicitudDayOffApiController::class, 'show']);
+Route::get('solicitud-dayoff/aprobacion/{id}', [SolicitudDayOffApiController::class, 'aprobacion']);
 Route::get('solicitud-dayoff/{id}/respuesta', [SolicitudDayOffApiController::class, 'respuesta']);
 Route::post('solicitud-dayoff/{id}/update', [SolicitudDayOffApiController::class, 'update']);
+
+Route::get('solicitud-vacaciones/{id}', [SolicitudVacacionesApiController::class, 'index']);
+Route::get('solicitud-vacaciones/create/{id}', [SolicitudVacacionesApiController::class, 'create']);
+Route::get('solicitud-vacaciones/{id}/show', [SolicitudVacacionesApiController::class, 'show']);
+Route::post('solicitud-vacaciones/store', [SolicitudVacacionesApiController::class, 'store']);
+Route::get('solicitud-vacaciones/aprobacion/{id}', [SolicitudVacacionesApiController::class, 'aprobacion']);
+Route::get('solicitud-vacaciones/{id}/respuesta', [SolicitudVacacionesApiController::class, 'respuesta']);
+Route::post('solicitud-vacaciones/{id}/update', [SolicitudVacacionesApiController::class, 'update']);
 
 Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', 'middleware' => ['auth:api']], function () {
     // Permissions

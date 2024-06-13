@@ -178,7 +178,7 @@ class SolicitudDayOffApiController extends Controller
 
     public function show($id)
     {
-        abort_if(Gate::denies('solicitud_dayoff_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('solicitud_dayoff_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $vacacion = SolicitudDayOff::with('empleado')->find($id);
 
@@ -188,7 +188,29 @@ class SolicitudDayOffApiController extends Controller
             return redirect(route('admin.solicitud-dayoff.index'));
         }
 
-        return view('admin.solicitudDayoff.show', compact('vacacion'));
+        if ($vacacion && $vacacion->empleado) {
+            $empleado = $vacacion->empleado->makeHidden([
+                'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
+                'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor'
+            ]);
+
+            $empleado->nombre_area = $empleado->area->area;
+            $empleado->nombre_puesto = $empleado->puesto;
+
+            $empleado->makeHidden([
+                'puestoRelacionado', 'area_id', 'puesto_id'
+            ]);
+
+            $vacacion->makeHidden([
+                'empleado'
+            ]);
+        }
+
+        return response()->json([
+            'vacacion' => $vacacion,
+            'empleado' => $empleado
+        ]);
+        // return view('admin.solicitudDayoff.show', compact('vacacion'));
     }
 
     public function edit($id)
@@ -347,48 +369,47 @@ class SolicitudDayOffApiController extends Controller
         return $dias_disponibles;
     }
 
-    public function aprobacion(Request $request)
+    public function aprobacion($id_user)
     {
-        abort_if(Gate::denies('modulo_aprobacion_ausencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $data = User::getCurrentUser()->empleado->id;
+        // abort_if(Gate::denies('modulo_aprobacion_ausencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $usuario = User::find($id_user);
+        $data = $usuario->empleado->id;
 
-        if ($request->ajax()) {
-            $query = SolicitudDayOff::with('empleado')->where('autoriza', '=', $data)->where('aprobacion', '=', 1)->orderByDesc('id')->get();
-            $table = datatables()::of($query);
+        $solicitudesDayOff = SolicitudDayOff::with('empleado')->where('autoriza', '=', $data)->where('aprobacion', '=', 1)->orderByDesc('id')->get();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
+        foreach ($solicitudesDayOff as $key_solicitud => $solicitante) {
+            if ($solicitante && $solicitante->empleado) {
+                $solicitante->empleado->makeHidden([
+                    'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
+                    'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor'
+                ]);
 
-            $table->editColumn('empleado', function ($row) {
-                return $row->empleado ? $row->empleado : '';
-            });
+                $solicitante->empleado->nombre_area = $solicitante->empleado->area->area;
+                $solicitante->empleado->nombre_puesto = $solicitante->empleado->puesto;
 
-            $table->editColumn('dias_solicitados', function ($row) {
-                return $row->dias_solicitados ? $row->dias_solicitados : '';
-            });
-            $table->editColumn('fecha_inicio', function ($row) {
-                return $row->fecha_inicio ? $row->fecha_inicio : '';
-            });
-            $table->editColumn('fecha_fin', function ($row) {
-                return $row->fecha_fin ? $row->fecha_fin : '';
-            });
-            $table->editColumn('aprobacion', function ($row) {
-                return $row->aprobacion ? $row->aprobacion : '';
-            });
-            // $table->editColumn('descripcion', function ($row) {
-            //     return $row->descripcion ? $row->descripcion : '';
-            // });
-
-            $table->rawColumns(['actions', 'placeholder']);
-
-            return $table->make(true);
+                $solicitante->empleado->makeHidden([
+                    'puestoRelacionado', 'area_id', 'puesto_id'
+                ]);
+            }
         }
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.solicitudDayoff.global-solicitudes', compact('logo_actual', 'empresa_actual'));
+        $dias_disponibles_date = $this->diasDisponibles($usuario->id);
+        if ($dias_disponibles_date > 0) {
+            $dias_disponibles = $this->diasDisponibles($usuario->id);
+        } else {
+            $dias_disponibles = 0;
+        }
+
+        return response()->json([
+            'logo_actual' => $logo_actual,
+            'empresa_actual' => $empresa_actual,
+            'dias_disponibles' => $dias_disponibles,
+            'solicitudesDayOff' => $solicitudesDayOff
+        ]);
     }
 
     public function respuesta($id)
