@@ -51,6 +51,6 @@ class CampanaNotificacionesComponent extends Component
         //$user = Auth::user();
         $user = User::getCurrentUser();
         $this->notificaciones = $user->unreadNotifications()->latest()->take(5)->get();
-        $this->notificaciones_sin_leer = $user->unreadNotifications()->where('data', 'not like', '%"tipo_notificacion":"task"%')->count();
+        $this->notificaciones_sin_leer = $user->unreadNotifications()->select('data')->where('data', 'not like', '%"tipo_notificacion":"task"%')->count();
     }
 }
