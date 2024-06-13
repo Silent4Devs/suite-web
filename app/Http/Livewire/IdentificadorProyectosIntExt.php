@@ -39,10 +39,10 @@ class IdentificadorProyectosIntExt extends Component
         $this->select_tipos = array_diff(TimesheetProyecto::TIPOS, $busqueda);
 
         if (count($busqueda) == 1) {
-            if (!empty($busqueda) && $busqueda[0] == 'Interno') {
+            if (! empty($busqueda) && $busqueda[0] == 'Interno') {
                 $this->mensaje = 'Este Identificador se encuentra en uso por un proyecto interno.';
                 $this->colorTexto = 'orange';
-            } elseif (!empty($busqueda) && $busqueda[0] == 'Externo') {
+            } elseif (! empty($busqueda) && $busqueda[0] == 'Externo') {
                 $this->mensaje = 'Este Identificador se encuentra en uso por un proyecto externo.';
                 $this->colorTexto = 'orange';
             } else {
