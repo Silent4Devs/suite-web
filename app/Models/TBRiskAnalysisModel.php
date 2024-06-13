@@ -16,6 +16,7 @@ class TBRiskAnalysisModel extends Model
         'nombre',
         'norma_id',
         'descripcion',
+        'general_id',
     ];
 
     //Relations
@@ -24,14 +25,14 @@ class TBRiskAnalysisModel extends Model
         return $this->belongsTo(Norma::class, 'norma_id');
     }
 
-    // public function getAr_Escala()
-    // {
-    //     return $this->belongsTo(TBTemplateAr_EscalaArModel::class, 'id');
-    // }
+    public function scales()
+    {
+        return $this->belongsTo(TBRiskAnalysis_ScalesArModel::class, 'id');
+    }
 
-    // public function getAR_Probabilidad_Impacto()
-    // {
-    //     return $this->belongsTo(TBTemplateArProbImpArModel::class, 'id');
-    // }
+    public function prob_imp()
+    {
+        return $this->belongsTo(TBRiskAnalysisProbImpModel::class, 'id');
+    }
 }
 

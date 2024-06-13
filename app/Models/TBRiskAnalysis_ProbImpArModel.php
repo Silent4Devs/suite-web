@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TBRiskAnalysis_ScalesArModel extends Model
+class TBRiskAnalysis_ProbImpArModel extends Model
 {
     use HasFactory;
 
     protected $guarded = ['id'];
-    protected $table = 'risk_analysis_scales_ar_pivote';
+    protected $table = 'risk_analysis_prob_imp_ar_pivote';
     protected $fillable = [
         'id',
         'risk_analysis_id',
@@ -23,8 +23,8 @@ class TBRiskAnalysis_ScalesArModel extends Model
         return $this->belongsTo(TBRiskAnalysisModel::class, 'risk_analysis_id');
     }
 
-    public function scales()
+    public function prob_imp()
     {
-        return $this->hasMany(TBRiskAnalysisScaleModel::class, 'min_max_id', 'id')->orderBy('id', 'asc');
+        return $this->hasMany(TBRiskAnalysisProbImpModel::class, 'min_max_id', 'id')->orderBy('id', 'asc');
     }
 }

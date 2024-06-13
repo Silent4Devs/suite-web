@@ -15,9 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('nombre');
             $table->unsignedBigInteger('norma_id')->nullable();
-            $table->unsignedBigInteger('risk_analysis')->nullable();
+            $table->unsignedBigInteger('general_id')->nullable();
             $table->longText('descripcion');
             $table->foreign('norma_id')->references('id')->on('normas')->onDelete('cascade');
+            $table->foreign('general_id')->references('id')->on('risk_analysis_general')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

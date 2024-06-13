@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('nombre');
             $table->float('valor', 8, 2);
             $table->string('color');
-            $table->boolean('riesgo_aceptable')->default(false);
             $table->unsignedBigInteger('min_max_id');
             $table->foreign('min_max_id')->references('id')->on('risk_analysis_prob_imp_ar_pivote')->onDelete('cascade');
             $table->timestamps();

@@ -10,6 +10,19 @@ use App\Models\TBSectionTemplateAr_QuestionTemplateArModel;
 use App\Models\TBRiskAnalysisGeneralModel;
 use App\Models\TBRiskAnalysis_ScalesArModel;
 use App\Models\TBRiskAnalysisModel;
+use App\Models\TBRiskAnalysisScaleModel;
+use App\Models\TBRiskAnalysis_ProbImpArModel;
+use App\Models\TBRiskAnalysisProbImpModel;
+use App\Models\TBSectionRiskAnalysisModel;
+use App\Models\TBQuestionRiskAnalysisModel;
+use App\Models\TBSectionAR_QuestionARModel;
+use App\Models\TBDataQuestionRiskAnalysisModel;
+use App\Models\TBQuestionAr_DataQuestionArModel;
+use App\Models\TBFormulaRiskAnalysisModel;
+use App\Models\TBSettingsTemplateAR_TBFormulaTemplateARModel;
+use App\Models\TBSettingsAr_FormulasArModel;
+use App\Models\TBSettingsTemplateAR_TBQuestionTemplateARModel;
+use App\Models\TBSettingsAr_QuestionsArModel;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -34,51 +47,156 @@ class RiskAnalysis extends Component
         $this->selectedCard = null;
     }
 
-    private function cloneScalesProb($riskAnalysis,$scalesPivote, $scales, $probPivote, $prob){
+    private function cloneFormulas($riskAnalysis, $questionsFormulas,$formulas)
+    {
+        foreach($questionsFormulas as $questionFormula){
+            foreach($formulas as $formula){
+                $copyQuestion = $questionFormula->replicate();
+                $newQuestion = new TBQuestionRiskAnalysisModel();
+                $copyFormula = $formula->replicate();
 
-        $scalePivoteRegister = TBRiskAnalysis_ScalesArModel::create([
-            'risk_analysis_id' => $riskAnalysis->id,
-            'valor_min' => $scalesPivote->valor_min,
-            'valor_max' => $scalesPivote->valor_max,
+                $newFormula = new TBFormulaRiskAnalysisModel();
+
+                if($formula->question_id === $questionFormula->id){
+                    $newQuestion->fill($copyQuestion->toArray());
+                    $newQuestion->save();
+
+                    TBSectionAR_QuestionARModel::create([
+                        'section_id' => $questionFormula->section_id,
+                        'question_id' => $newQuestion->id,
+                    ]);
+
+                    $copyFormula->section_id = $questionFormula->section_id;
+                    $copyFormula->question_id = $newQuestion->id;
+
+
+                    $newFormula->fill($copyFormula->toArray());
+                    $newFormula->save();
+
+                    $settingFormula = TBSettingsTemplateAR_TBFormulaTemplateARModel::where('formula_id', $formula->id)->first();
+                    // dd($settingFormula);
+                    $copySettingsFormula = $settingFormula->replicate();
+                    $newSettingsFormula = new TBSettingsAr_FormulasArModel();
+                    $newSettingsFormula->fill($copySettingsFormula->toArray());
+                    $newSettingsFormula->risk_analysis_id = $riskAnalysis;
+                    $newSettingsFormula->formula_id = $newFormula->id;
+                    $newSettingsFormula->save();
+                }
+            }
+        }
+    }
+    private function cloneSectionsQuestions($sections,$riskAnalysis,&$questionsFormulas)
+    {
+        foreach($sections as $section){
+            $copySection = $section->replicate();
+            $copySection->risk_analysis_id = $riskAnalysis;
+
+            $newSection = new TBSectionRiskAnalysisModel();
+            $newSection->fill($copySection->toArray());
+            $newSection->save();
+
+            $questions = $section->questions;
+
+            foreach($questions as $question){
+                if($question->type !== "11"){
+                    $copyQuestion = $question->replicate();
+
+                    $newQuestion = new TBQuestionRiskAnalysisModel();
+                    $newQuestion->fill($copyQuestion->toArray());
+                    $newQuestion->save();
+
+                    TBSectionAR_QuestionARModel::create([
+                        'section_id' => $newSection->id,
+                        'question_id' => $newQuestion->id,
+                    ]);
+                    //Settings Risk Analysis here
+
+                    $settingQuestion = TBSettingsTemplateAR_TBQuestionTemplateARModel::where('question_id',$question->id)->first();
+                    $copySettingQuestion = $settingQuestion->replicate();
+                    $newSettingsQuestion = new TBSettingsAr_QuestionsArModel();
+                    $newSettingsQuestion->fill($copySettingQuestion->toArray());
+                    $newSettingsQuestion->risk_analysis_id = $riskAnalysis;
+                    $newSettingsQuestion->question_id = $newQuestion->id;
+                    $newSettingsQuestion->save();
+
+
+                    $dataQuestions = $question->dataQuestions;
+                    foreach($dataQuestions as $dataQuestion){
+                        $copyData = $dataQuestion->replicate();
+                        $newData = new TBDataQuestionRiskAnalysisModel();
+                        $newData->fill($copyData->toArray());
+                        $newData->save();
+
+
+                        TBQuestionAr_DataQuestionArModel::create([
+                            'question_id' => $newQuestion->id,
+                            'dataquestion_id' => $newData->id,
+                        ]);
+                    }
+                }else{
+                    $question->section_id = $newSection->id;
+                    $questionsFormulas[]= $question;
+                }
+            }
+        }
+    }
+    private function cloneScalesProb($riskAnalysis,$scalePivote, $scales, $probPivote, $probabilities)
+    {
+        $scalePrivoteRegister = TBRiskAnalysis_ScalesArModel::create([
+            'risk_analysis_id' => $riskAnalysis,
+            'valor_min' => $scalePivote->valor_min,
+            'valor_max' => $scalePivote->valor_max,
         ]);
+
+        foreach($scales as $scale){
+            TBRiskAnalysisScaleModel::create([
+                'nombre' => $scale->nombre,
+                'valor' => $scale->valor,
+                'color' => $scale->color,
+                'riesgo_aceptable' => $scale->riesgo_aceptable,
+                'min_max_id' => $scalePrivoteRegister->id,
+            ]);
+        }
+
+        $probabilityPrivoteRegister = TBRiskAnalysis_ProbImpArModel::create([
+            'risk_analysis_id' => $riskAnalysis,
+            'valor_min' => $probPivote->valor_min,
+            'valor_max' => $probPivote->valor_max,
+        ]);
+
+        foreach($probabilities as $probability){
+            TBRiskAnalysisProbImpModel::create([
+                'nombre' => $probability->nombre,
+                'valor' => $probability->valor,
+                'color' => $probability->color,
+                'min_max_id' => $probabilityPrivoteRegister->id,
+            ]);
+        }
     }
 
-    private function cloneTemplateAR($id)
+    private function cloneTemplateAR($generalId,$templateId)
     {
-        $template = TBTemplateAnalisisRiesgoModel::find($id);
-        // dump($template);
+        $template = TBTemplateAnalisisRiesgoModel::find($templateId);
+        //get info scales and probability/impact
+        $scalePivote = $template->getAr_Escala;
+        $probPivote = $template->getAR_Probabilidad_Impacto;
+        $scales = $template->getAr_Escala->getEscalas;
+        $probabilities = $template->getAR_Probabilidad_Impacto->getProbImp;
+        $sections = TBSectionTemplateAnalisisRiesgoModel::where('template_id',$template->id)->get();
+        $formulas = TBFormulaTemplateAnalisisRiesgoModel::where('template_id',$template->id)->get();
+        $questionsFormulas = [];
+
+        //clone template risk analysis
         $riskAnalysis = TBRiskAnalysisModel::create([
             'nombre' => $template->nombre,
             'norma_id' => $template->norma_id,
+            'general_id' => $generalId,
             'descripcion' => $template->descripcion,
         ]);
-        dump($riskAnalysis);
-        //scales and probability
-        // $scalesPivote = $template->getAr_Escala;
-        // $scales = $template->getAr_Escala->getEscalas;
-        // $probPivote = $template->getAR_Probabilidad_Impacto;
-        // $prob = $template->getAR_Probabilidad_Impacto->getProbImp;
-        // $this->cloneScalesProb($riskAnalysis,$scalesPivote, $scales, $probPivote, $prob);
-        //sections and questions
-        // $sections = TBSectionTemplateAnalisisRiesgoModel::where('template_id',$id)->get();
-        // foreach($sections as $section){
-        //     $questions = $section->questions;
-        //     foreach($questions as $question){
-        //         if($question->type === "11"){
-        //             $questionFormulas[] = $question;
-        //         }
-        //         if(!$question->dataQuestions->isEmpty()){
-        //         }
 
-        //     }
-        // }
-        // //formulas
-        // foreach($questionFormulas as $questionFormula){
-        //     $formula = TBFormulaTemplateAnalisisRiesgoModel::where('question_id', $questionFormula->id)->first();
-
-        // }
-        // $formulas = TBFormulaTemplateAnalisisRiesgoModel::where('template_id', $id)->get();
-        // dd($formulas);
+        $this->cloneScalesProb($riskAnalysis->id,$scalePivote, $scales, $probPivote, $probabilities);
+        $this->cloneSectionsQuestions($sections,$riskAnalysis->id,$questionsFormulas);
+        $this->cloneFormulas($riskAnalysis->id, $questionsFormulas, $formulas);
 
     }
 
@@ -93,8 +211,8 @@ class RiskAnalysis extends Component
             'norma_id' => $this->norma_id,
             'template_id' => $this->selectedCard,
         ]);
-        // dump($risk->id);
-        $this->cloneTemplateAR($risk->id);
+        $templateId = $this->selectedCard;
+        $this->cloneTemplateAR($risk->id,$templateId);
     }
 
     public function save()
