@@ -7,8 +7,8 @@ export default defineConfig({
     laravel({
       input: [
         "public/css/app.css",
-        "public/css/style.css",
-        "public/css/admin.css",
+        "public/css/global/style.css",
+        "public/css/global/admin.css",
         "public/css/rds.css",
 
         "resources/js/app.js",

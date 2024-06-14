@@ -10,15 +10,15 @@
     <title>{{ trans('panel.site_title') }}</title>
 
     <!-- Principal Styles -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/loader.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/custom.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/global/loader.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/global/custom.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('vendor/file-manager/css/file-manager.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/yearpicker.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/admin.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/global/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/global/admin.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/rds.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/responsive.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/global/responsive.css') }}">
     @yield('css')
     @yield('styles')
     <!-- End Principal Styles -->
@@ -72,8 +72,8 @@
 
     {{-- Laravel vite --}}
     @vite(['public/css/app.css'])
-    @vite(['public/css/style.css'])
-    @vite(['public/css/admin.css'])
+    @vite(['public/css/global/style.css'])
+    @vite(['public/css/global/admin.css'])
     @vite(['public/css/rds.css'])
 
     @vite(['resources/js/app.js'])
