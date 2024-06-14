@@ -65,3 +65,5 @@ package-lock.json
 /caddy
 frankenphp
 frankenphp-worker.php
+
+.vscode/PythonImportHelper-v2-Completion.json
