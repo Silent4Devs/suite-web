@@ -26,3 +26,26 @@
 .content-pasarela {
     margin-left: 340px;
 }
+
+.portada-pasarela {
+    width: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+    background-color: #575757;
+    justify-content: center;
+}
+
+.portada-pasarela img {
+    object-fit: contain;
+    height: 100%;
+}
+
+.portada-pasarela-info {
+    width: 100%;
+}
+
+.instaladas .card {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
