@@ -10,6 +10,7 @@
     top: 0;
     left: 0;
     padding-top: 100px;
+    overflow: auto;
 
 }
 
@@ -48,4 +49,25 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+}
+
+.icon-background{
+    width: 65px;
+    height: 65px;
+    background-color: rgb(194, 194, 165);
+    color: #5A5A5A;
+    padding: 20px;
+    border-radius: 15px;
+    font-size: 35px !important;
+    border: 1px solid #AAAAAA;
+}
+
+.instaladas .card h5{
+    font-size: 18px;
+}
+.instaladas .card .btn{
+    border: 1px solid #AAAAAA;
+    border-radius: 10px;
+    padding: 6px 20px;
+    color: #787878;
 }

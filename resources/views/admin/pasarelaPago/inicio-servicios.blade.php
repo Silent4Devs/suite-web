@@ -7,7 +7,7 @@
     </style>
 @endsection
 @section('content')
-    <div class="menu-pasarela">
+    <div class="menu-pasarela scroll_estilo">
         <ul>
             <li> <strong> Aplicaciones </strong> </li>
             <li>
@@ -83,12 +83,12 @@
 
         <div class="instaladas mt-5">
             <h4>Instaladas</h4>
-            <div class="row">
+            <div class="row mt-4">
                 <div class="col-md-6">
                     <div class="card card-body">
                         <div class="d-flex align-items-center gap-2">
                             <i class="material-symbols-outlined icon-background">school</i>
-                            <span>Capacitación</span>
+                            <h5>Capacitación</h5>
                         </div>
                         <a href="" class="btn">Abrir</a>
                     </div>
@@ -97,7 +97,7 @@
                     <div class="card card-body">
                         <div class="d-flex align-items-center gap-2">
                             <i class="material-symbols-outlined icon-background">school</i>
-                            <span>Capacitación</span>
+                            <h5>Capacitación</h5>
                         </div>
                         <a href="" class="btn">Abrir</a>
                     </div>
@@ -108,7 +108,7 @@
                     <div class="card card-body">
                         <div class="d-flex align-items-center gap-2">
                             <i class="material-symbols-outlined icon-background">school</i>
-                            <span>Capacitación</span>
+                            <h5>Capacitación</h5>
                         </div>
                         <a href="" class="btn">Abrir</a>
                     </div>
@@ -117,7 +117,7 @@
                     <div class="card card-body">
                         <div class="d-flex align-items-center gap-2">
                             <i class="material-symbols-outlined icon-background">school</i>
-                            <span>Capacitación</span>
+                            <h5>Capacitación</h5>
                         </div>
                         <a href="" class="btn">Abrir</a>
                     </div>
@@ -125,10 +125,10 @@
             </div>
         </div>
 
-        <div class="tu-plan">
+        <div class="tu-plan mt-5">
             <h4>Disponible en tu plan</h4>
 
-            <div class="row">
+            <div class="row mt-4">
                 <div class="col-md-6">
                     <div class="card card-body">
                         <div>
