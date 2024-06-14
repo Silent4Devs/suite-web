@@ -2,17 +2,21 @@
 
 namespace App\Http\Livewire;
 
+use App\Mail\EvaluacionesDesempenoEliminacionEvaluador;
 use App\Models\Activo;
 use App\Models\Documento;
 use App\Models\Empleado;
+use App\Models\EvaluacionDesempeno;
 use App\Models\EvaluadoresEvaluacionCompetenciasDesempeno;
 use App\Models\EvaluadoresEvaluacionObjetivosDesempeno;
+use App\Models\ListaInformativa;
 use App\Models\Recurso;
 use App\Models\RevisionDocumento;
 use App\Models\User;
 use App\Traits\EmpleadoFunciones;
 use App\Traits\ObtenerOrganizacion;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 
 class BajaEmpleadoComponent extends Component
@@ -140,22 +144,44 @@ class BajaEmpleadoComponent extends Component
     {
         $this->empleadoEvaluador($this->empleado->id);
 
-        // $this->validate($this->rules, $this->messages);
-        // $this->empleado->update([
-        //     'estatus' => Empleado::BAJA,
-        //     'fecha_baja' => $this->fechaBaja,
-        //     'razon_baja' => $this->razonBaja,
-        // ]);
-        // $user = User::where('email', trim(preg_replace('/\s/u', ' ', $this->empleado->email)))->first();
-        // if ($user) {
-        //     $user->delete();
-        // }
-        // $this->emit('select2');
-        // $this->emit('baja', $this->empleado);
+        $this->validate($this->rules, $this->messages);
+
+        $this->empleado->update([
+            'estatus' => Empleado::BAJA,
+            'fecha_baja' => $this->fechaBaja,
+            'razon_baja' => $this->razonBaja,
+        ]);
+
+        $user = User::where('email', trim(preg_replace('/\s/u', ' ', $this->empleado->email)))->first();
+        if ($user) {
+            $user->delete();
+        }
+
+        $this->emit('select2');
+        $this->emit('baja', $this->empleado);
     }
 
     public function empleadoEvaluador($id_empleado)
     {
+        $empleado = Empleado::getAllDataColumns()->find($id_empleado);
+
+        $informados = ListaInformativa::with('participantes.empleado', 'usuarios.usuario')->where('modelo', '=', 'EvaluacionDesempeno')->first();
+
+        if (isset($informados->participantes[0]) || isset($informados->usuarios[0])) {
+
+            if (isset($informados->participantes[0])) {
+                foreach ($informados->participantes as $participante) {
+                    $correodestinatario[] = $participante->empleado->email;
+                }
+            }
+
+            if (isset($informados->usuarios[0])) {
+                foreach ($informados->usuarios as $usuario) {
+                    $correodestinatario[] = $usuario->usuario->email;
+                }
+            }
+        }
+
         $evaluadorDeCompetencias = EvaluadoresEvaluacionCompetenciasDesempeno::with('evaluacion', 'periodo')
             ->where('evaluador_desempeno_id', $id_empleado)
             ->get();
@@ -169,18 +195,18 @@ class BajaEmpleadoComponent extends Component
         if ($evaluadorDeCompetencias->isNotEmpty()) {
             foreach ($evaluadorDeCompetencias as $evcompetencia) {
                 if (!$evcompetencia->periodo->finalizado) {
-                    // $evcompetencia->delete();
+                    $allEvaluaciones->push($evcompetencia->evaluacion->id);
+                    $evcompetencia->delete();
                 }
-                $allEvaluaciones->push($evcompetencia->evaluacion->id);
             }
         }
 
         if ($evaluadorDeObjetivos->isNotEmpty()) {
             foreach ($evaluadorDeObjetivos as $evobjetivo) {
                 if (!$evobjetivo->periodo->finalizado) {
-                    // $evobjetivo->delete();
+                    $allEvaluaciones->push($evobjetivo->evaluacion->id);
+                    $evobjetivo->delete();
                 }
-                $allEvaluaciones->push($evobjetivo->evaluacion->id);
             }
         }
 
@@ -190,13 +216,12 @@ class BajaEmpleadoComponent extends Component
         // Convert to array if needed
         $uniqueEvaluacionesArray = $uniqueEvaluaciones->values()->all();
 
-        // Optionally, you can dump or debug the result
-        dump($uniqueEvaluacionesArray);
-
-        foreach ($uniqueEvaluacionesArray as $key_evaluacion => $evaluacion) {
-            dd($evaluacion);
+        if (!empty($uniqueEvaluacionesArray)) {
+            foreach ($uniqueEvaluacionesArray as $key_evaluacion => $id_evaluacion) {
+                $evaluacion = EvaluacionDesempeno::find($id_evaluacion);
+                $emailEvaluador = new EvaluacionesDesempenoEliminacionEvaluador($evaluacion->nombre, $empleado->name);
+                Mail::to($correodestinatario)->queue($emailEvaluador);
+            }
         }
-
-        dd('fin');
     }
 }

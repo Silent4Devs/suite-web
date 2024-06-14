@@ -2,6 +2,8 @@
 
 namespace App\Console\Commands;
 
+use App\Mail\EvaluacionesDesempenoErrorEvaluadorCompetencias;
+use App\Mail\EvaluacionesDesempenoErrorEvaluadorObjetivos;
 use App\Mail\EvaluacionesDesempenoFaltaCompetencias;
 use App\Mail\EvaluacionesDesempenoFaltaObjetivos;
 use App\Models\EvaluacionDesempeno;
@@ -84,13 +86,36 @@ class CrearEvaluacionesDesempeno extends Command
                                 if ($evaluado->empleado->objetivos_asignados["cuenta"] == 0 || $evaluado->empleado->objetivos_asignados["pendientes"] == true) {
                                     $evaluadoresProbObjetivos[] = $evaluado->empleado->name;
                                 }
+
+                                $porcentaje_evaluadores_competencias = $evaluado->evaluadoresCompetencias($periodo->id)->where('evaluador_desempeno_id', '!=', $evaluado->empleado->id)->sum('porcentaje_competencias');
+                                $porcentaje_evaluadores_objetivos = $evaluado->evaluadoresObjetivos($periodo->id)->where('evaluador_desempeno_id', '!=', $evaluado->empleado->id)->sum('porcentaje_objetivos');
+
+                                if ($porcentaje_evaluadores_competencias != 100) {
+                                    $evaluadosProbEvaluadoresComp[] = $evaluado->empleado->name;
+                                }
+
+                                if ($porcentaje_evaluadores_objetivos != 100) {
+                                    $evaluadosProbEvaluadoresObj[] = $evaluado->empleado->name;
+                                }
                             } elseif ($evaluacion->activar_objetivos && !$evaluacion->activar_competencias) {
                                 if ($evaluado->empleado->objetivos_asignados["cuenta"] == 0 || $evaluado->empleado->objetivos_asignados["pendientes"] == true) {
                                     $evaluadoresProbObjetivos[] = $evaluado->empleado->name;
                                 }
+
+                                $porcentaje_evaluadores_objetivos = $evaluado->evaluadoresObjetivos($periodo->id)->where('evaluador_desempeno_id', '!=', $evaluado->empleado->id)->sum('porcentaje_objetivos');
+
+                                if ($porcentaje_evaluadores_objetivos != 100) {
+                                    $evaluadosProbEvaluadoresObj[] = $evaluado->empleado->name;
+                                }
                             } elseif (!$evaluacion->activar_objetivos && $evaluacion->activar_competencias) {
                                 if ($evaluado->empleado->competencias_asignadas == 0) {
                                     $puestosSinCompetencias[] = $evaluado->empleado->puesto;
+                                }
+
+                                $porcentaje_evaluadores_competencias = $evaluado->evaluadoresCompetencias($periodo->id)->where('evaluador_desempeno_id', '!=', $evaluado->empleado->id)->sum('porcentaje_competencias');
+
+                                if ($porcentaje_evaluadores_competencias != 100) {
+                                    $evaluadosProbEvaluadoresComp[] = $evaluado->empleado->name;
                                 }
                             }
                         }
@@ -102,8 +127,20 @@ class CrearEvaluacionesDesempeno extends Command
                                 $crearCuestionario = false;
                             }
 
+                            if (!empty($evaluadosProbEvaluadoresComp)) {
+                                $emailCompetencia = new EvaluacionesDesempenoErrorEvaluadorCompetencias($evaluacion->nombre, $evaluadosProbEvaluadoresComp);
+                                Mail::to($correodestinatario)->queue($emailCompetencia);
+                                $crearCuestionario = false;
+                            }
+
                             if (!empty($evaluadoresProbObjetivos)) {
                                 $emailObjetivos = new EvaluacionesDesempenoFaltaObjetivos($evaluacion->nombre, $periodo->nombre_evaluacion, $evaluadoresProbObjetivos);
+                                Mail::to($correodestinatario)->queue($emailObjetivos);
+                                $crearCuestionario = false;
+                            }
+
+                            if (!empty($evaluadosProbEvaluadoresObj)) {
+                                $emailObjetivos = new EvaluacionesDesempenoErrorEvaluadorObjetivos($evaluacion->nombre, $evaluadosProbEvaluadoresObj);
                                 Mail::to($correodestinatario)->queue($emailObjetivos);
                                 $crearCuestionario = false;
                             }
@@ -113,10 +150,22 @@ class CrearEvaluacionesDesempeno extends Command
                                 Mail::to($correodestinatario)->queue($emailObjetivos);
                                 $crearCuestionario = false;
                             }
+
+                            if (!empty($evaluadosProbEvaluadoresComp)) {
+                                $emailCompetencia = new EvaluacionesDesempenoErrorEvaluadorCompetencias($evaluacion->nombre, $evaluadosProbEvaluadoresComp);
+                                Mail::to($correodestinatario)->queue($emailCompetencia);
+                                $crearCuestionario = false;
+                            }
                         } elseif (!$evaluacion->activar_objetivos && $evaluacion->activar_competencias) {
                             if (!empty($puestosSinCompetencias)) {
                                 $emailCompetencias = new EvaluacionesDesempenoFaltaCompetencias($evaluacion->nombre, $periodo->nombre_evaluacion, $puestosSinCompetencias);
                                 Mail::to($correodestinatario)->queue($emailCompetencias);
+                                $crearCuestionario = false;
+                            }
+
+                            if (!empty($evaluadosProbEvaluadoresObj)) {
+                                $emailObjetivos = new EvaluacionesDesempenoErrorEvaluadorObjetivos($evaluacion->nombre, $evaluadosProbEvaluadoresObj);
+                                Mail::to($correodestinatario)->queue($emailObjetivos);
                                 $crearCuestionario = false;
                             }
                         }

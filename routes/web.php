@@ -492,6 +492,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
         Route::get('recursos-humanos/evaluacion-desempeno/objetivos-exportar', 'RH\EvaluacionesDesempenoController@objetivosExportar')->name('rh.evaluaciones-desempeno.objetivos-exportar');
 
+        Route::get('recursos-humanos/evaluacion-desempeno/test', 'RH\EvaluacionesDesempenoController@test');
+
         // Definición de la ruta
         Route::get('iso27001/inicio-guia', function () {
             // Verifica si la sesión 'visited_first_link' está definida
