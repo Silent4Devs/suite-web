@@ -71,6 +71,11 @@
     @livewireStyles
 
     {{-- Laravel vite --}}
+    @vite(['public/css/app.css'])
+    @vite(['public/css/style.css'])
+    @vite(['public/css/admin.css'])
+    @vite(['public/css/rds.css'])
+
     @vite(['resources/js/app.js'])
     {{-- Laravel vite --}}
 
