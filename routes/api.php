@@ -38,6 +38,9 @@ Route::get('solicitud-dayoff/{id}/show', [SolicitudDayOffApiController::class, '
 Route::get('solicitud-dayoff/aprobacion/{id}', [SolicitudDayOffApiController::class, 'aprobacion']);
 Route::get('solicitud-dayoff/{id}/respuesta', [SolicitudDayOffApiController::class, 'respuesta']);
 Route::post('solicitud-dayoff/{id}/update', [SolicitudDayOffApiController::class, 'update']);
+Route::get('solicitud-dayoff/archivo/{id}', [SolicitudDayOffApiController::class, 'index']);
+Route::get('solicitud-dayoff/showVistaGlobal/{id}', [SolicitudDayOffApiController::class, 'index']);
+Route::get('solicitud-dayoff/showArchivo/{id}', [SolicitudDayOffApiController::class, 'index']);
 
 Route::get('solicitud-vacaciones/{id}', [SolicitudVacacionesApiController::class, 'index']);
 Route::get('solicitud-vacaciones/create/{id}', [SolicitudVacacionesApiController::class, 'create']);
@@ -46,6 +49,9 @@ Route::post('solicitud-vacaciones/store', [SolicitudVacacionesApiController::cla
 Route::get('solicitud-vacaciones/aprobacion/{id}', [SolicitudVacacionesApiController::class, 'aprobacion']);
 Route::get('solicitud-vacaciones/{id}/respuesta', [SolicitudVacacionesApiController::class, 'respuesta']);
 Route::post('solicitud-vacaciones/{id}/update', [SolicitudVacacionesApiController::class, 'update']);
+Route::get('solicitud-vacaciones/archivo/{id}', [SolicitudVacacionesApiController::class, 'archivo']);
+Route::get('solicitud-vacaciones/showVistaGlobal/{id}', [SolicitudVacacionesApiController::class, 'showVistaGlobal']);
+Route::get('solicitud-vacaciones/archivoShow/{id}', [SolicitudVacacionesApiController::class, 'archivoShow']);
 
 Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', 'middleware' => ['auth:api']], function () {
     // Permissions

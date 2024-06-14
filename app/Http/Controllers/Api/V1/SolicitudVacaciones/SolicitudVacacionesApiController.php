@@ -639,58 +639,43 @@ class SolicitudVacacionesApiController extends Controller
         // return view('admin.solicitudVacaciones.respuesta', compact('vacacion', 'dias_disponibles', 'año'));
     }
 
-    public function archivo(Request $request)
+    public function archivo($id_usuario)
     {
         //abort_if(Gate::denies('modulo_aprobacion_ausencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $data = User::getCurrentUser()->empleado->id;
+        $data = User::find($id_usuario)->empleado->id;
 
-        if ($request->ajax()) {
-            $query = SolicitudVacaciones::with('empleado')->where('autoriza', '=', $data)->where(function ($query) {
-                $query->where('aprobacion', '=', 2)
-                    ->orwhere('aprobacion', '=', 3);
-            })->orderByDesc('id')->get();
-            $table = datatables()::of($query);
-            $table->editColumn('actions', function ($row) {
-                $viewGate = 'amenazas_ver';
-                $editGate = 'amenazas_editar';
-                $deleteGate = 'amenazas_eliminar';
-                $crudRoutePart = 'solicitud-vacaciones';
+        $solicitudesVacaciones = SolicitudVacaciones::with('empleado')
+            ->where('empleado_id', '=', $data)
+            ->where('aprobacion', '=', 2)
+            ->orwhere('aprobacion', '=', 3)
+            ->orderByDesc('id')
+            ->get();
 
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
+        foreach ($solicitudesVacaciones as $key_solicitud => $solicitante) {
+            if ($solicitante && $solicitante->empleado) {
+                $solicitante->empleado->makeHidden([
+                    'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
+                    'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor'
+                ]);
 
-            $table->editColumn('empleado', function ($row) {
-                return $row->empleado ? $row->empleado : '';
-            });
-            $table->editColumn('dias_solicitados', function ($row) {
-                return $row->dias_solicitados ? $row->dias_solicitados : '';
-            });
-            $table->editColumn('fecha_inicio', function ($row) {
-                return $row->fecha_inicio ? $row->fecha_inicio : '';
-            });
-            $table->editColumn('fecha_fin', function ($row) {
-                return $row->fecha_fin ? $row->fecha_fin : '';
-            });
-            $table->editColumn('aprobacion', function ($row) {
-                return $row->aprobacion ? $row->aprobacion : '';
-            });
+                $solicitante->empleado->nombre_area = $solicitante->empleado->area->area;
+                $solicitante->empleado->nombre_puesto = $solicitante->empleado->puesto;
 
-            $table->rawColumns(['actions', 'placeholder']);
-
-            return $table->make(true);
+                $solicitante->empleado->makeHidden([
+                    'puestoRelacionado', 'area_id', 'puesto_id'
+                ]);
+            }
         }
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.solicitudVacaciones.archivo', compact('logo_actual', 'empresa_actual'));
+        return response()->json([
+            'logo_actual' => $logo_actual,
+            'empresa_actual' => $empresa_actual,
+            'solicitudesVacaciones' => $solicitudesVacaciones
+        ]);
     }
 
     public function showVistaGlobal($id)
