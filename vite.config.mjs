@@ -12,14 +12,14 @@ export default defineConfig({
             "public/css/rds.css",
 
             "resources/js/app.js",
-            
+            'resources/js/app.js',
+            'public/js/pages/index/template-analisis-riesgos.jsx',
+            'public/js/pages/index/FormulasAnalisisRiesgos.jsx',
+            'public/js/pages/index/SettingsAnalisisRiesgos.jsx',
+            'public/js/pages/index/TemplateViewPrevAnalisisRiesgos.jsx',
         ],
       refresh: true
     })
   ]
-                'resources/js/app.js',
-                'public/js/pages/index/template-analisis-riesgos.jsx',
-                'public/js/pages/index/FormulasAnalisisRiesgos.jsx',
-                'public/js/pages/index/SettingsAnalisisRiesgos.jsx',
-                'public/js/pages/index/TemplateViewPrevAnalisisRiesgos.jsx',
+
 });
