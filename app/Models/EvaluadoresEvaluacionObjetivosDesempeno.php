@@ -26,6 +26,23 @@ class EvaluadoresEvaluacionObjetivosDesempeno extends Model
         return $this->belongsTo(Empleado::class, 'evaluador_desempeno_id', 'id')->select('id', 'name', 'email', 'area_id', 'puesto_id', 'foto');
     }
 
+    public function evaluacion()
+    {
+        return $this->hasOneThrough(
+            EvaluacionDesempeno::class,
+            EvaluadosEvaluacionDesempeno::class,
+            'id',
+            'id',
+            'evaluado_desempeno_id',
+            'evaluacion_desempeno_id'
+        );
+    }
+
+    public function periodo()
+    {
+        return $this->belongsTo(PeriodosEvaluacionDesempeno::class, 'periodo_id', 'id');
+    }
+
     public function preguntasCuestionario()
     {
         return $this->hasMany(CuestionarioObjetivoEvDesempeno::class, 'evaluador_desempeno_id', 'id');

@@ -154,15 +154,49 @@ class BajaEmpleadoComponent extends Component
         // $this->emit('baja', $this->empleado);
     }
 
-    // public function empleadoEvaluador($id_empleado)
-    // {
-    //     $evaluadorDeCompetencias = EvaluadoresEvaluacionCompetenciasDesempeno::where('evaluador_desempeno_id', $id_empleado)->get();
+    public function empleadoEvaluador($id_empleado)
+    {
+        $evaluadorDeCompetencias = EvaluadoresEvaluacionCompetenciasDesempeno::with('evaluacion', 'periodo')
+            ->where('evaluador_desempeno_id', $id_empleado)
+            ->get();
 
-    //     $evaluadorDeObjetivos = EvaluadoresEvaluacionObjetivosDesempeno::where('evaluador_desempeno_id', $id_empleado)->get();
-    //     dd(
-    //         $id_empleado,
-    //         $evaluadorDeCompetencias,
-    //         $evaluadorDeObjetivos
-    //     );
-    // }
+        $evaluadorDeObjetivos = EvaluadoresEvaluacionObjetivosDesempeno::with('evaluacion', 'periodo')
+            ->where('evaluador_desempeno_id', $id_empleado)
+            ->get();
+
+        $allEvaluaciones = collect();
+
+        if ($evaluadorDeCompetencias->isNotEmpty()) {
+            foreach ($evaluadorDeCompetencias as $evcompetencia) {
+                if (!$evcompetencia->periodo->finalizado) {
+                    // $evcompetencia->delete();
+                }
+                $allEvaluaciones->push($evcompetencia->evaluacion->id);
+            }
+        }
+
+        if ($evaluadorDeObjetivos->isNotEmpty()) {
+            foreach ($evaluadorDeObjetivos as $evobjetivo) {
+                if (!$evobjetivo->periodo->finalizado) {
+                    // $evobjetivo->delete();
+                }
+                $allEvaluaciones->push($evobjetivo->evaluacion->id);
+            }
+        }
+
+        // Get unique evaluacion values
+        $uniqueEvaluaciones = $allEvaluaciones->unique();
+
+        // Convert to array if needed
+        $uniqueEvaluacionesArray = $uniqueEvaluaciones->values()->all();
+
+        // Optionally, you can dump or debug the result
+        dump($uniqueEvaluacionesArray);
+
+        foreach ($uniqueEvaluacionesArray as $key_evaluacion => $evaluacion) {
+            dd($evaluacion);
+        }
+
+        dd('fin');
+    }
 }
