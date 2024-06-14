@@ -35,10 +35,10 @@ class EditIdentificadorProyectosIntExt extends Component
 
         if (count($busqueda) == 1) {
             if (! empty($busqueda) && $busqueda[0] == 'Interno') {
-                $this->mensaje = 'Esta Identificador se encuentra en uso por un proyecto interno.';
+                $this->mensaje = 'Este Identificador se encuentra en uso por un proyecto interno.';
                 $this->colorTexto = 'orange';
             } elseif (! empty($busqueda) && $busqueda[0] == 'Externo') {
-                $this->mensaje = 'Esta Identificador se encuentra en uso por un proyecto externo.';
+                $this->mensaje = 'Este Identificador se encuentra en uso por un proyecto externo.';
                 $this->colorTexto = 'orange';
             } else {
                 $this->mensaje = 'Este Identificador no esta disponible.';
@@ -76,10 +76,10 @@ class EditIdentificadorProyectosIntExt extends Component
 
         if (count($busqueda) == 1) {
             if (! empty($busqueda) && $busqueda[0] == 'Interno') {
-                $this->mensaje = 'Esta Identificador se encuentra en uso por un proyecto interno.';
+                $this->mensaje = 'Este Identificador se encuentra en uso por un proyecto interno.';
                 $this->colorTexto = 'orange';
             } elseif (! empty($busqueda) && $busqueda[0] == 'Externo') {
-                $this->mensaje = 'Esta Identificador se encuentra en uso por un proyecto externo.';
+                $this->mensaje = 'Este Identificador se encuentra en uso por un proyecto externo.';
                 $this->colorTexto = 'orange';
             } else {
                 $this->mensaje = 'Este Identificador no esta disponible.';

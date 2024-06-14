@@ -10,20 +10,15 @@
     <title>{{ trans('panel.site_title') }}</title>
 
     <!-- Principal Styles -->
-    <link href="{{ asset('css/app.css') }}{{ config('app.cssVersion') }}" rel="stylesheet">
-    <link href="{{ asset('css/global/style.css') }}{{ config('app.cssVersion') }}" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/global/loader.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/global/admin.css') }}{{ config('app.cssVersion') }}">
-    <link rel="stylesheet" href="{{ asset('css/rds.css') }}{{ config('app.cssVersion') }}">
-    <link href="{{ asset('css/global/custom.css') }}{{ config('app.cssVersion') }}" rel="stylesheet" />
-    <link rel="stylesheet" href="{{ asset('vendor/file-manager/css/file-manager.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/global/darkMode.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/global/loader.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/global/custom.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/file-manager/css/file-manager.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/yearpicker.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/global/responsive.css') }}">
-
-    <link rel="stylesheet" href="{{ asset('css/global/TbButtons.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/global/TbColorsGlobal.css') }}">
-
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/global/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/global/admin.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/rds.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/global/responsive.css') }}">
     @yield('css')
     @yield('styles')
     <!-- End Principal Styles -->
@@ -76,6 +71,11 @@
     @livewireStyles
 
     {{-- Laravel vite --}}
+    @vite(['public/css/app.css'])
+    @vite(['public/css/global/style.css'])
+    @vite(['public/css/global/admin.css'])
+    @vite(['public/css/rds.css'])
+
     @vite(['resources/js/app.js'])
     {{-- Laravel vite --}}
 

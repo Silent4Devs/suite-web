@@ -167,7 +167,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::get('recursos-humanos/evaluacion-360', 'RH\Evaluacion360Controller@index')->name('rh-evaluacion360.index');
 
         //Modulo Capital Humano
-        Route::get('capital-humano', 'RH\CapitalHumanoController@index')->name('capital-humano.index');
+        Route::middleware('cacheResponse')->get('capital-humano', 'RH\CapitalHumanoController@index')->name('capital-humano.index');
 
         //Control de Ausencias
         Route::get('ajustes-dayoff', 'AusenciasController@ajustesDayoff')->name('ajustes-dayoff');
@@ -893,7 +893,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::resource('Tipo', 'RH\TipoCompetenciaController', ['except' => ['edit']]);
 
         Route::get('organigrama/exportar', 'OrganigramaController@exportTo')->name('organigrama.exportar');
-        Route::get('organigrama', 'OrganigramaController@index')->name('organigrama.index');
+        Route::middleware('cacheResponse')->get('organigrama', 'OrganigramaController@index')->name('organigrama.index');
 
         //Directorio
 
@@ -1538,7 +1538,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('courses', 'Escuela\Instructor\CourseController');
 
     Route::get('curso-estudiante/{course}', 'CursoEstudiante@cursoEstudiante')->name('curso-estudiante');
-    Route::get('mis-cursos', 'CursoEstudiante@misCursos')->name('mis-cursos');
+    Route::middleware('cacheResponse')->get('mis-cursos', 'CursoEstudiante@misCursos')->name('mis-cursos');
     Route::get('curso-estudiante/{course}/evaluacion/{evaluation}', 'CursoEstudiante@evaluacionEstudiante')->name('curso.evaluacion');
     Route::get('courses/{course}', 'CursoEstudiante@show')->name('courses.show');
     Route::post('course/{course}/enrolled', 'CursoEstudiante@enrolled')->name('courses.enrolled');
@@ -1666,7 +1666,7 @@ Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function 
 
 //KATBOL
 Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'namespace' => 'ContractManager', 'middleware' => ['auth', '2fa', 'active']], function () {
-    Route::view('katbol', 'contract_manager.katbol.index')->name('katbol');
+    Route::view('katbol', 'contract_manager.katbol.index')->name('katbol')->middleware('cacheResponse');
 
     //Proveedores
     Route::resource('proveedor', 'ProveedoresController');
