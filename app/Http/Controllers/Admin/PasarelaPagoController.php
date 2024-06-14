@@ -12,4 +12,10 @@ class PasarelaPagoController extends Controller
 
         return view('admin.pasarelaPago.inicio-servicios');
     }
+
+    public function planesPrecios(Request $request)
+    {
+
+        return view('admin.pasarelaPago.planes-precios');
+    }
 }

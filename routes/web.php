@@ -1562,6 +1562,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // pasarela de pago
     Route::get('pasarela-pago/', 'PasarelaPagoController@index')->name('pasarela-pago.inicio');
+    Route::get('pasarela-pago/planes-precios', 'PasarelaPagoController@planesPrecios')->name('pasarela-pago.planes-precios');
 });
 
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth', '2fa', 'active']], function () {

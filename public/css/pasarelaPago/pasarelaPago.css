@@ -52,22 +52,63 @@
 }
 
 .icon-background{
-    width: 65px;
-    height: 65px;
     background-color: rgb(194, 194, 165);
     color: #5A5A5A;
-    padding: 20px;
+    padding: 18px;
     border-radius: 15px;
-    font-size: 35px !important;
+    font-size: 38px !important;
     border: 1px solid #AAAAAA;
+    margin-right: 20px;
 }
 
-.instaladas .card h5{
+.instaladas .card h5,
+.tu-plan .card strong{
     font-size: 18px;
 }
+
+.tu-plan .card p{
+    margin-top: 20px;
+}
+
 .instaladas .card .btn{
     border: 1px solid #AAAAAA;
     border-radius: 10px;
     padding: 6px 20px;
     color: #787878;
+}
+
+/* precios planes ---------------- */
+
+.cards-planes-precios .card{
+    width: 50%;
+}
+
+.options-pago-periodo{
+    border-bottom: 1px solid #AEAEAE;
+}
+.options-pago-periodo .btn{
+    border-radius: 4px;
+    color: #5A5A5A;
+    padding: 10px 50px !important;
+    font-size: 20px;
+    outline: 1px solid #AEAEAE;
+    background-color: #fff;
+}
+.options-pago-periodo .btn.active{
+    background-color: #9FEBDF;
+}
+
+.link{
+    color: #3086AF;
+    border-bottom: 1px solid;
+}
+
+.cards-planes-precios .card-header{
+    text-align: center;
+    padding: 20px;
+    font-size: 22px;
+    color: #fff;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    font-weight: bolder;
 }

@@ -7,63 +7,7 @@
     </style>
 @endsection
 @section('content')
-    <div class="menu-pasarela scroll_estilo">
-        <ul>
-            <li> <strong> Aplicaciones </strong> </li>
-            <li>
-                <i class="material-symbols-outlined">apps</i>
-                Todas las aplicaciones
-            </li>
-            <li>
-                <i class="material-symbols-outlined">install_desktop</i>
-                Actualizaciones
-            </li>
-        </ul>
-
-        <ul class="mt-5">
-            <li> <strong> Planes </strong> </li>
-            <li>
-                <i class="material-symbols-outlined">credit_card</i>
-                Planes y Precios
-            </li>
-        </ul>
-
-        <ul class="mt-5">
-            <li> <strong> Aplicaciones </strong> </li>
-            <li>
-                <i class="material-symbols-outlined">school</i>
-                Capacitación
-            </li>
-            <li>
-                <i class="material-symbols-outlined">language</i>
-                Gestión Normativa
-            </li>
-            <li>
-                <i class="material-symbols-outlined">quick_reference</i>
-                Planes de trabajo
-            </li>
-            <li>
-                <i class="material-symbols-outlined">folder_managed</i>
-                Gestor Documental
-            </li>
-            <li>
-                <i class="material-symbols-outlined">install_desktop</i>
-                Gestión de Talento
-            </li>
-            <li>
-                <i class="material-symbols-outlined">quick_reference</i>
-                Gestión Contractual
-            </li>
-            <li>
-                <i class="material-symbols-outlined">gpp_maybe</i>
-                Gestión de Riesgos
-            </li>
-            <li>
-                <i class="material-symbols-outlined">groups</i>
-                Visitantes
-            </li>
-        </ul>
-    </div>
+    @include('admin.pasarelaPago.menu')
 
     <div class="content-pasarela">
         <div class="d-flex portada-pasarela">
@@ -86,8 +30,9 @@
             <div class="row mt-4">
                 <div class="col-md-6">
                     <div class="card card-body">
-                        <div class="d-flex align-items-center gap-2">
-                            <i class="material-symbols-outlined icon-background">school</i>
+                        <div class="d-flex align-items-center">
+                            <i class="material-symbols-outlined icon-background"
+                                style="background-color: #9CEBFF;">school</i>
                             <h5>Capacitación</h5>
                         </div>
                         <a href="" class="btn">Abrir</a>
@@ -95,9 +40,10 @@
                 </div>
                 <div class="col-md-6">
                     <div class="card card-body">
-                        <div class="d-flex align-items-center gap-2">
-                            <i class="material-symbols-outlined icon-background">school</i>
-                            <h5>Capacitación</h5>
+                        <div class="d-flex align-items-center">
+                            <i class="material-symbols-outlined icon-background"
+                                style="background-color: #F1F1F1;">emoji_people</i>
+                            <h5>Gestión Normativa</h5>
                         </div>
                         <a href="" class="btn">Abrir</a>
                     </div>
@@ -106,18 +52,20 @@
             <div class="row mt-4">
                 <div class="col-md-6">
                     <div class="card card-body">
-                        <div class="d-flex align-items-center gap-2">
-                            <i class="material-symbols-outlined icon-background">school</i>
-                            <h5>Capacitación</h5>
+                        <div class="d-flex align-items-center">
+                            <i class="material-symbols-outlined icon-background"
+                                style="background-color: #FCB4BC;">gpp_maybe</i>
+                            <h5>Gestor de Riesgos</h5>
                         </div>
                         <a href="" class="btn">Abrir</a>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="card card-body">
-                        <div class="d-flex align-items-center gap-2">
-                            <i class="material-symbols-outlined icon-background">school</i>
-                            <h5>Capacitación</h5>
+                        <div class="d-flex align-items-center">
+                            <i class="material-symbols-outlined icon-background"
+                                style="background-color: #E0C5FF;">clinical_notes</i>
+                            <h5>Gestión Contractual</h5>
                         </div>
                         <a href="" class="btn">Abrir</a>
                     </div>
@@ -132,10 +80,11 @@
                 <div class="col-md-6">
                     <div class="card card-body">
                         <div>
-                            <i class="material-symbols-outlined icon-background">school</i>
-                            Plan de trabajo
+                            <i class="material-symbols-outlined icon-background"
+                                style="background-color: #B1C6FF;">overview</i>
+                            <strong> Plan de trabajo </strong>
                         </div>
-                        <p class="text-center">
+                        <p>
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
                             labore et dolore magna aliqua.
                         </p>
@@ -148,10 +97,11 @@
                 <div class="col-md-6">
                     <div class="card card-body">
                         <div>
-                            <i class="material-symbols-outlined icon-background">school</i>
-                            Plan de trabajo
+                            <i class="material-symbols-outlined icon-background"
+                                style="background-color: #FFFDC4;">folder_managed</i>
+                            <strong> Gestor Documental </strong>
                         </div>
-                        <p class="text-center">
+                        <p>
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
                             labore et dolore magna aliqua.
                         </p>
@@ -166,10 +116,11 @@
                 <div class="col-md-6">
                     <div class="card card-body">
                         <div>
-                            <i class="material-symbols-outlined icon-background">school</i>
-                            Plan de trabajo
+                            <i class="material-symbols-outlined icon-background"
+                                style="background-color: #FFD9ED;">groups</i>
+                            <strong> Visitantes </strong>
                         </div>
-                        <p class="text-center">
+                        <p>
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
                             labore et dolore magna aliqua.
                         </p>
@@ -182,10 +133,11 @@
                 <div class="col-md-6">
                     <div class="card card-body">
                         <div>
-                            <i class="material-symbols-outlined icon-background">school</i>
-                            Plan de trabajo
+                            <i class="material-symbols-outlined icon-background"
+                                style="background-color: #FFD3BF;">id_card</i>
+                            <strong> Gestión de Talento </strong>
                         </div>
-                        <p class="text-center">
+                        <p>
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
                             labore et dolore magna aliqua.
                         </p>
