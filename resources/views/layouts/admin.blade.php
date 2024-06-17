@@ -14,14 +14,10 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/global/custom.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('vendor/file-manager/css/file-manager.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/yearpicker.css') }}">
-    @vite(['public/css/app.css'])
-    @vite(['public/css/global/style.css'])
-    @vite(['public/css/global/admin.css'])
-    @vite(['public/css/rds.css'])
-    {{-- <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/global/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/global/admin.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/rds.css') }}"> --}}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/rds.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/global/responsive.css') }}">
     @yield('css')
     @yield('styles')
@@ -74,8 +70,16 @@
     @yield('styles')
     @livewireStyles
 
+    {{-- Laravel vite --}}
+    @vite(['public/css/app.css'])
+    @vite(['public/css/global/style.css'])
+    @vite(['public/css/global/admin.css'])
+    @vite(['public/css/rds.css'])
+
     @vite(['resources/js/app.js'])
     {{-- Laravel vite --}}
+
+    //tamales cde rajas
 
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/favicon_tabantaj_v2.png') }}">
 </head>
@@ -110,7 +114,7 @@
                     </div>
                 </button>
                 <a href="{{ url('/admin/portal-comunicacion') }}"><img src="{{ asset('img/logo-ltr.png') }}"
-                        alt="Logo Tabantaj" style="height: 40px;"></a>
+                        alt="Logo Tabantaj image" style="height: 40px;"></a>
                 @livewire('global-search-component', ['lugar' => 'header'])
             </div>
             @if ($empleado)
