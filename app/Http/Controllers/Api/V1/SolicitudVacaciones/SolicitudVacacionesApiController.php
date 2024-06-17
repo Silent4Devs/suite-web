@@ -678,6 +678,40 @@ class SolicitudVacacionesApiController extends Controller
         ]);
     }
 
+    public function vistaGlobal()
+    {
+        // abort_if(Gate::denies('reglas_vacaciones_vista_global'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // $data = User::getCurrentUser()->empleado->id;
+
+        $solVac = SolicitudVacaciones::getAllwithEmpleados();
+
+        foreach ($solVac as $key_solicitud => $solicitante) {
+            if ($solicitante && $solicitante->empleado) {
+                $solicitante->empleado->makeHidden([
+                    'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
+                    'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor'
+                ]);
+
+                $solicitante->empleado->nombre_area = $solicitante->empleado->area->area;
+                $solicitante->empleado->nombre_puesto = $solicitante->empleado->puesto;
+
+                $solicitante->empleado->makeHidden([
+                    'puestoRelacionado', 'area_id', 'puesto_id'
+                ]);
+            }
+        }
+
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
+        $empresa_actual = $organizacion_actual->empresa;
+
+        return response()->json([
+            'logo_actual' => $logo_actual,
+            'empresa_actual' => $empresa_actual,
+            'solVac' => $solVac,
+        ]);
+    }
+
     public function showVistaGlobal($id)
     {
         //abort_if(Gate::denies('reglas_vacaciones_vista_global'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -689,7 +723,21 @@ class SolicitudVacacionesApiController extends Controller
             return redirect(route('admin.solicitud-vacaciones.index'));
         }
 
-        return view('admin.solicitudVacaciones.vistaGlobal', compact('vacacion'));
+        $vacacion->empleado->makeHidden([
+            'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
+            'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor'
+        ]);
+
+        $vacacion->empleado->nombre_area = $vacacion->empleado->area->area;
+        $vacacion->empleado->nombre_puesto = $vacacion->empleado->puesto;
+
+        $vacacion->empleado->makeHidden([
+            'puestoRelacionado', 'area_id', 'puesto_id'
+        ]);
+
+        return response()->json([
+            'vacacion' => $vacacion,
+        ]);
     }
 
     public function archivoShow($id)
@@ -700,9 +748,23 @@ class SolicitudVacacionesApiController extends Controller
         if (empty($vacacion)) {
             Alert::warning('warning', 'Data not found');
 
-            return redirect(route('admin.solicitud-vacaciones.index'));
+            return redirect(route('admin.solicitud-dayoff.index'));
         }
 
-        return view('admin.solicitudVacaciones.archivoShow', compact('vacacion'));
+        $vacacion->empleado->makeHidden([
+            'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
+            'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor'
+        ]);
+
+        $vacacion->empleado->nombre_area = $vacacion->empleado->area->area;
+        $vacacion->empleado->nombre_puesto = $vacacion->empleado->puesto;
+
+        $vacacion->empleado->makeHidden([
+            'puestoRelacionado', 'area_id', 'puesto_id'
+        ]);
+
+        return response()->json([
+            'vacacion' => $vacacion,
+        ]);
     }
 }
