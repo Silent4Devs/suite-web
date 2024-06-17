@@ -210,4 +210,8 @@ class AnalisisdeRiesgosController extends Controller
     {
         return view('admin.analisis-riesgos.tbAltaAnalisisRiesgos');
     }
+
+    public function LogsTemplateRiskAnalysis($id){
+        return view('admin.analisis-riesgos.tbLogTemplateRiskAnalysis', compact('id'));
+    }
 }
