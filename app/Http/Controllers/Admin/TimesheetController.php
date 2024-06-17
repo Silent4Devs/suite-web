@@ -300,7 +300,7 @@ class TimesheetController extends Controller
         $usuario = User::getCurrentUser();
         $organizacion = Organizacion::getFirst();
 
-        $semanasAtras =  $usuario->empleado->semanas_min_timesheet;
+        $semanasAtras = $usuario->empleado->semanas_min_timesheet;
 
         $today = Carbon::now();
 

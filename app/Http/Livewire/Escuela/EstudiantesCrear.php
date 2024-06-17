@@ -3,10 +3,10 @@
 namespace App\Http\Livewire\Escuela;
 
 use App\Models\Area;
+use App\Models\Empleado;
 use App\Models\Escuela\Course;
 use App\Models\Escuela\UsuariosCursos;
 use App\Models\User;
-use App\Models\Empleado;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
@@ -57,7 +57,7 @@ class EstudiantesCrear extends Component
         if ($this->publico == 'todos') {
             foreach ($this->usuarios as $usuario) {
                 // dump(is_null($usuario->empleado));
-                if(!is_null($usuario->empleado) && $usuario->empleado->estatus === "alta"){
+                if (! is_null($usuario->empleado) && $usuario->empleado->estatus === 'alta') {
                     UsuariosCursos::create([
                         'user_id' => $usuario->id,
                         'course_id' => $this->course->id,
@@ -71,7 +71,7 @@ class EstudiantesCrear extends Component
 
         if ($this->publico == 'area') {
             foreach ($this->usuarios as $usuario) {
-                if (isset($usuario->empleado->area_id) && $usuario->empleado->estatus === "alta") {
+                if (isset($usuario->empleado->area_id) && $usuario->empleado->estatus === 'alta') {
                     if ($usuario->empleado->area_id == $this->area_seleccionada) {
                         UsuariosCursos::create([
                             'user_id' => $usuario->id,
@@ -114,12 +114,11 @@ class EstudiantesCrear extends Component
 
         $usuarios = User::whereNotIn('id', $usuariosInscritos)->orderBy('name')->get();
 
-
         $empleados = Empleado::where('estatus', 'alta')->get();
 
-        foreach($usuarios as $usuario){
-            foreach($empleados as $empleado){
-                if($empleado->id === $usuario->empleado_id){
+        foreach ($usuarios as $usuario) {
+            foreach ($empleados as $empleado) {
+                if ($empleado->id === $usuario->empleado_id) {
 
                     $this->usuarios_manual->push($usuario);
                 }
