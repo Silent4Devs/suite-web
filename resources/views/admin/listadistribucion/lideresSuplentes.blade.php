@@ -33,6 +33,8 @@
         <hr>
         <div class="row g-0">
 
+            <input name="niveles" id="niveles" type="hidden" value="{{ $lista->niveles }}">
+
             <div class="col-12">
                 <br>
                 <br>
