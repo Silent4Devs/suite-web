@@ -150,6 +150,8 @@
             </div>
         </div>
     </div>
+
+    {{-- modales --}}
 @endsection
 @section('scripts')
 @endsection

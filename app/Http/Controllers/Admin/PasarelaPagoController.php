@@ -18,4 +18,16 @@ class PasarelaPagoController extends Controller
 
         return view('admin.pasarelaPago.planes-precios');
     }
+
+    public function prePago(Request $request)
+    {
+
+        return view('admin.pasarelaPago.pre-pago');
+    }
+
+    public function pago(Request $request)
+    {
+
+        return view('admin.pasarelaPago.pago');
+    }
 }

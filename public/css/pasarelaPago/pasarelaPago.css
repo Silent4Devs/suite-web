@@ -112,3 +112,27 @@
     border-top-right-radius: 12px;
     font-weight: bolder;
 }
+
+
+/* pre pago ---------------- */
+
+.btn-comprar{
+    background-color: #09C96A;
+    color: #fff;
+}
+
+/* apps ------------ */
+.icon-background.icon-lg{
+    padding: 40px;
+    font-size: 70px !important;
+    border-radius: 25px;
+}
+.box-apps-stars i{
+    font-size: 35px !important;
+    color: #c99a00;
+}
+
+.blue-box-estadisticas{
+    background-color: #F8FAFF;
+    border: 1px solid #A8D4E6;
+}
