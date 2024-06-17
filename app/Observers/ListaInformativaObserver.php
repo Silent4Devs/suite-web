@@ -5,7 +5,7 @@ namespace App\Observers;
 use App\Models\ListaInformativa;
 use Illuminate\Support\Facades\Cache;
 
-class ListaInformtivaObserver
+class ListaInformativaObserver
 {
     /**
      * Handle the ListaInformativa "created" event.
