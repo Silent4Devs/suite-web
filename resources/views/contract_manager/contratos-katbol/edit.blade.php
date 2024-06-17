@@ -16,23 +16,23 @@
         }
 
         /* .asterisco {
-                                                                                                                                                                                                                                                                                                                                                                                                                    color: red;
-                                                                                                                                                                                                                                                                                                                                                                                                                    margin-left: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                        color: red;
+                                                                                                                                                                                                                                                                                                                                                                                                                        margin-left: 5px;
 
-                                                                                                                                                                                                                                                                                                                                                                                                                } */
+                                                                                                                                                                                                                                                                                                                                                                                                                    } */
 
         /*.select-wrapper input{
 
-                                                                                                                                                                                                                                                                                                                                                                                                                direction:rtl;
-                                                                                                                                                                                                                                                                                                                                                                                                                text-align:left;
+                                                                                                                                                                                                                                                                                                                                                                                                                    direction:rtl;
+                                                                                                                                                                                                                                                                                                                                                                                                                    text-align:left;
 
-                                                                                                                                                                                                                                                                                                                                                                                                                }*/
+                                                                                                                                                                                                                                                                                                                                                                                                                    }*/
     </style>
 
     @if (session('mensajeError'))
-    <div class="alert alert-danger">
-        {{ session('mensajeError') }}
-    </div>
+        <div class="alert alert-danger">
+            {{ session('mensajeError') }}
+        </div>
     @endif
     {{-- {{ Breadcrumbs::render('contratos_edit', $contrato) }} --}}
     @include('admin.bitacora.formedit', ['show_contrato' => false])
@@ -196,27 +196,9 @@
 
                         <tbody>
                             <tr class="black-text">
-                                <td>
-                                    <a href="#" data-type="text" data-pk="{{ $contratos->id }}"
-                                        data-url="{{ route('contract_manager.contratos-katbol.contratopago', $contratos->id) }}"
-                                        data-title="Número de contrato" data-value="{{ $contratos->no_pagos }}"
-                                        class="no_pagos" data-name="no_pagos">
-                                    </a>
-                                </td>
-                                <td>
-                                    <a href="#" data-type="text" data-pk="{{ $contratos->id }}"
-                                        data-url="{{ route('contract_manager.contratos-katbol.contratopago', $contratos->id) }}"
-                                        data-title="Tipo de contrato" data-value="{{ $contratos->tipo_contrato }}"
-                                        class="tipo_contrato" data-name="tipo_contrato">
-                                    </a>
-                                </td>
-                                <td>
-                                    <a href="#" data-type="text" data-pk="{{ $contratos->id }}"
-                                        data-url="{{ route('contract_manager.contratos-katbol.contratopago', $contratos->id) }}"
-                                        data-title="Nombre de servicio" data-value="{{ $contratos->nombre_servicio }}"
-                                        class="nombre_servicio" data-name="nombre_servicio">
-                                    </a>
-                                </td>
+                                <td>{{ $contratos->no_pagos }}</td>
+                                <td>{{ $contratos->tipo_contrato }}</td>
+                                <td>{{ $contratos->nombre_servicio }}</td>
                             </tr>
                         </tbody>
                     </table>

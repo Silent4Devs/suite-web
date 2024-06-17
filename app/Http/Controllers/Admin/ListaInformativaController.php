@@ -134,9 +134,14 @@ class ListaInformativaController extends Controller
     {
         abort_if(Gate::denies('lista_informativa_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         //
-        $lista = ListaInformativa::select('id')->find($id);
-
+        $lista = ListaInformativa::select('id', 'modulo')->find($id);
+        $module = $lista->modulo;
         if (isset($request->nivel1[0]) || isset($request->nivel2[0])) {
+
+            $lista->update([
+                'modulo' => $module,
+            ]);
+
             $participantes = ParticipantesListaInformativa::where('modulo_id', '=', $lista->id)->delete();
             $usuarios = UsuariosListaInformativa::where('modulo_id', '=', $lista->id)->delete();
 
