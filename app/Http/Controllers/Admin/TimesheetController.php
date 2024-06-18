@@ -380,11 +380,7 @@ class TimesheetController extends Controller
                     // throw $e;
                     return response()->json(['status' => 400]);
                 }
-            } else {
-                dd('asdasd1');
             }
-        } else {
-            dd('asdasd2');
         }
         // return redirect()->route('admin.timesheet-mis-registros')->with('success', 'Registro Enviado');
     }
