@@ -108,19 +108,19 @@
                         <span>$2620.00 mx</span>
                     </h5>
 
-                    <p class="text-center">
+                    <p class="text-center mt-5">
                         <small><i>Al año: $31,000.00 te ahorrarías $400.00</i></small>
                     </p>
 
-                    <button class="btn btn-success w-100">
+                    <button class="btn btn-comprar w-100 py-3">
                         Comprar ahora
                     </button>
 
-                    <p>
+                    <p class="mt-2">
                         <small>
                             <i>
-                                Al hacer clic en "Realizar pedido", confirmo que he leído y acepto todos los
-                                <a href="">términos y políticas.</a>
+                                Al hacer clic en "Realizar pedido", confirmo que he leído y acepto todos los <br>
+                                <a class="link" href="">términos y políticas.</a>
                             </i>
                         </small>
                     </p>

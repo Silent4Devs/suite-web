@@ -115,11 +115,20 @@
 
 
 /* pre pago ---------------- */
-
 .btn-comprar{
     background-color: #09C96A;
     color: #fff;
 }
+.all-aplicaciones-pre .card{
+    min-width: 500px;
+}
+.all-aplicaciones-pre .card strong{
+    font-size: 18px;
+}
+.flex-direction-row{
+    flex-direction: row;
+}
+
 
 /* apps ------------ */
 .icon-background.icon-lg{

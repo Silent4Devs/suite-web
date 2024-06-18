@@ -2,8 +2,10 @@
     <ul>
         <li> <strong> Aplicaciones </strong> </li>
         <li>
-            <i class="material-symbols-outlined">apps</i>
-            Todas las aplicaciones
+            <a href="">
+                <i class="material-symbols-outlined">apps</i>
+                Todas las aplicaciones
+            </a>
         </li>
         <li>
             <i class="material-symbols-outlined">install_desktop</i>
@@ -14,8 +16,10 @@
     <ul class="mt-5">
         <li> <strong> Planes </strong> </li>
         <li>
-            <i class="material-symbols-outlined">credit_card</i>
-            Planes y Precios
+            <a href="{{ route('admin.pasarela-pago.planes-precios') }}">
+                <i class="material-symbols-outlined">credit_card</i>
+                Planes y Precios
+            </a>
         </li>
     </ul>
 

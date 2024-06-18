@@ -37,7 +37,8 @@
                     </p>
 
                     <div class="text-center mt-4">
-                        <a href="" class="btn btn-outline-primary">EMPIEZA AHORA</a>
+                        <a href="{{ route('admin.pasarela-pago.pre-pago') }}" class="btn btn-outline-primary">EMPIEZA
+                            AHORA</a>
                     </div>
                 </div>
             </div>
@@ -58,7 +59,8 @@
                     </p>
 
                     <div class="text-center mt-4">
-                        <a href="" class="btn btn-outline-primary">EMPIEZA AHORA</a>
+                        <a href="{{ route('admin.pasarela-pago.pre-pago') }}" class="btn btn-outline-primary">EMPIEZA
+                            AHORA</a>
                     </div>
                 </div>
             </div>
