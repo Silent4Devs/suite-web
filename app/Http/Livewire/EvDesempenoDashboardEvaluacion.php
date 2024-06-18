@@ -12,10 +12,13 @@ use App\Models\EvaluadosEvaluacionDesempeno;
 use App\Models\PeriodosEvaluacionDesempeno;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
 class EvDesempenoDashboardEvaluacion extends Component
 {
+    use LivewireAlert;
+
     public $id_evaluacion;
     public $evaluacion;
     public $evaluados_tabla;
@@ -460,21 +463,79 @@ class EvDesempenoDashboardEvaluacion extends Component
 
     public function modificarPeriodos()
     {
+        $modificarPeriodo = true;
+        $cambioExitoso = true;
+        $errores = [
+            'competencias' => [],
+            'objetivos' => [],
+            'evaluadoresComp' => [],
+            'evaluadoresObj' => [],
+        ];
+
+        // Realizar todas las comprobaciones primero
         foreach ($this->array_periodos as $key => $p) {
-            $periodoEdit = PeriodosEvaluacionDesempeno::find($p["id_periodo"]);
-            $periodoEdit->update([
-                'nombre_evaluacion' => $p['nombre_evaluacion'],
-                'fecha_inicio' => $p['fecha_inicio'],
-                'fecha_fin' => $p['fecha_fin'],
-                'habilitado' => $p['habilitado'],
-            ]);
+            foreach ($this->evaluacion->evaluados as $evaluado) {
+                if ($this->evaluacion->activar_objetivos && $this->evaluacion->activar_competencias) {
+                    $porcentaje_evaluadores_competencias = $evaluado->evaluadoresCompetencias($p["id_periodo"])->where('evaluador_desempeno_id', '!=', $evaluado->empleado->id)->sum('porcentaje_competencias');
+                    $porcentaje_evaluadores_objetivos = $evaluado->evaluadoresObjetivos($p["id_periodo"])->where('evaluador_desempeno_id', '!=', $evaluado->empleado->id)->sum('porcentaje_objetivos');
+
+                    if ($porcentaje_evaluadores_competencias != 100) {
+                        $errores['evaluadoresComp'][] = $evaluado->empleado->name;
+                    }
+
+                    if ($porcentaje_evaluadores_objetivos != 100) {
+                        $errores['evaluadoresObj'][] = $evaluado->empleado->name;
+                    }
+                } elseif ($this->evaluacion->activar_objetivos && !$this->evaluacion->activar_competencias) {
+                    $porcentaje_evaluadores_objetivos = $evaluado->evaluadoresObjetivos($p["id_periodo"])->where('evaluador_desempeno_id', '!=', $evaluado->empleado->id)->sum('porcentaje_objetivos');
+
+                    if ($porcentaje_evaluadores_objetivos != 100) {
+                        $errores['evaluadoresObj'][] = $evaluado->empleado->name;
+                    }
+                } elseif (!$this->evaluacion->activar_objetivos && $this->evaluacion->activar_competencias) {
+                    $porcentaje_evaluadores_competencias = $evaluado->evaluadoresCompetencias($p["id_periodo"])->where('evaluador_desempeno_id', '!=', $evaluado->empleado->id)->sum('porcentaje_competencias');
+
+                    if ($porcentaje_evaluadores_competencias != 100) {
+                        $errores['evaluadoresComp'][] = $evaluado->empleado->name;
+                    }
+                }
+            }
+
+            if (!empty($errores['evaluadoresComp']) || !empty($errores['evaluadoresObj'])) {
+                $modificarPeriodo = false;
+                $cambioExitoso = false;
+                break;
+            }
         }
 
-        $this->alert('success', 'Periodos Modificados', [
-            'position' => 'top-end',
-            'timer' => '4000',
-            'toast' => true,
-            'text' => 'Los periodos se modificaron correctamente.',
-        ]);
+        // Realizar los updates solo si no hay errores
+        if ($modificarPeriodo) {
+            foreach ($this->array_periodos as $p) {
+                $periodoEdit = PeriodosEvaluacionDesempeno::find($p["id_periodo"]);
+                $periodoEdit->update([
+                    'nombre_evaluacion' => $p['nombre_evaluacion'],
+                    'fecha_inicio' => $p['fecha_inicio'],
+                    'fecha_fin' => $p['fecha_fin'],
+                    'habilitado' => $p['habilitado'],
+                ]);
+            }
+        }
+
+        // Enviar alerta dependiendo del resultado
+        if ($cambioExitoso) {
+            $this->alert('success', 'Periodos Modificados', [
+                'position' => 'top-end',
+                'timer' => '4000',
+                'toast' => true,
+                'text' => 'Los periodos se modificaron correctamente.',
+            ]);
+        } else {
+            $this->alert('error', 'Error al intentar Modificar los Periodos', [
+                'position' => 'top-end',
+                'timer' => '4000',
+                'toast' => true,
+                'text' => 'Algunos colaboradores no tienen evaluadores, favor de añadirlos para que la evaluación pueda continuar su curso.',
+            ]);
+        }
     }
 }
