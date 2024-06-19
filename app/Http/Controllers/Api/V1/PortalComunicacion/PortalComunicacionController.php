@@ -73,6 +73,21 @@ class PortalComunicacionController extends Controller
 
         foreach ($nuevos as $key_nuevo => $nuevo) {
             $nuevo->nombre_area = $nuevo->area->area;
+
+            if ($nuevo->foto == null || $nuevo->foto == '0') {
+                if ($nuevo->genero == 'H') {
+                    $ruta = asset('storage/empleados/imagenes/man.png');
+                } elseif ($nuevo->genero == 'M') {
+                    $ruta = asset('storage/empleados/imagenes/woman.png');
+                } else {
+                    $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
+                }
+            } else {
+                $ruta = asset('storage/empleados/imagenes/' . $nuevo->foto);
+            }
+
+            $nuevo->ruta_foto = $ruta;
+
             $nuevo->makeHidden([
                 'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
                 'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet',
