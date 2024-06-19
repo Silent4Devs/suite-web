@@ -368,13 +368,27 @@ class TimesheetApiController extends Controller
 
         // Transformar los proyectos ocultando las propiedades
         $proyectos = $timesheet->proyectos->map(function ($proyecto) {
-            return collect($proyecto)->except(['created_at', 'updated_at', 'areas']);
+            return collect($proyecto)->except([
+                'created_at',
+                'updated_at',
+                'areas',
+                'fecha_inicio',
+                'fecha_fin',
+                'sede_id',
+                'tipo',
+                'horas_proyecto',
+            ]);
         });
 
         // Obtener y ocultar propiedades en las horas
         $horas = TimesheetHoras::where('timesheet_id', $id)->get()->map(function ($hora) {
-            return $hora->makeHidden(['created_at', 'updated_at']);
+            return $hora->makeHidden(['created_at', 'updated_at', 'tarea']);
         });
+
+        foreach ($horas as $key => $hora) {
+            $hora->nombre_tarea = $hora->tarea->tarea;
+        }
+
         $horas_count = $horas->count();
 
         return response()->json([
@@ -851,46 +865,53 @@ class TimesheetApiController extends Controller
     //     return view('admin.timesheet.papelera', compact('papelera', 'logo_actual', 'empresa_actual'));
     // }
 
-    // public function obtenerEquipo($childrens)
-    // {
-    //     $equipo_a_cargo = collect();
+    public function obtenerEquipo($childrens)
+    {
+        $equipo_a_cargo = collect();
 
-    //     foreach ($childrens as $evaluador) {
-    //         $equipo_a_cargo->push($evaluador->id);
+        foreach ($childrens as $evaluador) {
+            $equipo_a_cargo->push($evaluador->id);
 
-    //         if (count($evaluador->children)) {
-    //             $equipo_a_cargo->push($this->obtenerEquipo($evaluador->children));
-    //         }
-    //     }
+            if (count($evaluador->children)) {
+                $equipo_a_cargo->push($this->obtenerEquipo($evaluador->children));
+            }
+        }
 
-    //     return $equipo_a_cargo->flatten(1)->toArray();
-    // }
+        return $equipo_a_cargo->flatten(1)->toArray();
+    }
 
-    // public function aprobaciones(Request $request)
-    // {
-    //     abort_if(Gate::denies('timesheet_administrador_aprobar_rechazar_horas_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-    //     $habilitarTodos = $request->habilitarTodos ? true : false;
-    //     $usuario = User::getCurrentUser();
-    //     $equipo_a_cargo = $this->obtenerEquipo($usuario->empleado->children);
-    //     array_push($equipo_a_cargo, $usuario->empleado->id);
-    //     if ($habilitarTodos) {
-    //         $aprobaciones = Timesheet::where('estatus', 'pendiente')
-    //             ->where('estatus', 'pendiente')
-    //             ->whereIn('aprobador_id', $equipo_a_cargo)
-    //             ->get();
-    //     } else {
-    //         $aprobaciones = Timesheet::where('estatus', 'pendiente')
-    //             ->where('estatus', 'pendiente')
-    //             ->where('aprobador_id', $usuario->empleado->id)
-    //             ->get();
-    //     }
+    public function aprobaciones(Request $request)
+    {
+        // abort_if(Gate::denies('timesheet_administrador_aprobar_rechazar_horas_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $habilitarTodos = $request->habilitarTodos ? true : false;
+        // $usuario = User::getCurrentUser();
+        $usuario = User::find(2);
+        $equipo_a_cargo = $this->obtenerEquipo($usuario->empleado->children);
+        array_push($equipo_a_cargo, $usuario->empleado->id);
+        if ($habilitarTodos) {
+            $aprobaciones = Timesheet::where('estatus', 'pendiente')
+                ->where('estatus', 'pendiente')
+                ->whereIn('aprobador_id', $equipo_a_cargo)
+                ->get()->makeHidden(['proyectos', 'created_at', 'updated_at']);
+        } else {
+            $aprobaciones = Timesheet::where('estatus', 'pendiente')
+                ->where('estatus', 'pendiente')
+                ->where('aprobador_id', $usuario->empleado->id)
+                ->get()->makeHidden(['proyectos', 'created_at', 'updated_at']);
+        }
 
-    //     $organizacion_actual = $this->obtenerOrganizacion();
-    //     $logo_actual = $organizacion_actual->logo;
-    //     $empresa_actual = $organizacion_actual->empresa;
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
+        $empresa_actual = $organizacion_actual->empresa;
 
-    //     return view('admin.timesheet.aprobaciones', compact('aprobaciones', 'logo_actual', 'empresa_actual', 'habilitarTodos'));
-    // }
+        return response()->json([
+            'aprobaciones' => $aprobaciones,
+            'logo_actual' => $logo_actual,
+            'empresa_actual' => $empresa_actual,
+            'habilitarTodos' => $habilitarTodos
+        ]);
+        // return view('admin.timesheet.aprobaciones', compact('aprobaciones', 'logo_actual', 'empresa_actual', 'habilitarTodos'));
+    }
 
     // public function aprobados(Request $request)
     // {
@@ -944,55 +965,59 @@ class TimesheetApiController extends Controller
     //     return view('admin.timesheet.rechazos', compact('rechazos', 'logo_actual', 'empresa_actual', 'habilitarTodos'));
     // }
 
-    // public function aprobar(Request $request, $id)
-    // {
-    //     abort_if(Gate::denies('timesheet_administrador_aprobar_horas'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-    //     $aprobar = Timesheet::find($id);
-    //     $aprobar->update([
-    //         'estatus' => 'aprobado',
-    //         'comentarios' => $request->comentarios,
-    //     ]);
+    public function aprobar(Request $request, $id)
+    {
+        // abort_if(Gate::denies('timesheet_administrador_aprobar_horas'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $respuesta = $request->input('respuesta');
 
-    //     $solicitante = Empleado::getDataColumns()->find($aprobar->empleado_id);
+        $aprobar = Timesheet::find($id);
+        $aprobar->update([
+            'estatus' => 'aprobado',
+            'comentarios' => $respuesta["comentarios"],
+        ]);
 
-    //     $aprobador = Empleado::getDataColumns()->find($aprobar->aprobador_id);
+        $solicitante = Empleado::getDataColumns()->find($aprobar->empleado_id);
 
-    //     try {
-    //         // Enviar correo
-    //         Mail::to(removeUnicodeCharacters($solicitante->email))->queue(new TimesheetSolicitudAprobada($aprobador, $aprobar, $solicitante));
-    //     } catch (Throwable $e) {
-    //         report($e);
+        $aprobador = Empleado::getDataColumns()->find($aprobar->aprobador_id);
 
-    //         return redirect()->route('admin.timesheet-aprobaciones')->with('success', 'Guardado con éxito, correo no enviado');
-    //     }
+        try {
+            // Enviar correo
+            Mail::to(removeUnicodeCharacters($solicitante->email))->queue(new TimesheetSolicitudAprobada($aprobador, $aprobar, $solicitante));
+        } catch (Throwable $e) {
+            report($e);
 
-    //     return redirect()->route('admin.timesheet-aprobaciones')->with('success', 'Guardado con éxito');
-    // }
+            return json_encode(['éxito', 'Guardado con éxito, correo no enviado'], 200);
+        }
 
-    // public function rechazar(Request $request, $id)
-    // {
-    //     abort_if(Gate::denies('timesheet_administrador_aprobar_horas'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-    //     $rechazar = Timesheet::find($id);
-    //     $rechazar->update([
-    //         'estatus' => 'rechazado',
-    //         'comentarios' => $request->comentarios,
-    //     ]);
+        return json_encode(['éxito', 'Guardado con éxito'], 200);
+    }
 
-    //     $solicitante = Empleado::getDataColumns()->find($rechazar->empleado_id);
+    public function rechazar(Request $request, $id)
+    {
+        // abort_if(Gate::denies('timesheet_administrador_aprobar_horas'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $respuesta = $request->input('respuesta');
+        // dd($respuesta, $respuesta["comentarios"]);
+        $rechazar = Timesheet::find($id);
+        $rechazar->update([
+            'estatus' => 'rechazado',
+            'comentarios' => $respuesta["comentarios"],
+        ]);
 
-    //     $aprobador = Empleado::getDataColumns()->find($rechazar->aprobador_id);
+        $solicitante = Empleado::getDataColumns()->find($rechazar->empleado_id);
 
-    //     try {
-    //         // Enviar correo
-    //         Mail::to(removeUnicodeCharacters($solicitante->email))->queue(new TimesheetSolicitudRechazada($aprobador, $rechazar, $solicitante));
-    //     } catch (Throwable $e) {
-    //         report($e);
+        $aprobador = Empleado::getDataColumns()->find($rechazar->aprobador_id);
 
-    //         return redirect()->route('admin.timesheet-aprobaciones')->with('success', 'Guardado con éxito, correo no enviado');
-    //     }
+        try {
+            // Enviar correo
+            Mail::to(removeUnicodeCharacters($solicitante->email))->queue(new TimesheetSolicitudRechazada($aprobador, $rechazar, $solicitante));
+        } catch (Throwable $e) {
+            report($e);
 
-    //     return redirect()->route('admin.timesheet-aprobaciones')->with('success', 'Guardado con éxito');
-    // }
+            return json_encode(['éxito', 'Guardado con éxito, correo no enviado'], 200);
+        }
+
+        return json_encode(['éxito', 'Guardado con éxito'], 200);
+    }
 
     // public function clientes()
     // {

@@ -57,6 +57,9 @@ Route::get('solicitud-vacaciones/{id}/showVistaGlobal', [SolicitudVacacionesApiC
 Route::get('solicitud-vacaciones/{id}/archivoShow', [SolicitudVacacionesApiController::class, 'archivoShow']);
 
 Route::get('timesheet/show/{id}', [TimesheetApiController::class, 'show']);
+Route::get('timesheet/aprobaciones', [TimesheetApiController::class, 'aprobaciones']);
+Route::post('timesheet/aprobar/{id}', [TimesheetApiController::class, 'aprobar']);
+Route::post('timesheet/rechazar/{id}', [TimesheetApiController::class, 'rechazar']);
 
 Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', 'middleware' => ['auth:api']], function () {
     // Permissions
