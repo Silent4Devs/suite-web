@@ -1,6 +1,6 @@
 <?php
 
-namespace app\Http\Controllers\Api\V1\SolicitudVacaciones;
+namespace App\Http\Controllers\Api\V1\SolicitudVacaciones;
 
 use App\Http\Controllers\Controller;
 use App\Mail\RespuestaVacaciones as MailRespuestaVacaciones;

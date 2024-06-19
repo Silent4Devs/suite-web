@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\V1\SolicitudVacaciones\SolicitudVacacionesApiContro
 use App\Http\Controllers\Api\V1\PortalComunicacion\PortalComunicacionController;
 use App\Http\Controllers\Api\v1\AnalisisRiesgo\FormulasController;
 use App\Http\Controllers\Api\V1\AnalisisRiesgo\templateAnalisisRiesgoController;
+use App\Http\Controllers\Api\V1\Timesheet\TimesheetApiController;
 
 Route::post('v1/login', [AuthController::class, 'login']);
 
@@ -54,6 +55,8 @@ Route::get('solicitud-vacaciones/archivo/{id}', [SolicitudVacacionesApiControlle
 Route::get('solicitud-vacaciones-vistaGlobal', [SolicitudVacacionesApiController::class, 'vistaGlobal']);
 Route::get('solicitud-vacaciones/{id}/showVistaGlobal', [SolicitudVacacionesApiController::class, 'showVistaGlobal']);
 Route::get('solicitud-vacaciones/{id}/archivoShow', [SolicitudVacacionesApiController::class, 'archivoShow']);
+
+Route::get('timesheet/show/{id}', [TimesheetApiController::class, 'show']);
 
 Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', 'middleware' => ['auth:api']], function () {
     // Permissions

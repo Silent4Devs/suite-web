@@ -1,6 +1,6 @@
 <?php
 
-namespace app\Http\Controllers\Api\V1\SolicitudDayOff;
+namespace App\Http\Controllers\Api\V1\SolicitudDayOff;
 
 use App\Http\Controllers\Controller;
 use App\Mail\RespuestaDayOff as MailRespuestaDayoff;
