@@ -3,9 +3,33 @@
     <link rel="stylesheet" href="{{ asset('css/evaluations/evaluations.css') }}{{ config('app.cssVersion') }}">
 @endsection
 @section('content')
+    <style>
+        .caja-cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .caja-cards .card {
+            width: 250px;
+            text-align: center;
+
+        }
+
+        .caja-cards .card-header {
+            position: relative;
+        }
+
+        .dropdown.btn-options-foda-card {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+        }
+    </style>
     {{-- {{ Breadcrumbs::render('capital-humano') }} --}}
 
-    <h5 class="titulo_general_funcion"> Evaluación Dashboard [Nombre evaluación ]</h5>
+    @livewire('ev-desempeno-dashboard-general')
+    {{-- <h5 class="titulo_general_funcion"> Evaluación Dashboard [Nombre evaluación ]</h5>
 
     <p>
         <small>
@@ -465,8 +489,7 @@
                 </div>
             </div>
         </div>
-    </div>
-
+    </div> --}}
 @endsection
 
 @section('scripts')

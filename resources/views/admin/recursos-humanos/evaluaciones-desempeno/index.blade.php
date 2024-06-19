@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/foda.css') }}{{ config('app.cssVersion') }}">
 @endsection
 @section('content')
     <script script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
@@ -11,6 +10,28 @@
             position: absolute;
             right: 0;
             top: 7px;
+        }
+
+        .caja-cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .caja-cards .card {
+            width: 250px;
+            text-align: center;
+
+        }
+
+        .caja-cards .card-header {
+            position: relative;
+        }
+
+        .dropdown.btn-options-foda-card {
+            position: absolute;
+            top: 5px;
+            right: 5px;
         }
     </style>
     <h5 class="col-12 titulo_general_funcion">Evaluaciones</h5>
