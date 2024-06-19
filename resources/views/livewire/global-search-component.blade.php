@@ -29,7 +29,17 @@
     @endif
     @if ($lugar == 'portal')
         <input class="h-100" type="text" placeholder="Ejem: Cargar mis horas en Timesheet" autocomplete="off"
-            wire:model="search">
+            wire:model.lazy="search"  wire:click.prevent="askAsisten">
+            {{-- <button wire:click='askAsistenText'>Guardar</button> --}}
+
+            <div class="container" style="position: relative; top: -3rem;">
+                @if ($respuesta = $this->respuesta['response'] ?? null)
+                   <div class="response">
+                       <p>{{ $respuesta }}</p>
+                   </div>
+               @endif
+            </div>
+
 
         <div class="caja-list-search-global scroll_estilo">
             <ul class="list-group">
