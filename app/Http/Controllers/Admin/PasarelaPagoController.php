@@ -8,6 +8,7 @@ use App\Models\Plan;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Stripe\StripeClient;
+use Stripe\Plan as StripePlan;
 
 class PasarelaPagoController extends Controller
 {
@@ -22,20 +23,33 @@ class PasarelaPagoController extends Controller
 
         $stripe = new StripeClient(env('STRIPE_SECRET'));
 
-        $subscriptions = $user->subscriptions;
-        //dd($subscriptions);
-        $subscription = $stripe->subscriptions->retrieve(
-            $subscriptions[0]->stripe_id
-        );
+        // $subscriptions = $user->subscriptions;
 
-        if ($subscription->status === 'activa') {
+        // $subscription = $stripe->subscriptions->retrieve(
+        //     $subscriptions[0]->stripe_id
+        // );
 
-        } else {
+        // if ($subscription->status === 'activa') {
+        // } else {
+        // }
 
+        $plansAlls = $stripe->plans->all();
+        foreach ($plansAlls->data as $stripePlan) {
+            $productDetail = $stripe->products->retrieve($stripePlan->product, []);
+            $plan = Plan::updateOrCreate(
+                [
+                    'stripe_plan' => $stripePlan->id
+                ],
+                [
+                    'name' => $productDetail->metadata->name ?? 'No name',
+                    'slug' => $productDetail->metadata->name,
+                    'price' => $stripePlan->amount_decimal,
+                    'description' => $productDetail->metadata->description ?? 'No description available',
+                ]
+            );
         }
-
         $plans = Plan::get();
-        // dd($plans);
+
         return view('admin.pasarelaPago.planes-precios', compact("plans"));
     }
 
