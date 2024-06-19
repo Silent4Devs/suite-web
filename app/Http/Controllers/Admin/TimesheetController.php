@@ -1226,7 +1226,7 @@ class TimesheetController extends Controller
         $areas_array = $this->timesheetService->totalRegisterByAreas();
         $proyectos = $this->timesheetService->getRegistersByProyects();
 
-        $proyectos_array = TimesheetProyecto::get();
+        $proyectos_array = TimesheetProyecto::getAll();
 
         return view(
             // 'admin.timesheet.dashboard'
