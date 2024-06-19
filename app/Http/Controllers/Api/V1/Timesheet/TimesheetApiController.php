@@ -892,12 +892,16 @@ class TimesheetApiController extends Controller
             $aprobaciones = Timesheet::where('estatus', 'pendiente')
                 ->where('estatus', 'pendiente')
                 ->whereIn('aprobador_id', $equipo_a_cargo)
-                ->get()->makeHidden(['proyectos', 'created_at', 'updated_at']);
+                ->get()->makeHidden(['proyectos', 'created_at', 'updated_at', 'semana']);
         } else {
             $aprobaciones = Timesheet::where('estatus', 'pendiente')
                 ->where('estatus', 'pendiente')
                 ->where('aprobador_id', $usuario->empleado->id)
-                ->get()->makeHidden(['proyectos', 'created_at', 'updated_at']);
+                ->get()->makeHidden(['proyectos', 'created_at', 'updated_at', 'semana']);
+        }
+
+        foreach ($aprobaciones as $key => $aprobacion) {
+            $aprobacion->texto_semana = \Illuminate\Support\Str::limit(strip_tags($aprobacion->semana), 3000);
         }
 
         $organizacion_actual = $this->obtenerOrganizacion();

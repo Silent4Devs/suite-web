@@ -45,8 +45,17 @@ class PortalComunicacionController extends Controller
         $documentos_publicados = Documento::getLastFiveWithMacroproceso();
         // $comite_existe = Comiteseguridad::getAll()->count();
         $nuevos = $empleados->whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->get();
-        $comunicados = ComunicacionSgi::getAllwithImagenesBlog();
-        $noticias = ComunicacionSgi::getAllwithImagenesCarrousel()->take(3);
+        $comunicados = ComunicacionSgi::getAllwithImagenesBlog()->makeHidden(['descripcion', 'created_at', 'updated_at']);
+
+        foreach ($comunicados as $key_comunicados => $comunicado) {
+            $comunicado->texto_descripcion = \Illuminate\Support\Str::limit(strip_tags($comunicado->descripcion), 3000);
+        }
+
+        $noticias = ComunicacionSgi::getAllwithImagenesCarrousel()->makeHidden(['descripcion', 'created_at', 'updated_at'])->take(3);
+
+        foreach ($noticias as $key_noticia => $noticia) {
+            $noticia->texto_descripcion = \Illuminate\Support\Str::limit(strip_tags($noticia->descripcion), 3000);
+        }
 
         $cumpleaños = Cache::remember('Portal_cumpleaños_' . $authId, 3600, function () use ($hoy, $empleados) {
             return Empleado::alta()->select('id', 'name', 'area_id', 'puesto_id', 'foto', 'cumpleaños', 'estatus')->whereMonth('cumpleaños', '=', $hoy->format('m'))->get()->makeHidden([
