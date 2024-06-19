@@ -16,11 +16,12 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\HasApiTokens;
 use OwenIt\Auditing\Contracts\Auditable;
+use Laravel\Cashier\Billable;
 
 class User extends Authenticatable implements Auditable
 {
     use ClearsResponseCache, \OwenIt\Auditing\Auditable;
-    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes, Billable;
 
     public $table = 'users';
 
