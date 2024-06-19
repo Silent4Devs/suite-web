@@ -45,21 +45,27 @@ class PortalComunicacionController extends Controller
         $documentos_publicados = Documento::getLastFiveWithMacroproceso();
         // $comite_existe = Comiteseguridad::getAll()->count();
         $nuevos = $empleados->whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->get();
-        $comunicados = ComunicacionSgi::getAllwithImagenesBlog()->makeHidden(['descripcion', 'created_at', 'updated_at']);
+        $comunicados = ComunicacionSgi::getAllwithImagenesBlog()->makeHidden(['descripcion', 'created_at', 'updated_at', 'imagenes_comunicacion']);
 
         foreach ($comunicados as $key_comunicados => $comunicado) {
             $comunicado->texto_descripcion = \Illuminate\Support\Str::limit(strip_tags($comunicado->descripcion), 3000);
+            $comunicado->tipo_imagen = $comunicado->imagenes_comunicacion->first()->tipo;
+            $ruta_comunicado = asset('storage/imagen_comunicado_SGI/' . $comunicado->imagenes_comunicacion->first()->imagen);
+            $comunicado->ruta_imagen = $ruta_comunicado;
         }
 
-        $noticias = ComunicacionSgi::getAllwithImagenesCarrousel()->makeHidden(['descripcion', 'created_at', 'updated_at'])->take(3);
+        $noticias = ComunicacionSgi::getAllwithImagenesCarrousel()->makeHidden(['descripcion', 'created_at', 'updated_at', 'imagenes_comunicacion'])->take(3);
 
         foreach ($noticias as $key_noticia => $noticia) {
             $noticia->texto_descripcion = \Illuminate\Support\Str::limit(strip_tags($noticia->descripcion), 3000);
+            $noticia->tipo_imagen = $noticia->imagenes_comunicacion->first()->tipo;
+            $ruta_noticia = asset('storage/imagen_comunicado_SGI/' . $noticia->imagenes_comunicacion->first()->imagen);
+            $noticia->ruta_imagen = $ruta_noticia;
         }
 
         $cumpleaños = Cache::remember('Portal_cumpleaños_' . $authId, 3600, function () use ($hoy, $empleados) {
             return Empleado::alta()->select('id', 'name', 'area_id', 'puesto_id', 'foto', 'cumpleaños', 'estatus')->whereMonth('cumpleaños', '=', $hoy->format('m'))->get()->makeHidden([
-                'avatar', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
+                'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
                 'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet',
                 'area', 'supervisor'
             ]);
@@ -68,7 +74,7 @@ class PortalComunicacionController extends Controller
         foreach ($nuevos as $key_nuevo => $nuevo) {
             $nuevo->nombre_area = $nuevo->area->area;
             $nuevo->makeHidden([
-                'avatar', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
+                'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
                 'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet',
                 'area', 'supervisor', 'area_id', 'puesto_id', 'foto'
             ]);
@@ -76,6 +82,20 @@ class PortalComunicacionController extends Controller
 
         foreach ($cumpleaños as $key => $cumple) {
             $cumple->nombre_area = $cumple->area->area;
+
+            if ($cumple->foto == null || $cumple->foto == '0') {
+                if ($cumple->genero == 'H') {
+                    $ruta = asset('storage/empleados/imagenes/man.png');
+                } elseif ($cumple->genero == 'M') {
+                    $ruta = asset('storage/empleados/imagenes/woman.png');
+                } else {
+                    $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
+                }
+            } else {
+                $ruta = asset('storage/empleados/imagenes/' . $cumple->foto);
+            }
+
+            $cumple->ruta_foto = $ruta;
             $cumple->makeHidden([
                 'area_id',
                 'puesto_id',
