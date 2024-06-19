@@ -6,9 +6,7 @@ use App\Http\Controllers\Controller;
 
 class EvaluacionesDesempeñoController extends Controller
 {
-    public function index()
-    {
-    }
+    public function index() {}
 
     public function dashboardGeneral()
     {

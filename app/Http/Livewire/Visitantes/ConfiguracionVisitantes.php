@@ -27,10 +27,7 @@ class ConfiguracionVisitantes extends Component
         $this->emit('select2');
     }
 
-    public function mount()
-    {
-
-    }
+    public function mount() {}
 
     public function render()
     {

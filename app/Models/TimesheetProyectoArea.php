@@ -31,7 +31,8 @@ class TimesheetProyectoArea extends Model implements Auditable
         });
     }
 
-    public static function getWithArea(){
+    public static function getWithArea()
+    {
         return Cache::remember('TimesheetProyectoArea:timesheet_with_area_all', 3600 * 6, function () {
             return self::with('area')->orderBy('id', 'desc')->get();
         });
