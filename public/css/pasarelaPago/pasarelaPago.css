@@ -45,7 +45,8 @@
 .portada-pasarela-info {
     width: 100%;
 }
-.portada-pasarela p{
+
+.portada-pasarela p {
     padding-left: 0px !important;
 }
 
@@ -55,7 +56,7 @@
     align-items: center;
 }
 
-.icon-background{
+.icon-background {
     background-color: rgb(194, 194, 165);
     color: #5A5A5A;
     padding: 18px;
@@ -66,38 +67,45 @@
 }
 
 .instaladas .card h5,
-.tu-plan .card strong{
+.tu-plan .card strong {
     font-size: 18px;
 }
 
-.tu-plan .card p{
+.tu-plan .card p {
     margin-top: 20px;
 }
 
-.instaladas .card .btn{
+.instaladas .card .btn {
     border: 1px solid #AAAAAA;
     border-radius: 10px;
     padding: 6px 20px;
     color: #787878;
 }
-.modal-apps .modal-dialog{
+
+.modal-apps .modal-dialog {
     min-width: 1000px;
 }
-.modal-apps .modal-content{
+
+.modal-apps .modal-content {
     padding: 30px !important;
     border-radius: 30px !important;
 }
 
 /* precios planes ---------------- */
-
-.cards-planes-precios .card{
-    width: 50%;
+.cards-planes-precios {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 }
 
-.options-pago-periodo{
+.options-pago-periodo {
     border-bottom: 1px solid #AEAEAE;
 }
-.options-pago-periodo .btn{
+
+.options-pago-periodo img {
+    height: 20px;
+}
+
+.options-pago-periodo .btn {
     border-radius: 4px;
     color: #5A5A5A;
     padding: 10px 50px !important;
@@ -105,16 +113,17 @@
     outline: 1px solid #AEAEAE;
     background-color: #fff;
 }
-.options-pago-periodo .btn.active{
+
+.options-pago-periodo .btn.active {
     background-color: #9FEBDF;
 }
 
-.link{
+.link {
     color: #3086AF;
     border-bottom: 1px solid;
 }
 
-.cards-planes-precios .card-header{
+.cards-planes-precios .card-header {
     text-align: center;
     padding: 20px;
     font-size: 22px;
@@ -126,33 +135,42 @@
 
 
 /* pre pago ---------------- */
-.btn-comprar{
+.btn-comprar {
     background-color: #09C96A;
     color: #fff;
 }
-.all-aplicaciones-pre .card{
+
+.all-aplicaciones-pre .card {
     min-width: 500px;
 }
-.all-aplicaciones-pre .card strong{
+
+.all-aplicaciones-pre .card strong {
     font-size: 18px;
 }
-.flex-direction-row{
+
+.flex-direction-row {
     flex-direction: row;
 }
 
 
 /* apps ------------ */
-.icon-background.icon-lg{
+.icon-background.icon-lg {
     padding: 40px;
     font-size: 70px !important;
     border-radius: 25px;
 }
-.box-apps-stars i{
+
+.box-apps-stars i {
     font-size: 35px !important;
     color: #c99a00;
 }
 
-.blue-box-estadisticas{
+.blue-box-estadisticas {
     background-color: #F8FAFF;
     border: 1px solid #A8D4E6;
+}
+
+/* pago confirmado ----------- */
+.card-pago-confirmado {
+    font-size: 18px;
 }

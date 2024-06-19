@@ -2,7 +2,7 @@
     <ul>
         <li> <strong> Aplicaciones </strong> </li>
         <li>
-            <a href="">
+            <a href="{{ route('admin.pasarela-pago.inicio') }}">
                 <i class="material-symbols-outlined">apps</i>
                 Todas las aplicaciones
             </a>

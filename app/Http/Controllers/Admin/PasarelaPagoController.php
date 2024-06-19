@@ -72,4 +72,9 @@ class PasarelaPagoController extends Controller
         $subscription = $request->user()->newSubscription($request->plan, $plan->stripe_plan)->create($request->token);
         return view("subscription_success");
     }
+
+    public function pagoConfirmado()
+    {
+        return view('admin.pasarelaPago.pago-confirmado');
+    }
 }

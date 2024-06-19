@@ -21,7 +21,7 @@
             </button>
         </div>
 
-        <div class="cards-planes-precios d-flex align-items-center gap-3 mt-5">
+        <div class="cards-planes-precios mt-5 gap-3">
             @foreach ($plans as $plan)
                 <div class="card">
                     <div class="card-header" style="background-color: #0070D2;">
@@ -38,14 +38,15 @@
                         </p>
 
                         <div class="text-center mt-4">
-                            <a href="{{ route('admin.pasarela-pago.pago', $plan->slug) }}" class="btn btn-outline-primary">EMPIEZA AHORA</a>
+                            <a href="{{ route('admin.pasarela-pago.pago', $plan->slug) }}"
+                                class="btn btn-outline-primary">EMPIEZA AHORA</a>
                         </div>
                     </div>
                 </div>
             @endforeach
         </div>
 
-        <div class="d-flex justify-content-center mt-4">
+        <div class="d-flex justify-content-center mt-4 mb-4">
             <a href="" class="link">
                 <i class="material-symbols-outlined"> call </i>
                 <i class="material-symbols-outlined"> mail </i>

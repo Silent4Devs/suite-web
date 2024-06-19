@@ -71,13 +71,13 @@
 
                         <div class="d-flex justify-content-center mt-5 options-pago-periodo">
                             <button class="btn active">
-                                vis
+                                <img src="{{ asset('img/pasarelaPago/visa.png') }}" alt="">
                             </button>
                             <button class="btn">
-                                pay
+                                <img src="{{ asset('img/pasarelaPago/paypal.webp') }}" alt="">
                             </button>
                             <button class="btn">
-                                merca
+                                <img src="{{ asset('img/pasarelaPago/mercado-pago.webp') }}" alt="">
                             </button>
                         </div>
 
@@ -121,22 +121,24 @@
                         </div>
                     </div>
 
-                    <p class="text-center mt-5">
-                        <small><i>Al año: $31,000.00 te ahorrarías $400.00</i></small>
-                    </p>
+                    <div class="col-md-6 d-flex align-items-center flex-column justify-content-end">
+                        <p class="text-center mt-5">
+                            <small><i>Al año: $31,000.00 te ahorrarías $400.00</i></small>
+                        </p>
 
-                 <button type="submit" class="btn btn-success w-100" id="card-button"
+                        <button type="submit" class="btn btn-comprar py-3 w-100" id="card-button"
                             data-secret="{{ $intent->client_secret }}">Comprar ahora</button>
 
-                    <p class="mt-2">
-                        <small>
-                            <i>
-                                Al hacer clic en "Realizar pedido", confirmo que he leído y acepto todos los <br>
-                                <a class="link" href="">términos y políticas.</a>
-                            </i>
-                        </small>
-                    </p>
-                        
+                        <p class="mt-4">
+                            <small>
+                                <i>
+                                    Al hacer clic en "Realizar pedido", confirmo que he leído y acepto todos los <br>
+                                    <a class="link" href="">términos y políticas.</a>
+                                </i>
+                            </small>
+                        </p>
+                    </div>
+
                 </div>
             </form>
         </div>

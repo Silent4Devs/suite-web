@@ -1566,6 +1566,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('pasarela-pago/pre-pago', 'PasarelaPagoController@prePago')->name('pasarela-pago.pre-pago');
     Route::get('pasarela-pago/pago/{plan}', 'PasarelaPagoController@pago')->name('pasarela-pago.pago');
     Route::post('subscription', 'PasarelaPagoController@subscription')->name("pasarela-pago.create");
+    Route::get('pasarela-pago/pago-confirmacion', 'PasarelaPagoController@pagoConfirmado')->name('pasarela-pago.pago-confirmado');
 
 
     Route::get('pasarela-pago/apps/capacitaciones', 'PasarelaPagoAppsController@capacitaciones')->name('pasarela-pago.apps.capacitaciones');
