@@ -111,10 +111,7 @@ class BuscarCVComponent extends Component
         $this->emit('tagify');
     }
 
-    public function mount()
-    {
-
-    }
+    public function mount() {}
 
     public function render()
     {
