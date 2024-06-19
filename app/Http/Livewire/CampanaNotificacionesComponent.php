@@ -3,12 +3,13 @@
 namespace App\Http\Livewire;
 
 use App\Models\User;
-use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Component;
 
 class CampanaNotificacionesComponent extends Component
 {
     public $notificaciones;
+
     public $notificaciones_sin_leer;
 
     protected $listeners = [

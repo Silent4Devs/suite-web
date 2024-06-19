@@ -15,24 +15,33 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="card card-body mt-5">
-                    <h4>Servicio de implementación</h4>
-                    <p>
+                    <h3 style="color: #3086AF;">Servicio de implementación</h3>
+                    <p class="mt-3">
                         ¿Quieres libertad total para acceder a tu software en cualquier momento y lugar? Con nuestro
                         innovador [Nombre del Software], obtienes la flexibilidad de elegir cómo y dónde gestionar tus
                         datos.
                     </p>
 
-                    <label for="">
-                        <input type="checkbox" name="" id="">
-                        Instalación local
-                    </label>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
+                            value="option1">
+                        <label class="form-check-label" style="font-size:17px;" for="inlineRadio1">Instalación
+                            local</label>
+                    </div>
 
-                    <label for="">
-                        <input type="checkbox" name="" id="">
-                        En la nube
-                    </label>
+                    <p class="mt-3">
+                        Instálalo en tu servidor local para un control total sobre tu información y un acceso rápido sin
+                        depender de la conexión a internet.
+                        <strong>Limite de almacenamiento en la nube 1T</strong>
+                    </p>
 
-                    <p>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
+                            value="option1">
+                        <label class="form-check-label" style="font-size:17px;" for="inlineRadio1">En la nube</label>
+                    </div>
+
+                    <p class="mt-3">
                         ¿O prefieres la conveniencia de la nube? No hay problema. Con solo unos clics, tu software estará
                         listo para funcionar en un entorno virtual, garantizando la disponibilidad y la seguridad de tus
                         datos en cualquier situación. <br>
@@ -66,10 +75,10 @@
                         <span>$2480.00</span>
                     </div>
                     <span>Al año: $3,110.00 te ahorriasas $400.00</span>
-                    <div>
-                        <button class="btn btn-comprar">
+                    <div class="mt-5">
+                        <a href="{{ route('admin.pasarela-pago.pago') }}" class="btn btn-comprar w-100 py-3 text-white">
                             Comprar ahora
-                        </button>
+                        </a>
                     </div>
                 </div>
 
@@ -84,7 +93,75 @@
                 </div>
             </div>
         </div>
-
+        <div class="d-flex align-items-center gap-5">
+            <h3>Todas las aplicaciones Web</h3>
+            <div class="">
+                <label for="">Todos</label>
+                <input type="checkbox">
+            </div>
+        </div>
+        <div class="d-flex flex-wrap gap-2 all-aplicaciones-pre">
+            <div class="card card-body flex-direction-row flex-wrap justify-content-between">
+                <div class="d-flex gap-1 align-items-center">
+                    <i class="material-symbols-outlined icon-background" style="background-color: #9CEBFF;">school</i>
+                    <strong>Capacitación</strong>
+                </div>
+                <input type="checkbox" name="" id="">
+            </div>
+            <div class="card card-body flex-direction-row flex-wrap justify-content-between">
+                <div class="d-flex gap-1 align-items-center">
+                    <i class="material-symbols-outlined icon-background" style="background-color: #F1F1F1;">language</i>
+                    <strong>Gestión Normativa</strong>
+                </div>
+                <input type="checkbox" name="" id="">
+            </div>
+            <div class="card card-body flex-direction-row flex-wrap justify-content-between">
+                <div class="d-flex gap-1 align-items-center">
+                    <i class="material-symbols-outlined icon-background"
+                        style="background-color: #FCB4BC;">quick_reference</i>
+                    <strong>Planes de trabajo</strong>
+                </div>
+                <input type="checkbox" name="" id="">
+            </div>
+            <div class="card card-body flex-direction-row flex-wrap justify-content-between">
+                <div class="d-flex gap-1 align-items-center">
+                    <i class="material-symbols-outlined icon-background"
+                        style="background-color: #E0C5FF;">folder_managed</i>
+                    <strong>Gestor Documental</strong>
+                </div>
+                <input type="checkbox" name="" id="">
+            </div>
+            <div class="card card-body flex-direction-row flex-wrap justify-content-between">
+                <div class="d-flex gap-1 align-items-center">
+                    <i class="material-symbols-outlined icon-background"
+                        style="background-color: #9CEBFF;">install_desktop</i>
+                    <strong>Gestión de Talento</strong>
+                </div>
+                <input type="checkbox" name="" id="">
+            </div>
+            <div class="card card-body flex-direction-row flex-wrap justify-content-between">
+                <div class="d-flex gap-1 align-items-center">
+                    <i class="material-symbols-outlined icon-background"
+                        style="background-color: #F1F1F1;">quick_reference</i>
+                    <strong>Gestión Contractual</strong>
+                </div>
+                <input type="checkbox" name="" id="">
+            </div>
+            <div class="card card-body flex-direction-row flex-wrap justify-content-between">
+                <div class="d-flex gap-1 align-items-center">
+                    <i class="material-symbols-outlined icon-background" style="background-color: #FCB4BC;">gpp_maybe</i>
+                    <strong>Gestión de Riesgos</strong>
+                </div>
+                <input type="checkbox" name="" id="">
+            </div>
+            <div class="card card-body flex-direction-row flex-wrap justify-content-between">
+                <div class="d-flex gap-1 align-items-center">
+                    <i class="material-symbols-outlined icon-background" style="background-color: #E0C5FF;">groups</i>
+                    <strong>Visitantes</strong>
+                </div>
+                <input type="checkbox" name="" id="">
+            </div>
+        </div>
     </div>
 @endsection
 @section('scripts')

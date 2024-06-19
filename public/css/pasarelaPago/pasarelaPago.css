@@ -34,6 +34,7 @@
     overflow: hidden;
     background-color: #575757;
     justify-content: center;
+    height: 300px;
 }
 
 .portada-pasarela img {
@@ -43,6 +44,9 @@
 
 .portada-pasarela-info {
     width: 100%;
+}
+.portada-pasarela p{
+    padding-left: 0px !important;
 }
 
 .instaladas .card {
@@ -75,6 +79,13 @@
     border-radius: 10px;
     padding: 6px 20px;
     color: #787878;
+}
+.modal-apps .modal-dialog{
+    min-width: 1000px;
+}
+.modal-apps .modal-content{
+    padding: 30px !important;
+    border-radius: 30px !important;
 }
 
 /* precios planes ---------------- */
@@ -115,11 +126,20 @@
 
 
 /* pre pago ---------------- */
-
 .btn-comprar{
     background-color: #09C96A;
     color: #fff;
 }
+.all-aplicaciones-pre .card{
+    min-width: 500px;
+}
+.all-aplicaciones-pre .card strong{
+    font-size: 18px;
+}
+.flex-direction-row{
+    flex-direction: row;
+}
+
 
 /* apps ------------ */
 .icon-background.icon-lg{

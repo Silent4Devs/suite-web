@@ -25,10 +25,10 @@ class PasarelaPagoAppsController extends Controller
         return view('admin.pasarelaPago.apps.planes-trabajo');
     }
 
-    public function gestorDocumental()
+    public function gestionDocumental()
     {
 
-        return view('admin.pasarelaPago.apps.gestor-documental');
+        return view('admin.pasarelaPago.apps.gestion-documental');
     }
 
     public function gestionTalento()

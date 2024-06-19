@@ -121,49 +121,22 @@
                         </div>
                     </div>
 
-                    <div class="col-md-6">
-                        <div class="d-flex justify-content-center mt-5 options-pago-periodo">
-                            <button class="btn active">
-                                Mensual
-                            </button>
-                        </div>
-                        <h4 class="d-flex justify-content-between mt-4">
-                            <span>8 Aplicaciones</span>
-                            <span>$310.00 x 8</span>
-                        </h4>
-                        <hr>
-                        <h5 class="d-flex justify-content-between">
-                            <span>Todas las aplicaciones</span>
-                            <span>{{ number_format($plan->price, 2) }} mx</span>
-                        </h5>
-                        <hr>
-                        <span>¿Tienes un código de descuento?</span>
-                        <div class="d-flex align-items-center gap-1">
-                            <input type="text" class="form-control">
-                            <button class="btn btn-secondary">Enviar&nbsp;código</button>
-                        </div>
-                        <hr>
-                        <h5 class="d-flex justify-content-between" style="color: #0034E3;">
-                            <span>Total al mes +IVA:</span>
-                            <span>{{ number_format($plan->price, 2) }} mx</span>
-                        </h5>
+                    <p class="text-center mt-5">
+                        <small><i>Al año: $31,000.00 te ahorrarías $400.00</i></small>
+                    </p>
 
-                        <p class="text-center">
-                            <small><i>Al año: $31,000.00 te ahorrarías $400.00</i></small>
-                        </p>
-
-                        <button type="submit" class="btn btn-success w-100" id="card-button"
+                 <button type="submit" class="btn btn-success w-100" id="card-button"
                             data-secret="{{ $intent->client_secret }}">Comprar ahora</button>
 
-                        <p>
-                            <small>
-                                <i>
-                                    Al hacer clic en "Realizar pedido", confirmo que he leído y acepto todos los
-                                    <a href="">términos y políticas.</a>
-                                </i>
-                            </small>
-                        </p>
-                    </div>
+                    <p class="mt-2">
+                        <small>
+                            <i>
+                                Al hacer clic en "Realizar pedido", confirmo que he leído y acepto todos los <br>
+                                <a class="link" href="">términos y políticas.</a>
+                            </i>
+                        </small>
+                    </p>
+                        
                 </div>
             </form>
         </div>

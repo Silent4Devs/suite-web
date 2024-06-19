@@ -1571,7 +1571,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('pasarela-pago/apps/capacitaciones', 'PasarelaPagoAppsController@capacitaciones')->name('pasarela-pago.apps.capacitaciones');
     Route::get('pasarela-pago/apps/gestion-normativa', 'PasarelaPagoAppsController@gestionNormativa')->name('pasarela-pago.apps.gestion-normativa');
     Route::get('pasarela-pago/apps/planes-trabajo', 'PasarelaPagoAppsController@planesTrabajo')->name('pasarela-pago.apps.planes-trabajo');
-    Route::get('pasarela-pago/apps/gestor-documental', 'PasarelaPagoAppsController@gestorDocumental')->name('pasarela-pago.apps.gestor-documental');
+    Route::get('pasarela-pago/apps/gestion-documental', 'PasarelaPagoAppsController@gestionDocumental')->name('pasarela-pago.apps.gestion-documental');
     Route::get('pasarela-pago/apps/gestion-talento', 'PasarelaPagoAppsController@gestionTalento')->name('pasarela-pago.apps.gestion-talento');
     Route::get('pasarela-pago/apps/gestion-contractual', 'PasarelaPagoAppsController@gestionContractual')->name('pasarela-pago.apps.gestion-contractual');
     Route::get('pasarela-pago/apps/gestion-riesgos', 'PasarelaPagoAppsController@gestionRiesgos')->name('pasarela-pago.apps.gestion-riesgos');
