@@ -33,10 +33,10 @@ class EditIdentificadorProyectosIntExt extends Component
         $this->select_tipos = array_diff(TimesheetProyecto::TIPOS, $busqueda);
 
         if (count($busqueda) == 1) {
-            if (!empty($busqueda) && $busqueda[0] == 'Interno') {
+            if (! empty($busqueda) && $busqueda[0] == 'Interno') {
                 $this->mensaje = 'Este identificador es el del actual proyecto Interno. Se encuentra disponible para proyecto Externo';
                 $this->colorTexto = 'green';
-            } elseif (!empty($busqueda) && $busqueda[0] == 'Externo') {
+            } elseif (! empty($busqueda) && $busqueda[0] == 'Externo') {
                 $this->mensaje = 'Este identificador es el del actual proyecto Externo. Se encuentra disponible para proyecto Interno';
                 $this->colorTexto = 'green';
             } else {
@@ -76,7 +76,7 @@ class EditIdentificadorProyectosIntExt extends Component
         // dd($this->select_tipos);
 
         if (count($busqueda) == 1) {
-            if (!empty($busqueda) && $busqueda[0] == 'Interno') {
+            if (! empty($busqueda) && $busqueda[0] == 'Interno') {
                 if ($text == $this->proyecto->identificador) {
                     $this->mensaje = 'Este identificador es el del actual proyecto Interno. Se encuentra disponible para proyecto Externo';
                     $this->colorTexto = 'green';
@@ -84,7 +84,7 @@ class EditIdentificadorProyectosIntExt extends Component
                     $this->mensaje = 'Este Identificador se encuentra en uso por un proyecto interno.';
                     $this->colorTexto = 'orange';
                 }
-            } elseif (!empty($busqueda) && $busqueda[0] == 'Externo') {
+            } elseif (! empty($busqueda) && $busqueda[0] == 'Externo') {
                 if ($text == $this->proyecto->identificador) {
                     $this->mensaje = 'Este identificador es el del actual proyecto Externo. Se encuentra disponible para proyecto Interno';
                     $this->colorTexto = 'green';
