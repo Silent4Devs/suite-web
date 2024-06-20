@@ -42,10 +42,10 @@ class PortalComunicacionController extends Controller
         $empleado_asignado = $user->n_empleado;
         $authId = $user->id;
 
-        $documentos_publicados = Documento::getLastFiveWithMacroproceso();
+        $documentos_publicados = Documento::with('macroproceso')->where('estatus', Documento::PUBLICADO)->latest('updated_at')->get()->take(6);
         // $comite_existe = Comiteseguridad::getAll()->count();
         $nuevos = $empleados->whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->get();
-        $comunicados = ComunicacionSgi::getAllwithImagenesBlog()->makeHidden(['descripcion', 'created_at', 'updated_at', 'imagenes_comunicacion']);
+        $comunicados = ComunicacionSgi::getAllwithImagenesBlog()->makeHidden(['descripcion', 'created_at', 'updated_at', 'imagenes_comunicacion'])->take(4);
 
         foreach ($comunicados as $key_comunicados => $comunicado) {
             $comunicado->texto_descripcion = \Illuminate\Support\Str::limit(strip_tags($comunicado->descripcion), 3000);
@@ -67,12 +67,13 @@ class PortalComunicacionController extends Controller
             return Empleado::alta()->select('id', 'name', 'area_id', 'puesto_id', 'foto', 'cumpleaños', 'estatus')->whereMonth('cumpleaños', '=', $hoy->format('m'))->get()->makeHidden([
                 'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
                 'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet',
-                'area', 'supervisor'
+                'area', 'supervisor', 'puestoRelacionado'
             ]);
         });
 
         foreach ($nuevos as $key_nuevo => $nuevo) {
             $nuevo->nombre_area = $nuevo->area->area;
+            $nuevo->nombre_puesto = $nuevo->puesto;
 
             if ($nuevo->foto == null || $nuevo->foto == '0') {
                 if ($nuevo->genero == 'H') {
@@ -91,12 +92,15 @@ class PortalComunicacionController extends Controller
             $nuevo->makeHidden([
                 'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
                 'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet',
-                'area', 'supervisor', 'area_id', 'puesto_id', 'foto'
+                'area', 'supervisor', 'area_id', 'puesto_id', 'foto', 'puestoRelacionado'
             ]);
         }
 
         foreach ($cumpleaños as $key => $cumple) {
             $cumple->nombre_area = $cumple->area->area;
+            $cumple->nombre_puesto = $cumple->puesto;
+
+            $cumple->fecha_cumpleanos = $this->convertircumpleanos($cumple->cumpleaños);
 
             if ($cumple->foto == null || $cumple->foto == '0') {
                 if ($cumple->genero == 'H') {
@@ -114,11 +118,11 @@ class PortalComunicacionController extends Controller
             $cumple->makeHidden([
                 'area_id',
                 'puesto_id',
-                'foto'
+                'foto',
+                'cumpleaños'
             ]);
         }
 
-        // dd($cumpleaños);
         // $aniversarios = Cache::remember('Portal:portal_aniversarios', 3600 * 4, function () use ($hoy, $empleados) {
         //     return $empleados->whereMonth('antiguedad', '=', $hoy->format('m'))->whereYear('antiguedad', '<', $hoy->format('Y'))->get();
         // });
@@ -128,6 +132,7 @@ class PortalComunicacionController extends Controller
         // });
         // dd($comunicacionSgis, $comunicacionSgis_carrusel, $empleado_asignado, $aniversarios_contador_circulo, $politica_existe, $comite_existe, $nuevos, $cumpleaños, $user);
         // dd($cumpleaños);
+
         return response()->json(
             [
                 'documentos' => $documentos_publicados,
@@ -144,6 +149,82 @@ class PortalComunicacionController extends Controller
                 'user' => $user,
             ]
         );
+    }
+
+    public function convertircumpleanos($fecha)
+    {
+        $dia_cumpleanos = Carbon::parse($fecha)->format('d');
+        $mes_fecha = Carbon::parse($fecha)->format('m');
+
+        switch ($mes_fecha) {
+            case '01':
+                # code...
+                $mes_cumpleanos = "Enero";
+                break;
+
+            case '02':
+                # code...
+                $mes_cumpleanos = "Febrero";
+                break;
+
+            case '03':
+                # code...
+                $mes_cumpleanos = "Marzo";
+                break;
+
+            case '04':
+                # code...
+                $mes_cumpleanos = "Abril";
+                break;
+
+            case '05':
+                # code...
+                $mes_cumpleanos = "Mayo";
+                break;
+
+            case '06':
+                # code...
+                $mes_cumpleanos = "Junio";
+                break;
+
+            case '07':
+                # code...
+                $mes_cumpleanos = "Julio";
+                break;
+
+            case '08':
+                # code...
+                $mes_cumpleanos = "Agosto";
+                break;
+
+            case '09':
+                # code...
+                $mes_cumpleanos = "Septiembre";
+                break;
+
+            case '10':
+                # code...
+                $mes_cumpleanos = "Octubre";
+                break;
+
+            case '11':
+                # code...
+                $mes_cumpleanos = "Noviembre";
+                break;
+
+            case '12':
+                # code...
+                $mes_cumpleanos = "Diciembre";
+                break;
+
+            default:
+                # code...
+                break;
+        }
+
+        // dd($mes_fecha, $mes_cumpleanos);
+        $fecha_cumpleanos = $dia_cumpleanos . " de " . $mes_cumpleanos;
+        return $fecha_cumpleanos;
     }
 
     /**
@@ -210,53 +291,53 @@ class PortalComunicacionController extends Controller
         //
     }
 
-    public function reportes()
-    {
-        abort_if(Gate::denies('portal_comunicacion_mostrar_reportar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $organizacions = Organizacione::first();
+    // public function reportes()
+    // {
+    //     abort_if(Gate::denies('portal_comunicacion_mostrar_reportar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+    //     $organizacions = Organizacione::first();
 
-        return view('admin.portalCommunication.reportes', compact('organizacions'));
-    }
+    //     return view('admin.portalCommunication.reportes', compact('organizacions'));
+    // }
 
-    public function felicitarCumpleaños($cumpleañero_id)
-    {
-        $felicitar = FelicitarCumpleaños::create([
-            'cumpleañero_id' => $cumpleañero_id,
-            'felicitador_id' => User::getCurrentUser()->empleado->id,
-            'like' => true,
-        ]);
+    // public function felicitarCumpleaños($cumpleañero_id)
+    // {
+    //     $felicitar = FelicitarCumpleaños::create([
+    //         'cumpleañero_id' => $cumpleañero_id,
+    //         'felicitador_id' => User::getCurrentUser()->empleado->id,
+    //         'like' => true,
+    //     ]);
 
-        return redirect()->route('admin.portal-comunicacion.index')->with('success', 'Like generado');
-    }
+    //     return redirect()->route('admin.portal-comunicacion.index')->with('success', 'Like generado');
+    // }
 
-    public function felicitarCumpleañosDislike($id)
-    {
-        $felicitar = FelicitarCumpleaños::where('id', $id);
-        $felicitar->update([
-            'like' => false,
-        ]);
+    // public function felicitarCumpleañosDislike($id)
+    // {
+    //     $felicitar = FelicitarCumpleaños::where('id', $id);
+    //     $felicitar->update([
+    //         'like' => false,
+    //     ]);
 
-        return redirect()->route('admin.portal-comunicacion.index')->with('success', 'DisLike generado');
-    }
+    //     return redirect()->route('admin.portal-comunicacion.index')->with('success', 'DisLike generado');
+    // }
 
-    public function felicitarCumplesComentarios(Request $request, $cumpleañero_id)
-    {
-        $comentario = FelicitarCumpleaños::create([
-            'cumpleañero_id' => $cumpleañero_id,
-            'felicitador_id' => User::getCurrentUser()->empleado->id,
-            'comentarios' => $request->comentarios,
-        ]);
+    // public function felicitarCumplesComentarios(Request $request, $cumpleañero_id)
+    // {
+    //     $comentario = FelicitarCumpleaños::create([
+    //         'cumpleañero_id' => $cumpleañero_id,
+    //         'felicitador_id' => User::getCurrentUser()->empleado->id,
+    //         'comentarios' => $request->comentarios,
+    //     ]);
 
-        return redirect()->route('admin.portal-comunicacion.index')->with('success', 'Comentario generado');
-    }
+    //     return redirect()->route('admin.portal-comunicacion.index')->with('success', 'Comentario generado');
+    // }
 
-    public function felicitarCumplesComentariosUpdate(Request $request, $id)
-    {
-        $comentario = FelicitarCumpleaños::where('id', $id);
-        $comentario->update([
-            'comentarios' => $request->comentarios,
-        ]);
+    // public function felicitarCumplesComentariosUpdate(Request $request, $id)
+    // {
+    //     $comentario = FelicitarCumpleaños::where('id', $id);
+    //     $comentario->update([
+    //         'comentarios' => $request->comentarios,
+    //     ]);
 
-        return redirect()->route('admin.portal-comunicacion.index')->with('success', 'Comentario actualizado');
-    }
+    //     return redirect()->route('admin.portal-comunicacion.index')->with('success', 'Comentario actualizado');
+    // }
 }
