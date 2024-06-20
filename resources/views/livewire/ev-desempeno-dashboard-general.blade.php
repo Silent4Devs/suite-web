@@ -57,17 +57,74 @@
                 <h5>Resultado Anual</h5>
             </div>
             <div class="col-2">
-                Año
+                <div class="anima-focus">
+                    <select class="form-control" name="ano_anual" id="ano_anual" wire:model="ano_anual">
+                        @foreach ($anos_evaluaciones as $key => $ano)
+                            <option value="{{ $ano }}">{{ $ano }}</option>
+                        @endforeach
+                    </select>
+                    <label for="ano_anual">Año</label>
+                </div>
             </div>
             <div class="col-2">
-                <div class="anima-focus">
-                    <select class="form-control" name="tipo_anual" id="tipo_anual">
+                <div class="dropdown">
+                    <button class="btn btn-secondary btn-lg dropdown-toggle form-control" type="button"
+                        id="dropdownMenuButtonEmpleados" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false"
+                        style="text-align: initial; background-color:#fff; color:#3086AF !important; border: 1px solid #ced4da !important">
+                        Tipo
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonEmpleados"
+                        style="max-height: 200px; overflow-y: auto;">
+                        <div class="dropdown-item">
+                            <div class="row mt-2 mb-2">
+                                <div class="col-3">
+                                    <input type="checkbox" id="general_anual" class="form-check-input"
+                                        style="transform: scale(2);" wire:model="general_anual">
+                                </div>
+                                <div class="col-9">
+                                    <div class="text-wrap">
+                                        General
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dropdown-item">
+                            <div class="row mt-2 mb-2">
+                                <div class="col-3">
+                                    <input type="checkbox" id="objetivos_anual" class="form-check-input"
+                                        style="transform: scale(2);" wire:model="objetivos_anual">
+                                </div>
+                                <div class="col-9">
+                                    <div class="text-wrap">
+                                        Objetivos
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dropdown-item">
+                            <div class="row mt-2 mb-2">
+                                <div class="col-3">
+                                    <input type="checkbox" id="competencias_anual" class="form-check-input"
+                                        style="transform: scale(2);" wire:model="competencias_anual">
+                                </div>
+                                <div class="col-9">
+                                    <div class="text-wrap">
+                                        Competencias
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{-- <div class="anima-focus">
+                    <select class="form-control" name="tipo_anual" id="tipo_anual" wire:model="tipo_anual">
                         <option value="objetivos_anual">Objetivos</option>
                         <option value="competencias_anual">Competencias</option>
                         <option value="general_anual">General</option>
                     </select>
                     <label for="tipo_anual">Tipo</label>
-                </div>
+                </div> --}}
             </div>
             <div class="col-2">
                 <div class="anima-focus">
@@ -99,14 +156,65 @@
                 Año
             </div>
             <div class="col-2">
-                <div class="anima-focus">
-                    <select class="form-control" name="tipo_mensual" id="tipo_mensual">
+                {{-- <div class="anima-focus"> --}}
+                {{-- <select class="form-control" name="tipo_mensual" id="tipo_mensual" wire:model="tipo_mensual">
                         <option value="objetivos_mensual">Objetivos</option>
                         <option value="competencias_mensual">Competencias</option>
                         <option value="general_mensual">General</option>
                     </select>
-                    <label for="tipo_mensual">Tipo</label>
+                    <label for="tipo_mensual">Tipo</label> --}}
+
+                <div class="dropdown">
+                    <button class="btn btn-secondary btn-lg dropdown-toggle form-control" type="button"
+                        id="dropdownMenuButtonEmpleados" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false"
+                        style="text-align: initial; background-color:#fff; color:#3086AF !important; border: 1px solid #ced4da !important">
+                        Tipo
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonEmpleados"
+                        style="max-height: 200px; overflow-y: auto;">
+                        <div class="dropdown-item">
+                            <div class="row mt-2 mb-2">
+                                <div class="col-3">
+                                    <input type="checkbox" id="general_mensual" class="form-check-input"
+                                        style="transform: scale(2);" wire:model="general_mensual">
+                                </div>
+                                <div class="col-9">
+                                    <div class="text-wrap">
+                                        General
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dropdown-item">
+                            <div class="row mt-2 mb-2">
+                                <div class="col-3">
+                                    <input type="checkbox" id="objetivos_mensual" class="form-check-input"
+                                        style="transform: scale(2);" wire:model="objetivos_mensual">
+                                </div>
+                                <div class="col-9">
+                                    <div class="text-wrap">
+                                        Objetivos
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dropdown-item">
+                            <div class="row mt-2 mb-2">
+                                <div class="col-3">
+                                    <input type="checkbox" id="competencias_mensual" class="form-check-input"
+                                        style="transform: scale(2);" wire:model="competencias_mensual">
+                                </div>
+                                <div class="col-9">
+                                    <div class="text-wrap">
+                                        Competencias
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                {{-- </div> --}}
             </div>
             <div class="col-2">
                 <div class="anima-focus">
@@ -351,12 +459,8 @@
     <script>
         document.addEventListener('livewire:load', function() {
 
-            const anos = ["2020", "2021", "2022", "2023", "2024"];
-            const data = [
-                [19, 27, 47, 99, 21],
-                [19, 27, 47, 99, 21],
-                [19, 27, 47, 99, 21],
-            ];
+            const anos = @json($anos_evaluaciones);
+            const data = @json($datos_evaluaciones);
 
             var ctx = document.getElementById('resultadosanuales').getContext('2d');
             chartRA = new Chart(ctx, {
@@ -391,7 +495,7 @@
     {{-- Codigo cambio de filtros --}}
     <script>
         document.addEventListener('livewire:load', function() {
-            Livewire.on('objetivosArea', (objArea) => {
+            Livewire.on('dataAnual', (datosAnuales) => {
 
                 document.getElementById('resultadosanuales').remove();
                 let canvas = document.createElement("canvas");
@@ -403,18 +507,18 @@
                 let grafica_objetivos_area = new Chart(document.getElementById('resultadosanuales'), {
                     type: 'bar',
                     data: {
-                        labels: anos,
+                        labels: datosAnuales.labels,
                         datasets: [{
                             label: 'Objetivos',
-                            data: data[0],
+                            data: datosAnuales.data[0],
                             borderWidth: 1
                         }, {
                             label: 'Competencias',
-                            data: data[1],
+                            data: datosAnuales.data[1],
                             borderWidth: 1
                         }, {
                             label: 'General',
-                            data: data[2],
+                            data: datosAnuales.data[2],
                             borderWidth: 1
                         }]
                     },
@@ -434,12 +538,8 @@
     <script>
         document.addEventListener('livewire:load', function() {
 
-            const anos = ["2020", "2021", "2022", "2023", "2024"];
-            const data = [
-                [19, 27, 47, 99, 21],
-                [19, 27, 47, 99, 21],
-                [19, 27, 47, 99, 21],
-            ];
+            const anos = @json($anos_evaluaciones);
+            const data = @json($datos_evaluaciones);
 
             var ctx = document.getElementById('resultadosmensuales').getContext('2d');
             chartRA = new Chart(ctx, {
@@ -469,6 +569,47 @@
                 }
             });
 
+        });
+    </script>
+
+    <script>
+        document.addEventListener('livewire:load', function() {
+            Livewire.on('dataMensual', (datosMensuales) => {
+
+                document.getElementById('resultadosmensuales').remove();
+                let canvas = document.createElement("canvas");
+                canvas.id = "resultadosmensuales";
+                canvas.style.width = '100%';
+                canvas.style.height = '100%';
+                document.getElementById("contenedor-mensual").appendChild(canvas);
+
+                let grafica_objetivos_area = new Chart(document.getElementById('resultadosmensuales'), {
+                    type: 'bar',
+                    data: {
+                        labels: datosMensuales.labels,
+                        datasets: [{
+                            label: 'Objetivos',
+                            data: datosMensuales.data[0],
+                            borderWidth: 1
+                        }, {
+                            label: 'Competencias',
+                            data: datosMensuales.data[1],
+                            borderWidth: 1
+                        }, {
+                            label: 'General',
+                            data: datosMensuales.data[2],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            });
         });
     </script>
 @endsection
