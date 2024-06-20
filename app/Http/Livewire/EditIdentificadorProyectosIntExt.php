@@ -28,26 +28,25 @@ class EditIdentificadorProyectosIntExt extends Component
         $this->identificador_proyect = $this->proyecto->identificador;
 
         $busqueda = TimesheetProyecto::select('tipo')->where('identificador', $this->proyecto->identificador)->get()->pluck('tipo')->toArray();
+        $busquedaID = TimesheetProyecto::select('id')->where('identificador', $this->proyecto->identificador)->get()->pluck('id')->toArray();
 
         $this->select_tipos = array_diff(TimesheetProyecto::TIPOS, $busqueda);
 
-        // dd($this->select_tipos);
-
         if (count($busqueda) == 1) {
-            if (! empty($busqueda) && $busqueda[0] == 'Interno') {
-                $this->mensaje = 'Este Identificador se encuentra en uso por un proyecto interno.';
-                $this->colorTexto = 'orange';
-            } elseif (! empty($busqueda) && $busqueda[0] == 'Externo') {
-                $this->mensaje = 'Este Identificador se encuentra en uso por un proyecto externo.';
-                $this->colorTexto = 'orange';
+            if (!empty($busqueda) && $busqueda[0] == 'Interno') {
+                $this->mensaje = 'Este identificador es el del actual proyecto Interno. Se encuentra disponible para proyecto Externo';
+                $this->colorTexto = 'green';
+            } elseif (!empty($busqueda) && $busqueda[0] == 'Externo') {
+                $this->mensaje = 'Este identificador es el del actual proyecto Externo. Se encuentra disponible para proyecto Interno';
+                $this->colorTexto = 'green';
             } else {
-                $this->mensaje = 'Este Identificador no esta disponible.';
-                $this->colorTexto = 'red';
+                $this->mensaje = 'Este Identificador es del actual proyecto, pero no esta disponible para el otro tipo de Proyecto (Interno/Externo).';
+                $this->colorTexto = '#3086af';
                 $this->class = 'error';
             }
         } elseif (count($busqueda) == 2) {
-            $this->mensaje = 'Este Identificador no esta disponible.';
-            $this->colorTexto = 'red';
+            $this->mensaje = 'Este Identificador es del actual proyecto, pero no esta disponible para el otro tipo de Proyecto (Interno/Externo).';
+            $this->colorTexto = '#3086af';
             $this->class = 'error';
         } elseif (count($busqueda) == 0) {
             $this->mensaje = 'El Identificador esta disponible.';
@@ -55,7 +54,9 @@ class EditIdentificadorProyectosIntExt extends Component
             $this->class = 'error';
         }
 
-        $this->select_tipos = [$this->proyecto->tipo => $this->proyecto->tipo];
+        $extra_select_tipos = [$this->proyecto->tipo => $this->proyecto->tipo];
+        $this->select_tipos = array_merge($this->select_tipos, $extra_select_tipos);
+
         $this->tipo = $this->proyecto->tipo;
     }
 
@@ -75,21 +76,43 @@ class EditIdentificadorProyectosIntExt extends Component
         // dd($this->select_tipos);
 
         if (count($busqueda) == 1) {
-            if (! empty($busqueda) && $busqueda[0] == 'Interno') {
-                $this->mensaje = 'Este Identificador se encuentra en uso por un proyecto interno.';
-                $this->colorTexto = 'orange';
-            } elseif (! empty($busqueda) && $busqueda[0] == 'Externo') {
-                $this->mensaje = 'Este Identificador se encuentra en uso por un proyecto externo.';
-                $this->colorTexto = 'orange';
+            if (!empty($busqueda) && $busqueda[0] == 'Interno') {
+                if ($text == $this->proyecto->identificador) {
+                    $this->mensaje = 'Este identificador es el del actual proyecto Interno. Se encuentra disponible para proyecto Externo';
+                    $this->colorTexto = 'green';
+                } else {
+                    $this->mensaje = 'Este Identificador se encuentra en uso por un proyecto interno.';
+                    $this->colorTexto = 'orange';
+                }
+            } elseif (!empty($busqueda) && $busqueda[0] == 'Externo') {
+                if ($text == $this->proyecto->identificador) {
+                    $this->mensaje = 'Este identificador es el del actual proyecto Externo. Se encuentra disponible para proyecto Interno';
+                    $this->colorTexto = 'green';
+                } else {
+                    $this->mensaje = 'Este Identificador se encuentra en uso por un proyecto externo.';
+                    $this->colorTexto = 'orange';
+                }
             } else {
-                $this->mensaje = 'Este Identificador no esta disponible.';
-                $this->colorTexto = 'red';
-                $this->class = 'error';
+                if ($text == $this->proyecto->identificador) {
+                    $this->mensaje = 'Este Identificador es del actual proyecto, pero no esta disponible para el otro tipo de Proyecto (Interno/Externo).';
+                    $this->colorTexto = '#3086af';
+                    $this->class = 'error';
+                } else {
+                    $this->mensaje = 'Este Identificador no esta disponible.';
+                    $this->colorTexto = '#3086af';
+                    $this->class = 'error';
+                }
             }
         } elseif (count($busqueda) == 2) {
-            $this->mensaje = 'Este Identificador no esta disponible.';
-            $this->colorTexto = 'red';
-            $this->class = 'error';
+            if ($text == $this->proyecto->identificador) {
+                $this->mensaje = 'Este Identificador es del actual proyecto, pero no esta disponible para el otro tipo de Proyecto (Interno/Externo).';
+                $this->colorTexto = '#3086af';
+                $this->class = 'error';
+            } else {
+                $this->mensaje = 'Este Identificador no esta disponible.';
+                $this->colorTexto = '#3086af';
+                $this->class = 'error';
+            }
         } elseif (count($busqueda) == 0) {
             $this->mensaje = 'El Identificador esta disponible.';
             $this->colorTexto = 'green';
@@ -98,9 +121,9 @@ class EditIdentificadorProyectosIntExt extends Component
 
         foreach ($busquedaID as $key_busqueda => $b) {
             if ($this->proyecto->id == $b) {
-                $this->select_tipos = [$this->proyecto->tipo => $this->proyecto->tipo];
+                $extra_select_tipos = [$this->proyecto->tipo => $this->proyecto->tipo];
+                $this->select_tipos = array_merge($this->select_tipos, $extra_select_tipos);
             }
         }
-        // dd($busqueda);
     }
 }
