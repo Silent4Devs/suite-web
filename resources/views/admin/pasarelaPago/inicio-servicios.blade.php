@@ -28,48 +28,20 @@
         <div class="instaladas mt-5">
             <h4>Instaladas</h4>
             <div class="row mt-4">
-                <div class="col-md-6">
-                    <div class="card card-body" data-toggle="modal" data-target="#capacitaciones">
-                        <div class="d-flex align-items-center">
-                            <i class="material-symbols-outlined icon-background"
-                                style="background-color: #9CEBFF;">school</i>
-                            <h5>Capacitación</h5>
+                @foreach ($subscribed_plans as $subscribed_plan)
+                    <div class="col-md-6">
+                        <div class="card card-body" data-toggle="modal" data-target="#capacitaciones">
+                            <div class="d-flex align-items-center">
+                                @foreach ($subscribed_plan->images as $image)
+                                <img src="{{ $image }}" alt="Descripción de la imagen"
+                                    style="width: 79px;height: 70px;">
+                            @endforeach
+                                <h5>{{ $subscribed_plan->metadata->name }}</h5>
+                            </div>
+                            <button class="btn">Abrir</button>
                         </div>
-                        <button class="btn">Abrir</button>
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card card-body" data-toggle="modal" data-target="#gestion-normativa">
-                        <div class="d-flex align-items-center">
-                            <i class="material-symbols-outlined icon-background"
-                                style="background-color: #F1F1F1;">emoji_people</i>
-                            <h5>Gestión Normativa</h5>
-                        </div>
-                        <button class="btn">Abrir</button>
-                    </div>
-                </div>
-            </div>
-            <div class="row mt-4">
-                <div class="col-md-6">
-                    <div class="card card-body" data-toggle="modal" data-target="#gestor-riegos">
-                        <div class="d-flex align-items-center">
-                            <i class="material-symbols-outlined icon-background"
-                                style="background-color: #FCB4BC;">gpp_maybe</i>
-                            <h5>Gestor de Riesgos</h5>
-                        </div>
-                        <button class="btn">Abrir</button>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card card-body" data-toggle="modal" data-target="#gestion-contractual">
-                        <div class="d-flex align-items-center">
-                            <i class="material-symbols-outlined icon-background"
-                                style="background-color: #E0C5FF;">clinical_notes</i>
-                            <h5>Gestión Contractual</h5>
-                        </div>
-                        <button class="btn">Abrir</button>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
 
@@ -77,79 +49,28 @@
             <h4>Disponible en tu plan</h4>
 
             <div class="row mt-4">
-                <div class="col-md-6">
-                    <div class="card card-body">
-                        <div>
-                            <i class="material-symbols-outlined icon-background"
-                                style="background-color: #B1C6FF;">overview</i>
-                            <strong> Plan de trabajo </strong>
-                        </div>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                            labore et dolore magna aliqua.
-                        </p>
-                        <hr>
-                        <div class="text-center">
-                            <button class="btn btn-primary" data-toggle="modal"
-                                data-target="#planes-trabajo">Agregar</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card card-body">
-                        <div>
-                            <i class="material-symbols-outlined icon-background"
-                                style="background-color: #FFFDC4;">folder_managed</i>
-                            <strong> Gestor Documental </strong>
-                        </div>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                            labore et dolore magna aliqua.
-                        </p>
-                        <hr>
-                        <div class="text-center">
-                            <button class="btn btn-primary" data-toggle="modal"
-                                data-target="#gestion-documental">Agregar</button>
+                @foreach ($unsubscribed_plans as $unsubscribed_plan)
+                    <div class="col-md-6">
+                        <div class="card card-body">
+                            <div>
+                                @foreach ($unsubscribed_plan->images as $image)
+                                    <img src="{{ $image }}" alt="Descripción de la imagen"
+                                        style="width: 79px;height: 70px;">
+                                @endforeach
+                                </i>
+                                <strong> {{ $unsubscribed_plan->metadata->name }} </strong>
+                            </div>
+                            <p>
+                                {{ $unsubscribed_plan->metadata->description }}
+                            </p>
+                            <hr>
+                            <div class="text-center">
+                                <button class="btn btn-primary" data-toggle="modal"
+                                    data-target="#planes-trabajo">Agregar</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="card card-body">
-                        <div>
-                            <i class="material-symbols-outlined icon-background"
-                                style="background-color: #FFD9ED;">groups</i>
-                            <strong> Visitantes </strong>
-                        </div>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                            labore et dolore magna aliqua.
-                        </p>
-                        <hr>
-                        <div class="text-center">
-                            <button class="btn btn-primary" data-toggle="modal" data-target="#visitantes">Agregar</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card card-body">
-                        <div>
-                            <i class="material-symbols-outlined icon-background"
-                                style="background-color: #FFD3BF;">id_card</i>
-                            <strong> Gestión de Talento </strong>
-                        </div>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                            labore et dolore magna aliqua.
-                        </p>
-                        <hr>
-                        <div class="text-center">
-                            <button class="btn btn-primary" data-toggle="modal"
-                                data-target="#gestion-talento">Agregar</button>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </div>

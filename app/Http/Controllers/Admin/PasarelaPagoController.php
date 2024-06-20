@@ -14,15 +14,39 @@ class PasarelaPagoController extends Controller
 {
     public function index(Request $request)
     {
-        return view('admin.pasarelaPago.inicio-servicios');
+        $user = $request->user();
+        $stripe = new StripeClient(env('STRIPE_SECRET'));
+
+        $subscriptions = $stripe->subscriptions->all(['customer' => $user->stripe_id]);
+
+        $subscribed_plan_ids = [];
+        foreach ($subscriptions->data as $subscription) {
+            foreach ($subscription->items->data as $item) {
+                $subscribed_plan_ids[] = $item->plan->id;
+            }
+        }
+
+        $all_plans = $stripe->plans->all(['limit' => 100]);
+
+        $subscribed_plans = [];
+        $unsubscribed_plans = [];
+
+        foreach ($all_plans->data as $plan) {
+            if (in_array($plan->id, $subscribed_plan_ids)) {
+                $productDetail = $stripe->products->retrieve($plan->product, []);
+                $subscribed_plans[] = $productDetail;
+            } else {
+                $productDetail = $stripe->products->retrieve($plan->product, []);
+                $unsubscribed_plans[] = $productDetail;
+            }
+        }
+
+       // dd($subscribed_plans, $unsubscribed_plans);
+        return view('admin.pasarelaPago.inicio-servicios', compact('subscribed_plans', 'unsubscribed_plans'));
     }
 
     public function planesPrecios(Request $request)
     {
-        $user = $request->user();
-
-        $stripe = new StripeClient(env('STRIPE_SECRET'));
-
         // $subscriptions = $user->subscriptions;
 
         // $subscription = $stripe->subscriptions->retrieve(
@@ -32,7 +56,13 @@ class PasarelaPagoController extends Controller
         // if ($subscription->status === 'activa') {
         // } else {
         // }
+        return view('admin.pasarelaPago.planes-precios');
+    }
 
+    public function prePago(Request $request)
+    {
+        $user = $request->user();
+        $stripe = new StripeClient(env('STRIPE_SECRET'));
         $plansAlls = $stripe->plans->all();
         foreach ($plansAlls->data as $stripePlan) {
             $productDetail = $stripe->products->retrieve($stripePlan->product, []);
@@ -50,13 +80,7 @@ class PasarelaPagoController extends Controller
         }
         $plans = Plan::get();
 
-        return view('admin.pasarelaPago.planes-precios', compact("plans"));
-    }
-
-    public function prePago(Request $request)
-    {
-
-        return view('admin.pasarelaPago.pre-pago');
+        return view('admin.pasarelaPago.pre-pago', compact("plans"));
     }
 
     public function pago(Plan $plan, Request $request)
@@ -68,8 +92,8 @@ class PasarelaPagoController extends Controller
     public function subscription(Request $request)
     {
 
-        $plan = Plan::find($request->plan);
-        $subscription = $request->user()->newSubscription($request->plan, $plan->stripe_plan)->create($request->token);
+        //$plan = Plan::find($request->plan);
+        //$subscription = $request->user()->newSubscription($request->plan, $plan->stripe_plan)->create($request->token);
         return view("subscription_success");
     }
 

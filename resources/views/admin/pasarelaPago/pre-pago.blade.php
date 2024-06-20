@@ -101,66 +101,15 @@
             </div>
         </div>
         <div class="d-flex flex-wrap gap-2 all-aplicaciones-pre">
-            <div class="card card-body flex-direction-row flex-wrap justify-content-between">
-                <div class="d-flex gap-1 align-items-center">
-                    <i class="material-symbols-outlined icon-background" style="background-color: #9CEBFF;">school</i>
-                    <strong>Capacitación</strong>
+            @foreach ($plans as $plan)
+                <div class="card card-body flex-direction-row flex-wrap justify-content-between">
+                    <div class="d-flex gap-1 align-items-center">
+                        <i class="material-symbols-outlined icon-background" style="background-color: #9CEBFF;">school</i>
+                        <strong>{{ $plan->name }}</strong>
+                    </div>
+                    <input type="checkbox" name="" id="">
                 </div>
-                <input type="checkbox" name="" id="">
-            </div>
-            <div class="card card-body flex-direction-row flex-wrap justify-content-between">
-                <div class="d-flex gap-1 align-items-center">
-                    <i class="material-symbols-outlined icon-background" style="background-color: #F1F1F1;">language</i>
-                    <strong>Gestión Normativa</strong>
-                </div>
-                <input type="checkbox" name="" id="">
-            </div>
-            <div class="card card-body flex-direction-row flex-wrap justify-content-between">
-                <div class="d-flex gap-1 align-items-center">
-                    <i class="material-symbols-outlined icon-background"
-                        style="background-color: #FCB4BC;">quick_reference</i>
-                    <strong>Planes de trabajo</strong>
-                </div>
-                <input type="checkbox" name="" id="">
-            </div>
-            <div class="card card-body flex-direction-row flex-wrap justify-content-between">
-                <div class="d-flex gap-1 align-items-center">
-                    <i class="material-symbols-outlined icon-background"
-                        style="background-color: #E0C5FF;">folder_managed</i>
-                    <strong>Gestor Documental</strong>
-                </div>
-                <input type="checkbox" name="" id="">
-            </div>
-            <div class="card card-body flex-direction-row flex-wrap justify-content-between">
-                <div class="d-flex gap-1 align-items-center">
-                    <i class="material-symbols-outlined icon-background"
-                        style="background-color: #9CEBFF;">install_desktop</i>
-                    <strong>Gestión de Talento</strong>
-                </div>
-                <input type="checkbox" name="" id="">
-            </div>
-            <div class="card card-body flex-direction-row flex-wrap justify-content-between">
-                <div class="d-flex gap-1 align-items-center">
-                    <i class="material-symbols-outlined icon-background"
-                        style="background-color: #F1F1F1;">quick_reference</i>
-                    <strong>Gestión Contractual</strong>
-                </div>
-                <input type="checkbox" name="" id="">
-            </div>
-            <div class="card card-body flex-direction-row flex-wrap justify-content-between">
-                <div class="d-flex gap-1 align-items-center">
-                    <i class="material-symbols-outlined icon-background" style="background-color: #FCB4BC;">gpp_maybe</i>
-                    <strong>Gestión de Riesgos</strong>
-                </div>
-                <input type="checkbox" name="" id="">
-            </div>
-            <div class="card card-body flex-direction-row flex-wrap justify-content-between">
-                <div class="d-flex gap-1 align-items-center">
-                    <i class="material-symbols-outlined icon-background" style="background-color: #E0C5FF;">groups</i>
-                    <strong>Visitantes</strong>
-                </div>
-                <input type="checkbox" name="" id="">
-            </div>
+            @endforeach
         </div>
     </div>
 @endsection
