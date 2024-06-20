@@ -462,9 +462,7 @@ class MatrizRiesgosController extends Controller
         return redirect()->route('admin.matriz-requisito-legales.index')->with('success', 'Plan de Trabajo'.$planImplementacion->parent.' creado');
     }
 
-    public function ControlesGet()
-    {
-    }
+    public function ControlesGet() {}
 
     public function SistemaGestion(Request $request)
     {

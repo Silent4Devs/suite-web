@@ -151,9 +151,7 @@ class ModeloController extends Controller
         return back()->with('deleted', 'Registro eliminado con éxito');
     }
 
-    public function massDestroy(MassDestroyModeloRequest $request)
-    {
-    }
+    public function massDestroy(MassDestroyModeloRequest $request) {}
 
     public function getModelos(Request $request, $id = null)
     {

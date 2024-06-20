@@ -367,8 +367,10 @@
                             !$requisicion->firma_finanzas)
                         <button class="btn btn-primary" style="background: #454545 !important;">RECHAZAR
                             REQUISICIÓN</button>
-                        <div onclick="validar();" style="" class="btn btn-primary">Firmar</div>
+                    @else
+                        <div>&nbsp;</div>
                     @endif
+                    <div onclick="validar();" style="" class="btn btn-primary">Firmar</div>
                 </div>
             </form>
         </div>
