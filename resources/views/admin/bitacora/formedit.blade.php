@@ -117,6 +117,7 @@
     'route' => ['contract_manager.contratos-katbol.update', $contrato->id],
     'method' => 'PATCH',
     'enctype' => 'multipart/form-data',
+    'id' => 'update-form',
 ]) !!}
 @csrf
 
@@ -473,7 +474,7 @@
                 de firma
                 <font class="asterisco">*</font>
             </label>
-            <input type="date" name="fecha_firma" id="fecha_firma" class="form-control"
+            <input required type="date" name="fecha_firma" id="fecha_firma" class="form-control"
                 value="{{ old('fecha_firma', $contrato->fecha_firma) }}"
                 @if ($show_contrato) disabled @endif>
             {{-- {!! Form::text('fecha_firma', $contrato->fecha_firma, [
@@ -887,7 +888,7 @@
     <div class="col s12 right-align btn-grd distancia">
         @if (!$show_contrato)
             <a href="{{ route('contract_manager.contratos-katbol.index') }}" class="btn btn_cancelar">Cancelar</a>
-            {!! Form::submit('Guardar', ['class' => 'btn btn-success', 'onclick' => 'miFuncion()']) !!}
+            {!! Form::submit('Guardar', ['class' => 'btn btn-success']) !!}
         @endif
     </div>
 </div>
@@ -917,7 +918,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<script type="text/javascript">
+{{-- <script type="text/javascript">
     function miFuncion() {
         Swal.fire({
             position: 'top-end',
@@ -930,7 +931,7 @@
             window.location.href = window.location.href;
         });
     }
-</script>
+</script> --}}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/autonumeric/4.0.3/autoNumeric.js"></script>
@@ -1363,29 +1364,37 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 <script>
     $(document).ready(function() {
-        $('#miFormulario').on('submit', function(e) {
-            e.preventDefault();
+        $('#update-form').on('submit', function(e) {
+            e.preventDefault(); // Prevent the default form submission
+
+            // Create a FormData object from the form
+            var formData = new FormData(this);
 
             $.ajax({
-                type: 'POST',
-                url: $(this).attr('action'),
-                data: $(this).serialize(),
+                url: $(this).attr('action'), // Form action URL
+                method: $(this).attr('method'), // Form method
+                data: formData,
+                processData: false, // Prevent jQuery from automatically transforming the data into a query string
+                contentType: false, // Set the content type to false as jQuery will tell the server it's a query string request
                 success: function(response) {
-                    if (response.success) {
-                        Swal.fire(
-                            '¡Buen trabajo!',
-                            response.message,
-                            'success'
-                        );
+                    if (response.status === 'success') {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Éxito',
+                            text: response.message,
+                        });
                     }
                 },
                 error: function(xhr) {
-                    // Manejo de errores
-                    Swal.fire(
-                        'Error',
-                        'Ocurrió un error al guardar los datos',
-                        'error'
-                    );
+                    var errorMessage = 'An error occurred. Please try again.';
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        errorMessage = xhr.responseJSON.message;
+                    }
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: errorMessage,
+                    });
                 }
             });
         });

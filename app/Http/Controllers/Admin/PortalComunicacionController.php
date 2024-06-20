@@ -31,7 +31,7 @@ class PortalComunicacionController extends Controller
         $hoy->toDateString();
 
         $politica_existe = PoliticaSgsi::getAll()->count();
-        $getAlta = Empleado::getAltaEmpleados();
+        $getAlta = Empleado::alta()->select('id', 'area_id', 'name', 'puesto', 'foto', 'genero', 'cumpleaños');
         $user = User::getCurrentUser();
 
         $empleado_asignado = $user->n_empleado;
@@ -43,7 +43,7 @@ class PortalComunicacionController extends Controller
         $comunicacionSgis = ComunicacionSgi::getAllwithImagenesBlog();
         $comunicacionSgis_carrusel = ComunicacionSgi::getAllwithImagenesCarrousel();
 
-        $cumpleaños = Cache::remember('Portal_cumpleaños_'.$authId, 3600, function () use ($hoy, $getAlta) {
+        $cumpleaños = Cache::remember('Portal_cumpleaños_' . $authId, 3600, function () use ($hoy, $getAlta) {
             return $getAlta->whereMonth('cumpleaños', '=', $hoy->format('m'))->get();
         });
 
