@@ -42,10 +42,7 @@ class PanelinicioComponent extends Component
 
     public $cumpleanos_id;
 
-    public function mount()
-    {
-
-    }
+    public function mount() {}
 
     public function render()
     {
