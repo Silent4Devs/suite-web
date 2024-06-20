@@ -17,14 +17,11 @@ class PasarelaPagoController extends Controller
         $user = $request->user();
         $stripe = new StripeClient(env('STRIPE_SECRET'));
 
-        $subscriptions = $stripe->subscriptions->all(['customer' => $user->stripe_id]);
+        $subscriptions = $user->subscriptions;
 
-        $subscribed_plan_ids = [];
-        foreach ($subscriptions->data as $subscription) {
-            foreach ($subscription->items->data as $item) {
-                $subscribed_plan_ids[] = $item->plan->id;
-            }
-        }
+        $subscribed_plan_ids = $subscriptions->map(function ($subscription) {
+            return $subscription->stripe_price;
+        })->toArray();
 
         $all_plans = $stripe->plans->all(['limit' => 100]);
 
@@ -32,16 +29,13 @@ class PasarelaPagoController extends Controller
         $unsubscribed_plans = [];
 
         foreach ($all_plans->data as $plan) {
+            $productDetail = $stripe->products->retrieve($plan->product, []);
             if (in_array($plan->id, $subscribed_plan_ids)) {
-                $productDetail = $stripe->products->retrieve($plan->product, []);
                 $subscribed_plans[] = $productDetail;
             } else {
-                $productDetail = $stripe->products->retrieve($plan->product, []);
                 $unsubscribed_plans[] = $productDetail;
             }
         }
-
-       // dd($subscribed_plans, $unsubscribed_plans);
         return view('admin.pasarelaPago.inicio-servicios', compact('subscribed_plans', 'unsubscribed_plans'));
     }
 
@@ -99,6 +93,12 @@ class PasarelaPagoController extends Controller
 
     public function pagoConfirmado()
     {
+        return view('admin.pasarelaPago.pago-confirmado');
+    }
+
+    public function bolsa(Request $request)
+    {
+        dd($request);
         return view('admin.pasarelaPago.pago-confirmado');
     }
 }

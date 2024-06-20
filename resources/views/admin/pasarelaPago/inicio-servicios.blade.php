@@ -33,8 +33,7 @@
                         <div class="card card-body" data-toggle="modal" data-target="#capacitaciones">
                             <div class="d-flex align-items-center">
                                 @foreach ($subscribed_plan->images as $image)
-                                <img src="{{ $image }}" alt="Descripción de la imagen"
-                                    style="width: 79px;height: 70px;">
+                                <img src="{{ $image }}" alt="Descripción de la imagen" style="width: 79px;height: 70px;">
                             @endforeach
                                 <h5>{{ $subscribed_plan->metadata->name }}</h5>
                             </div>
