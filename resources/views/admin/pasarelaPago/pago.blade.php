@@ -1,13 +1,13 @@
 @extends('layouts.admin')
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/pasarelaPago/pasarelaPago.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/pasarelaPago/pasarelaPago.css') }}{{ config('app.cssVersion') }}">
 @endsection
 @section('styles')
     <style>
     </style>
 @endsection
 @section('content')
-    @include('admin.pasarelaPago.menu')
+    @include('admin.pasarelaPago.components.menu')
 
     {{-- <div class="container">
         <div class="row justify-content-center">
@@ -56,7 +56,7 @@
     </div> --}}
 
     <div class="content-pasarela">
-        <a href="" class="link">
+        <a href="{{ route('admin.pasarela-pago.inicio') }}" class="link">
             <i class="material-symbols-outlined">shopping_cart</i>
             Regresar al carrito
         </a>
@@ -74,7 +74,7 @@
                                 <img src="{{ asset('img/pasarelaPago/visa.png') }}" alt="">
                             </button>
                             <button class="btn">
-                                <img src="{{ asset('img/pasarelaPago/paypal.webp') }}" alt="">
+                                <img src="{{ asset('img/pasarelaPago/paypal.svg') }}" alt="">
                             </button>
                             <button class="btn">
                                 <img src="{{ asset('img/pasarelaPago/mercado-pago.webp') }}" alt="">
@@ -111,8 +111,8 @@
                             </div>
                             <div class="row">
                                 <div class="col-12 form-group d-flex align-items-center gap-1">
-                                    <input type="checkbox" name="" id="">
-                                    <label for="">
+                                    <label>
+                                        <input type="checkbox" name="" id="">
                                         Guardar mi información de pago para facilitar el proceso de pago la próxima vez.
                                     </label>
                                 </div>

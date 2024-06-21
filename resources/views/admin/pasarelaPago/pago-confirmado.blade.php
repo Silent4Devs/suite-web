@@ -1,15 +1,17 @@
 @extends('layouts.admin')
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/pasarelaPago/pasarelaPago.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/pasarelaPago/pasarelaPago.css') }}{{ config('app.cssVersion') }}">
 @endsection
 @section('styles')
     <style>
     </style>
 @endsection
 @section('content')
-    @include('admin.pasarelaPago.menu')
+    @include('admin.pasarelaPago.components.menu')
 
     <div class="content-pasarela">
+        @include('admin.pasarelaPago.components.btn-regresar')
+
         <div class="card card-body mt-5 card-pago-confirmado" style="width: 400px; margin: auto;">
             <div class="d-flex justify-content-between">
                 <strong>8 Aplicaciones</strong>
