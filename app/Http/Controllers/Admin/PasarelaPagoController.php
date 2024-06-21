@@ -41,15 +41,6 @@ class PasarelaPagoController extends Controller
 
     public function planesPrecios(Request $request)
     {
-        // $subscriptions = $user->subscriptions;
-
-        // $subscription = $stripe->subscriptions->retrieve(
-        //     $subscriptions[0]->stripe_id
-        // );
-
-        // if ($subscription->status === 'activa') {
-        // } else {
-        // }
         return view('admin.pasarelaPago.planes-precios');
     }
 
