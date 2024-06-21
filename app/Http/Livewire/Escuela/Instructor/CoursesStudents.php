@@ -46,9 +46,11 @@ class CoursesStudents extends Component
     public function destroy($student)
     {
         $cursoUsuario = UsuariosCursos::where('course_id', $this->course->id)->where('user_id', $student)->first();
-        $cursoUsuario->delete();
-        $this->render_alerta('success', 'El estudiante fue eliminado exitosamente');
-        $this->emit('UserStore');
+        if ($cursoUsuario) {
+            $cursoUsuario->delete();
+            $this->render_alerta('success', 'El estudiante fue eliminado exitosamente');
+            $this->emit('UserStore');
+        }
     }
 
     public function multiDestroy($studentsDelete)
