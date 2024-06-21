@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('failed_jobs', function (Blueprint $table) {
             //
-            $table->uuid("uuid");
+            $table->uuid('uuid');
 
         });
     }
@@ -25,7 +25,7 @@ return new class extends Migration
     {
         Schema::table('failed_jobs', function (Blueprint $table) {
             //
-            $table->dropColumn("uuid");
+            $table->dropColumn('uuid');
         });
     }
 };

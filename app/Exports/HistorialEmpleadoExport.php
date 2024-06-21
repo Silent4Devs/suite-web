@@ -3,14 +3,13 @@
 namespace App\Exports;
 
 use App\Models\User;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use Maatwebsite\Excel\Concerns\FromCollection;
-use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithStyles;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class HistorialEmpleadoExport implements FromCollection, WithHeadings, ShouldAutoSize, WithStyles
+class HistorialEmpleadoExport implements FromCollection, ShouldAutoSize, WithHeadings, WithStyles
 {
     protected $registrosHistorico;
 
@@ -34,7 +33,7 @@ class HistorialEmpleadoExport implements FromCollection, WithHeadings, ShouldAut
                 $campoModificado,
                 $fechaCambio,
                 $descripcion,
-                $responsable
+                $responsable,
             ];
         }
 
@@ -48,7 +47,7 @@ class HistorialEmpleadoExport implements FromCollection, WithHeadings, ShouldAut
             'Campo Modificado',
             'Fecha',
             'Descripción del Registro',
-            'Responsable'
+            'Responsable',
         ];
     }
 
@@ -60,9 +59,9 @@ class HistorialEmpleadoExport implements FromCollection, WithHeadings, ShouldAut
 
         foreach ($relaciones as $relacion) {
             if (isset($relacion['area'])) {
-                $descripcion .= 'Área: ' . $relacion['area'] . "\n";
+                $descripcion .= 'Área: '.$relacion['area']."\n";
             } elseif (isset($relacion['puesto'])) {
-                $descripcion .= 'Puesto: ' . $relacion['puesto'] . "\n";
+                $descripcion .= 'Puesto: '.$relacion['puesto']."\n";
             }
             // Add more logic as required
         }
@@ -76,7 +75,7 @@ class HistorialEmpleadoExport implements FromCollection, WithHeadings, ShouldAut
         // Implement logic to get the name of the responsible person based on $userId
         $responsable = '';
 
-        if (!empty($userId)) {
+        if (! empty($userId)) {
             $user = User::find($userId);
             $responsable = $user ? $user->name : 'Desconocido';
         }
