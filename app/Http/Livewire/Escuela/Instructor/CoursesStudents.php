@@ -51,7 +51,8 @@ class CoursesStudents extends Component
         $this->emit('UserStore');
     }
 
-    public function multiDestroy($studentsDelete) {
+    public function multiDestroy($studentsDelete)
+    {
         foreach ($studentsDelete[0] as $studentDelete) {
             $this->destroy($studentDelete);
         }
