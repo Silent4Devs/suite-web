@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Exports\EmpleadosGeneralExport;
+use App\Exports\HistorialEmpleadoExport;
 use App\Functions\CountriesFunction;
 use App\Http\Controllers\Controller;
 use App\Mail\EnviarCorreoBienvenidaTabantaj;
@@ -1124,7 +1125,7 @@ class EmpleadoController extends Controller
         return response()->json(['status' => 200, 'message' => 'Registro Actualizado']);
     }
 
-    public function agregarHistorico($id, $tabla, $campo, $valor_anterior)
+    public function agregarHistorico($id, $tabla, $campo, $valor_anterior, $userId)
     {
         $hoy = Carbon::today();
 
@@ -1133,6 +1134,7 @@ class EmpleadoController extends Controller
             'campo_modificado' => $campo,
             'fecha_cambio' => $hoy,
             'valor_anterior_id' => $valor_anterior,
+            'user_id' => $userId,
             'tabla_origen' => $tabla,
         ]);
     }
@@ -1290,6 +1292,8 @@ class EmpleadoController extends Controller
             'semanas_min_timesheet' => $request->semanas_min_timesheet,
         ]);
 
+        $userId = auth()->id();
+
         $newValues = $empleado->fresh()->getAttributes();
 
         // Verifica si los campos específicos han cambiado
@@ -1300,13 +1304,13 @@ class EmpleadoController extends Controller
         if ($areaIdChanged) {
             // El campo area_id ha sido modificado
             // Realiza las acciones necesarias...
-            $this->agregarHistorico($id, 'areas', 'area_id', $oldValues['area_id']);
+            $this->agregarHistorico($id, 'areas', 'area', $oldValues['area_id'], $userId);
         }
 
         if ($puestoIdChanged) {
             // El campo puesto_id ha sido modificado
             // Realiza las acciones necesarias...
-            $this->agregarHistorico($id, 'puestos', 'puesto_id', $oldValues['puesto_id']);
+            $this->agregarHistorico($id, 'puestos', 'puesto', $oldValues['puesto_id'], $userId);
         }
 
         $usuario = User::where('empleado_id', $empleado->id)->orWhere('n_empleado', $empleado->n_empleado)->first();
@@ -1720,5 +1724,14 @@ class EmpleadoController extends Controller
         $export = new EmpleadosGeneralExport();
 
         return Excel::download($export, 'Empleados.xlsx');
+    }
+
+    public function exportarHistorial($id)
+    {
+        $empleado = Empleado::findOrFail(intval($id)); // Asumiendo que el modelo de empleado es User
+
+        $registrosHistorico = $empleado->registrosHistorico->toArray(); // Asegúrate de que esto sea correcto
+
+        return Excel::download(new HistorialEmpleadoExport($registrosHistorico), 'historial_empleado_'.$id.'.xlsx');
     }
 }
