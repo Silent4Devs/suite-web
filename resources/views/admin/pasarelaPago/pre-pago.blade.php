@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 @section('css')
     <link rel="stylesheet" href="{{ asset('css/pasarelaPago/pasarelaPago.css') }}{{ config('app.cssVersion') }}">
+    <link rel="stylesheet" href="{{ asset('css/global/TbColorsGlobal.css') }}">
 @endsection
 @section('styles')
     <style>
@@ -138,14 +139,16 @@
             </div>
         </div>
         <div class="box-apps-pre-pago my-4">
-            @foreach ($plans as $plan)
+            @foreach ($unsubscribed_plans as $unsubscribed_plan)
                 <div class="card-app-pre-pago">
                     <div class="d-flex gap-1 align-items-center">
-                        <i class="material-symbols-outlined icon-background" style="background-color: #9CEBFF;">school</i>
-                        <span>{{ $plan->name }}</span>
+                        <i class="material-symbols-outlined icon-background color-{{ $unsubscribed_plan->metadata->img }}">
+                            {{ $unsubscribed_plan->metadata->img }}</i>
+                        <span>{{ $unsubscribed_plan->metadata->name }}</span>
                     </div>
-                    <input type="checkbox" name="plan_ids[]" value="{{ $plan->id }}"
-                        class="checkbox-submit input-check-app-pasarela">
+                    <input type="checkbox" name="plan_ids[]" value="{{ $unsubscribed_plan->id }}"
+                        class="checkbox-submit input-check-app-pasarela"
+                        data-plan-name="{{ $unsubscribed_plan->metadata->name }}">
                 </div>
             @endforeach
         </div>
@@ -157,6 +160,15 @@
             let checks = document.querySelectorAll('.input-check-app-pasarela');
             checks.forEach(checkStudent => {
                 checkStudent.checked = e.target.checked;
+                console.log(checkStudent.dataset.planName);
+            });
+        });
+
+        document.querySelectorAll('.input-check-app-pasarela').forEach(checkbox => {
+            checkbox.addEventListener('change', (e) => {
+                if (e.target.checked) {
+                    console.log(e.target.dataset.planName);
+                }
             });
         });
     </script>

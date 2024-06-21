@@ -46,26 +46,48 @@ class PasarelaPagoController extends Controller
 
     public function prePago(Request $request)
     {
+        // $user = $request->user();
+        // $stripe = new StripeClient(env('STRIPE_SECRET'));
+        // $plansAlls = $stripe->plans->all();
+        // foreach ($plansAlls->data as $stripePlan) {
+        //     $productDetail = $stripe->products->retrieve($stripePlan->product, []);
+        //     $plan = Plan::updateOrCreate(
+        //         [
+        //             'stripe_plan' => $stripePlan->id
+        //         ],
+        //         [
+        //             'name' => $productDetail->metadata->name ?? 'No name',
+        //             'slug' => $productDetail->metadata->name,
+        //             'price' => $stripePlan->amount_decimal,
+        //             'description' => $productDetail->metadata->description ?? 'No description available',
+        //         ]
+        //     );
+        // }
         $user = $request->user();
         $stripe = new StripeClient(env('STRIPE_SECRET'));
-        $plansAlls = $stripe->plans->all();
-        foreach ($plansAlls->data as $stripePlan) {
-            $productDetail = $stripe->products->retrieve($stripePlan->product, []);
-            $plan = Plan::updateOrCreate(
-                [
-                    'stripe_plan' => $stripePlan->id
-                ],
-                [
-                    'name' => $productDetail->metadata->name ?? 'No name',
-                    'slug' => $productDetail->metadata->name,
-                    'price' => $stripePlan->amount_decimal,
-                    'description' => $productDetail->metadata->description ?? 'No description available',
-                ]
-            );
+
+        $subscriptions = $user->subscriptions;
+
+        $subscribed_plan_ids = $subscriptions->map(function ($subscription) {
+            return $subscription->stripe_price;
+        })->toArray();
+
+        $all_plans = $stripe->plans->all(['limit' => 100]);
+
+        $subscribed_plans = [];
+        $unsubscribed_plans = [];
+
+        foreach ($all_plans->data as $plan) {
+            $productDetail = $stripe->products->retrieve($plan->product, []);
+            if (in_array($plan->id, $subscribed_plan_ids)) {
+                $subscribed_plans[] = $productDetail;
+            } else {
+                $unsubscribed_plans[] = $productDetail;
+            }
         }
         $plans = Plan::get();
 
-        return view('admin.pasarelaPago.pre-pago', compact("plans"));
+        return view('admin.pasarelaPago.pre-pago', compact("unsubscribed_plans"));
     }
 
     public function pago(Plan $plan, Request $request)
