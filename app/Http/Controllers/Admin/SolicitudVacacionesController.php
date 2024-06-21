@@ -304,9 +304,7 @@ class SolicitudVacacionesController extends Controller
         return view('admin.solicitudVacaciones.show', compact('vacacion'));
     }
 
-    public function edit($id)
-    {
-    }
+    public function edit($id) {}
 
     public function update(Request $request, $id)
     {

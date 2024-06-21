@@ -145,9 +145,7 @@ class ProcesosOctaveController extends Controller
         return $procesos[0]->toJson();
     }
 
-    public function show()
-    {
-    }
+    public function show() {}
 
     public function activos(Request $request)
     {

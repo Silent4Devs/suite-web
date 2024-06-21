@@ -117,6 +117,23 @@
                     </a>
                 </li>
             @endcan
+            <li><a href="{{ route('admin.empleados.baja') }}">
+                <div>
+                    <i class="bi bi-arrow-down"></i>
+                    <br>
+                    Baja Empleados
+                </div>
+            </a>
+            </li>
+
+            <li><a href="{{ route('admin.empleados.historial') }}">
+                <div>
+                    <i class="bi bi-clock-history"></i>
+                    <br>
+                    Historial Empleados
+                </div>
+            </a>
+           </li>
         </ul>
     </div>
 

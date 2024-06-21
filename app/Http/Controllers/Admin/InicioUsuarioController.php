@@ -1006,9 +1006,7 @@ class InicioUsuarioController extends Controller
         return redirect()->route('admin.desk.index')->with('success', 'Reporte generado');
     }
 
-    public function evidenciaSeguridad()
-    {
-    }
+    public function evidenciaSeguridad() {}
 
     public function riesgos()
     {

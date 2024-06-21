@@ -19,9 +19,7 @@ class IdentificadorProyectosIntExt extends Component
 
     public $colorTexto = '';
 
-    public function mount()
-    {
-    }
+    public function mount() {}
 
     public function render()
     {
