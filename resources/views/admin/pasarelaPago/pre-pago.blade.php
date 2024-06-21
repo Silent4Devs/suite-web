@@ -20,7 +20,6 @@
                             innovador [Nombre del Software], obtienes la flexibilidad de elegir cómo y dónde gestionar tus
                             datos.
                         </p>
-
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
                                 value="option1">

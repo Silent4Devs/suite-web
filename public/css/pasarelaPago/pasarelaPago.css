@@ -57,7 +57,6 @@
 }
 
 .icon-background {
-    background-color: rgb(194, 194, 165);
     color: #5A5A5A;
     padding: 18px;
     border-radius: 15px;
@@ -174,3 +173,29 @@
 .card-pago-confirmado {
     font-size: 18px;
 }
+
+.color-badge{
+    background-color: var(--color-peach-light) !important;
+}
+.color-folder_managed{
+    background-color: var(--color-yellow-light) !important;
+}
+.color-demography{
+    background-color: var(--color-purpule-light) !important;
+}
+.color-emoji_people{
+    background-color: var(--color-gray-light) !important;
+}
+.color-overview{
+    background-color: var(--color-blue-light-steel) !important;
+}
+.color-school{
+    background-color: var(--color-blue-light) !important;
+}
+.color-groups{
+    background-color: var(--color-pink) !important;
+}
+.color-gpp_maybe{
+    background-color: var(--color-pink-light) !important;
+}
+

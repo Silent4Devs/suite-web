@@ -22,7 +22,7 @@
 
     /*  */
 
-    --color-background:#345183;
+    --color-background: #345183;
 
     /*  Colores de los registros del calendario*/
     /* Eventos,Cumpleaños, etc*/
@@ -31,4 +31,18 @@
     --color-recursos: "#D6E5A1";
     --color-contratos: "#C0AEE5";
 
-  }
+    /* rosas */
+    --color-pink-light: #FCB4BC;
+    --color-pink: #FFD9ED;
+    --color-peach-light:#FFD3BF;
+    /* azules */
+    --color-blue-light: #9CEBFF;
+    --color-blue-light-steel: #B1C6FF;
+    /* grises */
+    --color-gray-light: #F1F1F1;
+    /* purpuras */
+    --color-purpule-light: #E0C5FF;
+    /* amarillo */
+    --color-yellow-light:#FFFDC4;
+
+}

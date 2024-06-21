@@ -32,9 +32,8 @@
                     <div class="col-md-6">
                         <div class="card card-body" data-toggle="modal" data-target="#capacitaciones">
                             <div class="d-flex align-items-center">
-                                @foreach ($subscribed_plan->images as $image)
-                                <img src="{{ $image }}" alt="Descripción de la imagen" style="width: 79px;height: 70px;">
-                            @endforeach
+                                <i class="material-symbols-outlined icon-background"
+                                    style="background-color: #9CEBFF;">{{ $subscribed_plan->metadata->img }}</i>
                                 <h5>{{ $subscribed_plan->metadata->name }}</h5>
                             </div>
                             <button class="btn">Abrir</button>
@@ -52,10 +51,7 @@
                     <div class="col-md-6">
                         <div class="card card-body">
                             <div>
-                                @foreach ($unsubscribed_plan->images as $image)
-                                    <img src="{{ $image }}" alt="Descripción de la imagen"
-                                        style="width: 79px;height: 70px;">
-                                @endforeach
+                                <i class="material-symbols-outlined icon-background color-{{ $unsubscribed_plan->metadata->img }}">{{ $unsubscribed_plan->metadata->img }}
                                 </i>
                                 <strong> {{ $unsubscribed_plan->metadata->name }} </strong>
                             </div>

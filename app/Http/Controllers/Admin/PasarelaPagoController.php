@@ -95,10 +95,4 @@ class PasarelaPagoController extends Controller
     {
         return view('admin.pasarelaPago.pago-confirmado');
     }
-
-    public function bolsa(Request $request)
-    {
-        dd($request);
-        return view('admin.pasarelaPago.pago-confirmado');
-    }
 }
