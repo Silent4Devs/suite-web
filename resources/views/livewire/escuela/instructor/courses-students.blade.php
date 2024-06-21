@@ -71,25 +71,31 @@
         </div>
     @endif
 
+
     <script>
-        document.querySelector('#seleccionar-todos-estudiantes').addEventListener("change", (e) => {
-            let checks = document.querySelectorAll('#datatable_students tbody td input');
-            checks.forEach(checkStudent => {
-                checkStudent.checked = e.target.checked;
+        document.addEventListener('livewire:load', function() {
+
+            document.querySelector('#seleccionar-todos-estudiantes').addEventListener("change", (e) => {
+                let checks = document.querySelectorAll('#datatable_students tbody td input');
+                checks.forEach(checkStudent => {
+                    checkStudent.checked = e.target.checked;
+                });
+            });
+            document.getElementById('btn-delete-students').addEventListener('click', () => {
+                let checksSelected = document.querySelectorAll(
+                    '#datatable_students tbody td input:checked');
+
+                let studentsIds = [];
+                checksSelected.forEach(item => {
+                    studentsIds.push(item.value);
+                });
+
+                Livewire.emit('clickDeleteAll', [studentsIds]);
             });
         });
-        document.getElementById('btn-delete-students').addEventListener('click', () => {
-            let checksSelected = document.querySelectorAll('#datatable_students tbody td input:checked');
 
-            let studentsIds = [];
-            checksSelected.forEach(item => {
-                studentsIds.push(item.value);
-            });
+        document.addEventListener('livewire:update', function() {
 
-            Livewire.emit('clickDeleteAll', [studentsIds]);
-        });
-
-        Livewire.on('renderScripts', () => {
             document.querySelector('#seleccionar-todos-estudiantes').addEventListener("change", (e) => {
                 let checks = document.querySelectorAll('#datatable_students tbody td input');
                 checks.forEach(checkStudent => {
@@ -106,7 +112,6 @@
                     studentsIds.push(item.value);
                 });
 
-                console.log(studentsIds);
                 Livewire.emit('clickDeleteAll', [studentsIds]);
             });
         });
