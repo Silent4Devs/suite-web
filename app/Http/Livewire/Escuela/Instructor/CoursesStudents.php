@@ -18,7 +18,7 @@ class CoursesStudents extends Component
 
     public $search;
 
-    public $listeners = ['UserStore' => 'render'];
+    public $listeners = ['UserStore' => 'render', 'clickDeleteAll' => 'multiDestroy'];
 
     public function mount(Course $course)
     {
@@ -28,7 +28,7 @@ class CoursesStudents extends Component
     public function render()
     {
         $students = $this->course->students()->where('name', 'LIKE', "%{$this->search}%")->get();
-        // dd($students);
+        $this->emit('renderScripts');
 
         return view('livewire.escuela.instructor.courses-students', compact('students'))->with('course', $this->course);
     }
@@ -49,5 +49,11 @@ class CoursesStudents extends Component
         $cursoUsuario->delete();
         $this->render_alerta('success', 'El estudiante fue eliminado exitosamente');
         $this->emit('UserStore');
+    }
+
+    public function multiDestroy($studentsDelete) {
+        foreach ($studentsDelete[0] as $studentDelete) {
+            $this->destroy($studentDelete);
+        }
     }
 }
