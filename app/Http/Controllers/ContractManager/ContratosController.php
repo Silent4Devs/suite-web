@@ -708,7 +708,11 @@ class ContratosController extends AppBaseController
             $contratos->save();
         }
 
-        return redirect(route('contract_manager.contratos-katbol.index'));
+        return response()->json([
+            'status' => 'success',
+            'message' => '¡Contrato actualizado correctamente!',
+        ]);
+        // return redirect(route('contract_manager.contratos-katbol.index'));
     }
 
     /**

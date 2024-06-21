@@ -284,6 +284,11 @@ class Empleado extends Model implements Auditable
         });
     }
 
+    public function registrosHistorico()
+    {
+        return $this->hasMany(HistoricoEmpleados::class, 'empleado_id', 'id');
+    }
+
     public static function getAllOrganigramaTree()
     {
         return Cache::remember('Empleados:empleados_all_organigrama_tree', 3600 * 6, function () {

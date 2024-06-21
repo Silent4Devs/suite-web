@@ -14,19 +14,6 @@
             margin: 8px 0;
             border-top: 3px solid #1E94A8;
         }
-
-        /* .asterisco {
-                                                                                                                                                                                                                                                                                                                                                                                                                        color: red;
-                                                                                                                                                                                                                                                                                                                                                                                                                        margin-left: 5px;
-
-                                                                                                                                                                                                                                                                                                                                                                                                                    } */
-
-        /*.select-wrapper input{
-
-                                                                                                                                                                                                                                                                                                                                                                                                                    direction:rtl;
-                                                                                                                                                                                                                                                                                                                                                                                                                    text-align:left;
-
-                                                                                                                                                                                                                                                                                                                                                                                                                    }*/
     </style>
 
     @if (session('mensajeError'))
