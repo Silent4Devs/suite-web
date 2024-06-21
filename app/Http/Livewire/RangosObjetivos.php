@@ -45,9 +45,7 @@ class RangosObjetivos extends Component
         $this->parametros = array_values($this->parametros);
     }
 
-    public function mount()
-    {
-    }
+    public function mount() {}
 
     public function render()
     {

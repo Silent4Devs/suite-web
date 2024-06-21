@@ -106,6 +106,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('empleado/expediente/update', 'EmpleadoController@expedienteUpdate')->name('empleado.edit.expediente-update');
     Route::post('empleado/expediente/Restaurar', 'EmpleadoController@expedienteRestaurar')->name('empleado.edit.expediente-restaurar');
     Route::get('empleado/{empleado}/solicitud-baja', 'EmpleadoController@solicitudBaja')->name('empleado.solicitud-baja');
+    Route::get('empleados/baja', 'EmpleadoController@baja')->name('empleados.baja');
+    Route::get('empleados/historial', 'EmpleadoController@historial')->name('empleados.historial');
+    Route::post('empleados/seleccionar', 'EmpleadoController@seleccionar')->name('empleados.seleccionar');
     Route::resource('empleados', 'EmpleadoController');
 
     // Organizacions
@@ -1567,6 +1570,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('pasarela-pago/pago', 'PasarelaPagoController@pago')->name('pasarela-pago.pago'); ///{plan}
     Route::post('subscription', 'PasarelaPagoController@subscription')->name("pasarela-pago.create");
     Route::get('pasarela-pago/pago-confirmacion', 'PasarelaPagoController@pagoConfirmado')->name('pasarela-pago.pago-confirmado');
+    Route::post('pasarela-pago/bolsa', 'PasarelaPagoController@bolsa')->name('pasarela-pago.bolsa');
 
 
     Route::get('pasarela-pago/apps/capacitaciones', 'PasarelaPagoAppsController@capacitaciones')->name('pasarela-pago.apps.capacitaciones');

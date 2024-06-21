@@ -15,6 +15,7 @@ use App\Models\EvidenciaDocumentoEmpleadoArchivo;
 use App\Models\EvidenciasCertificadosEmpleados;
 use App\Models\EvidenciasDocumentosEmpleados;
 use App\Models\ExperienciaEmpleados;
+use App\Models\HistoricoEmpleados;
 use App\Models\Language;
 use App\Models\ListaDocumentoEmpleado;
 use App\Models\Organizacion;
@@ -76,6 +77,55 @@ class EmpleadoController extends Controller
         $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.empleados.index', compact('empleados', 'logo_actual', 'empresa_actual'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function baja(Request $request)
+    {
+        abort_if(Gate::denies('bd_empleados_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $empleados = Empleado::select('id', 'n_empleado', 'name', 'foto', 'genero', 'email', 'telefono', 'area_id', 'puesto_id', 'supervisor_id', 'antiguedad', 'estatus', 'sede_id', 'cumpleaños')->orderBy('id', 'DESC')->where('estatus', 'baja')->get()
+            ->map(function ($empleado) {
+                $empleado['avatar_ruta'] = $empleado->avatar_ruta; // Access the computed attribute
+
+                return $empleado;
+            });
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
+        $empresa_actual = $organizacion_actual->empresa;
+
+        return view('admin.empleados.baja', compact('empleados', 'logo_actual', 'empresa_actual'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function historial(Request $request)
+    {
+        abort_if(Gate::denies('bd_empleados_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $empleados = Empleado::with('supervisor', 'sede', 'perfil')
+            ->orderBy('name', 'asc')
+            ->get();
+
+        return view('admin.empleados.historial', compact('empleados'));
+    }
+
+    public function seleccionar(Request $request)
+    {
+        $visualizarEmpleados = Empleado::with('supervisor', 'sede', 'perfil')->find(intval($request->empleado));
+
+        $empleados = Empleado::with('supervisor', 'sede', 'perfil')
+            ->orderBy('name', 'asc')
+            ->get();
+
+        return view('admin.empleados.historial', compact('visualizarEmpleados', 'empleados'));
     }
 
     public function getCertificaciones($empleado)
@@ -924,6 +974,10 @@ class EmpleadoController extends Controller
         $expedientes = EvidenciasDocumentosEmpleados::getAll()->where('empleado_id', intval($id));
         $empleado = Empleado::getaltaAll();
 
+        // foreach ($visualizarEmpleados->registrosHistorico as $key => $registro) {
+        //     dump($registro->relacion);
+        // }
+
         return view('admin.empleados.datosEmpleado', compact('visualizarEmpleados', 'empleado', 'contactos', 'dependientes', 'beneficiarios', 'certificados', 'capacitaciones', 'expedientes'));
     }
 
@@ -1070,6 +1124,19 @@ class EmpleadoController extends Controller
         return response()->json(['status' => 200, 'message' => 'Registro Actualizado']);
     }
 
+    public function agregarHistorico($id, $tabla, $campo, $valor_anterior)
+    {
+        $hoy = Carbon::today();
+
+        HistoricoEmpleados::create([
+            'empleado_id' => $id,
+            'campo_modificado' => $campo,
+            'fecha_cambio' => $hoy,
+            'valor_anterior_id' => $valor_anterior,
+            'tabla_origen' => $tabla,
+        ]);
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -1159,17 +1226,8 @@ class EmpleadoController extends Controller
             }
         }
 
-        // if ($request->hasFile('files')) {
-        //     $files = $request->file('files');
-        //     foreach ($files as $file) {
-        //         if (Storage::putFileAs('public/documentos_empleados', $file, $file->getClientOriginalName())) {
-        //             EvidenciasDocumentosEmpleados::create([
-        //                 'documentos' => $file->getClientOriginalName(),
-        //                 'empleado_id' => $empleado->id,
-        //             ]);
-        //         }
-        //     }
-        // }
+        $oldValues = $empleado->getOriginal();
+
         $empleado->update([
             'name' => $request->name,
             'area_id' => $request->area_id,
@@ -1231,6 +1289,25 @@ class EmpleadoController extends Controller
             'foto' => $image,
             'semanas_min_timesheet' => $request->semanas_min_timesheet,
         ]);
+
+        $newValues = $empleado->fresh()->getAttributes();
+
+        // Verifica si los campos específicos han cambiado
+        $areaIdChanged = $oldValues['area_id'] !== $newValues['area_id'];
+        $puestoIdChanged = $oldValues['puesto_id'] !== $newValues['puesto_id'];
+
+        // Realiza acciones basadas en los cambios
+        if ($areaIdChanged) {
+            // El campo area_id ha sido modificado
+            // Realiza las acciones necesarias...
+            $this->agregarHistorico($id, 'areas', 'area_id', $oldValues['area_id']);
+        }
+
+        if ($puestoIdChanged) {
+            // El campo puesto_id ha sido modificado
+            // Realiza las acciones necesarias...
+            $this->agregarHistorico($id, 'puestos', 'puesto_id', $oldValues['puesto_id']);
+        }
 
         $usuario = User::where('empleado_id', $empleado->id)->orWhere('n_empleado', $empleado->n_empleado)->first();
         $usuario->update([

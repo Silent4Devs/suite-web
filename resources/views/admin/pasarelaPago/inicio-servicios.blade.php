@@ -1,32 +1,21 @@
 @extends('layouts.admin')
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/pasarelaPago/pasarelaPago.css') }}">
     <link rel="stylesheet" href="{{ asset('css/global/TbColorsGlobal.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/pasarelaPago/pasarelaPago.css') }}{{ config('app.cssVersion') }}">
 @endsection
 @section('styles')
     <style>
     </style>
 @endsection
 @section('content')
-    @include('admin.pasarelaPago.menu')
+    @include('admin.pasarelaPago.components.menu')
 
     <div class="content-pasarela">
-        <div class="d-flex portada-pasarela">
-            <img src="{{ asset('img/pasarelaPago/portada-inicio.png') }}" alt="">
-            <div class="text-white portada-pasarela-info p-5">
-                <h3>Software Integral de Gestión Empresarial</h3>
-                <p class="p-3">
-                    Planifica, y analiza las operaciones contables de la compañía.
-                </p>
-                <p class="mt-5">
-                    <strong>
-                        Elige tus aplicaciones
-                    </strong>
-                </p>
-            </div>
-        </div>
 
-        <div class="instaladas mt-5">
+        @include('admin.pasarelaPago.components.portada')
+
+
+        <div class="instaladas">
             <h4>Instaladas</h4>
             <div class="row mt-4">
                 @foreach ($subscribed_plans as $subscribed_plan)

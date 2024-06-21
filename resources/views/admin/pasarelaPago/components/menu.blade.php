@@ -7,10 +7,10 @@
                 Todas las aplicaciones
             </a>
         </li>
-        <li>
+        {{-- <li>
             <i class="material-symbols-outlined">install_desktop</i>
             Actualizaciones
-        </li>
+        </li> --}}
     </ul>
 
     <ul class="mt-5">

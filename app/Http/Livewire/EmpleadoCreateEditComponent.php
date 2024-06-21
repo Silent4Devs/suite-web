@@ -135,10 +135,7 @@ class EmpleadoCreateEditComponent extends Component
 
     public $empleado;
 
-    public function mount()
-    {
-
-    }
+    public function mount() {}
 
     public function render()
     {
