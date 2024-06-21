@@ -56,89 +56,190 @@
     </div> --}}
 
     <div class="content-pasarela">
-        <a href="{{ route('admin.pasarela-pago.inicio') }}" class="link">
+        <a href="{{ route('admin.pasarela-pago.pre-pago') }}" class="link pb-2">
             <i class="material-symbols-outlined">shopping_cart</i>
             Regresar al carrito
         </a>
 
         <div class="card card-body mt-5">
-            <h4>Selecciona un método de pago</h4>
+            <h5>Selecciona un método de pago</h5>
             <form id="payment-form" action="{{ route('admin.pasarela-pago.create') }}" method="POST">
                 @csrf
                 {{-- <input type="hidden" name="plan" id="plan" value="{{ $plan->id }}"> --}}
-                <div class="row">
-                    <div class="col-md-6">
 
-                        <div class="d-flex justify-content-center mt-5 options-pago-periodo">
-                            <button class="btn active">
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <div class="nav options-pago-periodo">
+                            <button class="btn active" data-toggle="tab" data-target="#nav-visa">
                                 <img src="{{ asset('img/pasarelaPago/visa.png') }}" alt="">
                             </button>
-                            <button class="btn">
+                            <button class="btn" data-toggle="tab" data-target="#nav-paypal">
                                 <img src="{{ asset('img/pasarelaPago/paypal.svg') }}" alt="">
                             </button>
-                            <button class="btn">
+                            <button class="btn" data-toggle="tab" data-target="#nav-mercado">
                                 <img src="{{ asset('img/pasarelaPago/mercado-pago.webp') }}" alt="">
                             </button>
                         </div>
+                    </div>
+                </div>
 
-                        <div class="">
-                            <h5 class="mt-4"> Numero de tarjeta </h5>
+                <div class="tab-content mt-3" id="nav-tabContent">
 
+                    <div class="tab-pane fade show active" id="nav-visa">
+                        <div class="row">
+                            <div class="col-md-6">
 
-                            <div class="row">
-                                <div class="form-group col-12">
-                                    <label for="">Nombre</label>
-                                    <input type="text" id="nombrePago" class="form-control">
+                                <h5 class="mt-4" style="font-size: 18px;"> Numero de tarjeta </h5>
+
+                                <div class="row mt-3">
+                                    <div class="form-group col-12">
+                                        <label for="">Nombre</label>
+                                        <input type="text" id="nombrePago" class="form-control">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 form-group">
-                                    <label for="">Apellido Paterno*</label>
-                                    <input type="text" id="apellidoPaternoPago" class="form-control">
+                                <div class="row">
+                                    <div class="col-md-6 form-group">
+                                        <label for="">Apellido Paterno*</label>
+                                        <input type="text" id="apellidoPaternoPago" class="form-control">
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <label for="">Apellido Materno*</label>
+                                        <input type="text" id="apellidoMaternoPago" class="form-control">
+                                    </div>
                                 </div>
-                                <div class="col-md-6 form-group">
-                                    <label for="">Apellido Materno*</label>
-                                    <input type="text" id="apellidoMaternoPago" class="form-control">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="">Detalle de Tarjeta</label>
+                                            <div id="card-element"></div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <div class="form-group">
-                                        <label for="">Detalle de Tarjeta</label>
-                                        <div id="card-element"></div>
+                                <div class="row">
+                                    <div class="col-12 form-group d-flex align-items-center gap-1">
+                                        <label>
+                                            <input type="checkbox" name="" id="">
+                                            Guardar mi información de pago para facilitar el proceso de pago la próxima
+                                            vez.
+                                        </label>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-12 form-group d-flex align-items-center gap-1">
-                                    <label>
-                                        <input type="checkbox" name="" id="">
-                                        Guardar mi información de pago para facilitar el proceso de pago la próxima vez.
-                                    </label>
+
+                            <div class="col-md-6 d-flex align-items-center flex-column">
+                                <div style="text-center">
+                                    <img src="{{ asset('img/logo_monocromatico.png') }}" alt=""
+                                        style="height: 150px; opacity: 0.9;">
                                 </div>
+                                <p class="text-center mt-5">
+                                    <small><i>Al año: $31,000.00 te ahorrarías $400.00</i></small>
+                                </p>
+
+                                <button type="submit" class="btn btn-comprar py-3 w-100" id="card-button"
+                                    data-secret="{{ $intent->client_secret }}">Comprar ahora</button>
+
+                                <p class="mt-4">
+                                    <small>
+                                        <i>
+                                            Al hacer clic en "Realizar pedido", confirmo que he leído y acepto todos los
+                                            <br>
+                                            <a class="link" href="">términos y políticas.</a>
+                                        </i>
+                                    </small>
+                                </p>
                             </div>
 
                         </div>
                     </div>
+                    <div class="tab-pane fade" id="nav-paypal">
+                        <div class="row">
+                            <div class="col-md-6">
 
-                    <div class="col-md-6 d-flex align-items-center flex-column justify-content-end">
-                        <p class="text-center mt-5">
-                            <small><i>Al año: $31,000.00 te ahorrarías $400.00</i></small>
-                        </p>
 
-                        <button type="submit" class="btn btn-comprar py-3 w-100" id="card-button"
-                            data-secret="{{ $intent->client_secret }}">Comprar ahora</button>
+                                <div class="card card-body">
+                                    <h5 class="mt-4" style="font-size: 18px;"> Compras en Tabantaj </h5>
+                                    <p>
+                                        Cuando se haya completado la transacción, se hará el cargo a tu método de
+                                        pago y
+                                        recibirás
+                                        un correo electrónico para confirmar que hemos recibido tu pedido de compra.
+                                    </p>
+                                </div>
+                            </div>
 
-                        <p class="mt-4">
-                            <small>
-                                <i>
-                                    Al hacer clic en "Realizar pedido", confirmo que he leído y acepto todos los <br>
-                                    <a class="link" href="">términos y políticas.</a>
-                                </i>
-                            </small>
-                        </p>
+                            <div class="col-md-6 d-flex align-items-center flex-column">
+                                <div style="text-center">
+                                    <img src="{{ asset('img/logo_monocromatico.png') }}" alt=""
+                                        style="height: 150px; opacity: 0.9;">
+                                </div>
+                                <p class="text-center mt-5">
+                                    <small><i>Al año: $31,000.00 te ahorrarías $400.00</i></small>
+                                </p>
+
+                                <button type="submit" class="btn btn-comprar py-3 w-100" id="card-button"
+                                    data-secret="{{ $intent->client_secret }}" style="background-color: #FFC439;">
+                                    <img src="{{ asset('img/pasarelaPago/paypal.svg') }}" alt=""
+                                        style="height: 35px;">
+                                </button>
+
+                                <p class="mt-4">
+                                    <small>
+                                        <i>
+                                            Al hacer clic en "Realizar pedido", confirmo que he leído y acepto todos los
+                                            <br>
+                                            <a class="link" href="">términos y políticas.</a>
+                                        </i>
+                                    </small>
+                                </p>
+                            </div>
+
+                        </div>
                     </div>
+                    <div class="tab-pane fade" id="nav-mercado">
+                        <div class="row">
+                            <div class="col-md-6">
 
+
+                                <div class="card card-body">
+                                    <h5 class="mt-4" style="font-size: 18px;"> Compras en Tabantaj </h5>
+                                    <p>
+                                        Cuando se haya completado la transacción, se hará el cargo a tu método de pago y
+                                        recibirás
+                                        un correo electrónico para confirmar que hemos recibido tu pedido de compra.
+                                    </p>
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-6 d-flex align-items-center flex-column">
+                                <div style="text-center">
+                                    <img src="{{ asset('img/logo_monocromatico.png') }}" alt=""
+                                        style="height: 150px; opacity: 0.9;">
+                                </div>
+                                <p class="text-center mt-5">
+                                    <small><i>Al año: $31,000.00 te ahorrarías $400.00</i></small>
+                                </p>
+
+                                <button type="submit" class="btn btn-comprar py-3 w-100" id="card-button"
+                                    data-secret="{{ $intent->client_secret }}"
+                                    style="background-color: #fff; border:1px solid #bababa;">
+                                    <img src="{{ asset('img/pasarelaPago/mercado-pago.webp') }}" alt=""
+                                        style="height: 35px;">
+                                </button>
+
+                                <p class="mt-4">
+                                    <small>
+                                        <i>
+                                            Al hacer clic en "Realizar pedido", confirmo que he leído y acepto todos los
+                                            <br>
+                                            <a class="link" href="">términos y políticas.</a>
+                                        </i>
+                                    </small>
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
             </form>
         </div>

@@ -74,11 +74,14 @@
                                 <strong>$310.00 x 8</strong>
                             </div>
                             <hr>
-                            <div class="d-flex justify-content-between">
+                            <div class="d-flex justify-content-between"
+                                style="color: #17B265; font-weight: bolder; font-size: 18px;">
                                 <span>Total al mes +IVA:</span>
-                                <strong>$2480.00</strong>
+                                <span>$2480.00</span>
                             </div>
-                            <span>Al año: <strong>$3,110.00</strong> te ahorriasas <strong>$400.00</strong></span>
+                            <div class="mt-3">
+                                <small>Al año: <strong>$3,110.00</strong> te ahorriasas <strong>$400.00</strong></small>
+                            </div>
                             <div class="mt-5">
                                 <a href="{{ route('admin.pasarela-pago.pago') }}"
                                     class="btn btn-comprar w-100 py-3 text-white">
@@ -101,11 +104,14 @@
                                 <strong>$310.00 x 8</strong>
                             </div>
                             <hr>
-                            <div class="d-flex justify-content-between">
+                            <div class="d-flex justify-content-between"
+                                style="color: #236485; font-weight: bolder; font-size: 18px;">
                                 <span>Total al mes +IVA:</span>
-                                <strong>$2480.00</strong>
+                                <span>$2480.00</span>
                             </div>
-                            <span>Al año: <strong>$3,110.00</strong> te ahorriasas <strong>$400.00</strong></span>
+                            <div class="mt-3">
+                                <small>Al año: <strong>$3,110.00</strong> te ahorriasas <strong>$400.00</strong></small>
+                            </div>
                             <div class="mt-5">
                                 <a href="{{ route('admin.pasarela-pago.pago') }}"
                                     class="btn btn-comprar w-100 py-3 text-white" style="background-color: #3086AF;">
@@ -120,20 +126,15 @@
                 <p>
                     Medios de pago
                 </p>
-                <div class="card card-body">
-                    <div class="p-4" style="background-color: #FFFFDA;">
-                        Tu seguridad es nuestra prioridad. Con nuestra plataforma de pagos online, puedes estar
-                        tranquilo
-                        sabiendo que tus transacciones están protegidas en cada paso del camino.
-                    </div>
-                </div>
+
+                @include('admin.pasarelaPago.components.metodos-pago')
             </div>
         </div>
         <div class="d-flex align-items-center justify-content-between mt-5">
             <h4>Todas las aplicaciones Web</h4>
             <div class="">
-                <label for="">Todos</label>
-                <input type="checkbox">
+                <label for=""><strong>Todos</strong></label>
+                <input type="checkbox" id="input-all-apps-pasarela">
             </div>
         </div>
         <div class="box-apps-pre-pago my-4">
@@ -143,11 +144,20 @@
                         <i class="material-symbols-outlined icon-background" style="background-color: #9CEBFF;">school</i>
                         <span>{{ $plan->name }}</span>
                     </div>
-                    <input type="checkbox" name="plan_ids[]" value="{{ $plan->id }}" class="checkbox-submit">
+                    <input type="checkbox" name="plan_ids[]" value="{{ $plan->id }}"
+                        class="checkbox-submit input-check-app-pasarela">
                 </div>
             @endforeach
         </div>
     </div>
 @endsection
 @section('scripts')
+    <script>
+        document.querySelector('#input-all-apps-pasarela').addEventListener("change", (e) => {
+            let checks = document.querySelectorAll('.input-check-app-pasarela');
+            checks.forEach(checkStudent => {
+                checkStudent.checked = e.target.checked;
+            });
+        });
+    </script>
 @endsection
