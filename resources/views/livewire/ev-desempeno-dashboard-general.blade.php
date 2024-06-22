@@ -117,14 +117,6 @@
                         </div>
                     </div>
                 </div>
-                {{-- <div class="anima-focus">
-                    <select class="form-control" name="tipo_anual" id="tipo_anual" wire:model="tipo_anual">
-                        <option value="objetivos_anual">Objetivos</option>
-                        <option value="competencias_anual">Competencias</option>
-                        <option value="general_anual">General</option>
-                    </select>
-                    <label for="tipo_anual">Tipo</label>
-                </div> --}}
             </div>
             <div class="col-2">
                 <div class="anima-focus">
@@ -156,14 +148,6 @@
                 Año
             </div>
             <div class="col-2">
-                {{-- <div class="anima-focus"> --}}
-                {{-- <select class="form-control" name="tipo_mensual" id="tipo_mensual" wire:model="tipo_mensual">
-                        <option value="objetivos_mensual">Objetivos</option>
-                        <option value="competencias_mensual">Competencias</option>
-                        <option value="general_mensual">General</option>
-                    </select>
-                    <label for="tipo_mensual">Tipo</label> --}}
-
                 <div class="dropdown">
                     <button class="btn btn-secondary btn-lg dropdown-toggle form-control" type="button"
                         id="dropdownMenuButtonEmpleados" data-toggle="dropdown" aria-haspopup="true"
@@ -214,7 +198,6 @@
                         </div>
                     </div>
                 </div>
-                {{-- </div> --}}
             </div>
             <div class="col-2">
                 <div class="anima-focus">
@@ -253,17 +236,6 @@
                 <div class="col-md-2">
                     <a class="btn btn-primary" href="">Dashboard</a>
                 </div>
-
-                {{-- <div class="col-md-4">
-                    <label for="">Buscar por Estatus</label>
-                    <select id="input-search-estatus" class="form-control" onchange="buscadorGlobal()">
-                        <option value="">Seleccionar</option>
-                        <option value="pendiente">Pendiente</option>
-                        <option value="aprobado">Aprobado</option>
-                        <option value="rechazado">Rechazado</option>
-                    </select>
-                </div> --}}
-
             </div>
         </div>
 
@@ -458,28 +430,50 @@
 
     <script>
         document.addEventListener('livewire:load', function() {
-
-            const anos = @json($anos_evaluaciones);
             const data = @json($datos_evaluaciones);
+            const general_anual = @json($general_anual);
+            const objetivos_anual = @json($objetivos_anual);
+            const competencias_anual = @json($competencias_anual);
+
+            // Extract keys (years) and values (data points)
+            const anos = Object.keys(data);
+            const objetivos = anos.map(year => data[year]['objetivos']);
+            const competencias = anos.map(year => data[year]['competencias']);
+            const general = anos.map(year => data[year]['general']);
+
+            // Construct datasets based on boolean values
+            const datasets = [];
+
+            if (objetivos_anual) {
+                datasets.push({
+                    label: 'Objetivos',
+                    data: objetivos,
+                    borderWidth: 1
+                });
+            }
+
+            if (competencias_anual) {
+                datasets.push({
+                    label: 'Competencias',
+                    data: competencias,
+                    borderWidth: 1
+                });
+            }
+
+            if (general_anual) {
+                datasets.push({
+                    label: 'General',
+                    data: general,
+                    borderWidth: 1
+                });
+            }
 
             var ctx = document.getElementById('resultadosanuales').getContext('2d');
             chartRA = new Chart(ctx, {
                 type: 'bar',
                 data: {
                     labels: anos,
-                    datasets: [{
-                        label: 'Objetivos',
-                        data: data[0],
-                        borderWidth: 1
-                    }, {
-                        label: 'Competencias',
-                        data: data[1],
-                        borderWidth: 1
-                    }, {
-                        label: 'General',
-                        data: data[2],
-                        borderWidth: 1
-                    }]
+                    datasets: datasets
                 },
                 options: {
                     scales: {
@@ -489,7 +483,6 @@
                     }
                 }
             });
-
         });
     </script>
     {{-- Codigo cambio de filtros --}}
