@@ -87,7 +87,8 @@ class PortalComunicacionController extends Controller
                 $ruta = asset('storage/empleados/imagenes/' . $nuevo->foto);
             }
 
-            $nuevo->ruta_foto = $ruta;
+            // Encode spaces in the URL
+            $nuevo->ruta_foto = str_replace(' ', '%20', $ruta);
 
             $nuevo->makeHidden([
                 'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
@@ -114,7 +115,9 @@ class PortalComunicacionController extends Controller
                 $ruta = asset('storage/empleados/imagenes/' . $cumple->foto);
             }
 
-            $cumple->ruta_foto = $ruta;
+            // Encode spaces in the URL
+            $cumple->ruta_foto = str_replace(' ', '%20', $ruta);
+
             $cumple->makeHidden([
                 'area_id',
                 'puesto_id',
