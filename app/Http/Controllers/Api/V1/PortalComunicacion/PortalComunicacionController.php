@@ -28,6 +28,18 @@ class PortalComunicacionController extends Controller
     public function index(int $id)
     {
         // abort_if(Gate::denies('portal_de_comunicaccion_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        function encodeSpecialCharacters($url)
+        {
+            // Handle spaces
+            // $url = str_replace(' ', '%20', $url);
+            // Encode other special characters, excluding /, \, and :
+            $url = preg_replace_callback('/[^A-Za-z0-9_\-\.~\/\\\:]/', function ($matches) {
+                return rawurlencode($matches[0]);
+            }, $url);
+            return $url;
+        }
+
         $hoy = Carbon::now();
         $fecha_hoy = $hoy->toDateString();
 
@@ -88,7 +100,7 @@ class PortalComunicacionController extends Controller
             }
 
             // Encode spaces in the URL
-            $nuevo->ruta_foto = str_replace(' ', '%20', $ruta);
+            $nuevo->ruta_foto = encodeSpecialCharacters($ruta);
 
             $nuevo->makeHidden([
                 'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
@@ -116,7 +128,7 @@ class PortalComunicacionController extends Controller
             }
 
             // Encode spaces in the URL
-            $cumple->ruta_foto = str_replace(' ', '%20', $ruta);
+            $cumple->ruta_foto = encodeSpecialCharacters($ruta);
 
             $cumple->makeHidden([
                 'area_id',

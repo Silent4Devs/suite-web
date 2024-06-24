@@ -32,7 +32,7 @@ Route::get('api/v1/ar/formulas/options/{id}', [FormulasController::class, 'getOp
 Route::get('api/v1/ar/formulas/sections/{id}', [FormulasController::class, 'getSections']);
 
 Route::get('portal-comunicacion/{id}', [PortalComunicacionController::class, 'index']);
-Route::get('comunicados/{id}', [ComunicadosApiController::class, 'index']);
+Route::get('comunicados', [ComunicadosApiController::class, 'index']);
 
 Route::get('solicitud-dayoff/{id}', [SolicitudDayOffApiController::class, 'index']);
 Route::get('solicitud-dayoff/create/{id}', [SolicitudDayOffApiController::class, 'create']);
