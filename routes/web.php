@@ -109,7 +109,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('empleados/baja', 'EmpleadoController@baja')->name('empleados.baja');
     Route::get('empleados/historial', 'EmpleadoController@historial')->name('empleados.historial');
     Route::post('empleados/seleccionar', 'EmpleadoController@seleccionar')->name('empleados.seleccionar');
-    Route::get('exportar-historial/{id}', 'EmpleadoController@exportarHistorial')->name('empleados.historial');
+    Route::get('exportar-historial/{id}', 'EmpleadoController@exportarHistorial')->name('empleados.historial_export');
     Route::resource('empleados', 'EmpleadoController');
 
     // Organizacions
