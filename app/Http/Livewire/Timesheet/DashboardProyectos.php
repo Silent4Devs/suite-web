@@ -61,16 +61,19 @@ class DashboardProyectos extends Component
     {
         $this->datos_areas = collect();
 
-        Async::batchRun(
-            function () use (&$time_getall) {
-                // Check if the result is already cached
-                $time_getall = TimesheetProyecto::getIdNameAll();
-                $time_getall = $time_getall->sortByDesc('is_num');
-            },
-            function () use (&$time_area) {
-                $time_area = TimesheetProyectoArea::getWithArea();
-            },
-        );
+        // Async::batchRun(
+        //     function () use (&$time_getall) {
+        //         // Check if the result is already cached
+        //         $time_getall = TimesheetProyecto::getIdNameAll();
+        //         $time_getall = $time_getall->sortByDesc('is_num');
+        //     },
+        //     function () use (&$time_area) {
+        //         $time_area = TimesheetProyectoArea::getWithArea();
+        //     },
+        // );
+        $time_getall = TimesheetProyecto::getIdNameAll();
+        $time_getall = $time_getall->sortByDesc('is_num');
+        $time_area = TimesheetProyectoArea::getWithArea();
 
         if ($this->estatus === 'todos') {
             $this->proy = $time_getall;
