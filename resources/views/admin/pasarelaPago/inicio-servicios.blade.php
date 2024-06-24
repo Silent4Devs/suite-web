@@ -18,13 +18,12 @@
         <div class="instaladas">
             <h4>Instaladas</h4>
             <div class="row mt-4">
-                @foreach ($subscribed_plans as $subscribed_plan)
+                @foreach ($db_subscribed_plans as $subscribed_plan)
                     <div class="col-md-6">
-                        <div class="card card-body" data-toggle="modal" data-target="#capacitaciones">
+                        <div class="card card-body" data-toggle="modal" data-target="#{{ $subscribed_plan->slug }}">
                             <div class="d-flex align-items-center">
-                                <i class="material-symbols-outlined icon-background"
-                                    style="background-color: #9CEBFF;">{{ $subscribed_plan->metadata->img }}</i>
-                                <h5>{{ $subscribed_plan->metadata->name }}</h5>
+                                <i class="material-symbols-outlined icon-background color-{{ $subscribed_plan->img }}">{{ $subscribed_plan->img }}</i>
+                                <h5>{{ $subscribed_plan->name }}</h5>
                             </div>
                             <button class="btn">Abrir</button>
                         </div>

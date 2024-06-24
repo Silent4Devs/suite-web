@@ -14,7 +14,7 @@
         @include('admin.pasarelaPago.components.btn-regresar')
 
         <div class="row">
-            <div class="col-md-6 d-flex">
+            {{-- <div class="col-md-6 d-flex">
                 <div class="card card-body">
                     <h3 style="color: #3086AF;">Servicio de implementación</h3>
                     <p class="mt-4">
@@ -52,6 +52,34 @@
                         <strong>Limite de almacenamiento en la nube 1T</strong>
                     </p>
                 </div>
+            </div> --}}
+            <div class="col-md-6 d-flex">
+                <div class="card card-body">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <h4>Todas las aplicaciones Web</h4>
+                        <div class="">
+                            <label for=""><strong>Todos</strong></label>
+                            <input type="checkbox" id="input-all-apps-pasarela">
+                        </div>
+                    </div>
+                    <div class="box-apps-pre-pago my-4">
+                        @foreach ($unsubscribed_plans as $unsubscribed_plan)
+                            <div class="card-app-pre-pago">
+                                <div class="d-flex gap-1 align-items-center">
+                                    <i
+                                        class="material-symbols-outlined icon-background color-{{ $unsubscribed_plan->img }}">
+                                        {{ $unsubscribed_plan->img }}</i>
+                                    <span>{{ $unsubscribed_plan->name }}</span>
+                                </div>
+                                <input type="checkbox" name="plan_ids[]" value="{{ $unsubscribed_plan->stripe_plan }}"
+                                    class="checkbox-submit input-check-app-pasarela"
+                                    data-plan-name="{{ $unsubscribed_plan->name }}"
+                                    data-plan-price="{{ $unsubscribed_plan->price }}"
+                                    data-plan-id="{{ $unsubscribed_plan->stripe_plan }}">
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
             </div>
             <div class="col-md-6">
                 <div class="nav options-pago-periodo" style="border: none;">
@@ -78,18 +106,19 @@
                             <div class="d-flex justify-content-between"
                                 style="color: #17B265; font-weight: bolder; font-size: 18px;">
                                 <span>Total al mes +IVA:</span>
-                                <span>$2480.00</span>
+                                <span id="total-price">0</span>
                             </div>
                             <div class="mt-3">
                                 <small>Al año: <strong>$3,110.00</strong> te ahorriasas <strong>$400.00</strong></small>
                             </div>
-                            <div class="mt-5">
-                                <a href="{{ route('admin.pasarela-pago.pago') }}"
-                                    class="btn btn-comprar w-100 py-3 text-white">
-                                    Comprar ahora
-                                </a>
-
-                            </div>
+                            <form id="payment-form" action="{{ route('admin.pasarela-pago.pago') }}" method="POST">
+                                @csrf
+                                <div class="mt-5">
+                                    <input type="hidden" name="arrayData" id="arrayData">
+                                    <button id="buy-now-button" class="btn btn-comprar w-100 py-3 text-white"
+                                    disabled type="submit">Comprar ahora</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
 
@@ -118,8 +147,8 @@
                                     class="btn btn-comprar w-100 py-3 text-white" style="background-color: #3086AF;">
                                     Comprar ahora
                                 </a>
-
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -131,44 +160,82 @@
                 @include('admin.pasarelaPago.components.metodos-pago')
             </div>
         </div>
-        <div class="d-flex align-items-center justify-content-between mt-5">
-            <h4>Todas las aplicaciones Web</h4>
-            <div class="">
-                <label for=""><strong>Todos</strong></label>
-                <input type="checkbox" id="input-all-apps-pasarela">
-            </div>
-        </div>
-        <div class="box-apps-pre-pago my-4">
-            @foreach ($unsubscribed_plans as $unsubscribed_plan)
-                <div class="card-app-pre-pago">
-                    <div class="d-flex gap-1 align-items-center">
-                        <i class="material-symbols-outlined icon-background color-{{ $unsubscribed_plan->metadata->img }}">
-                            {{ $unsubscribed_plan->metadata->img }}</i>
-                        <span>{{ $unsubscribed_plan->metadata->name }}</span>
-                    </div>
-                    <input type="checkbox" name="plan_ids[]" value="{{ $unsubscribed_plan->id }}"
-                        class="checkbox-submit input-check-app-pasarela"
-                        data-plan-name="{{ $unsubscribed_plan->metadata->name }}">
-                </div>
-            @endforeach
-        </div>
+
     </div>
 @endsection
 @section('scripts')
     <script>
-        document.querySelector('#input-all-apps-pasarela').addEventListener("change", (e) => {
-            let checks = document.querySelectorAll('.input-check-app-pasarela');
-            checks.forEach(checkStudent => {
-                checkStudent.checked = e.target.checked;
-                console.log(checkStudent.dataset.planName);
-            });
-        });
+        const selectedPlans = [];
+        document.addEventListener('DOMContentLoaded', function() {
+            const allCheckbox = document.getElementById('input-all-apps-pasarela');
+            const checkboxes = document.querySelectorAll('.input-check-app-pasarela');
+            const totalPriceLabel = document.getElementById('total-price');
+            const buyNowButton = document.getElementById('buy-now-button');
 
-        document.querySelectorAll('.input-check-app-pasarela').forEach(checkbox => {
-            checkbox.addEventListener('change', (e) => {
-                if (e.target.checked) {
-                    console.log(e.target.dataset.planName);
-                }
+
+            allCheckbox.addEventListener('change', function() {
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = allCheckbox.checked;
+                });
+                updateTotalPrice();
+                updateSelectedPlans();
+            });
+
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    updateTotalPrice();
+                    updateSelectedPlans();
+                });
+            });
+
+            function updateTotalPrice() {
+                let totalPrice = 0;
+                let anyChecked = false;
+
+                checkboxes.forEach(checkbox => {
+                    if (checkbox.checked) {
+                        totalPrice += parseFloat(checkbox.getAttribute('data-plan-price'));
+                        anyChecked = true;
+                    }
+                });
+
+                totalPriceLabel.textContent = totalPrice.toFixed(2);
+                buyNowButton.disabled = !anyChecked;
+            }
+
+            function updateSelectedPlans() {
+                selectedPlans.length = 0;
+
+                checkboxes.forEach(checkbox => {
+                    if (checkbox.checked) {
+                        selectedPlans.push({
+                            name: checkbox.getAttribute('data-plan-name'),
+                            price: parseFloat(checkbox.getAttribute('data-plan-price')),
+                            id: checkbox.value
+                        });
+                    }
+                });
+
+                console.log(selectedPlans);
+            }
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('payment-form');
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault(); // Evita el comportamiento por defecto del formulario
+
+                // Supongamos que este es el array que quieres enviar
+                const myArray = [1, 2, 3, 4, 5];
+
+                // Convierte el array a una cadena JSON
+                const arrayDataField = document.getElementById('arrayData');
+                arrayDataField.value = JSON.stringify(selectedPlans);
+
+                // Envía el formulario
+                form.submit();
             });
         });
     </script>

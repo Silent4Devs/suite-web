@@ -190,7 +190,6 @@ input[type="checkbox"]{
 
 .box-apps-pre-pago{
     display: grid;
-    grid-template-columns: 1fr 1fr;
     gap: 20px;
 }
 .card-app-pre-pago{

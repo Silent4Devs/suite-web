@@ -65,7 +65,7 @@
             <h5>Selecciona un método de pago</h5>
             <form id="payment-form" action="{{ route('admin.pasarela-pago.create') }}" method="POST">
                 @csrf
-                {{-- <input type="hidden" name="plan" id="plan" value="{{ $plan->id }}"> --}}
+                 <input type="hidden" name="plan" id="plan" value="{{ json_encode($data) }}">
 
                 <div class="row mt-3">
                     <div class="col-md-6">

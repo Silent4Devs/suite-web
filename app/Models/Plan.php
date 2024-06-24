@@ -15,6 +15,10 @@ class Plan extends Model
         'stripe_plan',
         'price',
         'description',
+        'img',
+        'interval',
+        'trial_period_days',
+        'subscription'
     ];
 
     public function getRouteKeyName()
