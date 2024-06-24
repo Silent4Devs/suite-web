@@ -62,12 +62,12 @@ class SolicitudDayOffApiController extends Controller
             $dias_disponibles = 0;
         }
 
-        return response()->json([
+        return response(json_encode([
             'logo_actual' => $logo_actual,
             'empresa_actual' => $empresa_actual,
             'dias_disponibles' => $dias_disponibles,
             'solicitudesDayOff' => $solicitudesDayOff
-        ]);
+        ]), 200)->header('Content-Type', 'application/json');
 
         // return view('admin.solicitudDayoff.index', compact('logo_actual', 'empresa_actual', 'dias_disponibles'));
     }
@@ -111,7 +111,7 @@ class SolicitudDayOffApiController extends Controller
         // $organizacion = Organizacion::getFirst(); Innecesario
         $dias_pendientes = SolicitudDayOff::where('empleado_id', '=', $usuario->empleado->id)->where('aprobacion', '=', 1)->where('año', '=', $año)->sum('dias_solicitados');
 
-        return response()->json([
+        return response(json_encode([
             'vacacion' => $vacacion,
             'dias_disponibles' => $dias_disponibles,
             'año' => $año,
@@ -119,7 +119,7 @@ class SolicitudDayOffApiController extends Controller
             // 'organizacion' => $organizacion, Innecesario
             'dias_pendientes' => $dias_pendientes,
             'tipo_conteo' => $tipo_conteo,
-        ]);
+        ]), 200)->header('Content-Type', 'application/json');
 
         // return view('admin.solicitudDayoff.create', compact('vacacion', 'dias_disponibles', 'año', 'autoriza', 'organizacion', 'dias_pendientes', 'tipo_conteo'));
     }
@@ -206,10 +206,10 @@ class SolicitudDayOffApiController extends Controller
             ]);
         }
 
-        return response()->json([
+        return response(json_encode([
             'vacacion' => $vacacion,
             'empleado' => $empleado
-        ]);
+        ]), 200)->header('Content-Type', 'application/json');
         // return view('admin.solicitudDayoff.show', compact('vacacion'));
     }
 
@@ -404,12 +404,12 @@ class SolicitudDayOffApiController extends Controller
             $dias_disponibles = 0;
         }
 
-        return response()->json([
+        return response(json_encode([
             'logo_actual' => $logo_actual,
             'empresa_actual' => $empresa_actual,
             'dias_disponibles' => $dias_disponibles,
             'solicitudesDayOff' => $solicitudesDayOff
-        ]);
+        ]), 200)->header('Content-Type', 'application/json');
     }
 
     public function respuesta($id)
@@ -444,11 +444,11 @@ class SolicitudDayOffApiController extends Controller
         $ingreso = Empleado::where('id', $solicitante)->pluck('antiguedad')->first();
         $año = Carbon::createFromDate($ingreso)->age;
 
-        return response()->json([
+        return response(json_encode([
             'empleado' => $empleado,
             'vacacion' => $vacacion,
             'año' => $año
-        ]);
+        ]), 200)->header('Content-Type', 'application/json');
 
         // return view('admin.solicitudDayoff.respuesta', compact('vacacion', 'año'));
     }
@@ -485,11 +485,11 @@ class SolicitudDayOffApiController extends Controller
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        return response()->json([
+        return response(json_encode([
             'logo_actual' => $logo_actual,
             'empresa_actual' => $empresa_actual,
             'solicitudesDayOff' => $solicitudesDayOff
-        ]);
+        ]), 200)->header('Content-Type', 'application/json');
     }
 
     public function vistaGlobal()
@@ -519,11 +519,11 @@ class SolicitudDayOffApiController extends Controller
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        return response()->json([
+        return response(json_encode([
             'logo_actual' => $logo_actual,
             'empresa_actual' => $empresa_actual,
             'solVac' => $solVac,
-        ]);
+        ]), 200)->header('Content-Type', 'application/json');
     }
 
     public function showVistaGlobal($id)
@@ -549,9 +549,9 @@ class SolicitudDayOffApiController extends Controller
             'puestoRelacionado', 'area_id', 'puesto_id'
         ]);
 
-        return response()->json([
+        return response(json_encode([
             'vacacion' => $vacacion,
-        ]);
+        ]), 200)->header('Content-Type', 'application/json');
     }
 
     public function showArchivo($id)
@@ -577,8 +577,8 @@ class SolicitudDayOffApiController extends Controller
             'puestoRelacionado', 'area_id', 'puesto_id'
         ]);
 
-        return response()->json([
+        return response(json_encode([
             'vacacion' => $vacacion,
-        ]);
+        ]), 200)->header('Content-Type', 'application/json');
     }
 }

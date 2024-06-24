@@ -65,12 +65,12 @@ class SolicitudVacacionesApiController extends Controller
             $dias_disponibles = 0;
         }
 
-        return response()->json([
+        return response(json_encode([
             'logo_actual' => $logo_actual,
             'empresa_actual' => $empresa_actual,
             'dias_disponibles' => $dias_disponibles,
             'solicitudesVacaciones' => $solicitudesVacaciones
-        ]);
+        ]), 200)->header('Content-Type', 'application/json');
     }
 
     public function create($id_user)
@@ -128,7 +128,7 @@ class SolicitudVacacionesApiController extends Controller
             $periodo_vencido = 0;
             $finVacaciones_periodo_pasado = null;
 
-            return response()->json([
+            return response(json_encode([
                 'leyenda_sin_beneficio' => $leyenda_sin_beneficio,
                 'vacacion' => $vacacion,
                 'dias_disponibles' => $dias_disponibles,
@@ -143,7 +143,7 @@ class SolicitudVacacionesApiController extends Controller
                 'periodo_vencido' => $periodo_vencido,
                 'año_pasado' => $año_pasado,
                 'finVacaciones_periodo_pasado' => $finVacaciones_periodo_pasado,
-            ]);
+            ]), 200)->header('Content-Type', 'application/json');
 
             // return view('admin.solicitudVacaciones.create', compact('leyenda_sin_beneficio', 'finVacaciones_periodo_pasado', 'periodo_vencido', 'año_pasado', 'mostrar_reclamo', 'vacacion', 'dias_disponibles', 'año', 'autoriza', 'no_vacaciones', 'organizacion', 'finVacaciones', 'dias_pendientes', 'tipo_conteo'));
         }
@@ -187,7 +187,7 @@ class SolicitudVacacionesApiController extends Controller
             $finVacaciones_periodo_pasado = null;
         }
 
-        return response()->json([
+        return response(json_encode([
             'leyenda_sin_beneficio' => $leyenda_sin_beneficio,
             'vacacion' => $vacacion,
             'dias_disponibles' => $dias_disponibles,
@@ -202,7 +202,7 @@ class SolicitudVacacionesApiController extends Controller
             'periodo_vencido' => $periodo_vencido,
             'año_pasado' => $año_pasado,
             'finVacaciones_periodo_pasado' => $finVacaciones_periodo_pasado,
-        ]);
+        ]), 200)->header('Content-Type', 'application/json');
 
         // return view('admin.solicitudVacaciones.create', compact('leyenda_sin_beneficio', 'vacacion', 'dias_disponibles', 'año', 'autoriza', 'no_vacaciones', 'organizacion', 'finVacaciones', 'dias_pendientes', 'tipo_conteo', 'mostrar_reclamo', 'periodo_vencido', 'año_pasado', 'finVacaciones_periodo_pasado'));
     }
@@ -333,10 +333,10 @@ class SolicitudVacacionesApiController extends Controller
             ]);
         }
 
-        return response()->json([
+        return response(json_encode([
             'vacacion' => $vacacion,
             'empleado' => $empleado
-        ]);
+        ]), 200)->header('Content-Type', 'application/json');
         // return view('admin.solicitudDayoff.show', compact('vacacion'));
     }
 
@@ -573,12 +573,12 @@ class SolicitudVacacionesApiController extends Controller
             $dias_disponibles = 0;
         }
 
-        return response()->json([
+        return response(json_encode([
             'logo_actual' => $logo_actual,
             'empresa_actual' => $empresa_actual,
             'dias_disponibles' => $dias_disponibles,
             'solicitudesVacaciones' => $solicitudesVacaciones
-        ]);
+        ]), 200)->header('Content-Type', 'application/json');
     }
 
     public function respuesta($id)
@@ -612,11 +612,11 @@ class SolicitudVacacionesApiController extends Controller
         $ingreso = Empleado::where('id', $solicitante)->pluck('antiguedad')->first();
         $año = Carbon::createFromDate($ingreso)->age;
 
-        return response()->json([
+        return response(json_encode([
             'empleado' => $empleado,
             'vacacion' => $vacacion,
             'año' => $año
-        ]);
+        ]), 200)->header('Content-Type', 'application/json');
 
         $solicitante = $vacacion->empleado_id;
         $ingreso = Empleado::where('id', $solicitante)->pluck('antiguedad')->first();
@@ -631,11 +631,11 @@ class SolicitudVacacionesApiController extends Controller
             $dias_disponibles = null;
         }
 
-        return response()->json([
+        return response(json_encode([
             'vacacion' => $vacacion,
             'dias_disponibles' => $dias_disponibles,
             'año' => $año
-        ]);
+        ]), 200)->header('Content-Type', 'application/json');
         // return view('admin.solicitudVacaciones.respuesta', compact('vacacion', 'dias_disponibles', 'año'));
     }
 
@@ -671,11 +671,11 @@ class SolicitudVacacionesApiController extends Controller
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        return response()->json([
+        return response(json_encode([
             'logo_actual' => $logo_actual,
             'empresa_actual' => $empresa_actual,
             'solicitudesVacaciones' => $solicitudesVacaciones
-        ]);
+        ]), 200)->header('Content-Type', 'application/json');
     }
 
     public function vistaGlobal()
@@ -705,11 +705,11 @@ class SolicitudVacacionesApiController extends Controller
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        return response()->json([
+        return response(json_encode([
             'logo_actual' => $logo_actual,
             'empresa_actual' => $empresa_actual,
             'solVac' => $solVac,
-        ]);
+        ]), 200)->header('Content-Type', 'application/json');
     }
 
     public function showVistaGlobal($id)
@@ -735,9 +735,9 @@ class SolicitudVacacionesApiController extends Controller
             'puestoRelacionado', 'area_id', 'puesto_id'
         ]);
 
-        return response()->json([
+        return response(json_encode([
             'vacacion' => $vacacion,
-        ]);
+        ]), 200)->header('Content-Type', 'application/json');
     }
 
     public function archivoShow($id)
@@ -763,8 +763,8 @@ class SolicitudVacacionesApiController extends Controller
             'puestoRelacionado', 'area_id', 'puesto_id'
         ]);
 
-        return response()->json([
+        return response(json_encode([
             'vacacion' => $vacacion,
-        ]);
+        ]), 200)->header('Content-Type', 'application/json');
     }
 }

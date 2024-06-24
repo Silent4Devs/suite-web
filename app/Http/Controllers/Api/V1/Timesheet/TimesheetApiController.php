@@ -337,7 +337,7 @@ class TimesheetApiController extends Controller
     //             } catch (Throwable $e) {
     //                 report($e);
 
-    //                 return response()->json(['status' => 520]);
+    //                 return response(json_encode(['status' => 520]);
     //             }
     //         }
 
@@ -346,14 +346,14 @@ class TimesheetApiController extends Controller
     //         // Your database operations here
     //         DB::commit();
 
-    //         return response()->json(['status' => 200]);
+    //         return response(json_encode(['status' => 200]);
     //     }
     //     // catch exception and rollback transaction
     //     catch (Throwable $e) {
     //         DB::rollback();
 
     //         // throw $e;
-    //         return response()->json(['status' => 400]);
+    //         return response(json_encode(['status' => 400]);
     //     }
 
     //     // return redirect()->route('admin.timesheet-mis-registros')->with('success', 'Registro Enviado');
@@ -391,12 +391,12 @@ class TimesheetApiController extends Controller
 
         $horas_count = $horas->count();
 
-        return response()->json([
+        return response(json_encode([
             'timesheet' => $timesheet,
             'proyectos' => $proyectos,
             'horas' => $horas,
             'horas_count' => $horas_count,
-        ]);
+        ]), 200)->header('Content-Type', 'application/json');
         //         return view('admin.timesheet.show', compact('timesheet', 'horas', 'hoy_format', 'horas_count'));
         //     } else {
         //         abort(Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -605,13 +605,13 @@ class TimesheetApiController extends Controller
     //         } catch (Throwable $e) {
     //             report($e);
 
-    //             return response()->json(['status' => 520]);
+    //             return response(json_encode(['status' => 520]);
     //         }
     //     }
 
     //     $this->notificacionhorassobrepasadas($usuario->empleado->id);
 
-    //     return response()->json(['status' => 200]);
+    //     return response(json_encode(['status' => 200]);
     // }
 
     // public function destroy($id)
@@ -727,7 +727,7 @@ class TimesheetApiController extends Controller
     //                 );
     //             }
     //         } catch (\Throwable $th) {
-    //             return response()->json([
+    //             return response(json_encode([
     //                 'success' => true,
     //                 'message' => 'Ha Ocurrido un Error al enviar el correo.',
     //                 'id_proyecto' => $nuevo_proyecto->id,
@@ -738,13 +738,13 @@ class TimesheetApiController extends Controller
 
     //         // return redirect('admin/timesheet/proyectos/create');
 
-    //         return response()->json([
+    //         return response(json_encode([
     //             'success' => true,
     //             'message' => 'Se ha creado el proyecto con éxito.',
     //             'id_proyecto' => $nuevo_proyecto->id,
     //         ]);
     //     } catch (\Exception $e) {
-    //         return response()->json([
+    //         return response(json_encode([
     //             'success' => false,
     //             'message' => 'Se ha producido un error al intentar crear el proyecto.',
     //         ]);
@@ -908,12 +908,12 @@ class TimesheetApiController extends Controller
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        return response()->json([
+        return response(json_encode([
             'aprobaciones' => $aprobaciones,
             'logo_actual' => $logo_actual,
             'empresa_actual' => $empresa_actual,
             'habilitarTodos' => $habilitarTodos
-        ]);
+        ]), 200)->header('Content-Type', 'application/json');
         // return view('admin.timesheet.aprobaciones', compact('aprobaciones', 'logo_actual', 'empresa_actual', 'habilitarTodos'));
     }
 
@@ -1251,7 +1251,7 @@ class TimesheetApiController extends Controller
     //         }
     //     }
 
-    //     return response()->json(['tareas' => $tareas_array]);
+    //     return response(json_encode(['tareas' => $tareas_array]);
     // }
 
     // public function reporteAprobador($id)

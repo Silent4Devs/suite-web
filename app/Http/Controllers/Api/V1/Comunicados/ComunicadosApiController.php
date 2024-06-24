@@ -1,6 +1,6 @@
 <?php
 
-namespace app\Http\Controllers\Api\V1\PortalComunicacion;
+namespace app\Http\Controllers\Api\V1\Comunicados;
 
 use App\Http\Controllers\Controller;
 use App\Models\Comiteseguridad;
@@ -18,7 +18,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
 
-class PortalComunicacionController extends Controller
+class ComunicadosApiController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -31,122 +31,18 @@ class PortalComunicacionController extends Controller
         $hoy = Carbon::now();
         $fecha_hoy = $hoy->toDateString();
 
-        // $politica_existe = PoliticaSgsi::getAll()->count();
-        $empleados = Empleado::alta()->select('id', 'name', 'area_id', 'puesto_id', 'foto', 'antiguedad', 'cumpleaños', 'estatus');
-        $user = User::find($id);
-
-        $user->foto_empleado = $user->empleado->avatar;
-        $user->makeHidden([
-            'empleado'
-        ]);
-        $empleado_asignado = $user->n_empleado;
-        $authId = $user->id;
-
-        $documentos_publicados = Documento::with('macroproceso')->where('estatus', Documento::PUBLICADO)->latest('updated_at')->get()->take(6);
-        // $comite_existe = Comiteseguridad::getAll()->count();
-        $nuevos = $empleados->whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->get();
-        $comunicados = ComunicacionSgi::getAllwithImagenesBlog()->makeHidden(['descripcion', 'created_at', 'updated_at', 'imagenes_comunicacion'])->take(4);
+        $comunicados = ComunicacionSgi::getAllwithImagenesBlog()->makeHidden(['created_at', 'updated_at', 'deleted_at', 'team_id', 'id_publico', 'imagenes_comunicacion']);
 
         foreach ($comunicados as $key_comunicados => $comunicado) {
-            $comunicado->texto_descripcion = $comunicado->descripcion;
             $comunicado->tipo_imagen = $comunicado->imagenes_comunicacion->first()->tipo;
             $ruta_comunicado = asset('storage/imagen_comunicado_SGI/' . $comunicado->imagenes_comunicacion->first()->imagen);
             $comunicado->ruta_imagen = $ruta_comunicado;
         }
 
-        $noticias = ComunicacionSgi::getAllwithImagenesCarrousel()->makeHidden(['descripcion', 'created_at', 'updated_at', 'imagenes_comunicacion'])->take(3);
-
-        foreach ($noticias as $key_noticia => $noticia) {
-            $noticia->texto_descripcion = $noticia->descripcion;
-            $noticia->tipo_imagen = $noticia->imagenes_comunicacion->first()->tipo;
-            $ruta_noticia = asset('storage/imagen_comunicado_SGI/' . $noticia->imagenes_comunicacion->first()->imagen);
-            $noticia->ruta_imagen = $ruta_noticia;
-        }
-
-        $cumpleaños = Cache::remember('Portal_cumpleaños_' . $authId, 3600, function () use ($hoy, $empleados) {
-            return Empleado::alta()->select('id', 'name', 'area_id', 'puesto_id', 'foto', 'cumpleaños', 'estatus')->whereMonth('cumpleaños', '=', $hoy->format('m'))->get()->makeHidden([
-                'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
-                'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet',
-                'area', 'supervisor', 'puestoRelacionado'
-            ]);
-        });
-
-        foreach ($nuevos as $key_nuevo => $nuevo) {
-            $nuevo->nombre_area = $nuevo->area->area;
-            $nuevo->nombre_puesto = $nuevo->puesto;
-
-            if ($nuevo->foto == null || $nuevo->foto == '0') {
-                if ($nuevo->genero == 'H') {
-                    $ruta = asset('storage/empleados/imagenes/man.png');
-                } elseif ($nuevo->genero == 'M') {
-                    $ruta = asset('storage/empleados/imagenes/woman.png');
-                } else {
-                    $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
-                }
-            } else {
-                $ruta = asset('storage/empleados/imagenes/' . $nuevo->foto);
-            }
-
-            $nuevo->ruta_foto = $ruta;
-
-            $nuevo->makeHidden([
-                'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
-                'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet',
-                'area', 'supervisor', 'area_id', 'puesto_id', 'foto', 'puestoRelacionado'
-            ]);
-        }
-
-        foreach ($cumpleaños as $key => $cumple) {
-            $cumple->nombre_area = $cumple->area->area;
-            $cumple->nombre_puesto = $cumple->puesto;
-
-            $cumple->fecha_cumpleanos = $this->convertircumpleanos($cumple->cumpleaños);
-
-            if ($cumple->foto == null || $cumple->foto == '0') {
-                if ($cumple->genero == 'H') {
-                    $ruta = asset('storage/empleados/imagenes/man.png');
-                } elseif ($cumple->genero == 'M') {
-                    $ruta = asset('storage/empleados/imagenes/woman.png');
-                } else {
-                    $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
-                }
-            } else {
-                $ruta = asset('storage/empleados/imagenes/' . $cumple->foto);
-            }
-
-            $cumple->ruta_foto = $ruta;
-            $cumple->makeHidden([
-                'area_id',
-                'puesto_id',
-                'foto',
-                'cumpleaños'
-            ]);
-        }
-
-        // $aniversarios = Cache::remember('Portal:portal_aniversarios', 3600 * 4, function () use ($hoy, $empleados) {
-        //     return $empleados->whereMonth('antiguedad', '=', $hoy->format('m'))->whereYear('antiguedad', '<', $hoy->format('Y'))->get();
-        // });
-
-        // $aniversarios_contador_circulo = Cache::remember('Portal:portal_aniversarios_contador_circulo', 3600 * 4, function () use ($hoy, $empleados) {
-        //     return $empleados->whereMonth('antiguedad', '=', $hoy->format('m'))->whereYear('antiguedad', '<', $hoy->format('Y'))->count();
-        // });
-        // dd($comunicacionSgis, $comunicacionSgis_carrusel, $empleado_asignado, $aniversarios_contador_circulo, $politica_existe, $comite_existe, $nuevos, $cumpleaños, $user);
-        // dd($cumpleaños);
-
         return response(json_encode(
             [
-                'documentos' => $documentos_publicados,
                 'hoy' => $fecha_hoy,
                 'comunicados' => $comunicados,
-                'noticias' => $noticias,
-                'empleado_asignado' => $empleado_asignado,
-                // 'aniversarios' => $aniversarios,
-                // 'aniversarios_contador_circulo' => $aniversarios_contador_circulo,
-                // 'politica_existe' => $politica_existe,
-                // 'comite_existe' => $comite_existe,
-                'nuevos' => $nuevos,
-                'cumpleaños' => $cumpleaños,
-                'user' => $user,
             ],
         ), 200)->header('Content-Type', 'application/json');
     }
