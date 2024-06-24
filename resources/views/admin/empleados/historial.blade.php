@@ -19,16 +19,19 @@
             @endforeach
         </select>
         <hr>
-        <button type="submit" class="btn btn-primary" style="position: relative; left: 82rem;">Buscar</button>
+        <button type="submit" class="btn btn-primary" >Buscar</button>
         @if (isset($visualizarEmpleados))
         @if ($visualizarEmpleados->registrosHistorico)
-        <a href="{{ route('admin.empleados.historial', $visualizarEmpleados->id) }}" class="btn btn-primary" style="position: relative; left: 62rem;">
+        <a href="{{ route('admin.empleados.historial_export', $visualizarEmpleados->id) }}" class="btn btn-secondary">
+             Descargar
             <i class="fas fa-file-excel excel-logo"></i>
-            Descargar Historial
         </a>
        @endif
        @endif
     </form>
+
+    <br>
+    <br>
 
     @include('partials.flashMessages')
     <div class="datatable-fix datatable-rds">
