@@ -24,7 +24,7 @@
     }
 
     .img_empleado {
-        width: 20px;
+        width: 40px;
         height: 20px;
         border-radius: 50%;
         margin-right: 5px;
