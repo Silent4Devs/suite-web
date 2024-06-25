@@ -25,10 +25,10 @@ class SolicitudPermisoGoceSueldoApiController extends Controller
 
     public $modelo = 'SolicitudPermisoGoceSueldo';
 
-    public function index(Request $request)
+    public function index($id_user)
     {
         //abort_if(Gate::denies('solicitud_goce_sueldo_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $data = User::getCurrentUser()->empleado->id;
+        $data = User::find($id_user)->empleado->id;
 
         $solicitudesPermisos = SolicitudPermisoGoceSueldo::with('empleado')->where('empleado_id', '=', $data)->orderByDesc('id')->get();
 
@@ -59,14 +59,13 @@ class SolicitudPermisoGoceSueldoApiController extends Controller
         ]), 200)->header('Content-Type', 'application/json');
     }
 
-    public function create()
+    public function create($id_user)
     {
         //abort_if(Gate::denies('solicitud_goce_sueldo_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vacacion = new SolicitudPermisoGoceSueldo();
-        $autoriza = User::getCurrentUser()->empleado->supervisor_id;
+        $autoriza = User::find($id_user)->empleado->supervisor_id;
         $permisos = PermisosGoceSueldo::get();
 
-        return view('admin.solicitudGoceSueldo.create', compact('vacacion', 'autoriza', 'permisos'));
         return response(json_encode([
             'vacacion' => $vacacion,
             'autoriza' => $autoriza,
