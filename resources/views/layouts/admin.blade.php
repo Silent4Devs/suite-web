@@ -491,6 +491,9 @@
                                         @can('capacitaciones_acceder')
                                             <li><a href="{{ asset('admin/recursos') }}">Capacitaciones</a></li>
                                         @endcan
+
+                                        <li><a href="{{ route('admin.module_firmas') }}">Firmas</a></li>
+
                                     </ul>
                                 </li>
                             @endcan
