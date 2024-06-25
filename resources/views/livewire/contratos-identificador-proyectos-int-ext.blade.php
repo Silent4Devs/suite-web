@@ -13,11 +13,9 @@
             </div>
 
             @if (!$creacion_proyecto)
-                <div class="form-group col-md-6">
-                    <label for="no_proyecto" class="txt-tamaño">&nbsp;Número
-                        de
-                        proyecto*</label>
-                    <select class="form-control" name="no_proyecto" id="no_proyecto" required>
+                <div class="form-group col-md-10">
+                    <label for="no_proyecto" class="txt-tamaño">Número de proyecto*</label>
+                    <select class="form-control float-right" name="no_proyecto" id="no_proyecto" required>
                         <option value="" selected>Seleccione un Numero de proyecto</option>
                         @foreach ($proyectos as $proyecto)
                             <option data-id="{{ $proyecto->id }}" value="{{ $proyecto->identificador }}">
@@ -25,7 +23,7 @@
                         @endforeach
                     </select>
                     @if ($errors->has('no_proyecto'))
-                        <div class="invalid-feedback red-text">
+                        <div class="invalid-feedback">
                             {{ $errors->first('no_proyecto') }}
                         </div>
                     @endif

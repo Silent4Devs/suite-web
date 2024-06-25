@@ -4,6 +4,30 @@
 @section('titulo', 'Firmar Requisicion')
 <link rel="stylesheet" href="{{ asset('css/requisitions/requisitions.css') }}{{ config('app.cssVersion') }}">
 
+@if ($alerta)
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                // title: 'No es posible acceder a esta vista.',
+                imageUrl: `{{ asset('img/errors/cara-roja-triste.svg') }}`, // Replace with the path to your image
+                imageWidth: 100, // Set the width of the image as needed
+                imageHeight: 100,
+                html: `<h4 style="color:red;">Colaboradores no disponibles</h4>
+                        <br><p>Los colaboradores asignados se encuentran ausentes.</p><br>
+                        <p>Es necesario acercarse con el administrador para solicitar que se agregue un responsable, de lo contrario no podrá firmar la requisición.</p>`,
+                showCancelButton: false,
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Entendido.',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Redirect to another view after user clicks OK
+                    window.location.href = '{{ route('contract_manager.requisiciones') }}';
+                }
+            });
+        });
+    </script>
+@endif
+
 <div class="card card-content caja-blue">
 
     <div>
