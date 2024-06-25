@@ -10,7 +10,7 @@
                                 {{ $evaluador['nombre'] }}<br>
                                 @if ($evaluacion->estatus != 3)
                                     <a href="/admin/recursos-humanos/evaluacion-360/evaluacion/{{$evaluacion->id}}/reactivar/{{$evaluado->id}}/{{$evaluador['id']}}"
-                                        class="btn btn-primary btn-xs" title="Reactivar">Reactivar Evaluación</a>
+                                        class="btn tb-btn-primary btn-xs" title="Reactivar">Reactivar Evaluación</a>
                                 @endif
                             @else
                                 Evaluador
@@ -20,7 +20,7 @@
                         {{ $evaluador['nombre'] }} <br>
                         @if ($evaluacion->estatus != 3)
                             <a href="/admin/recursos-humanos/evaluacion-360/evaluacion/{{$evaluacion->id}}/reactivar/{{$evaluado->id}}/{{$evaluador['id']}}"
-                                class="btn btn-primary btn-xs" title="Reactivar">Reactivar Evaluación</a>
+                                class="btn tb-btn-primary btn-xs" title="Reactivar">Reactivar Evaluación</a>
                         @endif
                     @endif
                 </strong>

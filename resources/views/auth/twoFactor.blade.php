@@ -5,7 +5,7 @@
             <div class="card-group">
                 <div class="p-4 card">
                     <div class="card-body" style="position:relative">
-                        <img class="logo-tabantaj" src="{{ asset('img/logo_policromatico_2.png') }}" class="img-fluid"
+                        <img class="logo-tabantaj" src="{{ asset('img/auth/TBLogoPolicromatico.png') }}" class="img-fluid"
                             style="position: absolute;top:10px;right: 0;width: 130px;z-index: 1;">
                         @if (session()->has('message'))
                             <p class="alert alert-info">

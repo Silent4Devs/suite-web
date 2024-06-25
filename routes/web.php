@@ -107,6 +107,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('empleado/expediente/update', 'EmpleadoController@expedienteUpdate')->name('empleado.edit.expediente-update');
     Route::post('empleado/expediente/Restaurar', 'EmpleadoController@expedienteRestaurar')->name('empleado.edit.expediente-restaurar');
     Route::get('empleado/{empleado}/solicitud-baja', 'EmpleadoController@solicitudBaja')->name('empleado.solicitud-baja');
+    Route::get('empleados/baja', 'EmpleadoController@baja')->name('empleados.baja');
+    Route::get('empleados/historial', 'EmpleadoController@historial')->name('empleados.historial');
+    Route::post('empleados/seleccionar', 'EmpleadoController@seleccionar')->name('empleados.seleccionar');
+    Route::get('exportar-historial/{id}', 'EmpleadoController@exportarHistorial')->name('empleados.historial_export');
     Route::resource('empleados', 'EmpleadoController');
 
     // Organizacions
@@ -168,7 +172,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::get('recursos-humanos/evaluacion-360', 'RH\Evaluacion360Controller@index')->name('rh-evaluacion360.index');
 
         //Modulo Capital Humano
-        Route::get('capital-humano', 'RH\CapitalHumanoController@index')->name('capital-humano.index');
+        Route::middleware('cacheResponse')->get('capital-humano', 'RH\CapitalHumanoController@index')->name('capital-humano.index');
 
         //Control de Ausencias
         Route::get('ajustes-dayoff', 'AusenciasController@ajustesDayoff')->name('ajustes-dayoff');
@@ -520,6 +524,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::post('plantTrabajoBase/bloqueo/registrar', 'LockedPlanTrabajoController@setLockedToPlanTrabajo')->name('lockedPlan.setLockedToPlanTrabajo');
 
         Route::get('inicioUsuario/solicitud', [InicioUsuarioController::class, 'solicitud'])->name('solicitud');
+
+        Route::post('inicioUsuario/estado-disponibilidad', [InicioUsuarioController::class, 'cambiarEstadoDisponibilidad'])->name('estado-disponibilidad');
 
         Route::get('inicioUsuario/reportes/quejas', [InicioUsuarioController::class, 'quejas'])->name('reportes-quejas');
         Route::post('inicioUsuario/reportes/quejas', [InicioUsuarioController::class, 'storeQuejas'])->name('reportes-quejas-store');
@@ -882,6 +888,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
         Route::post('timesheet/create/obtenerTareas', 'TimesheetController@obtenerTareas')->name('timesheet-obtener-tareas');
 
+        Route::post('timesheet/creacionContratoProyecto', 'TimesheetController@creacionContratoProyecto')->name('timesheet.creacionContratoProyecto');
+
         Route::resource('timesheet', 'TimesheetController')->except(['create', 'index', 'edit']);
 
         //Competencia Tipo
@@ -890,7 +898,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::resource('Tipo', 'RH\TipoCompetenciaController', ['except' => ['edit']]);
 
         Route::get('organigrama/exportar', 'OrganigramaController@exportTo')->name('organigrama.exportar');
-        Route::get('organigrama', 'OrganigramaController@index')->name('organigrama.index');
+        Route::middleware('cacheResponse')->get('organigrama', 'OrganigramaController@index')->name('organigrama.index');
 
         //Directorio
 
@@ -1010,7 +1018,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         // Politica Sgsis
         Route::delete('politica-sgsis/destroy', 'PoliticaSgsiController@massDestroy')->name('politica-sgsis.massDestroy');
         Route::resource('politica-sgsis', 'PoliticaSgsiController');
-        Route::get('politica-sgsis/visualizacion', 'PoliticaSgsiController@visualizacion')->name('politica-sgsis/visualizacion');
+        Route::get('politica-sgsis-visualizacion', 'PoliticaSgsiController@visualizacion')->name('politica-sgsis.visualizacion');
         Route::post('politica-sgsis/cambioMostrar', 'PoliticaSgsiController@cambioMostrar')->name('politica-sgsis.cambio-mostrar');
         Route::post('politica-sgsis/pdf', 'PoliticaSgsiController@pdf')->name('politica-sgsis.pdf');
         Route::post('politica-sgsis/pdf/show/{id}', 'PoliticaSgsiController@pdf_show')->name('politica-sgsis.pdf_show');
@@ -1377,6 +1385,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::delete('analisis-riesgos/destroy', 'AnalisisdeRiesgosController@massDestroy')->name('analisis-riesgos.massDestroy');
         Route::middleware('cacheResponse')->get('analisis-riesgos-menu', 'AnalisisdeRiesgosController@menu')->name('analisis-riesgos.menu');
         Route::resource('analisis-riesgos', 'AnalisisdeRiesgosController');
+        Route::get('analisis-riesgos-inicio', 'AnalisisdeRiesgosController@inicioRiesgos');
+        Route::get('top-template-analisis-riegos', 'TopController@topAnalisisRiegos')->name('top-template-analisis-riesgos');
+        // Route::get('template-analisis-riesgo/create', 'TBTemplateAnalisisRiesgosController@create')->name('template-create-analisis-riesgos');
+        Route::resource('template-analisis-riesgo', 'TBTemplateAnalisisRiesgosController');
         Route::get('getEmployeeData', 'AnalisisdeRiesgosController@getEmployeeData')->name('getEmployeeData');
 
         Route::middleware('cacheResponse')->get('analisis-impacto-menu', 'AnalisisdeImpactoController@menu')->name('analisis-impacto.menu');
@@ -1531,7 +1543,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('courses', 'Escuela\Instructor\CourseController');
 
     Route::get('curso-estudiante/{course}', 'CursoEstudiante@cursoEstudiante')->name('curso-estudiante');
-    Route::get('mis-cursos', 'CursoEstudiante@misCursos')->name('mis-cursos');
+    Route::middleware('cacheResponse')->get('mis-cursos', 'CursoEstudiante@misCursos')->name('mis-cursos');
     Route::get('curso-estudiante/{course}/evaluacion/{evaluation}', 'CursoEstudiante@evaluacionEstudiante')->name('curso.evaluacion');
     Route::get('courses/{course}', 'CursoEstudiante@show')->name('courses.show');
     Route::post('course/{course}/enrolled', 'CursoEstudiante@enrolled')->name('courses.enrolled');
@@ -1541,12 +1553,20 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('courses/{course}/evaluation/{evaluation}', 'Escuela\Instructor\CourseQuestionController@index')->name('courses.evaluation.questions');
     Route::get('courses/{course}/evaluacion/{evaluation}/quizdetail', 'CursoEstudiante@tableQuizDetails')->name('courses.quizdetails');
     Route::get('courses-inscribed', 'CursoEstudiante@coursesInscribed')->name('courses-inscribed');
+
+    Route::get('panel-cursos', 'PanelCursosController@index')->name('panel-cursos');
+
     //categorias para el administrador de escuela
     Route::resource('categories', 'Escuela\Admin\CategoryController');
     Route::get('categories/destroy/{id}', 'Escuela\Admin\CategoryController@destroy');
     Route::resource('levels', 'Escuela\Admin\LevelController');
     Route::get('levels/destroy/{id}', 'Escuela\Admin\LevelController@destroy');
     Route::resource('dashboardescuela', 'Escuela\Admin\HomeController');
+
+    Route::get('courses-reportes-individuales/{id}', 'Escuela\Admin\ReportesIndividualesController@index')->name('courses-reportes-individuales');
+
+    // pasarela de pago
+    Route::get('pasarela-pago/', 'PasarelaPagoController@index')->name('pasarela-pago.inicio');
 });
 
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth', '2fa', 'active']], function () {
@@ -1664,7 +1684,7 @@ Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function 
 
 //KATBOL
 Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'namespace' => 'ContractManager', 'middleware' => ['auth', '2fa', 'active']], function () {
-    Route::view('katbol', 'contract_manager.katbol.index')->name('katbol');
+    Route::view('katbol', 'contract_manager.katbol.index')->name('katbol')->middleware('cacheResponse');
 
     //Proveedores
     Route::resource('proveedor', 'ProveedoresController');
@@ -1759,6 +1779,7 @@ Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'name
     Route::get('requisiciones/filtrar_jefe', 'RequisicionesController@filtrarPorEstado1')->name('requisiciones.filtrarPorEstado1');
     Route::get('requisiciones/filtrar_solicitante', 'RequisicionesController@filtrarPorEstado2')->name('requisiciones.filtrarPorEstado2');
     Route::get('requisiciones/filtrar_compras', 'RequisicionesController@filtrarPorEstado3')->name('requisiciones.filtrarPorEstado3');
+    Route::post('requisiciones/cambiarResponsable', 'RequisicionesController@cambiarResponsable')->name('requisiciones.cambiarResponsable');
 
     // ordenes de compra
     Route::get('orden-compra', 'OrdenCompraController@index')->name('orden-compra');

@@ -107,9 +107,9 @@
 
 
 @if (session('mensajeError'))
-<div class="alert alert-danger">
-    {{ session('mensajeError') }}
-</div>
+    <div class="alert alert-danger">
+        {{ session('mensajeError') }}
+    </div>
 @endif
 
 {{-- <form method="PATH" action="{{ route('contratos.update', $contrato->id) }}" enctype="multipart/form-data"> --}}
@@ -117,6 +117,7 @@
     'route' => ['contract_manager.contratos-katbol.update', $contrato->id],
     'method' => 'PATCH',
     'enctype' => 'multipart/form-data',
+    'id' => 'update-form',
 ]) !!}
 @csrf
 
@@ -222,8 +223,9 @@
             <label for="nombre_servicio" class="txt-tamaño">
                 Nombre del servicio<font class="asterisco">*</font></label><br>
             <div class="form-floating">
-                <textarea id="textarea1"  maxlength="550"  class="form-control" value="{{ $contrato->nombre_servicio }}" name="nombre_servicio"
-                    {{ $show_contrato ? 'readonly' : '' }} @if ($show_contrato) disabled @endif required>{{ $contrato->nombre_servicio }}</textarea>
+                <textarea id="textarea1" maxlength="550" class="form-control" value="{{ $contrato->nombre_servicio }}"
+                    name="nombre_servicio" {{ $show_contrato ? 'readonly' : '' }} @if ($show_contrato) disabled @endif
+                    required>{{ $contrato->nombre_servicio }}</textarea>
             </div>
             @if ($errors->has('nombre_servicio'))
                 <div class="invalid-feedback red-text">
@@ -250,12 +252,33 @@
             </select>
         </div>
 
-        <div class="distancia form-group col-md-4">
-            <label for="no_proyecto" class="txt-tamaño">
-                Número de proyecto</label>
-            <input type="text" maxlength="250" name="no_proyecto" id="no_proyecto" class="form-control"
-                value="{{ $contrato->no_proyecto }}" @if ($show_contrato) disabled @endif>
-        </div>
+        @if ($contrato->proyectoConvergencia)
+            <div class="distancia form-group col-md-4">
+                <label for="no_proyecto" class="txt-tamaño">Número de proyecto</label>
+                <select class="form-control" name="no_proyecto" id="no_proyecto"
+                    @if ($show_contrato) disabled @endif>
+                    <option value="" selected>Seleccione un Número de proyecto</option>
+                    @foreach ($proyectos as $proyecto)
+                        <option data-id="{{ $proyecto->id }}" value="{{ $proyecto->identificador }}"
+                            @if ($contrato->proyectoConvergencia->id == $proyecto->id) selected @endif>
+                            {{ $proyecto->identificador }} - {{ $proyecto->proyecto }}
+                        </option>
+                    @endforeach
+                </select>
+                @if ($errors->has('no_proyecto'))
+                    <div class="invalid-feedback red-text">
+                        {{ $errors->first('no_proyecto') }}
+                    </div>
+                @endif
+            </div>
+        @else
+            <div class="distancia form-group col-md-4">
+                <label for="no_proyecto" class="txt-tamaño">
+                    Número de proyecto</label>
+                <input type="text" maxlength="250" name="no_proyecto" id="no_proyecto" class="form-control"
+                    value="{{ $contrato->no_proyecto }}" @if ($show_contrato) disabled @endif>
+            </div>
+        @endif
 
         @if ($areas->count() > 0)
             <div class="distancia form-group col-md-4">
@@ -328,8 +351,8 @@
         <div class="form-group col-md-12">
             <label for="objetivo" class="txt-tamaño">
                 Objetivo del servicio<font class="asterisco">*</font></label>
-            <textarea style="text-align:justify" maxlength="500" id="textarea1" class="form-control" value="{{ $contrato->objetivo }}"
-                name="objetivo" @if ($show_contrato) disabled @endif required>{{ $contrato->objetivo }}</textarea>
+            <textarea style="text-align:justify" maxlength="500" id="textarea1" class="form-control"
+                value="{{ $contrato->objetivo }}" name="objetivo" @if ($show_contrato) disabled @endif required>{{ $contrato->objetivo }}</textarea>
             @if ($errors->has('objetivo'))
                 <div class="invalid-feedback red-text">
                     {{ $errors->first('objetivo') }}
@@ -339,29 +362,28 @@
     </div>
 
     <div class="row" style="margin-left: 10px; margin-right: 10px;">
-        <div class="distancia form-group col-md-6">
-            <label for="" class="txt-tamaño">
-                Adjuntar Contrato
-                <font class="asterisco">*</font>
-            </label>
-            <div class="file-field input-field">
+        @if ($contrato->file_contrato != null)
+            <div class="distancia form-group col-md-6">
+                <label for="" class="txt-tamaño">
+                    Adjuntar Contrato
+                    <font class="asterisco">*</font>
+                </label>
+                <div class="file-field input-field">
+                    <div class="btn" {{ !$show_contrato ? 'onclick=mostrarAlerta()' : '' }}>
+                        <span>Documento Actual:</span>
+                    </div>
 
-                <div class="btn" {{ !$show_contrato ? 'onclick=mostrarAlerta()' : '' }}>
-                    <span>Documento Actual:</span>
-                </div>
-
-                <div class="file-path-wrapper">
-                    <input value="{{ $contrato->file_contrato }}" class="file-path validate form-control"
-                        type="text" placeholder="Elegir documento" {{ $show_contrato ? 'readonly' : '' }}
-                        readonly>
+                    <div class="file-path-wrapper">
+                        <input value="{{ $contrato->file_contrato }}" class="file-path validate form-control"
+                            type="text" placeholder="Elegir documento" {{ $show_contrato ? 'readonly' : '' }}
+                            readonly>
+                    </div>
+                    <a href="{{ asset(trim('storage/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/' . $contrato->file_contrato)) }}"
+                        target="_blank" class=" descarga_archivo" style="margin-left:20px;">
+                        Descargar archivo actual</a>
                 </div>
             </div>
-            @if ($contrato->file_contrato != null)
-                <a href="{{ asset(trim('storage/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/' . $contrato->file_contrato)) }}"
-                    target="_blank" class=" descarga_archivo" style="margin-left:20px;">
-                    Descargar archivo actual</a>
-            @endif
-        </div>
+        @endif
         <div class="distancia form-group col-md-6">
             @if (!$show_contrato)
                 <div class="fondo_delete">
@@ -452,7 +474,7 @@
                 de firma
                 <font class="asterisco">*</font>
             </label>
-            <input type="date" name="fecha_firma" id="fecha_firma" class="form-control"
+            <input required type="date" name="fecha_firma" id="fecha_firma" class="form-control"
                 value="{{ old('fecha_firma', $contrato->fecha_firma) }}"
                 @if ($show_contrato) disabled @endif>
             {{-- {!! Form::text('fecha_firma', $contrato->fecha_firma, [
@@ -486,14 +508,14 @@
         <div class="form-group col-md-4">
             <label for="no_contrato" class="txt-tamaño">
                 No. Pagos<font class="asterisco">*</font></label>
-                {!! Form::number('no_pagos', $contrato->no_pagos, [
-                    'class' => 'form-control',
-                    'required',
-                    'pattern' => '[0-9]+',
-                    'min' => 0, // Opcional: especifica el valor mínimo permitido
-                    'step' => 1, // Opcional: especifica el paso de incremento/decremento
-                    $show_contrato ? 'readonly' : '',
-                ]) !!}
+            {!! Form::number('no_pagos', $contrato->no_pagos, [
+                'class' => 'form-control',
+                'required',
+                'pattern' => '[0-9]+',
+                'min' => 0, // Opcional: especifica el valor mínimo permitido
+                'step' => 1, // Opcional: especifica el paso de incremento/decremento
+                $show_contrato ? 'readonly' : '',
+            ]) !!}
             @if ($errors->has('no_pagos'))
                 <div class="invalid-feedback red-text">
                     {{ $errors->first('no_pagos') }}
@@ -725,43 +747,26 @@
                 </td>
                 <td>
                     <div class="td_fianza">
-                        @if (is_null($organizacion))
-                        @else
-                            <div class="row">
-                                PDF:
-                                <div class="file-field input-field">
-                                    <div class="btn">
-                                        <input class="input_file_validar form-control" type="file"
-                                            name="documento" accept=".pdf" readonly>
-                                        {{-- <input type="hidden" id="" name="" value=""> --}}
-                                    </div>
-                                    {{-- <div class="file-path-wrapper">
-                                    <input class="file-path validate" type="text"
-                                        placeholder="Elegir documento pdf" readonly>
-                                </div> --}}
-                                </div>
-                            </div>
-                        @endif
-
-                        <div class="ml-4 display-flex">
-                            <label class="red-text">{{ $errors->first('Type') }}</label>
-                        </div>
-                        @if ($contrato->documento != null)
-                            <a href="{{ asset(trim('storage/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/penalizaciones/' . $contrato->documento)) }}"
-                                target="_blank" class=" descarga_archivo" style="margin-left:20px;">
-
-                                Descargar
-                            </a>
-                        @endif
-                        <div class="ml-4 display-flex">
-                            <label class="red-text">{{ $errors->first('Type') }}</label>
-                        </div>
+                        <input class="form-control" type="file" name="documento" accept=".pdf" readonly>
                     </div>
-                </td>
-
-            </tbody>
-        </table>
+                    <div class="ml-4 display-flex">
+                        <label class="red-text">{{ $errors->first('Type') }}</label>
+                    </div>
+                    @if ($contrato->documento != null)
+                        <a href="{{ asset(trim('storage/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/penalizaciones/' . $contrato->documento)) }}"
+                            target="_blank" class="descarga_archivo" style="margin-left:20px;">
+                            Descargar
+                        </a>
+                    @endif
+                    <div class="ml-4 display-flex">
+                        <label class="red-text">{{ $errors->first('Type') }}</label>
+                    </div>
     </div>
+    </td>
+
+    </tbody>
+    </table>
+</div>
 </div>
 
 <div class="row">
@@ -883,7 +888,7 @@
     <div class="col s12 right-align btn-grd distancia">
         @if (!$show_contrato)
             <a href="{{ route('contract_manager.contratos-katbol.index') }}" class="btn btn_cancelar">Cancelar</a>
-            {!! Form::submit('Guardar', ['class' => 'btn btn-success',  'onclick' => 'miFuncion()']) !!}
+            {!! Form::submit('Guardar', ['class' => 'btn btn-success']) !!}
         @endif
     </div>
 </div>
@@ -913,7 +918,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<script type="text/javascript">
+{{-- <script type="text/javascript">
     function miFuncion() {
         Swal.fire({
             position: 'top-end',
@@ -925,9 +930,8 @@
             // redirigir a la misma página
             window.location.href = window.location.href;
         });
-}
-
-</script>
+    }
+</script> --}}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/autonumeric/4.0.3/autoNumeric.js"></script>
@@ -1086,7 +1090,7 @@
     $(document).ready(function() {
 
         if ($('#check_fianza').checked) {
-           $(".td_fianza").fadeOut(0);
+            $(".td_fianza").fadeOut(0);
         } else {
             $(".td_fianza").fadeIn(0);
         }
@@ -1099,6 +1103,7 @@
         }
     });
 </script>
+
 
 
 
@@ -1274,117 +1279,124 @@
         $('.input-field').click(function(e) {
             $('.input-field:hover').addClass('caja_input_file_activa');
         });
-        $('.input_file_validar').change(function(e) {
+        // $('.input_file_validar').change(function(e) {
 
-            $('.caja_input_file_activa .errors').remove();
-            let loader_file = $('<div>');
-            loader_file.addClass('progress');
-            loader_file.addClass('d-none');
-            $('.caja_input_file_activa').append(loader_file);
-            let loader_progres_file = $('<div>');
-            loader_progres_file.addClass('indeterminate');
-            $('.caja_input_file_activa .progress').append(loader_progres_file);
+        //     $('.caja_input_file_activa .errors').remove();
+        //     let loader_file = $('<div>');
+        //     loader_file.addClass('progress');
+        //     loader_file.addClass('d-none');
+        //     $('.caja_input_file_activa').append(loader_file);
+        //     let loader_progres_file = $('<div>');
+        //     loader_progres_file.addClass('indeterminate');
+        //     $('.caja_input_file_activa .progress').append(loader_progres_file);
 
-            let file = e.target.files[0];
-            let formData = new FormData();
-            formData.append('file', file);
-            $.ajax({
-                xhr: function() {
-                    let xhr = new window.XMLHttpRequest();
-                    xhr.upload.addEventListener("progress", function(evt) {
+        //     let file = e.target.files[0];
+        //     let formData = new FormData();
+        //     formData.append('file', file);
+        //     $.ajax({
+        //         xhr: function() {
+        //             let xhr = new window.XMLHttpRequest();
+        //             xhr.upload.addEventListener("progress", function(evt) {
 
 
-                        if (evt.lengthComputable) {
-                            let percentComplete = (evt.loaded / evt.total) * 100;
-                            // Place upload progress bar visibility code here
-                            $('.caja_input_file_activa .progress').removeClass(
-                                'd-none');
-                            if (percentComplete == 100) {
+        //                 if (evt.lengthComputable) {
+        //                     let percentComplete = (evt.loaded / evt.total) * 100;
+        //                     // Place upload progress bar visibility code here
+        //                     $('.caja_input_file_activa .progress').removeClass(
+        //                         'd-none');
+        //                     if (percentComplete == 100) {
 
-                            }
-                        }
-                    }, false);
-                    return xhr;
-                },
+        //                     }
+        //                 }
+        //             }, false);
+        //             return xhr;
+        //         },
 
-                url: url,
+        //         url: url,
 
-                data: formData,
+        //         data: formData,
 
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
+        //         headers: {
+        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //         },
 
-                type: 'POST',
+        //         type: 'POST',
 
-                dataType: 'json',
+        //         dataType: 'json',
 
-                contentType: false,
-                processData: false,
+        //         contentType: false,
+        //         processData: false,
 
-                success: function(json) {
-                    console.log('json');
-                },
+        //         success: function(json) {
+        //             console.log('json');
+        //         },
 
-                error: function(request, status, error) {
-                    console.log('Disculpe, existió un problema');
-                    $.each(request.responseJSON.errors, function(indexInArray,
-                        valueOfElement) {
-                        console.log(indexInArray);
+        //         error: function(request, status, error) {
+        //             console.log('Disculpe, existió un problema');
+        //             $.each(request.responseJSON.errors, function(indexInArray,
+        //                 valueOfElement) {
+        //                 console.log(indexInArray);
 
-                        let error_small = $('<small>');
-                        error_small.addClass(`${indexInArray}_error`);
-                        error_small.addClass('errors');
-                        $('.caja_input_file_activa').append(error_small);
+        //                 let error_small = $('<small>');
+        //                 error_small.addClass(`${indexInArray}_error`);
+        //                 error_small.addClass('errors');
+        //                 $('.caja_input_file_activa').append(error_small);
 
-                        document.querySelector(
-                                `.caja_input_file_activa .${indexInArray}_error`)
-                            .innerHTML =
-                            ` ${valueOfElement[0]}`;
+        //                 document.querySelector(
+        //                         `.caja_input_file_activa .${indexInArray}_error`)
+        //                     .innerHTML =
+        //                     ` ${valueOfElement[0]}`;
 
-                        e.target.value = '';
-                    });
-                },
+        //                 e.target.value = '';
+        //             });
+        //         },
 
-                complete: function(jqXHR, status) {
-                    console.log('Petición realizada');
-                    $('.caja_input_file_activa .progress').remove();
-                    $('.caja_input_file_activa').removeClass('caja_input_file_activa');
-                }
-            });
-        });
+        //         complete: function(jqXHR, status) {
+        //             console.log('Petición realizada');
+        //             $('.caja_input_file_activa .progress').remove();
+        //             $('.caja_input_file_activa').removeClass('caja_input_file_activa');
+        //         }
+        //     });
+        // });
     });
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 <script>
     $(document).ready(function() {
-        $('#miFormulario').on('submit', function(e) {
-            e.preventDefault();
+        $('#update-form').on('submit', function(e) {
+            e.preventDefault(); // Prevent the default form submission
+
+            // Create a FormData object from the form
+            var formData = new FormData(this);
 
             $.ajax({
-                type: 'POST',
-                url: $(this).attr('action'),
-                data: $(this).serialize(),
+                url: $(this).attr('action'), // Form action URL
+                method: $(this).attr('method'), // Form method
+                data: formData,
+                processData: false, // Prevent jQuery from automatically transforming the data into a query string
+                contentType: false, // Set the content type to false as jQuery will tell the server it's a query string request
                 success: function(response) {
-                    if(response.success) {
-                        Swal.fire(
-                            '¡Buen trabajo!',
-                            response.message,
-                            'success'
-                        );
+                    if (response.status === 'success') {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Éxito',
+                            text: response.message,
+                        });
                     }
                 },
                 error: function(xhr) {
-                    // Manejo de errores
-                    Swal.fire(
-                        'Error',
-                        'Ocurrió un error al guardar los datos',
-                        'error'
-                    );
+                    var errorMessage = 'An error occurred. Please try again.';
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        errorMessage = xhr.responseJSON.message;
+                    }
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: errorMessage,
+                    });
                 }
             });
         });
     });
 </script>
-

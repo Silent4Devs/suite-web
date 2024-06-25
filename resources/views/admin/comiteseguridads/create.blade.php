@@ -97,7 +97,7 @@
 
                 <div class="text-right form-group col-12">
                     <a href="{{ route('admin.comiteseguridads.index') }}" class="btn_cancelar" style="text-decoration: none;">Cancelar</a>
-                    <button class="btn btn-primary"  type="submit" style="width: 13%;">
+                    <button class="btn tb-btn-primary"  type="submit" style="width: 13%;">
                         {{ trans('global.save') }}
                     </button>
                 </div>

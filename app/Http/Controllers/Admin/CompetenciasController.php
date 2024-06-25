@@ -210,20 +210,41 @@ class CompetenciasController extends Controller
 
     public function miCurriculum(Request $request, Empleado $empleado)
     {
-        abort_if(Gate::denies('mi_perfil_mis_datos_ver_perfil_profesional'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $empleado->load('idiomas');
-        $lista_docs = ListaDocumentoEmpleado::getAll();
+        $usuario = User::getCurrentUser();
 
-        return view('admin.competencia.mi-cv', compact('empleado', 'lista_docs'));
+        if ($usuario->empleado->id == $empleado->id) {
+
+            $empleado->load('idiomas');
+            $lista_docs = ListaDocumentoEmpleado::getAll();
+
+            return view('admin.competencia.mi-cv', compact('empleado', 'lista_docs'));
+        } else {
+            abort_if(Gate::denies('mi_perfil_mis_datos_ver_perfil_profesional'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+            $empleado->load('idiomas');
+            $lista_docs = ListaDocumentoEmpleado::getAll();
+
+            return view('admin.competencia.mi-cv', compact('empleado', 'lista_docs'));
+        }
     }
 
     public function editarCompetencias(Empleado $empleado)
     {
-        abort_if(Gate::denies('mi_perfil_mis_datos_ver_perfil_profesional'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $isEditAdmin = false;
-        $idiomas = Language::get();
+        $usuario = User::getCurrentUser();
 
-        return view('admin.empleados.edit', compact('isEditAdmin', 'empleado', 'idiomas'));
+        if ($usuario->empleado->id == $empleado->id) {
+
+            $isEditAdmin = false;
+            $idiomas = Language::get();
+
+            return view('admin.empleados.edit', compact('isEditAdmin', 'empleado', 'idiomas'));
+        } else {
+            abort_if(Gate::denies('mi_perfil_mis_datos_ver_perfil_profesional'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            $isEditAdmin = false;
+            $idiomas = Language::get();
+
+            return view('admin.empleados.edit', compact('isEditAdmin', 'empleado', 'idiomas'));
+        }
     }
 
     public function cargarDocumentos(Request $request, Empleado $empleado)

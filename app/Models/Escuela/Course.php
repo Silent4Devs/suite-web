@@ -21,17 +21,13 @@ class Course extends Model implements Auditable
 
     protected $withCount = ['students', 'reviews'];
 
-    protected $fillable = [
-        'created_at',
-        'updated_at',
-        'deleted_at',
-    ];
-
     const BORRADOR = 1;
 
     const REVISION = 2;
 
     const PUBLICADO = 3;
+
+    const CERRADO = 4;
 
     //query redis cache
     public static function getAll()
@@ -70,6 +66,31 @@ class Course extends Model implements Auditable
     public function getRouteKeyName()
     {
         return 'slug';
+    }
+
+    public function getSectionsOrderAttribute()
+    {
+        if ($this->order_section) {
+            $sections = $this->order_section;
+            $string = str_replace('"', '', $sections);
+            $string = str_replace('seccion-', '', $sections);
+            $array = explode(',', $string);
+            $sectionsRegisters = collect();
+            foreach ($array as $section) {
+                $sectionConsult = Section::find($section);
+                if (isset($sectionConsult)) {
+                    $sectionsRegisters->push($sectionConsult);
+                }
+            }
+
+            $querys_unidos = $sectionsRegisters->merge($this->sections)->unique();
+
+            return $querys_unidos;
+        } else {
+            $secciones = $this->sections;
+
+            return $secciones;
+        }
     }
 
     //Relacion uno a muchos

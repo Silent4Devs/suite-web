@@ -5,7 +5,7 @@
 
 {{-- {{ Breadcrumbs::render('proveedores_create') }} --}}
 
-<link rel="stylesheet" href="{{ asset('css/requisiciones.css') }}">
+<link rel="stylesheet" href="{{ asset('css/requisitions/requisitions.css') }}">
 
 
 <div class="create-requisicion">
@@ -345,7 +345,7 @@
             Sub total <font class="asterisco">*</font>
         </label>
         <div class="caja-input-dinero">
-            <input type="text" name="sub_total{{ $count }}" data-count="{{ $count }}"
+            <input type="text"  name="sub_total{{ $count }}" data-count="{{ $count }}"
                 class="mod-sub_total browser-default" required value="{{ $producto->sub_total }}">
         </div>
     </div>
@@ -426,7 +426,7 @@
                     Sub total
                 </label>
                 <div class="caja-input-dinero">
-                    <input type="text" id="sub_total_calculado" name="sub_total" class="browser-default" required
+                    <input type="text" id="sub_total_calculado"  name="sub_total" class="browser-default" required
                         value="{{ $requisicion->sub_total }}" style="background: rgb(250, 249, 249);">
                 </div>
             </div>
@@ -437,7 +437,7 @@
                     IVA
                 </label>
                 <div class="caja-input-dinero">
-                    <input type="text" id="iva_calculado" name="iva" class="browser-default" required
+                    <input type="text" id="iva_calculado"  name="iva" class="browser-default" required
                         value="{{ $requisicion->iva }}" style="background: rgb(250, 249, 249);">
                 </div>
             </div>
@@ -448,7 +448,7 @@
                     IVA retenido
                 </label>
                 <div class="caja-input-dinero">
-                    <input type="text" id="iva_retenido_calculado" name="iva_retenido" class="browser-default"
+                    <input type="text" id="iva_retenido_calculado"  name="iva_retenido" class="browser-default"
                         required value="{{ $requisicion->iva_retenido }}" style="background: rgb(250, 249, 249);">
                 </div>
             </div>
@@ -459,7 +459,7 @@
                     ISR retenido
                 </label>
                 <div class="caja-input-dinero">
-                    <input type="text" id="isr_retenido_calculado" name="isr_retenido" class="browser-default"
+                    <input type="text" id="isr_retenido_calculado"  name="isr_retenido" class="browser-default"
                         required value="{{ $requisicion->isr_retenido }}" style="background: rgb(250, 249, 249);">
                 </div>
             </div>
@@ -470,7 +470,7 @@
                     Total
                 </label>
                 <div class="caja-input-dinero">
-                    <input type="text" id="total_calculado" name="total" class="browser-default" required
+                    <input type="text" id="total_calculado" name="total"  class="browser-default" required
                         value="{{ $requisicion->total }}" style="background: rgb(250, 249, 249);">
                 </div>
             </div>
@@ -480,7 +480,7 @@
 <div class="flex" style="justify-content: flex-end; margin-top:50px; gap:10px;">
     <a href="{{ route('contract_manager.orden-compra') }}"
     class="btn_cancelar" >Regresar</a>
-    <button class="btn btn-primary" onclick="mensaje()">Guardar</button>
+    <button class="btn tb-btn-primary" onclick="mensaje()">Guardar</button>
 </div>
 </form>
 </div>

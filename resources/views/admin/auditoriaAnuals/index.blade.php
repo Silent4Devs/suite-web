@@ -84,7 +84,7 @@
 
     <div class="text-right">
         <div class="d-flex justify-content-end">
-            <a href="{{ route('admin.auditoria-anuals.create') }}" type="button" class="btn btn-primary">Registrar Programa</a> &nbsp;
+            <a href="{{ route('admin.auditoria-anuals.create') }}" type="button" class="btn tb-btn-primary">Registrar Programa</a> &nbsp;
         </div>
     </div>
     <div class="mt-5 card">

@@ -112,7 +112,7 @@
 
             <div class="text-right form-group col-12" id="miDiv" style="display: none;">
                 <a href="{{ route('admin.comiteseguridads.index') }}" class="btn" id="btn_cancelar" style="color:#057BE2; width:6rem; height: 10rem;">Cancelar</a>
-                <button class="btn btn-primary" id="botonFormulario" type="submit">
+                <button class="btn tb-btn-primary" id="botonFormulario" type="submit">
                     {{ trans('global.save') }}
                 </button>
             </div>
@@ -128,7 +128,7 @@
 
 <div class="text-right form-group col-12">
     <a href="{{ route('admin.comiteseguridads.index') }}" class="btn_cancelar" style="text-decoration: none;">Cancelar</a>
-    <button class="btn btn-primary" id="botonPrincipal" type="submit" style="width: 13%;">
+    <button class="btn tb-btn-primary" id="botonPrincipal" type="submit" style="width: 13%;">
         {{ trans('global.save') }}
     </button>
 </div>

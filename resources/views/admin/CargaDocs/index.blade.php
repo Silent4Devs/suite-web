@@ -115,8 +115,8 @@
                     <i class="fas fa-chess-knight iconos-crear"></i>{!! Form::label('competencia', 'Competencias') !!}
                     <div class="caja_btn_input">
                         {!! Form::open(['route' => 'carga-competencia', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
-                        <input class="btn btn-primary btn-sm" type="file" name="competencia" required>
-                        {!! Form::button('<i class="fas fa-file-upload"></i>', ['class' => 'btn btn-primary, class' title 'btn btnCargar documentoy']) !!}
+                        <input class="btn tb-btn-primary btn-sm" type="file" name="competencia" required>
+                        {!! Form::button('<i class="fas fa-file-upload"></i>', ['class' => 'btn tb-btn-primary, class' title 'btn btnCargar documentoy']) !!}
                         <button class="btn btn-secondary btn-sm">Descargar Formato</button>
                         {!! Form::close() !!}
                     </div>
@@ -127,8 +127,8 @@
                     <i class="fas fa-vote-yea iconos-crear"></i>{!! Form::label('evaluacion', 'Evaluaciones') !!}
                     <div class="caja_btn_input">
                         {!! Form::open(['route' => 'carga-evaluacion', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
-                        <input class="btn btn-primary btn-sm" type="file" name="evaluacion" required>
-                        {!! Form::button('<i class="fas fa-file-upload"></i>', ['class' => 'btn btn-primary, class' title 'btn btnCargar documentoy']) !!}
+                        <input class="btn tb-btn-primary btn-sm" type="file" name="evaluacion" required>
+                        {!! Form::button('<i class="fas fa-file-upload"></i>', ['class' => 'btn tb-btn-primary, class' title 'btn btnCargar documentoy']) !!}
                         <button class="btn btn-secondary btn-sm">Descargar Formato</button>
                         {!! Form::close() !!}
                     </div>
@@ -229,8 +229,8 @@
                     <i class="fas fa-vote-yea iconos-crear"></i>{!! Form::label('evidencia_recursos', 'Evidencia de asignación de recursos') !!}
                     <div class="caja_btn_input">
                         {!! Form::open(['route' => 'carga-evidencia_recursos', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
-                        <input class="btn btn-primary btn-sm" type="file" name="evidencia_recursos" required>
-                        {!! Form::button('<i class="fas fa-file-upload"></i>', ['class' => 'btn btn-primary, class' title 'btn btnCargar documentoy']) !!}
+                        <input class="btn tb-btn-primary btn-sm" type="file" name="evidencia_recursos" required>
+                        {!! Form::button('<i class="fas fa-file-upload"></i>', ['class' => 'btn tb-btn-primary, class' title 'btn btnCargar documentoy']) !!}
                         <button class="btn btn-secondary btn-sm">Descargar Formato</button>
                         {!! Form::close() !!}
                     </div>
@@ -319,8 +319,8 @@
                     <i class="fas fa-user iconos-crear"></i>{!! Form::label('usuario', 'Usuario') !!}
                     <div class="caja_btn_input">
                         {!! Form::open(['route' => 'carga-usuario', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
-                        <input class="btn btn-primary btn-sm" type="file" name="usuario" required>
-                        {!! Form::button('<i class="fas fa-file-upload"></i>', ['class' => 'btn btn-primary, class' title 'btn btnCargar documentoy']) !!}
+                        <input class="btn tb-btn-primary btn-sm" type="file" name="usuario" required>
+                        {!! Form::button('<i class="fas fa-file-upload"></i>', ['class' => 'btn tb-btn-primary, class' title 'btn btnCargar documentoy']) !!}
                         <button class="btn btn-secondary btn-sm">Descargar Formato</button>
                         {!! Form::close() !!}
                     </div>
@@ -346,8 +346,8 @@
                     <i class="fa-fw fas fa-cogs iconos-crear"></i>{!! Form::label('ejecutarenlace', 'Enlace a Ejecutar') !!}
                     <div class="caja_btn_input">
                         {!! Form::open(['route' => 'carga-ejecutarenlace', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
-                        <input class="btn btn-primary btn-sm" type="file" name="ejecutarenlace" required>
-                        {!! Form::button('<i class="fas fa-file-upload"></i>', ['class' => 'btn btn-primary, class' title 'btn btnCargar documentoy']) !!}
+                        <input class="btn tb-btn-primary btn-sm" type="file" name="ejecutarenlace" required>
+                        {!! Form::button('<i class="fas fa-file-upload"></i>', ['class' => 'btn tb-btn-primary, class' title 'btn btnCargar documentoy']) !!}
                         <button class="btn btn-secondary btn-sm">Descargar Formato</button>
                         {!! Form::close() !!}
                     </div>
@@ -358,8 +358,8 @@
                     <i class="fa-fw fas fa-users iconos-crear"></i>{!! Form::label('team', 'Team') !!}
                     <div class="caja_btn_input">
                         {!! Form::open(['route' => 'carga-team', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
-                        <input class="btn btn-primary btn-sm" type="file" name="team" required>
-                        {!! Form::button('<i class="fas fa-file-upload"></i>', ['class' => 'btn btn-primary, class' title 'btn btnCargar documentoy']) !!}
+                        <input class="btn tb-btn-primary btn-sm" type="file" name="team" required>
+                        {!! Form::button('<i class="fas fa-file-upload"></i>', ['class' => 'btn tb-btn-primary, class' title 'btn btnCargar documentoy']) !!}
                         <button class="btn btn-secondary btn-sm">Descargar Formato</button>
                         {!! Form::close() !!}
                     </div>
@@ -370,8 +370,8 @@
                     <i class="fa-fw fab fa-stripe-s iconos-crear"></i>{!! Form::label('estadoincidente', 'Estado Incidente') !!}
                     <div class="caja_btn_input">
                         {!! Form::open(['route' => 'carga-estadoincidente', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
-                        <input class="btn btn-primary btn-sm" type="file" name="estadoincidente" required>
-                        {!! Form::button('<i class="fas fa-file-upload"></i>', ['class' => 'btn btn-primary, class' title 'btn btnCargar documentoy']) !!}
+                        <input class="btn tb-btn-primary btn-sm" type="file" name="estadoincidente" required>
+                        {!! Form::button('<i class="fas fa-file-upload"></i>', ['class' => 'btn tb-btn-primary, class' title 'btn btnCargar documentoy']) !!}
                         <button class="btn btn-secondary btn-sm">Descargar Formato</button>
                         {!! Form::close() !!}
                     </div>
@@ -413,8 +413,8 @@
                     <i class="fa-fw fas fa-question iconos-crear"></i>{!! Form::label('faqpregunta', 'Preguntas') !!}
                     <div class="caja_btn_input">
                         {!! Form::open(['route' => 'carga-faqpregunta', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
-                        <input class="btn btn-primary btn-sm" type="file" name="faqpregunta" required>
-                        {!! Form::button('<i class="fas fa-file-upload"></i>', ['class' => 'btn btn-primary, class' title 'btn btnCargar documentoy']) !!}
+                        <input class="btn tb-btn-primary btn-sm" type="file" name="faqpregunta" required>
+                        {!! Form::button('<i class="fas fa-file-upload"></i>', ['class' => 'btn tb-btn-primary, class' title 'btn btnCargar documentoy']) !!}
                         <button class="btn btn-secondary btn-sm">Descargar Formato</button>
                         {!! Form::close() !!}
                     </div>
@@ -441,8 +441,8 @@
                     <i class="fa-fw fas fa-question iconos-crear"></i>{!! Form::label('documentos', 'Documentos/Crear documetos') !!}
                     <div class="caja_btn_input">
                         {!! Form::open(['route' => 'carga-grupo_area', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
-                        <input class="btn btn-primary btn-sm" type="file" name="documentos" required>
-                        {!! Form::button('<i class="fas fa-file-upload"></i>', ['class' => 'btn btn-primary, class' title 'btn btnCargar documentoy']) !!}
+                        <input class="btn tb-btn-primary btn-sm" type="file" name="documentos" required>
+                        {!! Form::button('<i class="fas fa-file-upload"></i>', ['class' => 'btn tb-btn-primary, class' title 'btn btnCargar documentoy']) !!}
                         <button class="btn btn-secondary btn-sm">Descargar Formato</button>
                         {!! Form::close() !!}
                     </div>
@@ -451,8 +451,8 @@
                     <i class="fa-fw fas fa-question iconos-crear"></i>{!! Form::label('datos_area', 'Áreas/Crear área') !!}
                     <div class="caja_btn_input">
                         {!! Form::open(['route' => 'carga-datos_area', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
-                        <input class="btn btn-primary btn-sm" type="file" name="datos_area" required>
-                        {!! Form::button('<i class="fas fa-file-upload"></i>', ['class' => 'btn btn-primary, class' title 'btn btnCargar documentoy']) !!}
+                        <input class="btn tb-btn-primary btn-sm" type="file" name="datos_area" required>
+                        {!! Form::button('<i class="fas fa-file-upload"></i>', ['class' => 'btn tb-btn-primary, class' title 'btn btnCargar documentoy']) !!}
                         <button class="btn btn-secondary btn-sm">Descargar Formato</button>
                         {!! Form::close() !!}
                     </div>

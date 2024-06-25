@@ -45,11 +45,11 @@ class AuthController extends Controller
     {
         $token = request()->bearerToken();
 
-        return response()->json([
-            'status' => 'Success',
-            'message' => 'Hasta la proxima',
-            'data' => $token,
-        ], 204);
+        // return response()->json([
+        //     'status' => 'Success',
+        //     'message' => 'Hasta la proxima',
+        //     'data' => $token,
+        // ], 204);
 
         if (! $token) {
             return response()->json([
@@ -69,6 +69,6 @@ class AuthController extends Controller
             'status' => 'Success',
             'message' => 'Hasta la proxima',
             'data' => null,
-        ], 204);
+        ], 200);
     }
 }

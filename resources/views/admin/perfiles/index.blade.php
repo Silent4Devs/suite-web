@@ -8,8 +8,7 @@
 
     <div class="text-right">
         <div class="d-flex justify-content-end">
-            <a href="{{ route('admin.perfiles.create') }}" type="button" class="btn btn-primary">Registrar Nivel
-                Jerárquico</a>
+            <a href="{{ route('admin.perfiles.create') }}" type="button" class="btn tb-btn-primary">Registrar Nivel Jerárquico</a>
         </div>
     </div>
     @include('partials.flashMessages')

@@ -41,10 +41,10 @@
         }
 
         /* th {
-                background-color: #345183;
-                color: #ffff;
+                    background-color: #345183;
+                    color: #ffff;
 
-            } */
+                } */
 
         .iconos-tabla {
             color: #fff;
@@ -87,11 +87,12 @@
 
     <h5 class="col-12 titulo_general_funcion">Matriz de Riesgo </h5>
 
-        <div class="text-right">
-            <div class="d-flex justify-content-end">
-                <a href="{{ route('admin.analisis-riesgos.create') }}" type="button" class="btn btn-primary">Registrar Matriz</a>
-            </div>
+    <div class="text-right">
+        <div class="d-flex justify-content-end">
+            <a href="{{ route('admin.analisis-riesgos.create') }}" type="button" class="btn tb-btn-primary">Registrar
+                Matriz</a>
         </div>
+    </div>
 
     <div class="mt-5 card">
         @include('partials.flashMessages')

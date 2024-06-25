@@ -68,7 +68,7 @@
     }
 
     .instrucciones {
-        background-color:#306BA9;
+        background-color: #306BA9;
         border-radius: 8px;
         color: #fff;
         padding: 20px;
@@ -84,5 +84,29 @@
         border-radius: 4px;
         opacity: 1;
         color: #fff;
+    }
+
+    .imgdoc {
+        width: 150px;
+        height: 150px;
+        position: relative;
+        top: 5px;
+        left: 15px;
+        /* UI Properties */
+        background: transparent url('img/icono_onboarding.png') 0% 0% no-repeat padding-box;
+        opacity: 1;
+    }
+
+    #btn_cancelar {
+        background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
+        border: 1px solid var(--unnamed-color-057be2);
+        background: #FFFFFF 0% 0% no-repeat padding-box;
+        border: 1px solid #057BE2;
+        opacity: 1;
+    }
+
+    .anima-focus label {
+        margin-top: -7px !important;
+
     }
 </style>

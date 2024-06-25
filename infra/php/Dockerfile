@@ -1,4 +1,4 @@
-FROM php:8.2-fpm-alpine
+FROM php:8.3-fpm-alpine
 
 # Add docker-php-extension-installer script
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
@@ -56,8 +56,7 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
     excimer \
     pcntl \
     posix \
-    amqp \
-    newrelic
+    amqp
 
 # Enable phpredis extension
 #RUN echo "extension=redis.so" > /usr/local/etc/php/conf.d/docker-php-ext-redis.ini

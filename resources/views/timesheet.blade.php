@@ -9,7 +9,7 @@ analisis brecha
     <title>Timesheet</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/requisiciones_pdf.css{{config('app.cssVersion')}}">
+    <link rel="stylesheet" href="css/requisitions/pdf.css{{config('app.cssVersion')}}">
     <style>
         body{
             text-align: justify;

@@ -190,7 +190,7 @@
                             <i class="fa-regular fa-square-plus"></i> AGREGAR SERVICIOS Y PRODUCTOS
                         </div>
 
-                        <button class="btn btn-primary" type="submit">
+                        <button class="btn tb-btn-primary" type="submit">
                             Siguiente <i class="fa-solid fa-chevron-right icon-next"></i>
                         </button>
                     </div>
@@ -1249,7 +1249,7 @@
                     </div>
 
                     <div class="d-flex my-4" style="justify-content:flex-end;">
-                        <button class="btn btn-primary" type="submit">
+                        <button class="btn tb-btn-primary" type="submit">
                             Siguiente <i class="fa-solid fa-chevron-right icon-next"></i>
                         </button>
                     </div>
@@ -1567,7 +1567,7 @@
                                 </div>
                             </div>
                             <div class="flex my-4" style="justify-content: end; gap:10px;">
-                                <button onclick="validar()" class="btn btn-primary" type="submit">Firmar</button>
+                                <button onclick="validar()" class="btn tb-btn-primary" type="submit">Firmar</button>
                             </div>
                         </div>
                     </form>

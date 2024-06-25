@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('css')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}{{ config('app.cssVersion') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet/timesheet.css') }}{{ config('app.cssVersion') }}">
 @endsection
 @section('content')
     <style type="text/css">
@@ -47,7 +47,7 @@
             </div>
 
             <div class="form-group col-12">
-                <div class="btn btn-primary btn-transparent" id="btn_registro_completo">Registro Completo</div>
+                <div class="btn tb-btn-primary btn-transparent" id="btn_registro_completo">Registro Completo</div>
             </div>
 
             <div id="registro_completo" class="d-none w-100 row" style="margin:0 !important;">

@@ -1,7 +1,7 @@
 <div class="container">
 
     @if (count($lista_notificaciones) > 0)
-        <button class="btn btn-sm btn-primary" style="margin: 20px 0 10px 0" wire:click="markAllAsRead()">
+        <button class="btn btn-sm tb-btn-primary" style="margin: 20px 0 10px 0" wire:click="markAllAsRead()">
             Marcar todas como leídas
         </button>
         @foreach ($lista_notificaciones as $notificacion)

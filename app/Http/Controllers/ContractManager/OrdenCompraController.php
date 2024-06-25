@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\ContractManager;
 
 use App\Http\Controllers\Controller;
+use App\Mail\OrdenCompraAprobada;
 use App\Mail\RequisicionesEmail;
 use App\Models\ContractManager\CentroCosto as KatbolCentroCosto;
 use App\Models\ContractManager\Comprador as KatbolComprador;
@@ -13,6 +14,8 @@ use App\Models\ContractManager\ProvedorRequisicionCatalogo as KatbolProvedorRequ
 use App\Models\ContractManager\ProveedorIndistinto as KatbolProveedorIndistinto;
 use App\Models\ContractManager\ProveedorOC as KatbolProveedorOC;
 use App\Models\ContractManager\Requsicion as KatbolRequsicion;
+use App\Models\ListaDistribucion;
+use App\Models\ListaInformativa;
 use App\Models\Organizacion;
 use App\Models\User;
 use App\Traits\ObtenerOrganizacion;
@@ -28,6 +31,8 @@ class OrdenCompraController extends Controller
     use ObtenerOrganizacion;
 
     public $bandera = true;
+
+    public $modelo = 'OrdenCompra';
 
     /**
      * Display a listing of the resource.
@@ -45,7 +50,7 @@ class OrdenCompraController extends Controller
         $buttonFinanzas = false;
         $buttonCompras = false;
 
-        $proveedor_indistinto = KatbolProveedorIndistinto::getFirst()->pluck('requisicion_id');
+        // $proveedor_indistinto = KatbolProveedorIndistinto::getFirst()->pluck('requisicion_id');
 
         $requisiciones = KatbolRequsicion::with('contrato', 'provedores_requisiciones')->where([
             ['firma_solicitante', '!=', null],
@@ -55,7 +60,7 @@ class OrdenCompraController extends Controller
         ])->where('archivo', false)->orderByDesc('id')
             ->get();
 
-        return view('contract_manager.ordenes-compra.index', compact('buttonSolicitante', 'buttonFinanzas', 'buttonCompras', 'requisiciones', 'empresa_actual', 'logo_actual', 'proveedor_indistinto'));
+        return view('contract_manager.ordenes-compra.index', compact('buttonSolicitante', 'buttonFinanzas', 'buttonCompras', 'requisiciones', 'empresa_actual', 'logo_actual'));
     }
 
     public function getRequisicionIndex(Request $request)
@@ -271,16 +276,44 @@ class OrdenCompraController extends Controller
             'estado_orden' => 'curso',
         ]);
 
+        $copiasNivel = [];
+        $responsablesAusentes = [];
+        $correosCopia = [];
+
         if ($tipo_firma == 'firma_solicitante_orden') {
             $fecha = date('d-m-Y');
             $requisicion->fecha_firma_solicitante_orden = $fecha;
             $requisicion->save();
-            $user = 'lourdes.abadia@silent4business.com';
-            $userEmail = $user;
 
+            $listaReq = ListaDistribucion::where('modelo', $this->modelo)->first();
+            $listaPart = $listaReq->participantes;
+            // dump($listaPart);
+            for ($i = 0; $i <= $listaReq->niveles; $i++) {
+                $responsableNivel = $listaPart->where('nivel', $i)->where('numero_orden', 1)->first();
+
+                if ($responsableNivel->empleado->disponibilidad->disponibilidad == 1) {
+
+                    $responsable = $responsableNivel->empleado;
+                    $userEmail = $responsable->email;
+
+                    $cN = $listaPart->where('nivel', $i)->where('numero_orden', '!=', 1);
+
+                    foreach ($cN as $key => $c) {
+                        $copiasNivel[] = $c->empleado->email;
+                    }
+
+                    break;
+                } else {
+                    $responsablesAusentes[] = $responsableNivel->empleado->email;
+                }
+            }
+
+            $correosCopia = array_merge($copiasNivel, $responsablesAusentes);
+
+            // $user = 'lourdes.abadia@silent4business.com';
             $organizacion = Organizacion::getFirst();
 
-            Mail::to('ldelgadillo@silent4business.com')->cc('aurora.soriano@silent4business.com')->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
+            // Mail::to('ldelgadillo@silent4business.com')->cc('aurora.soriano@silent4business.com')->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
         }
         if ($tipo_firma == 'firma_comprador_orden') {
             $fecha = date('d-m-Y');
@@ -290,6 +323,7 @@ class OrdenCompraController extends Controller
             // correo de finanzas
             $userEmail = $requisicion->email;
         }
+
         if ($tipo_firma == 'firma_finanzas_orden') {
             $fecha = date('d-m-Y');
             $requisicion->fecha_firma_finanzas_orden = $fecha;
@@ -302,11 +336,25 @@ class OrdenCompraController extends Controller
                 'estado_orden' => 'fin',
             ]);
 
+            $listaInformativa = ListaInformativa::where('modelo', $this->modelo)->first();
+
+            foreach ($listaInformativa->participantes as $key => $informado) {
+                $correos_informados[] = $informado->empleado->email;
+            }
+
+            foreach ($listaInformativa->usuarios as $key => $informado) {
+                $correos_informados[] = $informado->usuario->email;
+            }
+
+            $organizacionInformado = Organizacion::getFirst();
+
+            Mail::to($correos_informados)->queue(new OrdenCompraAprobada($requisicion, $organizacionInformado));
+
             $userEmail = $requisicion->email;
         }
 
         $organizacion = Organizacion::getFirst();
-        Mail::to($userEmail)->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
+        Mail::to($userEmail)->cc($correosCopia)->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
 
         return redirect(route('contract_manager.orden-compra'));
     }
@@ -339,7 +387,6 @@ class OrdenCompraController extends Controller
 
     public function pdf($id)
     {
-
         $requisiciones = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->find($id);
         $user = User::find($requisiciones->id_finanzas_oc);
 
