@@ -47,12 +47,12 @@ class GlobalSearchComponent extends Component
     public function askAsistenText()
     {
 
-        $this->filename = 'requisiciones';
+        $this->filename = 'guia.pdf';
 
         $this->postData();
 
         // Asignar la ruta completa del archivo a $this->filePath
-        $this->filePath = storage_path('requisiciones.pdf');
+        $this->filePath = storage_path('Guia.pdf');
 
         $this->postDataText();
     }
@@ -62,7 +62,6 @@ class GlobalSearchComponent extends Component
         $response = $this->asistenService->postQuestionToPythonAPI($this->search);
         $this->respuesta = response()->json($response);
         $this->respuesta = $response;
-        dd($this->respuesta);
     }
 
     public function updatedSearch()

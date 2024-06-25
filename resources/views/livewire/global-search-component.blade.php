@@ -32,14 +32,13 @@
             wire:model.lazy="search"  wire:click.prevent="askAsisten">
             {{-- <button wire:click='askAsistenText'>Guardar</button> --}}
 
-            <div class="container" style="position: relative; top: -3rem;">
+            <div class="container mt-5 position-relative">
                 @if ($respuesta = $this->respuesta['response'] ?? null)
-                   <div class="response">
-                       <p>{{ $respuesta }}</p>
-                   </div>
-               @endif
+                    <div class="alert alert-dismissible position-absolute w-100" style="top: -3rem; z-index: 1050; background-color: #fff3cd; color: #000; font-size: 1.25rem; text-align: justify; padding: 1rem;">
+                        <p class="mb-0">{{ $respuesta }}</p>
+                    </div>
+                @endif
             </div>
-
 
         <div class="caja-list-search-global scroll_estilo">
             <ul class="list-group">
