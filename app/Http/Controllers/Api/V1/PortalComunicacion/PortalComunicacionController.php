@@ -58,8 +58,6 @@ class PortalComunicacionController extends Controller
 
         foreach ($documentos_publicados as $key_nuevo => $documento) {
             $documento->nombre_responsable = $documento->responsable->name;
-            $documento->nombre_area = $documento->responsable->area->area;
-            $documento->nombre_puesto = $documento->responsable->puesto;
 
             if ($documento->responsable->foto == null || $documento->responsable->foto == '0') {
                 if ($documento->responsable->genero == 'H') {
