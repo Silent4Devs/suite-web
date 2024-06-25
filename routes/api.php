@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\V1\PortalComunicacion\PortalComunicacionController;
 use App\Http\Controllers\Api\v1\AnalisisRiesgo\FormulasController;
 use App\Http\Controllers\Api\V1\AnalisisRiesgo\templateAnalisisRiesgoController;
 use App\Http\Controllers\Api\V1\Comunicados\ComunicadosApiController;
+use App\Http\Controllers\Api\V1\SolicitudPermisoGoceSueldo\SolicitudPermisoGoceSueldoApiController;
 use App\Http\Controllers\Api\V1\Timesheet\TimesheetApiController;
 
 Route::post('v1/login', [AuthController::class, 'login']);
@@ -57,6 +58,18 @@ Route::get('solicitud-vacaciones/archivo/{id}', [SolicitudVacacionesApiControlle
 Route::get('solicitud-vacaciones-vistaGlobal', [SolicitudVacacionesApiController::class, 'vistaGlobal']);
 Route::get('solicitud-vacaciones/{id}/showVistaGlobal', [SolicitudVacacionesApiController::class, 'showVistaGlobal']);
 Route::get('solicitud-vacaciones/{id}/archivoShow', [SolicitudVacacionesApiController::class, 'archivoShow']);
+
+Route::get('solicitud-vacaciones/{id}', [SolicitudPermisoGoceSueldoApiController::class, 'index']);
+Route::get('solicitud-vacaciones/create/{id}', [SolicitudPermisoGoceSueldoApiController::class, 'create']);
+Route::get('solicitud-vacaciones/{id}/show', [SolicitudPermisoGoceSueldoApiController::class, 'show']);
+Route::post('solicitud-vacaciones/store', [SolicitudPermisoGoceSueldoApiController::class, 'store']);
+Route::get('solicitud-vacaciones/aprobacion/{id}', [SolicitudPermisoGoceSueldoApiController::class, 'aprobacion']);
+Route::get('solicitud-vacaciones/{id}/respuesta', [SolicitudPermisoGoceSueldoApiController::class, 'respuesta']);
+Route::post('solicitud-vacaciones/{id}/update', [SolicitudPermisoGoceSueldoApiController::class, 'update']);
+Route::get('solicitud-vacaciones/archivo/{id}', [SolicitudPermisoGoceSueldoApiController::class, 'archivo']);
+// Route::get('solicitud-vacaciones-vistaGlobal', [SolicitudPermisoGoceSueldoApiController::class, 'vistaGlobal']);
+Route::get('solicitud-vacaciones/{id}/showVistaGlobal', [SolicitudPermisoGoceSueldoApiController::class, 'showVistaGlobal']);
+Route::get('solicitud-vacaciones/{id}/archivoShow', [SolicitudPermisoGoceSueldoApiController::class, 'archivoShow']);
 
 Route::get('timesheet/show/{id}', [TimesheetApiController::class, 'show']);
 Route::get('timesheet/aprobaciones', [TimesheetApiController::class, 'aprobaciones']);
