@@ -217,7 +217,9 @@ class RequisicionesController extends Controller
 
             $proveedores_catalogo = KatbolProveedorOC::whereIn('id', $proveedores_show)->get();
 
-            return view('contract_manager.requisiciones.firmar', compact('requisicion', 'organizacion', 'contrato', 'comprador', 'tipo_firma', 'supervisor', 'proveedores_catalogo', 'proveedor_indistinto', 'firma_finanzas_name'));
+            $alerta = $this->validacionLista($tipo_firma);
+
+            return view('contract_manager.requisiciones.firmar', compact('requisicion', 'organizacion', 'contrato', 'comprador', 'tipo_firma', 'supervisor', 'proveedores_catalogo', 'proveedor_indistinto', 'firma_finanzas_name', 'alerta'));
         } catch (\Exception $e) {
             return view('contract_manager.requisiciones.error');
         }
