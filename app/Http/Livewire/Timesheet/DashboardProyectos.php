@@ -135,7 +135,7 @@ class DashboardProyectos extends Component
                     $total_h = round($total_h, 2);
                     $total_he = round($total_he, 2);
 
-                    $tareas = TimesheetTarea::select('todos,proyecto_id, area_id')->where('proyecto_id', '=', $this->proy_id)->get();
+                    $tareas = TimesheetTarea::where('proyecto_id',$this->proy_id);
 
                     foreach ($tareas as $tar) {
                         if ($tar->todos == true) {
@@ -152,20 +152,20 @@ class DashboardProyectos extends Component
                         'tareas' => $t,
                     ]);
 
-                    // $empproyectos = Timesheet::select('id', 'empleado_id', 'estatus')
-                    //     ->with('horas', 'empleado')
-                    //     ->where('estatus', 'aprobado')
-                    //     ->whereHas('horas', function ($query) {
-                    //         $query->where('proyecto_id', $this->proy_id);
-                    //     })->distinct('empleado_id')->get();
+                    $empproyectos = Timesheet::select('id', 'empleado_id', 'estatus')
+                        ->with('horas', 'empleado')
+                        ->where('estatus', 'aprobado')
+                        ->whereHas('horas', function ($query) {
+                            $query->where('proyecto_id', $this->proy_id);
+                        })->distinct('empleado_id')->get();
 
-                    $empproyectos = Timesheet::select('timesheets.id', 'timesheets.empleado_id', 'timesheets.estatus')
-                        ->join('horas', 'timesheets.id', '=', 'horas.timesheet_id')
-                        ->with(['horas', 'empleado'])
-                        ->where('timesheets.estatus', 'aprobado')
-                        ->where('horas.proyecto_id', $this->proy_id)
-                        ->distinct('timesheets.empleado_id')
-                        ->get();
+                    // $empproyectos = Timesheet::select('timesheets.id', 'timesheets.empleado_id', 'timesheets.estatus')
+                    //     ->join('horas', 'timesheets.id', '=', 'horas.timesheet_id')
+                    //     ->with(['horas', 'empleado'])
+                    //     ->where('timesheets.estatus', 'aprobado')
+                    //     ->where('horas.proyecto_id', $this->proy_id)
+                    //     ->distinct('timesheets.empleado_id')
+                    //     ->get();
                     // dd($empproyectos);
 
                     $this->datos_empleados = collect();
