@@ -54,7 +54,33 @@ class PortalComunicacionController extends Controller
         $empleado_asignado = $user->n_empleado;
         $authId = $user->id;
 
-        $documentos_publicados = Documento::with('macroproceso')->where('estatus', Documento::PUBLICADO)->latest('updated_at')->get()->take(6);
+        $documentos_publicados = Documento::with('macroproceso', 'responsable')->where('estatus', Documento::PUBLICADO)->latest('updated_at')->get()->take(6);
+
+        foreach ($documentos_publicados as $key_nuevo => $documento) {
+            $documento->nombre_responsable = $documento->responsable->name;
+            $documento->nombre_area = $documento->responsable->area->area;
+            $documento->nombre_puesto = $documento->responsable->puesto;
+
+            if ($documento->responsable->foto == null || $documento->responsable->foto == '0') {
+                if ($documento->responsable->genero == 'H') {
+                    $ruta = asset('storage/empleados/imagenes/man.png');
+                } elseif ($documento->responsable->genero == 'M') {
+                    $ruta = asset('storage/empleados/imagenes/woman.png');
+                } else {
+                    $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
+                }
+            } else {
+                $ruta = asset('storage/empleados/imagenes/' . $documento->responsable->foto);
+            }
+
+            // Encode spaces in the URL
+            $documento->ruta_responsable_foto = encodeSpecialCharacters($ruta);
+
+            $documento->makeHidden([
+                'responsable'
+            ]);
+        }
+
         // $comite_existe = Comiteseguridad::getAll()->count();
         $nuevos = $empleados->whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->get();
         $comunicados = ComunicacionSgi::getAllwithImagenesBlog()->makeHidden(['descripcion', 'created_at', 'updated_at', 'imagenes_comunicacion'])->take(4);
