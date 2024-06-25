@@ -3,82 +3,47 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Storage;
 
-class NasBackup extends Command
+class TransferFile extends Command
 {
-    protected $nombre;
+    protected $signature = 'transfer:file';
+    protected $description = 'Transfer new files to FTP server';
 
-    protected $correodestinatario;
-
-    protected $cumplehoy;
-
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'transfer:nas';
-
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Felicitar empleados';
-
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         parent::__construct();
     }
 
-    /**
-     * Execute the console command.
-     *
-     * @return int
-     */
     public function handle()
     {
-        $cumplehoy = Carbon::today();
-        $cumplehoy->toDateString();
-        // dd($cumplehoy);
-        $cumpleañeros = Empleado::alta()
-            ->whereMonth('cumpleaños', '=', $cumplehoy->format('m'))
-            ->whereDay('cumpleaños', '=', $cumplehoy->format('d'))
-            ->get();
+        // Verificar si la transferencia de archivos está habilitada
+        if (env('ENABLE_FILE_TRANSFER', false)) {
+            $localDirectory = storage_path('snapshots'); // Ruta a la carpeta local
+            $remoteDirectory = env('NAS_DIRECTORY'); // Ruta a la carpeta remota en el servidor FTP
 
-        $imgtab = public_path("img\icono_tabantaj.png");
-        $imgpastel = public_path('img\pastel.png');
+            // Obtener todos los archivos en la carpeta local
+            $files = Storage::disk('snapshots')->files($localDirectory);
 
-        if ($cumpleañeros != null) {
-            foreach ($cumpleañeros as $cumpleañero) {
-                $filtro = CorreoCumpleanos::where('empleado_id', $cumpleañero->id)
-                    ->whereDate('fecha_envio', '=', $cumplehoy);
-                if ($filtro->exists() == false) {
-                    // dd("Si aparece");
-                    $empcump = CorreoCumpleanos::firstOrCreate([
-                        'empleado_id' => $cumpleañero->id,
-                        'fecha_envio' => $cumplehoy,
-                        'enviado' => false,
-                    ]);
-                    // dd("Si crea el registro");
-                    $nombre = $cumpleañero->name;
-                    $correodestinatario = $cumpleañero->email;
+            foreach ($files as $file) {
+                $fileName = basename($file);
+                $remoteFilePath = $remoteDirectory . '/' . $fileName;
 
-                    $email = new FelicitacionesMail($nombre, $correodestinatario, $imgpastel, $imgtab);
-                    Mail::to(removeUnicodeCharacters($correodestinatario))->queue($email);
-                    // dd('Si manda el correo');
-                    $empcump->update([
-                        'enviado' => true,
-                    ]);
+                // Verificar si el archivo ya existe en el servidor FTP
+                if (!Storage::disk('ftp')->exists($remoteFilePath)) {
+                    // Leer el contenido del archivo
+                    $fileContent = Storage::disk('snapshots')->get($file);
+
+                    // Subir el archivo al servidor FTP
+                    Storage::disk('ftp')->put($remoteFilePath, $fileContent);
+
+                    $this->info("File '{$fileName}' transferred successfully!");
                 } else {
-                    //No hace nada
+                    $this->info("File '{$fileName}' already exists on the FTP server.");
                 }
             }
+        } else {
+            $this->info('File transfer is disabled.');
         }
     }
 }
