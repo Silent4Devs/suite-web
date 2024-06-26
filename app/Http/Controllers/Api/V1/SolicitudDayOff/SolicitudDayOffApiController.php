@@ -38,6 +38,23 @@ class SolicitudDayOffApiController extends Controller
         $solicitudesDayOff = SolicitudDayOff::with('empleado')->where('empleado_id', '=', $data)->orderByDesc('id')->get();
 
         foreach ($solicitudesDayOff as $key_solicitud => $solicitante) {
+
+            switch ($solicitante->aprobacion) {
+                case 1:
+                    $solicitante->estatus = 'Pendiente';
+                    break;
+                case 2:
+                    $solicitante->estatus = 'Rechazado';
+                    break;
+                case 3:
+                    $solicitante->estatus = 'Aprobado';
+                    break;
+                default:
+                    $solicitante->estatus = 'Sin Seguimiento';
+            }
+
+            $solicitante->makeHidden(['aprobacion']);
+
             if ($solicitante && $solicitante->empleado) {
                 $solicitante->empleado->makeHidden([
                     'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
@@ -130,16 +147,6 @@ class SolicitudDayOffApiController extends Controller
     {
         // abort_if(Gate::denies('solicitud_dayoff_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $newSolicitud = $request->input('solicitud');
-        // dd($newSolicitud['fecha_inicio']);
-
-        // $request->validate([
-        //     'fecha_inicio' => 'required|date',
-        //     'fecha_fin' => 'required|date',
-        //     'empleado_id' => 'required|int',
-        //     'dias_solicitados' => 'required|int',
-        //     'año' => 'required|int',
-        //     'autoriza' => 'required|int',
-        // ]);
 
         $empleado = Empleado::getAll();
 
@@ -151,6 +158,7 @@ class SolicitudDayOffApiController extends Controller
             'empleado_id' => $newSolicitud['empleado_id'],
             'dias_solicitados' => $newSolicitud['dias_solicitados'],
             'año' => $newSolicitud['año'],
+            'descripcion' => $newSolicitud['descripcion'],
             'autoriza' => $newSolicitud['autoriza'],
         ]);
 
@@ -183,6 +191,22 @@ class SolicitudDayOffApiController extends Controller
         // abort_if(Gate::denies('solicitud_dayoff_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $vacacion = SolicitudDayOff::with('empleado')->find($id);
+
+        switch ($vacacion->aprobacion) {
+            case 1:
+                $vacacion->estatus = 'Pendiente';
+                break;
+            case 2:
+                $vacacion->estatus = 'Rechazado';
+                break;
+            case 3:
+                $vacacion->estatus = 'Aprobado';
+                break;
+            default:
+                $vacacion->estatus = 'Sin Seguimiento';
+        }
+
+        $vacacion->makeHidden(['aprobacion']);
 
         if (empty($vacacion)) {
             Alert::warning('warning', 'Regla de Day´s Off no asociada');
@@ -224,16 +248,6 @@ class SolicitudDayOffApiController extends Controller
     {
         // abort_if(Gate::denies('solicitud_dayoff_aprobar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $respuestaSolicitud = $request->input('solicitud');
-
-        // $request->validate([
-        //     'fecha_inicio' => 'required|date',
-        //     'fecha_fin' => 'required|date',
-        //     'empleado_id' => 'required|int',
-        //     'dias_solicitados' => 'required|int',
-        //     'año' => 'required|int',
-        //     'autoriza' => 'required|int',
-        //     'aprobacion' => 'required|int',
-        // ]);
 
         $solicitud = SolicitudDayOff::find($id);
 
@@ -380,6 +394,23 @@ class SolicitudDayOffApiController extends Controller
         $solicitudesPermisos = SolicitudDayOff::with('empleado')->where('autoriza', '=', $data)->where('aprobacion', '=', 1)->orderByDesc('id')->get();
 
         foreach ($solicitudesPermisos as $key_solicitud => $solicitante) {
+
+            switch ($solicitante->aprobacion) {
+                case 1:
+                    $solicitante->estatus = 'Pendiente';
+                    break;
+                case 2:
+                    $solicitante->estatus = 'Rechazado';
+                    break;
+                case 3:
+                    $solicitante->estatus = 'Aprobado';
+                    break;
+                default:
+                    $solicitante->estatus = 'Sin Seguimiento';
+            }
+
+            $solicitante->makeHidden(['aprobacion']);
+
             if ($solicitante && $solicitante->empleado) {
                 $solicitante->empleado->makeHidden([
                     'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
@@ -418,6 +449,22 @@ class SolicitudDayOffApiController extends Controller
     {
         // abort_if(Gate::denies('modulo_aprobacion_ausencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vacacion = SolicitudDayOff::with('empleado')->find($id);
+
+        switch ($vacacion->aprobacion) {
+            case 1:
+                $vacacion->estatus = 'Pendiente';
+                break;
+            case 2:
+                $vacacion->estatus = 'Rechazado';
+                break;
+            case 3:
+                $vacacion->estatus = 'Aprobado';
+                break;
+            default:
+                $vacacion->estatus = 'Sin Seguimiento';
+        }
+
+        $vacacion->makeHidden(['aprobacion']);
 
         if ($vacacion && $vacacion->empleado) {
             $empleado = $vacacion->empleado->makeHidden([
@@ -468,6 +515,23 @@ class SolicitudDayOffApiController extends Controller
             ->get();
 
         foreach ($solicitudesDayOff as $key_solicitud => $solicitante) {
+
+            switch ($solicitante->aprobacion) {
+                case 1:
+                    $solicitante->estatus = 'Pendiente';
+                    break;
+                case 2:
+                    $solicitante->estatus = 'Rechazado';
+                    break;
+                case 3:
+                    $solicitante->estatus = 'Aprobado';
+                    break;
+                default:
+                    $solicitante->estatus = 'Sin Seguimiento';
+            }
+
+            $solicitante->makeHidden(['aprobacion']);
+
             if ($solicitante && $solicitante->empleado) {
                 $solicitante->empleado->makeHidden([
                     'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
@@ -502,6 +566,23 @@ class SolicitudDayOffApiController extends Controller
         $solVac = SolicitudDayOff::getAllwithEmpleados();
 
         foreach ($solVac as $key_solicitud => $solicitante) {
+
+            switch ($solicitante->aprobacion) {
+                case 1:
+                    $solicitante->estatus = 'Pendiente';
+                    break;
+                case 2:
+                    $solicitante->estatus = 'Rechazado';
+                    break;
+                case 3:
+                    $solicitante->estatus = 'Aprobado';
+                    break;
+                default:
+                    $solicitante->estatus = 'Sin Seguimiento';
+            }
+
+            $solicitante->makeHidden(['aprobacion']);
+
             if ($solicitante && $solicitante->empleado) {
                 $solicitante->empleado->makeHidden([
                     'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
@@ -533,6 +614,22 @@ class SolicitudDayOffApiController extends Controller
         // abort_if(Gate::denies('reglas_dayoff_vista_global'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vacacion = SolicitudDayOff::with('empleado')->find($id);
 
+        switch ($vacacion->aprobacion) {
+            case 1:
+                $vacacion->estatus = 'Pendiente';
+                break;
+            case 2:
+                $vacacion->estatus = 'Rechazado';
+                break;
+            case 3:
+                $vacacion->estatus = 'Aprobado';
+                break;
+            default:
+                $vacacion->estatus = 'Sin Seguimiento';
+        }
+
+        $vacacion->makeHidden(['aprobacion']);
+
         if (empty($vacacion)) {
             Alert::warning('warning', 'Data not found');
 
@@ -560,6 +657,22 @@ class SolicitudDayOffApiController extends Controller
     {
         // abort_if(Gate::denies('modulo_aprobacion_ausencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vacacion = SolicitudDayOff::with('empleado')->find($id);
+
+        switch ($vacacion->aprobacion) {
+            case 1:
+                $vacacion->estatus = 'Pendiente';
+                break;
+            case 2:
+                $vacacion->estatus = 'Rechazado';
+                break;
+            case 3:
+                $vacacion->estatus = 'Aprobado';
+                break;
+            default:
+                $vacacion->estatus = 'Sin Seguimiento';
+        }
+
+        $vacacion->makeHidden(['aprobacion']);
 
         if (empty($vacacion)) {
             Alert::warning('warning', 'Data not found');

@@ -33,6 +33,24 @@ class SolicitudPermisoGoceSueldoApiController extends Controller
         $solicitudesPermisos = SolicitudPermisoGoceSueldo::with('empleado')->where('empleado_id', '=', $data)->orderByDesc('id')->get();
 
         foreach ($solicitudesPermisos as $key_solicitud => $solicitante) {
+
+
+            switch ($solicitante->aprobacion) {
+                case 1:
+                    $solicitante->estatus = 'Pendiente';
+                    break;
+                case 2:
+                    $solicitante->estatus = 'Rechazado';
+                    break;
+                case 3:
+                    $solicitante->estatus = 'Aprobado';
+                    break;
+                default:
+                    $solicitante->estatus = 'Sin Seguimiento';
+            }
+
+            $solicitante->makeHidden(['aprobacion']);
+
             if ($solicitante && $solicitante->empleado) {
                 $solicitante->empleado->makeHidden([
                     'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
@@ -77,16 +95,6 @@ class SolicitudPermisoGoceSueldoApiController extends Controller
     {
         // abort_if(Gate::denies('solicitud_dayoff_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $newSolicitud = $request->input('solicitud');
-        // dd($newSolicitud['fecha_inicio']);
-
-        // $request->validate([
-        //     'fecha_inicio' => 'required|date',
-        //     'fecha_fin' => 'required|date',
-        //     'empleado_id' => 'required|int',
-        //     'dias_solicitados' => 'required|int',
-        //     'año' => 'required|int',
-        //     'autoriza' => 'required|int',
-        // ]);
 
         $empleado = Empleado::getAll();
 
@@ -97,6 +105,7 @@ class SolicitudPermisoGoceSueldoApiController extends Controller
             'fecha_fin' => $newSolicitud['fecha_fin'],
             'empleado_id' => $newSolicitud['empleado_id'],
             'dias_solicitados' => $newSolicitud['dias_solicitados'],
+            'descripcion' => $newSolicitud['descripcion'],
             'año' => $newSolicitud['año'],
             'autoriza' => $newSolicitud['autoriza'],
         ]);
@@ -137,6 +146,22 @@ class SolicitudPermisoGoceSueldoApiController extends Controller
             return redirect(route('admin.solicitud-dayoff.index'));
         }
 
+        switch ($vacacion->aprobacion) {
+            case 1:
+                $vacacion->estatus = 'Pendiente';
+                break;
+            case 2:
+                $vacacion->estatus = 'Rechazado';
+                break;
+            case 3:
+                $vacacion->estatus = 'Aprobado';
+                break;
+            default:
+                $vacacion->estatus = 'Sin Seguimiento';
+        }
+
+        $vacacion->makeHidden(['aprobacion']);
+
         if ($vacacion && $vacacion->empleado) {
             $empleado = $vacacion->empleado->makeHidden([
                 'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
@@ -169,16 +194,6 @@ class SolicitudPermisoGoceSueldoApiController extends Controller
     {
         //abort_if(Gate::denies('solicitud_permiso_goce_aprobar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $respuestaSolicitud = $request->input('solicitud');
-
-        // $request->validate([
-        //     'fecha_inicio' => 'required|date',
-        //     'fecha_fin' => 'required|date',
-        //     'empleado_id' => 'required|int',
-        //     'dias_solicitados' => 'required|int',
-        //     'año' => 'required|int',
-        //     'autoriza' => 'required|int',
-        //     'aprobacion' => 'required|int',
-        // ]);
 
         $solicitud = SolicitudPermisoGoceSueldo::find($id);
 
@@ -239,6 +254,23 @@ class SolicitudPermisoGoceSueldoApiController extends Controller
         $solicitudesPermisos = SolicitudPermisoGoceSueldo::with('empleado')->where('autoriza', '=', $data)->where('aprobacion', '=', 1)->orderByDesc('id')->get();
 
         foreach ($solicitudesPermisos as $key_solicitud => $solicitante) {
+
+            switch ($solicitante->aprobacion) {
+                case 1:
+                    $solicitante->estatus = 'Pendiente';
+                    break;
+                case 2:
+                    $solicitante->estatus = 'Rechazado';
+                    break;
+                case 3:
+                    $solicitante->estatus = 'Aprobado';
+                    break;
+                default:
+                    $solicitante->estatus = 'Sin Seguimiento';
+            }
+
+            $solicitante->makeHidden(['aprobacion']);
+
             if ($solicitante && $solicitante->empleado) {
                 $solicitante->empleado->makeHidden([
                     'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
@@ -269,6 +301,22 @@ class SolicitudPermisoGoceSueldoApiController extends Controller
     {
         //abort_if(Gate::denies('modulo_aprobacion_ausencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vacacion = SolicitudPermisoGoceSueldo::with('empleado')->find($id);
+
+        switch ($vacacion->aprobacion) {
+            case 1:
+                $vacacion->estatus = 'Pendiente';
+                break;
+            case 2:
+                $vacacion->estatus = 'Rechazado';
+                break;
+            case 3:
+                $vacacion->estatus = 'Aprobado';
+                break;
+            default:
+                $vacacion->estatus = 'Sin Seguimiento';
+        }
+
+        $vacacion->makeHidden(['aprobacion']);
 
         if ($vacacion && $vacacion->empleado) {
             $empleado = $vacacion->empleado->makeHidden([
@@ -317,6 +365,22 @@ class SolicitudPermisoGoceSueldoApiController extends Controller
             ->get();
 
         foreach ($solicitudesPermisos as $key_solicitud => $solicitante) {
+
+            switch ($solicitante->aprobacion) {
+                case 1:
+                    $solicitante->estatus = 'Pendiente';
+                    break;
+                case 2:
+                    $solicitante->estatus = 'Rechazado';
+                    break;
+                case 3:
+                    $solicitante->estatus = 'Aprobado';
+                    break;
+                default:
+                    $solicitante->estatus = 'Sin Seguimiento';
+            }
+
+            $solicitante->makeHidden(['aprobacion']);
             if ($solicitante && $solicitante->empleado) {
                 $solicitante->empleado->makeHidden([
                     'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
@@ -354,6 +418,22 @@ class SolicitudPermisoGoceSueldoApiController extends Controller
             return redirect(route('admin.solicitud-dayoff.index'));
         }
 
+        switch ($vacacion->aprobacion) {
+            case 1:
+                $vacacion->estatus = 'Pendiente';
+                break;
+            case 2:
+                $vacacion->estatus = 'Rechazado';
+                break;
+            case 3:
+                $vacacion->estatus = 'Aprobado';
+                break;
+            default:
+                $vacacion->estatus = 'Sin Seguimiento';
+        }
+
+        $vacacion->makeHidden(['aprobacion']);
+
         $vacacion->empleado->makeHidden([
             'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
             'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor'
@@ -381,6 +461,22 @@ class SolicitudPermisoGoceSueldoApiController extends Controller
 
             return redirect(route('admin.solicitud-dayoff.index'));
         }
+
+        switch ($vacacion->aprobacion) {
+            case 1:
+                $vacacion->estatus = 'Pendiente';
+                break;
+            case 2:
+                $vacacion->estatus = 'Rechazado';
+                break;
+            case 3:
+                $vacacion->estatus = 'Aprobado';
+                break;
+            default:
+                $vacacion->estatus = 'Sin Seguimiento';
+        }
+
+        $vacacion->makeHidden(['aprobacion']);
 
         $vacacion->empleado->makeHidden([
             'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
