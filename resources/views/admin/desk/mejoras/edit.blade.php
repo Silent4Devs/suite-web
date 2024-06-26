@@ -60,14 +60,30 @@
                                     </div>
                                 </div>
                             </div>
-                            <div>
+                            <div class="mt-4 form-group col-12">
+                                <b>Datos generales:</b>
+                            </div>
+
+                            <div style="position: relative; left: 2rem;">
                                 <label>
                                     <input type="checkbox" id="toggle-info">
                                     Mostrar Información
                                 </label>
                             </div>
-                            <div class="mt-4 form-group col-12">
-                                <b>Datos generales:</b>
+
+                            <div class="mt-2 form-group col-md-12">
+                                <div class="info-bar" id="info-bar">
+                                    <p>Seleccione cuántos participantes de aprobación tendrá tu lista.</p>
+                                    @if($firmaModules && $firmaModules->empleados)
+                                    <select id="participantes" name="participantes[]" class="form-control" multiple="multiple" style="padding: 10px; border-radius: 50px; border: 1px solid #007BFF;">
+                                        @foreach($firmaModules->empleados as $empleado)
+                                            <option value="{{ $empleado->id }}">{{ $empleado->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @else
+                                        <p>No hay participantes disponibles.</p>
+                                    @endif
+                                </div>
                             </div>
 
                             <div class="mt-2 form-group col-2">
@@ -536,9 +552,242 @@
         </div>
     </div>
 </div>
+
+<div class="card card-content" style="margin-bottom: 30px">
+    <form method="POST" id="myForm" action="{{ route('admin.firmas_mejora.store') }}">
+    @csrf
+    <div class="" style="position: relative; left: 2rem;">
+        <br>
+        <h5><strong>Firma*</strong></h5>
+        <p>
+            Indispensable firmar  antes de guardar y enviarla a aprobación.
+        </p>
+    </div>
+    <div class="flex caja-firmar" wire:ignore>
+        <div class="flex-item"
+            style="display:flex; justify-content: center; flex-direction: column; align-items:center;">
+            <div id="firma_content" class="caja-space-firma"
+                style="display:flex; justify-content: center; flex-direction: column; align-items:center; border: 1px black solid;">
+                <canvas id="firma_requi" width="500px" height="300px">
+                    Navegador no compatible
+                </canvas>
+                <input type="hidden" name="firma" id="firma">
+            </div>
+            <div>
+                <div class="btn"
+                    style="color: white; background:  gray !important; transform: translateY(-40px) scale(0.8);"
+                    id="clear">Limpiar</div>
+            </div>
+            <div onclick="validar();" style="" class="btn btn-primary">Firmar</div>
+        </div>
+    </div>
+</form>
+</div>
 @endsection
 
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.signature.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 @section('scripts')
+<script>
+    function validar(params) {
+        var x = $("#firma").val();
+        if (x) {
+            document.getElementById("myForm").submit();
+        } else {
+            Swal.fire(
+                'Aun no ha firmado',
+                'Porfavor Intentelo nuevamente',
+                'error');
+        }
+    }
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        (function() {
+
+
+            window.requestAnimFrame = (function(callback) {
+                return window.requestAnimationFrame ||
+                    window.webkitRequestAnimationFrame ||
+                    window.mozRequestAnimationFrame ||
+                    window.oRequestAnimationFrame ||
+                    window.msRequestAnimaitonFrame ||
+                    function(callback) {
+                        window.setTimeout(callback, 1000 / 60);
+                    };
+            })();
+
+            if (document.getElementById('firma_requi')) {
+                renderCanvas("firma_requi", "clear");
+            }
+
+        })();
+
+        $('#firma_requi').mouseleave(function() {
+            var canvas = document.getElementById('firma_requi');
+            var dataUrl = canvas.toDataURL();
+            $('#firma').val(dataUrl);
+        });
+
+        function renderCanvas(contenedor, clearBtnCanvas) {
+
+            var canvas = document.getElementById(contenedor);
+            console.log(canvas);
+            var ctx = canvas.getContext("2d");
+            ctx.strokeStyle = "#222222";
+            ctx.lineWidth = 1;
+
+            var drawing = false;
+            var mousePos = {
+                x: 0,
+                y: 0
+            };
+            var lastPos = mousePos;
+
+            canvas.addEventListener("mousedown", function(e) {
+                drawing = true;
+                lastPos = getMousePos(canvas, e);
+            }, false);
+
+            canvas.addEventListener("mouseup", function(e) {
+                drawing = false;
+            }, false);
+
+            canvas.addEventListener("mousemove", function(e) {
+                mousePos = getMousePos(canvas, e);
+            }, false);
+
+            // Add touch event support for mobile
+            canvas.addEventListener("touchstart", function(e) {
+
+            }, false);
+
+            canvas.addEventListener("touchmove", function(e) {
+                var touch = e.touches[0];
+                var me = new MouseEvent("mousemove", {
+                    clientX: touch.clientX,
+                    clientY: touch.clientY
+                });
+                canvas.dispatchEvent(me);
+            }, false);
+
+            canvas.addEventListener("touchstart", function(e) {
+                mousePos = getTouchPos(canvas, e);
+                var touch = e.touches[0];
+                var me = new MouseEvent("mousedown", {
+                    clientX: touch.clientX,
+                    clientY: touch.clientY
+                });
+                canvas.dispatchEvent(me);
+            }, false);
+
+            canvas.addEventListener("touchend", function(e) {
+                var me = new MouseEvent("mouseup", {});
+                canvas.dispatchEvent(me);
+            }, false);
+
+            function getMousePos(canvasDom, mouseEvent) {
+                var rect = canvasDom.getBoundingClientRect();
+                return {
+                    x: mouseEvent.clientX - rect.left,
+                    y: mouseEvent.clientY - rect.top
+                }
+            }
+
+            function getTouchPos(canvasDom, touchEvent) {
+                var rect = canvasDom.getBoundingClientRect();
+                return {
+                    x: touchEvent.touches[0].clientX - rect.left,
+                    y: touchEvent.touches[0].clientY - rect.top
+                }
+            }
+
+            function renderCanvas() {
+                if (drawing) {
+                    ctx.moveTo(lastPos.x, lastPos.y);
+                    ctx.lineTo(mousePos.x, mousePos.y);
+                    ctx.stroke();
+                    lastPos = mousePos;
+                }
+            }
+
+            // Prevent scrolling when touching the canvas
+            document.body.addEventListener("touchstart", function(e) {
+                if (e.target == canvas) {
+                    e.preventDefault();
+                }
+            }, false);
+            document.body.addEventListener("touchend", function(e) {
+                if (e.target == canvas) {
+                    e.preventDefault();
+                }
+            }, false);
+            document.body.addEventListener("touchmove", function(e) {
+                if (e.target == canvas) {
+                    e.preventDefault();
+                }
+            }, false);
+
+            (function drawLoop() {
+                requestAnimFrame(drawLoop);
+                renderCanvas();
+            })();
+
+            function clearCanvas() {
+                canvas.width = canvas.width;
+            }
+
+            function isCanvasBlank() {
+                const context = canvas.getContext('2d');
+
+                const pixelBuffer = new Uint32Array(
+                    context.getImageData(0, 0, canvas.width, canvas.height).data.buffer
+                );
+
+                return !pixelBuffer.some(color => color !== 0);
+            }
+
+            // Set up the UI
+            // var sigText = document.getElementById(dataBaseCanvas);
+            // var sigImage = document.getElementById(imageCanvas);
+            var clearBtn = document.getElementById(clearBtnCanvas);
+            // var submitBtn = document.getElementById(submitBtnCanvas);
+            clearBtn.addEventListener("click", function(e) {
+                clearCanvas();
+                // sigText.innerHTML = "Data URL for your signature will go here!";
+                // sigImage.setAttribute("src", "");
+            }, false);
+            // submitBtn.addEventListener("click", function(e) {
+            //     const blank = isCanvasBlank();
+            //     if (!blank) {
+            //         // var dataUrl = canvas.toDataURL();
+            //         // sigText.innerHTML = dataUrl;
+            //         // sigImage.setAttribute("src", dataUrl);
+            //     } else {
+            //         if (toastr) {
+            //             toastr.info('No has firmado en el canvas');
+            //         } else {
+            //             alert('No has firmado en el canvas');
+            //         }
+            //     }
+            // }, false);
+
+        }
+
+        function isCanvasEmpty(canvas) {
+            const context = canvas.getContext('2d');
+
+            const pixelBuffer = new Uint32Array(
+                context.getImageData(0, 0, canvas.width, canvas.height).data.buffer
+            );
+
+            return !pixelBuffer.some(color => color !== 0);
+        }
+    });
+</script>
 <script>
     $(document).ready(function() {
         $('#participantes').select2({

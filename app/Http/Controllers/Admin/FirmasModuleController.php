@@ -9,6 +9,7 @@ use App\Models\FirmaModule;
 use App\Models\Modulo;
 use App\Models\Submodulo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FirmasModuleController extends Controller
 {
@@ -77,7 +78,8 @@ class FirmasModuleController extends Controller
         $firmaModule = FirmaCentroAtencion::create([
             'modulo_id' => 1,
             'submodulo_id' => 1,
-            'participantes' => json_encode($request->participantes), // Guardar el array de IDs como JSON
+            'participantes' => Auth::id(),
+            'firma' => $request->firma,
         ]);
 
         return redirect()->route('admin.desk.index')->with('success', 'Guardado con éxito');
@@ -89,7 +91,8 @@ class FirmasModuleController extends Controller
         $firmaModule = FirmaCentroAtencion::create([
             'modulo_id' => 1,
             'submodulo_id' => 4,
-            'participantes' => json_encode($request->participantes), // Guardar el array de IDs como JSON
+            'participantes' => Auth::id(),
+            'firma' => $request->firma,
         ]);
 
         return redirect()->route('admin.desk.index')->with('success', 'Guardado con éxito');
@@ -101,7 +104,8 @@ class FirmasModuleController extends Controller
         $firmaModule = FirmaCentroAtencion::create([
             'modulo_id' => 1,
             'submodulo_id' => 3,
-            'participantes' => json_encode($request->participantes), // Guardar el array de IDs como JSON
+            'participantes' => Auth::id(),
+            'firma' => $request->firma,
         ]);
 
         return redirect()->route('admin.desk.index')->with('success', 'Guardado con éxito');
@@ -113,7 +117,8 @@ class FirmasModuleController extends Controller
         $firmaModule = FirmaCentroAtencion::create([
             'modulo_id' => 1,
             'submodulo_id' => 6,
-            'participantes' => json_encode($request->participantes), // Guardar el array de IDs como JSON
+            'participantes' => Auth::id(),
+            'firma' => $request->firma,
         ]);
 
         return redirect()->route('admin.desk.index')->with('success', 'Guardado con éxito');
@@ -125,7 +130,8 @@ class FirmasModuleController extends Controller
         $firmaModule = FirmaCentroAtencion::create([
             'modulo_id' => 1,
             'submodulo_id' => 2,
-            'participantes' => json_encode($request->participantes), // Guardar el array de IDs como JSON
+            'participantes' => Auth::id(),
+            'firma' => $request->firma,
         ]);
 
         return redirect()->route('admin.desk.index')->with('success', 'Guardado con éxito');
@@ -137,7 +143,8 @@ class FirmasModuleController extends Controller
         $firmaModule = FirmaCentroAtencion::create([
             'modulo_id' => 1,
             'submodulo_id' => 5,
-            'participantes' => json_encode($request->participantes), // Guardar el array de IDs como JSON
+            'participantes' => Auth::id(),
+            'firma' => $request->firma,
         ]);
 
         return redirect()->route('admin.desk.index')->with('success', 'Guardado con éxito');

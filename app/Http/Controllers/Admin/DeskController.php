@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Mail\AceptacionAccionCorrectivaEmail;
 use App\Mail\AtencionQuejaAtendidaEmail;
 use App\Mail\CierreQuejaAceptadaEmail;
+use App\Mail\EmpleadoEmail;
 use App\Mail\NotificacionResponsableQuejaEmail;
 use App\Mail\ResolucionQuejaRechazadaEmail;
 use App\Mail\SeguimientoQuejaClienteEmail;
@@ -21,6 +22,7 @@ use App\Models\Empleado;
 use App\Models\EvidenciaQuejasClientes;
 use App\Models\EvidenciasQuejasClientesCerrado;
 use App\Models\EvidenciasSeguridad;
+use App\Models\FirmaCentroAtencion;
 use App\Models\FirmaModule;
 use App\Models\IncidentesSeguridad;
 use App\Models\Mejoras;
@@ -199,6 +201,8 @@ class DeskController extends Controller
             }
         }
 
+        $firmas_guardadas = FirmaCentroAtencion::where('modulo_id', 1)->where('submodulo_id', 1)->first();
+
 
         $sedes = Sede::getAll();
 
@@ -210,7 +214,12 @@ class DeskController extends Controller
 
         $categorias = CategoriaIncidente::get();
 
-        return view('admin.desk.seguridad.edit', compact('incidentesSeguridad', 'activos', 'empleados', 'sedes', 'areas', 'procesos', 'subcategorias', 'categorias', 'analisis', 'firmaModules'));
+        return view('admin.desk.seguridad.edit', compact('incidentesSeguridad', 'activos', 'empleados', 'sedes', 'areas', 'procesos', 'subcategorias', 'categorias', 'analisis', 'firmaModules', 'firmas_guardadas'));
+    }
+
+    public function removeUnicodeCharacters($string)
+    {
+        return preg_replace('/[^\x00-\x7F]/u', '', $string);
     }
 
     public function updateSeguridad(Request $request, $id_incidente)
@@ -227,6 +236,21 @@ class DeskController extends Controller
             'descripcion' => 'required',
             'estatus' => 'required',
         ]);
+
+        $empleadoIds = $request->participantes ?? [];
+
+        if (empty($empleadoIds) || !is_array($empleadoIds)) {
+            return back()->with('error', 'No se seleccionaron participantes para la aprobacion.');
+        }
+
+        // Obtener empleados desde la base de datos
+        $empleados = Empleado::select('id', 'name', 'email')->whereIn('id', $empleadoIds)->get();
+
+        // Enviar correos electrónicos
+        foreach ($empleados as $empleado) {
+            Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->send(new EmpleadoEmail($empleado));
+        }
+
 
         $incidentesSeguridad->update([
             'titulo' => $request->titulo,
@@ -416,6 +440,23 @@ class DeskController extends Controller
         abort_if(Gate::denies('centro_atencion_riesgos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $riesgos = RiesgoIdentificado::findOrfail(intval($id_riesgos));
+
+        $empleadoIds = $request->participantes;
+
+        if (empty($empleadoIds) || !is_array($empleadoIds)) {
+            return back()->with('error', 'No se seleccionaron participantes para la aprobacion.');
+        }
+
+        // Obtener empleados desde la base de datos
+        $empleados = Empleado::select('id', 'name', 'email')->whereIn('id', $empleadoIds)->get();
+
+
+        // Enviar correos electrónicos
+        foreach ($empleados as $empleado) {
+            Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->send(new EmpleadoEmail($empleado));
+        }
+
+
         $riesgos->update([
             'titulo' => $request->titulo,
             'fecha' => $request->fecha,
@@ -544,6 +585,22 @@ class DeskController extends Controller
         abort_if(Gate::denies('centro_atencion_quejas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $quejas = Quejas::findOrfail(intval($id_quejas));
+
+        $empleadoIds = $request->participantes;
+
+        if (empty($empleadoIds) || !is_array($empleadoIds)) {
+            return back()->with('error', 'No se seleccionaron participantes para la aprobacion.');
+        }
+
+        // Obtener empleados desde la base de datos
+        $empleados = Empleado::select('id', 'name', 'email')->whereIn('id', $empleadoIds)->get();
+
+
+        // Enviar correos electrónicos
+        foreach ($empleados as $empleado) {
+            Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->send(new EmpleadoEmail($empleado));
+        }
+
         $quejas->update([
             'titulo' => $request->titulo,
             'estatus' => $request->estatus,
@@ -670,6 +727,22 @@ class DeskController extends Controller
         abort_if(Gate::denies('centro_atencion_denuncias_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $denuncias = Denuncias::findOrfail(intval($id_denuncias));
+
+        $empleadoIds = $request->participantes;
+
+        if (empty($empleadoIds) || !is_array($empleadoIds)) {
+            return back()->with('error', 'No se seleccionaron participantes para la aprobacion.');
+        }
+
+        // Obtener empleados desde la base de datos
+        $empleados = Empleado::select('id', 'name', 'email')->whereIn('id', $empleadoIds)->get();
+
+
+        // Enviar correos electrónicos
+        foreach ($empleados as $empleado) {
+            Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->send(new EmpleadoEmail($empleado));
+        }
+
         $denuncias->update([
             'anonimo' => $request->anonimo,
             'descripcion' => $request->descripcion,
@@ -791,6 +864,7 @@ class DeskController extends Controller
     {
         abort_if(Gate::denies('centro_atencion_mejoras_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+
         $request->validate([
             'area_mejora' => 'nullable|string',
             'proceso_mejora' => 'nullable|string',
@@ -799,6 +873,22 @@ class DeskController extends Controller
             'descripcion' => 'required',
             'beneficios' => 'required',
         ]);
+
+        $empleadoIds = $request->participantes;
+
+
+        if (empty($empleadoIds) || !is_array($empleadoIds)) {
+            return back()->with('error', 'No se seleccionaron participantes para la aprobacion.');
+        }
+
+        // Obtener empleados desde la base de datos
+        $empleados = Empleado::select('id', 'name', 'email')->whereIn('id', $empleadoIds)->get();
+
+
+        // Enviar correos electrónicos
+        foreach ($empleados as $empleado) {
+            Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->send(new EmpleadoEmail($empleado));
+        }
 
         $mejoras = Mejoras::findOrfail(intval($id_mejoras));
         $mejoras->update([
@@ -918,15 +1008,28 @@ class DeskController extends Controller
         abort_if(Gate::denies('centro_atencion_sugerencias_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $sugerencias = Sugerencias::findOrfail(intval($id_sugerencias));
+
+        $empleadoIds = $request->participantes;
+
+        if (empty($empleadoIds) || !is_array($empleadoIds)) {
+            return back()->with('error', 'No se seleccionaron participantes para la aprobacion.');
+        }
+
+        // Obtener empleados desde la base de datos
+        $empleados = Empleado::select('id', 'name', 'email')->whereIn('id', $empleadoIds)->get();
+
+
+        // Enviar correos electrónicos
+        foreach ($empleados as $empleado) {
+            Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->send(new EmpleadoEmail($empleado));
+        }
+
         $sugerencias->update([
             'area_sugerencias' => $request->area_sugerencias,
             'proceso_sugerencias' => $request->proceso_sugerencias,
-
             'titulo' => $request->titulo,
             'descripcion' => $request->descripcion,
-
             'estatus' => $request->estatus,
-
             'fecha_cierre' => $request->fecha_cierre,
         ]);
 
