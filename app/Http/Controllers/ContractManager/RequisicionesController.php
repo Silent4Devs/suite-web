@@ -453,6 +453,7 @@ class RequisicionesController extends Controller
         $bandera = true;
         $requisicion = KatbolRequsicion::where('id', $id)->first();
         $user = User::find($requisicion->id_finanzas);
+        $mensaje = null;
 
         if ($user) {
             $firma_finanzas_name = $user->name;
@@ -465,31 +466,37 @@ class RequisicionesController extends Controller
         $comprador = KatbolComprador::with('user')->where('id', $requisicion->comprador_id)->first();
         $solicitante = User::find($requisicion->id_user);
 
+        $firma_siguiente = FirmasRequisiciones::where('requisicion_id', $requisicion->id)->first();
+
         if ($requisicion->firma_solicitante === null) {
-            if (removeUnicodeCharacters($user->email) === removeUnicodeCharacters($solicitante->email)) {
+            if ($user->empleado->id == $firma_siguiente->solicitante_id) { //solicitante_id
                 $tipo_firma = 'firma_solicitante';
                 $alerta = $this->validacionLista($tipo_firma);
             } else {
-                return view('contract_manager.requisiciones.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del solicitante directo: <br> <strong>' . $solicitante->name . '</strong>');
+                $mensaje = 'No tiene permisos para firmar<br> En espera del solicitante directo: <br> <strong>' . $solicitante->name . '</strong>';
+                return view('contract_manager.requisiciones.error', compact('mensaje'));
             }
         } elseif ($requisicion->firma_jefe === null) {
-            if (removeUnicodeCharacters($supervisor_email) === removeUnicodeCharacters($user->email) || removeUnicodeCharacters($user->email) === 'aurora.soriano@silent4business.com') {
+            if ($user->empleado->id == $firma_siguiente->jefe_id) { //jefe_id
                 $tipo_firma = 'firma_jefe';
                 $alerta = $this->validacionLista($tipo_firma);
             } else {
-                return view('contract_manager.requisiciones.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del jefe directo: <br> <strong>' . $supervisor . '</strong>');
+                $mensaje = 'No tiene permisos para firmar<br> En espera del jefe directo: <br> <strong>' . $supervisor . '</strong>';
+                return view('contract_manager.requisiciones.error', compact('mensaje'));
             }
         } elseif ($requisicion->firma_finanzas === null) {
-            if (removeUnicodeCharacters($user->email) === 'lourdes.abadia@silent4business.com' || removeUnicodeCharacters($user->email) === 'ldelgadillo@silent4business.com' || removeUnicodeCharacters($user->email) === 'aurora.soriano@silent4business.com') {
+            if ($user->empleado->id == $firma_siguiente->responsable_finanzas_id) { //responsable_finanzas_id
                 $tipo_firma = 'firma_finanzas';
             } else {
-                return view('contract_manager.requisiciones.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera de finanzas');
+                $mensaje = 'No tiene permisos para firmar<br> En espera de finanzas';
+                return view('contract_manager.requisiciones.error', compact('mensaje'));
             }
         } elseif ($requisicion->firma_compras === null) {
-            if (removeUnicodeCharacters($comprador->user->email) === removeUnicodeCharacters($user->email)) {
+            if (($user->empleado->id == $comprador->user->empleado->id) && ($user->empleado->id == $firma_siguiente->responsable_finanzas_id)) { //comprador_id
                 $tipo_firma = 'firma_compras';
             } else {
-                return view('contract_manager.requisiciones.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>' . $comprador->user->name . '</strong>');
+                $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>' . $comprador->user->name . '</strong>';
+                return view('contract_manager.requisiciones.error', compact('mensaje'));
             }
         } else {
             $tipo_firma = 'firma_final_aprobadores';
@@ -534,6 +541,7 @@ class RequisicionesController extends Controller
                     break;
                 }
             }
+            $alerta = empty($responsable);
         } elseif ($tipo == "firma_jefe") {
             $listaReq = ListaDistribucion::where('modelo', $this->modelo)->first();
             $listaPart = $listaReq->participantes;
@@ -549,9 +557,9 @@ class RequisicionesController extends Controller
                     break;
                 }
             }
+            $alerta = empty($responsable);
         }
 
-        $alerta = empty($responsable);
         return $alerta;
     }
 
