@@ -36,7 +36,7 @@
             <!--Para que me traiga correctamente el video hay que agregar -->
             <div class="video-curso-box">
                 @if ($current && $current->iframe)
-                    <div class="d-none">
+                    <div class="box-iframe-video-courses d-none">
                         {!! $current->iframe !!}
                     </div>
                     <div id="player"></div>
@@ -219,84 +219,84 @@
         </ul>
     </div>
     @section('scripts')
+        <script src="https://www.youtube.com/iframe_api"></script>
         <script>
+            function ytAppi() {
+
+                // Cargar la API de YouTube Player
+                var tag = document.createElement("script");
+                tag.src = "https://www.youtube.com/iframe_api";
+                var firstScriptTag = document.getElementsByTagName("script")[0];
+                firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+                // Variable para almacenar el reproductor
+                var player;
+
+                function getYouTubeVideoId() {
+                    var iframe = document.querySelector(".box-iframe-video-courses iframe");
+                    var url = iframe.src;
+                    var videoId = url.split("/embed/")[1].split("?")[0];
+                    return videoId;
+                }
+
+                // Esta función se llama automáticamente cuando la API de YouTube Player se carga
+                function onYouTubeIframeAPIReady() {
+                    var videoId = getYouTubeVideoId();
+                    player = new YT.Player("player", {
+                        height: "360",
+                        width: "640",
+                        videoId: videoId, // Reemplaza con el ID del video que quieras cargar
+                        events: {
+                            onReady: onPlayerReady,
+                            onStateChange: onPlayerStateChange,
+                        },
+                    });
+                }
+
+                // Esta función se llama cuando el reproductor está listo
+                function onPlayerReady(event) {
+                    // Opcional: Reproducir el video automáticamente
+                    // event.target.playVideo();
+                }
+
+                // Esta función se llama cuando cambia el estado del reproductor
+                function onPlayerStateChange(event) {
+                    if (event.data == YT.PlayerState.PLAYING) {
+                        // El video ha comenzado a reproducirse
+                        startTrackingProgress();
+                    } else if (event.data == YT.PlayerState.ENDED) {
+                        console.log('end');
+                        @this.completed();
+                        // Aquí puedes ejecutar acciones adicionales cuando el video termina
+                    }
+                }
+                // Función para rastrear el progreso del video
+                function startTrackingProgress() {
+                    setInterval(function() {
+                        var currentTime = player.getCurrentTime();
+                        var duration = player.getDuration();
+                        var progress = (currentTime / duration) * 100;
+
+                        console.log("Progreso del video: " + progress + "%");
+
+                        // Aquí puedes actualizar la UI o realizar otras acciones basadas en el progreso
+                    }, 1000); // Actualiza cada segundo
+                }
+            }
+
             Livewire.on('completado', () => {
                 if (!@json($current->completed)) {
 
                     setTimeout(() => {
-                        @this.completed();
-                        console.log('live');
+                        ytAppi();
                     }, 25000);
                 }
             });
 
             if (!@json($current->completed)) {
                 setTimeout(() => {
-                    @this.completed();
-                    console.log('mouse');
+                    ytAppi();
                 }, 25000);
-            }
-        </script>
-
-        <script src="https://www.youtube.com/iframe_api"></script>
-        <script>
-            // Cargar la API de YouTube Player
-            var tag = document.createElement("script");
-            tag.src = "https://www.youtube.com/iframe_api";
-            var firstScriptTag = document.getElementsByTagName("script")[0];
-            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-            // Variable para almacenar el reproductor
-            var player;
-
-            function getYouTubeVideoId() {
-                var iframe = document.getElementById("youtubeIframe");
-                var url = iframe.src;
-                var videoId = url.split("/embed/")[1].split("?")[0];
-                return videoId;
-            }
-
-            // Esta función se llama automáticamente cuando la API de YouTube Player se carga
-            function onYouTubeIframeAPIReady() {
-                var videoId = getYouTubeVideoId();
-                player = new YT.Player("player", {
-                    height: "360",
-                    width: "640",
-                    videoId: videoId, // Reemplaza con el ID del video que quieras cargar
-                    events: {
-                        onReady: onPlayerReady,
-                        onStateChange: onPlayerStateChange,
-                    },
-                });
-            }
-
-            // Esta función se llama cuando el reproductor está listo
-            function onPlayerReady(event) {
-                // Opcional: Reproducir el video automáticamente
-                // event.target.playVideo();
-            }
-
-            // Esta función se llama cuando cambia el estado del reproductor
-            function onPlayerStateChange(event) {
-                if (event.data == YT.PlayerState.PLAYING) {
-                    // El video ha comenzado a reproducirse
-                    startTrackingProgress();
-                } else if (event.data == YT.PlayerState.ENDED) {
-                    console.log("El video ha terminado");
-                    // Aquí puedes ejecutar acciones adicionales cuando el video termina
-                }
-            }
-            // Función para rastrear el progreso del video
-            function startTrackingProgress() {
-                setInterval(function() {
-                    var currentTime = player.getCurrentTime();
-                    var duration = player.getDuration();
-                    var progress = (currentTime / duration) * 100;
-
-                    console.log("Progreso del video: " + progress + "%");
-
-                    // Aquí puedes actualizar la UI o realizar otras acciones basadas en el progreso
-                }, 1000); // Actualiza cada segundo
             }
         </script>
     @endsection
