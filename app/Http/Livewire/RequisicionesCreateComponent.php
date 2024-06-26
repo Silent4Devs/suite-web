@@ -206,6 +206,13 @@ class RequisicionesCreateComponent extends Component
                 'comprador_id' => $data['comprador_id'],
                 'sucursal_id' => $data['sucursal_id'],
             ]);
+            $firmas_requi = FirmasRequisiciones::create([
+                'requisicion_id' => $this->nueva_requisicion->id,
+                'solicitante_id' => $usuario->empleado->id,
+                // 'jefe_id' => $responsable->id,
+                // 'responsable_finanzas_id' => $responsable->id,
+                // 'comprador_id' => $comprador->user->empleado->id,
+            ]);
         } else {
             $this->nueva_requisicion = KatbolRequsicion::create([
                 'fecha' => $data['fecha'],
@@ -215,6 +222,13 @@ class RequisicionesCreateComponent extends Component
                 'contrato_id' => $data['contrato_id'],
                 'comprador_id' => $data['comprador_id'],
                 'sucursal_id' => $data['sucursal_id'],
+            ]);
+            $firmas_requi = FirmasRequisiciones::create([
+                'requisicion_id' => $this->nueva_requisicion->id,
+                'solicitante_id' => $usuario->empleado->id,
+                // 'jefe_id' => $responsable->id,
+                // 'responsable_finanzas_id' => $responsable->id,
+                // 'comprador_id' => $comprador->user->empleado->id,
             ]);
         }
 
@@ -510,9 +524,9 @@ class RequisicionesCreateComponent extends Component
                 }
             }
 
-            $firmas_requi = FirmasRequisiciones::create([
-                'requisicion_id' => $this->nueva_requisicion->id,
-                'solicitante_id' => $user->empleado->id,
+            $firmas_requi = FirmasRequisiciones::where('requisicion_id', $this->nueva_requisicion->id)->first();
+
+            $firmas_requi->update([
                 'jefe_id' => $responsable->id,
                 // 'responsable_finanzas_id' => $responsable->id,
                 // 'comprador_id' => $comprador->user->empleado->id,
