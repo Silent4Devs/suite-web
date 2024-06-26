@@ -57,7 +57,9 @@ class PortalComunicacionController extends Controller
         $documentos_publicados = Documento::with('macroproceso', 'responsable')->where('estatus', Documento::PUBLICADO)->latest('updated_at')->get()->take(6);
 
         foreach ($documentos_publicados as $key_nuevo => $documento) {
+            $documento->id_responsable = $documento->responsable->id;
             $documento->nombre_responsable = $documento->responsable->name;
+            $documento->archivo = encodeSpecialCharacters($documento->archivo_actual);
 
             if ($documento->responsable->foto == null || $documento->responsable->foto == '0') {
                 if ($documento->responsable->genero == 'H') {
@@ -75,7 +77,8 @@ class PortalComunicacionController extends Controller
             $documento->ruta_responsable_foto = encodeSpecialCharacters($ruta);
 
             $documento->makeHidden([
-                'responsable'
+                'responsable',
+                'archivo_actual'
             ]);
         }
 
@@ -87,7 +90,7 @@ class PortalComunicacionController extends Controller
             $comunicado->texto_descripcion = $comunicado->descripcion;
             $comunicado->tipo_imagen = $comunicado->imagenes_comunicacion->first()->tipo;
             $ruta_comunicado = asset('storage/imagen_comunicado_SGI/' . $comunicado->imagenes_comunicacion->first()->imagen);
-            $comunicado->ruta_imagen = $ruta_comunicado;
+            $comunicado->ruta_imagen = encodeSpecialCharacters($ruta_comunicado);
         }
 
         $noticias = ComunicacionSgi::getAllwithImagenesCarrousel()->makeHidden(['descripcion', 'created_at', 'updated_at', 'imagenes_comunicacion'])->take(3);
@@ -96,7 +99,7 @@ class PortalComunicacionController extends Controller
             $noticia->texto_descripcion = $noticia->descripcion;
             $noticia->tipo_imagen = $noticia->imagenes_comunicacion->first()->tipo;
             $ruta_noticia = asset('storage/imagen_comunicado_SGI/' . $noticia->imagenes_comunicacion->first()->imagen);
-            $noticia->ruta_imagen = $ruta_noticia;
+            $noticia->ruta_imagen = encodeSpecialCharacters($ruta_noticia);
         }
 
         $cumpleaños = Cache::remember('Portal_cumpleaños_' . $authId, 3600, function () use ($hoy, $empleados) {
@@ -108,7 +111,9 @@ class PortalComunicacionController extends Controller
         });
 
         foreach ($nuevos as $key_nuevo => $nuevo) {
+            $nuevo->id_area = $nuevo->area->id;
             $nuevo->nombre_area = $nuevo->area->area;
+            $nuevo->id_puesto = $nuevo->puestoRelacionado->id;
             $nuevo->nombre_puesto = $nuevo->puesto;
 
             if ($nuevo->foto == null || $nuevo->foto == '0') {
@@ -134,7 +139,9 @@ class PortalComunicacionController extends Controller
         }
 
         foreach ($cumpleaños as $key => $cumple) {
+            $cumple->id_area = $cumple->area->id;
             $cumple->nombre_area = $cumple->area->area;
+            $cumple->id_puesto = $cumple->puestoRelacionado->id;
             $cumple->nombre_puesto = $cumple->puesto;
 
             $cumple->fecha_cumpleanos = $this->convertircumpleanos($cumple->cumpleaños);

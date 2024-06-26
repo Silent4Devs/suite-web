@@ -32,6 +32,9 @@ class SolicitudDayOffApiController extends Controller
         $usuario = User::find($id_user);
         $data = $usuario->empleado->id;
 
+        $año = Carbon::now()->format('Y');
+        $finDayOff = '31-12-' . $año;
+
         $solicitudesDayOff = SolicitudDayOff::with('empleado')->where('empleado_id', '=', $data)->orderByDesc('id')->get();
 
         foreach ($solicitudesDayOff as $key_solicitud => $solicitante) {
@@ -65,6 +68,7 @@ class SolicitudDayOffApiController extends Controller
             'logo_actual' => $logo_actual,
             'empresa_actual' => $empresa_actual,
             'dias_disponibles' => $dias_disponibles,
+            'finDayOff' => $finDayOff,
             'solicitudesDayOff' => $solicitudesDayOff
         ]), 200)->header('Content-Type', 'application/json');
 
@@ -76,6 +80,7 @@ class SolicitudDayOffApiController extends Controller
         // abort_if(Gate::denies('solicitud_dayoff_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $año = Carbon::now()->format('Y');
+        $finDayOff = '31-12-' . $año;
 
         $existe_regla_ingreso = DayOff::where('inicio_conteo', 1)->exists();
         $usuario = User::find($id_usuario);
@@ -113,7 +118,7 @@ class SolicitudDayOffApiController extends Controller
         return response(json_encode([
             'vacacion' => $vacacion,
             'dias_disponibles' => $dias_disponibles,
-            'año' => $año,
+            'finDayOff' => $finDayOff,
             'autoriza' => $autoriza,
             // 'organizacion' => $organizacion, Innecesario
             'dias_pendientes' => $dias_pendientes,

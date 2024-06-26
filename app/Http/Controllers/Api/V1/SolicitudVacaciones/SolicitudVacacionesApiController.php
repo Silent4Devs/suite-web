@@ -38,7 +38,7 @@ class SolicitudVacacionesApiController extends Controller
 
         $solicitudesVacaciones = SolicitudVacaciones::with('empleado')->where('empleado_id', '=', $data)->orderByDesc('id')->get();
 
-        foreach ($$solicitudesVacaciones as $key_solicitud => $solicitante) {
+        foreach ($solicitudesVacaciones as $key_solicitud => $solicitante) {
             if ($solicitante && $solicitante->empleado) {
                 $solicitante->empleado->makeHidden([
                     'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
@@ -65,11 +65,18 @@ class SolicitudVacacionesApiController extends Controller
             $dias_disponibles = 0;
         }
 
+        $ingreso = Carbon::parse($usuario->empleado->antiguedad);
+        $año = Carbon::createFromDate($ingreso)->age;
+        $inicio_vacaciones = $ingreso->addYear();
+        $finVacaciones = $inicio_vacaciones->addYear($año);
+        $finVacaciones = $finVacaciones->format('d-m-Y');
+
         return response(json_encode([
             'logo_actual' => $logo_actual,
             'empresa_actual' => $empresa_actual,
             'dias_disponibles' => $dias_disponibles,
-            'solicitudesVacaciones' => $solicitudesVacaciones
+            'finVacaciones' => $finVacaciones,
+            'solicitudesVacaciones' => $solicitudesVacaciones,
         ]), 200)->header('Content-Type', 'application/json');
     }
 
