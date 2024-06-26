@@ -281,7 +281,7 @@
             </div>
         </div>
 
-        <div class="row" style="margin-left: 10px;">
+        <div style="margin-left: 10px;">
             @livewire('contratos-identificador-proyectos-int-ext')
         </div>
 
