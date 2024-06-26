@@ -29,6 +29,7 @@
         <a href="#" data-tabs="analisis"><i class="mr-4 fas fa-clipboard-list"></i>Análisis Causa Raíz</a>
         <a href="#" data-tabs="plan"><i class="mr-4 fas fa-tasks"></i>Plan de Trabajo</a>
     </div>
+
     <div class="card-body">
 
         <div class="caja_caja_secciones">
@@ -58,6 +59,12 @@
 
                                     </div>
                                 </div>
+                            </div>
+                            <div>
+                                <label>
+                                    <input type="checkbox" id="toggle-info">
+                                    Mostrar Información
+                                </label>
                             </div>
                             <div class="mt-4 form-group col-12">
                                 <b>Datos generales:</b>
@@ -529,10 +536,51 @@
         </div>
     </div>
 </div>
-
 @endsection
 
 @section('scripts')
+<script>
+    $(document).ready(function() {
+        $('#participantes').select2({
+            placeholder: 'Selecciona participantes',
+            allowClear: true,
+            tags: true,
+            tokenSeparators: [',', ' '],
+            templateResult: formatEmpleado,
+            templateSelection: formatEmpleadoSelection,
+            maximumSelectionLength: 5  // Limita a un máximo de 5 selecciones
+        });
+
+        function formatEmpleado(empleado) {
+            if (!empleado.id) {
+                return empleado.text;
+            }
+            var avatar = $(empleado.element).data('avatar');
+            var $avatar = $('<img class="avatar" src="' + avatar + '">');
+            var $nombre = $('<span>' + empleado.text + '</span>');
+            var $container = $('<span>').append($avatar).append($nombre);
+            return $container;
+        }
+
+        function formatEmpleadoSelection(empleado) {
+            return empleado.text;
+        }
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const checkbox = document.getElementById('toggle-info');
+        const infoBar = document.getElementById('info-bar');
+
+        checkbox.addEventListener('change', function() {
+            if (checkbox.checked) {
+                infoBar.style.display = 'block';
+            } else {
+                infoBar.style.display = 'none';
+            }
+        });
+    });
+</script>
 <script type="text/javascript">
     const formatDate = (current_datetime) => {
         let formatted_date = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" +

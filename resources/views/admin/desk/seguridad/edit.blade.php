@@ -197,6 +197,12 @@
                                     </div>
                                 </div>
                             </div>
+                            <div>
+                                <label>
+                                    <input type="checkbox" id="toggle-info">
+                                    Mostrar Información
+                                </label>
+                            </div>
                             <div class="mt-1 form-group col-md-12">
                                 <b>Datos generales:</b>
                             </div>
@@ -953,12 +959,91 @@
         </div>
     </div>
 </div>
+<div class="info-bar" id="info-bar">
+    <div class="mt-4 card radius">
+    <div class="card-body">
+    <h5 class="titulo-card">Empleados</h5>
+    <hr>
+    <form method="POST" id="formularioAprobacion" action="{{ route('admin.firmas_seguridad.store') }}"
+    enctype="multipart/form-data">
+    @csrf
+    <div class="card">
+        <div class="card-body">
+            <h4 style="color:#057BE2; title-table-rds">Configuración Listas de Aprobación</h4>
+            <hr>
+            <div class="row g-0">
+                <div class="col-12">
+                    <p>Seleccione cuántos participantes de aprobación tendrá tu lista.</p>
+                    <div class="anima-focus">
+                        <select id="participantes" name="participantes[]" class="form-control" multiple="multiple">
+                            @foreach($firmaModules->empleados as $empleado)
+                                <option value="{{ $empleado->id }}">{{ $empleado->name }}</option>
+                            @endforeach
+                        </select>
+                        <label for="participantes">Participantes (máximo 5)</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-right" style="position: relative; top:-1rem;">
+        <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+    </div>
+</div>
+</div>
+</form>
+</div>
 @endsection
 
 
 
 @section('scripts')
 @parent
+<script>
+    $(document).ready(function() {
+        $('#participantes').select2({
+            placeholder: 'Selecciona participantes',
+            allowClear: true,
+            tags: true,
+            tokenSeparators: [',', ' '],
+            templateResult: formatEmpleado,
+            templateSelection: formatEmpleadoSelection,
+            maximumSelectionLength: 5  // Limita a un máximo de 5 selecciones
+        });
+
+        function formatEmpleado(empleado) {
+            if (!empleado.id) {
+                return empleado.text;
+            }
+            var avatar = $(empleado.element).data('avatar');
+            var $avatar = $('<img class="avatar" src="' + avatar + '">');
+            var $nombre = $('<span>' + empleado.text + '</span>');
+            var $container = $('<span>').append($avatar).append($nombre);
+            return $container;
+        }
+
+        function formatEmpleadoSelection(empleado) {
+            return empleado.text;
+        }
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const checkbox = document.getElementById('toggle-info');
+        const infoBar = document.getElementById('info-bar');
+
+        checkbox.addEventListener('change', function() {
+            if (checkbox.checked) {
+                infoBar.style.display = 'block';
+            } else {
+                infoBar.style.display = 'none';
+            }
+        });
+    });
+</script>
 <script type="text/javascript">
     const formatDate = (current_datetime) => {
         let formatted_date = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" +
