@@ -36,9 +36,10 @@
             <!--Para que me traiga correctamente el video hay que agregar -->
             <div class="video-curso-box">
                 @if ($current && $current->iframe)
-                    <div>
+                    <div class="d-none">
                         {!! $current->iframe !!}
                     </div>
+                    <div id="player"></div>
                 @else
                     <p>Sin registro</p>
                 @endif
@@ -115,13 +116,13 @@
 
     <div class="card card-body" style="width: 320px;">
         <h4>{{ $course->title }}</h4>
-        <div class="d-flex align-items-start">
+        <div class="d-flex align-items-start" wire:ignore>
             <div class="img-person" style="min-width: 40px; min-height: 40px;">
-                <img src="{{ isset($course->teacher->empleado->avatar_ruta) ? $course->teacher->empleado->avatar_ruta : '' }}"
-                    alt="{{ $course->teacher->name }}">
+                <img src="{{ isset($course->instructor->empleado->avatar_ruta) ? $course->instructor->empleado->avatar_ruta : '' }}"
+                    alt="{{ $course->instructor->name }}">
             </div>
             <div>
-                <p class="ml-2">{{ $course->teacher->name }}</p>
+                <p class="ml-2">{{ $course->instructor->name }}</p>
                 <p class="ml-2" style="color: #E3A008;">{{ strtoupper($course->category->name) }}</p>
 
             </div>
@@ -234,6 +235,68 @@
                     @this.completed();
                     console.log('mouse');
                 }, 25000);
+            }
+        </script>
+
+        <script src="https://www.youtube.com/iframe_api"></script>
+        <script>
+            // Cargar la API de YouTube Player
+            var tag = document.createElement("script");
+            tag.src = "https://www.youtube.com/iframe_api";
+            var firstScriptTag = document.getElementsByTagName("script")[0];
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+            // Variable para almacenar el reproductor
+            var player;
+
+            function getYouTubeVideoId() {
+                var iframe = document.getElementById("youtubeIframe");
+                var url = iframe.src;
+                var videoId = url.split("/embed/")[1].split("?")[0];
+                return videoId;
+            }
+
+            // Esta función se llama automáticamente cuando la API de YouTube Player se carga
+            function onYouTubeIframeAPIReady() {
+                var videoId = getYouTubeVideoId();
+                player = new YT.Player("player", {
+                    height: "360",
+                    width: "640",
+                    videoId: videoId, // Reemplaza con el ID del video que quieras cargar
+                    events: {
+                        onReady: onPlayerReady,
+                        onStateChange: onPlayerStateChange,
+                    },
+                });
+            }
+
+            // Esta función se llama cuando el reproductor está listo
+            function onPlayerReady(event) {
+                // Opcional: Reproducir el video automáticamente
+                // event.target.playVideo();
+            }
+
+            // Esta función se llama cuando cambia el estado del reproductor
+            function onPlayerStateChange(event) {
+                if (event.data == YT.PlayerState.PLAYING) {
+                    // El video ha comenzado a reproducirse
+                    startTrackingProgress();
+                } else if (event.data == YT.PlayerState.ENDED) {
+                    console.log("El video ha terminado");
+                    // Aquí puedes ejecutar acciones adicionales cuando el video termina
+                }
+            }
+            // Función para rastrear el progreso del video
+            function startTrackingProgress() {
+                setInterval(function() {
+                    var currentTime = player.getCurrentTime();
+                    var duration = player.getDuration();
+                    var progress = (currentTime / duration) * 100;
+
+                    console.log("Progreso del video: " + progress + "%");
+
+                    // Aquí puedes actualizar la UI o realizar otras acciones basadas en el progreso
+                }, 1000); // Actualiza cada segundo
             }
         </script>
     @endsection
