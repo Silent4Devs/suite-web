@@ -28,7 +28,7 @@
         }
     </style>
 
-    {{-- <x-loading-indicator /> --}}
+    <x-loading-indicator />
 
     <div style="width: 100%; ">
         <div style="position: sticky; top:80px;">
@@ -36,11 +36,11 @@
             <!--Para que me traiga correctamente el video hay que agregar -->
             <div class="video-curso-box">
                 @if ($current && $current->iframe)
-                    <div class="box-iframe-video-courses">
+                    <div class="box-iframe-video-courses d-none">
                         {!! $current->iframe !!}
 
                     </div>
-                    <div id="player3"></div>
+                    <div id="player3" class="w-100"></div>
                 @else
                     <p>Sin registro</p>
                 @endif
@@ -228,7 +228,7 @@
             var complet;
             document.addEventListener('livewire:update', function() {
                 console.log('Componente Livewire actualizado');
-                    initializeYouTubePlayer();
+                initializeYouTubePlayer();
             });
 
             document.addEventListener('DOMContentLoaded', function() {
@@ -250,7 +250,6 @@
                 return videoId;
             }
             var videoId = getYouTubeVideoId();
-            console.log('asdasd');
 
             //esto siempre se tiene que ejecutar por la api de youtube
             function onYouTubeIframeAPIReady() {
@@ -260,7 +259,7 @@
             function initializeYouTubePlayer() {
                 var videoId = getYouTubeVideoId(); // Obtener el ID del video desde el iframe
                 player = new YT.Player('player3', {
-                    height: '560',
+                    height: '460',
                     width: '940',
                     videoId: videoId, // Usar el ID del video obtenido
                     events: {
@@ -273,7 +272,7 @@
             function onPlayerReady(event) {
                 // Código a ejecutar cuando el reproductor está listo
                 console.log('Reproductor listo');
-                player.playVideo();
+                // player.playVideo();
             }
 
             function onPlayerStateChange(event) {
