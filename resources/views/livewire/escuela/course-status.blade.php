@@ -36,10 +36,11 @@
             <!--Para que me traiga correctamente el video hay que agregar -->
             <div class="video-curso-box">
                 @if ($current && $current->iframe)
-                    <div class="box-iframe-video-courses d-none">
+                    <div class="box-iframe-video-courses">
                         {!! $current->iframe !!}
+
                     </div>
-                    <div id="player"></div>
+                    <div id="player3"></div>
                 @else
                     <p>Sin registro</p>
                 @endif
@@ -120,9 +121,11 @@
             <div class="img-person" style="min-width: 40px; min-height: 40px;">
                 <img src="{{ isset($course->instructor->empleado->avatar_ruta) ? $course->instructor->empleado->avatar_ruta : '' }}"
                     alt="{{ $course->instructor->name }}">
+                {{-- {{ $course->instructor->name }} --}}
             </div>
             <div>
-                <p class="ml-2">{{ $course->instructor->name }}</p>
+                {{-- {{ $course->instructor->name }} --}}
+                <p class="ml-2">{{ $course->instructor->name }} </p>
                 <p class="ml-2" style="color: #E3A008;">{{ strtoupper($course->category->name) }}</p>
 
             </div>
@@ -221,82 +224,81 @@
     @section('scripts')
         <script src="https://www.youtube.com/iframe_api"></script>
         <script>
-            function ytAppi() {
-
-                // Cargar la API de YouTube Player
-                var tag = document.createElement("script");
-                tag.src = "https://www.youtube.com/iframe_api";
-                var firstScriptTag = document.getElementsByTagName("script")[0];
-                firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-                // Variable para almacenar el reproductor
-                var player;
-
-                function getYouTubeVideoId() {
-                    var iframe = document.querySelector(".box-iframe-video-courses iframe");
-                    var url = iframe.src;
-                    var videoId = url.split("/embed/")[1].split("?")[0];
-                    return videoId;
-                }
-
-                // Esta función se llama automáticamente cuando la API de YouTube Player se carga
-                function onYouTubeIframeAPIReady() {
-                    var videoId = getYouTubeVideoId();
-                    player = new YT.Player("player", {
-                        height: "360",
-                        width: "640",
-                        videoId: videoId, // Reemplaza con el ID del video que quieras cargar
-                        events: {
-                            onReady: onPlayerReady,
-                            onStateChange: onPlayerStateChange,
-                        },
-                    });
-                }
-
-                // Esta función se llama cuando el reproductor está listo
-                function onPlayerReady(event) {
-                    // Opcional: Reproducir el video automáticamente
-                    // event.target.playVideo();
-                }
-
-                // Esta función se llama cuando cambia el estado del reproductor
-                function onPlayerStateChange(event) {
-                    if (event.data == YT.PlayerState.PLAYING) {
-                        // El video ha comenzado a reproducirse
-                        startTrackingProgress();
-                    } else if (event.data == YT.PlayerState.ENDED) {
-                        console.log('end');
-                        @this.completed();
-                        // Aquí puedes ejecutar acciones adicionales cuando el video termina
-                    }
-                }
-                // Función para rastrear el progreso del video
-                function startTrackingProgress() {
-                    setInterval(function() {
-                        var currentTime = player.getCurrentTime();
-                        var duration = player.getDuration();
-                        var progress = (currentTime / duration) * 100;
-
-                        console.log("Progreso del video: " + progress + "%");
-
-                        // Aquí puedes actualizar la UI o realizar otras acciones basadas en el progreso
-                    }, 1000); // Actualiza cada segundo
-                }
-            }
-
-            Livewire.on('completado', () => {
-                if (!@json($current->completed)) {
-
-                    setTimeout(() => {
-                        ytAppi();
-                    }, 25000);
-                }
+            var player;
+            var complet;
+            document.addEventListener('livewire:update', function() {
+                console.log('Componente Livewire actualizado');
+                    initializeYouTubePlayer();
             });
 
-            if (!@json($current->completed)) {
-                setTimeout(() => {
-                    ytAppi();
-                }, 25000);
+            document.addEventListener('DOMContentLoaded', function() {
+                // Aquí carga la API de YouTube IFrame
+                var tag = document.createElement('script');
+                tag.src = "https://www.youtube.com/iframe_api";
+                var firstScriptTag = document.getElementsByTagName('script')[0];
+                firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+            });
+
+
+
+            function getYouTubeVideoId() {
+                var assignIdIframe = document.querySelector(".box-iframe-video-courses iframe");
+                assignIdIframe.id = 'videoYoutube';
+                var iframe = document.getElementById('videoYoutube');
+                var url = iframe.src;
+                var videoId = url.split('/embed/')[1].split('?')[0];
+                return videoId;
+            }
+            var videoId = getYouTubeVideoId();
+            console.log('asdasd');
+
+            //esto siempre se tiene que ejecutar por la api de youtube
+            function onYouTubeIframeAPIReady() {
+                initializeYouTubePlayer();
+            }
+
+            function initializeYouTubePlayer() {
+                var videoId = getYouTubeVideoId(); // Obtener el ID del video desde el iframe
+                player = new YT.Player('player3', {
+                    height: '560',
+                    width: '940',
+                    videoId: videoId, // Usar el ID del video obtenido
+                    events: {
+                        'onReady': onPlayerReady,
+                        'onStateChange': onPlayerStateChange
+                    }
+                });
+            }
+
+            function onPlayerReady(event) {
+                // Código a ejecutar cuando el reproductor está listo
+                console.log('Reproductor listo');
+                player.playVideo();
+            }
+
+            function onPlayerStateChange(event) {
+                if (event.data == YT.PlayerState.PLAYING) {
+                    // El video ha comenzado a reproducirse
+                    startTrackingProgress();
+                } else if (event.data == YT.PlayerState.ENDED) {
+                    console.log('El video ha terminado');
+                    if (!@json($current->completed)) {
+                        complet = true;
+                        @this.completed();
+                    }
+                }
+            }
+            // Función para rastrear el progreso del video
+            function startTrackingProgress() {
+                setInterval(function() {
+                    var currentTime = player.getCurrentTime();
+                    var duration = player.getDuration();
+                    var progress = (currentTime / duration) * 100;
+
+                    console.log('Progreso del video: ' + progress + '%');
+
+                    // Aquí puedes actualizar la UI o realizar otras acciones basadas en el progreso
+                }, 1000); // Actualiza cada segundo
             }
         </script>
     @endsection
