@@ -379,9 +379,11 @@ class SolicitudVacacionesApiController extends Controller
         //abort_if(Gate::denies('solicitud_vacaciones_aprobar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $respuestaSolicitud = $request->input('solicitud');
         $solicitud = SolicitudVacaciones::find($id);
-        $empleados = Empleado::getAll();
-        $supervisor = $empleados->find($request->autoriza);
-        $solicitante = $empleados->find($request->empleado_id);
+        $usuario = User::getCurrentUser();
+        $empleado = Empleado::getAll();
+
+        $supervisor = $empleado->find($usuario->empleado->id);
+        $solicitante = $empleado->find($solicitud->empleado_id);
 
         $solicitud->update([
             'aprobacion' => $respuestaSolicitud['aprobacion'],
@@ -559,10 +561,10 @@ class SolicitudVacacionesApiController extends Controller
         // return view('admin.solicitudVacaciones.aprobacion-menu', compact('solicitud_dayoff', 'solicitud_vacacion', 'solicitud_permiso'));
     }
 
-    public function aprobacion($id_user)
+    public function aprobacion()
     {
         //abort_if(Gate::denies('modulo_aprobacion_ausencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $usuario = User::find($id_user);
+        $usuario = User::getCurrentUser();
         $data = $usuario->empleado->id;
 
         $solicitudesVacaciones = SolicitudVacaciones::with('empleado')->where('autoriza', '=', $data)->where('aprobacion', '=', 1)->orderByDesc('id')->get();

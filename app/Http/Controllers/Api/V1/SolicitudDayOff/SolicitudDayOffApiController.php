@@ -252,13 +252,13 @@ class SolicitudDayOffApiController extends Controller
     {
         // abort_if(Gate::denies('solicitud_dayoff_aprobar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $respuestaSolicitud = $request->input('solicitud');
-
+        $usuario = User::getCurrentUser();
         $solicitud = SolicitudDayOff::find($id);
 
         $empleado = Empleado::getAll();
 
-        $supervisor = $empleado->find($respuestaSolicitud['autoriza']);
-        $solicitante = $empleado->find($respuestaSolicitud['empleado_id']);
+        $supervisor = $empleado->find($usuario->empleado->id);
+        $solicitante = $empleado->find($solicitud->empleado_id);
 
         $solicitud->update([
             'aprobacion' => $respuestaSolicitud['aprobacion'],

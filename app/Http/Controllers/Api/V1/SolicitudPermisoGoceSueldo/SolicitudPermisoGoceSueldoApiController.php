@@ -212,10 +212,11 @@ class SolicitudPermisoGoceSueldoApiController extends Controller
 
         $solicitud = SolicitudPermisoGoceSueldo::find($id);
 
+        $usuario = User::getCurrentUser();
         $empleado = Empleado::getAll();
 
-        $supervisor = $empleado->find($respuestaSolicitud['autoriza']);
-        $solicitante = $empleado->find($respuestaSolicitud['empleado_id']);
+        $supervisor = $empleado->find($usuario->empleado->id);
+        $solicitante = $empleado->find($solicitud->empleado_id);
 
         $solicitud->update([
             'aprobacion' => $respuestaSolicitud['aprobacion'],
