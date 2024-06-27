@@ -859,50 +859,50 @@ class templateAnalisisRiesgoController extends Controller
             $exists = $this->verifyInputsDefault($sections);
             $questions = [];
 
-            $optionId = ([
-                'id' => 'q-1',
-                'title' => 'ID',
-                'template' => $template->id,
-                'position' => 0,
-                'type' => '12',
-                'size' => 3,
-                'obligatory' => true,
-                'data' => [],
-            ]);
+            // $optionId = ([
+            //     'id' => 'q-1',
+            //     'title' => 'ID',
+            //     'template' => $template->id,
+            //     'position' => 0,
+            //     'type' => '12',
+            //     'size' => 3,
+            //     'obligatory' => true,
+            //     'data' => [],
+            // ]);
 
-            $optionDescription = ([
-                'id' => 'q-2',
-                'title' => 'Descripcion del riesgo',
-                'template' => $template->id,
-                'position' => 1,
-                'type' => '12',
-                'size' => 3,
-                'obligatory' => true,
-                'data' => [],
-            ]);
+            // $optionDescription = ([
+            //     'id' => 'q-2',
+            //     'title' => 'Descripcion del riesgo',
+            //     'template' => $template->id,
+            //     'position' => 1,
+            //     'type' => '12',
+            //     'size' => 3,
+            //     'obligatory' => true,
+            //     'data' => [],
+            // ]);
 
-            $optionOwner = ([
-                'id' => 'q-3',
-                'title' => 'Dueño del riesgo',
-                'template' => $template->id,
-                'position' => 2,
-                'type' => '13',
-                'size' => 3,
-                'obligatory' => true,
-                'data' => [],
-            ]);
+            // $optionOwner = ([
+            //     'id' => 'q-3',
+            //     'title' => 'Dueño del riesgo',
+            //     'template' => $template->id,
+            //     'position' => 2,
+            //     'type' => '13',
+            //     'size' => 3,
+            //     'obligatory' => true,
+            //     'data' => [],
+            // ]);
 
             if ($exists) {
                 foreach ($sections as $index => $section) {
                     $data = $section->questions;
                     $sectionId = $section->id;
                     $newQuestions = $data->map(function ($itm) use ($sectionId, $index) {
-                        if ($index === 0) {
-                            $itm['type'] === '11' ? $itm['position'] = $itm['position'] + 5 : null;
-                            if ($itm['type'] !== '11' && $itm['type'] !== '12' && $itm['type'] !== '13' && $itm['type'] !== '14') {
-                                $itm['position'] = $itm['position'] + 6;
-                            }
-                        }
+                        // if ($index === 0) {
+                        //     $itm['type'] === '11' ? $itm['position'] = $itm['position'] + 5 : null;
+                        //     if ($itm['type'] !== '10' && $itm['type'] !== '11' && $itm['type'] !== '12' && $itm['type'] !== '13' && $itm['type'] !== '14') {
+                        //         $itm['position'] = $itm['position'] + 5;
+                        //     }
+                        // }
                         Arr::forget($itm, 'created_at');
                         Arr::forget($itm, 'updated_at');
                         Arr::forget($itm, 'pivot');

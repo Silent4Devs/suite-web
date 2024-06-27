@@ -27,7 +27,7 @@ class TBQuestionTemplateAnalisisRiesgoModel extends Model
 
     public function sections()
     {
-        return $this->belongsToMany(TBSectionTemplateAnalisisRiesgoModel::class, 'secciones_templates_ar_questions_templates_ar_pivote');
+        return $this->belongsToMany(TBSectionTemplateAnalisisRiesgoModel::class, 'secciones_templates_ar_questions_templates_ar_pivote', 'question_id', 'section_id');
     }
 
     public function dataQuestions()

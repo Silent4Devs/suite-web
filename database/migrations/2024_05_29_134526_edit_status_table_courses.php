@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('courses', function (Blueprint $table) {
-            $table->string('status')->default('1')->change();
-            $table->dropUnique('courses_status_check');
-        });
+        // Schema::table('courses', function (Blueprint $table) {
+        //     $table->string('status')->default('1')->change();
+        //     $table->dropUnique('courses_status_check');
+        // });
     }
 
     /**

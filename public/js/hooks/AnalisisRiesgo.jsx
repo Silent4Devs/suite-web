@@ -955,7 +955,7 @@ export const useSettingsAnalisisRiesgos = (templateId) => {
 
                 dataSection.sort((a, b) => a.position - b.position);
                 dataQuestion.sort((a, b) => a.position - b.position);
-
+                console.log(dataQuestion);
                 setSections(dataSection);
                 setQuestions(dataQuestion);
             }

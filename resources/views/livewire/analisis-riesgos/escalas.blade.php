@@ -122,7 +122,7 @@
                                 </div>
                                 <div class="col-1" style="padding-top: 10px;">
                                     @if ($key > 1 && $escala['id'] !== 0)
-                                        <i wire:click="$emit('delete',{{ $escala['id'] }},{{ $key }})"
+                                        <i wire:click="$emit('deleteEscala',{{ $escala['id'] }},{{ $key }})"
                                             class="text-sm text-red-500 fas fa-trash-alt"></i>
                                     @elseif ($key > 1 && $escala['id'] === 0)
                                         <i wire:click="removeInput({{ $key }})"
@@ -161,7 +161,7 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            Livewire.on("delete", (id, key) => {
+            Livewire.on("deleteEscala", (id, key) => {
                 Swal.fire({
                     title: "Eliminar registro",
                     text: "¿Esta seguro que desea eliminar?",
@@ -173,7 +173,7 @@
                     cancelButtonText: "Cancelar",
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        Livewire.emitTo('analisis-riesgos.escalas', 'destroy', id, key);
+                        Livewire.emitTo('analisis-riesgos.escalas', 'destroyEscala', id, key);
                         Swal.fire({
                             title: "Eliminado",
                             text: "El análisis de brechas se elimino con éxito",
