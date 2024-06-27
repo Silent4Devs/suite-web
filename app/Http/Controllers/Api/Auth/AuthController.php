@@ -30,7 +30,7 @@ class AuthController extends Controller
         $user = User::select(['id', 'name', 'password', 'email', 'empleado_id', 'n_empleado'])
             ->where('email', request('email'))
             ->firstOrFail()
-            ->makeHidden(['empleado', 'empleado_id', 'n_empleado']);
+            ->makeHidden(['empleado', 'empleado_id', 'n_empleado', 'roles']);
 
         function encodeSpecialCharacters($url)
         {
@@ -61,6 +61,18 @@ class AuthController extends Controller
         $user->idEmpleado = $user->empleado->id;
 
         $supervisor = $user->empleado->es_supervisor;
+
+        // $permisos_usuario = [];
+
+        // foreach ($user->roles as $role) {
+
+        //     $roles[]["nombre_rol"] = $role->title;
+
+        //     foreach ($role->permissions as $key => $permiso) {
+        //         $permisos_usuario[]["permiso"] = $permiso->title;
+        //     }
+        // }
+        // dd($roles);
         //Genera un nuevo token para el usuario
         $token = $user->createToken('auth_token')->plainTextToken;
 
@@ -69,6 +81,8 @@ class AuthController extends Controller
             'access_token' => $token,
             'user' => $user->toArray(),
             'supervisor' => $supervisor,
+            // 'roles' => $roles,
+            // 'permisos' => $permisos_usuario,
         ]);
     }
 
