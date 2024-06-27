@@ -15,11 +15,19 @@ class Asistente extends Component
     public $respuesta;
     public $filename;
     public $filePath;
+    public $chatboxOpen = false;
 
     public function __construct($id = null)
     {
         parent::__construct($id);
         $this->asistenService = app(AsistentService::class);
+    }
+
+    public function toggleChatbox()
+    {
+        $this->chatboxOpen = !$this->chatboxOpen;
+        $this->search = '';
+        $this->respuesta = '';
     }
 
     public function postDataText()
@@ -39,12 +47,12 @@ class Asistente extends Component
     public function askAsistenText()
     {
 
-        $this->filename = 'guia.pdf';
+        $this->filename = 'guia3.pdf';
 
         $this->postData();
 
         // Asignar la ruta completa del archivo a $this->filePath
-        $this->filePath = storage_path('Guia.pdf');
+        $this->filePath = storage_path('GuiaV3.pdf');
 
         $this->postDataText();
     }
@@ -54,6 +62,7 @@ class Asistente extends Component
         $response = $this->asistenService->postQuestionToPythonAPI($this->search);
         $this->respuesta = response()->json($response);
         $this->respuesta = $response;
+        $this->search = '';
     }
     public function render()
     {

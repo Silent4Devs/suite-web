@@ -30,7 +30,6 @@
     @if ($lugar == 'portal')
         <input class="h-100" type="text" placeholder="Ejem: Cargar mis horas en Timesheet" autocomplete="off"
             wire:model.lazy="search">
-            {{-- <button wire:click='askAsistenText'>Guardar</button> --}}
 
         <div class="caja-list-search-global scroll_estilo">
             <ul class="list-group">
