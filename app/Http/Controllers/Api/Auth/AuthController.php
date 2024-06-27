@@ -60,6 +60,7 @@ class AuthController extends Controller
 
         $user->idEmpleado = $user->empleado->id;
 
+        $supervisor = $user->empleado->es_supervisor;
         //Genera un nuevo token para el usuario
         $token = $user->createToken('auth_token')->plainTextToken;
 
@@ -67,6 +68,7 @@ class AuthController extends Controller
         return response()->json([
             'access_token' => $token,
             'user' => $user->toArray(),
+            'supervisor' => $supervisor,
         ]);
     }
 
