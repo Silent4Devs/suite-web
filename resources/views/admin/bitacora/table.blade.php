@@ -92,6 +92,19 @@
         }
 
     }
+
+    div.recuadro-instruccion {
+        width: 688px;
+        height: 46px;
+        background: #FFFBEE;
+        border: 1px solid #FFA200;
+        border-radius: 9px;
+        opacity: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #FF8000;
+    }
 </style>
 <link rel="stylesheet" type="text/css" href="http://keith-wood.name/css/jquery.signature.css">
 
@@ -226,7 +239,7 @@
 
 
         <div class="row" style="margin-left: 10px; margin-right: 10px;">
-            <div class="distancia form-group col-md-4">
+            <div class="distancia form-group col-md-6">
                 <label for="proveedor_id" class="txt-tamaño">&nbsp;Nombre
                     del
                     cliente<font class="asterisco">*</font></label>
@@ -247,34 +260,9 @@
                     </div>
                 @endif
             </div>
-            <div class="distancia form-group col-md-4">
-                <label for="no_proyecto" class="txt-tamaño">&nbsp;Número
-                    de
-                    proyecto</label>
-                <input class="form-control" type="text" name="no_proyecto" id="no_proyecto" maxlength="250">
-                @if ($errors->has('no_proyecto'))
-                    <div class="invalid-feedback red-text">
-                        {{ $errors->first('no_proyecto') }}
-                    </div>
-                @endif
-            </div>
-            {{-- <div class="col s12 m4 distancia">
-                <label for="area_id" class="txt-tamaño">Área a la que pertenece el contrato</label>
-                <select class="" name="area_id" id="area_id" required>
-                    <option value="" selected disabled>Seleccione área</option>
-                    @foreach ($areas as $area)
-                        <option value="{{ $area->id }}">{{ $area->area }}</option>
-                    @endforeach
-                </select>
-                @if ($errors->has('area_id'))
-                    <div class="invalid-feedback red-text">
-                        {{ $errors->first('area_id') }}
-                    </div>
-                @endif
-            </div> --}}
 
 
-            <div class="distancia form-group col-md-4">
+            <div class="distancia form-group col-md-6">
                 <label for="area_id" class="txt-tamaño"> Área a la
                     que
                     pertenece el contrato:</label>
@@ -293,6 +281,9 @@
             </div>
         </div>
 
+        <div style="margin-left: 10px;">
+            @livewire('contratos-identificador-proyectos-int-ext')
+        </div>
 
         <div class="row" style="margin-left: 10px; margin-right: 10px;">
             <div class="form-group col-md-6">
@@ -304,7 +295,7 @@
                     <option>Solicitud de contrato</option>
                     <option>Autorización</option>
                     <option>Negociación</option>
-                    <option>Aprobacíon</option>
+                    <option>Aprobación</option>
                     <option>Ejecución</option>
                     <option>Gestión de obligaciónes</option>
                     <option>Modificación de contrato</option>
