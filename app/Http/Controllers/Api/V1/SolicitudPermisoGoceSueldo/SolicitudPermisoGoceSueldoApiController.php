@@ -30,7 +30,7 @@ class SolicitudPermisoGoceSueldoApiController extends Controller
         //abort_if(Gate::denies('solicitud_goce_sueldo_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $data = User::getCurrentUser();
 
-        $solicitudesPermisos = SolicitudPermisoGoceSueldo::with('empleado')->where('empleado_id', '=', $data)->orderByDesc('id')->get();
+        $solicitudesPermisos = SolicitudPermisoGoceSueldo::with('empleado')->where('empleado_id', '=', $data->empleado->id)->orderByDesc('id')->get();
 
         foreach ($solicitudesPermisos as $key_solicitud => $solicitante) {
 
@@ -77,16 +77,30 @@ class SolicitudPermisoGoceSueldoApiController extends Controller
         ]), 200)->header('Content-Type', 'application/json');
     }
 
-    public function create()
+    public function catalogoPermisos()
     {
         //abort_if(Gate::denies('solicitud_goce_sueldo_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $vacacion = new SolicitudPermisoGoceSueldo();
-        $autoriza = User::getCurrentUser();
-        $permisos = PermisosGoceSueldo::get();
+        // $vacacion = new SolicitudPermisoGoceSueldo();
+        // $autoriza = User::getCurrentUser();
+        $permisos = PermisosGoceSueldo::get()->makeHidden([
+            "created_at",
+            "updated_at",
+            "deleted_at"
+        ]);
+
+        foreach ($permisos as $key => $permiso) {
+            if ($permiso->tipo_permiso == 1) {
+                $permiso->categoria_permisos = "Permisos conforme a la ley";
+            } else if ($permiso->tipo_permiso == 2) {
+                $permiso->categoria_permisos = "Permisos otorgados por la empresa";
+            } else {
+                $permiso->categoria_permisos = "No definido";
+            }
+        }
 
         return response(json_encode([
-            'vacacion' => $vacacion,
-            'autoriza' => $autoriza,
+            // 'vacacion' => $vacacion,
+            // 'autoriza' => $autoriza,
             'permisos' => $permisos
         ]), 200)->header('Content-Type', 'application/json');
     }

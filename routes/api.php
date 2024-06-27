@@ -48,7 +48,7 @@ Route::group(['prefix' => 'api/v1', 'as' => 'api.', 'namespace' => 'Api\v1', 'mi
     Route::get('solicitud-vacaciones/{id}/archivoShow', [SolicitudVacacionesApiController::class, 'archivoShow']);
 
     Route::get('solicitud-permisos', [SolicitudPermisoGoceSueldoApiController::class, 'index']);
-    Route::get('solicitud-permisos/create', [SolicitudPermisoGoceSueldoApiController::class, 'create']);
+    Route::get('solicitud-permisos/catalogoPermisos', [SolicitudPermisoGoceSueldoApiController::class, 'catalogoPermisos']);
     Route::get('solicitud-permisos/{id}/show', [SolicitudPermisoGoceSueldoApiController::class, 'show']);
     Route::post('solicitud-permisos/store', [SolicitudPermisoGoceSueldoApiController::class, 'store']);
     Route::get('solicitud-permisos/aprobacion', [SolicitudPermisoGoceSueldoApiController::class, 'aprobacion']);

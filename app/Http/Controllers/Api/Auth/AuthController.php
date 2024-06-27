@@ -30,7 +30,7 @@ class AuthController extends Controller
         $user = User::select(['id', 'name', 'password', 'email', 'empleado_id', 'n_empleado'])
             ->where('email', request('email'))
             ->firstOrFail()
-            ->makeHidden(['empleado']);
+            ->makeHidden(['empleado', 'empleado_id', 'n_empleado']);
 
         function encodeSpecialCharacters($url)
         {

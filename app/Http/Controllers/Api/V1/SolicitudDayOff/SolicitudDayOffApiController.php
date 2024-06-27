@@ -74,9 +74,9 @@ class SolicitudDayOffApiController extends Controller
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        $dias_disponibles_date = $this->diasDisponibles($usuario->id);
+        $dias_disponibles_date = $this->diasDisponibles();
         if ($dias_disponibles_date > 0) {
-            $dias_disponibles = $this->diasDisponibles($usuario->id);
+            $dias_disponibles = $this->diasDisponibles();
         } else {
             $dias_disponibles = 0;
         }
@@ -128,7 +128,7 @@ class SolicitudDayOffApiController extends Controller
 
         $autoriza = $usuario->empleado->supervisor_id;
         $vacacion = new DayOff();
-        $dias_disponibles = $this->diasDisponibles($usuario->id);
+        $dias_disponibles = $this->diasDisponibles();
         // $organizacion = Organizacion::getFirst(); Innecesario
         $dias_pendientes = SolicitudDayOff::where('empleado_id', '=', $usuario->empleado->id)->where('aprobacion', '=', 1)->where('año', '=', $año)->sum('dias_solicitados');
 
@@ -161,7 +161,7 @@ class SolicitudDayOffApiController extends Controller
             'fecha_fin' => $newSolicitud['fecha_fin'],
             'empleado_id' => $solicitante->id,
             'dias_solicitados' => $newSolicitud['dias_solicitados'],
-            'año' => $newSolicitud['año'],
+            'año' => $año,
             'descripcion' => $newSolicitud['descripcion'],
             'autoriza' => $supervisor->id,
         ]);
@@ -429,9 +429,9 @@ class SolicitudDayOffApiController extends Controller
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        $dias_disponibles_date = $this->diasDisponibles($usuario->id);
+        $dias_disponibles_date = $this->diasDisponibles();
         if ($dias_disponibles_date > 0) {
-            $dias_disponibles = $this->diasDisponibles($usuario->id);
+            $dias_disponibles = $this->diasDisponibles();
         } else {
             $dias_disponibles = 0;
         }

@@ -25,7 +25,7 @@ class ComunicadosApiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(int $id)
+    public function index()
     {
         // abort_if(Gate::denies('portal_de_comunicaccion_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $hoy = Carbon::now();
