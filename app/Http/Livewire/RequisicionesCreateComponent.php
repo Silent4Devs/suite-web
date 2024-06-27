@@ -270,6 +270,7 @@ class RequisicionesCreateComponent extends Component
 
         $this->provedores_colllection->push($this->proveedores_catalogo);
         $this->habilitar_proveedores = true;
+        $this->emit('render_firma');
     }
 
     public function dataFirma()
