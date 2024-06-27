@@ -53,6 +53,10 @@ class FinanzasDashboard extends Component
 
             $empItem = Empleado::select('id', 'name')->where('id', $emp_p->empleado_id)->first();
             $horas = TimesheetHoras::where('proyecto_id', $id)
+                ->with('timesheet')
+                ->whereHas('timesheet', function ($query) {
+                    $query->where('estatus', 'aprobado');
+                })
                 ->whereMonth('updated_at', $mes)
                 ->whereYear('updated_at', $año)
                 ->where('empleado_id', $empItem->id)

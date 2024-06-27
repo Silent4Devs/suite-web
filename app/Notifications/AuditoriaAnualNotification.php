@@ -69,12 +69,14 @@ class AuditoriaAnualNotification extends Notification
     {
         return [
             'id' => $this->auditoria_anual->id,
-            'fecha_inicio' => $this->auditoria_anual->fechainicio,
+            'updated_at' => $this->auditoria_anual->updated_at,
+            'deleted_at' => $this->auditoria_anual->deleted_at,
             'time' => Carbon::now(),
             'type' => $this->tipo_consulta,
             'tabla' => $this->tabla,
             'slug' => $this->slug,
             'name' => Auth::user()->name,
+            'avatar_ruta' => Auth::user()->empleado->avatar_ruta,
         ];
     }
 }

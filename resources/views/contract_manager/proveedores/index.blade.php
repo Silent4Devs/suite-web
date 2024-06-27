@@ -15,8 +15,8 @@
 
     <div class="text-right">
         <div class="d-flex justify-content-end">
-            <a href="{{ route('contract_manager.proveedores.create') }}" type="button" class="btn btn-primary">Registrar Proveedor</a> &nbsp; &nbsp;
-            <a href="{{ route('contract_manager.proveedores.view_archivados') }}" type="button" class="btn btn-primary">Archivados</a>
+            <a href="{{ route('contract_manager.proveedores.create') }}" type="button" class="btn tb-btn-primary">Registrar Proveedor</a> &nbsp; &nbsp;
+            <a href="{{ route('contract_manager.proveedores.view_archivados') }}" type="button" class="btn tb-btn-primary">Archivados</a>
         </div>
     </div>
 

@@ -1,8 +1,8 @@
  <link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.css">
  <link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css">
 
- <link rel="stylesheet" type="text/css" href="{{ asset('../css/calendar_tui/tui-calendar.css') }}">
- <link rel="stylesheet" type="text/css" href="{{ asset('../css/calendar_tui/default.css') }}">
+ <link rel="stylesheet" type="text/css" href="{{ asset('../css/global/calendar/tui-calendar.css') }}">
+ <link rel="stylesheet" type="text/css" href="{{ asset('../css/global/calendar/default.css') }}">
 
  <style type="text/css">
      .caja {

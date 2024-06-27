@@ -7,7 +7,7 @@
     </div>
     <div class="col-12" id="contenedorSecciones"></div>
     <div class="col-12 text-center justify-content-center align-items-center mb-3">
-        <button class="btn btn-primary" id="btnAgregarSeccion"><i class="fas fa-plus mr-2"></i>
+        <button class="btn tb-btn-primary" id="btnAgregarSeccion"><i class="fas fa-plus mr-2"></i>
             Agregar Sección
         </button>
     </div>
@@ -118,7 +118,7 @@
                         <small class="text-muted">La sección debe contener al menos una lección</small>
                     </div>
                     <div id="contenedor_lecciones${contador}"></div>
-                    <button class=" btn btn-primary" data-type="agregar-leccion" data-contador-leccion="0" data-seccion-id="${contador}"><i class="fas fa-plus mr-2"></i>Agregar Lección</button>
+                    <button class=" btn tb-btn-primary" data-type="agregar-leccion" data-contador-leccion="0" data-seccion-id="${contador}"><i class="fas fa-plus mr-2"></i>Agregar Lección</button>
                 </div>
             </div>
             `;

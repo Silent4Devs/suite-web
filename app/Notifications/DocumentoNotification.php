@@ -69,12 +69,12 @@ class DocumentoNotification extends Notification
     {
         return [
             'id' => $this->documento->id,
-            'fecha_inicio' => $this->documento->fechainicio,
             'time' => Carbon::now(),
             'type' => $this->tipo_consulta,
             'tabla' => $this->tabla,
             'slug' => $this->slug,
             'name' => Auth::user()->name,
+            'avatar_ruta' => Auth::user()->empleado->avatar_ruta,
         ];
     }
 }

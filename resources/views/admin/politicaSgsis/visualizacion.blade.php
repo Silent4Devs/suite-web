@@ -60,11 +60,21 @@
     </style>
 @endsection
 {{ Breadcrumbs::render('admin.politicaSgsis.visualizacion') }}
-<h5 class="col-12 titulo_general_funcion">Politícas de la Organización: <strong> {{ $organizacions->empresa }}</h5>
-        @foreach ($politicaSgsis as $data)
+<h5 class="col-12 titulo_general_funcion">Políticas de la Organización: <strong>{{ $organizacions->empresa }}</strong></h5>
+
+@if ($politicaSgsis->isEmpty())
+    <div class="row">
+        <div class="col-12 text-center">
+            <div class="alert alert-info" role="alert">
+                <h4 class="alert-heading">¡Aun no hay políticas aprobadas!</h4>
+            </div>
+        </div>
+    </div>
+@else
+    @foreach ($politicaSgsis as $data)
         <div class="encabezado">
             <h6><strong>{{ $data->nombre_politica ?: 'Nombre: No definido' }}</strong></h6>
-            <p  class="quitar">Fecha de publicación : {{ $data->fecha_publicacion ?: 'fecha_publicacion: No definido' }}</p>
+            <p class="quitar">Fecha de publicación : {{ $data->fecha_publicacion ?: 'Fecha de publicación: No definido' }}</p>
             <div class="d-flex justify-content-end" style="position: relative; top: -2rem; right: 2rem;">@livewire('aceptar-politica', ['id_politica' => $data->id])</div>
         </div>
         <div class="card card-body">
@@ -73,10 +83,12 @@
                     <p class="quitar">{!! \Illuminate\Support\Str::limit(strip_tags($data->politicasgsi), 1050) !!}</p>
                 </div>
                 <div class="ml-auto">
-                    <img src="{{ asset('comite.png') }}" alt="Comite Image">
+                    <img src="{{ asset('comite.png') }}" alt="Imagen del Comité">
                 </div>
             </div>
         </div>
-        @endforeach
+    @endforeach
+@endif
+
 
 @endsection

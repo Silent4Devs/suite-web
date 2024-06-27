@@ -9,7 +9,9 @@ use App\Mail\TimesheetHorasSolicitudAprobacion;
 use App\Mail\TimesheetSolicitudAprobada;
 use App\Mail\TimesheetSolicitudRechazada;
 use App\Models\Area;
+use App\Models\ContractManager\Contrato;
 use App\Models\ContractManager\Fiscale;
+use App\Models\ConvergenciaContratos;
 use App\Models\Empleado;
 use App\Models\ListaInformativa;
 use App\Models\Organizacion;
@@ -55,7 +57,7 @@ class TimesheetController extends Controller
     public function index($estatus = 'todos')
     {
         abort_if(Gate::denies('timesheet_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $cacheKey = 'timesheet-' . User::getCurrentUser()->empleado->id;
+        $cacheKey = 'timesheet-'.User::getCurrentUser()->empleado->id;
 
         // $times = Timesheet::getPersonalTimesheet()->sortBy('fecha_dia');
         // dd($times);
@@ -639,9 +641,7 @@ class TimesheetController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-    }
+    public function destroy($id) {}
 
     public function eliminar($id)
     {
@@ -776,23 +776,70 @@ class TimesheetController extends Controller
         }
     }
 
+    public function creacionContratoProyecto(Request $request)
+    {
+        try {
+            $proyecto = TimesheetProyecto::getAll($request->id_proyecto)->find($request->id_proyecto);
+
+            $validacionNoContrato = Contrato::where('no_contrato', $request->no_contrato)->exists();
+
+            if (! $proyecto) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Proyecto no encontrado.',
+                ], 404);
+            } elseif ($validacionNoContrato) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'El No. Contrato ingresado ya existe.',
+                ], 404);
+            }
+
+            $nuevoContrato = Contrato::create([
+                'no_contrato' => $request->no_contrato,
+                'proveedor_id' => $proyecto->cliente_id,
+                'nombre_servicio' => $request->nombre_servicio,
+                'no_proyecto' => $proyecto->identificador,
+                'fecha_inicio' => $proyecto->fecha_inicio,
+                'fecha_fin' => $proyecto->fecha_fin,
+            ]);
+
+            $convergencia = ConvergenciaContratos::create([
+                'contrato_id' => $nuevoContrato->id,
+                'timesheet_proyecto_id' => $proyecto->id,
+                'timesheet_cliente_id' => $proyecto->cliente_id,
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Contrato creado exitosamente.',
+            ]);
+        } catch (Throwable $th) {
+            // Puedes usar $e->getMessage() para obtener el mensaje de error si es necesario
+            return response()->json([
+                'success' => false,
+                'message' => 'Se ha producido un error al intentar crear el contrato.',
+            ], 500);
+        }
+    }
+
     public function showProyectos($id)
     {
         abort_if(Gate::denies('timesheet_administrador_proyectos_show'), Response::HTTP_FORBIDDEN, '403 Forbidden'); //Nuevo permiso
         $proyecto = TimesheetProyecto::getAll($id)->find($id);
 
-        if (!$proyecto) {
+        if (! $proyecto) {
             return redirect()->route('admin.timesheet-proyectos')->with('error', 'El registro fue eliminado ');
         }
         $areas = TimesheetProyectoArea::where('proyecto_id', $id)
             ->join('areas', 'timesheet_proyectos_areas.area_id', '=', 'areas.id')
             ->get('areas.area');
 
-        $sedes = TimesheetProyecto::getAll('sedes_' . $id)->where('timesheet_proyectos.id', $id)
+        $sedes = TimesheetProyecto::getAll('sedes_'.$id)->where('timesheet_proyectos.id', $id)
             ->join('sedes', 'timesheet_proyectos.sede_id', '=', 'sedes.id')
             ->get('sedes.sede');
 
-        $clientes = TimesheetProyecto::getAll('clientes_' . $id)->where('timesheet_proyectos.id', $id)
+        $clientes = TimesheetProyecto::getAll('clientes_'.$id)->where('timesheet_proyectos.id', $id)
             ->join('timesheet_clientes', 'timesheet_proyectos.cliente_id', '=', 'timesheet_clientes.id')
             ->get('timesheet_clientes.nombre');
 
@@ -869,7 +916,7 @@ class TimesheetController extends Controller
 
     public function tareasProyecto($proyecto_id)
     {
-        $proyecto = TimesheetProyecto::getAll('tareas_' . $proyecto_id)->find($proyecto_id);
+        $proyecto = TimesheetProyecto::getAll('tareas_'.$proyecto_id)->find($proyecto_id);
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -1048,6 +1095,7 @@ class TimesheetController extends Controller
     public function clientesCreate()
     {
         abort_if(Gate::denies('timesheet_administrador_clientes_create'), Response::HTTP_FORBIDDEN, '403 Forbidden'); //Nuevo Permiso
+
         // $personas = Fiscale::get();
         return view('admin.timesheet.clientes.create');
     }
@@ -1059,7 +1107,7 @@ class TimesheetController extends Controller
 
             $cliente = TimesheetCliente::find($id);
 
-            if (!$cliente) {
+            if (! $cliente) {
                 abort(404);
             }
 
@@ -1166,7 +1214,7 @@ class TimesheetController extends Controller
         $areas_array = $this->timesheetService->totalRegisterByAreas();
         $proyectos = $this->timesheetService->getRegistersByProyects();
 
-        $proyectos_array = TimesheetProyecto::get();
+        $proyectos_array = TimesheetProyecto::getAll();
 
         return view(
             // 'admin.timesheet.dashboard'
@@ -1242,7 +1290,7 @@ class TimesheetController extends Controller
 
         //dd($proyectos[20]);
 
-        return view('admin.timesheet.reportes.reportes-financiero', compact('proyectos', 'logo_actual', 'empresa_actual'));
+        return view('admin.timesheet.reportes.reportes-financiero', compact('logo_actual', 'empresa_actual'));
     }
 
     public function obtenerTareas(Request $request)
@@ -1279,7 +1327,11 @@ class TimesheetController extends Controller
     public function proyectosEmpleados($id)
     {
         abort_if(Gate::denies('asignar_empleados'), Response::HTTP_FORBIDDEN, '403 Forbidden'); //Nuevo permiso
-        $proyecto = TimesheetProyecto::getAll('empleado_' . $id)->find($id);
+        $proyecto = TimesheetProyecto::getAll('empleado_'.$id)->find($id);
+
+        if (! $proyecto) {
+            abort(404);
+        }
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -1291,7 +1343,7 @@ class TimesheetController extends Controller
     public function proyectosExternos($id)
     {
         abort_if(Gate::denies('asignar_externos'), Response::HTTP_FORBIDDEN, '403 Forbidden'); //Nuevo permiso
-        $proyecto = TimesheetProyecto::getAll('externos_' . $id)->find($id);
+        $proyecto = TimesheetProyecto::getAll('externos_'.$id)->find($id);
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -1304,7 +1356,7 @@ class TimesheetController extends Controller
     {
         abort_if(Gate::denies('timesheet_administrador_proyectos_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden'); //Nuevo permiso
         $proyecto = TimesheetProyecto::getAll()->find($id);
-        if (!$proyecto) {
+        if (! $proyecto) {
             return redirect()->route('admin.timesheet-proyectos')->with('error', 'El registro fue eliminado ');
         }
         $clientes = TimesheetCliente::getAll();

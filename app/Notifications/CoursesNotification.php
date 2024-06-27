@@ -69,12 +69,14 @@ class CoursesNotification extends Notification
     {
         return [
             'id' => $this->courses->id,
-            'fecha_inicio' => $this->courses->fechainicio,
+            'updated_at' => $this->courses->updated_at,
+            'deleted_at' => $this->courses->deleted_at,
             'time' => Carbon::now(),
             'type' => $this->tipo_consulta,
             'tabla' => $this->tabla,
             'slug' => $this->slug,
             'name' => Auth::user()->name,
+            'avatar_ruta' => Auth::user()->empleado->avatar_ruta,
         ];
     }
 }

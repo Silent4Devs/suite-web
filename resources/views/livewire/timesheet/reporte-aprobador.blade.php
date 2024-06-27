@@ -524,7 +524,7 @@
                     <div class="w-100 d-flex justify-content-between">
                         <h5 id="titulo_estatus">Todos los Registros</h5>
                         <div class="btn_estatus_caja">
-                            <button class="btn btn-primary"
+                            <button class="btn tb-btn-primary"
                                 style="background-color: #5AC3E5; border:none !important; position: relative;"
                                 id="btn_todos" wire:click="todos">
                                 @if ($todos_contador > 0)
@@ -533,7 +533,7 @@
                                 @endif
                                 Todos
                             </button>
-                            <button class="btn btn-primary"
+                            <button class="btn tb-btn-primary"
                                 style="background-color: #aaa; border:none !important; position: relative;"
                                 id="btn_papelera" wire:click="papelera">
                                 @if ($borrador_contador > 0)
@@ -542,7 +542,7 @@
                                 @endif
                                 Borrador
                             </button>
-                            <button class="btn btn-primary"
+                            <button class="btn tb-btn-primary"
                                 style="background-color: #F48C16; border:none !important; position: relative;"
                                 id="btn_pendiente" wire:click="pendientes">
                                 @if ($pendientes_contador > 0)
@@ -551,7 +551,7 @@
                                 @endif
                                 Pendientes
                             </button>
-                            <button class="btn btn-primary"
+                            <button class="btn tb-btn-primary"
                                 style="background-color: #61CB5C; border:none !important; position: relative;"
                                 id="btn_aprobado" wire:click="aprobados">
                                 @if ($aprobados_contador > 0)
@@ -560,7 +560,7 @@
                                 @endif
                                 Aprobados
                             </button>
-                            <button class="btn btn-primary"
+                            <button class="btn tb-btn-primary"
                                 style="background-color: #EA7777; border:none !important; position: relative;"
                                 id="btn_rechazado" wire:click="rechazos">
                                 @if ($rechazos_contador > 0)

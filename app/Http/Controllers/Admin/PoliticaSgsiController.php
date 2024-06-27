@@ -291,7 +291,7 @@ class PoliticaSgsiController extends Controller
     public function visualizacion()
     {
         try {
-            $politicaSgsis = PoliticaSgsi::where('estatus', 'aprobado')->get();
+            $politicaSgsis = PoliticaSgsi::where('estatus', 'Aprobado')->get();
 
             foreach ($politicaSgsis as $polsgsis) {
                 if (! isset($polsgsis->reviso)) {

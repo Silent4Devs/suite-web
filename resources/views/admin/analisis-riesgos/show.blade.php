@@ -44,9 +44,9 @@
                             </th>
                             <td>
                                 @if ($analisis->porcentaje_implementacion == 0)
-                                <p>Sin evaluar</p>
+                                    <p>Sin evaluar</p>
                                 @else
-                                <p>{{ $analisis->porcentaje_implementacion }} %</p>
+                                    <p>{{ $analisis->porcentaje_implementacion }} %</p>
                                 @endif
                             </td>
                         </tr>
@@ -55,12 +55,12 @@
                                 Elaboró:
                             </th>
                             <td>
-                                @if($analisis->empleado)
-                                @if($analisis->empleado->name)
-                                <p>{{$analisis->empleado->name}}</p>
-                                @endif
+                                @if ($analisis->empleado)
+                                    @if ($analisis->empleado->name)
+                                        <p>{{ $analisis->empleado->name }}</p>
+                                    @endif
                                 @else
-                                No se ha asociado colaborador
+                                    No se ha asociado colaborador
                                 @endif
                             </td>
                         </tr>

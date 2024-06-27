@@ -181,9 +181,7 @@ class SeccionesTemplate extends Component
         // dd($this->secciones);
     }
 
-    public function mount()
-    {
-    }
+    public function mount() {}
 
     public function render()
     {

@@ -1,0 +1,101 @@
+.caja {
+    width: 50% !important;
+    height: 740px;
+    padding: 0;
+    overflow: hidden !important;
+}
+
+#lnb {
+    background: rgba(0, 0, 0, 0) !important;
+    border: none !important;
+}
+
+#lnb div {
+    border: none !important;
+}
+
+#calendarList {
+    border: none !important;
+}
+
+#calendar {
+    width: 100%;
+    /*overflow: hidden;*/
+    /* overflow-y: scroll; */
+    border: none !important;
+    height: auto !important;
+}
+
+#calendarList span {
+    margin-left: 0px;
+    font-size: 8pt;
+    float: left;
+    width: 100px;
+}
+
+#calendarList span:nth-child(even) {
+    width: 20px;
+}
+
+span strong {
+    font-size: 15pt !important;
+}
+
+span:not(.lever)::before {
+    left: -30px !important;
+    top: -5px !important;
+    transform: scale(0.7);
+    display: none;
+}
+
+.tui-full-calendar-month-dayname {
+    border: none !important;
+}
+
+.tui-full-calendar-popup-section div {
+    border: none !important;
+    margin-top: 20px !important;
+}
+
+.tui-full-calendar-popup-section input {
+    border-bottom: 1px solid #eee !important;
+}
+
+
+.btn.btn-default.btn-sm.move-day {
+    width: 30px;
+    height: 30px;
+    position: relative;
+}
+
+a:hover {
+    text-decoration: none !important;
+}
+
+.tui-full-calendar-popup .tui-full-calendar-popup-container {
+    display: none;
+}
+
+.tui-full-calendar-popup.tui-full-calendar-popup-detail .tui-full-calendar-popup-container {
+    display: block;
+}
+
+
+.tui-full-calendar-weekday-schedule-title {
+    position: relative;
+}
+
+.dropdown-menu.show {
+    width: 250px !important;
+}
+
+.i_calendar {
+    font-size: 11pt;
+    width: 20px;
+    text-align: center;
+}
+
+.i_calendar_cuadro {
+    margin: 0px 8px;
+}
+

@@ -444,9 +444,7 @@ class DocumentosController extends Controller
         }
     }
 
-    public function doDocumentObsolete(Documento $documento)
-    {
-    }
+    public function doDocumentObsolete(Documento $documento) {}
 
     public function checkCode(Request $request)
     {

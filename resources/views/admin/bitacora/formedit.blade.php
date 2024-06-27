@@ -107,9 +107,9 @@
 
 
 @if (session('mensajeError'))
-<div class="alert alert-danger">
-    {{ session('mensajeError') }}
-</div>
+    <div class="alert alert-danger">
+        {{ session('mensajeError') }}
+    </div>
 @endif
 
 {{-- <form method="PATH" action="{{ route('contratos.update', $contrato->id) }}" enctype="multipart/form-data"> --}}
@@ -222,8 +222,9 @@
             <label for="nombre_servicio" class="txt-tamaño">
                 Nombre del servicio<font class="asterisco">*</font></label><br>
             <div class="form-floating">
-                <textarea id="textarea1"  maxlength="550"  class="form-control" value="{{ $contrato->nombre_servicio }}" name="nombre_servicio"
-                    {{ $show_contrato ? 'readonly' : '' }} @if ($show_contrato) disabled @endif required>{{ $contrato->nombre_servicio }}</textarea>
+                <textarea id="textarea1" maxlength="550" class="form-control" value="{{ $contrato->nombre_servicio }}"
+                    name="nombre_servicio" {{ $show_contrato ? 'readonly' : '' }} @if ($show_contrato) disabled @endif
+                    required>{{ $contrato->nombre_servicio }}</textarea>
             </div>
             @if ($errors->has('nombre_servicio'))
                 <div class="invalid-feedback red-text">
@@ -328,8 +329,8 @@
         <div class="form-group col-md-12">
             <label for="objetivo" class="txt-tamaño">
                 Objetivo del servicio<font class="asterisco">*</font></label>
-            <textarea style="text-align:justify" maxlength="500" id="textarea1" class="form-control" value="{{ $contrato->objetivo }}"
-                name="objetivo" @if ($show_contrato) disabled @endif required>{{ $contrato->objetivo }}</textarea>
+            <textarea style="text-align:justify" maxlength="500" id="textarea1" class="form-control"
+                value="{{ $contrato->objetivo }}" name="objetivo" @if ($show_contrato) disabled @endif required>{{ $contrato->objetivo }}</textarea>
             @if ($errors->has('objetivo'))
                 <div class="invalid-feedback red-text">
                     {{ $errors->first('objetivo') }}
@@ -486,14 +487,14 @@
         <div class="form-group col-md-4">
             <label for="no_contrato" class="txt-tamaño">
                 No. Pagos<font class="asterisco">*</font></label>
-                {!! Form::number('no_pagos', $contrato->no_pagos, [
-                    'class' => 'form-control',
-                    'required',
-                    'pattern' => '[0-9]+',
-                    'min' => 0, // Opcional: especifica el valor mínimo permitido
-                    'step' => 1, // Opcional: especifica el paso de incremento/decremento
-                    $show_contrato ? 'readonly' : '',
-                ]) !!}
+            {!! Form::number('no_pagos', $contrato->no_pagos, [
+                'class' => 'form-control',
+                'required',
+                'pattern' => '[0-9]+',
+                'min' => 0, // Opcional: especifica el valor mínimo permitido
+                'step' => 1, // Opcional: especifica el paso de incremento/decremento
+                $show_contrato ? 'readonly' : '',
+            ]) !!}
             @if ($errors->has('no_pagos'))
                 <div class="invalid-feedback red-text">
                     {{ $errors->first('no_pagos') }}
@@ -724,28 +725,27 @@
                     </div>
                 </td>
                 <td>
-                        <div class="td_fianza">
-                            <input class="form-control" type="file"
-                                name="documento" accept=".pdf" readonly>
-                        </div>
-                        <div class="ml-4 display-flex">
-                            <label class="red-text">{{ $errors->first('Type') }}</label>
-                        </div>
-                        @if ($contrato->documento != null)
-                            <a href="{{ asset(trim('storage/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/penalizaciones/' . $contrato->documento)) }}"
-                                target="_blank" class="descarga_archivo" style="margin-left:20px;">
-                                Descargar
-                            </a>
-                        @endif
-                        <div class="ml-4 display-flex">
-                            <label class="red-text">{{ $errors->first('Type') }}</label>
-                        </div>
+                    <div class="td_fianza">
+                        <input class="form-control" type="file" name="documento" accept=".pdf" readonly>
                     </div>
-                </td>
-
-            </tbody>
-        </table>
+                    <div class="ml-4 display-flex">
+                        <label class="red-text">{{ $errors->first('Type') }}</label>
+                    </div>
+                    @if ($contrato->documento != null)
+                        <a href="{{ asset(trim('storage/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/penalizaciones/' . $contrato->documento)) }}"
+                            target="_blank" class="descarga_archivo" style="margin-left:20px;">
+                            Descargar
+                        </a>
+                    @endif
+                    <div class="ml-4 display-flex">
+                        <label class="red-text">{{ $errors->first('Type') }}</label>
+                    </div>
     </div>
+    </td>
+
+    </tbody>
+    </table>
+</div>
 </div>
 
 <div class="row">
@@ -1050,7 +1050,7 @@
     $(document).ready(function() {
 
         if ($('#check_fianza').checked) {
-           $(".td_fianza").fadeOut(0);
+            $(".td_fianza").fadeOut(0);
         } else {
             $(".td_fianza").fadeIn(0);
         }

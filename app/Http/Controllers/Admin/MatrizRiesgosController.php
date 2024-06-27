@@ -425,7 +425,7 @@ class MatrizRiesgosController extends Controller
         $referencia = $modulo->nombrerequisito;
         $urlStore = route('admin.matriz-requisito-legales.storePlanAccion', $id);
 
-        return view('admin.planesDeAccion.create', compact('planImplementacion', 'modulo_name', 'modulo', 'referencia', 'urlStore'));
+        return view('admin.workPlan.create', compact('planImplementacion', 'modulo_name', 'modulo', 'referencia', 'urlStore'));
     }
 
     public function storePlanAccion(Request $request, MatrizRiesgo $id)
@@ -462,9 +462,7 @@ class MatrizRiesgosController extends Controller
         return redirect()->route('admin.matriz-requisito-legales.index')->with('success', 'Plan de Trabajo'.$planImplementacion->parent.' creado');
     }
 
-    public function ControlesGet()
-    {
-    }
+    public function ControlesGet() {}
 
     public function SistemaGestion(Request $request)
     {

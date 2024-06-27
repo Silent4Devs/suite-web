@@ -62,9 +62,7 @@ class OrganizacionComponent extends Component
 
     public $twitter_id;
 
-    public function mount()
-    {
-    }
+    public function mount() {}
 
     public function render()
     {

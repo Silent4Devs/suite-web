@@ -339,7 +339,7 @@
                                                 style="
                                             padding-right: 50px;">
                                                 <button type="button" data-bs-dismiss="modal"
-                                                    class="btn btn-primary"
+                                                    class="btn tb-btn-primary"
                                                     style="width: 175px;
                                                     height: 39px;box-shadow:none;border-radius:6px;"
                                                     wire:click.prevent="removeAlcance1({{ $key }})">Eliminar</button>

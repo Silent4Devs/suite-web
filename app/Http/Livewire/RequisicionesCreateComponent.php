@@ -90,9 +90,7 @@ class RequisicionesCreateComponent extends Component
         $this->proveedores_count = $this->proveedores_count + 1;
     }
 
-    public function mount()
-    {
-    }
+    public function mount() {}
 
     public function render()
     {
@@ -272,6 +270,7 @@ class RequisicionesCreateComponent extends Component
 
         $this->provedores_colllection->push($this->proveedores_catalogo);
         $this->habilitar_proveedores = true;
+        $this->emit('render_firma');
     }
 
     public function dataFirma()

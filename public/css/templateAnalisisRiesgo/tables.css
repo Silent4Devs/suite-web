@@ -1,0 +1,17 @@
+.tbl-formulas{
+    width: 100%;
+    border-collapse: collapse;
+    overflow-x: auto;
+}
+.title{
+    text-align: left;
+    font: normal normal medium 16px/21px Roboto;
+    letter-spacing: 0px;
+    color: #575757;
+    opacity: 1;
+}
+
+table.dataTable thead, table.table thead{
+    background:#FFFFFF !important;
+    color: #000000 !important;
+}

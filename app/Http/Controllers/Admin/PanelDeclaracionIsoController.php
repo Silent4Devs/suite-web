@@ -232,7 +232,7 @@ class PanelDeclaracionIsoController extends Controller
         if ($request->enviarTodos) {
             $destinatarios = DeclaracionAplicabilidadResponsableIso::distinct('empleado_id')->pluck('empleado_id')->toArray();
         } elseif ($request->enviarNoNotificados) {
-            $destinatarios = DeclaracionAplicabilidadResponsableIso::where('esta_correo_enviado', false)->distinct('empleado_id')->pluck('empleado_id')->toArray();
+            $destinatarios = DeclaracionAplicabilidadResponsableIso::distinct('empleado_id')->pluck('empleado_id')->toArray();
         } else {
             $destinatarios = json_decode($request->responsables);
         }

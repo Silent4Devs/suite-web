@@ -29,7 +29,7 @@
             </div>
         </div>
 
-        <a class="btn btn-primary ml-auto" style="font-size: 16px; position: relative; right: 1rem;"
+        <a class="btn tb-btn-primary ml-auto" style="font-size: 16px; position: relative; right: 1rem;"
             href="{{ route('admin.matriz-requisito-legales.create') }}">
             Nueva Matriz de Requisitos
 

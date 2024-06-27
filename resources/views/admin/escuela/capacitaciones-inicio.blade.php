@@ -2,7 +2,7 @@
 @section('content')
     {{-- menus horizontales --}}
 
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}{{config('app.cssVersion')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet/timesheet.css') }}{{config('app.cssVersion')}}">
 
     <style type="text/css">
         .caja_botones_menu {
@@ -228,17 +228,17 @@
                                 </a>
                             </li>
                         @endcan
-                        
+
                     </ul>
                 </div>
             </div>
             @endif
         </div>
     </div>
-    
 
 
-    
+
+
 @endsection
 
 

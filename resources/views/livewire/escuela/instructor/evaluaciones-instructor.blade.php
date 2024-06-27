@@ -1,7 +1,7 @@
 <div>
     {{-- <x-loading-indicator wire:loading /> --}}
 
-    <h4>Evaluaciones del curso</h4>
+    <h4 id="parte-inicio">Evaluaciones del curso</h4>
     <hr class="mt-2 mb-6 bg-primary">
 
     <div class="card shadow-none">
@@ -74,6 +74,15 @@
     @section('scripts')
         <script src="https://cdn.ckeditor.com/ckeditor5/31.1.0/classic/ckeditor.js"></script>
     @endsection
+        <script>
+            document.addEventListener("click", function(e) {
+                let btn = event.target;
+                if (btn.classList.contains('btn-top')) {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+
+            });
+        </script>
 
 </div>
 

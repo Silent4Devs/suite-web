@@ -19,6 +19,15 @@ class ListaCampanaNotificacionesComponent extends Component
         'echo:notificaciones-campana,AlcancesEvent' => 'render',
         'echo:notificaciones-campana,MatrizRequisitosEvent' => 'render',
         'echo:notificaciones-campana,RequisicionesEvent' => 'render',
+        'echo:notificaciones-campana,EntendimientoOrganizacionEvent' => 'render',
+        'echo:notificaciones-campana,DocumentoEvent' => 'render',
+        'echo:notificaciones-campana,TimesheetEvent' => 'render',
+        'echo:notificaciones-campana,CoursesEvent' => 'render',
+        'echo:notificaciones-campana,SolicitudVacacionesEvent' => 'render',
+        'echo:notificaciones-campana,SolicitudDayofEvent' => 'render',
+        'echo:notificaciones-campana,SolicitudPermisoEvent' => 'render',
+        'echo:notificaciones-campana,PlanImplementacionEvent' => 'render',
+        'echo:notificaciones-campana,EvaluacionEvent' => 'render',
         'NotificationMarkedAsReadList' => 'render',
     ];
 

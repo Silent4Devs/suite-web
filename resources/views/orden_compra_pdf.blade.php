@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>OC</title>
 
-    <link rel="stylesheet" href="css/requisiciones_pdf.css{{config('app.cssVersion')}}">
+    <link rel="stylesheet" href="css/requisitions/pdf.css{{config('app.cssVersion')}}">
 </head>
 
 <body>

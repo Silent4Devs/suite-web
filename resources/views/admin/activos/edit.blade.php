@@ -383,7 +383,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                <button type="button" class="btn btn-primary" id="guardar_modelo">Guardar</button>
+                                <button type="button" class="btn tb-btn-primary" id="guardar_modelo">Guardar</button>
                             </div>
                         </div>
                     </div>
@@ -410,7 +410,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                <button type="button" class="btn btn-primary" id="guardar_marca">Guardar</button>
+                                <button type="button" class="btn tb-btn-primary" id="guardar_marca">Guardar</button>
                             </div>
                         </div>
                     </div>
@@ -438,7 +438,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                <button type="button" class="btn btn-primary" id="guardar_categoria"
+                                <button type="button" class="btn tb-btn-primary" id="guardar_categoria"
                                     data-dismiss="modal">Guardar</button>
                             </div>
                         </div>
@@ -486,7 +486,7 @@
 
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                <button type="button" class="btn btn-primary" id="guardar_subcategoria">Guardar</button>
+                                <button type="button" class="btn tb-btn-primary" id="guardar_subcategoria">Guardar</button>
                             </div>
                         </div>
                     </div>

@@ -10,6 +10,7 @@ use App\Models\TimesheetProyecto;
 use App\Models\TimesheetProyectoArea;
 use App\Models\TimesheetTarea;
 use Livewire\Component;
+use VXM\Async\AsyncFacade as Async;
 
 class DashboardProyectos extends Component
 {
@@ -60,10 +61,19 @@ class DashboardProyectos extends Component
     {
         $this->datos_areas = collect();
 
-        $time_getall = TimesheetProyecto::getAll();
+        // Async::batchRun(
+        //     function () use (&$time_getall) {
+        //         // Check if the result is already cached
+        //         $time_getall = TimesheetProyecto::getIdNameAll();
+        //         $time_getall = $time_getall->sortByDesc('is_num');
+        //     },
+        //     function () use (&$time_area) {
+        //         $time_area = TimesheetProyectoArea::getWithArea();
+        //     },
+        // );
+        $time_getall = TimesheetProyecto::getIdNameAll();
         $time_getall = $time_getall->sortByDesc('is_num');
-
-        $time_area = TimesheetProyectoArea::with('area')->get();
+        $time_area = TimesheetProyectoArea::getWithArea();
 
         if ($this->estatus === 'todos') {
             $this->proy = $time_getall;
@@ -88,7 +98,7 @@ class DashboardProyectos extends Component
 
                 $this->datos_areas = collect();
                 foreach ($lista_areas as $ar) {
-                    $timesheet = Timesheet::with('horas')
+                    $timesheet = Timesheet::with(['horas', 'empleado'])
                         ->where('estatus', 'aprobado')
                         ->whereHas('horas', function ($q) {
                             $q->where('proyecto_id', $this->proy_id);
@@ -125,7 +135,7 @@ class DashboardProyectos extends Component
                     $total_h = round($total_h, 2);
                     $total_he = round($total_he, 2);
 
-                    $tareas = TimesheetTarea::where('proyecto_id', '=', $this->proy_id)->get();
+                    $tareas = TimesheetTarea::where('proyecto_id', $this->proy_id);
 
                     foreach ($tareas as $tar) {
                         if ($tar->todos == true) {
@@ -148,6 +158,14 @@ class DashboardProyectos extends Component
                         ->whereHas('horas', function ($query) {
                             $query->where('proyecto_id', $this->proy_id);
                         })->distinct('empleado_id')->get();
+
+                    // $empproyectos = Timesheet::select('timesheets.id', 'timesheets.empleado_id', 'timesheets.estatus')
+                    //     ->join('horas', 'timesheets.id', '=', 'horas.timesheet_id')
+                    //     ->with(['horas', 'empleado'])
+                    //     ->where('timesheets.estatus', 'aprobado')
+                    //     ->where('horas.proyecto_id', $this->proy_id)
+                    //     ->distinct('timesheets.empleado_id')
+                    //     ->get();
                     // dd($empproyectos);
 
                     $this->datos_empleados = collect();
@@ -183,7 +201,7 @@ class DashboardProyectos extends Component
                 $this->emit('renderAreas', $this->datos_areas, $this->datos_empleados);
             } else {
                 $datos_dash = TimesheetProyecto::getAll($this->proy_id)->where('id', '=', $this->proy_id);
-                $area_individual = Area::where('id', '=', $this->area_id);
+                $area_individual = Area::select('area')->where('id', '=', $this->area_id);
 
                 if (! isset($area_individual->area)) {
                     $area_individual = 'Sin definir';
@@ -192,7 +210,7 @@ class DashboardProyectos extends Component
                 }
 
                 $this->datos_areas = collect();
-                $timesheet = Timesheet::with('horas', 'empleado')
+                $timesheet = Timesheet::with(['horas', 'empleado'])
                     ->where('estatus', 'aprobado')
                     ->whereHas('horas.timesheet', function ($q) {
                         $q->where('proyecto_id', $this->proy_id);
