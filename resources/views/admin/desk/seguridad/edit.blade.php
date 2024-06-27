@@ -3,8 +3,72 @@
 
 @section('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/centerAttention/forms.css') }}{{config('app.cssVersion')}}">
-    <link rel="stylesheet" href="{{ asset('css/requisitions/requisitions.css') }}{{ config('app.cssVersion') }}">
     <style>
+
+        .caja-firmas-doc .flex {
+            justify-content: center;
+            gap: 50px;
+            margin-top: 20px;
+        }
+
+        .caja-firmas-doc .flex-item {
+            width: 300px;
+            padding: 20px !important;
+        }
+
+        .firma-content {
+            width: 300px;
+            height: 200px;
+            border: 1px solid #ccc;
+        }
+
+        .caja-space-firma {
+            position: relative;
+            width: 500px;
+            height: 350px;
+        }
+
+        .caja-space-firma input {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .caja-space-firma canvas {
+            /* width: 100%;
+            height: 100%; */
+            border: 1px solid #5a5a5a;
+            ;
+        }
+
+        .img-firma {
+            width: 80%;
+            margin-left: 10%;
+        }
+
+        .caja-firmas-doc p {
+            width: 100%;
+            text-align: center;
+        }
+
+
+        .flex {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .flex-item {
+            width: 100%;
+            max-height: 100%;
+            padding: 30px;
+            box-sizing: border-box;
+            align-self: stretch;
+        }
+
+
+
+
         ol.breadcrumb {
             margin-bottom: 0px;
         }
@@ -148,6 +212,10 @@
             margin-left: -15px;
             border-radius: 100px;
             margin-top: 6px;
+        }
+
+        #info-bar {
+            display: none;
         }
     </style>
 @endsection
@@ -1009,8 +1077,8 @@
 <div class="caja-firmas-doc">
     <div class="flex" style="margin-top: 70px;">
         <div class="flex-item">
-            @if ($firmas_guardadas)
-                <img src="{{ $firmas_guardadas->firma }}" class="img-firma">
+            @if ($firmas_guardadas_1)
+                <img src="{{ $firmas_guardadas_1->firma }}" class="img-firma">
                 <p></p>
                 <p></p>
             @else
@@ -1022,7 +1090,7 @@
             </p>
         </div>
         <div class="flex-item">
-            @if ($firmas_guardadas)
+            @if ($firmas_guardadas_1)
                 <img src="{{ $firmas_guardadas->firma }}" class="img-firma">
                 <p></p>
                 <p></p>
@@ -1234,30 +1302,10 @@
                 return !pixelBuffer.some(color => color !== 0);
             }
 
-            // Set up the UI
-            // var sigText = document.getElementById(dataBaseCanvas);
-            // var sigImage = document.getElementById(imageCanvas);
             var clearBtn = document.getElementById(clearBtnCanvas);
-            // var submitBtn = document.getElementById(submitBtnCanvas);
             clearBtn.addEventListener("click", function(e) {
                 clearCanvas();
-                // sigText.innerHTML = "Data URL for your signature will go here!";
-                // sigImage.setAttribute("src", "");
             }, false);
-            // submitBtn.addEventListener("click", function(e) {
-            //     const blank = isCanvasBlank();
-            //     if (!blank) {
-            //         // var dataUrl = canvas.toDataURL();
-            //         // sigText.innerHTML = dataUrl;
-            //         // sigImage.setAttribute("src", dataUrl);
-            //     } else {
-            //         if (toastr) {
-            //             toastr.info('No has firmado en el canvas');
-            //         } else {
-            //             alert('No has firmado en el canvas');
-            //         }
-            //     }
-            // }, false);
 
         }
 
@@ -1272,13 +1320,6 @@
         }
     });
 </script>
-
-
-
-
-
-
-
 <script>
     $(document).ready(function() {
         $('#participantes').select2({

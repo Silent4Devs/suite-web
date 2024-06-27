@@ -11,6 +11,10 @@
         ol.breadcrumb {
             margin-bottom: 0px;
         }
+
+        #info-bar {
+            display: none;
+        }
     </style>
 @endsection
 {{ Breadcrumbs::render('riesgos-edit', $riesgos) }}

@@ -201,8 +201,7 @@ class DeskController extends Controller
             }
         }
 
-        $firmas_guardadas = FirmaCentroAtencion::where('modulo_id', 1)->where('submodulo_id', 1)->first();
-
+        $firmas_guardadas_1 = FirmaCentroAtencion::where('modulo_id', 1)->where('submodulo_id', 1)->get();
 
         $sedes = Sede::getAll();
 
@@ -214,7 +213,7 @@ class DeskController extends Controller
 
         $categorias = CategoriaIncidente::get();
 
-        return view('admin.desk.seguridad.edit', compact('incidentesSeguridad', 'activos', 'empleados', 'sedes', 'areas', 'procesos', 'subcategorias', 'categorias', 'analisis', 'firmaModules', 'firmas_guardadas'));
+        return view('admin.desk.seguridad.edit', compact('incidentesSeguridad', 'activos', 'empleados', 'sedes', 'areas', 'procesos', 'subcategorias', 'categorias', 'analisis', 'firmaModules', 'firmas_guardadas_1'));
     }
 
     public function removeUnicodeCharacters($string)
