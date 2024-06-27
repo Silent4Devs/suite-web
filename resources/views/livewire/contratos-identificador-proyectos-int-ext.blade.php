@@ -1,5 +1,5 @@
 <div>
-    <div style="margin-left: 20px; margin-right: 10px;">
+    <div style="margin-left: 20px; margin-right: 25px;">
         <div class="row">
             <div class="form-group col-md-2">
                 <br>
@@ -13,11 +13,9 @@
             </div>
 
             @if (!$creacion_proyecto)
-                <div class="form-group col-md-6">
-                    <label for="no_proyecto" class="txt-tamaño">&nbsp;Número
-                        de
-                        proyecto*</label>
-                    <select class="form-control" name="no_proyecto" id="no_proyecto" required>
+                <div class="form-group col-md-10">
+                    <label for="no_proyecto" class="txt-tamaño">Número de proyecto*</label>
+                    <select class="form-control float-right" name="no_proyecto" id="no_proyecto" required>
                         <option value="" selected>Seleccione un Numero de proyecto</option>
                         @foreach ($proyectos as $proyecto)
                             <option data-id="{{ $proyecto->id }}" value="{{ $proyecto->identificador }}">
@@ -25,7 +23,7 @@
                         @endforeach
                     </select>
                     @if ($errors->has('no_proyecto'))
-                        <div class="invalid-feedback red-text">
+                        <div class="invalid-feedback">
                             {{ $errors->first('no_proyecto') }}
                         </div>
                     @endif
@@ -34,7 +32,7 @@
         </div>
 
         @if ($creacion_proyecto)
-            <div class="row mb-4">
+            <div class="row mb-4" style="margin-left: 2px;">
                 <div class="recuadro-instruccion">
                     <strong>!</strong> &nbsp; Debe Ingresar un Identificador antes de poder seleccionar la categoria del
                     Proyecto.

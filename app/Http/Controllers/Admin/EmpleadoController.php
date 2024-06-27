@@ -10,6 +10,7 @@ use App\Mail\EnviarCorreoBienvenidaTabantaj;
 use App\Models\Area;
 use App\Models\CertificacionesEmpleados;
 use App\Models\CursosDiplomasEmpleados;
+use App\Models\DisponibilidadEmpleados;
 use App\Models\EducacionEmpleados;
 use App\Models\Empleado;
 use App\Models\EvidenciaDocumentoEmpleadoArchivo;
@@ -399,6 +400,10 @@ class EmpleadoController extends Controller
             'pagadora_actual' => $request->pagadora_actual,
             'periodicidad_nomina' => $request->periodicidad_nomina,
             'semanas_min_timesheet' => $request->semanas_min_timesheet,
+        ]);
+        DisponibilidadEmpleados::create([
+            'empleado_id' => $empleado->id,
+            'disponibilidad' => 1,
         ]);
         $this->createUserFromEmpleado($empleado);
         $this->assignDependenciesModel($request, $empleado);
