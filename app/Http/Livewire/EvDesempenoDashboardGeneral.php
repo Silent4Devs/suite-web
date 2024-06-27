@@ -172,46 +172,57 @@ class EvDesempenoDashboardGeneral extends Component
 
     public function updatedAreaAnual($value)
     {
+        dd($value);
         $this->cargarTablas();
     }
 
     public function updatedTipoAnual($value)
     {
+        dd($value);
+        $this->cargarTablas();
+    }
+
+    public function updatedGeneralAnual($value)
+    {
+        dd($value);
+        $this->cargarTablas();
+    }
+    public function updatedObjetivosAnual($value)
+    {
+        dd($value);
+        $this->cargarTablas();
+    }
+    public function updatedCompetenciasAnual($value)
+    {
+        dd($value);
         $this->cargarTablas();
     }
 
     public function updatedAreaMensual($value)
     {
+        dd($value);
         $this->cargarTablas();
     }
 
     public function updatedTipoMensual($value)
     {
+        dd($value);
         $this->cargarTablas();
     }
 
-    public function updatedGeneralAnual()
+    public function updatedGeneralMensual($value)
     {
+        dd($value);
         $this->cargarTablas();
     }
-    public function updatedObjetivosAnual()
+    public function updatedObjetivosMensual($value)
     {
+        dd($value);
         $this->cargarTablas();
     }
-    public function updatedCompetenciasAnual()
+    public function updatedCompetenciasMensual($value)
     {
-        $this->cargarTablas();
-    }
-    public function updatedGeneralMensual()
-    {
-        $this->cargarTablas();
-    }
-    public function updatedObjetivosMensual()
-    {
-        $this->cargarTablas();
-    }
-    public function updatedCompetenciasMensual()
-    {
+        dd($value);
         $this->cargarTablas();
     }
 }
