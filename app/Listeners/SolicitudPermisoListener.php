@@ -34,8 +34,8 @@ class SolicitudPermisoListener
         //         Notification::send($user, new SolicitudPermisoNotification($event->permiso, $event->tipo_consulta, $event->tabla, $event->slug));
         //     });
 
-            $user = auth()->user();
-            $supervisor = User::where('email', trim(removeUnicodeCharacters($user->empleado->supervisor->email)))->first();
-            Notification::send($supervisor, new SolicitudPermisoNotification($event->permiso, $event->tipo_consulta, $event->tabla, $event->slug));
+        $user = auth()->user();
+        $supervisor = User::where('email', trim(removeUnicodeCharacters($user->empleado->supervisor->email)))->first();
+        Notification::send($supervisor, new SolicitudPermisoNotification($event->permiso, $event->tipo_consulta, $event->tabla, $event->slug));
     }
 }

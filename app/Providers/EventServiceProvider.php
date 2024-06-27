@@ -61,8 +61,10 @@ use App\Models\Denuncias;
 use App\Models\Documento;
 use App\Models\EntendimientoOrganizacion;
 use App\Models\EnvioDocumentosAjustes;
+use App\Models\Escuela\Category;
 use App\Models\Escuela\Course;
 use App\Models\Escuela\Lesson;
+use App\Models\Escuela\Level;
 use App\Models\Escuela\Section;
 use App\Models\EvidenciasDocumentosEmpleados;
 use App\Models\ExperienciaEmpleados;
@@ -133,6 +135,7 @@ use App\Observers\AuditoriaInternaObserver;
 use App\Observers\CalendarioObserver;
 use App\Observers\CatalogoRangosObjetivosObserver;
 use App\Observers\CategoriaCapacitacionObserver;
+use App\Observers\CategoryObserver;
 use App\Observers\CompetenciaObserver;
 use App\Observers\ComunicadoSgiObserver;
 use App\Observers\ContratoObserver;
@@ -152,6 +155,7 @@ use App\Observers\IncidentesSeguridadObserver;
 use App\Observers\IncidentesVacacionesObserver;
 use App\Observers\KatbolProveedorIndistintoObserver;
 use App\Observers\LessonObserver;
+use App\Observers\LevelObserver;
 use App\Observers\ListaDistribucionObserver;
 use App\Observers\ListaInformativaObserver;
 use App\Observers\MacroprocesoObserver;
@@ -375,5 +379,7 @@ class EventServiceProvider extends ServiceProvider
         UsuariosListaInformativa::observe(UsuariosListaInformativaObserver::class);
         ListaDistribucion::observe(ListaDistribucionObserver::class);
         ParticipantesListaDistribucion::observe(ParticipantesListaDistribucionObserver::class);
+        Category::observe(CategoryObserver::class);
+        Level::observe(LevelObserver::class);
     }
 }
