@@ -884,8 +884,56 @@ class TimesheetApiController extends Controller
     {
         // abort_if(Gate::denies('timesheet_administrador_aprobar_rechazar_horas_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $habilitarTodos = $request->habilitarTodos ? true : false;
-        // $usuario = User::getCurrentUser();
-        $usuario = User::find(2);
+
+        function encodeSpecialCharacters($url)
+        {
+            // Handle spaces
+            // $url = str_replace(' ', '%20', $url);
+            // Encode other special characters, excluding /, \, and :
+            $url = preg_replace_callback('/[^A-Za-z0-9_\-\.~\/\\\:]/', function ($matches) {
+                return rawurlencode($matches[0]);
+            }, $url);
+            return $url;
+        }
+
+        $usuario = User::getCurrentUser()->makeHidden([
+            "empleado", "email_verified_at",
+            "approved",
+            "verified",
+            "verified_at",
+            "verification_token",
+            "two_factor",
+            "two_factor_expires_at",
+            "created_at",
+            "updated_at",
+            "deleted_at",
+            "organizacion_id",
+            "area_id",
+            "puesto_id",
+            "team_id"
+        ]);
+
+        if ($usuario->empleado->foto == null || $usuario->empleado->foto == '0') {
+            if ($usuario->empleado->genero == 'H') {
+                $ruta = asset('storage/empleados/imagenes/man.png');
+            } elseif ($usuario->empleado->genero == 'M') {
+                $ruta = asset('storage/empleados/imagenes/woman.png');
+            } else {
+                $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
+            }
+        } else {
+            $ruta = asset('storage/empleados/imagenes/' . $usuario->empleado->foto);
+        }
+
+        $usuario->ruta_foto = encodeSpecialCharacters($ruta);
+
+        $usuario->id_empleado = $usuario->empleado->id;
+        $usuario->nombre_empleado = $usuario->empleado->name;
+        $usuario->id_area_empleado = $usuario->empleado->area->id;
+        $usuario->nombre_area_empleado = $usuario->empleado->area->area;
+        $usuario->id_puesto_empleado = $usuario->empleado->puesto_id;
+        $usuario->nombre_puesto_empleado = $usuario->empleado->puesto;
+
         $equipo_a_cargo = $this->obtenerEquipo($usuario->empleado->children);
         array_push($equipo_a_cargo, $usuario->empleado->id);
         if ($habilitarTodos) {
@@ -909,6 +957,7 @@ class TimesheetApiController extends Controller
         $empresa_actual = $organizacion_actual->empresa;
 
         return response(json_encode([
+            'usuario' => $usuario,
             'aprobaciones' => $aprobaciones,
             'logo_actual' => $logo_actual,
             'empresa_actual' => $empresa_actual,

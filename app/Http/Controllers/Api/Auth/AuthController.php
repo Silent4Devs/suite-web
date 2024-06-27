@@ -27,9 +27,38 @@ class AuthController extends Controller
         }
 
         //Busca al usuario en la base de datos por email
-        $user = User::select(['id', 'name', 'password', 'email'])
+        $user = User::select(['id', 'name', 'password', 'email', 'empleado_id', 'n_empleado'])
             ->where('email', request('email'))
-            ->firstOrFail();
+            ->firstOrFail()
+            ->makeHidden(['empleado']);
+
+        function encodeSpecialCharacters($url)
+        {
+            // Handle spaces
+            // $url = str_replace(' ', '%20', $url);
+            // Encode other special characters, excluding /, \, and :
+            $url = preg_replace_callback('/[^A-Za-z0-9_\-\.~\/\\\:]/', function ($matches) {
+                return rawurlencode($matches[0]);
+            }, $url);
+            return $url;
+        }
+
+        if ($user->empleado->foto == null || $user->empleado->foto == '0') {
+            if ($user->empleado->genero == 'H') {
+                $ruta = asset('storage/empleados/imagenes/man.png');
+            } elseif ($user->empleado->genero == 'M') {
+                $ruta = asset('storage/empleados/imagenes/woman.png');
+            } else {
+                $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
+            }
+        } else {
+            $ruta = asset('storage/empleados/imagenes/' . $user->empleado->foto);
+        }
+
+        // Encode spaces in the URL
+        $user->ruta_foto = encodeSpecialCharacters($ruta);
+
+        $user->idEmpleado = $user->empleado->id;
 
         //Genera un nuevo token para el usuario
         $token = $user->createToken('auth_token')->plainTextToken;

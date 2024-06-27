@@ -26,10 +26,10 @@ class SolicitudDayOffApiController extends Controller
 
     public $modelo = 'SolicitudDayOff';
 
-    public function index($id_user)
+    public function index()
     {
         // abort_if(Gate::denies('solicitud_dayoff_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $usuario = User::find($id_user);
+        $usuario = User::getCurrentUser();
         $data = $usuario->empleado->id;
 
         $año = Carbon::now()->format('Y');
@@ -92,7 +92,7 @@ class SolicitudDayOffApiController extends Controller
         // return view('admin.solicitudDayoff.index', compact('logo_actual', 'empresa_actual', 'dias_disponibles'));
     }
 
-    public function create($id_usuario)
+    public function create()
     {
         // abort_if(Gate::denies('solicitud_dayoff_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -100,7 +100,7 @@ class SolicitudDayOffApiController extends Controller
         $finDayOff = '31-12-' . $año;
 
         $existe_regla_ingreso = DayOff::where('inicio_conteo', 1)->exists();
-        $usuario = User::find($id_usuario);
+        $usuario = User::getCurrentUser();
         if ($existe_regla_ingreso) {
             $existe_regla_por_area = DayOff::where('inicio_conteo', '=', 1)->where('afectados', 2)->whereHas('areas', function ($q) use ($usuario) {
                 $q->where('area_id', $usuario->empleado->area_id);
@@ -148,18 +148,22 @@ class SolicitudDayOffApiController extends Controller
         // abort_if(Gate::denies('solicitud_dayoff_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $newSolicitud = $request->input('solicitud');
 
-        $empleado = Empleado::getAll();
+        $empleados = Empleado::getAll();
 
-        $supervisor = $empleado->find($request->autoriza);
-        $solicitante = $empleado->find($request->empleado_id);
+        $solicitante = $empleados->find($newSolicitud['empleado_id']);
+        $supervisor = $empleados->find($solicitante->supervisor_id);
+
+        $ingreso = Carbon::parse($solicitante->antiguedad);
+        $año = Carbon::createFromDate($ingreso)->age;
+
         $solicitud = SolicitudDayOff::create([
             'fecha_inicio' => $newSolicitud['fecha_inicio'],
             'fecha_fin' => $newSolicitud['fecha_fin'],
-            'empleado_id' => $newSolicitud['empleado_id'],
+            'empleado_id' => $solicitante->id,
             'dias_solicitados' => $newSolicitud['dias_solicitados'],
             'año' => $newSolicitud['año'],
             'descripcion' => $newSolicitud['descripcion'],
-            'autoriza' => $newSolicitud['autoriza'],
+            'autoriza' => $supervisor->id,
         ]);
 
         $informados = ListaInformativa::with('participantes.empleado', 'usuarios.usuario')->where('modelo', '=', $this->modelo)->first();
@@ -257,13 +261,8 @@ class SolicitudDayOffApiController extends Controller
         $solicitante = $empleado->find($respuestaSolicitud['empleado_id']);
 
         $solicitud->update([
-            'fecha_inicio' => $respuestaSolicitud['fecha_inicio'],
-            'fecha_fin' => $respuestaSolicitud['fecha_fin'],
-            'empleado_id' => $respuestaSolicitud['empleado_id'],
-            'dias_solicitados' => $respuestaSolicitud['dias_solicitados'],
-            'año' => $respuestaSolicitud['año'],
-            'autoriza' => $respuestaSolicitud['autoriza'],
             'aprobacion' => $respuestaSolicitud['aprobacion'],
+            'comentarios_aprobador' => $respuestaSolicitud['comentarios_aprobador'],
         ]);
 
         $informados = ListaInformativa::with('participantes.empleado', 'usuarios.usuario')->where('modelo', '=', $this->modelo)->first();
@@ -343,12 +342,12 @@ class SolicitudDayOffApiController extends Controller
         }
     }
 
-    public function diasDisponibles($id_user)
+    public function diasDisponibles()
     {
         $año = Carbon::now()->format('Y');
         $existe_regla_ingreso = DayOff::where('inicio_conteo', 1)->exists();
 
-        $usuario = User::find($id_user);
+        $usuario = User::getCurrentUser();
         if ($existe_regla_ingreso) {
             $existe_regla_por_area = DayOff::where('inicio_conteo', '=', 1)->where('afectados', 2)->whereHas('areas', function ($q) use ($usuario) {
                 $q->where('area_id', $usuario->empleado->area_id);
@@ -385,10 +384,10 @@ class SolicitudDayOffApiController extends Controller
         return $dias_disponibles;
     }
 
-    public function aprobacion($id_user)
+    public function aprobacion()
     {
         // abort_if(Gate::denies('modulo_aprobacion_ausencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $usuario = User::find($id_user);
+        $usuario = User::getCurrentUser();
         $data = $usuario->empleado->id;
 
         $solicitudesPermisos = SolicitudDayOff::with('empleado')->where('autoriza', '=', $data)->where('aprobacion', '=', 1)->orderByDesc('id')->get();
@@ -502,10 +501,10 @@ class SolicitudDayOffApiController extends Controller
         // return view('admin.solicitudDayoff.respuesta', compact('vacacion', 'año'));
     }
 
-    public function archivo($id_usuario)
+    public function archivo()
     {
         // abort_if(Gate::denies('modulo_aprobacion_ausencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $data = User::find($id_usuario)->empleado->id;
+        $data = User::getCurrentUser();
 
         $solicitudesDayOff = SolicitudDayOff::with('empleado')
             ->where('empleado_id', '=', $data)

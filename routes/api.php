@@ -18,6 +18,51 @@ Route::post('api/v1/logout', [AuthController::class, 'logout']);
 Route::group(['prefix' => 'api/v1', 'as' => 'api.', 'namespace' => 'Api\v1', 'middleware' => 'auth:sanctum'], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('inicioUsuario', [InicioUsuarioController::class, 'index']);
+
+    Route::get('portal-comunicacion', [PortalComunicacionController::class, 'index']);
+    Route::get('comunicados', [ComunicadosApiController::class, 'index']);
+
+    Route::get('solicitud-dayoff', [SolicitudDayOffApiController::class, 'index']);
+    Route::get('solicitud-dayoff/create', [SolicitudDayOffApiController::class, 'create']);
+    Route::post('solicitud-dayoff/store', [SolicitudDayOffApiController::class, 'store']);
+    Route::get('solicitud-dayoff/{id}/show', [SolicitudDayOffApiController::class, 'show']);
+    Route::get('solicitud-dayoff/aprobacion', [SolicitudDayOffApiController::class, 'aprobacion']);
+    Route::get('solicitud-dayoff/{id}/respuesta', [SolicitudDayOffApiController::class, 'respuesta']);
+    Route::post('solicitud-dayoff/{id}/update', [SolicitudDayOffApiController::class, 'update']);
+    Route::get('solicitud-dayoff/archivo', [SolicitudDayOffApiController::class, 'archivo']);
+    Route::get('solicitud-dayoff-vistaGlobal', [SolicitudDayOffApiController::class, 'vistaGlobal']);
+    Route::get('solicitud-dayoff/{id}/showVistaGlobal', [SolicitudDayOffApiController::class, 'showVistaGlobal']);
+    Route::get('solicitud-dayoff/{id}/showArchivo', [SolicitudDayOffApiController::class, 'showArchivo']);
+
+    Route::get('solicitud-vacaciones', [SolicitudVacacionesApiController::class, 'index']);
+    Route::get('solicitud-vacaciones/aprobacionMenu', [SolicitudVacacionesApiController::class, 'aprobacionMenu']);
+    Route::get('solicitud-vacaciones/create', [SolicitudVacacionesApiController::class, 'create']);
+    Route::get('solicitud-vacaciones/{id}/show', [SolicitudVacacionesApiController::class, 'show']);
+    Route::post('solicitud-vacaciones/store', [SolicitudVacacionesApiController::class, 'store']);
+    Route::get('solicitud-vacaciones/aprobacion', [SolicitudVacacionesApiController::class, 'aprobacion']);
+    Route::get('solicitud-vacaciones/{id}/respuesta', [SolicitudVacacionesApiController::class, 'respuesta']);
+    Route::post('solicitud-vacaciones/{id}/update', [SolicitudVacacionesApiController::class, 'update']);
+    Route::get('solicitud-vacaciones/archivo', [SolicitudVacacionesApiController::class, 'archivo']);
+    Route::get('solicitud-vacaciones-vistaGlobal', [SolicitudVacacionesApiController::class, 'vistaGlobal']);
+    Route::get('solicitud-vacaciones/{id}/showVistaGlobal', [SolicitudVacacionesApiController::class, 'showVistaGlobal']);
+    Route::get('solicitud-vacaciones/{id}/archivoShow', [SolicitudVacacionesApiController::class, 'archivoShow']);
+
+    Route::get('solicitud-permisos', [SolicitudPermisoGoceSueldoApiController::class, 'index']);
+    Route::get('solicitud-permisos/create', [SolicitudPermisoGoceSueldoApiController::class, 'create']);
+    Route::get('solicitud-permisos/{id}/show', [SolicitudPermisoGoceSueldoApiController::class, 'show']);
+    Route::post('solicitud-permisos/store', [SolicitudPermisoGoceSueldoApiController::class, 'store']);
+    Route::get('solicitud-permisos/aprobacion', [SolicitudPermisoGoceSueldoApiController::class, 'aprobacion']);
+    Route::get('solicitud-permisos/{id}/respuesta', [SolicitudPermisoGoceSueldoApiController::class, 'respuesta']);
+    Route::post('solicitud-permisos/{id}/update', [SolicitudPermisoGoceSueldoApiController::class, 'update']);
+    Route::get('solicitud-permisos/archivo', [SolicitudPermisoGoceSueldoApiController::class, 'archivo']);
+    // Route::get('solicitud-permisos-vistaGlobal', [SolicitudPermisoGoceSueldoApiController::class, 'vistaGlobal']);
+    Route::get('solicitud-permisos/{id}/showVistaGlobal', [SolicitudPermisoGoceSueldoApiController::class, 'showVistaGlobal']);
+    Route::get('solicitud-permisos/{id}/archivoShow', [SolicitudPermisoGoceSueldoApiController::class, 'archivoShow']);
+
+    Route::get('timesheet/show/{id}', [TimesheetApiController::class, 'show']);
+    Route::get('timesheet/aprobaciones', [TimesheetApiController::class, 'aprobaciones']);
+    Route::post('timesheet/aprobar/{id}', [TimesheetApiController::class, 'aprobar']);
+    Route::post('timesheet/rechazar/{id}', [TimesheetApiController::class, 'rechazar']);
 });
 Route::apiResource('api/v1/test', templateAnalisisRiesgoController::class);
 Route::delete('api/v1/test/section/delete/{id}', [templateAnalisisRiesgoController::class, 'destroySection']);
@@ -31,50 +76,6 @@ Route::get('api/v1/ar/settings/{id}', [templateAnalisisRiesgoController::class, 
 Route::apiResource('api/v1/ar/formulas', FormulasController::class);
 Route::get('api/v1/ar/formulas/options/{id}', [FormulasController::class, 'getOptionsFormulas']);
 Route::get('api/v1/ar/formulas/sections/{id}', [FormulasController::class, 'getSections']);
-
-Route::get('portal-comunicacion/{id}', [PortalComunicacionController::class, 'index']);
-Route::get('comunicados', [ComunicadosApiController::class, 'index']);
-
-Route::get('solicitud-dayoff/{id}', [SolicitudDayOffApiController::class, 'index']);
-Route::get('solicitud-dayoff/create/{id}', [SolicitudDayOffApiController::class, 'create']);
-Route::post('solicitud-dayoff/store', [SolicitudDayOffApiController::class, 'store']);
-Route::get('solicitud-dayoff/{id}/show', [SolicitudDayOffApiController::class, 'show']);
-Route::get('solicitud-dayoff/aprobacion/{id}', [SolicitudDayOffApiController::class, 'aprobacion']);
-Route::get('solicitud-dayoff/{id}/respuesta', [SolicitudDayOffApiController::class, 'respuesta']);
-Route::post('solicitud-dayoff/{id}/update', [SolicitudDayOffApiController::class, 'update']);
-Route::get('solicitud-dayoff/archivo/{id}', [SolicitudDayOffApiController::class, 'archivo']);
-Route::get('solicitud-dayoff-vistaGlobal', [SolicitudDayOffApiController::class, 'vistaGlobal']);
-Route::get('solicitud-dayoff/{id}/showVistaGlobal', [SolicitudDayOffApiController::class, 'showVistaGlobal']);
-Route::get('solicitud-dayoff/{id}/showArchivo', [SolicitudDayOffApiController::class, 'showArchivo']);
-
-Route::get('solicitud-vacaciones/{id}', [SolicitudVacacionesApiController::class, 'index']);
-Route::get('solicitud-vacaciones/create/{id}', [SolicitudVacacionesApiController::class, 'create']);
-Route::get('solicitud-vacaciones/{id}/show', [SolicitudVacacionesApiController::class, 'show']);
-Route::post('solicitud-vacaciones/store', [SolicitudVacacionesApiController::class, 'store']);
-Route::get('solicitud-vacaciones/aprobacion/{id}', [SolicitudVacacionesApiController::class, 'aprobacion']);
-Route::get('solicitud-vacaciones/{id}/respuesta', [SolicitudVacacionesApiController::class, 'respuesta']);
-Route::post('solicitud-vacaciones/{id}/update', [SolicitudVacacionesApiController::class, 'update']);
-Route::get('solicitud-vacaciones/archivo/{id}', [SolicitudVacacionesApiController::class, 'archivo']);
-Route::get('solicitud-vacaciones-vistaGlobal', [SolicitudVacacionesApiController::class, 'vistaGlobal']);
-Route::get('solicitud-vacaciones/{id}/showVistaGlobal', [SolicitudVacacionesApiController::class, 'showVistaGlobal']);
-Route::get('solicitud-vacaciones/{id}/archivoShow', [SolicitudVacacionesApiController::class, 'archivoShow']);
-
-Route::get('solicitud-permisos/{id}', [SolicitudPermisoGoceSueldoApiController::class, 'index']);
-Route::get('solicitud-permisos/create/{id}', [SolicitudPermisoGoceSueldoApiController::class, 'create']);
-Route::get('solicitud-permisos/{id}/show', [SolicitudPermisoGoceSueldoApiController::class, 'show']);
-Route::post('solicitud-permisos/store', [SolicitudPermisoGoceSueldoApiController::class, 'store']);
-Route::get('solicitud-permisos/aprobacion/{id}', [SolicitudPermisoGoceSueldoApiController::class, 'aprobacion']);
-Route::get('solicitud-permisos/{id}/respuesta', [SolicitudPermisoGoceSueldoApiController::class, 'respuesta']);
-Route::post('solicitud-permisos/{id}/update', [SolicitudPermisoGoceSueldoApiController::class, 'update']);
-Route::get('solicitud-permisos/archivo/{id}', [SolicitudPermisoGoceSueldoApiController::class, 'archivo']);
-// Route::get('solicitud-permisos-vistaGlobal', [SolicitudPermisoGoceSueldoApiController::class, 'vistaGlobal']);
-Route::get('solicitud-permisos/{id}/showVistaGlobal', [SolicitudPermisoGoceSueldoApiController::class, 'showVistaGlobal']);
-Route::get('solicitud-permisos/{id}/archivoShow', [SolicitudPermisoGoceSueldoApiController::class, 'archivoShow']);
-
-Route::get('timesheet/show/{id}', [TimesheetApiController::class, 'show']);
-Route::get('timesheet/aprobaciones', [TimesheetApiController::class, 'aprobaciones']);
-Route::post('timesheet/aprobar/{id}', [TimesheetApiController::class, 'aprobar']);
-Route::post('timesheet/rechazar/{id}', [TimesheetApiController::class, 'rechazar']);
 
 Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', 'middleware' => ['auth:api']], function () {
     // Permissions

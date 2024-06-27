@@ -25,10 +25,10 @@ class SolicitudPermisoGoceSueldoApiController extends Controller
 
     public $modelo = 'SolicitudPermisoGoceSueldo';
 
-    public function index($id_user)
+    public function index()
     {
         //abort_if(Gate::denies('solicitud_goce_sueldo_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $data = User::find($id_user)->empleado->id;
+        $data = User::getCurrentUser();
 
         $solicitudesPermisos = SolicitudPermisoGoceSueldo::with('empleado')->where('empleado_id', '=', $data)->orderByDesc('id')->get();
 
@@ -77,11 +77,11 @@ class SolicitudPermisoGoceSueldoApiController extends Controller
         ]), 200)->header('Content-Type', 'application/json');
     }
 
-    public function create($id_user)
+    public function create()
     {
         //abort_if(Gate::denies('solicitud_goce_sueldo_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vacacion = new SolicitudPermisoGoceSueldo();
-        $autoriza = User::find($id_user)->empleado->supervisor_id;
+        $autoriza = User::getCurrentUser();
         $permisos = PermisosGoceSueldo::get();
 
         return response(json_encode([
@@ -96,18 +96,19 @@ class SolicitudPermisoGoceSueldoApiController extends Controller
         // abort_if(Gate::denies('solicitud_dayoff_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $newSolicitud = $request->input('solicitud');
 
-        $empleado = Empleado::getAll();
+        $empleados = Empleado::getAll();
 
-        $supervisor = $empleado->find($request->autoriza);
-        $solicitante = $empleado->find($request->empleado_id);
+        $solicitante = $empleados->find($newSolicitud['empleado_id']);
+        $supervisor = $empleados->find($solicitante->supervisor_id);
+
         $solicitud = SolicitudPermisoGoceSueldo::create([
             'fecha_inicio' => $newSolicitud['fecha_inicio'],
             'fecha_fin' => $newSolicitud['fecha_fin'],
-            'empleado_id' => $newSolicitud['empleado_id'],
+            'empleado_id' => $solicitante->id,
             'dias_solicitados' => $newSolicitud['dias_solicitados'],
             'descripcion' => $newSolicitud['descripcion'],
-            'año' => $newSolicitud['año'],
-            'autoriza' => $newSolicitud['autoriza'],
+            'autoriza' => $supervisor->id,
+            'permiso_id' => $newSolicitud['permiso_id'],
         ]);
 
         $informados = ListaInformativa::with('participantes.empleado', 'usuarios.usuario')->where('modelo', '=', $this->modelo)->first();
@@ -203,13 +204,8 @@ class SolicitudPermisoGoceSueldoApiController extends Controller
         $solicitante = $empleado->find($respuestaSolicitud['empleado_id']);
 
         $solicitud->update([
-            'fecha_inicio' => $respuestaSolicitud['fecha_inicio'],
-            'fecha_fin' => $respuestaSolicitud['fecha_fin'],
-            'empleado_id' => $respuestaSolicitud['empleado_id'],
-            'dias_solicitados' => $respuestaSolicitud['dias_solicitados'],
-            'año' => $respuestaSolicitud['año'],
-            'autoriza' => $respuestaSolicitud['autoriza'],
             'aprobacion' => $respuestaSolicitud['aprobacion'],
+            'comentarios_aprobador' => $respuestaSolicitud['comentarios_aprobador'],
         ]);
 
         $informados = ListaInformativa::with('participantes.empleado', 'usuarios.usuario')->where('modelo', '=', $this->modelo)->first();
@@ -245,10 +241,10 @@ class SolicitudPermisoGoceSueldoApiController extends Controller
         return json_encode(['éxito', 'Solicitud eliminada con éxito'], 200);
     }
 
-    public function aprobacion($id_user)
+    public function aprobacion()
     {
         //abort_if(Gate::denies('modulo_aprobacion_ausencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $usuario = User::find($id_user);
+        $usuario = User::getCurrentUser();
         $data = $usuario->empleado->id;
 
         $solicitudesPermisos = SolicitudPermisoGoceSueldo::with('empleado')->where('autoriza', '=', $data)->where('aprobacion', '=', 1)->orderByDesc('id')->get();
@@ -352,10 +348,10 @@ class SolicitudPermisoGoceSueldoApiController extends Controller
         ]), 200)->header('Content-Type', 'application/json');
     }
 
-    public function archivo($id_usuario)
+    public function archivo()
     {
         // abort_if(Gate::denies('modulo_aprobacion_ausencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $data = User::find($id_usuario)->empleado->id;
+        $data = User::getCurrentUser();
 
         $solicitudesPermisos = SolicitudPermisoGoceSueldo::with('empleado')
             ->where('empleado_id', '=', $data)

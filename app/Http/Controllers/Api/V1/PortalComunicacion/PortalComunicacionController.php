@@ -25,7 +25,7 @@ class PortalComunicacionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(int $id)
+    public function index()
     {
         // abort_if(Gate::denies('portal_de_comunicaccion_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -45,7 +45,7 @@ class PortalComunicacionController extends Controller
 
         // $politica_existe = PoliticaSgsi::getAll()->count();
         $empleados = Empleado::alta()->select('id', 'name', 'area_id', 'puesto_id', 'foto', 'antiguedad', 'cumpleaños', 'estatus');
-        $user = User::find($id);
+        $user = User::getCurrentUser();
 
         $user->foto_empleado = $user->empleado->avatar;
         $user->makeHidden([

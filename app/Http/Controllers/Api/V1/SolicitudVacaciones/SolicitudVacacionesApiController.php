@@ -97,9 +97,9 @@ class SolicitudVacacionesApiController extends Controller
         ]), 200)->header('Content-Type', 'application/json');
     }
 
-    public function create($id_user)
+    public function create()
     {
-        $usuario = User::find($id_user);
+        $usuario = User::getCurrentUser();
         //abort_if(Gate::denies('solicitud_vacaciones_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $ingreso = Carbon::parse($usuario->empleado->antiguedad);
         $dia_hoy = Carbon::now();
@@ -276,17 +276,20 @@ class SolicitudVacacionesApiController extends Controller
         $newSolicitud = $request->input('solicitud');
         $empleados = Empleado::getAll();
 
-        $supervisor = $empleados->find($request->autoriza);
-        $solicitante = $empleados->find($request->empleado_id);
+        $solicitante = $empleados->find($newSolicitud['empleado_id']);
+        $supervisor = $empleados->find($solicitante->supervisor_id);
+
+        $ingreso = Carbon::parse($solicitante->antiguedad);
+        $año = Carbon::createFromDate($ingreso)->age;
 
         $solicitud = SolicitudVacaciones::create([
             'fecha_inicio' => $newSolicitud['fecha_inicio'],
             'fecha_fin' => $newSolicitud['fecha_fin'],
-            'empleado_id' => $newSolicitud['empleado_id'],
+            'empleado_id' => $solicitante->id,
             'dias_solicitados' => $newSolicitud['dias_solicitados'],
-            'año' => $newSolicitud['año'],
+            'año' => $año,
             'descripcion' => $newSolicitud['descripcion'],
-            'autoriza' => $newSolicitud['autoriza'],
+            'autoriza' => $supervisor->id,
         ]);
 
         $informados = ListaInformativa::with('participantes.empleado', 'usuarios.usuario')->where('modelo', '=', $this->modelo)->first();
@@ -375,29 +378,14 @@ class SolicitudVacacionesApiController extends Controller
     {
         //abort_if(Gate::denies('solicitud_vacaciones_aprobar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $respuestaSolicitud = $request->input('solicitud');
-        // $request->validate([
-        //     'fecha_inicio' => 'required|date',
-        //     'fecha_fin' => 'required|date',
-        //     'empleado_id' => 'required|int',
-        //     'dias_solicitados' => 'required|int',
-        //     'año' => 'required|int',
-        //     'autoriza' => 'required|int',
-        //     'aprobacion' => 'required|int',
-        // ]);
-
         $solicitud = SolicitudVacaciones::find($id);
         $empleados = Empleado::getAll();
         $supervisor = $empleados->find($request->autoriza);
         $solicitante = $empleados->find($request->empleado_id);
 
         $solicitud->update([
-            'fecha_inicio' => $respuestaSolicitud['fecha_inicio'],
-            'fecha_fin' => $respuestaSolicitud['fecha_fin'],
-            'empleado_id' => $respuestaSolicitud['empleado_id'],
-            'dias_solicitados' => $respuestaSolicitud['dias_solicitados'],
-            'año' => $respuestaSolicitud['año'],
-            'autoriza' => $respuestaSolicitud['autoriza'],
             'aprobacion' => $respuestaSolicitud['aprobacion'],
+            'comentarios_aprobador' => $respuestaSolicitud['comentarios_aprobador'],
         ]);
 
         $informados = ListaInformativa::with('participantes.empleado', 'usuarios.usuario')->where('modelo', '=', $this->modelo)->first();
@@ -553,7 +541,7 @@ class SolicitudVacacionesApiController extends Controller
         }
     }
 
-    public function aprobacionMenu(Request $request)
+    public function aprobacionMenu()
     {
         //abort_if(Gate::denies('modulo_aprobacion_ausencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $usuario = User::getCurrentUser();
@@ -562,7 +550,13 @@ class SolicitudVacacionesApiController extends Controller
         $solicitud_permiso = SolicitudPermisoGoceSueldo::where('autoriza', $usuario->empleado->id)->where('aprobacion', 1)->count();
         $solicitudes_pendientes = $solicitud_vacacion + $solicitud_dayoff + $solicitud_permiso;
 
-        return view('admin.solicitudVacaciones.aprobacion-menu', compact('solicitud_dayoff', 'solicitud_vacacion', 'solicitud_permiso'));
+        return response(json_encode([
+            'solicitud_vacacion' => $solicitud_vacacion,
+            'solicitud_dayoff' => $solicitud_dayoff,
+            'solicitud_permiso' => $solicitud_permiso,
+            'solicitudes_pendientes' => $solicitudes_pendientes,
+        ]), 200)->header('Content-Type', 'application/json');
+        // return view('admin.solicitudVacaciones.aprobacion-menu', compact('solicitud_dayoff', 'solicitud_vacacion', 'solicitud_permiso'));
     }
 
     public function aprobacion($id_user)
