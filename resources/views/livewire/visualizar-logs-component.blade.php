@@ -6,6 +6,11 @@
         <div wire:loading wire:target='search'>
             Cargando...
         </div>
+        <div class="d-flex justify-content-end">
+            <a class="boton-transparente boton-sin-borde" href="{{ route('descarga-visualizar-logs') }}">
+                <i class="fas fa-file-excel icon" style="font-size: 1.5rem;color:#0f6935"></i>
+            </a> &nbsp;&nbsp;&nbsp;
+        </div>
         <div class="table-responsive" wire:remove>
             <table class="table">
                 <thead>

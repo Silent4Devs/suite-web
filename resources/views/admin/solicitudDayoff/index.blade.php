@@ -5,6 +5,7 @@
     </div>
 
     <style>
+
         .btn_cargar {
             border-radius: 100px !important;
             border: 1px solid #345183;
@@ -85,8 +86,15 @@
             <div class="form-group row mt-4">
                 <label for="inputEmail3" class="col-sm-2 col-form-label offset-8 ">Días disponibles:</label>
                 <div class="col-sm-2 pr-5">
+
+                    <div class="d-flex justify-content-end">
+                        <a class="boton-transparente boton-sin-borde" href="{{ route('descarga-solicitudes-day-off') }}">
+                            <i class="fas fa-file-excel icon" style="font-size: 1.5rem;color:#0f6935"></i>
+                        </a> &nbsp;&nbsp;&nbsp;
+                    </div>
                     <input type="text" style="text-align:center;" class="form-control" id="inputEmail3"
-                        value="{{ $dias_disponibles }}" disabled>
+                        value="{{ $dias_disponibles }}" disabled
+                        >
                 </div>
             </div>
             <div style="margin-bottom: 5px; margin-left:10px;" class="row">

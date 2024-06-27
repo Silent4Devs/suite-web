@@ -1650,7 +1650,11 @@ Route::group(['middleware' => ['auth', '2fa']], function () {
         Route::get('ExportTipoActivo', 'TipoActivo')->name('descarga-tipo-activo');
         Route::get('ExportInventarioActivos', 'InventarioActivos')->name('descarga-inventario-activos');
         Route::get('ExportGlosarios', 'Glosarios')->name('descarga-glosarios');
-        Route::get('ExportCategoriaCapacitaciones', 'CategoriaCapacitaciones')->name('descarga-categoria-capacitaciones');
+        Route::get('ExportCategoriaCapacitaciones', 'categoriaCapacitaciones')->name('descarga-categoria-capacitaciones');
+        Route::get('ExportVisualizarLogs', 'visualizarLogs')->name('descarga-visualizar-logs');
+        Route::get('ExportSolicitudesDayOff', 'solicitudesDayOff')->name('descarga-solicitudes-day-off');
+        Route::get('ExportSolicitudesVacaciones', 'solicitudesVacaciones')->name('descarga-solicitudes-vacaciones');
+        Route::get('ExportEvaluaciones360', 'evaluaciones360')->name('descarga-evaluaciones-360');
     });
 
 

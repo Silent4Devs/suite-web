@@ -104,4 +104,22 @@ class ExportExcelReport extends Controller
     {
         return $this->exportReport("categoriasCapacitaciones");
     }
+    // Esta funcion utiliza livewire
+    public function VisualizarLogs()
+    {
+        return $this->exportReport("visualizarLogs");
+    }
+    public function SolicitudesDayOff()
+    {
+        return $this->exportReport("solicitudesDayOff");
+    }
+    public function SolicitudesVacaciones()
+    {
+        return $this->exportReport("solicitudesVacaciones");
+    }
+    public function Evaluaciones360()
+    {
+        return $this->exportReport("evaluaciones360");
+    }
+
 }
