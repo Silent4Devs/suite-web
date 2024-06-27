@@ -11,13 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('productos_requisicion', function (Blueprint $table) {
-            $table->foreign('requisiciones_id')->references('id')->on('requisiciones')->onUpdate('cascade')->onDelete('cascade');
+        Schema::table('failed_jobs', function (Blueprint $table) {
+            //
+            $table->uuid('uuid');
+
         });
     }
 
     /**
      * Reverse the migrations.
      */
-    public function down(): void {}
+    public function down(): void
+    {
+        Schema::table('failed_jobs', function (Blueprint $table) {
+            //
+            $table->dropColumn('uuid');
+        });
+    }
 };

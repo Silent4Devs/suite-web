@@ -24,7 +24,7 @@
     }
 
     .img_empleado {
-        width: 20px;
+        width: 40px;
         height: 20px;
         border-radius: 50%;
         margin-right: 5px;
@@ -93,7 +93,7 @@
                                     <h4>Colaboradores Informados</h4>
                                 </div>
                                 <div class="row">
-                                    Asigna a los colaboradores que seran informados de los procesos en el modulo.
+                                    Asigna a los colaboradores que seran informados de los procesos en el módulo.
                                 </div>
                                 <div class="form-row mt-3">
                                     <div class="anima-focus" style="width: 70rem;">
@@ -116,7 +116,7 @@
                                     <h4>Usuarios Informados</h4>
                                 </div>
                                 <div class="row">
-                                    Asigna a los usuarios que seran informados de los procesos en el modulo.
+                                    Asigna a los usuarios que seran informados de los procesos en el módulo.
                                 </div>
                                 <div class="form-row mt-3">
                                     <div class="anima-focus" style="width: 70rem;">
@@ -164,7 +164,7 @@
                         } else {
                             var option = new Option(item.empleado_id, item.empleado_id);
                             $(option).html(item
-                            .empleado_id); // Change this according to your display requirements
+                                .empleado_id); // Change this according to your display requirements
 
                             nivelSelect.append(option);
                         }
@@ -210,7 +210,7 @@
                 maximumSelectionLength: 5,
                 language: {
                     maximumSelected: function(maximumSelect) {
-                        return 'Solo pueden seleccionarse un maximo de 5 informadores por modulo.';
+                        return 'Solo pueden seleccionarse un maximo de 5 informadores por módulo.';
                     }
                 },
                 escapeMarkup: function(m) {
@@ -222,7 +222,7 @@
                 maximumSelectionLength: 5,
                 language: {
                     maximumSelected: function(maximumSelect) {
-                        return 'Solo pueden seleccionarse un maximo de 5 informadores por modulo.';
+                        return 'Solo pueden seleccionarse un maximo de 5 informadores por módulo.';
                     }
                 }
             });

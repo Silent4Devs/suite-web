@@ -70,7 +70,7 @@ class EvaluacionesInstructor extends Component
         'name.max' => 'El campo nombre no debe de ser mayor a 255 caracteres',
     ];
 
-    protected $listeners = ['editarEvaluacion' => 'editar', 'evaluationDestroy'];
+    protected $listeners = ['editarEvaluacion' => 'editar', 'evaluationDestroy', 'renderEvaluacion' => 'render'];
 
     public function hydrate()
     {

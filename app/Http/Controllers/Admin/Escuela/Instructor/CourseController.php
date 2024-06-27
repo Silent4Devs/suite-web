@@ -35,7 +35,7 @@ class CourseController extends Controller
         $categories = Category::pluck('name', 'id');
         $levels = Level::pluck('name', 'id');
         $prices = Price::pluck('name', 'id');
-        $empleados = User::select('name', 'id')->get();
+        $empleados = User::get();
 
         return view('admin.escuela.instructor.courses.create', compact('categories', 'levels', 'prices', 'empleados'));
     }
@@ -110,7 +110,7 @@ class CourseController extends Controller
         $categories = Category::pluck('name', 'id');
         $levels = Level::pluck('name', 'id');
         $prices = Price::pluck('name', 'id');
-        $empleados = User::select('name', 'id')->get();
+        $empleados = User::get();
 
         return view('admin.escuela.instructor.courses.edit', compact('course', 'categories', 'levels', 'prices', 'empleados'));
     }
