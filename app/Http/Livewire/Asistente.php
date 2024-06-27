@@ -13,6 +13,7 @@ class Asistente extends Component
     protected $asistenService; // Declarar como protegida
 
     public $respuesta;
+    public $lineas;
     public $filename;
     public $filePath;
     public $chatboxOpen = false;
