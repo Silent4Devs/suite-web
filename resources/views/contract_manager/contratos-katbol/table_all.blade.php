@@ -156,7 +156,7 @@
     </table>
 
     {{-- <p class="lead">
-        <button id="json" class="btn tb-btn-primary">TO JSON</button>
+        <button id="json" class="btn btn-primary">TO JSON</button>
         <button id="csv" class="btn btn-info">TO CSV</button>
         <button id="pdf" class="btn btn-danger">TO PDF</button>
         <button id="txt" class="btn btn-success">TO TXT</button>

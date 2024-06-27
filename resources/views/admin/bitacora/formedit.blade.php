@@ -117,7 +117,6 @@
     'route' => ['contract_manager.contratos-katbol.update', $contrato->id],
     'method' => 'PATCH',
     'enctype' => 'multipart/form-data',
-    'id' => 'update-form',
 ]) !!}
 @csrf
 
@@ -252,33 +251,12 @@
             </select>
         </div>
 
-        @if ($contrato->proyectoConvergencia)
-            <div class="distancia form-group col-md-4">
-                <label for="no_proyecto" class="txt-tamaño">Número de proyecto</label>
-                <select class="form-control" name="no_proyecto" id="no_proyecto"
-                    @if ($show_contrato) disabled @endif>
-                    <option value="" selected>Seleccione un Número de proyecto</option>
-                    @foreach ($proyectos as $proyecto)
-                        <option data-id="{{ $proyecto->id }}" value="{{ $proyecto->identificador }}"
-                            @if ($contrato->proyectoConvergencia->id == $proyecto->id) selected @endif>
-                            {{ $proyecto->identificador }} - {{ $proyecto->proyecto }}
-                        </option>
-                    @endforeach
-                </select>
-                @if ($errors->has('no_proyecto'))
-                    <div class="invalid-feedback red-text">
-                        {{ $errors->first('no_proyecto') }}
-                    </div>
-                @endif
-            </div>
-        @else
-            <div class="distancia form-group col-md-4">
-                <label for="no_proyecto" class="txt-tamaño">
-                    Número de proyecto</label>
-                <input type="text" maxlength="250" name="no_proyecto" id="no_proyecto" class="form-control"
-                    value="{{ $contrato->no_proyecto }}" @if ($show_contrato) disabled @endif>
-            </div>
-        @endif
+        <div class="distancia form-group col-md-4">
+            <label for="no_proyecto" class="txt-tamaño">
+                Número de proyecto</label>
+            <input type="text" maxlength="250" name="no_proyecto" id="no_proyecto" class="form-control"
+                value="{{ $contrato->no_proyecto }}" @if ($show_contrato) disabled @endif>
+        </div>
 
         @if ($areas->count() > 0)
             <div class="distancia form-group col-md-4">
@@ -362,28 +340,29 @@
     </div>
 
     <div class="row" style="margin-left: 10px; margin-right: 10px;">
-        @if ($contrato->file_contrato != null)
-            <div class="distancia form-group col-md-6">
-                <label for="" class="txt-tamaño">
-                    Adjuntar Contrato
-                    <font class="asterisco">*</font>
-                </label>
-                <div class="file-field input-field">
-                    <div class="btn" {{ !$show_contrato ? 'onclick=mostrarAlerta()' : '' }}>
-                        <span>Documento Actual:</span>
-                    </div>
+        <div class="distancia form-group col-md-6">
+            <label for="" class="txt-tamaño">
+                Adjuntar Contrato
+                <font class="asterisco">*</font>
+            </label>
+            <div class="file-field input-field">
 
-                    <div class="file-path-wrapper">
-                        <input value="{{ $contrato->file_contrato }}" class="file-path validate form-control"
-                            type="text" placeholder="Elegir documento" {{ $show_contrato ? 'readonly' : '' }}
-                            readonly>
-                    </div>
-                    <a href="{{ asset(trim('storage/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/' . $contrato->file_contrato)) }}"
-                        target="_blank" class=" descarga_archivo" style="margin-left:20px;">
-                        Descargar archivo actual</a>
+                <div class="btn" {{ !$show_contrato ? 'onclick=mostrarAlerta()' : '' }}>
+                    <span>Documento Actual:</span>
+                </div>
+
+                <div class="file-path-wrapper">
+                    <input value="{{ $contrato->file_contrato }}" class="file-path validate form-control"
+                        type="text" placeholder="Elegir documento" {{ $show_contrato ? 'readonly' : '' }}
+                        readonly>
                 </div>
             </div>
-        @endif
+            @if ($contrato->file_contrato != null)
+                <a href="{{ asset(trim('storage/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/' . $contrato->file_contrato)) }}"
+                    target="_blank" class=" descarga_archivo" style="margin-left:20px;">
+                    Descargar archivo actual</a>
+            @endif
+        </div>
         <div class="distancia form-group col-md-6">
             @if (!$show_contrato)
                 <div class="fondo_delete">
@@ -474,7 +453,7 @@
                 de firma
                 <font class="asterisco">*</font>
             </label>
-            <input required type="date" name="fecha_firma" id="fecha_firma" class="form-control"
+            <input type="date" name="fecha_firma" id="fecha_firma" class="form-control"
                 value="{{ old('fecha_firma', $contrato->fecha_firma) }}"
                 @if ($show_contrato) disabled @endif>
             {{-- {!! Form::text('fecha_firma', $contrato->fecha_firma, [
@@ -914,25 +893,6 @@
 </div>
 
 
-
-
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-{{-- <script type="text/javascript">
-    function miFuncion() {
-        Swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            title: 'Registro actualizado con éxito.',
-            showConfirmButton: false,
-        }).then((result) => {
-            // Después de que el usuario interactúa con la alerta (o después de que se cierra),
-            // redirigir a la misma página
-            window.location.href = window.location.href;
-        });
-    }
-</script> --}}
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/autonumeric/4.0.3/autoNumeric.js"></script>
 <script>
@@ -1358,45 +1318,5 @@
         //         }
         //     });
         // });
-    });
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $('#update-form').on('submit', function(e) {
-            e.preventDefault(); // Prevent the default form submission
-
-            // Create a FormData object from the form
-            var formData = new FormData(this);
-
-            $.ajax({
-                url: $(this).attr('action'), // Form action URL
-                method: $(this).attr('method'), // Form method
-                data: formData,
-                processData: false, // Prevent jQuery from automatically transforming the data into a query string
-                contentType: false, // Set the content type to false as jQuery will tell the server it's a query string request
-                success: function(response) {
-                    if (response.status === 'success') {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Éxito',
-                            text: response.message,
-                        });
-                    }
-                },
-                error: function(xhr) {
-                    var errorMessage = 'An error occurred. Please try again.';
-                    if (xhr.responseJSON && xhr.responseJSON.message) {
-                        errorMessage = xhr.responseJSON.message;
-                    }
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: errorMessage,
-                    });
-                }
-            });
-        });
     });
 </script>
