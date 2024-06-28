@@ -2,7 +2,6 @@
     {{-- Knowing others is intelligence; knowing yourself is true wisdom. --}}
     <div class="container-fluid mb-4">
         <div class="row">
-
             <div class="col-4 mt-4">
                 <div class="card card-body justify-content-center" style="min-height:100px;">
                     <div class="row align-items-center">
@@ -59,6 +58,7 @@
             <div class="col-2">
                 <div class="anima-focus">
                     <select class="form-control" name="ano_anual" id="ano_anual" wire:model="ano_anual">
+                        <option value="todos" selected>Todos</option>
                         @foreach ($anos_evaluaciones as $key => $ano)
                             <option value="{{ $ano }}">{{ $ano }}</option>
                         @endforeach
@@ -145,7 +145,19 @@
                 <h5>Resultado Mensual</h5>
             </div>
             <div class="col-2">
-                Año
+                <div class="anima-focus">
+                    <select class="form-control" name="ano_mensual" id="ano_mensual" wire:model="ano_mensual">
+                        <option value="todos" selected>Todos</option>
+                        <option value="2020">2020</option>
+                        <option value="2021">2021</option>
+                        <option value="2022">2022</option>
+                        <option value="2023">2023</option>
+                        @foreach ($anos_evaluaciones as $key => $ano)
+                            <option value="{{ $ano }}">{{ $ano }}</option>
+                        @endforeach
+                    </select>
+                    <label for="ano_mensual">Año</label>
+                </div>
             </div>
             <div class="col-2">
                 <div class="dropdown">
@@ -489,6 +501,35 @@
     <script>
         document.addEventListener('livewire:load', function() {
             Livewire.on('dataAnual', (datosAnuales) => {
+                const anosAnual = datosAnuales.labels;
+
+                const datasets = [];
+                if (datosAnuales.filtro_objetivos_anual) {
+                    const objetivosAnual = anosAnual.map(ano => datosAnuales.data[ano].objetivos);
+                    datasets.push({
+                        label: 'Objetivos',
+                        data: objetivosAnual,
+                        borderWidth: 1
+                    });
+                }
+
+                if (datosAnuales.filtro_competencias_anual) {
+                    const competenciasAnual = anosAnual.map(ano => datosAnuales.data[ano].competencias);
+                    datasets.push({
+                        label: 'Competencias',
+                        data: competenciasAnual,
+                        borderWidth: 1
+                    });
+                }
+
+                if (datosAnuales.filtro_general_anual) {
+                    const generalAnual = anosAnual.map(ano => datosAnuales.data[ano].general);
+                    datasets.push({
+                        label: 'General',
+                        data: generalAnual,
+                        borderWidth: 1
+                    });
+                }
 
                 document.getElementById('resultadosanuales').remove();
                 let canvas = document.createElement("canvas");
@@ -497,23 +538,11 @@
                 canvas.style.height = '100%';
                 document.getElementById("contenedor-principal").appendChild(canvas);
 
-                let grafica_objetivos_area = new Chart(document.getElementById('resultadosanuales'), {
+                new Chart(document.getElementById('resultadosanuales'), {
                     type: 'bar',
                     data: {
-                        labels: datosAnuales.labels,
-                        datasets: [{
-                            label: 'Objetivos',
-                            data: datosAnuales.data[0],
-                            borderWidth: 1
-                        }, {
-                            label: 'Competencias',
-                            data: datosAnuales.data[1],
-                            borderWidth: 1
-                        }, {
-                            label: 'General',
-                            data: datosAnuales.data[2],
-                            borderWidth: 1
-                        }]
+                        labels: anosAnual,
+                        datasets: datasets
                     },
                     options: {
                         scales: {
@@ -526,7 +555,6 @@
             });
         });
     </script>
-
 
     <script>
         document.addEventListener('livewire:load', function() {

@@ -15,6 +15,9 @@ class EvDesempenoDashboardGeneral extends Component
 
     public $areas;
 
+    public $ano_anual = "todos";
+    public $ano_mensual = "todos";
+
     public $area_anual = "todas";
     public $area_mensual = "todas";
 
@@ -48,9 +51,18 @@ class EvDesempenoDashboardGeneral extends Component
 
     public function cargarTablas()
     {
+        $evaluaciones = EvaluacionDesempeno::getAll()->where('estatus', '!=', 0);
+        $this->extraeraAnosEvaluaciones($evaluaciones);
+        // dd($this->datos_evaluaciones);
+        $años = array_keys($this->datos_evaluaciones);
+        // $datos = array_values($this->datos_evaluaciones);
+
         $datosAnuales = [
-            "labels" =>  $this->datos_evaluaciones,
+            "labels" =>   $años,
             "data" => $this->datos_evaluaciones,
+            "filtro_general_anual" => $this->general_anual,
+            "filtro_objetivos_anual" => $this->objetivos_anual,
+            "filtro_competencias_anual" => $this->competencias_anual,
         ];
         $this->emit('dataAnual', $datosAnuales);
 
@@ -77,6 +89,11 @@ class EvDesempenoDashboardGeneral extends Component
 
     public function extraerDatosEvaluaciones($evaluaciones)
     {
+
+        if ($this->ano_anual != "todos") {
+            $evaluaciones->whereYear('created_at', $this->ano_anual);
+        }
+
         foreach ($evaluaciones as $key => $evaluacion) {
             $ano_creacion = Carbon::parse($evaluacion->created_at)->format('Y');
             $resultados = $this->calificacionesEvaluacion($evaluacion);
@@ -138,6 +155,8 @@ class EvDesempenoDashboardGeneral extends Component
     {
         foreach ($datos_evaluaciones as $key_ano => $ev_ano) {
 
+            $this->datos_evaluaciones[$key_ano] = null;
+
             $cuenta_obj = 0;
             $suma_anual_obj = 0;
 
@@ -156,73 +175,82 @@ class EvDesempenoDashboardGeneral extends Component
                 }
             }
 
-            $promedioObj = ($suma_anual_obj / $cuenta_obj);
-            $promedioComp = ($suma_anual_comp / $cuenta_comp);
+            $promedioObj = $cuenta_obj > 0 ? ($suma_anual_obj / $cuenta_obj) : 0;
+            if ($this->objetivos_anual) {
+                $this->datos_evaluaciones[$key_ano]["objetivos"] = $promedioObj;
+            }
 
-            $promedioGen = $promedioObj + $promedioComp;
+            $promedioComp = $cuenta_comp > 0 ? ($suma_anual_comp / $cuenta_comp) : 0;
+            if ($this->competencias_anual) {
+                $this->datos_evaluaciones[$key_ano]["competencias"] = $promedioComp;
+            }
 
-            $this->datos_evaluaciones[$key_ano] =
-                [
-                    "objetivos" => $promedioObj,
-                    "competencias" => $promedioComp,
-                    "general" => $promedioGen,
-                ];
+            if ($this->general_anual) {
+                $promedioGen = $promedioObj + $promedioComp;
+                $this->datos_evaluaciones[$key_ano]["general"] = $promedioGen;
+            }
         }
+    }
+
+    public function updatedAnoAnual($value)
+    {
+        // dd($value);
+        $this->cargarTablas();
     }
 
     public function updatedAreaAnual($value)
     {
-        dd($value);
+        //dd($value);
         $this->cargarTablas();
     }
 
     public function updatedTipoAnual($value)
     {
-        dd($value);
+        //dd($value);
         $this->cargarTablas();
     }
 
     public function updatedGeneralAnual($value)
     {
-        dd($value);
+        //dd($value);
         $this->cargarTablas();
     }
     public function updatedObjetivosAnual($value)
     {
-        dd($value);
+        //dd($value);
         $this->cargarTablas();
     }
     public function updatedCompetenciasAnual($value)
     {
-        dd($value);
+        //dd($value);
         $this->cargarTablas();
     }
 
     public function updatedAreaMensual($value)
     {
-        dd($value);
+        //dd($value);
         $this->cargarTablas();
     }
 
     public function updatedTipoMensual($value)
     {
-        dd($value);
+        //dd($value);
         $this->cargarTablas();
     }
 
     public function updatedGeneralMensual($value)
     {
-        dd($value);
+        //dd($value);
         $this->cargarTablas();
     }
     public function updatedObjetivosMensual($value)
     {
-        dd($value);
+        //dd($value);
         $this->cargarTablas();
     }
     public function updatedCompetenciasMensual($value)
     {
-        dd($value);
+        //dd($value);
         $this->cargarTablas();
     }
 }
