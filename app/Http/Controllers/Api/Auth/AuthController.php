@@ -60,6 +60,12 @@ class AuthController extends Controller
 
         $user->idEmpleado = $user->empleado->id;
 
+        $user->id_puesto = $user->empleado->puestoRelacionado->id;
+        $user->nombre_puesto = $user->empleado->puesto;
+
+        $user->id_area = $user->empleado->area->id;
+        $user->nombre_area = $user->empleado->area->area;
+
         $supervisor = $user->empleado->es_supervisor;
 
         // $permisos_usuario = [];

@@ -259,8 +259,19 @@ class SolicitudPermisoGoceSueldoApiController extends Controller
     public function aprobacion()
     {
         //abort_if(Gate::denies('modulo_aprobacion_ausencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $usuario = User::getCurrentUser();
-        $data = $usuario->empleado->id;
+
+        function encodeSpecialCharacters($url)
+        {
+            // Handle spaces
+            // $url = str_replace(' ', '%20', $url);
+            // Encode other special characters, excluding /, \, and :
+            $url = preg_replace_callback('/[^A-Za-z0-9_\-\.~\/\\\:]/', function ($matches) {
+                return rawurlencode($matches[0]);
+            }, $url);
+            return $url;
+        }
+
+        $data = User::getCurrentUser()->empleado->id;
 
         $solicitudesPermisos = SolicitudPermisoGoceSueldo::with('empleado')->where('autoriza', '=', $data)->where('aprobacion', '=', 1)->orderByDesc('id')->get();
 
@@ -288,7 +299,24 @@ class SolicitudPermisoGoceSueldoApiController extends Controller
                     'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor'
                 ]);
 
+                if ($solicitante->foto == null || $solicitante->foto == '0') {
+                    if ($solicitante->genero == 'H') {
+                        $ruta = asset('storage/empleados/imagenes/man.png');
+                    } elseif ($solicitante->genero == 'M') {
+                        $ruta = asset('storage/empleados/imagenes/woman.png');
+                    } else {
+                        $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
+                    }
+                } else {
+                    $ruta = asset('storage/empleados/imagenes/' . $solicitante->foto);
+                }
+
+                // Encode spaces in the URL
+                $solicitante->empleado->ruta_foto = encodeSpecialCharacters($ruta);
+
+                $solicitante->empleado->id_area = $solicitante->empleado->area->id;
                 $solicitante->empleado->nombre_area = $solicitante->empleado->area->area;
+                $solicitante->empleado->id_puesto = $solicitante->empleado->puestoRelacionado->id;
                 $solicitante->empleado->nombre_puesto = $solicitante->empleado->puesto;
 
                 $solicitante->empleado->makeHidden([
@@ -366,7 +394,7 @@ class SolicitudPermisoGoceSueldoApiController extends Controller
     public function archivo()
     {
         // abort_if(Gate::denies('modulo_aprobacion_ausencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $data = User::getCurrentUser();
+        $data = User::getCurrentUser()->empleado->id;
 
         $solicitudesPermisos = SolicitudPermisoGoceSueldo::with('empleado')
             ->where('empleado_id', '=', $data)
