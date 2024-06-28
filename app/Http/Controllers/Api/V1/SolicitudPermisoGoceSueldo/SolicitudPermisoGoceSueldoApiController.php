@@ -183,11 +183,28 @@ class SolicitudPermisoGoceSueldoApiController extends Controller
                 'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor'
             ]);
 
+            if ($empleado->foto == null || $empleado->foto == '0') {
+                if ($empleado->genero == 'H') {
+                    $ruta = asset('storage/empleados/imagenes/man.png');
+                } elseif ($empleado->genero == 'M') {
+                    $ruta = asset('storage/empleados/imagenes/woman.png');
+                } else {
+                    $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
+                }
+            } else {
+                $ruta = asset('storage/empleados/imagenes/' . $empleado->foto);
+            }
+
+            // Encode spaces in the URL
+            $empleado->ruta_foto = $this->encodeSpecialCharacters($ruta);
+
+            $empleado->id_area = $empleado->area->id;
             $empleado->nombre_area = $empleado->area->area;
+            $empleado->id_puesto = $empleado->puestoRelacionado->id;
             $empleado->nombre_puesto = $empleado->puesto;
 
             $empleado->makeHidden([
-                'puestoRelacionado', 'area_id', 'puesto_id'
+                'puestoRelacionado', 'area_id', 'puesto_id', 'foto'
             ]);
 
             $vacacion->makeHidden([
