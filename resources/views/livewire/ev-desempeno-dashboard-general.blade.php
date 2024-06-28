@@ -126,7 +126,7 @@
                             <option value="{{ $area->id }}">{{ $area->area }}</option>
                         @endforeach
                     </select>
-                    <label for="area_anual">Tipo</label>
+                    <label for="area_anual">Área</label>
                 </div>
             </div>
         </div>
@@ -148,10 +148,6 @@
                 <div class="anima-focus">
                     <select class="form-control" name="ano_mensual" id="ano_mensual" wire:model="ano_mensual">
                         <option value="todos" selected>Todos</option>
-                        <option value="2020">2020</option>
-                        <option value="2021">2021</option>
-                        <option value="2022">2022</option>
-                        <option value="2023">2023</option>
                         @foreach ($anos_evaluaciones as $key => $ano)
                             <option value="{{ $ano }}">{{ $ano }}</option>
                         @endforeach
@@ -442,7 +438,7 @@
 
     <script>
         document.addEventListener('livewire:load', function() {
-            const data = @json($datos_evaluaciones);
+            const data = @json($datos_evaluaciones_anuales);
             const general_anual = @json($general_anual);
             const objetivos_anual = @json($objetivos_anual);
             const competencias_anual = @json($competencias_anual);
@@ -560,7 +556,7 @@
         document.addEventListener('livewire:load', function() {
 
             const anos = @json($anos_evaluaciones);
-            const data = @json($datos_evaluaciones);
+            const data = @json($datos_evaluaciones_anuales);
 
             var ctx = document.getElementById('resultadosmensuales').getContext('2d');
             chartRA = new Chart(ctx, {
