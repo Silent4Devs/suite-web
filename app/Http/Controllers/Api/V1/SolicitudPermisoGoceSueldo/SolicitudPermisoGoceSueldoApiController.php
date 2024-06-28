@@ -256,20 +256,20 @@ class SolicitudPermisoGoceSueldoApiController extends Controller
         return json_encode(['éxito', 'Solicitud eliminada con éxito'], 200);
     }
 
+    public function encodeSpecialCharacters($url)
+    {
+        // Handle spaces
+        // $url = str_replace(' ', '%20', $url);
+        // Encode other special characters, excluding /, \, and :
+        $url = preg_replace_callback('/[^A-Za-z0-9_\-\.~\/\\\:]/', function ($matches) {
+            return rawurlencode($matches[0]);
+        }, $url);
+        return $url;
+    }
+
     public function aprobacion()
     {
         //abort_if(Gate::denies('modulo_aprobacion_ausencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        function encodeSpecialCharacters($url)
-        {
-            // Handle spaces
-            // $url = str_replace(' ', '%20', $url);
-            // Encode other special characters, excluding /, \, and :
-            $url = preg_replace_callback('/[^A-Za-z0-9_\-\.~\/\\\:]/', function ($matches) {
-                return rawurlencode($matches[0]);
-            }, $url);
-            return $url;
-        }
 
         $data = User::getCurrentUser()->empleado->id;
 
@@ -312,7 +312,7 @@ class SolicitudPermisoGoceSueldoApiController extends Controller
                 }
 
                 // Encode spaces in the URL
-                $solicitante->empleado->ruta_foto = encodeSpecialCharacters($ruta);
+                $solicitante->empleado->ruta_foto = $this->encodeSpecialCharacters($ruta);
 
                 $solicitante->empleado->id_area = $solicitante->empleado->area->id;
                 $solicitante->empleado->nombre_area = $solicitante->empleado->area->area;
@@ -362,6 +362,20 @@ class SolicitudPermisoGoceSueldoApiController extends Controller
                 'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
                 'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor'
             ]);
+
+            if ($empleado->foto == null || $empleado->foto == '0') {
+                if ($empleado->genero == 'H') {
+                    $ruta = asset('storage/empleados/imagenes/man.png');
+                } elseif ($empleado->genero == 'M') {
+                    $ruta = asset('storage/empleados/imagenes/woman.png');
+                } else {
+                    $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
+                }
+            } else {
+                $ruta = asset('storage/empleados/imagenes/' . $empleado->foto);
+            }
+
+            $empleado->ruta_foto = $this->encodeSpecialCharacters($ruta);
 
             $empleado->nombre_area = $empleado->area->area;
             $empleado->nombre_puesto = $empleado->puesto;

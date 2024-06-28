@@ -46,6 +46,27 @@ class TimesheetApiController extends Controller
         // try {
         $timesheet = Timesheet::findOrFail($id)->makeHidden(['created_at', 'updated_at', 'proyectos']);
 
+        $timesheet->empleado->makeHidden([
+            'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
+            'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor'
+        ]);
+
+        if ($timesheet->empleado->foto == null || $timesheet->empleado->foto == '0') {
+            if ($timesheet->empleado->genero == 'H') {
+                $ruta = asset('storage/empleados/imagenes/man.png');
+            } elseif ($timesheet->empleado->genero == 'M') {
+                $ruta = asset('storage/empleados/imagenes/woman.png');
+            } else {
+                $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
+            }
+        } else {
+            $ruta = asset('storage/empleados/imagenes/' . $timesheet->empleado->foto);
+        }
+
+        // Encode spaces in the URL
+        $timesheet->nombre_empleado = $timesheet->empleado->name;
+        $timesheet->ruta_foto = $this->encodeSpecialCharacters($ruta);
+
         // Transformar los proyectos ocultando las propiedades
         $proyectos = $timesheet->proyectos->map(function ($proyecto) {
             return collect($proyecto)->except([
@@ -101,21 +122,21 @@ class TimesheetApiController extends Controller
         return $equipo_a_cargo->flatten(1)->toArray();
     }
 
+    public  function encodeSpecialCharacters($url)
+    {
+        // Handle spaces
+        // $url = str_replace(' ', '%20', $url);
+        // Encode other special characters, excluding /, \, and :
+        $url = preg_replace_callback('/[^A-Za-z0-9_\-\.~\/\\\:]/', function ($matches) {
+            return rawurlencode($matches[0]);
+        }, $url);
+        return $url;
+    }
+
     public function aprobaciones(Request $request)
     {
         // abort_if(Gate::denies('timesheet_administrador_aprobar_rechazar_horas_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $habilitarTodos = $request->habilitarTodos ? true : false;
-
-        function encodeSpecialCharacters($url)
-        {
-            // Handle spaces
-            // $url = str_replace(' ', '%20', $url);
-            // Encode other special characters, excluding /, \, and :
-            $url = preg_replace_callback('/[^A-Za-z0-9_\-\.~\/\\\:]/', function ($matches) {
-                return rawurlencode($matches[0]);
-            }, $url);
-            return $url;
-        }
 
         $usuario = User::getCurrentUser()->makeHidden([
             "empleado", "email_verified_at",
@@ -146,7 +167,7 @@ class TimesheetApiController extends Controller
             $ruta = asset('storage/empleados/imagenes/' . $usuario->empleado->foto);
         }
 
-        $usuario->ruta_foto = encodeSpecialCharacters($ruta);
+        $usuario->ruta_foto = $this->encodeSpecialCharacters($ruta);
 
         $usuario->id_empleado = $usuario->empleado->id;
         $usuario->nombre_empleado = $usuario->empleado->name;
@@ -189,7 +210,7 @@ class TimesheetApiController extends Controller
 
             // Encode spaces in the URL
             $aprobacion->nombre_empleado = $aprobacion->empleado->name;
-            $aprobacion->ruta_foto = encodeSpecialCharacters($ruta);
+            $aprobacion->ruta_foto = $this->encodeSpecialCharacters($ruta);
         }
 
         $organizacion_actual = $this->obtenerOrganizacion();
