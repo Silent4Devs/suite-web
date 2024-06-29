@@ -4,6 +4,68 @@
 @section('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/centerAttention/forms.css') }}{{config('app.cssVersion')}}">
     <style type="text/css">
+
+        .caja-firmas-doc .flex {
+            justify-content: center;
+            gap: 50px;
+            margin-top: 20px;
+        }
+
+        .caja-firmas-doc .flex-item {
+            width: 300px;
+            padding: 20px !important;
+        }
+
+        .firma-content {
+            width: 300px;
+            height: 200px;
+            border: 1px solid #ccc;
+        }
+
+        .caja-space-firma {
+            position: relative;
+            width: 500px;
+            height: 350px;
+        }
+
+        .caja-space-firma input {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .caja-space-firma canvas {
+            /* width: 100%;
+            height: 100%; */
+            border: 1px solid #5a5a5a;
+            ;
+        }
+
+        .img-firma {
+            width: 80%;
+            margin-left: 10%;
+        }
+
+        .caja-firmas-doc p {
+            width: 100%;
+            text-align: center;
+        }
+
+
+        .flex {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .flex-item {
+            width: 100%;
+            max-height: 100%;
+            padding: 30px;
+            box-sizing: border-box;
+            align-self: stretch;
+        }
+
         sup {
             color: red;
         }
@@ -650,8 +712,21 @@
     </div>
 </div>
 
+@php
+    $userIsAuthorized = false;
+    if($firmaModules && $firmaModules->empleados){
+    foreach ($firmaModules->empleados as $empleado) {
+        if ($empleado->id === Auth::id()) {
+            $userIsAuthorized = true;
+            break;
+        }
+    }
+   }
+@endphp
+
+@if ($userIsAuthorized)
 <div class="card card-content" style="margin-bottom: 30px">
-    <form method="POST" id="myForm" action="">
+    <form method="POST" id="myForm" action="{{ route('admin.firmas_quejas.store') }}">
     @csrf
     <div class="" style="position: relative; left: 2rem;">
         <br>
@@ -660,11 +735,11 @@
             Indispensable firmar  antes de guardar y enviarla a aprobación.
         </p>
     </div>
-    <div class="flex caja-firmar" wire:ignore>
+    <div class="flex caja-firmar">
         <div class="flex-item"
             style="display:flex; justify-content: center; flex-direction: column; align-items:center;">
             <div id="firma_content" class="caja-space-firma"
-                style="display:flex; justify-content: center; flex-direction: column; align-items:center; border: 1px black solid;">
+                style="display:flex; justify-content: center; flex-direction: column; align-items:center;">
                 <canvas id="firma_requi" width="500px" height="300px">
                     Navegador no compatible
                 </canvas>
@@ -678,8 +753,34 @@
             <div onclick="validar();" style="" class="btn btn-primary">Firmar</div>
         </div>
     </div>
-</form>
+    </form>
 </div>
+@endif
+
+
+@if ($userIsAuthorized)
+<div class="card card-content" style="margin-bottom: 30px">
+    <div class="caja-firmas-doc">
+        @foreach($firmas as $firma)
+        <div class="flex" style="margin-top: 70px;">
+            <div class="flex-item">
+                @if($firma->firma)
+                    <img src="{{ $firma->firma }}" class="img-firma" width="200" height="100">
+                    <p>Fecha: {{ $firma->created_at->format('Y-m-d') }}</p>
+                    <p>Firmante: {{ $firma->empleado->name }}</p>
+                @else
+                    <div style="height: 137px;"></div>
+                @endif
+                <hr>
+                <p>
+                    <small>FECHA, FIRMA Y NOMBRE DEL PARTICIPANTE </small>
+                </p>
+            </div>
+        </div>
+        @endforeach
+    </div>
+</div>
+@endif
 @endsection
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>

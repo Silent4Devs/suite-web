@@ -179,6 +179,10 @@ class DeskController extends Controller
     {
         abort_if(Gate::denies('centro_atencion_incidentes_de_seguridad_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $modulo = 1;
+
+        $submodulo = 1;
+
         $incidentesSeguridad = IncidentesSeguridad::findOrfail(intval($id_incidente))->load('evidencias_seguridad');
 
         $analisis = AnalisisSeguridad::where('formulario', '=', 'seguridad')->where('seguridad_id', intval($id_incidente))->first();
@@ -187,21 +191,20 @@ class DeskController extends Controller
 
         $empleados = Empleado::getaltaAll();
 
-        $firmaModules = FirmaModule::where('modulo_id', 1)->where('submodulo_id', 1)->first();
+        $firmaModules = FirmaModule::where('modulo_id', $modulo)->where('submodulo_id', $submodulo)->first();
 
         if ($firmaModules) {
             $participantesIds = json_decode($firmaModules->participantes, true); // Decodificar como array
 
             if ($participantesIds) {
-                $firmaModules->empleados = Empleado::whereIn('id', $participantesIds)
-                    ->where('estatus', 'alta')
+                $firmaModules->empleados = User::select('id', 'name', 'email')->whereIn('id', $participantesIds)
                     ->get();
             } else {
                 $firmaModules->empleados = collect();
             }
         }
 
-        $firmas_guardadas_1 = FirmaCentroAtencion::where('modulo_id', 1)->where('submodulo_id', 1)->get();
+        $firmas = FirmaCentroAtencion::with('empleado')->where('modulo_id', $modulo)->where('submodulo_id', $submodulo)->get();
 
         $sedes = Sede::getAll();
 
@@ -213,7 +216,7 @@ class DeskController extends Controller
 
         $categorias = CategoriaIncidente::get();
 
-        return view('admin.desk.seguridad.edit', compact('incidentesSeguridad', 'activos', 'empleados', 'sedes', 'areas', 'procesos', 'subcategorias', 'categorias', 'analisis', 'firmaModules', 'firmas_guardadas_1'));
+        return view('admin.desk.seguridad.edit', compact('incidentesSeguridad', 'activos', 'empleados', 'sedes', 'areas', 'procesos', 'subcategorias', 'categorias', 'analisis', 'firmaModules', 'firmas'));
     }
 
     public function removeUnicodeCharacters($string)
@@ -243,7 +246,7 @@ class DeskController extends Controller
         }
 
         // Obtener empleados desde la base de datos
-        $empleados = Empleado::select('id', 'name', 'email')->whereIn('id', $empleadoIds)->get();
+        $empleados = User::select('id', 'name', 'email')->whereIn('id', $empleadoIds)->get();
 
         // Enviar correos electrónicos
         foreach ($empleados as $empleado) {
@@ -401,6 +404,10 @@ class DeskController extends Controller
     {
         abort_if(Gate::denies('centro_atencion_riesgos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $modulo = 1;
+
+        $submodulo = 4;
+
         $riesgos = RiesgoIdentificado::findOrfail(intval($id_riesgos))->load('evidencias_riesgos');
 
         $analisis = AnalisisSeguridad::where('formulario', '=', 'riesgo')->where('riesgos_id', intval($id_riesgos))->first();
@@ -417,21 +424,22 @@ class DeskController extends Controller
 
         $empleados = Empleado::getaltaAll();
 
-        $firmaModules = FirmaModule::where('modulo_id', 1)->where('submodulo_id', 4)->first();
+        $firmaModules = FirmaModule::where('modulo_id', $modulo)->where('submodulo_id', $submodulo)->first();
 
         if ($firmaModules) {
             $participantesIds = json_decode($firmaModules->participantes, true); // Decodificar como array
 
             if ($participantesIds) {
-                $firmaModules->empleados = Empleado::whereIn('id', $participantesIds)
-                    ->where('estatus', 'alta')
+                $firmaModules->empleados = User::whereIn('id', $participantesIds)
                     ->get();
             } else {
                 $firmaModules->empleados = collect();
             }
         }
 
-        return view('admin.desk.riesgos.edit', compact('riesgos', 'procesos', 'empleados', 'areas', 'activos', 'sedes', 'analisis', 'firmaModules'));
+        $firmas = FirmaCentroAtencion::with('empleado')->where('modulo_id', $modulo)->where('submodulo_id', $submodulo)->get();
+
+        return view('admin.desk.riesgos.edit', compact('riesgos', 'procesos', 'empleados', 'areas', 'activos', 'sedes', 'analisis', 'firmaModules', 'firmas'));
     }
 
     public function updateRiesgos(Request $request, $id_riesgos)
@@ -447,7 +455,7 @@ class DeskController extends Controller
         }
 
         // Obtener empleados desde la base de datos
-        $empleados = Empleado::select('id', 'name', 'email')->whereIn('id', $empleadoIds)->get();
+        $empleados = User::select('id', 'name', 'email')->whereIn('id', $empleadoIds)->get();
 
 
         // Enviar correos electrónicos
@@ -547,6 +555,10 @@ class DeskController extends Controller
     {
         abort_if(Gate::denies('centro_atencion_quejas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $modulo = 1;
+
+        $submodulo = 3;
+
         $quejas = Quejas::findOrfail(intval($id_quejas))->load('evidencias_quejas');
 
         $procesos = Proceso::getAll();
@@ -561,22 +573,23 @@ class DeskController extends Controller
 
         $empleados = Empleado::getaltaAll();
 
-        $firmaModules = FirmaModule::where('modulo_id', 1)->where('submodulo_id', 3)->first();
+        $firmaModules = FirmaModule::where('modulo_id',  $modulo)->where('submodulo_id', $submodulo)->first();
 
         if ($firmaModules) {
             $participantesIds = json_decode($firmaModules->participantes, true); // Decodificar como array
 
             if ($participantesIds) {
-                $firmaModules->empleados = Empleado::whereIn('id', $participantesIds)
-                    ->where('estatus', 'alta')
+                $firmaModules->empleados = User::whereIn('id', $participantesIds)
                     ->get();
             } else {
                 $firmaModules->empleados = collect();
             }
         }
 
+        $firmas = FirmaCentroAtencion::with('empleado')->where('modulo_id', $modulo)->where('submodulo_id', $submodulo)->get();
 
-        return view('admin.desk.quejas.edit', compact('quejas', 'procesos', 'empleados', 'areas', 'activos', 'sedes', 'analisis', 'firmaModules'));
+
+        return view('admin.desk.quejas.edit', compact('quejas', 'procesos', 'empleados', 'areas', 'activos', 'sedes', 'analisis', 'firmaModules', 'firmas'));
     }
 
     public function updateQuejas(Request $request, $id_quejas)
@@ -592,7 +605,7 @@ class DeskController extends Controller
         }
 
         // Obtener empleados desde la base de datos
-        $empleados = Empleado::select('id', 'name', 'email')->whereIn('id', $empleadoIds)->get();
+        $empleados = User::select('id', 'name', 'email')->whereIn('id', $empleadoIds)->get();
 
 
         // Enviar correos electrónicos
@@ -696,6 +709,10 @@ class DeskController extends Controller
     {
         abort_if(Gate::denies('centro_atencion_denuncias_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $modulo = 1;
+
+        $submodulo = 6;
+
         $analisis = AnalisisSeguridad::where('formulario', '=', 'denuncia')->where('denuncias_id', intval($id_denuncias))->first();
 
         $denuncias = Denuncias::findOrfail(intval($id_denuncias));
@@ -704,21 +721,22 @@ class DeskController extends Controller
 
         $empleados = Empleado::getaltaAll();
 
-        $firmaModules = FirmaModule::where('modulo_id', 1)->where('submodulo_id', 6)->first();
+        $firmaModules = FirmaModule::where('modulo_id', $modulo)->where('submodulo_id', $submodulo)->first();
 
         if ($firmaModules) {
             $participantesIds = json_decode($firmaModules->participantes, true); // Decodificar como array
 
             if ($participantesIds) {
-                $firmaModules->empleados = Empleado::whereIn('id', $participantesIds)
-                    ->where('estatus', 'alta')
+                $firmaModules->empleados = User::whereIn('id', $participantesIds)
                     ->get();
             } else {
                 $firmaModules->empleados = collect();
             }
         }
 
-        return view('admin.desk.denuncias.edit', compact('denuncias', 'activos', 'empleados', 'analisis', 'firmaModules'));
+        $firmas = FirmaCentroAtencion::with('empleado')->where('modulo_id', $modulo)->where('submodulo_id', $submodulo)->get();
+
+        return view('admin.desk.denuncias.edit', compact('denuncias', 'activos', 'empleados', 'analisis', 'firmaModules', 'firmas'));
     }
 
     public function updateDenuncias(Request $request, $id_denuncias)
@@ -734,7 +752,7 @@ class DeskController extends Controller
         }
 
         // Obtener empleados desde la base de datos
-        $empleados = Empleado::select('id', 'name', 'email')->whereIn('id', $empleadoIds)->get();
+        $empleados = User::select('id', 'name', 'email')->whereIn('id', $empleadoIds)->get();
 
 
         // Enviar correos electrónicos
@@ -830,6 +848,10 @@ class DeskController extends Controller
     {
         abort_if(Gate::denies('centro_atencion_mejoras_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $modulo = 1;
+
+        $submodulo = 2;
+
         $mejoras = Mejoras::findOrfail(intval($id_mejoras));
 
         $activos = Activo::getAll();
@@ -842,21 +864,22 @@ class DeskController extends Controller
 
         $analisis = AnalisisSeguridad::where('formulario', '=', 'mejora')->where('mejoras_id', intval($id_mejoras))->first();
 
-        $firmaModules = FirmaModule::where('modulo_id', 1)->where('submodulo_id', 2)->first();
+        $firmaModules = FirmaModule::where('modulo_id', $modulo)->where('submodulo_id', $submodulo)->first();
 
         if ($firmaModules) {
             $participantesIds = json_decode($firmaModules->participantes, true); // Decodificar como array
 
             if ($participantesIds) {
-                $firmaModules->empleados = Empleado::whereIn('id', $participantesIds)
-                    ->where('estatus', 'alta')
+                $firmaModules->empleados = User::whereIn('id', $participantesIds)
                     ->get();
             } else {
                 $firmaModules->empleados = collect();
             }
         }
 
-        return view('admin.desk.mejoras.edit', compact('mejoras', 'activos', 'empleados', 'areas', 'procesos', 'analisis', 'firmaModules'));
+        $firmas = FirmaCentroAtencion::with('empleado')->where('modulo_id', $modulo)->where('submodulo_id', $submodulo)->get();
+
+        return view('admin.desk.mejoras.edit', compact('mejoras', 'activos', 'empleados', 'areas', 'procesos', 'analisis', 'firmaModules', 'firmas'));
     }
 
     public function updateMejoras(Request $request, $id_mejoras)
@@ -881,7 +904,7 @@ class DeskController extends Controller
         }
 
         // Obtener empleados desde la base de datos
-        $empleados = Empleado::select('id', 'name', 'email')->whereIn('id', $empleadoIds)->get();
+        $empleados = User::select('id', 'name', 'email')->whereIn('id', $empleadoIds)->get();
 
 
         // Enviar correos electrónicos
@@ -972,6 +995,10 @@ class DeskController extends Controller
     {
         abort_if(Gate::denies('centro_atencion_sugerencias_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $modulo = 1;
+
+        $submodulo = 5;
+
         $sugerencias = Sugerencias::findOrfail(intval($id_sugerencias));
 
         $activos = Activo::getAll();
@@ -985,21 +1012,22 @@ class DeskController extends Controller
         $analisis = AnalisisSeguridad::where('formulario', '=', 'sugerencia')->where('sugerencias_id', intval($id_sugerencias))->first();
 
 
-        $firmaModules = FirmaModule::where('modulo_id', 1)->where('submodulo_id', 5)->first();
+        $firmaModules = FirmaModule::where('modulo_id', $modulo)->where('submodulo_id', $submodulo)->first();
 
         if ($firmaModules) {
             $participantesIds = json_decode($firmaModules->participantes, true); // Decodificar como array
 
             if ($participantesIds) {
-                $firmaModules->empleados = Empleado::whereIn('id', $participantesIds)
-                    ->where('estatus', 'alta')
+                $firmaModules->empleados = User::whereIn('id', $participantesIds)
                     ->get();
             } else {
                 $firmaModules->empleados = collect();
             }
         }
 
-        return view('admin.desk.sugerencias.edit', compact('sugerencias', 'activos', 'empleados', 'areas', 'procesos', 'analisis', 'firmaModules'));
+        $firmas = FirmaCentroAtencion::with('empleado')->where('modulo_id', $modulo)->where('submodulo_id', $submodulo)->get();
+
+        return view('admin.desk.sugerencias.edit', compact('sugerencias', 'activos', 'empleados', 'areas', 'procesos', 'analisis', 'firmaModules', 'firmas'));
     }
 
     public function updateSugerencias(Request $request, $id_sugerencias)
@@ -1015,7 +1043,7 @@ class DeskController extends Controller
         }
 
         // Obtener empleados desde la base de datos
-        $empleados = Empleado::select('id', 'name', 'email')->whereIn('id', $empleadoIds)->get();
+        $empleados = User::select('id', 'name', 'email')->whereIn('id', $empleadoIds)->get();
 
 
         // Enviar correos electrónicos

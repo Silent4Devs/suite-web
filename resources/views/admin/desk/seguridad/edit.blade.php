@@ -1042,6 +1042,20 @@
     </div>
 </div>
 
+
+@php
+    $userIsAuthorized = false;
+    if($firmaModules && $firmaModules->empleados){
+    foreach ($firmaModules->empleados as $empleado) {
+        if ($empleado->id === Auth::id()) {
+            $userIsAuthorized = true;
+            break;
+        }
+    }
+   }
+@endphp
+
+@if ($userIsAuthorized)
 <div class="card card-content" style="margin-bottom: 30px">
     <form method="POST" id="myForm" action="{{ route('admin.firmas_seguridad.store') }}">
     @csrf
@@ -1070,68 +1084,36 @@
             <div onclick="validar();" style="" class="btn btn-primary">Firmar</div>
         </div>
     </div>
-</form>
+    </form>
 </div>
+@endif
 
+
+
+@if ($userIsAuthorized)
 <div class="card card-content" style="margin-bottom: 30px">
-<div class="caja-firmas-doc">
-    <div class="flex" style="margin-top: 70px;">
-        <div class="flex-item">
-            @if ($firmas_guardadas_1)
-                <img src="{{ $firmas_guardadas_1->firma }}" class="img-firma">
-                <p></p>
-                <p></p>
-            @else
-                <div style="height: 137px;"></div>
-            @endif
-            <hr>
-            <p>
-                <small>FECHA, FIRMA Y NOMBRE DEL PARTICIPANTE </small>
-            </p>
+    <div class="caja-firmas-doc">
+        @foreach($firmas as $firma)
+        <div class="flex" style="margin-top: 70px;">
+            <div class="flex-item">
+                @if($firma->firma)
+                    <img src="{{ $firma->firma }}" class="img-firma" width="200" height="100">
+                    <p>Fecha: {{ $firma->created_at->format('Y-m-d') }}</p>
+                    <p>Firmante: {{ $firma->empleado->name }}</p>
+                @else
+                    <div style="height: 137px;"></div>
+                @endif
+                <hr>
+                <p>
+                    <small>FECHA, FIRMA Y NOMBRE DEL PARTICIPANTE </small>
+                </p>
+            </div>
         </div>
-        <div class="flex-item">
-            @if ($firmas_guardadas_1)
-                <img src="{{ $firmas_guardadas->firma }}" class="img-firma">
-                <p></p>
-                <p></p>
-            @else
-                <div style="height: 137px;"></div>
-            @endif
-            <hr>
-            <p>
-                <small>FECHA, FIRMA Y NOMBRE DEL PARTICIPANTE </small>
-            </p>
-        </div>
-    </div>
-    <div class="flex">
-        <div class="flex-item">
-            @if ($firmas_guardadas)
-                <img src="{{ $firmas_guardadas->firma }}" class="img-firma">
-                <p></p>
-                <p></p>
-            @else
-                <div style="height: 137px;"></div>
-            @endif
-            <hr>
-            <p>
-                <small>FECHA, FIRMA Y NOMBRE DEL PARTICIPANTE </small>
-            </p>
-        </div>
-        <div class="flex-item">
-            @if ($firmas_guardadas)
-                <img src="{{ $firmas_guardadas->firma }}" class="img-firma">
-                <p></p>
-                <p></p>
-            @else
-                <div style="height: 137px;"></div>
-            @endif
-            <hr>
-            <p>
-                <small>FECHA, FIRMA Y NOMBRE DEL PARTICIPANTE </small>
-            </p>
-        </div>
+        @endforeach
     </div>
 </div>
+@endif
+
 
 @endsection
 

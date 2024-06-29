@@ -8,8 +8,10 @@ use App\Models\FirmaCentroAtencion;
 use App\Models\FirmaModule;
 use App\Models\Modulo;
 use App\Models\Submodulo;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class FirmasModuleController extends Controller
 {
@@ -21,7 +23,7 @@ class FirmasModuleController extends Controller
         foreach ($firmaModules as $firma) {
             $participantesIds = json_decode($firma->participantes);
             if ($participantesIds) {
-                $firma->empleados = Empleado::whereIn('id', $participantesIds)->where('estatus', 'alta')->get();
+                $firma->empleados = User::whereIn('id', $participantesIds)->get();
             } else {
                 $firma->empleados = collect();
             }
@@ -33,7 +35,7 @@ class FirmasModuleController extends Controller
     public function create()
     {
 
-        $empleados = Empleado::where('estatus', 'alta')->orderBy('name', 'asc')
+        $empleados = User::orderBy('name', 'asc')
             ->get();
 
         $modulos = Modulo::all();
@@ -74,79 +76,80 @@ class FirmasModuleController extends Controller
 
     public function seguridadFirma(Request $request)
     {
-        // Crear un nuevo registro de FirmaModule
         $firmaModule = FirmaCentroAtencion::create([
             'modulo_id' => 1,
             'submodulo_id' => 1,
-            'participantes' => Auth::id(),
+            'user_id' => Auth::id(),
             'firma' => $request->firma,
         ]);
 
-        return redirect()->route('admin.desk.index')->with('success', 'Guardado con éxito');
+
+        return redirect()->route('admin.desk.index')->with('success', 'Firma guardada con éxito');
     }
+
 
     public function riesgosFirma(Request $request)
     {
-        // Crear un nuevo registro de FirmaModule
         $firmaModule = FirmaCentroAtencion::create([
             'modulo_id' => 1,
             'submodulo_id' => 4,
-            'participantes' => Auth::id(),
+            'user_id' => Auth::id(),
             'firma' => $request->firma,
         ]);
 
-        return redirect()->route('admin.desk.index')->with('success', 'Guardado con éxito');
+
+        return redirect()->route('admin.desk.index')->with('success', 'Firma guardada con éxito');
     }
 
     public function quejasFirma(Request $request)
     {
-        // Crear un nuevo registro de FirmaModule
         $firmaModule = FirmaCentroAtencion::create([
             'modulo_id' => 1,
             'submodulo_id' => 3,
-            'participantes' => Auth::id(),
+            'user_id' => Auth::id(),
             'firma' => $request->firma,
         ]);
 
-        return redirect()->route('admin.desk.index')->with('success', 'Guardado con éxito');
+
+        return redirect()->route('admin.desk.index')->with('success', 'Firma guardada con éxito');
     }
 
     public function denunciasFirma(Request $request)
     {
-        // Crear un nuevo registro de FirmaModule
         $firmaModule = FirmaCentroAtencion::create([
             'modulo_id' => 1,
             'submodulo_id' => 6,
-            'participantes' => Auth::id(),
+            'user_id' => Auth::id(),
             'firma' => $request->firma,
         ]);
 
-        return redirect()->route('admin.desk.index')->with('success', 'Guardado con éxito');
+
+        return redirect()->route('admin.desk.index')->with('success', 'Firma guardada con éxito');
     }
 
     public function mejoraFirma(Request $request)
     {
-        // Crear un nuevo registro de FirmaModule
         $firmaModule = FirmaCentroAtencion::create([
             'modulo_id' => 1,
             'submodulo_id' => 2,
-            'participantes' => Auth::id(),
+            'user_id' => Auth::id(),
             'firma' => $request->firma,
         ]);
 
-        return redirect()->route('admin.desk.index')->with('success', 'Guardado con éxito');
+
+        return redirect()->route('admin.desk.index')->with('success', 'Firma guardada con éxito');
     }
 
     public function sugerenciasFirma(Request $request)
     {
-        // Crear un nuevo registro de FirmaModule
         $firmaModule = FirmaCentroAtencion::create([
             'modulo_id' => 1,
             'submodulo_id' => 5,
-            'participantes' => Auth::id(),
+            'user_id' => Auth::id(),
             'firma' => $request->firma,
         ]);
 
-        return redirect()->route('admin.desk.index')->with('success', 'Guardado con éxito');
+
+        return redirect()->route('admin.desk.index')->with('success', 'Firma guardada con éxito');
     }
 }
