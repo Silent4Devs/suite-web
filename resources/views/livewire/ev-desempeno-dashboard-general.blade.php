@@ -146,7 +146,7 @@
             </div>
             <div class="col-2">
                 <div class="anima-focus">
-                    <select class="form-control" name="ano_mensual" id="ano_mensual" wire:model="ano_mensual">
+                    <select class="form-control" name="mes_mensual" id="mes_mensual" wire:model="mes_mensual">
                         <option value="todos" selected>Todos</option>
                         @foreach ($anos_evaluaciones as $key => $ano)
                             <option value="{{ $ano }}">{{ $ano }}</option>

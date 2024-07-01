@@ -32,6 +32,9 @@ class EvDesempenoDashboardGeneral extends Component
     public $anos_evaluaciones = [];
     public $datos_evaluaciones_anuales = [];
 
+    public $meses_evaluaciones = [];
+    public $datos_evaluaciones_mensuales = [];
+
     public function mount()
     {
         $evaluaciones = EvaluacionDesempeno::getAll()->where('estatus', '!=', 0);
@@ -89,6 +92,29 @@ class EvDesempenoDashboardGeneral extends Component
         }
 
         $this->anos_evaluaciones = array_unique($anos);
+
+        $this->extraerDatosEvaluacionesAnual($evaluaciones);
+    }
+
+    public function colocarMesesEvaluaciones($evaluaciones)
+    {
+        $meses =
+            [
+                "1" => "Enero",
+                "2" => "Febrero",
+                "3" => "Marzo",
+                "4" => "Abril",
+                "5" => "Mayo",
+                "6" => "Junio",
+                "7" => "Julio",
+                "8" => "Agosto",
+                "9" => "Septiembre",
+                "10" => "Octubre",
+                "11" => "Noviembre",
+                "12" => "Diciembre",
+            ];
+
+        $this->meses_evaluaciones = array_unique($meses);
 
         $this->extraerDatosEvaluacionesAnual($evaluaciones);
     }
@@ -341,22 +367,18 @@ class EvDesempenoDashboardGeneral extends Component
         $this->cargarTablas();
     }
 
-    public function updatedTipoAnual($value)
-    {
-        //dd($value);
-        $this->cargarTablas();
-    }
-
     public function updatedGeneralAnual($value)
     {
         //dd($value);
         $this->cargarTablas();
     }
+
     public function updatedObjetivosAnual($value)
     {
         //dd($value);
         $this->cargarTablas();
     }
+
     public function updatedCompetenciasAnual($value)
     {
         //dd($value);
@@ -369,7 +391,7 @@ class EvDesempenoDashboardGeneral extends Component
         $this->cargarTablas();
     }
 
-    public function updatedTipoMensual($value)
+    public function updatedMesMensual($value)
     {
         //dd($value);
         $this->cargarTablas();
