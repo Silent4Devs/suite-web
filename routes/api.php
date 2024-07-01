@@ -33,6 +33,7 @@ Route::group(['prefix' => 'api/v1', 'as' => 'api.', 'namespace' => 'Api\v1', 'mi
     Route::get('solicitud-dayoff-vistaGlobal', [SolicitudDayOffApiController::class, 'vistaGlobal']);
     Route::get('solicitud-dayoff/{id}/showVistaGlobal', [SolicitudDayOffApiController::class, 'showVistaGlobal']);
     Route::get('solicitud-dayoff/{id}/showArchivo', [SolicitudDayOffApiController::class, 'showArchivo']);
+    Route::delete('solicitud-dayoff/{id}/destroy', [SolicitudDayOffApiController::class, 'destroy']);
 
     Route::get('solicitud-vacaciones', [SolicitudVacacionesApiController::class, 'index']);
     Route::get('solicitud-vacaciones/aprobacionMenu', [SolicitudVacacionesApiController::class, 'aprobacionMenu']);
@@ -46,6 +47,7 @@ Route::group(['prefix' => 'api/v1', 'as' => 'api.', 'namespace' => 'Api\v1', 'mi
     Route::get('solicitud-vacaciones-vistaGlobal', [SolicitudVacacionesApiController::class, 'vistaGlobal']);
     Route::get('solicitud-vacaciones/{id}/showVistaGlobal', [SolicitudVacacionesApiController::class, 'showVistaGlobal']);
     Route::get('solicitud-vacaciones/{id}/archivoShow', [SolicitudVacacionesApiController::class, 'archivoShow']);
+    Route::delete('solicitud-vacaciones/{id}/destroy', [SolicitudVacacionesApiController::class, 'destroy']);
 
     Route::get('solicitud-permisos', [SolicitudPermisoGoceSueldoApiController::class, 'index']);
     Route::get('solicitud-permisos/catalogoPermisos', [SolicitudPermisoGoceSueldoApiController::class, 'catalogoPermisos']);
@@ -58,6 +60,7 @@ Route::group(['prefix' => 'api/v1', 'as' => 'api.', 'namespace' => 'Api\v1', 'mi
     // Route::get('solicitud-permisos-vistaGlobal', [SolicitudPermisoGoceSueldoApiController::class, 'vistaGlobal']);
     Route::get('solicitud-permisos/{id}/showVistaGlobal', [SolicitudPermisoGoceSueldoApiController::class, 'showVistaGlobal']);
     Route::get('solicitud-permisos/{id}/archivoShow', [SolicitudPermisoGoceSueldoApiController::class, 'archivoShow']);
+    Route::delete('solicitud-permisos/{id}/destroy', [SolicitudPermisoGoceSueldoApiController::class, 'destroy']);
 
     Route::get('timesheet/show/{id}', [TimesheetApiController::class, 'show']);
     Route::get('timesheet/aprobaciones', [TimesheetApiController::class, 'aprobaciones']);
