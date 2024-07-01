@@ -93,7 +93,7 @@
                                     <h4>Colaboradores Informados</h4>
                                 </div>
                                 <div class="row">
-                                    Asigna a los colaboradores que seran informados de los procesos en el módulo.
+                                    Asigna a los colaboradores que serán informados de los procesos en el módulo.
                                 </div>
                                 <div class="form-row mt-3">
                                     <div class="anima-focus" style="width: 70rem;">
@@ -116,7 +116,7 @@
                                     <h4>Usuarios Informados</h4>
                                 </div>
                                 <div class="row">
-                                    Asigna a los usuarios que seran informados de los procesos en el módulo.
+                                    Asigna a los usuarios que serán informados de los procesos en el módulo.
                                 </div>
                                 <div class="form-row mt-3">
                                     <div class="anima-focus" style="width: 70rem;">
@@ -235,7 +235,7 @@
 
             var avatar = $(option.element).data('avatar');
             if (avatar) {
-                var avatarHtml = `<img src="${avatar}" class="img_empleado" />`;
+                var avatarHtml = `<img src="${avatar}" class="img_empleado" style="margin-left: 20px;" />`;
                 var avatarText = option.text;
 
                 var formattedResult = $('<span>' + avatarHtml + ' ' + avatarText + '</span>');
