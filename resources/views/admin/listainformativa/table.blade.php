@@ -86,20 +86,15 @@
                             <h5>Lista de Aprobadores</h5>
 
                             <hr>
-                            <br>
 
-                            <h6 style="color:#057BE2; position: relative; left: 15rem;"> Nivel
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Informados
-                            </h6>
                             <br>
-                            <br>
-                            <div class="row mb-3" style="position: relative; left: 12rem;">
-                                <div class="col-6">
+                            <div class="row mb-3" style="position: relative;">
+                                <div class="col-2">
                                     <br>
                                     <h6> Colaboradores</h6> &nbsp;&nbsp;&nbsp;
                                 </div>
-                                <div class="col-4">
-                                    <div class="row" style="position: relative; right: 20rem;">
+                                <div class="col-8">
+                                    <div class="row" style="position: relative;">
                                         @foreach ($modulo->participantes as $index => $participante)
                                             <div class="col-4">
                                                 <img src="{{ asset('storage/empleados/imagenes') }}/{{ $participante->empleado->avatar }}"
@@ -109,13 +104,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row mb-3" style="position: relative; left: 15rem;">
-                                <div class="col-6">
+                            <div class="row mb-3" style="position: relative;">
+                                <div class="col-2">
                                     <br>
                                     <h6> Usuarios</h6> &nbsp;&nbsp;&nbsp;
                                 </div>
-                                <div class="col-4">
-                                    <div class="row" style="position: relative; right: 20rem;">
+                                <div class="col-8">
+                                    <div class="row" style="position: relative;">
                                         @foreach ($modulo->usuarios as $index => $usuario)
                                             <div class="col-4">
                                                 <img src="{{ asset('storage/empleados/imagenes/usuario_no_cargado.png') }}"

@@ -402,11 +402,6 @@
                                         <i class="material-symbols-outlined i-direct">keyboard_arrow_down</i>
                                     </a>
                                     <ul>
-                                        @can('lista_distribucion_acceder')
-                                            <li><a href="{{ asset('admin/lista-distribucion') }}">Lista de
-                                                    distribución</a>
-                                            </li>
-                                        @endcan
                                         @can('clausulas_auditorias_acceder')
                                             <li><a href="{{ route('admin.auditoria-clasificacion') }}">Clasificación</a>
                                             </li>
@@ -436,6 +431,11 @@
                                         @endcan
                                         @can('crear_area_acceder')
                                             <li><a href="{{ route('admin.areas.index') }}">Crear Áreas</a></li>
+                                        @endcan
+                                        @can('lista_distribucion_acceder')
+                                            <li><a href="{{ asset('admin/lista-distribucion') }}">Lista de
+                                                    distribución</a>
+                                            </li>
                                         @endcan
                                         @can('lista_informativa_acceder')
                                             <li>
