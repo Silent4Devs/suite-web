@@ -41,7 +41,7 @@
     "spatie/laravel-responsecache": "^7.4",
     "tucker-eric/eloquentfilter": "^3.2",
     "vladimir-yuldashev/laravel-queue-rabbitmq": "^14.0",
-    "vxm/laravel-async": "^4.1",
+    "vxm/laravel-async": "^5.0",
     "yajra/laravel-datatables-oracle": "^10.0"
   },
   "require-dev": {
