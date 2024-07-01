@@ -473,7 +473,7 @@ class RequisicionesController extends Controller
                 $tipo_firma = 'firma_solicitante';
                 $alerta = $this->validacionLista($tipo_firma);
             } else {
-                $mensaje = 'No tiene permisos para firmar<br> En espera del solicitante directo: <br> <strong>' . $solicitante->name . '</strong>';
+                $mensaje = 'No tiene permisos para firmar<br> En espera del solicitante directo: <br> <strong>' . $firma_siguiente->solicitante->name . '</strong>';
                 return view('contract_manager.requisiciones.error', compact('mensaje'));
             }
         } elseif ($requisicion->firma_jefe === null) {
@@ -481,14 +481,14 @@ class RequisicionesController extends Controller
                 $tipo_firma = 'firma_jefe';
                 $alerta = $this->validacionLista($tipo_firma);
             } else {
-                $mensaje = 'No tiene permisos para firmar<br> En espera del jefe directo: <br> <strong>' . $supervisor . '</strong>';
+                $mensaje = 'No tiene permisos para firmar<br> En espera del jefe directo: <br> <strong>' . $firma_siguiente->jefe->name . '</strong>';
                 return view('contract_manager.requisiciones.error', compact('mensaje'));
             }
         } elseif ($requisicion->firma_finanzas === null) {
             if ($user->empleado->id == $firma_siguiente->responsable_finanzas_id) { //responsable_finanzas_id
                 $tipo_firma = 'firma_finanzas';
             } else {
-                $mensaje = 'No tiene permisos para firmar<br> En espera de finanzas';
+                $mensaje = 'No tiene permisos para firmar<br> En espera de finanzas:' . $firma_siguiente->responsableFinanzas->name;
                 return view('contract_manager.requisiciones.error', compact('mensaje'));
             }
         } elseif ($requisicion->firma_compras === null) {
@@ -512,7 +512,7 @@ class RequisicionesController extends Controller
 
         $proveedores_catalogo = KatbolProveedorOC::whereIn('id', $proveedores_show)->get();
 
-        return view('contract_manager.requisiciones.firmar', compact('firma_finanzas_name', 'requisicion', 'organizacion', 'bandera', 'contrato', 'comprador', 'tipo_firma', 'supervisor', 'proveedores_catalogo', 'proveedor_indistinto', 'alerta'));
+        return view('contract_manager.requisiciones.firmar', compact('firma_siguiente', 'firma_finanzas_name', 'requisicion', 'organizacion', 'bandera', 'contrato', 'comprador', 'tipo_firma', 'supervisor', 'proveedores_catalogo', 'proveedor_indistinto', 'alerta'));
     }
 
     public function validacionLista($tipo)
