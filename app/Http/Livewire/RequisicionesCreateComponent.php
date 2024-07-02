@@ -109,6 +109,8 @@ class RequisicionesCreateComponent extends Component
 
     public $saludo = true;
 
+    public $alerta_jefes = false;
+
     protected $requisicionService;
 
     public function __construct($id = null)
@@ -204,6 +206,13 @@ class RequisicionesCreateComponent extends Component
                 'comprador_id' => $data['comprador_id'],
                 'sucursal_id' => $data['sucursal_id'],
             ]);
+            $firmas_requi = FirmasRequisiciones::create([
+                'requisicion_id' => $this->nueva_requisicion->id,
+                'solicitante_id' => $usuario->empleado->id,
+                // 'jefe_id' => $responsable->id,
+                // 'responsable_finanzas_id' => $responsable->id,
+                // 'comprador_id' => $comprador->user->empleado->id,
+            ]);
         } else {
             $this->nueva_requisicion = KatbolRequsicion::create([
                 'fecha' => $data['fecha'],
@@ -213,6 +222,13 @@ class RequisicionesCreateComponent extends Component
                 'contrato_id' => $data['contrato_id'],
                 'comprador_id' => $data['comprador_id'],
                 'sucursal_id' => $data['sucursal_id'],
+            ]);
+            $firmas_requi = FirmasRequisiciones::create([
+                'requisicion_id' => $this->nueva_requisicion->id,
+                'solicitante_id' => $usuario->empleado->id,
+                // 'jefe_id' => $responsable->id,
+                // 'responsable_finanzas_id' => $responsable->id,
+                // 'comprador_id' => $comprador->user->empleado->id,
             ]);
         }
 
@@ -416,7 +432,45 @@ class RequisicionesCreateComponent extends Component
         $comprador = KatbolComprador::where('id', $requisicion->comprador_id)->first();
         $contrato = KatbolContrato::where('id', $requisicion->contrato_id)->first();
         $this->emit('render_firma');
+        $this->validacionLista();
         $this->habilitar_firma = true;
+    }
+
+    public function validacionLista()
+    {
+        $user = User::getCurrentUser();
+        $alerta = false;
+        $responsable = null;
+
+        $listaReq = ListaDistribucion::where('modelo', 'Empleado')->first();
+        //Traemos participantes
+        $listaPart = $listaReq->participantes;
+
+        $jefe = $user->empleado->supervisor;
+        //Buscamos al supervisor por su id
+        $supList = $listaPart->where('empleado_id', $jefe->id)->first();
+
+        //Buscamos en que nivel se encuentra el supervisor
+        $nivel = $supList->nivel;
+
+        //traemos a todos los participantes correspondientes a ese nivel
+        $participantesNivel = $listaPart->where('nivel', $nivel)->sortBy('numero_orden');
+
+        //Buscamos 1 por 1 los participantes del nivel (area)
+        foreach ($participantesNivel as $key => $partNiv) {
+            //Si su estado esta activo se le manda el correo
+            if ($partNiv->empleado->disponibilidad->disponibilidad == 1) {
+
+                $responsable = $partNiv->empleado;
+                $supervisor = $responsable->email;
+
+                break;
+            }
+        }
+
+        if (empty($responsable)) {
+            $this->emit('sin_responsables');
+        }
     }
 
     public function removeUnicodeCharacters($string)
@@ -470,9 +524,9 @@ class RequisicionesCreateComponent extends Component
                 }
             }
 
-            $firmas_requi = FirmasRequisiciones::create([
-                'requisicion_id' => $this->nueva_requisicion->id,
-                'solicitante_id' => $user->empleado->id,
+            $firmas_requi = FirmasRequisiciones::where('requisicion_id', $this->nueva_requisicion->id)->first();
+
+            $firmas_requi->update([
                 'jefe_id' => $responsable->id,
                 // 'responsable_finanzas_id' => $responsable->id,
                 // 'comprador_id' => $comprador->user->empleado->id,

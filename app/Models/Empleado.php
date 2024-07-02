@@ -73,7 +73,6 @@ class Empleado extends Model implements Auditable
         'area_id' => 'int',
         'sede_id' => 'int',
         'mostrar_telefono' => 'boolean',
-
     ];
 
     public static $searchable = [

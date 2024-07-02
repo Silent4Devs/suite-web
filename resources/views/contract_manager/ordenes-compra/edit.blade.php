@@ -106,7 +106,7 @@
                     </div>
                     <div class="col s12 l3 ">
                         <label for="" class="txt-tamaño">
-                            Días de crédito proveedor
+                            Días de crédito proveedor*
                         </label>
                         <input type="text" required name="dias_credito" class="browser-default"
                             value="{{ $requisicion->dias_credito }}">

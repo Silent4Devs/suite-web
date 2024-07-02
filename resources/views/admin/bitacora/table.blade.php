@@ -239,7 +239,7 @@
 
 
         <div class="row" style="margin-left: 10px; margin-right: 10px;">
-            <div class="distancia form-group col-md-4">
+            <div class="distancia form-group col-md-6">
                 <label for="proveedor_id" class="txt-tamaño">&nbsp;Nombre
                     del
                     cliente<font class="asterisco">*</font></label>
@@ -262,7 +262,7 @@
             </div>
 
 
-            <div class="distancia form-group col-md-4">
+            <div class="distancia form-group col-md-6">
                 <label for="area_id" class="txt-tamaño"> Área a la
                     que
                     pertenece el contrato:</label>
@@ -281,7 +281,9 @@
             </div>
         </div>
 
-        @livewire('contratos-identificador-proyectos-int-ext')
+        <div style="margin-left: 10px;">
+            @livewire('contratos-identificador-proyectos-int-ext')
+        </div>
 
         <div class="row" style="margin-left: 10px; margin-right: 10px;">
             <div class="form-group col-md-6">
@@ -293,7 +295,7 @@
                     <option>Solicitud de contrato</option>
                     <option>Autorización</option>
                     <option>Negociación</option>
-                    <option>Aprobacíon</option>
+                    <option>Aprobación</option>
                     <option>Ejecución</option>
                     <option>Gestión de obligaciónes</option>
                     <option>Modificación de contrato</option>

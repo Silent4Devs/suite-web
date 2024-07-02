@@ -23,7 +23,7 @@ class CoursesReview extends Component
 
     public function render()
     {
-        $course = Course::getAll()->find($this->course_id);
+        $course = Course::getAll()->where('id', $this->course_id);
         $enrolled = CourseUser::where('course_id', $course->id)->where('user_id', User::getCurrentUser()->id)->exists();
         $review = Review::where('course_id', $course->id)->where('user_id', User::getCurrentUser()->id)->exists();
 
