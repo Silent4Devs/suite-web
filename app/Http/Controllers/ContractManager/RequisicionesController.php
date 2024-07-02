@@ -101,7 +101,7 @@ class RequisicionesController extends Controller
 
             $requisicion = KatbolRequsicion::with('sucursal', 'comprador.user', 'contrato')->find($id);
 
-            if (!$requisicion) {
+            if (! $requisicion) {
                 abort(404);
             }
 
@@ -473,7 +473,8 @@ class RequisicionesController extends Controller
                 $tipo_firma = 'firma_solicitante';
                 $alerta = $this->validacionLista($tipo_firma);
             } else {
-                $mensaje = 'No tiene permisos para firmar<br> En espera del solicitante directo: <br> <strong>' . $firma_siguiente->solicitante->name . '</strong>';
+                $mensaje = 'No tiene permisos para firmar<br> En espera del solicitante directo: <br> <strong>'.$firma_siguiente->solicitante->name.'</strong>';
+
                 return view('contract_manager.requisiciones.error', compact('mensaje'));
             }
         } elseif ($requisicion->firma_jefe === null) {
@@ -481,21 +482,24 @@ class RequisicionesController extends Controller
                 $tipo_firma = 'firma_jefe';
                 $alerta = $this->validacionLista($tipo_firma);
             } else {
-                $mensaje = 'No tiene permisos para firmar<br> En espera del jefe directo: <br> <strong>' . $firma_siguiente->jefe->name . '</strong>';
+                $mensaje = 'No tiene permisos para firmar<br> En espera del jefe directo: <br> <strong>'.$firma_siguiente->jefe->name.'</strong>';
+
                 return view('contract_manager.requisiciones.error', compact('mensaje'));
             }
         } elseif ($requisicion->firma_finanzas === null) {
             if ($user->empleado->id == $firma_siguiente->responsable_finanzas_id) { //responsable_finanzas_id
                 $tipo_firma = 'firma_finanzas';
             } else {
-                $mensaje = 'No tiene permisos para firmar<br> En espera de finanzas:' . $firma_siguiente->responsableFinanzas->name;
+                $mensaje = 'No tiene permisos para firmar<br> En espera de finanzas:'.$firma_siguiente->responsableFinanzas->name;
+
                 return view('contract_manager.requisiciones.error', compact('mensaje'));
             }
         } elseif ($requisicion->firma_compras === null) {
             if (($user->empleado->id == $comprador->user->empleado->id) && ($user->empleado->id == $firma_siguiente->responsable_finanzas_id)) { //comprador_id
                 $tipo_firma = 'firma_compras';
             } else {
-                $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>' . $comprador->user->name . '</strong>';
+                $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>'.$comprador->user->name.'</strong>';
+
                 return view('contract_manager.requisiciones.error', compact('mensaje'));
             }
         } else {
@@ -521,7 +525,7 @@ class RequisicionesController extends Controller
         $alerta = false;
         $responsable = null;
 
-        if ($tipo == "firma_solicitante") {
+        if ($tipo == 'firma_solicitante') {
             $listaReq = ListaDistribucion::where('modelo', 'Empleado')->first();
             $listaPart = $listaReq->participantes;
 
@@ -542,7 +546,7 @@ class RequisicionesController extends Controller
                 }
             }
             $alerta = empty($responsable);
-        } elseif ($tipo == "firma_jefe") {
+        } elseif ($tipo == 'firma_jefe') {
             $listaReq = ListaDistribucion::where('modelo', $this->modelo)->first();
             $listaPart = $listaReq->participantes;
 
