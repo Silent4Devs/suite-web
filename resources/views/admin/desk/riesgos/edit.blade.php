@@ -375,6 +375,48 @@
                                 <div class="form-control">{{ $riesgos->reporto->telefono }}</div>
                             </div>
 
+                            @php
+                                $userIsAuthorized = false;
+                                if($firmaModules && $firmaModules->empleados){
+                                foreach ($firmaModules->empleados as $empleado) {
+                                    if ($empleado->id === Auth::id()) {
+                                        $userIsAuthorized = true;
+                                        break;
+                                    }
+                                }
+                                }
+                            @endphp
+
+
+                            @if ($userIsAuthorized)
+                            <div class="mt-2 form-group col-md-12">
+                                <div class="" style="position: relative; left: 2rem;">
+                                    <br>
+                                    <h5><strong>Firma*</strong></h5>
+                                    <p>
+                                        Indispensable firmar  antes de guardar y enviarla a aprobación.
+                                    </p>
+                                </div>
+                                <div class="flex caja-firmar">
+                                    <div class="flex-item"
+                                        style="display:flex; justify-content: center; flex-direction: column; align-items:center;">
+                                        <div id="firma_content" class="caja-space-firma"
+                                            style="display:flex; justify-content: center; flex-direction: column; align-items:center;">
+                                            <canvas id="firma_requi" width="500px" height="300px">
+                                                Navegador no compatible
+                                            </canvas>
+                                            <input type="hidden" name="firma" id="firma">
+                                        </div>
+                                        <div>
+                                            <div class="btn"
+                                                style="color: white; background:  gray !important; transform: translateY(-40px) scale(0.8);"
+                                                id="clear">Limpiar</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @endif
+
 
 
                             <div class="mt-2 text-right form-group col-12">
@@ -680,6 +722,7 @@
                                             <textarea class="form-control" name="comentarios" id="comentarios"></textarea>
                                             <span class="text-danger error_comentarios errors"></span>
                                         </div>
+
                                         <div class="text-right form-group col-md-12">
                                             <a href="#" class="btn btn_cancelar">Cancelar</a>
                                             <input type="submit" value="Guardar"
@@ -707,40 +750,6 @@
     }
    }
 @endphp
-
-@if ($userIsAuthorized)
-<div class="card card-content" style="margin-bottom: 30px">
-    <form method="POST" id="myForm" action="{{ route('admin.firmas_riesgos.store') }}">
-    @csrf
-    <div class="" style="position: relative; left: 2rem;">
-        <br>
-        <h5><strong>Firma*</strong></h5>
-        <p>
-            Indispensable firmar  antes de guardar y enviarla a aprobación.
-        </p>
-    </div>
-    <div class="flex caja-firmar">
-        <div class="flex-item"
-            style="display:flex; justify-content: center; flex-direction: column; align-items:center;">
-            <div id="firma_content" class="caja-space-firma"
-                style="display:flex; justify-content: center; flex-direction: column; align-items:center;">
-                <canvas id="firma_requi" width="500px" height="300px">
-                    Navegador no compatible
-                </canvas>
-                <input type="hidden" name="firma" id="firma">
-            </div>
-            <div>
-                <div class="btn"
-                    style="color: white; background:  gray !important; transform: translateY(-40px) scale(0.8);"
-                    id="clear">Limpiar</div>
-            </div>
-            <div onclick="validar();" style="" class="btn btn-primary">Firmar</div>
-        </div>
-    </div>
-    </form>
-</div>
-@endif
-
 
 
 @if ($userIsAuthorized)

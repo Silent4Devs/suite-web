@@ -37,6 +37,7 @@ use App\Models\TimesheetCliente;
 use App\Models\TimesheetProyecto;
 use App\Models\User;
 use App\Traits\ObtenerOrganizacion;
+use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -237,6 +238,7 @@ class DeskController extends Controller
             'ubicacion' => 'nullable|string',
             'descripcion' => 'required',
             'estatus' => 'required',
+            'firma'  => 'required',
         ]);
 
         $empleadoIds = $request->participantes ?? [];
@@ -274,6 +276,13 @@ class DeskController extends Controller
             'justificacion' => $request->justificacion,
             'categoria_id' => $request->categoria_id,
             'subcategoria_id' => $request->subcategoria_id,
+        ]);
+
+        $firmaModule = FirmaCentroAtencion::create([
+            'modulo_id' => 1,
+            'submodulo_id' => 1,
+            'user_id' => Auth::id(),
+            'firma' => $request->firma,
         ]);
 
         $documento = $incidentesSeguridad->evidencia;
@@ -445,6 +454,8 @@ class DeskController extends Controller
     public function updateRiesgos(Request $request, $id_riesgos)
     {
         abort_if(Gate::denies('centro_atencion_riesgos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $modulo = 1;
+        $submodulo = 4;
 
         $riesgos = RiesgoIdentificado::findOrfail(intval($id_riesgos));
 
@@ -462,6 +473,13 @@ class DeskController extends Controller
         foreach ($empleados as $empleado) {
             Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->send(new EmpleadoEmail($empleado));
         }
+
+        $firmaModule = FirmaCentroAtencion::create([
+            'modulo_id' => $modulo,
+            'submodulo_id' =>  $submodulo,
+            'user_id' => Auth::id(),
+            'firma' => $request->firma,
+        ]);
 
 
         $riesgos->update([
@@ -598,6 +616,10 @@ class DeskController extends Controller
 
         $quejas = Quejas::findOrfail(intval($id_quejas));
 
+        $modulo = 1;
+
+        $submodulo = 3;
+
         $empleadoIds = $request->participantes;
 
         if (empty($empleadoIds) || !is_array($empleadoIds)) {
@@ -612,6 +634,14 @@ class DeskController extends Controller
         foreach ($empleados as $empleado) {
             Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->send(new EmpleadoEmail($empleado));
         }
+
+
+        $firmaModule = FirmaCentroAtencion::create([
+            'modulo_id' => $modulo,
+            'submodulo_id' => $submodulo,
+            'user_id' => Auth::id(),
+            'firma' => $request->firma,
+        ]);
 
         $quejas->update([
             'titulo' => $request->titulo,
@@ -745,6 +775,9 @@ class DeskController extends Controller
 
         $denuncias = Denuncias::findOrfail(intval($id_denuncias));
 
+        $modulo = 1;
+        $submodulo = 6;
+
         $empleadoIds = $request->participantes;
 
         if (empty($empleadoIds) || !is_array($empleadoIds)) {
@@ -759,6 +792,13 @@ class DeskController extends Controller
         foreach ($empleados as $empleado) {
             Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->send(new EmpleadoEmail($empleado));
         }
+
+        $firmaModule = FirmaCentroAtencion::create([
+            'modulo_id' => $modulo,
+            'submodulo_id' => $submodulo,
+            'user_id' => Auth::id(),
+            'firma' => $request->firma,
+        ]);
 
         $denuncias->update([
             'anonimo' => $request->anonimo,
@@ -894,7 +934,12 @@ class DeskController extends Controller
             'tipo' => 'required',
             'descripcion' => 'required',
             'beneficios' => 'required',
+            'firma' => 'required',
         ]);
+
+        $modulo = 1;
+
+        $submodulo = 2;
 
         $empleadoIds = $request->participantes;
 
@@ -913,6 +958,14 @@ class DeskController extends Controller
         }
 
         $mejoras = Mejoras::findOrfail(intval($id_mejoras));
+
+        $firmaModule = FirmaCentroAtencion::create([
+            'modulo_id' => $modulo,
+            'submodulo_id' => $submodulo,
+            'user_id' => Auth::id(),
+            'firma' => $request->firma,
+        ]);
+
         $mejoras->update([
             'estatus' => $request->estatus,
             'fecha_cierre' => $request->fecha_cierre,
@@ -1036,7 +1089,11 @@ class DeskController extends Controller
 
         $sugerencias = Sugerencias::findOrfail(intval($id_sugerencias));
 
+        $modulo = 1;
+        $submodulo = 5;
+
         $empleadoIds = $request->participantes;
+
 
         if (empty($empleadoIds) || !is_array($empleadoIds)) {
             return back()->with('error', 'No se seleccionaron participantes para la aprobacion.');
@@ -1050,6 +1107,13 @@ class DeskController extends Controller
         foreach ($empleados as $empleado) {
             Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->send(new EmpleadoEmail($empleado));
         }
+
+        $firmaModule = FirmaCentroAtencion::create([
+            'modulo_id' => $modulo,
+            'submodulo_id' =>  $submodulo,
+            'user_id' => Auth::id(),
+            'firma' => $request->firma,
+        ]);
 
         $sugerencias->update([
             'area_sugerencias' => $request->area_sugerencias,
