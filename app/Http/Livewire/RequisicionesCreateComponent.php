@@ -306,18 +306,18 @@ class RequisicionesCreateComponent extends Component
 
                             $this->filename = 'requisicion_' . $this->requisicion_id . 'cotizacion_' . $cotizacion_count . '_' . uniqid() . '.' . $cotizacion_actual->getClientOriginalExtension();
 
-                            $this->postData();
+                            // $this->postData();
 
-                            // Ruta donde se guardará el archivo
-                            $ruta = 'cotizaciones_requisiciones_proveedores/';
+                            // // Ruta donde se guardará el archivo
+                            // $ruta = 'cotizaciones_requisiciones_proveedores/';
 
-                            // Guardar el archivo en el disco 'public' con la ruta específica
-                            $path = $cotizacion_actual->storeAs($ruta, $this->filename, 'public');
+                            // // Guardar el archivo en el disco 'public' con la ruta específica
+                            // $path = $cotizacion_actual->storeAs($ruta, $this->filename, 'public');
 
-                            // Asignar la ruta completa del archivo a $this->filePath
-                            $this->filePath = storage_path('app/public/' . $path);
+                            // // Asignar la ruta completa del archivo a $this->filePath
+                            // $this->filePath = storage_path('app/public/' . $path);
 
-                            $this->postDataText();
+                            // $this->postDataText();
 
                             $proveedor_req->cotizacion = $this->filename;
                             $proveedor_req->save();
