@@ -8,8 +8,10 @@ use App\Events\AuditoriaAnualEvent;
 use App\Events\CoursesEvent;
 use App\Events\DocumentoEvent;
 use App\Events\EntendimientoOrganizacionEvent;
+use App\Events\EvaluacionEvent;
 use App\Events\IncidentesDeSeguridadEvent;
 use App\Events\MatrizRequisitosEvent;
+use App\Events\PlanImplementacionEvent;
 use App\Events\PoliticasSgiEvent;
 use App\Events\RecursosEvent;
 use App\Events\RegistroMejoraEvent;
@@ -26,8 +28,10 @@ use App\Listeners\BroadcastUserLoginNotification;
 use App\Listeners\CoursesListener;
 use App\Listeners\DocumentoListener;
 use App\Listeners\EntendimientoOrganizacionListener;
+use App\Listeners\EvaluacionListener;
 use App\Listeners\IncidentesDeSeguridadListener;
 use App\Listeners\MatrizRequisitosListener;
+use App\Listeners\PlanImplementacionListener;
 use App\Listeners\PoliticasSgiListener;
 use App\Listeners\RecursosListener;
 use App\Listeners\RegistroMejoraListener;
@@ -57,8 +61,10 @@ use App\Models\Denuncias;
 use App\Models\Documento;
 use App\Models\EntendimientoOrganizacion;
 use App\Models\EnvioDocumentosAjustes;
+use App\Models\Escuela\Category;
 use App\Models\Escuela\Course;
 use App\Models\Escuela\Lesson;
+use App\Models\Escuela\Level;
 use App\Models\Escuela\Section;
 use App\Models\EvidenciasDocumentosEmpleados;
 use App\Models\ExperienciaEmpleados;
@@ -66,6 +72,8 @@ use App\Models\IncidentesDayoff;
 use App\Models\IncidentesDeSeguridad;
 use App\Models\IncidentesSeguridad;
 use App\Models\IncidentesVacaciones;
+use App\Models\ListaDistribucion;
+use App\Models\ListaInformativa;
 use App\Models\Macroproceso;
 use App\Models\Marca;
 use App\Models\MatrizRequisitoLegale;
@@ -75,6 +83,8 @@ use App\Models\Mejoras;
 use App\Models\Minutasaltadireccion;
 use App\Models\Modelo;
 use App\Models\Organizacion;
+use App\Models\ParticipantesListaDistribucion;
+use App\Models\ParticipantesListaInformativa;
 use App\Models\PerfilEmpleado;
 use App\Models\PermisosGoceSueldo;
 use App\Models\PlanBaseActividade;
@@ -112,6 +122,7 @@ use App\Models\TimesheetProyectoEmpleado;
 use App\Models\TimesheetTarea;
 use App\Models\Tipoactivo;
 use App\Models\User;
+use App\Models\UsuariosListaInformativa;
 use App\Models\VersionesIso;
 use App\Models\Vulnerabilidad;
 use App\Observers\AccionCorrectivaObserver;
@@ -124,6 +135,7 @@ use App\Observers\AuditoriaInternaObserver;
 use App\Observers\CalendarioObserver;
 use App\Observers\CatalogoRangosObjetivosObserver;
 use App\Observers\CategoriaCapacitacionObserver;
+use App\Observers\CategoryObserver;
 use App\Observers\CompetenciaObserver;
 use App\Observers\ComunicadoSgiObserver;
 use App\Observers\ContratoObserver;
@@ -143,6 +155,9 @@ use App\Observers\IncidentesSeguridadObserver;
 use App\Observers\IncidentesVacacionesObserver;
 use App\Observers\KatbolProveedorIndistintoObserver;
 use App\Observers\LessonObserver;
+use App\Observers\LevelObserver;
+use App\Observers\ListaDistribucionObserver;
+use App\Observers\ListaInformativaObserver;
 use App\Observers\MacroprocesoObserver;
 use App\Observers\MarcasObserver;
 use App\Observers\MastrizRequisitosObserver;
@@ -154,6 +169,8 @@ use App\Observers\MinutasAltaDireccionObserver;
 use App\Observers\ModelosObserver;
 use App\Observers\ObjetivoEmpleadoObserver;
 use App\Observers\OrganizacionObserver;
+use App\Observers\ParticipantesListaDistribucionObserver;
+use App\Observers\ParticipantesListaInformativaObserver;
 use App\Observers\PerfilEmpleadoObserver;
 use App\Observers\PermisosGoceSueldoObserver;
 use App\Observers\PlanBaseActividadesObserver;
@@ -189,6 +206,7 @@ use App\Observers\TipoCompetenciaObserver;
 use App\Observers\TipoContratoEmpleadoObserver;
 use App\Observers\tipoObjetivoObserver;
 use App\Observers\UsersObserver;
+use App\Observers\UsuariosListaInformativaObserver;
 use App\Observers\VersionesIsoObserver;
 use App\Observers\VulnerabilidadObserver;
 use Illuminate\Auth\Events\Login;
@@ -247,9 +265,9 @@ class EventServiceProvider extends ServiceProvider
         DocumentoEvent::class => [
             DocumentoListener::class,
         ],
-        // TimesheetEvent::class => [
-        //     TimesheetListener::class,
-        // ],
+        TimesheetEvent::class => [
+            TimesheetListener::class,
+        ],
         CoursesEvent::class => [
             CoursesListener::class,
         ],
@@ -261,6 +279,12 @@ class EventServiceProvider extends ServiceProvider
         ],
         SolicitudPermisoEvent::class => [
             SolicitudPermisoListener::class,
+        ],
+        PlanImplementacionEvent::class => [
+            PlanImplementacionListener::class,
+        ],
+        EvaluacionEvent::class => [
+            EvaluacionListener::class,
         ],
     ];
 
@@ -350,5 +374,12 @@ class EventServiceProvider extends ServiceProvider
         Sucursal::observe(SucursalObserver::class);
         CatalogoRangosObjetivos::observe(CatalogoRangosObjetivosObserver::class);
         Vulnerabilidad::observe(VulnerabilidadObserver::class);
+        ListaInformativa::observe(ListaInformativaObserver::class);
+        ParticipantesListaInformativa::observe(ParticipantesListaInformativaObserver::class);
+        UsuariosListaInformativa::observe(UsuariosListaInformativaObserver::class);
+        ListaDistribucion::observe(ListaDistribucionObserver::class);
+        ParticipantesListaDistribucion::observe(ParticipantesListaDistribucionObserver::class);
+        Category::observe(CategoryObserver::class);
+        Level::observe(LevelObserver::class);
     }
 }

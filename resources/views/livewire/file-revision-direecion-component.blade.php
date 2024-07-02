@@ -28,7 +28,7 @@
             </div>
         </div>
     </div>
-    <button type="submit" class="btn btn-primary mb-2" wire:click.prevent="save" wire:loading.attr="disabled"
+    <button type="submit" class="btn tb-btn-primary mb-2" wire:click.prevent="save" wire:loading.attr="disabled"
         wire:target="save">
         <div wire:loading.remove wire:target="save">Subir archivos(s)</div>
         <div wire:loading wire:target="save"><i class="fas fa-spinner fa-spin mr-2"></i>

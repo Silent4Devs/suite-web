@@ -26,6 +26,9 @@ class EntendimientoOrganizacion extends Model implements Auditable
         'fecha',
         'id_elabora',
         'estatus',
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     //Redis methods

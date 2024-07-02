@@ -15,7 +15,7 @@ class PoliticaSgsiObserver
      */
     public function created(PoliticaSgsi $politicaSgsi)
     {
-        event(new PoliticasSgiEvent($politicaSgsi, 'create', 'politica_sgsis', 'Politicas'));
+        event(new PoliticasSgiEvent($politicaSgsi, 'create', 'politica_sgsis', 'Politica'));
 
         $this->forgetCache();
     }
@@ -27,7 +27,7 @@ class PoliticaSgsiObserver
      */
     public function updated(PoliticaSgsi $politicaSgsi)
     {
-        event(new PoliticasSgiEvent($politicaSgsi, 'update', 'politica_sgsis', 'Politicas'));
+        event(new PoliticasSgiEvent($politicaSgsi, 'update', 'politica_sgsis', 'Politica'));
 
         $this->forgetCache();
     }
@@ -39,7 +39,7 @@ class PoliticaSgsiObserver
      */
     public function deleted(PoliticaSgsi $politicaSgsi)
     {
-        event(new PoliticasSgiEvent($politicaSgsi, 'delete', 'politica_sgsis', 'Politicas'));
+        event(new PoliticasSgiEvent($politicaSgsi, 'delete', 'politica_sgsis', 'Politica'));
 
         $this->forgetCache();
     }

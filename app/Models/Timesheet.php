@@ -32,6 +32,8 @@ class Timesheet extends Model implements Auditable
         'inicio_semana',
         'fin_semana',
         'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     public static function getPersonalTimesheetQuery()

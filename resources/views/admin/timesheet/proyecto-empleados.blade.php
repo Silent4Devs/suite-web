@@ -1,11 +1,32 @@
 @extends('layouts.admin')
 @section('css')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}{{ config('app.cssVersion') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet/timesheet.css') }}{{ config('app.cssVersion') }}">
 @endsection
 @section('styles')
     <style>
         .select2-dropdown {
             transform: translate(0) !important;
+        }
+
+        .text-wrap {
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .btn.dropdown-toggle::after {
+            position: absolute;
+            right: 0.75rem;
+            /* Adjust as needed to position the arrow */
+            top: 50%;
+            transform: translateY(-50%);
+            margin-left: -0.255em;
+            vertical-align: 0.255em;
+            content: "";
+            border-top: 0.3em solid;
+            border-right: 0.3em solid transparent;
+            border-bottom: 0;
+            border-left: 0.3em solid transparent;
+            pointer-events: none;
         }
     </style>
 @endsection

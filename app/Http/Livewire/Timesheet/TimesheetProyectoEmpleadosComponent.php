@@ -126,16 +126,16 @@ class TimesheetProyectoEmpleadosComponent extends Component
     public function seleccionarTodos()
     {
         foreach ($this->empleados as $empleado) {
-            $this->addEmpleadoIndivudual($empleado['id']);
+            $this->addEmpleadoIndividual($empleado['id']);
         }
     }
 
-    public function seleccionarTodosExterno()
-    {
-        foreach ($this->empleados as $empleado) {
-            $this->addEmpleadoIndivudual($empleado['id'], true);
-        }
-    }
+    // public function seleccionarTodosExterno()
+    // {
+    //     foreach ($this->empleados as $empleado) {
+    //         $this->addEmpleadoIndividual($empleado['id'], true);
+    //     }
+    // }
 
     public function asignacionEmpleados($id_empleado, $key, $asignacion)
     {
@@ -143,7 +143,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
             $this->empleado_añadido = $id_empleado;
             $this->emit('modalProyectosExternos');
         } elseif ($asignacion) {
-            $this->addEmpleadoIndivudual($id_empleado);
+            $this->addEmpleadoIndividual($id_empleado);
         } else {
 
             $empleado_proyecto = TimesheetProyectoEmpleado::select(
@@ -161,14 +161,14 @@ class TimesheetProyectoEmpleadosComponent extends Component
 
     public function addEmpleado()
     {
-        $this->addEmpleadoIndivudual($this->empleado_añadido);
+        $this->addEmpleadoIndividual($this->empleado_añadido);
     }
 
-    public function addEmpleadoIndivudual($empleado_añadido_id, $todosExt = false)
+    public function addEmpleadoIndividual($empleado_añadido_id, $todosExt = false)
     {
         $empleado_add_proyecto = Empleado::find($empleado_añadido_id);
 
-        if (!$empleado_add_proyecto) {
+        if (! $empleado_add_proyecto) {
             return redirect()->route('admin.timesheet-proyecto-empleados', ['proyecto_id' => intval($this->proyecto_id)])
                 ->with('error', 'El registro fue eliminado');
         }
@@ -186,11 +186,22 @@ class TimesheetProyectoEmpleadosComponent extends Component
                         'costo_hora' => $this->costo_hora,
                     ]
                 );
-                if (!$todosExt) {
+                $this->dispatchBrowserEvent('closeModal');
+                if (! $todosExt) {
                     $this->resetInput();
                 }
             } else {
-                $this->dehydrate();
+                $time_proyect_empleado = TimesheetProyectoEmpleado::firstOrCreate(
+                    [
+                        'proyecto_id' => $this->proyecto->id,
+                        'empleado_id' => $empleado_add_proyecto->id,
+                    ],
+                    [
+                        'area_id' => $empleado_add_proyecto->area_id,
+                        'horas_asignadas' => 0,
+                        'costo_hora' => 0,
+                    ]
+                );
             }
         }
 

@@ -71,7 +71,7 @@
                         compromisos con respecto al sistema de gestión implementado en la organización.
                 </p>
                 <p>
-                    La Política del Sistema de Gestión sirve como un documento fundamental para alinear a toda la
+                    Nos sirve como un documento fundamental para alinear a toda la
                     organización en torno a los objetivos y compromisos relacionados con la calidad, el medio ambiente u
                     otros ámbitos específicos.
                 </p>
@@ -112,7 +112,7 @@
 
             <div class="text-right form-group col-12">
                 <a href="{{ route('admin.politica-sgsis.index') }}" class="btn_cancelar" style="text-decoration: none;">Cancelar</a>
-                <button class="btn btn-primary" type="submit">
+                <button class="btn tb-btn-primary" type="submit">
                     Guardar y enviar aprobación
                 </button>
             </div>

@@ -10,6 +10,6 @@
         ])
     </div>
     <div class="col-12 mt-3" style="text-align: end">
-        <button class="btn btn-primary" wire:click.prevent="guardarRegistroVisitante()">Finalizar</button>
+        <button class="btn tb-btn-primary" wire:click.prevent="guardarRegistroVisitante()">Finalizar</button>
     </div>
 </div>

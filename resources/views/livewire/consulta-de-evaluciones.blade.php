@@ -103,7 +103,7 @@
             </select>
         </div>
         <div class="col-2">
-            <button class="h-100 btn btn-sm btn-primary" wire:click="compararEvaluaciones">Comparar</button>
+            <button class="h-100 btn btn-sm tb-btn-primary" wire:click="compararEvaluaciones">Comparar</button>
         </div>
         <div class="col-12" x-data="{ show: $wire.showCompare }">
             <div class="row">

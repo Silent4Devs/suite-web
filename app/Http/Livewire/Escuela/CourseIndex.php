@@ -25,12 +25,28 @@ class CourseIndex extends Component
     public function render()
     {
         // dd("test");
-        $categories = Category::all();
-        $levels = Level::all();
+        $categories = Category::getAll();
+        $levels = Level::getAll();
         $courses = Course::where('status', 3)
             ->category($this->category_id)
             ->level($this->level_id)
             ->latest('id')->paginate(8);
+
+        foreach ($courses as $course) {
+            $courses_lessons = $course->lessons;
+            $lesson_introduction = $courses_lessons->first();
+            // dump($courses_lessons->first());
+            if (! is_null($lesson_introduction)) {
+                if (is_null($lesson_introduction['iframe'])) {
+                    $course->lesson_introduction = null;
+                } else {
+                    $course->lesson_introduction = $lesson_introduction['iframe'];
+                }
+            } else {
+                $course->lesson_introduction = null;
+            }
+
+        }
 
         return view('livewire.escuela.course-index', compact('courses', 'categories', 'levels'));
     }

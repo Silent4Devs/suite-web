@@ -109,6 +109,8 @@ class InicioUsuarioController extends Controller
         $usuario = User::getCurrentUser();
         $empleado = Empleado::getMyEmpleadodata($usuario->empleado->id);
 
+        // dd($empleado->estado_disponibilidad);
+
         $usuarioVinculadoConEmpleado = false;
         if ($empleado) {
             $usuarioVinculadoConEmpleado = true;
@@ -129,7 +131,11 @@ class InicioUsuarioController extends Controller
                     $task->canAdd = $task->canAdd == 'true' ? true : false;
                     $task->canWrite = $task->canWrite == 'true' ? true : false;
                     $task->duration = intval($task->duration);
-                    $task->progress = intval($task->progress);
+                    if (! isset($task->progress) || empty($task->progress)) {
+                        $task->progress = 0;
+                    } else {
+                        $task->progress = intval($task->progress);
+                    }
                     $task->canDelete = $task->canDelete == 'true' ? true : false;
                     isset($task->level) ? $task->level = intval($task->level) : $task->level = 0;
                     isset($task->collapsed) ? $task->collapsed = $task->collapsed == 'true' ? true : false : $task->collapsed = false;
@@ -1000,9 +1006,7 @@ class InicioUsuarioController extends Controller
         return redirect()->route('admin.desk.index')->with('success', 'Reporte generado');
     }
 
-    public function evidenciaSeguridad()
-    {
-    }
+    public function evidenciaSeguridad() {}
 
     public function riesgos()
     {
@@ -1294,7 +1298,6 @@ class InicioUsuarioController extends Controller
             abort_if(Gate::denies('mi_perfil_mis_datos_ver_expediente'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         }
 
-
         $empleado = Empleado::getAll()->find($id_empleado);
 
         $evidendiasdocumentos = EvidenciasDocumentosEmpleados::getAll();
@@ -1390,5 +1393,18 @@ class InicioUsuarioController extends Controller
         $solicitudes_pendientes = 0;
 
         return view('admin.inicioUsuario.solicitudesv2', compact('solicitudes_pendientes'));
+    }
+
+    public function cambiarEstadoDisponibilidad(Request $request)
+    {
+        // dd($request);
+        $usuario = User::getCurrentUser();
+        $empleado = Empleado::getMyEmpleadodata($usuario->empleado->id);
+
+        $cambioED = $empleado->disponibilidad;
+
+        $cambioED->update([
+            'disponibilidad' => $request->cambiar,
+        ]);
     }
 }

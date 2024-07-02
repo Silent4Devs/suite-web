@@ -1,4 +1,3 @@
-
 <div class="create-requisicion">
     <div class="card card-body caja-blue">
 
@@ -92,8 +91,8 @@
 
                                     Referencia (Título de la requisición) <font class="asterisco">*</font>
                                 </label>
-                                <input class="browser-default" type="text" value="" maxlength="255" name="descripcion"
-                                    required>
+                                <input class="browser-default" type="text" value="" maxlength="255"
+                                    name="descripcion" required>
                             </div>
 
                             <div class="col s12 l3">
@@ -150,8 +149,9 @@
                                     <label for="" class="txt-tamaño">
                                         Cantidad <font class="asterisco">*</font>
                                     </label>
-                                    <input type="text" name="cantidad_1" pattern="[0-9]+" title="Por favor, ingrese solo números enteros."
-                                    class="model-cantidad browser-default" required>
+                                    <input type="text" name="cantidad_1" pattern="[0-9]+"
+                                        title="Por favor, ingrese solo números enteros."
+                                        class="model-cantidad browser-default" required>
                                 </div>
                                 <div class="col s12 l8">
                                     <label for="" class="txt-tamaño">

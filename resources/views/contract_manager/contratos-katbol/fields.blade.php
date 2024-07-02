@@ -80,7 +80,7 @@
             <div class="row mb-3">
                 <div class="col s12">
                     <div class="form-group col-sm-12 right">
-                        {!! Form::submit('Guardar', ['class' => 'btn btn-primary']) !!}
+                        {!! Form::submit('Guardar', ['class' => 'btn tb-btn-primary']) !!}
                         <a href="{{ route('contratos.index') }}" class="btn btn-default">Cancelar</a>
                     </div>
                 </div>

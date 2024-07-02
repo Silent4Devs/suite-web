@@ -15,8 +15,8 @@
 
     <div class="text-right">
         <div class="d-flex justify-content-end">
-            <a href="{{ route('contract_manager.productos.create') }}" type="button" class="btn btn-primary">Registrar Producto</a> &nbsp; &nbsp;
-            <a href="{{ route('contract_manager.productos.view_archivados') }}" type="button" class="btn btn-primary">Archivados</a>
+            <a href="{{ route('contract_manager.productos.create') }}" type="button" class="btn tb-btn-primary">Registrar Producto</a> &nbsp; &nbsp;
+            <a href="{{ route('contract_manager.productos.view_archivados') }}" type="button" class="btn tb-btn-primary">Archivados</a>
         </div>
     </div>
     <div class="mt-5 card">

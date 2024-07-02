@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Models\Empleado;
 use App\Models\User;
 use App\Notifications\DocumentoNotification;
 use Illuminate\Support\Facades\Notification;
@@ -26,12 +27,17 @@ class DocumentoListener
      */
     public function handle($event)
     {
-        User::select('users.id', 'users.name', 'users.email', 'role_user.role_id')
-            ->join('role_user', 'role_user.user_id', '=', 'users.id')
-            ->where('role_user.role_id', '=', '1')->where('users.id', '!=', auth()->id())
-            ->get()
-            ->each(function (User $user) use ($event) {
-                Notification::send($user, new DocumentoNotification($event->documento, $event->tipo_consulta, $event->tabla, $event->slug));
-            });
+        $elaborador = Empleado::where('id', $event->documento->elaboro_id)->first();
+        $elabor = User::where('email', trim(removeUnicodeCharacters($elaborador->email)))->first();
+        Notification::send($elabor, new DocumentoNotification($event->documento, $event->tipo_consulta, $event->tabla, $event->slug));
+        $revisor_emple = Empleado::where('id', $event->documento->reviso_id)->first();
+        $revisor = User::where('email', trim(removeUnicodeCharacters($revisor_emple->email)))->first();
+        Notification::send($revisor, new DocumentoNotification($event->documento, $event->tipo_consulta, $event->tabla, $event->slug));
+        $aprobador = Empleado::where('id', $event->documento->aprobo_id)->first();
+        $aprobo = User::where('email', trim(removeUnicodeCharacters($aprobador->email)))->first();
+        Notification::send($aprobo, new DocumentoNotification($event->documento, $event->tipo_consulta, $event->tabla, $event->slug));
+        $responsable = Empleado::where('id', $event->documento->responsable_id)->first();
+        $respo = User::where('email', trim(removeUnicodeCharacters($responsable->email)))->first();
+        Notification::send($respo, new DocumentoNotification($event->documento, $event->tipo_consulta, $event->tabla, $event->slug));
     }
 }

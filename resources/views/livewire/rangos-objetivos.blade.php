@@ -154,7 +154,7 @@
                 <a href="{{ route('admin.rangos.index') }}" class="btn btn-outline-primary btn-block">Cancelar</a>
             </div>
             <div class="col-3">
-                <button class="btn btn-primary btn-block" type="submit">Generar Catalogo</button>
+                <button class="btn tb-btn-primary btn-block" type="submit">Generar Catalogo</button>
             </div>
     </form>
 </div>

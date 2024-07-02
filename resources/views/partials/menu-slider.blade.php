@@ -181,7 +181,7 @@
         @endcan
         @can('politica_sistema_gestion_acceder')
             <div class="item-ms">
-                <a href="{{ route('admin.politica-sgsis/visualizacion') }}">
+                <a href="{{ route('admin.politica-sgsis.visualizacion') }}">
                     <i class="material-symbols-outlined">local_library</i>
                     <span>Políticas</span>
                 </a>

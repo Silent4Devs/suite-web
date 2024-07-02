@@ -1,18 +1,72 @@
 <section>
+    <x-loading-indicator />
+
     <div class="" x-data="{ open: @entangle('open') }">
         <!-- Button (blue), duh! -->
-        <div class="row justify-content-start">
+
+        <div class="d-flex justify-content-between align-items-center mt-5">
+            <h4>Agregar estudiantes</h4>
+        </div>
+
+        <hr class="mt-2 mb-6 bg-primary">
+
+        <div class="card card-body">
+            <div class="row">
+                <div class="col-md-6 form-group anima-focus">
+                    <select name="publico" id="" class="form-control" wire:model="publico">
+                        <option value="" selected></option>
+                        <option value="todos">Toda la empresa</option>
+                        <option value="area">Por área(s)</option>
+                        <option value="manual">Manualmente</option>
+                    </select>
+                    <label for="user_id">Publico objetivo</label>
+                </div>
+                @if ($publico == 'todos')
+                    <div class="col-md-6">
+                        <button class="btn btn-primary" wire:click="save();">
+                            Registrar a todos
+                        </button>
+                    </div>
+                @endif
+            </div>
+            @if ($publico == 'area')
+                <form wire:submit.prevent="save()">
+                    <div class="row">
+                        <div class="col-md-6 anima-focus form-group">
+                            <select name="" id="" class="form-control" required
+                                wire:model="area_seleccionada">
+                                <option value="" selected></option>
+                                @foreach ($areas as $area)
+                                    <option value="{{ $area->id }}">{{ $area->area }}</option>
+                                @endforeach
+                            </select>
+                            <label for="">Seleccione Área</label>
+                        </div>
+                        <div class="col-md-4">
+                            <button class="btn btn-primary">Inscribir todos en el área</button>
+                        </div>
+                    </div>
+                </form>
+            @endif
+            @if ($publico == 'manual')
+                <div class="row">
+                    <div class="col-12">
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#addStudentDataModal">
+                            Agregar Estudiante <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            @endif
+        </div>
+
+        <div class="row justify-content-start mt-5">
             <div class="col-9">
                 <h4>Estudiantes del curso</h4>
-            </div>
-            <div class="col-3 d-flex justify-content-end">
-                <button class="btn btn-light text-primary border border-primary" data-toggle="modal"
-                data-target="#addStudentDataModal">Agregar Estudiante <i class="fa-solid fa-plus"></i></button>
             </div>
         </div>
         <hr class="mt-2 mb-6 bg-primary">
 
-        @include("livewire.escuela.instructor.addstudent")
+        @include('livewire.escuela.instructor.addstudent')
         {{-- <div class="absolute top-0 left-0 flex items-center justify-center w-full h-full"
             style="background-color: rgba(0,0,0,.5);" x-show="open">
             <div class="h-auto p-4 mx-2 text-left bg-white rounded shadow-xl md:max-w-xl md:p-6 lg:p-8 md:mx-0"
@@ -74,10 +128,9 @@
     {{-- @section('scripts') --}}
     <script>
         window.addEventListener('closeModal', event => {
-                $('.modal').modal('hide');
-                $('.modal-backdrop').remove();
-            })
+            $('.modal').modal('hide');
+            $('.modal-backdrop').remove();
+        })
     </script>
     {{-- @endsection --}}
 </section>
-

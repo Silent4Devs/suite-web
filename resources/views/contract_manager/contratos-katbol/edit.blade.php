@@ -16,23 +16,23 @@
         }
 
         /* .asterisco {
-                                                                                                                                                                                                                                                                                                                                                                                                                    color: red;
-                                                                                                                                                                                                                                                                                                                                                                                                                    margin-left: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                        color: red;
+                                                                                                                                                                                                                                                                                                                                                                                                                        margin-left: 5px;
 
-                                                                                                                                                                                                                                                                                                                                                                                                                } */
+                                                                                                                                                                                                                                                                                                                                                                                                                    } */
 
         /*.select-wrapper input{
 
-                                                                                                                                                                                                                                                                                                                                                                                                                direction:rtl;
-                                                                                                                                                                                                                                                                                                                                                                                                                text-align:left;
+                                                                                                                                                                                                                                                                                                                                                                                                                    direction:rtl;
+                                                                                                                                                                                                                                                                                                                                                                                                                    text-align:left;
 
-                                                                                                                                                                                                                                                                                                                                                                                                                }*/
+                                                                                                                                                                                                                                                                                                                                                                                                                    }*/
     </style>
 
     @if (session('mensajeError'))
-    <div class="alert alert-danger">
-        {{ session('mensajeError') }}
-    </div>
+        <div class="alert alert-danger">
+            {{ session('mensajeError') }}
+        </div>
     @endif
     {{-- {{ Breadcrumbs::render('contratos_edit', $contrato) }} --}}
     @include('admin.bitacora.formedit', ['show_contrato' => false])

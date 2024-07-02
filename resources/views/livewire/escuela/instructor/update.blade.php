@@ -7,14 +7,16 @@
             </div>
             <div class="modal-body">
                 <div class="form-group anima-focus">
-                    <input class="form-control" type="text" value="" id="title" placeholder="" wire:model.defer="question">
+                    <input class="form-control" type="text" value="" id="title" placeholder=""
+                        wire:model.defer="question">
                     <label>Pregunta*</label>
                     @error('question')
                         <p class="text-xs text-red-700">El campo pregunta es obligatorio.</p>
                     @enderror
                 </div>
                 <div class="form-group anima-focus">
-                    <input class="form-control" type="text" value="" id="description" placeholder="" wire:model.defer="explanation">
+                    <input class="form-control" type="text" value="" id="description" placeholder=""
+                        wire:model.defer="explanation">
                     <label>Descripción</label>
                     @error('explanation')
                         {{--  <p class="text-xs text-red-700">El campo pregunta es obligatorio.</p>  --}}
@@ -57,9 +59,9 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn cancel" data-dismiss="modal"
+                <button type="button" class="btn btn-cancelar" data-dismiss="modal"
                     wire:click.prevent="cancel()">Cerrar</button>
-                <button wire:click.prevent="update({{ $questionModel->id }})" class="btn btn-primary close-modal"
+                <button wire:click.prevent="update({{ $questionModel->id }})" class="btn tb-btn-primary close-modal"
                     style="background-color: #345183">
                     Actualizar
                 </button>

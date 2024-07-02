@@ -35,7 +35,7 @@ class CourseController extends Controller
         $categories = Category::pluck('name', 'id');
         $levels = Level::pluck('name', 'id');
         $prices = Price::pluck('name', 'id');
-        $empleados = User::select('name', 'id')->get();
+        $empleados = User::get();
 
         return view('admin.escuela.instructor.courses.create', compact('categories', 'levels', 'prices', 'empleados'));
     }
@@ -75,10 +75,8 @@ class CourseController extends Controller
 
         if ($request->hasFile('file')) {
             $image = $request->file('file');
-            // Storage::putFileAs('public/cursos', $image);
             Storage::put('public/cursos', $image);
             $url = '/storage/cursos/'.$image->hashName();
-
             $course->image()->create([
                 'url' => $url,
             ]);
@@ -112,7 +110,7 @@ class CourseController extends Controller
         $categories = Category::pluck('name', 'id');
         $levels = Level::pluck('name', 'id');
         $prices = Price::pluck('name', 'id');
-        $empleados = User::select('name', 'id')->get();
+        $empleados = User::get();
 
         return view('admin.escuela.instructor.courses.edit', compact('course', 'categories', 'levels', 'prices', 'empleados'));
     }

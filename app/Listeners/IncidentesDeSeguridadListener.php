@@ -31,7 +31,6 @@ class IncidentesDeSeguridadListener
             ->where('role_user.role_id', '=', '1')
             ->where('users.id', '!=', auth()->id())
             ->get()
-
             ->each(function (User $user) use ($event) {
                 Notification::send($user, new IncidentesDeSeguridadNotification($event->incidentesDeSeguridad, $event->tipo_consulta, $event->tabla, $event->slug));
             });

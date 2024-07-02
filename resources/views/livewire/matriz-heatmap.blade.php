@@ -136,7 +136,7 @@
         <div class="col-md-12">
             <div class="py-2 d-flex justify-content-between">
                 <label class="text-primary" style="font-size: 24px;">Total Riesgos Iniciales</label>
-                <button class="btn btn-primary btn-sm" wire:click="clean">Ver todo</button>
+                <button class="btn tb-btn-primary btn-sm" wire:click="clean">Ver todo</button>
             </div>
             <div class="row">
                 <div class="col-6 col-md-3">

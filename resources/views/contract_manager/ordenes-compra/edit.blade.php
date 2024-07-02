@@ -5,7 +5,7 @@
 
 {{-- {{ Breadcrumbs::render('proveedores_create') }} --}}
 
-<link rel="stylesheet" href="{{ asset('css/requisiciones.css') }}">
+<link rel="stylesheet" href="{{ asset('css/requisitions/requisitions.css') }}">
 
 
 <div class="create-requisicion">
@@ -106,7 +106,7 @@
                     </div>
                     <div class="col s12 l3 ">
                         <label for="" class="txt-tamaño">
-                            Días de crédito proveedor
+                            Días de crédito proveedor*
                         </label>
                         <input type="text" required name="dias_credito" class="browser-default"
                             value="{{ $requisicion->dias_credito }}">
@@ -480,7 +480,7 @@
 <div class="flex" style="justify-content: flex-end; margin-top:50px; gap:10px;">
     <a href="{{ route('contract_manager.orden-compra') }}"
     class="btn_cancelar" >Regresar</a>
-    <button class="btn btn-primary" onclick="mensaje()">Guardar</button>
+    <button class="btn tb-btn-primary" onclick="mensaje()">Guardar</button>
 </div>
 </form>
 </div>

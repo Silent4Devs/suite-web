@@ -3,7 +3,7 @@
 @section('titulo', 'Ver Requisición')
 
 @include('layouts.datatables_css')
-<link rel="stylesheet" href="{{asset('css/requisiciones.css')}}{{config('app.cssVersion')}}">
+<link rel="stylesheet" href="{{asset('css/requisitions/requisitions.css')}}{{config('app.cssVersion')}}">
 <style>
     @media print{
         .card.card-item{
@@ -131,9 +131,44 @@
                             <strong>Proveedor:</strong><br><br>
                             {{$provedores->proveedor}}
                         </div>
-                        <div class="col s12 l6">
-                            <strong>Detalle del producto:</strong><br><br>
-                            {{$provedores->detalles}}
+                        <div class="row">
+                            <div class="col s12 l4">
+                                <strong>Nombre del contacto:</strong><br><br>
+                                {{$provedores->contacto}}
+                            </div>
+                            <div class="col s12 l4">
+                                <strong>Fecha Inicio:</strong><br><br>
+                                {{ date('d-m-Y', strtotime($provedores->fecha_inicio)) }}
+                            </div>
+                            <div class="col s12 l4">
+                                <strong>Teléfono:</strong><br><br>
+                                {{$provedores->cel}}
+                            </div>
+                            <div class="col s12 l4">
+                                <br><br>
+                                <strong>Correo Electrónico:</strong><br><br>
+                                {{$provedores->contacto_correo}}
+                            </div>
+                            <div class="col s12 l4">
+                                <br><br>
+                                <strong>Fecha Fin:</strong><br><br>
+                                {{ date('d-m-Y', strtotime($provedores->fecha_fin)) }}
+                            </div>
+                            <div class="col s12 l4">
+                                <br><br>
+                                <strong>URL:</strong><br><br>
+                                {{$provedores->url}}
+                            </div>
+                            <div class="col s12 14">
+                                    <label for="" class="txt-tamaño">
+                                        Cotizaciones <font class="asterisco">*</font>
+                                    </label>
+                                    <div class="flex" style="gap: 25px;">
+                                        <div style="min-width: 300px;">Cotizacion actual: <a
+                                                href="{{ asset('storage/cotizaciones_requisiciones_proveedores/' . $provedores->cotizacion) }}"
+                                                style="text-decoration: underline; color: deepskyblue;"
+                                                target="_blank">Descargar cotización <i class="fa-regular fa-circle-down"></i></a></div></div>
+                            </div>
                         </div>
                         <div class="col s12 l6">
                             <strong>Comentarios:</strong><br><br>

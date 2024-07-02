@@ -4,12 +4,12 @@
             <div class="px-4 py-2">
                 <h5 class="text-sm font-medium leading-6 text-gray-900">
                     Información de la evaluación
-                </h1>
-                <p class="mt-1">
-                    Realizaste esta evaluación el <span
-                        class="px-2 bg-success text-white rounded">{{ $evaluationUser ? $evaluationUser->created_at->format('d-m-Y') : 'Evaluación no realizada' }}
-                    </span>
-                </p>
+                    </h1>
+                    <p class="mt-1">
+                        Realizaste esta evaluación el <span
+                            class="px-2 bg-success text-white rounded">{{ $evaluationUser ? $evaluationUser->created_at->format('d-m-Y') : 'Evaluación no realizada' }}
+                        </span>
+                    </p>
             </div>
             <div class="border-top">
                 <div>
@@ -27,8 +27,7 @@
                             Estatus
                         </div>
                         <div class="col-3 d-flex justify-content-center">
-                            <span
-                                class="bg-success text-white rounded px-2">Terminado</span>
+                            <span class="bg-success text-white rounded px-2">Terminado</span>
 
                         </div>
                     </div>
@@ -62,7 +61,11 @@
             @php
                 $userAnswer = [];
                 foreach ($userAnswers as $answer) {
-                    if ($answer->evaluation_id == $evaluation->id && $answer->question_id == $question->id && $answer->user_evaluation_id == $evaluationUser->id) {
+                    if (
+                        $answer->evaluation_id == $evaluation->id &&
+                        $answer->question_id == $question->id &&
+                        $answer->user_evaluation_id == $evaluationUser->id
+                    ) {
                         $userAnswer = [
                             'evaluation_id' => $answer->evaluation_id,
                             'question_id' => $answer->id,
@@ -83,9 +86,7 @@
                             style="text-transform: capitalize">{{ $question->question }}</span>
                         <div x-data={show:false} class="block text-xs">
                             <div class="p-1" id="headingOne">
-                                <button @click="show=!show"
-                                    class="btn btn-link"
-                                    type="button">
+                                <button @click="show=!show" class="btn btn-link" type="button">
                                     Más detalle
                                 </button>
                             </div>
@@ -107,34 +108,31 @@
                                 @isset($userAnswer['answer_id'])
                                     @if ($answer->id == $userAnswer['answer_id'])
                                         @if ($userAnswer['is_correct'])
-                                            <div
-                                                class="px-2 mt-1 bg-success text-white rounded">
+                                            <div class="px-2 mt-1 bg-success text-white rounded">
                                                 <span class="mr-2 font-extrabold">{{ $alphabet[$key] }}</span>
                                                 {{ $answer->answer }}
                                                 <span class="p-1 font-extrabold">(Your Answer)</span>
                                             </div>
                                         @else
-                                            <div
-                                                class="px-2 mt-1 text-white bg-danger">
+                                            <div class="px-2 mt-1 text-white bg-danger">
                                                 <span class="mr-2 font-extrabold">{{ $alphabet[$key] }} </span>
                                                 {{ $answer->answer }}
                                                 <span class="p-1 font-extrabold">(Your Answer)</span>
                                             </div>
                                         @endif
                                     @else
-                                            @if ($answer->is_correct == "1")
-                                                <div class="px-2 mt-1 bg-success text-white rounded">
-                                                    <span class="mr-2">{{ $alphabet[$key] }}</span>
-                                                    {{ $correctAnswer->answer }}
-                                                    <span class="p-1 font-extrabold">(Correct Answer)</span>
-                                                </div>
-                                            @else
-                                                <div class="px-2 mt-1 text-sm text-black bg-gray-300 rounded-lg max-w-auto">
-                                                    <span class="mr-2 font-extrabold">{{ $alphabet[$key] }} </span>
-                                                    {{ $answer->answer }}
-                                                </div>
-                                            @endif
-
+                                        @if ($answer->is_correct == '1')
+                                            <div class="px-2 mt-1 bg-success text-white rounded">
+                                                <span class="mr-2">{{ $alphabet[$key] }}</span>
+                                                {{ $correctAnswer->answer }}
+                                                <span class="p-1 font-extrabold">(Correct Answer)</span>
+                                            </div>
+                                        @else
+                                            <div class="px-2 mt-1 text-sm text-black bg-gray-300 rounded-lg max-w-auto">
+                                                <span class="mr-2 font-extrabold">{{ $alphabet[$key] }} </span>
+                                                {{ $answer->answer }}
+                                            </div>
+                                        @endif
                                     @endif
                                 @endisset
                             @endforeach
@@ -150,8 +148,8 @@
     {{-- $user es nulo cuando se muestra los resultados de la evaluación para el mismo usuario --}}
     @if ($user->id == null)
         <div class="flex items-center justify-end mt-4">
-            <a type="submit"
-                class="inline-flex items-center px-4 py-2 m-4 btn cancel" href="{{ route('admin.curso.evaluacion', ['course' => $course->id, 'evaluation' => $evaluation->id]) }}">
+            <a type="submit" class="inline-flex items-center px-4 py-2 m-4 btn btn-cancelar"
+                href="{{ route('admin.curso.evaluacion', ['course' => $course->id, 'evaluation' => $evaluation->id]) }}">
                 {{ __('Regresar') }}
             </a>
         </div>

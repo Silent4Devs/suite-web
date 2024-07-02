@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/print_foda.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/global/foda/print.css') }}">
     <style>
         .fs-consulta {
             font-size: 11px;
@@ -576,7 +576,7 @@
                                         class="fas fa-chart-bar"></i></button>
                             </div>
                             <div x-show="show" x-transition>
-                                <canvas id="objetivosGrafica" height="500"></canvas>
+                                <canvas id="objetivosGrafica" width="400" height="500"></canvas>
                             </div>
                             <div x-show="!show" x-transition>
                                 <canvas id="barObjetivos" width="400" height="400"></canvas>

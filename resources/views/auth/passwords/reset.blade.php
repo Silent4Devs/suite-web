@@ -1,8 +1,8 @@
 @extends('layouts.app')
 @section('content')
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/favicon_tabantaj.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/auth/TBIconTabantaj.png') }}">
 @section('styles')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/login.css') }}{{config('app.cssVersion')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/auth/TBlogin.css') }}{{config('app.cssVersion')}}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
 @endsection
 
@@ -10,7 +10,7 @@
 <div id="login" class="fondo">
     <div class="caja_marca">
         <div class="marca">
-            <img src="{{ asset('img/logo_policromatico.png') }}"><br>
+            <img src="{{ asset('img/auth/TBLogoPolicromatico.png') }}"><br>
             <p class="by">By <strong>Silent</strong>for<strong>Business</strong></p>
             <p class="bienvenidos"><strong>Bienvenidos al</strong> Sistema Integral de Gestión Empresarial</p>
         </div>

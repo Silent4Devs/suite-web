@@ -33,7 +33,7 @@ se reflejen los cambios en ambas  -->
             </p>
         </div>
         <div class="py-4 mx-auto">
-            <a href="{{ route('courses.show', $course) }}" class="mt-4 btn btn-primary btn-block ">
+            <a href="{{ route('courses.show', $course) }}" class="mt-4 btn tb-btn-primary btn-block ">
                 Más información
             </a>
         </div>

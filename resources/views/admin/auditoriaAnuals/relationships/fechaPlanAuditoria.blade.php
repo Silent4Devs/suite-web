@@ -104,7 +104,7 @@
                             </td>
                             <td>
                                 @can('plan_auditorium_show')
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.plan-auditoria.show', $planAuditorium->id) }}">
+                                    <a class="btn btn-xs tb-btn-primary" href="{{ route('admin.plan-auditoria.show', $planAuditorium->id) }}">
                                         {{ trans('global.view') }}
                                     </a>
                                 @endcan
