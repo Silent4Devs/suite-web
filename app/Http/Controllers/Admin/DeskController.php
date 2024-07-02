@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Mail\AceptacionAccionCorrectivaEmail;
 use App\Mail\AtencionQuejaAtendidaEmail;
 use App\Mail\CierreQuejaAceptadaEmail;
+use App\Mail\EmpleadoEmail;
 use App\Mail\NotificacionResponsableQuejaEmail;
 use App\Mail\ResolucionQuejaRechazadaEmail;
 use App\Mail\SeguimientoQuejaClienteEmail;
@@ -21,6 +22,8 @@ use App\Models\Empleado;
 use App\Models\EvidenciaQuejasClientes;
 use App\Models\EvidenciasQuejasClientesCerrado;
 use App\Models\EvidenciasSeguridad;
+use App\Models\FirmaCentroAtencion;
+use App\Models\FirmaModule;
 use App\Models\IncidentesSeguridad;
 use App\Models\Mejoras;
 use App\Models\Proceso;
@@ -34,6 +37,7 @@ use App\Models\TimesheetCliente;
 use App\Models\TimesheetProyecto;
 use App\Models\User;
 use App\Traits\ObtenerOrganizacion;
+use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -176,6 +180,10 @@ class DeskController extends Controller
     {
         abort_if(Gate::denies('centro_atencion_incidentes_de_seguridad_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $modulo = 1;
+
+        $submodulo = 1;
+
         $incidentesSeguridad = IncidentesSeguridad::findOrfail(intval($id_incidente))->load('evidencias_seguridad');
 
         $analisis = AnalisisSeguridad::where('formulario', '=', 'seguridad')->where('seguridad_id', intval($id_incidente))->first();
@@ -183,6 +191,21 @@ class DeskController extends Controller
         $activos = Activo::getAll();
 
         $empleados = Empleado::getaltaAll();
+
+        $firmaModules = FirmaModule::where('modulo_id', $modulo)->where('submodulo_id', $submodulo)->first();
+
+        if ($firmaModules) {
+            $participantesIds = json_decode($firmaModules->participantes, true); // Decodificar como array
+
+            if ($participantesIds) {
+                $firmaModules->empleados = User::select('id', 'name', 'email')->whereIn('id', $participantesIds)
+                    ->get();
+            } else {
+                $firmaModules->empleados = collect();
+            }
+        }
+
+        $firmas = FirmaCentroAtencion::with('empleado')->where('modulo_id', $modulo)->where('submodulo_id', $submodulo)->get();
 
         $sedes = Sede::getAll();
 
@@ -194,7 +217,12 @@ class DeskController extends Controller
 
         $categorias = CategoriaIncidente::get();
 
-        return view('admin.desk.seguridad.edit', compact('incidentesSeguridad', 'activos', 'empleados', 'sedes', 'areas', 'procesos', 'subcategorias', 'categorias', 'analisis'));
+        return view('admin.desk.seguridad.edit', compact('incidentesSeguridad', 'activos', 'empleados', 'sedes', 'areas', 'procesos', 'subcategorias', 'categorias', 'analisis', 'firmaModules', 'firmas'));
+    }
+
+    public function removeUnicodeCharacters($string)
+    {
+        return preg_replace('/[^\x00-\x7F]/u', '', $string);
     }
 
     public function updateSeguridad(Request $request, $id_incidente)
@@ -210,7 +238,23 @@ class DeskController extends Controller
             'ubicacion' => 'nullable|string',
             'descripcion' => 'required',
             'estatus' => 'required',
+            'firma'  => 'required',
         ]);
+
+        $empleadoIds = $request->participantes ?? [];
+
+        if (empty($empleadoIds) || !is_array($empleadoIds)) {
+            return back()->with('error', 'No se seleccionaron participantes para la aprobacion.');
+        }
+
+        // Obtener empleados desde la base de datos
+        $empleados = User::select('id', 'name', 'email')->whereIn('id', $empleadoIds)->get();
+
+        // Enviar correos electrónicos
+        foreach ($empleados as $empleado) {
+            Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->send(new EmpleadoEmail($empleado));
+        }
+
 
         $incidentesSeguridad->update([
             'titulo' => $request->titulo,
@@ -234,15 +278,22 @@ class DeskController extends Controller
             'subcategoria_id' => $request->subcategoria_id,
         ]);
 
+        $firmaModule = FirmaCentroAtencion::create([
+            'modulo_id' => 1,
+            'submodulo_id' => 1,
+            'user_id' => Auth::id(),
+            'firma' => $request->firma,
+        ]);
+
         $documento = $incidentesSeguridad->evidencia;
 
-        if ($request->file('evidencia') != null or ! empty($request->file('evidencia'))) {
+        if ($request->file('evidencia') != null or !empty($request->file('evidencia'))) {
             foreach ($request->file('evidencia') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_documento = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
+                $name_documento = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
 
-                $new_name_documento = 'Seguridad_file_'.$incidentesSeguridad->id.'_'.$name_documento.'.'.$extension;
+                $new_name_documento = 'Seguridad_file_' . $incidentesSeguridad->id . '_' . $name_documento . '.' . $extension;
 
                 $route = 'public/evidencias_seguridad';
 
@@ -362,6 +413,10 @@ class DeskController extends Controller
     {
         abort_if(Gate::denies('centro_atencion_riesgos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $modulo = 1;
+
+        $submodulo = 4;
+
         $riesgos = RiesgoIdentificado::findOrfail(intval($id_riesgos))->load('evidencias_riesgos');
 
         $analisis = AnalisisSeguridad::where('formulario', '=', 'riesgo')->where('riesgos_id', intval($id_riesgos))->first();
@@ -378,14 +433,55 @@ class DeskController extends Controller
 
         $empleados = Empleado::getaltaAll();
 
-        return view('admin.desk.riesgos.edit', compact('riesgos', 'procesos', 'empleados', 'areas', 'activos', 'sedes', 'analisis'));
+        $firmaModules = FirmaModule::where('modulo_id', $modulo)->where('submodulo_id', $submodulo)->first();
+
+        if ($firmaModules) {
+            $participantesIds = json_decode($firmaModules->participantes, true); // Decodificar como array
+
+            if ($participantesIds) {
+                $firmaModules->empleados = User::whereIn('id', $participantesIds)
+                    ->get();
+            } else {
+                $firmaModules->empleados = collect();
+            }
+        }
+
+        $firmas = FirmaCentroAtencion::with('empleado')->where('modulo_id', $modulo)->where('submodulo_id', $submodulo)->get();
+
+        return view('admin.desk.riesgos.edit', compact('riesgos', 'procesos', 'empleados', 'areas', 'activos', 'sedes', 'analisis', 'firmaModules', 'firmas'));
     }
 
     public function updateRiesgos(Request $request, $id_riesgos)
     {
         abort_if(Gate::denies('centro_atencion_riesgos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $modulo = 1;
+        $submodulo = 4;
 
         $riesgos = RiesgoIdentificado::findOrfail(intval($id_riesgos));
+
+        $empleadoIds = $request->participantes;
+
+        if (empty($empleadoIds) || !is_array($empleadoIds)) {
+            return back()->with('error', 'No se seleccionaron participantes para la aprobacion.');
+        }
+
+        // Obtener empleados desde la base de datos
+        $empleados = User::select('id', 'name', 'email')->whereIn('id', $empleadoIds)->get();
+
+
+        // Enviar correos electrónicos
+        foreach ($empleados as $empleado) {
+            Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->send(new EmpleadoEmail($empleado));
+        }
+
+        $firmaModule = FirmaCentroAtencion::create([
+            'modulo_id' => $modulo,
+            'submodulo_id' =>  $submodulo,
+            'user_id' => Auth::id(),
+            'firma' => $request->firma,
+        ]);
+
+
         $riesgos->update([
             'titulo' => $request->titulo,
             'fecha' => $request->fecha,
@@ -477,6 +573,10 @@ class DeskController extends Controller
     {
         abort_if(Gate::denies('centro_atencion_quejas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $modulo = 1;
+
+        $submodulo = 3;
+
         $quejas = Quejas::findOrfail(intval($id_quejas))->load('evidencias_quejas');
 
         $procesos = Proceso::getAll();
@@ -491,7 +591,23 @@ class DeskController extends Controller
 
         $empleados = Empleado::getaltaAll();
 
-        return view('admin.desk.quejas.edit', compact('quejas', 'procesos', 'empleados', 'areas', 'activos', 'sedes', 'analisis'));
+        $firmaModules = FirmaModule::where('modulo_id',  $modulo)->where('submodulo_id', $submodulo)->first();
+
+        if ($firmaModules) {
+            $participantesIds = json_decode($firmaModules->participantes, true); // Decodificar como array
+
+            if ($participantesIds) {
+                $firmaModules->empleados = User::whereIn('id', $participantesIds)
+                    ->get();
+            } else {
+                $firmaModules->empleados = collect();
+            }
+        }
+
+        $firmas = FirmaCentroAtencion::with('empleado')->where('modulo_id', $modulo)->where('submodulo_id', $submodulo)->get();
+
+
+        return view('admin.desk.quejas.edit', compact('quejas', 'procesos', 'empleados', 'areas', 'activos', 'sedes', 'analisis', 'firmaModules', 'firmas'));
     }
 
     public function updateQuejas(Request $request, $id_quejas)
@@ -499,6 +615,34 @@ class DeskController extends Controller
         abort_if(Gate::denies('centro_atencion_quejas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $quejas = Quejas::findOrfail(intval($id_quejas));
+
+        $modulo = 1;
+
+        $submodulo = 3;
+
+        $empleadoIds = $request->participantes;
+
+        if (empty($empleadoIds) || !is_array($empleadoIds)) {
+            return back()->with('error', 'No se seleccionaron participantes para la aprobacion.');
+        }
+
+        // Obtener empleados desde la base de datos
+        $empleados = User::select('id', 'name', 'email')->whereIn('id', $empleadoIds)->get();
+
+
+        // Enviar correos electrónicos
+        foreach ($empleados as $empleado) {
+            Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->send(new EmpleadoEmail($empleado));
+        }
+
+
+        $firmaModule = FirmaCentroAtencion::create([
+            'modulo_id' => $modulo,
+            'submodulo_id' => $submodulo,
+            'user_id' => Auth::id(),
+            'firma' => $request->firma,
+        ]);
+
         $quejas->update([
             'titulo' => $request->titulo,
             'estatus' => $request->estatus,
@@ -595,6 +739,10 @@ class DeskController extends Controller
     {
         abort_if(Gate::denies('centro_atencion_denuncias_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $modulo = 1;
+
+        $submodulo = 6;
+
         $analisis = AnalisisSeguridad::where('formulario', '=', 'denuncia')->where('denuncias_id', intval($id_denuncias))->first();
 
         $denuncias = Denuncias::findOrfail(intval($id_denuncias));
@@ -603,7 +751,22 @@ class DeskController extends Controller
 
         $empleados = Empleado::getaltaAll();
 
-        return view('admin.desk.denuncias.edit', compact('denuncias', 'activos', 'empleados', 'analisis'));
+        $firmaModules = FirmaModule::where('modulo_id', $modulo)->where('submodulo_id', $submodulo)->first();
+
+        if ($firmaModules) {
+            $participantesIds = json_decode($firmaModules->participantes, true); // Decodificar como array
+
+            if ($participantesIds) {
+                $firmaModules->empleados = User::whereIn('id', $participantesIds)
+                    ->get();
+            } else {
+                $firmaModules->empleados = collect();
+            }
+        }
+
+        $firmas = FirmaCentroAtencion::with('empleado')->where('modulo_id', $modulo)->where('submodulo_id', $submodulo)->get();
+
+        return view('admin.desk.denuncias.edit', compact('denuncias', 'activos', 'empleados', 'analisis', 'firmaModules', 'firmas'));
     }
 
     public function updateDenuncias(Request $request, $id_denuncias)
@@ -611,6 +774,32 @@ class DeskController extends Controller
         abort_if(Gate::denies('centro_atencion_denuncias_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $denuncias = Denuncias::findOrfail(intval($id_denuncias));
+
+        $modulo = 1;
+        $submodulo = 6;
+
+        $empleadoIds = $request->participantes;
+
+        if (empty($empleadoIds) || !is_array($empleadoIds)) {
+            return back()->with('error', 'No se seleccionaron participantes para la aprobacion.');
+        }
+
+        // Obtener empleados desde la base de datos
+        $empleados = User::select('id', 'name', 'email')->whereIn('id', $empleadoIds)->get();
+
+
+        // Enviar correos electrónicos
+        foreach ($empleados as $empleado) {
+            Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->send(new EmpleadoEmail($empleado));
+        }
+
+        $firmaModule = FirmaCentroAtencion::create([
+            'modulo_id' => $modulo,
+            'submodulo_id' => $submodulo,
+            'user_id' => Auth::id(),
+            'firma' => $request->firma,
+        ]);
+
         $denuncias->update([
             'anonimo' => $request->anonimo,
             'descripcion' => $request->descripcion,
@@ -699,6 +888,10 @@ class DeskController extends Controller
     {
         abort_if(Gate::denies('centro_atencion_mejoras_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $modulo = 1;
+
+        $submodulo = 2;
+
         $mejoras = Mejoras::findOrfail(intval($id_mejoras));
 
         $activos = Activo::getAll();
@@ -711,12 +904,28 @@ class DeskController extends Controller
 
         $analisis = AnalisisSeguridad::where('formulario', '=', 'mejora')->where('mejoras_id', intval($id_mejoras))->first();
 
-        return view('admin.desk.mejoras.edit', compact('mejoras', 'activos', 'empleados', 'areas', 'procesos', 'analisis'));
+        $firmaModules = FirmaModule::where('modulo_id', $modulo)->where('submodulo_id', $submodulo)->first();
+
+        if ($firmaModules) {
+            $participantesIds = json_decode($firmaModules->participantes, true); // Decodificar como array
+
+            if ($participantesIds) {
+                $firmaModules->empleados = User::whereIn('id', $participantesIds)
+                    ->get();
+            } else {
+                $firmaModules->empleados = collect();
+            }
+        }
+
+        $firmas = FirmaCentroAtencion::with('empleado')->where('modulo_id', $modulo)->where('submodulo_id', $submodulo)->get();
+
+        return view('admin.desk.mejoras.edit', compact('mejoras', 'activos', 'empleados', 'areas', 'procesos', 'analisis', 'firmaModules', 'firmas'));
     }
 
     public function updateMejoras(Request $request, $id_mejoras)
     {
         abort_if(Gate::denies('centro_atencion_mejoras_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
 
         $request->validate([
             'area_mejora' => 'nullable|string',
@@ -725,9 +934,38 @@ class DeskController extends Controller
             'tipo' => 'required',
             'descripcion' => 'required',
             'beneficios' => 'required',
+            'firma' => 'required',
         ]);
 
+        $modulo = 1;
+
+        $submodulo = 2;
+
+        $empleadoIds = $request->participantes;
+
+
+        if (empty($empleadoIds) || !is_array($empleadoIds)) {
+            return back()->with('error', 'No se seleccionaron participantes para la aprobacion.');
+        }
+
+        // Obtener empleados desde la base de datos
+        $empleados = User::select('id', 'name', 'email')->whereIn('id', $empleadoIds)->get();
+
+
+        // Enviar correos electrónicos
+        foreach ($empleados as $empleado) {
+            Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->send(new EmpleadoEmail($empleado));
+        }
+
         $mejoras = Mejoras::findOrfail(intval($id_mejoras));
+
+        $firmaModule = FirmaCentroAtencion::create([
+            'modulo_id' => $modulo,
+            'submodulo_id' => $submodulo,
+            'user_id' => Auth::id(),
+            'firma' => $request->firma,
+        ]);
+
         $mejoras->update([
             'estatus' => $request->estatus,
             'fecha_cierre' => $request->fecha_cierre,
@@ -810,6 +1048,10 @@ class DeskController extends Controller
     {
         abort_if(Gate::denies('centro_atencion_sugerencias_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $modulo = 1;
+
+        $submodulo = 5;
+
         $sugerencias = Sugerencias::findOrfail(intval($id_sugerencias));
 
         $activos = Activo::getAll();
@@ -822,7 +1064,23 @@ class DeskController extends Controller
 
         $analisis = AnalisisSeguridad::where('formulario', '=', 'sugerencia')->where('sugerencias_id', intval($id_sugerencias))->first();
 
-        return view('admin.desk.sugerencias.edit', compact('sugerencias', 'activos', 'empleados', 'areas', 'procesos', 'analisis'));
+
+        $firmaModules = FirmaModule::where('modulo_id', $modulo)->where('submodulo_id', $submodulo)->first();
+
+        if ($firmaModules) {
+            $participantesIds = json_decode($firmaModules->participantes, true); // Decodificar como array
+
+            if ($participantesIds) {
+                $firmaModules->empleados = User::whereIn('id', $participantesIds)
+                    ->get();
+            } else {
+                $firmaModules->empleados = collect();
+            }
+        }
+
+        $firmas = FirmaCentroAtencion::with('empleado')->where('modulo_id', $modulo)->where('submodulo_id', $submodulo)->get();
+
+        return view('admin.desk.sugerencias.edit', compact('sugerencias', 'activos', 'empleados', 'areas', 'procesos', 'analisis', 'firmaModules', 'firmas'));
     }
 
     public function updateSugerencias(Request $request, $id_sugerencias)
@@ -830,15 +1088,39 @@ class DeskController extends Controller
         abort_if(Gate::denies('centro_atencion_sugerencias_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $sugerencias = Sugerencias::findOrfail(intval($id_sugerencias));
+
+        $modulo = 1;
+        $submodulo = 5;
+
+        $empleadoIds = $request->participantes;
+
+
+        if (empty($empleadoIds) || !is_array($empleadoIds)) {
+            return back()->with('error', 'No se seleccionaron participantes para la aprobacion.');
+        }
+
+        // Obtener empleados desde la base de datos
+        $empleados = User::select('id', 'name', 'email')->whereIn('id', $empleadoIds)->get();
+
+
+        // Enviar correos electrónicos
+        foreach ($empleados as $empleado) {
+            Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->send(new EmpleadoEmail($empleado));
+        }
+
+        $firmaModule = FirmaCentroAtencion::create([
+            'modulo_id' => $modulo,
+            'submodulo_id' =>  $submodulo,
+            'user_id' => Auth::id(),
+            'firma' => $request->firma,
+        ]);
+
         $sugerencias->update([
             'area_sugerencias' => $request->area_sugerencias,
             'proceso_sugerencias' => $request->proceso_sugerencias,
-
             'titulo' => $request->titulo,
             'descripcion' => $request->descripcion,
-
             'estatus' => $request->estatus,
-
             'fecha_cierre' => $request->fecha_cierre,
         ]);
 
@@ -972,13 +1254,13 @@ class DeskController extends Controller
 
         $image = null;
 
-        if ($request->file('evidencia') != null or ! empty($request->file('evidencia'))) {
+        if ($request->file('evidencia') != null or !empty($request->file('evidencia'))) {
             foreach ($request->file('evidencia') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
+                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
 
-                $new_name_image = 'Queja_file_'.$quejasClientes->id.'_'.$name_image.'.'.$extension;
+                $new_name_image = 'Queja_file_' . $quejasClientes->id . '_' . $name_image . '.' . $extension;
 
                 $route = 'public/evidencias_quejas_clientes';
 
@@ -1106,13 +1388,13 @@ class DeskController extends Controller
 
         $documento = null;
 
-        if ($request->file('evidencia') != null or ! empty($request->file('evidencia'))) {
+        if ($request->file('evidencia') != null or !empty($request->file('evidencia'))) {
             foreach ($request->file('evidencia') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_documento = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
+                $name_documento = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
 
-                $new_name_documento = 'Queja_file_'.$quejasClientes->id.'_'.$name_documento.'.'.$extension;
+                $new_name_documento = 'Queja_file_' . $quejasClientes->id . '_' . $name_documento . '.' . $extension;
 
                 $route = 'public/evidencias_quejas_clientes';
 
@@ -1129,13 +1411,13 @@ class DeskController extends Controller
 
         $image = null;
 
-        if ($request->file('cierre') != null or ! empty($request->file('cierre'))) {
+        if ($request->file('cierre') != null or !empty($request->file('cierre'))) {
             foreach ($request->file('cierre') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
+                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
 
-                $new_name_image = 'Queja_file_'.$quejasClientes->id.'_'.$name_image.'.'.$extension;
+                $new_name_image = 'Queja_file_' . $quejasClientes->id . '_' . $name_image . '.' . $extension;
 
                 $route = 'public/evidencias_quejas_clientes_cerrado';
 
@@ -1165,7 +1447,7 @@ class DeskController extends Controller
 
         if ($notificar_atencion_queja_no_aprobada) {
             if ($cerrar_ticket == false) {
-                if (! $quejasClientes->email_env_resolucion_rechazada) {
+                if (!$quejasClientes->email_env_resolucion_rechazada) {
                     if ($quejasClientes->registro != null && $quejasClientes->responsableAtencion != null) {
                         $quejasClientes->update([
                             'email_env_resolucion_rechazada' => true,
@@ -1178,7 +1460,7 @@ class DeskController extends Controller
 
         if ($notificar_atencion_queja_no_aprobada) {
             if ($cerrar_ticket) {
-                if (! $quejasClientes->email_env_resolucion_aprobada) {
+                if (!$quejasClientes->email_env_resolucion_aprobada) {
                     if ($quejasClientes->registro != null && $quejasClientes->responsableAtencion != null) {
                         $quejasClientes->update([
                             'email_env_resolucion_aprobada' => true,
@@ -1189,8 +1471,8 @@ class DeskController extends Controller
             }
         }
 
-        if (! $email_realizara_accion_inmediata) {
-            if (! is_null($quejasClientes->acciones_tomara_responsable)) {
+        if (!$email_realizara_accion_inmediata) {
+            if (!is_null($quejasClientes->acciones_tomara_responsable)) {
                 if ($quejasClientes->registro != null && $quejasClientes->responsableAtencion != null) {
                     $quejasClientes->update([
                         'email_realizara_accion_inmediata' => true,
@@ -1201,7 +1483,7 @@ class DeskController extends Controller
         }
 
         if ($notificar_registro_queja) {
-            if (! $quejasClientes->correo_enviado_registro) {
+            if (!$quejasClientes->correo_enviado_registro) {
                 if ($quejasClientes->registro != null && $quejasClientes->responsableAtencion != null) {
                     $quejasClientes->update([
                         'correo_enviado_registro' => true,
@@ -1222,7 +1504,7 @@ class DeskController extends Controller
                 $query->where('acciones_correctivas_aprobacionables_id', $quejasClientes->id);
             })->exists();
 
-            if (! $existeAC) {
+            if (!$existeAC) {
                 $accion_correctiva = AccionCorrectiva::create([
                     'tema' => $request->titulo,
                     'causaorigen' => 'Queja de un cliente',
@@ -1249,7 +1531,7 @@ class DeskController extends Controller
                 $quejasClientes->accionCorrectivaAprobacional()->sync($accion_correctiva->id);
             }
 
-            if (! $quejasClientes->correoEnviado) {
+            if (!$quejasClientes->correoEnviado) {
                 $quejasClientes->update([
                     'correoEnviado' => true,
                 ]);
@@ -1558,7 +1840,7 @@ class DeskController extends Controller
 
             return response()->json(['isValid' => true]);
         } elseif ($request->tipo_validacion == 'queja-atencion') {
-            if (! is_null($quejasClientes->responsable_atencion_queja_id)) {
+            if (!is_null($quejasClientes->responsable_atencion_queja_id)) {
                 if ($quejasClientes->responsable_atencion_queja_id != User::getCurrentUser()->empleado->id) {
                     $this->validateRequestRegistroQuejaCliente($request);
                     $this->validateRequestAnalisisQuejaCliente($request);
