@@ -9,15 +9,10 @@
 
 
 <div class="card card-body">
-    {{-- <div class="mb-2 row">
-        <div class="mb-4 ml-4 w-100" style="border-bottom: solid 2px #345183;">
-            <span class="ml-1" style="font-size: 17px; font-weight: bold;">
-                 Vincular Plan de Trabajo</span>
-        </div>
-    </div> --}}
     <div class="card-header">
         <h5>Acuerdos y Compromisos</h5>
     </div>
+
     <div class="">
         <div class="row">
             <div class="col-sm-12 col-lg-12 col-md-12">

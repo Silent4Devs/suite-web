@@ -59,6 +59,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('users/list/get', 'UsersController@getUsersIndex')->name('users.getUsersIndex');
     Route::resource('users', 'UsersController');
 
+    // Firmas
+    Route::get('firmas_module', 'FirmasModuleController@index')->name('module_firmas');
+    Route::get('firmas_module/create', 'FirmasModuleController@create')->name('module_firmas.create');
+    Route::post('firmas_module/store', 'FirmasModuleController@store')->name('module_firmas.store');
+
     // Empleados
     Route::get('empleados/importar', 'EmpleadoController@importar')->name('empleado.importar');
     Route::post('empleados/list/get', 'EmpleadoController@getListaEmpleadosIndex')->name('empleado.getListaEmpleadosIndex');
