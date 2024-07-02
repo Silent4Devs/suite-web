@@ -1711,6 +1711,8 @@ Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'name
 
     Route::post('contratos-katbol/validateDocument', 'ContratoController@validateDocument')->name('contratos-katbol.validar-documento');
 
+    Route::post('contratos-katbol/aprobacion-firma-contrato', 'ContratosController@aprobacionFirma')->name('contratos-katbol.aprobacion-firma-contrato');
+
     Route::resource('bitacoras', 'BitacoraController');
 
     Route::resource('facturas', 'FacturaController');
