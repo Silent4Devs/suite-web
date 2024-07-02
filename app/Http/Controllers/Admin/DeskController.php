@@ -186,6 +186,10 @@ class DeskController extends Controller
 
         $incidentesSeguridad = IncidentesSeguridad::findOrfail(intval($id_incidente))->load('evidencias_seguridad');
 
+        $incidentesSeguridad->descripcion = strip_tags($incidentesSeguridad->descripcion);
+
+        $incidentesSeguridad->justificacion = strip_tags($incidentesSeguridad->justificacion);
+
         $analisis = AnalisisSeguridad::where('formulario', '=', 'seguridad')->where('seguridad_id', intval($id_incidente))->first();
 
         $activos = Activo::getAll();
@@ -934,12 +938,18 @@ class DeskController extends Controller
             'tipo' => 'required',
             'descripcion' => 'required',
             'beneficios' => 'required',
-            'firma' => 'required',
         ]);
-
         $modulo = 1;
 
         $submodulo = 2;
+
+        $firmaModule = FirmaCentroAtencion::create([
+            'modulo_id' => $modulo,
+            'submodulo_id' => $submodulo,
+            'user_id' => Auth::id(),
+            'firma' => $request->firma,
+        ]);
+
 
         $empleadoIds = $request->participantes;
 
@@ -958,13 +968,6 @@ class DeskController extends Controller
         }
 
         $mejoras = Mejoras::findOrfail(intval($id_mejoras));
-
-        $firmaModule = FirmaCentroAtencion::create([
-            'modulo_id' => $modulo,
-            'submodulo_id' => $submodulo,
-            'user_id' => Auth::id(),
-            'firma' => $request->firma,
-        ]);
 
         $mejoras->update([
             'estatus' => $request->estatus,
