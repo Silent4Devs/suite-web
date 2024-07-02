@@ -216,15 +216,13 @@
                                 <label for="area">Área</label>
                             </div>
                         </div>
-                        <div class="form-row">
-                            <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-6">
-                                <select class="form-control" id="asistencia" name="asistencia" placeholder="">
+                        <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-6">
+                                <select class="form-control custom-select" id="asistencia" name="asistencia" placeholder="">
                                     <option value="Si" default>Sí</option>
                                     <option value="No">No</option>
                                     <option value="Ausencia Justificada">Ausencia Justificada</option>
                                 </select>
-                                <label for="asistencia">Asistencia</label>
-                            </div>
+                                <label for="asistencia">Asistencia </label>
                         </div>
                         <div class="form-group col-sm-12 col-md-12 col-lg-12">
                             <button id="btn-suscribir-participante" type="submit" class="mr-3 btn btn-link"
