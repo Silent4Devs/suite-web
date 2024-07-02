@@ -389,7 +389,7 @@
 
 
                             @if ($userIsAuthorized)
-                            <div class="mt-2 form-group col-md-12">
+                            <div class="card card-body">
                                 <div class="" style="position: relative; left: 2rem;">
                                     <br>
                                     <h5><strong>Firma*</strong></h5>
