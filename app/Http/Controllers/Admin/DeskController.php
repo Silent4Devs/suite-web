@@ -288,7 +288,6 @@ class DeskController extends Controller
             'subcategoria_id' => $request->subcategoria_id,
         ]);
 
-
         $documento = $incidentesSeguridad->evidencia;
 
         if ($request->file('evidencia') != null or ! empty($request->file('evidencia'))) {
@@ -463,11 +462,10 @@ class DeskController extends Controller
 
         $firmaModule = FirmaCentroAtencion::create([
             'modulo_id' => $modulo,
-            'submodulo_id' =>  $submodulo,
+            'submodulo_id' => $submodulo,
             'user_id' => Auth::id(),
             'firma' => $request->firma,
         ]);
-
 
         $riesgos = RiesgoIdentificado::findOrfail(intval($id_riesgos));
 
@@ -628,7 +626,6 @@ class DeskController extends Controller
         $modulo = 1;
 
         $submodulo = 3;
-
 
         $firmaModule = FirmaCentroAtencion::create([
             'modulo_id' => $modulo,
@@ -792,7 +789,6 @@ class DeskController extends Controller
 
         $modulo = 1;
         $submodulo = 6;
-
 
         $firmaModule = FirmaCentroAtencion::create([
             'modulo_id' => $modulo,
@@ -1103,11 +1099,10 @@ class DeskController extends Controller
 
         $firmaModule = FirmaCentroAtencion::create([
             'modulo_id' => $modulo,
-            'submodulo_id' =>  $submodulo,
+            'submodulo_id' => $submodulo,
             'user_id' => Auth::id(),
             'firma' => $request->firma,
         ]);
-
 
         $empleadoIds = $request->participantes;
 
