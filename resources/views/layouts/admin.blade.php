@@ -273,7 +273,7 @@
             </div>
             @if (
                 $usuario->can('clausulas_auditorias_acceder') ||
-                    $usuario->can('mis_cursos_acceder') ||
+                    $usuario->can('capacitaciones_acceder') ||
                     $usuario->can('sistema_gestion_contratos_acceder') ||
                     $usuario->can('administracion_sistema_gestion_contratos_acceder') ||
                     $usuario->can('analisis_de_riesgo_integral_acceder') ||
@@ -285,7 +285,7 @@
                 <div class="item-content-menu-header" style="background-color: #fff;">
                     <span class="title-item-menu-header">MÓDULOS TABANTAJ</span>
                     <div class="menu-blocks-mod-header">
-                        @can('mis_cursos_acceder')
+                        @can('capacitaciones_acceder')
                             <a href="{{ route('admin.mis-cursos') }}">
                                 <div class="caja-icon-mod-header" style="background: #9CEBFF;">
                                     <i class="material-symbols-outlined">school</i>

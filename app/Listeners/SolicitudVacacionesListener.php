@@ -4,10 +4,16 @@ namespace App\Listeners;
 
 use App\Models\User;
 use App\Notifications\SolicitudVacacionesNotification;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Notification;
 
-class SolicitudVacacionesListener
+class SolicitudVacacionesListener implements ShouldQueue
 {
+    use InteractsWithQueue;
+
+    public $tries = 5;
+
     /**
      * Create the event listener.
      *
