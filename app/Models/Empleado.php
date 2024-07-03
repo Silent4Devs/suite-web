@@ -173,7 +173,7 @@ class Empleado extends Model implements Auditable
 
     public static function getMyEmpleadodata($id)
     {
-        return Cache::remember('Empleados:empleados_my_empleado_data_'.$id, 3600, function () use ($id) {
+        return Cache::remember('Empleados:empleados_my_empleado_data_' . $id, 3600, function () use ($id) {
             return self::where('id', $id)->first();
         });
     }
@@ -971,11 +971,6 @@ class Empleado extends Model implements Auditable
     public function responsableTratamiento()
     {
         return $this->hasMany(TratamientoRiesgo::class, 'id_dueno', 'id')->alta()->with('area');
-    }
-
-    public function registrosHistorico()
-    {
-        return $this->hasMany(HistoricoEmpleados::class, 'empleado_id', 'id');
     }
 
     public function disponibilidad()
