@@ -396,29 +396,9 @@
             'actividades' => $actividades,
         ])
 
-        <div class="card card-body">
-            <div style="">
-                <label>
-                    <input type="checkbox" id="toggle-info">
-                    Mostrar Información
-                </label>
-            </div>
 
-                <div class="info-bar" id="info-bar">
-                    <p>Seleccione cuántos aprobadores de aprobación tendrá tu lista.</p>
-                    @if($firmaModules && $firmaModules->empleados)
-                    <select id="aprobadores" name="aprobadores[]" class="form-control" multiple="multiple" style="padding: 10px; border-radius: 50px; border: 1px solid #007BFF;">
-                        @foreach($firmaModules->empleados as $empleado)
-                            <option value="{{ $empleado->id }}">{{ $empleado->name }}</option>
-                        @endforeach
-                    </select>
-                    @else
-                        <p>No hay aprobadores disponibles.</p>
-                    @endif
-                </div>
-        </div>
 
-        @php
+    @php
         $userIsAuthorized = false;
         if($firmaModules && $firmaModules->empleados){
         foreach ($firmaModules->empleados as $empleado) {
