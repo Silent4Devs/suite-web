@@ -5,26 +5,27 @@
 @section('content')
     {{-- {{ Breadcrumbs::render('capital-humano') }} --}}
 
-    <h5 class="titulo_general_funcion"> Carga de Objetivos: [Víctor Hugo Rodriguez Albarrán] </h5>
+    <h5 class="titulo_general_funcion"> Carga de Objetivos: {{ $empleado->name }} </h5>
 
     <div class="card card-body" style="color: #464646;">
         <div class="d-flex align-items-center justify-content-between">
             <div class="d-flex align-items-center" style="gap: 30px;">
                 <div class="img-person" style="width: 80px; height: 80px;">
-                    <img src="" alt="">
+                    <img src="{{ asset('storage/empleados/imagenes/') . '/' . $empleado->avatar }}" alt="">
                 </div>
-                <span>Víctor Hugo Rodriguez Albarrán</span>
+                <span>{{ $empleado->name }}</span>
                 <hr class="line-vertical mx-2">
                 <di class="d-flex flex-column">
-                    <span> Director Sr. Innovación y Nuevos Productos </span>
-                    <span class="mt-3"> Dirección General</span>
+                    <span> {{ $empleado->puestoRelacionado->puesto }} </span>
+                    <span class="mt-3"> {{ $empleado->area->area }}</span>
                 </di>
             </div>
-            <img src="https://picsum.photos/200/300" alt="" style="height: 90px;">
+            <img src="{{ $organizacion->logotipo }}" alt="" style="height: 90px;">
         </div>
     </div>
 
-    <div class="card card-body">
+    @livewire('formulario-objetivos-desempeno-empleados', ['id_empleado' => $empleado->id])
+    {{-- <div class="card card-body">
         <div class="info-first-config">
             <h4 class="title-config">Nuevo Objetivo</h4>
             <p>Define los Valores y Escalas con los que se medirán los objetivos.</p>
@@ -201,43 +202,7 @@
             </button>
         </div>
 
-    </div>
-
-    <div class="card card-body">
-        <div class="info-first-config">
-            <h4 class="title-config">Escalas del objetivo</h4>
-            <hr class="my-4">
-        </div>
-
-        <div class="datatable-fix">
-            <table class="table datatable">
-                <thead>
-                    <tr>
-                        <th>Categoría</th>
-                        <th>Objetivos Estratégicos</th>
-                        <th>KPI</th>
-                        <th>Descripción</th>
-                        <th>Estatus</th>
-                        <th>Meta</th>
-                        <th>Periodo</th>
-                        <th>Opciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Categoría</td>
-                        <td>Objetivos Estratégicos</td>
-                        <td>KPI</td>
-                        <td>Descripción</td>
-                        <td>Estatus</td>
-                        <td>Meta</td>
-                        <td>Periodo</td>
-                        <td>Opciones</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+    </div> --}}
 @endsection
 
 @section('scripts')

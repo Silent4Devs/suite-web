@@ -3,9 +3,33 @@
     <link rel="stylesheet" href="{{ asset('css/evaluations/evaluations.css') }}{{ config('app.cssVersion') }}">
 @endsection
 @section('content')
+    <style>
+        .caja-cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .caja-cards .card {
+            width: 250px;
+            text-align: center;
+
+        }
+
+        .caja-cards .card-header {
+            position: relative;
+        }
+
+        .dropdown.btn-options-foda-card {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+        }
+    </style>
     {{-- {{ Breadcrumbs::render('capital-humano') }} --}}
 
-    <h5 class="titulo_general_funcion"> Evaluación Dashboard [Nombre evaluación ]</h5>
+    @livewire('ev-desempeno-dashboard-general')
+    {{-- <h5 class="titulo_general_funcion"> Evaluación Dashboard [Nombre evaluación ]</h5>
 
     <p>
         <small>
@@ -15,27 +39,23 @@
 
     <div class="row mt-4">
         <div class="col-md-3">
-            <div class="w-100 p-3 text-center text-white rounded" style="background-color: #2C9E7F;">
+            <div class="w-100 p-3 text-center text-white rounded-lg" style="background-color: #2C9E7F;">
                 Enviar recordatorio de Evaluación
-                <i class="material-symbols-outlined ml-2">campaign</i>
-            </div>
-        </div>
-        <div class="col-md-3" style="opacity: 50%;">
-            <div class="w-100 p-3 text-center text-white rounded" style="background-color: #DF5050;">
-                Cerrar Evaluación
-                <i class="material-symbols-outlined ml-2">cancel</i>
-            </div>
-        </div>
-        <div class="col-md-3" style="opacity: 50%;">
-            <div class="w-100 p-3 text-center text-white rounded" style="background-color: #A650DF;">
-                Modificar periodo de evaluación
-                <i class="material-symbols-outlined ml-2">edit_calendar</i>
             </div>
         </div>
         <div class="col-md-3">
-            <div class="w-100 p-3 text-center text-white rounded" style="background-color: #507BDF;">
+            <div class="w-100 p-3 text-center text-white rounded-lg" style="background-color: #DF5050;">
+                Cerrar Evaluación
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="w-100 p-3 text-center text-white rounded-lg" style="background-color: #A650DF;">
+                Modificar periodo de evaluación
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="w-100 p-3 text-center text-white rounded-lg" style="background-color: #507BDF;">
                 Generar Reporte
-                <i class="material-symbols-outlined ml-2">print</i>
             </div>
         </div>
     </div>
@@ -66,14 +86,10 @@
                     <tbody>
                         <tr>
                             <td>
-                                Evaluación Trimestral del año 2023
+                                <p>Evaluación Trimestral del año 2023</p>
                             </td>
                             <td>
-                                <span class="state-green">En curso</span>
-                                <span class="state-yellow">Pendiente</span>
-                                <span class="state-red">Rechazado</span>
-                                <span class="state-grey">Cancelado</span>
-                                <span class="state-blue">Terminado</span>
+                                En curso
                             </td>
                             <td>
                                 10/10/2023
@@ -91,20 +107,19 @@
                 </table>
             </div>
         </div>
-        <div class="col-md-6 d-flex">
+        <div class="col-md-6">
             <div class="card card-body">
-                <div class="d-flex gap-2">
-                    <div class="w-100">
-                        <strong>Evaluaciones contestadas</strong>
-                        <div class="progress mt-2" style="height: 25px;">
-                            <div class="progress-bar bg-warning" role="progressbar" style="width: 75%;" aria-valuenow="75"
-                                aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="d-flex w-100">
+                    <div class="">
+                        <span>Evaluaciones contestadas</span>
+                        <div class="progress">
+                            <div class="progress-bar bg-warning" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                     </div>
                     <div class="">
-                        <strong>Total</strong>
-                        <p class="mt-2" style="font-size: 20px; color: #34ABB9;">
-                            <strong> 5/5 </strong>
+                        <span>Total</span>
+                        <p>
+                            54/100
                         </p>
                     </div>
                 </div>
@@ -114,8 +129,7 @@
 
     <div class="row" style="font-size: 18px;">
         <div class="col-md-4">
-            <div class="text-white d-flex align-items-center justify-content-between p-4 rounded-lg"
-                style="background-color: #984F96;">
+            <div class="text-white d-flex align-items-center justify-content-between p-4 rounded-lg" style="background-color: #984F96;">
                 <div>
                     <span>Promedio General</span>
                 </div>
@@ -125,8 +139,7 @@
             </div>
         </div>
         <div class="col-md-4">
-            <div class="text-white d-flex align-items-center justify-content-between p-4 rounded-lg"
-                style="background-color: #984F96;">
+            <div class="text-white d-flex align-items-center justify-content-between p-4 rounded-lg" style="background-color: #984F96;">
                 <div>
                     <span>Objetivos</span>
                 </div>
@@ -136,8 +149,7 @@
             </div>
         </div>
         <div class="col-md-4">
-            <div class="text-white d-flex align-items-center justify-content-between p-4 rounded-lg"
-                style="background-color: #984F96;">
+            <div class="text-white d-flex align-items-center justify-content-between p-4 rounded-lg" style="background-color: #984F96;">
                 <div>
                     <span>Competencias</span>
                 </div>
@@ -146,6 +158,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 
     <div class="row mt-4" style="font-size: 15px; color: #006DDB;">
@@ -187,7 +200,7 @@
         </div>
         <div class="col-md-3">
             <div class="p-3 rounded-lg" style="background-color: #fff; box-shadow: 0px 1px 4px #0000000F;">
-                <div class="d-flex align-items-center justify-content-between color-primary" style="opacity: 70%;">
+                <div class="d-flex align-items-center justify-content-between color-primary" style="opacity: 70%;"  >
                     <div>
                         Trimestre 4
                     </div>
@@ -199,100 +212,142 @@
         </div>
     </div>
 
-    <div class="card card-body mt-4" style="background-color: #DCF2FF;">
-        <div class="row">
-            <div class="col-12 form-group">
-                <select name="" id="area-select" class="form-control" style="background-color: #fff;">
-                    <option value="" selected disabled>Área</option>
-                </select>
-            </div>
-        </div>
+    <div class="card card-body mt-3">
+        <h5>Resultado por área</h5>
+        grahp
+    </div>
 
-        <div class="row mt-4" style="font-size: 15px; color: #9E50AA;">
-            <div class="col-md-4">
-                <div class="p-3 rounded-lg" style="background-color: #fff; box-shadow: 0px 1px 4px #0000000F;">
-                    <div class="d-flex align-items-center justify-content-between color-primary">
-                        <div>
-                            Promedio General
-                        </div>
-                        <div>
-                            <small>Resultado</small> <strong>67%</strong>
-                        </div>
+    <div class="card card-body" style="background-color: #BF9CC4;">
+        <div class="form-group">
+            <select name="" id="area-select" class="form-control" style="background-color: #fff;">
+                <option value="" selected disabled>Área</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row mt-4" style="font-size: 15px; color: #9E50AA;">
+        <div class="col-md-4">
+            <div class="p-3 rounded-lg" style="background-color: #fff; box-shadow: 0px 1px 4px #0000000F;">
+                <div class="d-flex align-items-center justify-content-between color-primary">
+                    <div>
+                        Promedio General
                     </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="p-3 rounded-lg" style="background-color: #fff; box-shadow: 0px 1px 4px #0000000F;">
-                    <div class="d-flex align-items-center justify-content-between color-primary">
-                        <div>
-                            Objetivos
-                        </div>
-                        <div>
-                            <small>Resultado</small> <strong>67%</strong>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="p-3 rounded-lg" style="background-color: #fff; box-shadow: 0px 1px 4px #0000000F;">
-                    <div class="d-flex align-items-center justify-content-between color-primary">
-                        <div>
-                            Competencias
-                        </div>
-                        <div>
-                            <small>Resultado</small> <strong>67%</strong>
-                        </div>
+                    <div>
+                        <small>Resultado</small> <strong>67%</strong>
                     </div>
                 </div>
             </div>
         </div>
-
-        <div class="row mt-4">
-            <div class="col-md-6">
-                <div class="card card-body">
-                    <h5>Cumplimiento de Objetivos</h5>
-                    grahp
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card card-body">
-                    <h5>Resultado de evaluación por escalas</h5>
-
-                    grahp
+        <div class="col-md-4">
+            <div class="p-3 rounded-lg" style="background-color: #fff; box-shadow: 0px 1px 4px #0000000F;">
+                <div class="d-flex align-items-center justify-content-between color-primary">
+                    <div>
+                        Objetivos
+                    </div>
+                    <div>
+                        <small>Resultado</small> <strong>67%</strong>
+                    </div>
                 </div>
             </div>
         </div>
+        <div class="col-md-4">
+            <div class="p-3 rounded-lg" style="background-color: #fff; box-shadow: 0px 1px 4px #0000000F;">
+                <div class="d-flex align-items-center justify-content-between color-primary">
+                    <div>
+                        Competencias
+                    </div>
+                    <div>
+                        <small>Resultado</small> <strong>67%</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <div class="card card-body">
-            <h5>Cumplimiento de Competencias</h5>
-            graph
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="card card-body">
+                <h5>Cumplimiento de Objetivos</h5>
+                grahp
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card card-body">
+                <h5>Resultado de evaluación por escalas</h5>
+
+                grahp
+            </div>
         </div>
     </div>
 
     <div class="card card-body">
-        <nav class="nav-evaluaciones-card mb-0">
-            <div class="nav nav-tabs" role="tablist" style="margin-bottom: 0px !important;">
-                <a class="nav-link active" id="" data-type="empleados" data-toggle="tab"
-                    href="#nav-config-obj-1" role="tab" aria-controls="nav-empleados" aria-selected="true">
-                    Definir Categorías
-                </a>
-                <a class="nav-link" id="" data-type="calendario-comunicacion" data-toggle="tab"
-                    href="#nav-config-obj-2" role="tab" aria-controls="nav-config-obj-2" aria-selected="false">
-                    Definir Escalas
-                </a>
-            </div>
-        </nav>
-        <hr class="mt-0 mb-4">
-        <div class="tab-content" id="nav-tabContent">
+        <h5>Cumplimiento de Competencias</h5>
+        graph
+    </div>
 
-            <div class="tab-pane mb-4 fade show active" id="nav-config-obj-1" role="tabpanel"
-                aria-labelledby="nav-config-obj-1">
+    <div class="card card-body">
+        <div class="d-flex w-100">
+            <div class="">
+                <span>Evaluaciones contestadas</span>
+                <div class="progress">
+                    <div class="progress-bar bg-warning" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            </div>
+            <div class="">
+                <span>Total</span>
+                <p>
+                    54/100
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="card card-body">
+
+        <div class="row">
+            <div class="col-md-3 form-group">
+                <select name="" id="" class="form-control">
+                    <option value="" selected disabled>Área</option>
+                </select>
+            </div>
+            <div class="col-md-3 form-group">
+                <select name="" id="" class="form-control">
+                    <option disabled selected value="">Colaborador</option>
+                </select>
+            </div>
+            <div class="col-md-3 form-group">
+                <select name="" id="" disabled select class="form-control">
+                    <option value="">Evaluador</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Buscar ...">
+            </div>
+        </div>
+    </div>
+
+    <nav class="mt-5">
+        <div class="nav nav-tabs" role="tablist" style="margin-bottom: 0px !important;">
+            <a class="nav-link active" id="" data-type="empleados" data-toggle="tab" href="#nav-config-obj-1"
+                role="tab" aria-controls="nav-empleados" aria-selected="true">
+                Definir Categorías
+            </a>
+            <a class="nav-link" id="" data-type="calendario-comunicacion" data-toggle="tab"
+                href="#nav-config-obj-2" role="tab" aria-controls="nav-config-obj-2" aria-selected="false">
+                Definir Escalas
+            </a>
+        </div>
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+
+        <div class="tab-pane mb-4 fade show active" id="nav-config-obj-1" role="tabpanel"
+            aria-labelledby="nav-config-obj-1">
+            <div class="card card-body">
 
                 <table id="datatable-empleados-config-evaluaciones" class="table table-bordered w-100 datatable">
                     <thead class="thead-dark">
                         <tr>
                             <th>Nombre</th>
-                            <th>Área</th>
                             <th>Evaluadores</th>
                             <th>Avance</th>
                             <th>Actividad</th>
@@ -301,7 +356,6 @@
                     <tbody>
                         <tr>
                             <td>Nombre</td>
-                            <td>Área</td>
                             <td>Evaluadores</td>
                             <td>Avance</td>
                             <td>Actividad</td>
@@ -310,8 +364,10 @@
                 </table>
 
             </div>
+        </div>
 
-            <div class="tab-pane mb-4 fade" id="nav-config-obj-2" role="tabpanel" aria-labelledby="nav-config-obj-2">
+        <div class="tab-pane mb-4 fade" id="nav-config-obj-2" role="tabpanel" aria-labelledby="nav-config-obj-2">
+            <div class="card card-body">
                 <div class="datatable-fix">
                     <table id="" class="table table-bordered w-100 datatable">
                         <thead class="thead-dark">
@@ -433,7 +489,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 @endsection
 
 @section('scripts')

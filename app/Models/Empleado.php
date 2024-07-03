@@ -384,6 +384,21 @@ class Empleado extends Model implements Auditable
         });
     }
 
+    public static function getaltaAllObjetivosGenerales()
+    {
+        return Cache::remember('Empleados:empleados_alta_all_objetivos_generales', 3600 * 6, function () {
+            return self::alta()->select(
+                'n_empleado',
+                'name',
+                'puesto_id',
+                'area_id',
+                'perfil_empleado_id',
+                'id',
+                'foto'
+            )->with(['objetivos', 'area', 'perfil', 'puestoRelacionado'])->get();
+        });
+    }
+
     public static function getaltaAllObjetivoSupervisorChildren()
     {
         return Cache::remember('Empleados:empleados_alta_all_evaluaciones', 3600 * 6, function () {
@@ -777,7 +792,25 @@ class Empleado extends Model implements Auditable
 
     public function objetivos()
     {
-        return $this->hasMany('App\Models\RH\ObjetivoEmpleado', 'empleado_id', 'id');
+        return $this->hasMany('App\Models\RH\ObjetivoEmpleado', 'empleado_id', 'id')
+            ->where('papelera', false)
+            ->where('ev360', true);
+    }
+
+    public function objetivosGenerales()
+    {
+        return $this->hasMany('App\Models\RH\ObjetivoEmpleado', 'empleado_id', 'id')
+            ->where('papelera', false)
+            ->get();
+    }
+
+    public function objetivosPeriodo($periodo)
+    {
+        return $this->hasMany('App\Models\RH\ObjetivoEmpleado', 'empleado_id', 'id')
+            ->with('objetivo.tipo', 'objetivo.metrica', 'objetivo.escalas')
+            ->where($periodo, true)
+            ->where('papelera', false)
+            ->get();
     }
 
     public function perfil()
