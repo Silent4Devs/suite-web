@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\V1\PortalComunicacion\PortalComunicacionController;
 use App\Http\Controllers\Api\v1\AnalisisRiesgo\FormulasController;
 use App\Http\Controllers\Api\V1\AnalisisRiesgo\templateAnalisisRiesgoController;
 use App\Http\Controllers\Api\V1\Comunicados\ComunicadosApiController;
+use App\Http\Controllers\Api\V1\ContadorSolicitudes\ContadorSolicitudesApiController;
 use App\Http\Controllers\Api\V1\SolicitudPermisoGoceSueldo\SolicitudPermisoGoceSueldoApiController;
 use App\Http\Controllers\Api\V1\Timesheet\TimesheetApiController;
 
@@ -21,6 +22,9 @@ Route::group(['prefix' => 'api/v1', 'as' => 'api.', 'namespace' => 'Api\v1', 'mi
 
     Route::get('portal-comunicacion', [PortalComunicacionController::class, 'index']);
     Route::get('comunicados', [ComunicadosApiController::class, 'index']);
+
+    Route::get('counterSolicitud', [ContadorSolicitudesApiController::class, 'contadorSolicitudes']);
+    Route::get('counterGeneralSolicitud', [ContadorSolicitudesApiController::class, 'contadorGeneralSolicitudes']);
 
     Route::get('solicitud-dayoff', [SolicitudDayOffApiController::class, 'index']);
     Route::get('solicitud-dayoff/create', [SolicitudDayOffApiController::class, 'create']);
@@ -36,7 +40,6 @@ Route::group(['prefix' => 'api/v1', 'as' => 'api.', 'namespace' => 'Api\v1', 'mi
     Route::delete('solicitud-dayoff/{id}/destroy', [SolicitudDayOffApiController::class, 'destroy']);
 
     Route::get('solicitud-vacaciones', [SolicitudVacacionesApiController::class, 'index']);
-    Route::get('solicitud-vacaciones/aprobacionMenu', [SolicitudVacacionesApiController::class, 'aprobacionMenu']);
     Route::get('solicitud-vacaciones/create', [SolicitudVacacionesApiController::class, 'create']);
     Route::get('solicitud-vacaciones/{id}/show', [SolicitudVacacionesApiController::class, 'show']);
     Route::post('solicitud-vacaciones/store', [SolicitudVacacionesApiController::class, 'store']);

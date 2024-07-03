@@ -560,24 +560,6 @@ class SolicitudVacacionesApiController extends Controller
         }
     }
 
-    public function aprobacionMenu()
-    {
-        //abort_if(Gate::denies('modulo_aprobacion_ausencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $usuario = User::getCurrentUser();
-        $solicitud_vacacion = SolicitudVacaciones::where('autoriza', $usuario->empleado->id)->where('aprobacion', 1)->count();
-        $solicitud_dayoff = SolicitudDayOff::where('autoriza', $usuario->empleado->id)->where('aprobacion', 1)->count();
-        $solicitud_permiso = SolicitudPermisoGoceSueldo::where('autoriza', $usuario->empleado->id)->where('aprobacion', 1)->count();
-        $solicitudes_pendientes = $solicitud_vacacion + $solicitud_dayoff + $solicitud_permiso;
-
-        return response(json_encode([
-            'solicitud_vacacion' => $solicitud_vacacion,
-            'solicitud_dayoff' => $solicitud_dayoff,
-            'solicitud_permiso' => $solicitud_permiso,
-            'solicitudes_pendientes' => $solicitudes_pendientes,
-        ]), 200)->header('Content-Type', 'application/json');
-        // return view('admin.solicitudVacaciones.aprobacion-menu', compact('solicitud_dayoff', 'solicitud_vacacion', 'solicitud_permiso'));
-    }
-
     public function encodeSpecialCharacters($url)
     {
         // Handle spaces
