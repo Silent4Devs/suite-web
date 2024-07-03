@@ -13,9 +13,7 @@ class TemplateTop extends Component
 
     protected $listeners = ['destroy'];
 
-    public function mount()
-    {
-    }
+    public function mount() {}
 
     public function render()
     {

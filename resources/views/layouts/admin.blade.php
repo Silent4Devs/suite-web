@@ -10,20 +10,19 @@
     <title>{{ trans('panel.site_title') }}</title>
 
     <!-- Principal Styles -->
-    <link href="{{ asset('css/app.css') }}{{ config('app.cssVersion') }}" rel="stylesheet">
-    <link href="{{ asset('css/global/style.css') }}{{ config('app.cssVersion') }}" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/global/loader.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/global/admin.css') }}{{ config('app.cssVersion') }}">
-    <link rel="stylesheet" href="{{ asset('css/rds.css') }}{{ config('app.cssVersion') }}">
-    <link href="{{ asset('css/global/custom.css') }}{{ config('app.cssVersion') }}" rel="stylesheet" />
-    <link rel="stylesheet" href="{{ asset('vendor/file-manager/css/file-manager.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/global/darkMode.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/global/loader.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/global/custom.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/file-manager/css/file-manager.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/yearpicker.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/global/responsive.css') }}">
-
-    <link rel="stylesheet" href="{{ asset('css/global/TbButtons.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/global/TbColorsGlobal.css') }}">
-
+    @vite(['public/css/app.css'])
+    @vite(['public/css/global/style.css'])
+    @vite(['public/css/global/admin.css'])
+    @vite(['public/css/rds.css'])
+    {{-- <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/global/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/global/admin.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/rds.css') }}"> --}}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/global/responsive.css') }}">
     @yield('css')
     @yield('styles')
     <!-- End Principal Styles -->
@@ -75,7 +74,6 @@
     @yield('styles')
     @livewireStyles
 
-    {{-- Laravel vite --}}
     @vite(['resources/js/app.js'])
     {{-- Laravel vite --}}
 
@@ -404,11 +402,6 @@
                                         <i class="material-symbols-outlined i-direct">keyboard_arrow_down</i>
                                     </a>
                                     <ul>
-                                        @can('lista_distribucion_acceder')
-                                            <li><a href="{{ asset('admin/lista-distribucion') }}">Lista de
-                                                    distribución</a>
-                                            </li>
-                                        @endcan
                                         @can('clausulas_auditorias_acceder')
                                             <li><a href="{{ route('admin.auditoria-clasificacion') }}">Clasificación</a>
                                             </li>
@@ -439,6 +432,11 @@
                                         @can('crear_area_acceder')
                                             <li><a href="{{ route('admin.areas.index') }}">Crear Áreas</a></li>
                                         @endcan
+                                        @can('lista_distribucion_acceder')
+                                            <li><a href="{{ asset('admin/lista-distribucion') }}">Lista de
+                                                    distribución</a>
+                                            </li>
+                                        @endcan
                                         @can('lista_informativa_acceder')
                                             <li>
                                                 <a href="{{ route('admin.lista-informativa.index') }}">Lista Informativa</a>
@@ -465,6 +463,8 @@
                                         @can('glosario_acceder')
                                             <li><a href="{{ route('admin.glosarios.index') }}">Glosario</a></li>
                                         @endcan
+
+                                        <li><a href="{{ route('admin.module_firmas') }}">Firmas</a></li>
                                     </ul>
                                 </li>
                             @endcan

@@ -18,7 +18,6 @@ use App\Models\FirmasRequisiciones;
 use App\Models\ListaDistribucion;
 use App\Models\Organizacion;
 use App\Models\User;
-use App\Services\RequisicionService;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -109,64 +108,7 @@ class RequisicionesCreateComponent extends Component
 
     public $saludo = true;
 
-    protected $requisicionService;
-
-    public function __construct($id = null)
-    {
-        parent::__construct($id);
-        $this->requisicionService = app(RequisicionService::class);
-    }
-
-    public function postData()
-    {
-        $result = $this->requisicionService->postDataToPythonAPI($this->filename);
-
-        return $result;
-    }
-
-    public function postDataLoad()
-    {
-        $result = $this->requisicionService->postDataLoadPythonAPI($this->path);
-
-        return $result;
-    }
-
-    public function postDataClean()
-    {
-        $result = $this->requisicionService->postDataCleanPythonAPI($this->path);
-
-        return $result;
-    }
-
-    public function postDataScaned()
-    {
-        $result = $this->requisicionService->postDataScanedPythonAPI($this->path);
-
-        return $result;
-    }
-
-    public function postDataExtract()
-    {
-        $result = $this->requisicionService->postDataExtractPythonAPI($this->image);
-
-        return $result;
-    }
-
-    public function postDataText()
-    {
-        $result = $this->requisicionService->postDataTextPythonAPI($this->filePath, $this->filename);
-
-        return $result;
-    }
-
-    public function askQuestion()
-    {
-        $response = $this->requisicionService->postQuestionToPythonAPI($this->question);
-
-        $this->respuesta = response()->json($response);
-
-        $this->respuesta = $response;
-    }
+    public $alerta_jefes = false;
 
     public function actualizarCountProveedores()
     {
@@ -204,6 +146,13 @@ class RequisicionesCreateComponent extends Component
                 'comprador_id' => $data['comprador_id'],
                 'sucursal_id' => $data['sucursal_id'],
             ]);
+            $firmas_requi = FirmasRequisiciones::create([
+                'requisicion_id' => $this->nueva_requisicion->id,
+                'solicitante_id' => $usuario->empleado->id,
+                // 'jefe_id' => $responsable->id,
+                // 'responsable_finanzas_id' => $responsable->id,
+                // 'comprador_id' => $comprador->user->empleado->id,
+            ]);
         } else {
             $this->nueva_requisicion = KatbolRequsicion::create([
                 'fecha' => $data['fecha'],
@@ -213,6 +162,13 @@ class RequisicionesCreateComponent extends Component
                 'contrato_id' => $data['contrato_id'],
                 'comprador_id' => $data['comprador_id'],
                 'sucursal_id' => $data['sucursal_id'],
+            ]);
+            $firmas_requi = FirmasRequisiciones::create([
+                'requisicion_id' => $this->nueva_requisicion->id,
+                'solicitante_id' => $usuario->empleado->id,
+                // 'jefe_id' => $responsable->id,
+                // 'responsable_finanzas_id' => $responsable->id,
+                // 'comprador_id' => $comprador->user->empleado->id,
             ]);
         }
 
@@ -286,23 +242,6 @@ class RequisicionesCreateComponent extends Component
                             || $cotizacion_actual->getClientOriginalExtension() === 'csv'
                         ) {
                             $this->habilitar_alerta = false;
-                            $this->bandera = true;
-
-                            $this->filename = 'requisicion_'.$this->requisicion_id.'cotizacion_'.$cotizacion_count.'_'.uniqid().'.'.$cotizacion_actual->getClientOriginalExtension();
-
-                            $this->postData();
-
-                            // Ruta donde se guardará el archivo
-                            $ruta = 'cotizaciones_requisiciones_proveedores/';
-
-                            // Guardar el archivo en el disco 'public' con la ruta específica
-                            $path = $cotizacion_actual->storeAs($ruta, $this->filename, 'public');
-
-                            // Asignar la ruta completa del archivo a $this->filePath
-                            $this->filePath = storage_path('app/public/'.$path);
-
-                            $this->postDataText();
-
                             $proveedor_req->cotizacion = $this->filename;
                             $proveedor_req->save();
                         } else {
@@ -368,44 +307,6 @@ class RequisicionesCreateComponent extends Component
         $this->habilitar_proveedores = true;
     }
 
-    public function openChat()
-    {
-        $this->chatOpen = true;
-
-        $this->saludo = true;
-
-        $this->question = 'El presente documento trata de...';
-
-        $this->askQuestion();
-    }
-
-    // public function archivoCargado($index)
-    // {
-    //     $cotizacion_actual = $this->cotizaciones[$index];
-
-    //     $this->filename = 'requisicion_'.$this->requisicion_id.'cotizazcion_'.$index.'_'.uniqid().'.'.$cotizacion_actual->getClientOriginalExtension();
-
-    //     $this->postData();
-
-    //     $this->filePath = $cotizacion_actual->storeAs('public/cotizaciones_requisiciones_proveedores/', $this->filename);
-
-    //     $this->postDataText();
-
-    //     // También puedes enviar mensajes de éxito o error al usuario
-    //     session()->flash('message', 'Archivo cargado exitosamente!');
-    // }
-
-    public function closeChat()
-    {
-        $this->chatOpen = false;
-
-        $this->bandera = false;
-
-        $this->path = $this->filename;
-
-        $this->postDataClean();
-    }
-
     public function dataFirma()
     {
         $this->habilitar_proveedores = false;
@@ -416,7 +317,45 @@ class RequisicionesCreateComponent extends Component
         $comprador = KatbolComprador::where('id', $requisicion->comprador_id)->first();
         $contrato = KatbolContrato::where('id', $requisicion->contrato_id)->first();
         $this->emit('render_firma');
+        $this->validacionLista();
         $this->habilitar_firma = true;
+    }
+
+    public function validacionLista()
+    {
+        $user = User::getCurrentUser();
+        $alerta = false;
+        $responsable = null;
+
+        $listaReq = ListaDistribucion::where('modelo', 'Empleado')->first();
+        //Traemos participantes
+        $listaPart = $listaReq->participantes;
+
+        $jefe = $user->empleado->supervisor;
+        //Buscamos al supervisor por su id
+        $supList = $listaPart->where('empleado_id', $jefe->id)->first();
+
+        //Buscamos en que nivel se encuentra el supervisor
+        $nivel = $supList->nivel;
+
+        //traemos a todos los participantes correspondientes a ese nivel
+        $participantesNivel = $listaPart->where('nivel', $nivel)->sortBy('numero_orden');
+
+        //Buscamos 1 por 1 los participantes del nivel (area)
+        foreach ($participantesNivel as $key => $partNiv) {
+            //Si su estado esta activo se le manda el correo
+            if ($partNiv->empleado->disponibilidad->disponibilidad == 1) {
+
+                $responsable = $partNiv->empleado;
+                $supervisor = $responsable->email;
+
+                break;
+            }
+        }
+
+        if (empty($responsable)) {
+            $this->emit('sin_responsables');
+        }
     }
 
     public function removeUnicodeCharacters($string)
@@ -470,9 +409,9 @@ class RequisicionesCreateComponent extends Component
                 }
             }
 
-            $firmas_requi = FirmasRequisiciones::create([
-                'requisicion_id' => $this->nueva_requisicion->id,
-                'solicitante_id' => $user->empleado->id,
+            $firmas_requi = FirmasRequisiciones::where('requisicion_id', $this->nueva_requisicion->id)->first();
+
+            $firmas_requi->update([
                 'jefe_id' => $responsable->id,
                 // 'responsable_finanzas_id' => $responsable->id,
                 // 'comprador_id' => $comprador->user->empleado->id,

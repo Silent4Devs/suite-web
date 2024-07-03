@@ -105,8 +105,8 @@
                     <span class="help-block">{{ trans('cruds.user.fields.roles_helper') }}</span>
                 </div>
                 <div class="form-group">
-                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn-secundario">Cancelar</a>
-                    <button class="btn btn-primario" type="submit">
+                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn btn-primary">Cancelar</a>
+                    <button class="btn btn-primary" type="submit">
                         {{ trans('global.save') }}
                     </button>
                 </div>

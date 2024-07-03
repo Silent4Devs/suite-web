@@ -71,6 +71,6 @@ class Kernel extends HttpKernel
     ];
 
     protected $middlewareAliases = [
-        //'doNotCacheResponse' => \Spatie\ResponseCache\Middlewares\DoNotCacheResponse::class,
+        'doNotCacheResponse' => \Spatie\ResponseCache\Middlewares\DoNotCacheResponse::class,
     ];
 }

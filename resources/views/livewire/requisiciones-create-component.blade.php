@@ -365,12 +365,11 @@
                                                             Carga de cotizaciones <font class="asterisco">*</font>
                                                         </label>
                                                         <input type="file" required
-                                                               class="modal-cotizacion form-control-file"
-                                                               name="cotizacion_{{ $i }}"
-                                                               wire:model="cotizaciones.{{ $i }}"
-                                                               data-count="{{ $i }}"
-                                                               accept=".pdf, .docx, .pptx, .point, .xml, .jpeg, .jpg, .png, .xlsx, .xlsm, .csv"
-                                                               >
+                                                            class="modal-cotizacion form-control-file"
+                                                            name="cotizacion_{{ $i }}"
+                                                            wire:model="cotizaciones.{{ $i }}"
+                                                            data-count="{{ $i }}"
+                                                            accept=".pdf, .docx, .pptx, .point, .xml, .jpeg, .jpg, .png, .xlsx, .xlsm, .csv">
                                                     </div>
                                                 </div>
                                                 <br>
@@ -380,14 +379,16 @@
                                                     <span wire:loading wire:target="openChat">
                                                         <i class="fas fa-spinner fa-spin"></i> Cargando...
                                                     </span>
-                                                  </button>
-                                                  <style>
+                                                </button>
+                                                <style>
                                                     .chat-wrapper {
                                                         position: fixed;
                                                         bottom: 20px;
                                                         right: 20px;
-                                                        width: 500px; /* Aumenta el ancho de la caja */
-                                                        height: 350px; /* Aumenta el alto de la caja */
+                                                        width: 500px;
+                                                        /* Aumenta el ancho de la caja */
+                                                        height: 350px;
+                                                        /* Aumenta el alto de la caja */
                                                         display: flex;
                                                         align-items: center;
                                                         justify-content: center;
@@ -396,24 +397,28 @@
                                                     .chat-box {
                                                         width: 100%;
                                                         height: 100%;
-                                                        background: rgba(255, 255, 255, 0.8); /* Transparente */
+                                                        background: rgba(255, 255, 255, 0.8);
+                                                        /* Transparente */
                                                         border: 1px solid #ddd;
                                                         border-radius: 20px;
                                                         box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
                                                         display: flex;
                                                         flex-direction: column;
                                                         z-index: 1000;
-                                                        overflow: hidden; /* Para asegurar que los bordes redondeados se mantengan */
+                                                        overflow: hidden;
+                                                        /* Para asegurar que los bordes redondeados se mantengan */
                                                     }
 
                                                     .chat-frame {
                                                         flex: 1;
-                                                        margin: 10px; /* Espacio para crear el efecto de marco */
+                                                        margin: 10px;
+                                                        /* Espacio para crear el efecto de marco */
                                                         border-radius: 20px;
                                                         overflow: hidden;
                                                         display: flex;
                                                         flex-direction: column;
-                                                        background: rgba(255, 255, 255, 0.9); /* Fondo transparente del marco */
+                                                        background: rgba(255, 255, 255, 0.9);
+                                                        /* Fondo transparente del marco */
                                                     }
 
                                                     .chat-header {
@@ -504,7 +509,8 @@
                                                                 <div class="chat-frame">
                                                                     <div class="chat-header">
                                                                         <h3>Chat Bot</h3>
-                                                                        <button class="close-btn" wire:click="closeChat">&times;</button>
+                                                                        <button class="close-btn"
+                                                                            wire:click="closeChat">&times;</button>
                                                                     </div>
                                                                     <div class="chat-content">
                                                                         <!-- Mensajes del chat -->
@@ -522,14 +528,16 @@
                                                                         </span>
                                                                     </div>
                                                                     <div class="chat-input">
-                                                                        <input type="text" id="question" wire:model.lazy="question">
-                                                                        <button type="submit" wire:click.prevent="askQuestion">Enviar</button>
+                                                                        <input type="text" id="question"
+                                                                            wire:model.lazy="question">
+                                                                        <button type="submit"
+                                                                            wire:click.prevent="askQuestion">Enviar</button>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                  @endif
-                                               </div>
+                                                    @endif
+                                                </div>
                                             @endif
                                         @endisset
                                     @endif
@@ -687,7 +695,7 @@
                                         <strong>URL:</strong><br><br>
                                         {{ $proveedor->url }}
                                     </div>
-                                        </div>
+                                </div>
                             </div>
                         @endforeach
 
@@ -852,9 +860,9 @@
     </div>
 
     @if ($habilitar_alerta_cotizacion)
-    <b>
-        <H1>Ocurrio algo Inesperado Intentelo Nuevamente</H1>
-    </b>
+        <b>
+            <H1>Ocurrio algo Inesperado Intentelo Nuevamente</H1>
+        </b>
     @endif
 
     @if ($habilitar_alerta)
@@ -901,9 +909,33 @@
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script type="text/javascript" src="{{ asset('js/jquery.signature.min.js') }}"></script>
 
-
-
     @section('scripts')
+        <script>
+            document.addEventListener('livewire:load', function() {
+                Livewire.on('sin_responsables', function() {
+                    Swal.fire({
+                        // title: 'No es posible acceder a esta vista.',
+                        imageUrl: `{{ asset('img/errors/cara-roja-triste.svg') }}`, // Replace with the path to your image
+                        imageWidth: 100, // Set the width of the image as needed
+                        imageHeight: 100,
+                        html: `<h4 style="color:red;">Colaboradores no disponibles</h4>
+        <br><p>Los colaboradores asignados se encuentran ausentes.</p><br>
+        <p>Es necesario acercarse con el administrador para solicitar que se agregue  un responsable, de lo contrario no podra firmar la requisición.</p>`,
+                        // icon: '{{ session('status') === 'success' ? 'success' : 'error' }}',
+                        showCancelButton: false,
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'Entendido.',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Redirect to another view after user clicks OK
+                            window.location.href =
+                                '{{ route('contract_manager.requisiciones') }}';
+                        }
+                    });
+                });
+            });
+        </script>
+
         <script>
             $(".not-select2").select2('destroy');
         </script>

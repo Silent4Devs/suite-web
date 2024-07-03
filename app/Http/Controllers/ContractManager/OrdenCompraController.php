@@ -280,6 +280,9 @@ class OrdenCompraController extends Controller
         $responsablesAusentes = [];
         $correosCopia = [];
 
+        $organizacion = Organizacion::getFirst();
+        $userEmail = $requisicion->email;
+
         if ($tipo_firma == 'firma_solicitante_orden') {
             $fecha = date('d-m-Y');
             $requisicion->fecha_firma_solicitante_orden = $fecha;
@@ -311,8 +314,7 @@ class OrdenCompraController extends Controller
             $correosCopia = array_merge($copiasNivel, $responsablesAusentes);
 
             // $user = 'lourdes.abadia@silent4business.com';
-            $organizacion = Organizacion::getFirst();
-
+            Mail::to($userEmail)->cc($correosCopia)->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
             // Mail::to('ldelgadillo@silent4business.com')->cc('aurora.soriano@silent4business.com')->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
         }
         if ($tipo_firma == 'firma_comprador_orden') {
@@ -322,6 +324,8 @@ class OrdenCompraController extends Controller
 
             // correo de finanzas
             $userEmail = $requisicion->email;
+            $organizacion = Organizacion::getFirst();
+            Mail::to($userEmail)->cc($correosCopia)->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
         }
 
         if ($tipo_firma == 'firma_finanzas_orden') {
@@ -336,8 +340,23 @@ class OrdenCompraController extends Controller
                 'estado_orden' => 'fin',
             ]);
 
-            $listaInformativa = ListaInformativa::where('modelo', $this->modelo)->first();
+            if (isset($requisicion->contrato->proyectoConvergencia->tipo)) {
+                if ($requisicion->contrato->proyectoConvergencia->tipo == 'Interno') {
+                    $tipo_orden = '	Ordenes de Compra - Internas';
+                    $orden_correo = 'Interno';
+                } elseif ($requisicion->contrato->proyectoConvergencia->tipo == 'Externo') {
+                    $tipo_orden = 'Ordenes de Compra - Externas';
+                    $orden_correo = 'Externo';
+                } else {
+                    $tipo_orden = 'Ordenes de Compra - Externas';
+                    $orden_correo = 'Externo';
+                }
+            } else {
+                $tipo_orden = 'Ordenes de Compra - Externas';
+                $orden_correo = 'Externo';
+            }
 
+            $listaInformativa = ListaInformativa::where('modelo', $this->modelo)->where('submodulo', $tipo_orden)->first();
             foreach ($listaInformativa->participantes as $key => $informado) {
                 $correos_informados[] = $informado->empleado->email;
             }
@@ -347,13 +366,9 @@ class OrdenCompraController extends Controller
             }
 
             $organizacionInformado = Organizacion::getFirst();
-
-            Mail::to($correos_informados)->queue(new OrdenCompraAprobada($requisicion, $organizacionInformado));
-
-            $userEmail = $requisicion->email;
+            Mail::to($correos_informados)->queue(new OrdenCompraAprobada($requisicion, $organizacionInformado, $orden_correo));
         }
 
-        $organizacion = Organizacion::getFirst();
         Mail::to($userEmail)->cc($correosCopia)->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
 
         return redirect(route('contract_manager.orden-compra'));

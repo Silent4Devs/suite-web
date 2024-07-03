@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyMinutasaltadireccionRequest;
+use App\Mail\EmpleadoEmail;
 use App\Mail\Minutas\MinutaConfirmacionSolicitud;
 use App\Mail\Minutas\MinutaRechazoPorEdicion;
 use App\Mail\Minutas\SolicitudDeAprobacion;
@@ -15,6 +16,8 @@ use App\Mail\SolicitudAprobacionMinuta;
 use App\Models\Empleado;
 use App\Models\ExternosMinutaDireccion;
 use App\Models\FilesRevisonDireccion;
+use App\Models\FirmaCentroAtencion;
+use App\Models\FirmaModule;
 use App\Models\HistoralRevisionMinuta;
 use App\Models\Minutasaltadireccion;
 use App\Models\Organizacion;
@@ -25,6 +28,7 @@ use App\Models\User;
 use App\Rules\ActividadesPlanAccionRule;
 use App\Rules\ParticipantesMinutasAltaDireccionRule;
 use App\Traits\ObtenerOrganizacion;
+use Auth;
 use Carbon\Carbon;
 use Gate;
 use Illuminate\Http\Request;
@@ -157,6 +161,7 @@ class MinutasaltadireccionController extends Controller
                 ];
             }
         }*/
+
         $participantes = json_decode($request->input('participantes'), true);
 
         if (is_array($participantes)) {
@@ -407,6 +412,12 @@ class MinutasaltadireccionController extends Controller
     public function edit($id)
     {
         abort_if(Gate::denies('revision_por_direccion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $modulo = 3;
+
+        $submodulo = 8;
+
+        $firmas = FirmaCentroAtencion::with('empleado')->where('modulo_id', $modulo)->where('submodulo_id', $submodulo)->get();
+
         $minutasaltadireccion = Minutasaltadireccion::with([
             'participantes',
             // 'planes',
@@ -430,11 +441,26 @@ class MinutasaltadireccionController extends Controller
             ->get();
         $responsablereunions = Empleado::getAltaEmpleadosWithArea();
 
+        $firmaModules = FirmaModule::where('modulo_id', $modulo)->where('submodulo_id', $submodulo)->first();
+
+        if ($firmaModules) {
+            $participantesIds = json_decode($firmaModules->participantes, true); // Decodificar como array
+
+            if ($participantesIds) {
+                $firmaModules->empleados = User::whereIn('id', $participantesIds)
+                    ->get();
+            } else {
+                $firmaModules->empleados = collect();
+            }
+        }
+
         return view('admin.minutasaltadireccions.edit', compact(
             'minutasaltadireccion',
             'actividades',
             'participantesWithAsistencia',
-            'responsablereunions'
+            'responsablereunions',
+            'firmaModules',
+            'firmas'
         ));
     }
 
@@ -467,10 +493,42 @@ class MinutasaltadireccionController extends Controller
         }
     }
 
+    public function removeUnicodeCharacters($string)
+    {
+        return preg_replace('/[^\x00-\x7F]/u', '', $string);
+    }
+
     public function update(Request $request, Minutasaltadireccion $minutasaltadireccion)
     {
         abort_if(Gate::denies('revision_por_direccion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $modulo = 3;
+
+        $submodulo = 8;
+
+        $firmaModule = FirmaCentroAtencion::create([
+            'modulo_id' => $modulo,
+            'submodulo_id' => $submodulo,
+            'user_id' => Auth::id(),
+            'firma' => $request->firma,
+        ]);
+
         $this->processUpdate($request, $minutasaltadireccion, true);
+
+        $empleadoIds = $request->aprobadores;
+
+        if (empty($empleadoIds) || ! is_array($empleadoIds)) {
+            return back()->with('error', 'No se seleccionaron aprobadores para la aprobacion.');
+        }
+
+        // Obtener empleados desde la base de datos
+        $empleados = User::select('id', 'name', 'email')->whereIn('id', $empleadoIds)->get();
+
+        // Enviar correos electrónicos
+        foreach ($empleados as $empleado) {
+            Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->send(new EmpleadoEmail($empleado));
+        }
+
         if ($request->hasFile('files')) {
             $files = $request->file('files');
             foreach ($files as $file) {

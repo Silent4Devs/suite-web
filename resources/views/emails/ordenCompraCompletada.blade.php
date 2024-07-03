@@ -50,7 +50,7 @@
                                             height="70" src="{{ $logo }}"
                                             style="margin: auto; margin-top: 30px;"><br><br>
 
-                                        <h4>Proceso de Orden de Compra Completado</h4>
+                                        <h4>Proceso de Orden de Compra {{ $tipo }} Completado</h4>
 
                                         <p>Se ha completado el proceso de solicitud de la orden de compra No.
                                             {{ $requisicion->folio }}</p>

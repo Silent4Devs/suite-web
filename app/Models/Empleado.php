@@ -73,7 +73,6 @@ class Empleado extends Model implements Auditable
         'area_id' => 'int',
         'sede_id' => 'int',
         'mostrar_telefono' => 'boolean',
-
     ];
 
     public static $searchable = [
@@ -228,7 +227,7 @@ class Empleado extends Model implements Auditable
 
     public static function getAltaEmpleados()
     {
-        return Cache::remember('Empleados:empleados_alta', 3600 * 8, function () {
+        return Cache::remember('Empleados:empleados_alta', 3600 * 4, function () {
             return self::alta()->select('id', 'area_id', 'name', 'puesto', 'foto', 'genero')
                 ->get();
         });
@@ -282,6 +281,11 @@ class Empleado extends Model implements Auditable
             return self::select('id', 'name', 'foto', 'area_id', 'puesto_id', 'supervisor_id')
                 ->get();
         });
+    }
+
+    public function registrosHistorico()
+    {
+        return $this->hasMany(HistoricoEmpleados::class, 'empleado_id', 'id');
     }
 
     public static function getAllOrganigramaTree()

@@ -123,6 +123,7 @@ class ContratosController extends AppBaseController
             'pmp_asignado' => 'required',
             // 'signed' => 'required',
             // "creacion_proyecto" => "nullable|boolean",
+            'no_proyecto' => 'required_if:creacion_proyecto,false|int',
             'identificador' => 'required_if:creacion_proyecto,true|string|max:255',
             'tipo' => 'required_if:creacion_proyecto,true|string|max:255',
             'proyecto_name' => 'required_if:creacion_proyecto,true|string|max:255',
@@ -131,6 +132,7 @@ class ContratosController extends AppBaseController
             'fecha_fin_proyecto' => 'required_if:creacion_proyecto,true|date|after_or_equal:fecha_inicio_proyecto',
             'horas_proyecto' => 'nullable|integer|min:0',
         ], [
+            'no_proyecto.int' => 'Debe seleccionar un proyecto o crear uno.',
             'monto_pago.regex' => 'El monto total debe ser menor a 99,999,999,999.99',
             'maximo.regex' => 'El monto total debe ser menor a 99,999,999,999.99',
             'minimo.regex' => 'El monto total debe ser menor a 99,999,999,999.99',
@@ -409,8 +411,9 @@ class ContratosController extends AppBaseController
             $convenios = ConveniosModificatorios::where('contrato_id', '=', $contratos->id)->get();
             $dolares = DolaresContrato::where('contrato_id', $id)->first();
 
-            //dd($descargar_archivo);
-            return view('contract_manager.contratos-katbol.show', compact('proveedor_id', 'dolares', 'areas'))->with('contrato', $contrato)->with('proveedores', $proveedores)->with('contratos', $contratos)->with('ids', $id)->with('descargar_archivo', $descargar_archivo)->with('convenios', $convenios)->with('organizacion', $organizacion);
+            $proyectos = TimesheetProyecto::getAll()->where('estatus', 'proceso');
+
+            return view('contract_manager.contratos-katbol.show', compact('proveedor_id', 'dolares', 'areas', 'proyectos'))->with('contrato', $contrato)->with('proveedores', $proveedores)->with('contratos', $contratos)->with('ids', $id)->with('descargar_archivo', $descargar_archivo)->with('convenios', $convenios)->with('organizacion', $organizacion);
         } catch (\Exception $e) {
             return redirect()->route('contract_manager.contratos-katbol.index')->with('error', 'Ocurrio un error.');
         }
@@ -705,7 +708,11 @@ class ContratosController extends AppBaseController
             $contratos->save();
         }
 
-        return redirect(route('contract_manager.contratos-katbol.index'));
+        return response()->json([
+            'status' => 'success',
+            'message' => '¡Contrato actualizado correctamente!',
+        ]);
+        // return redirect(route('contract_manager.contratos-katbol.index'));
     }
 
     /**

@@ -13,7 +13,7 @@
     @include('partials.flashMessages')
     <h5 class="col-12 titulo_general_funcion">Orden De Compra</h5>
     <button type="button" class="btn  tb-btn-primary" id="filtrarBtn4"
-        style="position: relative; left: 75rem;">Aprobadores</button>
+        style="position: relative; left: 79rem;">Aprobadores</button>
     <div class="mt-5 card">
         <div class="card-body datatable-fix">
 
@@ -196,13 +196,19 @@
                             var firma_solicitante = row.firma_solicitante_orden;
                             var firma_comprador = row.firma_comprador_orden;
                             var firma_finanzas = row.firma_finanzas_orden;
+                            var estatus = row.estado_orden;
 
-                            if (!firma_solicitante && !firma_comprador && !firma_finanzas) {
-                                return '<h5><span class="badge badge-pill badge-primary">Por iniciar</span></h5>';
-                            } else if (firma_solicitante && firma_comprador && firma_finanzas) {
-                                return '<h5><span class="badge badge-pill badge-success">Firmada</span></h5>';
+                            if (estatus == "rechazado_oc") {
+                                return '<h5><span class="badge badge-pill badge-danger">Rechazado</span></h5>';
                             } else {
-                                return '<h5><span class="badge badge-pill badge-info">En curso</span></h5>';
+                                if (!firma_solicitante && !firma_comprador && !firma_finanzas) {
+                                    return '<h5><span class="badge badge-pill badge-primary">Por iniciar</span></h5>';
+                                } else if (firma_solicitante && firma_comprador && firma_finanzas) {
+                                    return '<h5><span class="badge badge-pill badge-success">Firmada</span></h5>';
+                                } else {
+                                    return '<h5><span class="badge badge-pill badge-info">En curso</span></h5>';
+                                }
+
                             }
                         }
                     },

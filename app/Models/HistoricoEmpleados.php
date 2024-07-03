@@ -9,7 +9,7 @@ class HistoricoEmpleados extends Model
 {
     use HasFactory;
 
-    protected $table = "historico_empleados";
+    protected $table = 'historico_empleados';
 
     protected $appends = ['relacion'];
 
@@ -19,6 +19,7 @@ class HistoricoEmpleados extends Model
         'fecha_cambio',
         'valor_anterior_id',
         'tabla_origen',
+        'user_id',
     ];
 
     public function empleadoHistorico()
@@ -29,6 +30,7 @@ class HistoricoEmpleados extends Model
     public function areaHistorico($id)
     {
         $area = Area::withTrashed()->find($id);
+
         return [
             'area' => $area,
         ];
@@ -37,6 +39,7 @@ class HistoricoEmpleados extends Model
     public function puestoHistorico($id)
     {
         $puesto = Puesto::withTrashed()->find($id);
+
         return ['puesto' => $puesto];
     }
 

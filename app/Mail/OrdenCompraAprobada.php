@@ -15,6 +15,7 @@ class OrdenCompraAprobada extends Mailable
 
     public $organizacion;
 
+    public $tipo;
     /**
      * Create a new message instance.
      *
@@ -22,10 +23,11 @@ class OrdenCompraAprobada extends Mailable
      */
 
     //prueba
-    public function __construct($nueva_requisicion, $organizacion)
+    public function __construct($nueva_requisicion, $organizacion, $tipo)
     {
         $this->requisicion = $nueva_requisicion;
         $this->organizacion = $organizacion;
+        $this->tipo = $tipo;
     }
 
     public function getBase64($url)
@@ -67,6 +69,6 @@ class OrdenCompraAprobada extends Mailable
             'img_linkedin' => $this->getBase64(asset('img/linkedin.png')),
             'img_facebook' => $this->getBase64(asset('img/facebook.png')),
             'img_requi' => $this->getBase64(asset('img/img_req.png')),
-        ])->subject('Orden de Compra Aprobada: '.$this->requisicion->referencia);
+        ])->subject('Orden de Compra ('.$this->tipo.') Aprobada: '.$this->requisicion->referencia);
     }
 }
