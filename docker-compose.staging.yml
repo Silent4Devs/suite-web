@@ -177,6 +177,60 @@ services:
     networks:
       - tabantajnetwork
 
+  filebeat:
+    image: elastic/filebeat:7.17.10
+    container_name: filebeat
+    user: root
+    platform: linux/amd64
+    volumes:
+      - ./filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml
+      - ./storage/logs:/var/log/laravel
+    environment:
+      - monitoring.enabled= true
+    depends_on:
+      - laravel.test
+    networks:
+      - sail-elk
+
+  elastic-search-tabantaj:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.8.1
+    container_name: elastic-search-tabantaj
+    restart: unless-stopped
+    tty: true
+    ports:
+      - 9200:9200
+      - 9300:9300
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - elasticsearch:/usr/share/elasticsearch/data
+    environment:
+      - node.name=elasticsearch
+      - cluster.name=docker-cluster
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+    networks:
+      - tabantajnetwork
+
+  logstash-tabantaj:
+    image: docker.elastic.co/logstash/logstash:8.8.1
+    container_name: logstash-tabantaj
+    restart: unless-stopped
+    tty: true
+    volumes:
+      - ./infra/logstash:/usr/share/logstash/pipeline
+    environment:
+      ELASTICSEARCH_HOST: "http://192.168.9.78"
+      ELASTICSEARCH_PORT: 9200
+    ports:
+      - 5044:5044
+    depends_on:
+      - elastic-search-tabantaj
+    networks:
+      - tabantajnetwork
+
 volumes:
   tabantaj-db:
     driver: local
@@ -195,160 +249,103 @@ volumes:
 
 networks:
   tabantajnetwork:
+#elasticsearch-logs-tabantaj:
+#   image: docker.elastic.co/elasticsearch/elasticsearch:8.8.1
+#   container_name: elasticsearch-logs-tabantaj
+#   environment:
+#     - node.name=elasticsearch-logs
+#     - cluster.name=docker-cluster
+#     - discovery.type=single-node
+#     - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+#   ulimits:
+#     memlock:
+#       soft: -1
+#       hard: -1
+#   volumes:
+#     - elasticsearch-logs:/usr/share/elasticsearch/data
+#   ports:
+#     - 9201:9200
+#     - 9301:9300
+#   networks:
+#     - tabantajnetwork
+# prometheus-tabantaj:
+#   image: prom/prometheus
+#   container_name: prometheus-tabantaj
+#   restart: unless-stopped
+#   tty: true
+#   ports:
+#     - 9090:9090
+#   volumes:
+#     - ./infra/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+#   networks:
+#     - tabantajnetwork
 
-  # prometheus-tabantaj:
-  #   image: prom/prometheus
-  #   container_name: prometheus-tabantaj
-  #   restart: unless-stopped
-  #   tty: true
-  #   ports:
-  #     - 9090:9090
-  #   volumes:
-  #     - ./infra/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
-  #   networks:
-  #     - tabantajnetwork
+# prometheus-node-exporter-tabantaj:
+#   image: prom/node-exporter:latest
+#   container_name: prometheus-node-exporter-tabantaj
+#   restart: unless-stopped
+#   volumes:
+#     - /proc:/host/proc:ro
+#     - /sys:/host/sys:ro
+#     - /:/rootfs:ro
+#   command:
+#     - '--path.procfs=/host/proc'
+#     - '--path.sysfs=/host/sys'
+#     - --collector.filesystem.ignored-mount-points
+#     - "^/(sys|proc|dev|host|etc|rootfs/var/lib/docker/containers|rootfs/var/lib/docker/overlay2|rootfs/run/docker/netns|rootfs/var/lib/docker/aufs)($$|/)"
+#   networks:
+#     - tabantajnetwork
+#   privileged: true
+#   depends_on:
+#     - prometheus-tabantaj
+#   ports:
+#     - 9101:9100
 
-  # prometheus-node-exporter-tabantaj:
-  #   image: prom/node-exporter:latest
-  #   container_name: prometheus-node-exporter-tabantaj
-  #   restart: unless-stopped
-  #   volumes:
-  #     - /proc:/host/proc:ro
-  #     - /sys:/host/sys:ro
-  #     - /:/rootfs:ro
-  #   command:
-  #     - '--path.procfs=/host/proc'
-  #     - '--path.sysfs=/host/sys'
-  #     - --collector.filesystem.ignored-mount-points
-  #     - "^/(sys|proc|dev|host|etc|rootfs/var/lib/docker/containers|rootfs/var/lib/docker/overlay2|rootfs/run/docker/netns|rootfs/var/lib/docker/aufs)($$|/)"
-  #   networks:
-  #     - tabantajnetwork
-  #   privileged: true
-  #   depends_on:
-  #     - prometheus-tabantaj
-  #   ports:
-  #     - 9101:9100
+# redis-exporter-tabantaj:
+#   image: oliver006/redis_exporter:v1.22.0-alpine
+#   container_name: redis-exporter-tabantaj
+#   restart: unless-stopped
+#   tty: true
+#   ports:
+#     - 9121:9121
+#   networks:
+#     - tabantajnetwork
+#   environment:
+#     REDIS_ADDR: "redis-tabantaj:6379"
+#     REDIS_USER: null
+#     REDIS_PASS: null
+#   # command:
+#   #   - --redis.addr=redis-tabantaj:6379
 
-  # redis-exporter-tabantaj:
-  #   image: oliver006/redis_exporter:v1.22.0-alpine
-  #   container_name: redis-exporter-tabantaj
-  #   restart: unless-stopped
-  #   tty: true
-  #   ports:
-  #     - 9121:9121
-  #   networks:
-  #     - tabantajnetwork
-  #   environment:
-  #     REDIS_ADDR: "redis-tabantaj:6379"
-  #     REDIS_USER: null
-  #     REDIS_PASS: null
-  #   # command:
-  #   #   - --redis.addr=redis-tabantaj:6379
+# nginx-exporter-tabantaj:
+#   image: nginx/nginx-prometheus-exporter:latest
+#   container_name: nginx-exporter-tabantaj
+#   restart: unless-stopped
+#   tty: true
+#   ports:
+#     - 9113:9113
+#   command:
+#     - -nginx.scrape-uri=http://nginx-tabantaj:8080/stub_status
+#   networks:
+#     - tabantajnetwork
 
-  # nginx-exporter-tabantaj:
-  #   image: nginx/nginx-prometheus-exporter:latest
-  #   container_name: nginx-exporter-tabantaj
-  #   restart: unless-stopped
-  #   tty: true
-  #   ports:
-  #     - 9113:9113
-  #   command:
-  #     - -nginx.scrape-uri=http://nginx-tabantaj:8080/stub_status
-  #   networks:
-  #     - tabantajnetwork
+# postgres-exporter-tabantaj:
+#   image: prometheuscommunity/postgres-exporter
+#   ports:
+#     - 9187:9187
+#   environment:
+#     DATA_SOURCE_NAME: "postgresql://homestead:secret@postgres-tabantaj:5432/homestead?sslmode=disable"
+#   networks:
+#     - tabantajnetwork
 
-  # postgres-exporter-tabantaj:
-  #   image: prometheuscommunity/postgres-exporter
-  #   ports:
-  #     - 9187:9187
-  #   environment:
-  #     DATA_SOURCE_NAME: "postgresql://homestead:secret@postgres-tabantaj:5432/homestead?sslmode=disable"
-  #   networks:
-  #     - tabantajnetwork
-
-  # grafana-tabantaj:
-  #   image: grafana/grafana:8.1.8
-  #   container_name: grafana-tabantaj
-  #   restart: unless-stopped
-  #   tty: true
-  #   volumes:
-  #     - /opt/grafana:/etc/grafana/provisioning
-  #   ports:
-  #     - 3000:3000
-  #   networks:
-  #     - tabantajnetwork
-
-  # elastic-search-tabantaj:
-  #   image: docker.elastic.co/elasticsearch/elasticsearch:8.8.1
-  #   container_name: elastic-search-tabantaj
-  #   restart: unless-stopped
-  #   tty: true
-  #   ports:
-  #     - 9200:9200
-  #     - 9300:9300
-  #   ulimits:
-  #     memlock:
-  #       soft: -1
-  #       hard: -1
-  #   volumes:
-  #     - elasticsearch:/usr/share/elasticsearch/data
-  #   environment:
-  #     - node.name=elasticsearch
-  #     - cluster.name=docker-cluster
-  #     - discovery.type=single-node
-  #     - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
-  #   networks:
-  #     - tabantajnetwork
-
-  # elasticsearch-logs-tabantaj:
-  #   image: docker.elastic.co/elasticsearch/elasticsearch:8.8.1
-  #   container_name: elasticsearch-logs-tabantaj
-  #   environment:
-  #     - node.name=elasticsearch-logs
-  #     - cluster.name=docker-cluster
-  #     - discovery.type=single-node
-  #     - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
-  #   ulimits:
-  #     memlock:
-  #       soft: -1
-  #       hard: -1
-  #   volumes:
-  #     - elasticsearch-logs:/usr/share/elasticsearch/data
-  #   ports:
-  #     - 9201:9200
-  #     - 9301:9300
-  #   networks:
-  #     - tabantajnetwork
-
-  # logstash-tabantaj:
-  #   image: docker.elastic.co/logstash/logstash:8.8.1
-  #   container_name: logstash-tabantaj
-  #   restart: unless-stopped
-  #   tty: true
-  #   volumes:
-  #     - ./infra/logstash:/usr/share/logstash/pipeline
-  #   environment:
-  #     ELASTICSEARCH_HOST: "http://192.168.9.78"
-  #     ELASTICSEARCH_PORT: 9200
-  #   ports:
-  #     - 5044:5044
-  #   depends_on:
-  #     - elastic-search-tabantaj
-  #   networks:
-  #     - tabantajnetwork
-
-  # cadvisor-tabantaj:
-  #   image: google/cadvisor:latest
-  #   container_name: cadvisor-tabantaj
-  #   restart: unless-stopped
-  #   depends_on:
-  #     - prometheus-tabantaj
-  #   volumes:
-  #     - /:/rootfs:ro
-  #     - /var/run:/var/run:rw
-  #     - /sys/fs/cgroup:/sys/fs/cgroup:ro
-  #     - /var/lib/docker/:/var/lib/docker:ro
-  #   ports:
-  #     - 8081:8080
-  #   networks:
-  #     - tabantajnetwork
+# grafana-tabantaj:
+#   image: grafana/grafana:8.1.8
+#   container_name: grafana-tabantaj
+#   restart: unless-stopped
+#   tty: true
+#   volumes:
+#     - /opt/grafana:/etc/grafana/provisioning
+#   ports:
+#     - 3000:3000
+#   networks:
+#     - tabantajnetwork

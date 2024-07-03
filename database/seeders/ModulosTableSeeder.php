@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\Modulo;
+use Illuminate\Database\Seeder;
 
 class ModulosTableSeeder extends Seeder
 {

@@ -16,10 +16,11 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('modulo_id');
             $table->unsignedBigInteger('submodulo_id');
-            $table->jsonb('participantes')->nullable();
+            $table->unsignedBigInteger('user_id');
             $table->longText('firma')->nullable();
             $table->timestamps();
 
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('modulo_id')->references('id')->on('modulos')->onDelete('cascade');
             $table->foreign('submodulo_id')->references('id')->on('submodulos')->onDelete('cascade');
         });

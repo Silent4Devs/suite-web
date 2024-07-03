@@ -217,6 +217,10 @@
         #info-bar {
             display: none;
         }
+
+        .select2-container--default .select2-selection--multiple {
+                border: 1px solid #ADD8E6 !important;
+        }
     </style>
 @endsection
 {{ Breadcrumbs::render('seguridad-edit', $incidentesSeguridad) }}
@@ -252,7 +256,7 @@
                                             <i class="bi bi-info mr-3" style="color: #3B82F6; font-size: 30px"></i>
                                         </div>
                                     </div>
-                                    <div class="col-11">
+                                    <div class="col-12" style="width: 300rem;">
                                         <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">
                                             Instrucciones</p>
                                         <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Al final de
@@ -731,6 +735,48 @@
                                 <textarea name="comentarios" class="form-control">{{ $incidentesSeguridad->comentarios }}</textarea>
                             </div>
 
+                            @php
+                            $userIsAuthorized = false;
+                            if($firmaModules && $firmaModules->empleados){
+                            foreach ($firmaModules->empleados as $empleado) {
+                                if ($empleado->id === Auth::id()) {
+                                    $userIsAuthorized = true;
+                                    break;
+                                }
+                            }
+                            }
+                        @endphp
+
+
+                        @if ($userIsAuthorized)
+                        <div class="mt-2 form-group col-md-12">
+                            <div class="" style="position: relative; left: 2rem;">
+                                <br>
+                                <h5><strong>Firma*</strong></h5>
+                                <p>
+                                    Indispensable firmar  antes de guardar y enviarla a aprobación.
+                                </p>
+                            </div>
+                            <div class="flex caja-firmar">
+                                <div class="flex-item"
+                                    style="display:flex; justify-content: center; flex-direction: column; align-items:center;">
+                                    <div id="firma_content" class="caja-space-firma"
+                                        style="display:flex; justify-content: center; flex-direction: column; align-items:center;">
+                                        <canvas id="firma_requi" width="500px" height="300px">
+                                            Navegador no compatible
+                                        </canvas>
+                                        <input type="hidden" name="firma" id="firma">
+                                    </div>
+                                    <div>
+                                        <div class="btn"
+                                            style="color: white; background:  gray !important; transform: translateY(-40px) scale(0.8);"
+                                            id="clear">Limpiar</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
+
                             <div class="mt-2 text-right form-group col-md-12">
                                 <a href="{{ asset('admin/desk') }}" class="btn btn_cancelar">Cancelar</a>
                                 <input type="submit" class="btn btn-success" value="Enviar">
@@ -749,7 +795,7 @@
                                             <i class="bi bi-info mr-3" style="color: #3B82F6; font-size: 30px"></i>
                                         </div>
                                     </div>
-                                    <div class="col-11">
+                                    <div class="col-12" style="width: 300rem;">
                                         <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">
                                             Instrucciones</p>
                                         <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Al final de
@@ -1042,96 +1088,44 @@
     </div>
 </div>
 
-<div class="card card-content" style="margin-bottom: 30px">
-    <form method="POST" id="myForm" action="{{ route('admin.firmas_seguridad.store') }}">
-    @csrf
-    <div class="" style="position: relative; left: 2rem;">
-        <br>
-        <h5><strong>Firma*</strong></h5>
-        <p>
-            Indispensable firmar  antes de guardar y enviarla a aprobación.
-        </p>
-    </div>
-    <div class="flex caja-firmar">
-        <div class="flex-item"
-            style="display:flex; justify-content: center; flex-direction: column; align-items:center;">
-            <div id="firma_content" class="caja-space-firma"
-                style="display:flex; justify-content: center; flex-direction: column; align-items:center;">
-                <canvas id="firma_requi" width="500px" height="300px">
-                    Navegador no compatible
-                </canvas>
-                <input type="hidden" name="firma" id="firma">
-            </div>
-            <div>
-                <div class="btn"
-                    style="color: white; background:  gray !important; transform: translateY(-40px) scale(0.8);"
-                    id="clear">Limpiar</div>
-            </div>
-            <div onclick="validar();" style="" class="btn btn-primary">Firmar</div>
-        </div>
-    </div>
-</form>
-</div>
 
+@php
+    $userIsAuthorized = false;
+    if($firmaModules && $firmaModules->empleados){
+    foreach ($firmaModules->empleados as $empleado) {
+        if ($empleado->id === Auth::id()) {
+            $userIsAuthorized = true;
+            break;
+        }
+    }
+   }
+@endphp
+
+
+@if ($userIsAuthorized)
 <div class="card card-content" style="margin-bottom: 30px">
-<div class="caja-firmas-doc">
-    <div class="flex" style="margin-top: 70px;">
-        <div class="flex-item">
-            @if ($firmas_guardadas_1)
-                <img src="{{ $firmas_guardadas_1->firma }}" class="img-firma">
-                <p></p>
-                <p></p>
-            @else
-                <div style="height: 137px;"></div>
-            @endif
-            <hr>
-            <p>
-                <small>FECHA, FIRMA Y NOMBRE DEL PARTICIPANTE </small>
-            </p>
+    <div class="caja-firmas-doc">
+        @foreach($firmas as $firma)
+        <div class="flex" style="margin-top: 70px;">
+            <div class="flex-item">
+                @if($firma->firma)
+                    <img src="{{ $firma->firma }}" class="img-firma" width="200" height="100">
+                    <p>Fecha: {{ $firma->created_at->format('Y-m-d') }}</p>
+                    <p>Firmante: {{ $firma->empleado->name }}</p>
+                @else
+                    <div style="height: 137px;"></div>
+                @endif
+                <hr>
+                <p>
+                    <small>FECHA, FIRMA Y NOMBRE DEL PARTICIPANTE </small>
+                </p>
+            </div>
         </div>
-        <div class="flex-item">
-            @if ($firmas_guardadas_1)
-                <img src="{{ $firmas_guardadas->firma }}" class="img-firma">
-                <p></p>
-                <p></p>
-            @else
-                <div style="height: 137px;"></div>
-            @endif
-            <hr>
-            <p>
-                <small>FECHA, FIRMA Y NOMBRE DEL PARTICIPANTE </small>
-            </p>
-        </div>
-    </div>
-    <div class="flex">
-        <div class="flex-item">
-            @if ($firmas_guardadas)
-                <img src="{{ $firmas_guardadas->firma }}" class="img-firma">
-                <p></p>
-                <p></p>
-            @else
-                <div style="height: 137px;"></div>
-            @endif
-            <hr>
-            <p>
-                <small>FECHA, FIRMA Y NOMBRE DEL PARTICIPANTE </small>
-            </p>
-        </div>
-        <div class="flex-item">
-            @if ($firmas_guardadas)
-                <img src="{{ $firmas_guardadas->firma }}" class="img-firma">
-                <p></p>
-                <p></p>
-            @else
-                <div style="height: 137px;"></div>
-            @endif
-            <hr>
-            <p>
-                <small>FECHA, FIRMA Y NOMBRE DEL PARTICIPANTE </small>
-            </p>
-        </div>
+        @endforeach
     </div>
 </div>
+@endif
+
 
 @endsection
 

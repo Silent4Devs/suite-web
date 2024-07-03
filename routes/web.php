@@ -63,12 +63,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('firmas_module', 'FirmasModuleController@index')->name('module_firmas');
     Route::get('firmas_module/create', 'FirmasModuleController@create')->name('module_firmas.create');
     Route::post('firmas_module/store', 'FirmasModuleController@store')->name('module_firmas.store');
-    Route::post('firmas_module/seguridad', 'FirmasModuleController@seguridadFirma')->name('firmas_seguridad.store');
-    Route::post('firmas_module/riesgos', 'FirmasModuleController@riesgosFirma')->name('firmas_riesgos.store');
-    Route::post('firmas_module/quejas', 'FirmasModuleController@quejasFirma')->name('firmas_quejas.store');
-    Route::post('firmas_module/denuncias', 'FirmasModuleController@denunciasFirma')->name('firmas_denuncias.store');
-    Route::post('firmas_module/mejora', 'FirmasModuleController@mejoraFirma')->name('firmas_mejora.store');
-    Route::post('firmas_module/sugerencias', 'FirmasModuleController@sugerenciasFirma')->name('firmas_sugerencias.store');
 
     // Empleados
     Route::get('empleados/importar', 'EmpleadoController@importar')->name('empleado.importar');
