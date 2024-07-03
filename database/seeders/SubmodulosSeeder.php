@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\Modulo;
 use App\Models\Submodulo;
+use Illuminate\Database\Seeder;
 
 class SubmodulosSeeder extends Seeder
 {
