@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\FirmaCentroAtencion;
 use App\Models\FirmaModule;
 use App\Models\Modulo;
 use App\Models\Submodulo;
@@ -63,6 +64,22 @@ class FirmasModuleController extends Controller
             'modulo_id' => $request->modulos,
             'submodulo_id' => $request->submodulos,
             'participantes' => json_encode($request->participantes), // Guardar el array de IDs como JSON
+        ]);
+
+        return redirect()->route('admin.module_firmas')->with('success', 'Guardado con éxito');
+    }
+
+
+    public function store_minutas(Request $request)
+    {
+        $modulo = 3;
+        $submodulo = 8;
+        // Crear un nuevo registro de FirmaModule
+        $firmaModule = FirmaCentroAtencion::create([
+            'modulo_id' => $modulo,
+            'submodulo_id' => $submodulo,
+            'user_id' => Auth::id(),
+            'firma' => $request->firma, // Guardar el array de IDs como JSON
         ]);
 
         return redirect()->route('admin.module_firmas')->with('success', 'Guardado con éxito');

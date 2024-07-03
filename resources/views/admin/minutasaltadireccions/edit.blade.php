@@ -397,50 +397,6 @@
         ])
 
 
-
-    @php
-        $userIsAuthorized = false;
-        if($firmaModules && $firmaModules->empleados){
-        foreach ($firmaModules->empleados as $empleado) {
-            if ($empleado->id === Auth::id()) {
-                $userIsAuthorized = true;
-                break;
-            }
-        }
-        }
-    @endphp
-
-
-    @if ($userIsAuthorized)
-    <div class="card card-body">
-        <div class="" style="position: relative; left: 2rem;">
-            <br>
-            <h5><strong>Firma*</strong></h5>
-            <p>
-                Indispensable firmar  antes de guardar y enviarla a aprobación.
-            </p>
-        </div>
-        <div class="flex caja-firmar">
-            <div class="flex-item"
-                style="display:flex; justify-content: center; flex-direction: column; align-items:center;">
-                <div id="firma_content" class="caja-space-firma"
-                    style="display:flex; justify-content: center; flex-direction: column; align-items:center;">
-                    <canvas id="firma_requi" width="500px" height="300px">
-                        Navegador no compatible
-                    </canvas>
-                    <input type="hidden" name="firma" id="firma">
-                </div>
-                <div>
-                    <div class="btn"
-                        style="color: white; background:  gray !important; transform: translateY(-40px) scale(0.8);"
-                        id="clear">Limpiar</div>
-                </div>
-            </div>
-        </div>
-    </div>
-    @endif
-
-
         {{-- FIN MODULO AGREGAR PLAN DE Trabajo --}}
         <div class="text-right form-group col-12">
             <a href="{{ route('admin.minutasaltadireccions.index') }}" class="btn_cancelar"
@@ -454,22 +410,39 @@
         </div>
     </form>
 
-@php
-    $userIsAuthorized = false;
-    if($firmaModules && $firmaModules->empleados){
-    foreach ($firmaModules->empleados as $empleado) {
-        if ($empleado->id === Auth::id()) {
-            $userIsAuthorized = true;
-            break;
-        }
-    }
-   }
-@endphp
+          <form method="POST" id="myForm" action="{{ route('admin.module_firmas.store_minutas') }}"
+                        enctype="multipart/form-data">
+                        <div class="card card-body">
+                            <div class="">
+                                <h5><strong>Firma*</strong></h5>
+                                <p>
+                                    Indispensable firmar de los participantes
+                                </p>
+                            </div>
+                            <div class="flex caja-firmar" wire:ignore>
+                                <div class="flex-item" style="display:flex; justify-content: center;">
+                                    <div id="firma_content" class="caja-space-firma"
+                                        style="display: flex; justify-content: center; align-items: center;">
+                                        <canvas id="firma_requi" width="500px" height="300px">
+                                            Navegador no compatible
+                                        </canvas>
+                                        <input type="hidden" name="firma" id="firma">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex">
+                                <div class="flex-item" style="display: flex; justify-content:center;">
+                                    <div class="btn" style="background: #959595 !important" id="clear">Limpiar
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex my-4" style="justify-content: end;">
+                                <button onclick="validar()" class="btn btn-primary" type="submit">Firmar</button>
+                            </div>
+            </div>
+        </form>
 
 
-
-
-@if ($userIsAuthorized)
 <div class="card card-content" style="margin-bottom: 30px">
     <div class="caja-firmas-doc">
         @foreach($firmas as $firma)
@@ -491,7 +464,7 @@
         @endforeach
     </div>
 </div>
-@endif
+
 @endsection
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>

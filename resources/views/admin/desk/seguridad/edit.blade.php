@@ -282,7 +282,7 @@
                                 <div class="info-bar" id="info-bar">
                                     <p>Seleccione cuántos participantes de aprobación tendrá tu lista.</p>
                                     @if($firmaModules && $firmaModules->empleados)
-                                    <select id="participantes" name="participantes[]" class="form-control" multiple="multiple" style="padding: 10px; border-radius: 50px; border: 1px solid #007BFF;">
+                                    <select id="participantes" name="participantes[]" class="form-control" multiple="multiple">
                                         @foreach($firmaModules->empleados as $empleado)
                                             <option value="{{ $empleado->id }}">{{ $empleado->name }}</option>
                                         @endforeach
@@ -348,20 +348,6 @@
 
                             </div>
 
-                            {{-- <div class="mt-2 form-group col-md-4">
-                                <label class="form-label"><i class="fas fa-user-plus iconos-crear"></i>Asignado
-                                    a</label>
-                                <select name="empleado_asignado_id" class="form-control">
-                                    @foreach ($empleados as $empleado)
-                                    <option value="" disabled selected
-                                    {{ old('empleado_asignado_id', $incidentesSeguridad->asignado->name) }}
-                                        >
-                                    </option>
-                                        <option
-                                            value="{{ $empleado->id }}">{{ $empleado->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div> --}}
                             <div class="form-group col-12">
                                 <b>Asignado:</b>
                             </div>
@@ -474,39 +460,6 @@
                                     @endforeach
                                 </select>
                             </div>
-
-                            {{-- <div class="mt-2 form-group col-md-6">
-                                <label class="form-label"><i
-                                        class="fas fa-layer-group iconos-crear"></i>Categoría</label>
-                                <select id="select_categoria" class="form-control"
-                                    value="{{ $incidentesSeguridad->categoria }}" name="categoria_id">
-                                    <option selected disabled>Seleccione categoría</option>
-                                    @foreach ($categorias as $categoria)
-                                        <option value="{{ $categoria->id }}"
-                                            {{ $incidentesSeguridad->categoria_id == $categoria->id ? 'selected' : '' }}>
-                                            {{ $categoria->categoria }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div> --}}
-
-                            {{-- <div class="mt-2 form-group col-md-6">
-                                <label class="form-label"><i
-                                        class="fas fa-adjust iconos-crear"></i>Subcategoría</label>
-                                <select id="select_subcategorias" class="form-control"
-                                    value="{{ $incidentesSeguridad->subcategoria }}" name="subcategoria_id">
-                                    <option selected disabled class="option_vacio">Seleccione subcategoría</option>
-                                    @foreach ($subcategorias as $subcategoria)
-                                        <option
-                                            value="{{ $subcategoria->id }}"
-                                            {{ $incidentesSeguridad->subcategoria_id == $subcategoria->id ? 'selected' : '' }}>
-                                            {{ $subcategoria->subcategoria }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div> --}}
-
-
 
                             <div class="mt-2 form-group col-md-12">
                                 <label class="form-label"><i class="fas fa-file-alt iconos-crear"></i>Descripción
@@ -681,52 +634,6 @@
                                 <label class="form-label"><i class="fas fa-phone iconos-crear"></i>Teléfono</label>
                                 <div class="form-control" readonly>{{ $incidentesSeguridad->reporto->telefono }}</div>
                             </div>
-
-
-                            {{-- <div class="mt-4 form-group col-md-12">
-                                <b>Priorización del incidente:</b>
-                            </div> --}}
-
-                            {{-- <div class="mt-2 form-group col-md-4 select_elegir_prioridad">
-                                <label class="form-label"><i
-                                        class="fas fa-chart-line iconos-crear"></i>Urgencia</label>
-                                <select class="form-control" name="urgencia" id="select_urgencia">
-                                    <option data-urgencia="3"
-                                        {{ old('urgencia', $incidentesSeguridad->urgencia) == 'Alta' ? 'selected' : '' }}>
-                                        Alta</option>
-                                    <option data-urgencia="2"
-                                        {{ old('urgencia', $incidentesSeguridad->urgencia) == 'Media' ? 'selected' : '' }}>
-                                        Media</option>
-                                    <option data-urgencia="1"
-                                        {{ old('urgencia', $incidentesSeguridad->urgencia) == 'Baja' ? 'selected' : '' }}>
-                                        Baja</option>
-                                </select>
-                            </div>
-
-                            <div class="mt-2 form-group col-md-4 select_elegir_prioridad">
-                                <label class="form-label"><i
-                                        class="fas fa-compact-disc iconos-crear"></i>Impacto</label>
-                                <select class="form-control" name="impacto" id="select_impacto">
-                                    <option data-impacto="3"
-                                        {{ old('impacto', $incidentesSeguridad->impacto) == 'Alta' ? 'selected' : '' }}>
-                                        Alta</option>
-                                    <option data-impacto="2"
-                                        {{ old('impacto', $incidentesSeguridad->impacto) == 'Media' ? 'selected' : '' }}>
-                                        Media</option>
-                                    <option data-impacto="1"
-                                        {{ old('impacto', $incidentesSeguridad->impacto) == 'Baja' ? 'selected' : '' }}>
-                                        Baja</option>
-                                </select>
-                            </div>
-
-                            <div class="mt-2 form-group col-md-4">
-                                <label class="form-label"><i class="fas fa-flag iconos-crear"></i>Prioridad</label>
-                                <div class="form-control" id="prioridad"></div>
-                            </div> --}}
-
-
-
-
 
                             <div class="mt-2 form-group col-md-12">
                                 <label class="form-label"><i

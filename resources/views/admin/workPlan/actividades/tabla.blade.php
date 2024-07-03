@@ -48,16 +48,6 @@
                 </div>
             </div>
         </div>
-        {{-- <div class="col-sm-12 col-lg-4 col-4">
-            <div class="form-group anima-focus">
-                <label for="progreso"> Progreso <span
-                        class="text-danger">*</span></label>
-                <input type="number" class="form-control" id="progreso" name="progreso" min="0" max="100">
-                <small id="progresoHelp" class="form-text text-muted">Progreso de la actividad, rango de 0 -
-                    100</small>
-                <small class="p-0 m-0 text-xs error_progreso errores text-danger"></small>
-            </div>
-        </div> --}}
         <div class="mb-3 row">
             <div class="form-group anima-focus col-sm-12 col-lg-12 col-md-12">
                 <select class="responsables_actividad form-control" id="responsables_actividad" multiple placeholder="">
@@ -67,10 +57,6 @@
                     @endforeach
                 </select>
                 <label for="responsables_actividad"> Responsables <span class="text-danger">*</span></label>
-                {{-- <i
-                    class="fas fa-info-circle" style="font-size:12pt; float: right;"
-                    title="Responsables de la actividad"></i> --}}
-                {{-- <small id="responsables_actividadHelp" class="form-text text-muted">Responsables de la actividad</small> --}}
                 <small class="p-0 m-0 text-xs error_participantes errores text-danger"></small>
             </div>
         </div>
