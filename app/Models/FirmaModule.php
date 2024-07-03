@@ -10,6 +10,7 @@ class FirmaModule extends Model
     use HasFactory;
 
     protected $table = 'firma_modules';
+
     protected $fillable = ['modulo_id', 'submodulo_id', 'participantes'];
 
     public function modulo()

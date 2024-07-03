@@ -80,6 +80,10 @@
             display: none;
         }
 
+        .select2-container--default .select2-selection--multiple {
+                border: 1px solid #ADD8E6 !important;
+        }
+
     </style>
 @endsection
 
@@ -294,7 +298,7 @@
 
 
                         @if ($userIsAuthorized)
-                        <div class="card card-body">
+                        <div class="mt-2 form-group col-12">
                             <div class="" style="position: relative; left: 2rem;">
                                 <br>
                                 <h5><strong>Firma*</strong></h5>

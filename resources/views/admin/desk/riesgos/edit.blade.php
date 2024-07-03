@@ -78,6 +78,10 @@
         #info-bar {
             display: none;
         }
+
+        .select2-container--default .select2-selection--multiple {
+                border: 1px solid #ADD8E6 !important;
+        }
     </style>
 @endsection
 {{ Breadcrumbs::render('riesgos-edit', $riesgos) }}
@@ -108,7 +112,7 @@
                                             <i class="bi bi-info mr-3" style="color: #3B82F6; font-size: 30px"></i>
                                         </div>
                                     </div>
-                                    <div class="col-11">
+                                    <div class="col-12" style="width: 300rem;">
                                         <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">
                                             Instrucciones</p>
                                         <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Al final de
@@ -437,7 +441,7 @@
                                             <i class="bi bi-info mr-3" style="color: #3B82F6; font-size: 30px"></i>
                                         </div>
                                     </div>
-                                    <div class="col-11">
+                                    <div class="col-12" style="width: 300rem;">
                                         <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">
                                             Instrucciones</p>
                                         <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Al final de
