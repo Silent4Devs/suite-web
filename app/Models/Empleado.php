@@ -438,6 +438,24 @@ class Empleado extends Model implements Auditable
         });
     }
 
+    public static function getCumpleanos()
+    {
+        $hoy = Carbon::now();
+
+        return Cache::remember('Empleados:portal_cumpleaños', 3600, function () use ($hoy) {
+            return Empleado::alta()->select('id', 'area_id', 'name', 'puesto', 'foto', 'genero', 'cumpleaños', 'antiguedad')->whereMonth('cumpleaños', '=', $hoy->format('m'))->get();
+        });
+    }
+
+    public static function getNuevos()
+    {
+        $hoy = Carbon::now();
+
+        return Cache::remember('Empleados:portal_nuevos', 3600, function () use ($hoy) {
+            return Empleado::alta()->select('id', 'area_id', 'name', 'puesto', 'foto', 'genero', 'cumpleaños', 'antiguedad')->whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->get();
+        });
+    }
+
     public static function getDataColumns()
     {
         return Cache::remember('Empleados:empleados_data_columns_all', 3600 * 6, function () {

@@ -1328,19 +1328,6 @@ class EmpleadoController extends Controller
         // return redirect()->route('admin.empleados.index')->with('success', 'Editado con éxito');
     }
 
-    public function agregarHistorico($id, $tabla, $campo, $valor_anterior)
-    {
-        $hoy = Carbon::today();
-
-        HistoricoEmpleados::create([
-            'empleado_id' => $id,
-            'campo_modificado' => $campo,
-            'fecha_cambio' => $hoy,
-            'valor_anterior_id' => $valor_anterior,
-            'tabla_origen' => $tabla,
-        ]);
-    }
-
     public function updateFromCurriculum(Request $request, Empleado $empleado)
     {
         $request->validate([
