@@ -34,4 +34,10 @@ class AprobadorFirmaContrato extends Model
     {
         return $this->belongsTo(Contrato::class, 'contrato_id');
     }
+
+    public function getFirmaRutaAttribute() {
+        $ruta = asset('storage/contratos/' . $this->contrato->id . '_contrato_' . $this->contrato->no_contrato . '/aprobacionFirma/' . $this->firma);
+
+        return $ruta;
+    }
 }

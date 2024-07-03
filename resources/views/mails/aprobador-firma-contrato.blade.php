@@ -194,7 +194,7 @@
                                             </p>
                                         </div>
                                         <div style="text-align:center; margin-top:20px">
-                                            <a href="{{ route('contract_manager.contratos-katbol.edit', [$aprobador_firma_contrato->contrato->id]) }}"
+                                            <a href="{{ route('contract_manager.contratos-katbol.show', [$aprobador_firma_contrato->contrato->id]) }}"
                                                 style="text-decoration:none;padding-top:15px; border-radius:4px; display:inline-block; min-width:300px; height:35px ;color:#fff; font-size:11pt; background-color:#345183">
                                                 Ver solicitud
                                             </a>
