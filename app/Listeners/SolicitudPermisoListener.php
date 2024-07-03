@@ -4,10 +4,16 @@ namespace App\Listeners;
 
 use App\Models\User;
 use App\Notifications\SolicitudPermisoNotification;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Notification;
 
-class SolicitudPermisoListener
+class SolicitudPermisoListener implements ShouldQueue
 {
+    use InteractsWithQueue;
+
+    public $tries = 5;
+
     /**
      * Create the event listener.
      *
