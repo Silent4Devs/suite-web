@@ -393,7 +393,7 @@
 
 
                             @if ($userIsAuthorized)
-                            <div class="mt-2 form-group col-6">
+                            <div class="mt-2 form-group col-12">
                                 <div class="" style="position: relative; left: 2rem;">
                                     <br>
                                     <h5><strong>Firma*</strong></h5>
