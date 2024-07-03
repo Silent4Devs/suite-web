@@ -7,13 +7,13 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithTitle;
 
-class HojaEvaluadosPeriodoExport implements FromCollection, WithHeadings,  WithTitle
+class HojaEvaluadosPeriodoExport implements FromCollection, WithHeadings, WithTitle
 {
     /**
      * @return \Illuminate\Support\Collection
      */
-
     public $id;
+
     public $periodo_id;
 
     public function __construct($id_evaluacion, $id_periodo)
@@ -46,7 +46,7 @@ class HojaEvaluadosPeriodoExport implements FromCollection, WithHeadings,  WithT
                     $evO = $evaluadoresObjetivos->map(function ($eO) {
                         return [
                             'id' => $eO->empleado->id,
-                            'nombre' => $eO->empleado->name
+                            'nombre' => $eO->empleado->name,
                         ];
                     });
 
@@ -66,7 +66,7 @@ class HojaEvaluadosPeriodoExport implements FromCollection, WithHeadings,  WithT
                     $evC = $evaluadoresCompetencias->map(function ($eC) {
                         return [
                             'id' => $eC->empleado->id,
-                            'nombre' => $eC->empleado->name
+                            'nombre' => $eC->empleado->name,
                         ];
                     });
 
@@ -101,14 +101,13 @@ class HojaEvaluadosPeriodoExport implements FromCollection, WithHeadings,  WithT
                 $filtro_objetivos = $totales_evaluado[$periodo->id][$evaluado->id]['objetivos']['calif_total'];
 
                 foreach ($filtro_competencias as $key_c => $comp) {
-                    $data['nombre_competencia' . ($key_c + 1)] = $comp["competencia"];
-                    $data['calif_competencia' . ($key_c + 1)] = $comp["calificacion_total"];
+                    $data['nombre_competencia'.($key_c + 1)] = $comp['competencia'];
+                    $data['calif_competencia'.($key_c + 1)] = $comp['calificacion_total'];
                 }
 
-
                 foreach ($filtro_objetivos as $key_o => $obj) {
-                    $data['nombre_objetivo' . ($key_o + 1)] = $obj["nombre"];
-                    $data['calif_objetivo' . ($key_o + 1)] = $obj["calificacion_total"];
+                    $data['nombre_objetivo'.($key_o + 1)] = $obj['nombre'];
+                    $data['calif_objetivo'.($key_o + 1)] = $obj['calificacion_total'];
                 }
                 $coleccion->push($data);
             }
@@ -132,9 +131,9 @@ class HojaEvaluadosPeriodoExport implements FromCollection, WithHeadings,  WithT
                 'Porcentaje Competencias',
                 'Total Competencias',
                 'Total Objetivos',
-                'Calificacion'
+                'Calificacion',
             ];
-        } elseif ($evaluacion->activar_objetivos && !$evaluacion->activar_competencias) {
+        } elseif ($evaluacion->activar_objetivos && ! $evaluacion->activar_competencias) {
             $allHeaders = [
                 'Nombre',
                 'Puesto',
@@ -144,9 +143,9 @@ class HojaEvaluadosPeriodoExport implements FromCollection, WithHeadings,  WithT
                 'Porcentaje Objetivos',
                 'Porcentaje Competencias',
                 'Total Objetivos',
-                'Calificacion'
+                'Calificacion',
             ];
-        } elseif (!$evaluacion->activar_objetivos && $evaluacion->activar_competencias) {
+        } elseif (! $evaluacion->activar_objetivos && $evaluacion->activar_competencias) {
             $allHeaders = [
                 'Nombre',
                 'Puesto',
@@ -156,7 +155,7 @@ class HojaEvaluadosPeriodoExport implements FromCollection, WithHeadings,  WithT
                 'Porcentaje Objetivos',
                 'Porcentaje Competencias',
                 'Total Competencias',
-                'Calificacion'
+                'Calificacion',
             ];
         }
 

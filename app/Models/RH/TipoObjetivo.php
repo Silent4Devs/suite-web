@@ -30,7 +30,7 @@ class TipoObjetivo extends Model implements Auditable
     public function getImagenRutaAttribute()
     {
         if ($this->imagen) {
-            return asset('storage/perspectivas/img/' . $this->imagen);
+            return asset('storage/perspectivas/img/'.$this->imagen);
         }
 
         return asset('img/bullseye.png');

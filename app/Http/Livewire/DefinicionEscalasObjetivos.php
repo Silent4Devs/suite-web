@@ -25,6 +25,7 @@ class DefinicionEscalasObjetivos extends Component
     public $maximo = null;
 
     public $valor_estatus_1;
+
     public $valor_estatus_2;
 
     public function addParametro1()
@@ -47,7 +48,6 @@ class DefinicionEscalasObjetivos extends Component
             $this->estatus_1 = $escalas[0]->parametro;
             $this->color_estatus_1 = $escalas[0]->color;
             $this->valor_estatus_1 = $escalas[0]->valor;
-
 
             $this->estatus_2 = $escalas[1]->parametro;
             $this->color_estatus_2 = $escalas[1]->color;
@@ -96,18 +96,18 @@ class DefinicionEscalasObjetivos extends Component
         EscalasMedicionObjetivos::create([
             'parametro' => $data['estatus_1'],
             'color' => $data['color_estatus_1'],
-            'valor' => $data['valor_estatus_1']
+            'valor' => $data['valor_estatus_1'],
         ]);
 
         EscalasMedicionObjetivos::create([
             'parametro' => $data['estatus_2'],
             'color' => $data['color_estatus_2'],
-            'valor' => $data['valor_estatus_2']
+            'valor' => $data['valor_estatus_2'],
         ]);
 
         $param_extra = $this->groupValues($data);
 
-        if (!empty($param_extra)) {
+        if (! empty($param_extra)) {
             foreach ($param_extra as $key => $p) {
                 EscalasMedicionObjetivos::create([
                     'parametro' => $p['estatus'],
@@ -132,7 +132,7 @@ class DefinicionEscalasObjetivos extends Component
         foreach ($this->parametros as $key => $parametro) {
             $estatusKey = "estatus_arreglo_{$key}";
 
-            if (isset($values[$estatusKey]) && !empty($values[$estatusKey])) {
+            if (isset($values[$estatusKey]) && ! empty($values[$estatusKey])) {
 
                 $groupedValues["group_{$key}"] = [
                     'estatus' => $values[$estatusKey],

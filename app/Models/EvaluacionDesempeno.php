@@ -25,19 +25,22 @@ class EvaluacionDesempeno extends Model
     ];
 
     protected $appends =
-    [
-        'areas_evaluacion',
-        'estatus_palabra',
-        'total_evaluaciones',
-        'total_evaluaciones_completadas',
-        'porcentaje_evaluaciones_completadas',
-        'cuenta_evaluados_evaluaciones_totales',
-        'cuenta_evaluados_evaluaciones_completadas_totales',
-    ];
+        [
+            'areas_evaluacion',
+            'estatus_palabra',
+            'total_evaluaciones',
+            'total_evaluaciones_completadas',
+            'porcentaje_evaluaciones_completadas',
+            'cuenta_evaluados_evaluaciones_totales',
+            'cuenta_evaluados_evaluaciones_completadas_totales',
+        ];
 
     const BORRADOR = 0;
+
     const ACTIVO = 1;
+
     const CERRADO = 2;
+
     const PAUSADO = 3;
 
     public static function getAll()
@@ -100,7 +103,6 @@ class EvaluacionDesempeno extends Model
         return $unique_ids;
     }
 
-
     public function getPorcentajeEvaluacionesCompletadasAttribute()
     {
         $evaluacion = self::find($this->id);
@@ -137,12 +139,14 @@ class EvaluacionDesempeno extends Model
     public function getCuentaEvaluadosEvaluacionesTotalesAttribute()
     {
         $evaluacion = self::find($this->id);
+
         return $evaluacion->evaluados->sum('cuenta_evaluaciones');
     }
 
     public function getCuentaEvaluadosEvaluacionesCompletadasTotalesAttribute()
     {
         $evaluacion = self::find($this->id);
+
         return $evaluacion->evaluados->sum('cuenta_evaluaciones_completadas');
     }
 }

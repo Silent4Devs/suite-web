@@ -8,6 +8,7 @@ use Livewire\Component;
 class PapeleraObjetivosDesempeno extends Component
 {
     public $id_emp;
+
     public $objetivos;
 
     public function mount($id_empleado)
@@ -29,7 +30,7 @@ class PapeleraObjetivosDesempeno extends Component
         $objetivo = ObjetivoEmpleado::find($id_obj);
         // dd($objetivo);
         $objetivo->update([
-            'papelera' => false
+            'papelera' => false,
         ]);
     }
 

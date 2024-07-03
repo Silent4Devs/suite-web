@@ -3,8 +3,8 @@
 namespace App\Http\Livewire;
 
 use App\Models\RH\TipoObjetivo;
-use Livewire\Component;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Component;
 
 class EvTrimestralConfigCategorias extends Component
 {
@@ -46,7 +46,7 @@ class EvTrimestralConfigCategorias extends Component
 
     public function removeCategoria($keyIndex, $id_borrar = null)
     {
-        if (!empty($id_borrar)) {
+        if (! empty($id_borrar)) {
             $tipo = TipoObjetivo::find($id_borrar);
             $tipo->delete();
         }
@@ -65,10 +65,10 @@ class EvTrimestralConfigCategorias extends Component
         dd($data);
     }
 
-    public function editRegistro($entrada, $campo, $id_edit = null, $key)
+    public function editRegistro($entrada, $campo, $id_edit, $key)
     {
         // dd($entrada, $campo, $id_edit, $key);
-        if ($id_edit == null && $campo != "nombre") {
+        if ($id_edit == null && $campo != 'nombre') {
             $this->alert('warning', '¡Crear Categoría!', [
                 'position' => 'center',
                 'timer' => '5000',

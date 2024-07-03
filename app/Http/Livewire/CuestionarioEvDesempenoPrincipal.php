@@ -9,20 +9,27 @@ use Livewire\Component;
 class CuestionarioEvDesempenoPrincipal extends Component
 {
     public $evaluacionDesempeno;
+
     public $evaluado;
+
     public $periodo;
+
     public $acceso_objetivos;
+
     public $acceso_competencias;
 
     public $autoevaluacion = false;
 
     public $objetivos_evaluado;
+
     public $objetivos_autoevaluado;
 
     public $competencias_evaluado;
+
     public $competencias_autoevaluado;
 
     public $dataFromChild1;
+
     public $dataFromChild2;
 
     protected $listeners = ['dataFromChild1', 'dataFromChild2'];

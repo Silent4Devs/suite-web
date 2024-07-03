@@ -119,7 +119,7 @@ class BajaEmpleadoComponent extends Component
     public function obtenerCapacitaciones()
     {
         $empleado = $this->empleado->id;
-        $cacheKeyRecursos = 'Recursos:recursos_' . User::getCurrentUser()->id;
+        $cacheKeyRecursos = 'Recursos:recursos_'.User::getCurrentUser()->id;
         $recursos = Cache::remember($cacheKeyRecursos, 3600 * 8, function () use ($empleado) {
             return Recurso::whereHas('empleados', function ($query) use ($empleado) {
                 $query->where('empleados.id', $empleado);
@@ -194,7 +194,7 @@ class BajaEmpleadoComponent extends Component
 
         if ($evaluadorDeCompetencias->isNotEmpty()) {
             foreach ($evaluadorDeCompetencias as $evcompetencia) {
-                if (!$evcompetencia->periodo->finalizado) {
+                if (! $evcompetencia->periodo->finalizado) {
                     $allEvaluaciones->push($evcompetencia->evaluacion->id);
                     $evcompetencia->delete();
                 }
@@ -203,7 +203,7 @@ class BajaEmpleadoComponent extends Component
 
         if ($evaluadorDeObjetivos->isNotEmpty()) {
             foreach ($evaluadorDeObjetivos as $evobjetivo) {
-                if (!$evobjetivo->periodo->finalizado) {
+                if (! $evobjetivo->periodo->finalizado) {
                     $allEvaluaciones->push($evobjetivo->evaluacion->id);
                     $evobjetivo->delete();
                 }
@@ -216,7 +216,7 @@ class BajaEmpleadoComponent extends Component
         // Convert to array if needed
         $uniqueEvaluacionesArray = $uniqueEvaluaciones->values()->all();
 
-        if (!empty($uniqueEvaluacionesArray)) {
+        if (! empty($uniqueEvaluacionesArray)) {
             foreach ($uniqueEvaluacionesArray as $key_evaluacion => $id_evaluacion) {
                 $evaluacion = EvaluacionDesempeno::find($id_evaluacion);
                 $emailEvaluador = new EvaluacionesDesempenoEliminacionEvaluador($evaluacion->nombre, $empleado->name);

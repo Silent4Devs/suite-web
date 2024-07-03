@@ -66,11 +66,12 @@ class EvaluadosEvaluacionDesempeno extends Model
             );
 
             $nombres = array_unique(array_merge($matchingIds, $distinctIds));
-        } elseif ($evaluado->evaluacion->activar_competencias && !$evaluado->evaluacion->activar_objetivos) {
+        } elseif ($evaluado->evaluacion->activar_competencias && ! $evaluado->evaluacion->activar_objetivos) {
             $nombres = $this->evaluadoresCompetencias->pluck('evaluador_desempeno_id')->unique()->toArray();
-        } elseif (!$evaluado->evaluacion->activar_competencias && $evaluado->evaluacion->activar_objetivos) {
+        } elseif (! $evaluado->evaluacion->activar_competencias && $evaluado->evaluacion->activar_objetivos) {
             $nombres = $this->evaluadoresObjetivos->pluck('evaluador_desempeno_id')->unique()->toArray();
         }
+
         //Enviamos los ids, para que sea mas facil de manejar
         return $nombres;
     }
@@ -147,7 +148,7 @@ class EvaluadosEvaluacionDesempeno extends Model
                 ];
 
                 // Agrupar por objetivo_id
-                if (!isset($calificacionesAgrupadas[$pregunta->objetivo_id])) {
+                if (! isset($calificacionesAgrupadas[$pregunta->objetivo_id])) {
                     $calificacionesAgrupadas[$pregunta->objetivo_id] = [];
                 }
 
@@ -180,6 +181,7 @@ class EvaluadosEvaluacionDesempeno extends Model
 
         $promedio = $totalCalificaciones > 0 ? $sumaTotal / $totalCalificaciones : 0;
         $promedioRedondeado = round($promedio, 2);
+
         return [
             'calif_agrup' => $calificacionesAgrupadas,
             'calif_total' => $calificacionesSumadas,
@@ -204,7 +206,7 @@ class EvaluadosEvaluacionDesempeno extends Model
                     'calificacion_total' => round((($pregunta->calificacion_competencia / $pregunta->infoCompetencia->nivel_esperado) * $evlrs->porcentaje_competencias), 2),
                 ];
 
-                if (!isset($calificacionesAgrupadas[$pregunta->competencia_id])) {
+                if (! isset($calificacionesAgrupadas[$pregunta->competencia_id])) {
                     $calificacionesAgrupadas[$pregunta->competencia_id] = [];
                 }
 
@@ -237,6 +239,7 @@ class EvaluadosEvaluacionDesempeno extends Model
 
         $promedio = $totalCalificaciones > 0 ? $sumaTotal / $totalCalificaciones : 0;
         $promedioRedondeado = round($promedio, 2);
+
         return [
             'calif_agrup' => $calificacionesAgrupadas,
             'calif_total' => $calificacionesSumadas,
@@ -264,7 +267,7 @@ class EvaluadosEvaluacionDesempeno extends Model
                 ];
 
                 // Agrupar por objetivo_id
-                if (!isset($calificacionesAgrupadas[$pregunta->objetivo_id])) {
+                if (! isset($calificacionesAgrupadas[$pregunta->objetivo_id])) {
                     $calificacionesAgrupadas[$pregunta->objetivo_id] = [];
                 }
 
@@ -298,6 +301,7 @@ class EvaluadosEvaluacionDesempeno extends Model
 
         $promedio = $totalCalificaciones > 0 ? $sumaTotal / $totalCalificaciones : 0;
         $promedioRedondeado = round($promedio, 2);
+
         return [
             'calif_agrup' => $calificacionesAgrupadas,
             'calif_total' => $calificacionesSumadas,
@@ -326,7 +330,7 @@ class EvaluadosEvaluacionDesempeno extends Model
                     'calificacion_total' => round(($calificacion_total / $pregunta->infoCompetencia->nivel_esperado) * $evlrs->porcentaje_competencias, 2),
                 ];
 
-                if (!isset($calificacionesAgrupadas[$pregunta->competencia_id])) {
+                if (! isset($calificacionesAgrupadas[$pregunta->competencia_id])) {
                     $calificacionesAgrupadas[$pregunta->competencia_id] = [];
                 }
 
@@ -351,7 +355,7 @@ class EvaluadosEvaluacionDesempeno extends Model
                 'competencia_id' => $competencia_id,
                 'competencia' => $calificacion['competencia'],
                 'nivel_esperado' => $calificacion['nivel_esperado'],
-                "promedio_competencias" => $promedio_competencia,
+                'promedio_competencias' => $promedio_competencia,
                 'calificacion_total' => $suma,
             ];
         }
@@ -365,6 +369,7 @@ class EvaluadosEvaluacionDesempeno extends Model
 
         $promedio = $totalCalificaciones > 0 ? $sumaTotal / $totalCalificaciones : 0;
         $promedioRedondeado = round($promedio, 2);
+
         return [
             'calif_agrup' => $calificacionesAgrupadas,
             'calif_total' => $calificacionesSumadas,
@@ -392,7 +397,7 @@ class EvaluadosEvaluacionDesempeno extends Model
                 ];
 
                 // Agrupar por objetivo_id
-                if (!isset($calificacionesAgrupadas[$pregunta->objetivo_id])) {
+                if (! isset($calificacionesAgrupadas[$pregunta->objetivo_id])) {
                     $calificacionesAgrupadas[$pregunta->objetivo_id] = [];
                 }
 
@@ -412,7 +417,7 @@ class EvaluadosEvaluacionDesempeno extends Model
             $calificacionesSumadas[] = [
                 'objetivo_id' => $objetivo_id,
                 'calificacion_total' => $suma,
-                'estatus_calificado' => $calificacion["estatus_calificado"],
+                'estatus_calificado' => $calificacion['estatus_calificado'],
             ];
         }
 

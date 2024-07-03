@@ -20,7 +20,7 @@ class MetricasObjetivo extends Model implements Auditable
     protected $fillable = [
         'definicion',
         'valor_minimo',
-        'valor_maximo'
+        'valor_maximo',
     ];
 
     //Redis methods

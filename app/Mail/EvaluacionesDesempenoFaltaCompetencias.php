@@ -11,7 +11,9 @@ class EvaluacionesDesempenoFaltaCompetencias extends Mailable
     use Queueable, SerializesModels;
 
     protected $nombre_evaluacion;
+
     protected $nombre_periodo;
+
     protected $puestos;
 
     /**
@@ -35,7 +37,7 @@ class EvaluacionesDesempenoFaltaCompetencias extends Mailable
     public function build()
     {
         return $this->from(env('# MAIL_FROM_ADDRESS'), env('# MAIL_FROM_NAME'))
-            ->subject('Evaluacion ' . $this->nombre_evaluacion . ':Colaboradores sin Competencias')
+            ->subject('Evaluacion '.$this->nombre_evaluacion.':Colaboradores sin Competencias')
             ->view(
                 'mails.evaluaciones.competencias.competenciasFaltantes',
                 [

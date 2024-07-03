@@ -9,7 +9,7 @@ class CatalogoCompetenciasEvDesempeno extends Model
 {
     use HasFactory;
 
-    protected $table = "catalogo_competencias_ev_desempenos";
+    protected $table = 'catalogo_competencias_ev_desempenos';
 
     protected $fillable = [
         'competencia',
@@ -18,7 +18,7 @@ class CatalogoCompetenciasEvDesempeno extends Model
         'nivel_esperado',
     ];
 
-    public  function ponderaciones()
+    public function ponderaciones()
     {
         return $this->hasMany(ConductasCompCuestionarioEvDesempenos::class, 'competencia_id', 'id');
     }

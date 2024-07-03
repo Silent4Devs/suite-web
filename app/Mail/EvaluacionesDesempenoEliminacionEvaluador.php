@@ -11,6 +11,7 @@ class EvaluacionesDesempenoEliminacionEvaluador extends Mailable
     use Queueable, SerializesModels;
 
     protected $nombre_evaluacion;
+
     protected $evaluador;
 
     /**
@@ -33,7 +34,7 @@ class EvaluacionesDesempenoEliminacionEvaluador extends Mailable
     public function build()
     {
         return $this->from(env('# MAIL_FROM_ADDRESS'), env('# MAIL_FROM_NAME'))
-            ->subject('Evaluacion ' . $this->nombre_evaluacion . ': Evaluador Dado de Baja')
+            ->subject('Evaluacion '.$this->nombre_evaluacion.': Evaluador Dado de Baja')
             ->view(
                 'mails.evaluaciones.evaluadores.bajaEvaluador',
                 [

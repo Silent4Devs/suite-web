@@ -10,29 +10,39 @@ use App\Models\PeriodoCargaObjetivos;
 use App\Models\Puesto;
 use App\Models\RH\Objetivo;
 use Illuminate\Support\Facades\Mail;
-use Livewire\Component;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Component;
 
 class CargaObjetivos extends Component
 {
     use LivewireAlert;
 
     public $empleados;
+
     public $areas;
+
     public $puestos;
+
     public $perfiles;
 
     public $total_colaboradores = 0;
+
     public $total_con_objetivos = 0;
+
     public $total_sin_objetivos = 0;
+
     public $total_obj_pend = 0;
 
     public $select_area = 0;
+
     public $select_puesto = 0;
+
     public $select_perfil = 0;
 
     public $fecha_inicio = null;
+
     public $fecha_fin = null;
+
     public $periodo_habilitado = null;
 
     public function mount()
@@ -107,7 +117,7 @@ class CargaObjetivos extends Component
     public function habilitarCargaObjetivos($valor)
     {
         if ($valor) {
-            if (!empty($this->fecha_inicio) && !empty($this->fecha_fin)) {
+            if (! empty($this->fecha_inicio) && ! empty($this->fecha_fin)) {
                 if ($this->fecha_inicio < $this->fecha_fin) {
 
                     PeriodoCargaObjetivos::create([

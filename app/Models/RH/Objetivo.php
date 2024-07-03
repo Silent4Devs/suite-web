@@ -34,7 +34,7 @@ class Objetivo extends Model implements Auditable
     public function getImagenRutaAttribute()
     {
         if ($this->imagen) {
-            return asset('storage/objetivos/img/' . $this->imagen);
+            return asset('storage/objetivos/img/'.$this->imagen);
         }
 
         return asset('img/bullseye.png');

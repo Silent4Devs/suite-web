@@ -3,14 +3,16 @@
 namespace App\Http\Livewire;
 
 use App\Models\User;
+use Intervention\Image\Facades\Image;
 use Livewire\Component;
 use Livewire\TemporaryUploadedFile;
-use Intervention\Image\Facades\Image;
 
 class CierreCuestionario extends Component
 {
     public $evaluador;
+
     public $id_evaluacion;
+
     public $id_evaluado;
 
     public $signatureData;
@@ -32,7 +34,7 @@ class CierreCuestionario extends Component
     {
         $image = Image::make($image->getRealPath());
         // Save the image to the storage or public directory
-        $image->save(public_path('signatures/' . uniqid() . '.png'));
+        $image->save(public_path('signatures/'.uniqid().'.png'));
 
         // Optionally, you can save the image path to a database
         // $signature = Signature::create(['path' => $imagePath]);

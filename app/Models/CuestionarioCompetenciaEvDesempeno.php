@@ -12,15 +12,15 @@ class CuestionarioCompetenciaEvDesempeno extends Model
     protected $table = 'cuestionario_competencia_ev_desempenos';
 
     protected $fillable =
-    [
-        'competencia_id',
-        'periodo_id',
-        'evaluacion_desempeno_id',
-        'evaluado_desempeno_id',
-        'evaluador_desempeno_id',
-        'calificacion_competencia',
-        'estatus_calificado',
-    ];
+        [
+            'competencia_id',
+            'periodo_id',
+            'evaluacion_desempeno_id',
+            'evaluado_desempeno_id',
+            'evaluador_desempeno_id',
+            'calificacion_competencia',
+            'estatus_calificado',
+        ];
 
     public function infoCompetencia()
     {

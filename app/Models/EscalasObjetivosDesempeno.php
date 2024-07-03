@@ -11,16 +11,20 @@ class EscalasObjetivosDesempeno extends Model
 
     // Condiciones Escalas
     const MENOR_QUE = 1;
+
     const MENOR_O_IGUAL_QUE = 2;
+
     const IGUAL_QUE = 3;
+
     const MAYOR_QUE = 4;
+
     const MAYOR_O_IGUAL_QUE = 5;
 
     protected $appends =
-    [
-        'condicion_palabra',
-        'condicion_signo',
-    ];
+        [
+            'condicion_palabra',
+            'condicion_signo',
+        ];
 
     protected $table = 'escalas_objetivos_desempenos';
 

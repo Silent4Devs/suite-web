@@ -3,9 +3,7 @@
 namespace App\Exports;
 
 use App\Models\EvaluacionDesempeno;
-use App\Models\SolicitudDayOff;
 use Maatwebsite\Excel\Concerns\FromCollection;
-use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 
 class EvaluacionesDesempenoReportExport implements FromCollection, WithMultipleSheets
@@ -13,8 +11,8 @@ class EvaluacionesDesempenoReportExport implements FromCollection, WithMultipleS
     /**
      * @return \Illuminate\Support\Collection
      */
-
     public $id;
+
     public $evaluacion;
 
     public function __construct($id_evaluacion)
@@ -24,9 +22,7 @@ class EvaluacionesDesempenoReportExport implements FromCollection, WithMultipleS
         $this->evaluacion = EvaluacionDesempeno::find($id_evaluacion);
     }
 
-    public function collection()
-    {
-    }
+    public function collection() {}
 
     public function sheets(): array
     {

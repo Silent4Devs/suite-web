@@ -15,36 +15,43 @@ class EvDesempenoDashboardGeneral extends Component
 
     public $areas;
 
-    public $ano_anual = "todos";
-    public $mes_mensual = "ninguno";
+    public $ano_anual = 'todos';
 
-    public $area_anual = "todas";
-    public $area_mensual = "todas";
+    public $mes_mensual = 'ninguno';
+
+    public $area_anual = 'todas';
+
+    public $area_mensual = 'todas';
 
     public $general_anual = true;
+
     public $objetivos_anual = true;
+
     public $competencias_anual = true;
 
     public $general_mensual = true;
+
     public $objetivos_mensual = true;
+
     public $competencias_mensual = true;
 
     public $anos_evaluaciones = [];
+
     public $datos_evaluaciones_anuales = [];
 
-    public $meses_evaluaciones =     [
-        "1" => "Enero",
-        "2" => "Febrero",
-        "3" => "Marzo",
-        "4" => "Abril",
-        "5" => "Mayo",
-        "6" => "Junio",
-        "7" => "Julio",
-        "8" => "Agosto",
-        "9" => "Septiembre",
-        "10" => "Octubre",
-        "11" => "Noviembre",
-        "12" => "Diciembre",
+    public $meses_evaluaciones = [
+        '1' => 'Enero',
+        '2' => 'Febrero',
+        '3' => 'Marzo',
+        '4' => 'Abril',
+        '5' => 'Mayo',
+        '6' => 'Junio',
+        '7' => 'Julio',
+        '8' => 'Agosto',
+        '9' => 'Septiembre',
+        '10' => 'Octubre',
+        '11' => 'Noviembre',
+        '12' => 'Diciembre',
     ];
 
     public $datos_evaluaciones_mensuales = [];
@@ -69,9 +76,9 @@ class EvDesempenoDashboardGeneral extends Component
 
     public function contadoresEvaluaciones($evaluaciones)
     {
-        $this->contadores["activo"] = $evaluaciones->where('estatus', '=', 1)->count();
-        $this->contadores["cerrado"] = $evaluaciones->where('estatus', '=', 2)->count();
-        $this->contadores["pausado"] = $evaluaciones->where('estatus', '=', 3)->count();
+        $this->contadores['activo'] = $evaluaciones->where('estatus', '=', 1)->count();
+        $this->contadores['cerrado'] = $evaluaciones->where('estatus', '=', 2)->count();
+        $this->contadores['pausado'] = $evaluaciones->where('estatus', '=', 3)->count();
     }
 
     public function cargarTablas()
@@ -82,24 +89,24 @@ class EvDesempenoDashboardGeneral extends Component
         $años = array_keys($this->datos_evaluaciones_anuales);
 
         $datosAnuales = [
-            "labels" => $años,
-            "data" => $this->datos_evaluaciones_anuales,
-            "filtro_general_anual" => $this->general_anual,
-            "filtro_objetivos_anual" => $this->objetivos_anual,
-            "filtro_competencias_anual" => $this->competencias_anual,
+            'labels' => $años,
+            'data' => $this->datos_evaluaciones_anuales,
+            'filtro_general_anual' => $this->general_anual,
+            'filtro_objetivos_anual' => $this->objetivos_anual,
+            'filtro_competencias_anual' => $this->competencias_anual,
         ];
         $this->emit('dataAnual', $datosAnuales);
 
         $meses = array_keys($this->datos_evaluaciones_mensuales);
         $datosMensuales = [
-            "labels" => $meses,
-            "data" => $this->datos_evaluaciones_mensuales,
-            "filtro_objetivos_mensual" => $this->objetivos_mensual,
-            "filtro_competencias_mensual" => $this->competencias_mensual,
-            "filtro_general_mensual" => $this->general_mensual,
+            'labels' => $meses,
+            'data' => $this->datos_evaluaciones_mensuales,
+            'filtro_objetivos_mensual' => $this->objetivos_mensual,
+            'filtro_competencias_mensual' => $this->competencias_mensual,
+            'filtro_general_mensual' => $this->general_mensual,
         ];
 
-        $this->emit("dataMensual", $datosMensuales);
+        $this->emit('dataMensual', $datosMensuales);
     }
 
     public function extraeraAnosEvaluaciones($evaluaciones)
@@ -118,19 +125,20 @@ class EvDesempenoDashboardGeneral extends Component
 
     public function extraerDatosEvaluacionesAnual($evaluaciones)
     {
-        if ($this->ano_anual != "todos") {
+        if ($this->ano_anual != 'todos') {
             $evaluaciones = $evaluaciones->filter(function ($evaluacion) {
                 return $evaluacion->created_at->year == $this->ano_anual;
             });
         }
 
-        if ($this->area_anual != "todas") {
+        if ($this->area_anual != 'todas') {
             $evaluaciones = $evaluaciones->filter(function ($evaluacion) {
                 foreach ($evaluacion->evaluados as $evaluado) {
                     if ($evaluado->empleado->area_id == $this->area_anual) {
                         return true;
                     }
                 }
+
                 return false;
             });
         }
@@ -138,6 +146,7 @@ class EvDesempenoDashboardGeneral extends Component
         // Verificar si la colección no está vacía
         if ($evaluaciones->isEmpty()) {
             $this->datos_evaluaciones_anuales = [];
+
             return;
         }
 
@@ -161,12 +170,12 @@ class EvDesempenoDashboardGeneral extends Component
         foreach ($evaluacion->evaluados as $key_evaluado => $evaluado) {
             if ($evaluacion->activar_objetivos) {
                 $calificacionesObjetivos = $evaluado->calificaciones_objetivos_evaluado;
-                $sumaObjetivos += $calificacionesObjetivos["promedio_total"];
+                $sumaObjetivos += $calificacionesObjetivos['promedio_total'];
             }
 
             if ($evaluacion->activar_competencias) {
                 $calificacionesCompetencias = $evaluado->calificaciones_competencias_evaluado;
-                $sumaCompetencias += $calificacionesCompetencias["promedio_total"];
+                $sumaCompetencias += $calificacionesCompetencias['promedio_total'];
             }
         }
 
@@ -199,30 +208,30 @@ class EvDesempenoDashboardGeneral extends Component
             $suma_anual_comp = 0;
 
             foreach ($ev_ano as $key_ev => $ev) {
-                if ($ev["objetivos_activos"]) {
+                if ($ev['objetivos_activos']) {
                     $cuenta_obj++;
-                    $suma_anual_obj += $ev["objetivos"];
+                    $suma_anual_obj += $ev['objetivos'];
                 }
 
-                if ($ev["competencias_activos"]) {
+                if ($ev['competencias_activos']) {
                     $cuenta_comp++;
-                    $suma_anual_comp += $ev["competencias"];
+                    $suma_anual_comp += $ev['competencias'];
                 }
             }
 
             $promedioObj = $cuenta_obj > 0 ? ($suma_anual_obj / $cuenta_obj) : 0;
             if ($this->objetivos_anual) {
-                $this->datos_evaluaciones_anuales[$key_ano]["objetivos"] = $promedioObj;
+                $this->datos_evaluaciones_anuales[$key_ano]['objetivos'] = $promedioObj;
             }
 
             $promedioComp = $cuenta_comp > 0 ? ($suma_anual_comp / $cuenta_comp) : 0;
             if ($this->competencias_anual) {
-                $this->datos_evaluaciones_anuales[$key_ano]["competencias"] = $promedioComp;
+                $this->datos_evaluaciones_anuales[$key_ano]['competencias'] = $promedioComp;
             }
 
             if ($this->general_anual) {
                 $promedioGen = $promedioObj + $promedioComp;
-                $this->datos_evaluaciones_anuales[$key_ano]["general"] = $promedioGen;
+                $this->datos_evaluaciones_anuales[$key_ano]['general'] = $promedioGen;
             }
         }
     }
@@ -234,19 +243,20 @@ class EvDesempenoDashboardGeneral extends Component
         $datos = [];
 
         // Validamos si las evaluaciones están vacías y los filtros no son "todos" o "ninguno"
-        if ($evaluaciones->isEmpty() && $this->ano_anual != "todos" && $this->mes_mensual != "ninguno") {
+        if ($evaluaciones->isEmpty() && $this->ano_anual != 'todos' && $this->mes_mensual != 'ninguno') {
             $this->datos_evaluaciones_mensuales = [];
+
             return;
         }
 
         // Filtramos por mes si no es "ninguno"
-        if ($this->mes_mensual != "ninguno") {
+        if ($this->mes_mensual != 'ninguno') {
             foreach ($evaluaciones as $key_evaluacion => $evaluacion) {
                 foreach ($evaluacion->periodos as $key_periodo => $periodo) {
                     $mes_evaluacion = Carbon::parse($periodo->fecha_inicio)->format('m');
                     if ($mes_evaluacion == $this->mes_mensual) {
                         $resultados = $this->calificacionesEvaluacionMensual($evaluacion, $periodo->id);
-                        if (!empty($resultados)) {
+                        if (! empty($resultados)) {
                             $datos[] = $resultados;
                         }
                     }
@@ -255,13 +265,14 @@ class EvDesempenoDashboardGeneral extends Component
         }
 
         // Filtramos por área si no es "todas"
-        if ($this->area_mensual != "todas") {
+        if ($this->area_mensual != 'todas') {
             $evaluaciones = $evaluaciones->filter(function ($evaluacion) {
                 foreach ($evaluacion->evaluados as $evaluado) {
                     if ($evaluado->empleado->area_id == $this->area_mensual) {
                         return true;
                     }
                 }
+
                 return false;
             });
         }
@@ -269,6 +280,7 @@ class EvDesempenoDashboardGeneral extends Component
         // Verificamos si la colección no está vacía después del filtrado
         if ($evaluaciones->isEmpty()) {
             $this->datos_evaluaciones_mensuales = [];
+
             return;
         }
 
@@ -284,12 +296,12 @@ class EvDesempenoDashboardGeneral extends Component
         foreach ($evaluacion->evaluados as $key_evaluado => $evaluado) {
             if ($evaluacion->activar_objetivos) {
                 $calificacionesObjetivos = $evaluado->calificacionesObjetivosEvaluadoPeriodo($id_periodo);
-                $sumaObjetivos += $calificacionesObjetivos["promedio_total"];
+                $sumaObjetivos += $calificacionesObjetivos['promedio_total'];
             }
 
             if ($evaluacion->activar_competencias) {
                 $calificacionesCompetencias = $evaluado->calificacionesCompetenciasEvaluadoPeriodo($id_periodo);
-                $sumaCompetencias += $calificacionesCompetencias["promedio_total"];
+                $sumaCompetencias += $calificacionesCompetencias['promedio_total'];
             }
         }
 
@@ -322,29 +334,29 @@ class EvDesempenoDashboardGeneral extends Component
             $cuenta_comp = 0;
             $suma_mensual_comp = 0;
 
-            if ($ev_mes["objetivos_activos"]) {
+            if ($ev_mes['objetivos_activos']) {
                 $cuenta_obj++;
-                $suma_mensual_obj += $ev_mes["objetivos"];
+                $suma_mensual_obj += $ev_mes['objetivos'];
             }
 
-            if ($ev_mes["competencias_activos"]) {
+            if ($ev_mes['competencias_activos']) {
                 $cuenta_comp++;
-                $suma_mensual_comp += $ev_mes["competencias"];
+                $suma_mensual_comp += $ev_mes['competencias'];
             }
 
             $promedioObj = $cuenta_obj > 0 ? ($suma_mensual_obj / $cuenta_obj) : 0;
             if ($this->objetivos_mensual) {
-                $this->datos_evaluaciones_mensuales[$mesPalabra]["objetivos"] = $promedioObj;
+                $this->datos_evaluaciones_mensuales[$mesPalabra]['objetivos'] = $promedioObj;
             }
 
             $promedioComp = $cuenta_comp > 0 ? ($suma_mensual_comp / $cuenta_comp) : 0;
             if ($this->competencias_mensual) {
-                $this->datos_evaluaciones_mensuales[$mesPalabra]["competencias"] = $promedioComp;
+                $this->datos_evaluaciones_mensuales[$mesPalabra]['competencias'] = $promedioComp;
             }
 
             if ($this->general_mensual) {
                 $promedioGen = $promedioObj + $promedioComp;
-                $this->datos_evaluaciones_mensuales[$mesPalabra]["general"] = $promedioGen;
+                $this->datos_evaluaciones_mensuales[$mesPalabra]['general'] = $promedioGen;
             }
         }
     }
@@ -353,44 +365,44 @@ class EvDesempenoDashboardGeneral extends Component
     {
         switch ($numeroMes) {
 
-            case "1":
-                return "Enero";
+            case '1':
+                return 'Enero';
                 break;
-            case "2":
-                return "Febrero";
+            case '2':
+                return 'Febrero';
                 break;
-            case "3":
-                return "Marzo";
+            case '3':
+                return 'Marzo';
                 break;
-            case "4":
-                return "Abril";
+            case '4':
+                return 'Abril';
                 break;
-            case "5":
-                return "Mayo";
+            case '5':
+                return 'Mayo';
                 break;
-            case "6":
-                return "Junio";
+            case '6':
+                return 'Junio';
                 break;
-            case "7":
-                return "Julio";
+            case '7':
+                return 'Julio';
                 break;
-            case "8":
-                return "Agosto";
+            case '8':
+                return 'Agosto';
                 break;
-            case "9":
-                return "Septiembre";
+            case '9':
+                return 'Septiembre';
                 break;
-            case "10":
-                return  "Octubre";
+            case '10':
+                return 'Octubre';
                 break;
-            case "11":
-                return  "Noviembre";
+            case '11':
+                return 'Noviembre';
                 break;
-            case "12":
-                return  "Diciembre";
+            case '12':
+                return 'Diciembre';
                 break;
             default:
-                return "Indefinido";
+                return 'Indefinido';
                 break;
         }
     }
@@ -442,11 +454,13 @@ class EvDesempenoDashboardGeneral extends Component
         //dd($value);
         $this->cargarTablas();
     }
+
     public function updatedObjetivosMensual($value)
     {
         //dd($value);
         $this->cargarTablas();
     }
+
     public function updatedCompetenciasMensual($value)
     {
         //dd($value);

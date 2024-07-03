@@ -3,8 +3,8 @@
 namespace App\Http\Livewire;
 
 use App\Models\RH\MetricasObjetivo;
-use Livewire\Component;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Component;
 
 class DefinicionUnidadesObjetivos extends Component
 {
@@ -91,7 +91,7 @@ class DefinicionUnidadesObjetivos extends Component
 
         $param_extra = $this->groupValues($data);
 
-        if (!empty($param_extra)) {
+        if (! empty($param_extra)) {
             foreach ($param_extra as $key => $p) {
                 MetricasObjetivo::create([
                     'definicion' => $p['estatus'],
@@ -116,7 +116,7 @@ class DefinicionUnidadesObjetivos extends Component
         foreach ($this->parametros as $key => $definicion) {
             $estatusKey = "estatus_arreglo_{$key}";
 
-            if (isset($values[$estatusKey]) && !empty($values[$estatusKey])) {
+            if (isset($values[$estatusKey]) && ! empty($values[$estatusKey])) {
 
                 $groupedValues["group_{$key}"] = [
                     'estatus' => $values[$estatusKey],

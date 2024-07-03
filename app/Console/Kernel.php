@@ -49,7 +49,7 @@ class Kernel extends ConsoleKernel
             ->withoutOverlapping()
             ->onOneServer()
             ->sentryMonitor();
-        $schedule->command('snapshot:create dump' . date('Y-m-d-H'))
+        $schedule->command('snapshot:create dump'.date('Y-m-d-H'))
             ->timezone('America/Mexico_City')
             //->days([2, 5])
             ->daily()
@@ -92,7 +92,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(__DIR__ . '/Commands');
+        $this->load(__DIR__.'/Commands');
 
         require base_path('routes/console.php');
     }

@@ -13,7 +13,6 @@ class HojaDatosEvaluacionesExport implements FromCollection, WithHeadings, WithT
     /**
      * @return \Illuminate\Support\Collection
      */
-
     public $id;
 
     public function __construct($id_evaluacion)

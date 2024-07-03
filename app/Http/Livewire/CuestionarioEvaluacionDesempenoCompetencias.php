@@ -5,8 +5,8 @@ namespace App\Http\Livewire;
 use App\Models\CuestionarioCompetenciaEvDesempeno;
 use App\Models\EvaluacionDesempeno;
 use App\Models\User;
-use Livewire\Component;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Component;
 
 class CuestionarioEvaluacionDesempenoCompetencias extends Component
 {
@@ -14,25 +14,33 @@ class CuestionarioEvaluacionDesempenoCompetencias extends Component
 
     //Basicos
     public $evaluador;
+
     public $id_evaluacion;
+
     public $id_evaluado;
+
     public $id_periodo;
 
     public $autoevaluacion = false;
 
     public $periodo_seleccionado = 0;
+
     public $array_periodos;
 
     //Traer datos de la evaluación
     public $evaluacion;
+
     public $evaluado;
+
     public $competencias_evaluado;
+
     public $competencias_autoevaluado;
 
     //Campos para validación dependiendo de lo que el evaluador vaya a evaluar
     public $validacion_competencias_evaluador;
 
     public $escalas;
+
     public $conducta;
 
     public $porcentajeCalificado = 0;
@@ -90,8 +98,6 @@ class CuestionarioEvaluacionDesempenoCompetencias extends Component
             }
         }
     }
-
-
 
     public function evaluarCompetencia($id_competencia, $valor)
     {

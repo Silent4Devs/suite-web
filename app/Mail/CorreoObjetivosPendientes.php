@@ -3,10 +3,7 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
 class CorreoObjetivosPendientes extends Mailable
@@ -16,8 +13,8 @@ class CorreoObjetivosPendientes extends Mailable
     /**
      * Create a new message instance.
      */
-
     public $empleado;
+
     public $no_objetivos;
 
     public function __construct($empleado, $no_objetivos)
@@ -29,6 +26,6 @@ class CorreoObjetivosPendientes extends Mailable
 
     public function build()
     {
-        return $this->view('mails.evaluaciones.objetivos.correo-objetivos-pendientes')->subject('Objetivos Pendientes: ' . $this->empleado->name);
+        return $this->view('mails.evaluaciones.objetivos.correo-objetivos-pendientes')->subject('Objetivos Pendientes: '.$this->empleado->name);
     }
 }

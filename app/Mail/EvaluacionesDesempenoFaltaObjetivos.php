@@ -11,7 +11,9 @@ class EvaluacionesDesempenoFaltaObjetivos extends Mailable
     use Queueable, SerializesModels;
 
     protected $nombre_evaluacion;
+
     protected $nombre_periodo;
+
     protected $evaluados;
 
     /**
@@ -35,7 +37,7 @@ class EvaluacionesDesempenoFaltaObjetivos extends Mailable
     public function build()
     {
         return $this->from(env('# MAIL_FROM_ADDRESS'), env('# MAIL_FROM_NAME'))
-            ->subject('Evaluacion ' . $this->nombre_evaluacion . ':Atención Objetivos Colaboradores')
+            ->subject('Evaluacion '.$this->nombre_evaluacion.':Atención Objetivos Colaboradores')
             ->view(
                 'mails.objetivosFaltantes',
                 [

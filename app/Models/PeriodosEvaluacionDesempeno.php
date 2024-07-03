@@ -12,14 +12,14 @@ class PeriodosEvaluacionDesempeno extends Model
     protected $table = 'periodos_evaluacion_desempenos';
 
     protected $fillable =
-    [
-        'evaluacion_desempeno_id',
-        'nombre_evaluacion',
-        'fecha_inicio',
-        'fecha_fin',
-        'habilitado',
-        'finalizado',
-    ];
+        [
+            'evaluacion_desempeno_id',
+            'nombre_evaluacion',
+            'fecha_inicio',
+            'fecha_fin',
+            'habilitado',
+            'finalizado',
+        ];
 
     public function evaluacion()
     {

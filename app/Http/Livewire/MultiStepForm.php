@@ -364,7 +364,7 @@ class MultiStepForm extends Component
                 'catalogoObjetivos' => 'required|numeric',
                 //'sumaTotalPesoGeneral' => 'required|numeric|in:100',
             ]));
-        } elseif ($this->includeCompetencias && !$this->includeObjetivos) {
+        } elseif ($this->includeCompetencias && ! $this->includeObjetivos) {
             // If only competencias are included
             $this->sumaTotalPesoGeneral = $this->pesoGeneralCompetencias;
             $this->pesoGeneralObjetivos = 0;
@@ -372,7 +372,7 @@ class MultiStepForm extends Component
                 // 'pesoGeneralCompetencias' => 'required|numeric|in:100',
                 // 'sumaTotalPesoGeneral' => 'required|numeric|in:100',
             ]));
-        } elseif (!$this->includeCompetencias && $this->includeObjetivos) {
+        } elseif (! $this->includeCompetencias && $this->includeObjetivos) {
             // If only objetivos are included
             $this->sumaTotalPesoGeneral = $this->pesoGeneralObjetivos;
             $this->pesoGeneralCompetencias = 0;
@@ -419,7 +419,7 @@ class MultiStepForm extends Component
         $messages = [];
 
         // Validation for evaluado options
-        if (!$this->evaluado_por_jefe && !$this->evaluado_por_misma_area && !$this->evaluado_por_equipo_a_cargo && !$this->autoevaluacion) {
+        if (! $this->evaluado_por_jefe && ! $this->evaluado_por_misma_area && ! $this->evaluado_por_equipo_a_cargo && ! $this->autoevaluacion) {
             $rules += [
                 'evaluado_por_jefe' => 'accepted',
                 'evaluado_por_misma_area' => 'accepted',
@@ -460,8 +460,8 @@ class MultiStepForm extends Component
         // Validate total sum of weights
         $rules['sumaTotalPeso'] = 'numeric|max:100|min:100';
         $messages += [
-            'sumaTotalPeso.max' => 'El peso total debe ser 100%, actual: ' . $this->sumaTotalPeso . '%',
-            'sumaTotalPeso.min' => 'El peso total debe ser 100%, actual: ' . $this->sumaTotalPeso . '%',
+            'sumaTotalPeso.max' => 'El peso total debe ser 100%, actual: '.$this->sumaTotalPeso.'%',
+            'sumaTotalPeso.min' => 'El peso total debe ser 100%, actual: '.$this->sumaTotalPeso.'%',
         ];
 
         $this->validate($rules, $messages);
@@ -496,7 +496,7 @@ class MultiStepForm extends Component
             // }
             $this->createEvaluation(
                 $idx,
-                $this->nombre . '-' . ($idx + 1),
+                $this->nombre.'-'.($idx + 1),
                 $this->descripcion,
                 $estatus,
                 $this->evaluados_objetivo,
@@ -755,7 +755,7 @@ class MultiStepForm extends Component
 
         if ($includeCompetencias) {
             $competencias = $empleado->puestoRelacionado->competencias ?? null;
-            if (!is_null($competencias)) {
+            if (! is_null($competencias)) {
                 $evaluacionRespuestas = [];
                 foreach ($evaluadores as $evaluador) {
                     foreach ($competencias as $competencia) {
@@ -786,7 +786,7 @@ class MultiStepForm extends Component
             }
             // dd('Aprobado');
             // dump($objetivos);
-            if (!empty($objetivos)) {
+            if (! empty($objetivos)) {
                 $objetivoIds = $objetivos;
                 $evaluadores_objetivos = $evaluadores_objetivos->unique('id')->toArray();
                 // dd($empleado->objetivos, $objetivos, $objetivoIds, $evaluadores_objetivos);

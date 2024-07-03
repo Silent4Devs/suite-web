@@ -8,7 +8,6 @@ use App\Mail\CorreoObjetivosPendientes;
 use App\Models\Empleado;
 use App\Models\EscalasMedicionObjetivos;
 use App\Models\EscalasObjetivosDesempeno;
-use App\Models\ObjetivosDesempenoEmpleados;
 use App\Models\PeriodoCargaObjetivos;
 use App\Models\RH\MetricasObjetivo;
 use App\Models\RH\Objetivo;
@@ -22,36 +21,55 @@ use Livewire\Component;
 class FormularioObjetivosDesempenoEmpleados extends Component
 {
     public $id_emp;
+
     public $front_usuario;
+
     public $front_empleado;
 
     public $objetivos;
+
     public $cuentaObjPend = 0;
 
     public $categorias;
+
     public $unidades;
+
     public $escalas;
+
     public $array_escalas_objetivos = [];
 
     public $permiso_carga = false;
+
     public $mostrar = false;
 
     public $objetivo_estrategico = '';
+
     public $descripcion = '';
+
     public $KPI = '';
+
     public $select_categoria = '';
+
     public $select_unidad = '';
 
     public $nombre_unidad;
+
     public $minimo_unidad;
+
     public $maximo_unidad;
 
     public $ev360 = false;
+
     public $mensual = false;
+
     public $bimestral = false;
+
     public $trimestral = false;
+
     public $semestral = false;
+
     public $anualmente = false;
+
     public $abierta = false;
 
     public function mount($id_empleado)
@@ -136,15 +154,15 @@ class FormularioObjetivosDesempenoEmpleados extends Component
             $est_obj = Objetivo::find($id_obj);
             $empleado = Empleado::getAltaDataColumns()->find($this->id_emp);
 
-            if ($estado == "aprobar") {
+            if ($estado == 'aprobar') {
                 $est_obj->update([
-                    'esta_aprobado' => 1
+                    'esta_aprobado' => 1,
                 ]);
                 Mail::to(removeUnicodeCharacters($empleado->email))->queue(new CorreoObjetivoAprobado($empleado, $est_obj));
                 $this->render();
-            } elseif ($estado == "rechazar") {
+            } elseif ($estado == 'rechazar') {
                 $est_obj->update([
-                    'esta_aprobado' => 2
+                    'esta_aprobado' => 2,
                 ]);
                 Mail::to(removeUnicodeCharacters($empleado->email))->queue(new CorreoObjetivoRechazado($empleado, $est_obj));
                 $this->render();
@@ -262,7 +280,7 @@ class FormularioObjetivosDesempenoEmpleados extends Component
         $objetivo = ObjetivoEmpleado::find($id_obj);
 
         $objetivo->update([
-            'papelera' => true
+            'papelera' => true,
         ]);
     }
 }

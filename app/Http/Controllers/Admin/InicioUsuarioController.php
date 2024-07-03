@@ -204,7 +204,7 @@ class InicioUsuarioController extends Controller
             })->distinct()->get();
         });
 
-        $cacheKeyRecursos = 'Recursos:recursos_' . $usuario->id;
+        $cacheKeyRecursos = 'Recursos:recursos_'.$usuario->id;
         $recursos = Cache::remember($cacheKeyRecursos, 3600 * 8, function () use ($empleado) {
             return Recurso::whereHas('empleados', function ($query) use ($empleado) {
                 $query->where('empleados.id', $empleado->id);
@@ -738,13 +738,13 @@ class InicioUsuarioController extends Controller
 
         $image = null;
 
-        if ($request->file('evidencia') != null or !empty($request->file('evidencia'))) {
+        if ($request->file('evidencia') != null or ! empty($request->file('evidencia'))) {
             foreach ($request->file('evidencia') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
+                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
 
-                $new_name_image = 'Queja_file_' . $quejas->id . '_' . $name_image . '.' . $extension;
+                $new_name_image = 'Queja_file_'.$quejas->id.'_'.$name_image.'.'.$extension;
 
                 $route = 'public/evidencias_quejas';
 
@@ -803,13 +803,13 @@ class InicioUsuarioController extends Controller
 
         $image = null;
 
-        if ($request->file('evidencia') != null or !empty($request->file('evidencia'))) {
+        if ($request->file('evidencia') != null or ! empty($request->file('evidencia'))) {
             foreach ($request->file('evidencia') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
+                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
 
-                $new_name_image = 'Denuncia_file_' . $denuncias->id . '_' . $name_image . '.' . $extension;
+                $new_name_image = 'Denuncia_file_'.$denuncias->id.'_'.$name_image.'.'.$extension;
 
                 $route = 'public/evidencias_denuncias';
 
@@ -982,13 +982,13 @@ class InicioUsuarioController extends Controller
 
         $image = null;
 
-        if ($request->file('evidencia') != null or !empty($request->file('evidencia'))) {
+        if ($request->file('evidencia') != null or ! empty($request->file('evidencia'))) {
             foreach ($request->file('evidencia') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
+                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
 
-                $new_name_image = 'Seguridad_file_' . $incidentes_seguridad->id . '_' . $name_image . '.' . $extension;
+                $new_name_image = 'Seguridad_file_'.$incidentes_seguridad->id.'_'.$name_image.'.'.$extension;
 
                 $route = 'public/evidencias_seguridad';
 
@@ -1049,13 +1049,13 @@ class InicioUsuarioController extends Controller
 
         $image = null;
 
-        if ($request->file('evidencia') != null or !empty($request->file('evidencia'))) {
+        if ($request->file('evidencia') != null or ! empty($request->file('evidencia'))) {
             foreach ($request->file('evidencia') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
+                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
 
-                $new_name_image = 'Riesgo_file_' . $riesgos->id . '_' . $name_image . '.' . $extension;
+                $new_name_image = 'Riesgo_file_'.$riesgos->id.'_'.$name_image.'.'.$extension;
 
                 $route = 'public/evidencias_riesgos';
 
@@ -1339,10 +1339,10 @@ class InicioUsuarioController extends Controller
     {
         // dd($request->all());
         if ($request->name == 'file') {
-            $fileName = time() . $request->file('value')->getClientOriginalName();
+            $fileName = time().$request->file('value')->getClientOriginalName();
             // dd($request->file('value'));
             $empleado = Empleado::getAll()->find($request->empleadoId);
-            $request->file('value')->storeAs('public/expedientes/' . Str::slug($empleado->name), $fileName);
+            $request->file('value')->storeAs('public/expedientes/'.Str::slug($empleado->name), $fileName);
             $expediente = EvidenciasDocumentosEmpleados::updateOrCreate(['empleado_id' => $request->empleadoId, 'lista_documentos_empleados_id' => $request->documentoId], [$request->name => $request->value]);
 
             $doc_viejo = EvidenciaDocumentoEmpleadoArchivo::where('evidencias_documentos_empleados_id', $expediente->id)->where('archivado', false)->first();

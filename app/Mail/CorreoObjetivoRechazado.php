@@ -3,10 +3,7 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
 class CorreoObjetivoRechazado extends Mailable
@@ -17,6 +14,7 @@ class CorreoObjetivoRechazado extends Mailable
      * Create a new message instance.
      */
     public $empleado;
+
     public $objetivo;
 
     public function __construct($empleado, $objetivo)

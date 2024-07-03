@@ -12,9 +12,9 @@ class EvidenciaObjCuestionarioEvDesempeno extends Model
     protected $table = 'evidencia_obj_cuestionario_ev_desempenos';
 
     protected $fillable =
-    [
-        'pregunta_cuest_obj_ev_des_id',
-        'nombre_archivo',
-        'comentarios'
-    ];
+        [
+            'pregunta_cuest_obj_ev_des_id',
+            'nombre_archivo',
+            'comentarios',
+        ];
 }

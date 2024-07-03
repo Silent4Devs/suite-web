@@ -11,6 +11,7 @@ class EvaluacionesDesempenoErrorEvaluadorObjetivos extends Mailable
     use Queueable, SerializesModels;
 
     protected $nombre_evaluacion;
+
     protected $evaluados;
 
     /**
@@ -33,7 +34,7 @@ class EvaluacionesDesempenoErrorEvaluadorObjetivos extends Mailable
     public function build()
     {
         return $this->from(env('# MAIL_FROM_ADDRESS'), env('# MAIL_FROM_NAME'))
-            ->subject('Evaluacion ' . $this->nombre_evaluacion . ': Error con Evaluadores - Objetivos')
+            ->subject('Evaluacion '.$this->nombre_evaluacion.': Error con Evaluadores - Objetivos')
             ->view(
                 'mails.evaluaciones.evaluadores.problemaEvaluadoresObjetivos',
                 [

@@ -3,10 +3,7 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
 class CorreoCargaObjetivos extends Mailable
@@ -14,7 +11,8 @@ class CorreoCargaObjetivos extends Mailable
     use Queueable, SerializesModels;
 
     // public $empleado;
-    public  $fecha_in;
+    public $fecha_in;
+
     public $fecha_fin;
 
     public function __construct($fecha_in, $fecha_fin)

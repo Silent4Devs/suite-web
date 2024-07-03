@@ -7,13 +7,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Area;
 use App\Models\Empleado;
 use App\Models\EvaluacionDesempeno;
-use App\Models\ListaInformativa;
 use App\Models\Organizacion;
 use App\Models\PeriodosEvaluacionDesempeno;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -22,6 +19,7 @@ class EvaluacionesDesempenoController extends Controller
     public function index()
     {
         $evaluaciones = EvaluacionDesempeno::getAll();
+
         // dd($evaluaciones);
         return view('admin.recursos-humanos.evaluaciones-desempeno.index', compact('evaluaciones'));
     }
@@ -30,6 +28,7 @@ class EvaluacionesDesempenoController extends Controller
     {
         $evaluaciones = EvaluacionDesempeno::with('periodos', 'evaluados')->find($id_evaluacion);
         dd($evaluaciones);
+
         return view('admin.recursos-humanos.evaluaciones-desempeno.index', compact('evaluaciones'));
     }
 
@@ -41,18 +40,21 @@ class EvaluacionesDesempenoController extends Controller
     public function dashboardEvaluacion($id_evaluacion)
     {
         EvaluacionDesempeno::findOrFail($id_evaluacion);
+
         return view('admin.recursos-humanos.evaluaciones-desempeno.dashboard-evaluacion', compact('id_evaluacion'));
     }
 
     public function dashboardArea($id_evaluacion, $id_area)
     {
         EvaluacionDesempeno::findOrFail($id_evaluacion);
+
         return view('admin.recursos-humanos.evaluaciones-desempeno.dashboard-area', compact('id_evaluacion', 'id_area'));
     }
 
     public function dashboardEvaluado($id_evaluacion, $id_evaluado)
     {
         EvaluacionDesempeno::findOrFail($id_evaluacion);
+
         return view('admin.recursos-humanos.evaluaciones-desempeno.dashboard-evaluado', compact('id_evaluacion', 'id_evaluado'));
     }
 
@@ -90,7 +92,7 @@ class EvaluacionesDesempenoController extends Controller
         $acceso_objetivos = in_array($currentUser->id, $evaluadoresObjetivos);
         $acceso_competencias = in_array($currentUser->id, $evaluadoresCompetencias);
 
-        if (!$acceso_objetivos && !$acceso_competencias) {
+        if (! $acceso_objetivos && ! $acceso_competencias) {
             return redirect()->route('admin.inicio-Usuario.index');
         }
 
@@ -112,6 +114,7 @@ class EvaluacionesDesempenoController extends Controller
     {
         $empleado = Empleado::getaltaAllWithAreaObjetivoPerfil()->find($id_empleado);
         $organizacion = Organizacion::first();
+
         // dd($empleado);
         return view('admin.recursos-humanos.evaluaciones-desempeno.carga-objetivos-empleado', compact('empleado', 'organizacion'));
     }
@@ -124,6 +127,7 @@ class EvaluacionesDesempenoController extends Controller
     public function objetivosPapelera($id_empleado)
     {
         $empleado = Empleado::getaltaAllWithAreaObjetivoPerfil()->find($id_empleado);
+
         // dd($empleado);
         return view('admin.recursos-humanos.evaluaciones-desempeno.objetivos-papelera', compact('empleado'));
     }
@@ -157,15 +161,15 @@ class EvaluacionesDesempenoController extends Controller
             $imageEvaluado = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $signatureEvaluado));
             $imageEvaluador = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $signatureEvaluador));
 
-            if (!Storage::exists('public/evaluacionesDesempeno/evaluacion/' . $evaluacion->id . '/firmas/periodo' . '/' . $periodo->nombre_evaluacion . '/evaluado' . '/' . $evaluado->name . '/evaluador' . '/' . $evaluador->name)) {
-                Storage::makeDirectory('public/evaluacionesDesempeno/evaluacion/' . $evaluacion->id . '/firmas/periodo' . '/' . $periodo->nombre_evaluacion . '/evaluado' . '/' . $evaluado->name . '/evaluador' . '/' . $evaluador->name, 0755, true);
+            if (! Storage::exists('public/evaluacionesDesempeno/evaluacion/'.$evaluacion->id.'/firmas/periodo'.'/'.$periodo->nombre_evaluacion.'/evaluado'.'/'.$evaluado->name.'/evaluador'.'/'.$evaluador->name)) {
+                Storage::makeDirectory('public/evaluacionesDesempeno/evaluacion/'.$evaluacion->id.'/firmas/periodo'.'/'.$periodo->nombre_evaluacion.'/evaluado'.'/'.$evaluado->name.'/evaluador'.'/'.$evaluador->name, 0755, true);
             }
 
-            $filenameEvaluado = '/evaluacion' . $evaluacion->id . 'firmaevaluado' . $evaluado->name . '.png';
-            $filenameEvaluador = '/evaluacion' . $evaluacion->id . 'firmaevaluador' . $evaluador->name . '.png';
+            $filenameEvaluado = '/evaluacion'.$evaluacion->id.'firmaevaluado'.$evaluado->name.'.png';
+            $filenameEvaluador = '/evaluacion'.$evaluacion->id.'firmaevaluador'.$evaluador->name.'.png';
 
-            Storage::put('public/evaluacionesDesempeno/evaluacion/' . $evaluacion->id . '/firmas/periodo' . '/' . $periodo->nombre_evaluacion . '/evaluado' . '/' . $evaluado->name . '/evaluador' . '/' . $evaluador->name  . $filenameEvaluado, $imageEvaluado);
-            Storage::put('public/evaluacionesDesempeno/evaluacion/' . $evaluacion->id . '/firmas/periodo' . '/' . $periodo->nombre_evaluacion . '/evaluado' . '/' . $evaluado->name . '/evaluador' . '/' . $evaluador->name  . $filenameEvaluador, $imageEvaluador);
+            Storage::put('public/evaluacionesDesempeno/evaluacion/'.$evaluacion->id.'/firmas/periodo'.'/'.$periodo->nombre_evaluacion.'/evaluado'.'/'.$evaluado->name.'/evaluador'.'/'.$evaluador->name.$filenameEvaluado, $imageEvaluado);
+            Storage::put('public/evaluacionesDesempeno/evaluacion/'.$evaluacion->id.'/firmas/periodo'.'/'.$periodo->nombre_evaluacion.'/evaluado'.'/'.$evaluado->name.'/evaluador'.'/'.$evaluador->name.$filenameEvaluador, $imageEvaluador);
 
             if ($evaluacion->activar_competencias && $evaluacion->activar_objetivos) {
                 $evldrObj = $evVal->evaluadoresObjetivos->where('periodo_id', $id_periodo)
@@ -185,7 +189,7 @@ class EvaluacionesDesempenoController extends Controller
                     'firma_evaluado' => $filenameEvaluado,
                     'firma_evaluador' => $filenameEvaluador,
                 ]);
-            } elseif ($evaluacion->activar_competencias && !$evaluacion->activar_objetivos) {
+            } elseif ($evaluacion->activar_competencias && ! $evaluacion->activar_objetivos) {
                 $evldrObj = $evVal->evaluadoresObjetivos->where('periodo_id', $id_periodo)
                     ->where('evaluador_desempeno_id', $evaluador->id)
                     ->where('evaluado_desempeno_id', $evVal->id)
@@ -195,7 +199,7 @@ class EvaluacionesDesempenoController extends Controller
                     'firma_evaluado' => $filenameEvaluado,
                     'firma_evaluador' => $filenameEvaluador,
                 ]);
-            } elseif (!$evaluacion->activar_competencias && $evaluacion->activar_objetivos) {
+            } elseif (! $evaluacion->activar_competencias && $evaluacion->activar_objetivos) {
                 $evldrComp = $evVal->evaluadoresCompetencias->where('periodo_id', $id_periodo)
                     ->where('evaluador_desempeno_id', $evaluador->id)
                     ->where('evaluado_desempeno_id', $evVal->id)
@@ -206,6 +210,7 @@ class EvaluacionesDesempenoController extends Controller
                     'firma_evaluador' => $filenameEvaluador,
                 ]);
             }
+
             return response()->json(['success' => true]);
         } catch (\Throwable $th) {
             //throw $th;
@@ -252,6 +257,7 @@ class EvaluacionesDesempenoController extends Controller
         // }
 
         $export = new EvaluacionesDesempenoReportExport($id);
+
         // dd($export);
         return Excel::download($export, 'Evaluaciones_desempeño.xlsx');
     }

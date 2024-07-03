@@ -9,7 +9,7 @@ class CatalogoObjetivosEvDesempeno extends Model
 {
     use HasFactory;
 
-    protected $table = "catalogo_objetivos_ev_desempenos";
+    protected $table = 'catalogo_objetivos_ev_desempenos';
 
     protected $fillable = [
         'objetivo',
