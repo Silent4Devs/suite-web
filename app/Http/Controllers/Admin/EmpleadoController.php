@@ -227,10 +227,10 @@ class EmpleadoController extends Controller
                     $value = substr($request->snap_foto, strpos($request->snap_foto, ',') + 1);
                     $value = base64_decode($value);
 
-                    $new_name_image = 'UID_'.$empleado->id.'_'.$empleado->name.'.png';
+                    $new_name_image = 'UID_' . $empleado->id . '_' . $empleado->name . '.png';
                     $image = $new_name_image;
 
-                    $route = storage_path().'/app/public/empleados/imagenes/'.$new_name_image;
+                    $route = storage_path() . '/app/public/empleados/imagenes/' . $new_name_image;
 
                     // Call the ImageService to consume the external API
                     $apiResponse = ImageService::consumeImageCompresorApi($request->file('foto'));
@@ -241,15 +241,15 @@ class EmpleadoController extends Controller
                     }
                 }
             }
-        } elseif ($request->snap_foto && ! $request->file('foto')) {
+        } elseif ($request->snap_foto && !$request->file('foto')) {
             if ($request->snap_foto) {
                 if (preg_match('/^data:image\/(\w+);base64,/', $request->snap_foto)) {
                     $value = substr($request->snap_foto, strpos($request->snap_foto, ',') + 1);
                     $value = base64_decode($value);
 
-                    $new_name_image = 'UID_'.$empleado->id.'_'.$empleado->name.'.png';
+                    $new_name_image = 'UID_' . $empleado->id . '_' . $empleado->name . '.png';
                     $image = $new_name_image;
-                    $route = storage_path().'/app/public/empleados/imagenes/'.$new_name_image;
+                    $route = storage_path() . '/app/public/empleados/imagenes/' . $new_name_image;
 
                     // Call the ImageService to consume the external API
                     $apiResponse = ImageService::consumeImageCompresorApi($request->file('foto'));
@@ -261,11 +261,11 @@ class EmpleadoController extends Controller
                 }
             }
         } else {
-            if ($request->file('foto') != null or ! empty($request->file('foto'))) {
+            if ($request->file('foto') != null or !empty($request->file('foto'))) {
                 $extension = pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_EXTENSION);
-                $name_image = basename(pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
-                $new_name_image = 'UID_'.$empleado->id.'_'.$empleado->name.'.'.$extension;
-                $route = storage_path().'/app/public/empleados/imagenes/'.$new_name_image;
+                $name_image = basename(pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
+                $new_name_image = 'UID_' . $empleado->id . '_' . $empleado->name . '.' . $extension;
+                $route = storage_path() . '/app/public/empleados/imagenes/' . $new_name_image;
                 $image = $new_name_image;
 
                 // Call the ImageService to consume the external API
@@ -291,7 +291,7 @@ class EmpleadoController extends Controller
         foreach ($collection as $collect) {
             foreach ($collect as $item) {
                 // if (!is_null($item) && (array_key_exists('id', $collect) && $collect['id'] != '0')) {
-                if (! is_null($item)) {
+                if (!is_null($item)) {
                     $onlyNull = false;
 
                     return $onlyNull;
@@ -305,7 +305,7 @@ class EmpleadoController extends Controller
     public function validateDynamicForms($request)
     {
         if (isset($request->dependientes)) {
-            if (! $this->containsOnlyNull($request->dependientes)) {
+            if (!$this->containsOnlyNull($request->dependientes)) {
                 if (count($request->dependientes)) {
                     $request->validate([
                         'dependientes.*.nombre' => 'required|string',
@@ -316,7 +316,7 @@ class EmpleadoController extends Controller
         }
 
         if (isset($request->contactos_emergencia)) {
-            if (! $this->containsOnlyNull($request->contactos_emergencia)) {
+            if (!$this->containsOnlyNull($request->contactos_emergencia)) {
                 if (count($request->contactos_emergencia)) {
                     $request->validate([
                         'contactos_emergencia.*.nombre' => 'required|string|max:255',
@@ -328,7 +328,7 @@ class EmpleadoController extends Controller
         }
 
         if (isset($request->beneficiarios)) {
-            if (! $this->containsOnlyNull($request->beneficiarios)) {
+            if (!$this->containsOnlyNull($request->beneficiarios)) {
                 if (count($request->beneficiarios)) {
                     $request->validate([
                         'beneficiarios.*.nombre' => 'required|string',
@@ -435,7 +435,7 @@ class EmpleadoController extends Controller
     public function assignDependenciesModel($request, $empleado)
     {
         if (isset($request->dependientes)) {
-            if (! $this->containsOnlyNull($request->dependientes)) {
+            if (!$this->containsOnlyNull($request->dependientes)) {
                 if (count($request->dependientes)) {
                     foreach ($request->dependientes as $dependiente) {
                         $dependienteModel = DependientesEconomicosEmpleados::where('id', $dependiente['id']);
@@ -459,7 +459,7 @@ class EmpleadoController extends Controller
         }
         // dd(isset($request->contactos_emergencia));
         if (isset($request->contactos_emergencia)) {
-            if (! $this->containsOnlyNull($request->contactos_emergencia)) {
+            if (!$this->containsOnlyNull($request->contactos_emergencia)) {
                 if (count($request->contactos_emergencia)) {
                     foreach ($request->contactos_emergencia as $contactos_emergencia) {
                         $model = ContactosEmergenciaEmpleado::where('id', $contactos_emergencia['id']);
@@ -485,7 +485,7 @@ class EmpleadoController extends Controller
         }
 
         if (isset($request->beneficiarios)) {
-            if (! $this->containsOnlyNull($request->beneficiarios)) {
+            if (!$this->containsOnlyNull($request->beneficiarios)) {
                 if (count($request->beneficiarios)) {
                     foreach ($request->beneficiarios as $beneficiario) {
                         $model = BeneficiariosEmpleado::where('id', $beneficiario['id']);
@@ -603,7 +603,7 @@ class EmpleadoController extends Controller
                 // Get just ext
                 $extension = $request->file('documento')->getClientOriginalExtension();
                 // Filename to store
-                $fileNameToStore = $filename.'_'.time().'.'.$extension;
+                $fileNameToStore = $filename . '_' . time() . '.' . $extension;
                 // Upload Image
                 $path = $request->file('documento')->storeAs('public/certificados_empleados', $fileNameToStore);
 
@@ -645,7 +645,7 @@ class EmpleadoController extends Controller
             // Get just ext
             $extension = $request->file('documento')->getClientOriginalExtension();
             // Filename to store
-            $fileNameToStore = $filename.'_'.time().'.'.$extension;
+            $fileNameToStore = $filename . '_' . time() . '.' . $extension;
             // Upload Image
             $path = $request->file('documento')->storeAs('public/certificados_empleados', $fileNameToStore);
 
@@ -708,7 +708,7 @@ class EmpleadoController extends Controller
                 // Get just ext
                 $extension = $request->file('file')->getClientOriginalExtension();
                 // Filename to store
-                $fileNameToStore = $filename.'_'.time().'.'.$extension;
+                $fileNameToStore = $filename . '_' . time() . '.' . $extension;
                 // Upload Image
                 $path = $request->file('file')->storeAs('public/cursos_empleados', $fileNameToStore);
 
@@ -775,7 +775,7 @@ class EmpleadoController extends Controller
             // Get just ext
             $extension = $request->file('file')->getClientOriginalExtension();
             // Filename to store
-            $fileNameToStore = $filename.'_'.time().'.'.$extension;
+            $fileNameToStore = $filename . '_' . time() . '.' . $extension;
             // Upload Image
             $path = $request->file('file')->storeAs('public/cursos_empleados', $fileNameToStore);
 
@@ -1083,10 +1083,10 @@ class EmpleadoController extends Controller
     public function expedienteUpdate(Request $request)
     {
         if ($request->name == 'file') {
-            $fileName = time().$request->file('value')->getClientOriginalName();
+            $fileName = time() . $request->file('value')->getClientOriginalName();
             // dd($request->file('value'));
             $empleado = Empleado::find($request->empleadoId);
-            $request->file('value')->storeAs('public/expedientes/'.Str::slug($empleado->name), $fileName);
+            $request->file('value')->storeAs('public/expedientes/' . Str::slug($empleado->name), $fileName);
             $expediente = EvidenciasDocumentosEmpleados::updateOrCreate(['empleado_id' => $request->empleadoId, 'lista_documentos_empleados_id' => $request->documentoId], [$request->name => $request->value]);
 
             $doc_viejo = EvidenciaDocumentoEmpleadoArchivo::where('evidencias_documentos_empleados_id', $expediente->id)->where('archivado', false)->first();
@@ -1165,7 +1165,7 @@ class EmpleadoController extends Controller
         }
         $request->validate([
             'name' => 'required|string',
-            'n_empleado' => 'nullable|unique:empleados,n_empleado,'.$id,
+            'n_empleado' => 'nullable|unique:empleados,n_empleado,' . $id,
             'area_id' => 'required|exists:areas,id',
             'supervisor_id' => $validateSupervisor,
             'puesto_id' => 'required|exists:puestos,id',
@@ -1186,9 +1186,9 @@ class EmpleadoController extends Controller
                     $value = substr($request->snap_foto, strpos($request->snap_foto, ',') + 1);
                     $value = base64_decode($value);
 
-                    $new_name_image = 'UID_'.$empleado->id.'_'.$empleado->name.'.png';
+                    $new_name_image = 'UID_' . $empleado->id . '_' . $empleado->name . '.png';
                     $image = $new_name_image;
-                    $route = storage_path().'/app/public/empleados/imagenes/'.$new_name_image;
+                    $route = storage_path() . '/app/public/empleados/imagenes/' . $new_name_image;
                     // Call the ImageService to consume the external API
                     $apiResponse = ImageService::consumeImageCompresorApi($request->file('foto'));
 
@@ -1198,15 +1198,15 @@ class EmpleadoController extends Controller
                     }
                 }
             }
-        } elseif ($request->snap_foto && ! $request->file('foto')) {
+        } elseif ($request->snap_foto && !$request->file('foto')) {
             if ($request->snap_foto) {
                 if (preg_match('/^data:image\/(\w+);base64,/', $request->snap_foto)) {
                     $value = substr($request->snap_foto, strpos($request->snap_foto, ',') + 1);
                     $value = base64_decode($value);
 
-                    $new_name_image = 'UID_'.$empleado->id.'_'.$empleado->name.'.png';
+                    $new_name_image = 'UID_' . $empleado->id . '_' . $empleado->name . '.png';
                     $image = $new_name_image;
-                    $route = storage_path().'/app/public/empleados/imagenes/'.$new_name_image;
+                    $route = storage_path() . '/app/public/empleados/imagenes/' . $new_name_image;
                     // Call the ImageService to consume the external API
                     $apiResponse = ImageService::consumeImageCompresorApi($request->file('foto'));
 
@@ -1217,11 +1217,11 @@ class EmpleadoController extends Controller
                 }
             }
         } else {
-            if ($request->file('foto') != null or ! empty($request->file('foto'))) {
+            if ($request->file('foto') != null or !empty($request->file('foto'))) {
                 $extension = pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_EXTENSION);
-                $name_image = basename(pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
-                $new_name_image = 'UID_'.$empleado->id.'_'.$empleado->name.'.'.$extension;
-                $route = storage_path().'/app/public/empleados/imagenes/'.$new_name_image;
+                $name_image = basename(pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
+                $new_name_image = 'UID_' . $empleado->id . '_' . $empleado->name . '.' . $extension;
+                $route = storage_path() . '/app/public/empleados/imagenes/' . $new_name_image;
                 $image = $new_name_image;
                 // Call the ImageService to consume the external API
                 $apiResponse = ImageService::consumeImageCompresorApi($request->file('foto'));
@@ -1309,13 +1309,13 @@ class EmpleadoController extends Controller
         if ($areaIdChanged) {
             // El campo area_id ha sido modificado
             // Realiza las acciones necesarias...
-            $this->agregarHistorico($id, 'areas', 'area', $oldValues['area_id'], $userId);
+            $this->agregarHistorico($id, 'areas', 'Área', $oldValues['area_id'], $userId);
         }
 
         if ($puestoIdChanged) {
             // El campo puesto_id ha sido modificado
             // Realiza las acciones necesarias...
-            $this->agregarHistorico($id, 'puestos', 'puesto', $oldValues['puesto_id'], $userId);
+            $this->agregarHistorico($id, 'puestos', 'Puesto', $oldValues['puesto_id'], $userId);
         }
 
         $usuario = User::where('empleado_id', $empleado->id)->orWhere('n_empleado', $empleado->n_empleado)->first();
@@ -1326,19 +1326,6 @@ class EmpleadoController extends Controller
 
         return response()->json(['status' => 'success', 'message' => 'Empleado Actualizado', 'from' => 'rh'], 200);
         // return redirect()->route('admin.empleados.index')->with('success', 'Editado con éxito');
-    }
-
-    public function agregarHistorico($id, $tabla, $campo, $valor_anterior)
-    {
-        $hoy = Carbon::today();
-
-        HistoricoEmpleados::create([
-            'empleado_id' => $id,
-            'campo_modificado' => $campo,
-            'fecha_cambio' => $hoy,
-            'valor_anterior_id' => $valor_anterior,
-            'tabla_origen' => $tabla,
-        ]);
     }
 
     public function updateFromCurriculum(Request $request, Empleado $empleado)
@@ -1440,7 +1427,7 @@ class EmpleadoController extends Controller
                     ->select('empleados.id', 'empleados.name', 'empleados.email', 'empleados.puesto', 'areas.area', 'puestos.puesto as puesto')
                     ->leftJoin('areas', 'empleados.area_id', '=', 'areas.id')
                     ->leftJoin('puestos', 'empleados.puesto_id', '=', 'puestos.id')
-                    ->where('empleados.name', 'ILIKE', '%'.$nombre.'%')
+                    ->where('empleados.name', 'ILIKE', '%' . $nombre . '%')
                     ->where('empleados.estatus', 'alta')
                     ->whereNull('empleados.deleted_at')
                     ->get();
@@ -1456,7 +1443,7 @@ class EmpleadoController extends Controller
             $nombre = $request->nombre;
             if ($nombre != null) {
                 $usuarios = DB::table('empleados')
-                    ->where('name', 'ILIKE', '%'.$nombre.'%')
+                    ->where('name', 'ILIKE', '%' . $nombre . '%')
                     ->join('areas', 'empleados.area_id', '=', 'areas.id')
                     ->where('empleados.estado', 'alta')
                     ->take(5)
@@ -1485,9 +1472,9 @@ class EmpleadoController extends Controller
         if (preg_match('/^data:image\/(\w+);base64,/', $request->image)) {
             $value = substr($request->image, strpos($request->image, ',') + 1);
             $value = base64_decode($value);
-            $new_name_image = 'UID_'.$empleado->id.'_'.$empleado->name.'.png';
+            $new_name_image = 'UID_' . $empleado->id . '_' . $empleado->name . '.png';
 
-            $route = storage_path().'/app/public/empleados/imagenes/'.$new_name_image;
+            $route = storage_path() . '/app/public/empleados/imagenes/' . $new_name_image;
 
             // Call the ImageService to consume the external API
             $apiResponse = ImageService::consumeImageCompresorApi($request->file('foto'));
@@ -1577,7 +1564,7 @@ class EmpleadoController extends Controller
 
         if ($request->hasFile('file')) {
             $file = $request->file('file');
-            if (Storage::putFileAs('public/expedientes/'.Str::slug($empleado->name), $file, $file->getClientOriginalName())) {
+            if (Storage::putFileAs('public/expedientes/' . Str::slug($empleado->name), $file, $file->getClientOriginalName())) {
                 $evidencia->update([
                     'documentos' => $file->getClientOriginalName(),
                 ]);
@@ -1610,7 +1597,7 @@ class EmpleadoController extends Controller
             ]);
             if ($request->hasFile('file')) {
                 $file = $request->file('file');
-                if (Storage::putFileAs('public/expedientes/'.Str::slug($empleado->name), $file, $file->getClientOriginalName())) {
+                if (Storage::putFileAs('public/expedientes/' . Str::slug($empleado->name), $file, $file->getClientOriginalName())) {
                     $documento->update([
                         'documentos' => $file->getClientOriginalName(),
                     ]);
@@ -1750,6 +1737,6 @@ class EmpleadoController extends Controller
 
         $registrosHistorico = $empleado->registrosHistorico->toArray(); // Asegúrate de que esto sea correcto
 
-        return Excel::download(new HistorialEmpleadoExport($registrosHistorico), 'historial_empleado_'.$id.'.xlsx');
+        return Excel::download(new HistorialEmpleadoExport($registrosHistorico), 'historial_empleado_' . $id . '.xlsx');
     }
 }
