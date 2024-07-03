@@ -147,12 +147,12 @@
             <div class="col-2">
                 <div class="anima-focus">
                     <select class="form-control" name="mes_mensual" id="mes_mensual" wire:model="mes_mensual">
-                        <option value="todos" selected>Todos</option>
-                        @foreach ($anos_evaluaciones as $key => $ano)
-                            <option value="{{ $ano }}">{{ $ano }}</option>
+                        <option value="ninguno" selected>Seleccione un Mes del Año elegido</option>
+                        @foreach ($meses_evaluaciones as $key => $mes)
+                            <option value="{{ $key }}">{{ $mes }}</option>
                         @endforeach
                     </select>
-                    <label for="ano_mensual">Año</label>
+                    <label for="ano_mensual">Mes</label>
                 </div>
             </div>
             <div class="col-2">
@@ -592,7 +592,44 @@
     <script>
         document.addEventListener('livewire:load', function() {
             Livewire.on('dataMensual', (datosMensuales) => {
+                const mesSeleccionado = datosMensuales.labels[0]; // Solo un mes
+                const datosMes = datosMensuales.data[mesSeleccionado];
 
+                const datasets = [];
+                if (datosMensuales.filtro_objetivos_mensual) {
+                    const objetivosMensual = datosMes?.objetivos || 0;
+                    datasets.push({
+                        label: 'Objetivos',
+                        data: [objetivosMensual],
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    });
+                }
+
+                if (datosMensuales.filtro_competencias_mensual) {
+                    const competenciasMensual = datosMes?.competencias || 0;
+                    datasets.push({
+                        label: 'Competencias',
+                        data: [competenciasMensual],
+                        backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                        borderColor: 'rgba(153, 102, 255, 1)',
+                        borderWidth: 1
+                    });
+                }
+
+                if (datosMensuales.filtro_general_mensual) {
+                    const generalMensual = datosMes?.general || 0;
+                    datasets.push({
+                        label: 'General',
+                        data: [generalMensual],
+                        backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                        borderColor: 'rgba(255, 159, 64, 1)',
+                        borderWidth: 1
+                    });
+                }
+
+                // Eliminar el canvas existente y crear uno nuevo
                 document.getElementById('resultadosmensuales').remove();
                 let canvas = document.createElement("canvas");
                 canvas.id = "resultadosmensuales";
@@ -600,23 +637,12 @@
                 canvas.style.height = '100%';
                 document.getElementById("contenedor-mensual").appendChild(canvas);
 
-                let grafica_objetivos_area = new Chart(document.getElementById('resultadosmensuales'), {
+                // Crear el gráfico
+                new Chart(document.getElementById('resultadosmensuales'), {
                     type: 'bar',
                     data: {
-                        labels: datosMensuales.labels,
-                        datasets: [{
-                            label: 'Objetivos',
-                            data: datosMensuales.data[0],
-                            borderWidth: 1
-                        }, {
-                            label: 'Competencias',
-                            data: datosMensuales.data[1],
-                            borderWidth: 1
-                        }, {
-                            label: 'General',
-                            data: datosMensuales.data[2],
-                            borderWidth: 1
-                        }]
+                        labels: [mesSeleccionado], // Solo un mes
+                        datasets: datasets,
                     },
                     options: {
                         scales: {
