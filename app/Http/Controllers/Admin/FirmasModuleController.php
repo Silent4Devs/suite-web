@@ -3,15 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Empleado;
-use App\Models\FirmaCentroAtencion;
 use App\Models\FirmaModule;
 use App\Models\Modulo;
 use App\Models\Submodulo;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 
 class FirmasModuleController extends Controller
 {
@@ -28,9 +24,9 @@ class FirmasModuleController extends Controller
                 $firma->empleados = collect();
             }
         }
+
         return view('admin.firmas.index', compact('firmaModules'));
     }
-
 
     public function create()
     {
@@ -44,7 +40,6 @@ class FirmasModuleController extends Controller
 
         return view('admin.firmas.create', compact('modulos', 'submodulos', 'empleados'));
     }
-
 
     public function store(Request $request)
     {
