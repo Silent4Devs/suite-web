@@ -31,10 +31,10 @@
 
                 <div class="col-12">
                     <p class="mt-4">
-                        Escalas <br>
-                        Define las escalas de medición y asigna su Valor y Nombre
+                        Unidades de medida <br>
+                        Define las unidades de medida de los objetivos.
                     </p>
-                    <div class="form-row">
+                    <div class="form-row mt-3">
                         {{-- <div class="col-1">
                             <div class="anima-focus mb-3 ">
                                 <input type="number" id="valor_estatus_1" name="valor_estatus_1"
@@ -54,14 +54,14 @@
                         <div class="col-2">
                             <div class="anima-focus mb-3 ">
                                 <input type="number" id="valor_minimo_1" name="valor_minimo_1"
-                                    wire:model.defer="valor_minimo_1" class="form-control" placeholder="" required>
+                                    wire:model.defer="valor_minimo_1" class="form-control" placeholder="">
                                 <label for="valor_minimo_1">Valor Minimo*<sup>*</sup></label>
                             </div>
                         </div>
                         <div class="col-2">
                             <div class="anima-focus mb-3 ">
                                 <input type="text" id="valor_maximo_1" name="valor_maximo_1"
-                                    wire:model.defer="valor_maximo_1" class="form-control" placeholder="" required>
+                                    wire:model.defer="valor_maximo_1" class="form-control" placeholder="">
                                 <label for="valor_maximo_1">Valor Maximo*<sup>*</sup></label>
                             </div>
                         </div>
@@ -81,7 +81,7 @@
                 </div>
                 @foreach ($parametros as $key => $p)
                     <div class="col-12">
-                        <div class="form-row">
+                        <div class="form-row  mt-3 mb-3">
                             {{-- <div class="col-1">
                                 <div class="anima-focus mb-3 ">
                                     <input type="number" id="valor_estatus_arreglo_{{ $key }}"
@@ -103,7 +103,7 @@
                                     <input type="number" id="maximo_{{ $key }}"
                                         name="minimo_{{ $key }}"
                                         wire:model.defer="parametros.{{ $key }}.minimo" class="form-control"
-                                        placeholder="" required>
+                                        placeholder="">
                                     <label for="maximo_{{ $key }}">Valor Minimo*<sup>*</sup></label>
                                 </div>
                             </div>
@@ -112,7 +112,7 @@
                                     <input type="number" id="maximo_{{ $key }}"
                                         name="maximo_{{ $key }}"
                                         wire:model.defer="parametros.{{ $key }}.maximo" class="form-control"
-                                        placeholder="" required>
+                                        placeholder="">
                                     <label for="maximo_{{ $key }}">Valor Maximo*<sup>*</sup></label>
                                 </div>
                             </div>

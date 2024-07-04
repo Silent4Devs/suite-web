@@ -14,7 +14,10 @@ class PermisosCargaObjetivosSeeder extends Seeder
     {
         //
         $perfiles = [
-            ['perfil' => 'Administrador'],
+            [
+                'perfil' => 'Administrador',
+                'permisos_asignacion' => true
+            ],
             ['perfil' => 'Jefe Inmediato'],
             ['perfil' => 'Colaborador'],
         ];
