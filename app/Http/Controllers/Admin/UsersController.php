@@ -132,15 +132,16 @@ class UsersController extends Controller
     {
         try {
             abort_if(Gate::denies('usuarios_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            $registro = User::find($id);
 
-            $registro = User::find($id); // Donde $id es el ID del registro que deseas eliminar.
+            if (!$registro) {
+                return response()->json(['status' => 'error', 'message' => 'Registro no encontrado.'], 404);
+            }
 
             $registro->delete();
-            Alert::success('éxito', 'Información añadida con éxito');
-
-            return redirect()->route('admin.users.index');
+            return response()->json(['status' => 'success', 'message' => 'El registro ha sido eliminado con éxito.']);
         } catch (\Exception $e) {
-            return redirect()->route('admin.users.index')->with('error', $e->getMessage());
+            return response()->json(['status' => 'error', 'message' => $e->getMessage()], 500);
         }
     }
 
@@ -159,10 +160,10 @@ class UsersController extends Controller
     {
         if ($request->ajax()) {
             $nombre = $request->nombre;
-            $usuarios = User::getAll()->where('name', 'LIKE', '%'.$nombre.'%')->take(5);
+            $usuarios = User::getAll()->where('name', 'LIKE', '%' . $nombre . '%')->take(5);
             $lista = "<ul class='list-group' id='empleados-lista'>";
             foreach ($usuarios as $usuario) {
-                $lista .= "<button type='button' class='list-group-item list-group-item-action' onClick='seleccionarUsuario(".$usuario.");'>".$usuario->name.'</button>';
+                $lista .= "<button type='button' class='list-group-item list-group-item-action' onClick='seleccionarUsuario(" . $usuario . ");'>" . $usuario->name . '</button>';
             }
             $lista .= '</ul>';
 
@@ -204,7 +205,7 @@ class UsersController extends Controller
             $message = "Verificación por dos factores habilitada para el usuario {$user->name}";
         }
 
-        $user->two_factor = ! $user->two_factor;
+        $user->two_factor = !$user->two_factor;
 
         $user->save();
 
@@ -219,7 +220,7 @@ class UsersController extends Controller
             $message = "El usuario {$user->name} ha sido desbloqueado";
         }
 
-        $user->is_active = ! $user->is_active;
+        $user->is_active = !$user->is_active;
 
         $user->save();
 
