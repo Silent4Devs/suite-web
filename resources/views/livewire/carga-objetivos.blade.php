@@ -69,7 +69,7 @@
                         <option value="{{ $puesto->id }}">{{ $puesto->puesto }}</option>
                     @endforeach
                 </select>
-                <label for="area">Puesto</label>
+                <label for="puesto">Puesto</label>
             </div>
             <div class="col-md-3 form-group anima-focus">
                 <select id="perfil" wire:model="select_perfil" class="form-control">
@@ -78,17 +78,26 @@
                         <option value="{{ $perfil->id }}">{{ $perfil->nombre }}</option>
                     @endforeach
                 </select>
-                <label for="area">Perfil</label>
+                <label for="perfil">Perfil</label>
+            </div>
+            <div class="col-md-3 form-group anima-focus">
+                <select id="colaborador" wire:model="select_colaborador" class="form-control">
+                    <option selected value="0">Todos</option>
+                    @foreach ($empleados as $empleado)
+                        <option value="{{ $empleado->id }}">{{ $empleado->name }}</option>
+                    @endforeach
+                </select>
+                <label for="colaborador">Colaborador</label>
             </div>
         </div>
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-9 form-group anima-focus">
                 <input id="buscar" type="search" class="form-control" placeholder=""
                     style="border: none; border-bottom: 1px solid; border-radius: 0px !important;">
                 <label for="buscar"><i class="material-symbols-outlined"
                         style="transform: translateY(50%);">search</i> Buscar</label>
             </div>
-        </div>
+        </div> --}}
     </div>
     <div class="card card-body">
         <div class="datatable-fix">

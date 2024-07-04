@@ -39,6 +39,8 @@ class CargaObjetivos extends Component
 
     public $select_perfil = 0;
 
+    public $select_colaborador = 0;
+
     public $fecha_inicio = null;
 
     public $fecha_fin = null;
@@ -74,6 +76,11 @@ class CargaObjetivos extends Component
 
         if ($this->select_perfil != 0) {
             $this->empleados = $this->empleados->where('perfil_empleado_id', $this->select_perfil)->sortBy('name');
+            $this->cuentasCero();
+        }
+
+        if ($this->select_colaborador != 0) {
+            $this->empleados = $this->empleados->where('id', $this->select_colaborador)->sortBy('name');
             $this->cuentasCero();
         }
 
@@ -117,7 +124,7 @@ class CargaObjetivos extends Component
     public function habilitarCargaObjetivos($valor)
     {
         if ($valor) {
-            if (! empty($this->fecha_inicio) && ! empty($this->fecha_fin)) {
+            if (!empty($this->fecha_inicio) && !empty($this->fecha_fin)) {
                 if ($this->fecha_inicio < $this->fecha_fin) {
 
                     PeriodoCargaObjetivos::create([
