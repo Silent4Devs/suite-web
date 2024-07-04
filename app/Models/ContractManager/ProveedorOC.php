@@ -5,6 +5,7 @@ namespace App\Models\ContractManager;
 use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class ProveedorOC extends Model implements Auditable
@@ -28,4 +29,11 @@ class ProveedorOC extends Model implements Auditable
     ];
 
     public $table = 'proveedor_o_c_s';
+
+    public static function getAll()
+    {
+        return Cache::remember('ProveedorOC:Proveedor_all', 3600 * 6, function () {
+            return self::get();
+        });
+    }
 }
