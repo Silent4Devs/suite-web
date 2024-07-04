@@ -30,7 +30,9 @@ class UsersController extends Controller
 
         $users = User::getUserWithRole();
 
-        return view('users.tbUsersIndex', compact('users', 'existsVinculoEmpleadoAdmin'));
+        $empleados = Empleado::getAltaDataColumns();
+
+        return view('users.tbUsersIndex', compact('users', 'existsVinculoEmpleadoAdmin', 'empleados'));
     }
 
     public function getUsersIndex(Request $request)

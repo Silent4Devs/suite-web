@@ -64,8 +64,9 @@
 
                                 <a href="{{ url('/admin/users/' . $user->id . '') }}"><i class="fas fa-eye"></i></a>
 
-                                <a onclick="mostrarAlertaVinculacion('{{ url('/admin/users') }}');"> <i
-                                        class="fas fa-user-tag"></i></a>
+                                <a onclick="mostrarAlertaVinculacion('{{ $user->id }}', '{{ $user->name }}');">
+                                    <i class="fas fa-user-tag"></i>
+                                </a>
 
                                 <a href="{{ url('/admin/users/bloqueo/' . $user->id . '/change') }}"> <i
                                         class="fas fa-lock"></i></a>
@@ -74,7 +75,46 @@
                                     <i class="fas fa-trash text-danger"></i>
                                 </a>
 
-
+                                <div data-user-id="{{ $user->id }}" class="modal fade"
+                                    id="vincularEmpleado{{ $user->id }}" data-backdrop="static" data-keyboard="false"
+                                    tabindex="-1" aria-labelledby="vincularEmpleado{{ $user->id }}Label"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="vincularEmpleado{{ $user->id }}Label">
+                                                    Vinculación de
+                                                    Empleados</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p><strong>Empleado vinculado actualmente:</strong>
+                                                    {{ $user->empleado ? $user->empleado->name : 'Sin Vincular' }}</p>
+                                                {{-- <select name="n_empleado" id="n_empleado{{ $user->id }}"
+                                                    class="select2">
+                                                    <option value="" selected disabled>-- Selecciona el empleado a
+                                                        vincular --</option>
+                                                    {{ $empleados }}
+                                                    ${empleados.map(empleado => `
+                                                    <option
+                                                        value="${empleado.n_empleado != null ? `NEMPLEADO-${empleado.n_empleado}` : `IDEMPLEADO-${empleado.id}`}">
+                                                        ${empleado.name}</option>
+                                                    `).join('')}
+                                                </select> --}}
+                                                <span class="text-sm n_empleado_error errores text-danger"></span>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-dismiss="modal">Cerrar</button>
+                                                <button type="button" class="btn btn-primary"
+                                                    onclick="VincularEmpleado('{{ $user->name }}', '{{ $user->id }}');">Vincular</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
                             </td>
                         </tr>
