@@ -2,7 +2,8 @@
 
 namespace App\Observers;
 
-use App\Models\ProveedorOC;
+use App\Models\ContractManager\ProveedorOC;
+use Illuminate\Support\Facades\Cache;
 
 class ProveedorOCObserver
 {
@@ -12,6 +13,7 @@ class ProveedorOCObserver
     public function created(ProveedorOC $proveedorOC): void
     {
         //
+        $this->forgetCache();
     }
 
     /**
@@ -20,6 +22,7 @@ class ProveedorOCObserver
     public function updated(ProveedorOC $proveedorOC): void
     {
         //
+        $this->forgetCache();
     }
 
     /**
@@ -28,6 +31,7 @@ class ProveedorOCObserver
     public function deleted(ProveedorOC $proveedorOC): void
     {
         //
+        $this->forgetCache();
     }
 
     /**
@@ -36,6 +40,7 @@ class ProveedorOCObserver
     public function restored(ProveedorOC $proveedorOC): void
     {
         //
+        $this->forgetCache();
     }
 
     /**
@@ -44,5 +49,11 @@ class ProveedorOCObserver
     public function forceDeleted(ProveedorOC $proveedorOC): void
     {
         //
+        $this->forgetCache();
+    }
+
+    public function forgetCache()
+    {
+        Cache::forget('ProveedorOC:ProveedorOC_all');
     }
 }

@@ -32,7 +32,7 @@ class ProveedorOC extends Model implements Auditable
 
     public static function getAll()
     {
-        return Cache::remember('ProveedorOC:Proveedor_all', 3600 * 6, function () {
+        return Cache::remember('ProveedorOC:ProveedorOC_all', 3600 * 6, function () {
             return self::get();
         });
     }

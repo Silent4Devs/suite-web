@@ -39,7 +39,7 @@ class Comprador extends Model implements Auditable
 
     public static function getAllWithUser()
     {
-        return Cache::remember('Comprador:Comprador_all', 3600 * 6, function () {
+        return Cache::remember('Comprador:Comprador_user_all', 3600 * 6, function () {
             return self::with('user')->get();
         });
     }
