@@ -16,23 +16,23 @@
         <h3 class="text-center"><strong>Evaluaciones por Periodo</strong></h3>
         <ul>
             <li>
-                <a href="#">
+                <a href="{{ route('admin.rh.evaluaciones-desempeno.dashboard-general') }}">
                     <div style="text-transform: capitalize">
                         <i class="bi bi-clipboard-check"></i><br>
                         <p class="m-0 mt-2">
                             Crear
                             <br>
-                            Asignar objetivos por Periodo
+                            Evaluación
                         </p>
                     </div>
                 </a>
             </li>
             <li>
-                <a href="{{ route('admin.ev360-evaluaciones.index') }}">
+                <a href="{{ route('admin.ev360-objetivos-periodo.config') }}">
                     <div>
                         <i class="bi bi-patch-check"></i><br>
                         <p class="m-0 mt-2">
-                            Asignar objetivos Estratégicos
+                            Configurar Evaluación
                             <br>
                         </p>
                     </div>
