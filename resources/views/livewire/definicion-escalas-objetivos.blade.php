@@ -5,7 +5,7 @@
             <div class="info-first-config">
                 <h4 class="title-config">Escalas de medición</h4>
                 {{-- <p>Define los Valores y Escalas con los que se medirán los objetivos.</p> --}}
-                <p>Define las Escalas con los que se medirán los objetivos.</p>
+                <p>Define las Escalas con las que se calificaran los objetivos.</p>
                 <hr class="my-4">
             </div>
 
