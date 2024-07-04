@@ -68,6 +68,10 @@
             height: calc(100% - 40px);
 
         }
+
+        .ventana_menu ul {
+            margin-top: 0px !important;
+        }
     </style>
 
     {{-- {{ Breadcrumbs::render('capital-humano') }} --}}

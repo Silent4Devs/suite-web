@@ -249,7 +249,7 @@
 
         <div class="text-left mt-4">
             <a href="{{ route('admin.rh.evaluaciones-desempeno.create-evaluacion') }}" class="btn btn-info"
-                style="background-color: #59BB87 !important;">
+                style="background-color: #59BB87 !important; color:#fff !important;">
                 Crear Evaluación
             </a>
         </div>
