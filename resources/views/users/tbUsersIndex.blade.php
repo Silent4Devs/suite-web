@@ -1,8 +1,7 @@
 @extends('layouts.admin')
 @section('content')
-
-    <link rel="stylesheet" href="{{asset('css/global/TbColorsGlobal.css')}}">
-    <link rel="stylesheet" href="{{asset('css/global/tbButtons.css')}}">
+    <link rel="stylesheet" href="{{ asset('css/global/TbColorsGlobal.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/global/tbButtons.css') }}">
 
     <h5 class="col-12 titulo_general_funcion">Usuarios</h5>
     <div class="mt-5 card">
@@ -90,7 +89,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 @section('scripts')
-@parent
-    <script src="{{asset('js/users/userDeleteAlert.js')}}"></script>
-    <script src="{{asset('js/users/tableIndexUsers.js')}}"></script>
+    @parent
+    <script src="{{ asset('js/users/userDeleteAlert.js') }}"></script>
+    <script src="{{ asset('js/users/tableIndexUsers.js') }}"></script>
 @endsection
