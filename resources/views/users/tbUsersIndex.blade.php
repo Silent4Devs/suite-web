@@ -70,7 +70,7 @@
                                 <a href="{{ url('/admin/users/bloqueo/' . $user->id . '/change') }}"> <i
                                         class="fas fa-lock"></i></a>
 
-                                <a onclick="mostrarAlerta('{{ url('/admin/users/destroy/' . $user->id . '') }}');">
+                                <a onclick="mostrarAlerta('{{ route('admin.users.destroy', $user->id) }}');">
                                     <i class="fas fa-trash text-danger"></i>
                                 </a>
 
