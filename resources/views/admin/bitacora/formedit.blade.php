@@ -132,9 +132,9 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row mt-4" style="margin-left: 10px; margin-right: 10px;">
         @if (!$firmado)
-            <div>
+            <div class="col-12">
                 <label for="">Activar flujo de aprobación </label>
                 {!! Form::checkbox('firma_check', 1, $firma->count() ? true : false, [
                     'id' => 'aprobadores_firma',
@@ -163,7 +163,7 @@
         @endif
     </div>
 
-    <div class="row" style="margin-left: 10px; margin-right: 10px;">
+    <div class="row mt-4" style="margin-left: 10px; margin-right: 10px;">
         <h4 class="sub-titulo-form col s12">INFORMACIÓN GENERAL DEL CONTRATO</h4>
     </div>
 

@@ -559,14 +559,16 @@ class ContratosController extends AppBaseController
             $proyectos = TimesheetProyecto::getAll()->where('estatus', 'proceso');
 
             $firma = FirmaModule::where('modulo_id', '2')->where('submodulo_id', '7')->first();
+            // dd($firma->aprobadores);
+            // $exampleVar = $firma->aprobadores[0];
             $aprobacionFirmaContrato = AprobadorFirmaContrato::where('contrato_id', $contrato->id)->get();
             $firmar = false;
             $firmado = false;
-            foreach ($aprobacionFirmaContrato as $firma) {
-                if ($firma->aprobador_id == User::getCurrentUser()->empleado->id) {
+            foreach ($aprobacionFirmaContrato as $firma_item) {
+                if ($firma_item->aprobador_id == User::getCurrentUser()->empleado->id) {
                     $firmar = true;
                 }
-                if ($firma->firma) {
+                if ($firma_item->firma) {
                     $firmado = true;
                 }
             }
