@@ -33,6 +33,10 @@ class EmpleadoEmail extends Mailable
             ->with([
                 'nombre' => $this->empleado->name,
                 'email' => $this->empleado->email,
+                'img_twitter' => $this->getBase64(asset('img/twitter.png')),
+                'img_linkedin' => $this->getBase64(asset('img/linkedin.png')),
+                'img_facebook' => $this->getBase64(asset('img/facebook.png')),
+                'img_requi' => $this->getBase64(asset('img/img_req.png')),
             ]);
     }
 }
