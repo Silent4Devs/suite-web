@@ -28,10 +28,6 @@
             </div> --}}
 
             <div class="col-12">
-                <p class="mt-4">
-                    Escalas <br>
-                    Define las escalas de medición y asigna su Valor y Nombre
-                </p>
                 <div class="form-row">
                     <div class="col-1">
                         <div class="anima-focus mb-3 ">
