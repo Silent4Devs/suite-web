@@ -67,7 +67,7 @@ class AreasObserver
             'Areas:areas_all',
             'Areas:Areas_exists',
             'Areas:areas_pluck',
-            'Areas:areas_with_empleados'
+            'Areas:areas_with_empleados',
         ]);
     }
 }
