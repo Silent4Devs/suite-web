@@ -13,6 +13,30 @@
                 <form method="POST" action="{{ route('admin.puestos.store') }}" enctype="multipart/form-data">
                     @csrf
 
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="">
+                                <label>
+                                    {{-- <input type="checkbox" class="filled-in" checked="checked" /> --}}
+                                    <input type="checkbox" name="aprobadores_firma" id="aprobadores_firma" value="1"
+                                        style="width: 20px; height: 20px; vertical-align:middle;" />
+                                    <span>Activar flujo de aprobación</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row d-none" id="aprobadores-firma-box">
+                        <div class="col-md-12 form-group">
+                            <label for="">Asignar Aprobadores</label>
+                            <select name="aprobadores_firma[]" id="aprobadores" multiple class="form-control">
+                                @foreach ($firma->aprobadores as $aprobador)
+                                    <option value="{{ $aprobador->id }}">
+                                        {{ $aprobador->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
 
                     <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
                         <span style="font-size: 17px; font-weight: bold;">
@@ -779,6 +803,22 @@
 
 
 @section('scripts')
+    <script>
+        $(document).ready(function() {
+            $("#aprobadores").select2({
+                theme: "bootstrap4",
+            });
+        });
+
+        document.getElementById('aprobadores_firma').addEventListener('change', (e) => {
+            console.log(e.target.checked);
+            if (e.target.checked) {
+                document.getElementById('aprobadores-firma-box').classList.remove('d-none');
+            } else {
+                document.getElementById('aprobadores-firma-box').classList.add('d-none');
+            }
+        });
+    </script>
     <script>
         $(document).ready(function() {
             CKEDITOR.replace('descripcion', {

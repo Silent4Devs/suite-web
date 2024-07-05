@@ -95,8 +95,6 @@ class ContratosController extends AppBaseController
 
         $firma = FirmaModule::where('modulo_id', '2')->where('submodulo_id', '7')->first();
 
-        $porv = $firma->aprobadores;
-
         return view('contract_manager.contratos-katbol.create', compact('dolares', 'organizacion', 'areas', 'proyectos', 'firma'))->with('proveedores', $proveedores)->with('contratos', $contratos);
     }
 
@@ -560,7 +558,20 @@ class ContratosController extends AppBaseController
 
             $proyectos = TimesheetProyecto::getAll()->where('estatus', 'proceso');
 
-            return view('contract_manager.contratos-katbol.edit', compact('proyectos', 'proveedor_id', 'dolares', 'organizacion', 'areas'))->with('contrato', $contrato)->with('proveedores', $proveedores)->with('contratos', $contratos)->with('ids', $id)->with('descargar_archivo', $descargar_archivo)->with('convenios', $convenios)->with('organizacion', $organizacion);
+            $firma = FirmaModule::where('modulo_id', '2')->where('submodulo_id', '7')->first();
+            $aprobacionFirmaContrato = AprobadorFirmaContrato::where('contrato_id', $contrato->id)->get();
+            $firmar = false;
+            $firmado = false;
+            foreach ($aprobacionFirmaContrato as $firma) {
+                if ($firma->aprobador_id == User::getCurrentUser()->empleado->id) {
+                    $firmar = true;
+                }
+                if ($firma->firma) {
+                    $firmado = true;
+                }
+            }
+
+            return view('contract_manager.contratos-katbol.edit', compact('proyectos', 'proveedor_id', 'dolares', 'organizacion', 'areas', 'firma', 'firmar', 'firmado', 'aprobacionFirmaContrato'))->with('contrato', $contrato)->with('proveedores', $proveedores)->with('contratos', $contratos)->with('ids', $id)->with('descargar_archivo', $descargar_archivo)->with('convenios', $convenios)->with('organizacion', $organizacion);
         } catch (\Exception $e) {
             return redirect()->route('contract_manager.contratos-katbol.index')->with('error', $e->getMessage());
         }
@@ -804,6 +815,33 @@ class ContratosController extends AppBaseController
             $contratos = Contrato::find($contrato->id);
             $contratos->documento = $contrato->id.$fecha_inicio.$nombre;
             $contratos->save();
+        }
+
+        // aprobadores
+        if (isset($request->aprobadores_firma) && isset($request->firma_check)) {
+            $aprobacionFirmaContrato = AprobadorFirmaContrato::where('contrato_id', $contrato->id)->get();
+            foreach ($aprobacionFirmaContrato as $aprobador_old) {
+                $aprobador_old->destroy();
+            }
+            foreach ($request->aprobadores_firma as $aprobador_id) {
+                $aprobador_firma_contrato = AprobadorFirmaContrato::create([
+                    'contrato_id' => $contrato->id,
+                    'aprobador_id' => $aprobador_id,
+                    'solicitante_id' => User::getCurrentUser()->empleado->id,
+                ]);
+
+                if (isset($aprobador_firma_contrato->aprobador->email)) {
+
+                    try {
+                        Mail::to(removeUnicodeCharacters($aprobador_firma_contrato->aprobador->email))->queue(new AprobadorFirmaContratoMail($aprobador_firma_contrato));
+                    } catch (\Throwable $th) {}
+                }
+            }
+            $aprobador_firma_contrato_historico = AprobadorFirmaContratoHistorico::create([
+                'contrato_id' => $contrato->id,
+                'solicitante_id' => User::getCurrentUser()->empleado->id,
+                'empleado_update_id' => User::getCurrentUser()->empleado->id,
+            ]);
         }
 
         return response()->json([
