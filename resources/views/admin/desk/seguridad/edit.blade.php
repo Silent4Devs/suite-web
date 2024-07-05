@@ -253,7 +253,7 @@
                                 <div class="row w-100">
                                     <div class="text-center col-1 align-items-center d-flex justify-content-center">
                                         <div class="w-100">
-                                            <i class="bi bi-info mr-3" style="color: #3B82F6; font-size: 30px"></i>
+                                            {{-- <i class="bi bi-info mr-3" style="color: #3B82F6; font-size: 30px"></i> --}}
                                         </div>
                                     </div>
                                     <div class="col-12" style="width: 300rem;">
@@ -274,7 +274,7 @@
                             <div style="position: relative; left: 2rem;">
                                 <label>
                                     <input type="checkbox" id="toggle-info">
-                                    Mostrar Información
+                                    Activar flujo de aprobación
                                 </label>
                             </div>
 
@@ -735,48 +735,6 @@
                                 <textarea name="comentarios" class="form-control">{{ $incidentesSeguridad->comentarios }}</textarea>
                             </div>
 
-                            @php
-                            $userIsAuthorized = false;
-                            if($firmaModules && $firmaModules->empleados){
-                            foreach ($firmaModules->empleados as $empleado) {
-                                if ($empleado->id === Auth::id()) {
-                                    $userIsAuthorized = true;
-                                    break;
-                                }
-                            }
-                            }
-                        @endphp
-
-
-                        @if ($userIsAuthorized)
-                        <div class="mt-2 form-group col-md-12">
-                            <div class="" style="position: relative; left: 2rem;">
-                                <br>
-                                <h5><strong>Firma*</strong></h5>
-                                <p>
-                                    Indispensable firmar  antes de guardar y enviarla a aprobación.
-                                </p>
-                            </div>
-                            <div class="flex caja-firmar">
-                                <div class="flex-item"
-                                    style="display:flex; justify-content: center; flex-direction: column; align-items:center;">
-                                    <div id="firma_content" class="caja-space-firma"
-                                        style="display:flex; justify-content: center; flex-direction: column; align-items:center;">
-                                        <canvas id="firma_requi" width="500px" height="300px">
-                                            Navegador no compatible
-                                        </canvas>
-                                        <input type="hidden" name="firma" id="firma">
-                                    </div>
-                                    <div>
-                                        <div class="btn"
-                                            style="color: white; background:  gray !important; transform: translateY(-40px) scale(0.8);"
-                                            id="clear">Limpiar</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        @endif
-
                             <div class="mt-2 text-right form-group col-md-12">
                                 <a href="{{ asset('admin/desk') }}" class="btn btn_cancelar">Cancelar</a>
                                 <input type="submit" class="btn btn-success" value="Enviar">
@@ -1101,6 +1059,40 @@
    }
 @endphp
 
+
+@if ($userIsAuthorized)
+<form method="POST" action="{{ route('admin.module_firmas.seguridad') }}" enctype="multipart/form-data">
+<div class="card card-body">
+    <div class="" style="position: relative; left: 2rem;">
+        <br>
+        <h5><strong>Firma*</strong></h5>
+        <p>
+            Indispensable firmar  antes de guardar y enviarla a aprobación.
+        </p>
+    </div>
+    <div class="flex caja-firmar">
+        <div class="flex-item"
+            style="display:flex; justify-content: center; flex-direction: column; align-items:center;">
+            <div id="firma_content" class="caja-space-firma"
+                style="display:flex; justify-content: center; flex-direction: column; align-items:center;">
+                <canvas id="firma_requi" width="500px" height="300px">
+                    Navegador no compatible
+                </canvas>
+                <input type="hidden" name="firma" id="firma">
+            </div>
+            <div>
+                <div class="btn"
+                    style="color: white; background:  gray !important; transform: translateY(-40px) scale(0.8);"
+                    id="clear">Limpiar</div>
+            </div>
+            <div class="flex my-4" style="justify-content: end;">
+                <button onclick="validar()" class="btn btn-primary" type="submit">Firmar</button>
+            </div>
+        </div>
+    </div>
+    </div>
+</form>
+@endif
 
 @if ($userIsAuthorized)
 <div class="card card-content" style="margin-bottom: 30px">
