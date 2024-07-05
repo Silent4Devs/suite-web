@@ -130,6 +130,63 @@
 })();
 
 $(document).ready(function () {
+    // Función para vincular empleados
+    window.VincularEmpleado = function (nombre, user_id) {
+        let id_empleado = document.getElementById(
+            `id_empleado_${user_id}`
+        ).value;
+        $.ajax({
+            type: "POST",
+            url: "/admin/users/vincular",
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            data: {
+                id_empleado,
+                user_id,
+            },
+            dataType: "JSON",
+            beforeSend: function () {
+                Swal.fire(
+                    "¡Estamos Vinculando!",
+                    `El usuario: ${nombre} está siendo vinculado`,
+                    "info"
+                );
+            },
+            success: function (response) {
+                Swal.fire(
+                    "Usuario Vinculado",
+                    `El usuario: ${nombre} ha sido vinculado`,
+                    "success"
+                );
+                $(`#vincularEmpleado${user_id}`).modal("hide");
+                $(".modal-backdrop").hide();
+                setTimeout(() => {
+                    location.reload();
+                }, 5000);
+            },
+            error: function (error) {
+                $.each(
+                    error.responseJSON.errors,
+                    function (indexInArray, valueOfElement) {
+                        $(`span.${indexInArray}_error`).text(valueOfElement[0]);
+                        console.log(indexInArray, valueOfElement);
+                    }
+                );
+                Swal.fire(
+                    "Ocurrió un error",
+                    `Error: ${error.responseJSON.message}`,
+                    "error"
+                );
+            },
+        });
+    };
+
+    // Inicializa select2 si es necesario
+    $(".select2").select2();
+});
+
+$(document).ready(function () {
     let dtButtons = [
         {
             extend: "csvHtml5",
