@@ -188,9 +188,9 @@ services:
     environment:
       - monitoring.enabled= true
     depends_on:
-      - laravel.test
+      - php
     networks:
-      - sail-elk
+      - tabantajnetwork
 
   elastic-search-tabantaj:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.8.1
