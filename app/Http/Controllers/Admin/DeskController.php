@@ -261,7 +261,6 @@ class DeskController extends Controller
 
         $existingRecord = AprobadorSeleccionado::where('seguridad_id', $incidentesSeguridad->id)->first();
 
-        // Si existe, eliminarlo
         if ($existingRecord) {
             $existingRecord->delete();
         }
