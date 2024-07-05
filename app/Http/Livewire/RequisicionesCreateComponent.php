@@ -242,7 +242,9 @@ class RequisicionesCreateComponent extends Component
                             || $cotizacion_actual->getClientOriginalExtension() === 'csv'
                         ) {
                             $this->habilitar_alerta = false;
-                            $proveedor_req->cotizacion = $this->filename;
+                            $this->bandera = true;
+                            $name = 'requisicion_' . $this->requisicion_id . 'cotizacion_' . $cotizacion_count . '_' . uniqid() . '.' . $cotizacion_actual->getClientOriginalExtension();
+                            $proveedor_req->cotizacion = $name;
                             $proveedor_req->save();
                         } else {
                             $this->habilitar_alerta = true;
