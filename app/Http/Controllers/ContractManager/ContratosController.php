@@ -95,6 +95,8 @@ class ContratosController extends AppBaseController
 
         $firma = FirmaModule::where('modulo_id', '2')->where('submodulo_id', '7')->first();
 
+        $exampleVar = $firma->aprobadores;
+
         return view('contract_manager.contratos-katbol.create', compact('dolares', 'organizacion', 'areas', 'proyectos', 'firma'))->with('proveedores', $proveedores)->with('contratos', $contratos);
     }
 
