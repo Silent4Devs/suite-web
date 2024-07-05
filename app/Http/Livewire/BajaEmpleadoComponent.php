@@ -58,12 +58,12 @@ class BajaEmpleadoComponent extends Component
     //mount
     public function mount($empleado)
     {
-        $this->empleado = $empleado;
-        $this->empleados = $this->obtenerEmpleados();
-        $this->documentosQueDeboAprobar = $this->obtenerDocumentosQueDeboAprobar();
-        $this->documentosQueMeDebenAprobar = $this->obtenerDocumentosQueMeDebenAprobar();
-        $this->misActivos = $this->obtenerMisActivos();
-        $this->misCapacitaciones = $this->obtenerCapacitaciones();
+        $this->empleado = Empleado::getSelectEmpleadosWithArea()->where('id', $empleado->id)->first();
+        // $this->empleados = $this->obtenerEmpleados();
+        // $this->documentosQueDeboAprobar = $this->obtenerDocumentosQueDeboAprobar();
+        // $this->documentosQueMeDebenAprobar = $this->obtenerDocumentosQueMeDebenAprobar();
+        // $this->misActivos = $this->obtenerMisActivos();
+        // $this->misCapacitaciones = $this->obtenerCapacitaciones();
     }
 
     public function render()
@@ -75,53 +75,53 @@ class BajaEmpleadoComponent extends Component
         return view('livewire.baja-empleado-component', compact('logo', 'empresa'));
     }
 
-    public function obtenerEmpleados()
-    {
-        $empleados = Empleado::alta()->where('id', '!=', $this->empleado->id)->select('id', 'name')->orderBy('name')->get();
+    // public function obtenerEmpleados()
+    // {
+    //     $empleados = Empleado::alta()->where('id', '!=', $this->empleado->id)->select('id', 'name')->orderBy('name')->get();
 
-        return $empleados;
-    }
+    //     return $empleados;
+    // }
 
-    public function obtenerComites()
-    {
-        $comites = $this->empleado->comiteSeguridad;
+    // public function obtenerComites()
+    // {
+    //     $comites = $this->empleado->comiteSeguridad;
 
-        return $comites;
-    }
+    //     return $comites;
+    // }
 
-    public function obtenerDocumentosQueDeboAprobar()
-    {
-        $revisiones = RevisionDocumento::getAllWithDocumento();
+    // public function obtenerDocumentosQueDeboAprobar()
+    // {
+    //     $revisiones = RevisionDocumento::getAllWithDocumento();
 
-        return $revisiones;
-    }
+    //     return $revisiones;
+    // }
 
-    public function obtenerDocumentosQueMeDebenAprobar()
-    {
-        $mis_documentos = Documento::getWithMacroproceso($this->empleado->id);
+    // public function obtenerDocumentosQueMeDebenAprobar()
+    // {
+    //     $mis_documentos = Documento::getWithMacroproceso($this->empleado->id);
 
-        return $mis_documentos;
-    }
+    //     return $mis_documentos;
+    // }
 
-    public function obtenerMisActivos()
-    {
-        $activos = Activo::select('*')->where('id_responsable', '=', $this->empleado->id)->get();
+    // public function obtenerMisActivos()
+    // {
+    //     $activos = Activo::select('*')->where('id_responsable', '=', $this->empleado->id)->get();
 
-        return $activos;
-    }
+    //     return $activos;
+    // }
 
-    public function obtenerCapacitaciones()
-    {
-        $empleado = $this->empleado->id;
-        $cacheKeyRecursos = 'Recursos:recursos_'.User::getCurrentUser()->id;
-        $recursos = Cache::remember($cacheKeyRecursos, 3600 * 8, function () use ($empleado) {
-            return Recurso::whereHas('empleados', function ($query) use ($empleado) {
-                $query->where('empleados.id', $empleado);
-            })->get();
-        });
+    // public function obtenerCapacitaciones()
+    // {
+    //     $empleado = $this->empleado->id;
+    //     $cacheKeyRecursos = 'Recursos:recursos_' . User::getCurrentUser()->id;
+    //     $recursos = Cache::remember($cacheKeyRecursos, 3600 * 8, function () use ($empleado) {
+    //         return Recurso::whereHas('empleados', function ($query) use ($empleado) {
+    //             $query->where('empleados.id', $empleado);
+    //         })->get();
+    //     });
 
-        return $recursos;
-    }
+    //     return $recursos;
+    // }
 
     public function cambiarSupervisor()
     {
@@ -137,16 +137,26 @@ class BajaEmpleadoComponent extends Component
     public function darDeBaja()
     {
         $this->validate($this->rules, $this->messages);
-        $this->empleado->update([
+        // dd(
+        //     $this->fechaBaja,
+        //     $this->razonBaja,
+        //     $this->empleado
+        // );
+        // dump(1);
+
+        $empleadoBaja = Empleado::where('id', $this->empleado->id)->first();
+
+        $empleadoBaja->update([
             'estatus' => Empleado::BAJA,
             'fecha_baja' => $this->fechaBaja,
             'razon_baja' => $this->razonBaja,
         ]);
-        $user = User::where('email', trim(preg_replace('/\s/u', ' ', $this->empleado->email)))->first();
+        // dump(2);
+        $user = User::where('email', trim(preg_replace('/\s/u', ' ', $empleadoBaja->email)))->first();
         if ($user) {
             $user->delete();
         }
         $this->emit('select2');
-        $this->emit('baja', $this->empleado);
+        $this->emit('baja', $empleadoBaja);
     }
 }
