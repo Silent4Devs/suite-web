@@ -93,17 +93,15 @@
                                             <div class="modal-body">
                                                 <p><strong>Empleado vinculado actualmente:</strong>
                                                     {{ $user->empleado ? $user->empleado->name : 'Sin Vincular' }}</p>
-                                                {{-- <select name="n_empleado" id="n_empleado{{ $user->id }}"
+                                                <select name="id_empleado" id="id_empleado_{{ $user->id }}"
                                                     class="select2">
                                                     <option value="" selected disabled>-- Selecciona el empleado a
                                                         vincular --</option>
-                                                    {{ $empleados }}
-                                                    ${empleados.map(empleado => `
-                                                    <option
-                                                        value="${empleado.n_empleado != null ? `NEMPLEADO-${empleado.n_empleado}` : `IDEMPLEADO-${empleado.id}`}">
-                                                        ${empleado.name}</option>
-                                                    `).join('')}
-                                                </select> --}}
+                                                    @foreach ($empleados as $key_empleado => $emp)
+                                                        <option value="{{ $emp->id }}">
+                                                            {{ $emp->name }}</option>
+                                                    @endforeach
+                                                </select>
                                                 <span class="text-sm n_empleado_error errores text-danger"></span>
                                             </div>
                                             <div class="modal-footer">

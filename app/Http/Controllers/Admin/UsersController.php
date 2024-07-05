@@ -30,7 +30,7 @@ class UsersController extends Controller
 
         $users = User::getUserWithRole();
 
-        $empleados = Empleado::getAltaDataColumns();
+        $empleados = Empleado::getAltaDataColumns()->sortBy('name');
 
         return view('users.tbUsersIndex', compact('users', 'existsVinculoEmpleadoAdmin', 'empleados'));
     }
@@ -177,23 +177,13 @@ class UsersController extends Controller
     {
         if ($request->ajax()) {
             $request->validate([
-                // 'n_empleado' => ['required', new EmpleadoNoVinculado, 'exists:empleados,n_empleado'],
-                'n_empleado' => ['required'],
+                'id_empleado' => ['required'],
             ]);
             $usuario = User::find(intval($request->user_id));
-            $identificador = explode('-', $request->n_empleado);
-            $tipo = $identificador[0];
-            $numero = $identificador[1];
 
-            if ($tipo == 'NEMPLEADO') {
-                $usuario->update([
-                    'n_empleado' => $numero,
-                ]);
-            } else {
-                $usuario->update([
-                    'empleado_id' => $numero,
-                ]);
-            }
+            $usuario->update([
+                'empleado_id' => $request->id_empleado,
+            ]);
 
             return response()->json(['success' => true]);
         }

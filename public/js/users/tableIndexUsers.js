@@ -132,8 +132,9 @@
 $(document).ready(function () {
     // Función para vincular empleados
     window.VincularEmpleado = function (nombre, user_id) {
-        console.log(user_id);
-        let n_empleado = document.getElementById(`n_empleado${user_id}`).value;
+        let id_empleado = document.getElementById(
+            `id_empleado_${user_id}`
+        ).value;
         $.ajax({
             type: "POST",
             url: "/admin/users/vincular",
@@ -141,7 +142,7 @@ $(document).ready(function () {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
             },
             data: {
-                n_empleado,
+                id_empleado,
                 user_id,
             },
             dataType: "JSON",
@@ -158,12 +159,11 @@ $(document).ready(function () {
                     `El usuario: ${nombre} ha sido vinculado`,
                     "success"
                 );
-                table.ajax.reload();
                 $(`#vincularEmpleado${user_id}`).modal("hide");
                 $(".modal-backdrop").hide();
                 setTimeout(() => {
-                    window.location.reload();
-                }, 1000);
+                    location.reload();
+                }, 5000);
             },
             error: function (error) {
                 $.each(
