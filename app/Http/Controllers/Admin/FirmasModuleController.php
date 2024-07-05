@@ -8,8 +8,8 @@ use App\Models\FirmaModule;
 use App\Models\Modulo;
 use App\Models\Submodulo;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Auth;
+use Illuminate\Http\Request;
 
 class FirmasModuleController extends Controller
 {
@@ -70,7 +70,6 @@ class FirmasModuleController extends Controller
         return redirect()->route('admin.module_firmas')->with('success', 'Guardado con éxito');
     }
 
-
     public function edit($id)
     {
         $firma_module = FirmaModule::findOrFail($id); // Usa findOrFail para manejo de errores
@@ -80,7 +79,7 @@ class FirmasModuleController extends Controller
 
         // Convertir la cadena de participantes a un array si es una cadena delimitada
         $participantes = [];
-        if (!empty($firma_module->participantes)) {
+        if (! empty($firma_module->participantes)) {
             $cleanString = str_replace(['[', ']', '"'], '', $firma_module->participantes);
             $participantes = explode(',', $cleanString);
             $participantes = array_map('trim', $participantes);
@@ -88,7 +87,6 @@ class FirmasModuleController extends Controller
 
         return view('admin.firmas.edit', compact('modulos', 'submodulos', 'empleados', 'firma_module', 'participantes'));
     }
-
 
     public function update(Request $request, $id)
     {
