@@ -65,7 +65,7 @@
             <h5>Selecciona un método de pago</h5>
             <form id="payment-form" action="{{ route('admin.pasarela-pago.create') }}" method="POST">
                 @csrf
-                 <input type="hidden" name="plan" id="plan" value="{{ json_encode($data) }}">
+                <input type="hidden" class="form-control" name="plan" id="plan" value="{{ json_encode($data) }}">
 
                 <div class="row mt-3">
                     <div class="col-md-6">
@@ -84,7 +84,6 @@
                 </div>
 
                 <div class="tab-content mt-3" id="nav-tabContent">
-
                     <div class="tab-pane fade show active" id="nav-visa">
                         <div class="row">
                             <div class="col-md-6">
@@ -93,18 +92,20 @@
 
                                 <div class="row mt-3">
                                     <div class="form-group col-12">
-                                        <label for="">Nombre</label>
-                                        <input type="text" id="nombrePago" class="form-control">
+                                        <label for="nombrePago">Nombre</label>
+                                        <input type="text" id="nombrePago" name="nombrePago" class="form-control">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6 form-group">
-                                        <label for="">Apellido Paterno*</label>
-                                        <input type="text" id="apellidoPaternoPago" class="form-control">
+                                        <label for="apellidoPaternoPago">Apellido Paterno*</label>
+                                        <input type="text" id="apellidoPaternoPago" name="apellidoPaternoPago"
+                                            class="form-control">
                                     </div>
                                     <div class="col-md-6 form-group">
-                                        <label for="">Apellido Materno*</label>
-                                        <input type="text" id="apellidoMaternoPago" class="form-control">
+                                        <label for="apellidoMaternoPago">Apellido Materno*</label>
+                                        <input type="text" id="apellidoMaternoPago" name="apellidoMaternoPago"
+                                            class="form-control">
                                     </div>
                                 </div>
                                 <div class="row">
@@ -115,29 +116,33 @@
                                         </div>
                                     </div>
                                 </div>
+                                {{--  --}}
                                 <div class="row">
-                                    <div class="col-12 form-group d-flex align-items-center gap-1">
-                                        <label>
-                                            <input type="checkbox" name="" id="">
-                                            Guardar mi información de pago para facilitar el proceso de pago la próxima
-                                            vez.
-                                        </label>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="codigoDescuento">Código de Descuento</label>
+                                            <input type="text" class="form-control" name="codigoDescuento"
+                                                id="codigoDescuento" placeholder="Código de Descuento" maxlength="255"
+                                                required>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-
+                            {{--  --}}
                             <div class="col-md-6 d-flex align-items-center flex-column">
-                                <div style="text-center">
+                                {{-- <div style="text-center">
                                     <img src="{{ asset('img/logo_monocromatico.png') }}" alt=""
                                         style="height: 150px; opacity: 0.9;">
+                                </div> --}}
+                                <div class="text-center">
+                                    <p class="text-center h3"><strong>Total a pagar:</strong></p>
+                                    <p class="text-center h3"><strong>$: {{ json_encode($totalPriceFormatted) }}</strong></p>
                                 </div>
                                 <p class="text-center mt-5">
                                     <small><i>Al año: $31,000.00 te ahorrarías $400.00</i></small>
                                 </p>
-
                                 <button type="submit" class="btn btn-comprar py-3 w-100" id="card-button"
                                     data-secret="{{ $intent->client_secret }}">Comprar ahora</button>
-
                                 <p class="mt-4">
                                     <small>
                                         <i>
@@ -151,6 +156,7 @@
 
                         </div>
                     </div>
+
                     <div class="tab-pane fade" id="nav-paypal">
                         <div class="row">
                             <div class="col-md-6">
@@ -168,9 +174,13 @@
                             </div>
 
                             <div class="col-md-6 d-flex align-items-center flex-column">
-                                <div style="text-center">
+                                {{-- <div style="text-center">
                                     <img src="{{ asset('img/logo_monocromatico.png') }}" alt=""
                                         style="height: 150px; opacity: 0.9;">
+                                </div> --}}
+                                <div class="text-center">
+                                    <p class="text-center h3"><strong>Total a pagar:</strong></p>
+                                    <p class="text-center h3"><strong>$: {{ json_encode($totalPriceFormatted) }}</strong></p>
                                 </div>
                                 <p class="text-center mt-5">
                                     <small><i>Al año: $31,000.00 te ahorrarías $400.00</i></small>
@@ -212,9 +222,13 @@
                             </div>
 
                             <div class="col-md-6 d-flex align-items-center flex-column">
-                                <div style="text-center">
+                                {{-- <div style="text-center">
                                     <img src="{{ asset('img/logo_monocromatico.png') }}" alt=""
                                         style="height: 150px; opacity: 0.9;">
+                                </div> --}}
+                                <div class="text-center">
+                                    <p class="text-center h3"><strong>Total a pagar:</strong></p>
+                                    <p class="text-center h3"><strong>$: {{ json_encode($totalPriceFormatted) }}</strong></p>
                                 </div>
                                 <p class="text-center mt-5">
                                     <small><i>Al año: $31,000.00 te ahorrarías $400.00</i></small>
@@ -261,6 +275,7 @@
         const name = document.getElementById('nombrePago')
         const apellidoPa = document.getElementById('apellidoPaternoPago')
         const apellidoMa = document.getElementById('apellidoMaternoPago')
+        const descuento = document.getElementById('codigoDescuento');
 
 
         form.addEventListener('submit', async (e) => {
@@ -284,13 +299,38 @@
             if (error) {
                 cardBtn.disable = false
             } else {
-                let token = document.createElement('input')
-                token.setAttribute('type', 'hidden')
-                token.setAttribute('name', 'token')
-                token.setAttribute('value', setupIntent.payment_method)
-                form.appendChild(token)
+                let token = document.createElement('input');
+                token.setAttribute('type', 'hidden');
+                token.setAttribute('name', 'token');
+                token.setAttribute('value', setupIntent.payment_method);
+                form.appendChild(token);
+
+                if (descuento.value) {
+                    let descuentoInput = document.createElement('input');
+                    descuentoInput.setAttribute('type', 'hidden');
+                    descuentoInput.setAttribute('name', 'codigo_descuento');
+                    descuentoInput.setAttribute('value', descuento.value);
+                    form.appendChild(descuentoInput);
+                }
+
                 form.submit();
             }
         })
+    </script>
+    <script>
+        document.getElementById('cardNumber').addEventListener('input', function(e) {
+            this.value = this.value.replace(/\D/g, '').slice(0, 16);
+        });
+
+        document.getElementById('cvv').addEventListener('input', function(e) {
+            this.value = this.value.replace(/\D/g, '').slice(0, 4);
+        });
+
+        document.getElementById('expirationDate').addEventListener('input', function(e) {
+            this.value = this.value.replace(/\D/g, '').slice(0, 4);
+            if (this.value.length > 2) {
+                this.value = this.value.slice(0, 2) + '/' + this.value.slice(2);
+            }
+        });
     </script>
 @endsection

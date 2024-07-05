@@ -67,15 +67,16 @@
                             <div class="card-app-pre-pago">
                                 <div class="d-flex gap-1 align-items-center">
                                     <i
-                                        class="material-symbols-outlined icon-background color-{{ $unsubscribed_plan->img }}">
-                                        {{ $unsubscribed_plan->img }}</i>
-                                    <span>{{ $unsubscribed_plan->name }}</span>
+                                        class="material-symbols-outlined icon-background color-{{ $unsubscribed_plan['img'] }}">
+                                        {{ $unsubscribed_plan['img'] }}</i>
+                                    <span>{{ $unsubscribed_plan['name'] }}</span>
                                 </div>
-                                <input type="checkbox" name="plan_ids[]" value="{{ $unsubscribed_plan->stripe_plan }}"
+                                <input type="checkbox" name="plan_ids[]" value="{{ $unsubscribed_plan['stripe_plan'] }}"
                                     class="checkbox-submit input-check-app-pasarela"
-                                    data-plan-name="{{ $unsubscribed_plan->name }}"
-                                    data-plan-price="{{ $unsubscribed_plan->price }}"
-                                    data-plan-id="{{ $unsubscribed_plan->stripe_plan }}">
+                                    data-plan-name="{{ $unsubscribed_plan['name'] }}"
+                                    data-plan-price="{{ $unsubscribed_plan['price'] }}"
+                                    data-plan-id="{{ $unsubscribed_plan['stripe_plan'] }}"
+                                    data-plan-product="{{ $unsubscribed_plan['product'] }}">
                             </div>
                         @endforeach
                     </div>
@@ -93,20 +94,15 @@
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="nav-mes">
                         <div class="card card-body">
-                            <div class="d-flex justify-content-between">
-                                <span>Todas las aplicaciones</span>
-                                <strong>$6600.00 MX</strong>
-                            </div>
                             <hr>
-                            <div class="d-flex justify-content-between">
-                                <span>8 Aplicaciones</span>
-                                <strong>$310.00 x 8</strong>
+                            <div id="total-aplications">
+
                             </div>
                             <hr>
                             <div class="d-flex justify-content-between"
                                 style="color: #17B265; font-weight: bolder; font-size: 18px;">
                                 <span>Total al mes +IVA:</span>
-                                <span id="total-price">0</span>
+                                <span id="total-price">$ 0.00</span>
                             </div>
                             <div class="mt-3">
                                 <small>Al año: <strong>$3,110.00</strong> te ahorriasas <strong>$400.00</strong></small>
@@ -115,8 +111,8 @@
                                 @csrf
                                 <div class="mt-5">
                                     <input type="hidden" name="arrayData" id="arrayData">
-                                    <button id="buy-now-button" class="btn btn-comprar w-100 py-3 text-white"
-                                    disabled type="submit">Comprar ahora</button>
+                                    <button id="buy-now-button" class="btn btn-comprar w-100 py-3 text-white" disabled
+                                        type="submit">Comprar ahora</button>
                                 </div>
                             </form>
                         </div>
@@ -170,8 +166,8 @@
             const allCheckbox = document.getElementById('input-all-apps-pasarela');
             const checkboxes = document.querySelectorAll('.input-check-app-pasarela');
             const totalPriceLabel = document.getElementById('total-price');
+            const aplicationSelect = document.getElementById('total-aplications');
             const buyNowButton = document.getElementById('buy-now-button');
-
 
             allCheckbox.addEventListener('change', function() {
                 checkboxes.forEach(checkbox => {
@@ -199,7 +195,8 @@
                     }
                 });
 
-                totalPriceLabel.textContent = totalPrice.toFixed(2);
+                totalPriceLabel.textContent = '$ ' + totalPrice.toFixed(2);
+
                 buyNowButton.disabled = !anyChecked;
             }
 
@@ -210,31 +207,52 @@
                     if (checkbox.checked) {
                         selectedPlans.push({
                             name: checkbox.getAttribute('data-plan-name'),
+                            product: checkbox.getAttribute('data-plan-product'),
                             price: parseFloat(checkbox.getAttribute('data-plan-price')),
                             id: checkbox.value
                         });
                     }
                 });
+                updatePlans(selectedPlans);
+                // console.log(selectedPlans);
+            }
 
-                console.log(selectedPlans);
+            function updatePlans(plans) {
+                aplicationSelect.innerHTML = '';
+
+                if (plans.length === 0) {
+                    return;
+                }
+                const uniquePlans = new Set();
+
+                plans.forEach(aplicacion => {
+                    const key = `${aplicacion.name}-${aplicacion.price}`;
+                    if (!uniquePlans.has(key)) {
+                        uniquePlans.add(key);
+
+                        const div = document.createElement('div');
+                        div.className = 'd-flex justify-content-between';
+
+                        const span = document.createElement('span');
+                        span.textContent = `${aplicacion.name}`;
+
+                        const strong = document.createElement('strong');
+                        strong.textContent = `$ ${aplicacion.price}`;
+                        div.appendChild(span);
+                        div.appendChild(strong);
+                        aplicationSelect.appendChild(div);
+                    }
+                });
             }
         });
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const form = document.getElementById('payment-form');
-
             form.addEventListener('submit', async (e) => {
-                e.preventDefault(); // Evita el comportamiento por defecto del formulario
-
-                // Supongamos que este es el array que quieres enviar
-                const myArray = [1, 2, 3, 4, 5];
-
-                // Convierte el array a una cadena JSON
+                e.preventDefault();
                 const arrayDataField = document.getElementById('arrayData');
                 arrayDataField.value = JSON.stringify(selectedPlans);
-
-                // Envía el formulario
                 form.submit();
             });
         });

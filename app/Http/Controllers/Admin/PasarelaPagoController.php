@@ -8,8 +8,15 @@ use App\Models\Plan;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Laravel\Cashier\Cashier;
+use Stripe\Exception\CardException;
+use Stripe\PaymentIntent;
+use Stripe\PaymentMethod;
 use Stripe\StripeClient;
 use Stripe\Plan as StripePlan;
+use Stripe\Stripe;
+use App\Models\Subscription;
+use Laravel\Cashier\Exceptions\IncompletePayment;
+use Laravel\Cashier\Subscription as CashierSubscription;
 
 class PasarelaPagoController extends Controller
 {
@@ -87,91 +94,234 @@ class PasarelaPagoController extends Controller
 
     public function prePago(Request $request)
     {
+        $user = $request->user();
+        $stripe = new StripeClient(env('STRIPE_SECRET'));
+
+        $subscriptions = $user->subscriptions;
+
+        $subscribed_plan_ids = $subscriptions->map(function ($subscription) {
+            return $subscription->stripe_price;
+        })->toArray();
+
+        $all_plans = $stripe->prices->all(['limit' => 100]);
+
+        $subscribed_plans = [];
         $unsubscribed_plans = [];
-        $db_unsubscribed_plans = Plan::where('subscription', false)->get();
-        foreach ($db_unsubscribed_plans as $db_plan) {
-            $unsubscribed_plans[] = $db_plan;
+
+        foreach ($all_plans->data as $plan) {
+            if (in_array($plan->id, $subscribed_plan_ids)) {
+                $subscribed_plans[] = $plan;
+            } else {
+                $db_plan = Plan::where('stripe_plan', $plan->id)->first();
+                $unsubscribed_plans[] = [
+                    'id' => $plan->id,
+                    'name' => $db_plan->name,
+                    'price' => $plan->unit_amount_decimal / 100,
+                    'stripe_plan' => $plan->id,
+                    'product' => $plan->product,
+                    'img' => $db_plan->img,
+                ];
+            }
         }
+
         return view('admin.pasarelaPago.pre-pago', compact("unsubscribed_plans"));
     }
 
     public function pago(Plan $plan, Request $request)
     {
+        $stripe = new StripeClient(env('STRIPE_SECRET'));
+        $user = $request->user();
+        $paymentMethods = $stripe->paymentMethods->all([
+            'type' => 'card',
+            'limit' => 3,
+            'customer' => $user->stripe_id, // ID del cliente en Stripe
+        ]);
+
         $jsonString = $request->input('arrayData');
         $data = json_decode($jsonString, true);
+        $totalPrice = 0;
+        foreach ($data as $item) {
+            if (isset($item['price'])) {
+                $totalPrice += $item['price'];
+            }
+        }
+        $totalPriceFormatted = number_format($totalPrice, 2, ',', '.');
         $intent = auth()->user()->createSetupIntent();
-        return view('admin.pasarelaPago.pago', compact("plan", "intent", "data"));
+        return view('admin.pasarelaPago.pago', compact("plan", "intent", "data", "totalPriceFormatted"));
     }
 
     public function subscription(Request $request)
     {
-        $stripe = new StripeClient(env('STRIPE_SECRET'));
-        $plans = json_decode($request->plan, true);
+        $expirationDate = $request->input('expirationDate');
+        list($month, $year) = explode('/', $expirationDate);
+        $checkbox1 = $request->input('checkbox1');
+        $plans = json_decode($request->input('plan'), true);
+        $lineItems = [];
+        $subscriptionIds = [];
 
         foreach ($plans as $plan) {
-            $planId = $plan['id'];
-            $planName = $plan['name'];
-            $planFromDatabase = Plan::where('stripe_plan', $planId)->first();
-            $subscription = $request->user()->newSubscription($plan['id'], $planFromDatabase->stripe_plan)->create($request->token);
+            try {
+                $subscriptionBuilder = $request->user()->newSubscription($plan['name'], $plan['id'])
+                    ->add([
+                        [
+                            'price_data' => [
+                                'currency' => 'mxn',
+                                'product' => $plan['product'],
+                                'unit_amount' => $plan['price'] * 100,
+                            ],
+                            'quantity' => 1,
+                        ],
+                    ]);
+                // if ($checkbox1 == 'on') {
+                //     $subscription = $subscriptionBuilder->create([
+                //         'payment_method' => $request->payment_method_id,
+                //         'payment_method_options' => [
+                //             'default_payment_method' => true,
+                //         ],
+                //     ]);
+                // } else {
+                //     $subscription = $subscriptionBuilder->create();
+                // }
+                // $subscriptionIds[] = $subscription->id;
+            } catch (IncompletePayment $exception) {
+                //return redirect()->route('checkout.payment', ['subscription_id' => $subscription->id]);
+            } catch (\Exception $exception) {
+                return back()->withError('Error al crear la suscripción: ' . $exception->getMessage());
+            }
         }
         return view("admin.pasarelaPago.pago-confirmado");
     }
 
     public function pagoConfirmado()
     {
-        dd("hola");
         return view('admin.pasarelaPago.pago-confirmado');
     }
 
     public function createPaymentIntent(Request $request)
     {
+        dd("hola2");
+        $nombrePago = $request->input('nombrePago');
+        $apellidoPaternoPago = $request->input('apellidoPaternoPago');
+        $apellidoMaternoPago = $request->input('apellidoMaternoPago');
+        $cardNumber = $request->input('cardNumber');
+        $cvv = $request->input('cvv');
+        $expirationDate = $request->input('expirationDate');
+        list($month, $year) = explode('/', $expirationDate);
+        $expMonth = (int) $month;
+        $expYear = (int) ('20' . $year);
+        $checkbox1 = $request->input('checkbox1');
         try {
-            // Obtener el producto y el precio de Stripe
-            $productId = 'your_product_id'; // ID del producto en Stripe
-            $priceId = 'your_price_id'; // ID del precio en Stripe
+            Stripe::setApiKey(env('STRIPE_SECRET'));
 
-            // Crear el intento de pago con Stripe
-            $paymentIntent = Cashier::stripe()->paymentIntents()->create([
-                'amount' => 1000, // El monto en centavos (por ejemplo, $10.00)
-                'currency' => 'usd',
-                'payment_method_types' => ['card', 'paypal', 'mercado_pago'],
-                'customer' => $request->user()->stripe_id,
-                'metadata' => [
-                    'product_id' => $productId,
-                    'price_id' => $priceId,
-                ],
-            ]);
+            // Verificar si el método de pago existe
+            $paymentMethodId = $request->input('payment_method_id');
+            $paymentMethod = null;
 
-            // Confirmar el intento de pago
-            Cashier::stripe()->paymentIntents()->confirm(
-                $paymentIntent->id,
-                ['payment_method' => $request->input('payment_method')]
-            );
-
-            // Si se proporciona un plan, crear la suscripción
-            if ($request->has('plan_id')) {
-                $planId = $request->input('plan_id');
-                $user = $request->user();
-
-                // Crear la suscripción utilizando Laravel Cashier
-                $subscription = $user->newSubscription($planId, 'default_plan')->create($request->token);
-
-                // Opcional: Guardar el método de pago
-                if ($request->input('save_payment_method')) {
-                    $user->updateDefaultPaymentMethod($request->input('payment_method_id'));
+            if ($paymentMethodId) {
+                try {
+                    $paymentMethod = PaymentMethod::retrieve($paymentMethodId);
+                } catch (\Stripe\Exception\InvalidRequestException $e) {
+                    // El método de pago no existe o no se pudo recuperar
                 }
             }
 
-            return response()->json([
-                'clientSecret' => $paymentIntent->client_secret,
-            ]);
+            // Si no existe el método de pago, crearlo y luego realizar el pago y la suscripción
+            if (!$paymentMethod) {
+                // Crear el método de pago en Stripe
+                $paymentMethod = PaymentMethod::create([
+                    'type' => 'card',
+                    'card' => [
+                        'number' => $cardNumber,
+                        'exp_month' => $expMonth,
+                        'exp_year' => $expYear,
+                        'cvc' => $cvv,
+                    ],
+                ]);
 
+                // Ahora puedes usar $paymentMethod->id para obtener el ID del método de pago creado
+
+                $plans = json_decode($request->input('plan'), true);
+
+                $lineItems = [];
+
+                foreach ($plans as $plan) {
+                    $lineItems[] = [
+                        'price_data' => [
+                            'currency' => 'mxn',
+                            'product' => $plan['id'],
+                            'unit_amount' => $plan['price'] * 100,
+                        ],
+                        'quantity' => 1,
+                    ];
+                }
+
+                // Crear el intento de pago con Stripe
+                $paymentIntent = PaymentIntent::create([
+                    'amount' => calculateTotalAmountw($lineItems),
+                    'currency' => 'mxn',
+                    'payment_method_types' => ['card'],
+                    'customer' => $request->user()->stripe_id,
+                    'line_items' => $lineItems,
+                    'metadata' => [
+                        'product_ids' => array_column($lineItems, 'product_data.product'),
+                    ],
+                    'payment_method' => $paymentMethod->id, // Asociar el método de pago recién creado
+                ]);
+
+                // Confirmar el intento de pago
+                $paymentIntent->confirm([
+                    'payment_method' => $request->input('cardNumber')
+                ]);
+
+                // Si se proporciona un plan, crear la suscripción
+                if ($request->has('plan_id')) {
+                    $planId = $request->input('plan_id');
+                    $user = $request->user();
+
+                    // Crear la suscripción utilizando la API de Stripe
+                    $subscription = CashierSubscription::create([
+                        'customer' => $request->user()->stripe_id,
+                        'items' => [
+                            [
+                                'price' => $planId, // ID del precio del plan en Stripe
+                            ],
+                        ],
+                        'payment_behavior' => 'default_incomplete',
+                    ]);
+
+                    // Opcional: Guardar el método de pago si está activo
+                    if ($request->input('save_payment_method') && $paymentMethod->card->checks->cvc_check === 'pass') {
+                        // Adjuntar el método de pago al cliente para futuras transacciones
+                        \Stripe\Customer::update(
+                            $request->user()->stripe_id,
+                            ['invoice_settings' => ['default_payment_method' => $paymentMethod->id]]
+                        );
+                    }
+                }
+
+                return response()->json([
+                    'clientSecret' => $paymentIntent->client_secret,
+                ]);
+            } else {
+                // Si el método de pago ya existe, manejar el caso según tus necesidades
+                // Aquí puedes retornar un mensaje de error o realizar alguna acción específica
+                return response()->json(['error' => 'El método de pago ya existe.'], 422);
+            }
         } catch (CardException $e) {
             // Manejar excepción si ocurre un problema con la tarjeta de crédito
             return response()->json(['error' => $e->getMessage()], 422);
         } catch (\Exception $e) {
             // Manejar otras excepciones generales
             return response()->json(['error' => $e->getMessage()], 500);
+        }
+
+        function calculateTotalAmountw($lineItems)
+        {
+            $total = 0;
+            foreach ($lineItems as $item) {
+                $total += $item['price_data']['unit_amount'] * $item['quantity'];
+            }
+            return $total;
         }
     }
 }
