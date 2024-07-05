@@ -8,7 +8,6 @@
     .select2-container {
         margin-top: 10px !important;
     }
-
 </style>
 <div class="row">
     <div class="col-12">
@@ -18,8 +17,7 @@
     <div class="col-sm-12 col-lg-12 col-md-12 col-12">
         <div class="form-group">
             <label for="nombre">
-                <i class="fab fa-discourse iconos-crear"></i> Nombre de la evaluación <span
-                    class="text-danger">*</span>
+                <i class="fab fa-discourse iconos-crear"></i> Nombre de la evaluación <span class="text-danger">*</span>
             </label>
             <input type="text" class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" id="nombre"
                 aria-describedby="nombreHelp" name="nombre" value="{{ old('nombre') }}">
@@ -33,8 +31,8 @@
             <label for="descripcion">
                 <i class="fab fa-discourse iconos-crear"></i> Descripción de la evaluación
             </label>
-            <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" name="descripcion"
-                id="" cols="30" rows="10">{{ old('descripcion') }}</textarea>
+            <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" name="descripcion" id=""
+                cols="30" rows="10">{{ old('descripcion') }}</textarea>
             <small id="descripcionHelp" class="form-text text-muted">Ingresa la Descripción la evaluación</small>
             <span class="errors descripcion_error text-danger"></span>
         </div>
@@ -104,7 +102,7 @@
                 });
             } else {
                 document.getElementById('evaluados_grupo_dinamico').style.display = 'none';
-                // Select Areas                
+                // Select Areas
                 if ($('#evaluados_areas').hasClass("select2-hidden-accessible")) {
                     $('#evaluados_areas').select2('destroy');
                 }

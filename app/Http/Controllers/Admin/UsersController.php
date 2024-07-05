@@ -132,15 +132,17 @@ class UsersController extends Controller
     {
         try {
             abort_if(Gate::denies('usuarios_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            $registro = User::find($id);
 
-            $registro = User::find($id); // Donde $id es el ID del registro que deseas eliminar.
+            if (! $registro) {
+                return response()->json(['status' => 'error', 'message' => 'Registro no encontrado.'], 404);
+            }
 
             $registro->delete();
-            Alert::success('éxito', 'Información añadida con éxito');
 
-            return redirect()->route('admin.users.index');
+            return response()->json(['status' => 'success', 'message' => 'El registro ha sido eliminado con éxito.']);
         } catch (\Exception $e) {
-            return redirect()->route('admin.users.index')->with('error', $e->getMessage());
+            return response()->json(['status' => 'error', 'message' => $e->getMessage()], 500);
         }
     }
 

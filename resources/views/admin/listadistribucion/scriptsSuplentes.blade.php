@@ -213,7 +213,7 @@
         }
 
         var avatar = $(option.element).data('avatar');
-        var avatarHtml = `<img src="${avatar}" class="img_empleado" />`;
+        var avatarHtml = `<img src="${avatar}" class="img_empleado" style="margin-left: 20px;" />`;
         var avatarText = option.text;
 
         var formattedResult = $('<span>' + avatarHtml + ' ' + avatarText + '</span>');

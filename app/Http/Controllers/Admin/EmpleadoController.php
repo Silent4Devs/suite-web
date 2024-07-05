@@ -10,6 +10,7 @@ use App\Mail\EnviarCorreoBienvenidaTabantaj;
 use App\Models\Area;
 use App\Models\CertificacionesEmpleados;
 use App\Models\CursosDiplomasEmpleados;
+use App\Models\DisponibilidadEmpleados;
 use App\Models\EducacionEmpleados;
 use App\Models\Empleado;
 use App\Models\EvidenciaDocumentoEmpleadoArchivo;
@@ -399,6 +400,10 @@ class EmpleadoController extends Controller
             'pagadora_actual' => $request->pagadora_actual,
             'periodicidad_nomina' => $request->periodicidad_nomina,
             'semanas_min_timesheet' => $request->semanas_min_timesheet,
+        ]);
+        DisponibilidadEmpleados::create([
+            'empleado_id' => $empleado->id,
+            'disponibilidad' => 1,
         ]);
         $this->createUserFromEmpleado($empleado);
         $this->assignDependenciesModel($request, $empleado);
@@ -1304,13 +1309,13 @@ class EmpleadoController extends Controller
         if ($areaIdChanged) {
             // El campo area_id ha sido modificado
             // Realiza las acciones necesarias...
-            $this->agregarHistorico($id, 'areas', 'area', $oldValues['area_id'], $userId);
+            $this->agregarHistorico($id, 'areas', 'Área', $oldValues['area_id'], $userId);
         }
 
         if ($puestoIdChanged) {
             // El campo puesto_id ha sido modificado
             // Realiza las acciones necesarias...
-            $this->agregarHistorico($id, 'puestos', 'puesto', $oldValues['puesto_id'], $userId);
+            $this->agregarHistorico($id, 'puestos', 'Puesto', $oldValues['puesto_id'], $userId);
         }
 
         $usuario = User::where('empleado_id', $empleado->id)->orWhere('n_empleado', $empleado->n_empleado)->first();
