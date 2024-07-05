@@ -635,6 +635,7 @@
 
 @if ($userIsAuthorized)
 <form method="POST" action="{{ route('admin.module_firmas.mejoras') }}" enctype="multipart/form-data">
+@csrf
 <div class="card card-body">
     <div class="" style="position: relative; left: 2rem;">
         <br>
