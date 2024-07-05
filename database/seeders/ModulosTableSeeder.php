@@ -12,7 +12,6 @@ class ModulosTableSeeder extends Seeder
         $modulos = [
             ['name' => 'Centro de Atención'],
             ['name' => 'Gestión contractual'],
-            ['name' => 'Gestión Normativa'],
             ['name' => 'Gestión de Talento'],
         ];
 
