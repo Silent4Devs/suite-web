@@ -36,9 +36,9 @@ class FirmasModuleController extends Controller
         $empleados = User::orderBy('name', 'asc')
             ->get();
 
-        $modulos = Modulo::all();
+        $modulos = Modulo::get();
 
-        $submodulos = Submodulo::all();
+        $submodulos = Submodulo::get();
 
         return view('admin.firmas.create', compact('modulos', 'submodulos', 'empleados'));
     }
@@ -73,13 +73,13 @@ class FirmasModuleController extends Controller
     public function edit($id)
     {
         $firma_module = FirmaModule::findOrFail($id); // Usa findOrFail para manejo de errores
-        $modulos = Modulo::all();
-        $submodulos = Submodulo::all();
+        $modulos = Modulo::get();
+        $submodulos = Submodulo::get();
         $empleados = User::orderBy('name', 'asc')->get();
 
         // Convertir la cadena de participantes a un array si es una cadena delimitada
         $participantes = [];
-        if (! empty($firma_module->participantes)) {
+        if (!empty($firma_module->participantes)) {
             $cleanString = str_replace(['[', ']', '"'], '', $firma_module->participantes);
             $participantes = explode(',', $cleanString);
             $participantes = array_map('trim', $participantes);
@@ -110,7 +110,7 @@ class FirmasModuleController extends Controller
             'firma' => $request->firma,
         ]);
 
-        return redirect()->route('admin.module_firmas')->with('success', 'Actualizado con éxito');
+        return redirect()->route('admin.desk.index')->with('success', 'Actualizado con éxito');
     }
 
     public function riesgos(Request $request)
@@ -125,7 +125,7 @@ class FirmasModuleController extends Controller
             'firma' => $request->firma,
         ]);
 
-        return redirect()->route('admin.module_firmas')->with('success', 'Actualizado con éxito');
+        return redirect()->route('admin.desk.index')->with('success', 'Actualizado con éxito');
     }
 
     public function mejoras(Request $request)
@@ -141,7 +141,7 @@ class FirmasModuleController extends Controller
             'firma' => $request->firma,
         ]);
 
-        return redirect()->route('admin.module_firmas')->with('success', 'Actualizado con éxito');
+        return redirect()->route('admin.desk.index')->with('success', 'Actualizado con éxito');
     }
 
     public function denuncias(Request $request)
@@ -156,7 +156,7 @@ class FirmasModuleController extends Controller
             'firma' => $request->firma,
         ]);
 
-        return redirect()->route('admin.module_firmas')->with('success', 'Actualizado con éxito');
+        return redirect()->route('admin.desk.index')->with('success', 'Actualizado con éxito');
     }
 
     public function quejas(Request $request)
@@ -172,7 +172,7 @@ class FirmasModuleController extends Controller
             'firma' => $request->firma,
         ]);
 
-        return redirect()->route('admin.module_firmas')->with('success', 'Actualizado con éxito');
+        return redirect()->route('admin.desk.index')->with('success', 'Actualizado con éxito');
     }
 
     public function sugerencias(Request $request)
@@ -187,6 +187,6 @@ class FirmasModuleController extends Controller
             'firma' => $request->firma,
         ]);
 
-        return redirect()->route('admin.module_firmas')->with('success', 'Actualizado con éxito');
+        return redirect()->route('admin.desk.index')->with('success', 'Actualizado con éxito');
     }
 }
