@@ -6,10 +6,16 @@ use App\Models\Empleado;
 use App\Models\ListaDistribucion;
 use App\Models\User;
 use App\Notifications\EntendimientoOrganizacionNotification;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Notification;
 
-class EntendimientoOrganizacionListener
+class EntendimientoOrganizacionListener implements ShouldQueue
 {
+    use InteractsWithQueue;
+
+    public $tries = 5;
+
     /**
      * Create the event listener.
      *

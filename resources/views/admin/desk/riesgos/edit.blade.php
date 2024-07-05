@@ -109,7 +109,7 @@
                                 <div class="row w-100">
                                     <div class="text-center col-1 align-items-center d-flex justify-content-center">
                                         <div class="w-100">
-                                            <i class="bi bi-info mr-3" style="color: #3B82F6; font-size: 30px"></i>
+                                            {{-- <i class="bi bi-info mr-3" style="color: #3B82F6; font-size: 30px"></i> --}}
                                         </div>
                                     </div>
                                     <div class="col-12" style="width: 300rem;">
@@ -130,7 +130,7 @@
                             <div style="position: relative; left: 2rem;">
                                 <label>
                                     <input type="checkbox" id="toggle-info">
-                                    Mostrar Información
+                                    Activar flujo de aprobación
                                 </label>
                             </div>
 
@@ -140,7 +140,10 @@
                                     @if($firmaModules && $firmaModules->empleados)
                                     <select id="participantes" name="participantes[]" class="form-control" multiple="multiple" style="padding: 10px; border-radius: 50px; border: 1px solid #007BFF;">
                                         @foreach($firmaModules->empleados as $empleado)
-                                            <option value="{{ $empleado->id }}">{{ $empleado->name }}</option>
+                                            <option value="{{ $empleado->id }}"
+                                                @if(in_array($empleado->id, $aprobadoresArray)) selected @endif>
+                                                {{ $empleado->name }}
+                                            </option>
                                         @endforeach
                                     </select>
                                     @else
@@ -148,6 +151,7 @@
                                     @endif
                                 </div>
                             </div>
+
                             <div class="mt-2 form-group col-2">
                                 <label class="form-label"><i class="fas fa-ticket-alt iconos-crear"></i>Folio</label>
                                 <div class="form-control">{{ $riesgos->folio }}</div>
@@ -378,48 +382,6 @@
                                 <label class="form-label"><i class="fas fa-phone iconos-crear"></i>Teléfono</label>
                                 <div class="form-control">{{ $riesgos->reporto->telefono }}</div>
                             </div>
-
-                            @php
-                                $userIsAuthorized = false;
-                                if($firmaModules && $firmaModules->empleados){
-                                foreach ($firmaModules->empleados as $empleado) {
-                                    if ($empleado->id === Auth::id()) {
-                                        $userIsAuthorized = true;
-                                        break;
-                                    }
-                                }
-                                }
-                            @endphp
-
-
-                            @if ($userIsAuthorized)
-                            <div class="mt-2 form-group col-12">
-                                <div class="" style="position: relative; left: 2rem;">
-                                    <br>
-                                    <h5><strong>Firma*</strong></h5>
-                                    <p>
-                                        Indispensable firmar  antes de guardar y enviarla a aprobación.
-                                    </p>
-                                </div>
-                                <div class="flex caja-firmar">
-                                    <div class="flex-item"
-                                        style="display:flex; justify-content: center; flex-direction: column; align-items:center;">
-                                        <div id="firma_content" class="caja-space-firma"
-                                            style="display:flex; justify-content: center; flex-direction: column; align-items:center;">
-                                            <canvas id="firma_requi" width="500px" height="300px">
-                                                Navegador no compatible
-                                            </canvas>
-                                            <input type="hidden" name="firma" id="firma">
-                                        </div>
-                                        <div>
-                                            <div class="btn"
-                                                style="color: white; background:  gray !important; transform: translateY(-40px) scale(0.8);"
-                                                id="clear">Limpiar</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            @endif
 
 
 
@@ -743,20 +705,53 @@
     </div>
 </div>
 
+
 @php
     $userIsAuthorized = false;
-    if($firmaModules && $firmaModules->empleados){
-    foreach ($firmaModules->empleados as $empleado) {
-        if ($empleado->id === Auth::id()) {
+    if ($aprobadores) {
+        $aprobadoresArray = json_decode($aprobadores->aprobadores, true); // Decodificar JSON a array
+        if (is_array($aprobadoresArray) && in_array(Auth::id(), $aprobadoresArray)) {
             $userIsAuthorized = true;
-            break;
         }
     }
-   }
 @endphp
 
 
 @if ($userIsAuthorized)
+<form method="POST" action="{{ route('admin.module_firmas.riesgos') }}" enctype="multipart/form-data">
+@csrf
+<div class="card card-body">
+    <div class="" style="position: relative; left: 2rem;">
+        <br>
+        <h5><strong>Firma*</strong></h5>
+        <p>
+            Indispensable firmar  antes de guardar y enviarla a aprobación.
+        </p>
+    </div>
+    <div class="flex caja-firmar">
+        <div class="flex-item"
+            style="display:flex; justify-content: center; flex-direction: column; align-items:center;">
+            <div id="firma_content" class="caja-space-firma"
+                style="display:flex; justify-content: center; flex-direction: column; align-items:center;">
+                <canvas id="firma_requi" width="500px" height="300px">
+                    Navegador no compatible
+                </canvas>
+                <input type="hidden" name="firma" id="firma">
+            </div>
+            <div>
+                <div class="btn"
+                    style="color: white; background:  gray !important; transform: translateY(-40px) scale(0.8);"
+                    id="clear">Limpiar</div>
+            </div>
+            <div class="flex my-4" style="justify-content: end;">
+                <button onclick="validar()" class="btn btn-primary" type="submit">Firmar</button>
+            </div>
+        </div>
+    </div>
+    </div>
+</form>
+@endif
+
 <div class="card card-content" style="margin-bottom: 30px">
     <div class="caja-firmas-doc">
         @foreach($firmas as $firma)
@@ -778,8 +773,6 @@
         @endforeach
     </div>
 </div>
-@endif
-
 @endsection
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>

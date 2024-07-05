@@ -9,8 +9,10 @@ use App\Functions\FormatearFecha;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\CreateContratoRequest;
 use App\Http\Requests\UpdateContratoRequest;
+use App\Mail\AprobadorFirmaContratoMail;
+use App\Models\AprobadorFirmaContrato;
+use App\Models\AprobadorFirmaContratoHistorico;
 use App\Models\Area;
-use App\Traits\ObtenerOrganizacion;
 use App\Models\ContractManager\CedulaCumplimiento;
 use App\Models\ContractManager\CierreContrato;
 use App\Models\ContractManager\Contrato;
@@ -21,21 +23,19 @@ use App\Models\ContractManager\Factura;
 use App\Models\ConvergenciaContratos;
 use App\Models\Empleado;
 use App\Models\FirmaModule;
-use App\Models\AprobadorFirmaContrato;
-use App\Models\AprobadorFirmaContratoHistorico;
 use App\Models\Organizacion;
 use App\Models\TimesheetCliente;
 use App\Models\TimesheetProyecto;
 use App\Models\TimesheetProyectoArea;
-use App\Mail\AprobadorFirmaContratoMail;
-use Illuminate\Support\Facades\Mail;
 use App\Models\User;
 use App\Repositories\ContratoRepository;
 use App\Rules\NumeroContrato;
+use App\Traits\ObtenerOrganizacion;
 use Carbon\Carbon;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
@@ -401,7 +401,8 @@ class ContratosController extends AppBaseController
 
                     try {
                         Mail::to(removeUnicodeCharacters($aprobador_firma_contrato->aprobador->email))->queue(new AprobadorFirmaContratoMail($aprobador_firma_contrato));
-                    } catch (\Throwable $th) {}
+                    } catch (\Throwable $th) {
+                    }
                 }
             }
             $aprobador_firma_contrato_historico = AprobadorFirmaContratoHistorico::create([
@@ -458,7 +459,8 @@ class ContratosController extends AppBaseController
         }
     }
 
-    public function aprobacionFirma(Request $request) {
+    public function aprobacionFirma(Request $request)
+    {
 
         $contrato = Contrato::find($request->contrato_id);
 
@@ -471,7 +473,7 @@ class ContratosController extends AppBaseController
             $base64Image = substr($base64Image, strpos($base64Image, ',') + 1);
             $type = strtolower($type[1]); // png, jpg, gif
 
-            if (!in_array($type, ['jpg', 'jpeg', 'gif', 'png'])) {
+            if (! in_array($type, ['jpg', 'jpeg', 'gif', 'png'])) {
                 throw new \Exception('Tipo de imagen inválido');
             }
         } else {
@@ -482,24 +484,24 @@ class ContratosController extends AppBaseController
         $image = base64_decode($base64Image);
 
         if (strpos($base64Image, 'data:image/') === 0) {
-            list($type, $base64Image) = explode(';', $base64Image);
-            list(, $base64Image) = explode(',', $base64Image);
+            [$type, $base64Image] = explode(';', $base64Image);
+            [, $base64Image] = explode(',', $base64Image);
         }
 
         // Generar un nombre único para la imagen
-        $imageName = uniqid() . '.' . $type;
+        $imageName = uniqid().'.'.$type;
         // Guardar la imagen en el sistema de archivos
 
-        Storage::put('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/aprobacionFirma/' . $imageName, $image);
+        Storage::put('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/aprobacionFirma/'.$imageName, $image);
 
         // Obtener la URL de la imagen guardada
-        $imageUrl = Storage::url('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/aprobacionFirma/' . $imageName);
+        $imageUrl = Storage::url('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/aprobacionFirma/'.$imageName);
 
         $aprobacionFirmaContrato->update([
             'firma' => $imageName,
         ]);
 
-        return redirect('contract_manager/contratos-katbol/contratoinsert/' . $contrato->id);
+        return redirect('contract_manager/contratos-katbol/contratoinsert/'.$contrato->id);
     }
 
     public function historicoAprobacion()

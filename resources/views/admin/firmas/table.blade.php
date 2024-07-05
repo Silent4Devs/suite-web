@@ -1,14 +1,17 @@
 <table class="datatable datatable-lista-distribucion" id="datatable-lista-distribucion">
     <thead>
         <tr>
-            <th style="width: 80rem; ">
+            <th style="width: 80rem;">
                 Módulo
             </th>
-            <th style="width: 80rem; ">
+            <th style="width: 80rem;">
                 Submódulo
             </th>
-            <th style="width: 80rem; position: relative; left: 2rem; " >
+            <th style="width: 80rem; position: relative; left: 2rem;">
                 Aprobadores
+            </th>
+            <th style="width: 80rem;">
+                Opciones
             </th>
         </tr>
     </thead>
@@ -27,6 +30,10 @@
                 @else
                     No participantes
                 @endif
+            </td>
+            <td style="">
+                <a href="{{ route('admin.module_firmas.edit', $firma->id) }}"><i
+                        class="fas fa-edit"></i></a>
             </td>
         </tr>
     @endforeach

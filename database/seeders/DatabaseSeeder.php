@@ -132,6 +132,12 @@ class DatabaseSeeder extends Seeder
                 ListaDistribucionRequisicionOrdenCompraSeeder::class,
                 ListaDistribucionSuplentesLideresSeeder::class,
                 ListaInformativaOrdenesdeCompraSeeder::class,
+                //Competencias
+                //CompetenciasCeroSeeder::class,
+                //AprobadorObjetivoEstrategicoSeeder es un seeder especificamente
+                //para aprobar los objetivos en caso de que sea necesario que algun otro usuario externo a los lideres deba revisarlos
+                // AprobadorObjetivoEstrategicoSeeder::class,
+                PermisosCargaObjetivosSeeder::class,
             ]
         );
     }

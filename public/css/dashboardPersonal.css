@@ -1,0 +1,40 @@
+
+        /* Your CSS file */
+        .hidden-div-objetivos {
+            display: none;
+        }
+
+        .hidden-div-competencias {
+            display: none;
+        }
+
+        /* Customizing table-striped */
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: #FBECF3;
+            /* Custom color for odd rows */
+        }
+
+        .table-striped thead tr,
+        .table-striped thead th {
+            background-color: #DE93B6;
+            /* Custom color for thead rows and header cells */
+            color: white !important;
+            /* Text color for header cells */
+        }
+
+        /* Styles for the table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            border: 1px solid #dddddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }

@@ -5,10 +5,16 @@ namespace App\Listeners;
 use App\Models\ContractManager\Comprador;
 use App\Models\User;
 use App\Notifications\RequisicionesNotification;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Notification;
 
-class RequisicionesListener
+class RequisicionesListener implements ShouldQueue
 {
+    use InteractsWithQueue;
+
+    public $tries = 5;
+
     /**
      * Create the event listener.
      *

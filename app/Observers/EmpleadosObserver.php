@@ -74,5 +74,8 @@ class EmpleadosObserver
         Cache::forget('Empleados:empleados_all_evaluaciones');
         Cache::forget('Empleados:empleados_all_organigrama_tree');
         Cache::forget('Empleados:empleados_all_organigrama_tree_else');
+        Cache::forget('Empleados:empleados_alta_all_objetivos_generales');
+        Cache::forget('Empleados:portal_cumpleaños');
+        Cache::forget('Empleados:portal_nuevos');
     }
 }

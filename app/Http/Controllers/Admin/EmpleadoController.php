@@ -1309,13 +1309,13 @@ class EmpleadoController extends Controller
         if ($areaIdChanged) {
             // El campo area_id ha sido modificado
             // Realiza las acciones necesarias...
-            $this->agregarHistorico($id, 'areas', 'area', $oldValues['area_id'], $userId);
+            $this->agregarHistorico($id, 'areas', 'Área', $oldValues['area_id'], $userId);
         }
 
         if ($puestoIdChanged) {
             // El campo puesto_id ha sido modificado
             // Realiza las acciones necesarias...
-            $this->agregarHistorico($id, 'puestos', 'puesto', $oldValues['puesto_id'], $userId);
+            $this->agregarHistorico($id, 'puestos', 'Puesto', $oldValues['puesto_id'], $userId);
         }
 
         $usuario = User::where('empleado_id', $empleado->id)->orWhere('n_empleado', $empleado->n_empleado)->first();
