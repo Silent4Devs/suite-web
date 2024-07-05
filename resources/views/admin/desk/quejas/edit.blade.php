@@ -143,7 +143,10 @@
                                     @if($firmaModules && $firmaModules->empleados)
                                     <select id="participantes" name="participantes[]" class="form-control" multiple="multiple" style="padding: 10px; border-radius: 50px; border: 1px solid #007BFF;">
                                         @foreach($firmaModules->empleados as $empleado)
-                                            <option value="{{ $empleado->id }}">{{ $empleado->name }}</option>
+                                            <option value="{{ $empleado->id }}"
+                                                @if(in_array($empleado->id, $aprobadoresArray)) selected @endif>
+                                                {{ $empleado->name }}
+                                            </option>
                                         @endforeach
                                     </select>
                                     @else
@@ -151,6 +154,7 @@
                                     @endif
                                 </div>
                             </div>
+
                             <div class="mt-2 form-group col-2">
                                 <label class="form-label"><i class="fas fa-ticket-alt iconos-crear"></i>Folio</label>
                                 <div class="form-control">{{ $quejas->folio }}</div>
@@ -716,19 +720,17 @@
 
 @php
     $userIsAuthorized = false;
-    if($firmaModules && $firmaModules->empleados){
-    foreach ($firmaModules->empleados as $empleado) {
-        if ($empleado->id === Auth::id()) {
+    if ($aprobadores) {
+        $aprobadoresArray = json_decode($aprobadores->aprobadores, true); // Decodificar JSON a array
+        if (is_array($aprobadoresArray) && in_array(Auth::id(), $aprobadoresArray)) {
             $userIsAuthorized = true;
-            break;
         }
     }
-   }
 @endphp
 
 
 @if ($userIsAuthorized)
-<form method="POST"  action="{{ route('admin.module_firmas.quejas') }}" enctype="multipart/form-data">
+<form method="POST" action="{{ route('admin.module_firmas.quejas') }}" enctype="multipart/form-data">
 @csrf
 <div class="card card-body">
     <div class="" style="position: relative; left: 2rem;">
@@ -762,8 +764,6 @@
 </form>
 @endif
 
-
-@if ($userIsAuthorized)
 <div class="card card-content" style="margin-bottom: 30px">
     <div class="caja-firmas-doc">
         @foreach($firmas as $firma)
@@ -785,7 +785,8 @@
         @endforeach
     </div>
 </div>
-@endif
+
+
 @endsection
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
