@@ -7,11 +7,11 @@
         <div class="row">
             <div class="col-md-3 form-group">
                 <label for="inicioCarga">Inicio de carga de objetivos</label>
-                <input id="inicioCarga" wire:model="fecha_inicio" type="date" class="form-control">
+                <input id="inicioCarga" wire:model.lazy="fecha_inicio" type="date" class="form-control">
             </div>
             <div class="col-md-3 form-group">
                 <label for="finCarga">Fin de carga objetivos</label>
-                <input id="finCarga" wire:model="fecha_fin" type="date" class="form-control">
+                <input id="finCarga" wire:model.lazy="fecha_fin" type="date" class="form-control">
             </div>
             <div class="col-md-3 form-group">
                 <label for="inicioCarga">Habilitar</label>
