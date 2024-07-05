@@ -5,9 +5,9 @@
             <form wire:submit.prevent="submitForm(Object.fromEntries(new FormData($event.target)))">
 
                 <div class="info-first-config">
-                    <h4 class="title-config">Escalas de medición</h4>
+                    <h4 class="title-config">Unidades de medida</h4>
                     {{-- <p>Define los Valores y Escalas con los que se medirán los objetivos.</p> --}}
-                    <p>Define las Escalas con los que se medirán los objetivos.</p>
+                    <p>Define las unidades de medida de los objetivos.</p>
                     <hr class="my-4">
                 </div>
 
@@ -30,10 +30,6 @@
                 </div> --}}
 
                 <div class="col-12">
-                    <p class="mt-4">
-                        Unidades de medida <br>
-                        Define las unidades de medida de los objetivos.
-                    </p>
                     <div class="form-row mt-3">
                         {{-- <div class="col-1">
                             <div class="anima-focus mb-3 ">
