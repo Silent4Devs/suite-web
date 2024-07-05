@@ -91,9 +91,11 @@ class CargaObjetivos extends Component
                 $this->total_con_objetivos++;
 
                 foreach ($emp->objetivos as $emp_obj) {
-                    if ($emp_obj->objetivo->esta_aprobado == Objetivo::SIN_DEFINIR) {
-                        $this->total_obj_pend++;
-                        break;
+                    if (isset($emp_obj->objetivo->esta_aprobado)) {
+                        if ($emp_obj->objetivo->esta_aprobado == Objetivo::SIN_DEFINIR) {
+                            $this->total_obj_pend++;
+                            break;
+                        }
                     }
                 }
             } else {
