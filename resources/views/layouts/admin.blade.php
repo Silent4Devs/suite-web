@@ -86,6 +86,7 @@
             alt="Loading...">
     </div>
     @php
+
         use App\Models\Organizacion;
         use App\Models\User;
         use App\Models\Empleado;
@@ -642,6 +643,8 @@
             <p>Comunicación</p>
         </a>
     </div>
+
+    <livewire:asistente />
 
     <!-- inicia sección de script -->
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
