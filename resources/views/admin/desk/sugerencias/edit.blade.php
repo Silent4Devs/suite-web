@@ -618,6 +618,7 @@
 
 @if ($userIsAuthorized)
 <form method="POST" action="" enctype="multipart/form-data">
+@csrf
 <div class="card card-body">
     <div class="" style="position: relative; left: 2rem;">
         <br>
