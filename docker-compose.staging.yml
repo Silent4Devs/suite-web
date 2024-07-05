@@ -242,8 +242,8 @@ volumes:
     driver: local
   mailhog_data:
     driver: local
-  # elasticsearch:
-  #   driver: local
+  elasticsearch:
+    driver: local
   # elasticsearch-logs:
   #   driver: local
 

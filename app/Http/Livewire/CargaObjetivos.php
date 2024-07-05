@@ -91,9 +91,11 @@ class CargaObjetivos extends Component
                 $this->total_con_objetivos++;
 
                 foreach ($emp->objetivos as $emp_obj) {
-                    if ($emp_obj->objetivo->esta_aprobado == Objetivo::SIN_DEFINIR) {
-                        $this->total_obj_pend++;
-                        break;
+                    if (isset($emp_obj->objetivo->esta_aprobado)) {
+                        if ($emp_obj->objetivo->esta_aprobado == Objetivo::SIN_DEFINIR) {
+                            $this->total_obj_pend++;
+                            break;
+                        }
                     }
                 }
             } else {
@@ -114,17 +116,40 @@ class CargaObjetivos extends Component
 
     public function notificarCarga()
     {
-        $empleados = Empleado::getAltaDataColumns();
+        try {
+            $empleados = Empleado::getAltaDataColumns();
 
-        foreach ($empleados as $emp) {
-            Mail::to(removeUnicodeCharacters($emp->email))->queue(new CorreoCargaObjetivos($this->fecha_inicio, $this->fecha_fin));
+            foreach ($empleados as $emp) {
+                Mail::to(removeUnicodeCharacters($emp->email))->queue(new CorreoCargaObjetivos($this->fecha_inicio, $this->fecha_fin));
+            }
+
+            $this->alert('success', 'Notificación Exitosa.', [
+                'position' => 'center',
+                'timer' => '6000',
+                'toast' => true,
+                'text' => 'Se ha notificado correctamente sobre el periodo de carga de objetivos.',
+                'showConfirmButton' => false,
+                'onConfirmed' => '',
+                'confirmButtonText' => 'Entendido',
+            ]);
+        } catch (\Throwable $th) {
+            //throw $th;
+            $this->alert('error', 'Notificación Fallida.', [
+                'position' => 'center',
+                'timer' => '6000',
+                'toast' => true,
+                'text' => 'Ha habido un error al intentar notificar a los colaboradores.',
+                'showConfirmButton' => false,
+                'onConfirmed' => '',
+                'confirmButtonText' => 'Entendido',
+            ]);
         }
     }
 
     public function habilitarCargaObjetivos($valor)
     {
         if ($valor) {
-            if (! empty($this->fecha_inicio) && ! empty($this->fecha_fin)) {
+            if (!empty($this->fecha_inicio) && !empty($this->fecha_fin)) {
                 if ($this->fecha_inicio < $this->fecha_fin) {
 
                     PeriodoCargaObjetivos::create([
