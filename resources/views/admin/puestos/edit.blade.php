@@ -10,6 +10,36 @@
                     @method('PUT')
                     @csrf
 
+                    <div class="row">
+                        @if (!$firmado)
+                            <div>
+                                <label for="">Activar flujo de aprobación </label>
+                                <input type="checkbox" name="firma_check" id="aprobadores_firma" value="1"
+                                    style="width: 20px; height: 20px; vertical-align: middle;"
+                                    {{ $firma->count() ? 'checked' : '' }}>
+                            </div>
+                        @endif
+                        @if (!$firmado)
+                            <div class="col-12 {{ $firma->count() ? '' : 'd-none' }}" id="aprobadores-firma-box">
+                                <div class="form-group">
+                                    <label for="">Asignar Aprobadores</label>
+                                    <select name="aprobadores_firma[]" id="aprobadores" multiple class="form-control">
+                                        @foreach ($firma->aprobadores as $aprobador)
+                                            <option value="{{ $aprobador->id }}"
+                                                {{ $firma->aprobadores->contains('id', $aprobador->id) ? 'selected' : '' }}>
+                                                {{ $aprobador->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        @else
+                            <div class="col-12">
+                                <p>No es posible modificar el flujo de aprobación una vez iniciado</p>
+                            </div>
+                        @endif
+                    </div>
+
                     <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
                         <span style="font-size: 17px; font-weight: bold;">
                             Identificación del Puesto</span>
