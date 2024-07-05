@@ -136,7 +136,33 @@
             </div>
 
         </div>
+
         <div class="row">
+            <div class="col-12">
+                <div class="">
+                    <label>
+                        {{-- <input type="checkbox" class="filled-in" checked="checked" /> --}}
+                        <input type="checkbox" name="aprobadores_firma" id="aprobadores_firma" value="1"
+                            style="width: 20px; height: 20px; vertical-align:middle;" />
+                        <span>Activar flujo de aprobación</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="row d-none" id="aprobadores-firma-box">
+            <div class="col-md-12 form-group">
+                <label for="">Asignar Aprobadores</label>
+                <select name="aprobadores_firma[]" id="aprobadores" multiple class="form-control">
+                    @foreach ($firma->aprobadores as $aprobador)
+                        <option value="{{ $aprobador->id }}">
+                            {{ $aprobador->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+
+        <div class="row mt-4">
             <h4 class="sub-titulo-form col s12">INFORMACIÓN GENERAL DEL CONTRATO</h4>
         </div>
         <div class="row">
@@ -149,14 +175,6 @@
                                 onchange="javascript:showContent()"
                                 style="width: 20px; height: 20px; vertical-align:middle;" />
                             <span>Contrato Privado</span>
-                        </label>
-                    </div>
-                    <div class=" distancia">
-                        <label>
-                            {{-- <input type="checkbox" class="filled-in" checked="checked" /> --}}
-                            <input type="checkbox" name="aprobadores_firma" id="aprobadores_firma" value="1"
-                                style="width: 20px; height: 20px; vertical-align:middle;" />
-                            <span>Activar flujo de aprobación</span>
                         </label>
                     </div>
                 </div>
@@ -754,19 +772,6 @@
                     </div>
             @endif
             </div> --}}
-
-            <div class="row d-none" id="aprobadores-firma-box">
-                <div class="col-md-12 form-group">
-                    <label for="">Asignar Aprobadores</label>
-                    <select name="aprobadores_firma[]" id="aprobadores" multiple class="form-control">
-                        @foreach ($firma->aprobadores as $aprobador)
-                            <option value="{{ $aprobador->id }}">
-                                {{ $aprobador->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
 
             <div class="form-group col-12 text-right mt-4">
                 <div class="col s12 m12 right-align btn-grd distancia">
