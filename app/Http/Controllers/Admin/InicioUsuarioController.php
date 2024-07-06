@@ -950,6 +950,7 @@ class InicioUsuarioController extends Controller
             'procedente' => 'required',
         ]);
 
+
         $incidentes_seguridad = IncidentesSeguridad::create([
             'titulo' => $request->titulo,
             'fecha' => $request->fecha,
