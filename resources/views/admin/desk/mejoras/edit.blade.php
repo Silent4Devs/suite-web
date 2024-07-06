@@ -670,6 +670,7 @@
 </form>
 @endif
 
+@if ($userIsAuthorized)
 <div class="card card-content" style="margin-bottom: 30px">
     <div class="caja-firmas-doc">
         @foreach($firmas as $firma)
@@ -691,6 +692,7 @@
         @endforeach
     </div>
 </div>
+@endif
 @endsection
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>

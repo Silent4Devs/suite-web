@@ -79,7 +79,7 @@ class FirmasModuleController extends Controller
 
         // Convertir la cadena de participantes a un array si es una cadena delimitada
         $participantes = [];
-        if (!empty($firma_module->participantes)) {
+        if (! empty($firma_module->participantes)) {
             $cleanString = str_replace(['[', ']', '"'], '', $firma_module->participantes);
             $participantes = explode(',', $cleanString);
             $participantes = array_map('trim', $participantes);
@@ -183,6 +183,19 @@ class FirmasModuleController extends Controller
         $firmaModule = FirmaCentroAtencion::create([
             'modulo_id' => $modulo,
             'submodulo_id' => $submodulo,
+            'user_id' => Auth::id(),
+            'firma' => $request->firma,
+        ]);
+
+        return redirect()->route('admin.desk.index')->with('success', 'Actualizado con éxito');
+    }
+
+    public function minutas(Request $request)
+    {
+
+        $firmaModule = FirmaCentroAtencion::create([
+            'modulo_id' => 3,
+            'submodulo_id' => 8,
             'user_id' => Auth::id(),
             'firma' => $request->firma,
         ]);

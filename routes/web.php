@@ -71,6 +71,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('firmas_module/mejoras', 'FirmasModuleController@mejoras')->name('module_firmas.mejoras');
     Route::post('firmas_module/denuncias', 'FirmasModuleController@denuncias')->name('module_firmas.denuncias');
     Route::post('firmas_module/sugerencia', 'FirmasModuleController@sugerencia')->name('module_firmas.sugerencia');
+    Route::post('firmas_module/minutas', 'FirmasModuleController@minutas')->name('module_firmas.minutas');
 
     // Empleados
     Route::get('empleados/importar', 'EmpleadoController@importar')->name('empleado.importar');

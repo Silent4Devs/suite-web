@@ -243,7 +243,7 @@ class RequisicionesCreateComponent extends Component
                         ) {
                             $this->habilitar_alerta = false;
                             $this->bandera = true;
-                            $name = 'requisicion_' . $this->requisicion_id . 'cotizacion_' . $cotizacion_count . '_' . uniqid() . '.' . $cotizacion_actual->getClientOriginalExtension();
+                            $name = 'requisicion_'.$this->requisicion_id.'cotizacion_'.$cotizacion_count.'_'.uniqid().'.'.$cotizacion_actual->getClientOriginalExtension();
                             $proveedor_req->cotizacion = $name;
                             $proveedor_req->save();
                         } else {

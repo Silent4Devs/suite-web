@@ -653,6 +653,7 @@
 </form>
 @endif
 
+@if ($userIsAuthorized)
 <div class="card card-content" style="margin-bottom: 30px">
     <div class="caja-firmas-doc">
         @foreach($firmas as $firma)
@@ -674,6 +675,7 @@
         @endforeach
     </div>
 </div>
+@endif
 @endsection
 
 

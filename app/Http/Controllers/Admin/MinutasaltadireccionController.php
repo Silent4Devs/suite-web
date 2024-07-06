@@ -17,7 +17,6 @@ use App\Models\Empleado;
 use App\Models\ExternosMinutaDireccion;
 use App\Models\FilesRevisonDireccion;
 use App\Models\FirmaCentroAtencion;
-use App\Models\FirmaModule;
 use App\Models\HistoralRevisionMinuta;
 use App\Models\Minutasaltadireccion;
 use App\Models\Organizacion;
@@ -28,7 +27,6 @@ use App\Models\User;
 use App\Rules\ActividadesPlanAccionRule;
 use App\Rules\ParticipantesMinutasAltaDireccionRule;
 use App\Traits\ObtenerOrganizacion;
-use Auth;
 use Carbon\Carbon;
 use Gate;
 use Illuminate\Http\Request;
@@ -81,7 +79,7 @@ class MinutasaltadireccionController extends Controller
     public function store(Request $request)
     {
         abort_if(Gate::denies('revision_por_direccion_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        // dd($request->all());
+
         $request->validate([
             'objetivoreunion' => 'required',
             'responsable_id' => 'required',
@@ -142,25 +140,6 @@ class MinutasaltadireccionController extends Controller
 
     public function vincularParticipantes($request, $minutasaltadireccion)
     {
-        // $arrstrParticipantes = explode(',', $request->participantes);
-        // $participantes = array_map(function ($valor) {
-        //     return intval($valor);
-        // }, $arrstrParticipantes);
-
-        /*$participantes = json_decode($request->input('participantes'));
-        // dd($participantes);
-        if (is_array($participantes)) {
-            foreach ($participantes as $participante) {
-
-                $empleadoId = $participante->empleado_id;
-                $asistencia = $participante->asistencia;
-
-                $arrpart[] = [
-                    'empleado_id' => $empleadoId,
-                    'asistencia' => $asistencia,
-                ];
-            }
-        }*/
 
         $participantes = json_decode($request->input('participantes'), true);
 
@@ -412,55 +391,37 @@ class MinutasaltadireccionController extends Controller
     public function edit($id)
     {
         abort_if(Gate::denies('revision_por_direccion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $modulo = 3;
-
-        $submodulo = 8;
-
-        $firmas = FirmaCentroAtencion::with('empleado')->where('modulo_id', $modulo)->where('submodulo_id', $submodulo)->get();
 
         $minutasaltadireccion = Minutasaltadireccion::with([
             'participantes',
-            // 'planes',
             'documentos',
             'externos',
-        ])
-            ->find($id);
+        ])->find($id);
+
+        $participantesIds = $minutasaltadireccion->participantes->pluck('id')->toArray();
 
         $planes_minuta = Minutasaltadireccion::with(
             'planes'
-        )
-            ->find($id);
+        )->find($id);
+
         $actividades = array_filter($planes_minuta->planes->first()->tasks, function ($actividad) {
             return intval($actividad->level) > 0;
         });
-        // dd($planes_minuta, $actividades);
 
         $participantesWithAsistencia = $minutasaltadireccion->participantes()
-            // ->select('name', 'area_id', 'foto')
             ->withPivot('asistencia')
             ->get();
         $responsablereunions = Empleado::getAltaEmpleadosWithArea();
 
-        $firmaModules = FirmaModule::where('modulo_id', $modulo)->where('submodulo_id', $submodulo)->first();
-
-        if ($firmaModules) {
-            $participantesIds = json_decode($firmaModules->participantes, true); // Decodificar como array
-
-            if ($participantesIds) {
-                $firmaModules->empleados = User::whereIn('id', $participantesIds)
-                    ->get();
-            } else {
-                $firmaModules->empleados = collect();
-            }
-        }
+        $firmas = FirmaCentroAtencion::with('empleado')->where('modulo_id', 3)->where('submodulo_id', 8)->get();
 
         return view('admin.minutasaltadireccions.edit', compact(
             'minutasaltadireccion',
             'actividades',
             'participantesWithAsistencia',
             'responsablereunions',
-            'firmaModules',
-            'firmas'
+            'firmas',
+            'participantesIds'
         ));
     }
 
@@ -502,31 +463,17 @@ class MinutasaltadireccionController extends Controller
     {
         abort_if(Gate::denies('revision_por_direccion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $modulo = 3;
-
-        $submodulo = 8;
-
-        $firmaModule = FirmaCentroAtencion::create([
-            'modulo_id' => $modulo,
-            'submodulo_id' => $submodulo,
-            'user_id' => Auth::id(),
-            'firma' => $request->firma,
-        ]);
-
         $this->processUpdate($request, $minutasaltadireccion, true);
 
-        $empleadoIds = $request->aprobadores;
+        $empleadoIds = $request->participantes;
 
-        if (empty($empleadoIds) || ! is_array($empleadoIds)) {
-            return back()->with('error', 'No se seleccionaron aprobadores para la aprobacion.');
-        }
+        $empleadoIdsArray = json_decode($empleadoIds, true);
+        $empleadoIds = array_column($empleadoIdsArray, 'empleado_id');
 
-        // Obtener empleados desde la base de datos
-        $empleados = User::select('id', 'name', 'email')->whereIn('id', $empleadoIds)->get();
+        $empleados = Empleado::whereIn('id', $empleadoIds)->get();
 
-        // Enviar correos electrónicos
         foreach ($empleados as $empleado) {
-            Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->send(new EmpleadoEmail($empleado));
+            Mail::to($empleado->email)->send(new EmpleadoEmail($empleado));
         }
 
         if ($request->hasFile('files')) {

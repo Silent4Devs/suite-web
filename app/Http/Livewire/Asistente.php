@@ -7,15 +7,18 @@ use Livewire\Component;
 
 class Asistente extends Component
 {
-
     public $search = '';
 
     protected $asistenService; // Declarar como protegida
 
     public $respuesta;
+
     public $lineas;
+
     public $filename;
+
     public $filePath;
+
     public $chatboxOpen = false;
 
     public function __construct($id = null)
@@ -26,7 +29,7 @@ class Asistente extends Component
 
     public function toggleChatbox()
     {
-        $this->chatboxOpen = !$this->chatboxOpen;
+        $this->chatboxOpen = ! $this->chatboxOpen;
         $this->search = '';
         $this->respuesta = '';
     }
@@ -65,6 +68,7 @@ class Asistente extends Component
         $this->respuesta = $response;
         $this->search = '';
     }
+
     public function render()
     {
         return view('livewire.asistente');

@@ -17,7 +17,8 @@ class SubmodulosSeeder extends Seeder
             ['name' => 'Riesgos', 'modulo_name' => 'Centro de Atención'],
             ['name' => 'Sugerencias', 'modulo_name' => 'Centro de Atención'],
             ['name' => 'Denuncias', 'modulo_name' => 'Centro de Atención'],
-            ['name' => 'Contratos', 'modulo_name' => 'Gestión contractual'],
+            ['name' => 'Contratos', 'modulo_name' => 'Gestión Contractual'],
+            ['name' => 'Revision por direccion', 'modulo_name' => 'Gestión Normativa'],
             ['name' => 'Perfil de puestos', 'modulo_name' => 'Gestión de Talento'],
         ];
 
