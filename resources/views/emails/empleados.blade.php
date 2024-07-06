@@ -86,7 +86,7 @@
                                         <strong>{{ $nombre }}</strong> le ha mandado una solicitud de
                                         firma.
                                                                                 <br>
-                                        <a href="{{ url('/admin/desk/' . $id . '/riesgos-edit') }}">Ir a Resgo</a>
+                                        <a href="{{ url('/admin/desk/' . $id . '/riesgos-edit') }}">Ir a Riesgo</a>
                                         @break
 
                                         @default
