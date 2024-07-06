@@ -14,17 +14,19 @@ class EmpleadoEmail extends Mailable
     public $empleado;
     public $id;
     public $status;
+    public $organizacion;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($empleado, $status, $id)
+    public function __construct($empleado, $status, $id, $organizacion)
     {
         $this->empleado = $empleado;
         $this->status = $status;
         $this->id = $id;
+        $this->organizacion = $organizacion;
     }
 
     public function getBase64($url)
@@ -63,6 +65,7 @@ class EmpleadoEmail extends Mailable
                 'email' => $this->empleado->email,
                 'status' => $this->status,
                 'id' => $this->id,
+                'logo' => $this->getBase64($this->organizacion->logotipo),
                 'img_twitter' => $this->getBase64(asset('img/twitter.png')),
                 'img_linkedin' => $this->getBase64(asset('img/linkedin.png')),
                 'img_facebook' => $this->getBase64(asset('img/facebook.png')),
