@@ -5,6 +5,7 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Storage;
 
 class EmpleadoEmail extends Mailable
 {
@@ -20,6 +21,29 @@ class EmpleadoEmail extends Mailable
     public function __construct($empleado)
     {
         $this->empleado = $empleado;
+    }
+
+    public function getBase64($url)
+    {
+        try {
+            $img_route = $url;
+            $logo_base = file_get_contents($img_route);
+            $img = 'data:image/png;base64,' . base64_encode($logo_base);
+
+            return $img;
+        } catch (\Exception $e) {
+            try {
+                $img_route = $url;
+                $logo_base = Storage::get($img_route);
+                $img = 'data:image/png;base64,' . base64_encode($logo_base);
+
+                return $img;
+            } catch (\Throwable $th) {
+                $img = 'data:image/png;base64,' . '';
+
+                return $img;
+            }
+        }
     }
 
     /**
