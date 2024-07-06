@@ -40,23 +40,18 @@ function mostrarAlerta(url) {
     });
 }
 
-function mostrarAlertaVinculacion(url) {
+function mostrarAlertaVinculacion(userId, userName) {
     Swal.fire({
         title: "¿Vincular?",
         text: "No podrás deshacer esta acción",
-        icon: "success",
+        icon: "warning",
         showCancelButton: true,
         confirmButtonText: "Sí, vincular",
         cancelButtonText: "Cancelar",
     }).then((result) => {
         if (result.isConfirmed) {
-            Swal.fire(
-                "Vinculado!",
-                "El elemento ha sido vinculado.",
-                "success"
-            );
-            console.log(url);
-            window.location.href = url;
+            // Abre el modal en lugar de redirigir
+            $(`#vincularEmpleado${userId}`).modal("show");
         }
     });
 }

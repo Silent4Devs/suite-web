@@ -18,8 +18,14 @@ class PermisosCargaObjetivosSeeder extends Seeder
                 'perfil' => 'Administrador',
                 'permisos_asignacion' => true,
             ],
-            ['perfil' => 'Jefe Inmediato'],
-            ['perfil' => 'Colaborador'],
+            [
+                'perfil' => 'Jefe Inmediato',
+                'permisos_asignacion' => false,
+            ],
+            [
+                'perfil' => 'Colaborador',
+                'permisos_asignacion' => false,
+            ],
         ];
 
         PermisosCargaObjetivos::insert($perfiles);

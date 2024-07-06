@@ -13,7 +13,6 @@ use App\Models\Puesto;
 use App\Models\Role;
 use App\Models\Team;
 use App\Models\User;
-use App\Rules\EmpleadoNoVinculado;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -30,7 +29,9 @@ class UsersController extends Controller
 
         $users = User::getUserWithRole();
 
-        return view('users.tbUsersIndex', compact('users', 'existsVinculoEmpleadoAdmin'));
+        $empleados = Empleado::getAltaDataColumns()->sortBy('name');
+
+        return view('users.tbUsersIndex', compact('users', 'existsVinculoEmpleadoAdmin', 'empleados'));
     }
 
     public function getUsersIndex(Request $request)
@@ -176,23 +177,13 @@ class UsersController extends Controller
     {
         if ($request->ajax()) {
             $request->validate([
-                // 'n_empleado' => ['required', new EmpleadoNoVinculado, 'exists:empleados,n_empleado'],
-                'n_empleado' => ['required'],
+                'id_empleado' => ['required'],
             ]);
             $usuario = User::find(intval($request->user_id));
-            $identificador = explode('-', $request->n_empleado);
-            $tipo = $identificador[0];
-            $numero = $identificador[1];
 
-            if ($tipo == 'NEMPLEADO') {
-                $usuario->update([
-                    'n_empleado' => $numero,
-                ]);
-            } else {
-                $usuario->update([
-                    'empleado_id' => $numero,
-                ]);
-            }
+            $usuario->update([
+                'empleado_id' => $request->id_empleado,
+            ]);
 
             return response()->json(['success' => true]);
         }

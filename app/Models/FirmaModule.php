@@ -30,15 +30,20 @@ class FirmaModule extends Model
 
     public function getAprobadoresAttribute()
     {
-        $empleados_array = str_replace('[', '', $this->participantes);
-        $empleados_array = str_replace(']', '', $empleados_array);
-        $empleados_array = str_replace('"', '', $empleados_array);
-        $empleados_array = explode(',', $empleados_array);
+        $users_array = str_replace('[', '', $this->participantes);
+        $users_array = str_replace(']', '', $users_array);
+        $users_array = str_replace('"', '', $users_array);
+        $users_array = str_replace(' ', '', $users_array);
+        $users_array = explode(',', $users_array);
 
         $aprobadores = collect();
-        foreach ($empleados_array as $empleado_id) {
-            $empleado = Empleado::find($empleado_id);
-            $aprobadores->push($empleado);
+        foreach ($users_array as $user_id) {
+            $usuario = User::find($user_id);
+            if (isset($usuario->empleado)) {
+                if ($usuario->empleado->estatus == 'alta') {
+                    $aprobadores->push($usuario->empleado);
+                }
+            }
         }
 
         return $aprobadores;
