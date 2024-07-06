@@ -45,7 +45,54 @@
 
                             <table class="caja-info">
 
-                                <h1>Hola {{$nombre}}</h1>
+                                <p style="font-size: 16px;">
+                                    @switch($status)
+                                        @case('seguridad')
+                                        <strong>{{ $nombre }}</strong> le ha mandado una solicitud de
+                                        firma.
+                                        <br>
+                                        <a href="{{ url('/admin/desk/' . $id . '/seguridad-edit') }}">Ir a Seguridad</a>
+                                        @break
+
+                                        @case('denuncias')
+                                        <strong>{{ $nombre }}</strong> le ha mandado una solicitud de
+                                        firma.
+                                                                                <br>
+                                        <a href="{{ url('/admin/desk/' . $id . '/denuncias-edit') }}">Ir a Denuncia</a>
+                                        @break
+
+                                        @case('mejoras')
+                                        <strong>{{ $nombre }}</strong> le ha mandado una solicitud de
+                                        firma.
+                                                                                <br>
+                                        <a href="{{ url('/admin/desk/' . $id . '/mejoras-edit') }}">Ir a Mejora</a>
+                                        @break
+
+                                        @case('quejas')
+                                        <strong>{{ $nombre }}</strong> le ha mandado una solicitud de
+                                        firma.
+                                                                                <br>
+                                        <a href="{{ url('/admin/desk/' . $id . '/quejas-edit') }}">Ir a Queja</a>
+                                        @break
+
+                                        @case('sugerencias')
+                                        <strong>{{ $nombre }}</strong> le ha mandado una solicitud de
+                                        firma.
+                                                                                <br>
+                                        <a href="{{ url('/admin/desk/' . $id . '/sugerencias-edit') }}">Ir a Sugerencia</a>
+                                        @break
+
+                                        @case('riesgos')
+                                        <strong>{{ $nombre }}</strong> le ha mandado una solicitud de
+                                        firma.
+                                                                                <br>
+                                        <a href="{{ url('/admin/desk/' . $id . '/riesgos-edit') }}">Ir a Resgo</a>
+                                        @break
+
+                                        @default
+                                    @endswitch
+                                </p>
+
                             </table>
                             <br><br>
                             <div class="caja-blue" style="background-color: #2567AE; padding: 25px 0px;">
