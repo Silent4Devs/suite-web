@@ -730,7 +730,7 @@
 
 
 @if ($userIsAuthorized)
-<form method="POST" action="{{ route('admin.module_firmas.quejas') }}" enctype="multipart/form-data">
+<form method="POST" action="{{ route('admin.module_firmas.quejas', ['id' => $quejas->id]) }}" enctype="multipart/form-data">
 @csrf
 <div class="card card-body">
     <div class="" style="position: relative; left: 2rem;">

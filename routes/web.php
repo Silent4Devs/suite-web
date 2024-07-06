@@ -65,7 +65,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('firmas_module/store', 'FirmasModuleController@store')->name('module_firmas.store');
     Route::get('firmas_module/edit/{id}', 'FirmasModuleController@edit')->name('module_firmas.edit');
     Route::post('firmas_module/update/{id}', 'FirmasModuleController@update')->name('module_firmas.update');
-    Route::post('firmas_module/seguridad', 'FirmasModuleController@seguridad')->name('module_firmas.seguridad');
+    Route::post('firmas_module/seguridad/{id}', 'FirmasModuleController@seguridad')->name('module_firmas.seguridad');
     Route::post('firmas_module/riesgos', 'FirmasModuleController@riesgos')->name('module_firmas.riesgos');
     Route::post('firmas_module/quejas', 'FirmasModuleController@quejas')->name('module_firmas.quejas');
     Route::post('firmas_module/mejoras', 'FirmasModuleController@mejoras')->name('module_firmas.mejoras');
