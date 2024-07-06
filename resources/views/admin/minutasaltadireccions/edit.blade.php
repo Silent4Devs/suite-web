@@ -416,20 +416,21 @@
 
 @php
     $userIsAuthorized = false;
-    if($firmaModules && $firmaModules->empleados){
-    foreach ($firmaModules->empleados as $empleado) {
-        if ($empleado->id === Auth::id()) {
-            $userIsAuthorized = true;
-            break;
+    if ($minutasaltadireccion && $minutasaltadireccion->participantes) {
+        foreach ($minutasaltadireccion->participantes as $empleado) {
+            if (in_array($empleado->id, $participantesIds)) {
+                $userIsAuthorized = true;
+                break;
+            }
         }
     }
-   }
 @endphp
 
 
 
 @if ($userIsAuthorized)
-<form method="POST" action="" enctype="multipart/form-data">
+<form method="POST" action="{{ route('admin.module_firmas.minutas') }}" enctype="multipart/form-data">
+    @csrf
 <div class="card card-body">
     <div class="" style="position: relative; left: 2rem;">
         <br>

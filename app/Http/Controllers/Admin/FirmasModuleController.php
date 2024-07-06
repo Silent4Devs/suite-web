@@ -189,4 +189,17 @@ class FirmasModuleController extends Controller
 
         return redirect()->route('admin.desk.index')->with('success', 'Actualizado con éxito');
     }
+
+    public function minutas(Request $request)
+    {
+
+        $firmaModule = FirmaCentroAtencion::create([
+            'modulo_id' => 3,
+            'submodulo_id' => 8,
+            'user_id' => Auth::id(),
+            'firma' => $request->firma,
+        ]);
+
+        return redirect()->route('admin.desk.index')->with('success', 'Actualizado con éxito');
+    }
 }
