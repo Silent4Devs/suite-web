@@ -13,7 +13,6 @@ use App\Models\Puesto;
 use App\Models\Role;
 use App\Models\Team;
 use App\Models\User;
-use App\Rules\EmpleadoNoVinculado;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;

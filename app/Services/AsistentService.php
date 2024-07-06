@@ -13,7 +13,6 @@ class AsistentService
         $this->client = new Client();
     }
 
-
     public function postQuestionToPythonAPI($question)
     {
         $url = 'http://localhost:8080/ask-question/';

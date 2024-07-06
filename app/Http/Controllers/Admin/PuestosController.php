@@ -7,37 +7,36 @@ use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroyPuestoRequest;
 use App\Http\Requests\StorePuestoRequest;
 use App\Http\Requests\UpdatePuestoRequest;
+use App\Mail\AprobadorFirmaPuestoMail;
+use App\Models\AprobadorFirmaPuesto;
+use App\Models\AprobadorFirmaPuestoHistorico;
 use App\Models\Area;
 use App\Models\ContactosExternosPuestos;
 use App\Models\Empleado;
+use App\Models\FirmaModule;
 use App\Models\HerramientasPuestos;
 use App\Models\Language;
 use App\Models\PerfilEmpleado;
-use App\Models\AprobadorFirmaPuesto;
-use App\Models\AprobadorFirmaPuestoHistorico;
-use App\Models\User;
 use App\Models\Puesto;
-use App\Models\FirmaModule;
 use App\Models\PuestoContactos;
 use App\Models\PuestoIdiomaPorcentajePivot;
 use App\Models\PuestoResponsabilidade;
 use App\Models\PuestosCertificado;
 use App\Models\RH\Competencia;
-use App\Traits\ObtenerOrganizacion;
-use Illuminate\Support\Facades\Storage;
 use App\Models\Team;
-use App\Mail\AprobadorFirmaPuestoMail;
-use Illuminate\Support\Facades\Mail;
+use App\Models\User;
+use App\Traits\ObtenerOrganizacion;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
 class PuestosController extends Controller
 {
-    use ObtenerOrganizacion;
     use CsvImportTrait;
-
+    use ObtenerOrganizacion;
 
     public function index(Request $request)
     {
@@ -179,7 +178,8 @@ class PuestosController extends Controller
 
                     try {
                         Mail::to(removeUnicodeCharacters($aprobador_firma_puesto->aprobador->email))->queue(new AprobadorFirmaPuestoMail($aprobador_firma_puesto));
-                    } catch (\Throwable $th) {}
+                    } catch (\Throwable $th) {
+                    }
                 }
             }
             $aprobador_firma_puesto_historico = AprobadorFirmaPuestoHistorico::create([
@@ -253,17 +253,17 @@ class PuestosController extends Controller
         $externos = ContactosExternosPuestos::all();
 
         $firma = FirmaModule::where('modulo_id', '4')->where('submodulo_id', '9')->first();
-            $aprobacionFirmaPuesto = AprobadorFirmaPuesto::where('puesto_id', $puesto->id)->get();
-            $firmar = false;
-            $firmado = false;
-            foreach ($aprobacionFirmaPuesto as $firma) {
-                if ($firma->aprobador_id == User::getCurrentUser()->empleado->id) {
-                    $firmar = true;
-                }
-                if ($firma->firma) {
-                    $firmado = true;
-                }
+        $aprobacionFirmaPuesto = AprobadorFirmaPuesto::where('puesto_id', $puesto->id)->get();
+        $firmar = false;
+        $firmado = false;
+        foreach ($aprobacionFirmaPuesto as $firma) {
+            if ($firma->aprobador_id == User::getCurrentUser()->empleado->id) {
+                $firmar = true;
             }
+            if ($firma->firma) {
+                $firmado = true;
+            }
+        }
 
         return view('admin.puestos.edit', compact('reportaras', 'externos', 'contactosEdit', 'puesto', 'areas', 'reportas', 'lenguajes', 'competencias', 'idis', 'responsabilidades', 'certificados', 'herramientas', 'contactos', 'empleados', 'language', 'puestos', 'firma', 'firmar', 'firmado', 'aprobacionFirmaPuesto'));
     }
@@ -307,7 +307,8 @@ class PuestosController extends Controller
         return view('admin.puestos.show', compact('puesto', 'idiomas', 'competencias', 'responsabilidades', 'certificados', 'idiomas', 'herramientas', 'contactos', 'empleados', 'areas'));
     }
 
-    public function aprobacionFirma(Request $request) {
+    public function aprobacionFirma(Request $request)
+    {
 
         $puesto = Puesto::find($request->puesto_id);
 
@@ -320,7 +321,7 @@ class PuestosController extends Controller
             $base64Image = substr($base64Image, strpos($base64Image, ',') + 1);
             $type = strtolower($type[1]); // png, jpg, gif
 
-            if (!in_array($type, ['jpg', 'jpeg', 'gif', 'png'])) {
+            if (! in_array($type, ['jpg', 'jpeg', 'gif', 'png'])) {
                 throw new \Exception('Tipo de imagen inválido');
             }
         } else {
@@ -331,18 +332,18 @@ class PuestosController extends Controller
         $image = base64_decode($base64Image);
 
         if (strpos($base64Image, 'data:image/') === 0) {
-            list($type, $base64Image) = explode(';', $base64Image);
-            list(, $base64Image) = explode(',', $base64Image);
+            [$type, $base64Image] = explode(';', $base64Image);
+            [, $base64Image] = explode(',', $base64Image);
         }
 
         // Generar un nombre único para la imagen
-        $imageName = uniqid() . '.' . $type;
+        $imageName = uniqid().'.'.$type;
         // Guardar la imagen en el sistema de archivos
 
-        Storage::put('public/puestos/firmasAprobadores/' . $imageName, $image);
+        Storage::put('public/puestos/firmasAprobadores/'.$imageName, $image);
 
         // Obtener la URL de la imagen guardada
-        $imageUrl = Storage::url('public/puestos/firmasAprobadores/' . $imageName);
+        $imageUrl = Storage::url('public/puestos/firmasAprobadores/'.$imageName);
 
         $aprobacionFirmapuesto->update([
             'firma' => $imageName,

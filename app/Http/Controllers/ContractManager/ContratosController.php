@@ -836,7 +836,8 @@ class ContratosController extends AppBaseController
 
                     try {
                         Mail::to(removeUnicodeCharacters($aprobador_firma_contrato->aprobador->email))->queue(new AprobadorFirmaContratoMail($aprobador_firma_contrato));
-                    } catch (\Throwable $th) {}
+                    } catch (\Throwable $th) {
+                    }
                 }
             }
             $aprobador_firma_contrato_historico = AprobadorFirmaContratoHistorico::create([

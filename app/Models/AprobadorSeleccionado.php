@@ -19,6 +19,6 @@ class AprobadorSeleccionado extends Model
         'sugerencias_id',
         'quejas_id',
         'denuncias_id',
-        'aprobadores'
+        'aprobadores',
     ];
 }

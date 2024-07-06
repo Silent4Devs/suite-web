@@ -18,7 +18,6 @@ class AprobadorFirmaPuesto extends Model
         'firma',
     ];
 
-
     public function aprobador()
     {
         return $this->belongsTo(Empleado::class, 'aprobador_id');
@@ -34,8 +33,9 @@ class AprobadorFirmaPuesto extends Model
         return $this->belongsTo(Puesto::class, 'puesto_id');
     }
 
-    public function getFirmaRutaAttribute() {
-        $ruta = asset('storage/puestos/firmasAprobadores/' . $this->firma);
+    public function getFirmaRutaAttribute()
+    {
+        $ruta = asset('storage/puestos/firmasAprobadores/'.$this->firma);
 
         return $ruta;
     }
