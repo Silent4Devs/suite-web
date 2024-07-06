@@ -79,7 +79,7 @@ class FirmasModuleController extends Controller
 
         // Convertir la cadena de participantes a un array si es una cadena delimitada
         $participantes = [];
-        if (! empty($firma_module->participantes)) {
+        if (!empty($firma_module->participantes)) {
             $cleanString = str_replace(['[', ']', '"'], '', $firma_module->participantes);
             $participantes = explode(',', $cleanString);
             $participantes = array_map('trim', $participantes);
@@ -101,19 +101,28 @@ class FirmasModuleController extends Controller
         return redirect()->route('admin.module_firmas')->with('success', 'Actualizado con éxito');
     }
 
-    public function seguridad(Request $request)
+    public function seguridad(Request $request, $id)
     {
+
+        $existingRecord = FirmaCentroAtencion::where('id_seguridad', $id)->where('user_id', Auth::id())->first();
+
+        // Si existe, eliminarlo
+        if ($existingRecord) {
+            $existingRecord->delete();
+        }
+
         $firmaModule = FirmaCentroAtencion::create([
             'modulo_id' => 1,
             'submodulo_id' => 1,
             'user_id' => Auth::id(),
             'firma' => $request->firma,
+            'id_seguridad' => $id,
         ]);
 
         return redirect()->route('admin.desk.index')->with('success', 'Actualizado con éxito');
     }
 
-    public function riesgos(Request $request)
+    public function riesgos(Request $request, $id)
     {
         $modulo = 1;
         $submodulo = 4;
@@ -123,12 +132,13 @@ class FirmasModuleController extends Controller
             'submodulo_id' => $submodulo,
             'user_id' => Auth::id(),
             'firma' => $request->firma,
+            'id_riesgos' => $id,
         ]);
 
         return redirect()->route('admin.desk.index')->with('success', 'Actualizado con éxito');
     }
 
-    public function mejoras(Request $request)
+    public function mejoras(Request $request, $id)
     {
         $modulo = 1;
 
@@ -139,12 +149,13 @@ class FirmasModuleController extends Controller
             'submodulo_id' => $submodulo,
             'user_id' => Auth::id(),
             'firma' => $request->firma,
+            'id_mejoras' => $id,
         ]);
 
         return redirect()->route('admin.desk.index')->with('success', 'Actualizado con éxito');
     }
 
-    public function denuncias(Request $request)
+    public function denuncias(Request $request, $id)
     {
         $modulo = 1;
         $submodulo = 6;
@@ -154,12 +165,13 @@ class FirmasModuleController extends Controller
             'submodulo_id' => $submodulo,
             'user_id' => Auth::id(),
             'firma' => $request->firma,
+            'id_denuncias' => $id,
         ]);
 
         return redirect()->route('admin.desk.index')->with('success', 'Actualizado con éxito');
     }
 
-    public function quejas(Request $request)
+    public function quejas(Request $request, $id)
     {
         $modulo = 1;
 
@@ -170,12 +182,13 @@ class FirmasModuleController extends Controller
             'submodulo_id' => $submodulo,
             'user_id' => Auth::id(),
             'firma' => $request->firma,
+            'id_quejas' => $id,
         ]);
 
         return redirect()->route('admin.desk.index')->with('success', 'Actualizado con éxito');
     }
 
-    public function sugerencias(Request $request)
+    public function sugerencias(Request $request, $id)
     {
         $modulo = 1;
         $submodulo = 5;
@@ -185,6 +198,7 @@ class FirmasModuleController extends Controller
             'submodulo_id' => $submodulo,
             'user_id' => Auth::id(),
             'firma' => $request->firma,
+            'id_sugerencias' => $id,
         ]);
 
         return redirect()->route('admin.desk.index')->with('success', 'Actualizado con éxito');
