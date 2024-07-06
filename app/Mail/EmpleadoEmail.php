@@ -12,8 +12,11 @@ class EmpleadoEmail extends Mailable
     use Queueable, SerializesModels;
 
     public $empleado;
+
     public $id;
+
     public $status;
+
     public $organizacion;
 
     /**
@@ -34,18 +37,18 @@ class EmpleadoEmail extends Mailable
         try {
             $img_route = $url;
             $logo_base = file_get_contents($img_route);
-            $img = 'data:image/png;base64,' . base64_encode($logo_base);
+            $img = 'data:image/png;base64,'.base64_encode($logo_base);
 
             return $img;
         } catch (\Exception $e) {
             try {
                 $img_route = $url;
                 $logo_base = Storage::get($img_route);
-                $img = 'data:image/png;base64,' . base64_encode($logo_base);
+                $img = 'data:image/png;base64,'.base64_encode($logo_base);
 
                 return $img;
             } catch (\Throwable $th) {
-                $img = 'data:image/png;base64,' . '';
+                $img = 'data:image/png;base64,'.'';
 
                 return $img;
             }
