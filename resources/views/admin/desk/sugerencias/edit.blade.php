@@ -619,7 +619,7 @@
 
 
 @if ($userIsAuthorized)
-<form method="POST" action="{{ route('admin.module_firmas.sugerencias') }}" enctype="multipart/form-data">
+<form method="POST" action="{{ route('admin.module_firmas.sugerencias', ['id' => $sugerencias->id]) }}" enctype="multipart/form-data">
 @csrf
 <div class="card card-body">
     <div class="" style="position: relative; left: 2rem;">
