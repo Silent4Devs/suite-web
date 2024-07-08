@@ -10,17 +10,12 @@
 
     <div class="row">
         @can('reglas_dayoff_vista_global')
-            <div class="col-12 text-right">
+            <div class="col-12 text-left">
 
-                <div class="d-flex justify-content-end">
-                    <a class="boton-transparente boton-sin-borde" href="{{ route('descarga-solicitudes-dayoff') }}">
-                        <i class="fas fa-file-excel icon" style="font-size: 1.5rem;color:#0f6935"></i>
-                    </a> &nbsp;&nbsp;&nbsp;
-
-                <a type="button" class="btn" style="background-color:#b9eeb9; border: #fff; width:200px;"
-                    href="{{ url('admin/ExportDayOff') }}">
-                    <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#cf1010" title="Exportar Excel"></i>
-                    Exportar Excel
+                <a type="button" class="btn" style="background-color:#b9eeb9; border: #fff; width:100px;"
+                    href="{{ route('descarga-solicitudes-day-off') }}">
+                    <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935" title="Exportar Excel"></i>
+                    Reporte
                 </a>
             </div>
         @endcan
