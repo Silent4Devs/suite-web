@@ -11,26 +11,32 @@
             <a href="{{ route('admin.perfiles.create') }}" type="button" class="btn tb-btn-primary">Registrar Nivel Jerárquico</a>
         </div>
     </div>
-        @include('partials.flashMessages')
-        <div class="datatable-fix datatable-rds">
-            <h3 class="title-table-rds"> Niveles Jerárquicos</h3>
-            <table class="datatable datatable-Perfiles">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>
-                            Nivel
-                        </th>
-                        <th>
-                            Descripción
-                        </th>
-                        <th>
-                            Opciones
-                        </th>
-                    </tr>
-
-                </thead>
-            </table>
+    @include('partials.flashMessages')
+    <div class="datatable-fix datatable-rds">
+        <h3 class="title-table-rds"> Niveles Jerárquicos</h3>
+        <div class="d-flex justify-content-end">
+            <a class="boton-transparente boton-sin-borde" href="{{ route('descarga-nivel-jerarquico') }}">
+                <!-- <img src="{{ asset('download_FILL0_wght300_GRAD0_opsz24.svg') }}" alt="Importar" class="icon"> -->
+                <i class="fas fa-file-excel icon" style="font-size: 1.5rem;color:#0f6935"></i>
+            </a> &nbsp;&nbsp;&nbsp;
         </div>
+        <table class="datatable datatable-Perfiles">
+            <thead class="thead-dark">
+                <tr>
+                    <th>
+                        Nivel
+                    </th>
+                    <th>
+                        Descripción
+                    </th>
+                    <th>
+                        Opciones
+                    </th>
+                </tr>
+
+            </thead>
+        </table>
+    </div>
 @endsection
 
 
@@ -39,7 +45,8 @@
     <script>
         $(function() {
             //let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-            let dtButtons = [{
+            let dtButtons = [
+                /*{
                     extend: 'csvHtml5',
                     title: `Perfiles ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
@@ -58,7 +65,7 @@
                     exportOptions: {
                         columns: ['th:not(:last-child):visible']
                     }
-                },
+                },*/
                 {
                     extend: 'pdfHtml5',
                     title: `Perfiles ${new Date().toLocaleDateString().trim()}`,

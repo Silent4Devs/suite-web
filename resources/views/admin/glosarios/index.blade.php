@@ -76,6 +76,12 @@
     <h5 class="col-12 titulo_general_funcion">Glosario</h5>
     <div class="mt-5 card">
         <div class="card-body datatable-fix">
+            <div class="d-flex justify-content-end">
+                <a class="boton-transparente boton-sin-borde" href="{{ route('descarga-glosarios') }}">
+                    <!-- <img src="{{ asset('download_FILL0_wght300_GRAD0_opsz24.svg') }}" alt="Importar" class="icon"> -->
+                    <i class="fas fa-file-excel icon" style="font-size: 1.5rem;color:#0f6935"></i>
+                </a> &nbsp;&nbsp;&nbsp;
+            </div>
             <table id="dom" class="table table-bordered w-100 datatable-glosario" style="width: 100%">
                 <thead class="thead-dark">
                     <tr>

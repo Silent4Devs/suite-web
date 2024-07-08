@@ -4,6 +4,12 @@
         {{ Breadcrumbs::render('Solicitud-Vacaciones') }}
     </div>
 
+    <div class="d-flex justify-content-end">
+        <a class="boton-transparente boton-sin-borde" href="{{ route('descarga-solicitudes-vacaciones') }}">
+            <i class="fas fa-file-excel icon" style="font-size: 1.5rem;color:#0f6935"></i>
+        </a> &nbsp;&nbsp;&nbsp;
+    </div>
+
     <style>
         .btn_cargar {
             border-radius: 100px !important;

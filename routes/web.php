@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\GrupoAreaController;
 use App\Http\Controllers\Admin\InicioUsuarioController;
 use App\Http\Controllers\Admin\PortalComunicacionController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\ExportExcelReport;
 use App\Http\Controllers\QueueCorreo;
 use App\Http\Controllers\UsuarioBloqueado;
 use App\Http\Controllers\Visitantes\RegistroVisitantesController;
@@ -1662,27 +1663,46 @@ Route::group(['middleware' => ['auth', '2fa']], function () {
     // Route::post('CargaCategoria', 'SubidaExcel@CategoriaActivo')->name('carga-categoria');
 
     //Ruta ExportExcel
-    Route::get('ExportAmenaza', 'ExportExcel@Amenaza')->name('descarga-amenaza');
-    Route::get('ExportVulnerabilidad', 'ExportExcel@Vulnerabilidad')->name('descarga-vulnerabilidad');
-    Route::get('ExportAnalisisRiesgo', 'ExportExcel@AnalisisRiesgo')->name('descarga-analisis_riego');
-    Route::get('ExportPartesInteresadas', 'ExportExcel@PartesInteresadas')->name('descarga-partes_interesadas');
-    Route::get('ExportMatrizRequisitosLegales', 'ExportExcel@MatrizRequisitosLegales')->name('descarga-matriz_requisitos_legales');
-    Route::get('ExportFoda', 'ExportExcel@Foda')->name('descarga-foda');
-    Route::get('ExportDeterminacionAlcance', 'ExportExcel@DeterminacionAlcance')->name('descarga-determinacion_alcance');
-    Route::get('ExportComiteSeguridad', 'ExportExcel@ComiteSeguridad')->name('descarga-comite_seguridad');
-    Route::get('ExportAltaDireccion', 'ExportExcel@AltaDireccion')->name('descarga-alta_direccion');
-    Route::get('ExportCategoriaCapacitacion', 'ExportExcel@CategoriaCapacitacion')->name('descarga-categoriacapacitacion');
-    Route::get('ExportRevisionDireccion', 'ExportExcel@RevisionDireccion')->name('descarga-revisiondireccion');
-    // Route::get('ExportCategoria', 'ExportExcel@CategoriaActivo')->name('descarga-categoria');
-    Route::get('ExportPuesto', 'ExportExcel@Puesto')->name('descarga-puesto');
-    // Route::get('ExportEstadoIncidente', 'ExportExcel@EstadoIncidente')->name('descarga-estadoincidente');
-    Route::get('ExportRole', 'ExportExcel@Roles')->name('descarga-roles');
-    Route::get('ExportPoliticaSgsi', 'ExportExcel@PoliticaSgsi')->name('descarga-politica_sgi');
-    Route::get('ExportGrupoArea', 'ExportExcel@GrupoArea')->name('descarga-grupo_area');
-    Route::get('ExportEmpleado', 'ExportExcel@Empleado')->name('descarga-empleado');
-    Route::get('ExportActivos', 'ExportExcel@Activos')->name('descarga-activo_inventario');
+    Route::controller(ExportExcelReport::class)->group(function () {
+        Route::get('ExportUsuario', 'Users')->name('descarga-usuario');
+        Route::get('ExportPuesto', 'Puesto')->name('descarga-puesto');
+        Route::get('ExportRoles', 'Roles')->name('descarga-roles');
+        Route::get('ExportSoporte', 'Soporte')->name('descarga-soporte');
+        Route::get('ExportEmpleado', 'Empleado')->name('descarga-empleado');
+        Route::get('ExportSede', 'Sede')->name('descarga-sedes');
+        Route::get('ExportNivelJerarquico', 'NivelJerarquico')->name('descarga-nivel-jerarquico');
+        Route::get('ExportRegistroArea', 'RegistroArea')->name('descarga-registro-area');
+        Route::get('ExportMacroproceso', 'Macroproceso')->name('descarga-macroproceso');
+        Route::get('ExportProceso', 'Proceso')->name('descarga-proceso');
+        Route::get('ExportTipoActivo', 'TipoActivo')->name('descarga-tipo-activo');
+        Route::get('ExportInventarioActivos', 'InventarioActivos')->name('descarga-inventario-activos');
+        Route::get('ExportGlosarios', 'Glosarios')->name('descarga-glosarios');
+        Route::get('ExportCategoriasCapacitaciones', 'categoriasCapacitaciones')->name('descarga-categoria-capacitaciones');
+        Route::get('ExportVisualizarLogs', 'visualizarLogs')->name('descarga-visualizar-logs');
+        Route::get('ExportSolicitudesDayOff', 'solicitudesDayOff')->name('descarga-solicitudes-day-off');
+        Route::get('ExportSolicitudesVacaciones', 'solicitudesVacaciones')->name('descarga-solicitudes-vacaciones');
+        Route::get('ExportEvaluaciones360', 'evaluaciones360')->name('descarga-evaluaciones-360');
+        Route::post('ExportRegistrosTimesheet', 'registrosTimesheet')->name('descarga-registro-timesheet');
+        Route::post('ExportTimesheetAreas', 'timesheetAreas')->name('descarga-timesheet-areas');
+        Route::post('ExportTimesheetProyectos', 'timesheetProyectos')->name('descarga-timesheet-proyectos');
+    });
 
-    //  Route::get('ExportFormatoResponsivo', 'ActivosController@ExportFormato')->name('descarga-formato_reponsivo');
+    Route::get('ExportAmenaza', 'ExportExcelReport@Amenaza')->name('descarga-amenaza');
+    Route::get('ExportVulnerabilidad', 'ExportExcelReport@Vulnerabilidad')->name('descarga-vulnerabilidad');
+    Route::get('ExportAnalisisRiesgo', 'ExportExcelReport@AnalisisRiesgo')->name('descarga-analisis_riego');
+    Route::get('ExportPartesInteresadas', 'ExportExcelReport@PartesInteresadas')->name('descarga-partes_interesadas');
+    Route::get('ExportMatrizRequisitosLegales', 'ExportExcelReport@MatrizRequisitosLegales')->name('descarga-matriz_requisitos_legales');
+    Route::get('ExportFoda', 'ExportExcelReport@Foda')->name('descarga-foda');
+    Route::get('ExportDeterminacionAlcance', 'ExportExcelReport@DeterminacionAlcance')->name('descarga-determinacion_alcance');
+    Route::get('ExportComiteSeguridad', 'ExportExcelReport@ComiteSeguridad')->name('descarga-comite_seguridad');
+    Route::get('ExportAltaDireccion', 'ExportExcelReport@AltaDireccion')->name('descarga-alta_direccion');
+    Route::get('ExportCategoriaCapacitacion', 'ExportExcelReport@CategoriaCapacitacion')->name('descarga-categoriacapacitacion');
+    Route::get('ExportRevisionDireccion', 'ExportExcelReport@RevisionDireccion')->name('descarga-revisiondireccion');
+    // Route::get('ExportCategoria', 'ExportExcelReport@CategoriaActivo')->name('descarga-categoria');
+
+    // Route::get('ExportEstadoIncidente', 'ExportExcelReport@EstadoIncidente')->name('descarga-estadoincidente');
+    Route::get('ExportPoliticaSgsi', 'ExportExcelReport@PoliticaSgsi')->name('descarga-politica_sgi');
+    Route::get('ExportGrupoArea', 'ExportExcelReport@GrupoArea')->name('descarga-grupo_area');
 });
 
 Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function () {

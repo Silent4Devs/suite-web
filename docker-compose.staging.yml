@@ -164,6 +164,18 @@ services:
     networks:
       - tabantajnetwork
 
+  reportservice:
+    image: ghcr.io/silent4devs/reportservice:latest
+    container_name: reportservice
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3301:3301"
+    volumes:
+      - reportservice_data:/reportservice
+    networks:
+      - tabantajnetwork
+
   mailhog-service:
     image: mailhog/mailhog # Reemplaza "imagen:tag" con la imagen y etiqueta correctas de Maihog
     container_name: maihog-container # El nombre del contenedor
@@ -239,6 +251,8 @@ volumes:
   pgadmin-data:
     driver: local
   goservices_data:
+    driver: local
+  reportservice_data:
     driver: local
   mailhog_data:
     driver: local
