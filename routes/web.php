@@ -8,8 +8,8 @@ use App\Http\Controllers\Admin\GrupoAreaController;
 use App\Http\Controllers\Admin\InicioUsuarioController;
 use App\Http\Controllers\Admin\PortalComunicacionController;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\QueueCorreo;
 use App\Http\Controllers\ExportExcelReport;
+use App\Http\Controllers\QueueCorreo;
 use App\Http\Controllers\UsuarioBloqueado;
 use App\Http\Controllers\Visitantes\RegistroVisitantesController;
 use Illuminate\Support\Facades\Auth;
@@ -1663,8 +1663,8 @@ Route::group(['middleware' => ['auth', '2fa']], function () {
     // Route::post('CargaCategoria', 'SubidaExcel@CategoriaActivo')->name('carga-categoria');
 
     //Ruta ExportExcel
-    Route::controller(ExportExcelReport::class)->group(function(){
-        Route::get('ExportUsuario' , 'Users')->name('descarga-usuario');
+    Route::controller(ExportExcelReport::class)->group(function () {
+        Route::get('ExportUsuario', 'Users')->name('descarga-usuario');
         Route::get('ExportPuesto', 'Puesto')->name('descarga-puesto');
         Route::get('ExportRoles', 'Roles')->name('descarga-roles');
         Route::get('ExportSoporte', 'Soporte')->name('descarga-soporte');
@@ -1686,7 +1686,6 @@ Route::group(['middleware' => ['auth', '2fa']], function () {
         Route::post('ExportTimesheetAreas', 'timesheetAreas')->name('descarga-timesheet-areas');
         Route::post('ExportTimesheetProyectos', 'timesheetProyectos')->name('descarga-timesheet-proyectos');
     });
-
 
     Route::get('ExportAmenaza', 'ExportExcelReport@Amenaza')->name('descarga-amenaza');
     Route::get('ExportVulnerabilidad', 'ExportExcelReport@Vulnerabilidad')->name('descarga-vulnerabilidad');
