@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="supported-color-schemes" content="light dark">
 
-    <title>Empleados</title>
+    <title>Solicitud de Firma</title>
     <style>
         .content {
             border-top: 30px solid #2567AE;
