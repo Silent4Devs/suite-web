@@ -9,11 +9,11 @@
 
     <div class="row">
         @can('reglas_vacaciones_vista_global')
-            <div class="col-12 text-right">
-                <a type="button" class="btn" style="background-color:#b9eeb9; border: #fff; width:200px;"
-                    href="{{ url('admin/ExportVacaciones') }}">
+            <div class="col-12 text-left">
+                <a type="button" class="btn" style="background-color:#b9eeb9; border: #fff; width:100px;"
+                    href="{{ route('descarga-solicitudes-vacaciones') }}">
                     <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935" title="Exportar Excel"></i>
-                    Exportar Excel
+                    Reporte
                 </a>
             </div>
         @endcan
