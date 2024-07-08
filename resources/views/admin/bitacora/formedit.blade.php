@@ -132,36 +132,38 @@
         </div>
     </div>
 
-    <div class="row mt-4" style="margin-left: 10px; margin-right: 10px;">
-        @if (!$firmado)
-            <div class="col-12">
-                <label for="">Activar flujo de aprobación </label>
-                {!! Form::checkbox('firma_check', 1, $firma->count() ? true : false, [
-                    'id' => 'aprobadores_firma',
-                    'style' => 'width: 20px; height: 20px; vertical-align: middle;',
-                ]) !!}
-            </div>
-        @endif
-        @if (!$firmado)
-            <div class="col-12 {{ $firma->count() ? '' : 'd-none' }}" id="aprobadores-firma-box">
-                <div class="form-group">
-                    <label for="">Asignar Aprobadores</label>
-                    <select name="aprobadores_firma[]" id="aprobadores" multiple class="form-control">
-                        @foreach ($firma->aprobadores as $aprobador)
-                            <option value="{{ $aprobador->id }}"
-                                {{ $firma->aprobadores->contains('id', $aprobador->id) ? 'selected' : '' }}>
-                                {{ $aprobador->name }}
-                            </option>
-                        @endforeach
-                    </select>
+    @if (!$show_contrato)
+        <div class="row mt-4" style="margin-left: 10px; margin-right: 10px;">
+            @if (!$firmado)
+                <div class="col-12">
+                    <label for="">Activar flujo de aprobación </label>
+                    {!! Form::checkbox('firma_check', 1, $firma->count() ? true : false, [
+                        'id' => 'aprobadores_firma',
+                        'style' => 'width: 20px; height: 20px; vertical-align: middle;',
+                    ]) !!}
                 </div>
-            </div>
-        @else
-            <div class="col-12">
-                <p>No es posible modificar el flujo de aprobación una vez iniciado</p>
-            </div>
-        @endif
-    </div>
+            @endif
+            @if (!$firmado)
+                <div class="col-12 {{ $firma->count() ? '' : 'd-none' }}" id="aprobadores-firma-box">
+                    <div class="form-group">
+                        <label for="">Asignar Aprobadores</label>
+                        <select name="aprobadores_firma[]" id="aprobadores" multiple class="form-control">
+                            @foreach ($firma->aprobadores as $aprobador)
+                                <option value="{{ $aprobador->id }}"
+                                    {{ $firma->aprobadores->contains('id', $aprobador->id) ? 'selected' : '' }}>
+                                    {{ $aprobador->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+            @else
+                <div class="col-12">
+                    <p>No es posible modificar el flujo de aprobación una vez iniciado</p>
+                </div>
+            @endif
+        </div>
+    @endif
 
     <div class="row mt-4" style="margin-left: 10px; margin-right: 10px;">
         <h4 class="sub-titulo-form col s12">INFORMACIÓN GENERAL DEL CONTRATO</h4>
@@ -967,6 +969,55 @@
         </div>
     </div>
 @endif
+
+
+<style>
+    #firma_aprobador canvas {
+        border: 1px solid #bbb;
+    }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/lemonadejs/dist/lemonade.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@lemonadejs/signature/dist/index.min.js"></script>
+@if ($firmar)
+    <div class="col-12">
+        <div class="card card-body">
+            <form action="{{ route('contract_manager.contratos-katbol.aprobacion-firma-contrato') }}" method="POST">
+                @csrf
+                <div class="d-flex gap-4 align-items-center flex-column">
+                    <div>
+                        <h5>Ingrese su firma para la aprobación del registro</h5>
+                    </div>
+                    <div id="firma_aprobador" class="" style="width: auto;"></div>
+                    <input type="hidden" name="firma_base" value="" id="firma-input">
+                    <input type="hidden" name="contrato_id" value="{{ $contrato->id }}">
+                    <div class="d-flex gap-5">
+                        <div id="resetCanvas" class="btn btn-outline-secondary">Limpiar</div>
+                        <button class="btn btn-primary">Guardar firma</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+@endif
+<script>
+    // Get the element to render signature component inside
+    const firma_aprobador = document.getElementById("firma_aprobador");
+    const resetCanvas = document.getElementById("resetCanvas");
+    resetCanvas.addEventListener("click", () => {
+        // console.log(component.getImage());
+        component.value = [];
+        document.getElementById('firma-input').value = component.getImage();
+    });
+    document.querySelector('#firma_aprobador').onmouseup = function() {
+        document.getElementById('firma-input').value = component.getImage();
+    }
+    // Call signature with the firma_aprobador element and the options object, saving its reference in a variable
+    const component = Signature(firma_aprobador, {
+        width: 700,
+        height: 300,
+        instructions: ""
+    });
+</script>
 
 
 

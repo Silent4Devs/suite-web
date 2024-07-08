@@ -447,13 +447,19 @@ class ContratosController extends AppBaseController
 
             $aprobacionFirmaContrato = AprobadorFirmaContrato::where('contrato_id', $id)->get();
             $firmar = false;
-            foreach ($aprobacionFirmaContrato as $firma) {
-                if ($firma->aprobador_id == User::getCurrentUser()->empleado->id) {
-                    $firmar = true;
+            $firmado = false;
+            foreach ($aprobacionFirmaContrato as $firma_item) {
+                if ($firma_item->aprobador_id == User::getCurrentUser()->empleado->id) {
+                    if (!isset($firma_item->firma)) {
+                        $firmar = true;
+                    }
+                }
+                if ($firma_item->firma) {
+                    $firmado = true;
                 }
             }
 
-            return view('contract_manager.contratos-katbol.show', compact('proveedor_id', 'dolares', 'areas', 'proyectos', 'aprobacionFirmaContrato', 'firmar'))->with('contrato', $contrato)->with('proveedores', $proveedores)->with('contratos', $contratos)->with('ids', $id)->with('descargar_archivo', $descargar_archivo)->with('convenios', $convenios)->with('organizacion', $organizacion);
+            return view('contract_manager.contratos-katbol.show', compact('proveedor_id', 'dolares', 'areas', 'proyectos', 'aprobacionFirmaContrato', 'firmar', 'firmado'))->with('contrato', $contrato)->with('proveedores', $proveedores)->with('contratos', $contratos)->with('ids', $id)->with('descargar_archivo', $descargar_archivo)->with('convenios', $convenios)->with('organizacion', $organizacion);
         } catch (\Exception $e) {
             return redirect()->route('contract_manager.contratos-katbol.index')->with('error', 'Ocurrio un error.');
         }
@@ -558,6 +564,7 @@ class ContratosController extends AppBaseController
 
             $proyectos = TimesheetProyecto::getAll()->where('estatus', 'proceso');
 
+            // firmas aprobadores
             $firma = FirmaModule::where('modulo_id', '2')->where('submodulo_id', '7')->first();
             // dd($firma->aprobadores);
             // $exampleVar = $firma->aprobadores[0];
@@ -566,7 +573,9 @@ class ContratosController extends AppBaseController
             $firmado = false;
             foreach ($aprobacionFirmaContrato as $firma_item) {
                 if ($firma_item->aprobador_id == User::getCurrentUser()->empleado->id) {
-                    $firmar = true;
+                    if (!isset($firma_item->firma)) {
+                        $firmar = true;
+                    }
                 }
                 if ($firma_item->firma) {
                     $firmado = true;
