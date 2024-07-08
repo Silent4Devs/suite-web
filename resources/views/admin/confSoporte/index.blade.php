@@ -22,6 +22,12 @@
         </div>
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
+            <div class="d-flex justify-content-end">
+                <a class="boton-transparente boton-sin-borde" href="{{ route('descarga-soporte') }}">
+                    <!-- <img src="{{ asset('download_FILL0_wght300_GRAD0_opsz24.svg') }}" alt="Importar" class="icon"> -->
+                    <i class="fas fa-file-excel icon" style="font-size: 1.5rem;color:#0f6935"></i>
+                </a> &nbsp;&nbsp;&nbsp;
+            </div>
             <table class="table datatable-ConfSoporte " style="width: 100%">
                 <thead class="thead-dark dt-personalizada">
                     <tr>
@@ -63,7 +69,8 @@
     <script>
         $(function() {
             //let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-            let dtButtons = [{
+            let dtButtons = [
+                /*{
                     extend: 'csvHtml5',
                     title: `Reporte de soporte ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
@@ -82,7 +89,7 @@
                     exportOptions: {
                         columns: ['th:not(:last-child):visible']
                     }
-                },
+                },*/
                 {
                     extend: 'pdfHtml5',
                     title: `Reporte de soporte ${new Date().toLocaleDateString().trim()}`,

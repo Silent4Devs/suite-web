@@ -256,7 +256,6 @@ class FirmasModuleController extends Controller
         $modulo = 1;
         $submodulo = 5;
 
-
         $sugerencias = Sugerencias::where('id', $id)->first();
 
         if ($sugerencias->estatus === 'cerrado') {
