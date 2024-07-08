@@ -57,11 +57,6 @@
                             </p>
                             <hr class="my-4">
                         </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <span style="color: #3086AF;">Una ventana de</span>
-                            </div>
-                        </div>
                         <div class="row mt-3">
                             <div class="col-md-4">
                                 <div class="p-4 rounded-lg d-flex align-items-center justify-content-between"
@@ -72,8 +67,8 @@
                                         </label>
                                     </div>
                                     <div>
-                                        <input type="number" wire:model="porcentaje_objetivos" name="porcentaje_objetivos"
-                                            style="width: 90px;">
+                                        <input class="form-control" type="number" wire:model="porcentaje_objetivos"
+                                            name="porcentaje_objetivos" style="width: 90px;">
                                     </div>
                                 </div>
                             </div>
@@ -86,7 +81,7 @@
                                         </label>
                                     </div>
                                     <div>
-                                        <input type="number" wire:model="porcentaje_competencias"
+                                        <input class="form-control" type="number" wire:model="porcentaje_competencias"
                                             name="porcentaje_competencias" style="width: 90px;">
                                     </div>
                                 </div>
@@ -307,7 +302,7 @@
             <div class="tab-content" id="nav-create-4" role="tabpanel" aria-labelledby="nav-create-4">
                 <div class="card card-body">
                     <div class="info-first-config">
-                        <h4 class="title-config">Evaluador(es) de objetivos: Toda la empresa</h4>
+                        <h4 class="title-config">Evaluador(es).</h4>
                         <p>Asigna a los evaluadores y su porcentaje de evaluacións</p>
                         <hr class="my-4">
                     </div>
@@ -493,6 +488,7 @@
                                                         </div>
                                                         <div class="col-1">
                                                             <input type="number" min="0" max="100"
+                                                                class="form-control"
                                                                 wire:model="array_porcentaje_evaluadores.{{ $key }}.porcentaje_evaluador_objetivos.{{ $index_obj }}">
                                                         </div>
                                                         @if ($index_obj > 0)
@@ -542,6 +538,7 @@
                                                         </div>
                                                         <div class="col-1">
                                                             <input type="number" min="0" max="100"
+                                                                class="form-control"
                                                                 wire:model="array_porcentaje_evaluadores.{{ $key }}.porcentaje_evaluador_competencias.{{ $index_comp }}">
                                                         </div>
                                                         @if ($index_comp > 0)
