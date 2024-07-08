@@ -135,8 +135,8 @@
 
                             <div class="mt-2 form-group col-md-12">
                                 <div class="info-bar" id="info-bar">
-                                    <p>Seleccione cuántos participantes de aprobación tendrá tu lista.</p>
                                     @if($firmaModules && $firmaModules->empleados)
+                                    <p>Seleccione cuántos participantes de aprobación tendrá tu lista.</p>
                                     <select id="participantes" name="participantes[]" class="form-control" multiple="multiple" style="padding: 10px; border-radius: 50px; border: 1px solid #007BFF;">
                                         @foreach($firmaModules->empleados as $empleado)
                                             <option value="{{ $empleado->id }}"
