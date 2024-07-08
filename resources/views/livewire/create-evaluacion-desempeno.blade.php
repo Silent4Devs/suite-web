@@ -2,25 +2,25 @@
 
     {{-- <x-loading-indicator /> --}}
 
-    <div class="pasos-create-evaluaciones mb-5">
-        <div class="paso-create-ev">
-            <span>1</span>
-            inicio
+    <div class="container">
+        <div class="mt-5 mb-5 text-center">
+            <h2>Additional element : Steps Using Bootstrap 4</h2>
         </div>
-        <hr>
-        <div class="paso-create-ev">
-            <span>2</span>
-            Periodos
-        </div>
-        <hr>
-        <div class="paso-create-ev">
-            <span>3</span>
-            Público
-        </div>
-        <hr>
-        <div class="paso-create-ev">
-            <span>4</span>
-            Evaluadores
+        <div class="mt-5 mb-5">
+            <ul class="step d-flex flex-nowrap">
+                <li class="step-item @if ($paso == 1) active @endif">
+                    <a href="#!" class="">Inicio</a>
+                </li>
+                <li class="step-item @if ($paso == 2) active @endif">
+                    <a href="#!" class="">Periodos</a>
+                </li>
+                <li class="step-item @if ($paso == 3) active @endif">
+                    <a href="#!" class="">Público</a>
+                </li>
+                <li class="step-item @if ($paso == 4) active @endif">
+                    <a href="#!" class="">Evaluadores</a>
+                </li>
+            </ul>
         </div>
     </div>
 

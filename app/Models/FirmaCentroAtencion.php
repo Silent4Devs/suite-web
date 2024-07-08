@@ -11,7 +11,7 @@ class FirmaCentroAtencion extends Model
 
     protected $table = 'firma_centro_atencions';
 
-    protected $fillable = ['modulo_id', 'submodulo_id', 'user_id', 'firma', 'id_seguridad', 'id_riesgos', 'id_quejas', 'id_mejoras', 'id_denuncias', 'id_sugerencias'];
+    protected $fillable = ['modulo_id', 'submodulo_id', 'user_id', 'firma', 'id_seguridad', 'id_riesgos', 'id_quejas', 'id_mejoras', 'id_denuncias', 'id_sugerencias', 'id_minutas'];
 
     public function empleado()
     {
