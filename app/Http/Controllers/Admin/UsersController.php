@@ -13,7 +13,6 @@ use App\Models\Puesto;
 use App\Models\Role;
 use App\Models\Team;
 use App\Models\User;
-use App\Rules\EmpleadoNoVinculado;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -30,7 +29,9 @@ class UsersController extends Controller
 
         $users = User::getUserWithRole();
 
-        return view('users.tbUsersIndex', compact('users', 'existsVinculoEmpleadoAdmin'));
+        $empleados = Empleado::getAltaDataColumns()->sortBy('name');
+
+        return view('users.tbUsersIndex', compact('users', 'existsVinculoEmpleadoAdmin', 'empleados'));
     }
 
     public function getUsersIndex(Request $request)
@@ -132,15 +133,17 @@ class UsersController extends Controller
     {
         try {
             abort_if(Gate::denies('usuarios_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            $registro = User::find($id);
 
-            $registro = User::find($id); // Donde $id es el ID del registro que deseas eliminar.
+            if (! $registro) {
+                return response()->json(['status' => 'error', 'message' => 'Registro no encontrado.'], 404);
+            }
 
             $registro->delete();
-            Alert::success('éxito', 'Información añadida con éxito');
 
-            return redirect()->route('admin.users.index');
+            return response()->json(['status' => 'success', 'message' => 'El registro ha sido eliminado con éxito.']);
         } catch (\Exception $e) {
-            return redirect()->route('admin.users.index')->with('error', $e->getMessage());
+            return response()->json(['status' => 'error', 'message' => $e->getMessage()], 500);
         }
     }
 
@@ -174,23 +177,13 @@ class UsersController extends Controller
     {
         if ($request->ajax()) {
             $request->validate([
-                // 'n_empleado' => ['required', new EmpleadoNoVinculado, 'exists:empleados,n_empleado'],
-                'n_empleado' => ['required'],
+                'id_empleado' => ['required'],
             ]);
             $usuario = User::find(intval($request->user_id));
-            $identificador = explode('-', $request->n_empleado);
-            $tipo = $identificador[0];
-            $numero = $identificador[1];
 
-            if ($tipo == 'NEMPLEADO') {
-                $usuario->update([
-                    'n_empleado' => $numero,
-                ]);
-            } else {
-                $usuario->update([
-                    'empleado_id' => $numero,
-                ]);
-            }
+            $usuario->update([
+                'empleado_id' => $request->id_empleado,
+            ]);
 
             return response()->json(['success' => true]);
         }

@@ -1,0 +1,303 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use App\Models\Denuncias;
+use App\Models\FirmaCentroAtencion;
+use App\Models\FirmaModule;
+use App\Models\IncidentesSeguridad;
+use App\Models\Mejoras;
+use App\Models\Modulo;
+use App\Models\Quejas;
+use App\Models\RiesgoIdentificado;
+use App\Models\Submodulo;
+use App\Models\Sugerencias;
+use App\Models\User;
+use Auth;
+use Illuminate\Http\Request;
+
+class FirmasModuleController extends Controller
+{
+    public function index(Request $request)
+    {
+        $firmaModules = FirmaModule::with('modulo', 'submodulo')->get();
+
+        // Obtener detalles de los empleados
+        foreach ($firmaModules as $firma) {
+            $participantesIds = json_decode($firma->participantes);
+            if ($participantesIds) {
+                $firma->empleados = User::whereIn('id', $participantesIds)->get();
+            } else {
+                $firma->empleados = collect();
+            }
+        }
+
+        return view('admin.firmas.index', compact('firmaModules'));
+    }
+
+    public function create()
+    {
+
+        $empleados = User::orderBy('name', 'asc')
+            ->get();
+
+        $modulos = Modulo::get();
+
+        $submodulos = Submodulo::get();
+
+        return view('admin.firmas.create', compact('modulos', 'submodulos', 'empleados'));
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'modulos' => 'required|exists:modulos,id',
+            'submodulos' => 'required|exists:submodulos,id',
+            'participantes' => 'required|array', // Asegúrate de que participantes sea un array
+        ]);
+
+        $existingRecord = FirmaModule::where('modulo_id', $request->modulos)
+            ->where('submodulo_id', $request->submodulos)
+            ->exists();
+
+        if ($existingRecord) {
+            // Manejar el caso de error
+            return back()->withInput()->withErrors(['error' => 'Ya existe un registro con este módulo y submódulo.']);
+        }
+
+        // Crear un nuevo registro de FirmaModule
+        $firmaModule = FirmaModule::create([
+            'modulo_id' => $request->modulos,
+            'submodulo_id' => $request->submodulos,
+            'participantes' => json_encode($request->participantes), // Guardar el array de IDs como JSON
+        ]);
+
+        return redirect()->route('admin.module_firmas')->with('success', 'Guardado con éxito');
+    }
+
+    public function edit($id)
+    {
+        $firma_module = FirmaModule::findOrFail($id); // Usa findOrFail para manejo de errores
+        $modulos = Modulo::get();
+        $submodulos = Submodulo::get();
+        $empleados = User::orderBy('name', 'asc')->get();
+
+        // Convertir la cadena de participantes a un array si es una cadena delimitada
+        $participantes = [];
+        if (! empty($firma_module->participantes)) {
+            $cleanString = str_replace(['[', ']', '"'], '', $firma_module->participantes);
+            $participantes = explode(',', $cleanString);
+            $participantes = array_map('trim', $participantes);
+        }
+
+        return view('admin.firmas.edit', compact('modulos', 'submodulos', 'empleados', 'firma_module', 'participantes'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $firma = FirmaModule::find($id);
+
+        $firma->update([
+            'modulo_id' => $firma->modulo_id,
+            'submodulo_id' => $firma->submodulo_id,
+            'participantes' => json_encode($request->participantes),
+        ]);
+
+        return redirect()->route('admin.module_firmas')->with('success', 'Actualizado con éxito');
+    }
+
+    public function seguridad(Request $request, $id)
+    {
+        $seguridad = IncidentesSeguridad::where('id', $id)->first();
+
+        if ($seguridad->estatus === 'Cerrado' || $seguridad->estatus === 'No procedente') {
+            $existingRecord = FirmaCentroAtencion::where('id_seguridad', $id)->where('user_id', Auth::id())->first();
+
+            // Si existe, eliminarlo
+            if ($existingRecord) {
+                $existingRecord->delete();
+            }
+
+            $firmaModule = FirmaCentroAtencion::create([
+                'modulo_id' => 1,
+                'submodulo_id' => 1,
+                'user_id' => Auth::id(),
+                'firma' => $request->firma,
+                'id_seguridad' => $id,
+            ]);
+
+            return redirect()->route('admin.desk.index')->with('success', 'Actualizado con éxito');
+        } else {
+            return redirect()->route('admin.desk.index')->with('error', 'El registro aun no cuenta con un status  para poder ser aprobado');
+        }
+    }
+
+    public function riesgos(Request $request, $id)
+    {
+        $modulo = 1;
+        $submodulo = 4;
+
+        $riesgo = RiesgoIdentificado::where('id', $id)->first();
+
+        if ($riesgo->estatus === 'cerrado') {
+            $existingRecord = FirmaCentroAtencion::where('id_riesgos', $id)->where('user_id', Auth::id())->first();
+
+            // Si existe, eliminarlo
+            if ($existingRecord) {
+                $existingRecord->delete();
+            }
+
+            $firmaModule = FirmaCentroAtencion::create([
+                'modulo_id' => $modulo,
+                'submodulo_id' => $submodulo,
+                'user_id' => Auth::id(),
+                'firma' => $request->firma,
+                'id_riesgos' => $id,
+            ]);
+
+            return redirect()->route('admin.desk.index')->with('success', 'Actualizado con éxito');
+        } else {
+            return redirect()->route('admin.desk.index')->with('error', 'El registro aun no cuenta con un status  para poder ser aprobado');
+        }
+    }
+
+    public function mejoras(Request $request, $id)
+    {
+        $modulo = 1;
+
+        $submodulo = 2;
+
+        $mejoras = Mejoras::where('id', $id)->first();
+
+        if ($mejoras->estatus === 'cerrado') {
+            $existingRecord = FirmaCentroAtencion::where('id_mejoras', $id)->where('user_id', Auth::id())->first();
+
+            // Si existe, eliminarlo
+            if ($existingRecord) {
+                $existingRecord->delete();
+            }
+
+            $firmaModule = FirmaCentroAtencion::create([
+                'modulo_id' => $modulo,
+                'submodulo_id' => $submodulo,
+                'user_id' => Auth::id(),
+                'firma' => $request->firma,
+                'id_mejoras' => $id,
+            ]);
+
+            return redirect()->route('admin.desk.index')->with('success', 'Actualizado con éxito');
+        } else {
+            return redirect()->route('admin.desk.index')->with('error', 'El registro aun no cuenta con un status  para poder ser aprobado');
+        }
+    }
+
+    public function denuncias(Request $request, $id)
+    {
+        $modulo = 1;
+        $submodulo = 6;
+
+        $denuncia = Denuncias::where('id', $id)->first();
+
+        if ($denuncia->estatus === 'cerrado') {
+            $existingRecord = FirmaCentroAtencion::where('id_denuncias', $id)->where('user_id', Auth::id())->first();
+
+            // Si existe, eliminarlo
+            if ($existingRecord) {
+                $existingRecord->delete();
+            }
+
+            $firmaModule = FirmaCentroAtencion::create([
+                'modulo_id' => $modulo,
+                'submodulo_id' => $submodulo,
+                'user_id' => Auth::id(),
+                'firma' => $request->firma,
+                'id_denuncias' => $id,
+            ]);
+
+            return redirect()->route('admin.desk.index')->with('success', 'Actualizado con éxito');
+        } else {
+            return redirect()->route('admin.desk.index')->with('error', 'El registro aun no cuenta con un status  para poder ser aprobado');
+        }
+    }
+
+    public function quejas(Request $request, $id)
+    {
+        $modulo = 1;
+
+        $submodulo = 3;
+
+        $quejas = Quejas::where('id', $id)->first();
+
+        if ($quejas->estatus === 'cerrado') {
+            $existingRecord = FirmaCentroAtencion::where('id_quejas', $id)->where('user_id', Auth::id())->first();
+
+            // Si existe, eliminarlo
+            if ($existingRecord) {
+                $existingRecord->delete();
+            }
+
+            $firmaModule = FirmaCentroAtencion::create([
+                'modulo_id' => $modulo,
+                'submodulo_id' => $submodulo,
+                'user_id' => Auth::id(),
+                'firma' => $request->firma,
+                'id_quejas' => $id,
+            ]);
+
+            return redirect()->route('admin.desk.index')->with('success', 'Actualizado con éxito');
+        } else {
+            return redirect()->route('admin.desk.index')->with('error', 'El registro aun no cuenta con un status  para poder ser aprobado');
+        }
+    }
+
+    public function sugerencias(Request $request, $id)
+    {
+        $modulo = 1;
+        $submodulo = 5;
+
+        $sugerencias = Sugerencias::where('id', $id)->first();
+
+        if ($sugerencias->estatus === 'cerrado') {
+            $existingRecord = FirmaCentroAtencion::where('id_sugerencias', $id)->where('user_id', Auth::id())->first();
+
+            // Si existe, eliminarlo
+            if ($existingRecord) {
+                $existingRecord->delete();
+            }
+
+            $firmaModule = FirmaCentroAtencion::create([
+                'modulo_id' => $modulo,
+                'submodulo_id' => $submodulo,
+                'user_id' => Auth::id(),
+                'firma' => $request->firma,
+                'id_sugerencias' => $id,
+            ]);
+
+            return redirect()->route('admin.desk.index')->with('success', 'Actualizado con éxito');
+        } else {
+            return redirect()->route('admin.desk.index')->with('error', 'El registro aun no cuenta con un status  para poder ser aprobado');
+        }
+    }
+
+    public function minutas(Request $request, $id)
+    {
+
+        $existingRecord = FirmaCentroAtencion::where('id_minutas', $id)->where('user_id', Auth::id())->first();
+
+        // Si existe, eliminarlo
+        if ($existingRecord) {
+            $existingRecord->delete();
+        }
+
+        $firmaModule = FirmaCentroAtencion::create([
+            'modulo_id' => 3,
+            'submodulo_id' => 8,
+            'user_id' => Auth::id(),
+            'firma' => $request->firma,
+            'id_minutas' => $id,
+        ]);
+
+        return redirect()->route('admin.desk.index')->with('success', 'Actualizado con éxito');
+    }
+}

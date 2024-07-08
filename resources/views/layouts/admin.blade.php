@@ -86,6 +86,7 @@
             alt="Loading...">
     </div>
     @php
+
         use App\Models\Organizacion;
         use App\Models\User;
         use App\Models\Empleado;
@@ -273,7 +274,7 @@
             </div>
             @if (
                 $usuario->can('clausulas_auditorias_acceder') ||
-                    $usuario->can('mis_cursos_acceder') ||
+                    $usuario->can('capacitaciones_acceder') ||
                     $usuario->can('sistema_gestion_contratos_acceder') ||
                     $usuario->can('administracion_sistema_gestion_contratos_acceder') ||
                     $usuario->can('analisis_de_riesgo_integral_acceder') ||
@@ -285,7 +286,7 @@
                 <div class="item-content-menu-header" style="background-color: #fff;">
                     <span class="title-item-menu-header">MÓDULOS TABANTAJ</span>
                     <div class="menu-blocks-mod-header">
-                        @can('mis_cursos_acceder')
+                        @can('capacitaciones_acceder')
                             <a href="{{ route('admin.mis-cursos') }}">
                                 <div class="caja-icon-mod-header" style="background: #9CEBFF;">
                                     <i class="material-symbols-outlined">school</i>
@@ -402,11 +403,6 @@
                                         <i class="material-symbols-outlined i-direct">keyboard_arrow_down</i>
                                     </a>
                                     <ul>
-                                        @can('lista_distribucion_acceder')
-                                            <li><a href="{{ asset('admin/lista-distribucion') }}">Lista de
-                                                    distribución</a>
-                                            </li>
-                                        @endcan
                                         @can('clausulas_auditorias_acceder')
                                             <li><a href="{{ route('admin.auditoria-clasificacion') }}">Clasificación</a>
                                             </li>
@@ -437,6 +433,11 @@
                                         @can('crear_area_acceder')
                                             <li><a href="{{ route('admin.areas.index') }}">Crear Áreas</a></li>
                                         @endcan
+                                        @can('lista_distribucion_acceder')
+                                            <li><a href="{{ asset('admin/lista-distribucion') }}">Lista de
+                                                    distribución</a>
+                                            </li>
+                                        @endcan
                                         @can('lista_informativa_acceder')
                                             <li>
                                                 <a href="{{ route('admin.lista-informativa.index') }}">Lista Informativa</a>
@@ -463,6 +464,8 @@
                                         @can('glosario_acceder')
                                             <li><a href="{{ route('admin.glosarios.index') }}">Glosario</a></li>
                                         @endcan
+
+                                        <li><a href="{{ route('admin.module_firmas') }}">Firmas</a></li>
                                     </ul>
                                 </li>
                             @endcan
@@ -640,6 +643,8 @@
             <p>Comunicación</p>
         </a>
     </div>
+
+    <livewire:asistente />
 
     <!-- inicia sección de script -->
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>

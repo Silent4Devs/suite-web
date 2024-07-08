@@ -129,7 +129,7 @@ class EstudiantesCrear extends Component
         // dd($this->usuarios[0]->empleado);
 
         if ($this->publico == 'area') {
-            $this->areas = Area::get();
+            $this->areas = Area::getAll();
         }
 
         return view('livewire.escuela.estudiantes-crear', ['usuarios' => $this->usuarios]);

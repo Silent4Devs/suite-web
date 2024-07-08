@@ -310,7 +310,7 @@ class AreasController extends Controller
 
     public function pdf()
     {
-        $areas = Area::get();
+        $areas = Area::getAll();
         $pdf = PDF::loadView('areas', compact('areas'));
         $pdf->setPaper('A4', 'portrait');
 

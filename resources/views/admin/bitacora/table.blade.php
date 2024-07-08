@@ -127,8 +127,8 @@
 @endif
 <form method="POST" action="{{ route('contract_manager.contratos-katbol.store') }}" enctype="multipart/form-data">
     @csrf
-    <div class="card card-content">
-        <div class="row" style="margin-left: 10px; margin-right: 10px;">
+    <div class="card card-body">
+        <div class="row">
 
             <div class="col m12" style="margin-top: 30px;">
                 <h3 class="titulo-form">INSTRUCCIONES</h3>
@@ -136,22 +136,53 @@
             </div>
 
         </div>
-        <div class="row" style="margin-left: 10px; margin-right: 10px;">
+
+        <div class="row">
+            <div class="col-12">
+                <div class="">
+                    <label>
+                        {{-- <input type="checkbox" class="filled-in" checked="checked" /> --}}
+                        <input type="checkbox" name="aprobadores_firma" id="aprobadores_firma" value="1"
+                            style="width: 20px; height: 20px; vertical-align:middle;" />
+                        <span>Activar flujo de aprobación</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="row d-none" id="aprobadores-firma-box">
+            <div class="col-md-12 form-group">
+                <label for="">Asignar Aprobadores</label>
+                <select name="aprobadores_firma[]" id="aprobadores" multiple class="form-control">
+                    @foreach ($firma->aprobadores as $aprobador)
+                        <option value="{{ $aprobador->id }}">
+                            {{ $aprobador->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+
+        <div class="row mt-4">
             <h4 class="sub-titulo-form col s12">INFORMACIÓN GENERAL DEL CONTRATO</h4>
         </div>
-        <div class="row" style="margin-left: 10px; margin-right: 10px;">
-            <div class="col s12 m12 distancia">
-                <label>
-                    {{-- <input type="checkbox" class="filled-in" checked="checked" /> --}}
-                    <input type="checkbox" name="identificador_privado" id="check" value="1"
-                        onchange="javascript:showContent()" />
-                    <span>Contrato Privado</span>
-                </label>
+        <div class="row">
+            <div class="col-12">
+                <div class="d-flex justify-content-between">
+                    <div class="distancia">
+                        <label>
+                            {{-- <input type="checkbox" class="filled-in" checked="checked" /> --}}
+                            <input type="checkbox" name="identificador_privado" id="check" value="1"
+                                onchange="javascript:showContent()"
+                                style="width: 20px; height: 20px; vertical-align:middle;" />
+                            <span>Contrato Privado</span>
+                        </label>
+                    </div>
+                </div>
             </div>
             <input type="text" name="contrato_privado" style="visibility:hidden">
         </div>
 
-        <div class="row" style="margin-left: 10px;margin-right: 10px;">
+        <div class="row">
             @if ($contratos->no_contrato == null)
                 <div class="distancia
             form-group col-md-6">
@@ -222,7 +253,7 @@
                 @endif
             </div>
         </div>
-        <div class="row" style="margin-left: 10px;margin-right: 10px;">
+        <div class="row">
             <div class="distancia form-group col-md-12">
                 <label for="nombre_servicio" class="txt-tamaño">
                     Nombre del servicio<font class="asterisco">*</font></label>
@@ -238,7 +269,7 @@
         </div>
 
 
-        <div class="row" style="margin-left: 10px; margin-right: 10px;">
+        <div class="row">
             <div class="distancia form-group col-md-6">
                 <label for="proveedor_id" class="txt-tamaño">&nbsp;Nombre
                     del
@@ -281,11 +312,11 @@
             </div>
         </div>
 
-        <div class="row" style="margin-left: 10px;">
+        <div style="margin-left: 10px;">
             @livewire('contratos-identificador-proyectos-int-ext')
         </div>
 
-        <div class="row" style="margin-left: 10px; margin-right: 10px;">
+        <div class="row">
             <div class="form-group col-md-6">
                 <label for="fase" class="txt-tamaño">
                     &nbsp;Fase<font class="asterisco">*
@@ -334,7 +365,7 @@
             </div>
 
         </div>
-        <div class="row" style="margin-left: 10px; margin-right: 10px;">
+        <div class="row">
             <div class="form-group col-md-12">
                 <label for="objetivo" class="txt-tamaño">
                     Objetivo del servicio<font class="asterisco">*</font></label>
@@ -349,7 +380,7 @@
                 @endif
             </div>
         </div>
-        <div class="row" style="margin-left: 10px; margin-right: 10px;">
+        <div class="row">
             <div class="form-group col-md-6">
                 <label for="estatus" class="txt-tamaño">Adjuntar
                     Contrato<font class="asterisco">*</font></label><br>
@@ -401,7 +432,7 @@
                 @endif
             </div>
         </div>
-        <div class="row" style="margin-left: 10px; margin-right: 10px;">
+        <div class="row">
             <div class="form-group col-md-4">
                 <label for="no_contrato" class="txt-tamaño">Fecha
                     de
@@ -444,7 +475,7 @@
                 @endif
             </div>
         </div>
-        <div class="row" style="margin-left: 10px; margin-right: 10px;">
+        <div class="row">
             <div class="form-group col-md-4">
                 <label for="no_contrato" class="txt-tamaño">
                     &nbsp;No. Pagos<font class="asterisco">*</font></label><br>
@@ -503,7 +534,7 @@
                     <div class="card hoverable">
                         <div class="card-content center-align">
 
-                            <div class="row" style="margin-left: 10px; margin-right: 10px;">
+                            <div class="row">
                                 <div class="form-group col-md-3">
                                     <label for="no_contrato" class="txt-tamaño">
                                         Valor del Dolar
@@ -552,7 +583,7 @@
                                     ]) !!}
                                 </div>
                             </div>
-                            <div class="row" style="margin-left: 10px; margin-right: 10px;">
+                            <div class="row">
                                 @php
                                     $contrato_importe_total = $contratos->monto_pago;
                                 @endphp
@@ -652,10 +683,10 @@
                     </div>
                 </div>
             </div>
-            <div class="row" style="margin-left: 10px; margin-right: 10px;">
+            <div class="row">
                 <h4 class="sub-titulo-form col s12">RESPONSABLES</h4>
             </div>
-            <div class="row" style="margin-left: 10px; margin-right: 10px;">
+            <div class="row">
                 <div class="form-group col-md-4">
                     <label class="txt-tamaño">&nbsp;Nombre
                         del Supervisor 1<font class="asterisco">*
@@ -687,7 +718,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row" style="margin-left: 10px; margin-right: 10px;">
+            <div class="row">
                 <div class="form-group col-md-4">
                     <label class="txt-tamaño">&nbsp;Nombre
                         del Supervisor 2</label>
@@ -741,7 +772,8 @@
                     </div>
             @endif
             </div> --}}
-            <div class="form-group col-12 text-right mt-4" style="margin-left: 10px; margin-right: 10px;">
+
+            <div class="form-group col-12 text-right mt-4">
                 <div class="col s12 m12 right-align btn-grd distancia">
                     <a id="btnCancelar" href="{{ route('contract_manager.contratos-katbol.index') }}"
                         class="btn btn_cancelar">Cancelar</a>
@@ -1167,6 +1199,24 @@
             $('.td_fianza').fadeIn(0);
         } else {
             $('.td_fianza').fadeOut(0);
+        }
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $("#aprobadores").select2({
+            theme: "bootstrap4",
+        });
+    });
+
+    document.getElementById('aprobadores_firma').addEventListener('change', (e) => {
+        console.log(e.target.checked);
+        if (e.target.checked) {
+            document.getElementById('aprobadores-firma-box').classList.remove('d-none');
+        } else {
+            document.getElementById('aprobadores-firma-box').classList.add('d-none');
         }
     });
 </script>

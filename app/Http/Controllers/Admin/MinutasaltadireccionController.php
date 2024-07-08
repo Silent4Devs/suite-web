@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyMinutasaltadireccionRequest;
+use App\Mail\EmpleadoEmail;
 use App\Mail\Minutas\MinutaConfirmacionSolicitud;
 use App\Mail\Minutas\MinutaRechazoPorEdicion;
 use App\Mail\Minutas\SolicitudDeAprobacion;
@@ -15,6 +16,7 @@ use App\Mail\SolicitudAprobacionMinuta;
 use App\Models\Empleado;
 use App\Models\ExternosMinutaDireccion;
 use App\Models\FilesRevisonDireccion;
+use App\Models\FirmaCentroAtencion;
 use App\Models\HistoralRevisionMinuta;
 use App\Models\Minutasaltadireccion;
 use App\Models\Organizacion;
@@ -77,7 +79,7 @@ class MinutasaltadireccionController extends Controller
     public function store(Request $request)
     {
         abort_if(Gate::denies('revision_por_direccion_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        // dd($request->all());
+
         $request->validate([
             'objetivoreunion' => 'required',
             'responsable_id' => 'required',
@@ -138,25 +140,7 @@ class MinutasaltadireccionController extends Controller
 
     public function vincularParticipantes($request, $minutasaltadireccion)
     {
-        // $arrstrParticipantes = explode(',', $request->participantes);
-        // $participantes = array_map(function ($valor) {
-        //     return intval($valor);
-        // }, $arrstrParticipantes);
 
-        /*$participantes = json_decode($request->input('participantes'));
-        // dd($participantes);
-        if (is_array($participantes)) {
-            foreach ($participantes as $participante) {
-
-                $empleadoId = $participante->empleado_id;
-                $asistencia = $participante->asistencia;
-
-                $arrpart[] = [
-                    'empleado_id' => $empleadoId,
-                    'asistencia' => $asistencia,
-                ];
-            }
-        }*/
         $participantes = json_decode($request->input('participantes'), true);
 
         if (is_array($participantes)) {
@@ -407,34 +391,37 @@ class MinutasaltadireccionController extends Controller
     public function edit($id)
     {
         abort_if(Gate::denies('revision_por_direccion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $minutasaltadireccion = Minutasaltadireccion::with([
             'participantes',
-            // 'planes',
             'documentos',
             'externos',
-        ])
-            ->find($id);
+        ])->find($id);
+
+        $participantesIds = $minutasaltadireccion->participantes->pluck('id')->toArray();
 
         $planes_minuta = Minutasaltadireccion::with(
             'planes'
-        )
-            ->find($id);
+        )->find($id);
+
         $actividades = array_filter($planes_minuta->planes->first()->tasks, function ($actividad) {
             return intval($actividad->level) > 0;
         });
-        // dd($planes_minuta, $actividades);
 
         $participantesWithAsistencia = $minutasaltadireccion->participantes()
-            // ->select('name', 'area_id', 'foto')
             ->withPivot('asistencia')
             ->get();
         $responsablereunions = Empleado::getAltaEmpleadosWithArea();
+
+        $firmas = FirmaCentroAtencion::with('empleado')->where('modulo_id', 3)->where('submodulo_id', 8)->get();
 
         return view('admin.minutasaltadireccions.edit', compact(
             'minutasaltadireccion',
             'actividades',
             'participantesWithAsistencia',
-            'responsablereunions'
+            'responsablereunions',
+            'firmas',
+            'participantesIds'
         ));
     }
 
@@ -467,10 +454,28 @@ class MinutasaltadireccionController extends Controller
         }
     }
 
+    public function removeUnicodeCharacters($string)
+    {
+        return preg_replace('/[^\x00-\x7F]/u', '', $string);
+    }
+
     public function update(Request $request, Minutasaltadireccion $minutasaltadireccion)
     {
         abort_if(Gate::denies('revision_por_direccion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $this->processUpdate($request, $minutasaltadireccion, true);
+
+        $empleadoIds = $request->participantes;
+
+        $empleadoIdsArray = json_decode($empleadoIds, true);
+        $empleadoIds = array_column($empleadoIdsArray, 'empleado_id');
+
+        $empleados = Empleado::whereIn('id', $empleadoIds)->get();
+
+        foreach ($empleados as $empleado) {
+            Mail::to($empleado->email)->send(new EmpleadoEmail($empleado));
+        }
+
         if ($request->hasFile('files')) {
             $files = $request->file('files');
             foreach ($files as $file) {

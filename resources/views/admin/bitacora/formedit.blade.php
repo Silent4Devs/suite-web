@@ -121,14 +121,49 @@
 ]) !!}
 @csrf
 
-<div class="card card-content">
+<div class="card card-body">
     <div class="row" style="margin-left: 10px; margin-right: 10px;">
         <div class="col s12" style="margin-top: 30px;">
             <h3 class="titulo-form">INSTRUCCIONES</h3>
-            <p class="instrucciones">Edite los datos del contrato</p>
+            <div class="d-flex justify-content-between">
+                <p class="instrucciones">Edite los datos del contrato</p>
+
+            </div>
         </div>
     </div>
-    <div class="row" style="margin-left: 10px; margin-right: 10px;">
+
+    <div class="row mt-4" style="margin-left: 10px; margin-right: 10px;">
+        @if (!$firmado)
+            <div class="col-12">
+                <label for="">Activar flujo de aprobación </label>
+                {!! Form::checkbox('firma_check', 1, $firma->count() ? true : false, [
+                    'id' => 'aprobadores_firma',
+                    'style' => 'width: 20px; height: 20px; vertical-align: middle;',
+                ]) !!}
+            </div>
+        @endif
+        @if (!$firmado)
+            <div class="col-12 {{ $firma->count() ? '' : 'd-none' }}" id="aprobadores-firma-box">
+                <div class="form-group">
+                    <label for="">Asignar Aprobadores</label>
+                    <select name="aprobadores_firma[]" id="aprobadores" multiple class="form-control">
+                        @foreach ($firma->aprobadores as $aprobador)
+                            <option value="{{ $aprobador->id }}"
+                                {{ $firma->aprobadores->contains('id', $aprobador->id) ? 'selected' : '' }}>
+                                {{ $aprobador->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+        @else
+            <div class="col-12">
+                <p>No es posible modificar el flujo de aprobación una vez iniciado</p>
+            </div>
+        @endif
+    </div>
+
+    <div class="row mt-4" style="margin-left: 10px; margin-right: 10px;">
         <h4 class="sub-titulo-form col s12">INFORMACIÓN GENERAL DEL CONTRATO</h4>
     </div>
 
@@ -859,30 +894,31 @@
         @endif
     </div>
     {{-- <div class="row"></div>
-        <div class="row">
-            <br>
-            <label class="txt-tamaño" for="firma">
-                Firma:</label>
-            <br/>
-            <br>
-            @if ($contratos->firma1 != null)
-                <p>Ya existe una firma registrada para este contrato</p>
-                <p>Si desea cambiar la firma registrada de click en el recuadro de abajo y
-                    firme el espacio.</p><br>
-                <label class="txt-tamaño">Actualizar firma </label>
-                <input type="checkbox" style="pointer-events: auto; opacity: 1; width: 20px; height: 20px" unchecked
-                onclick="var input = document.getElementById('signature64');
-                if(this.checked){ input.disabled = false; input.focus();}else{input.disabled=true;}" />
-            @endif
+    <div class="row">
+        <br>
+        <label class="txt-tamaño" for="firma">
+            Firma:</label>
+        <br/>
+        <br>
+        @if ($contratos->firma1 != null)
+            <p>Ya existe una firma registrada para este contrato</p>
+            <p>Si desea cambiar la firma registrada de click en el recuadro de abajo y
+                firme el espacio.</p><br>
+            <label class="txt-tamaño">Actualizar firma </label>
+            <input type="checkbox" style="pointer-events: auto; opacity: 1; width: 20px; height: 20px" unchecked
+            onclick="var input = document.getElementById('signature64');
+            if(this.checked){ input.disabled = false; input.focus();}else{input.disabled=true;}" />
+        @endif
+    </div>
+    <div class="col s12 m3 distancia"></div>
+    <div class="distancia form-group col-md-4">
+        <div id="signaturePad" >
+            <textarea id="signature64" name="signed" style="display:none" disabled="disabled"></textarea>
         </div>
-        <div class="col s12 m3 distancia"></div>
-        <div class="distancia form-group col-md-4">
-                <div id="signaturePad" >
-                    <textarea id="signature64" name="signed" style="display:none" disabled="disabled"></textarea>
-                </div>
-                <button id="clear" class="btn btn-danger btn-sm">Borrar firma</button>
-            <br/>
-        </div> --}}
+        <button id="clear" class="btn btn-danger btn-sm">Borrar firma</button>
+        <br/>
+    </div> --}}
+
 </div>
 <div class="form-group col-12 text-right mt-4" style="margin-left: 10px; margin-right: 10px;">
     <div class="col s12 right-align btn-grd distancia">
@@ -913,6 +949,24 @@
     </div>
 </div>
 
+@if ($aprobacionFirmaContrato->count())
+    <div class="col-12">
+        <div class="card card-body">
+            <h5 class="text-center">Aprobaciones firmadas</h5>
+            <div class="d-flex flex-wrap gap-4 mt-4 justify-content-center"
+                style="width: 100%; max-width: 1000px; margin: auto;">
+                @foreach ($aprobacionFirmaContrato as $firma)
+                    @if ($firma->firma)
+                        <div class="text-center">
+                            <img src="{{ $firma->firma_ruta }}" alt="firma" style="width: 400px;"> <br>
+                            <span>{{ $firma->aprobador->name }}</span>
+                        </div>
+                    @endif
+                @endforeach
+            </div>
+        </div>
+    </div>
+@endif
 
 
 
@@ -1104,9 +1158,6 @@
     });
 </script>
 
-
-
-
 <script>
     $(document).ready(function() {
 
@@ -1257,7 +1308,6 @@
     });
 </script>
 
-
 <script>
     $("#dolares_filtro").select2('destroy');
 </script>
@@ -1398,5 +1448,23 @@
                 }
             });
         });
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $("#aprobadores").select2({
+            theme: "bootstrap4",
+        });
+    });
+
+    document.getElementById('aprobadores_firma').addEventListener('change', (e) => {
+        console.log(e.target.checked);
+        if (e.target.checked) {
+            document.getElementById('aprobadores-firma-box').classList.remove('d-none');
+        } else {
+            document.getElementById('aprobadores-firma-box').classList.add('d-none');
+        }
     });
 </script>
