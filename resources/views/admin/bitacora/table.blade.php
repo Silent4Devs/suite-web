@@ -108,9 +108,9 @@
 </style>
 
 @if (session('mensajeError'))
-<div class="alert alert-danger">
-    {{ session('mensajeError') }}
-</div>
+    <div class="alert alert-danger">
+        {{ session('mensajeError') }}
+    </div>
 @endif
 <form method="POST" action="{{ route('contract_manager.contratos-katbol.store') }}" enctype="multipart/form-data">
     @csrf
@@ -458,7 +458,7 @@
                 <label for="no_contrato" class="txt-tamaño">
                     &nbsp;No. Pagos<font class="asterisco">*</font></label><br>
 
-                {!! Form::number('no_pagos', null, ['class' => 'form-control', 'required'], ['min' => "1"] ) !!}
+                {!! Form::number('no_pagos', null, ['class' => 'form-control', 'required'], ['min' => '1']) !!}
                 @if ($errors->has('no_pagos'))
                     <div class="invalid-feedback red-text">
                         {{ $errors->first('no_pagos') }}
@@ -701,7 +701,7 @@
                     <label class="txt-tamaño">&nbsp;Nombre
                         del Supervisor 2</label>
                     <div>
-                        {!! Form::text('administrador_contrato', null, ['class' => 'form-control','maxlength' => '250']) !!}
+                        {!! Form::text('administrador_contrato', null, ['class' => 'form-control', 'maxlength' => '250']) !!}
                         @if ($errors->has('administrador_contrato'))
                             <div class="invalid-feedback red-text">
                                 {{ $errors->first('administrador_contrato') }}

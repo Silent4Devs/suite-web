@@ -14,9 +14,7 @@ class TareasNotificacionesComponent extends Component
         'TaskMarkedAsReadList' => 'getTotalNotificaciones',
     ];
 
-    public function mount()
-    {
-    }
+    public function mount() {}
 
     public function render()
     {

@@ -25,8 +25,8 @@ class CourseIndex extends Component
     public function render()
     {
         // dd("test");
-        $categories = Category::all();
-        $levels = Level::all();
+        $categories = Category::getAll();
+        $levels = Level::getAll();
         $courses = Course::where('status', 3)
             ->category($this->category_id)
             ->level($this->level_id)

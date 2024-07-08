@@ -142,9 +142,7 @@ class AnalisisBrechaController extends Controller
         return redirect()->route('admin.analisisdebrechas.index');
     }
 
-    public function show(AnalisisBrecha $analisisBrecha)
-    {
-    }
+    public function show(AnalisisBrecha $analisisBrecha) {}
 
     public function edit($id)
     {

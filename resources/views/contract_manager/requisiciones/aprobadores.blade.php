@@ -18,7 +18,7 @@
             color: #fff;
         }
 
-        .tb-btn-primary-custom {
+        .btn-primary-custom {
             background-color: #007bff;
             color: #fff;
         }
@@ -26,19 +26,19 @@
     <h5 class="col-12 titulo_general_funcion">Requisiciones</h5>
 
     <!-- Botón 1 -->
-    <button type="button" class="btn @if ($buttonSolicitante) btn-success-custom @else tb-btn-primary-custom @endif"
+    <button type="button" class="btn @if ($buttonSolicitante) btn-success-custom @else btn-primary-custom @endif"
         id="filtrarBtn2" style="position: relative; left: 1rem;">Filtrar Requisiciones pendientes solicitantes</button>
 
     <!-- Botón 2 -->
-    <button type="button" class="btn @if ($buttonJefe) btn-success-custom @else tb-btn-primary-custom @endif"
+    <button type="button" class="btn @if ($buttonJefe) btn-success-custom @else btn-primary-custom @endif"
         id="filtrarBtn1" style="position: relative; left: 2rem;">Filtrar requisiciones pendientes jefes</button>
 
     <!-- Botón 3 -->
-    <button type="button" class="btn @if ($buttonFinanzas) btn-success-custom @else tb-btn-primary-custom @endif"
+    <button type="button" class="btn @if ($buttonFinanzas) btn-success-custom @else btn-primary-custom @endif"
         id="filtrarBtn" style="position: relative; left: 4rem;">Filtrar requisiciones pendientes finanzas</button>
 
     <!-- Botón 4 -->
-    <button type="button" class="btn @if ($buttonCompras) btn-success-custom @else tb-btn-primary-custom @endif"
+    <button type="button" class="btn @if ($buttonCompras) btn-success-custom @else btn-primary-custom @endif"
         id="filtrarBtn3" style="position: relative; left: 6rem;">Filtrar requisiciones pendientes compradores</button>
 
 
@@ -66,7 +66,8 @@
                             <td>RQ-00-00-{{ $requisicion->id }}</td>
                             <td>{{ $requisicion->fecha }}</td>
                             <td>{{ $requisicion->referencia }}</td>
-                            <td>{{$requisicion->proveedor_catalogo  ?? $requisicion->provedores_requisiciones->first()->contacto  ?? 'Indistinto'  }}</td>
+                            <td>{{ $requisicion->proveedor_catalogo ?? ($requisicion->provedores_requisiciones->first()->contacto ?? 'Indistinto') }}
+                            </td>
                             <td>
                                 @switch($requisicion->estado)
                                     @case('curso')

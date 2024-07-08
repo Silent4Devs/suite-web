@@ -39,21 +39,30 @@ class RequisicionesController extends Controller
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
+        $proveedor_indistinto = KatbolProveedorIndistinto::getFirst()->pluck('requisicion_id');
+
+        $requisicion_id = KatbolRequsicion::get()->pluck('id');
+        $ids = [];
+
+        foreach ($requisicion_id as $id) {
+            $ids = $id;
+        }
+
         $id = User::getCurrentUser()->id;
         $roles = ModelsUser::find($id)->roles()->get();
 
         foreach ($roles as $rol) {
             if ($rol->title === 'Admin') {
-                $requisiciones = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto', 'provedores_requisiciones', 'provedores_indistintos_requisiciones', 'provedores_requisiciones_catalogo')->orderByDesc('id')->where('archivo', false)->get();
+                $requisiciones = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->orderByDesc('id')->where('archivo', false)->get();
 
-                return view('contract_manager.requisiciones.index', compact('requisiciones', 'empresa_actual', 'logo_actual'));
+                return view('contract_manager.requisiciones.index', compact('ids', 'requisiciones', 'proveedor_indistinto', 'empresa_actual', 'logo_actual'));
             } else {
                 $requisiciones_solicitante = null;
                 $id = User::getCurrentUser()->id;
 
-                $requisiciones_solicitante = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto', 'provedores_requisiciones', 'provedores_indistintos_requisiciones', 'provedores_requisiciones_catalogo')->where('archivo', false)->where('id_user', $id)->orderByDesc('id')->get();
+                $requisiciones_solicitante = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->where('id_user', $id)->orderByDesc('id')->get();
 
-                return view('contract_manager.requisiciones.index_solicitante', compact('requisiciones_solicitante', 'empresa_actual', 'logo_actual'));
+                return view('contract_manager.requisiciones.index_solicitante', compact('ids', 'requisiciones_solicitante', 'empresa_actual', 'logo_actual', 'proveedor_indistinto'));
             }
         }
     }

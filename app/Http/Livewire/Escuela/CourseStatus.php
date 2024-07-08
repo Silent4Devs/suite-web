@@ -29,14 +29,25 @@ class CourseStatus extends Component
 
     public $evaluationsUser;
 
+    public $lecciones_orden;
+
     //metodo mount se carga una unica vez y esto sucede cuando se carga la página
     public function mount(Course $course, $evaluacionesLeccion)
     {
+        $this->lecciones_orden = collect();
         $this->course = $course;
         //determinamos cual es la lección actual
-        foreach ($course->lessons as $lesson) {
-            if (! $lesson->completed) {
-                $this->current = $lesson;
+        foreach ($course->sections_order as $secciones_lecciones) {
+            foreach ($secciones_lecciones->lessons as $lesson) {
+                if (! $lesson->completed) {
+                    // dd($lesson);
+                    $this->current = $lesson;
+                    //break para que salga del bucle
+                    break;
+                }
+            }
+            if ($this->current) {
+                // dd($lesson);
                 //break para que salga del bucle
                 break;
             }
@@ -76,6 +87,8 @@ class CourseStatus extends Component
     //cambiamos la lección actual
     public function changeLesson(Lesson $lesson, $atras = null)
     {
+        // dd($this->previous);
+
         if ($atras == 'previous') {
             $this->current = $lesson;
 
@@ -83,6 +96,9 @@ class CourseStatus extends Component
         }
 
         if ($this->current->completed) {
+
+            $this->emit('completado');
+
             $this->current = $lesson;
 
             return;
@@ -117,9 +133,19 @@ class CourseStatus extends Component
     public function getIndexProperty()
     {
         // Check if $this->course exists and is not null
-        if ($this->course && $this->course->lessons && $this->current) {
+        if ($this->course && $this->lecciones_orden && $this->current) {
             // Use optional() to safely access 'id' property of each lesson and search for $this->current->id
-            return optional($this->course->lessons->pluck('id'))->search($this->current->id);
+
+            $lecciones_ordenadas = collect();
+
+            foreach ($this->course->sections_order as $secciones_lecciones) {
+                foreach ($secciones_lecciones->lessons as $lesson) {
+                    $lecciones_ordenadas->push($lesson);
+                }
+            }
+            $this->lecciones_orden = $lecciones_ordenadas;
+
+            return optional($lecciones_ordenadas->pluck('id'))->search($this->current->id);
         }
 
         return null; // or handle the situation based on your logic
@@ -131,17 +157,17 @@ class CourseStatus extends Component
         if ($this->index == 0) {
             return null;
         } else {
-            return $this->course->lessons[$this->index - 1];
+            return $this->lecciones_orden[$this->index - 1];
         }
     }
 
     //propiedad next
     public function getNextProperty()
     {
-        if ($this->index == $this->course->lessons->count() - 1) {
+        if ($this->index == $this->lecciones_orden->count() - 1) {
             return null;
         } else {
-            return $this->course->lessons[$this->index + 1];
+            return $this->lecciones_orden[$this->index + 1];
         }
     }
 
@@ -149,14 +175,14 @@ class CourseStatus extends Component
     {
         $i = 0;
 
-        foreach ($this->course->lessons as $lesson) {
+        foreach ($this->lecciones_orden as $lesson) {
             if ($lesson->completed) {
                 $i++;
             }
         }
 
         //calcular el porcentaje de la
-        $advance = ($i * 100) / ($this->course->lessons->count());
+        $advance = ($i * 100) / ($this->lecciones_orden->count());
 
         return round($advance, 2);
     }
@@ -165,14 +191,14 @@ class CourseStatus extends Component
     {
         $i = 0;
 
-        foreach ($this->course->lessons as $lesson) {
+        foreach ($this->lecciones_orden as $lesson) {
             if ($lesson->completed) {
                 $i++;
             }
         }
 
         //calcular el porcentaje de la
-        $advance = ($i * 100) / ($this->course->lessons->count());
+        $advance = ($i * 100) / ($this->lecciones_orden->count());
 
         return round($advance, 2);
     }

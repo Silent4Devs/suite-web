@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('css')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet/timesheet.css') }}{{ config('app.cssVersion') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}{{ config('app.cssVersion') }}">
 @endsection
 @section('content')
 
@@ -8,7 +8,7 @@
     </h5>
 
     {{-- @include('admin.timesheet.complementos.cards') --}}
-    @include('admin.timesheet.complementos.admin-aprob')
+    {{-- @include('admin.timesheet.complementos.admin-aprob') --}}
     {{-- @include('admin.timesheet.complementos.blue-card-header') --}}
 
     <div class="card card-body mt-4">
@@ -130,6 +130,7 @@
                 </div>
                 <div class="row">
                     <div class="form-group col-12 text-right">
+                        <a href="{{ route('admin.timesheet-proyectos') }}" class="btn btn_cancelar">Cancelar</a>
                         <button id="submit-btn" class="btn btn-success" type="button">Crear Proyecto</button>
                     </div>
                 </div>
@@ -173,7 +174,7 @@
                                 icon: 'success',
                                 title: 'Proyecto Creado!',
                                 text: data
-                                .message, // Assuming the response contains a 'message' key
+                                    .message, // Assuming the response contains a 'message' key
                                 allowOutsideClick: false // Prevent dismissing by clicking outside the dialog
                             }).then((result) => {
                                 if (result.isConfirmed) {
