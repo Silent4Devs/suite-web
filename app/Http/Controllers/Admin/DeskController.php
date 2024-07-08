@@ -297,7 +297,7 @@ class DeskController extends Controller
 
         // Enviar correos electrónicos
         foreach ($empleados as $empleado) {
-            Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->send(new EmpleadoEmail($empleado, $status, $incidentesSeguridad->id, $organizacion));
+            Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new EmpleadoEmail($empleado, $status, $incidentesSeguridad->id, $organizacion));
         }
 
         $incidentesSeguridad->update([
@@ -544,7 +544,7 @@ class DeskController extends Controller
         $organizacion = Organizacion::first();
 
         foreach ($empleados as $empleado) {
-            Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->send(new EmpleadoEmail($empleados, $status, $riesgos->id, $organizacion));
+            Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new EmpleadoEmail($empleados, $status, $riesgos->id, $organizacion));
         }
 
         $riesgos->update([
@@ -731,7 +731,7 @@ class DeskController extends Controller
 
         // Enviar correos electrónicos
         foreach ($empleados as $empleado) {
-            Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->send(new EmpleadoEmail($empleado, $status, $quejas->id, $organizacion));
+            Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new EmpleadoEmail($empleado, $status, $quejas->id, $organizacion));
         }
 
         $quejas->update([
@@ -916,7 +916,7 @@ class DeskController extends Controller
         $organizacion = Organizacion::first();
         // Enviar correos electrónicos
         foreach ($empleados as $empleado) {
-            Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->send(new EmpleadoEmail($empleado, $status, $denuncias->id, $organizacion));
+            Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new EmpleadoEmail($empleado, $status, $denuncias->id, $organizacion));
         }
 
         $denuncias->update([
@@ -1106,7 +1106,7 @@ class DeskController extends Controller
         $organizacion = Organizacion::first();
         // Enviar correos electrónicos
         foreach ($empleados as $empleado) {
-            Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->send(new EmpleadoEmail($empleado, $status, $mejoras->id, $organizacion));
+            Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new EmpleadoEmail($empleado, $status, $mejoras->id, $organizacion));
         }
 
         $mejoras->update([
@@ -1281,7 +1281,7 @@ class DeskController extends Controller
         $organizacion = Organizacion::first();
         // Enviar correos electrónicos
         foreach ($empleados as $empleado) {
-            Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->send(new EmpleadoEmail($empleado, $status, $sugerencias->id, $organizacion));
+            Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new EmpleadoEmail($empleado, $status, $sugerencias->id, $organizacion));
         }
 
         $sugerencias->update([

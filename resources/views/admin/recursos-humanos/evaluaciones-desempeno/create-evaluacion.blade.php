@@ -75,7 +75,7 @@
 @section('content')
     {{-- {{ Breadcrumbs::render('capital-humano') }} --}}
 
-    <h5 class="titulo_general_funcion"> Configuración de la Evaluación </h5>
+    {{-- <h5 class="titulo_general_funcion"> Configuración de la Evaluación </h5> --}}
 
     @livewire('create-evaluacion-desempeno')
 

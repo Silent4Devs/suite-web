@@ -85,7 +85,7 @@ class FirmasModuleController extends Controller
 
         // Convertir la cadena de participantes a un array si es una cadena delimitada
         $participantes = [];
-        if (!empty($firma_module->participantes)) {
+        if (! empty($firma_module->participantes)) {
             $cleanString = str_replace(['[', ']', '"'], '', $firma_module->participantes);
             $participantes = explode(',', $cleanString);
             $participantes = array_map('trim', $participantes);
