@@ -69,6 +69,7 @@ Route::group(['prefix' => 'api/v1', 'as' => 'api.', 'namespace' => 'Api\v1', 'mi
     Route::get('timesheet/aprobaciones', [TimesheetApiController::class, 'aprobaciones']);
     Route::post('timesheet/aprobar/{id}', [TimesheetApiController::class, 'aprobar']);
     Route::post('timesheet/rechazar/{id}', [TimesheetApiController::class, 'rechazar']);
+    Route::get('timesheet/contadorRegistrosPendientes', [TimesheetApiController::class, 'contadorPendientesTimesheetAprobador']);
 });
 Route::apiResource('api/v1/test', templateAnalisisRiesgoController::class);
 Route::delete('api/v1/test/section/delete/{id}', [templateAnalisisRiesgoController::class, 'destroySection']);

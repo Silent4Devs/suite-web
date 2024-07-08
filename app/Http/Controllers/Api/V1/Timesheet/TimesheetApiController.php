@@ -279,4 +279,18 @@ class TimesheetApiController extends Controller
 
         return json_encode(['éxito', 'Guardado con éxito'], 200);
     }
+
+    public function contadorPendientesTimesheetAprobador()
+    {
+        $usuario = User::getCurrentUser();
+        // papelera, aprobado, rechazado, pendiente
+
+        $pendientes = Timesheet::with('empleado')->where('estatus', 'pendiente')
+            ->where('aprobador_id', $usuario->empleado->id)
+            ->count();
+
+        return response(json_encode([
+            'pendientes' => $pendientes,
+        ]), 200)->header('Content-Type', 'application/json');
+    }
 }
