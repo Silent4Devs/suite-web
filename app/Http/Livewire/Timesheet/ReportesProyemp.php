@@ -7,13 +7,16 @@ use App\Models\Area;
 use App\Models\Empleado;
 use App\Models\TimesheetHoras;
 use App\Models\TimesheetProyecto;
+use App\Services\ReportXlsxService;
 use Carbon\Carbon;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ReportesProyemp extends Component
 {
+    use LivewireAlert;
     use WithPagination;
 
     protected $paginationTheme = 'bootstrap';
@@ -145,6 +148,41 @@ class ReportesProyemp extends Component
         $export = new ReporteColaboradorTarea($this->fecha_inicio, $this->fecha_fin, $this->area_id, $this->emp_id, $this->proy_id);
 
         return Excel::download($export, 'reporte_colaborador_tarea.xlsx');
+    }
+
+    public function exportEmpleadosPuestosReport()
+    {
+        try {
+            // Call the ImageService to consume the external API
+            $apiResponse = ReportXlsxService::ReportConsumer('empleadosPuestos');
+
+            if ($apiResponse['status'] == 500) {
+                $this->alert('error', 'Ocurrió un error al exportar el reporte. Por favor, inténtalo de nuevo más tarde.', [
+                    'position' => 'top-end',
+                    'timer' => 3000,
+                    'toast' => true,
+                    'timerProgressBar' => true,
+                ]);
+            } else {
+                // Guardar el archivo en el escritorio del usuario
+                file_put_contents(public_path('reportfiles_tmp/'.$apiResponse['fileName']), $apiResponse['body']);
+
+                // Redirigir para descargar el archivo
+                return response()->download(public_path('reportfiles_tmp/'.$apiResponse['fileName']))->deleteFileAfterSend(true);
+            }
+
+        } catch (\Exception $e) {
+
+            \Log::error('Error en exportación de reporte de empleados y puestos: '.$e->getMessage());
+
+            $this->alert('error', '', [
+                'position' => 'top-end',
+                'timer' => 3000,
+                'toast' => true,
+                'text' => 'Ocurrió un error al exportar el reporte. Por favor, inténtalo de nuevo más tarde.',
+                'timerProgressBar' => true,
+            ]);
+        }
     }
 
     public function todos()
