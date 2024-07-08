@@ -450,7 +450,7 @@ class ContratosController extends AppBaseController
             $firmado = false;
             foreach ($aprobacionFirmaContrato as $firma_item) {
                 if ($firma_item->aprobador_id == User::getCurrentUser()->empleado->id) {
-                    if (!isset($firma_item->firma)) {
+                    if (! isset($firma_item->firma)) {
                         $firmar = true;
                     }
                 }
@@ -573,7 +573,7 @@ class ContratosController extends AppBaseController
             $firmado = false;
             foreach ($aprobacionFirmaContrato as $firma_item) {
                 if ($firma_item->aprobador_id == User::getCurrentUser()->empleado->id) {
-                    if (!isset($firma_item->firma)) {
+                    if (! isset($firma_item->firma)) {
                         $firmar = true;
                     }
                 }
