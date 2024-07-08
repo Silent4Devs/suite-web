@@ -131,7 +131,7 @@
 
                             <div style="position: relative; left: 2rem;">
                                 <label>
-                                    <input type="checkbox" id="toggle-info">
+                                    <input type="checkbox" id="toggle-info" checked>
                                     Activar flujo de aprobación
                                 </label>
                             </div>

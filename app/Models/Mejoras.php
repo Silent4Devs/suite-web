@@ -20,6 +20,18 @@ class Mejoras extends Model implements Auditable
         'id',
     ];
 
+    protected $fillable = [
+        'estatus',
+        'fecha_cierre',
+        'descripcion',
+        'beneficios',
+        'titulo',
+        'area_mejora',
+        'proceso_mejora',
+        'tipo',
+        'otro',
+    ];
+
     protected $appends = ['folio', 'fecha_creacion', 'fecha_de_cierre', 'fecha_reporte', 'beneficio_html', 'descripcion_html'];
 
     //Redis methods

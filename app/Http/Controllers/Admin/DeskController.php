@@ -284,7 +284,7 @@ class DeskController extends Controller
 
         $empleadoIds = $request->participantes ?? [];
 
-        if (empty($empleadoIds) || ! is_array($empleadoIds)) {
+        if (empty($empleadoIds) || !is_array($empleadoIds)) {
             return back()->with('error', 'No se seleccionaron participantes para la aprobacion.');
         }
 
@@ -295,10 +295,13 @@ class DeskController extends Controller
 
         $organizacion = Organizacion::first();
 
-        // Enviar correos electrónicos
-        foreach ($empleados as $empleado) {
-            Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new EmpleadoEmail($empleado, $status, $incidentesSeguridad->id, $organizacion));
+        if ($incidentesSeguridad->estatus === 'Cerrado') {
+            // Enviar correos electrónicos
+            foreach ($empleados as $empleado) {
+                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new EmpleadoEmail($empleado, $status, $incidentesSeguridad->id, $organizacion));
+            }
         }
+
 
         $incidentesSeguridad->update([
             'titulo' => $request->titulo,
@@ -324,13 +327,13 @@ class DeskController extends Controller
 
         $documento = $incidentesSeguridad->evidencia;
 
-        if ($request->file('evidencia') != null or ! empty($request->file('evidencia'))) {
+        if ($request->file('evidencia') != null or !empty($request->file('evidencia'))) {
             foreach ($request->file('evidencia') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_documento = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
+                $name_documento = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
 
-                $new_name_documento = 'Seguridad_file_'.$incidentesSeguridad->id.'_'.$name_documento.'.'.$extension;
+                $new_name_documento = 'Seguridad_file_' . $incidentesSeguridad->id . '_' . $name_documento . '.' . $extension;
 
                 $route = 'public/evidencias_seguridad';
 
@@ -532,7 +535,7 @@ class DeskController extends Controller
 
         $empleadoIds = $request->participantes;
 
-        if (empty($empleadoIds) || ! is_array($empleadoIds)) {
+        if (empty($empleadoIds) || !is_array($empleadoIds)) {
             return back()->with('error', 'No se seleccionaron participantes para la aprobacion.');
         }
 
@@ -543,8 +546,10 @@ class DeskController extends Controller
 
         $organizacion = Organizacion::first();
 
-        foreach ($empleados as $empleado) {
-            Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new EmpleadoEmail($empleados, $status, $riesgos->id, $organizacion));
+        if ($riesgos->estatus === 'cerrado') {
+            foreach ($empleados as $empleado) {
+                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new EmpleadoEmail($empleados, $status, $riesgos->id, $organizacion));
+            }
         }
 
         $riesgos->update([
@@ -718,7 +723,7 @@ class DeskController extends Controller
 
         $empleadoIds = $request->participantes;
 
-        if (empty($empleadoIds) || ! is_array($empleadoIds)) {
+        if (empty($empleadoIds) || !is_array($empleadoIds)) {
             return back()->with('error', 'No se seleccionaron participantes para la aprobacion.');
         }
 
@@ -729,9 +734,11 @@ class DeskController extends Controller
 
         $organizacion = Organizacion::first();
 
-        // Enviar correos electrónicos
-        foreach ($empleados as $empleado) {
-            Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new EmpleadoEmail($empleado, $status, $quejas->id, $organizacion));
+        if ($quejas->estatus === 'cerrado') {
+            // Enviar correos electrónicos
+            foreach ($empleados as $empleado) {
+                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new EmpleadoEmail($empleado, $status, $quejas->id, $organizacion));
+            }
         }
 
         $quejas->update([
@@ -904,7 +911,7 @@ class DeskController extends Controller
 
         $empleadoIds = $request->participantes;
 
-        if (empty($empleadoIds) || ! is_array($empleadoIds)) {
+        if (empty($empleadoIds) || !is_array($empleadoIds)) {
             return back()->with('error', 'No se seleccionaron participantes para la aprobacion.');
         }
 
@@ -914,9 +921,12 @@ class DeskController extends Controller
         $status = 'denuncias';
 
         $organizacion = Organizacion::first();
-        // Enviar correos electrónicos
-        foreach ($empleados as $empleado) {
-            Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new EmpleadoEmail($empleado, $status, $denuncias->id, $organizacion));
+
+        if ($denuncias->estatus === 'cerrado') {
+            // Enviar correos electrónicos
+            foreach ($empleados as $empleado) {
+                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new EmpleadoEmail($empleado, $status, $denuncias->id, $organizacion));
+            }
         }
 
         $denuncias->update([
@@ -1094,7 +1104,7 @@ class DeskController extends Controller
 
         $empleadoIds = $request->participantes;
 
-        if (empty($empleadoIds) || ! is_array($empleadoIds)) {
+        if (empty($empleadoIds) || !is_array($empleadoIds)) {
             return back()->with('error', 'No se seleccionaron participantes para la aprobacion.');
         }
 
@@ -1104,9 +1114,12 @@ class DeskController extends Controller
         $status = 'mejoras';
 
         $organizacion = Organizacion::first();
-        // Enviar correos electrónicos
-        foreach ($empleados as $empleado) {
-            Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new EmpleadoEmail($empleado, $status, $mejoras->id, $organizacion));
+
+        if ($mejoras->estatus === 'cerrado') {
+            // Enviar correos electrónicos
+            foreach ($empleados as $empleado) {
+                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new EmpleadoEmail($empleado, $status, $mejoras->id, $organizacion));
+            }
         }
 
         $mejoras->update([
@@ -1269,7 +1282,7 @@ class DeskController extends Controller
 
         $empleadoIds = $request->participantes;
 
-        if (empty($empleadoIds) || ! is_array($empleadoIds)) {
+        if (empty($empleadoIds) || !is_array($empleadoIds)) {
             return back()->with('error', 'No se seleccionaron participantes para la aprobacion.');
         }
 
@@ -1279,9 +1292,12 @@ class DeskController extends Controller
         $status = 'sugerencias';
 
         $organizacion = Organizacion::first();
-        // Enviar correos electrónicos
-        foreach ($empleados as $empleado) {
-            Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new EmpleadoEmail($empleado, $status, $sugerencias->id, $organizacion));
+
+        if ($sugerencias->estatus === 'cerrado') {
+            // Enviar correos electrónicos
+            foreach ($empleados as $empleado) {
+                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new EmpleadoEmail($empleado, $status, $sugerencias->id, $organizacion));
+            }
         }
 
         $sugerencias->update([
@@ -1423,13 +1439,13 @@ class DeskController extends Controller
 
         $image = null;
 
-        if ($request->file('evidencia') != null or ! empty($request->file('evidencia'))) {
+        if ($request->file('evidencia') != null or !empty($request->file('evidencia'))) {
             foreach ($request->file('evidencia') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
+                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
 
-                $new_name_image = 'Queja_file_'.$quejasClientes->id.'_'.$name_image.'.'.$extension;
+                $new_name_image = 'Queja_file_' . $quejasClientes->id . '_' . $name_image . '.' . $extension;
 
                 $route = 'public/evidencias_quejas_clientes';
 
@@ -1557,13 +1573,13 @@ class DeskController extends Controller
 
         $documento = null;
 
-        if ($request->file('evidencia') != null or ! empty($request->file('evidencia'))) {
+        if ($request->file('evidencia') != null or !empty($request->file('evidencia'))) {
             foreach ($request->file('evidencia') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_documento = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
+                $name_documento = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
 
-                $new_name_documento = 'Queja_file_'.$quejasClientes->id.'_'.$name_documento.'.'.$extension;
+                $new_name_documento = 'Queja_file_' . $quejasClientes->id . '_' . $name_documento . '.' . $extension;
 
                 $route = 'public/evidencias_quejas_clientes';
 
@@ -1580,13 +1596,13 @@ class DeskController extends Controller
 
         $image = null;
 
-        if ($request->file('cierre') != null or ! empty($request->file('cierre'))) {
+        if ($request->file('cierre') != null or !empty($request->file('cierre'))) {
             foreach ($request->file('cierre') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
+                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
 
-                $new_name_image = 'Queja_file_'.$quejasClientes->id.'_'.$name_image.'.'.$extension;
+                $new_name_image = 'Queja_file_' . $quejasClientes->id . '_' . $name_image . '.' . $extension;
 
                 $route = 'public/evidencias_quejas_clientes_cerrado';
 
@@ -1616,7 +1632,7 @@ class DeskController extends Controller
 
         if ($notificar_atencion_queja_no_aprobada) {
             if ($cerrar_ticket == false) {
-                if (! $quejasClientes->email_env_resolucion_rechazada) {
+                if (!$quejasClientes->email_env_resolucion_rechazada) {
                     if ($quejasClientes->registro != null && $quejasClientes->responsableAtencion != null) {
                         $quejasClientes->update([
                             'email_env_resolucion_rechazada' => true,
@@ -1629,7 +1645,7 @@ class DeskController extends Controller
 
         if ($notificar_atencion_queja_no_aprobada) {
             if ($cerrar_ticket) {
-                if (! $quejasClientes->email_env_resolucion_aprobada) {
+                if (!$quejasClientes->email_env_resolucion_aprobada) {
                     if ($quejasClientes->registro != null && $quejasClientes->responsableAtencion != null) {
                         $quejasClientes->update([
                             'email_env_resolucion_aprobada' => true,
@@ -1640,8 +1656,8 @@ class DeskController extends Controller
             }
         }
 
-        if (! $email_realizara_accion_inmediata) {
-            if (! is_null($quejasClientes->acciones_tomara_responsable)) {
+        if (!$email_realizara_accion_inmediata) {
+            if (!is_null($quejasClientes->acciones_tomara_responsable)) {
                 if ($quejasClientes->registro != null && $quejasClientes->responsableAtencion != null) {
                     $quejasClientes->update([
                         'email_realizara_accion_inmediata' => true,
@@ -1652,7 +1668,7 @@ class DeskController extends Controller
         }
 
         if ($notificar_registro_queja) {
-            if (! $quejasClientes->correo_enviado_registro) {
+            if (!$quejasClientes->correo_enviado_registro) {
                 if ($quejasClientes->registro != null && $quejasClientes->responsableAtencion != null) {
                     $quejasClientes->update([
                         'correo_enviado_registro' => true,
@@ -1673,7 +1689,7 @@ class DeskController extends Controller
                 $query->where('acciones_correctivas_aprobacionables_id', $quejasClientes->id);
             })->exists();
 
-            if (! $existeAC) {
+            if (!$existeAC) {
                 $accion_correctiva = AccionCorrectiva::create([
                     'tema' => $request->titulo,
                     'causaorigen' => 'Queja de un cliente',
@@ -1700,7 +1716,7 @@ class DeskController extends Controller
                 $quejasClientes->accionCorrectivaAprobacional()->sync($accion_correctiva->id);
             }
 
-            if (! $quejasClientes->correoEnviado) {
+            if (!$quejasClientes->correoEnviado) {
                 $quejasClientes->update([
                     'correoEnviado' => true,
                 ]);
@@ -2009,7 +2025,7 @@ class DeskController extends Controller
 
             return response()->json(['isValid' => true]);
         } elseif ($request->tipo_validacion == 'queja-atencion') {
-            if (! is_null($quejasClientes->responsable_atencion_queja_id)) {
+            if (!is_null($quejasClientes->responsable_atencion_queja_id)) {
                 if ($quejasClientes->responsable_atencion_queja_id != User::getCurrentUser()->empleado->id) {
                     $this->validateRequestRegistroQuejaCliente($request);
                     $this->validateRequestAnalisisQuejaCliente($request);
