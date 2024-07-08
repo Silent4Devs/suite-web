@@ -295,9 +295,11 @@ class DeskController extends Controller
 
         $organizacion = Organizacion::first();
 
-        // Enviar correos electrónicos
-        foreach ($empleados as $empleado) {
-            Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->send(new EmpleadoEmail($empleado, $status, $incidentesSeguridad->id, $organizacion));
+        if ($incidentesSeguridad->estatus === 'Cerrado') {
+            // Enviar correos electrónicos
+            foreach ($empleados as $empleado) {
+                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new EmpleadoEmail($empleado, $status, $incidentesSeguridad->id, $organizacion));
+            }
         }
 
         $incidentesSeguridad->update([
@@ -543,8 +545,10 @@ class DeskController extends Controller
 
         $organizacion = Organizacion::first();
 
-        foreach ($empleados as $empleado) {
-            Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->send(new EmpleadoEmail($empleados, $status, $riesgos->id, $organizacion));
+        if ($riesgos->estatus === 'cerrado') {
+            foreach ($empleados as $empleado) {
+                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new EmpleadoEmail($empleados, $status, $riesgos->id, $organizacion));
+            }
         }
 
         $riesgos->update([
@@ -729,9 +733,11 @@ class DeskController extends Controller
 
         $organizacion = Organizacion::first();
 
-        // Enviar correos electrónicos
-        foreach ($empleados as $empleado) {
-            Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->send(new EmpleadoEmail($empleado, $status, $quejas->id, $organizacion));
+        if ($quejas->estatus === 'cerrado') {
+            // Enviar correos electrónicos
+            foreach ($empleados as $empleado) {
+                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new EmpleadoEmail($empleado, $status, $quejas->id, $organizacion));
+            }
         }
 
         $quejas->update([
@@ -914,9 +920,12 @@ class DeskController extends Controller
         $status = 'denuncias';
 
         $organizacion = Organizacion::first();
-        // Enviar correos electrónicos
-        foreach ($empleados as $empleado) {
-            Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->send(new EmpleadoEmail($empleado, $status, $denuncias->id, $organizacion));
+
+        if ($denuncias->estatus === 'cerrado') {
+            // Enviar correos electrónicos
+            foreach ($empleados as $empleado) {
+                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new EmpleadoEmail($empleado, $status, $denuncias->id, $organizacion));
+            }
         }
 
         $denuncias->update([
@@ -1104,9 +1113,12 @@ class DeskController extends Controller
         $status = 'mejoras';
 
         $organizacion = Organizacion::first();
-        // Enviar correos electrónicos
-        foreach ($empleados as $empleado) {
-            Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->send(new EmpleadoEmail($empleado, $status, $mejoras->id, $organizacion));
+
+        if ($mejoras->estatus === 'cerrado') {
+            // Enviar correos electrónicos
+            foreach ($empleados as $empleado) {
+                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new EmpleadoEmail($empleado, $status, $mejoras->id, $organizacion));
+            }
         }
 
         $mejoras->update([
@@ -1279,9 +1291,12 @@ class DeskController extends Controller
         $status = 'sugerencias';
 
         $organizacion = Organizacion::first();
-        // Enviar correos electrónicos
-        foreach ($empleados as $empleado) {
-            Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->send(new EmpleadoEmail($empleado, $status, $sugerencias->id, $organizacion));
+
+        if ($sugerencias->estatus === 'cerrado') {
+            // Enviar correos electrónicos
+            foreach ($empleados as $empleado) {
+                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new EmpleadoEmail($empleado, $status, $sugerencias->id, $organizacion));
+            }
         }
 
         $sugerencias->update([

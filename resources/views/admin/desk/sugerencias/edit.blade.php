@@ -136,15 +136,15 @@
 
                             <div style="position: relative; left: 2rem;">
                                 <label>
-                                    <input type="checkbox" id="toggle-info">
+                                    <input type="checkbox" id="toggle-info" checked>
                                     Activar flujo de aprobación
                                 </label>
                             </div>
 
                             <div class="mt-2 form-group col-md-12">
                                 <div class="info-bar" id="info-bar">
-                                    <p>Seleccione cuántos participantes de aprobación tendrá tu lista.</p>
                                     @if($firmaModules && $firmaModules->empleados)
+                                    <p>Seleccione cuántos participantes de aprobación tendrá tu lista.</p>
                                     <select id="participantes" name="participantes[]" class="form-control" multiple="multiple" style="padding: 10px; border-radius: 50px; border: 1px solid #007BFF;">
                                         @foreach($firmaModules->empleados as $empleado)
                                             <option value="{{ $empleado->id }}"
@@ -609,6 +609,7 @@
 </div>
 @php
     $userIsAuthorized = false;
+    $existingRecord = App\Models\FirmaCentroAtencion::where('id_sugerencias', $sugerencias->id)->where('user_id', Auth::id())->first();
     if ($aprobadores) {
         $aprobadoresArray = json_decode($aprobadores->aprobadores, true); // Decodificar JSON a array
         if (is_array($aprobadoresArray) && in_array(Auth::id(), $aprobadoresArray)) {
@@ -619,6 +620,7 @@
 
 
 @if ($userIsAuthorized)
+@if (!$existingRecord)
 <form method="POST" action="{{ route('admin.module_firmas.sugerencias', ['id' => $sugerencias->id]) }}" enctype="multipart/form-data">
 @csrf
 <div class="card card-body">
@@ -651,6 +653,7 @@
     </div>
     </div>
 </form>
+@endif
 @endif
 
 @if ($userIsAuthorized)
