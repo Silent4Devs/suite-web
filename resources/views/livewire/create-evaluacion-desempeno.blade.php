@@ -3,8 +3,8 @@
     {{-- <x-loading-indicator /> --}}
 
     <div class="container">
-        <div class="mt-5 mb-5 text-center">
-            <h2>Additional element : Steps Using Bootstrap 4</h2>
+        <div class="mt-5 mb-5 text-center titulo_general_funcion">
+            <h2>Configuración de la Evaluación</h2>
         </div>
         <div class="mt-5 mb-5">
             <ul class="step d-flex flex-nowrap">
