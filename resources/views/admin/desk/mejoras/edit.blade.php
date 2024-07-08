@@ -75,9 +75,6 @@
         ol.breadcrumb {
             margin-bottom: 0px;
         }
-        #info-bar {
-            display: none;
-        }
 
         .select2-container--default .select2-selection--multiple {
                 border: 1px solid #ADD8E6 !important;
@@ -626,6 +623,7 @@
 
 @php
     $userIsAuthorized = false;
+    $existingRecord = App\Models\FirmaCentroAtencion::where('id_mejoras', $mejoras->id)->where('user_id', Auth::id())->first();
     if ($aprobadores) {
         $aprobadoresArray = json_decode($aprobadores->aprobadores, true); // Decodificar JSON a array
         if (is_array($aprobadoresArray) && in_array(Auth::id(), $aprobadoresArray)) {
@@ -636,6 +634,7 @@
 
 
 @if ($userIsAuthorized)
+@if (!$existingRecord)
 <form method="POST" action="{{ route('admin.module_firmas.mejoras', ['id' => $mejoras->id]) }}" enctype="multipart/form-data">
 @csrf
 <div class="card card-body">
@@ -668,6 +667,7 @@
     </div>
     </div>
 </form>
+@endif
 @endif
 
 @if ($userIsAuthorized)

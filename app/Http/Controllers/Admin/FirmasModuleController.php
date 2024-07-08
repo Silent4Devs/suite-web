@@ -79,7 +79,7 @@ class FirmasModuleController extends Controller
 
         // Convertir la cadena de participantes a un array si es una cadena delimitada
         $participantes = [];
-        if (! empty($firma_module->participantes)) {
+        if (!empty($firma_module->participantes)) {
             $cleanString = str_replace(['[', ']', '"'], '', $firma_module->participantes);
             $participantes = explode(',', $cleanString);
             $participantes = array_map('trim', $participantes);
@@ -127,6 +127,13 @@ class FirmasModuleController extends Controller
         $modulo = 1;
         $submodulo = 4;
 
+        $existingRecord = FirmaCentroAtencion::where('id_riesgos', $id)->where('user_id', Auth::id())->first();
+
+        // Si existe, eliminarlo
+        if ($existingRecord) {
+            $existingRecord->delete();
+        }
+
         $firmaModule = FirmaCentroAtencion::create([
             'modulo_id' => $modulo,
             'submodulo_id' => $submodulo,
@@ -144,6 +151,13 @@ class FirmasModuleController extends Controller
 
         $submodulo = 2;
 
+        $existingRecord = FirmaCentroAtencion::where('id_mejoras', $id)->where('user_id', Auth::id())->first();
+
+        // Si existe, eliminarlo
+        if ($existingRecord) {
+            $existingRecord->delete();
+        }
+
         $firmaModule = FirmaCentroAtencion::create([
             'modulo_id' => $modulo,
             'submodulo_id' => $submodulo,
@@ -159,6 +173,13 @@ class FirmasModuleController extends Controller
     {
         $modulo = 1;
         $submodulo = 6;
+
+        $existingRecord = FirmaCentroAtencion::where('id_denuncias', $id)->where('user_id', Auth::id())->first();
+
+        // Si existe, eliminarlo
+        if ($existingRecord) {
+            $existingRecord->delete();
+        }
 
         $firmaModule = FirmaCentroAtencion::create([
             'modulo_id' => $modulo,
@@ -177,6 +198,13 @@ class FirmasModuleController extends Controller
 
         $submodulo = 3;
 
+        $existingRecord = FirmaCentroAtencion::where('id_quejas', $id)->where('user_id', Auth::id())->first();
+
+        // Si existe, eliminarlo
+        if ($existingRecord) {
+            $existingRecord->delete();
+        }
+
         $firmaModule = FirmaCentroAtencion::create([
             'modulo_id' => $modulo,
             'submodulo_id' => $submodulo,
@@ -193,6 +221,13 @@ class FirmasModuleController extends Controller
         $modulo = 1;
         $submodulo = 5;
 
+        $existingRecord = FirmaCentroAtencion::where('id_sugerencias', $id)->where('user_id', Auth::id())->first();
+
+        // Si existe, eliminarlo
+        if ($existingRecord) {
+            $existingRecord->delete();
+        }
+
         $firmaModule = FirmaCentroAtencion::create([
             'modulo_id' => $modulo,
             'submodulo_id' => $submodulo,
@@ -204,14 +239,22 @@ class FirmasModuleController extends Controller
         return redirect()->route('admin.desk.index')->with('success', 'Actualizado con éxito');
     }
 
-    public function minutas(Request $request)
+    public function minutas(Request $request, $id)
     {
+
+        $existingRecord = FirmaCentroAtencion::where('id_minutas', $id)->where('user_id', Auth::id())->first();
+
+        // Si existe, eliminarlo
+        if ($existingRecord) {
+            $existingRecord->delete();
+        }
 
         $firmaModule = FirmaCentroAtencion::create([
             'modulo_id' => 3,
             'submodulo_id' => 8,
             'user_id' => Auth::id(),
             'firma' => $request->firma,
+            'id_minutas' => $id,
         ]);
 
         return redirect()->route('admin.desk.index')->with('success', 'Actualizado con éxito');

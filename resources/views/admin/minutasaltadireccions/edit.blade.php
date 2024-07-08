@@ -416,6 +416,7 @@
 
 @php
     $userIsAuthorized = false;
+    $existingRecord = App\Models\FirmaCentroAtencion::where('id_minutas', $minutasaltadireccion->id)->where('user_id', Auth::id())->first();
     if ($minutasaltadireccion && $minutasaltadireccion->participantes) {
         foreach ($minutasaltadireccion->participantes as $empleado) {
             if (in_array($empleado->id, $participantesIds)) {
@@ -429,7 +430,8 @@
 
 
 @if ($userIsAuthorized)
-<form method="POST" action="{{ route('admin.module_firmas.minutas') }}" enctype="multipart/form-data">
+@if (!$existingRecord)
+<form method="POST" action="{{ route('admin.module_firmas.minutas', ['id' => $minutasaltadireccion->id]) }}"  enctype="multipart/form-data">
     @csrf
 <div class="card card-body">
     <div class="" style="position: relative; left: 2rem;">
@@ -461,6 +463,7 @@
     </div>
     </div>
 </form>
+@endif
 @endif
 
 @if ($userIsAuthorized)
