@@ -68,7 +68,7 @@
     }
 
     .instrucciones {
-        background-color:#306BA9;
+        background-color: #306BA9;
         border-radius: 8px;
         color: #fff;
         padding: 20px;
@@ -84,5 +84,20 @@
         border-radius: 4px;
         opacity: 1;
         color: #fff;
+    }
+
+    .custom-row {
+        display: flex;
+        align-items: center;
+    }
+
+    .custom-row i {
+        margin-right: 10px;
+        /* Espacio entre el icono y el texto */
+    }
+
+    .custom-row h4 {
+        margin-top: 8px;
+        /* Ajuste de margen superior */
     }
 </style>

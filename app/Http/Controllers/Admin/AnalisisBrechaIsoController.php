@@ -162,9 +162,7 @@ class AnalisisBrechaIsoController extends Controller
         return redirect()->route('admin.analisisdebrechas-2022.index');
     }
 
-    public function show(AnalisisBrechaIso $analisisBrecha)
-    {
-    }
+    public function show(AnalisisBrechaIso $analisisBrecha) {}
 
     public function edit($id)
     {

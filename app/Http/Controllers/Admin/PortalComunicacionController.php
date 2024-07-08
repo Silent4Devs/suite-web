@@ -31,7 +31,7 @@ class PortalComunicacionController extends Controller
         $hoy->toDateString();
 
         $politica_existe = PoliticaSgsi::getAll()->count();
-        $getAlta = Empleado::alta();
+        $getAlta = Empleado::alta()->select('id', 'area_id', 'name', 'puesto', 'foto', 'genero', 'cumpleaños');
         $user = User::getCurrentUser();
 
         $empleado_asignado = $user->n_empleado;

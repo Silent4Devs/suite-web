@@ -44,27 +44,36 @@ class TimesheetService
     public function totalCounters(): array
     {
         // $counters = $this->timesheetRepo->find(['estatus']);
+        // $counters = Timesheet::getAllEstatus();
+        // $papelera = 0;
+        // $pendiente = 0;
+        // $rechazado = 0;
+        // $aprobado = 0;
+        // foreach ($counters as $counter) {
+        //     switch ($counter->estatus) {
+        //         case 'aprobado':
+        //             $aprobado++;
+        //             break;
+        //         case 'pendiente':
+        //             $pendiente++;
+        //             break;
+        //         case 'papelera':
+        //             $papelera++;
+        //             break;
+        //         case 'rechazado':
+        //             $rechazado++;
+        //             break;
+        //     }
+        // }
+
         $counters = Timesheet::getAllEstatus();
-        $papelera = 0;
-        $pendiente = 0;
-        $rechazado = 0;
-        $aprobado = 0;
-        foreach ($counters as $counter) {
-            switch ($counter->estatus) {
-                case 'aprobado':
-                    $aprobado++;
-                    break;
-                case 'pendiente':
-                    $pendiente++;
-                    break;
-                case 'papelera':
-                    $papelera++;
-                    break;
-                case 'rechazado':
-                    $rechazado++;
-                    break;
-            }
-        }
+
+        $grouped = $counters->groupBy('estatus');
+
+        $papelera = $grouped->get('papelera')->count();
+        $pendiente = $grouped->get('pendiente')->count();
+        $aprobado = $grouped->get('aprobado')->count();
+        $rechazado = $grouped->get('rechazado')->count();
 
         return [
             'borrador_contador' => $papelera,
@@ -84,6 +93,7 @@ class TimesheetService
         $hoy = $this->carbon->now();
         $semanas_del_mes = intval(($hoy->format('d') * 4) / 29);
         $times_por_mes_esperados = $semanas_del_mes * $this->empleadoRepo->count();
+
         if ($times_por_mes_esperados == 0) {
             $times_por_mes_esperados = 1;
         }
@@ -160,7 +170,7 @@ class TimesheetService
                 'times_rechazados' => $contador_times_rechazados_areas,
                 'times_papelera' => $contador_times_papelera_areas,
                 'partisipacion' => $porcentaje_participacion_area,
-                'nivel_p' => $nivel_participacion,
+                'nivel_p' => $nivel_participacion ?? '',
                 'times_esperados' => $times_complete_esperados_area,
                 'empleados' => $empleados_array,
             ];
@@ -181,6 +191,7 @@ class TimesheetService
         // Obtenemos la lista de los proyectos
         // $proyectos = $this->timesheetProyectoRepo->find(['id', 'proyecto', 'estatus']);
         $proyectos = TimesheetProyecto::getAllDashboard();
+
         $proyectos_array = [];
         $cancelados = 0;
         $terminados = 0;
@@ -189,6 +200,7 @@ class TimesheetService
         $horas_totales_cancelados = 0;
         $horas_totales_terminados = 0;
         $horas_totales_proceso = 0;
+
         foreach ($proyectos as $proyecto) {
             switch ($proyecto->estatus) {
                 case 'cancelado':
@@ -243,20 +255,35 @@ class TimesheetService
 
     private function calcularHorasProyecto($tareas): int
     {
-        $total = 0;
+        $total = 0.0;
+
+        //funcion optimizada
         foreach ($tareas as $tarea) {
-            if (! $tarea->horas->isEmpty()) {
-                foreach ($tarea->horas as $horas) {
-                    $total += floatval($horas->horas_lunes);
-                    $total += floatval($horas->horas_martes);
-                    $total += floatval($horas->horas_miercoles);
-                    $total += floatval($horas->horas_jueves);
-                    $total += floatval($horas->horas_viernes);
-                    $total += floatval($horas->horas_sabado);
-                    $total += floatval($horas->horas_domingo);
-                }
+            foreach ($tarea->horas as $horas) {
+                // Summing hours for each day directly
+                $total += floatval($horas->horas_lunes)
+                    + floatval($horas->horas_martes)
+                    + floatval($horas->horas_miercoles)
+                    + floatval($horas->horas_jueves)
+                    + floatval($horas->horas_viernes)
+                    + floatval($horas->horas_sabado)
+                    + floatval($horas->horas_domingo);
             }
         }
+
+        // foreach ($tareas as $tarea) {
+        //     if (! $tarea->horas->isEmpty()) {
+        //         foreach ($tarea->horas as $horas) {
+        //             $total += floatval($horas->horas_lunes);
+        //             $total += floatval($horas->horas_martes);
+        //             $total += floatval($horas->horas_miercoles);
+        //             $total += floatval($horas->horas_jueves);
+        //             $total += floatval($horas->horas_viernes);
+        //             $total += floatval($horas->horas_sabado);
+        //             $total += floatval($horas->horas_domingo);
+        //         }
+        //     }
+        // }
 
         return $total;
     }

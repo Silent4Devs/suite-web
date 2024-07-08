@@ -91,8 +91,8 @@
 
                                     Referencia (Título de la requisición) <font class="asterisco">*</font>
                                 </label>
-                                <input class="browser-default" type="text" value="" maxlength="255" name="descripcion"
-                                    required>
+                                <input class="browser-default" type="text" value="" maxlength="255"
+                                    name="descripcion" required>
                             </div>
 
                             <div class="col s12 l3">
@@ -149,8 +149,9 @@
                                     <label for="" class="txt-tamaño">
                                         Cantidad <font class="asterisco">*</font>
                                     </label>
-                                    <input type="text" name="cantidad_1" pattern="[0-9]+" title="Por favor, ingrese solo números enteros."
-                                    class="model-cantidad browser-default" required>
+                                    <input type="text" name="cantidad_1" pattern="[0-9]+"
+                                        title="Por favor, ingrese solo números enteros."
+                                        class="model-cantidad browser-default" required>
                                 </div>
                                 <div class="col s12 l8">
                                     <label for="" class="txt-tamaño">
@@ -198,7 +199,6 @@
                 <form id="form-proveedores"
                     wire:submit.prevent="proveedoresStore(Object.fromEntries(new FormData($event.target)))"
                     action="POST" enctype="multipart/form-data">
-                    @csrf
                     <div class="card card-body">
                         <h3 class="titulo-form">Solicitud de requisición</h3>
                         <hr style="margin: 20px 0px;">
@@ -228,7 +228,7 @@
 
                                             Proveedor <font class="asterisco">*</font>
                                         </label>
-                                        <select class="browser-default not-select2"
+                                        <select class="model-producto browser-default not-select2"
                                             wire:model.lazy='selectedInput.{{ $i }}'
                                             name="proveedor_{{ $i }}" required>
                                             <option value="">Seleccione una opción</option>
@@ -258,8 +258,22 @@
                                                     name="contacto_fecha_fin_{{ $i }}" required>
                                             </div>
                                         </div>
-                                        <div wire:loading>
-                                            <i class="fas fa-spinner fa-spin"></i> Cargando...
+                                        <div>
+                                            <div>
+                                                <div class="preloader-wrapper big active">
+                                                    <div class="spinner-layer spinner-red">
+                                                        <div class="circle-clipper left">
+                                                            <div class="circle"></div>
+                                                        </div>
+                                                        <div class="gap-patch">
+                                                            <div class="circle"></div>
+                                                        </div>
+                                                        <div class="circle-clipper right">
+                                                            <div class="circle"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -268,7 +282,7 @@
                                     @if ($this->selectedInput[$i] == 'otro')
                                         <div class="row">
                                             <div class="col s12 l12">
-                                                <select class="browser-default"
+                                                <select class="model-producto browser-default not-select2"
                                                     wire:model.lazy='selectOption.{{ $i }}'
                                                     name="proveedor_otro{{ $i }}" required>
                                                     <option selected value="indistinto">Indistinto</option>
@@ -357,22 +371,20 @@
                                                             name="contacto_url_{{ $i }}">
                                                     </div>
                                                 </div>
-                                                <br>
                                                 <div class="row">
                                                     <div class="col s12 l12">
                                                         <label for="" class="txt-tamaño">
                                                             Carga de cotizaciones <font class="asterisco">*</font>
                                                         </label>
                                                         <input type="file" required
-                                                               class="modal-cotizacion form-control-file"
-                                                               name="cotizacion_{{ $i }}"
-                                                               wire:model="cotizaciones.{{ $i }}"
-                                                               data-count="{{ $i }}"
-                                                               accept=".pdf, .docx, .pptx, .point, .xml, .jpeg, .jpg, .png, .xlsx, .xlsm, .csv"
-                                                               >
+                                                            class="modal-cotizacion form-control-file"
+                                                            name="cotizacion_{{ $i }}"
+                                                            wire:model.lazy="cotizaciones.{{ $i }}"
+                                                            data-count="{{ $i }}"
+                                                            accept=".pdf, .docx, .pptx .point, .xml, .jpeg, .jpg, .png, .xlsx, .xlsm, .csv">
                                                     </div>
                                                 </div>
-                                                <br>
+                                            @else
                                             @endif
                                         @endisset
                                     @endif
@@ -530,164 +542,6 @@
                                         <strong>URL:</strong><br><br>
                                         {{ $proveedor->url }}
                                     </div>
-                                    @if ($bandera)
-                                               <button class="btn btn-primary" wire:click.prevent="openChat">
-                                                Robot
-                                                <i class="fa-solid fa-robot"></i>
-                                                <span wire:loading wire:target="openChat">
-                                                    <i class="fas fa-spinner fa-spin"></i> Cargando...
-                                                </span>
-                                              </button>
-                                               @endif
-                                                <style>
-                                                    .chat-wrapper {
-                                                        position: fixed;
-                                                        bottom: 20px;
-                                                        right: 20px;
-                                                        width: 500px; /* Aumenta el ancho de la caja */
-                                                        height: 350px; /* Aumenta el alto de la caja */
-                                                        display: flex;
-                                                        align-items: center;
-                                                        justify-content: center;
-                                                    }
-
-                                                    .chat-box {
-                                                        width: 100%;
-                                                        height: 100%;
-                                                        background: rgba(255, 255, 255, 0.8); /* Transparente */
-                                                        border: 1px solid #ddd;
-                                                        border-radius: 20px;
-                                                        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-                                                        display: flex;
-                                                        flex-direction: column;
-                                                        z-index: 1000;
-                                                        overflow: hidden; /* Para asegurar que los bordes redondeados se mantengan */
-                                                    }
-
-                                                    .chat-frame {
-                                                        flex: 1;
-                                                        margin: 10px; /* Espacio para crear el efecto de marco */
-                                                        border-radius: 20px;
-                                                        overflow: hidden;
-                                                        display: flex;
-                                                        flex-direction: column;
-                                                        background: rgba(255, 255, 255, 0.9); /* Fondo transparente del marco */
-                                                    }
-
-                                                    .chat-header {
-                                                        display: flex;
-                                                        justify-content: space-between;
-                                                        align-items: center;
-                                                        padding: 15px 20px;
-                                                        background: rgba(74, 144, 226, 0.9);
-                                                        color: white;
-                                                        position: relative;
-                                                    }
-
-                                                    .chat-header h3 {
-                                                        margin: 0;
-                                                        flex: 1;
-                                                        text-align: center;
-                                                    }
-
-
-                                                    .close-btn {
-                                                        background: none;
-                                                        border: none;
-                                                        color: white;
-                                                        font-size: 1.5em;
-                                                        cursor: pointer;
-                                                    }
-
-                                                    .chat-content {
-                                                        flex: 1;
-                                                        padding: 20px;
-                                                        overflow-y: auto;
-                                                        background: rgba(249, 249, 249, 0.9);
-                                                        display: flex;
-                                                        flex-direction: column;
-                                                    }
-
-                                                    .chat-input {
-                                                        display: flex;
-                                                        padding: 10px;
-                                                        border-top: 1px solid #ddd;
-                                                        background: rgba(245, 245, 245, 0.9);
-                                                    }
-
-                                                    .chat-input input {
-                                                        flex: 1;
-                                                        padding: 10px;
-                                                        border: 1px solid #ddd;
-                                                        border-radius: 20px;
-                                                        margin-right: 10px;
-                                                    }
-
-                                                    .chat-input button {
-                                                        padding: 10px 20px;
-                                                        border: none;
-                                                        border-radius: 20px;
-                                                        background: #4A90E2;
-                                                        color: white;
-                                                        cursor: pointer;
-                                                    }
-
-                                                    .chat-input button:hover {
-                                                        background: #357ABD;
-                                                    }
-
-                                                    .message {
-                                                        margin-bottom: 15px;
-                                                        padding: 10px;
-                                                        border-radius: 20px;
-                                                        max-width: 80%;
-                                                    }
-
-                                                    .bot-message {
-                                                        background: #e1f5fe;
-                                                        color: #0277bd;
-                                                    }
-
-                                                    .user-message {
-                                                        background: #c8e6c9;
-                                                        color: #388e3c;
-                                                        align-self: flex-end;
-                                                    }
-                                                </style>
-
-                                                <div>
-                                                    @if ($chatOpen)
-                                                        <div class="chat-wrapper">
-                                                            <div class="chat-box">
-                                                                <div class="chat-frame">
-                                                                    <div class="chat-header">
-                                                                        <h3>Chat Bot</h3>
-                                                                        <button class="close-btn" wire:click="closeChat">&times;</button>
-                                                                    </div>
-                                                                    <div class="chat-content">
-                                                                        <!-- Mensajes del chat -->
-                                                                        @if ($saludo)
-                                                                            <p>Hola, ¿cómo puedo ayudarte hoy?</p>
-                                                                        @endif
-
-                                                                        @if ($respuesta = $this->respuesta['response'] ?? null)
-                                                                            <div class="response">
-                                                                                <p>{{ $respuesta }}</p>
-                                                                            </div>
-                                                                        @endif
-                                                                        <span wire:loading wire:target="askQuestion">
-                                                                            <i class="fas fa-spinner fa-spin"></i> Cargando...
-                                                                        </span>
-                                                                    </div>
-                                                                    <div class="chat-input">
-                                                                        <input type="text" id="question" wire:model.lazy="question">
-                                                                        <button type="submit" wire:click.prevent="askQuestion">Enviar</button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    @endif
-                                                </div>
                                 </div>
                             </div>
                         @endforeach
@@ -849,12 +703,6 @@
             @endif
         </div>
     </div>
-
-    @if ($habilitar_alerta_cotizacion)
-    <b>
-        <H1>Ocurrio algo Inesperado Intentelo Nuevamente</H1>
-    </b>
-    @endif
 
     @if ($habilitar_alerta)
         <b>
@@ -1099,14 +947,6 @@
                 });
             });
 
-            // document.addEventListener("DOMContentLoaded", () => {
-            //     @this.set('proveedores_count', 1);
-            //     Livewire.on('cambiarTab', (id_tab) => {
-            //         // Activa la pestaña con ID 'profile'
-            //         $('#myTab a[href="#' + id_tab + '"]').tab('show');
-            //     });
-            // });
-
             function printArea() {
                 let area = $('#select_solicitante option:selected').attr("data-area");
                 document.querySelector('#area_print').value = area;
@@ -1172,53 +1012,28 @@
                     confirmButtonText: 'Si, Seguro!'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        if (tipo_card === 'proveedor') {
-                            let card = document.querySelector('.card-proveedor');
+                        if (tipo_card === 'servicio') {
+                            let card = document.querySelector('.card-product');
                             let nueva_card = document.createElement("div");
                             nueva_card.classList.add("card");
                             nueva_card.classList.add("card-body");
-                            nueva_card.classList.add("card-proveedor");
-                            let cards_count = document.querySelectorAll('.card-proveedor').length + 1;
+                            nueva_card.classList.add("card-product");
+                            let cards_count = document.querySelectorAll('.card-product').length + 1;
                             nueva_card.setAttribute("data-count", cards_count);
-                            let id_nueva_card = 'proveedor-card-' + cards_count;
+                            let id_nueva_card = 'product-serv-' + cards_count;
                             nueva_card.setAttribute('id', id_nueva_card);
 
-                            let caja_cards = document.querySelector('.caja-card-proveedor');
+                            let caja_cards = document.querySelector('.caja-card-product');
                             caja_cards.appendChild(nueva_card);
+                            document.querySelector('.card-product:last-child').innerHTML += card.innerHTML;
 
-                            document.querySelector('.card-proveedor:last-child').innerHTML += card.innerHTML;
-
-                            document.querySelector('#' + id_nueva_card + ' .modal-detalles').setAttribute('name',
-                                'detalles_' + cards_count);
-
-                            document.querySelector('#' + id_nueva_card + ' .modal-tipo').setAttribute('name',
-                                'tipo_' + cards_count);
-
-                            document.querySelector('#' + id_nueva_card + ' .modal-tipo-2').setAttribute(
-                                'name', 'tipo_' + cards_count);
-
-
-                            document.querySelector('#' + id_nueva_card + ' .modal-comentario').setAttribute(
-                            'name', 'comentarios_' + cards_count);
-
-                            document.querySelector('#' + id_nueva_card + ' .modal-nombre').setAttribute(
-                            'name', 'contacto_' + cards_count);
-
-                            document.querySelector('#' + id_nueva_card + ' .modal-telefono').setAttribute(
-                            'name', 'contacto_telefono_' + cards_count);
-
-
-                            document.querySelector('#' + id_nueva_card + ' .modal-correo').setAttribute(
-                            'name', 'contacto_correo_' + cards_count);
-
-                            document.querySelector('#' + id_nueva_card + ' .modal-url').setAttribute(
-                            'name', 'contacto_url_' + cards_count);
-
-                            document.querySelector('#' + id_nueva_card + ' .modal-cotizacion').setAttribute(
-                            'name', 'cotizacion_' + cards_count);
-
-
-                            @this.set('proveedores_count', cards_count);
+                            document.querySelector('#' + id_nueva_card + ' .model-cantidad').setAttribute('name',
+                                'cantidad_' + cards_count);
+                            document.querySelector('#' + id_nueva_card + ' .model-producto').setAttribute('name',
+                                'producto_' + cards_count);
+                            document.querySelector('#' + id_nueva_card + ' .model-especificaciones').setAttribute(
+                                'name', 'especificaciones_' + cards_count);
+                            @this.set('products_servs_count', cards_count);
                         }
 
                         if (tipo_card === 'proveedor') {

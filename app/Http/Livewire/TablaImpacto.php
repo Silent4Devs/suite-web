@@ -42,10 +42,7 @@ class TablaImpacto extends Component
     public $tablaImpactoId = 1;
     // public $contenidos =[];
 
-    public function mount()
-    {
-
-    }
+    public function mount() {}
 
     // public function addColumn($indexColumna)
     // {

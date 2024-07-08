@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Escuela;
 
 use App\Models\Area;
+use App\Models\Empleado;
 use App\Models\Escuela\Course;
 use App\Models\Escuela\UsuariosCursos;
 use App\Models\User;
@@ -27,6 +28,8 @@ class EstudiantesCrear extends Component
 
     public $area_seleccionada;
 
+    public $usuarios_manual;
+
     protected $rules = [
         'user_id' => 'required',
     ];
@@ -43,6 +46,9 @@ class EstudiantesCrear extends Component
     public function mount(Course $course)
     {
         $this->course = $course;
+        $this->usuarios_manual = collect();
+        // $this->usuarios = collect();
+
     }
 
     public function save()
@@ -50,11 +56,14 @@ class EstudiantesCrear extends Component
 
         if ($this->publico == 'todos') {
             foreach ($this->usuarios as $usuario) {
-                UsuariosCursos::create([
-                    'user_id' => $usuario->id,
-                    'course_id' => $this->course->id,
-                ]);
-                $this->emit('UserStore');
+                // dump(is_null($usuario->empleado));
+                if (! is_null($usuario->empleado) && $usuario->empleado->estatus === 'alta') {
+                    UsuariosCursos::create([
+                        'user_id' => $usuario->id,
+                        'course_id' => $this->course->id,
+                    ]);
+                    $this->emit('UserStore');
+                }
             }
             $this->render_alerta('success', 'Los estudiantes de la organización se han agregado exitosamente');
             $this->dispatchBrowserEvent('closeModal');
@@ -62,7 +71,7 @@ class EstudiantesCrear extends Component
 
         if ($this->publico == 'area') {
             foreach ($this->usuarios as $usuario) {
-                if (isset($usuario->empleado->area_id)) {
+                if (isset($usuario->empleado->area_id) && $usuario->empleado->estatus === 'alta') {
                     if ($usuario->empleado->area_id == $this->area_seleccionada) {
                         UsuariosCursos::create([
                             'user_id' => $usuario->id,
@@ -103,10 +112,24 @@ class EstudiantesCrear extends Component
     {
         $usuariosInscritos = UsuariosCursos::with('usuarios')->where('course_id', $this->course->id)->pluck('user_id')->toArray();
 
-        $this->usuarios = User::whereNotIn('id', $usuariosInscritos)->orderBy('name')->get();
+        $usuarios = User::whereNotIn('id', $usuariosInscritos)->orderBy('name')->get();
+
+        $empleados = Empleado::where('estatus', 'alta')->get();
+
+        foreach ($usuarios as $usuario) {
+            foreach ($empleados as $empleado) {
+                if ($empleado->id === $usuario->empleado_id) {
+
+                    $this->usuarios_manual->push($usuario);
+                }
+            }
+        }
+        $this->usuarios = $usuarios;
+
+        // dd($this->usuarios[0]->empleado);
 
         if ($this->publico == 'area') {
-            $this->areas = Area::get();
+            $this->areas = Area::getAll();
         }
 
         return view('livewire.escuela.estudiantes-crear', ['usuarios' => $this->usuarios]);
