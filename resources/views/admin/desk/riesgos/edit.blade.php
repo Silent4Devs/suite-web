@@ -75,10 +75,6 @@
             margin-bottom: 0px;
         }
 
-        #info-bar {
-            display: none;
-        }
-
         .select2-container--default .select2-selection--multiple {
                 border: 1px solid #ADD8E6 !important;
         }
@@ -708,6 +704,7 @@
 
 @php
     $userIsAuthorized = false;
+    $existingRecord = App\Models\FirmaCentroAtencion::where('id_riesgos', $riesgos->id)->where('user_id', Auth::id())->first();
     if ($aprobadores) {
         $aprobadoresArray = json_decode($aprobadores->aprobadores, true); // Decodificar JSON a array
         if (is_array($aprobadoresArray) && in_array(Auth::id(), $aprobadoresArray)) {
@@ -718,7 +715,8 @@
 
 
 @if ($userIsAuthorized)
-<form method="POST" action="{{ route('admin.module_firmas.riesgos') }}" enctype="multipart/form-data">
+@if (!$existingRecord)
+<form method="POST" action="{{ route('admin.module_firmas.riesgos', ['id' => $riesgos->id]) }}" enctype="multipart/form-data">
 @csrf
 <div class="card card-body">
     <div class="" style="position: relative; left: 2rem;">
@@ -750,6 +748,7 @@
     </div>
     </div>
 </form>
+@endif
 @endif
 
 @if ($userIsAuthorized)
