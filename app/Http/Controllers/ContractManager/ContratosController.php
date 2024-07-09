@@ -405,12 +405,13 @@ class ContratosController extends AppBaseController
                     }
                 }
             }
-            $aprobador_firma_contrato_historico = AprobadorFirmaContratoHistorico::create([
-                'contrato_id' => $contrato->id,
-                'solicitante_id' => User::getCurrentUser()->empleado->id,
-                'empleado_update_id' => User::getCurrentUser()->empleado->id,
-            ]);
         }
+        $aprobador_firma_contrato_historico = AprobadorFirmaContratoHistorico::create([
+            'contrato_id' => $contrato->id,
+            'solicitante_id' => User::getCurrentUser()->empleado->id,
+            'empleado_update_id' => User::getCurrentUser()->empleado->id,
+            'firma_check' => isset($request->firma_check) ? true : false ,
+        ]);
 
         //return redirect(route('contratos.index'));
         return redirect('contract_manager/contratos-katbol/contratoinsert/' . $contrato->id);
@@ -445,6 +446,7 @@ class ContratosController extends AppBaseController
 
             $proyectos = TimesheetProyecto::getAll()->where('estatus', 'proceso');
 
+            // aprobadores
             $aprobacionFirmaContrato = AprobadorFirmaContrato::where('contrato_id', $id)->get();
             $firmar = false;
             $firmado = false;
@@ -500,11 +502,11 @@ class ContratosController extends AppBaseController
 
         $ruta_carpeta = storage_path('app/public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/aprobacionFirma');
 
-        // Dar permisos chmod 777 a la carpeta
-
         Storage::put('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/aprobacionFirma/'.$imageName, $image);
 
+        // Dar permisos chmod 777 a la carpeta
         chmod($ruta_carpeta, 0777);
+
         // Obtener la URL de la imagen guardada
         $imageUrl = Storage::url('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/aprobacionFirma/' . $imageName);
 
@@ -586,8 +588,9 @@ class ContratosController extends AppBaseController
                     $firmado = true;
                 }
             }
+            $aprobacionFirmaContratoHisotricoLast = AprobadorFirmaContratoHistorico::where('contrato_id', $contrato->id)->orderBy('id', 'DESC')->first();
 
-            return view('contract_manager.contratos-katbol.edit', compact('proyectos', 'proveedor_id', 'dolares', 'organizacion', 'areas', 'firma', 'firmar', 'firmado', 'aprobacionFirmaContrato'))->with('contrato', $contrato)->with('proveedores', $proveedores)->with('contratos', $contratos)->with('ids', $id)->with('descargar_archivo', $descargar_archivo)->with('convenios', $convenios)->with('organizacion', $organizacion);
+            return view('contract_manager.contratos-katbol.edit', compact('proyectos', 'proveedor_id', 'dolares', 'organizacion', 'areas', 'firma', 'firmar', 'firmado', 'aprobacionFirmaContrato', 'aprobacionFirmaContratoHisotricoLast'))->with('contrato', $contrato)->with('proveedores', $proveedores)->with('contratos', $contratos)->with('ids', $id)->with('descargar_archivo', $descargar_archivo)->with('convenios', $convenios)->with('organizacion', $organizacion);
         } catch (\Exception $e) {
             return redirect()->route('contract_manager.contratos-katbol.index')->with('error', $e->getMessage());
         }
@@ -854,12 +857,13 @@ class ContratosController extends AppBaseController
                     }
                 }
             }
-            $aprobador_firma_contrato_historico = AprobadorFirmaContratoHistorico::create([
-                'contrato_id' => $contrato->id,
-                'solicitante_id' => User::getCurrentUser()->empleado->id,
-                'empleado_update_id' => User::getCurrentUser()->empleado->id,
-            ]);
         }
+        $aprobador_firma_contrato_historico = AprobadorFirmaContratoHistorico::create([
+            'contrato_id' => $contrato->id,
+            'solicitante_id' => User::getCurrentUser()->empleado->id,
+            'empleado_update_id' => User::getCurrentUser()->empleado->id,
+            'firma_check' => isset($request->firma_check) ? true : false ,
+        ]);
 
         return response()->json([
             'status' => 'success',
