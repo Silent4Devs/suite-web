@@ -213,39 +213,6 @@ class VacacionesController extends Controller
         $data = User::getCurrentUser()->empleado->id;
 
         $solVac = SolicitudVacaciones::getAllwithEmpleados();
-        // dd($solVac);
-
-        // if ($request->ajax()) {
-        //     $query = SolicitudVacaciones::getAllwithEmpleados();
-        //     $table = datatables()::of($query);
-
-        //     $table->addColumn('placeholder', '&nbsp;');
-        //     $table->addColumn('actions', '&nbsp;');
-
-        //     $table->editColumn('empleado', function ($row) {
-        //         return $row->empleado ? $row->empleado : '';
-        //     });
-
-        //     $table->editColumn('dias_solicitados', function ($row) {
-        //         return $row->dias_solicitados ? $row->dias_solicitados : '';
-        //     });
-        //     $table->editColumn('fecha_inicio', function ($row) {
-        //         return $row->fecha_inicio ? $row->fecha_inicio : '';
-        //     });
-        //     $table->editColumn('fecha_fin', function ($row) {
-        //         return $row->fecha_fin ? $row->fecha_fin : '';
-        //     });
-        //     $table->editColumn('aprobacion', function ($row) {
-        //         return $row->aprobacion ? $row->aprobacion : '';
-        //     });
-        //     $table->editColumn('descripcion', function ($row) {
-        //         return $row->descripcion ? $row->descripcion : '';
-        //     });
-
-        //     $table->rawColumns(['actions', 'placeholder']);
-
-        //     return $query;
-        // }
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
