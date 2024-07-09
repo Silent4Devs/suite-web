@@ -346,7 +346,7 @@ class PuestosController extends Controller
         $firmado = false;
         foreach ($aprobacionFirmaPuesto as $firma_item) {
             if ($firma_item->aprobador_id == User::getCurrentUser()->empleado->id) {
-                if (!isset($firma_item->firma)) {
+                if (! isset($firma_item->firma)) {
                     $firmar = true;
                 }
             }

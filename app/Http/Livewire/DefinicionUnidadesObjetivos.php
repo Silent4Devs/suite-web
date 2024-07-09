@@ -31,7 +31,7 @@ class DefinicionUnidadesObjetivos extends Component
             'id' => null,
             'definicion' => null,
             'minimo' => null,
-            'maximo' => null
+            'maximo' => null,
         ];
     }
 

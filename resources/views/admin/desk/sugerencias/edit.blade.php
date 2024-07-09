@@ -134,10 +134,11 @@
                                 <b>Datos generales:</b>
                             </div>
 
+                            @if ($sugerencias->estatus === 'cerrado' || $sugerencias->estatus === 'cancelado')
                             <div style="position: relative; left: 2rem;">
                                 <label>
                                     <input type="checkbox" id="toggle-info" {{ !empty($aprobadoresArray) ? 'checked' : '' }}>
-                                    Activar flujo de aprobación
+                                    Activar flujo de firma(s)
                                 </label>
                             </div>
 
@@ -161,6 +162,7 @@
                                     </select>
                                 </div>
                             </div>
+                            @endif
 
                             <div class="mt-2 form-group col-2">
                                 <label class="form-label"><i
@@ -659,7 +661,7 @@
 @endif
 @endif
 
-@if ($userIsAuthorized)
+@if ($userIsAuthorized || auth()->user()->roles->contains('title', 'Admin'))
 <div class="card card-content" style="margin-bottom: 30px">
     <div class="caja-firmas-doc">
         @foreach($firmas as $firma)
