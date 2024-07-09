@@ -143,7 +143,7 @@
                                         @if($firmaModules && $firmaModules->empleados)
                                             @if(count($firmaModules->empleados) > 0)
                                                 @foreach($firmaModules->empleados as $empleado)
-                                                    <option value="{{ $empleado->id }}" avatar="{{ $empleado->avatar }}" @if(is_array($aprobadoresArray) && in_array($empleado->id, $aprobadoresArray)) selected @endif>
+                                                    <option value="{{ $empleado->id }}"  @if(is_array($aprobadoresArray) && in_array($empleado->id, $aprobadoresArray)) selected @endif>
                                                         {{ $empleado->name }}
                                                     </option>
                                                 @endforeach
@@ -1017,10 +1017,8 @@
             if (!empleado.id) {
                 return empleado.text;
             }
-            var avatar = $(empleado.element).data('avatar');
-            var $avatar = $('<img class="avatar" src="' + avatar + '">');
             var $nombre = $('<span>' + empleado.text + '</span>');
-            var $container = $('<span>').append($avatar).append($nombre);
+            var $container = $('<span>').append($nombre);
             return $container;
         }
 
