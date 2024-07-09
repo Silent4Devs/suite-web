@@ -531,8 +531,7 @@ class DeskController extends Controller
 
         $aprobadorSeleccionado->save();
 
-        $empleadoIds = $request->participantes;
-
+        $empleadoIds = $request->participantes ?? [];
 
         // Obtener empleados desde la base de datos
         $empleados = User::select('id', 'name', 'email')->whereIn('id', $empleadoIds)->get();
@@ -718,7 +717,7 @@ class DeskController extends Controller
 
         $aprobadorSeleccionado->save();
 
-        $empleadoIds = $request->participantes;
+        $empleadoIds = $request->participantes ?? [];
 
 
         // Obtener empleados desde la base de datos
@@ -905,7 +904,7 @@ class DeskController extends Controller
 
         $aprobadorSeleccionado->save();
 
-        $empleadoIds = $request->participantes;
+        $empleadoIds = $request->participantes ?? [];
 
 
         // Obtener empleados desde la base de datos
@@ -1097,7 +1096,7 @@ class DeskController extends Controller
 
         $aprobadorSeleccionado->save();
 
-        $empleadoIds = $request->participantes;
+        $empleadoIds = $request->participantes ?? [];
 
         // Obtener empleados desde la base de datos
         $empleados = User::select('id', 'name', 'email')->whereIn('id', $empleadoIds)->get();
@@ -1273,7 +1272,7 @@ class DeskController extends Controller
 
         $aprobadorSeleccionado->save();
 
-        $empleadoIds = $request->participantes;
+        $empleadoIds = $request->participantes ?? [];
 
         // Obtener empleados desde la base de datos
         $empleados = User::select('id', 'name', 'email')->whereIn('id', $empleadoIds)->get();
