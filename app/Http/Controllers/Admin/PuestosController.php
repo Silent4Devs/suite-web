@@ -304,7 +304,21 @@ class PuestosController extends Controller
         $empleados = Empleado::getaltaAll();
         $areas = Area::getAll();
 
-        return view('admin.puestos.show', compact('puesto', 'idiomas', 'competencias', 'responsabilidades', 'certificados', 'idiomas', 'herramientas', 'contactos', 'empleados', 'areas'));
+        $aprobacionFirmaPuesto = AprobadorFirmaPuesto::where('puesto_id', $puesto->id)->get();
+        $firmar = false;
+        $firmado = false;
+        foreach ($aprobacionFirmaPuesto as $firma_item) {
+            if ($firma_item->aprobador_id == User::getCurrentUser()->empleado->id) {
+                if (!isset($firma_item->firma)) {
+                    $firmar = true;
+                }
+            }
+            if ($firma_item->firma) {
+                $firmado = true;
+            }
+        }
+
+        return view('admin.puestos.show', compact('puesto', 'idiomas', 'competencias', 'responsabilidades', 'certificados', 'idiomas', 'herramientas', 'contactos', 'empleados', 'areas', 'aprobacionFirmaPuesto', 'firmar', 'firmado'));
     }
 
     public function aprobacionFirma(Request $request)
@@ -339,6 +353,11 @@ class PuestosController extends Controller
         // Generar un nombre único para la imagen
         $imageName = uniqid().'.'.$type;
         // Guardar la imagen en el sistema de archivos
+
+        $ruta_carpeta = storage_path('public/puestos/firmasAprobadores');
+
+        // Dar permisos chmod 777 a la carpeta
+        chmod($ruta_carpeta, 0777);
 
         Storage::put('public/puestos/firmasAprobadores/'.$imageName, $image);
 
