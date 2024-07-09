@@ -1441,3 +1441,7 @@ table td {
 .progress-bar.bg-warning {
     background-color: #FFCB80 !important;
 }
+
+.cke_notifications_area{
+    display: none !important;
+}
