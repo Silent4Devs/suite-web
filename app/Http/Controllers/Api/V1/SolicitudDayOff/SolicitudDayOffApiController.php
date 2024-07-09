@@ -33,7 +33,7 @@ class SolicitudDayOffApiController extends Controller
         $data = $usuario->empleado->id;
 
         $año = Carbon::now()->format('Y');
-        $finDayOff = '31-12-' . $año;
+        $finDayOff = '31-12-'.$año;
 
         $solicitudesDayOff = SolicitudDayOff::with('empleado')->where('empleado_id', '=', $data)->orderByDesc('id')->get();
 
@@ -58,14 +58,14 @@ class SolicitudDayOffApiController extends Controller
             if ($solicitante && $solicitante->empleado) {
                 $solicitante->empleado->makeHidden([
                     'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
-                    'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor'
+                    'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor',
                 ]);
 
                 $solicitante->empleado->nombre_area = $solicitante->empleado->area->area;
                 $solicitante->empleado->nombre_puesto = $solicitante->empleado->puesto;
 
                 $solicitante->empleado->makeHidden([
-                    'puestoRelacionado', 'area_id', 'puesto_id'
+                    'puestoRelacionado', 'area_id', 'puesto_id',
                 ]);
             }
         }
@@ -86,7 +86,7 @@ class SolicitudDayOffApiController extends Controller
             'empresa_actual' => $empresa_actual,
             'dias_disponibles' => $dias_disponibles,
             'finDayOff' => $finDayOff,
-            'solicitudesDayOff' => $solicitudesDayOff
+            'solicitudesDayOff' => $solicitudesDayOff,
         ]), 200)->header('Content-Type', 'application/json');
 
         // return view('admin.solicitudDayoff.index', compact('logo_actual', 'empresa_actual', 'dias_disponibles'));
@@ -97,7 +97,7 @@ class SolicitudDayOffApiController extends Controller
         // abort_if(Gate::denies('solicitud_dayoff_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $año = Carbon::now()->format('Y');
-        $finDayOff = '31-12-' . $año;
+        $finDayOff = '31-12-'.$año;
 
         $existe_regla_ingreso = DayOff::where('inicio_conteo', 1)->exists();
         $usuario = User::getCurrentUser();
@@ -185,6 +185,7 @@ class SolicitudDayOffApiController extends Controller
         } else {
             Mail::to(removeUnicodeCharacters($supervisor->email))->queue(new MailSolicitudDayOff($solicitante, $supervisor, $solicitud));
         }
+
         // Alert::success('éxito', 'Información añadida con éxito');
         // return redirect()->route('admin.solicitud-dayoff.index');
         return json_encode(['data' => 'La solicitud fue creada exitosamente.'], 200);
@@ -221,7 +222,7 @@ class SolicitudDayOffApiController extends Controller
         if ($vacacion && $vacacion->empleado) {
             $empleado = $vacacion->empleado->makeHidden([
                 'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
-                'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor'
+                'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor',
             ]);
 
             if ($empleado->foto == null || $empleado->foto == '0') {
@@ -233,7 +234,7 @@ class SolicitudDayOffApiController extends Controller
                     $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
                 }
             } else {
-                $ruta = asset('storage/empleados/imagenes/' . $empleado->foto);
+                $ruta = asset('storage/empleados/imagenes/'.$empleado->foto);
             }
 
             // Encode spaces in the URL
@@ -245,17 +246,17 @@ class SolicitudDayOffApiController extends Controller
             $empleado->nombre_puesto = $empleado->puesto;
 
             $empleado->makeHidden([
-                'puestoRelacionado', 'area_id', 'puesto_id', 'foto'
+                'puestoRelacionado', 'area_id', 'puesto_id', 'foto',
             ]);
 
             $vacacion->makeHidden([
-                'empleado'
+                'empleado',
             ]);
         }
 
         return response(json_encode([
             'vacacion' => $vacacion,
-            'empleado' => $empleado
+            'empleado' => $empleado,
         ]), 200)->header('Content-Type', 'application/json');
         // return view('admin.solicitudDayoff.show', compact('vacacion'));
     }
@@ -301,6 +302,7 @@ class SolicitudDayOffApiController extends Controller
         } else {
             Mail::to(removeUnicodeCharacters($solicitante->email))->queue(new MailRespuestaDayOff($solicitante, $supervisor, $solicitud));
         }
+
         // Alert::success('éxito', 'Información añadida con éxito');
         // return redirect(route('admin.solicitud-dayoff.aprobacion'));
         return json_encode(['data' => 'Se ha enviado la respuesta de la solicitud.'], 200);
@@ -409,6 +411,7 @@ class SolicitudDayOffApiController extends Controller
         $url = preg_replace_callback('/[^A-Za-z0-9_\-\.~\/\\\:]/', function ($matches) {
             return rawurlencode($matches[0]);
         }, $url);
+
         return $url;
     }
 
@@ -442,7 +445,7 @@ class SolicitudDayOffApiController extends Controller
             if ($solicitante && $solicitante->empleado) {
                 $solicitante->empleado->makeHidden([
                     'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
-                    'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor'
+                    'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor',
                 ]);
 
                 if ($solicitante->foto == null || $solicitante->foto == '0') {
@@ -454,7 +457,7 @@ class SolicitudDayOffApiController extends Controller
                         $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
                     }
                 } else {
-                    $ruta = asset('storage/empleados/imagenes/' . $solicitante->foto);
+                    $ruta = asset('storage/empleados/imagenes/'.$solicitante->foto);
                 }
 
                 // Encode spaces in the URL
@@ -466,7 +469,7 @@ class SolicitudDayOffApiController extends Controller
                 $solicitante->empleado->nombre_puesto = $solicitante->empleado->puesto;
 
                 $solicitante->empleado->makeHidden([
-                    'puestoRelacionado', 'area_id', 'puesto_id'
+                    'puestoRelacionado', 'area_id', 'puesto_id',
                 ]);
             }
         }
@@ -486,7 +489,7 @@ class SolicitudDayOffApiController extends Controller
             'logo_actual' => $logo_actual,
             'empresa_actual' => $empresa_actual,
             'dias_disponibles' => $dias_disponibles,
-            'solicitudesPermisos' => $solicitudesPermisos
+            'solicitudesPermisos' => $solicitudesPermisos,
         ]), 200)->header('Content-Type', 'application/json');
     }
 
@@ -514,7 +517,7 @@ class SolicitudDayOffApiController extends Controller
         if ($vacacion && $vacacion->empleado) {
             $empleado = $vacacion->empleado->makeHidden([
                 'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
-                'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor'
+                'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor',
             ]);
 
             if ($empleado->foto == null || $empleado->foto == '0') {
@@ -526,7 +529,7 @@ class SolicitudDayOffApiController extends Controller
                     $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
                 }
             } else {
-                $ruta = asset('storage/empleados/imagenes/' . $empleado->foto);
+                $ruta = asset('storage/empleados/imagenes/'.$empleado->foto);
             }
 
             $empleado->ruta_foto = $this->encodeSpecialCharacters($ruta);
@@ -535,11 +538,11 @@ class SolicitudDayOffApiController extends Controller
             $empleado->nombre_puesto = $empleado->puesto;
 
             $empleado->makeHidden([
-                'puestoRelacionado', 'area_id', 'puesto_id'
+                'puestoRelacionado', 'area_id', 'puesto_id',
             ]);
 
             $vacacion->makeHidden([
-                'empleado'
+                'empleado',
             ]);
         }
 
@@ -555,7 +558,7 @@ class SolicitudDayOffApiController extends Controller
         return response(json_encode([
             'empleado' => $empleado,
             'vacacion' => $vacacion,
-            'año' => $año
+            'año' => $año,
         ]), 200)->header('Content-Type', 'application/json');
 
         // return view('admin.solicitudDayoff.respuesta', compact('vacacion', 'año'));
@@ -594,14 +597,14 @@ class SolicitudDayOffApiController extends Controller
             if ($solicitante && $solicitante->empleado) {
                 $solicitante->empleado->makeHidden([
                     'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
-                    'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor'
+                    'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor',
                 ]);
 
                 $solicitante->empleado->nombre_area = $solicitante->empleado->area->area;
                 $solicitante->empleado->nombre_puesto = $solicitante->empleado->puesto;
 
                 $solicitante->empleado->makeHidden([
-                    'puestoRelacionado', 'area_id', 'puesto_id'
+                    'puestoRelacionado', 'area_id', 'puesto_id',
                 ]);
             }
         }
@@ -613,7 +616,7 @@ class SolicitudDayOffApiController extends Controller
         return response(json_encode([
             'logo_actual' => $logo_actual,
             'empresa_actual' => $empresa_actual,
-            'solicitudesDayOff' => $solicitudesDayOff
+            'solicitudesDayOff' => $solicitudesDayOff,
         ]), 200)->header('Content-Type', 'application/json');
     }
 
@@ -645,14 +648,14 @@ class SolicitudDayOffApiController extends Controller
             if ($solicitante && $solicitante->empleado) {
                 $solicitante->empleado->makeHidden([
                     'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
-                    'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor'
+                    'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor',
                 ]);
 
                 $solicitante->empleado->nombre_area = $solicitante->empleado->area->area;
                 $solicitante->empleado->nombre_puesto = $solicitante->empleado->puesto;
 
                 $solicitante->empleado->makeHidden([
-                    'puestoRelacionado', 'area_id', 'puesto_id'
+                    'puestoRelacionado', 'area_id', 'puesto_id',
                 ]);
             }
         }
@@ -697,14 +700,14 @@ class SolicitudDayOffApiController extends Controller
 
         $vacacion->empleado->makeHidden([
             'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
-            'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor'
+            'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor',
         ]);
 
         $vacacion->empleado->nombre_area = $vacacion->empleado->area->area;
         $vacacion->empleado->nombre_puesto = $vacacion->empleado->puesto;
 
         $vacacion->empleado->makeHidden([
-            'puestoRelacionado', 'area_id', 'puesto_id'
+            'puestoRelacionado', 'area_id', 'puesto_id',
         ]);
 
         return response(json_encode([
@@ -741,14 +744,14 @@ class SolicitudDayOffApiController extends Controller
 
         $vacacion->empleado->makeHidden([
             'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
-            'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor'
+            'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor',
         ]);
 
         $vacacion->empleado->nombre_area = $vacacion->empleado->area->area;
         $vacacion->empleado->nombre_puesto = $vacacion->empleado->puesto;
 
         $vacacion->empleado->makeHidden([
-            'puestoRelacionado', 'area_id', 'puesto_id'
+            'puestoRelacionado', 'area_id', 'puesto_id',
         ]);
 
         return response(json_encode([

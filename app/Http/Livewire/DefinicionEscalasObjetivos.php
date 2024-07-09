@@ -11,13 +11,21 @@ class DefinicionEscalasObjetivos extends Component
     use LivewireAlert;
 
     public $color_estatus_1 = '#34B990';
+
     public $color_estatus_2 = '#73A7D5';
+
     public $estatus_1;
+
     public $estatus_2;
+
     public $parametros = [];
+
     public $minimo = null;
+
     public $maximo = null;
+
     public $valor_estatus_1;
+
     public $valor_estatus_2;
 
     public function addParametro1()
@@ -74,7 +82,7 @@ class DefinicionEscalasObjetivos extends Component
                 'parametro' => $data['estatus_2'],
                 'color' => $data['color_estatus_2'],
                 'valor' => $data['valor_estatus_2'],
-            ]
+            ],
         ];
 
         foreach ($this->parametros as $parametro) {
@@ -94,6 +102,7 @@ class DefinicionEscalasObjetivos extends Component
                 'toast' => true,
                 'text' => 'Por favor, asegúrese de que todos los valores sean únicos.',
             ]);
+
             return;
         }
 
@@ -125,7 +134,7 @@ class DefinicionEscalasObjetivos extends Component
         foreach ($this->parametros as $key => $parametro) {
             $estatusKey = "estatus_arreglo_{$key}";
 
-            if (isset($values[$estatusKey]) && !empty($values[$estatusKey])) {
+            if (isset($values[$estatusKey]) && ! empty($values[$estatusKey])) {
                 $groupedValues[] = [
                     'estatus' => $values[$estatusKey],
                     'color' => $values["color_estatus_arreglo_{$key}"] ?? null,

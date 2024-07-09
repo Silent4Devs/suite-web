@@ -46,7 +46,7 @@ class EvTrimestralConfigCategorias extends Component
 
     public function removeCategoria($keyIndex, $id_borrar = null)
     {
-        if (!empty($id_borrar)) {
+        if (! empty($id_borrar)) {
             $tipo = TipoObjetivo::find($id_borrar);
             $tipo->delete();
         }
