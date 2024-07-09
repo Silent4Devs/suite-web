@@ -286,10 +286,6 @@ class DeskController extends Controller
 
         $empleadoIds = $request->participantes ?? [];
 
-        if (empty($empleadoIds) || !is_array($empleadoIds)) {
-            return back()->with('error', 'No se seleccionaron participantes para la aprobacion.');
-        }
-
         // Obtener empleados desde la base de datos
         $empleados = User::select('id', 'name', 'email')->whereIn('id', $empleadoIds)->get();
 
@@ -301,10 +297,9 @@ class DeskController extends Controller
         if ($incidentesSeguridad->estatus === 'Cerrado') {
             // Enviar correos electrónicos
             foreach ($empleados as $empleado) {
-                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new EmpleadoEmail($empleado, $status, $incidentesSeguridad->id, $organizacion));
+                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->send(new EmpleadoEmail($empleado, $status, $incidentesSeguridad->id, $organizacion));
             }
         }
-
 
         $incidentesSeguridad->update([
             'titulo' => $request->titulo,
@@ -539,9 +534,6 @@ class DeskController extends Controller
 
         $empleadoIds = $request->participantes;
 
-        if (empty($empleadoIds) || !is_array($empleadoIds)) {
-            return back()->with('error', 'No se seleccionaron participantes para la aprobacion.');
-        }
 
         // Obtener empleados desde la base de datos
         $empleados = User::select('id', 'name', 'email')->whereIn('id', $empleadoIds)->get();
@@ -552,7 +544,7 @@ class DeskController extends Controller
 
         if ($riesgos->estatus === 'cerrado') {
             foreach ($empleados as $empleado) {
-                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new EmpleadoEmail($empleados, $status, $riesgos->id, $organizacion));
+                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->send(new EmpleadoEmail($empleados, $status, $riesgos->id, $organizacion));
             }
         }
 
@@ -729,9 +721,6 @@ class DeskController extends Controller
 
         $empleadoIds = $request->participantes;
 
-        if (empty($empleadoIds) || !is_array($empleadoIds)) {
-            return back()->with('error', 'No se seleccionaron participantes para la aprobacion.');
-        }
 
         // Obtener empleados desde la base de datos
         $empleados = User::select('id', 'name', 'email')->whereIn('id', $empleadoIds)->get();
@@ -743,7 +732,7 @@ class DeskController extends Controller
         if ($quejas->estatus === 'cerrado') {
             // Enviar correos electrónicos
             foreach ($empleados as $empleado) {
-                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new EmpleadoEmail($empleado, $status, $quejas->id, $organizacion));
+                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->send(new EmpleadoEmail($empleado, $status, $quejas->id, $organizacion));
             }
         }
 
@@ -919,9 +908,6 @@ class DeskController extends Controller
 
         $empleadoIds = $request->participantes;
 
-        if (empty($empleadoIds) || !is_array($empleadoIds)) {
-            return back()->with('error', 'No se seleccionaron participantes para la aprobacion.');
-        }
 
         // Obtener empleados desde la base de datos
         $empleados = User::select('id', 'name', 'email')->whereIn('id', $empleadoIds)->get();
@@ -933,7 +919,7 @@ class DeskController extends Controller
         if ($denuncias->estatus === 'cerrado') {
             // Enviar correos electrónicos
             foreach ($empleados as $empleado) {
-                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new EmpleadoEmail($empleado, $status, $denuncias->id, $organizacion));
+                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->send(new EmpleadoEmail($empleado, $status, $denuncias->id, $organizacion));
             }
         }
 
@@ -1114,10 +1100,6 @@ class DeskController extends Controller
 
         $empleadoIds = $request->participantes;
 
-        if (empty($empleadoIds) || !is_array($empleadoIds)) {
-            return back()->with('error', 'No se seleccionaron participantes para la aprobacion.');
-        }
-
         // Obtener empleados desde la base de datos
         $empleados = User::select('id', 'name', 'email')->whereIn('id', $empleadoIds)->get();
 
@@ -1128,7 +1110,7 @@ class DeskController extends Controller
         if ($mejoras->estatus === 'cerrado') {
             // Enviar correos electrónicos
             foreach ($empleados as $empleado) {
-                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new EmpleadoEmail($empleado, $status, $mejoras->id, $organizacion));
+                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->send(new EmpleadoEmail($empleado, $status, $mejoras->id, $organizacion));
             }
         }
 
@@ -1294,10 +1276,6 @@ class DeskController extends Controller
 
         $empleadoIds = $request->participantes;
 
-        if (empty($empleadoIds) || !is_array($empleadoIds)) {
-            return back()->with('error', 'No se seleccionaron participantes para la aprobacion.');
-        }
-
         // Obtener empleados desde la base de datos
         $empleados = User::select('id', 'name', 'email')->whereIn('id', $empleadoIds)->get();
 
@@ -1308,7 +1286,7 @@ class DeskController extends Controller
         if ($sugerencias->estatus === 'cerrado') {
             // Enviar correos electrónicos
             foreach ($empleados as $empleado) {
-                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new EmpleadoEmail($empleado, $status, $sugerencias->id, $organizacion));
+                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->send(new EmpleadoEmail($empleado, $status, $sugerencias->id, $organizacion));
             }
         }
 
