@@ -29,10 +29,8 @@ services:
       # - ./infra/postgres/data:/var/lib/postgresql/data #localpath
       - tabantaj-db:/var/lib/postgresql/data
       - ./infra/postgres/postgresql.conf:/etc/postgresql/postgresql.conf
-    environment:
-      - POSTGRES_USER=homestead
-      - POSTGRES_PASSWORD=secret
-      - POSTGRES_DB=homestead
+    env_file:
+      - .env
     ports:
       - "5432:5432"
     networks:
@@ -45,9 +43,8 @@ services:
     image: dpage/pgadmin4:latest
     ports:
       - "5480:80"
-    environment:
-      - PGADMIN_DEFAULT_PASSWORD=VnRE!Jib7W9@qeBN
-      - PGADMIN_DEFAULT_EMAIL=soporte.desarrollo@silent4business.com
+    env_file:
+      - .env
     restart: unless-stopped
     tty: true
     volumes:
@@ -128,20 +125,16 @@ services:
     tty: true
     ports:
       - 6360:80
-    environment:
-      - REDIS_1_HOST=redis-tabantaj # Replace with your Redis container name
-      - REDIS_1_PORT=6379 # Replace with your Redis container port
-      #- REDIS_1_AUTH=silent11!
+    env_file:
+      - .env
     networks:
       - tabantajnetwork
 
   rabbitmq-tabantaj:
     image: rabbitmq:3-management-alpine
     container_name: rabbit-tabantaj
-    environment:
-      - RABBITMQ_DEFAULT_USER=desarrollo
-      - RABBITMQ_DEFAULT_PASS=Password123.
-      - RABBITMQ_DEFAULT_VHOST=desarrollo # Add this line
+    env_file:
+      - .env
     ports:
       - 5672:5672
       - 15672:15672
