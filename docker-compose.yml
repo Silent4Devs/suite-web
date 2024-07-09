@@ -109,7 +109,7 @@ services:
       dockerfile: Dockerfile
     volumes:
       - .:/var/www/html
-    command: php artisan queue:work --tries=3
+    command: php artisan queue:work --tries=6
     depends_on:
       - php
     container_name: queue-worker-tabantaj

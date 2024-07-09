@@ -32,7 +32,7 @@ class SolicitudVacaciones extends Model implements Auditable
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'empleado_id')->select('name', 'id', 'foto', 'area_id');
+        return $this->belongsTo(Empleado::class, 'empleado_id')->select('name', 'id', 'foto', 'area_id', 'puesto_id');
     }
 
     public static function getAllwithEmpleados()
