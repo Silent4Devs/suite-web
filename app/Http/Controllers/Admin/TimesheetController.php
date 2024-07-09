@@ -57,7 +57,7 @@ class TimesheetController extends Controller
     public function index($estatus = 'todos')
     {
         abort_if(Gate::denies('timesheet_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $cacheKey = 'timesheet-'.User::getCurrentUser()->empleado->id;
+        $cacheKey = 'timesheet-' . User::getCurrentUser()->empleado->id;
 
         // $times = Timesheet::getPersonalTimesheet()->sortBy('fecha_dia');
         // dd($times);
@@ -310,9 +310,8 @@ class TimesheetController extends Controller
         $endDayFormatted = $endDay->format('Y/m/d');
 
         $fechaTimeSheetFormatted = Carbon::parse($request->fecha_dia)->format('Y/m/d');
-
         if ($request->estatus == 'pendiente' || $request->estatus == 'papelera') {
-            if ($fechaTimeSheetFormatted > $firstDayFormatted && $fechaTimeSheetFormatted < $endDayFormatted) {
+            if (($fechaTimeSheetFormatted > $firstDayFormatted && $fechaTimeSheetFormatted < $endDayFormatted) || ($fechaTimeSheetFormatted > $firstDayFormatted && $endDayFormatted < $fechaTimeSheetFormatted)) {
                 try {
                     $timesheet_nuevo = Timesheet::create([
                         'fecha_dia' => $request->fecha_dia,
@@ -641,7 +640,9 @@ class TimesheetController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id) {}
+    public function destroy($id)
+    {
+    }
 
     public function eliminar($id)
     {
@@ -789,7 +790,7 @@ class TimesheetController extends Controller
 
             $validacionNoContrato = Contrato::where('no_contrato', $request->no_contrato)->exists();
 
-            if (! $proyecto) {
+            if (!$proyecto) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Proyecto no encontrado.',
@@ -834,18 +835,18 @@ class TimesheetController extends Controller
         abort_if(Gate::denies('timesheet_administrador_proyectos_show'), Response::HTTP_FORBIDDEN, '403 Forbidden'); //Nuevo permiso
         $proyecto = TimesheetProyecto::getAll($id)->find($id);
 
-        if (! $proyecto) {
+        if (!$proyecto) {
             return redirect()->route('admin.timesheet-proyectos')->with('error', 'El registro fue eliminado ');
         }
         $areas = TimesheetProyectoArea::where('proyecto_id', $id)
             ->join('areas', 'timesheet_proyectos_areas.area_id', '=', 'areas.id')
             ->get('areas.area');
 
-        $sedes = TimesheetProyecto::getAll('sedes_'.$id)->where('timesheet_proyectos.id', $id)
+        $sedes = TimesheetProyecto::getAll('sedes_' . $id)->where('timesheet_proyectos.id', $id)
             ->join('sedes', 'timesheet_proyectos.sede_id', '=', 'sedes.id')
             ->get('sedes.sede');
 
-        $clientes = TimesheetProyecto::getAll('clientes_'.$id)->where('timesheet_proyectos.id', $id)
+        $clientes = TimesheetProyecto::getAll('clientes_' . $id)->where('timesheet_proyectos.id', $id)
             ->join('timesheet_clientes', 'timesheet_proyectos.cliente_id', '=', 'timesheet_clientes.id')
             ->get('timesheet_clientes.nombre');
 
@@ -926,7 +927,7 @@ class TimesheetController extends Controller
 
     public function tareasProyecto($proyecto_id)
     {
-        $proyecto = TimesheetProyecto::getAll('tareas_'.$proyecto_id)->find($proyecto_id);
+        $proyecto = TimesheetProyecto::getAll('tareas_' . $proyecto_id)->find($proyecto_id);
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -1117,7 +1118,7 @@ class TimesheetController extends Controller
 
             $cliente = TimesheetCliente::find($id);
 
-            if (! $cliente) {
+            if (!$cliente) {
                 abort(404);
             }
 
@@ -1337,9 +1338,9 @@ class TimesheetController extends Controller
     public function proyectosEmpleados($id)
     {
         abort_if(Gate::denies('asignar_empleados'), Response::HTTP_FORBIDDEN, '403 Forbidden'); //Nuevo permiso
-        $proyecto = TimesheetProyecto::getAll('empleado_'.$id)->find($id);
+        $proyecto = TimesheetProyecto::getAll('empleado_' . $id)->find($id);
 
-        if (! $proyecto) {
+        if (!$proyecto) {
             abort(404);
         }
 
@@ -1353,7 +1354,7 @@ class TimesheetController extends Controller
     public function proyectosExternos($id)
     {
         abort_if(Gate::denies('asignar_externos'), Response::HTTP_FORBIDDEN, '403 Forbidden'); //Nuevo permiso
-        $proyecto = TimesheetProyecto::getAll('externos_'.$id)->find($id);
+        $proyecto = TimesheetProyecto::getAll('externos_' . $id)->find($id);
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -1366,7 +1367,7 @@ class TimesheetController extends Controller
     {
         abort_if(Gate::denies('timesheet_administrador_proyectos_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden'); //Nuevo permiso
         $proyecto = TimesheetProyecto::getAll()->find($id);
-        if (! $proyecto) {
+        if (!$proyecto) {
             return redirect()->route('admin.timesheet-proyectos')->with('error', 'El registro fue eliminado ');
         }
         $clientes = TimesheetCliente::getAll();
