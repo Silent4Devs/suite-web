@@ -46,7 +46,7 @@ class EvTrimestralConfigCategorias extends Component
 
     public function removeCategoria($keyIndex, $id_borrar = null)
     {
-        if (! empty($id_borrar)) {
+        if (!empty($id_borrar)) {
             $tipo = TipoObjetivo::find($id_borrar);
             $tipo->delete();
         }
@@ -60,10 +60,10 @@ class EvTrimestralConfigCategorias extends Component
         return view('livewire.ev-trimestral-config-categorias');
     }
 
-    public function submitForm($data)
-    {
-        dd($data);
-    }
+    // public function submitForm($data)
+    // {
+    //     dd($data);
+    // }
 
     public function editRegistro($entrada, $campo, $id_edit, $key)
     {

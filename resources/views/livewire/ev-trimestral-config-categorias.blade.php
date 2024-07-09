@@ -81,10 +81,9 @@
                 <span class="material-symbols-outlined">add_circle</span>
                 Agregar Categoría
             </div> --}}
-
-                <button class="btn btn-primary" type="submit">
+                {{-- <button class="btn btn-primary" type="submit">
                     GUARDAR
-                </button>
+                </button> --}}
             </div>
         </form>
     </div>
