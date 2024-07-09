@@ -150,7 +150,7 @@
                         <select name="aprobadores_firma[]" id="aprobadores" multiple class="form-control">
                             @foreach ($firma->aprobadores as $aprobador)
                                 <option value="{{ $aprobador->id }}"
-                                    {{ $firma->aprobadores->contains('id', $aprobador->id) ? 'selected' : '' }}>
+                                    {{ $aprobacionFirmaContrato->contains('aprobador_id', $aprobador->id) ? 'selected' : '' }}>
                                     {{ $aprobador->name }}
                                 </option>
                             @endforeach
