@@ -170,7 +170,7 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>Periodicidad: Trimestral</th>
+                                    <th>Periodicidad: {{ ucfirst($periodo_evaluacion) }}</th>
                                     <th>Fecha de inicio de la evaluación</th>
                                     <th>Fecha de fin de la evaluación</th>
                                     <th>Habilitar</th>
@@ -184,7 +184,8 @@
                                                 <input type="text" name="nombre_evaluacion[]"
                                                     id="nombre_evaluacion_{{ $index }}"
                                                     wire:model="arreglo_periodos.{{ $index }}.nombre_evaluacion"
-                                                    class="form-control" value="{{ $ap['nombre_evaluacion'] }}">
+                                                    class="form-control"
+                                                    value="{{ $ap['nombre_evaluacion'] }}"@if ($index == 0) required @endif>
                                                 <label for="">Evaluación*</label>
                                             </div>
                                         </td>
@@ -192,7 +193,8 @@
                                             <div class="form-group anima-focus">
                                                 <input type="date" placeholder=""
                                                     wire:model="arreglo_periodos.{{ $index }}.fecha_inicio"
-                                                    class="form-control" value="{{ $ap['fecha_inicio'] }}">
+                                                    class="form-control"
+                                                    value="{{ $ap['fecha_inicio'] }}"@if ($index == 0) required @endif>
                                                 <label for="">Inicio de la evaluación</label>
                                             </div>
                                         </td>
@@ -200,14 +202,15 @@
                                             <div class="form-group anima-focus">
                                                 <input type="date" placeholder=""
                                                     wire:model="arreglo_periodos.{{ $index }}.fecha_fin"
-                                                    class="form-control" value="{{ $ap['fecha_fin'] }}">
+                                                    class="form-control"
+                                                    value="{{ $ap['fecha_fin'] }}"@if ($index == 0) required @endif>
                                                 <label for="">Fin de la evaluación</label>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-group">
                                                 <input type="checkbox" class="form-control"
-                                                    wire:model="arreglo_periodos.{{ $index }}.habilitar">
+                                                    wire:model="arreglo_periodos.{{ $index }}.habilitar"@if ($index == 0) disabled @endif>
                                             </div>
                                         </td>
                                     </tr>
