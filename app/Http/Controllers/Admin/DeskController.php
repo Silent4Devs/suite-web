@@ -295,7 +295,6 @@ class DeskController extends Controller
 
 
         if ($incidentesSeguridad->estatus === 'Cerrado') {
-            // Enviar correos electrónicos
             foreach ($empleados as $empleado) {
                 Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->send(new EmpleadoEmail($empleado, $status, $incidentesSeguridad->id, $organizacion));
             }
@@ -532,8 +531,7 @@ class DeskController extends Controller
 
         $aprobadorSeleccionado->save();
 
-        $empleadoIds = $request->participantes;
-
+        $empleadoIds = $request->participantes ?? [];
 
         // Obtener empleados desde la base de datos
         $empleados = User::select('id', 'name', 'email')->whereIn('id', $empleadoIds)->get();
@@ -719,7 +717,7 @@ class DeskController extends Controller
 
         $aprobadorSeleccionado->save();
 
-        $empleadoIds = $request->participantes;
+        $empleadoIds = $request->participantes ?? [];
 
 
         // Obtener empleados desde la base de datos
@@ -906,7 +904,7 @@ class DeskController extends Controller
 
         $aprobadorSeleccionado->save();
 
-        $empleadoIds = $request->participantes;
+        $empleadoIds = $request->participantes ?? [];
 
 
         // Obtener empleados desde la base de datos
@@ -1098,7 +1096,7 @@ class DeskController extends Controller
 
         $aprobadorSeleccionado->save();
 
-        $empleadoIds = $request->participantes;
+        $empleadoIds = $request->participantes ?? [];
 
         // Obtener empleados desde la base de datos
         $empleados = User::select('id', 'name', 'email')->whereIn('id', $empleadoIds)->get();
@@ -1274,7 +1272,7 @@ class DeskController extends Controller
 
         $aprobadorSeleccionado->save();
 
-        $empleadoIds = $request->participantes;
+        $empleadoIds = $request->participantes ?? [];
 
         // Obtener empleados desde la base de datos
         $empleados = User::select('id', 'name', 'email')->whereIn('id', $empleadoIds)->get();

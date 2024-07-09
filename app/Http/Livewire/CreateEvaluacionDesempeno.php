@@ -152,13 +152,98 @@ class CreateEvaluacionDesempeno extends Component
 
     public function primerPaso()
     {
-        if ($this->activar_objetivos == false) {
+        // Validación de nombre de la evaluación
+        if (empty($this->nombre_evaluacion)) {
+            $this->alert('warning', 'Nombre de Evaluación Requerido', [
+                'position' => 'center',
+                'timer' => 6000,
+                'toast' => false,
+                'text' => 'Debe proporcionar un nombre para la evaluación.',
+                'showConfirmButton' => true,
+                'confirmButtonText' => 'Entendido',
+                'timerProgressBar' => true,
+            ]);
+            return;
+        }
+
+        // Validación de selección de objetivos y competencias
+        if (!$this->activar_objetivos && !$this->activar_competencias) {
+            $this->alert('warning', 'Selección Requerida', [
+                'position' => 'center',
+                'timer' => 6000,
+                'toast' => false,
+                'text' => 'Debe seleccionar al menos una opción: objetivos, competencias, o ambos.',
+                'showConfirmButton' => true,
+                'confirmButtonText' => 'Entendido',
+                'timerProgressBar' => true,
+            ]);
+            return;
+        }
+
+        // Validación de porcentajes
+        if ($this->activar_objetivos && $this->activar_competencias) {
+            if (($this->porcentaje_objetivos + $this->porcentaje_competencias) != 100) {
+                $this->alert('warning', 'Porcentaje Incorrecto', [
+                    'position' => 'center',
+                    'timer' => 6000,
+                    'toast' => false,
+                    'text' => 'La suma de los porcentajes de objetivos y competencias debe ser igual a 100%.',
+                    'showConfirmButton' => true,
+                    'confirmButtonText' => 'Entendido',
+                    'timerProgressBar' => true,
+                ]);
+                return;
+            }
+
+            if ($this->porcentaje_objetivos == 0 || $this->porcentaje_competencias == 0) {
+                $this->alert('warning', 'Porcentaje Incorrecto', [
+                    'position' => 'center',
+                    'timer' => 6000,
+                    'toast' => false,
+                    'text' => 'Los porcentajes de objetivos y competencias no pueden ser 0 si ambos están seleccionados.',
+                    'showConfirmButton' => true,
+                    'confirmButtonText' => 'Entendido',
+                    'timerProgressBar' => true,
+                ]);
+                return;
+            }
+        } elseif ($this->activar_objetivos && !$this->activar_competencias) {
+            if ($this->porcentaje_objetivos != 100) {
+                $this->alert('warning', 'Porcentaje Incorrecto', [
+                    'position' => 'center',
+                    'timer' => 6000,
+                    'toast' => false,
+                    'text' => 'El porcentaje de objetivos debe ser igual a 100%.',
+                    'showConfirmButton' => true,
+                    'confirmButtonText' => 'Entendido',
+                    'timerProgressBar' => true,
+                ]);
+                return;
+            }
+        } elseif (!$this->activar_objetivos && $this->activar_competencias) {
+            if ($this->porcentaje_competencias != 100) {
+                $this->alert('warning', 'Porcentaje Incorrecto', [
+                    'position' => 'center',
+                    'timer' => 6000,
+                    'toast' => false,
+                    'text' => 'El porcentaje de competencias debe ser igual a 100%.',
+                    'showConfirmButton' => true,
+                    'confirmButtonText' => 'Entendido',
+                    'timerProgressBar' => true,
+                ]);
+                return;
+            }
+        }
+
+        // Establecer porcentaje a 0 si no está activado
+        if (!$this->activar_objetivos) {
             $this->porcentaje_objetivos = 0;
         }
-        if ($this->activar_competencias == false) {
+        if (!$this->activar_competencias) {
             $this->porcentaje_competencias = 0;
         }
 
+        // Guardar los datos del primer paso
         $this->datosPaso1 = [
             'nombre' => $this->nombre_evaluacion,
             'descripcion' => $this->descripcion_evaluacion,
@@ -168,26 +253,45 @@ class CreateEvaluacionDesempeno extends Component
             'porcentaje_competencias' => $this->porcentaje_competencias,
         ];
 
+        // Avanzar al siguiente paso
         $this->paso = 2;
     }
 
     public function segundoPaso()
     {
-        // dd('2', $this->arreglo_periodos);
         $this->datosPaso2 = [];
 
         foreach ($this->arreglo_periodos as $key => $ap) {
-            $this->datosPaso2[] =
-                [
-                    'nombre_evaluacion' => $ap['nombre_evaluacion'],
-                    'fecha_inicio' => $ap['fecha_inicio'],
-                    'fecha_fin' => $ap['fecha_fin'],
-                    'habilitar' => $ap['habilitar'],
-                ];
+            $fechaInicio = $key === 0 ? $ap['fecha_inicio'] : null;
+            $fechaFin = $key === 0 ? $ap['fecha_fin'] : null;
+            $habilitar = $key === 0 ? true : false;
+
+            // Validar que la primera posición tenga fechas
+            if ($key === 0 && (empty($fechaInicio) || empty($fechaFin))) {
+                // Emitir alerta si faltan las fechas
+                $this->alert('warning', 'Faltan fechas en el primer período', [
+                    'position' => 'center',
+                    'timer' => '6000',
+                    'toast' => false,
+                    'text' => 'Por favor complete las fechas de inicio y fin en el primer período.',
+                    'showConfirmButton' => true,
+                    'confirmButtonText' => 'Confirmar',
+                    'timerProgressBar' => true,
+                ]);
+                return;
+            }
+
+            $this->datosPaso2[] = [
+                'nombre_evaluacion' => $ap['nombre_evaluacion'],
+                'fecha_inicio' => $fechaInicio,
+                'fecha_fin' => $fechaFin,
+                'habilitar' => $habilitar,
+            ];
         }
-        // dd('datos', $this->datosPaso2);
+
         $this->paso = 3;
     }
+
 
     public function tercerPaso()
     {
@@ -259,7 +363,7 @@ class CreateEvaluacionDesempeno extends Component
         }
 
         foreach ($this->datosPaso2 as $key => $p) {
-            if (! empty($p['nombre_evaluacion'])) {
+            if (!empty($p['nombre_evaluacion'])) {
                 $periodos_creados[] = PeriodosEvaluacionDesempeno::create([
                     'evaluacion_desempeno_id' => $evaluacion->id,
                     'nombre_evaluacion' => $p['nombre_evaluacion'],
@@ -437,142 +541,54 @@ class CreateEvaluacionDesempeno extends Component
 
     public function seleccionPeriodo($periodo, $valor)
     {
-        // dd($periodo, $valor);
         $this->arreglo_periodos = [];
         $this->periodo_evaluacion = $periodo;
-        switch ($periodo) {
-            case 'mensual':
-                $this->mensual = $valor;
-                $this->bimestral = false;
-                $this->trimestral = false;
-                $this->semestral = false;
-                $this->anualmente = false;
-                $this->abierta = false;
 
-                if ($valor) {
-                    for ($i = 1; $i <= 12; $i++) {
-                        $this->arreglo_periodos[] = [
-                            'nombre_evaluacion' => 'T'.$i,
-                            'fecha_inicio' => null,
-                            'fecha_fin' => null,
-                            'habilitar' => false,
-                        ];
-                    }
-                }
-                // dd($this->arreglo_periodos[0]);
-                break;
+        // Desactivar todos los períodos
+        $this->mensual = $this->bimestral = $this->trimestral = $this->semestral = $this->anualmente = $this->abierta = false;
 
-            case 'bimestral':
-                $this->mensual = false;
-                $this->bimestral = $valor;
-                $this->trimestral = false;
-                $this->semestral = false;
-                $this->anualmente = false;
-                $this->abierta = false;
+        // Configurar el período seleccionado
+        $cantidad_periodos = 0;
+        if ($valor) {
+            switch ($periodo) {
+                case 'mensual':
+                    $this->mensual = true;
+                    $cantidad_periodos = 12;
+                    break;
+                case 'bimestral':
+                    $this->bimestral = true;
+                    $cantidad_periodos = 6;
+                    break;
+                case 'trimestral':
+                    $this->trimestral = true;
+                    $cantidad_periodos = 4;
+                    break;
+                case 'semestral':
+                    $this->semestral = true;
+                    $cantidad_periodos = 2;
+                    break;
+                case 'anualmente':
+                case 'abierta':
+                    $this->anualmente = ($periodo == 'anualmente');
+                    $this->abierta = ($periodo == 'abierta');
+                    $cantidad_periodos = 1;
+                    break;
+                default:
+                    // Periodo no válido
+                    return;
+            }
 
-                if ($valor) {
-                    for ($i = 1; $i <= 6; $i++) {
-                        $this->arreglo_periodos[] = [
-                            'nombre_evaluacion' => 'T'.$i,
-                            'fecha_inicio' => null,
-                            'fecha_fin' => null,
-                            'habilitar' => false,
-                        ];
-                    }
-                }
-                //dd($this->arreglo_periodos);
-                break;
-
-            case 'trimestral':
-                $this->mensual = false;
-                $this->bimestral = false;
-                $this->trimestral = $valor;
-                $this->semestral = false;
-                $this->anualmente = false;
-                $this->abierta = false;
-
-                if ($valor) {
-                    for ($i = 1; $i <= 4; $i++) {
-                        $this->arreglo_periodos[] = [
-                            'nombre_evaluacion' => 'T'.$i,
-                            'fecha_inicio' => null,
-                            'fecha_fin' => null,
-                            'habilitar' => false,
-                        ];
-                    }
-                }
-                //dd($this->arreglo_periodos);
-                break;
-
-            case 'semestral':
-                $this->mensual = false;
-                $this->bimestral = false;
-                $this->trimestral = false;
-                $this->semestral = $valor;
-                $this->anualmente = false;
-                $this->abierta = false;
-
-                if ($valor) {
-                    for ($i = 1; $i <= 2; $i++) {
-                        $this->arreglo_periodos[] = [
-                            'nombre_evaluacion' => 'T'.$i,
-                            'fecha_inicio' => null,
-                            'fecha_fin' => null,
-                            'habilitar' => false,
-                        ];
-                    }
-                }
-                //dd($this->arreglo_periodos);
-                break;
-
-            case 'anualmente':
-                $this->mensual = false;
-                $this->bimestral = false;
-                $this->trimestral = false;
-                $this->semestral = false;
-                $this->anualmente = $valor;
-                $this->abierta = false;
-
-                if ($valor) {
-                    for ($i = 1; $i <= 1; $i++) {
-                        $this->arreglo_periodos[] = [
-                            'nombre_evaluacion' => 'T'.$i,
-                            'fecha_inicio' => null,
-                            'fecha_fin' => null,
-                            'habilitar' => false,
-                        ];
-                    }
-                }
-                //dd($this->arreglo_periodos);
-                break;
-
-            case 'abierta':
-                $this->mensual = false;
-                $this->bimestral = false;
-                $this->trimestral = false;
-                $this->semestral = false;
-                $this->anualmente = false;
-                $this->abierta = $valor;
-
-                if ($valor) {
-                    for ($i = 1; $i <= 1; $i++) {
-                        $this->arreglo_periodos[] = [
-                            'nombre_evaluacion' => 'T'.$i,
-                            'fecha_inicio' => null,
-                            'fecha_fin' => null,
-                            'habilitar' => false,
-                        ];
-                    }
-                }
-                //dd($this->arreglo_periodos);
-                break;
-
-            default:
-                // code...
-                //dd($this->arreglo_periodos);
-                break;
+            for ($i = 1; $i <= $cantidad_periodos; $i++) {
+                $this->arreglo_periodos[] = [
+                    'nombre_evaluacion' => 'T' . $i,
+                    'fecha_inicio' => null,
+                    'fecha_fin' => null,
+                    'habilitar' => ($i === 1), // Solo el primer periodo habilitado
+                ];
+            }
         }
     }
+
 
     public function seleccionarEvaluados($valor)
     {
@@ -779,174 +795,113 @@ class CreateEvaluacionDesempeno extends Component
         $this->array_porcentaje_evaluadores = array_values($this->array_porcentaje_evaluadores);
     }
 
-    public function borrador()
+    public function guardarBorrador()
     {
+        // Comienza o continúa el borrador de la evaluación
+        $evaluacion = EvaluacionDesempeno::create(
+            [
+                'nombre' => $this->datosPaso1['nombre'] ?? '',
+                'descripcion' => $this->datosPaso1['descripcion'] ?? '',
+                'activar_objetivos' => $this->datosPaso1['activar_objetivos'] ?? 0,
+                'porcentaje_objetivos' => $this->datosPaso1['porcentaje_objetivos'] ?? 0,
+                'activar_competencias' => $this->datosPaso1['activar_competencias'] ?? 0,
+                'porcentaje_competencias' => $this->datosPaso1['porcentaje_competencias'] ?? 0,
+                'tipo_periodo' => $this->periodo_evaluacion ?? null,
+                'estatus' => 0, // Estatus de borrador
+                'autor_id' => User::getCurrentUser()->empleado->id,
+            ]
+        );
+
+        // Guardar el paso actual en la evaluación (por ejemplo, paso 1, 2, 3, etc.)
+        $evaluacion->update(['paso_actual' => $this->paso]);
+
+        // Guardar los datos del paso actual
         switch ($this->paso) {
             case 1:
-                if (! empty($this->nombre_evaluacion)) {
-                    $this->primerPaso();
-                    // dd($this->datosPaso1);
-                    $evaluacion = EvaluacionDesempeno::create([
-                        'nombre' => $this->datosPaso1['nombre'],
-                        'descripcion' => $this->datosPaso1['descripcion'],
-                        'activar_objetivos' => $this->datosPaso1['activar_objetivos'],
-                        'porcentaje_objetivos' => $this->datosPaso1['porcentaje_objetivos'],
-                        'activar_competencias' => $this->datosPaso1['activar_competencias'],
-                        'porcentaje_competencias' => $this->datosPaso1['porcentaje_competencias'],
-                        'tipo_periodo' => null,
-                        'estatus' => 0,
-                    ]);
-                } else {
-                    //alerta
-                    dd('alerta');
-                }
-
-                return redirect(route('admin.rh.evaluaciones-desempeno.index'));
+                // Paso 1 ya guardado arriba
                 break;
 
             case 2:
-                $this->primerPaso();
-
-                $evaluacion = EvaluacionDesempeno::create([
-                    'nombre' => $this->datosPaso1['nombre'],
-                    'descripcion' => $this->datosPaso1['descripcion'],
-                    'activar_objetivos' => $this->datosPaso1['activar_objetivos'],
-                    'porcentaje_objetivos' => $this->datosPaso1['porcentaje_objetivos'],
-                    'activar_competencias' => $this->datosPaso1['activar_competencias'],
-                    'porcentaje_competencias' => $this->datosPaso1['porcentaje_competencias'],
-                    'tipo_periodo' => null,
-                    'estatus' => 0,
-                ]);
-
-                if (! empty($this->periodo_evaluacion)) {
-                    $evaluacion->update([
-                        'tipo_periodo' => $this->periodo_evaluacion,
-                    ]);
-
-                    $this->segundoPaso();
-
-                    foreach ($this->datosPaso2 as $key => $p) {
-                        if (! empty($p['nombre_evaluacion'])) {
-                            PeriodosEvaluacionDesempeno::create([
-                                'evaluacion_desempeno_id' => $evaluacion->id,
-                                'nombre_evaluacion' => $p['nombre_evaluacion'],
-                                'fecha_inicio' => $p['fecha_inicio'],
-                                'fecha_fin' => $p['fecha_fin'],
-                                'habilitado' => $p['habilitar'],
-                            ]);
-                        }
-                    }
-                }
-
-                return redirect(route('admin.rh.evaluaciones-desempeno.index'));
+                $this->guardarPaso2($evaluacion);
                 break;
 
             case 3:
-                $this->primerPaso();
-
-                $evaluacion = EvaluacionDesempeno::create([
-                    'nombre' => $this->datosPaso1['nombre'],
-                    'descripcion' => $this->datosPaso1['descripcion'],
-                    'activar_objetivos' => $this->datosPaso1['activar_objetivos'],
-                    'porcentaje_objetivos' => $this->datosPaso1['porcentaje_objetivos'],
-                    'activar_competencias' => $this->datosPaso1['activar_competencias'],
-                    'porcentaje_competencias' => $this->datosPaso1['porcentaje_competencias'],
-                    'tipo_periodo' => null,
-                    'estatus' => 0,
-                ]);
-
-                if (! empty($this->periodo_evaluacion)) {
-                    $evaluacion->update([
-                        'tipo_periodo' => $this->periodo_evaluacion,
-                    ]);
-
-                    $this->segundoPaso();
-
-                    foreach ($this->datosPaso2 as $key => $p) {
-                        if (! empty($p['nombre_evaluacion'])) {
-                            PeriodosEvaluacionDesempeno::create([
-                                'evaluacion_desempeno_id' => $evaluacion->id,
-                                'nombre_evaluacion' => $p['nombre_evaluacion'],
-                                'fecha_inicio' => $p['fecha_inicio'],
-                                'fecha_fin' => $p['fecha_fin'],
-                                'habilitado' => $p['habilitar'],
-                            ]);
-                        }
-                    }
-                }
-
-                return redirect(route('admin.rh.evaluaciones-desempeno.index'));
+                $this->guardarPaso2($evaluacion);
+                $this->guardarPaso3($evaluacion);
                 break;
 
             case 4:
-                $this->primerPaso();
+                $this->guardarPaso2($evaluacion);
+                $this->guardarPaso3($evaluacion);
+                $this->guardarPaso4($evaluacion);
+                break;
+        }
 
-                $evaluacion = EvaluacionDesempeno::create([
-                    'nombre' => $this->datosPaso1['nombre'],
-                    'descripcion' => $this->datosPaso1['descripcion'],
-                    'activar_objetivos' => $this->datosPaso1['activar_objetivos'],
-                    'porcentaje_objetivos' => $this->datosPaso1['porcentaje_objetivos'],
-                    'activar_competencias' => $this->datosPaso1['activar_competencias'],
-                    'porcentaje_competencias' => $this->datosPaso1['porcentaje_competencias'],
-                    'tipo_periodo' => null,
-                    'estatus' => 0,
-                ]);
+        // Redirigir a la vista de índice con un mensaje de éxito
+        return redirect(route('admin.rh.evaluaciones-desempeno.index'))->with('success', 'Borrador guardado correctamente.');
+    }
 
-                if (! empty($this->periodo_evaluacion)) {
-                    $evaluacion->update([
-                        'tipo_periodo' => $this->periodo_evaluacion,
-                    ]);
+    private function guardarPaso2($evaluacion)
+    {
+        if (!empty($this->periodo_evaluacion)) {
+            $evaluacion->update(['tipo_periodo' => $this->periodo_evaluacion]);
 
-                    $this->segundoPaso();
-
-                    foreach ($this->datosPaso2 as $key => $p) {
-                        if (! empty($p['nombre_evaluacion'])) {
-                            PeriodosEvaluacionDesempeno::create([
-                                'evaluacion_desempeno_id' => $evaluacion->id,
-                                'nombre_evaluacion' => $p['nombre_evaluacion'],
-                                'fecha_inicio' => $p['fecha_inicio'],
-                                'fecha_fin' => $p['fecha_fin'],
-                                'habilitado' => $p['habilitar'],
-                            ]);
-                        }
-                    }
-                }
-
-                foreach ($this->array_evaluados as $key => $evaluado) {
-                    // dd($evaluado);
-                    $evaluado = EvaluadosEvaluacionDesempeno::create(
+            foreach ($this->datosPaso2 as $p) {
+                if (!empty($p['nombre_evaluacion'])) {
+                    PeriodosEvaluacionDesempeno::updateOrCreate(
+                        ['evaluacion_desempeno_id' => $evaluacion->id, 'nombre_evaluacion' => $p['nombre_evaluacion']],
                         [
-                            'evaluacion_desempeno_id' => $evaluacion->id,
-                            'evaluado_desempeno_id' => $evaluado['id'],
+                            'fecha_inicio' => $p['fecha_inicio'],
+                            'fecha_fin' => $p['fecha_fin'],
+                            'habilitado' => $p['habilitar'],
                         ]
                     );
+                }
+            }
+        }
+    }
 
-                    foreach ($this->array_evaluadores[$key]['evaluador_objetivos'] as $subkey => $evaluador) {
-                        if (! empty($evaluador)) {
-                            EvaluadoresEvaluacionObjetivosDesempeno::create([
-                                'evaluado_desempeno_id' => $evaluado->id,
-                                'evaluador_desempeno_id' => $evaluador,
-                                'porcentaje_objetivos' => $this->array_porcentaje_evaluadores[$key]['porcentaje_evaluador_objetivos'][$subkey],
-                            ]);
-                        }
-                    }
-                    foreach ($this->array_evaluadores[$key]['evaluador_competencias'] as $subkey => $evaluador) {
-                        if (! empty($evaluador)) {
-                            EvaluadoresEvaluacionObjetivosDesempeno::create([
-                                'evaluado_desempeno_id' => $evaluado->id,
-                                'evaluador_desempeno_id' => $evaluador,
-                                'porcentaje_objetivos' => $this->array_porcentaje_evaluadores[$key]['porcentaje_evaluador_competencias'][$subkey],
-                            ]);
-                        }
-                    }
+    private function guardarPaso3($evaluacion)
+    {
+        foreach ($this->array_evaluados as $evaluado) {
+            EvaluadosEvaluacionDesempeno::updateOrCreate(
+                ['evaluacion_desempeno_id' => $evaluacion->id, 'evaluado_desempeno_id' => $evaluado['id']],
+                []
+            );
+        }
+    }
+
+    private function guardarPaso4($evaluacion)
+    {
+        foreach ($this->array_evaluados as $key => $evaluado) {
+            $new_evaluado = EvaluadosEvaluacionDesempeno::updateOrCreate(
+                ['evaluacion_desempeno_id' => $evaluacion->id, 'evaluado_desempeno_id' => $evaluado['id']],
+                []
+            );
+
+            foreach ($this->datosPaso2 as $p) {
+                foreach ($this->array_evaluadores[$key]['evaluador_objetivos'] as $subkey => $evaluador) {
+                    EvaluadoresEvaluacionObjetivosDesempeno::updateOrCreate(
+                        [
+                            'evaluado_desempeno_id' => $new_evaluado->id,
+                            'evaluador_desempeno_id' => $evaluador,
+                            'periodo_id' => $p['id'],
+                        ],
+                        ['porcentaje_objetivos' => $this->array_porcentaje_evaluadores[$key]['porcentaje_evaluador_objetivos'][$subkey]]
+                    );
                 }
 
-                return redirect(route('admin.rh.evaluaciones-desempeno.index'));
-                break;
-
-            default:
-                return redirect(route('admin.rh.evaluaciones-desempeno.index'));
-                break;
+                foreach ($this->array_evaluadores[$key]['evaluador_competencias'] as $subkey => $evaluador) {
+                    EvaluadoresEvaluacionCompetenciasDesempeno::updateOrCreate(
+                        [
+                            'evaluado_desempeno_id' => $new_evaluado->id,
+                            'evaluador_desempeno_id' => $evaluador,
+                            'periodo_id' => $p['id'],
+                        ],
+                        ['porcentaje_competencias' => $this->array_porcentaje_evaluadores[$key]['porcentaje_evaluador_competencias'][$subkey]]
+                    );
+                }
+            }
         }
     }
 }
