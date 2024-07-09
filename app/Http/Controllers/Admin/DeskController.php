@@ -261,29 +261,6 @@ class DeskController extends Controller
 
         $submodulo = 1;
 
-        $existingRecord = AprobadorSeleccionado::where('seguridad_id', $incidentesSeguridad->id)->first();
-
-        if ($existingRecord) {
-            $existingRecord->delete();
-        }
-
-        $aprobadorSeleccionado = new AprobadorSeleccionado();
-
-        // Asignar cada campo individualmente
-        $aprobadorSeleccionado->modulo_id = $modulo;
-        $aprobadorSeleccionado->submodulo_id = $submodulo;
-        $aprobadorSeleccionado->user_id = Auth::id();
-        $aprobadorSeleccionado->seguridad_id = $incidentesSeguridad->id;
-        $aprobadorSeleccionado->mejoras_id = null;
-        $aprobadorSeleccionado->riesgos_id = null;
-        $aprobadorSeleccionado->sugerencias_id = null;
-        $aprobadorSeleccionado->quejas_id = null;
-        $aprobadorSeleccionado->denuncias_id = null;
-        $aprobadorSeleccionado->aprobadores = json_encode($request->participantes);
-
-        // Guardar el registro en la base de datos
-        $aprobadorSeleccionado->save();
-
         $empleadoIds = $request->participantes ?? [];
 
         // Obtener empleados desde la base de datos
@@ -317,6 +294,30 @@ class DeskController extends Controller
 
 
         if ($incidentesSeguridad->estatus === 'Cerrado' || $incidentesSeguridad->estatus === 'No procedente') {
+
+            $existingRecord = AprobadorSeleccionado::where('seguridad_id', $incidentesSeguridad->id)->first();
+
+            if ($existingRecord) {
+                $existingRecord->delete();
+            }
+
+            $aprobadorSeleccionado = new AprobadorSeleccionado();
+
+            // Asignar cada campo individualmente
+            $aprobadorSeleccionado->modulo_id = $modulo;
+            $aprobadorSeleccionado->submodulo_id = $submodulo;
+            $aprobadorSeleccionado->user_id = Auth::id();
+            $aprobadorSeleccionado->seguridad_id = $incidentesSeguridad->id;
+            $aprobadorSeleccionado->mejoras_id = null;
+            $aprobadorSeleccionado->riesgos_id = null;
+            $aprobadorSeleccionado->sugerencias_id = null;
+            $aprobadorSeleccionado->quejas_id = null;
+            $aprobadorSeleccionado->denuncias_id = null;
+            $aprobadorSeleccionado->aprobadores = json_encode($request->participantes);
+
+            // Guardar el registro en la base de datos
+            $aprobadorSeleccionado->save();
+
             foreach ($empleados as $empleado) {
                 Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new EmpleadoEmail($empleado, $status, $incidentesSeguridad->id, $organizacion));
             }
@@ -508,29 +509,6 @@ class DeskController extends Controller
 
         $submodulo = 4;
 
-        $existingRecord = AprobadorSeleccionado::where('riesgos_id', $riesgos->id)->first();
-
-        // Si existe, eliminarlo
-        if ($existingRecord) {
-            $existingRecord->delete();
-        }
-
-        $aprobadorSeleccionado = new AprobadorSeleccionado();
-
-        // Asignar cada campo individualmente
-        $aprobadorSeleccionado->modulo_id = $modulo;
-        $aprobadorSeleccionado->submodulo_id = $submodulo;
-        $aprobadorSeleccionado->user_id = Auth::id();
-        $aprobadorSeleccionado->seguridad_id = null;
-        $aprobadorSeleccionado->mejoras_id = null;
-        $aprobadorSeleccionado->riesgos_id = $riesgos->id;
-        $aprobadorSeleccionado->sugerencias_id = null;
-        $aprobadorSeleccionado->quejas_id = null;
-        $aprobadorSeleccionado->denuncias_id = null;
-        $aprobadorSeleccionado->aprobadores = json_encode($request->participantes);
-
-        $aprobadorSeleccionado->save();
-
         $empleadoIds = $request->participantes ?? [];
 
         // Obtener empleados desde la base de datos
@@ -555,6 +533,31 @@ class DeskController extends Controller
         ]);
 
         if ($riesgos->estatus === 'cerrado' || $riesgos->estatus === 'cancelado') {
+
+            $existingRecord = AprobadorSeleccionado::where('riesgos_id', $riesgos->id)->first();
+
+            // Si existe, eliminarlo
+            if ($existingRecord) {
+                $existingRecord->delete();
+            }
+
+            $aprobadorSeleccionado = new AprobadorSeleccionado();
+
+            // Asignar cada campo individualmente
+            $aprobadorSeleccionado->modulo_id = $modulo;
+            $aprobadorSeleccionado->submodulo_id = $submodulo;
+            $aprobadorSeleccionado->user_id = Auth::id();
+            $aprobadorSeleccionado->seguridad_id = null;
+            $aprobadorSeleccionado->mejoras_id = null;
+            $aprobadorSeleccionado->riesgos_id = $riesgos->id;
+            $aprobadorSeleccionado->sugerencias_id = null;
+            $aprobadorSeleccionado->quejas_id = null;
+            $aprobadorSeleccionado->denuncias_id = null;
+            $aprobadorSeleccionado->aprobadores = json_encode($request->participantes);
+
+            $aprobadorSeleccionado->save();
+
+
             foreach ($empleados as $empleado) {
                 Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new EmpleadoEmail($empleados, $status, $riesgos->id, $organizacion));
             }
@@ -695,29 +698,6 @@ class DeskController extends Controller
 
         $submodulo = 3;
 
-        $existingRecord = AprobadorSeleccionado::where('quejas_id', $quejas->id)->first();
-
-        // Si existe, eliminarlo
-        if ($existingRecord) {
-            $existingRecord->delete();
-        }
-
-        $aprobadorSeleccionado = new AprobadorSeleccionado();
-
-        // Asignar cada campo individualmente
-        $aprobadorSeleccionado->modulo_id = $modulo;
-        $aprobadorSeleccionado->submodulo_id = $submodulo;
-        $aprobadorSeleccionado->user_id = Auth::id();
-        $aprobadorSeleccionado->seguridad_id = null;
-        $aprobadorSeleccionado->mejoras_id = null;
-        $aprobadorSeleccionado->riesgos_id = null;
-        $aprobadorSeleccionado->sugerencias_id = null;
-        $aprobadorSeleccionado->quejas_id = $quejas->id;
-        $aprobadorSeleccionado->denuncias_id = null;
-        $aprobadorSeleccionado->aprobadores = json_encode($request->participantes);
-
-        $aprobadorSeleccionado->save();
-
         $empleadoIds = $request->participantes ?? [];
 
 
@@ -745,6 +725,31 @@ class DeskController extends Controller
         ]);
 
         if ($quejas->estatus === 'cerrado' || $quejas->estatus === 'cancelado') {
+
+            $existingRecord = AprobadorSeleccionado::where('quejas_id', $quejas->id)->first();
+
+            // Si existe, eliminarlo
+            if ($existingRecord) {
+                $existingRecord->delete();
+            }
+
+            $aprobadorSeleccionado = new AprobadorSeleccionado();
+
+            // Asignar cada campo individualmente
+            $aprobadorSeleccionado->modulo_id = $modulo;
+            $aprobadorSeleccionado->submodulo_id = $submodulo;
+            $aprobadorSeleccionado->user_id = Auth::id();
+            $aprobadorSeleccionado->seguridad_id = null;
+            $aprobadorSeleccionado->mejoras_id = null;
+            $aprobadorSeleccionado->riesgos_id = null;
+            $aprobadorSeleccionado->sugerencias_id = null;
+            $aprobadorSeleccionado->quejas_id = $quejas->id;
+            $aprobadorSeleccionado->denuncias_id = null;
+            $aprobadorSeleccionado->aprobadores = json_encode($request->participantes);
+
+            $aprobadorSeleccionado->save();
+
+
             // Enviar correos electrónicos
             foreach ($empleados as $empleado) {
                 Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new EmpleadoEmail($empleado, $status, $quejas->id, $organizacion));
@@ -882,31 +887,7 @@ class DeskController extends Controller
 
         $submodulo = 6;
 
-        $existingRecord = AprobadorSeleccionado::where('denuncias_id', $denuncias->id)->first();
-
-        // Si existe, eliminarlo
-        if ($existingRecord) {
-            $existingRecord->delete();
-        }
-
-        $aprobadorSeleccionado = new AprobadorSeleccionado();
-
-        // Asignar cada campo individualmente
-        $aprobadorSeleccionado->modulo_id = $modulo;
-        $aprobadorSeleccionado->submodulo_id = $submodulo;
-        $aprobadorSeleccionado->user_id = Auth::id();
-        $aprobadorSeleccionado->seguridad_id = null;
-        $aprobadorSeleccionado->mejoras_id = null;
-        $aprobadorSeleccionado->riesgos_id = null;
-        $aprobadorSeleccionado->sugerencias_id = null;
-        $aprobadorSeleccionado->quejas_id = null;
-        $aprobadorSeleccionado->denuncias_id = $denuncias->id;
-        $aprobadorSeleccionado->aprobadores = json_encode($request->participantes);
-
-        $aprobadorSeleccionado->save();
-
         $empleadoIds = $request->participantes ?? [];
-
 
         // Obtener empleados desde la base de datos
         $empleados = User::select('id', 'name', 'email')->whereIn('id', $empleadoIds)->get();
@@ -927,6 +908,30 @@ class DeskController extends Controller
         ]);
 
         if ($denuncias->estatus === 'cerrado' || $denuncias->estatus === 'cancelado') {
+
+            $existingRecord = AprobadorSeleccionado::where('denuncias_id', $denuncias->id)->first();
+
+            // Si existe, eliminarlo
+            if ($existingRecord) {
+                $existingRecord->delete();
+            }
+
+            $aprobadorSeleccionado = new AprobadorSeleccionado();
+
+            // Asignar cada campo individualmente
+            $aprobadorSeleccionado->modulo_id = $modulo;
+            $aprobadorSeleccionado->submodulo_id = $submodulo;
+            $aprobadorSeleccionado->user_id = Auth::id();
+            $aprobadorSeleccionado->seguridad_id = null;
+            $aprobadorSeleccionado->mejoras_id = null;
+            $aprobadorSeleccionado->riesgos_id = null;
+            $aprobadorSeleccionado->sugerencias_id = null;
+            $aprobadorSeleccionado->quejas_id = null;
+            $aprobadorSeleccionado->denuncias_id = $denuncias->id;
+            $aprobadorSeleccionado->aprobadores = json_encode($request->participantes);
+
+            $aprobadorSeleccionado->save();
+
             // Enviar correos electrónicos
             foreach ($empleados as $empleado) {
                 Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new EmpleadoEmail($empleado, $status, $denuncias->id, $organizacion));
@@ -1074,28 +1079,6 @@ class DeskController extends Controller
 
         $mejoras = Mejoras::findOrfail(intval($id_mejoras));
 
-        $existingRecord = AprobadorSeleccionado::where('mejoras_id', $mejoras->id)->first();
-
-        // Si existe, eliminarlo
-        if ($existingRecord) {
-            $existingRecord->delete();
-        }
-
-        $aprobadorSeleccionado = new AprobadorSeleccionado();
-
-        // Asignar cada campo individualmente
-        $aprobadorSeleccionado->modulo_id = $modulo;
-        $aprobadorSeleccionado->submodulo_id = $submodulo;
-        $aprobadorSeleccionado->user_id = Auth::id();
-        $aprobadorSeleccionado->seguridad_id = null;
-        $aprobadorSeleccionado->mejoras_id = $mejoras->id;
-        $aprobadorSeleccionado->riesgos_id = null;
-        $aprobadorSeleccionado->sugerencias_id = null;
-        $aprobadorSeleccionado->quejas_id = null;
-        $aprobadorSeleccionado->denuncias_id = null;
-        $aprobadorSeleccionado->aprobadores = json_encode($request->participantes);
-
-        $aprobadorSeleccionado->save();
 
         $empleadoIds = $request->participantes ?? [];
 
@@ -1119,6 +1102,29 @@ class DeskController extends Controller
         ]);
 
         if ($mejoras->estatus === 'cerrado' || $mejoras->estatus === 'cancelado') {
+            $existingRecord = AprobadorSeleccionado::where('mejoras_id', $mejoras->id)->first();
+
+            // Si existe, eliminarlo
+            if ($existingRecord) {
+                $existingRecord->delete();
+            }
+
+            $aprobadorSeleccionado = new AprobadorSeleccionado();
+
+            // Asignar cada campo individualmente
+            $aprobadorSeleccionado->modulo_id = $modulo;
+            $aprobadorSeleccionado->submodulo_id = $submodulo;
+            $aprobadorSeleccionado->user_id = Auth::id();
+            $aprobadorSeleccionado->seguridad_id = null;
+            $aprobadorSeleccionado->mejoras_id = $mejoras->id;
+            $aprobadorSeleccionado->riesgos_id = null;
+            $aprobadorSeleccionado->sugerencias_id = null;
+            $aprobadorSeleccionado->quejas_id = null;
+            $aprobadorSeleccionado->denuncias_id = null;
+            $aprobadorSeleccionado->aprobadores = json_encode($request->participantes);
+
+            $aprobadorSeleccionado->save();
+
             // Enviar correos electrónicos
             foreach ($empleados as $empleado) {
                 Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new EmpleadoEmail($empleado, $status, $mejoras->id, $organizacion));
@@ -1250,29 +1256,6 @@ class DeskController extends Controller
 
         $submodulo = 5;
 
-        $existingRecord = AprobadorSeleccionado::where('sugerencias_id', $sugerencias->id)->first();
-
-        // Si existe, eliminarlo
-        if ($existingRecord) {
-            $existingRecord->delete();
-        }
-
-        $aprobadorSeleccionado = new AprobadorSeleccionado();
-
-        // Asignar cada campo individualmente
-        $aprobadorSeleccionado->modulo_id = $modulo;
-        $aprobadorSeleccionado->submodulo_id = $submodulo;
-        $aprobadorSeleccionado->user_id = Auth::id();
-        $aprobadorSeleccionado->seguridad_id = null;
-        $aprobadorSeleccionado->mejoras_id = null;
-        $aprobadorSeleccionado->riesgos_id = null;
-        $aprobadorSeleccionado->sugerencias_id = $sugerencias->id;
-        $aprobadorSeleccionado->quejas_id = null;
-        $aprobadorSeleccionado->denuncias_id = null;
-        $aprobadorSeleccionado->aprobadores = json_encode($request->participantes);
-
-        $aprobadorSeleccionado->save();
-
         $empleadoIds = $request->participantes ?? [];
 
         // Obtener empleados desde la base de datos
@@ -1292,6 +1275,30 @@ class DeskController extends Controller
         ]);
 
         if ($sugerencias->estatus === 'cerrado' || $sugerencias->estatus === 'cancelado') {
+
+            $existingRecord = AprobadorSeleccionado::where('sugerencias_id', $sugerencias->id)->first();
+
+            // Si existe, eliminarlo
+            if ($existingRecord) {
+                $existingRecord->delete();
+            }
+
+            $aprobadorSeleccionado = new AprobadorSeleccionado();
+
+            // Asignar cada campo individualmente
+            $aprobadorSeleccionado->modulo_id = $modulo;
+            $aprobadorSeleccionado->submodulo_id = $submodulo;
+            $aprobadorSeleccionado->user_id = Auth::id();
+            $aprobadorSeleccionado->seguridad_id = null;
+            $aprobadorSeleccionado->mejoras_id = null;
+            $aprobadorSeleccionado->riesgos_id = null;
+            $aprobadorSeleccionado->sugerencias_id = $sugerencias->id;
+            $aprobadorSeleccionado->quejas_id = null;
+            $aprobadorSeleccionado->denuncias_id = null;
+            $aprobadorSeleccionado->aprobadores = json_encode($request->participantes);
+
+            $aprobadorSeleccionado->save();
+
             // Enviar correos electrónicos
             foreach ($empleados as $empleado) {
                 Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new EmpleadoEmail($empleado, $status, $sugerencias->id, $organizacion));
