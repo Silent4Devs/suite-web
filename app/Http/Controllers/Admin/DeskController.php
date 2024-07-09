@@ -318,7 +318,7 @@ class DeskController extends Controller
 
         if ($incidentesSeguridad->estatus === 'Cerrado' || $incidentesSeguridad->estatus === 'No procedente') {
             foreach ($empleados as $empleado) {
-                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->send(new EmpleadoEmail($empleado, $status, $incidentesSeguridad->id, $organizacion));
+                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new EmpleadoEmail($empleado, $status, $incidentesSeguridad->id, $organizacion));
             }
         }
 
@@ -556,7 +556,7 @@ class DeskController extends Controller
 
         if ($riesgos->estatus === 'cerrado' || $riesgos->estatus === 'cancelado') {
             foreach ($empleados as $empleado) {
-                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->send(new EmpleadoEmail($empleados, $status, $riesgos->id, $organizacion));
+                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new EmpleadoEmail($empleados, $status, $riesgos->id, $organizacion));
             }
         }
 
@@ -747,7 +747,7 @@ class DeskController extends Controller
         if ($quejas->estatus === 'cerrado' || $quejas->estatus === 'cancelado') {
             // Enviar correos electrónicos
             foreach ($empleados as $empleado) {
-                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->send(new EmpleadoEmail($empleado, $status, $quejas->id, $organizacion));
+                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new EmpleadoEmail($empleado, $status, $quejas->id, $organizacion));
             }
         }
 
@@ -929,7 +929,7 @@ class DeskController extends Controller
         if ($denuncias->estatus === 'cerrado' || $denuncias->estatus === 'cancelado') {
             // Enviar correos electrónicos
             foreach ($empleados as $empleado) {
-                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->send(new EmpleadoEmail($empleado, $status, $denuncias->id, $organizacion));
+                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new EmpleadoEmail($empleado, $status, $denuncias->id, $organizacion));
             }
         }
 
@@ -1121,7 +1121,7 @@ class DeskController extends Controller
         if ($mejoras->estatus === 'cerrado' || $mejoras->estatus === 'cancelado') {
             // Enviar correos electrónicos
             foreach ($empleados as $empleado) {
-                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->send(new EmpleadoEmail($empleado, $status, $mejoras->id, $organizacion));
+                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new EmpleadoEmail($empleado, $status, $mejoras->id, $organizacion));
             }
         }
 
@@ -1294,7 +1294,7 @@ class DeskController extends Controller
         if ($sugerencias->estatus === 'cerrado' || $sugerencias->estatus === 'cancelado') {
             // Enviar correos electrónicos
             foreach ($empleados as $empleado) {
-                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->send(new EmpleadoEmail($empleado, $status, $sugerencias->id, $organizacion));
+                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new EmpleadoEmail($empleado, $status, $sugerencias->id, $organizacion));
             }
         }
 
