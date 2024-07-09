@@ -12,7 +12,8 @@ use App\Http\Controllers\Api\V1\ContadorSolicitudes\ContadorSolicitudesApiContro
 use App\Http\Controllers\Api\V1\SolicitudPermisoGoceSueldo\SolicitudPermisoGoceSueldoApiController;
 use App\Http\Controllers\Api\V1\Timesheet\TimesheetApiController;
 
-Route::post('v1/login', [AuthController::class, 'login']);
+Route::post('/v1/login', [AuthController::class, 'login']);
+Route::post('/v1/ejemplo', function () { return response()->json(['message' => 'ya funciona']); });
 
 Route::post('api/v1/logout', [AuthController::class, 'logout']);
 
