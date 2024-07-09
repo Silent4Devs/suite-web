@@ -379,8 +379,6 @@ class TimesheetController extends Controller
                     // throw $e;
                     return response()->json(['status' => 400]);
                 }
-            } else {
-                dd('Else');
             }
         }
 
