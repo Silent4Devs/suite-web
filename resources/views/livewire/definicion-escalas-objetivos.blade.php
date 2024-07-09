@@ -4,36 +4,16 @@
 
             <div class="info-first-config">
                 <h4 class="title-config">Escalas de medición</h4>
-                {{-- <p>Define los Valores y Escalas con los que se medirán los objetivos.</p> --}}
                 <p>Define las Escalas con las que se calificaran los objetivos.</p>
                 <hr class="my-4">
             </div>
-
-            {{-- <p>
-                Rango <br>
-                Especifica el valor mínimo y máximo que tendrá la escala de medición
-            </p>
-
-            <div class="d-flex" style="gap: 10px;">
-                <div class="form-group anima-focus" style="width: 100px;">
-                    <input type="text" class="form-control" placeholder="" wire:model.defer="minimo" name="minimo"
-                        wire:change="definirLimite('minimo', $event.target.value)">
-                    <label for="">Mínimo*</label>
-                </div>
-                <div class="form-group anima-focus" style="width: 100px;">
-                    <input type="text" class="form-control" placeholder="" wire:model.defer="maximo" name="maximo"
-                        wire:change="definirLimite('maximo', $event.target.value)">
-                    <label for="">Máximo*</label>
-                </div>
-            </div> --}}
 
             <div class="col-12">
                 <div class="form-row">
                     <div class="col-1">
                         <div class="anima-focus mb-3 ">
                             <input type="number" id="valor_estatus_1" name="valor_estatus_1"
-                                wire:model.defer="valor_estatus_1" class="form-control" placeholder=""
-                                min="{{ $minimo }}" max="{{ $maximo }}" required>
+                                wire:model.defer="valor_estatus_1" class="form-control" placeholder="" required>
                             <label for="valor_estatus_1">Valor<sup>*</sup></label>
                         </div>
                     </div>
@@ -59,8 +39,7 @@
                     <div class="col-1">
                         <div class="anima-focus mb-3 ">
                             <input type="number" id="valor_estatus_2" name="valor_estatus_2"
-                                wire:model.defer="valor_estatus_2" class="form-control" placeholder=""
-                                min="{{ $minimo }}" max="{{ $maximo }}" required>
+                                wire:model.defer="valor_estatus_2" class="form-control" placeholder="" required>
                             <label for="valor_estatus_2">Valor <sup>*</sup></label>
                         </div>
                     </div>
@@ -88,7 +67,7 @@
                             <div class="anima-focus mb-3 ">
                                 <input type="number" id="valor_estatus_arreglo_{{ $key }}"
                                     name="valor_estatus_arreglo_{{ $key }}" class="form-control" placeholder=""
-                                    {{-- min="{{ $minimo }}" max="{{ $maximo }}" --}} wire:model="parametros.{{ $key }}.valor">
+                                    wire:model="parametros.{{ $key }}.valor">
                                 <label for="valor_estatus_arreglo_{{ $key }}">Valor</label>
                             </div>
                         </div>
@@ -144,64 +123,3 @@
         </form>
     </div>
 </div>
-{{-- <div class="card card-body">
-    <div class="info-first-config">
-        <h4 class="title-config">Escalas de medición</h4>
-        <p>Define los Valores y Escalas con los que se medirán los objetivos.</p>
-        <hr class="my-4">
-    </div>
-
-    <p>
-        Rango <br>
-        Especifica el valor mínimo y máximo que tendrá la escala de medición
-    </p>
-
-    <div class="d-flex" style="gap: 10px;">
-        <div class="form-group anima-focus" style="width: 100px;">
-            <input type="text" class="form-control" placeholder="">
-            <label for="">Mínimo*</label>
-        </div>
-        <div class="form-group anima-focus" style="width: 100px;">
-            <input type="text" class="form-control" placeholder="">
-            <label for="">Máximo*</label>
-        </div>
-    </div>
-
-    <p class="mt-4">
-        Escalas <br>
-        Define las escalas de medición y asigna su Valor y Nombre
-    </p>
-    <div class="caja-items-config-escalas">
-        <div class="item-config-escala">
-            <div class="d-flex align-items-center" style="gap: 10px;">
-                <div class="form-group anima-focus" style="width: 100px;">
-                    <input type="text" class="form-control" placeholder="">
-                    <label for="">Valor*</label>
-                </div>
-                <div class="form-group anima-focus" style="width: 300px;">
-                    <input type="text" class="form-control" placeholder="">
-                    <label for="">Nombre de la escala*</label>
-                </div>
-                <div class="form-group anima-focus" style="width: 100px;">
-                    <input type="color" class="form-control" placeholder="">
-                    <label for="">Color</label>
-                </div>
-                <div class="btn-delete-escala">
-                    <i class="material-symbols-outlined" title="Eliminar"
-                        onclick="deleteItem('item-config-escala')">delete</i>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="d-flex justify-content-between align-items-center">
-        <div class="d-flex align-items-center mt-4" style="color: #006DDB; gap: 10px; cursor: pointer;"
-            onclick="addItem('item-config-escala', 'caja-items-config-escalas')">
-            <span class="material-symbols-outlined">add_circle</span>
-            Agregar Categoría
-        </div>
-
-        <button class="btn btn-primary">
-            GUARDAR
-        </button>
-    </div>
-</div> --}}
