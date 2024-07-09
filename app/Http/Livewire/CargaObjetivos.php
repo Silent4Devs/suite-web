@@ -7,8 +7,10 @@ use App\Models\Area;
 use App\Models\Empleado;
 use App\Models\PerfilEmpleado;
 use App\Models\PeriodoCargaObjetivos;
+use App\Models\PermisosCargaObjetivos;
 use App\Models\Puesto;
 use App\Models\RH\Objetivo;
+use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
@@ -117,10 +119,56 @@ class CargaObjetivos extends Component
     public function notificarCarga()
     {
         try {
+            $permisos = PermisosCargaObjetivos::select('id', 'perfil', 'permisos_asignacion', 'permiso_objetivos', 'permiso_escala')
+                ->orderBy('id')
+                ->get();
+
+            $administrador = $permisos->where('perfil', 'Administrador')->first();
+            $jefeInmediato = $permisos->where('perfil', 'Jefe Inmediato')->first();
+            $colaborador = $permisos->where('perfil', 'Colaborador')->first();
+
             $empleados = Empleado::getAltaDataColumns();
 
-            foreach ($empleados as $emp) {
-                Mail::to(removeUnicodeCharacters($emp->email))->queue(new CorreoCargaObjetivos($this->fecha_inicio, $this->fecha_fin));
+            if ($colaborador->permisos_asignacion) {
+                $correos_colaborador = $empleados->pluck('email')->toArray();
+                $correos_colaborador = array_unique($correos_colaborador);
+            }
+
+            if ($jefeInmediato->permisos_asignacion) {
+                $correos_jefeInmediato = [];
+
+                foreach ($empleados as $key_jefe => $empleado) {
+                    if ($empleado->es_supervisor) {
+                        $correos_jefeInmediato[] = $empleado->email;
+                    }
+                }
+
+                $correos_jefeInmediato = array_unique($correos_jefeInmediato);
+            }
+
+            if ($administrador->permisos_asignacion) {
+                $usuarios = User::getAllWithEmpleado();
+                $correos_administrador = [];
+
+                foreach ($usuarios as $key_usuario => $usuario) {
+                    if ($usuario->is_Admin && $usuario->empleado) {
+                        $correos_administrador[] = $usuario->empleado->email;
+                    }
+                }
+
+                $correos_administrador = array_unique($correos_administrador);
+            }
+
+            // Opcional: Combina todos los correos y elimina duplicados
+            $all_correos = array_unique(array_merge(
+                $correos_colaborador ?? [],
+                $correos_jefeInmediato ?? [],
+                $correos_administrador ?? []
+            ));
+
+            // Enviar correos
+            foreach ($all_correos as $email) {
+                Mail::to(removeUnicodeCharacters($email))->queue(new CorreoCargaObjetivos($this->fecha_inicio, $this->fecha_fin));
             }
 
             $this->alert('success', 'Notificación Exitosa.', [
@@ -149,7 +197,7 @@ class CargaObjetivos extends Component
     public function habilitarCargaObjetivos($valor)
     {
         if ($valor) {
-            if (! empty($this->fecha_inicio) && ! empty($this->fecha_fin)) {
+            if (!empty($this->fecha_inicio) && !empty($this->fecha_fin)) {
                 if ($this->fecha_inicio < $this->fecha_fin) {
 
                     PeriodoCargaObjetivos::create([

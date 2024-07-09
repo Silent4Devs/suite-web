@@ -11,21 +11,13 @@ class DefinicionEscalasObjetivos extends Component
     use LivewireAlert;
 
     public $color_estatus_1 = '#34B990';
-
     public $color_estatus_2 = '#73A7D5';
-
     public $estatus_1;
-
     public $estatus_2;
-
     public $parametros = [];
-
     public $minimo = null;
-
     public $maximo = null;
-
     public $valor_estatus_1;
-
     public $valor_estatus_2;
 
     public function addParametro1()
@@ -35,7 +27,6 @@ class DefinicionEscalasObjetivos extends Component
 
     public function removeParametro1($keyndex)
     {
-        // dd($keyndex);
         unset($this->parametros[$keyndex]);
         $this->parametros = array_values($this->parametros);
     }
@@ -52,15 +43,14 @@ class DefinicionEscalasObjetivos extends Component
             $this->estatus_2 = $escalas[1]->parametro;
             $this->color_estatus_2 = $escalas[1]->color;
             $this->valor_estatus_2 = $escalas[1]->valor;
-            // dd($escalas);
+
             foreach ($escalas as $key => $esc) {
                 if ($key > 1) {
-                    $this->parametros[$key] =
-                        [
-                            'parametro' => $esc->parametro,
-                            'color_estatus' => $esc->color,
-                            'valor' => $esc->valor,
-                        ];
+                    $this->parametros[] = [
+                        'parametro' => $esc->parametro,
+                        'color_estatus' => $esc->color,
+                        'valor' => $esc->valor,
+                    ];
                 }
             }
         }
@@ -71,50 +61,53 @@ class DefinicionEscalasObjetivos extends Component
         return view('livewire.definicion-escalas-objetivos');
     }
 
-    // public function definirLimite($limite, $valor)
-    // {
-    //     switch ($limite) {
-    //         case 'minimo':
-    //             $this->minimo = $valor;
-    //             break;
-
-    //         case 'maximo':
-    //             $this->maximo = $valor;
-    //             break;
-    //     }
-    // }
-
     public function submitForm($data)
     {
-        // dd($data);
-        $borrar = EscalasMedicionObjetivos::get();
+        // Recopilar todos los datos en un solo arreglo
+        $escalas = [
+            [
+                'parametro' => $data['estatus_1'],
+                'color' => $data['color_estatus_1'],
+                'valor' => $data['valor_estatus_1'],
+            ],
+            [
+                'parametro' => $data['estatus_2'],
+                'color' => $data['color_estatus_2'],
+                'valor' => $data['valor_estatus_2'],
+            ]
+        ];
 
-        foreach ($borrar as $borra) {
-            $borra->delete();
+        foreach ($this->parametros as $parametro) {
+            $escalas[] = [
+                'parametro' => $parametro['parametro'],
+                'color' => $parametro['color_estatus'],
+                'valor' => $parametro['valor'],
+            ];
         }
 
-        EscalasMedicionObjetivos::create([
-            'parametro' => $data['estatus_1'],
-            'color' => $data['color_estatus_1'],
-            'valor' => $data['valor_estatus_1'],
-        ]);
+        // Verificar si hay valores duplicados
+        $valores = array_column($escalas, 'valor');
+        if (count($valores) !== count(array_unique($valores))) {
+            $this->alert('error', 'Los valores no deben repetirse', [
+                'position' => 'center',
+                'timer' => 5000,
+                'toast' => true,
+                'text' => 'Por favor, asegúrese de que todos los valores sean únicos.',
+            ]);
+            return;
+        }
 
-        EscalasMedicionObjetivos::create([
-            'parametro' => $data['estatus_2'],
-            'color' => $data['color_estatus_2'],
-            'valor' => $data['valor_estatus_2'],
-        ]);
+        // Ordenar las escalas por el valor
+        usort($escalas, function ($a, $b) {
+            return $a['valor'] <=> $b['valor'];
+        });
 
-        $param_extra = $this->groupValues($data);
+        // Borrar registros existentes
+        EscalasMedicionObjetivos::truncate();
 
-        if (! empty($param_extra)) {
-            foreach ($param_extra as $key => $p) {
-                EscalasMedicionObjetivos::create([
-                    'parametro' => $p['estatus'],
-                    'color' => $p['color'],
-                    'valor' => $p['valor'],
-                ]);
-            }
+        // Guardar las escalas ordenadas
+        foreach ($escalas as $escala) {
+            EscalasMedicionObjetivos::create($escala);
         }
 
         $this->alert('success', '¡Las escalas han sido definidas con éxito!', [
@@ -132,9 +125,8 @@ class DefinicionEscalasObjetivos extends Component
         foreach ($this->parametros as $key => $parametro) {
             $estatusKey = "estatus_arreglo_{$key}";
 
-            if (isset($values[$estatusKey]) && ! empty($values[$estatusKey])) {
-
-                $groupedValues["group_{$key}"] = [
+            if (isset($values[$estatusKey]) && !empty($values[$estatusKey])) {
+                $groupedValues[] = [
                     'estatus' => $values[$estatusKey],
                     'color' => $values["color_estatus_arreglo_{$key}"] ?? null,
                     'valor' => $values["valor_estatus_arreglo_{$key}"] ?? null,
@@ -142,7 +134,6 @@ class DefinicionEscalasObjetivos extends Component
             }
         }
 
-        // dd($groupedValues);
         return $groupedValues;
     }
 }
