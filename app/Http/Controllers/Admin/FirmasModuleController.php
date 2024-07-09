@@ -85,7 +85,7 @@ class FirmasModuleController extends Controller
 
         // Convertir la cadena de participantes a un array si es una cadena delimitada
         $participantes = [];
-        if (! empty($firma_module->participantes)) {
+        if (!empty($firma_module->participantes)) {
             $cleanString = str_replace(['[', ']', '"'], '', $firma_module->participantes);
             $participantes = explode(',', $cleanString);
             $participantes = array_map('trim', $participantes);
@@ -140,7 +140,7 @@ class FirmasModuleController extends Controller
 
         $riesgo = RiesgoIdentificado::where('id', $id)->first();
 
-        if ($riesgo->estatus === 'cerrado') {
+        if ($riesgo->estatus === 'cerrado' || $riesgo->estatus === 'cancelado') {
             $existingRecord = FirmaCentroAtencion::where('id_riesgos', $id)->where('user_id', Auth::id())->first();
 
             // Si existe, eliminarlo
@@ -170,7 +170,7 @@ class FirmasModuleController extends Controller
 
         $mejoras = Mejoras::where('id', $id)->first();
 
-        if ($mejoras->estatus === 'cerrado') {
+        if ($mejoras->estatus === 'cerrado' || $mejoras->estatus === 'cancelado') {
             $existingRecord = FirmaCentroAtencion::where('id_mejoras', $id)->where('user_id', Auth::id())->first();
 
             // Si existe, eliminarlo
@@ -199,7 +199,7 @@ class FirmasModuleController extends Controller
 
         $denuncia = Denuncias::where('id', $id)->first();
 
-        if ($denuncia->estatus === 'cerrado') {
+        if ($denuncia->estatus === 'cerrado' || $denuncia->estatus === 'cancelado') {
             $existingRecord = FirmaCentroAtencion::where('id_denuncias', $id)->where('user_id', Auth::id())->first();
 
             // Si existe, eliminarlo
@@ -229,7 +229,7 @@ class FirmasModuleController extends Controller
 
         $quejas = Quejas::where('id', $id)->first();
 
-        if ($quejas->estatus === 'cerrado') {
+        if ($quejas->estatus === 'cerrado' || $quejas->estatus === 'cancelado') {
             $existingRecord = FirmaCentroAtencion::where('id_quejas', $id)->where('user_id', Auth::id())->first();
 
             // Si existe, eliminarlo
@@ -258,7 +258,7 @@ class FirmasModuleController extends Controller
 
         $sugerencias = Sugerencias::where('id', $id)->first();
 
-        if ($sugerencias->estatus === 'cerrado') {
+        if ($sugerencias->estatus === 'cerrado' || $sugerencias->estatus === 'cancelado') {
             $existingRecord = FirmaCentroAtencion::where('id_sugerencias', $id)->where('user_id', Auth::id())->first();
 
             // Si existe, eliminarlo

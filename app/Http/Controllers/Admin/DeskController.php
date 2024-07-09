@@ -293,14 +293,6 @@ class DeskController extends Controller
 
         $organizacion = Organizacion::first();
 
-
-        if ($incidentesSeguridad->estatus === 'Cerrado') {
-            // Enviar correos electrónicos
-            foreach ($empleados as $empleado) {
-                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->send(new EmpleadoEmail($empleado, $status, $incidentesSeguridad->id, $organizacion));
-            }
-        }
-
         $incidentesSeguridad->update([
             'titulo' => $request->titulo,
             'estatus' => $request->estatus,
@@ -322,6 +314,13 @@ class DeskController extends Controller
             'categoria_id' => $request->categoria_id,
             'subcategoria_id' => $request->subcategoria_id,
         ]);
+
+
+        if ($incidentesSeguridad->estatus === 'Cerrado' || $incidentesSeguridad->estatus === 'No procedente') {
+            foreach ($empleados as $empleado) {
+                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new EmpleadoEmail($empleado, $status, $incidentesSeguridad->id, $organizacion));
+            }
+        }
 
         $documento = $incidentesSeguridad->evidencia;
 
@@ -532,8 +531,7 @@ class DeskController extends Controller
 
         $aprobadorSeleccionado->save();
 
-        $empleadoIds = $request->participantes;
-
+        $empleadoIds = $request->participantes ?? [];
 
         // Obtener empleados desde la base de datos
         $empleados = User::select('id', 'name', 'email')->whereIn('id', $empleadoIds)->get();
@@ -541,12 +539,6 @@ class DeskController extends Controller
         $status = 'riesgos';
 
         $organizacion = Organizacion::first();
-
-        if ($riesgos->estatus === 'cerrado') {
-            foreach ($empleados as $empleado) {
-                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->send(new EmpleadoEmail($empleados, $status, $riesgos->id, $organizacion));
-            }
-        }
 
         $riesgos->update([
             'titulo' => $request->titulo,
@@ -561,6 +553,13 @@ class DeskController extends Controller
             'activos_afectados' => $request->activos_afectados,
             'comentarios' => $request->comentarios,
         ]);
+
+        if ($riesgos->estatus === 'cerrado' || $riesgos->estatus === 'cancelado') {
+            foreach ($empleados as $empleado) {
+                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new EmpleadoEmail($empleados, $status, $riesgos->id, $organizacion));
+            }
+        }
+
 
         return redirect()->route('admin.desk.index')->with('success', 'Reporte actualizado');
     }
@@ -719,7 +718,7 @@ class DeskController extends Controller
 
         $aprobadorSeleccionado->save();
 
-        $empleadoIds = $request->participantes;
+        $empleadoIds = $request->participantes ?? [];
 
 
         // Obtener empleados desde la base de datos
@@ -728,13 +727,6 @@ class DeskController extends Controller
         $status = 'quejas';
 
         $organizacion = Organizacion::first();
-
-        if ($quejas->estatus === 'cerrado') {
-            // Enviar correos electrónicos
-            foreach ($empleados as $empleado) {
-                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->send(new EmpleadoEmail($empleado, $status, $quejas->id, $organizacion));
-            }
-        }
 
         $quejas->update([
             'titulo' => $request->titulo,
@@ -751,6 +743,13 @@ class DeskController extends Controller
             'fecha_cierre' => $request->fecha_cierre,
 
         ]);
+
+        if ($quejas->estatus === 'cerrado' || $quejas->estatus === 'cancelado') {
+            // Enviar correos electrónicos
+            foreach ($empleados as $empleado) {
+                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new EmpleadoEmail($empleado, $status, $quejas->id, $organizacion));
+            }
+        }
 
         // return redirect()->route('admin.desk.quejas-edit', $id_quejas)->with('success', 'Reporte actualizado');
         return redirect()->route('admin.desk.index')->with('success', 'Reporte actualizado');
@@ -906,7 +905,7 @@ class DeskController extends Controller
 
         $aprobadorSeleccionado->save();
 
-        $empleadoIds = $request->participantes;
+        $empleadoIds = $request->participantes ?? [];
 
 
         // Obtener empleados desde la base de datos
@@ -915,13 +914,6 @@ class DeskController extends Controller
         $status = 'denuncias';
 
         $organizacion = Organizacion::first();
-
-        if ($denuncias->estatus === 'cerrado') {
-            // Enviar correos electrónicos
-            foreach ($empleados as $empleado) {
-                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->send(new EmpleadoEmail($empleado, $status, $denuncias->id, $organizacion));
-            }
-        }
 
         $denuncias->update([
             'anonimo' => $request->anonimo,
@@ -933,6 +925,13 @@ class DeskController extends Controller
             'estatus' => $request->estatus,
             'fecha_cierre' => $request->fecha_cierre,
         ]);
+
+        if ($denuncias->estatus === 'cerrado' || $denuncias->estatus === 'cancelado') {
+            // Enviar correos electrónicos
+            foreach ($empleados as $empleado) {
+                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new EmpleadoEmail($empleado, $status, $denuncias->id, $organizacion));
+            }
+        }
 
         return redirect()->route('admin.desk.index')->with('success', 'Reporte actualizado');
     }
@@ -1098,7 +1097,7 @@ class DeskController extends Controller
 
         $aprobadorSeleccionado->save();
 
-        $empleadoIds = $request->participantes;
+        $empleadoIds = $request->participantes ?? [];
 
         // Obtener empleados desde la base de datos
         $empleados = User::select('id', 'name', 'email')->whereIn('id', $empleadoIds)->get();
@@ -1106,13 +1105,6 @@ class DeskController extends Controller
         $status = 'mejoras';
 
         $organizacion = Organizacion::first();
-
-        if ($mejoras->estatus === 'cerrado') {
-            // Enviar correos electrónicos
-            foreach ($empleados as $empleado) {
-                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->send(new EmpleadoEmail($empleado, $status, $mejoras->id, $organizacion));
-            }
-        }
 
         $mejoras->update([
             'estatus' => $request->estatus,
@@ -1125,6 +1117,13 @@ class DeskController extends Controller
             'tipo' => $request->tipo,
             'otro' => $request->otro,
         ]);
+
+        if ($mejoras->estatus === 'cerrado' || $mejoras->estatus === 'cancelado') {
+            // Enviar correos electrónicos
+            foreach ($empleados as $empleado) {
+                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new EmpleadoEmail($empleado, $status, $mejoras->id, $organizacion));
+            }
+        }
 
         // return redirect()->route('admin.desk.mejoras-edit', $id_mejoras)->with('success', 'Reporte actualizado');
         return redirect()->route('admin.desk.index')->with('success', 'Reporte actualizado');
@@ -1274,7 +1273,7 @@ class DeskController extends Controller
 
         $aprobadorSeleccionado->save();
 
-        $empleadoIds = $request->participantes;
+        $empleadoIds = $request->participantes ?? [];
 
         // Obtener empleados desde la base de datos
         $empleados = User::select('id', 'name', 'email')->whereIn('id', $empleadoIds)->get();
@@ -1282,13 +1281,6 @@ class DeskController extends Controller
         $status = 'sugerencias';
 
         $organizacion = Organizacion::first();
-
-        if ($sugerencias->estatus === 'cerrado') {
-            // Enviar correos electrónicos
-            foreach ($empleados as $empleado) {
-                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->send(new EmpleadoEmail($empleado, $status, $sugerencias->id, $organizacion));
-            }
-        }
 
         $sugerencias->update([
             'area_sugerencias' => $request->area_sugerencias,
@@ -1298,6 +1290,13 @@ class DeskController extends Controller
             'estatus' => $request->estatus,
             'fecha_cierre' => $request->fecha_cierre,
         ]);
+
+        if ($sugerencias->estatus === 'cerrado' || $sugerencias->estatus === 'cancelado') {
+            // Enviar correos electrónicos
+            foreach ($empleados as $empleado) {
+                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new EmpleadoEmail($empleado, $status, $sugerencias->id, $organizacion));
+            }
+        }
 
         // return redirect()->route('admin.desk.sugerencias-edit', $id_sugerencias)->with('success', 'Reporte actualizado');
         return redirect()->route('admin.desk.index')->with('success', 'Reporte actualizado');
