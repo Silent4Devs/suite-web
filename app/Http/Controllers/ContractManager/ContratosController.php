@@ -501,10 +501,10 @@ class ContratosController extends AppBaseController
         $ruta_carpeta = storage_path('app/public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/aprobacionFirma');
 
         // Dar permisos chmod 777 a la carpeta
-        chmod($ruta_carpeta, 0777);
 
         Storage::put('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/aprobacionFirma/'.$imageName, $image);
 
+        chmod($ruta_carpeta, 0777);
         // Obtener la URL de la imagen guardada
         $imageUrl = Storage::url('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/aprobacionFirma/' . $imageName);
 
