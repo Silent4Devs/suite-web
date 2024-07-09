@@ -354,7 +354,7 @@ class PuestosController extends Controller
         $imageName = uniqid().'.'.$type;
         // Guardar la imagen en el sistema de archivos
 
-        $ruta_carpeta = storage_path('public/puestos/firmasAprobadores');
+        $ruta_carpeta = storage_path('app/public/puestos/firmasAprobadores');
 
         // Dar permisos chmod 777 a la carpeta
         chmod($ruta_carpeta, 0777);

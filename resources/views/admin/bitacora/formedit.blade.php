@@ -978,26 +978,26 @@
 </style>
 <script src="https://cdn.jsdelivr.net/npm/lemonadejs/dist/lemonade.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@lemonadejs/signature/dist/index.min.js"></script>
-@if ($firmar)
-    <div class="col-12">
-        <div class="card card-body">
-            <form action="{{ route('contract_manager.contratos-katbol.aprobacion-firma-contrato') }}" method="POST">
-                @csrf
-                <div class="d-flex gap-4 align-items-center flex-column">
-                    <div>
-                        <h5>Ingrese su firma para la aprobación del registro</h5>
-                    </div>
-                    <div id="firma_aprobador" class="" style="width: auto;"></div>
-                    <input type="hidden" name="firma_base" value="" id="firma-input">
-                    <input type="hidden" name="contrato_id" value="{{ $contrato->id }}">
-                    <div class="d-flex gap-5">
-                        <div id="resetCanvas" class="btn btn-outline-secondary">Limpiar</div>
-                        <button class="btn btn-primary">Guardar firma</button>
-                    </div>
+{{-- @if ($firmar) --}}
+<div class="col-12">
+    <div class="card card-body">
+        <form action="{{ route('contract_manager.contratos-katbol.aprobacion-firma-contrato') }}" method="POST">
+            @csrf
+            <div class="d-flex gap-4 align-items-center flex-column">
+                <div>
+                    <h5>Ingrese su firma para la aprobación del registro</h5>
                 </div>
-            </form>
-        </div>
+                <div id="firma_aprobador" class="" style="width: auto;"></div>
+                <input type="hidden" name="firma_base" value="" id="firma-input">
+                <input type="hidden" name="contrato_id" value="{{ $contrato->id }}">
+                <div class="d-flex gap-5">
+                    <div id="resetCanvas" class="btn btn-outline-secondary">Limpiar</div>
+                    <button class="btn btn-primary">Guardar firma</button>
+                </div>
+            </div>
+        </form>
     </div>
+</div>
 @endif
 <script>
     // Get the element to render signature component inside

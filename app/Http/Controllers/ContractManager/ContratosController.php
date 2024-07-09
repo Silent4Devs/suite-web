@@ -498,7 +498,7 @@ class ContratosController extends AppBaseController
         $imageName = uniqid() . '.' . $type;
         // Guardar la imagen en el sistema de archivos
 
-        $ruta_carpeta = storage_path('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/aprobacionFirma');
+        $ruta_carpeta = storage_path('app/public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/aprobacionFirma');
 
         // Dar permisos chmod 777 a la carpeta
         chmod($ruta_carpeta, 0777);
