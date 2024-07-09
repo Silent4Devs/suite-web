@@ -136,7 +136,7 @@
                             <div style="position: relative; left: 2rem;">
                                 <label>
                                     <input type="checkbox" id="toggle-info" {{ !empty($aprobadoresArray) ? 'checked' : '' }}>
-                                    Activar flujo de aprobación
+                                    Activar flujo de firma(s)
                                 </label>
                             </div>
 
