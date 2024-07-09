@@ -837,7 +837,7 @@ class ContratosController extends AppBaseController
         if (isset($request->aprobadores_firma) && isset($request->firma_check)) {
             $aprobacionFirmaContrato = AprobadorFirmaContrato::where('contrato_id', $contrato->id)->get();
             foreach ($aprobacionFirmaContrato as $aprobador_old) {
-                $aprobador_old->destroy();
+                $aprobador_old->delete();
             }
             foreach ($request->aprobadores_firma as $aprobador_id) {
                 $aprobador_firma_contrato = AprobadorFirmaContrato::create([
