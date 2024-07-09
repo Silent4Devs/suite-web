@@ -3,12 +3,15 @@
 namespace App\Http\Livewire;
 
 use App\Models\RH\MetricasObjetivo;
+use App\Models\RH\Objetivo;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
 class DefinicionUnidadesObjetivos extends Component
 {
     use LivewireAlert;
+
+    public $id_1 = null;
 
     public $valor_minimo_1 = 0;
 
@@ -22,38 +25,55 @@ class DefinicionUnidadesObjetivos extends Component
 
     public $maximo = null;
 
-    public function addParametro1()
+    public function addUnidad()
     {
-        $this->parametros[] = '';
+        $this->parametros[] = [
+            'id' => null,
+            'definicion' => null,
+            'minimo' => null,
+            'maximo' => null
+        ];
     }
 
-    public function removeParametro1($keyndex)
+    public function removeUnidad($keyndex)
     {
-        // dd($keyndex);
+        $borrarPM = MetricasObjetivo::find($this->parametros[$keyndex]['id']);
+
+        $borrarPM->delete();
+
         unset($this->parametros[$keyndex]);
         $this->parametros = array_values($this->parametros);
+
+        $this->alert('success', 'Unidad eliminada con éxito.', [
+            'position' => 'center',
+            'timer' => 5000,
+            'toast' => true,
+            'text' => 'Se ha eliminado la unidad correctamente.',
+        ]);
     }
 
     public function mount()
     {
 
         $unidades = MetricasObjetivo::get();
+        $objetivos = Objetivo::get();
 
-        if (isset($unidades[0]->definicion)) {
-            $this->definicion_1 = $unidades[0]->definicion;
-            $this->valor_minimo_1 = $unidades[0]->valor_minimo;
-            $this->valor_maximo_1 = $unidades[0]->valor_maximo;
+        // Crear un array de IDs de métricas utilizadas en los objetivos
+        $metricasUtilizadas = $objetivos->pluck('metrica_id')->toArray();
 
-            foreach ($unidades as $key => $esc) {
-                if ($key > 1) {
-                    $this->parametros[$key] =
-                        [
-                            'definicion' => $esc->definicion,
-                            'minimo' => $esc->valor_minimo ?? null,
-                            'maximo' => $esc->valor_maximo ?? null,
-                        ];
-                }
-            }
+        // Añadir la propiedad 'utilizado' a cada unidad
+        foreach ($unidades as $unidad) {
+            $unidad->utilizado = in_array($unidad->id, $metricasUtilizadas);
+        }
+
+        foreach ($unidades as $key => $esc) {
+            $this->parametros[$key] = [
+                'id' => $esc->id ?? null,
+                'definicion' => $esc->definicion,
+                'minimo' => $esc->valor_minimo ?? null,
+                'maximo' => $esc->valor_maximo ?? null,
+                'utilizado' => $esc->utilizado, // Agregar la propiedad utilizado
+            ];
         }
     }
 
@@ -62,70 +82,25 @@ class DefinicionUnidadesObjetivos extends Component
         return view('livewire.definicion-unidades-objetivos');
     }
 
-    // public function definirLimite($limite, $valor)
-    // {
-    //     switch ($limite) {
-    //         case 'minimo':
-    //             $this->minimo = $valor;
-    //             break;
-
-    //         case 'maximo':
-    //             $this->maximo = $valor;
-    //             break;
-    //     }
-    // }
-
-    public function submitForm($data)
+    public function agregarUnidad($key)
     {
-        // dd($data);
-        $borrar = MetricasObjetivo::get();
+        // dd($this->parametros[$key]);
+        $pa = MetricasObjetivo::updateOrCreate(
+            ['id' => $this->parametros[$key]['id']],
+            [
+                'definicion' => $this->parametros[$key]['definicion'],
+                'minimo' => $this->parametros[$key]['minimo'],
+                'maximo' => $this->parametros[$key]['maximo'],
+            ]
+        );
 
-        foreach ($borrar as $borra) {
-            $borra->delete();
-        }
+        $this->parametros[$key]['id'] = $pa->id;
 
-        MetricasObjetivo::create([
-            'definicion' => $data['definicion_1'],
-            'color' => $data['color_estatus_1'],
-        ]);
-
-        $param_extra = $this->groupValues($data);
-
-        if (! empty($param_extra)) {
-            foreach ($param_extra as $key => $p) {
-                MetricasObjetivo::create([
-                    'definicion' => $p['estatus'],
-                    'minimo' => $p['minimo'],
-                    'maximo' => $p['minimo'],
-                ]);
-            }
-        }
-
-        $this->alert('success', '¡Las unidades han sido definidas con éxito!', [
+        $this->alert('success', '¡La unidad ha sido definida con éxito!', [
             'position' => 'center',
             'timer' => 5000,
             'toast' => true,
-            'text' => 'Se ha generado el catalogo, lo puedes consultar y editar cuando lo necesites.',
+            'text' => 'Se ha generado la unidad correctamente.',
         ]);
-    }
-
-    public function groupValues($values)
-    {
-        $groupedValues = [];
-
-        foreach ($this->parametros as $key => $definicion) {
-            $estatusKey = "estatus_arreglo_{$key}";
-
-            if (isset($values[$estatusKey]) && ! empty($values[$estatusKey])) {
-
-                $groupedValues["group_{$key}"] = [
-                    'estatus' => $values[$estatusKey],
-                    'color' => $values["color_estatus_arreglo_{$key}"] ?? null,
-                ];
-            }
-        }
-
-        // dd($groupedValues);
-        return $groupedValues;
     }
 }

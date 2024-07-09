@@ -779,9 +779,13 @@ class InicioUsuarioController extends Controller
         $request->validate([
             'ubicacion' => 'required|max:255',
             'descripcion' => 'required|max:550',
+            'empleado_denunciado_id' => 'required',
+            'empleado_denuncio_id' => 'required',
         ], [
             'descripcion.max' => 'El campo título no puede exceder los 550 caracteres.',
             'ubicacion.max' => 'El campo descripción no puede exceder los 255 caracteres.',
+            'empleado_denunciado_id.required' => 'El campo empleado  es requerido.',
+            'empleado_denuncio_id.required' => 'El campo empleado  es requerido.',
         ]);
 
         $denuncias = Denuncias::create([

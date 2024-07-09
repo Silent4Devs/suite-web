@@ -135,23 +135,26 @@
 
                             <div style="position: relative; left: 2rem;">
                                 <label>
-                                    <input type="checkbox" id="toggle-info" checked>
+                                    <input type="checkbox" id="toggle-info" {{ !empty($aprobadoresArray) ? 'checked' : '' }}>
                                     Activar flujo de aprobación
                                 </label>
                             </div>
 
                             <div class="mt-2 form-group col-md-12">
-                                <div class="info-bar" id="info-bar">
+                                <div class="info-bar" id="info-bar" style="display: {{ !empty($aprobadoresArray) ? 'block' : 'none' }};">
                                     @if($firmaModules && $firmaModules->empleados)
-                                    <p>Seleccione cuántos participantes de aprobación tendrá tu lista.</p>
-                                    <select id="participantes" name="participantes[]" class="form-control" multiple="multiple" style="padding: 10px; border-radius: 50px; border: 1px solid #007BFF;">
-                                        @foreach($firmaModules->empleados as $empleado)
-                                            <option value="{{ $empleado->id }}"
-                                                @if(in_array($empleado->id, $aprobadoresArray)) selected @endif>
-                                                {{ $empleado->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
+                                        <p>Seleccione cuántos participantes de aprobación tendrá tu lista.</p>
+                                        @if(is_array($aprobadoresArray))
+                                            <select id="participantes" name="participantes[]" class="form-control" multiple="multiple" style="padding: 10px; border-radius: 50px; border: 1px solid #007BFF;">
+                                                @foreach($firmaModules->empleados as $empleado)
+                                                    <option value="{{ $empleado->id }}" @if(in_array($empleado->id, $aprobadoresArray)) selected @endif>
+                                                        {{ $empleado->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        @else
+                                            <p>No hay participantes disponibles.</p>
+                                        @endif
                                     @else
                                         <p>No hay participantes disponibles.</p>
                                     @endif

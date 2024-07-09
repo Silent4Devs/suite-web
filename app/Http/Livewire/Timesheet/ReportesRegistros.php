@@ -8,6 +8,7 @@ use App\Models\Empleado;
 use App\Models\Timesheet;
 use Carbon\Carbon;
 use Excel;
+use Illuminate\Support\Facades\Http;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -142,10 +143,74 @@ class ReportesRegistros extends Component
 
     public function exportExcel()
     {
+        // dd(1);
 
         $export = new ReporteColaboradorRegistro($this->fecha_inicio, $this->fecha_fin, $this->area_id, $this->emp_id);
 
         return Excel::download($export, 'reporte_colaborador_registro.xlsx');
+    }
+
+    //apipost
+    public function RegistroTimesheet()
+    {
+        $data = [
+            'area' => $this->area_id,
+            'empleado' => $this->emp_id,
+            'fecha_inicio' => $this->fecha_inicio,
+            'fecha_fin' => $this->fecha_fin,
+        ];
+
+        $apiEndpoint = env('REPORTSERVICE_API');
+        $response = Http::post($apiEndpoint.'/registrosTimesheet/', $data);
+
+        if ($response->successful()) {
+            dd($response->json());
+            $this->emit('apiPostConsumido', $response->json());
+        } else {
+            dd('no entro');
+            $this->emit('apiPostError', $response->status());
+        }
+    }
+
+    public function TimesheetAreas()
+    {
+        $data = [
+            'area' => $this->area_id,
+            'fecha_inicio' => $this->fecha_inicio,
+            'fecha_fin' => $this->fecha_fin,
+        ];
+
+        $apiEndpoint = env('REPORTSERVICE_API');
+        $response = Http::post($apiEndpoint.'/timesheetAreas/', $data);
+
+        if ($response->successful()) {
+            dd($response->json());
+            $this->emit('apiPostConsumido', $response->json());
+        } else {
+            //dd("no entro");
+            $this->emit('apiPostError', $response->status());
+        }
+    }
+
+    public function TimesheetProyectos()
+    {
+        $data = [
+            'area' => $this->area_id,
+            'proyecto' => $this->proyecto,
+            'fecha_inicio' => $this->fecha_inicio,
+            'fecha_fin' => $this->fecha_fin,
+        ];
+
+        $apiEndpoint = env('REPORTSERVICE_API');
+        $response = Http::post($apiEndpoint.'/timesheetProyectos/', $data);
+
+        if ($response->successful()) {
+            dd($response->json());
+            $this->emit('apiPostConsumido', $response->json());
+        } else {
+            //dd("no entro");
+            $this->emit('apiPostError', $response->status());
+        }
     }
 
     public function establecerContadores()

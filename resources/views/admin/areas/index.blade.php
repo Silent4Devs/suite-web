@@ -1,19 +1,19 @@
 @extends('layouts.admin')
 <style>
- #form_id {
-    display: none;
-}
-
+    #form_id {
+        display: none;
+    }
 </style>
 @section('content')
-
-
     <h5 class="col-12 titulo_general_funcion">Registro de Áreas</h5>
     <div class="mt-5 card">
         @can('crear_area_agregar')
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
-                    @include('csvImport.modal', ['model' => 'Area', 'route' => 'admin.areas.parseCsvImport'])
+                    @include('csvImport.modal', [
+                        'model' => 'Area',
+                        'route' => 'admin.areas.parseCsvImport',
+                    ])
                 </div>
             </div>
         @endcan
@@ -27,7 +27,8 @@
                 </div>
                 <div class="col-11">
                     <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
-                    <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Agregue las áreas de la organización comenzando
+                    <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Agregue las áreas de la organización
+                        comenzando
                         por la de más alta jerarquía
 
                     </p>
@@ -38,6 +39,12 @@
 
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
+            <div class="d-flex justify-content-end">
+                <a class="boton-transparente boton-sin-borde" href="{{ route('descarga-registro-area') }}">
+                    <!-- <img src="{{ asset('download_FILL0_wght300_GRAD0_opsz24.svg') }}" alt="Importar" class="icon"> -->
+                    <i class="fas fa-file-excel icon" style="font-size: 1.5rem;color:#0f6935"></i>
+                </a> &nbsp;&nbsp;&nbsp;
+            </div>
             <table class="table table-bordered w-100 datatable-Area">
                 <thead class="thead-dark">
                     <tr>
@@ -68,19 +75,19 @@
     </div>
 @endsection
 
-<form method="POST" id="form_id" style="position: relative; left: 10rem; "
-        action="{{ route('admin.areas.pdf') }}">
-        @csrf
-        <button class="boton-transparentev2" type="submit" style="color: #306BA9;">
-            IMPRIMIR <img src="{{ asset('imprimir.svg') }}" alt="Importar" class="icon">
-        </button>
-    </form>
+<form method="POST" id="form_id" style="position: relative; left: 10rem; " action="{{ route('admin.areas.pdf') }}">
+    @csrf
+    <button class="boton-transparentev2" type="submit" style="color: #306BA9;">
+        IMPRIMIR <img src="{{ asset('imprimir.svg') }}" alt="Importar" class="icon">
+    </button>
+</form>
 
 @section('scripts')
     @parent
     <script>
         $(function() {
-            let dtButtons = [{
+            let dtButtons = [
+                /*{
                     extend: 'csvHtml5',
                     title: `Áreas ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
@@ -99,7 +106,7 @@
                     exportOptions: {
                         columns: ['th:not(:last-child):visible']
                     }
-                },
+                },*/
                 {
                     extend: 'pdfHtml5',
                     title: `Áreas ${new Date().toLocaleDateString().trim()}`,
@@ -150,22 +157,24 @@
 
             @can('crear_area_agregar')
                 let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar area',
-                url: "{{ route('admin.areas.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config){
-                let {url} = config;
-                window.location.href = url;
-                }
+                    text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                    titleAttr: 'Agregar area',
+                    url: "{{ route('admin.areas.create') }}",
+                    className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                    action: function(e, dt, node, config) {
+                        let {
+                            url
+                        } = config;
+                        window.location.href = url;
+                    }
                 };
                 let btnImport = {
-                text: '<i class="pl-2 pr-3 fas fa-file-csv"></i> CSV Importar',
-                titleAttr: 'Importar datos por CSV',
-                className: "btn-xs btn-outline-primary rounded ml-2 pr-3",
-                action: function(e, dt, node, config){
-                $('#csvImportModal').modal('show');
-                }
+                    text: '<i class="pl-2 pr-3 fas fa-file-csv"></i> CSV Importar',
+                    titleAttr: 'Importar datos por CSV',
+                    className: "btn-xs btn-outline-primary rounded ml-2 pr-3",
+                    action: function(e, dt, node, config) {
+                        $('#csvImportModal').modal('show');
+                    }
                 };
                 dtButtons.push(btnAgregar);
                 dtButtons.push(btnImport);
@@ -173,29 +182,39 @@
             @can('crear_area_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
-                text: deleteButtonTrans,
-                url: "{{ route('admin.areas.massDestroy') }}",
-                className: 'btn-danger',
-                action: function (e, dt, node, config) {
-                var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-                return entry.id
-                });
+                    text: deleteButtonTrans,
+                    url: "{{ route('admin.areas.massDestroy') }}",
+                    className: 'btn-danger',
+                    action: function(e, dt, node, config) {
+                        var ids = $.map(dt.rows({
+                            selected: true
+                        }).data(), function(entry) {
+                            return entry.id
+                        });
 
-                if (ids.length === 0) {
-                alert('{{ trans('global.datatables.zero_selected') }}')
+                        if (ids.length === 0) {
+                            alert('{{ trans('global.datatables.zero_selected') }}')
 
-                return
-                }
+                            return
+                        }
 
-                if (confirm('{{ trans('global.areYouSure') }}')) {
-                $.ajax({
-                headers: {'x-csrf-token': _token},
-                method: 'POST',
-                url: config.url,
-                data: { ids: ids, _method: 'DELETE' }})
-                .done(function () { location.reload() })
-                }
-                }
+                        if (confirm('{{ trans('global.areYouSure') }}')) {
+                            $.ajax({
+                                    headers: {
+                                        'x-csrf-token': _token
+                                    },
+                                    method: 'POST',
+                                    url: config.url,
+                                    data: {
+                                        ids: ids,
+                                        _method: 'DELETE'
+                                    }
+                                })
+                                .done(function() {
+                                    location.reload()
+                                })
+                        }
+                    }
                 }
                 //dtButtons.push(deleteButton)
             @endcan
