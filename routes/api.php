@@ -2,14 +2,14 @@
 
 use App\Http\Controllers\API\Auth\AuthController;
 use App\Http\Controllers\Api\InicioUsuario\InicioUsuarioController;
-use App\Http\Controllers\Api\V1\SolicitudDayOff\SolicitudDayOffApiController;
-use App\Http\Controllers\Api\V1\SolicitudVacaciones\SolicitudVacacionesApiController;
-use App\Http\Controllers\Api\V1\PortalComunicacion\PortalComunicacionController;
 use App\Http\Controllers\Api\v1\AnalisisRiesgo\FormulasController;
 use App\Http\Controllers\Api\V1\AnalisisRiesgo\templateAnalisisRiesgoController;
 use App\Http\Controllers\Api\V1\Comunicados\ComunicadosApiController;
 use App\Http\Controllers\Api\V1\ContadorSolicitudes\ContadorSolicitudesApiController;
+use App\Http\Controllers\Api\V1\PortalComunicacion\PortalComunicacionController;
+use App\Http\Controllers\Api\V1\SolicitudDayOff\SolicitudDayOffApiController;
 use App\Http\Controllers\Api\V1\SolicitudPermisoGoceSueldo\SolicitudPermisoGoceSueldoApiController;
+use App\Http\Controllers\Api\V1\SolicitudVacaciones\SolicitudVacacionesApiController;
 use App\Http\Controllers\Api\V1\Timesheet\TimesheetApiController;
 
 Route::post('v1/login', [AuthController::class, 'login']);

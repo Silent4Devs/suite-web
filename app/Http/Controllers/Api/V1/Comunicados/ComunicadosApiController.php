@@ -3,20 +3,15 @@
 namespace app\Http\Controllers\Api\V1\Comunicados;
 
 use App\Http\Controllers\Controller;
-use App\Models\Comiteseguridad;
 use App\Models\ComunicacionSgi;
-use App\Models\Documento;
 use App\Models\Empleado;
 use App\Models\FelicitarCumpleaños;
 use App\Models\Organizacione;
-use App\Models\PoliticaSgsi;
 use App\Models\User;
-use Illuminate\Support\Arr;
 use Carbon\Carbon;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Cache;
 
 class ComunicadosApiController extends Controller
 {
@@ -35,7 +30,7 @@ class ComunicadosApiController extends Controller
 
         foreach ($comunicados as $key_comunicados => $comunicado) {
             $comunicado->tipo_imagen = $comunicado->imagenes_comunicacion->first()->tipo;
-            $ruta_comunicado = asset('storage/imagen_comunicado_SGI/' . $comunicado->imagenes_comunicacion->first()->imagen);
+            $ruta_comunicado = asset('storage/imagen_comunicado_SGI/'.$comunicado->imagenes_comunicacion->first()->imagen);
             $comunicado->ruta_imagen = $ruta_comunicado;
         }
 
@@ -54,72 +49,73 @@ class ComunicadosApiController extends Controller
 
         switch ($mes_fecha) {
             case '01':
-                # code...
-                $mes_cumpleanos = "Enero";
+                // code...
+                $mes_cumpleanos = 'Enero';
                 break;
 
             case '02':
-                # code...
-                $mes_cumpleanos = "Febrero";
+                // code...
+                $mes_cumpleanos = 'Febrero';
                 break;
 
             case '03':
-                # code...
-                $mes_cumpleanos = "Marzo";
+                // code...
+                $mes_cumpleanos = 'Marzo';
                 break;
 
             case '04':
-                # code...
-                $mes_cumpleanos = "Abril";
+                // code...
+                $mes_cumpleanos = 'Abril';
                 break;
 
             case '05':
-                # code...
-                $mes_cumpleanos = "Mayo";
+                // code...
+                $mes_cumpleanos = 'Mayo';
                 break;
 
             case '06':
-                # code...
-                $mes_cumpleanos = "Junio";
+                // code...
+                $mes_cumpleanos = 'Junio';
                 break;
 
             case '07':
-                # code...
-                $mes_cumpleanos = "Julio";
+                // code...
+                $mes_cumpleanos = 'Julio';
                 break;
 
             case '08':
-                # code...
-                $mes_cumpleanos = "Agosto";
+                // code...
+                $mes_cumpleanos = 'Agosto';
                 break;
 
             case '09':
-                # code...
-                $mes_cumpleanos = "Septiembre";
+                // code...
+                $mes_cumpleanos = 'Septiembre';
                 break;
 
             case '10':
-                # code...
-                $mes_cumpleanos = "Octubre";
+                // code...
+                $mes_cumpleanos = 'Octubre';
                 break;
 
             case '11':
-                # code...
-                $mes_cumpleanos = "Noviembre";
+                // code...
+                $mes_cumpleanos = 'Noviembre';
                 break;
 
             case '12':
-                # code...
-                $mes_cumpleanos = "Diciembre";
+                // code...
+                $mes_cumpleanos = 'Diciembre';
                 break;
 
             default:
-                # code...
+                // code...
                 break;
         }
 
         // dd($mes_fecha, $mes_cumpleanos);
-        $fecha_cumpleanos = $dia_cumpleanos . " de " . $mes_cumpleanos;
+        $fecha_cumpleanos = $dia_cumpleanos.' de '.$mes_cumpleanos;
+
         return $fecha_cumpleanos;
     }
 

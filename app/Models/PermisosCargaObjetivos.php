@@ -12,10 +12,10 @@ class PermisosCargaObjetivos extends Model
     protected $table = 'permisos_carga_objetivos';
 
     protected $fillable =
-    [
-        'perfil',
-        'permisos_asignacion',
-        'permiso_objetivos',
-        'permiso_escala',
-    ];
+        [
+            'perfil',
+            'permisos_asignacion',
+            'permiso_objetivos',
+            'permiso_escala',
+        ];
 }

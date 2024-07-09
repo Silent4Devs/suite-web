@@ -46,7 +46,7 @@ class IncidentesSeguridad extends Model implements Auditable, HasMedia
         'empleado_reporto_id',
         'procedente',
         'justificacion',
-        'estatus'
+        'estatus',
 
     ];
 
