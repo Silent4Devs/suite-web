@@ -295,7 +295,6 @@ class DeskController extends Controller
 
 
         if ($incidentesSeguridad->estatus === 'Cerrado') {
-            // Enviar correos electrónicos
             foreach ($empleados as $empleado) {
                 Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->send(new EmpleadoEmail($empleado, $status, $incidentesSeguridad->id, $organizacion));
             }
