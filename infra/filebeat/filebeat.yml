@@ -1,11 +1,16 @@
 filebeat.inputs:
 - type: log
+  enable: true
   paths:
-    - /var/log/laravel/*.log
-
-# output.elasticsearch:
-#   hosts: ["host.docker.internal:9200"]
+    - /var/log/ELK-log-manager/*.log #Attention: path '/var/log/ELK-log-manager' must be exact the path that you defined in filebeat volume in docker-compose.yml
 
 
 output.logstash:
-  hosts: ["host.docker.internal:5044"]
+  hosts: ["logstash:5044"]
+
+logging.json: true
+logging.metrics.enable: false
+
+logging:
+  files:
+    rotationeverybytes: 12582912
