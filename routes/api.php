@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\API\Auth\AuthController;
+use App\Http\Controllers\Api\Auth\UserAuthController;
 use App\Http\Controllers\Api\InicioUsuario\InicioUsuarioController;
 use App\Http\Controllers\Api\V1\SolicitudDayOff\SolicitudDayOffApiController;
 use App\Http\Controllers\Api\V1\SolicitudVacaciones\SolicitudVacacionesApiController;
@@ -13,15 +13,15 @@ use App\Http\Controllers\Api\V1\SolicitudPermisoGoceSueldo\SolicitudPermisoGoceS
 use App\Http\Controllers\Api\V1\Test;
 use App\Http\Controllers\Api\V1\Timesheet\TimesheetApiController;
 
-Route::post('/loginMobile', [AuthController::class, 'login']);
-Route::post('/ejemplo', [Test::class, 'test1']);
-Route::apiResource('/test', Test::class);
-route::post('/test2', [Test::class, 'store']);
+Route::post('/loginMobile', [UserAuthController::class, 'login']);
+// Route::post('/ejemplo', [Test::class, 'test1']);
+// Route::apiResource('/test', Test::class);
+// route::post('/test2', [Test::class, 'store']);
 
-Route::post('api/v1/logout', [AuthController::class, 'logout']);
+// Route::post('api/v1/logout', [AuthController::class, 'logout']);
 
 Route::group(['prefix' => 'api/v1', 'as' => 'api.', 'namespace' => 'Api\v1', 'middleware' => 'auth:sanctum'], function () {
-    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/logout', [UserAuthController::class, 'logout']);
     Route::get('inicioUsuario', [InicioUsuarioController::class, 'index']);
 
     Route::get('portal-comunicacion', [PortalComunicacionController::class, 'index']);
