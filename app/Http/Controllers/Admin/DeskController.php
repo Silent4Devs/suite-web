@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Mail\AceptacionAccionCorrectivaEmail;
 use App\Mail\AtencionQuejaAtendidaEmail;
 use App\Mail\CierreQuejaAceptadaEmail;
-use App\Mail\EmpleadoEmail;
+use App\Mail\SolicitudAprobacion;
 use App\Mail\NotificacionResponsableQuejaEmail;
 use App\Mail\ResolucionQuejaRechazadaEmail;
 use App\Mail\SeguimientoQuejaClienteEmail;
@@ -344,7 +344,7 @@ class DeskController extends Controller
             $aprobadorSeleccionado->save();
 
             foreach ($empleados as $empleado) {
-                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new EmpleadoEmail($empleado, $status, $incidentesSeguridad->id, $organizacion));
+                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new SolicitudAprobacion($empleado, $status, $incidentesSeguridad->id, $organizacion));
             }
         }
 
@@ -606,7 +606,7 @@ class DeskController extends Controller
             $aprobadorSeleccionado->save();
 
             foreach ($empleados as $empleado) {
-                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new EmpleadoEmail($empleados, $status, $riesgos->id, $organizacion));
+                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new SolicitudAprobacion($empleados, $status, $riesgos->id, $organizacion));
             }
         }
 
@@ -819,7 +819,7 @@ class DeskController extends Controller
 
             // Enviar correos electrónicos
             foreach ($empleados as $empleado) {
-                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new EmpleadoEmail($empleado, $status, $quejas->id, $organizacion));
+                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new SolicitudAprobacion($empleado, $status, $quejas->id, $organizacion));
             }
         }
 
@@ -1025,7 +1025,7 @@ class DeskController extends Controller
 
             // Enviar correos electrónicos
             foreach ($empleados as $empleado) {
-                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new EmpleadoEmail($empleado, $status, $denuncias->id, $organizacion));
+                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new SolicitudAprobacion($empleado, $status, $denuncias->id, $organizacion));
             }
         }
 
@@ -1241,7 +1241,7 @@ class DeskController extends Controller
 
             // Enviar correos electrónicos
             foreach ($empleados as $empleado) {
-                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new EmpleadoEmail($empleado, $status, $mejoras->id, $organizacion));
+                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new SolicitudAprobacion($empleado, $status, $mejoras->id, $organizacion));
             }
         }
 
@@ -1438,7 +1438,7 @@ class DeskController extends Controller
 
             // Enviar correos electrónicos
             foreach ($empleados as $empleado) {
-                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new EmpleadoEmail($empleado, $status, $sugerencias->id, $organizacion));
+                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new SolicitudAprobacion($empleado, $status, $sugerencias->id, $organizacion));
             }
         }
 
