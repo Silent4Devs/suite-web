@@ -9,10 +9,13 @@ use App\Http\Controllers\Api\V1\ContadorSolicitudes\ContadorSolicitudesApiContro
 use App\Http\Controllers\Api\V1\PortalComunicacion\PortalComunicacionController;
 use App\Http\Controllers\Api\V1\SolicitudDayOff\SolicitudDayOffApiController;
 use App\Http\Controllers\Api\V1\SolicitudPermisoGoceSueldo\SolicitudPermisoGoceSueldoApiController;
-use App\Http\Controllers\Api\V1\SolicitudVacaciones\SolicitudVacacionesApiController;
+use App\Http\Controllers\Api\V1\Test;
 use App\Http\Controllers\Api\V1\Timesheet\TimesheetApiController;
 
-Route::post('v1/login', [AuthController::class, 'login']);
+Route::post('/loginMobile', [AuthController::class, 'login']);
+Route::post('/ejemplo', [Test::class, 'test1']);
+Route::apiResource('/test', Test::class);
+route::post('/test2', [Test::class, 'store']);
 
 Route::post('api/v1/logout', [AuthController::class, 'logout']);
 

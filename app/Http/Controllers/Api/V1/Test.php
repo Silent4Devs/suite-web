@@ -1,26 +1,34 @@
 <?php
 
-namespace App\Http\Controllers\Api\Auth;
+namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Laravel\Sanctum\PersonalAccessToken;
-use Laravel\Sanctum\Sanctum;
 
-class AuthController extends Controller
+class Test extends Controller
 {
-    public function login(Request $request): JsonResponse
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
     {
-        $request->validate([
+        return "hola";
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        request()->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);
 
         //valida las credenciales del usuario
-        if (! Auth::attempt($request->only('email', 'password'))) {
+        if (!Auth::attempt($request->only('email', 'password'))) {
             return response()->json([
                 'message' => 'Invalid access credentials',
             ], 401);
@@ -40,7 +48,6 @@ class AuthController extends Controller
             $url = preg_replace_callback('/[^A-Za-z0-9_\-\.~\/\\\:]/', function ($matches) {
                 return rawurlencode($matches[0]);
             }, $url);
-
             return $url;
         }
 
@@ -53,7 +60,7 @@ class AuthController extends Controller
                 $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
             }
         } else {
-            $ruta = asset('storage/empleados/imagenes/'.$user->empleado->foto);
+            $ruta = asset('storage/empleados/imagenes/' . $user->empleado->foto);
         }
 
         // Encode spaces in the URL
@@ -93,34 +100,33 @@ class AuthController extends Controller
         ]);
     }
 
-    public function logout(): JsonResponse
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
     {
-        $token = request()->bearerToken();
-
-        // return response()->json([
-        //     'status' => 'Success',
-        //     'message' => 'Hasta la proxima',
-        //     'data' => $token,
-        // ], 204);
-
-        if (! $token) {
-            return response()->json([
-                'status' => 'Error',
-                'message' => 'Token not provided',
-                'data' => null,
-            ], 400);
-        }
-
-        /** @var PersonalAccessToken $model */
-        $model = Sanctum::$personalAccessTokenModel;
-
-        $accessToken = $model::findToken($token);
-        $accessToken->delete();
-
-        return response()->json([
-            'status' => 'Success',
-            'message' => 'Hasta la proxima',
-            'data' => null,
-        ], 200);
+        //
     }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        //
+    }
+
+    public function test1(){
+        return "test3";
+    }
+
+
 }
