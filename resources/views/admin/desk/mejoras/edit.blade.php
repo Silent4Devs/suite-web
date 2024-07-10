@@ -135,16 +135,13 @@
 
                             <div style="position: relative; left: 2rem;">
                                 <label>
-                                    <input type="checkbox" id="toggle-info" {{ !empty($aprobadoresArray) ? 'checked' : '' }} {{ $mejoras->estatus === 'cerrado' || $mejoras->estatus === 'cancelado' ? '' : 'disabled' }}>
+                                    <input type="checkbox" id="toggle-info" {{ !empty($aprobadoresArray) ? 'checked' : '' }}>
                                     Activar flujo de firma(s)
                                 </label>
                                 <br>
-                                @if($mejoras->estatus !== 'cerrado' && $mejoras->estatus !== 'cancelado')
-                                <span style="color: red;">No puedes guardar aprobadores hasta que cumplas con un estatus permitido.</span>
-                                @endif
                             </div>
 
-                            @if($mejoras->estatus === 'cerrado' || $mejoras->estatus === 'cancelado')
+
                             <div class="mt-2 form-group col-md-12">
                                 <div class="info-bar" id="info-bar" style="display: {{ !empty($aprobadoresArray) ? 'block' : 'none' }};">
                                     <p>Seleccione cuántos participantes de aprobación tendrá tu lista.</p>
@@ -165,7 +162,7 @@
                                     </select>
                                 </div>
                             </div>
-                            @endif
+
 
 
                             <div class="mt-2 form-group col-12">
@@ -647,6 +644,7 @@
 @endphp
 
 
+@if($mejoras->estatus === 'cerrado' || $mejoras->estatus === 'cancelado')
 @if ($userIsAuthorized)
 @if (!$existingRecord)
 <form method="POST" action="{{ route('admin.module_firmas.mejoras', ['id' => $mejoras->id]) }}" enctype="multipart/form-data">
@@ -681,6 +679,7 @@
     </div>
     </div>
 </form>
+@endif
 @endif
 @endif
 
