@@ -58,7 +58,7 @@ class EvDesempenoDashboardGeneral extends Component
 
     public function mount()
     {
-        $evaluaciones = EvaluacionDesempeno::getAll()->where('estatus', '!=', 0);
+        $evaluaciones = EvaluacionDesempeno::getAll();
 
         $this->evaluaciones = $evaluaciones;
 
@@ -256,7 +256,7 @@ class EvDesempenoDashboardGeneral extends Component
                     $mes_evaluacion = Carbon::parse($periodo->fecha_inicio)->format('m');
                     if ($mes_evaluacion == $this->mes_mensual) {
                         $resultados = $this->calificacionesEvaluacionMensual($evaluacion, $periodo->id);
-                        if (! empty($resultados)) {
+                        if (!empty($resultados)) {
                             $datos[] = $resultados;
                         }
                     }

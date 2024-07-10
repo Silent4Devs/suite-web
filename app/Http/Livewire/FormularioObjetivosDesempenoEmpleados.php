@@ -8,6 +8,7 @@ use App\Mail\CorreoObjetivosPendientes;
 use App\Models\Empleado;
 use App\Models\EscalasMedicionObjetivos;
 use App\Models\EscalasObjetivosDesempeno;
+use App\Models\EvaluacionDesempeno;
 use App\Models\PeriodoCargaObjetivos;
 use App\Models\RH\MetricasObjetivo;
 use App\Models\RH\Objetivo;
@@ -72,9 +73,13 @@ class FormularioObjetivosDesempenoEmpleados extends Component
 
     public $abierta = false;
 
+    public $evaluacion_activa = false;
+
     public function mount($id_empleado)
     {
         $this->id_emp = $id_empleado;
+
+        $this->evaluacion_activa = EvaluacionDesempeno::where('estatus', 1)->orWhere('estatus', 3)->first();
 
         $this->categorias = TipoObjetivo::get();
         $this->unidades = MetricasObjetivo::getAll();
