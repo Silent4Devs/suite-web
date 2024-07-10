@@ -10,10 +10,13 @@ use App\Http\Controllers\Api\V1\AnalisisRiesgo\templateAnalisisRiesgoController;
 use App\Http\Controllers\Api\V1\Comunicados\ComunicadosApiController;
 use App\Http\Controllers\Api\V1\ContadorSolicitudes\ContadorSolicitudesApiController;
 use App\Http\Controllers\Api\V1\SolicitudPermisoGoceSueldo\SolicitudPermisoGoceSueldoApiController;
+use App\Http\Controllers\Api\V1\Test;
 use App\Http\Controllers\Api\V1\Timesheet\TimesheetApiController;
 
-Route::post('/v1/login', [AuthController::class, 'login']);
-Route::post('/v1/ejemplo', [AuthController::class, 'login']);
+Route::post('v1/login', [AuthController::class, 'login']);
+Route::post('v1/ejemplo', [AuthController::class, 'login']);
+Route::apiResource('/test', Test::class);
+route::post('/test2', [Test::class, 'store']);
 
 Route::post('api/v1/logout', [AuthController::class, 'logout']);
 
