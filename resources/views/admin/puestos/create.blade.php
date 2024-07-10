@@ -18,7 +18,7 @@
                             <div class="">
                                 <label>
                                     {{-- <input type="checkbox" class="filled-in" checked="checked" /> --}}
-                                    <input type="checkbox" name="aprobadores_firma" id="aprobadores_firma" value="1"
+                                    <input type="checkbox" name="firma_check" id="aprobadores_firma" value="1"
                                         style="width: 20px; height: 20px; vertical-align:middle;" />
                                     <span>Activar flujo de aprobación</span>
                                 </label>

@@ -2,12 +2,12 @@
 
 namespace App\Mail;
 
-use App\Models\AprobadorFirmapuesto;
+use App\Models\AprobadorFirmaPuesto;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class AprobadorFirmapuestoMail extends Mailable
+class AprobadorFirmaPuestoMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -18,7 +18,7 @@ class AprobadorFirmapuestoMail extends Mailable
      */
     public $aprobador_firma_puesto;
 
-    public function __construct(AprobadorFirmapuesto $aprobador_firma_puesto)
+    public function __construct(AprobadorFirmaPuesto $aprobador_firma_puesto)
     {
         $this->aprobador_firma_puesto = $aprobador_firma_puesto;
     }

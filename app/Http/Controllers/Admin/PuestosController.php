@@ -177,13 +177,13 @@ class PuestosController extends Controller
                 if (isset($aprobador_firma_puesto->aprobador->email)) {
 
                     try {
-                        Mail::to(removeUnicodeCharacters($aprobador_firma_puesto->aprobador->email))->queue(new AprobadorFirmaPuesto($aprobador_firma_puesto));
+                        Mail::to(removeUnicodeCharacters($aprobador_firma_puesto->aprobador->email))->queue(new AprobadorFirmaPuestoMail($aprobador_firma_puesto));
                     } catch (\Throwable $th) {
                     }
                 }
             }
         }
-        $aprobador_firma_puesto_historico = AprobadorFirmaPuesto::create([
+        $aprobador_firma_puesto_historico = AprobadorFirmaPuestoHistorico::create([
             'puesto_id' => $puesto->id,
             'solicitante_id' => User::getCurrentUser()->empleado->id,
             'empleado_update_id' => User::getCurrentUser()->empleado->id,
@@ -355,7 +355,9 @@ class PuestosController extends Controller
             }
         }
 
-        return view('admin.puestos.show', compact('puesto', 'idiomas', 'competencias', 'responsabilidades', 'certificados', 'idiomas', 'herramientas', 'contactos', 'empleados', 'areas', 'aprobacionFirmaPuesto', 'firmar', 'firmado'));
+        $aprobacionFirmaPuestoHisotricoLast = AprobadorFirmaPuestoHistorico::where('puesto_id', $puesto->id)->orderBy('id', 'DESC')->first();
+
+        return view('admin.puestos.show', compact('puesto', 'idiomas', 'competencias', 'responsabilidades', 'certificados', 'idiomas', 'herramientas', 'contactos', 'empleados', 'areas', 'aprobacionFirmaPuesto', 'firmar', 'firmado', 'aprobacionFirmaPuestoHisotricoLast'));
     }
 
     public function aprobacionFirma(Request $request)
