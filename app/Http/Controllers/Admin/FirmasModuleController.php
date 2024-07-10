@@ -520,7 +520,7 @@ class FirmasModuleController extends Controller
                 'modulo_id' => $modulo,
                 'submodulo_id' => $submodulo,
                 'user_id' => Auth::id(),
-                'firma' => $request->firma,
+                'firma' =>  $imageName,
                 'id_sugerencias' => $id,
             ]);
 
