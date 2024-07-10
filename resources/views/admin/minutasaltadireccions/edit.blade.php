@@ -466,14 +466,14 @@
 @endif
 @endif
 
-@if ($userIsAuthorized)
+@if ($userIsAuthorized  || auth()->user()->roles->contains('title', 'Admin'))
 <div class="card card-content" style="margin-bottom: 30px">
     <div class="caja-firmas-doc">
         @foreach($firmas as $firma)
         <div class="flex" style="margin-top: 70px;">
             <div class="flex-item">
                 @if($firma->firma)
-                    <img src="{{ $firma->firma }}" class="img-firma" width="200" height="100">
+                    <img src="{{ $firma->firma_ruta_minutas }}" class="img-firma" width="200" height="100">
                     <p>Fecha: {{ $firma->created_at->format('Y-m-d') }}</p>
                     <p>Firmante: {{ $firma->empleado->name }}</p>
                 @else
