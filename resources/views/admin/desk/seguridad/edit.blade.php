@@ -1021,7 +1021,7 @@
         <div class="flex" style="margin-top: 70px;">
             <div class="flex-item">
                 @if($firma->firma)
-                    <img src="{{ $firma->firma }}" class="img-firma" width="200" height="100">
+                    <img src="{{ $firma->firma_ruta_seguridad }}" class="img-firma" width="200" height="100">
                     <p>Fecha: {{ $firma->created_at->format('Y-m-d') }}</p>
                     <p>Firmante: {{ $firma->empleado->name }}</p>
                 @else
