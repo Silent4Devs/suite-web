@@ -204,7 +204,7 @@ services:
     networks:
       - tabantajnetwork
 
-  Logstash:
+  logstash:
     image: logstash:8.11.1
     container_name: logstash
     restart: always
