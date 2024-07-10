@@ -245,7 +245,7 @@ services:
     environment:
       - monitoring.enabled= true
     depends_on:
-      - Logstash
+      - logstash
       - elasticsearch
     command: ["--strict.perms=false"]
     ulimits:
