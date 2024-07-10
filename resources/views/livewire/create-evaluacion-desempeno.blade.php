@@ -1,7 +1,5 @@
 <div>
 
-    {{-- <x-loading-indicator /> --}}
-
     <div class="container">
         <div class="mt-5 mb-5 text-center titulo_general_funcion">
             <h2>Configuración de la Evaluación</h2>
@@ -91,7 +89,7 @@
 
                     <div class="row">
                         <div class="col-6 text-left my-4">
-                            <a wire:click.prevent="borrador" class="btn btn-success" style="width: 170px;">Borrador</a>
+                            <a wire:click.prevent="guardarBorrador" class="btn btn-success" style="width: 170px;">Borrador</a>
                         </div>
 
                         <div class=" col-6 text-right my-4">
@@ -222,7 +220,7 @@
 
                 <div class="row">
                     <div class="col-6 text-left my-4">
-                        <a wire:click.prevent="borrador" class="btn btn-success" style="width: 170px;">Borrador</a>
+                        <a wire:click.prevent="guardarBorrador" class="btn btn-success" style="width: 170px;">Borrador</a>
                     </div>
 
                     <div class="col-6 text-right my-4">
@@ -290,7 +288,7 @@
 
                 <div class="row">
                     <div class="col-6 text-left my-4">
-                        <a wire:click.prevent="borrador" class="btn btn-success" style="width: 170px;">Borrador</a>
+                        <a wire:click.prevent="guardarBorrador" class="btn btn-success" style="width: 170px;">Borrador</a>
                     </div>
 
                     <div class="col-6 text-right my-4">
@@ -492,14 +490,17 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-2">
-                                                            <input
-                                                                id="porcentaje_objetivos_evaluador_{{ $key }}_{{ $index_obj }}"
-                                                                type="number" min="0" max="100"
-                                                                class="form-control"
-                                                                wire:model="array_porcentaje_evaluadores.{{ $key }}.porcentaje_evaluador_objetivos.{{ $index_obj }}">
-                                                            <label
-                                                                for="porcentaje_objetivos_evaluador_{{ $key }}_{{ $index_obj }}">Porcentaje
-                                                                (%)</label>
+                                                            <div class="anima-focus">
+                                                                <input
+                                                                    id="porcentaje_objetivos_evaluador_{{ $key }}_{{ $index_obj }}"
+                                                                    type="number" min="0" max="100"
+                                                                    class="form-control"
+                                                                    wire:model="array_porcentaje_evaluadores.{{ $key }}.porcentaje_evaluador_objetivos.{{ $index_obj }}">
+                                                                <label
+                                                                    for="porcentaje_objetivos_evaluador_{{ $key }}_{{ $index_obj }}">Porcentaje
+                                                                    (%)
+                                                                </label>
+                                                            </div>
                                                         </div>
                                                         @if ($index_obj > 0)
                                                             <div class="col-1">
@@ -513,8 +514,7 @@
                                                     @endforeach
                                                     <div class="col-2">
                                                         <a class="btn btn-link" style="color: #3490dc;"
-                                                            wire:click.prevent="agregarEvaluadorObjetivos({{ $key }} )">+
-                                                            Agregar</a>
+                                                            wire:click.prevent="agregarEvaluadorObjetivos({{ $key }} )">+Agregar</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -547,14 +547,17 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-2">
-                                                            <input
-                                                                id="porcentaje_objetivos_evaluador_{{ $key }}_{{ $index_obj }}"
-                                                                type="number" min="0" max="100"
-                                                                class="form-control"
-                                                                wire:model="array_porcentaje_evaluadores.{{ $key }}.porcentaje_evaluador_competencias.{{ $index_comp }}">
-                                                            <label
-                                                                for="porcentaje_competencias_evaluador_{{ $key }}_{{ $index_comp }}">Porcentaje
-                                                                (%)</label>
+                                                            <div class="anima-focus">
+                                                                <input
+                                                                    id="porcentaje_objetivos_evaluador_{{ $key }}_{{ $index_obj }}"
+                                                                    type="number" min="0" max="100"
+                                                                    class="form-control"
+                                                                    wire:model="array_porcentaje_evaluadores.{{ $key }}.porcentaje_evaluador_competencias.{{ $index_comp }}">
+                                                                <label
+                                                                    for="porcentaje_competencias_evaluador_{{ $key }}_{{ $index_comp }}">Porcentaje
+                                                                    (%)
+                                                                </label>
+                                                            </div>
                                                         </div>
                                                         @if ($index_comp > 0)
                                                             <div class="col-1">
@@ -568,8 +571,7 @@
                                                     @endforeach
                                                     <div class="col-4">
                                                         <a class="btn-link" style="color: #3490dc;"
-                                                            wire:click.prevent="agregarEvaluadorCompetencias({{ $key }})">+
-                                                            Agregar
+                                                            wire:click.prevent="agregarEvaluadorCompetencias({{ $key }})">+Agregar
                                                         </a>
                                                     </div>
                                                 </div>
@@ -584,7 +586,7 @@
 
                 <div class="row">
                     <div class="col-6 text-left my-4">
-                        <a wire:click.prevent="borrador" class="btn btn-success" style="width: 170px;">Borrador</a>
+                        <a wire:click.prevent="guardarBorrador" class="btn btn-success" style="width: 170px;">Borrador</a>
                     </div>
 
                     <div class="col-6 text-right my-4">
@@ -628,6 +630,20 @@
                     }
                 });
             });
+        </script>
+
+        <script>
+            function openNewTabCompetencias() {
+                var url = "{{ route('admin.ev360-competencias-por-puesto.index') }}"; // Replace with the actual route name
+                window.open(url, '_blank');
+            }
+        </script>
+        <script>
+            function openNewTabObjetivos() {
+                var url =
+                    "{{ route('admin.ev360-objetivos-periodo.config') }}"; // Replace with the actual route name
+                window.open(url, '_blank');
+            }
         </script>
     @endsection
 </div>
