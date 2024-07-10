@@ -13,8 +13,8 @@ use App\Http\Controllers\Api\V1\SolicitudPermisoGoceSueldo\SolicitudPermisoGoceS
 use App\Http\Controllers\Api\V1\Test;
 use App\Http\Controllers\Api\V1\Timesheet\TimesheetApiController;
 
-Route::post('v1/login', [AuthController::class, 'login']);
-Route::post('v1/ejemplo', [AuthController::class, 'login']);
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/ejemplo', [Test::class, 'test1']);
 Route::apiResource('/test', Test::class);
 route::post('/test2', [Test::class, 'store']);
 
