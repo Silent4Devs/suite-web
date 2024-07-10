@@ -151,11 +151,18 @@ class FirmasModuleController extends Controller
 
             $ruta_carpeta = storage_path('app/public/seguridad/' . $seguridad->id  . '/firma');
 
-            // Dar permisos chmod 777 a la carpeta
+
+            if (!is_dir($ruta_carpeta)) {
+                mkdir($ruta_carpeta, 0777, true);
+            }
+
+
+            chmod($ruta_carpeta, 0777);
+
 
             Storage::put('public/seguridad/' . $seguridad->id . '/firma/' . $imageName, $image);
 
-            chmod($ruta_carpeta, 0777);
+
             // Obtener la URL de la imagen guardada
             $imageUrl = Storage::url('public/seguridad/' . $seguridad->id . '/firma/' . $imageName);
 
@@ -217,11 +224,15 @@ class FirmasModuleController extends Controller
 
             $ruta_carpeta = storage_path('app/public/riesgos/' . $riesgo->id  . '/firma');
 
-            // Dar permisos chmod 777 a la carpeta
+            if (!is_dir($ruta_carpeta)) {
+                mkdir($ruta_carpeta, 0777, true);
+            }
+
+
+            chmod($ruta_carpeta, 0777);
 
             Storage::put('public/riesgos/' . $riesgo->id . '/firma/' . $imageName, $image);
 
-            chmod($ruta_carpeta, 0777);
             // Obtener la URL de la imagen guardada
             $imageUrl = Storage::url('public/riesgos/' . $riesgo->id . '/firma/' . $imageName);
 
@@ -283,11 +294,15 @@ class FirmasModuleController extends Controller
 
             $ruta_carpeta = storage_path('app/public/mejoras/' . $mejoras->id  . '/firma');
 
-            // Dar permisos chmod 777 a la carpeta
+            if (!is_dir($ruta_carpeta)) {
+                mkdir($ruta_carpeta, 0777, true);
+            }
+
+
+            chmod($ruta_carpeta, 0777);
 
             Storage::put('public/mejoras/' . $mejoras->id . '/firma/' . $imageName, $image);
 
-            chmod($ruta_carpeta, 0777);
             // Obtener la URL de la imagen guardada
             $imageUrl = Storage::url('public/mejoras/' . $mejoras->id . '/firma/' . $imageName);
 
@@ -348,11 +363,15 @@ class FirmasModuleController extends Controller
 
             $ruta_carpeta = storage_path('app/public/denuncias/' . $denuncia->id  . '/firma');
 
-            // Dar permisos chmod 777 a la carpeta
+            if (!is_dir($ruta_carpeta)) {
+                mkdir($ruta_carpeta, 0777, true);
+            }
+
+
+            chmod($ruta_carpeta, 0777);
 
             Storage::put('public/denuncias/' . $denuncia->id . '/firma/' . $imageName, $image);
 
-            chmod($ruta_carpeta, 0777);
             // Obtener la URL de la imagen guardada
             $imageUrl = Storage::url('public/denuncias/' . $denuncia->id . '/firma/' . $imageName);
 
@@ -414,11 +433,16 @@ class FirmasModuleController extends Controller
 
             $ruta_carpeta = storage_path('app/public/quejas/' . $quejas->id  . '/firma');
 
-            // Dar permisos chmod 777 a la carpeta
+            if (!is_dir($ruta_carpeta)) {
+                mkdir($ruta_carpeta, 0777, true);
+            }
+
+
+            chmod($ruta_carpeta, 0777);
 
             Storage::put('public/quejas/' . $quejas->id . '/firma/' . $imageName, $image);
 
-            chmod($ruta_carpeta, 0777);
+
             // Obtener la URL de la imagen guardada
             $imageUrl = Storage::url('public/quejas/' . $quejas->id . '/firma/' . $imageName);
 
@@ -479,11 +503,16 @@ class FirmasModuleController extends Controller
 
             $ruta_carpeta = storage_path('app/public/sugerencias/' . $sugerencias->id  . '/firma');
 
-            // Dar permisos chmod 777 a la carpeta
+            if (!is_dir($ruta_carpeta)) {
+                mkdir($ruta_carpeta, 0777, true);
+            }
+
+
+            chmod($ruta_carpeta, 0777);
+
 
             Storage::put('public/sugerencias/' . $sugerencias->id . '/firma/' . $imageName, $image);
 
-            chmod($ruta_carpeta, 0777);
             // Obtener la URL de la imagen guardada
             $imageUrl = Storage::url('public/sugerencias/' . $sugerencias->id . '/firma/' . $imageName);
 
@@ -540,11 +569,15 @@ class FirmasModuleController extends Controller
 
         $ruta_carpeta = storage_path('app/public/minuta/' . $minuta->id  . '/firma');
 
-        // Dar permisos chmod 777 a la carpeta
+        if (!is_dir($ruta_carpeta)) {
+            mkdir($ruta_carpeta, 0777, true);
+        }
+
+
+        chmod($ruta_carpeta, 0777);
 
         Storage::put('public/minuta/' . $minuta->id . '/firma/' . $imageName, $image);
 
-        chmod($ruta_carpeta, 0777);
         // Obtener la URL de la imagen guardada
         $imageUrl = Storage::url('public/minuta/' . $minuta->id . '/firma/' . $imageName);
 
