@@ -47,5 +47,9 @@ class Test extends Controller
         //
     }
 
+    public function test1(){
+        return "test3";
+    }
+
 
 }
