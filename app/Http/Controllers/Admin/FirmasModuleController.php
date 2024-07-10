@@ -85,7 +85,7 @@ class FirmasModuleController extends Controller
 
         // Convertir la cadena de participantes a un array si es una cadena delimitada
         $participantes = [];
-        if (! empty($firma_module->participantes)) {
+        if (!empty($firma_module->participantes)) {
             $cleanString = str_replace(['[', ']', '"'], '', $firma_module->participantes);
             $participantes = explode(',', $cleanString);
             $participantes = array_map('trim', $participantes);
@@ -298,6 +298,6 @@ class FirmasModuleController extends Controller
             'id_minutas' => $id,
         ]);
 
-        return redirect()->route('admin.desk.index')->with('success', 'Actualizado con éxito');
+        return redirect()->route('admin.minutasaltadireccions.index')->with('success', 'Actualizado con éxito');
     }
 }
