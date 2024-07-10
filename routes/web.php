@@ -71,7 +71,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('firmas_module/quejas/{id}', 'FirmasModuleController@quejas')->name('module_firmas.quejas');
     Route::post('firmas_module/mejoras/{id}', 'FirmasModuleController@mejoras')->name('module_firmas.mejoras');
     Route::post('firmas_module/denuncias/{id}', 'FirmasModuleController@denuncias')->name('module_firmas.denuncias');
-    Route::post('firmas_module/sugerencia/{id}', 'FirmasModuleController@sugerencia')->name('module_firmas.sugerencias');
+    Route::post('firmas_module/sugerencia/{id}', 'FirmasModuleController@sugerencias')->name('module_firmas.sugerencias');
     Route::post('firmas_module/minutas/{id}', 'FirmasModuleController@minutas')->name('module_firmas.minutas');
 
     // Empleados
