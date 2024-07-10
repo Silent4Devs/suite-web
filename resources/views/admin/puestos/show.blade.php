@@ -359,6 +359,24 @@
 
     </div>
 
+    @if ($aprobacionFirmaPuesto->count())
+        <div class="col-12">
+            <div class="card card-body">
+                <h5 class="text-center">Aprobaciones firmadas</h5>
+                <div class="d-flex flex-wrap gap-4 mt-4 justify-content-center"
+                    style="width: 100%; max-width: 1000px; margin: auto;">
+                    @foreach ($aprobacionFirmaPuesto as $firma)
+                        @if ($firma->firma)
+                            <div class="text-center">
+                                <img src="{{ $firma->firma_ruta }}" alt="firma" style="width: 400px;"> <br>
+                                <span>{{ $firma->aprobador->name }}</span>
+                            </div>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    @endif
     <style>
         #firma_aprobador canvas {
             border: 1px solid #bbb;
@@ -369,7 +387,7 @@
     @if ($firmar)
         <div class="col-12">
             <div class="card card-body">
-                <form action="{{ route('admin.puestos-aprobacion.aprobacion-firma-puesto') }}" method="POST">
+                <form action="{{ route('puestos-aprobacion.aprobacion-firma-puesto') }}" method="POST">
                     @csrf
                     <div class="d-flex gap-4 align-items-center flex-column">
                         <div>
@@ -406,24 +424,5 @@
             instructions: ""
         });
     </script>
-
-    @if ($aprobacionFirmaPuesto->count())
-        <div class="col-12">
-            <div class="card card-body">
-                <h5 class="text-center">Aprobaciones firmadas</h5>
-                <div class="d-flex flex-wrap gap-4 mt-4 justify-content-center"
-                    style="width: 100%; max-width: 1000px; margin: auto;">
-                    @foreach ($aprobacionFirmaPuesto as $firma)
-                        @if ($firma->firma)
-                            <div class="text-center">
-                                <img src="{{ $firma->firma_ruta }}" alt="firma" style="width: 400px;"> <br>
-                                <span>{{ $firma->aprobador->name }}</span>
-                            </div>
-                        @endif
-                    @endforeach
-                </div>
-            </div>
-        </div>
-    @endif
 
 @endsection

@@ -271,13 +271,19 @@
                                 <b>Datos generales:</b>
                             </div>
 
+
                             <div style="position: relative; left: 2rem;">
                                 <label>
-                                    <input type="checkbox" id="toggle-info" {{ !empty($aprobadoresArray) ? 'checked' : '' }}>
-                                    Activar flujo de aprobación
+                                    <input type="checkbox" id="toggle-info" {{ !empty($aprobadoresArray) ? 'checked' : '' }} {{ $incidentesSeguridad->estatus === 'Cerrado' || $incidentesSeguridad->estatus === 'No procedente' ? '' : 'disabled' }}>
+                                    Activar flujo de firma(s)
                                 </label>
+                                <br>
+                                @if($incidentesSeguridad->estatus !== 'Cerrado' && $incidentesSeguridad->estatus !== 'No procedente')
+                                <span style="color: red;">No puedes guardar aprobadores hasta que cumplas con un estatus permitido.</span>
+                                @endif
                             </div>
 
+                            @if($incidentesSeguridad->estatus === 'Cerrado' || $incidentesSeguridad->estatus === 'No procedente')
                             <div class="mt-2 form-group col-md-12">
                                 <div class="info-bar" id="info-bar" style="display: {{ !empty($aprobadoresArray) ? 'block' : 'none' }};">
                                     <p>Seleccione cuántos participantes de aprobación tendrá tu lista.</p>
@@ -298,7 +304,7 @@
                                     </select>
                                 </div>
                             </div>
-
+                            @endif
 
 
                             <div class="mt-2 form-group col-md-6">

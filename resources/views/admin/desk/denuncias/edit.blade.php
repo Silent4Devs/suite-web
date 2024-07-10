@@ -135,11 +135,16 @@
 
                             <div style="position: relative; left: 2rem;">
                                 <label>
-                                    <input type="checkbox" id="toggle-info" {{ !empty($aprobadoresArray) ? 'checked' : '' }}>
-                                    Activar flujo de aprobación
+                                    <input type="checkbox" id="toggle-info" {{ !empty($aprobadoresArray) ? 'checked' : '' }} {{ $denuncias->estatus === 'cerrado' || $denuncias->estatus === 'cancelado' ? '' : 'disabled' }}>
+                                    Activar flujo de firma(s)
                                 </label>
+                                <br>
+                                @if($denuncias->estatus !== 'cerrado' && $denuncias->estatus !== 'cancelado')
+                                <span style="color: red;">No puedes guardar aprobadores hasta que cumplas con un estatus permitido.</span>
+                                @endif
                             </div>
 
+                            @if($denuncias->estatus === 'cerrado' || $denuncias->estatus === 'cancelado')
                             <div class="mt-2 form-group col-md-12">
                                 <div class="info-bar" id="info-bar" style="display: {{ !empty($aprobadoresArray) ? 'block' : 'none' }};">
                                     <p>Seleccione cuántos participantes de aprobación tendrá tu lista.</p>
@@ -160,6 +165,8 @@
                                     </select>
                                 </div>
                             </div>
+                            @endif
+
 
                             <div class="mt-2 form-group col-6">
                                 <label class="form-label"><i class="fas fa-ticket-alt iconos-crear"></i>Folio</label>
