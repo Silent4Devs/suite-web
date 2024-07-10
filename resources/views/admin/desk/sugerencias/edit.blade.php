@@ -134,14 +134,18 @@
                                 <b>Datos generales:</b>
                             </div>
 
-                            @if ($sugerencias->estatus === 'cerrado' || $sugerencias->estatus === 'cancelado')
                             <div style="position: relative; left: 2rem;">
                                 <label>
-                                    <input type="checkbox" id="toggle-info" {{ !empty($aprobadoresArray) ? 'checked' : '' }}>
+                                    <input type="checkbox" id="toggle-info" {{ !empty($aprobadoresArray) ? 'checked' : '' }} {{ $sugerencias->estatus === 'cerrado' || $sugerencias->estatus === 'cancelado' ? '' : 'disabled' }}>
                                     Activar flujo de firma(s)
                                 </label>
+                                <br>
+                                @if($sugerencias->estatus !== 'cerrado' && $sugerencias->estatus !== 'cancelado')
+                                <span style="color: red;">No puedes guardar aprobadores hasta que cumplas con un estatus permitido.</span>
+                                @endif
                             </div>
 
+                            @if($sugerencias->estatus === 'cerrado' || $sugerencias->estatus === 'cancelado')
                             <div class="mt-2 form-group col-md-12">
                                 <div class="info-bar" id="info-bar" style="display: {{ !empty($aprobadoresArray) ? 'block' : 'none' }};">
                                     <p>Seleccione cuántos participantes de aprobación tendrá tu lista.</p>
