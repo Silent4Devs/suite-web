@@ -909,4 +909,111 @@ class CreateEvaluacionDesempeno extends Component
             }
         }
     }
+
+    public function repetirConsultaCompetencias()
+    {
+        foreach ($this->listaIDSinCompetencias as $IDsinComp) {
+
+            $rev_emp_comp = Empleado::select(
+                'id',
+                'name',
+                'area_id',
+                'puesto_id',
+            )->with(['area:id,area', 'puestoRelacionado:id,puesto'])
+                ->where('estatus', 'alta')
+                ->whereNull('deleted_at')
+                ->where('empleados.id', $IDsinComp)
+                ->first();
+            if ($rev_emp_comp->competencias_asignadas > 0) {
+                $this->listaEmpleadosSinCompetencias = $this->listaEmpleadosSinCompetencias->filter(function ($item) use ($rev_emp_comp) {
+                    return $item !== $rev_emp_comp->name;
+                });
+            }
+        }
+
+        $this->totalEmpleadosSinCompetencias = $this->listaEmpleadosSinCompetencias->count();
+
+        if ($this->totalEmpleadosSinCompetencias == 0) {
+            $this->hayEmpleadosSinCompetencias = false;
+        }
+
+        if (
+            $this->hayEmpleadosSinCompetencias == false &&
+            $this->hayEmpleadosSinObjetivos == false &&
+            $this->hayEmpleadosObjetivosPendiente == false
+        ) {
+            $this->bloquear_evaluacion = false;
+        }
+    }
+
+    public function repetirConsultaObjetivos()
+    {
+        foreach ($this->listaIDSinObjetivos as $IDsinObj) {
+
+            $rev_emp_obj = Empleado::select(
+                'id',
+                'name',
+                'area_id',
+                'puesto_id',
+            )->with(['area:id,area', 'objetivos:id,objetivo_id,empleado_id'])
+                ->where('estatus', 'alta')
+                ->whereNull('deleted_at')
+                ->where('empleados.id', $IDsinObj)
+                ->first();
+            if ($rev_emp_obj->objetivos_asignados['cuenta'] > 0) {
+                $this->listaEmpleadosSinObjetivos = $this->listaEmpleadosSinObjetivos->filter(function ($item) use ($rev_emp_obj) {
+                    return $item !== $rev_emp_obj->name;
+                });
+            }
+        }
+        $this->totalEmpleadosSinObjetivos = $this->listaEmpleadosSinObjetivos->count();
+
+        if ($this->totalEmpleadosSinObjetivos == 0) {
+            $this->hayEmpleadosSinObjetivos = false;
+        }
+
+        if (
+            $this->hayEmpleadosSinCompetencias == false &&
+            $this->hayEmpleadosSinObjetivos == false &&
+            $this->hayEmpleadosObjetivosPendiente == false
+        ) {
+            $this->bloquear_evaluacion = false;
+        }
+    }
+
+    public function repetirConsultaObjetivosPendientes()
+    {
+        foreach ($this->listaIDObjetivosPendiente as $IDObjPen) {
+
+            $rev_emp_obj_pend = Empleado::select(
+                'id',
+                'name',
+                'area_id',
+                'puesto_id',
+            )->with(['area:id,area', 'objetivos:id,objetivo_id,empleado_id'])
+                ->where('estatus', 'alta')
+                ->whereNull('deleted_at')
+                ->where('empleados.id', $IDObjPen)
+                ->first();
+
+            if ($rev_emp_obj_pend->objetivos_asignados['pendientes'] == false) {
+                $this->listaEmpleadosObjetivosPendiente = $this->listaEmpleadosObjetivosPendiente->filter(function ($item) use ($rev_emp_obj_pend) {
+                    return $item !== $rev_emp_obj_pend->name;
+                });
+            }
+        }
+        $this->totalEmpleadosObjetivosPendiente = $this->listaEmpleadosObjetivosPendiente->count();
+
+        if ($this->totalEmpleadosObjetivosPendiente == 0) {
+            $this->hayEmpleadosObjetivosPendiente = false;
+        }
+
+        if (
+            $this->hayEmpleadosSinCompetencias == false &&
+            $this->hayEmpleadosSinObjetivos == false &&
+            $this->hayEmpleadosObjetivosPendiente == false
+        ) {
+            $this->bloquear_evaluacion = false;
+        }
+    }
 }

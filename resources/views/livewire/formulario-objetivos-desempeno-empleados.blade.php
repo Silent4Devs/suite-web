@@ -146,7 +146,7 @@
                     </div>
                 </div>
 
-                <div class="row mt-4">
+                {{-- <div class="row mt-4">
                     <div class="col-12">
                         <div class="p-3 rounded-lg" style="color: #818181; background-color: #FFFEE5;">
                             <i>
@@ -174,7 +174,7 @@
                         </div>
                         <label for="">Periodos</label>
                     </div>
-                </div>
+                </div> --}}
 
 
                 <div class="info-first-config mt-5">
@@ -183,11 +183,11 @@
                     <hr class="my-4">
                 </div>
 
-                <div class="d-flex align-items-center" style="gap: 20px;">
+                {{-- <div class="d-flex align-items-center" style="gap: 20px;">
                     <input type="checkbox">
                     <span><strong>Variante</strong></span>
                     <span>Selecciona esta opción si deseas agregar una o más variantes a tus valores por periodo.</span>
-                </div>
+                </div> --}}
 
                 <div class="mt-5">
                     <div class="row">

@@ -322,7 +322,8 @@
                             competencias
                             <div class="row mt-2 mb-2 ml-2 mr-2">
                                 @foreach ($listaEmpleadosSinCompetencias as $eSinCompetencias)
-                                    <div><img class="img_empleado"
+                                    <div class="col-1">
+                                        <img class="img_empleado"
                                             src="{{ asset('storage/empleados/imagenes') }}/{{ $eSinCompetencias['avatar'] }}"
                                             width="20px;" alt="{{ $eSinCompetencias['name'] }}"
                                             title="{{ $eSinCompetencias['name'] }}">
@@ -368,7 +369,8 @@
                             objetivos
                             <div class="row mt-2 mb-2 ml-2 mr-2">
                                 @foreach ($listaEmpleadosSinObjetivos as $eSinObjetivo)
-                                    <div><img class="img_empleado"
+                                    <div class="col-1">
+                                        <img class="img_empleado"
                                             src="{{ asset('storage/empleados/imagenes') }}/{{ $eSinObjetivo['avatar'] }}"
                                             width="20px;" alt="{{ $eSinObjetivo['name'] }}"
                                             title="{{ $eSinObjetivo['name'] }}">
@@ -414,7 +416,7 @@
                             objetivos pendientes de revisión.
                             <div class="row mt-2 mb-2 ml-2 mr-2">
                                 @foreach ($listaEmpleadosObjetivosPendiente as $eObjetivoPendiente)
-                                    <div>
+                                    <div class="col-1">
                                         <img class="img_empleado"
                                             src="{{ asset('storage/empleados/imagenes') }}/{{ $eObjetivoPendiente['avatar'] }}"
                                             width="20px;" alt="{{ $eObjetivoPendiente['name'] }}"
@@ -471,7 +473,7 @@
                                             <div class="col-10">
                                                 <div class="row">
                                                     @foreach ($array_evaluadores[$key]['evaluador_objetivos'] as $index_obj => $evldr_obj)
-                                                        <div class="col-2">
+                                                        <div class="col-3">
                                                             <div class="anima-focus">
                                                                 <select class="form-control"
                                                                     name="evaluador_objetivo_{{ $key }}"
@@ -489,10 +491,15 @@
                                                                     for="evaluador_objetivo_{{ $key }}.evaluador_objetivos.{{ $index_obj }}">Evaluador</label>
                                                             </div>
                                                         </div>
-                                                        <div class="col-1">
-                                                            <input type="number" min="0" max="100"
+                                                        <div class="col-2">
+                                                            <input
+                                                                id="porcentaje_objetivos_evaluador_{{ $key }}_{{ $index_obj }}"
+                                                                type="number" min="0" max="100"
                                                                 class="form-control"
                                                                 wire:model="array_porcentaje_evaluadores.{{ $key }}.porcentaje_evaluador_objetivos.{{ $index_obj }}">
+                                                            <label
+                                                                for="porcentaje_objetivos_evaluador_{{ $key }}_{{ $index_obj }}">Porcentaje
+                                                                (%)</label>
                                                         </div>
                                                         @if ($index_obj > 0)
                                                             <div class="col-1">
@@ -504,7 +511,7 @@
                                                             </div>
                                                         @endif
                                                     @endforeach
-                                                    <div class="col-4">
+                                                    <div class="col-2">
                                                         <a class="btn btn-link" style="color: #3490dc;"
                                                             wire:click.prevent="agregarEvaluadorObjetivos({{ $key }} )">+
                                                             Agregar</a>
@@ -521,7 +528,7 @@
                                             <div class="col-10">
                                                 <div class="row">
                                                     @foreach ($array_evaluadores[$key]['evaluador_competencias'] as $index_comp => $evldr_comp)
-                                                        <div class="col-2">
+                                                        <div class="col-3">
                                                             <div class="anima-focus">
                                                                 <select class="form-control"
                                                                     name="evaluador_competencia_{{ $key }}"
@@ -539,10 +546,15 @@
                                                                     for="evaluador_competencia_{{ $key }}.evaluador_competencias.{{ $index_comp }}">Evaluador</label>
                                                             </div>
                                                         </div>
-                                                        <div class="col-1">
-                                                            <input type="number" min="0" max="100"
+                                                        <div class="col-2">
+                                                            <input
+                                                                id="porcentaje_objetivos_evaluador_{{ $key }}_{{ $index_obj }}"
+                                                                type="number" min="0" max="100"
                                                                 class="form-control"
                                                                 wire:model="array_porcentaje_evaluadores.{{ $key }}.porcentaje_evaluador_competencias.{{ $index_comp }}">
+                                                            <label
+                                                                for="porcentaje_competencias_evaluador_{{ $key }}_{{ $index_comp }}">Porcentaje
+                                                                (%)</label>
                                                         </div>
                                                         @if ($index_comp > 0)
                                                             <div class="col-1">
