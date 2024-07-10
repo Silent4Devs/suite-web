@@ -2,21 +2,15 @@
 
 namespace App\Http\Livewire;
 
-use App\Mail\EvaluacionesDesempenoEliminacionEvaluador;
 use App\Models\Activo;
 use App\Models\Documento;
 use App\Models\Empleado;
-use App\Models\EvaluacionDesempeno;
-use App\Models\EvaluadoresEvaluacionCompetenciasDesempeno;
-use App\Models\EvaluadoresEvaluacionObjetivosDesempeno;
-use App\Models\ListaInformativa;
 use App\Models\Recurso;
 use App\Models\RevisionDocumento;
 use App\Models\User;
 use App\Traits\EmpleadoFunciones;
 use App\Traits\ObtenerOrganizacion;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 
 class BajaEmpleadoComponent extends Component
@@ -64,12 +58,12 @@ class BajaEmpleadoComponent extends Component
     //mount
     public function mount($empleado)
     {
-        $this->empleado = $empleado;
-        $this->empleados = $this->obtenerEmpleados();
-        $this->documentosQueDeboAprobar = $this->obtenerDocumentosQueDeboAprobar();
-        $this->documentosQueMeDebenAprobar = $this->obtenerDocumentosQueMeDebenAprobar();
-        $this->misActivos = $this->obtenerMisActivos();
-        $this->misCapacitaciones = $this->obtenerCapacitaciones();
+        $this->empleado = Empleado::getSelectEmpleadosWithArea()->where('id', $empleado->id)->first();
+        // $this->empleados = $this->obtenerEmpleados();
+        // $this->documentosQueDeboAprobar = $this->obtenerDocumentosQueDeboAprobar();
+        // $this->documentosQueMeDebenAprobar = $this->obtenerDocumentosQueMeDebenAprobar();
+        // $this->misActivos = $this->obtenerMisActivos();
+        // $this->misCapacitaciones = $this->obtenerCapacitaciones();
     }
 
     public function render()
@@ -81,53 +75,53 @@ class BajaEmpleadoComponent extends Component
         return view('livewire.baja-empleado-component', compact('logo', 'empresa'));
     }
 
-    public function obtenerEmpleados()
-    {
-        $empleados = Empleado::alta()->where('id', '!=', $this->empleado->id)->select('id', 'name')->orderBy('name')->get();
+    // public function obtenerEmpleados()
+    // {
+    //     $empleados = Empleado::alta()->where('id', '!=', $this->empleado->id)->select('id', 'name')->orderBy('name')->get();
 
-        return $empleados;
-    }
+    //     return $empleados;
+    // }
 
-    public function obtenerComites()
-    {
-        $comites = $this->empleado->comiteSeguridad;
+    // public function obtenerComites()
+    // {
+    //     $comites = $this->empleado->comiteSeguridad;
 
-        return $comites;
-    }
+    //     return $comites;
+    // }
 
-    public function obtenerDocumentosQueDeboAprobar()
-    {
-        $revisiones = RevisionDocumento::getAllWithDocumento();
+    // public function obtenerDocumentosQueDeboAprobar()
+    // {
+    //     $revisiones = RevisionDocumento::getAllWithDocumento();
 
-        return $revisiones;
-    }
+    //     return $revisiones;
+    // }
 
-    public function obtenerDocumentosQueMeDebenAprobar()
-    {
-        $mis_documentos = Documento::getWithMacroproceso($this->empleado->id);
+    // public function obtenerDocumentosQueMeDebenAprobar()
+    // {
+    //     $mis_documentos = Documento::getWithMacroproceso($this->empleado->id);
 
-        return $mis_documentos;
-    }
+    //     return $mis_documentos;
+    // }
 
-    public function obtenerMisActivos()
-    {
-        $activos = Activo::select('*')->where('id_responsable', '=', $this->empleado->id)->get();
+    // public function obtenerMisActivos()
+    // {
+    //     $activos = Activo::select('*')->where('id_responsable', '=', $this->empleado->id)->get();
 
-        return $activos;
-    }
+    //     return $activos;
+    // }
 
-    public function obtenerCapacitaciones()
-    {
-        $empleado = $this->empleado->id;
-        $cacheKeyRecursos = 'Recursos:recursos_'.User::getCurrentUser()->id;
-        $recursos = Cache::remember($cacheKeyRecursos, 3600 * 8, function () use ($empleado) {
-            return Recurso::whereHas('empleados', function ($query) use ($empleado) {
-                $query->where('empleados.id', $empleado);
-            })->get();
-        });
+    // public function obtenerCapacitaciones()
+    // {
+    //     $empleado = $this->empleado->id;
+    //     $cacheKeyRecursos = 'Recursos:recursos_' . User::getCurrentUser()->id;
+    //     $recursos = Cache::remember($cacheKeyRecursos, 3600 * 8, function () use ($empleado) {
+    //         return Recurso::whereHas('empleados', function ($query) use ($empleado) {
+    //             $query->where('empleados.id', $empleado);
+    //         })->get();
+    //     });
 
-        return $recursos;
-    }
+    //     return $recursos;
+    // }
 
     public function cambiarSupervisor()
     {
@@ -142,86 +136,20 @@ class BajaEmpleadoComponent extends Component
 
     public function darDeBaja()
     {
-        $this->empleadoEvaluador($this->empleado->id);
-
         $this->validate($this->rules, $this->messages);
+        $empleadoBaja = Empleado::where('id', $this->empleado->id)->first();
 
-        $this->empleado->update([
+        $empleadoBaja->update([
             'estatus' => Empleado::BAJA,
             'fecha_baja' => $this->fechaBaja,
             'razon_baja' => $this->razonBaja,
         ]);
-
-        $user = User::where('email', trim(preg_replace('/\s/u', ' ', $this->empleado->email)))->first();
+        // dump(2);
+        $user = User::where('email', trim(preg_replace('/\s/u', ' ', $empleadoBaja->email)))->first();
         if ($user) {
             $user->delete();
         }
-
         $this->emit('select2');
-        $this->emit('baja', $this->empleado);
-    }
-
-    public function empleadoEvaluador($id_empleado)
-    {
-        $empleado = Empleado::getAllDataColumns()->find($id_empleado);
-
-        $informados = ListaInformativa::with('participantes.empleado', 'usuarios.usuario')->where('modelo', '=', 'EvaluacionDesempeno')->first();
-
-        if (isset($informados->participantes[0]) || isset($informados->usuarios[0])) {
-
-            if (isset($informados->participantes[0])) {
-                foreach ($informados->participantes as $participante) {
-                    $correodestinatario[] = $participante->empleado->email;
-                }
-            }
-
-            if (isset($informados->usuarios[0])) {
-                foreach ($informados->usuarios as $usuario) {
-                    $correodestinatario[] = $usuario->usuario->email;
-                }
-            }
-        }
-
-        $evaluadorDeCompetencias = EvaluadoresEvaluacionCompetenciasDesempeno::with('evaluacion', 'periodo')
-            ->where('evaluador_desempeno_id', $id_empleado)
-            ->get();
-
-        $evaluadorDeObjetivos = EvaluadoresEvaluacionObjetivosDesempeno::with('evaluacion', 'periodo')
-            ->where('evaluador_desempeno_id', $id_empleado)
-            ->get();
-
-        $allEvaluaciones = collect();
-
-        if ($evaluadorDeCompetencias->isNotEmpty()) {
-            foreach ($evaluadorDeCompetencias as $evcompetencia) {
-                if (! $evcompetencia->periodo->finalizado) {
-                    $allEvaluaciones->push($evcompetencia->evaluacion->id);
-                    $evcompetencia->delete();
-                }
-            }
-        }
-
-        if ($evaluadorDeObjetivos->isNotEmpty()) {
-            foreach ($evaluadorDeObjetivos as $evobjetivo) {
-                if (! $evobjetivo->periodo->finalizado) {
-                    $allEvaluaciones->push($evobjetivo->evaluacion->id);
-                    $evobjetivo->delete();
-                }
-            }
-        }
-
-        // Get unique evaluacion values
-        $uniqueEvaluaciones = $allEvaluaciones->unique();
-
-        // Convert to array if needed
-        $uniqueEvaluacionesArray = $uniqueEvaluaciones->values()->all();
-
-        if (! empty($uniqueEvaluacionesArray)) {
-            foreach ($uniqueEvaluacionesArray as $key_evaluacion => $id_evaluacion) {
-                $evaluacion = EvaluacionDesempeno::find($id_evaluacion);
-                $emailEvaluador = new EvaluacionesDesempenoEliminacionEvaluador($evaluacion->nombre, $empleado->name);
-                Mail::to($correodestinatario)->queue($emailEvaluador);
-            }
-        }
+        $this->emit('baja', $empleadoBaja);
     }
 }
