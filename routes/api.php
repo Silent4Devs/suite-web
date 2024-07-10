@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\API\Auth\AuthController;
+use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\InicioUsuario\InicioUsuarioController;
 use App\Http\Controllers\Api\V1\SolicitudDayOff\SolicitudDayOffApiController;
 use App\Http\Controllers\Api\V1\SolicitudVacaciones\SolicitudVacacionesApiController;
