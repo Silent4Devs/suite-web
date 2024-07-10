@@ -410,7 +410,7 @@ class ContratosController extends AppBaseController
             'contrato_id' => $contrato->id,
             'solicitante_id' => User::getCurrentUser()->empleado->id,
             'empleado_update_id' => User::getCurrentUser()->empleado->id,
-            'firma_check' => isset($request->firma_check) ? true : false ,
+            'firma_check' => isset($request->firma_check) ? true : false,
         ]);
 
         //return redirect(route('contratos.index'));
@@ -862,7 +862,7 @@ class ContratosController extends AppBaseController
             'contrato_id' => $contrato->id,
             'solicitante_id' => User::getCurrentUser()->empleado->id,
             'empleado_update_id' => User::getCurrentUser()->empleado->id,
-            'firma_check' => isset($request->firma_check) ? true : false ,
+            'firma_check' => isset($request->firma_check) ? true : false,
         ]);
 
         return response()->json([

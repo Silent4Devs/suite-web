@@ -187,7 +187,7 @@ class PuestosController extends Controller
             'puesto_id' => $puesto->id,
             'solicitante_id' => User::getCurrentUser()->empleado->id,
             'empleado_update_id' => User::getCurrentUser()->empleado->id,
-            'firma_check' => isset($request->firma_check) ? true : false ,
+            'firma_check' => isset($request->firma_check) ? true : false,
         ]);
 
         return redirect()->route('admin.puestos.index')->with('success', 'Puesto Creado');
@@ -255,14 +255,14 @@ class PuestosController extends Controller
 
         // firmas aprobadores
         $firma = FirmaModule::where('modulo_id', '4')->where('submodulo_id', '9')->first();
-         // dd($firma->aprobadores);
-         // $exampleVar = $firma->aprobadores[0];
+        // dd($firma->aprobadores);
+        // $exampleVar = $firma->aprobadores[0];
         $aprobacionFirmaPuesto = AprobadorFirmaPuesto::where('puesto_id', $puesto->id)->get();
         $firmar = false;
         $firmado = false;
         foreach ($aprobacionFirmaPuesto as $firma_item) {
             if ($firma_item->aprobador_id == User::getCurrentUser()->empleado->id) {
-                if (!isset($firma_item->firma)) {
+                if (! isset($firma_item->firma)) {
                     $firmar = true;
                 }
             }
@@ -292,8 +292,8 @@ class PuestosController extends Controller
         $this->saveUpdateContactosExternos($request->externos, $puesto);
         $this->saveOrUpdateLanguage($request->id_language, $puesto);
 
-         // aprobadores
-         if (isset($request->aprobadores_firma) && isset($request->firma_check)) {
+        // aprobadores
+        if (isset($request->aprobadores_firma) && isset($request->firma_check)) {
             $aprobacionFirmaPuesto = AprobadorFirmaPuesto::where('puesto_id', $puesto->id)->get();
             foreach ($aprobacionFirmaPuesto as $aprobador_old) {
                 $aprobador_old->delete();
@@ -318,7 +318,7 @@ class PuestosController extends Controller
             'puesto_id' => $puesto->id,
             'solicitante_id' => User::getCurrentUser()->empleado->id,
             'empleado_update_id' => User::getCurrentUser()->empleado->id,
-            'firma_check' => isset($request->firma_check) ? true : false ,
+            'firma_check' => isset($request->firma_check) ? true : false,
         ]);
 
         return redirect()->route('admin.puestos.index');
