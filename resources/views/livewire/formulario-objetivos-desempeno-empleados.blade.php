@@ -146,36 +146,38 @@
                     </div>
                 </div>
 
-                {{-- <div class="row mt-4">
-                    <div class="col-12">
-                        <div class="p-3 rounded-lg" style="color: #818181; background-color: #FFFEE5;">
-                            <i>
-                                *Esta sección estará activa hasta que establezcas los periodos de la evaluación en la
-                                <a href="" style="color: #006DDB; text-decoration: underline;">
-                                    Configuración de la Evaluación.
-                                </a>
-                                (Asigna un periodo para hacer estos ajustes en la calibración de objetivos)
-                            </i>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mt-4" style="width: 300px;">
-                    <div class="form-group anima-focus">
-                        <div class="form-control" style="height: auto !important;">
-                            <div class="d-flex flex-column py-3" style="gap: 15px;">
-                                @for ($i = 0; $i < 3; $i++)
-                                    <div>
-                                        <input type="checkbox" name="" id="">
-                                        <label for="">Trimestre 1</label>
-                                    </div>
-                                @endfor
+                @if (!empty($evaluacion_activa))
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div class="p-3 rounded-lg" style="color: #818181; background-color: #FFFEE5;">
+                                <i>
+                                    *Esta sección estará activa hasta que establezcas los periodos de la evaluación en
+                                    la
+                                    <a href="" style="color: #006DDB; text-decoration: underline;">
+                                        Configuración de la Evaluación.
+                                    </a>
+                                    (Asigna un periodo para hacer estos ajustes en la calibración de objetivos)
+                                </i>
                             </div>
                         </div>
-                        <label for="">Periodos</label>
                     </div>
-                </div> --}}
 
+                    <div class="mt-4" style="width: 300px;">
+                        <div class="form-group anima-focus">
+                            <div class="form-control" style="height: auto !important;">
+                                <div class="d-flex flex-column py-3" style="gap: 15px;">
+                                    @foreach ($evaluacion_activa->periodos as $key_evaluacion => $periodo)
+                                        <div>
+                                            <input type="checkbox" name="" id="" checked>
+                                            <label for="">{{ $periodo->nombre_evaluacion }}</label>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                            <label for="">Periodos</label>
+                        </div>
+                    </div>
+                @endif
 
                 <div class="info-first-config mt-5">
                     <h4 class="title-config">Escalas del objetivo</h4>
