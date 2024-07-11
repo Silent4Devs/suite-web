@@ -6,12 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Laravel\Sanctum\Sanctum;
 use Laravel\Sanctum\PersonalAccessToken;
+use Laravel\Sanctum\Sanctum;
 
 class UserAuthController extends Controller
 {
-
     public function login(Request $request)
     {
         $request->validate([
@@ -20,7 +19,7 @@ class UserAuthController extends Controller
         ]);
 
         //valida las credenciales del usuario
-        if (!Auth::attempt($request->only('email', 'password'))) {
+        if (! Auth::attempt($request->only('email', 'password'))) {
             return response()->json([
                 'message' => 'Invalid access credentials',
             ], 401);
@@ -39,6 +38,7 @@ class UserAuthController extends Controller
             $url = preg_replace_callback('/[^A-Za-z0-9_\-\.~\/\\\:]/', function ($matches) {
                 return rawurlencode($matches[0]);
             }, $url);
+
             return $url;
         }
 
@@ -51,7 +51,7 @@ class UserAuthController extends Controller
                 $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
             }
         } else {
-            $ruta = asset('storage/empleados/imagenes/' . $user->empleado->foto);
+            $ruta = asset('storage/empleados/imagenes/'.$user->empleado->foto);
         }
 
         // Encode spaces in the URL
@@ -82,7 +82,7 @@ class UserAuthController extends Controller
     {
         $token = request()->bearerToken();
 
-        if (!$token) {
+        if (! $token) {
             return response()->json([
                 'status' => 'Error',
                 'message' => 'Token not provided',
@@ -102,5 +102,4 @@ class UserAuthController extends Controller
             'data' => null,
         ], 200);
     }
-
 }
