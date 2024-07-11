@@ -271,7 +271,6 @@
                                 <b>Datos generales:</b>
                             </div>
 
-
                             @if (is_null($firma_validacion))
                             <div style="position: relative; left: 2rem;">
                                 <label>
@@ -280,7 +279,6 @@
                                 </label>
                                 <br>
                             </div>
-
 
                             <div class="mt-2 form-group col-md-12">
                                 <div class="info-bar" id="info-bar" style="display: {{ !empty($aprobadoresArray) ? 'block' : 'none' }};">
