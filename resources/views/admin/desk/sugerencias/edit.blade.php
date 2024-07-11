@@ -134,6 +134,7 @@
                                 <b>Datos generales:</b>
                             </div>
 
+                            @if($firmas === null)
                             <div style="position: relative; left: 2rem;">
                                 <label>
                                     <input type="checkbox" id="toggle-info" {{ !empty($aprobadoresArray) ? 'checked' : '' }}>
@@ -163,6 +164,7 @@
                                     </select>
                                 </div>
                             </div>
+                            @endif
 
 
                             <div class="mt-2 form-group col-2">

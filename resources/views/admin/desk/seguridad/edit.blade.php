@@ -272,6 +272,9 @@
                             </div>
 
 
+
+
+                            @if($firmas === null)
                             <div style="position: relative; left: 2rem;">
                                 <label>
                                     <input type="checkbox" id="toggle-info" {{ !empty($aprobadoresArray) ? 'checked' : '' }}>
@@ -301,6 +304,8 @@
                                     </select>
                                 </div>
                             </div>
+                            @endif
+
 
 
 
