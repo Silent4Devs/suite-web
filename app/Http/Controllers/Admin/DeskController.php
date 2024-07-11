@@ -516,6 +516,7 @@ class DeskController extends Controller
                 $firmaModules->empleados = collect();
             }
         }
+
         $participantsSelected = false;
 
         $firmas = FirmaCentroAtencion::with('empleado')->where('modulo_id', $modulo)->where('submodulo_id', $submodulo)->where('id_riesgos', $riesgos->id)->get();
