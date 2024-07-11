@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\EscalasMedicionObjetivos;
+use Illuminate\Support\Str;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
@@ -30,7 +31,12 @@ class DefinicionEscalasObjetivos extends Component
 
     public function addParametro1()
     {
-        $this->parametros[] = '';
+        $this->parametros[] =
+            [
+                'parametro' => "",
+                'valor' => null,
+                'color_estatus' => "#000000",
+            ];
     }
 
     public function removeParametro1($keyndex)
@@ -47,19 +53,21 @@ class DefinicionEscalasObjetivos extends Component
             $this->estatus_1 = $escalas[0]->parametro;
             $this->color_estatus_1 = $escalas[0]->color;
             $this->valor_estatus_1 = $escalas[0]->valor;
+        }
 
+        if (isset($escalas[1]->parametro)) {
             $this->estatus_2 = $escalas[1]->parametro;
             $this->color_estatus_2 = $escalas[1]->color;
             $this->valor_estatus_2 = $escalas[1]->valor;
+        }
 
-            foreach ($escalas as $key => $esc) {
-                if ($key > 1) {
-                    $this->parametros[] = [
-                        'parametro' => $esc->parametro,
-                        'color_estatus' => $esc->color,
-                        'valor' => $esc->valor,
-                    ];
-                }
+        foreach ($escalas as $key => $esc) {
+            if ($key > 1) {
+                $this->parametros[] = [
+                    'parametro' => $esc->parametro,
+                    'color_estatus' => $esc->color,
+                    'valor' => $esc->valor,
+                ];
             }
         }
     }
@@ -93,6 +101,20 @@ class DefinicionEscalasObjetivos extends Component
             ];
         }
 
+        // Validar que los campos 'parametro' no estén vacíos y que 'valor' no sea null
+        foreach ($escalas as $escala) {
+            if (empty($escala['parametro']) || $escala['valor'] === null) {
+                $this->alert('error', 'Parámetro no puede estar vacío y valor no puede ser null', [
+                    'position' => 'center',
+                    'timer' => 5000,
+                    'toast' => true,
+                    'text' => 'Por favor, asegúrese de completar todos los campos de parámetro y valor.',
+                ]);
+
+                return;
+            }
+        }
+
         // Verificar si hay valores duplicados
         $valores = array_column($escalas, 'valor');
         if (count($valores) !== count(array_unique($valores))) {
@@ -123,7 +145,7 @@ class DefinicionEscalasObjetivos extends Component
             'position' => 'center',
             'timer' => 5000,
             'toast' => true,
-            'text' => 'Se ha generado el catalogo, lo puedes consultar y editar cuando lo necesites.',
+            'text' => 'Se ha generado el catálogo, lo puedes consultar y editar cuando lo necesites.',
         ]);
     }
 
@@ -134,7 +156,7 @@ class DefinicionEscalasObjetivos extends Component
         foreach ($this->parametros as $key => $parametro) {
             $estatusKey = "estatus_arreglo_{$key}";
 
-            if (isset($values[$estatusKey]) && ! empty($values[$estatusKey])) {
+            if (isset($values[$estatusKey]) && !empty($values[$estatusKey])) {
                 $groupedValues[] = [
                     'estatus' => $values[$estatusKey],
                     'color' => $values["color_estatus_arreglo_{$key}"] ?? null,

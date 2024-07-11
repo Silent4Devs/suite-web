@@ -21,7 +21,6 @@ use App\Models\RH\GruposEvaluado;
 use App\Models\ListaInformativa;
 use App\Models\PeriodosEvaluacionDesempeno;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
@@ -171,7 +170,7 @@ class CreateEvaluacionDesempeno extends Component
         }
 
         // Validación de selección de objetivos y competencias
-        if (! $this->activar_objetivos && ! $this->activar_competencias) {
+        if (!$this->activar_objetivos && !$this->activar_competencias) {
             $this->alert('warning', 'Selección Requerida', [
                 'position' => 'center',
                 'timer' => 6000,
@@ -214,7 +213,7 @@ class CreateEvaluacionDesempeno extends Component
 
                 return;
             }
-        } elseif ($this->activar_objetivos && ! $this->activar_competencias) {
+        } elseif ($this->activar_objetivos && !$this->activar_competencias) {
             if ($this->porcentaje_objetivos != 100) {
                 $this->alert('warning', 'Porcentaje Incorrecto', [
                     'position' => 'center',
@@ -228,7 +227,7 @@ class CreateEvaluacionDesempeno extends Component
 
                 return;
             }
-        } elseif (! $this->activar_objetivos && $this->activar_competencias) {
+        } elseif (!$this->activar_objetivos && $this->activar_competencias) {
             if ($this->porcentaje_competencias != 100) {
                 $this->alert('warning', 'Porcentaje Incorrecto', [
                     'position' => 'center',
@@ -245,10 +244,10 @@ class CreateEvaluacionDesempeno extends Component
         }
 
         // Establecer porcentaje a 0 si no está activado
-        if (! $this->activar_objetivos) {
+        if (!$this->activar_objetivos) {
             $this->porcentaje_objetivos = 0;
         }
-        if (! $this->activar_competencias) {
+        if (!$this->activar_competencias) {
             $this->porcentaje_competencias = 0;
         }
 
@@ -376,7 +375,7 @@ class CreateEvaluacionDesempeno extends Component
         }
 
         foreach ($this->datosPaso2 as $key => $p) {
-            if (! empty($p['nombre_evaluacion'])) {
+            if (!empty($p['nombre_evaluacion'])) {
                 $periodos_creados[] = PeriodosEvaluacionDesempeno::create([
                     'evaluacion_desempeno_id' => $evaluacion->id,
                     'nombre_evaluacion' => $p['nombre_evaluacion'],
@@ -611,7 +610,7 @@ class CreateEvaluacionDesempeno extends Component
 
             for ($i = 1; $i <= $cantidad_periodos; $i++) {
                 $this->arreglo_periodos[] = [
-                    'nombre_evaluacion' => 'T'.$i,
+                    'nombre_evaluacion' => 'T' . $i,
                     'fecha_inicio' => null,
                     'fecha_fin' => null,
                     'habilitar' => ($i === 1), // Solo el primer periodo habilitado
@@ -831,7 +830,7 @@ class CreateEvaluacionDesempeno extends Component
     public function guardarBorrador()
     {
         // Validar antes de guardar
-        if (! $this->validarPasoActual()) {
+        if (!$this->validarPasoActual()) {
             $this->guardarHastaPasoAnterior();
 
             return redirect(route('admin.rh.evaluaciones-desempeno.index'))->with('warning', 'Datos incompletos, borrador guardado hasta el paso anterior.');
@@ -1021,11 +1020,11 @@ class CreateEvaluacionDesempeno extends Component
 
     private function guardarPaso2($evaluacion)
     {
-        if (! empty($this->periodo_evaluacion)) {
+        if (!empty($this->periodo_evaluacion)) {
             $evaluacion->update(['tipo_periodo' => $this->periodo_evaluacion]);
 
             foreach ($this->datosPaso2 as $p) {
-                if (! empty($p['nombre_evaluacion'])) {
+                if (!empty($p['nombre_evaluacion'])) {
                     PeriodosEvaluacionDesempeno::updateOrCreate(
                         ['evaluacion_desempeno_id' => $evaluacion->id],
                         [
