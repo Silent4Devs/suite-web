@@ -272,6 +272,7 @@
                             </div>
 
 
+                            @if (is_null($firma))
                             <div style="position: relative; left: 2rem;">
                                 <label>
                                     <input type="checkbox" id="toggle-info" {{ !empty($aprobadoresArray) ? 'checked' : '' }}>
@@ -301,7 +302,7 @@
                                     </select>
                                 </div>
                             </div>
-
+                            @endif
 
 
                             <div class="mt-2 form-group col-md-6">
