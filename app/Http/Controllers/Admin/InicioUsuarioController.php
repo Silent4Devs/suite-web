@@ -852,7 +852,7 @@ class InicioUsuarioController extends Controller
         ]);
 
         $mejoras = Mejoras::create([
-            'empleado_mejoro_id' => User::getCurrentUser()->empleado->id,
+            'empleado_mejoro_id' => optional(User::getCurrentUser()->empleado)->id ?? '',
             'descripcion' => $request->descripcion,
             'beneficios' => $request->beneficios,
             'titulo' => $request->titulo,
