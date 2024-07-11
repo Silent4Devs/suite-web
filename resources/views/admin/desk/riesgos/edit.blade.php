@@ -127,7 +127,7 @@
                                 <b>Datos generales:</b>
                             </div>
 
-                            @if (is_null($firmas))
+                            @if (is_null($firma_validacion))
                             <div style="position: relative; left: 2rem;">
                                 <label>
                                     <input type="checkbox" id="toggle-info" {{ !empty($aprobadoresArray) ? 'checked' : '' }}>
@@ -773,7 +773,7 @@
             <div class="flex-item">
                 @if($firma->firma)
                     <img src="{{ $firma->firma_ruta_riesgos }}" class="img-firma" width="200" height="100">
-                    <p>Fecha: {{ $firma->created_at->format('Y-m-d') }}</p>
+                    <p>Fecha: {{ $firma->created_at->format('d-m-Y') }}</p>
                     <p>Firmante: {{ $firma->empleado->name }}</p>
                 @else
                     <div style="height: 137px;"></div>
