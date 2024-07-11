@@ -37,8 +37,8 @@
                 </div>
                 <div class="col-10" style="position: relative; top: 3rem;">
                     <h5>Crea tu propio grupo de distribución de correo</h6>
-                        <p>En esta sección puedes generar las listas informativas de correos, 
-                            en las cuales se informaran a los colaboradores 
+                        <p>En esta sección puedes generar las listas informativas de correos,
+                            en las cuales se informaran a los colaboradores
                             sobre los procesos en estos submodulos.</p>
                 </div>
             </div>
@@ -113,7 +113,7 @@
                                                 </option>
                                             @endforeach
                                         </select>
-                                        <label for="nivel2" style="color:#057BE2;">Colaboradores</label>
+                                        <label for="nivel2" style="color:#057BE2;">Usuarios</label>
                                     </div>
                                 </div>
                         </div>
