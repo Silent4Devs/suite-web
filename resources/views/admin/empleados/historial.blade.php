@@ -48,36 +48,51 @@
             <tbody>
                 @if (isset($visualizarEmpleados))
                     @foreach ($visualizarEmpleados->registrosHistorico as $registro)
-                        @php
+                    @php
                         $fechaFormateada = \Carbon\Carbon::parse($registro['fecha_cambio'])->format('d-m-Y');
-                        @endphp
+                    @endphp
                         <tr>
-                            <td>{{ $registro['campo_modificado'] }}</td> <!-- Campo Modificado -->
-                            <td>{{ $fechaFormateada }}</td> <!-- Campo Modificado -->
+                            <td>{{ $registro['campo_modificado'] }}</td>
+                            <td>{{ $fechaFormateada }}</td>
                             <td>
                                 @if (isset($registro['relacion']))
                                     @foreach ($registro['relacion'] as $relacion)
-                                        @if (isset($relacion['area']))
-                                            <!-- Mostrar información específica de área -->
-                                            {{ $relacion['area'] }}
-                                        @elseif (isset($relacion['puesto']))
-                                            <!-- Mostrar información específica de puesto -->
-                                            {{ $relacion['puesto'] }}
+                                        @if (isset($relacion['area']) && !empty($relacion['area']))
+                                            @php
+                                                $areaData = json_decode($relacion['area'], true);
+                                            @endphp
+                                            @if (is_array($areaData))
+
+                                            @else
+                                                {{ $relacion['area'] }}
+                                            @endif
+                                        @endif
+                                        @if (isset($relacion['puesto']) && !empty($relacion['puesto']))
+                                            @php
+                                                $puestoData = json_decode($relacion['puesto'], true);
+                                            @endphp
+                                            @if (is_array($puestoData))
+
+                                            @else
+                                                {{ $relacion['puesto'] }}
+                                            @endif
                                         @endif
                                     @endforeach
                                 @endif
                             </td>
 
                             @php
-                            $user = App\Models\User::where('id', intval($registro['user_id']))
-                              ->first();
+                            $user = App\Models\User::where('id', intval($registro['user_id']))->first();
                             @endphp
 
-                            <td>{{$user->name ?? ''}}</td>
+                            <td>{{ $user->name ?? '' }}</td>
                         </tr>
                     @endforeach
                 @endif
             </tbody>
         </table>
+
+
+
     </div>
 @endsection
