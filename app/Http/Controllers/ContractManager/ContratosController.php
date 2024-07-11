@@ -716,7 +716,6 @@ class ContratosController extends AppBaseController
         $areas = Area::getIdNameAll();
 
         $proyecto = TimesheetProyecto::select('id', 'identificador')->where('identificador', $request->no_proyecto)->first();
-
         $contrato = $this->contratoRepository->update([
             'tipo_contrato' => $request->tipo_contrato,
             'no_contrato' => $no_contrato_sin_slashes,
@@ -748,10 +747,12 @@ class ContratosController extends AppBaseController
 
         $convergencia = ConvergenciaContratos::where('contrato_id', $contrato->id)->first();
 
-        $convergencia->update([
-            'timesheet_proyecto_id' => $proyecto->id,
-            'timesheet_cliente_id' => $request->proveedor_id,
-        ]);
+        if (isset($convergencia)) {
+            $convergencia->update([
+                'timesheet_proyecto_id' => $proyecto->id,
+                'timesheet_cliente_id' => $request->proveedor_id,
+            ]);
+        }
 
         $dolares = DolaresContrato::where('contrato_id', $id)->first();
         if ($dolares) {
