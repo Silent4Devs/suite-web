@@ -240,10 +240,6 @@
                     <label for="">Buscar</label>
                     <input id="input-search" type="text" class="form-control" onkeyup="buscadorGlobal()">
                 </div>
-
-                <div class="col-md-2">
-                    <a class="btn btn-primary" href="">Dashboard</a>
-                </div>
             </div>
         </div>
 
@@ -256,7 +252,6 @@
 
         <div class="caja-cards mt-5">
             @foreach ($evaluaciones as $evaluacion)
-                {{-- <a href="{{ asset('admin/entendimiento-organizacions') }}/{{ $evaluacion->id }}"> --}}
                 <div class="card card-foda" style="min-height: 260px !important;">
                     <div class="card-header">
                         <strong> {{ Carbon\Carbon::parse($evaluacion->created_at)->format('d/m/Y') }}</strong>
@@ -274,8 +269,6 @@
                                     <i class="fa-solid fa-pencil"></i>&nbsp;Editar</a> --}}
                                 <a class="dropdown-item delete-item" onclick="deleteItem({{ $evaluacion->id }})">
                                     <i class="fa-solid fa-trash"></i>&nbsp;Eliminar</a>
-                                {{-- <a class="dropdown-item disabled" href=#>
-                                            <i class="fa-solid fa-trash"></i>&nbsp;Eliminar (En uso)</a> --}}
                             </div>
                         </div>
                     </div>
@@ -283,9 +276,6 @@
                         <h3>
                             {{ $evaluacion->nombre }}
                         </h3>
-                        {{-- <p>
-                            <small>{{ $evaluacion->id_elabora ? $evaluacion->empleadoindiscriminado->name : 'No asignado' }}</small>
-                        </p> --}}
                         @switch($evaluacion->estatus)
                             @case(0)
                                 <span class="badge"

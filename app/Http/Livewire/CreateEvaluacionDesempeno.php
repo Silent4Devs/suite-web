@@ -17,9 +17,11 @@ use App\Models\EvaluacionDesempeno;
 use App\Models\EvaluadoresEvaluacionCompetenciasDesempeno;
 use App\Models\EvaluadoresEvaluacionObjetivosDesempeno;
 use App\Models\EvaluadosEvaluacionDesempeno;
+use App\Models\RH\GruposEvaluado;
 use App\Models\ListaInformativa;
 use App\Models\PeriodosEvaluacionDesempeno;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
@@ -72,11 +74,15 @@ class CreateEvaluacionDesempeno extends Component
 
     public $empleados;
 
-    public $evaluados_areas;
+    public $grupos;
+
+    public $evaluados_areas = "";
 
     public $evaluados_manual;
 
     public $empleados_seleccionados;
+
+    public $evaluados_grupos = "";
 
     //verificacion objetivos y competencias
     public $hayEmpleadosSinCompetencias = false;
@@ -116,6 +122,10 @@ class CreateEvaluacionDesempeno extends Component
 
     public $colaboradores = [];
 
+    public $nombreGrupo = '';
+
+    public $empleados_grupo;
+
     public function updatedEmpleadosSeleccionados($value)
     {
         // dd($value);
@@ -130,14 +140,6 @@ class CreateEvaluacionDesempeno extends Component
 
     public function mount()
     {
-        // dd($a, $e);
-        // $this->areas = $a;
-        // $this->empleados = $e;
-
-        // dd(
-        //     $this->areas,
-        //     $this->empleados
-        // );
     }
 
     public function render()
@@ -147,6 +149,7 @@ class CreateEvaluacionDesempeno extends Component
 
     public function retroceder()
     {
+        $this->empleados = null;
         $this->paso--;
     }
 
@@ -296,12 +299,17 @@ class CreateEvaluacionDesempeno extends Component
             ];
         }
 
+        $this->empleados = Empleado::getIDaltaAll()->sortBy('name');
+
         $this->paso = 3;
     }
 
     public function tercerPaso()
     {
-        // dd($this->evaluados_manual);
+        $this->empleados = null;
+        $this->areas = null;
+        $this->grupos = null;
+
         $evld = [];
         switch ($this->select_evaluados) {
             case 'toda':
@@ -313,7 +321,6 @@ class CreateEvaluacionDesempeno extends Component
             case 'areas':
                 $ev_query = Area::with('totalIDEmpleados')->find($this->evaluados_areas);
                 $evld = $ev_query->totalIDEmpleados->pluck('id');
-                // dd($evld);
                 break;
 
             case 'manualmente':
@@ -324,11 +331,11 @@ class CreateEvaluacionDesempeno extends Component
                 // }
                 $evld = collect($this->empleados_seleccionados);
 
-                // dd($evld);
                 break;
 
-            case 'grupos':
-                // $this->empleados = Empleado::getIDaltaAll();
+            case 'grupo':
+                $ev_query = GruposEvaluado::with('empleadosEvaluacion')->find($this->evaluados_grupos);
+                $evld = $ev_query->empleados->pluck('id');
                 break;
         }
         // dd($ev);
@@ -430,8 +437,14 @@ class CreateEvaluacionDesempeno extends Component
             }
         }
 
-        $evaluaciones_actuales = EvaluacionDesempeno::where('estatus', 1)->orWhere('estatus', 3)->get();
-        if (!empty($evaluaciones_actuales)) {
+        $evaluaciones_actuales = EvaluacionDesempeno::where('id', '!=', $evaluacion->id)
+            ->where(function ($query) {
+                $query->where('estatus', 1)
+                    ->orWhere('estatus', 3);
+            })
+            ->get();
+
+        if (!$evaluaciones_actuales->isEmpty()) {
             $evaluacion_activa = true;
         } else {
             $evaluacion_activa = false;
@@ -609,31 +622,34 @@ class CreateEvaluacionDesempeno extends Component
 
     public function seleccionarEvaluados($valor)
     {
-        // dd($valor);
         switch ($valor) {
             case 'toda':
                 $this->select_evaluados = $valor;
                 $this->areas = null;
-                $this->empleados = null;
+                $this->grupos = null;
 
                 break;
 
             case 'areas':
+                $this->grupos = null;
                 $this->areas = Area::getIdNameAll()->sortBy('area');
-                $this->empleados = null;
                 $this->select_evaluados = $valor;
 
                 break;
 
             case 'manualmente':
-                $this->empleados = Empleado::getIDaltaAll()->sortBy('name');
                 $this->areas = null;
                 $this->select_evaluados = $valor;
+                // $this->empleados = Empleado::getIDaltaAll()->sortBy('name');
+                $this->grupos = null;
 
                 break;
 
-            case 'grupos':
-                // $this->empleados = Empleado::getIDaltaAll();
+            case 'grupo':
+                $this->select_evaluados = $valor;
+                $this->areas = null;
+                // $this->empleados = null;
+                $this->grupos = GruposEvaluado::getAll();
                 break;
         }
     }
@@ -657,7 +673,6 @@ class CreateEvaluacionDesempeno extends Component
                 [
                     'id' => $emp->id,
                     'name' => $emp->name,
-                    // 'area' => $emp->area->area,
                 ];
         }
         // dump('colaboradores');
@@ -671,6 +686,7 @@ class CreateEvaluacionDesempeno extends Component
                     'area' => $eva->area->area,
                     'competencias' => $eva->competencias_asignadas,
                     'objetivos' => $eva->objetivos_asignados,
+                    'supervisor_id' => $eva->supervisor->id ?? null,
                 ];
 
             $this->listaEmpleadosSinCompetencias = collect();
@@ -749,34 +765,34 @@ class CreateEvaluacionDesempeno extends Component
             if ($this->activar_objetivos == true && $this->activar_competencias == true) {
 
                 $this->array_evaluadores[$key] = [
-                    'evaluador_objetivos' => [''],
-                    'evaluador_competencias' => [''],
+                    'evaluador_objetivos' => [isset($eva->supervisor->id) ? $eva->supervisor->id : ''],
+                    'evaluador_competencias' => [isset($eva->supervisor->id)  ? $eva->supervisor->id : ''],
                 ];
 
                 $this->array_porcentaje_evaluadores[$key] =
                     [
-                        'porcentaje_evaluador_objetivos' => [''],
-                        'porcentaje_evaluador_competencias' => [''],
+                        'porcentaje_evaluador_objetivos' => [100],
+                        'porcentaje_evaluador_competencias' => [100],
                     ];
             } elseif ($this->activar_objetivos == true && $this->activar_competencias == false) {
 
                 $this->array_evaluadores[] =
                     [
-                        'evaluador_objetivos' => [''],
+                        'evaluador_objetivos' => [isset($eva->supervisor->id) ? $eva->supervisor->id : ''],
                     ];
 
                 $this->array_porcentaje_evaluadores = [
-                    'porcentaje_evaluador_objetivos' => [''],
+                    'porcentaje_evaluador_objetivos' => [100],
                 ];
             } elseif ($this->activar_objetivos == false && $this->activar_competencias == true) {
 
                 $this->array_evaluadores[] =
                     [
-                        'evaluador_competencias' => [''],
+                        'evaluador_competencias' => [isset($eva->supervisor->id) ? $eva->supervisor->id : ''],
                     ];
 
                 $this->array_porcentaje_evaluadores = [
-                    'porcentaje_evaluador_competencias' => [''],
+                    'porcentaje_evaluador_competencias' => [100],
                 ];
             }
         }
@@ -1165,5 +1181,31 @@ class CreateEvaluacionDesempeno extends Component
         ) {
             $this->bloquear_evaluacion = false;
         }
+    }
+
+    public function guardarGrupo()
+    {
+        // Validar que los campos no estén vacíos
+
+        // Si pasó la validación, procedemos a crear el grupo
+        $grupo = GruposEvaluado::create([
+            'nombre' => $this->nombreGrupo,
+        ]);
+
+        $grupo->empleados()->sync($this->empleados_grupo);
+
+        // Mostrar alerta de éxito
+        $this->alert('success', 'Grupo Guardado', [
+            'position' => 'center',
+            'timer' => 6000,
+            'toast' => false,
+            'text' => 'El grupo ha sido guardado correctamente.',
+            'showConfirmButton' => false,
+            'timerProgressBar' => true,
+        ]);
+
+        // Limpiar los campos después de guardar
+        $this->nombreGrupo = "";
+        $this->empleados_grupo = null;
     }
 }
