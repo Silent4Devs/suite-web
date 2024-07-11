@@ -106,7 +106,7 @@
                                                 </option>
                                             @endforeach
                                         </select>
-                                        <label for="nivel1" style="color:#057BE2;">Usuarios</label>
+                                        <label for="nivel1" style="color:#057BE2;">Colaboradores</label>
                                     </div>
                                 </div>
                             </div>
@@ -128,7 +128,7 @@
                                                 </option>
                                             @endforeach
                                         </select>
-                                        <label for="nivel2" style="color:#057BE2;">Colaboradores</label>
+                                        <label for="nivel2" style="color:#057BE2;">Usuarios</label>
                                     </div>
                                 </div>
                             </div>
