@@ -14,7 +14,7 @@ class Test extends Controller
      */
     public function index()
     {
-        return "hola";
+        return 'hola';
     }
 
     /**
@@ -28,7 +28,7 @@ class Test extends Controller
         ]);
 
         //valida las credenciales del usuario
-        if (!Auth::attempt($request->only('email', 'password'))) {
+        if (! Auth::attempt($request->only('email', 'password'))) {
             return response()->json([
                 'message' => 'Invalid access credentials',
             ], 401);
@@ -48,6 +48,7 @@ class Test extends Controller
             $url = preg_replace_callback('/[^A-Za-z0-9_\-\.~\/\\\:]/', function ($matches) {
                 return rawurlencode($matches[0]);
             }, $url);
+
             return $url;
         }
 
@@ -60,7 +61,7 @@ class Test extends Controller
                 $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
             }
         } else {
-            $ruta = asset('storage/empleados/imagenes/' . $user->empleado->foto);
+            $ruta = asset('storage/empleados/imagenes/'.$user->empleado->foto);
         }
 
         // Encode spaces in the URL
@@ -124,8 +125,9 @@ class Test extends Controller
         //
     }
 
-    public function test1(){
-        return "test3";
+    public function test1()
+    {
+        return 'test3';
     }
 
     public function login(Request $request)
@@ -136,7 +138,7 @@ class Test extends Controller
         ]);
 
         //valida las credenciales del usuario
-        if (!Auth::attempt($request->only('email', 'password'))) {
+        if (! Auth::attempt($request->only('email', 'password'))) {
             return response()->json([
                 'message' => 'Invalid access credentials',
             ], 401);
@@ -156,6 +158,7 @@ class Test extends Controller
             $url = preg_replace_callback('/[^A-Za-z0-9_\-\.~\/\\\:]/', function ($matches) {
                 return rawurlencode($matches[0]);
             }, $url);
+
             return $url;
         }
 
@@ -168,7 +171,7 @@ class Test extends Controller
                 $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
             }
         } else {
-            $ruta = asset('storage/empleados/imagenes/' . $user->empleado->foto);
+            $ruta = asset('storage/empleados/imagenes/'.$user->empleado->foto);
         }
 
         // Encode spaces in the URL
@@ -218,7 +221,7 @@ class Test extends Controller
         //     'data' => $token,
         // ], 204);
 
-        if (!$token) {
+        if (! $token) {
             return response()->json([
                 'status' => 'Error',
                 'message' => 'Token not provided',
@@ -238,6 +241,4 @@ class Test extends Controller
             'data' => null,
         ], 200);
     }
-
-
 }
