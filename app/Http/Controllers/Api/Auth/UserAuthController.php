@@ -4,14 +4,14 @@ namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Laravel\Sanctum\PersonalAccessToken;
 use Laravel\Sanctum\Sanctum;
+use Laravel\Sanctum\PersonalAccessToken;
 
-class AuthController extends Controller
+class UserAuthController extends Controller
 {
+
     public function login(Request $request)
     {
         $request->validate([
@@ -20,7 +20,7 @@ class AuthController extends Controller
         ]);
 
         //valida las credenciales del usuario
-        if (! Auth::attempt($request->only('email', 'password'))) {
+        if (!Auth::attempt($request->only('email', 'password'))) {
             return response()->json([
                 'message' => 'Invalid access credentials',
             ], 401);
@@ -35,12 +35,10 @@ class AuthController extends Controller
         function encodeSpecialCharacters($url)
         {
             // Handle spaces
-            // $url = str_replace(' ', '%20', $url);
             // Encode other special characters, excluding /, \, and :
             $url = preg_replace_callback('/[^A-Za-z0-9_\-\.~\/\\\:]/', function ($matches) {
                 return rawurlencode($matches[0]);
             }, $url);
-
             return $url;
         }
 
@@ -53,7 +51,7 @@ class AuthController extends Controller
                 $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
             }
         } else {
-            $ruta = asset('storage/empleados/imagenes/'.$user->empleado->foto);
+            $ruta = asset('storage/empleados/imagenes/' . $user->empleado->foto);
         }
 
         // Encode spaces in the URL
@@ -69,17 +67,6 @@ class AuthController extends Controller
 
         $supervisor = $user->empleado->es_supervisor;
 
-        // $permisos_usuario = [];
-
-        // foreach ($user->roles as $role) {
-
-        //     $roles[]["nombre_rol"] = $role->title;
-
-        //     foreach ($role->permissions as $key => $permiso) {
-        //         $permisos_usuario[]["permiso"] = $permiso->title;
-        //     }
-        // }
-        // dd($roles);
         //Genera un nuevo token para el usuario
         $token = $user->createToken('auth_token')->plainTextToken;
 
@@ -88,22 +75,14 @@ class AuthController extends Controller
             'access_token' => $token,
             'user' => $user->toArray(),
             'supervisor' => $supervisor,
-            // 'roles' => $roles,
-            // 'permisos' => $permisos_usuario,
         ]);
     }
 
-    public function logout(): JsonResponse
+    public function logout()
     {
         $token = request()->bearerToken();
 
-        // return response()->json([
-        //     'status' => 'Success',
-        //     'message' => 'Hasta la proxima',
-        //     'data' => $token,
-        // ], 204);
-
-        if (! $token) {
+        if (!$token) {
             return response()->json([
                 'status' => 'Error',
                 'message' => 'Token not provided',
@@ -123,4 +102,5 @@ class AuthController extends Controller
             'data' => null,
         ], 200);
     }
+
 }
