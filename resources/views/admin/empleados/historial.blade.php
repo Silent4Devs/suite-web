@@ -48,9 +48,12 @@
             <tbody>
                 @if (isset($visualizarEmpleados))
                     @foreach ($visualizarEmpleados->registrosHistorico as $registro)
+                    @php
+                        $fechaFormateada = \Carbon\Carbon::parse($registro['fecha_cambio'])->format('d-m-Y');
+                    @endphp
                         <tr>
                             <td>{{ $registro['campo_modificado'] }}</td>
-                            <td>{{ $registro['fecha_cambio'] }}</td>
+                            <td>{{ $fechaFormateada }}</td>
                             <td>
                                 @if (isset($registro['relacion']))
                                     @foreach ($registro['relacion'] as $relacion)
