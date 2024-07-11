@@ -89,11 +89,13 @@
 
                     <div class="row">
                         <div class="col-6 text-left my-4">
-                            <a wire:click.prevent="guardarBorrador" class="btn btn-success" style="width: 170px;">Borrador</a>
+                            <a wire:click.prevent="guardarBorrador" class="btn btn-success" style="width: 170px;">Guardar
+                                Borrador</a>
                         </div>
 
                         <div class=" col-6 text-right my-4">
-                            <a wire:click.prevent="retroceder" class="btn btn-outline-primary" style="width: 170px;">ATRÁS</a>
+                            <a href="{{ route('admin.rh.evaluaciones-desempeno.dashboard-general') }}"
+                                class="btn btn-outline-primary" style="width: 170px;">Cancelar</a>
                             <a wire:click.prevent="primerPaso" class="btn btn-success" style="width: 170px;">SIGUIENTE</a>
                         </div>
                     </div>
@@ -220,7 +222,8 @@
 
                 <div class="row">
                     <div class="col-6 text-left my-4">
-                        <a wire:click.prevent="guardarBorrador" class="btn btn-success" style="width: 170px;">Borrador</a>
+                        <a wire:click.prevent="guardarBorrador" class="btn btn-success" style="width: 170px;">Guardar
+                            Borrador</a>
                     </div>
 
                     <div class="col-6 text-right my-4">
@@ -249,9 +252,61 @@
                             <option value="grupo">Grupo</option>
                         </select>
 
-                        <button class="btn btn-outline-primary">
+                        <button class="btn btn-outline-primary" type="button" data-toggle="modal"
+                            data-target="#crearGrupo">
                             CREAR&nbsp;GRUPO
                         </button>
+                    </div>
+
+                    <div class="modal fade" id="crearGrupo" tabindex="-1" role="dialog" aria-labelledby="crearGrupoLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="crearGrupoLabel">Crear Grupo</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-sm-12 col-lg-12">
+                                            <div class="form-group">
+                                                <label for="nombreGrupo">Nombre del grupo: <span
+                                                        class="text-danger">*</span></label>
+                                                <input type="text"
+                                                    class="form-control {{ $errors->has('nombreGrupo') ? 'is-invalid' : '' }}"
+                                                    id="nombre" aria-describedby="nombre" wire:model.defer="nombreGrupo"
+                                                    value="{{ old('nombreGrupo') }}" autocomplete="off">
+                                                <small>Ingresa el nombre del grupo</small>
+                                                @if ($errors->has('nombreGrupo'))
+                                                    <span class="invalid-feedback">{{ $errors->first('nombreGrupo') }}</span>
+                                                @endif
+                                                <span class="text-danger nombre_error error-ajax"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 col-lg-12">
+                                            <select class="form-control" wire:model.defer="empleados_grupo" multiple
+                                                id="empleadosPertenecientes">
+                                                @foreach ($empleados as $empleado)
+                                                    <option value="{{ $empleado->id }}">{{ $empleado->name }}</option>
+                                                @endforeach
+                                            </select>
+                                            <small>Manten presionada la tecla ctrl y selecciona a los empleados que formarán el
+                                                grupo</small>
+                                            @if ($errors->has('empleados'))
+                                                <small class="text-danger">{{ $errors->first('empleados') }}</small>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Guardar
+                                        cambios</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="d-flex align-items-center" style="gap: 20px;">
@@ -262,6 +317,7 @@
                             @case('areas')
                                 <select class="form-control" name="evaluados_areas" id="evaluados_areas"
                                     wire:model="evaluados_areas">
+                                    <option value="" disabled selected>Seleccione una opcion</option>
                                     @foreach ($areas as $area)
                                         <option value="{{ $area->id }}">{{ $area->area }}</option>
                                     @endforeach
@@ -277,8 +333,14 @@
                                 </select>
                             @break
 
-                            @case('grupos')
-                                <h4>Select de grupos</h4>
+                            @case('grupo')
+                                <select class="form-control" name="evaluados_grupos" id="evaluados_grupos"
+                                    wire:model="evaluados_grupos">
+                                    <option value="" disabled selected>Seleccione una opcion</option>
+                                    @foreach ($grupos as $grupo)
+                                        <option value="{{ $grupo->id }}">{{ $grupo->nombre }}</option>
+                                    @endforeach
+                                </select>
                             @break
 
                             @default
@@ -288,7 +350,8 @@
 
                 <div class="row">
                     <div class="col-6 text-left my-4">
-                        <a wire:click.prevent="guardarBorrador" class="btn btn-success" style="width: 170px;">Borrador</a>
+                        <a wire:click.prevent="guardarBorrador" class="btn btn-success" style="width: 170px;">Guardar
+                            Borrador</a>
                     </div>
 
                     <div class="col-6 text-right my-4">
@@ -586,7 +649,8 @@
 
                 <div class="row">
                     <div class="col-6 text-left my-4">
-                        <a wire:click.prevent="guardarBorrador" class="btn btn-success" style="width: 170px;">Borrador</a>
+                        <a wire:click.prevent="guardarBorrador" class="btn btn-success" style="width: 170px;">Guardar
+                            Borrador</a>
                     </div>
 
                     <div class="col-6 text-right my-4">
