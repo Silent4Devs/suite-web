@@ -223,8 +223,7 @@
         </div>
     </div>
 
-    <div class="col s12 m12" id="ampliacion_contrato_lista"
-        style="display: {{ $contratos->contrato_ampliado ? 'block' : 'none' }}">
+    <div class="col s12 m12" id="ampliacion_contrato_lista">
         <div class="card card-body">
             <h5 class="mb-0 d-inline-block">Ampliación de contrato</h5>
             <hr class="hr-custom-title">
@@ -236,8 +235,7 @@
         </div>
     </div>
 
-    <div class="col s12 m12" id="convenio_contrato_lista"
-        style="display: {{ $contratos->convenio_modificatorio ? 'block' : 'none' }}">
+    <div class="col s12 m12" id="convenio_contrato_lista">
         <div class="card card-body">
             <h5 class="mb-0 d-inline-block">Convenios Modificatorios</h5>
             <hr class="hr-custom-title">

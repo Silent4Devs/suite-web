@@ -14,7 +14,6 @@
         .asterisco {
             color: red;
             margin-left: 5px;
-
         }
     </style>
     <div class="col s12 m12">
@@ -49,10 +48,11 @@
                                 <form id="ampliacion_form"
                                     action="{{ route('contract_manager.contratos-katbol.ampliacion', ['id' => $contratos->id]) }}"
                                     method="POST">
+                                    @csrf
                                     @method('PATCH')
                                     <p>
                                         <label>
-                                            <input type="checkbox" class="checkbox"
+                                            <input type="checkbox" name="contrato_ampliado" class="checkbox"
                                                 {{ $contratos->contrato_ampliado ? 'checked' : '' }} />
                                             <span></span>
                                         </label>
@@ -63,10 +63,11 @@
                                 <form id="convenio_form"
                                     action="{{ route('contract_manager.contratos-katbol.convenios', ['id' => $contratos->id]) }}"
                                     method="POST">
+                                    @csrf
                                     @method('PATCH')
                                     <p>
                                         <label>
-                                            <input type="checkbox" class="checkbox_convenio"
+                                            <input type="checkbox" name="convenio_modificatorio" class="checkbox_convenio"
                                                 {{ $contratos->convenio_modificatorio ? 'checked' : '' }} />
                                             <span></span>
                                         </label>
@@ -79,7 +80,6 @@
             </div>
         </div>
     </div>
-
 
     <div>
         <div class="col s12 m12">
@@ -157,8 +157,7 @@
         </div>
     </div>
 
-    <div class="col s12 m12" id="ampliacion_contrato_lista"
-        style="display: {{ $contratos->contrato_ampliado ? 'block' : 'none' }}">
+    <div class="col s12 m12" id="ampliacion_contrato_lista">
         <div class="card card-body">
             <h5 class="mb-0 d-inline-block">Ampliación de contrato</h5>
             <hr class="hr-custom-title">
@@ -167,7 +166,6 @@
                 'show_contrato' => false,
                 'fecha_fin_contrato' => $contratos->fecha_fin,
             ])
-
         </div>
     </div>
 
@@ -191,123 +189,73 @@
         </div>
     </div>
 
-
-
     <div class="form-group col-12 text-right mt-4" style="margin-left: 10px; margin-right: 10px;">
         <div class="col s12 m12 right-align btn-grd distancia">
-            <a href="{{ route('contract_manager.contratos-katbol.index') }}" class="btn btn-success">Salir sin
-                llenar</a>
+            <a href="{{ route('contract_manager.contratos-katbol.index') }}" class="btn btn-success">Salir sin llenar</a>
         </div>
     </div>
 @endsection
 
 @section('scripts')
     <script>
-        @section('x-editable')
-            $(document).ready(function() {
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
+        $(document).ready(function() {
+            // Configuración de CSRF para AJAX
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
 
-                //categories table
-                $(".no_pagos").editable({
-                    dataType: 'json',
-                    success: function(response, newValue) {
-                        console.log('Actualizado, response')
-                    }
-                });
-                $(".tipo_contrato").editable({
-                    dataType: 'json',
-                    success: function(response, newValue) {
-                        console.log('Actualizado, response')
-                    }
-                });
+            // Función para manejar el click en el checkbox de ampliación
+            $(".checkbox").click(function() {
+                let ampliado = $(this).is(':checked') ? 1 : 0;
+                let form = $(this).closest('form');
+                let url = form.attr('action');
 
-                $(".nombre_servicio").editable({
-                    dataType: 'json',
-                    success: function(response, newValue) {
-                        console.log('Actualizado, response')
-                    }
-                });
-
-
-                $(".checkbox").click(function() {
-                    let ampliado = 0;
-                    let url = $("#ampliacion_form").attr("action");
-                    if ($(".checkbox").is(':checked')) {
-                        ampliado = 1;
-                        $.ajax({
-                            type: "POST",
-                            url: url,
-                            data: {
-                                ampliado
-                            },
-                            success: function(response) {
-                                if (response.success == 1) {
-                                    $("#ampliacion_contrato_lista").show();
-                                }
-                            }
-                        });
-                    } else {
-                        ampliado = 0;
-                        $.ajax({
-                            type: "POST",
-                            url: url,
-                            data: {
-                                ampliado
-                            },
-                            success: function(response) {
-                                if (response.success == 0) {
-                                    $("#ampliacion_contrato_lista").hide();
-                                }
-                            }
-                        });
-                    }
-                });
-
-                $(".checkbox_convenio").click(function() {
-                    let convenio = 0;
-                    let url = $("#convenio_form").attr("action");
-                    if ($(".checkbox_convenio").is(':checked')) {
-                        convenio = 1;
-                        $.ajax({
-                            type: "POST",
-                            url: url,
-                            data: {
-                                convenio
-                            },
-                            success: function(response) {
-                                if (response.success == 1) {
-                                    $("#convenio_contrato_lista").show();
-                                }
-                            }
-                        });
-                    } else {
-                        convenio = 0;
-                        $.ajax({
-                            type: "POST",
-                            url: url,
-                            data: {
-                                convenio
-                            },
-                            success: function(response) {
-                                if (response.success == 0) {
-                                    $("#convenio_contrato_lista").hide();
-                                }
-                            }
-                        });
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: {
+                        contrato_ampliado: ampliado
+                    },
+                    success: function(response) {
+                        // Manejo de respuesta exitosa
+                        if (response.success == 1) {
+                            // Actualizar el estilo del contenedor de ampliación
+                            $("#ampliacion_contrato_lista").css('display', ampliado ? 'block' :
+                                'none');
+                        }
+                    },
+                    error: function(err) {
+                        console.error('Error al enviar datos:', err);
                     }
                 });
             });
 
-            function refreshTable() {
-                $('.refresco').fadeOut();
-                $('.refresco').load(url, function() {
-                    $('.refresco').fadeIn();
+
+            // Función para manejar el click en el checkbox de convenios modificatorios
+            $(".checkbox_convenio").click(function() {
+                let convenio = $(this).is(':checked') ? 1 : 0;
+                let form = $(this).closest('form');
+                let url = form.attr('action');
+
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: {
+                        convenio_modificatorio: convenio
+                    },
+                    success: function(response) {
+                        // Manejo de respuesta exitosa
+                        if (response.success == 1) {
+                            $("#convenio_contrato_lista").toggle();
+                        }
+                    },
+                    error: function(err) {
+                        console.error('Error al enviar datos:', err);
+                    }
                 });
-            }
-        @endsection
+            });
+        });
     </script>
 @endsection
