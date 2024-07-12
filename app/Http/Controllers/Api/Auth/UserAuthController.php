@@ -102,4 +102,26 @@ class UserAuthController extends Controller
             'data' => null,
         ], 200);
     }
+
+    public function checkToken(Request $request)
+    {
+        // Obtener el token de la solicitud
+        $token = $request->bearerToken();
+
+        // Verificar si el token existe y sigue siendo válido
+        $tokenInstance = PersonalAccessToken::findToken($token);
+
+        if ($tokenInstance && !$tokenInstance->isExpired()) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Token is valid'
+            ],200);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Token is invalid or expired'
+            ], 200);
+        }
+    }
+
 }
