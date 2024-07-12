@@ -218,8 +218,10 @@
                                         </div>
                                         <div class="form-group anima-focus" style="min-width: 60px;">
                                             <input wire:model="array_escalas_objetivos.{{ $key }}.valor"
-                                                type="number" name="" id="" class="form-control">
-                                            <label for="">Valor</label>
+                                                type="number" name="escalas_objetivos{{ $key }}valor"
+                                                id="escalas_objetivos{{ $key }}valor" class="form-control"
+                                                min="{{ $minimo_objetivo }}" max="{{ $maximo_objetivo }}">
+                                            <label for="escalas_objetivos{{ $key }}valor">Valor</label>
                                         </div>
                                     </div>
                                 </div>

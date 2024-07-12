@@ -17,10 +17,13 @@ use App\Models\RH\TipoObjetivo;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
 class FormularioObjetivosDesempenoEmpleados extends Component
 {
+    use LivewireAlert;
+
     public $id_emp;
 
     public $front_usuario;
@@ -74,6 +77,9 @@ class FormularioObjetivosDesempenoEmpleados extends Component
     public $abierta = false;
 
     public $evaluacion_activa = false;
+
+    public $minimo_objetivo = null;
+    public $maximo_objetivo = null;
 
     public function mount($id_empleado)
     {
@@ -278,6 +284,26 @@ class FormularioObjetivosDesempenoEmpleados extends Component
         $this->semestral = false;
         $this->anualmente = false;
         $this->abierta = false;
+    }
+
+    public function updatedSelectUnidad()
+    {
+        $unidadSeleccionada = $this->unidades->find($this->select_unidad);
+
+        if ($unidadSeleccionada->valor_minimo === null || $unidadSeleccionada->valor_maximo === null) {
+            $this->alert('warning', 'Valores no definidos', [
+                'position' => 'center',
+                'timer' => 6000,
+                'toast' => false,
+                'text' => 'La Unidad Seleccionada no posee los valores minimo y/o maximo definidos (No podra usarse en las evaluaciones de desempeño).',
+                'showConfirmButton' => true,
+                'confirmButtonText' => 'Entendido',
+                'timerProgressBar' => true,
+            ]);
+        } else {
+            $this->minimo_objetivo = $unidadSeleccionada->valor_minimo;
+            $this->maximo_objetivo = $unidadSeleccionada->valor_maximo;
+        }
     }
 
     public function enviarPapelera($id_obj)
