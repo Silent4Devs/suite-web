@@ -105,6 +105,12 @@
             </div>
             <div>
                 <div class="form-row">
+                    <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-12">
+                        <label>
+                            <input type="checkbox" name="flujo"  id="toggle-info">
+                            Activar flujo de firma(s)
+                        </label>
+                    </div>
                     <div class="form-group anima-focus col-sm-12 col-md-6 col-lg-6">
                         <select required class="form-control" name="responsable_id" id="responsable_id">
                             @foreach ($responsablereunions as $responsablereunion)
@@ -397,9 +403,21 @@
         ])
 
 
-
-
-
+        <script src="{{ mix('js/app.js') }}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        @if (session('alert'))
+            <script>
+                Swal.fire({
+                    icon: 'success',
+                    title: '¡Éxito el proceso de firma acaba de ser  aprobado!',
+                    text: '{{ session('alert') }}',
+                    timer: 3000,
+                    showConfirmButton: false,
+                    toast: true,
+                    position: 'top-end'
+                });
+            </script>
+        @endif
 
         {{-- FIN MODULO AGREGAR PLAN DE Trabajo --}}
         <div class="text-right form-group col-12">
@@ -426,7 +444,6 @@
         }
     }
 @endphp
-
 
 
 @if ($userIsAuthorized)
