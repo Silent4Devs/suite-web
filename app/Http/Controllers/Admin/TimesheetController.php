@@ -208,6 +208,7 @@ class TimesheetController extends Controller
 
         DB::beginTransaction();
 
+
         $organizacion_semana = Organizacion::getFirst();
 
         $request->validate(
@@ -310,8 +311,8 @@ class TimesheetController extends Controller
         $endDayFormatted = $endDay->format('Y/m/d');
 
         $fechaTimeSheetFormatted = Carbon::parse($request->fecha_dia)->format('Y/m/d');
-        if ($request->estatus == 'pendiente' || $request->estatus == 'papelera') {
-            if (($fechaTimeSheetFormatted > $firstDayFormatted && $fechaTimeSheetFormatted < $endDayFormatted) || ($fechaTimeSheetFormatted > $firstDayFormatted && $endDayFormatted < $fechaTimeSheetFormatted)) {
+        if ($request->estatus === 'pendiente' || $request->estatus === 'papelera') {
+            if (($fechaTimeSheetFormatted >= $firstDayFormatted && $fechaTimeSheetFormatted <= $endDayFormatted) || ($fechaTimeSheetFormatted >= $firstDayFormatted && $endDayFormatted <= $fechaTimeSheetFormatted)) {
                 try {
                     $timesheet_nuevo = Timesheet::create([
                         'fecha_dia' => $request->fecha_dia,
@@ -350,7 +351,7 @@ class TimesheetController extends Controller
                         }
                     }
 
-                    if ($timesheet_nuevo->estatus == 'pendiente') {
+                    if ($timesheet_nuevo->estatus === 'pendiente') {
                         $aprobador = Empleado::find($usuario->empleado->supervisor_id);
 
                         $solicitante = Empleado::find($usuario->empleado->id);
@@ -369,6 +370,7 @@ class TimesheetController extends Controller
 
                     // Your database operations here
                     DB::commit();
+
 
                     return response()->json(['status' => 200]);
                 }
