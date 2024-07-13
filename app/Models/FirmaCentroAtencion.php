@@ -13,9 +13,14 @@ class FirmaCentroAtencion extends Model
 
     protected $fillable = ['modulo_id', 'submodulo_id', 'user_id', 'firma', 'id_seguridad', 'id_riesgos', 'id_quejas', 'id_mejoras', 'id_denuncias', 'id_sugerencias', 'id_minutas', 'empleado_id'];
 
-    public function empleado()
+    public function empleadoTable()
     {
         return $this->belongsTo(Empleado::class, 'empleado_id', 'id');
+    }
+
+    public function empleado()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
     public function getFirmaRutaSeguridadAttribute()

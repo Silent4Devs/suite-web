@@ -104,14 +104,16 @@
             </div>
             <div>
                 <div class="form-row mt-4">
-                    <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-12">
-                        <label>
-                            <input type="checkbox" name="firma_check" id="toggle-info"
-                                {{ $minutasaltadireccion->firma_check ? 'checked' : '' }}
-                                value={{ $minutasaltadireccion->firma_check ? 1 : 0 }}>
-                            Activar flujo de firma(s)
-                        </label>
-                    </div>
+                    {{-- @if () --}}
+                        <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-12">
+                            <label>
+                                <input type="checkbox" name="firma_check" id="toggle-info"
+                                    {{ $minutasaltadireccion->firma_check ? 'checked' : '' }}
+                                    value={{ $minutasaltadireccion->firma_check ? 1 : 0 }}>
+                                Activar flujo de firma(s)
+                            </label>
+                        </div>
+                    {{-- @endif --}}
                     <div class="form-group anima-focus col-sm-12 col-md-6 col-lg-6">
                         <select required class="form-control" name="responsable_id" id="responsable_id">
                             @foreach ($responsablereunions as $responsablereunion)
