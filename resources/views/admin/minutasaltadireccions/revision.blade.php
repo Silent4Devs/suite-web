@@ -180,7 +180,8 @@
         </div>
     </div>
 
-    <form method="POST" id="formularioRevision" enctype="multipart/form-data">
+    <form method="POST" id="formularioRevision" enctype="multipart/form-data"
+        class="{{ $minutas->firma_check ? (!$firmado ? 'd-none' : '') : '' }}">
         @csrf
         <div class="card card-body shadow-sm">
 
@@ -254,27 +255,26 @@
     @endif
 
     @if ($firmado)
-        @if ($userIsAuthorized || auth()->user()->roles->contains('title', 'Admin'))
-            <div class="card card-body" style="margin-bottom: 30px">
-                <div class="caja-firmas-doc d-flex gap-5 justify-content-center">
-                    @foreach ($firmas as $firma)
-                        <div class="d-flex justify-content-center align-items-center" style="flex-direction: column;">
-                            @if ($firma->firma)
-                                @if (isset($firma->empleado))
-                                    <img src="{{ $firma->firma_ruta_minutas }}" class="img-firma" width="200"
-                                        height="100">
-                                    <p> {{ $firma->created_at->format('d/m/Y') }}</p>
-                                    <p> {{ $firma->empleado->name }}</p>
-                                @endif
-                            @else
-                                <div style="height: 137px;"></div>
+        <div class="card card-body" style="margin-bottom: 30px">
+            <div class="caja-firmas-doc d-flex gap-5 justify-content-center flex-wrap">
+                @foreach ($firmas as $firma)
+                    <div class="d-flex justify-content-center align-items-center" style="flex-direction: column;">
+                        @if ($firma->firma)
+                            @if (isset($firma->empleadoTable))
+                                <img src="{{ $firma->firma_ruta_minutas }}" class="img-firma" width="200"
+                                    height="100">
+                                <p> {{ $firma->created_at->format('d/m/Y') }}</p>
+                                <p> {{ $firma->empleadoTable->name }}</p>
                             @endif
-                        </div>
-                    @endforeach
-                </div>
+                        @else
+                            <div style="height: 137px;"></div>
+                        @endif
+                    </div>
+                @endforeach
             </div>
-        @endif
+        </div>
     @endif
+
 @endsection
 
 <script>
