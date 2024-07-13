@@ -290,6 +290,22 @@ class CreateEvaluacionDesempeno extends Component
                 return;
             }
 
+            // Validar que la fecha de inicio no sea posterior a la fecha de fin
+            if ($key === 0 && $fechaInicio > $fechaFin) {
+                // Emitir alerta si la fecha de inicio es posterior a la fecha de fin
+                $this->alert('warning', 'Fechas inválidas en el primer período', [
+                    'position' => 'center',
+                    'timer' => '6000',
+                    'toast' => false,
+                    'text' => 'La fecha de inicio no puede ser posterior a la fecha de fin en el primer período.',
+                    'showConfirmButton' => true,
+                    'confirmButtonText' => 'Confirmar',
+                    'timerProgressBar' => true,
+                ]);
+
+                return;
+            }
+
             $this->datosPaso2[] = [
                 'nombre_evaluacion' => $ap['nombre_evaluacion'],
                 'fecha_inicio' => $fechaInicio,
