@@ -243,7 +243,7 @@
                         <p>Selecciona a quien(es) va dirigida la evaluación o crea un nuevo grupo.</p>
                         <hr class="my-4">
                     </div>
-                    <div class="d-flex align-items-center" style="gap: 20px;">
+                    <div class="d-flex align-items-center mb-2" style="gap: 20px;">
                         <select name="se" id="se" class="form-control" style="max-width: 350px;"
                             wire:change="seleccionarEvaluados($event.target.value)" wire:model="select_evaluados">
                             <option value="toda">Toda la empresa</option>
@@ -309,7 +309,7 @@
                         </div>
                     </div>
 
-                    <div class="d-flex align-items-center" style="gap: 20px;">
+                    <div class="d-flex align-items-center mt-2" style="gap: 20px;">
                         @switch($select_evaluados)
                             @case('toda')
                             @break
