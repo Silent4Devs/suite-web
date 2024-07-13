@@ -164,7 +164,7 @@ class FirmasModuleController extends Controller
             $firmaModule = FirmaCentroAtencion::create([
                 'modulo_id' => 1,
                 'submodulo_id' => 1,
-                'user_id' => Auth::id(),
+                'empleado_id' => User::getCurrentUser()->empleado->id,
                 'firma' => $imageName,
                 'id_seguridad' => $id,
             ]);
@@ -521,7 +521,7 @@ class FirmasModuleController extends Controller
     {
 
         $minuta = Minutasaltadireccion::where('id', $id)->first();
-        $existingRecord = FirmaCentroAtencion::where('id_minutas', $id)->where('user_id', Auth::id())->first();
+        $existingRecord = FirmaCentroAtencion::where('id_minutas', $id)->first();
 
         // Si existe, eliminarlo
         if ($existingRecord) {
@@ -570,7 +570,7 @@ class FirmasModuleController extends Controller
         $firmaModule = FirmaCentroAtencion::create([
             'modulo_id' => 3,
             'submodulo_id' => 8,
-            'user_id' => Auth::id(),
+            'empleado_id' => User::getCurrentUser()->empleado->id,
             'firma' => $imageName,
             'id_minutas' => $id,
         ]);
