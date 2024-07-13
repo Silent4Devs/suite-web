@@ -325,9 +325,6 @@
                                         <a class="dropdown-item"
                                             wire:click.prevent="enviarPapelera({{ $obj->id }})">Enviar a la
                                             Papelera</a>
-                                        <a class="dropdown-item delete-item"
-                                            wire:click.prevent="eliminarObjetivo({{ $obj->id }})">
-                                            <i class="fa-solid fa-trash"></i>&nbsp;Eliminar</a>
                                     </div>
                                 </div>
                             </td>
