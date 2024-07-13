@@ -184,9 +184,7 @@ class MinutasaltadireccionController extends Controller
                 'minuta_id' => $minutasaltadireccion->id,
             ]);
             Mail::to(removeUnicodeCharacters($participante->email))->send(new SolicitudAprobacionMinuta($id_minuta, $tema_minuta));
-            dump($participante->email);
         }
-        dd();
 
         if (isset($minutasaltadireccion->externos)) {
             foreach ($minutasaltadireccion->externos as $externo) {
