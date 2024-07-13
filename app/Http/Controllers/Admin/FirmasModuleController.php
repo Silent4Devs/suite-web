@@ -573,6 +573,7 @@ class FirmasModuleController extends Controller
             'empleado_id' => User::getCurrentUser()->empleado->id,
             'firma' => $imageName,
             'id_minutas' => $id,
+            'user_id' => User::getCurrentUser()->id,
         ]);
 
         return redirect()->route('admin.minutasaltadireccions.index')->with('success', 'Actualizado con éxito');

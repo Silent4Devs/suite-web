@@ -220,7 +220,7 @@ class MinutasaltadireccionController extends Controller
         // Mail::to(removeUnicodeCharacters($participante->email))->queue(new SolicitudDeAprobacion($minutasaltadireccion, $revisor, $historialRevisionMinuta));
         // }
 
-        $this->enviarCorreosParticipantes($minutasaltadireccion, $numero_revision);
+        // $this->enviarCorreosParticipantes($minutasaltadireccion, $numero_revision);
     }
 
     public function vincularActividadesPlanDeAccion($request, $minuta, $planEdit = null, $edit = false)
@@ -415,16 +415,7 @@ class MinutasaltadireccionController extends Controller
             ->get();
         $responsablereunions = Empleado::getAltaEmpleadosWithArea();
 
-        $firmas = FirmaCentroAtencion::with('empleado')->where('modulo_id', 3)->where('submodulo_id', 8)->get();
-
-        $userIsAuthorized = false;
-        foreach ($participantesIds as $participante_id) {
-            if (User::getCurrentUser()->empleado->id == $participante_id) {
-                $userIsAuthorized = true;
-            }
-        }
-
-        $firmas = FirmaCentroAtencion::with('empleado')->where('modulo_id', 3)->where('submodulo_id', 8)->get();
+        $firmas = FirmaCentroAtencion::with('empleado')->where('modulo_id', 3)->where('submodulo_id', 8)->where('id_minutas', $id)->get();
         $firmado = false;
         foreach ($firmas as $firma) {
             if (isset($firma->firma) && $firma->firma != '') {
@@ -439,7 +430,6 @@ class MinutasaltadireccionController extends Controller
             'responsablereunions',
             'firmas',
             'participantesIds',
-            'userIsAuthorized',
             'firmado'
         ));
     }
@@ -474,9 +464,9 @@ class MinutasaltadireccionController extends Controller
         }
         if ($edit) {
             $plan = $minutasaltadireccion->planes->first();
-            $this->vincularActividadesPlanDeAccion($request, $minutasaltadireccion, $plan, true);
+            // $this->vincularActividadesPlanDeAccion($request, $minutasaltadireccion, $plan, true);
         } else {
-            $this->vincularActividadesPlanDeAccion($request, $minutasaltadireccion);
+            // $this->vincularActividadesPlanDeAccion($request, $minutasaltadireccion);
         }
     }
 
@@ -535,7 +525,7 @@ class MinutasaltadireccionController extends Controller
         $actividades = json_decode($request->actividades);
         $this->createPDF($minutasaltadireccion, $actividades);
 
-        $this->sendEmailRejectToBeforeReviewers($minutasaltadireccion);
+        // $this->sendEmailRejectToBeforeReviewers($minutasaltadireccion);
         // Revisiones
         $this->initReviews($minutasaltadireccion);
 
@@ -594,8 +584,8 @@ class MinutasaltadireccionController extends Controller
         $rfc = $organizacion_actual->rfc;
 
         // aprobaciones firmas
-        $user_firmado = FirmaCentroAtencion::with('empleado')->where('modulo_id', 3)->where('submodulo_id', 8)->where('empleado_id', User::getCurrentUser()->empleado->id)->first();
-        $firmas = FirmaCentroAtencion::with('empleado')->where('modulo_id', 3)->where('submodulo_id', 8)->get();
+        $user_firmado = FirmaCentroAtencion::where('modulo_id', 3)->where('submodulo_id', 8)->where('id_minutas', $id)->where('empleado_id', User::getCurrentUser()->empleado->id)->first();
+        $firmas = FirmaCentroAtencion::where('modulo_id', 3)->where('submodulo_id', 8)->where('id_minutas', $id)->get();
         $participantesIds = $minutas->participantes->pluck('id')->toArray();
         $userIsAuthorized = false;
         foreach ($participantesIds as $participante_id) {
@@ -611,7 +601,7 @@ class MinutasaltadireccionController extends Controller
             }
         }
 
-        // dd($firmas[0]->empleado);
+        // dd($userIsAuthorized);
 
         return view('admin.minutasaltadireccions.revision', compact('minutas', 'logo_actual', 'direccion', 'empresa_actual', 'rfc', 'responsable', 'revision', 'userIsAuthorized', 'firmas', 'firmado'));
     }
