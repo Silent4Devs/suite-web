@@ -93,6 +93,10 @@ class MinutasaltadireccionController extends Controller
         ]);
 
         $minutasaltadireccion = Minutasaltadireccion::create($request->all());
+
+        $minutasaltadireccion->update([
+            'firma_check' => isset($request->firma_check),
+        ]);
         // dd('se guardo bien tipo de reunion', $minutasaltadireccion);
         if ($request->hasFile('files')) {
             $files = $request->file('files');
@@ -420,6 +424,14 @@ class MinutasaltadireccionController extends Controller
             }
         }
 
+        $firmas = FirmaCentroAtencion::with('empleado')->where('modulo_id', 3)->where('submodulo_id', 8)->get();
+        $firmado = false;
+        foreach ($firmas as $firma) {
+            if (isset($firma->firma) && $firma->firma != '') {
+                $firmado = true;
+            }
+        }
+
         return view('admin.minutasaltadireccions.edit', compact(
             'minutasaltadireccion',
             'actividades',
@@ -427,7 +439,8 @@ class MinutasaltadireccionController extends Controller
             'responsablereunions',
             'firmas',
             'participantesIds',
-            'userIsAuthorized'
+            'userIsAuthorized',
+            'firmado'
         ));
     }
 
@@ -465,10 +478,6 @@ class MinutasaltadireccionController extends Controller
         } else {
             $this->vincularActividadesPlanDeAccion($request, $minutasaltadireccion);
         }
-
-        $numero_revision = RevisionMinuta::where('minuta_id', $minutasaltadireccion->id)->max('no_revision') ? intval(RevisionMinuta::where('minuta_id', $minutasaltadireccion->id)->max('no_revision')) + 1 : 1;
-
-        $this->enviarCorreosParticipantes($minutasaltadireccion, $numero_revision);
     }
 
     public function removeUnicodeCharacters($string)
