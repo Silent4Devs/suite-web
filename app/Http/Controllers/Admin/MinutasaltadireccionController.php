@@ -78,7 +78,6 @@ class MinutasaltadireccionController extends Controller
     public function store(Request $request)
     {
         abort_if(Gate::denies('revision_por_direccion_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
         $request->validate([
             'objetivoreunion' => 'required',
             'responsable_id' => 'required',
@@ -414,18 +413,27 @@ class MinutasaltadireccionController extends Controller
 
         $firmas = FirmaCentroAtencion::with('empleado')->where('modulo_id', 3)->where('submodulo_id', 8)->get();
 
+        $userIsAuthorized = false;
+        foreach ($participantesIds as $participante_id) {
+            if (User::getCurrentUser()->empleado->id == $participante_id) {
+                $userIsAuthorized = true;
+            }
+        }
+
         return view('admin.minutasaltadireccions.edit', compact(
             'minutasaltadireccion',
             'actividades',
             'participantesWithAsistencia',
             'responsablereunions',
             'firmas',
-            'participantesIds'
+            'participantesIds',
+            'userIsAuthorized'
         ));
     }
 
     public function processUpdate($request, Minutasaltadireccion $minutasaltadireccion, $edit = false)
     {
+
         $request->validate([
             'objetivoreunion' => 'required',
             'responsable_id' => 'required|integer',
@@ -440,6 +448,12 @@ class MinutasaltadireccionController extends Controller
         ]);
 
         $minuta = $minutasaltadireccion->update($request->all());
+
+        $minutasaltadireccion->update([
+            'firma_check' => isset($request->firma_check),
+        ]);
+
+        // dd($minutasaltadireccion);
 
         $this->vincularParticipantes($request, $minutasaltadireccion);
         if ($request->has('participantesExt')) {
@@ -566,7 +580,27 @@ class MinutasaltadireccionController extends Controller
         $empresa_actual = $organizacion_actual->empresa;
         $rfc = $organizacion_actual->rfc;
 
-        return view('admin.minutasaltadireccions.revision', compact('minutas', 'logo_actual', 'direccion', 'empresa_actual', 'rfc', 'responsable', 'revision'));
+        // aprobaciones firmas
+        $user_firmado = FirmaCentroAtencion::with('empleado')->where('modulo_id', 3)->where('submodulo_id', 8)->where('empleado_id', User::getCurrentUser()->empleado->id)->first();
+        $firmas = FirmaCentroAtencion::with('empleado')->where('modulo_id', 3)->where('submodulo_id', 8)->get();
+        $participantesIds = $minutas->participantes->pluck('id')->toArray();
+        $userIsAuthorized = false;
+        foreach ($participantesIds as $participante_id) {
+            if (User::getCurrentUser()->empleado->id == $participante_id && (! isset($user_firmado->firma) || $user_firmado->firma == '')) {
+                $userIsAuthorized = true;
+            }
+        }
+
+        $firmado = false;
+        foreach ($firmas as $firma) {
+            if (isset($firma->firma) && $firma->firma != '') {
+                $firmado = true;
+            }
+        }
+
+        // dd($firmas[0]->empleado);
+
+        return view('admin.minutasaltadireccions.revision', compact('minutas', 'logo_actual', 'direccion', 'empresa_actual', 'rfc', 'responsable', 'revision', 'userIsAuthorized', 'firmas', 'firmado'));
     }
 
     public function aprobado($id, Request $request)
