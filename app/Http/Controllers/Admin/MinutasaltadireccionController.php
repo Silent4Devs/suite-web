@@ -183,8 +183,10 @@ class MinutasaltadireccionController extends Controller
                 'no_revision' => strval($numero_revision),
                 'minuta_id' => $minutasaltadireccion->id,
             ]);
-            Mail::to(removeUnicodeCharacters($participante->email))->queue(new SolicitudAprobacionMinuta($id_minuta, $tema_minuta));
+            Mail::to(removeUnicodeCharacters($participante->email))->send(new SolicitudAprobacionMinuta($id_minuta, $tema_minuta));
+            dump($participante->email);
         }
+        dd();
 
         if (isset($minutasaltadireccion->externos)) {
             foreach ($minutasaltadireccion->externos as $externo) {
@@ -465,6 +467,10 @@ class MinutasaltadireccionController extends Controller
         } else {
             $this->vincularActividadesPlanDeAccion($request, $minutasaltadireccion);
         }
+
+        $numero_revision = RevisionMinuta::where('minuta_id', $minutasaltadireccion->id)->max('no_revision') ? intval(RevisionMinuta::where('minuta_id', $minutasaltadireccion->id)->max('no_revision')) + 1 : 1;
+
+        $this->enviarCorreosParticipantes($minutasaltadireccion, $numero_revision);
     }
 
     public function removeUnicodeCharacters($string)
