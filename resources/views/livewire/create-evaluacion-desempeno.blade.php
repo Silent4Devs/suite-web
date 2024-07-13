@@ -312,10 +312,6 @@
                     <div class="d-flex align-items-center mt-2" style="gap: 20px;">
                         @switch($select_evaluados)
                             @case('toda')
-                                <select class="form-control" name="evaluados_areas" id="evaluados_areas"
-                                    wire:model="evaluados_areas">
-                                    <option value="" disabled selected>Seleccione una opcion</option>
-                                </select>
                             @break
 
                             @case('areas')
