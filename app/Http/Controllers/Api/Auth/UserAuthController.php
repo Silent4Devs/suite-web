@@ -111,17 +111,16 @@ class UserAuthController extends Controller
         // Verificar si el token existe y sigue siendo válido
         $tokenInstance = PersonalAccessToken::findToken($token);
 
-        if ($tokenInstance && !$tokenInstance->isExpired()) {
+        if ($tokenInstance && ! $tokenInstance->isExpired()) {
             return response()->json([
                 'status' => 'success',
-                'message' => 'Token is valid'
-            ],200);
+                'message' => 'Token is valid',
+            ], 200);
         } else {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Token is invalid or expired'
+                'message' => 'Token is invalid or expired',
             ], 200);
         }
     }
-
 }
