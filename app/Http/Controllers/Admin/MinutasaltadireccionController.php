@@ -586,7 +586,7 @@ class MinutasaltadireccionController extends Controller
         $participantesIds = $minutas->participantes->pluck('id')->toArray();
         $userIsAuthorized = false;
         foreach ($participantesIds as $participante_id) {
-            if (User::getCurrentUser()->empleado->id == $participante_id && (!isset($user_firmado->firma) || $user_firmado->firma == '')) {
+            if (User::getCurrentUser()->empleado->id == $participante_id && (! isset($user_firmado->firma) || $user_firmado->firma == '')) {
                 $userIsAuthorized = true;
             }
         }
