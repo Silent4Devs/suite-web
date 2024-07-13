@@ -3,7 +3,6 @@
 namespace App\Http\Livewire;
 
 use App\Models\EscalasMedicionObjetivos;
-use Illuminate\Support\Str;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
@@ -33,9 +32,9 @@ class DefinicionEscalasObjetivos extends Component
     {
         $this->parametros[] =
             [
-                'parametro' => "",
+                'parametro' => '',
                 'valor' => null,
-                'color_estatus' => "#000000",
+                'color_estatus' => '#000000',
             ];
     }
 
@@ -156,7 +155,7 @@ class DefinicionEscalasObjetivos extends Component
         foreach ($this->parametros as $key => $parametro) {
             $estatusKey = "estatus_arreglo_{$key}";
 
-            if (isset($values[$estatusKey]) && !empty($values[$estatusKey])) {
+            if (isset($values[$estatusKey]) && ! empty($values[$estatusKey])) {
                 $groupedValues[] = [
                     'estatus' => $values[$estatusKey],
                     'color' => $values["color_estatus_arreglo_{$key}"] ?? null,
