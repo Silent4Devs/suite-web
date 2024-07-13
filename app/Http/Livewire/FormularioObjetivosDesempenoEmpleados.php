@@ -79,6 +79,7 @@ class FormularioObjetivosDesempenoEmpleados extends Component
     public $evaluacion_activa = false;
 
     public $minimo_objetivo = null;
+
     public $maximo_objetivo = null;
 
     public function mount($id_empleado)

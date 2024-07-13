@@ -208,7 +208,6 @@ class TimesheetController extends Controller
 
         DB::beginTransaction();
 
-
         $organizacion_semana = Organizacion::getFirst();
 
         $request->validate(
@@ -370,7 +369,6 @@ class TimesheetController extends Controller
 
                     // Your database operations here
                     DB::commit();
-
 
                     return response()->json(['status' => 200]);
                 }
