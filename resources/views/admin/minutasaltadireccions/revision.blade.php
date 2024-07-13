@@ -180,7 +180,8 @@
         </div>
     </div>
 
-    <form method="POST" id="formularioRevision" enctype="multipart/form-data">
+    <form method="POST" id="formularioRevision" enctype="multipart/form-data"
+        class="{{ $minutas->firma_check ? (!$firmado ? 'd-none' : '') : '' }}">
         @csrf
         <div class="card card-body shadow-sm">
 
