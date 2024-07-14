@@ -120,7 +120,7 @@ class MinutasaltadireccionController extends Controller
         }
 
         //Vinculación Plan de Trabajo
-        // $this->vincularActividadesPlanDeAccion($request, $minutasaltadireccion);
+        $this->vincularActividadesPlanDeAccion($request, $minutasaltadireccion);
 
         // Almacenamiento de participantes relacionados
         $this->vincularParticipantes($request, $minutasaltadireccion);
@@ -129,8 +129,8 @@ class MinutasaltadireccionController extends Controller
             $this->vincularParticipantesExternos($request, $minutasaltadireccion);
         }
         //Creación del PDF
-        // $actividades = json_decode($request->actividades);
-        // $this->createPDF($minutasaltadireccion, $actividades);
+        $actividades = json_decode($request->actividades);
+        $this->createPDF($minutasaltadireccion, $actividades);
 
         // // Revisiones
         $this->initReviews($minutasaltadireccion);
