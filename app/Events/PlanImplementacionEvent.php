@@ -35,8 +35,8 @@ class PlanImplementacionEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        \Log::debug('retorno notificacion');
+        // \Log::debug('retorno notificacion');
 
-        return new Channel('notificaciones-campana');
+        // return new Channel('notificaciones-campana');
     }
 }
