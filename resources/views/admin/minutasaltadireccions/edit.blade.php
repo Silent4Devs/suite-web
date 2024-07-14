@@ -37,7 +37,7 @@
 
         .caja-space-firma canvas {
             /* width: 100%;
-                                                                                        height: 100%; */
+                                                                                                        height: 100%; */
             border: 1px solid #5a5a5a;
             ;
         }
@@ -104,14 +104,20 @@
             </div>
             <div>
                 <div class="form-row mt-4">
-                    <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-12">
-                        <label>
-                            <input type="checkbox" name="firma_check" id="toggle-info"
-                                {{ $minutasaltadireccion->firma_check ? 'checked' : '' }}
-                                value={{ $minutasaltadireccion->firma_check ? 1 : 0 }}>
-                            Activar flujo de firma(s)
-                        </label>
-                    </div>
+                    @if (!$firmado)
+                        <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-12">
+                            <label>
+                                <input type="checkbox" name="firma_check" id="toggle-info"
+                                    {{ $minutasaltadireccion->firma_check ? 'checked' : '' }}
+                                    value={{ $minutasaltadireccion->firma_check ? 1 : 0 }}>
+                                Activar flujo de firma(s)
+                            </label>
+                        </div>
+                    @else
+                        <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-12">
+                            <p>No es posible modificar el flujo de aprobación una vez iniciado</p>
+                        </div>
+                    @endif
                     <div class="form-group anima-focus col-sm-12 col-md-6 col-lg-6">
                         <select required class="form-control" name="responsable_id" id="responsable_id">
                             @foreach ($responsablereunions as $responsablereunion)
@@ -438,10 +444,11 @@
             </button>
         </div>
     </form>
+@endsection
 
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="{{ asset('js/jquery.signature.min.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.signature.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 @section('scripts')
     <script>
