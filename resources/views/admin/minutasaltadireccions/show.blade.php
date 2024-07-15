@@ -138,7 +138,7 @@
                                                 <tr>
                                                     <th style="background-color: #f0f0f0; padding: 8px; border-top-left-radius: 10px; border-top-right-radius: 10px;"
                                                         colspan="2">
-                                                        <center style="color: white;">Aprobaciones firmadas</center>
+                                                        <center style="">Aprobaciones firmadas</center>
                                                     </th>
                                                 </tr>
                                             </thead>
