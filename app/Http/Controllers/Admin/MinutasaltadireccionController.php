@@ -405,8 +405,21 @@ class MinutasaltadireccionController extends Controller
 
         $minuta = $minutasaltadireccion->update($request->all());
 
+        $firmas = FirmaCentroAtencion::with('empleado')->where('modulo_id', 3)->where('submodulo_id', 8)->where('id_minutas', $minutasaltadireccion->id)->get();
+        $firmado = false;
+        foreach ($firmas as $firma) {
+            if (isset($firma->firma) && $firma->firma != '') {
+                $firmado = true;
+            }
+        }
+
+        if (!$firmado) {
+            $firma_check_pro = isset($request->firma_check);
+        }else{
+            $firma_check_pro = true;
+        }
         $minutasaltadireccion->update([
-            'firma_check' => isset($request->firma_check),
+            'firma_check' => $firma_check_pro,
         ]);
 
         // dd($minutasaltadireccion);
@@ -520,7 +533,15 @@ class MinutasaltadireccionController extends Controller
         $empresa_actual = $organizacion_actual->empresa;
         $rfc = $organizacion_actual->rfc;
 
-        return view('admin.minutasaltadireccions.show', compact('minutas', 'logo_actual', 'direccion', 'empresa_actual', 'rfc', 'responsable', 'revision'));
+        $firmas = FirmaCentroAtencion::where('modulo_id', 3)->where('submodulo_id', 8)->where('id_minutas', $id)->get();
+        $firmado = false;
+        foreach ($firmas as $firma) {
+            if (isset($firma->firma) && $firma->firma != '') {
+                $firmado = true;
+            }
+        }
+
+        return view('admin.minutasaltadireccions.show', compact('minutas', 'logo_actual', 'direccion', 'empresa_actual', 'rfc', 'responsable', 'revision', 'firmas', 'firmado'));
     }
 
     public function revision($id)
@@ -554,7 +575,7 @@ class MinutasaltadireccionController extends Controller
             }
         }
 
-        // dd($userIsAuthorized);
+        // dd($firmas);
 
         return view('admin.minutasaltadireccions.revision', compact('minutas', 'logo_actual', 'direccion', 'empresa_actual', 'rfc', 'responsable', 'revision', 'userIsAuthorized', 'firmas', 'firmado'));
     }
