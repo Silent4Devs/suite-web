@@ -289,7 +289,7 @@
                                             <select class="form-control" wire:model.defer="empleados_grupo" multiple
                                                 id="empleadosPertenecientes">
                                                 @foreach ($empleados as $empleado)
-                                                    <option value="{{ $empleado->id }}">{{ $empleado->name }}</option>
+                                                    <option value="{{ $empleado['id'] }}">{{ $empleado['name'] }}</option>
                                                 @endforeach
                                             </select>
                                             <small>Manten presionada la tecla ctrl y selecciona a los empleados que formarán el
@@ -302,7 +302,8 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Guardar
+                                    <button wire:click.prevent="guardarGrupo" type="button" class="btn btn-primary"
+                                        data-dismiss="modal">Guardar
                                         cambios</button>
                                 </div>
                             </div>
@@ -328,7 +329,7 @@
                                 <select class="form-control select2" name="evaluados_manual" id="evaluados_manual"
                                     wire:model="evaluados_manual" multiple wire:ignore>
                                     @foreach ($empleados as $empleado)
-                                        <option value="{{ $empleado->id }}">{{ $empleado->name }}</option>
+                                        <option value="{{ $empleado['id'] }}">{{ $empleado['name'] }}</option>
                                     @endforeach
                                 </select>
                             @break
