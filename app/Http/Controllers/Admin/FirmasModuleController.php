@@ -521,12 +521,6 @@ class FirmasModuleController extends Controller
     {
 
         $minuta = Minutasaltadireccion::where('id', $id)->first();
-        $existingRecord = FirmaCentroAtencion::where('id_minutas', $id)->first();
-
-        // Si existe, eliminarlo
-        if ($existingRecord) {
-            $existingRecord->delete();
-        }
 
         $base64Image = $request->firma;
 
