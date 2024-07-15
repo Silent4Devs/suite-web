@@ -78,6 +78,14 @@ class Kernel extends ConsoleKernel
             ->at('23:40')
             ->onOneServer()
             ->sentryMonitor();
+
+        // Limpiar token expirados para sanctum
+        $schedule->command('sanctum:prune-expired --hours=24')
+            ->timezone('America/Mexico_City')
+            ->saturdays()
+            ->at('23:00')
+            ->onOneServer()
+            ->sentryMonitor();
     }
 
     /**
