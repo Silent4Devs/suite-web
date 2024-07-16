@@ -263,7 +263,7 @@
 
         $('#nivel1').on('select2:unselect', function(e) {
             var unselectedOptionId = e.params.data.id;
-            var index = selectedOptions1.indexOf(unselectedOptionId);
+            // var index = selectedOptions1.indexOf(unselectedOptionId);
             if (index !== -1) {
                 selectedOptions1.splice(index, 1);
             }
@@ -285,7 +285,7 @@
 
         $('#nivel2').on('select2:unselect', function(e) {
             var unselectedOptionId = e.params.data.id;
-            var index = selectedOptions2.indexOf(unselectedOptionId);
+            // var index = selectedOptions2.indexOf(unselectedOptionId);
             if (index !== -1) {
                 selectedOptions2.splice(index, 1);
             }
