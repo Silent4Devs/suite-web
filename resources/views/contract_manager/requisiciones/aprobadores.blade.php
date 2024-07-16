@@ -156,8 +156,7 @@
                                 @if (isset($requisicion->registroFirmas))
                                     @if ($requisicion->registroFirmas->duplicados($empleadoActual->id))
                                         <!-- Button trigger modal -->
-                                        <a class="btn btn-primary" data-toggle="modal"
-                                            data-target="#modal-{{ $requisicion->id }}">
+                                        <a data-toggle="modal" data-target="#modal-{{ $requisicion->id }}">
                                             <i class="fa-solid fa-file-signature"></i>
                                         </a>
 
