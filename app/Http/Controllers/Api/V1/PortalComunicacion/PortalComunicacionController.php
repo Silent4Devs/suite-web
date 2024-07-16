@@ -85,7 +85,6 @@ class PortalComunicacionController extends Controller
         // $comite_existe = Comiteseguridad::getAll()->count();
         $nuevos = $empleados->whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->get();
         $comunicados = ComunicacionSgi::getAllwithImagenesBlog()->makeHidden(['descripcion', 'created_at', 'updated_at', 'imagenes_comunicacion'])->take(4);
-
         foreach ($comunicados as $key_comunicados => $comunicado) {
             $comunicado->texto_descripcion = $comunicado->descripcion;
             $comunicado->tipo_imagen = $comunicado->imagenes_comunicacion->first()->tipo;
@@ -178,6 +177,9 @@ class PortalComunicacionController extends Controller
         // });
         // dd($comunicacionSgis, $comunicacionSgis_carrusel, $empleado_asignado, $aniversarios_contador_circulo, $politica_existe, $comite_existe, $nuevos, $cumpleaños, $user);
         // dd($cumpleaños);
+
+        // dd($comunicados,$noticias);
+
 
         return response(json_encode(
             [
