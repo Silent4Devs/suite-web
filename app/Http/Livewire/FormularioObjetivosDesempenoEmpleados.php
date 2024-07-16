@@ -90,7 +90,7 @@ class FormularioObjetivosDesempenoEmpleados extends Component
 
     protected $rules = [
         'objetivo_estrategico' => 'required|string|max:255',
-        'descripcion' => 'required|string|max:500',
+        'descripcion' => 'string',
         'select_categoria' => 'required|integer',
         'KPI' => 'required|string|max:255',
         'select_unidad' => 'required|integer',
@@ -102,7 +102,7 @@ class FormularioObjetivosDesempenoEmpleados extends Component
         'semestral' => 'required|boolean',
         'anualmente' => 'required|boolean',
         'abierta' => 'required|boolean',
-        'array_escalas_objetivos.*.condicional' => 'required|string|max:255',
+        'array_escalas_objetivos.*.condicional' => 'required|integer|between:1,5',
         'array_escalas_objetivos.*.valor' => 'required|numeric',
         'array_escalas_objetivos.*.parametro' => 'required|string|max:255',
         'array_escalas_objetivos.*.color' => 'required|string|max:7',
@@ -121,7 +121,7 @@ class FormularioObjetivosDesempenoEmpleados extends Component
             $this->array_escalas_objetivos[$key] =
                 [
                     'color' => $e->color,
-                    'condicional' => 1,
+                    'condicional' => 0,
                     'valor' => 0,
                     'parametro' => $e->parametro,
                     'color' => $e->color,
@@ -212,7 +212,20 @@ class FormularioObjetivosDesempenoEmpleados extends Component
 
     public function crearObjetivo()
     {
-        $this->validate();
+        try {
+            $this->validate();
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            $this->alert('error', 'Error de validación', [
+                'position' => 'center',
+                'timer' => 6000,
+                'toast' => false,
+                'text' => 'Se deben llenar todos los campos obligatorios.',
+                'showConfirmButton' => true,
+                'confirmButtonText' => 'Entendido',
+                'timerProgressBar' => true,
+            ]);
+            return;
+        }
 
         $usuario = User::getCurrentUser();
 
@@ -407,6 +420,7 @@ class FormularioObjetivosDesempenoEmpleados extends Component
     public function resetInputsEscalas()
     {
         foreach ($this->array_escalas_objetivos as $key => $e) {
+            $this->array_escalas_objetivos[$key]['condicional'] = 0;
             $this->array_escalas_objetivos[$key]['valor'] = 0;
         }
     }
