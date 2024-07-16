@@ -8,6 +8,7 @@ use App\Models\FirmaCentroAtencion;
 use App\Models\FirmaModule;
 use App\Models\IncidentesSeguridad;
 use App\Models\Mejoras;
+use App\Models\Minutasaltadireccion;
 use App\Models\Modulo;
 use App\Models\Quejas;
 use App\Models\RiesgoIdentificado;
@@ -16,6 +17,7 @@ use App\Models\Sugerencias;
 use App\Models\User;
 use Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class FirmasModuleController extends Controller
 {
@@ -112,6 +114,7 @@ class FirmasModuleController extends Controller
         $seguridad = IncidentesSeguridad::where('id', $id)->first();
 
         if ($seguridad->estatus === 'Cerrado' || $seguridad->estatus === 'No procedente') {
+
             $existingRecord = FirmaCentroAtencion::where('id_seguridad', $id)->where('user_id', Auth::id())->first();
 
             // Si existe, eliminarlo
@@ -119,11 +122,51 @@ class FirmasModuleController extends Controller
                 $existingRecord->delete();
             }
 
+            $base64Image = $request->firma;
+
+            // Eliminar el prefijo 'data:image/png;base64,' si existe
+            if (preg_match('/^data:image\/(\w+);base64,/', $base64Image, $type)) {
+                $base64Image = substr($base64Image, strpos($base64Image, ',') + 1);
+                $type = strtolower($type[1]); // png, jpg, gif
+
+                if (! in_array($type, ['jpg', 'jpeg', 'gif', 'png'])) {
+                    throw new \Exception('Tipo de imagen inválido');
+                }
+            } else {
+                throw new \Exception('Datos de imagen base64 inválidos');
+            }
+
+            // Decodificar la cadena Base64
+            $image = base64_decode($base64Image);
+
+            if (strpos($base64Image, 'data:image/') === 0) {
+                [$type, $base64Image] = explode(';', $base64Image);
+                [, $base64Image] = explode(',', $base64Image);
+            }
+
+            // Generar un nombre único para la imagen
+            $imageName = uniqid().'.'.$type;
+            // Guardar la imagen en el sistema de archivos
+
+            $ruta_carpeta = storage_path('app/public/seguridad/'.$seguridad->id.'/firma');
+
+            if (! is_dir($ruta_carpeta)) {
+                mkdir($ruta_carpeta, 0777, true);
+            }
+
+            chmod($ruta_carpeta, 0777);
+
+            Storage::put('public/seguridad/'.$seguridad->id.'/firma/'.$imageName, $image);
+
+            // Obtener la URL de la imagen guardada
+            $imageUrl = Storage::url('public/seguridad/'.$seguridad->id.'/firma/'.$imageName);
+
             $firmaModule = FirmaCentroAtencion::create([
                 'modulo_id' => 1,
                 'submodulo_id' => 1,
+                'empleado_id' => User::getCurrentUser()->empleado->id,
+                'firma' => $imageName,
                 'user_id' => Auth::id(),
-                'firma' => $request->firma,
                 'id_seguridad' => $id,
             ]);
 
@@ -140,7 +183,7 @@ class FirmasModuleController extends Controller
 
         $riesgo = RiesgoIdentificado::where('id', $id)->first();
 
-        if ($riesgo->estatus === 'cerrado') {
+        if ($riesgo->estatus === 'cerrado' || $riesgo->estatus === 'cancelado') {
             $existingRecord = FirmaCentroAtencion::where('id_riesgos', $id)->where('user_id', Auth::id())->first();
 
             // Si existe, eliminarlo
@@ -148,11 +191,50 @@ class FirmasModuleController extends Controller
                 $existingRecord->delete();
             }
 
+            $base64Image = $request->firma;
+
+            // Eliminar el prefijo 'data:image/png;base64,' si existe
+            if (preg_match('/^data:image\/(\w+);base64,/', $base64Image, $type)) {
+                $base64Image = substr($base64Image, strpos($base64Image, ',') + 1);
+                $type = strtolower($type[1]); // png, jpg, gif
+
+                if (! in_array($type, ['jpg', 'jpeg', 'gif', 'png'])) {
+                    throw new \Exception('Tipo de imagen inválido');
+                }
+            } else {
+                throw new \Exception('Datos de imagen base64 inválidos');
+            }
+
+            // Decodificar la cadena Base64
+            $image = base64_decode($base64Image);
+
+            if (strpos($base64Image, 'data:image/') === 0) {
+                [$type, $base64Image] = explode(';', $base64Image);
+                [, $base64Image] = explode(',', $base64Image);
+            }
+
+            // Generar un nombre único para la imagen
+            $imageName = uniqid().'.'.$type;
+            // Guardar la imagen en el sistema de archivos
+
+            $ruta_carpeta = storage_path('app/public/riesgos/'.$riesgo->id.'/firma');
+
+            if (! is_dir($ruta_carpeta)) {
+                mkdir($ruta_carpeta, 0777, true);
+            }
+
+            chmod($ruta_carpeta, 0777);
+
+            Storage::put('public/riesgos/'.$riesgo->id.'/firma/'.$imageName, $image);
+
+            // Obtener la URL de la imagen guardada
+            $imageUrl = Storage::url('public/riesgos/'.$riesgo->id.'/firma/'.$imageName);
+
             $firmaModule = FirmaCentroAtencion::create([
                 'modulo_id' => $modulo,
                 'submodulo_id' => $submodulo,
                 'user_id' => Auth::id(),
-                'firma' => $request->firma,
+                'firma' => $imageName,
                 'id_riesgos' => $id,
             ]);
 
@@ -170,7 +252,7 @@ class FirmasModuleController extends Controller
 
         $mejoras = Mejoras::where('id', $id)->first();
 
-        if ($mejoras->estatus === 'cerrado') {
+        if ($mejoras->estatus === 'cerrado' || $mejoras->estatus === 'cancelado') {
             $existingRecord = FirmaCentroAtencion::where('id_mejoras', $id)->where('user_id', Auth::id())->first();
 
             // Si existe, eliminarlo
@@ -178,11 +260,50 @@ class FirmasModuleController extends Controller
                 $existingRecord->delete();
             }
 
+            $base64Image = $request->firma;
+
+            // Eliminar el prefijo 'data:image/png;base64,' si existe
+            if (preg_match('/^data:image\/(\w+);base64,/', $base64Image, $type)) {
+                $base64Image = substr($base64Image, strpos($base64Image, ',') + 1);
+                $type = strtolower($type[1]); // png, jpg, gif
+
+                if (! in_array($type, ['jpg', 'jpeg', 'gif', 'png'])) {
+                    throw new \Exception('Tipo de imagen inválido');
+                }
+            } else {
+                throw new \Exception('Datos de imagen base64 inválidos');
+            }
+
+            // Decodificar la cadena Base64
+            $image = base64_decode($base64Image);
+
+            if (strpos($base64Image, 'data:image/') === 0) {
+                [$type, $base64Image] = explode(';', $base64Image);
+                [, $base64Image] = explode(',', $base64Image);
+            }
+
+            // Generar un nombre único para la imagen
+            $imageName = uniqid().'.'.$type;
+            // Guardar la imagen en el sistema de archivos
+
+            $ruta_carpeta = storage_path('app/public/mejoras/'.$mejoras->id.'/firma');
+
+            if (! is_dir($ruta_carpeta)) {
+                mkdir($ruta_carpeta, 0777, true);
+            }
+
+            chmod($ruta_carpeta, 0777);
+
+            Storage::put('public/mejoras/'.$mejoras->id.'/firma/'.$imageName, $image);
+
+            // Obtener la URL de la imagen guardada
+            $imageUrl = Storage::url('public/mejoras/'.$mejoras->id.'/firma/'.$imageName);
+
             $firmaModule = FirmaCentroAtencion::create([
                 'modulo_id' => $modulo,
                 'submodulo_id' => $submodulo,
                 'user_id' => Auth::id(),
-                'firma' => $request->firma,
+                'firma' => $imageName,
                 'id_mejoras' => $id,
             ]);
 
@@ -199,7 +320,7 @@ class FirmasModuleController extends Controller
 
         $denuncia = Denuncias::where('id', $id)->first();
 
-        if ($denuncia->estatus === 'cerrado') {
+        if ($denuncia->estatus === 'cerrado' || $denuncia->estatus === 'cancelado') {
             $existingRecord = FirmaCentroAtencion::where('id_denuncias', $id)->where('user_id', Auth::id())->first();
 
             // Si existe, eliminarlo
@@ -207,11 +328,50 @@ class FirmasModuleController extends Controller
                 $existingRecord->delete();
             }
 
+            $base64Image = $request->firma;
+
+            // Eliminar el prefijo 'data:image/png;base64,' si existe
+            if (preg_match('/^data:image\/(\w+);base64,/', $base64Image, $type)) {
+                $base64Image = substr($base64Image, strpos($base64Image, ',') + 1);
+                $type = strtolower($type[1]); // png, jpg, gif
+
+                if (! in_array($type, ['jpg', 'jpeg', 'gif', 'png'])) {
+                    throw new \Exception('Tipo de imagen inválido');
+                }
+            } else {
+                throw new \Exception('Datos de imagen base64 inválidos');
+            }
+
+            // Decodificar la cadena Base64
+            $image = base64_decode($base64Image);
+
+            if (strpos($base64Image, 'data:image/') === 0) {
+                [$type, $base64Image] = explode(';', $base64Image);
+                [, $base64Image] = explode(',', $base64Image);
+            }
+
+            // Generar un nombre único para la imagen
+            $imageName = uniqid().'.'.$type;
+            // Guardar la imagen en el sistema de archivos
+
+            $ruta_carpeta = storage_path('app/public/denuncias/'.$denuncia->id.'/firma');
+
+            if (! is_dir($ruta_carpeta)) {
+                mkdir($ruta_carpeta, 0777, true);
+            }
+
+            chmod($ruta_carpeta, 0777);
+
+            Storage::put('public/denuncias/'.$denuncia->id.'/firma/'.$imageName, $image);
+
+            // Obtener la URL de la imagen guardada
+            $imageUrl = Storage::url('public/denuncias/'.$denuncia->id.'/firma/'.$imageName);
+
             $firmaModule = FirmaCentroAtencion::create([
                 'modulo_id' => $modulo,
                 'submodulo_id' => $submodulo,
                 'user_id' => Auth::id(),
-                'firma' => $request->firma,
+                'firma' => $imageName,
                 'id_denuncias' => $id,
             ]);
 
@@ -229,7 +389,7 @@ class FirmasModuleController extends Controller
 
         $quejas = Quejas::where('id', $id)->first();
 
-        if ($quejas->estatus === 'cerrado') {
+        if ($quejas->estatus === 'cerrado' || $quejas->estatus === 'cancelado') {
             $existingRecord = FirmaCentroAtencion::where('id_quejas', $id)->where('user_id', Auth::id())->first();
 
             // Si existe, eliminarlo
@@ -237,11 +397,50 @@ class FirmasModuleController extends Controller
                 $existingRecord->delete();
             }
 
+            $base64Image = $request->firma;
+
+            // Eliminar el prefijo 'data:image/png;base64,' si existe
+            if (preg_match('/^data:image\/(\w+);base64,/', $base64Image, $type)) {
+                $base64Image = substr($base64Image, strpos($base64Image, ',') + 1);
+                $type = strtolower($type[1]); // png, jpg, gif
+
+                if (! in_array($type, ['jpg', 'jpeg', 'gif', 'png'])) {
+                    throw new \Exception('Tipo de imagen inválido');
+                }
+            } else {
+                throw new \Exception('Datos de imagen base64 inválidos');
+            }
+
+            // Decodificar la cadena Base64
+            $image = base64_decode($base64Image);
+
+            if (strpos($base64Image, 'data:image/') === 0) {
+                [$type, $base64Image] = explode(';', $base64Image);
+                [, $base64Image] = explode(',', $base64Image);
+            }
+
+            // Generar un nombre único para la imagen
+            $imageName = uniqid().'.'.$type;
+            // Guardar la imagen en el sistema de archivos
+
+            $ruta_carpeta = storage_path('app/public/quejas/'.$quejas->id.'/firma');
+
+            if (! is_dir($ruta_carpeta)) {
+                mkdir($ruta_carpeta, 0777, true);
+            }
+
+            chmod($ruta_carpeta, 0777);
+
+            Storage::put('public/quejas/'.$quejas->id.'/firma/'.$imageName, $image);
+
+            // Obtener la URL de la imagen guardada
+            $imageUrl = Storage::url('public/quejas/'.$quejas->id.'/firma/'.$imageName);
+
             $firmaModule = FirmaCentroAtencion::create([
                 'modulo_id' => $modulo,
                 'submodulo_id' => $submodulo,
                 'user_id' => Auth::id(),
-                'firma' => $request->firma,
+                'firma' => $imageName,
                 'id_quejas' => $id,
             ]);
 
@@ -258,7 +457,7 @@ class FirmasModuleController extends Controller
 
         $sugerencias = Sugerencias::where('id', $id)->first();
 
-        if ($sugerencias->estatus === 'cerrado') {
+        if ($sugerencias->estatus === 'cerrado' || $sugerencias->estatus === 'cancelado') {
             $existingRecord = FirmaCentroAtencion::where('id_sugerencias', $id)->where('user_id', Auth::id())->first();
 
             // Si existe, eliminarlo
@@ -266,11 +465,50 @@ class FirmasModuleController extends Controller
                 $existingRecord->delete();
             }
 
+            $base64Image = $request->firma;
+
+            // Eliminar el prefijo 'data:image/png;base64,' si existe
+            if (preg_match('/^data:image\/(\w+);base64,/', $base64Image, $type)) {
+                $base64Image = substr($base64Image, strpos($base64Image, ',') + 1);
+                $type = strtolower($type[1]); // png, jpg, gif
+
+                if (! in_array($type, ['jpg', 'jpeg', 'gif', 'png'])) {
+                    throw new \Exception('Tipo de imagen inválido');
+                }
+            } else {
+                throw new \Exception('Datos de imagen base64 inválidos');
+            }
+
+            // Decodificar la cadena Base64
+            $image = base64_decode($base64Image);
+
+            if (strpos($base64Image, 'data:image/') === 0) {
+                [$type, $base64Image] = explode(';', $base64Image);
+                [, $base64Image] = explode(',', $base64Image);
+            }
+
+            // Generar un nombre único para la imagen
+            $imageName = uniqid().'.'.$type;
+            // Guardar la imagen en el sistema de archivos
+
+            $ruta_carpeta = storage_path('app/public/sugerencias/'.$sugerencias->id.'/firma');
+
+            if (! is_dir($ruta_carpeta)) {
+                mkdir($ruta_carpeta, 0777, true);
+            }
+
+            chmod($ruta_carpeta, 0777);
+
+            Storage::put('public/sugerencias/'.$sugerencias->id.'/firma/'.$imageName, $image);
+
+            // Obtener la URL de la imagen guardada
+            $imageUrl = Storage::url('public/sugerencias/'.$sugerencias->id.'/firma/'.$imageName);
+
             $firmaModule = FirmaCentroAtencion::create([
                 'modulo_id' => $modulo,
                 'submodulo_id' => $submodulo,
                 'user_id' => Auth::id(),
-                'firma' => $request->firma,
+                'firma' => $imageName,
                 'id_sugerencias' => $id,
             ]);
 
@@ -283,21 +521,56 @@ class FirmasModuleController extends Controller
     public function minutas(Request $request, $id)
     {
 
-        $existingRecord = FirmaCentroAtencion::where('id_minutas', $id)->where('user_id', Auth::id())->first();
+        $minuta = Minutasaltadireccion::where('id', $id)->first();
 
-        // Si existe, eliminarlo
-        if ($existingRecord) {
-            $existingRecord->delete();
+        $base64Image = $request->firma;
+
+        // Eliminar el prefijo 'data:image/png;base64,' si existe
+        if (preg_match('/^data:image\/(\w+);base64,/', $base64Image, $type)) {
+            $base64Image = substr($base64Image, strpos($base64Image, ',') + 1);
+            $type = strtolower($type[1]); // png, jpg, gif
+
+            if (! in_array($type, ['jpg', 'jpeg', 'gif', 'png'])) {
+                throw new \Exception('Tipo de imagen inválido');
+            }
+        } else {
+            throw new \Exception('Datos de imagen base64 inválidos');
         }
+
+        // Decodificar la cadena Base64
+        $image = base64_decode($base64Image);
+
+        if (strpos($base64Image, 'data:image/') === 0) {
+            [$type, $base64Image] = explode(';', $base64Image);
+            [, $base64Image] = explode(',', $base64Image);
+        }
+
+        // Generar un nombre único para la imagen
+        $imageName = uniqid().'.'.$type;
+        // Guardar la imagen en el sistema de archivos
+
+        $ruta_carpeta = storage_path('app/public/minuta/'.$minuta->id.'/firma');
+
+        if (! is_dir($ruta_carpeta)) {
+            mkdir($ruta_carpeta, 0777, true);
+        }
+
+        chmod($ruta_carpeta, 0777);
+
+        Storage::put('public/minuta/'.$minuta->id.'/firma/'.$imageName, $image);
+
+        // Obtener la URL de la imagen guardada
+        $imageUrl = Storage::url('public/minuta/'.$minuta->id.'/firma/'.$imageName);
 
         $firmaModule = FirmaCentroAtencion::create([
             'modulo_id' => 3,
             'submodulo_id' => 8,
-            'user_id' => Auth::id(),
-            'firma' => $request->firma,
+            'empleado_id' => User::getCurrentUser()->empleado->id,
+            'firma' => $imageName,
             'id_minutas' => $id,
+            'user_id' => User::getCurrentUser()->id,
         ]);
 
-        return redirect()->route('admin.desk.index')->with('success', 'Actualizado con éxito');
+        return redirect()->back()->with('success', 'Actualizado con éxito');
     }
 }

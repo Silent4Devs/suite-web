@@ -58,7 +58,7 @@ class EvDesempenoDashboardGeneral extends Component
 
     public function mount()
     {
-        $evaluaciones = EvaluacionDesempeno::getAll()->where('estatus', '!=', 0);
+        $evaluaciones = EvaluacionDesempeno::getAll();
 
         $this->evaluaciones = $evaluaciones;
 

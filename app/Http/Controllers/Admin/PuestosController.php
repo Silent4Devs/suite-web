@@ -182,12 +182,13 @@ class PuestosController extends Controller
                     }
                 }
             }
-            $aprobador_firma_puesto_historico = AprobadorFirmaPuestoHistorico::create([
-                'puesto_id' => $puesto->id,
-                'solicitante_id' => User::getCurrentUser()->empleado->id,
-                'empleado_update_id' => User::getCurrentUser()->empleado->id,
-            ]);
         }
+        $aprobador_firma_puesto_historico = AprobadorFirmaPuestoHistorico::create([
+            'puesto_id' => $puesto->id,
+            'solicitante_id' => User::getCurrentUser()->empleado->id,
+            'empleado_update_id' => User::getCurrentUser()->empleado->id,
+            'firma_check' => isset($request->firma_check) ? true : false,
+        ]);
 
         return redirect()->route('admin.puestos.index')->with('success', 'Puesto Creado');
     }
@@ -252,20 +253,26 @@ class PuestosController extends Controller
         $puestos = Puesto::getAll();
         $externos = ContactosExternosPuestos::all();
 
+        // firmas aprobadores
         $firma = FirmaModule::where('modulo_id', '4')->where('submodulo_id', '9')->first();
+        // dd($firma->aprobadores);
+        // $exampleVar = $firma->aprobadores[0];
         $aprobacionFirmaPuesto = AprobadorFirmaPuesto::where('puesto_id', $puesto->id)->get();
         $firmar = false;
         $firmado = false;
-        foreach ($aprobacionFirmaPuesto as $firma) {
-            if ($firma->aprobador_id == User::getCurrentUser()->empleado->id) {
-                $firmar = true;
+        foreach ($aprobacionFirmaPuesto as $firma_item) {
+            if ($firma_item->aprobador_id == User::getCurrentUser()->empleado->id) {
+                if (! isset($firma_item->firma)) {
+                    $firmar = true;
+                }
             }
-            if ($firma->firma) {
+            if ($firma_item->firma) {
                 $firmado = true;
             }
         }
+        $aprobacionFirmaPuestoHisotricoLast = AprobadorFirmaPuestoHistorico::where('puesto_id', $puesto->id)->orderBy('id', 'DESC')->first();
 
-        return view('admin.puestos.edit', compact('reportaras', 'externos', 'contactosEdit', 'puesto', 'areas', 'reportas', 'lenguajes', 'competencias', 'idis', 'responsabilidades', 'certificados', 'herramientas', 'contactos', 'empleados', 'language', 'puestos', 'firma', 'firmar', 'firmado', 'aprobacionFirmaPuesto'));
+        return view('admin.puestos.edit', compact('reportaras', 'externos', 'contactosEdit', 'puesto', 'areas', 'reportas', 'lenguajes', 'competencias', 'idis', 'responsabilidades', 'certificados', 'herramientas', 'contactos', 'empleados', 'language', 'puestos', 'firma', 'firmar', 'firmado', 'aprobacionFirmaPuesto', 'aprobacionFirmaPuestoHisotricoLast'));
     }
 
     public function update(UpdatePuestoRequest $request, Puesto $puesto)
@@ -284,6 +291,35 @@ class PuestosController extends Controller
         $this->saveUpdateContactos($request->contactos, $puesto);
         $this->saveUpdateContactosExternos($request->externos, $puesto);
         $this->saveOrUpdateLanguage($request->id_language, $puesto);
+
+        // aprobadores
+        if (isset($request->aprobadores_firma) && isset($request->firma_check)) {
+            $aprobacionFirmaPuesto = AprobadorFirmaPuesto::where('puesto_id', $puesto->id)->get();
+            foreach ($aprobacionFirmaPuesto as $aprobador_old) {
+                $aprobador_old->delete();
+            }
+            foreach ($request->aprobadores_firma as $aprobador_id) {
+                $aprobador_firma_puesto = AprobadorFirmaPuesto::create([
+                    'puesto_id' => $puesto->id,
+                    'aprobador_id' => $aprobador_id,
+                    'solicitante_id' => User::getCurrentUser()->empleado->id,
+                ]);
+
+                if (isset($aprobador_firma_puesto->aprobador->email)) {
+
+                    try {
+                        Mail::to(removeUnicodeCharacters($aprobador_firma_puesto->aprobador->email))->queue(new AprobadorFirmaPuestoMail($aprobador_firma_puesto));
+                    } catch (\Throwable $th) {
+                    }
+                }
+            }
+        }
+        $aprobador_firma_puesto_historico = AprobadorFirmaPuestoHistorico::create([
+            'puesto_id' => $puesto->id,
+            'solicitante_id' => User::getCurrentUser()->empleado->id,
+            'empleado_update_id' => User::getCurrentUser()->empleado->id,
+            'firma_check' => isset($request->firma_check) ? true : false,
+        ]);
 
         return redirect()->route('admin.puestos.index');
     }
@@ -304,12 +340,13 @@ class PuestosController extends Controller
         $empleados = Empleado::getaltaAll();
         $areas = Area::getAll();
 
+        // aprobadores
         $aprobacionFirmaPuesto = AprobadorFirmaPuesto::where('puesto_id', $puesto->id)->get();
         $firmar = false;
         $firmado = false;
         foreach ($aprobacionFirmaPuesto as $firma_item) {
             if ($firma_item->aprobador_id == User::getCurrentUser()->empleado->id) {
-                if (!isset($firma_item->firma)) {
+                if (! isset($firma_item->firma)) {
                     $firmar = true;
                 }
             }
@@ -318,7 +355,9 @@ class PuestosController extends Controller
             }
         }
 
-        return view('admin.puestos.show', compact('puesto', 'idiomas', 'competencias', 'responsabilidades', 'certificados', 'idiomas', 'herramientas', 'contactos', 'empleados', 'areas', 'aprobacionFirmaPuesto', 'firmar', 'firmado'));
+        $aprobacionFirmaPuestoHisotricoLast = AprobadorFirmaPuestoHistorico::where('puesto_id', $puesto->id)->orderBy('id', 'DESC')->first();
+
+        return view('admin.puestos.show', compact('puesto', 'idiomas', 'competencias', 'responsabilidades', 'certificados', 'idiomas', 'herramientas', 'contactos', 'empleados', 'areas', 'aprobacionFirmaPuesto', 'firmar', 'firmado', 'aprobacionFirmaPuestoHisotricoLast'));
     }
 
     public function aprobacionFirma(Request $request)
@@ -355,11 +394,13 @@ class PuestosController extends Controller
         // Guardar la imagen en el sistema de archivos
 
         $ruta_carpeta = storage_path('app/public/puestos/firmasAprobadores');
+        $ruta_carpeta_content = storage_path('app/public/puestos');
+
+        Storage::put('public/puestos/firmasAprobadores/'.$imageName, $image);
 
         // Dar permisos chmod 777 a la carpeta
         chmod($ruta_carpeta, 0777);
-
-        Storage::put('public/puestos/firmasAprobadores/'.$imageName, $image);
+        chmod($ruta_carpeta_content, 0777);
 
         // Obtener la URL de la imagen guardada
         $imageUrl = Storage::url('public/puestos/firmasAprobadores/'.$imageName);

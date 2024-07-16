@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('css')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet/timesheet.css') }}{{config('app.cssVersion')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet/timesheet.css') }}{{ config('app.cssVersion') }}">
 @endsection
 @section('content')
     {{ Breadcrumbs::render('timesheet-create') }}
@@ -15,7 +15,6 @@
     <x-loading-indicator />
 
     @livewire('timesheet.timesheet-horas-filas', ['origen' => 'create', 'timesheet_id' => null])
-
 @endsection
 
 
@@ -309,8 +308,6 @@
             total_horas_filas = Math.round(total_horas_filas * 10) / 10; // Redondear a 1 decimal
             document.getElementById('total_horas_filas').innerText = ' h';
         }
-
-
     </script>
     <script type="text/javascript">
         $(document).ready(function() {

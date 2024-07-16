@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyMinutasaltadireccionRequest;
-use App\Mail\EmpleadoEmail;
 use App\Mail\Minutas\MinutaConfirmacionSolicitud;
 use App\Mail\Minutas\MinutaRechazoPorEdicion;
 use App\Mail\Minutas\SolicitudDeAprobacion;
@@ -79,7 +78,6 @@ class MinutasaltadireccionController extends Controller
     public function store(Request $request)
     {
         abort_if(Gate::denies('revision_por_direccion_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
         $request->validate([
             'objetivoreunion' => 'required',
             'responsable_id' => 'required',
@@ -95,6 +93,10 @@ class MinutasaltadireccionController extends Controller
         ]);
 
         $minutasaltadireccion = Minutasaltadireccion::create($request->all());
+
+        $minutasaltadireccion->update([
+            'firma_check' => isset($request->firma_check),
+        ]);
         // dd('se guardo bien tipo de reunion', $minutasaltadireccion);
         if ($request->hasFile('files')) {
             $files = $request->file('files');
@@ -185,7 +187,7 @@ class MinutasaltadireccionController extends Controller
                 'no_revision' => strval($numero_revision),
                 'minuta_id' => $minutasaltadireccion->id,
             ]);
-            Mail::to(removeUnicodeCharacters($participante->email))->queue(new SolicitudAprobacionMinuta($id_minuta, $tema_minuta));
+            Mail::to(removeUnicodeCharacters($participante->email))->send(new SolicitudAprobacionMinuta($id_minuta, $tema_minuta));
         }
 
         if (isset($minutasaltadireccion->externos)) {
@@ -221,9 +223,8 @@ class MinutasaltadireccionController extends Controller
         $this->enviarCorreosParticipantes($minutasaltadireccion, $numero_revision);
     }
 
-    public function vincularActividadesPlanDeAccion($request, $minuta, $planEdit = null, $edit = false)
+    public function vincularActividadesPlanDeAccion($request, $minuta, $edit = false)
     {
-        // dd($request->actividades);
         if (isset($request->actividades)) {
             $tasks = [
                 [
@@ -250,120 +251,73 @@ class MinutasaltadireccionController extends Controller
                     'historic' => [],
                 ],
             ];
+
             $actividades = json_decode($request->actividades);
 
-            foreach ($actividades as $actividad) {
-                $asignados = [];
-                $tmp_id = null;
-                $dur = null;
-                $desc = null;
-                if ($edit) {
-                    if (isset($actividad[5]->participantes_id)) {
-                        if (gettype($actividad[5]->participantes_id) == 'string') {
-                            if (str_contains($actividad[5]->participantes_id, ',')) {
-                                $tmp_id = $actividad[5]->id;
-                                $dur = $actividad[5]->duration;
-                                $desc = $actividad[4];
-                                $asignados = explode(',', $actividad[5]->participantes_id);
-                            } else {
-                                $tmp_id = $actividad[5]->id;
-                                $dur = $actividad[5]->duration;
-                                $desc = $actividad[4];
-                                array_push($asignados, $actividad[5]->participantes_id);
-                            }
-                        } else {
-                            $tmp_id = $actividad[5]->id;
-                            $dur = $actividad[5]->duration;
-                            $desc = $actividad[4];
-                            $asignados = $actividad[5]->participantes_id;
-                        }
-                    } else {
-                        // Si funciona si no se agregan mas actividades
-                        if (! isset($actividad[5]->id)) {
-                            $planes_minuta = Minutasaltadireccion::with(
-                                'planes'
-                            )
-                                ->find($minuta->id);
-                            $activ = array_filter($planes_minuta->planes->first()->tasks, function ($actividad) {
-                                return intval($actividad->level) > 0;
-                            });
-                            foreach ($activ as $act) {
-                                foreach ($act->assigs as $as) {
-                                    if ($act->name == $actividad[0]) {
-                                        $asignados[] = $as->resourceId;
+            if (! $edit) {
+                foreach ($actividades as $actividad) {
+                    $asignados = [];
+                    $tmp_id = null;
+                    $dur = null;
+                    $desc = null;
 
-                                        $tmp_id = $as->id;
-                                        $dur = $act->duration;
-                                        $desc = $actividad[4];
-                                    }
-                                }
-                            }
-                        }
-                    }
-                } else {
                     $desc = $actividad[4];
                     $tmp_id = $actividad[5]->id;
                     $dur = $actividad[5]->duration;
                     $asignados = $actividad[5]->participantes_id;
-                }
 
-                $assigs = [];
-                foreach ($asignados as $asignado) {
-                    $id = intval($asignado);
-                    $assigs[] = [
-                        'id' => 'tmp_'.time().'_'.$id,
-                        'effort' => '0',
-                        'roleId' => '1',
-                        'resourceId' => $id,
+                    $assigs = [];
+                    foreach ($asignados as $asignado) {
+                        $id = intval($asignado);
+                        $assigs[] = [
+                            'id' => 'tmp_'.time().'_'.$id,
+                            'effort' => '0',
+                            'roleId' => '1',
+                            'resourceId' => $id,
+                        ];
+                    }
+
+                    $tasks[] = [
+                        'id' => $tmp_id,
+                        'end' => strtotime($actividad[2]) * 1000,
+                        'name' => $actividad[0],
+                        'level' => 1,
+                        'start' => strtotime($actividad[1]) * 1000,
+                        'canAdd' => true,
+                        'status' => 'STATUS_ACTIVE',
+                        'canWrite' => true,
+                        'duration' => $dur,
+                        'progress' => 0,
+                        'canDelete' => true,
+                        'collapsed' => false,
+                        'relevance' => '0',
+                        'canAddIssue' => true,
+                        'description' => $desc,
+                        'endIsMilestone' => false,
+                        'startIsMilestone' => false,
+                        'progressByWorklog' => false,
+                        'assigs' => $assigs,
+                        'resources' => [],
+                        'subtasks' => [],
+                        'historic' => [],
                     ];
+
+                    $planImplementacion = new PlanImplementacion(); // Necesario se carga inicialmente el Diagrama Universal de Gantt
+                    $planImplementacion->tasks = $tasks;
+                    $planImplementacion->canAdd = true;
+                    $planImplementacion->canWrite = true;
+                    $planImplementacion->canWriteOnParent = true;
+                    $planImplementacion->changesReasonWhy = false;
+                    $planImplementacion->selectedRow = 0;
+                    $planImplementacion->zoom = '3d';
+                    $planImplementacion->parent = $request->tema_reunion;
+                    $planImplementacion->norma = 'ISO 27001';
+                    $planImplementacion->modulo_origen = 'Minutas Alta Dirección';
+                    $planImplementacion->objetivo = null;
+                    $planImplementacion->elaboro_id = User::getCurrentUser()->empleado->id;
+
+                    $minuta->planes()->save($planImplementacion);
                 }
-
-                $tasks[] = [
-                    'id' => $tmp_id,
-                    'end' => strtotime($actividad[2]) * 1000,
-                    'name' => $actividad[0],
-                    'level' => 1,
-                    'start' => strtotime($actividad[1]) * 1000,
-                    'canAdd' => true,
-                    'status' => 'STATUS_ACTIVE',
-                    'canWrite' => true,
-                    'duration' => $dur,
-                    'progress' => 0,
-                    'canDelete' => true,
-                    'collapsed' => false,
-                    'relevance' => '0',
-                    'canAddIssue' => true,
-                    'description' => $desc,
-                    'endIsMilestone' => false,
-                    'startIsMilestone' => false,
-                    'progressByWorklog' => false,
-                    'assigs' => $assigs,
-                    'resources' => [],
-                    'subtasks' => [],
-                    'historic' => [],
-                ];
-            }
-            if ($edit) {
-                $planEdit->update([
-                    'tasks' => $tasks,
-                ]);
-                $minuta->planes()->sync($planEdit);
-            } else {
-                $planImplementacion = new PlanImplementacion(); // Necesario se carga inicialmente el Diagrama Universal de Gantt
-                $planImplementacion->tasks = $tasks;
-                $planImplementacion->canAdd = true;
-                $planImplementacion->canWrite = true;
-                $planImplementacion->canWriteOnParent = true;
-                $planImplementacion->changesReasonWhy = false;
-                $planImplementacion->selectedRow = 0;
-                $planImplementacion->zoom = '3d';
-                $planImplementacion->parent = $request->tema_reunion;
-                $planImplementacion->norma = 'ISO 27001';
-                $planImplementacion->modulo_origen = 'Minutas Alta Dirección';
-                $planImplementacion->objetivo = null;
-                $planImplementacion->elaboro_id = User::getCurrentUser()->empleado->id;
-
-                $minuta->planes()->save($planImplementacion);
             }
         }
     }
@@ -413,7 +367,13 @@ class MinutasaltadireccionController extends Controller
             ->get();
         $responsablereunions = Empleado::getAltaEmpleadosWithArea();
 
-        $firmas = FirmaCentroAtencion::with('empleado')->where('modulo_id', 3)->where('submodulo_id', 8)->get();
+        $firmas = FirmaCentroAtencion::with('empleado')->where('modulo_id', 3)->where('submodulo_id', 8)->where('id_minutas', $id)->get();
+        $firmado = false;
+        foreach ($firmas as $firma) {
+            if (isset($firma->firma) && $firma->firma != '') {
+                $firmado = true;
+            }
+        }
 
         return view('admin.minutasaltadireccions.edit', compact(
             'minutasaltadireccion',
@@ -421,12 +381,14 @@ class MinutasaltadireccionController extends Controller
             'participantesWithAsistencia',
             'responsablereunions',
             'firmas',
-            'participantesIds'
+            'participantesIds',
+            'firmado'
         ));
     }
 
     public function processUpdate($request, Minutasaltadireccion $minutasaltadireccion, $edit = false)
     {
+
         $request->validate([
             'objetivoreunion' => 'required',
             'responsable_id' => 'required|integer',
@@ -442,13 +404,32 @@ class MinutasaltadireccionController extends Controller
 
         $minuta = $minutasaltadireccion->update($request->all());
 
+        $firmas = FirmaCentroAtencion::with('empleado')->where('modulo_id', 3)->where('submodulo_id', 8)->where('id_minutas', $minutasaltadireccion->id)->get();
+        $firmado = false;
+        foreach ($firmas as $firma) {
+            if (isset($firma->firma) && $firma->firma != '') {
+                $firmado = true;
+            }
+        }
+
+        if (! $firmado) {
+            $firma_check_pro = isset($request->firma_check);
+        } else {
+            $firma_check_pro = true;
+        }
+        $minutasaltadireccion->update([
+            'firma_check' => $firma_check_pro,
+        ]);
+
+        // dd($minutasaltadireccion);
+
         $this->vincularParticipantes($request, $minutasaltadireccion);
         if ($request->has('participantesExt')) {
             $this->vincularParticipantesExternos($request, $minutasaltadireccion);
         }
         if ($edit) {
             $plan = $minutasaltadireccion->planes->first();
-            $this->vincularActividadesPlanDeAccion($request, $minutasaltadireccion, $plan, true);
+            $this->vincularActividadesPlanDeAccion($request, $minutasaltadireccion, true);
         } else {
             $this->vincularActividadesPlanDeAccion($request, $minutasaltadireccion);
         }
@@ -463,18 +444,11 @@ class MinutasaltadireccionController extends Controller
     {
         abort_if(Gate::denies('revision_por_direccion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $this->processUpdate($request, $minutasaltadireccion, true);
-
-        $empleadoIds = $request->participantes;
-
-        $empleadoIdsArray = json_decode($empleadoIds, true);
-        $empleadoIds = array_column($empleadoIdsArray, 'empleado_id');
-
-        $empleados = Empleado::whereIn('id', $empleadoIds)->get();
-
-        foreach ($empleados as $empleado) {
-            Mail::to($empleado->email)->send(new EmpleadoEmail($empleado));
+        if ($request->flujo === 'on') {
+            session()->flash('alert', '¡Operación exitosa ya pueden firmar los participantes!');
         }
+
+        $this->processUpdate($request, $minutasaltadireccion, true);
 
         if ($request->hasFile('files')) {
             $files = $request->file('files');
@@ -516,7 +490,7 @@ class MinutasaltadireccionController extends Controller
         $actividades = json_decode($request->actividades);
         $this->createPDF($minutasaltadireccion, $actividades);
 
-        $this->sendEmailRejectToBeforeReviewers($minutasaltadireccion);
+        // $this->sendEmailRejectToBeforeReviewers($minutasaltadireccion);
         // Revisiones
         $this->initReviews($minutasaltadireccion);
 
@@ -558,7 +532,15 @@ class MinutasaltadireccionController extends Controller
         $empresa_actual = $organizacion_actual->empresa;
         $rfc = $organizacion_actual->rfc;
 
-        return view('admin.minutasaltadireccions.show', compact('minutas', 'logo_actual', 'direccion', 'empresa_actual', 'rfc', 'responsable', 'revision'));
+        $firmas = FirmaCentroAtencion::where('modulo_id', 3)->where('submodulo_id', 8)->where('id_minutas', $id)->get();
+        $firmado = false;
+        foreach ($firmas as $firma) {
+            if (isset($firma->firma) && $firma->firma != '') {
+                $firmado = true;
+            }
+        }
+
+        return view('admin.minutasaltadireccions.show', compact('minutas', 'logo_actual', 'direccion', 'empresa_actual', 'rfc', 'responsable', 'revision', 'firmas', 'firmado'));
     }
 
     public function revision($id)
@@ -574,7 +556,27 @@ class MinutasaltadireccionController extends Controller
         $empresa_actual = $organizacion_actual->empresa;
         $rfc = $organizacion_actual->rfc;
 
-        return view('admin.minutasaltadireccions.revision', compact('minutas', 'logo_actual', 'direccion', 'empresa_actual', 'rfc', 'responsable', 'revision'));
+        // aprobaciones firmas
+        $user_firmado = FirmaCentroAtencion::where('modulo_id', 3)->where('submodulo_id', 8)->where('id_minutas', $id)->where('empleado_id', User::getCurrentUser()->empleado->id)->first();
+        $firmas = FirmaCentroAtencion::where('modulo_id', 3)->where('submodulo_id', 8)->where('id_minutas', $id)->get();
+        $participantesIds = $minutas->participantes->pluck('id')->toArray();
+        $userIsAuthorized = false;
+        foreach ($participantesIds as $participante_id) {
+            if (User::getCurrentUser()->empleado->id == $participante_id && (! isset($user_firmado->firma) || $user_firmado->firma == '')) {
+                $userIsAuthorized = true;
+            }
+        }
+
+        $firmado = false;
+        foreach ($firmas as $firma) {
+            if (isset($firma->firma) && $firma->firma != '') {
+                $firmado = true;
+            }
+        }
+
+        // dd($firmas);
+
+        return view('admin.minutasaltadireccions.revision', compact('minutas', 'logo_actual', 'direccion', 'empresa_actual', 'rfc', 'responsable', 'revision', 'userIsAuthorized', 'firmas', 'firmado'));
     }
 
     public function aprobado($id, Request $request)

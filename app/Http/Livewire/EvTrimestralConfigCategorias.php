@@ -60,10 +60,10 @@ class EvTrimestralConfigCategorias extends Component
         return view('livewire.ev-trimestral-config-categorias');
     }
 
-    public function submitForm($data)
-    {
-        dd($data);
-    }
+    // public function submitForm($data)
+    // {
+    //     dd($data);
+    // }
 
     public function editRegistro($entrada, $campo, $id_edit, $key)
     {

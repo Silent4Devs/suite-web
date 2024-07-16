@@ -271,34 +271,36 @@
                                 <b>Datos generales:</b>
                             </div>
 
+                            @if (is_null($firma_validacion))
                             <div style="position: relative; left: 2rem;">
                                 <label>
                                     <input type="checkbox" id="toggle-info" {{ !empty($aprobadoresArray) ? 'checked' : '' }}>
-                                    Activar flujo de aprobación
+                                    Activar flujo de firma(s)
                                 </label>
+                                <br>
                             </div>
 
                             <div class="mt-2 form-group col-md-12">
                                 <div class="info-bar" id="info-bar" style="display: {{ !empty($aprobadoresArray) ? 'block' : 'none' }};">
-                                    @if($firmaModules && $firmaModules->empleados)
-                                        <p>Seleccione cuántos participantes de aprobación tendrá tu lista.</p>
-                                        @if(is_array($aprobadoresArray))
-                                            <select id="participantes" name="participantes[]" class="form-control" multiple="multiple" style="padding: 10px; border-radius: 50px; border: 1px solid #007BFF;">
+                                    <p>Seleccione cuántos participantes de aprobación tendrá tu lista.</p>
+                                    <select id="participantes" name="participantes[]" class="form-control" multiple="multiple" style="padding: 10px; border-radius: 50px; border: 1px solid #007BFF;">
+                                        @if($firmaModules && $firmaModules->empleados)
+                                            @if(count($firmaModules->empleados) > 0)
                                                 @foreach($firmaModules->empleados as $empleado)
-                                                    <option value="{{ $empleado->id }}" @if(in_array($empleado->id, $aprobadoresArray)) selected @endif>
+                                                    <option  value="{{ $empleado->id }}"   @if(is_array($aprobadoresArray) && in_array($empleado->id, $aprobadoresArray)) selected @endif>
                                                         {{ $empleado->name }}
                                                     </option>
                                                 @endforeach
-                                            </select>
+                                            @else
+                                                <option value="" disabled>No hay participantes disponibles.</option>
+                                            @endif
                                         @else
-                                            <p>No hay participantes disponibles.</p>
+                                            <option value="" disabled>No hay participantes disponibles.</option>
                                         @endif
-                                    @else
-                                        <p>No hay participantes disponibles.</p>
-                                    @endif
+                                    </select>
                                 </div>
                             </div>
-
+                            @endif
 
 
                             <div class="mt-2 form-group col-md-6">
@@ -972,6 +974,7 @@
     }
 @endphp
 
+@if($incidentesSeguridad->estatus === 'Cerrado' || $incidentesSeguridad->estatus === 'No procedente')
 @if ($userIsAuthorized)
 @if (!$existingRecord)
 <form method="POST" action="{{ route('admin.module_firmas.seguridad', ['id' => $incidentesSeguridad->id]) }}" enctype="multipart/form-data">
@@ -1008,16 +1011,17 @@
 </form>
 @endif
 @endif
+@endif
 
-@if ($userIsAuthorized)
+@if ($userIsAuthorized || auth()->user()->roles->contains('title', 'Admin'))
 <div class="card card-content" style="margin-bottom: 30px">
     <div class="caja-firmas-doc">
         @foreach($firmas as $firma)
         <div class="flex" style="margin-top: 70px;">
             <div class="flex-item">
                 @if($firma->firma)
-                    <img src="{{ $firma->firma }}" class="img-firma" width="200" height="100">
-                    <p>Fecha: {{ $firma->created_at->format('Y-m-d') }}</p>
+                    <img src="{{ $firma->firma_ruta_seguridad }}" class="img-firma" width="200" height="100">
+                    <p>Fecha: {{ $firma->created_at->format('d-m-Y') }}</p>
                     <p>Firmante: {{ $firma->empleado->name }}</p>
                 @else
                     <div style="height: 137px;"></div>
@@ -1237,10 +1241,8 @@
             if (!empleado.id) {
                 return empleado.text;
             }
-            var avatar = $(empleado.element).data('avatar');
-            var $avatar = $('<img class="avatar" src="' + avatar + '">');
             var $nombre = $('<span>' + empleado.text + '</span>');
-            var $container = $('<span>').append($avatar).append($nombre);
+            var $container = $('<span>').append($nombre);
             return $container;
         }
 

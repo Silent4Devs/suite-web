@@ -34,7 +34,6 @@ class IncidentesSeguridad extends Model implements Auditable, HasMedia
     ];
 
     protected $fillable = [
-        'empleado_reporto_id',
         'empleado_asignado_id',
         'titulo',
         'fecha',
@@ -47,7 +46,7 @@ class IncidentesSeguridad extends Model implements Auditable, HasMedia
         'empleado_reporto_id',
         'procedente',
         'justificacion',
-        'estatus'
+        'estatus',
 
     ];
 

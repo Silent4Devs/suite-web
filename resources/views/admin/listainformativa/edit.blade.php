@@ -106,7 +106,7 @@
                                                 </option>
                                             @endforeach
                                         </select>
-                                        <label for="nivel1" style="color:#057BE2;">Usuarios</label>
+                                        <label for="nivel1" style="color:#057BE2;">Colaboradores</label>
                                     </div>
                                 </div>
                             </div>
@@ -128,7 +128,7 @@
                                                 </option>
                                             @endforeach
                                         </select>
-                                        <label for="nivel2" style="color:#057BE2;">Colaboradores</label>
+                                        <label for="nivel2" style="color:#057BE2;">Usuarios</label>
                                     </div>
                                 </div>
                             </div>
@@ -263,7 +263,7 @@
 
         $('#nivel1').on('select2:unselect', function(e) {
             var unselectedOptionId = e.params.data.id;
-            var index = selectedOptions1.indexOf(unselectedOptionId);
+            // var index = selectedOptions1.indexOf(unselectedOptionId);
             if (index !== -1) {
                 selectedOptions1.splice(index, 1);
             }
@@ -285,7 +285,7 @@
 
         $('#nivel2').on('select2:unselect', function(e) {
             var unselectedOptionId = e.params.data.id;
-            var index = selectedOptions2.indexOf(unselectedOptionId);
+            // var index = selectedOptions2.indexOf(unselectedOptionId);
             if (index !== -1) {
                 selectedOptions2.splice(index, 1);
             }

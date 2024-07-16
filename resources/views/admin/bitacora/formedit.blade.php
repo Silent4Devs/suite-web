@@ -137,14 +137,22 @@
             @if (!$firmado)
                 <div class="col-12">
                     <label for="">Activar flujo de aprobación </label>
-                    {!! Form::checkbox('firma_check', 1, $firma->count() ? true : false, [
-                        'id' => 'aprobadores_firma',
-                        'style' => 'width: 20px; height: 20px; vertical-align: middle;',
-                    ]) !!}
+                    {!! Form::checkbox(
+                        'firma_check',
+                        1,
+                        isset($aprobacionFirmaContratoHisotricoLast->firma_check)
+                            ? $aprobacionFirmaContratoHisotricoLast->firma_check
+                            : false,
+                        [
+                            'id' => 'aprobadores_firma',
+                            'style' => 'width: 20px; height: 20px; vertical-align: middle;',
+                        ],
+                    ) !!}
                 </div>
             @endif
             @if (!$firmado)
-                <div class="col-12 {{ $firma->count() ? '' : 'd-none' }}" id="aprobadores-firma-box">
+                <div class="col-12 {{ isset($aprobacionFirmaContratoHisotricoLast->firma_check) ? ($aprobacionFirmaContratoHisotricoLast->firma_check ? '' : 'd-none') : 'd-none' }}"
+                    id="aprobadores-firma-box">
                     <div class="form-group">
                         <label for="">Asignar Aprobadores</label>
                         <select name="aprobadores_firma[]" id="aprobadores" multiple class="form-control">

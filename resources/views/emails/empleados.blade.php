@@ -96,6 +96,13 @@
                                         <a href="{{ url('/admin/desk/' . $id . '/riesgos-edit') }}">Ir a Riesgo</a>
                                         @break
 
+                                        @case('minutas')
+                                        <strong>{{ $nombre }}</strong> le ha mandado una solicitud de
+                                        firma.
+                                                                                <br>
+                                        <a href="{{ url('/admin/minutasaltadireccions/' . $id . '/edit') }}">Ir a Minuta</a>
+                                        @break
+
                                         @default
                                     @endswitch
                                 </p>

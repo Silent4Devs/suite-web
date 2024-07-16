@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API\Auth;
+namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
@@ -12,9 +12,9 @@ use Laravel\Sanctum\Sanctum;
 
 class AuthController extends Controller
 {
-    public function login(Request $request): JsonResponse
+    public function login(Request $request)
     {
-        request()->validate([
+        $request->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);
@@ -27,10 +27,59 @@ class AuthController extends Controller
         }
 
         //Busca al usuario en la base de datos por email
-        $user = User::select(['id', 'name', 'password', 'email'])
+        $user = User::select(['id', 'name', 'password', 'email', 'empleado_id', 'n_empleado'])
             ->where('email', request('email'))
-            ->firstOrFail();
+            ->firstOrFail()
+            ->makeHidden(['empleado', 'empleado_id', 'n_empleado', 'roles']);
 
+        function encodeSpecialCharacters($url)
+        {
+            // Handle spaces
+            // $url = str_replace(' ', '%20', $url);
+            // Encode other special characters, excluding /, \, and :
+            $url = preg_replace_callback('/[^A-Za-z0-9_\-\.~\/\\\:]/', function ($matches) {
+                return rawurlencode($matches[0]);
+            }, $url);
+
+            return $url;
+        }
+
+        if ($user->empleado->foto == null || $user->empleado->foto == '0') {
+            if ($user->empleado->genero == 'H') {
+                $ruta = asset('storage/empleados/imagenes/man.png');
+            } elseif ($user->empleado->genero == 'M') {
+                $ruta = asset('storage/empleados/imagenes/woman.png');
+            } else {
+                $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
+            }
+        } else {
+            $ruta = asset('storage/empleados/imagenes/'.$user->empleado->foto);
+        }
+
+        // Encode spaces in the URL
+        $user->ruta_foto = encodeSpecialCharacters($ruta);
+
+        $user->idEmpleado = $user->empleado->id;
+
+        $user->id_puesto = $user->empleado->puestoRelacionado->id;
+        $user->nombre_puesto = $user->empleado->puesto;
+
+        $user->id_area = $user->empleado->area->id;
+        $user->nombre_area = $user->empleado->area->area;
+
+        $supervisor = $user->empleado->es_supervisor;
+
+        // $permisos_usuario = [];
+
+        // foreach ($user->roles as $role) {
+
+        //     $roles[]["nombre_rol"] = $role->title;
+
+        //     foreach ($role->permissions as $key => $permiso) {
+        //         $permisos_usuario[]["permiso"] = $permiso->title;
+        //     }
+        // }
+        // dd($roles);
         //Genera un nuevo token para el usuario
         $token = $user->createToken('auth_token')->plainTextToken;
 
@@ -38,6 +87,9 @@ class AuthController extends Controller
         return response()->json([
             'access_token' => $token,
             'user' => $user->toArray(),
+            'supervisor' => $supervisor,
+            // 'roles' => $roles,
+            // 'permisos' => $permisos_usuario,
         ]);
     }
 

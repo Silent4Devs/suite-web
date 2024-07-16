@@ -71,7 +71,7 @@ class Timesheet extends Model implements Auditable
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'empleado_id')->select('id', 'name', 'area_id');
+        return $this->belongsTo(Empleado::class, 'empleado_id')->select('id', 'name', 'area_id', 'foto');
     }
 
     public function aprobador()
