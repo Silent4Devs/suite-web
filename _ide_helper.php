@@ -5,7 +5,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 10.48.12.
+ * Generated for Laravel 10.48.16.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -19978,10 +19978,10 @@ namespace Spatie\LaravelIgnition\Facades {
          * 
          *
          * @static 
-         */        public static function withStackFrameArguments($withStackFrameArguments = true)
+         */        public static function withStackFrameArguments($withStackFrameArguments = true, $forcePHPIniSetting = false)
         {
                         /** @var \Spatie\FlareClient\Flare $instance */
-                        return $instance->withStackFrameArguments($withStackFrameArguments);
+                        return $instance->withStackFrameArguments($withStackFrameArguments, $forcePHPIniSetting);
         }
                     /**
          * 
@@ -20830,7 +20830,7 @@ namespace Illuminate\Console\Scheduling {
                     /**
          * 
          *
-         * @see \Sentry\Laravel\Features\ConsoleSchedulingIntegration::onBoot()
+         * @see \Sentry\Laravel\Features\ConsoleSchedulingIntegration::register()
          * @param string|null $monitorSlug
          * @param int|null $checkInMargin
          * @param int|null $maxRuntime

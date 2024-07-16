@@ -134,8 +134,8 @@ return [
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],
-        'NAS' => [
-            'driver'   => 'NAS',
+        'ftp' => [
+            'driver'   => 'ftp',
             'host'     => env('NAS_HOST'),
             'username' => env('NAS_USERNAME'),
             'password' => env('NAS_PASSWORD'),
