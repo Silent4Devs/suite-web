@@ -2,7 +2,6 @@
 
 namespace App\Mail;
 
-use App\Models\QuejasCliente;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -20,9 +19,7 @@ class BackupNotification extends Mailable
 
     public $evidencia;
 
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     /**
      * Build the message.
@@ -32,6 +29,6 @@ class BackupNotification extends Mailable
     public function build()
     {
         return $this->subject('Tabantaj Backup Transfer Completed')
-                    ->view('mails.backupNotification');
+            ->view('mails.backupNotification');
     }
 }

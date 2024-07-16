@@ -7,9 +7,9 @@ use App\Console\Commands\EnviarCorreoFelicitaciones;
 use App\Console\Commands\NotificarEvaluacion360;
 use App\Console\Commands\NotificarRecursos;
 use App\Console\Commands\NotificarUsuarioCapacitacion;
+use App\Console\Commands\TransferFile;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use App\Console\Commands\TransferFile;
 
 class Kernel extends ConsoleKernel
 {

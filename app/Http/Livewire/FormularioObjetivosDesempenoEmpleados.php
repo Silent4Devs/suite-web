@@ -57,11 +57,15 @@ class FormularioObjetivosDesempenoEmpleados extends Component
     public $select_unidad = '';
 
     public $nombre_unidad;
+
     public $minimo_unidad;
+
     public $maximo_unidad;
 
     public $nombre_edit_unidad;
+
     public $minimo_edit_unidad;
+
     public $maximo_edit_unidad;
 
     public $ev360 = false;
@@ -103,7 +107,6 @@ class FormularioObjetivosDesempenoEmpleados extends Component
         'array_escalas_objetivos.*.parametro' => 'required|string|max:255',
         'array_escalas_objetivos.*.color' => 'required|string|max:7',
     ];
-
 
     public function mount($id_empleado)
     {
@@ -258,6 +261,7 @@ class FormularioObjetivosDesempenoEmpleados extends Component
                         'confirmButtonText' => 'Entendido',
                         'timerProgressBar' => true,
                     ]);
+
                     return;
                 }
             }
@@ -276,6 +280,7 @@ class FormularioObjetivosDesempenoEmpleados extends Component
                         'confirmButtonText' => 'Entendido',
                         'timerProgressBar' => true,
                     ]);
+
                     return;
                 }
             }
