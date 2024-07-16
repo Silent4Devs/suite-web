@@ -7,6 +7,7 @@ use App\Console\Commands\EnviarCorreoFelicitaciones;
 use App\Console\Commands\NotificarEvaluacion360;
 use App\Console\Commands\NotificarRecursos;
 use App\Console\Commands\NotificarUsuarioCapacitacion;
+use App\Console\Commands\TransferFile;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -22,6 +23,7 @@ class Kernel extends ConsoleKernel
         NotificarEvaluacion360::class,
         EnviarCorreoFelicitaciones::class,
         NotificarUsuarioCapacitacion::class,
+        TransferFile::class,
     ];
 
     /**
@@ -59,7 +61,7 @@ class Kernel extends ConsoleKernel
             ->sentryMonitor();
 
         //dump automatico de base de datos
-        $schedule->command('php artisan snapshot:cleanup --keep=30')
+        $schedule->command('php artisan snapshot:cleanup --keep=15')
             ->timezone('America/Mexico_City')
             //->days([2, 5])
             ->daily()
@@ -89,6 +91,15 @@ class Kernel extends ConsoleKernel
             ->timezone('America/Mexico_City')
             ->saturdays()
             ->at('23:00')
+            ->onOneServer()
+            ->sentryMonitor();
+
+        // Schedule the TransferFile command to run daily
+        $schedule->command('transfer:file')
+            ->timezone('America/Mexico_City')
+            ->daily()
+            ->at('01:00')
+            ->withoutOverlapping()
             ->onOneServer()
             ->sentryMonitor();
     }
