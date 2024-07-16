@@ -46,6 +46,7 @@ button {
     min-width: calc(100% - var(--aside-width));
     background-color: rgb(255, 255, 255);
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 
@@ -53,7 +54,6 @@ button {
     animation-fill-mode: both;
     animation-delay: 3s;
 }
-
 .logo-box {
     width: 350px;
     height: 350px;
@@ -74,22 +74,53 @@ button {
 
 .logo-circle {
     width: 300px;
-    animation: logoCircle 32s linear infinite;
+    animation: logoCircle 60s linear infinite;
 }
 
 .box-circle-color {
-    animation: boxCircleColor 3s;
+    animation: boxCircleColor 1s;
     animation-fill-mode: both;
-    animation-delay: 3s;
+    animation-delay: 4s;
 }
 
-img {
+.isotipo, .logo-circle {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     margin: auto;
+}
+
+.tbj-title{
+    width: 400px;
+    margin-top: 30px;
+}
+
+.box-title-tbj{
+    text-align: right;
+    color: #345183;
+    animation: enterUp 0.7s;
+    animation-delay: 1s;
+    animation-fill-mode: both;
+}
+.text-by{
+    font-size: 12px;
+    font-weight: lighter;
+
+    animation: boxCircleColor 0.5s;
+    animation-fill-mode: both;
+    animation-delay: 1.5s;
+}
+.text-bienvenidos{
+    color: #2b4168;
+    font-size: 24px;
+    margin-top: 40px;
+    font-weight: lighter;
+
+    animation: enterUp 0.4s;
+    animation-delay: 2s;
+    animation-fill-mode: both;
 }
 
 .aside-tbj {
@@ -99,6 +130,92 @@ img {
 
     display: grid;
     place-items: center;
+    padding: 40px;
+}
+
+.box-logo-org{
+    width: 100px;
+    height: 100px;
+    margin: auto;
+    overflow: hidden;
+    border: 1px solid #a7aeb9;
+    border-radius: 1000px;
+    display: grid;
+    place-items: center;
+    margin-bottom: 40px;
+    background-color: #fff;
+}
+.box-logo-org img{
+    width:85%;
+    height:85%;
+    object-fit: contain;
+}
+.text-iniciar{
+    font-size: 24px;
+    color: #345183;
+    font-weight: lighter;
+    text-align: center;
+    margin-bottom: 40px;
+}
+.input-item{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border: 1px solid #768192;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: 0.2s;
+    color: #434549;
+}
+.input-item:focus-within{
+    transform: scale(1.03);
+    border: 1px solid #152249;
+}
+.icon.icon-box{
+    width: 50px;
+    height: 50px;
+    padding: 8px;
+    background-color: #fff;
+    display: grid;
+    place-items: center;
+}
+.icon.icon-box img{
+    width: 100%;
+    filter: brightness(0) saturate(100%) invert(32%) sepia(3%) saturate(1465%) hue-rotate(180deg) brightness(88%) contrast(86%);
+}
+.input-item:focus-within .icon.icon-box img{
+    filter: brightness(0) saturate(100%) invert(7%) sepia(58%) saturate(3098%) hue-rotate(219deg) brightness(98%) contrast(91%);
+}
+
+.input-item input{
+    width: 100%;
+    height: 50px;
+    border: none;
+    padding: 0px 5px;
+}
+.input-item input:focus{
+    outline: none;
+}
+
+.button-item{
+    margin-bottom: 15px;
+}
+.button-item button{
+    width: 100%;
+    height: 50px;
+    color: #fff;
+    background-color: #293c76;
+    border-radius: 8px;
+}
+
+.box-links{
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    font-size: 13px;
 }
 
 @keyframes isotipo {
@@ -133,5 +250,12 @@ img {
 @keyframes boxCircleColor {
     from {
         opacity: 0;
+    }
+}
+
+@keyframes enterUp {
+    from{
+        opacity: 0;
+        transform: translateY(50%);
     }
 }
