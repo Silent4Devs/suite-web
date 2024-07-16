@@ -5,6 +5,7 @@
     </div>
 
     <style>
+
         .btn_cargar {
             border-radius: 100px !important;
             border: 1px solid #345183;
@@ -86,7 +87,8 @@
                 <label for="inputEmail3" class="col-sm-2 col-form-label offset-8 ">Días disponibles:</label>
                 <div class="col-sm-2 pr-5">
                     <input type="text" style="text-align:center;" class="form-control" id="inputEmail3"
-                        value="{{ $dias_disponibles }}" disabled>
+                        value="{{ $dias_disponibles }}" disabled
+                        >
                 </div>
             </div>
             <div style="margin-bottom: 5px; margin-left:10px;" class="row">

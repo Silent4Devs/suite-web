@@ -7,6 +7,7 @@ use App\Models\Escuela\Evaluation;
 use App\Models\Escuela\Instructor\UserAnswer;
 use App\Models\Escuela\UsuariosCursos;
 use App\Traits\ObtenerOrganizacion;
+use Carbon\Carbon;
 
 class ReportesIndividualesController extends Controller
 {
@@ -36,16 +37,29 @@ class ReportesIndividualesController extends Controller
 
             $calificacion = 0;
             $evaluaciones = Evaluation::where('course_id', $id)->get();
+            $evaluaciones_count = $evaluaciones->count();
+            $evaluacion_usuario_collect = collect();
             foreach ($evaluaciones as $evaluation) {
                 $correctQuestions = UserAnswer::where('is_correct', true)->where('user_id', $cu->user_id)->where('evaluation_id', $evaluation->id)->count();
+                $last_quest_response = UserAnswer::where('user_id', $cu->user_id)->where('evaluation_id', $evaluation->id)->first();
+                // dd($last_quest_response);
                 $totalQuizQuestions = count($evaluation->questions);
                 $totalQuestions = $totalQuizQuestions == 0 ? 1 : $totalQuizQuestions;
-                $percentage = ($correctQuestions * 100) / $totalQuestions;
+                $percentage = ($correctQuestions * 10) / $totalQuestions;
                 $calificacion += $percentage;
+
+                $evaluacion_usuario_collect->push(
+                    [
+                        'name' => $evaluation->name,
+                        'calificacion' => isset($percentage) ? $percentage : 'No aplica',
+                        'fecha' => $last_quest_response ? Carbon::parse($last_quest_response->created_at)->format('d/m/Y') : 'No contestada',
+                    ],
+                );
             }
-            $cu->calificacion = $calificacion / $evaluaciones->count();
+            $cu->calificacion = $calificacion / ($evaluaciones->count() == 0 ? 1 : $evaluaciones->count());
+            $cu->evaluaciones_usuario = $evaluacion_usuario_collect;
         }
 
-        return view('admin.escuela.reportes-individuales', compact('logo_actual', 'empresa_actual', 'cursos_usuario'));
+        return view('admin.escuela.reportes-individuales', compact('logo_actual', 'empresa_actual', 'cursos_usuario', 'evaluaciones'));
     }
 }

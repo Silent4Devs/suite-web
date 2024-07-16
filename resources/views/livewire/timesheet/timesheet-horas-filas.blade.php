@@ -128,7 +128,8 @@
                                     <small class="d-mobile">Lunes </small>
                                     <input type="number" name="timesheet[{{ $i }}][lunes]" data-dia="lunes"
                                         data-i="{{ $i }}" id="ingresar_hora_lunes_{{ $i }}"
-                                        class="ingresar_horas  form-control" min="0" max="24">
+                                        class="ingresar_horas  form-control" min="0" max="24"
+                                        step=".1">
                                     <small class="timesheet_{{ $i }}_horas errores text-danger"
                                         style="position:absolute; margin-top:3px;"></small>
                                 </td>
@@ -137,42 +138,48 @@
                                     <input type="number" name="timesheet[{{ $i }}][martes]"
                                         data-dia="martes" data-i="{{ $i }}"
                                         id="ingresar_hora_martes_{{ $i }}"
-                                        class="ingresar_horas  form-control" min="0" max="24">
+                                        class="ingresar_horas  form-control" min="0" max="24"
+                                        step=".1">
                                 </td>
                                 <td class="td-date-time">
                                     <small class="d-mobile">Miercoles </small>
                                     <input type="number" name="timesheet[{{ $i }}][miercoles]"
                                         data-dia="miercoles" data-i="{{ $i }}"
                                         id="ingresar_hora_miercoles_{{ $i }}"
-                                        class="ingresar_horas  form-control" min="0" max="24">
+                                        class="ingresar_horas  form-control" min="0" max="24"
+                                        step=".1">
                                 </td>
                                 <td class="td-date-time">
                                     <small class="d-mobile">Jueves </small>
                                     <input type="number" name="timesheet[{{ $i }}][jueves]"
                                         data-dia="jueves" data-i="{{ $i }}"
                                         id="ingresar_hora_jueves_{{ $i }}"
-                                        class="ingresar_horas  form-control" min="0" max="24">
+                                        class="ingresar_horas  form-control" min="0" max="24"
+                                        step=".1">
                                 </td>
                                 <td class="td-date-time">
                                     <small class="d-mobile">Viernes </small>
                                     <input type="number" name="timesheet[{{ $i }}][viernes]"
                                         data-dia="viernes" data-i="{{ $i }}"
                                         id="ingresar_hora_viernes_{{ $i }}"
-                                        class="ingresar_horas  form-control" min="0" max="24">
+                                        class="ingresar_horas  form-control" min="0" max="24"
+                                        step=".1">
                                 </td>
                                 <td class="td-date-time">
                                     <small class="d-mobile">Sabado </small>
                                     <input type="number" name="timesheet[{{ $i }}][sabado]"
                                         data-dia="sabado" data-i="{{ $i }}"
                                         id="ingresar_hora_sabado_{{ $i }}"
-                                        class="ingresar_horas  form-control" min="0" max="24">
+                                        class="ingresar_horas  form-control" min="0" max="24"
+                                        step=".1">
                                 </td>
                                 <td class="td-date-time">
                                     <small class="d-mobile">Domingo </small>
                                     <input type="number" name="timesheet[{{ $i }}][domingo]"
                                         data-dia="domingo" data-i="{{ $i }}"
                                         id="ingresar_hora_domingo_{{ $i }}"
-                                        class="ingresar_horas  form-control" min="0" max="24">
+                                        class="ingresar_horas  form-control" min="0" max="24"
+                                        step=".1">
                                 </td>
                                 <td>
                                     <font class="d-mobile mt-1" style="font-weight: bold;">Descripción: </font>

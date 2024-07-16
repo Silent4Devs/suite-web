@@ -9,7 +9,9 @@ use App\Mail\TimesheetHorasSolicitudAprobacion;
 use App\Mail\TimesheetSolicitudAprobada;
 use App\Mail\TimesheetSolicitudRechazada;
 use App\Models\Area;
+use App\Models\ContractManager\Contrato;
 use App\Models\ContractManager\Fiscale;
+use App\Models\ConvergenciaContratos;
 use App\Models\Empleado;
 use App\Models\ListaInformativa;
 use App\Models\Organizacion;
@@ -296,73 +298,88 @@ class TimesheetController extends Controller
             }
         }
         $usuario = User::getCurrentUser();
+        $organizacion = Organizacion::getFirst();
 
-        try {
-            $timesheet_nuevo = Timesheet::create([
-                'fecha_dia' => $request->fecha_dia,
-                'dia_semana' => $organizacion_semana->dia_timesheet,
-                'inicio_semana' => $organizacion_semana->inicio_timesheet,
-                'fin_semana' => $organizacion_semana->fin_timesheet,
-                'empleado_id' => $usuario->empleado->id,
-                'aprobador_id' => $usuario->empleado->supervisor_id,
-                'estatus' => $request->estatus,
-            ]);
+        $semanasAtras = $usuario->empleado->semanas_min_timesheet;
 
-            foreach ($request->timesheet as $index => $hora) {
-                if (array_key_exists('proyecto', $hora) && array_key_exists('tarea', $hora)) {
+        $today = Carbon::now();
 
-                    foreach ($hora as $key => $value) {
-                        if ($value === '') {
-                            $hora[$key] = null;
+        $firstDay = $today->copy()->subWeeks($usuario->empleado->semanas_min_timesheet);
+        $endDay = $today->copy()->addWeeks($organizacion->semanas_adicionales);
+        $firstDayFormatted = $firstDay->format('Y/m/d');
+        $endDayFormatted = $endDay->format('Y/m/d');
+
+        $fechaTimeSheetFormatted = Carbon::parse($request->fecha_dia)->format('Y/m/d');
+        if ($request->estatus === 'pendiente' || $request->estatus === 'papelera') {
+            if (($fechaTimeSheetFormatted >= $firstDayFormatted && $fechaTimeSheetFormatted <= $endDayFormatted) || ($fechaTimeSheetFormatted >= $firstDayFormatted && $endDayFormatted <= $fechaTimeSheetFormatted)) {
+                try {
+                    $timesheet_nuevo = Timesheet::create([
+                        'fecha_dia' => $request->fecha_dia,
+                        'dia_semana' => $organizacion_semana->dia_timesheet,
+                        'inicio_semana' => $organizacion_semana->inicio_timesheet,
+                        'fin_semana' => $organizacion_semana->fin_timesheet,
+                        'empleado_id' => $usuario->empleado->id,
+                        'aprobador_id' => $usuario->empleado->supervisor_id,
+                        'estatus' => $request->estatus,
+                    ]);
+
+                    foreach ($request->timesheet as $index => $hora) {
+                        if (array_key_exists('proyecto', $hora) && array_key_exists('tarea', $hora)) {
+
+                            foreach ($hora as $key => $value) {
+                                if ($value === '') {
+                                    $hora[$key] = null;
+                                }
+                            }
+
+                            $horas_nuevas = TimesheetHoras::create([
+                                'timesheet_id' => $timesheet_nuevo->id,
+                                'proyecto_id' => array_key_exists('proyecto', $hora) ? $hora['proyecto'] : null,
+                                'tarea_id' => array_key_exists('tarea', $hora) ? $hora['tarea'] : null,
+                                'facturable' => array_key_exists('facturable', $hora) ? true : false,
+                                'horas_lunes' => $hora['lunes'],
+                                'horas_martes' => $hora['martes'],
+                                'horas_miercoles' => $hora['miercoles'],
+                                'horas_jueves' => $hora['jueves'],
+                                'horas_viernes' => $hora['viernes'],
+                                'horas_sabado' => $hora['sabado'],
+                                'horas_domingo' => $hora['domingo'],
+                                'descripcion' => $hora['descripcion'],
+                                'empleado_id' => $usuario->empleado->id,
+                            ]);
                         }
                     }
 
-                    $horas_nuevas = TimesheetHoras::create([
-                        'timesheet_id' => $timesheet_nuevo->id,
-                        'proyecto_id' => array_key_exists('proyecto', $hora) ? $hora['proyecto'] : null,
-                        'tarea_id' => array_key_exists('tarea', $hora) ? $hora['tarea'] : null,
-                        'facturable' => array_key_exists('facturable', $hora) ? true : false,
-                        'horas_lunes' => $hora['lunes'],
-                        'horas_martes' => $hora['martes'],
-                        'horas_miercoles' => $hora['miercoles'],
-                        'horas_jueves' => $hora['jueves'],
-                        'horas_viernes' => $hora['viernes'],
-                        'horas_sabado' => $hora['sabado'],
-                        'horas_domingo' => $hora['domingo'],
-                        'descripcion' => $hora['descripcion'],
-                        'empleado_id' => $usuario->empleado->id,
-                    ]);
+                    if ($timesheet_nuevo->estatus === 'pendiente') {
+                        $aprobador = Empleado::find($usuario->empleado->supervisor_id);
+
+                        $solicitante = Empleado::find($usuario->empleado->id);
+
+                        try {
+                            // Enviar correo
+                            Mail::to(trim(removeUnicodeCharacters($aprobador->email)))->queue(new TimesheetHorasSolicitudAprobacion($aprobador, $timesheet_nuevo, $solicitante));
+                        } catch (Throwable $e) {
+                            report($e);
+
+                            return response()->json(['status' => 520]);
+                        }
+                    }
+
+                    $this->notificacionhorassobrepasadas($usuario->empleado->id);
+
+                    // Your database operations here
+                    DB::commit();
+
+                    return response()->json(['status' => 200]);
+                }
+                // catch exception and rollback transaction
+                catch (Throwable $e) {
+                    DB::rollback();
+
+                    // throw $e;
+                    return response()->json(['status' => 400]);
                 }
             }
-
-            if ($timesheet_nuevo->estatus == 'pendiente') {
-                $aprobador = Empleado::find($usuario->empleado->supervisor_id);
-
-                $solicitante = Empleado::find($usuario->empleado->id);
-
-                try {
-                    // Enviar correo
-                    Mail::to(removeUnicodeCharacters($aprobador->email))->queue(new TimesheetHorasSolicitudAprobacion($aprobador, $timesheet_nuevo, $solicitante));
-                } catch (Throwable $e) {
-                    report($e);
-
-                    return response()->json(['status' => 520]);
-                }
-            }
-
-            $this->notificacionhorassobrepasadas($usuario->empleado->id);
-
-            // Your database operations here
-            DB::commit();
-
-            return response()->json(['status' => 200]);
-        }
-        // catch exception and rollback transaction
-        catch (Throwable $e) {
-            DB::rollback();
-
-            // throw $e;
-            return response()->json(['status' => 400]);
         }
 
         // return redirect()->route('admin.timesheet-mis-registros')->with('success', 'Registro Enviado');
@@ -623,9 +640,7 @@ class TimesheetController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-    }
+    public function destroy($id) {}
 
     public function eliminar($id)
     {
@@ -667,7 +682,13 @@ class TimesheetController extends Controller
         try {
             $request->validate(
                 [
-                    'identificador' => 'required|unique:timesheet_proyectos,identificador|max:255',
+                    'identificador' => [
+                        'max:255',
+                        'required',
+                        Rule::unique('timesheet_proyectos')->where(function ($query) use ($request) {
+                            return $query->where('tipo', $request->tipo);
+                        }),
+                    ],
                     'proyecto_name' => 'required|max:255',
                     'cliente_id' => 'required',
                     'sede_id' => 'nullable',
@@ -738,7 +759,7 @@ class TimesheetController extends Controller
             } catch (\Throwable $th) {
                 return response()->json([
                     'success' => true,
-                    'message' => 'Ha Ocurrido un Error al enviar el correo.',
+                    'message' => 'Al intentar enviar el correo de notificación al usuario responsable ha ocurrido un error.',
                     'id_proyecto' => $nuevo_proyecto->id,
                 ]);
             }
@@ -757,6 +778,53 @@ class TimesheetController extends Controller
                 'success' => false,
                 'message' => 'Se ha producido un error al intentar crear el proyecto.',
             ]);
+        }
+    }
+
+    public function creacionContratoProyecto(Request $request)
+    {
+        try {
+            $proyecto = TimesheetProyecto::getAll($request->id_proyecto)->find($request->id_proyecto);
+
+            $validacionNoContrato = Contrato::where('no_contrato', $request->no_contrato)->exists();
+
+            if (! $proyecto) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Proyecto no encontrado.',
+                ], 404);
+            } elseif ($validacionNoContrato) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'El No. Contrato ingresado ya existe.',
+                ], 404);
+            }
+
+            $nuevoContrato = Contrato::create([
+                'no_contrato' => $request->no_contrato,
+                'proveedor_id' => $proyecto->cliente_id,
+                'nombre_servicio' => $request->nombre_servicio,
+                'no_proyecto' => $proyecto->identificador,
+                'fecha_inicio' => $proyecto->fecha_inicio,
+                'fecha_fin' => $proyecto->fecha_fin,
+            ]);
+
+            $convergencia = ConvergenciaContratos::create([
+                'contrato_id' => $nuevoContrato->id,
+                'timesheet_proyecto_id' => $proyecto->id,
+                'timesheet_cliente_id' => $proyecto->cliente_id,
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Contrato creado exitosamente.',
+            ]);
+        } catch (Throwable $th) {
+            // Puedes usar $e->getMessage() para obtener el mensaje de error si es necesario
+            return response()->json([
+                'success' => false,
+                'message' => 'Se ha producido un error al intentar crear el contrato.',
+            ], 500);
         }
     }
 
@@ -790,9 +858,13 @@ class TimesheetController extends Controller
         abort_if(Gate::denies('timesheet_administrador_proyectos_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden'); //Nuevo permiso
         $request->validate([
             'identificador' => [
-                'required',
-                Rule::unique('timesheet_proyectos')->ignore($id),
                 'max:255',
+                'required',
+                Rule::unique('timesheet_proyectos')
+                    ->where(function ($query) use ($request) {
+                        return $query->where('tipo', $request->tipo);
+                    })
+                    ->ignore($id),  // Ignora el ID del proyecto actual
             ],
             'proyecto_name' => 'required|max:255',
             'cliente_id' => 'required',
@@ -1151,7 +1223,7 @@ class TimesheetController extends Controller
         $areas_array = $this->timesheetService->totalRegisterByAreas();
         $proyectos = $this->timesheetService->getRegistersByProyects();
 
-        $proyectos_array = TimesheetProyecto::get();
+        $proyectos_array = TimesheetProyecto::getAll();
 
         return view(
             // 'admin.timesheet.dashboard'

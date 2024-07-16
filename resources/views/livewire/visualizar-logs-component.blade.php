@@ -1,8 +1,17 @@
+<div class="col-12 text-left">
+    <a type="button" class="btn" style="background-color:#b9eeb9; border: #fff; width:100px; margin-top:-30px;"
+        href="{{ route('descarga-visualizar-logs') }}">
+        <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935" title="Exportar Excel"></i>
+        Reporte
+    </a>
+</div>
 <div class="card">
     <div class="card-body">
         {{--  <div class="mb-3">
             <input type="text" class="form-control" placeholder="Search" wire:model.lazy="search">
         </div>  --}}
+
+
         <div wire:loading wire:target='search'>
             Cargando...
         </div>

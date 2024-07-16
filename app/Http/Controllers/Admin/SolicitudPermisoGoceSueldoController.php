@@ -165,40 +165,45 @@ class SolicitudPermisoGoceSueldoController extends Controller
 
     public function update(Request $request, $id)
     {
-        abort_if(Gate::denies('solicitud_permiso_goce_aprobar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $empleado = User::getCurrentUser()->empleado;
 
-        $request->validate([
-            'aprobacion' => 'required|int',
-        ]);
-        $solicitud = SolicitudPermisoGoceSueldo::find($id);
-        $empleados = Empleado::getAll();
+        if ($empleado->es_supervisor || Gate::allows('solicitud_permiso_goce_aprobar')) {
 
-        $supervisor = $empleados->find($request->autoriza);
-        $solicitante = $empleados->find($request->empleado_id);
-        $solicitud->update($request->all());
+            $request->validate([
+                'aprobacion' => 'required|int',
+            ]);
+            $solicitud = SolicitudPermisoGoceSueldo::find($id);
+            $empleados = Empleado::getAll();
 
-        $informados = ListaInformativa::with('participantes.empleado', 'usuarios.usuario')->where('modelo', '=', $this->modelo)->first();
+            $supervisor = $empleados->find($request->autoriza);
+            $solicitante = $empleados->find($request->empleado_id);
+            $solicitud->update($request->all());
 
-        if (isset($informados->participantes[0]) || isset($informados->usuarios[0])) {
+            $informados = ListaInformativa::with('participantes.empleado', 'usuarios.usuario')->where('modelo', '=', $this->modelo)->first();
 
-            if (isset($informados->participantes[0])) {
-                foreach ($informados->participantes as $participante) {
-                    $correos[] = $participante->empleado->email;
+            if (isset($informados->participantes[0]) || isset($informados->usuarios[0])) {
+
+                if (isset($informados->participantes[0])) {
+                    foreach ($informados->participantes as $participante) {
+                        $correos[] = $participante->empleado->email;
+                    }
                 }
-            }
 
-            if (isset($informados->usuarios[0])) {
-                foreach ($informados->usuarios as $usuario) {
-                    $correos[] = $usuario->usuario->email;
+                if (isset($informados->usuarios[0])) {
+                    foreach ($informados->usuarios as $usuario) {
+                        $correos[] = $usuario->usuario->email;
+                    }
                 }
+                Mail::to(removeUnicodeCharacters($solicitante->email))->queue(new MailRespuestaPermisoGoceSueldo($solicitante, $supervisor, $solicitud, $correos));
+            } else {
+                Mail::to(removeUnicodeCharacters($solicitante->email))->queue(new MailRespuestaPermisoGoceSueldo($solicitante, $supervisor, $solicitud));
             }
-            Mail::to(removeUnicodeCharacters($solicitante->email))->queue(new MailRespuestaPermisoGoceSueldo($solicitante, $supervisor, $solicitud, $correos));
+            Alert::success('éxito', 'Información actualizada con éxito');
+
+            return redirect(route('admin.solicitud-permiso-goce-sueldo.aprobacion'));
         } else {
-            Mail::to(removeUnicodeCharacters($solicitante->email))->queue(new MailRespuestaPermisoGoceSueldo($solicitante, $supervisor, $solicitud));
+            abort(Response::HTTP_FORBIDDEN, '403 Forbidden');
         }
-        Alert::success('éxito', 'Información actualizada con éxito');
-
-        return redirect(route('admin.solicitud-permiso-goce-sueldo.aprobacion'));
     }
 
     public function destroy(Request $request)

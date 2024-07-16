@@ -68,6 +68,31 @@ class Course extends Model implements Auditable
         return 'slug';
     }
 
+    public function getSectionsOrderAttribute()
+    {
+        if ($this->order_section) {
+            $sections = $this->order_section;
+            $string = str_replace('"', '', $sections);
+            $string = str_replace('seccion-', '', $sections);
+            $array = explode(',', $string);
+            $sectionsRegisters = collect();
+            foreach ($array as $section) {
+                $sectionConsult = Section::find($section);
+                if (isset($sectionConsult)) {
+                    $sectionsRegisters->push($sectionConsult);
+                }
+            }
+
+            $querys_unidos = $sectionsRegisters->merge($this->sections)->unique();
+
+            return $querys_unidos;
+        } else {
+            $secciones = $this->sections;
+
+            return $secciones;
+        }
+    }
+
     //Relacion uno a muchos
 
     public function reviews()

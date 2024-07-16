@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\CrearEvaluacionesDesempeno;
 use App\Console\Commands\EnviarCorreoFelicitaciones;
 use App\Console\Commands\NotificarEvaluacion360;
 use App\Console\Commands\NotificarRecursos;
@@ -44,9 +45,13 @@ class Kernel extends ConsoleKernel
             ->withoutOverlapping()
             ->onOneServer()
             ->sentryMonitor();
-
-        //dump automatico de base de datos
-        $schedule->command('snapshot:create')
+        $schedule->command(CrearEvaluacionesDesempeno::class)
+            ->timezone('America/Mexico_City')
+            ->dailyAt('09:00')
+            ->withoutOverlapping()
+            ->onOneServer()
+            ->sentryMonitor();
+        $schedule->command('snapshot:create dump'.date('Y-m-d-H'))
             ->timezone('America/Mexico_City')
             //->days([2, 5])
             ->daily()
@@ -78,6 +83,14 @@ class Kernel extends ConsoleKernel
             //->days([2, 5])
             ->daily()
             ->at('23:40')
+            ->onOneServer()
+            ->sentryMonitor();
+
+        // Limpiar token expirados para sanctum
+        $schedule->command('sanctum:prune-expired --hours=24')
+            ->timezone('America/Mexico_City')
+            ->saturdays()
+            ->at('23:00')
             ->onOneServer()
             ->sentryMonitor();
 

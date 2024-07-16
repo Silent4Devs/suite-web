@@ -39,6 +39,7 @@ class IncidentesDeSeguridad extends Model implements Auditable
     protected $fillable = [
         'folio',
         'resumen',
+        'estatus',
         'prioridad',
         'fechaocurrencia',
         'clasificacion',

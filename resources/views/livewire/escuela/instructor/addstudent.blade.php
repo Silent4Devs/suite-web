@@ -12,9 +12,9 @@
                         <option value="" selected>
                             Selecciona una opción
                         </option>
-                        @foreach ($usuarios as $usuario)
-                            <option value="{{ $usuario->id }}">
-                                {{ $usuario->name }}</option>
+                        @foreach ($usuarios_manual as $usuario)
+                            <option value="{{ $usuario['id'] }}">
+                                {{ $usuario['name'] }}</option>
                         @endforeach
                     </select>
                     <label for="user_id">Usuario*</label>

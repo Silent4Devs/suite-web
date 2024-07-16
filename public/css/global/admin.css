@@ -315,7 +315,9 @@ header {
 .btn-outline-light,
 .btn-outline-dark,
 .btn-cancelar,
-.btn_cancelar {
+.btn_cancelar,
+.tb-btn-primary,
+.tb-btn-seccondary {
     padding: 12px 25px !important;
     border-radius: 8px !important;
     cursor: pointer;
@@ -335,7 +337,8 @@ header {
 }
 
 .btn.btn-success,
-.btn.btn-danger {
+.btn.btn-danger,
+.btn.tb-btn-primary {
     background-color: #057BE2 !important;
     color: #fff !important;
 }
@@ -1004,7 +1007,7 @@ table.dataTable tr th {
 /* ------------------------ */
 
 .ventana_menu ul {
-    margin-top: 100px !important;
+    margin-top: 40px !important;
 }
 
 .dt-button-collection.dropdown-menu {
@@ -1437,4 +1440,8 @@ table td {
 
 .progress-bar.bg-warning {
     background-color: #FFCB80 !important;
+}
+
+.cke_notifications_area{
+    display: none !important;
 }

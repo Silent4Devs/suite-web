@@ -230,7 +230,7 @@ class MultiStepForm extends Component
         $this->currentStep++;
         if ($this->currentStep == 3) {
             $this->listaEvaluados = $this->obtenerEvaluadosConEvaluadores($this->evaluados_objetivo);
-            // dd($this->listaEvaluados[0]['evaluado']['objetivos_asignados']);
+            // dd($this->listaEvaluados[0]['evaluado']);
         }
         if ($this->currentStep == 4) {
             $this->listaEmpleadosSinCompetencias = collect();

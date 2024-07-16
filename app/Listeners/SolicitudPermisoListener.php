@@ -4,10 +4,16 @@ namespace App\Listeners;
 
 use App\Models\User;
 use App\Notifications\SolicitudPermisoNotification;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Notification;
 
-class SolicitudPermisoListener
+class SolicitudPermisoListener implements ShouldQueue
 {
+    use InteractsWithQueue;
+
+    public $tries = 5;
+
     /**
      * Create the event listener.
      *
@@ -26,12 +32,19 @@ class SolicitudPermisoListener
      */
     public function handle($event)
     {
-        User::select('users.id', 'users.name', 'users.email', 'role_user.role_id')
-            ->join('role_user', 'role_user.user_id', '=', 'users.id')
-            ->where('role_user.role_id', '=', '1')->where('users.id', '!=', auth()->id())
-            ->get()
-            ->each(function (User $user) use ($event) {
-                Notification::send($user, new SolicitudPermisoNotification($event->permiso, $event->tipo_consulta, $event->tabla, $event->slug));
-            });
+        // User::select('users.id', 'users.name', 'users.email', 'role_user.role_id')
+        //     ->join('role_user', 'role_user.user_id', '=', 'users.id')
+        //     ->where('role_user.role_id', '=', '1')->where('users.id', '!=', auth()->id())
+        //     ->get()
+        //     ->each(function (User $user) use ($event) {
+        //         Notification::send($user, new SolicitudPermisoNotification($event->permiso, $event->tipo_consulta, $event->tabla, $event->slug));
+        //     });
+
+        $user = auth()->user();
+        if ($user->empleado && $user->empleado->supervisor) {
+            // Obtener al supervisor por su dirección de correo electrónico
+            $supervisor = User::where('email', trim(removeUnicodeCharacters($user->empleado->supervisor->email)))->first();
+        }
+        Notification::send($supervisor, new SolicitudPermisoNotification($event->permiso, $event->tipo_consulta, $event->tabla, $event->slug));
     }
 }
