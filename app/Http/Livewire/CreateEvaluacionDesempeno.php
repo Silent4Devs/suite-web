@@ -1122,6 +1122,17 @@ class CreateEvaluacionDesempeno extends Component
 
         if ($this->totalEmpleadosSinCompetencias == 0) {
             $this->hayEmpleadosSinCompetencias = false;
+        } else {
+            $this->alert('warning', 'Sin Competencias', [
+                'position' => 'center',
+                'timer' => '600000',
+                'toast' => false,
+                'text' => 'Existen colaboradores sin competencias asignadas, no podra crear la evaluación si los colaboradores no tienen competencias para evaluar',
+                'showConfirmButton' => true,
+                'onConfirmed' => '',
+                'confirmButtonText' => 'Confirmar',
+                'timerProgressBar' => true,
+            ]);
         }
 
         if (
@@ -1157,6 +1168,17 @@ class CreateEvaluacionDesempeno extends Component
 
         if ($this->totalEmpleadosSinObjetivos == 0) {
             $this->hayEmpleadosSinObjetivos = false;
+        } else {
+            $this->alert('warning', 'Sin Objetivos', [
+                'position' => 'center',
+                'timer' => '600000',
+                'toast' => false,
+                'text' => 'Existen colaboradores sin objetivos asignados, no podra crear la evaluación si los colaboradores no tienen objetivos para evaluar',
+                'showConfirmButton' => true,
+                'onConfirmed' => '',
+                'confirmButtonText' => 'Confirmar',
+                'timerProgressBar' => true,
+            ]);
         }
 
         if (
@@ -1193,6 +1215,17 @@ class CreateEvaluacionDesempeno extends Component
 
         if ($this->totalEmpleadosObjetivosPendiente == 0) {
             $this->hayEmpleadosObjetivosPendiente = false;
+        } else {
+            $this->alert('warning', 'Objetivos Pendientes', [
+                'position' => 'center',
+                'timer' => '600000',
+                'toast' => false,
+                'text' => 'Existen colaboradores con objetivos asignados pendientes de revisar, no podra crear la evaluación si los colaboradores tienen objetivos con estatus pendientes.',
+                'showConfirmButton' => true,
+                'onConfirmed' => '',
+                'confirmButtonText' => 'Confirmar',
+                'timerProgressBar' => true,
+            ]);
         }
 
         if (

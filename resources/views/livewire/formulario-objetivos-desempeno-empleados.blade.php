@@ -63,11 +63,12 @@
                                 <label for="unidad-medida">Unidad de medida</label>
                             </div>
                             <button class="btn btn-primary" style="height: 45px;" data-toggle="modal"
-                                data-target="#modalUnidad">
+                                data-target="#modalCrearUnidad">
                                 <i class="fa-solid fa-plus"></i>
                             </button>
-                            <button class="btn btn-primary" style="height: 45px;">
-                                <i class="fa-solid fa-plus"></i>
+                            <button class="btn btn-primary" style="height: 45px;" data-toggle="modal"
+                                data-target="#modalEditarUnidad" wire:click="editarUnidad">
+                                <i class="fa-solid fa-pencil"></i>
                             </button>
                         </div>
                     </div>
@@ -103,12 +104,13 @@
                     </div>
                 </div>
 
-                <div class="modal fade" id="modalUnidad" tabindex="-1" role="dialog"
-                    aria-labelledby="modalUnidadLabel" aria-hidden="true" wire:ignore>
+                <div class="modal fade" id="modalCrearUnidad" tabindex="-1" role="dialog"
+                    aria-labelledby="modalCrearUnidadLabel" aria-hidden="true" wire:ignore>
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="modalUnidadLabel">Crear Unidad de Medición para Objetivos
+                                <h5 class="modal-title" id="modalCrearUnidadLabel">Crear Unidad de Medición para
+                                    Objetivos
                                     Estrategicos</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
@@ -141,6 +143,50 @@
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                                 <a wire:click.prevent="crearUnidad" type="button" class="btn btn-primary"
                                     data-dismiss="modal">Crear Unidad</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="modalEditarUnidad" tabindex="-1" role="dialog"
+                    aria-labelledby="modalEditarUnidadLabel" aria-hidden="true" wire:ignore>
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalEditarUnidadLabel">Editar Unidad de Medición para
+                                    Objetivos
+                                    Estrategicos</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <!-- Modal content goes here -->
+                                {{-- This is the content of the modal. --}}
+                                <div class="row">
+                                    <div class="col-12 form-group anima-focus">
+                                        <input wire:model="nombre_edit_unidad" id="nombre_edit_unidad" type="text"
+                                            class="form-control" placeholder="">
+                                        <label for="nombre_edit_unidad">Unidad</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6 form-group anima-focus">
+                                        <input wire:model="minimo_edit_unidad" id="minimo_edit_unidad" type="number"
+                                            class="form-control" placeholder="">
+                                        <label for="minimo_edit_unidad">Valor Minimo</label>
+                                    </div>
+                                    <div class="col-6 form-group anima-focus">
+                                        <input wire:model="maximo_edit_unidad" id="maximo_edit_unidad" type="number"
+                                            class="form-control" placeholder="">
+                                        <label for="maximo_edit_unidad">Valor Maximo</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                <a wire:click.prevent="updateUnidad" type="button" class="btn btn-primary"
+                                    data-dismiss="modal">Editar Unidad</a>
                             </div>
                         </div>
                     </div>

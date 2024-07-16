@@ -85,13 +85,13 @@ class DefinicionUnidadesObjetivos extends Component
 
     public function agregarUnidad($key)
     {
-        // dd($this->parametros[$key]);
+
         $pa = MetricasObjetivo::updateOrCreate(
             ['id' => $this->parametros[$key]['id']],
             [
                 'definicion' => $this->parametros[$key]['definicion'],
-                'minimo' => $this->parametros[$key]['minimo'],
-                'maximo' => $this->parametros[$key]['maximo'],
+                'valor_minimo' => $this->parametros[$key]['minimo'],
+                'valor_maximo' => $this->parametros[$key]['maximo'],
             ]
         );
 
