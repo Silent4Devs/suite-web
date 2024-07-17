@@ -537,7 +537,7 @@
 
                     <div class="mt-3">
                         @foreach ($array_evaluados as $key => $evaluado)
-                            <div class="row">
+                            <div class="row mt-1 mb-1">
                                 <div class="col-2">
                                     <div class="row">
                                         {{ $evaluado['name'] }}
@@ -548,7 +548,7 @@
                                 </div>
                                 <div class="col-10">
                                     @if ($activar_objetivos)
-                                        <div class="row">
+                                        <div class="row mt-1 mb-1">
                                             <div class="col-2">
                                                 Objetivos
                                             </div>
@@ -596,16 +596,16 @@
                                                             </div>
                                                         @endif
                                                     @endforeach
-                                                    <div class="col-2">
+                                                    <div class="col-3">
                                                         <a class="btn btn-link" style="color: #3490dc;"
-                                                            wire:click.prevent="agregarEvaluadorObjetivos({{ $key }} )">+Agregar</a>
+                                                            wire:click.prevent="agregarEvaluadorObjetivos({{ $key }})">+Agregar</a>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     @endif
                                     @if ($activar_competencias)
-                                        <div class="row">
+                                        <div class="row mt-1 mb-1">
                                             <div class="col-2">
                                                 Competencias
                                             </div>
@@ -653,10 +653,9 @@
                                                             </div>
                                                         @endif
                                                     @endforeach
-                                                    <div class="col-4">
+                                                    <div class="col-3 mb-2">
                                                         <a class="btn-link" style="color: #3490dc;"
-                                                            wire:click.prevent="agregarEvaluadorCompetencias({{ $key }})">+Agregar
-                                                        </a>
+                                                            wire:click.prevent="agregarEvaluadorCompetencias({{ $key }})">+Agregar</a>
                                                     </div>
                                                 </div>
                                             </div>
