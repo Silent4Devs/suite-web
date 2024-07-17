@@ -159,6 +159,14 @@ class EditEvaluacionDesempeno extends Component
         $this->grupos = GruposEvaluado::getAll();
 
         $this->cargarDatosPaso1();
+        // Avanzar al siguiente paso
+        if (isset($this->evaluacion->periodos)) {
+            $this->cargarDatosPaso2();
+        }
+
+        if (isset($this->evaluacion->evaluados)) {
+            $this->cargarEvaluadosEdit();
+        }
     }
 
     public function render()
@@ -180,17 +188,30 @@ class EditEvaluacionDesempeno extends Component
     {
         // dd($this->evaluacion->periodos);
 
+        $this->arreglo_periodos = null;
+
+        $this->periodo_evaluacion = $this->evaluacion->tipo_periodo;
+
         foreach ($this->evaluacion->periodos as $key_periodo => $periodo) {
-            dd($periodo);
             $this->arreglo_periodos[] = [
                 'nombre_evaluacion' => $periodo->nombre_evaluacion,
                 'fecha_inicio' => $periodo->fecha_inicio,
                 'fecha_fin' => $periodo->fecha_fin,
-                // 'habilitar' => , // Solo el primer periodo habilitado
+                'habilitar' =>  $periodo->habilitado,
             ];
         }
+
+        $this->seleccionPeriodoBorrador($this->evaluacion->tipo_periodo);
         // 'tipo_periodo',
         // 'estatus',
+    }
+
+    public function cargarEvaluadosEdit()
+    {
+        foreach ($this->evaluacion->evaluados as $key_evaluado => $evaluado) {
+            dd($evaluado);
+            $this->array_evaluados[]
+        }
     }
 
     public function retroceder()
@@ -307,11 +328,6 @@ class EditEvaluacionDesempeno extends Component
             'porcentaje_competencias' => $this->porcentaje_competencias,
         ];
 
-
-        // Avanzar al siguiente paso
-        if (isset($this->evaluacion->periodos)) {
-            $this->cargarDatosPaso2();
-        }
         $this->paso = 2;
     }
 
@@ -700,6 +716,35 @@ class EditEvaluacionDesempeno extends Component
         }
     }
 
+    public function seleccionPeriodoBorrador($periodo)
+    {
+        $this->mensual = $this->bimestral = $this->trimestral = $this->semestral = $this->anualmente = $this->abierta = false;
+
+        // Configurar el período seleccionado
+        switch ($periodo) {
+            case 'mensual':
+                $this->mensual = true;
+                break;
+            case 'bimestral':
+                $this->bimestral = true;
+                break;
+            case 'trimestral':
+                $this->trimestral = true;
+                break;
+            case 'semestral':
+                $this->semestral = true;
+                break;
+            case 'anualmente':
+            case 'abierta':
+                $this->anualmente = ($periodo == 'anualmente');
+                $this->abierta = ($periodo == 'abierta');
+                break;
+            default:
+                // Periodo no válido
+                return;
+        }
+    }
+
     public function seleccionarEvaluados($valor)
     {
         $this->select_evaluados = $valor;
@@ -754,25 +799,21 @@ class EditEvaluacionDesempeno extends Component
             $this->hayEmpleadosObjetivosPendiente = false;
             // dd($this->array_evaluados);
             foreach ($this->array_evaluados as $evaluadoL) {
-                // dd($evaluadoL['competencias']);
                 if ($evaluadoL['competencias'] == 0) {
                     $this->hayEmpleadosSinCompetencias = true;
                     $this->totalEmpleadosSinCompetencias++;
                     $this->listaEmpleadosSinCompetencias->push(['name' => $evaluadoL['name'], 'avatar' => $evaluadoL['avatar']]);
                     $this->listaIDSinCompetencias->push($evaluadoL['id']);
-                    // dd($this->listaEmpleadosSinCompetencias);
                 } elseif ($evaluadoL['objetivos']['cuenta'] == 0) {
                     $this->hayEmpleadosSinObjetivos = true;
                     $this->totalEmpleadosSinObjetivos++;
                     $this->listaEmpleadosSinObjetivos->push(['name' => $evaluadoL['name'], 'avatar' => $evaluadoL['avatar']]);
                     $this->listaIDSinObjetivos->push($evaluadoL['id']);
-                    // dd($this->listaEmpleadosSinObjetivos);
                 } elseif ($evaluadoL['objetivos']['pendientes'] == true) {
                     $this->hayEmpleadosObjetivosPendiente = true;
                     $this->totalEmpleadosObjetivosPendiente++;
                     $this->listaEmpleadosObjetivosPendiente->push(['name' => $evaluadoL['name'], 'avatar' => $evaluadoL['avatar']]);
                     $this->listaIDObjetivosPendiente->push($evaluadoL['id']);
-                    // dd($this->listaEmpleadosObjetivosPendiente);
                 }
             }
 
