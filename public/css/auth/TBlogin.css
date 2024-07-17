@@ -42,6 +42,16 @@ button {
     overflow: hidden;
 }
 
+.btn-animation-stop {
+    position: absolute;
+    bottom: 3px;
+    left: 3px;
+}
+
+.btn-animation-stop img {
+    width: 60px;
+}
+
 .present-tbj {
     min-width: calc(100% - var(--aside-width));
     background-color: rgb(255, 255, 255);
@@ -49,41 +59,27 @@ button {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
-    animation: fadeInContentMain 1s;
-    animation-fill-mode: both;
-    animation-delay: 3s;
 }
+
 .logo-box {
     width: 350px;
     height: 350px;
     border-radius: 1000px;
     border: 5px #152249 solid;
     position: relative;
-
-    animation: logoBox 3s;
-    animation-fill-mode: both;
-    animation-delay: 3s;
 }
 
 .isotipo {
     width: 200px;
     padding-top: 40px;
-    animation: isotipo 1s;
 }
 
 .logo-circle {
     width: 300px;
-    animation: logoCircle 60s linear infinite;
 }
 
-.box-circle-color {
-    animation: boxCircleColor 1s;
-    animation-fill-mode: both;
-    animation-delay: 4s;
-}
-
-.isotipo, .logo-circle {
+.isotipo,
+.logo-circle {
     position: absolute;
     top: 0;
     left: 0;
@@ -92,35 +88,26 @@ button {
     margin: auto;
 }
 
-.tbj-title{
+.tbj-title {
     width: 400px;
     margin-top: 30px;
 }
 
-.box-title-tbj{
+.box-title-tbj {
     text-align: right;
     color: #345183;
-    animation: enterUp 0.7s;
-    animation-delay: 1s;
-    animation-fill-mode: both;
 }
-.text-by{
+
+.text-by {
     font-size: 12px;
     font-weight: lighter;
-
-    animation: boxCircleColor 0.5s;
-    animation-fill-mode: both;
-    animation-delay: 1.5s;
 }
-.text-bienvenidos{
+
+.text-bienvenidos {
     color: #2b4168;
     font-size: 24px;
     margin-top: 40px;
     font-weight: lighter;
-
-    animation: enterUp 0.4s;
-    animation-delay: 2s;
-    animation-fill-mode: both;
 }
 
 .aside-tbj {
@@ -133,7 +120,7 @@ button {
     padding: 40px;
 }
 
-.box-logo-org{
+.box-logo-org {
     width: 100px;
     height: 100px;
     margin: auto;
@@ -145,19 +132,22 @@ button {
     margin-bottom: 40px;
     background-color: #fff;
 }
-.box-logo-org img{
-    width:85%;
-    height:85%;
+
+.box-logo-org img {
+    width: 85%;
+    height: 85%;
     object-fit: contain;
 }
-.text-iniciar{
+
+.text-iniciar {
     font-size: 24px;
     color: #345183;
     font-weight: lighter;
     text-align: center;
     margin-bottom: 40px;
 }
-.input-item{
+
+.input-item {
     display: flex;
     align-items: center;
     width: 100%;
@@ -168,11 +158,13 @@ button {
     transition: 0.2s;
     color: #434549;
 }
-.input-item:focus-within{
+
+.input-item:focus-within {
     transform: scale(1.03);
     border: 1px solid #152249;
 }
-.icon.icon-box{
+
+.icon.icon-box {
     width: 50px;
     height: 50px;
     padding: 8px;
@@ -180,28 +172,32 @@ button {
     display: grid;
     place-items: center;
 }
-.icon.icon-box img{
+
+.icon.icon-box img {
     width: 100%;
     filter: brightness(0) saturate(100%) invert(32%) sepia(3%) saturate(1465%) hue-rotate(180deg) brightness(88%) contrast(86%);
 }
-.input-item:focus-within .icon.icon-box img{
+
+.input-item:focus-within .icon.icon-box img {
     filter: brightness(0) saturate(100%) invert(7%) sepia(58%) saturate(3098%) hue-rotate(219deg) brightness(98%) contrast(91%);
 }
 
-.input-item input{
+.input-item input {
     width: 100%;
     height: 50px;
     border: none;
     padding: 0px 5px;
 }
-.input-item input:focus{
+
+.input-item input:focus {
     outline: none;
 }
 
-.button-item{
+.button-item {
     margin-bottom: 15px;
 }
-.button-item button{
+
+.button-item button {
     width: 100%;
     height: 50px;
     color: #fff;
@@ -209,7 +205,7 @@ button {
     border-radius: 8px;
 }
 
-.box-links{
+.box-links {
     margin-top: 40px;
     display: flex;
     justify-content: center;
@@ -218,10 +214,68 @@ button {
     font-size: 13px;
 }
 
+
+/* animation enter tabantaj ---- */
+body.animate-active {
+    cursor: pointer;
+}
+
+.btn-animation-stop {
+    display: none;
+}
+
+.animate-active .btn-animation-stop {
+    display: block;
+}
+
+.animate-active .present-tbj {
+    animation: fadeInContentMain 1s;
+    animation-fill-mode: both;
+    animation-delay: 3s;
+}
+
+.animate-active .logo-box {
+    animation: logoBox 3s;
+    animation-fill-mode: both;
+    animation-delay: 3s;
+}
+
+.animate-active .isotipo {
+    animation: isotipo 0.6s;
+}
+
+.logo-circle {
+    animation: logoCircle 60s linear infinite;
+}
+
+.animate-active .box-circle-color {
+    animation: boxCircleColor 1s;
+    animation-fill-mode: both;
+    animation-delay: 4s;
+}
+
+.animate-active .tbj-title {
+    animation: enterUp 0.7s;
+    animation-delay: 0.7s;
+    animation-fill-mode: both;
+}
+
+.animate-active .text-by {
+    animation: boxCircleColor 0.7s;
+    animation-fill-mode: both;
+    animation-delay: 1s;
+}
+
+.animate-active .text-bienvenidos {
+    animation: enterUp 0.7s;
+    animation-delay: 1.3s;
+    animation-fill-mode: both;
+}
+
 @keyframes isotipo {
     from {
         opacity: 0;
-        transform: scale(0.4);
+        transform: scale(0.8);
     }
 }
 
@@ -254,8 +308,88 @@ button {
 }
 
 @keyframes enterUp {
-    from{
+    from {
         opacity: 0;
-        transform: translateY(50%);
+        transform: translateY(10px);
     }
+}
+
+/* aviso privacidad ---------- */
+#modal_aviso.visible {
+    visibility: visible;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+#modal_aviso {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0);
+    overflow: auto;
+    padding-bottom: 100px;
+
+    transition: 0.5s;
+    visibility: hidden;
+}
+
+.contenido_modal {
+    width: 90%;
+    height: auto;
+    padding: 34px;
+    max-width: 1000px;
+    background-color: #fff;
+    border-radius: 6px;
+    margin: auto;
+    margin-top: 70px;
+
+    opacity: 0;
+    transition: 0.4s;
+}
+
+.visible .contenido_modal {
+    opacity: 1;
+}
+
+.modal_header {
+    display: flex;
+}
+
+.modal_header img {
+    height: 70px;
+}
+
+.modal_header h4 {
+    width: 100%;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-body {
+    height: auto;
+}
+
+.modal-body {
+    text-align: justify;
+}
+
+#btn_closed_modal {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 18pt;
+    color: #bbb;
+    cursor: pointer;
+}
+
+#btn_closed_modal img {
+    width: 40px;
+}
+
+.modal_body p {
+    text-align: justify;
 }

@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('classBody', 'animate-active')
 @section('content')
     @if (session('message'))
         <div class="alert alert-info" role="alert">
@@ -20,7 +21,7 @@
         @endphp
 
         <div class="box-logo-org">
-            <img src="{{ asset('img/logotipo-tabantaj.png') }}" alt="Logo de la Organizacion">
+            <img src="{{ asset($logotipo) }}" alt="Logo de la Organizacion">
         </div>
 
         <div class="text-iniciar">

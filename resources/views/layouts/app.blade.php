@@ -17,7 +17,8 @@
     @livewireStyles
 </head>
 
-<body>
+<body class="@yield('classBody')">
+    <button class="btn-animation-stop"><img src="{{ asset('img/auth/icon-next.svg') }}" alt="Icon next"></button>
     <main class="content-main">
         <div class="present-tbj">
             <div class="logo-box">
