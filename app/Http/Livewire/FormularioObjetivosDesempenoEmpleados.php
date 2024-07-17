@@ -62,6 +62,12 @@ class FormularioObjetivosDesempenoEmpleados extends Component
 
     public $maximo_unidad;
 
+    public $nombre_edit_unidad;
+
+    public $minimo_edit_unidad;
+
+    public $maximo_edit_unidad;
+
     public $ev360 = false;
 
     public $mensual = false;
@@ -82,6 +88,26 @@ class FormularioObjetivosDesempenoEmpleados extends Component
 
     public $maximo_objetivo = null;
 
+    protected $rules = [
+        'objetivo_estrategico' => 'required|string|max:255',
+        'descripcion' => 'string',
+        'select_categoria' => 'required|integer',
+        'KPI' => 'required|string|max:255',
+        'select_unidad' => 'required|integer',
+        'id_emp' => 'required|integer',
+        'ev360' => 'required|boolean',
+        'mensual' => 'required|boolean',
+        'bimestral' => 'required|boolean',
+        'trimestral' => 'required|boolean',
+        'semestral' => 'required|boolean',
+        'anualmente' => 'required|boolean',
+        'abierta' => 'required|boolean',
+        'array_escalas_objetivos.*.condicional' => 'required|integer|between:1,5',
+        'array_escalas_objetivos.*.valor' => 'required|numeric',
+        'array_escalas_objetivos.*.parametro' => 'required|string|max:255',
+        'array_escalas_objetivos.*.color' => 'required|string|max:7',
+    ];
+
     public function mount($id_empleado)
     {
         $this->id_emp = $id_empleado;
@@ -95,7 +121,7 @@ class FormularioObjetivosDesempenoEmpleados extends Component
             $this->array_escalas_objetivos[$key] =
                 [
                     'color' => $e->color,
-                    'condicional' => 1,
+                    'condicional' => 0,
                     'valor' => 0,
                     'parametro' => $e->parametro,
                     'color' => $e->color,
@@ -186,11 +212,24 @@ class FormularioObjetivosDesempenoEmpleados extends Component
 
     public function crearObjetivo()
     {
+        try {
+            $this->validate();
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            $this->alert('error', 'Error de validación', [
+                'position' => 'center',
+                'timer' => 6000,
+                'toast' => false,
+                'text' => 'Se deben llenar todos los campos obligatorios.',
+                'showConfirmButton' => true,
+                'confirmButtonText' => 'Entendido',
+                'timerProgressBar' => true,
+            ]);
+            return;
+        }
+
         $usuario = User::getCurrentUser();
 
-        if ($usuario->can('objetivos_estrategicos_agregar')) {
-            $estatus = 1;
-        } elseif ($usuario->empleado->es_supervisor) {
+        if ($usuario->can('objetivos_estrategicos_agregar') || $usuario->empleado->es_supervisor) {
             $estatus = 1;
         } else {
             $estatus = 0;
@@ -205,7 +244,7 @@ class FormularioObjetivosDesempenoEmpleados extends Component
             'empleado_id' => $this->id_emp,
             'estatus' => $estatus,
         ]);
-        // dd($this->mensual);
+
         ObjetivoEmpleado::create([
             'empleado_id' => $this->id_emp,
             'objetivo_id' => $objetivo->id,
@@ -221,19 +260,69 @@ class FormularioObjetivosDesempenoEmpleados extends Component
             'abierta' => $this->abierta,
         ]);
 
+        // Validar que cada posición es mayor que todas sus predecesoras
+        $numEscalas = count($this->array_escalas_objetivos);
+        for ($i = 1; $i < $numEscalas; $i++) {
+            for ($j = 0; $j < $i; $j++) {
+                if ($this->array_escalas_objetivos[$i]['valor'] <= $this->array_escalas_objetivos[$j]['valor']) {
+                    $this->alert('error', 'Error de validación', [
+                        'position' => 'center',
+                        'timer' => 6000,
+                        'toast' => false,
+                        'text' => 'Cada posición debe ser mayor que todas sus predecesoras.',
+                        'showConfirmButton' => true,
+                        'confirmButtonText' => 'Entendido',
+                        'timerProgressBar' => true,
+                    ]);
+
+                    return;
+                }
+            }
+        }
+
+        // Validar que cada posición es menor que todas sus sucesoras
+        for ($i = 0; $i < $numEscalas - 1; $i++) {
+            for ($j = $i + 1; $j < $numEscalas; $j++) {
+                if ($this->array_escalas_objetivos[$i]['valor'] >= $this->array_escalas_objetivos[$j]['valor']) {
+                    $this->alert('error', 'Error de validación', [
+                        'position' => 'center',
+                        'timer' => 6000,
+                        'toast' => false,
+                        'text' => 'Cada posición debe ser menor que todas sus sucesoras.',
+                        'showConfirmButton' => true,
+                        'confirmButtonText' => 'Entendido',
+                        'timerProgressBar' => true,
+                    ]);
+
+                    return;
+                }
+            }
+        }
+
+        // Guardar las escalas
         foreach ($this->array_escalas_objetivos as $key => $esc_obj) {
             EscalasObjetivosDesempeno::create([
                 'id_objetivo_desempeno' => $objetivo->id,
-                'condicion' => $this->array_escalas_objetivos[$key]['condicional'],
-                'valor' => $this->array_escalas_objetivos[$key]['valor'],
-                'parametro' => $this->array_escalas_objetivos[$key]['parametro'],
-                'color' => $this->array_escalas_objetivos[$key]['color'],
+                'condicion' => $esc_obj['condicional'],
+                'valor' => $esc_obj['valor'],
+                'parametro' => $esc_obj['parametro'],
+                'color' => $esc_obj['color'],
             ]);
         }
 
         $this->resetInputsObjetivo();
         $this->resetInputsPeriodos();
         $this->resetInputsEscalas();
+
+        $this->alert('success', 'Objetivo Creado', [
+            'position' => 'center',
+            'timer' => 6000,
+            'toast' => false,
+            'text' => 'El objetivo ha sido creado con éxito.',
+            'showConfirmButton' => true,
+            'confirmButtonText' => 'Entendido',
+            'timerProgressBar' => true,
+        ]);
     }
 
     public function crearUnidad()
@@ -244,12 +333,64 @@ class FormularioObjetivosDesempenoEmpleados extends Component
             'valor_maximo' => $this->maximo_unidad,
         ]);
 
-        $this->unidades = MetricasObjetivo::get();
+        $this->unidades = MetricasObjetivo::getAll();
 
         $this->resetInputsUnidad();
+
+        $this->alert('success', 'Unidad Creada', [
+            'position' => 'center',
+            'timer' => 6000,
+            'toast' => false,
+            'text' => 'Se ha creado la unidad con éxito.',
+            'showConfirmButton' => true,
+            'confirmButtonText' => 'Entendido',
+            'timerProgressBar' => true,
+        ]);
+    }
+
+    public function editarUnidad()
+    {
+        $editar_unidad = $this->unidades->find($this->select_unidad);
+
+        $this->nombre_edit_unidad = $editar_unidad->definicion;
+        $this->minimo_edit_unidad = $editar_unidad->valor_minimo;
+        $this->maximo_edit_unidad = $editar_unidad->valor_maximo;
+    }
+
+    public function updateUnidad()
+    {
+        $editar_unidad = $this->unidades->find($this->select_unidad);
+
+        $editar_unidad->update([
+            'definicion' => $this->nombre_edit_unidad,
+            'valor_minimo' => $this->minimo_edit_unidad,
+            'valor_maximo' => $this->maximo_edit_unidad,
+        ]);
+
+        $this->unidades = MetricasObjetivo::getAll();
+
+        $this->updatedSelectUnidad();
+        $this->resetInputsEditUnidad();
+
+        $this->alert('success', 'Unidad Editada', [
+            'position' => 'center',
+            'timer' => 6000,
+            'toast' => false,
+            'text' => 'La unidad fue editada exitosamente.',
+            'showConfirmButton' => true,
+            'confirmButtonText' => 'Entendido',
+            'timerProgressBar' => true,
+        ]);
     }
 
     public function resetInputsUnidad()
+    {
+        $this->nombre_edit_unidad = '';
+        $this->minimo_edit_unidad = 0;
+        $this->maximo_edit_unidad = 0;
+    }
+
+    public function resetInputsEditUnidad()
     {
         $this->nombre_unidad = '';
         $this->minimo_unidad = 0;
@@ -267,17 +408,6 @@ class FormularioObjetivosDesempenoEmpleados extends Component
 
     public function resetInputsPeriodos()
     {
-        // $this->ev360 = false;
-        // $this->mensual = false;
-        // $this->bimestral = false;
-        // $this->trimestral = false;
-        // $this->semestral = false;
-        // $this->anualmente = false;
-        // $this->abierta = false;
-    }
-
-    public function resetInputsEscalas()
-    {
         $this->ev360 = false;
         $this->mensual = false;
         $this->bimestral = false;
@@ -285,6 +415,14 @@ class FormularioObjetivosDesempenoEmpleados extends Component
         $this->semestral = false;
         $this->anualmente = false;
         $this->abierta = false;
+    }
+
+    public function resetInputsEscalas()
+    {
+        foreach ($this->array_escalas_objetivos as $key => $e) {
+            $this->array_escalas_objetivos[$key]['condicional'] = 0;
+            $this->array_escalas_objetivos[$key]['valor'] = 0;
+        }
     }
 
     public function updatedSelectUnidad()
@@ -313,6 +451,16 @@ class FormularioObjetivosDesempenoEmpleados extends Component
 
         $objetivo->update([
             'papelera' => true,
+        ]);
+
+        $this->alert('success', 'Objetivo Desechado', [
+            'position' => 'center',
+            'timer' => 6000,
+            'toast' => false,
+            'text' => 'El objetivo ha sido enviado a la papelera.',
+            'showConfirmButton' => true,
+            'confirmButtonText' => 'Entendido',
+            'timerProgressBar' => true,
         ]);
     }
 }

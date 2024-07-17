@@ -166,6 +166,7 @@ class FirmasModuleController extends Controller
                 'submodulo_id' => 1,
                 'empleado_id' => User::getCurrentUser()->empleado->id,
                 'firma' => $imageName,
+                'user_id' => Auth::id(),
                 'id_seguridad' => $id,
             ]);
 

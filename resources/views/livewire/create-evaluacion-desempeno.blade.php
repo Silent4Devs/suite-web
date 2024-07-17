@@ -213,10 +213,30 @@
                                                     wire:model="arreglo_periodos.{{ $index }}.habilitar"@if ($index == 0) disabled @endif>
                                             </div>
                                         </td>
+                                        @if ($abierta)
+                                            <td>
+                                                @if ($index > 0)
+                                                    <div class="form-group">
+                                                        <button class="btn btn-link"
+                                                            wire:click.prevent="eliminarPeriodo({{ $index }})">
+                                                            <i class="fa-regular fa-trash-can"></i>
+                                                        </button>
+                                                    </div>
+                                                @endif
+                                            </td>
+                                        @endif
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
+                        @if ($abierta)
+                            <div class="col-3" style="justify-content: left;">
+                                <button class="btn btn-link" wire:click.prevent="agregarPeriodo">
+                                    Añadir Periodo
+                                    <i class="bi bi-plus-circle"></i>
+                                </button>
+                            </div>
+                        @endif
                     </div>
                 </div>
 
@@ -289,7 +309,7 @@
                                             <select class="form-control" wire:model.defer="empleados_grupo" multiple
                                                 id="empleadosPertenecientes">
                                                 @foreach ($empleados as $empleado)
-                                                    <option value="{{ $empleado->id }}">{{ $empleado->name }}</option>
+                                                    <option value="{{ $empleado['id'] }}">{{ $empleado['name'] }}</option>
                                                 @endforeach
                                             </select>
                                             <small>Manten presionada la tecla ctrl y selecciona a los empleados que formarán el
@@ -302,7 +322,8 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Guardar
+                                    <button wire:click.prevent="guardarGrupo" type="button" class="btn btn-primary"
+                                        data-dismiss="modal">Guardar
                                         cambios</button>
                                 </div>
                             </div>
@@ -328,7 +349,7 @@
                                 <select class="form-control select2" name="evaluados_manual" id="evaluados_manual"
                                     wire:model="evaluados_manual" multiple wire:ignore>
                                     @foreach ($empleados as $empleado)
-                                        <option value="{{ $empleado->id }}">{{ $empleado->name }}</option>
+                                        <option value="{{ $empleado['id'] }}">{{ $empleado['name'] }}</option>
                                     @endforeach
                                 </select>
                             @break
