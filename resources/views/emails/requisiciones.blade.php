@@ -81,7 +81,8 @@
                                                     @break
 
                                                     @case('firma_finanzas')
-                                                        <strong>{{ $supervisor }}</strong> ha autorizado una requisición y
+                                                        <strong>{{ $supervisor }}</strong> ha autorizado una requisición en el
+                                                        rol de <strong>{{ $puesto }}</strong> y
                                                         solicita su firma.
                                                     @break
 
