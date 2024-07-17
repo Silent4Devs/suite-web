@@ -213,10 +213,30 @@
                                                     wire:model="arreglo_periodos.{{ $index }}.habilitar"@if ($index == 0) disabled @endif>
                                             </div>
                                         </td>
+                                        @if ($abierta)
+                                            <td>
+                                                @if ($index > 0)
+                                                    <div class="form-group">
+                                                        <button class="btn btn-link"
+                                                            wire:click.prevent="eliminarPeriodo({{ $index }})">
+                                                            <i class="fa-regular fa-trash-can"></i>
+                                                        </button>
+                                                    </div>
+                                                @endif
+                                            </td>
+                                        @endif
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
+                        @if ($abierta)
+                            <div class="col-3" style="justify-content: left;">
+                                <button class="btn btn-link" wire:click.prevent="agregarPeriodo">
+                                    Añadir Periodo
+                                    <i class="bi bi-plus-circle"></i>
+                                </button>
+                            </div>
+                        @endif
                     </div>
                 </div>
 
