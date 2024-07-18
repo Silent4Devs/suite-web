@@ -25,7 +25,7 @@
                     <div class="col-12 form-group anima-focus">
                         <input wire:model="objetivo_estrategico" id="objetivo_estrategico" type="text"
                             class="form-control" placeholder="">
-                        <label for="objetivo_estrategico">Objetivo Estratégico</label>
+                        <label for="objetivo_estrategico" class="required">Objetivo Estratégico</label>
                     </div>
                 </div>
                 <div class="row">
@@ -44,11 +44,11 @@
                                 <option value="{{ $categoria->id }}">{{ $categoria->nombre }}</option>
                             @endforeach
                         </select>
-                        <label for="categoria">Categoría</label>
+                        <label for="categoria" class="required">Categoría</label>
                     </div>
                     <div class="col-md-3 form-group anima-focus">
                         <input wire:model="KPI" id="KPI" type="text" class="form-control" placeholder="">
-                        <label for="KPI">KPI</label>
+                        <label for="KPI" class="required">KPI</label>
                     </div>
                     <div class="col-md-6">
                         <div class="d-flex" style="gap: 10px;">
@@ -60,7 +60,7 @@
                                         <option value="{{ $unidad->id }}">{{ $unidad->definicion }}</option>
                                     @endforeach
                                 </select>
-                                <label for="unidad-medida">Unidad de medida</label>
+                                <label for="unidad-medida" class="required">Unidad de medida</label>
                             </div>
                             <button class="btn btn-primary" style="height: 45px;" data-toggle="modal"
                                 data-target="#modalCrearUnidad">
@@ -241,10 +241,10 @@
                     <div class="row">
                         @foreach ($escalas as $key => $e)
                             <div class="col-3">
-                                <div class="form-row">
+                                <div class="form-row mb-3">
                                     {{ $e->parametro }}
                                 </div>
-                                <div class="form-row">
+                                <div class="form-row mt-3">
                                     <div class="d-flex align-tiems-center" style="gap: 20px;">
                                         <div class="form-group anima-focus" style="width: 60px;">
                                             <input wire:model="array_escalas_objetivos.{{ $key }}.color"
@@ -253,21 +253,26 @@
                                         <div class="form-group anima-focus" style="min-width: 60px;">
                                             <select
                                                 wire:model="array_escalas_objetivos.{{ $key }}.condicional"
-                                                type="text" name="" id="" class="form-control">
+                                                type="text" name="escala_{{ $key }}" id=""
+                                                class="form-control">
+                                                <option value="0" disabled selected>Seleccione una Condición
+                                                </option>
                                                 <option value="1">Menor que</option>
                                                 <option value="2">Menor o igual que</option>
                                                 <option value="3">Igual que</option>
                                                 <option value="4">Mayor que</option>
                                                 <option value="5">Mayor o igual que</option>
                                             </select>
-                                            <label for="">Condicional</label>
+                                            <label for="escala_{{ $key }}"
+                                                class="required">Condicional</label>
                                         </div>
                                         <div class="form-group anima-focus" style="min-width: 60px;">
                                             <input wire:model="array_escalas_objetivos.{{ $key }}.valor"
                                                 type="number" name="escalas_objetivos{{ $key }}valor"
                                                 id="escalas_objetivos{{ $key }}valor" class="form-control"
                                                 min="{{ $minimo_objetivo }}" max="{{ $maximo_objetivo }}">
-                                            <label for="escalas_objetivos{{ $key }}valor">Valor</label>
+                                            <label for="escalas_objetivos{{ $key }}valor"
+                                                class="required">Valor</label>
                                         </div>
                                     </div>
                                 </div>

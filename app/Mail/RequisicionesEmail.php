@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\FirmasRequisiciones;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
@@ -22,6 +23,7 @@ class RequisicionesEmail extends Mailable
 
     public $supervisor;
 
+    public $puesto;
     /**
      * Create a new message instance.
      *
@@ -35,24 +37,34 @@ class RequisicionesEmail extends Mailable
         $this->organizacion = $organizacion;
         $this->tipo_firma = $tipo_firma;
 
+        $firmas = FirmasRequisiciones::where('requisicion_id', $nueva_requisicion->id)->first();
+
         $user = User::where('id', $this->requisicion->id_user)->first();
 
         $empleado = $user->empleado;
 
-        $this->supervisor = $empleado->supervisor->name;
+        // $this->supervisor = $empleado->supervisor->name;
 
         // requisiciones
         if ($tipo_firma === 'firma_solicitante') {
             $this->tipo_firma_siguiente = 'firma_jefe';
+            $this->supervisor = $firmas->solicitante->name;
+            $this->puesto = $firmas->solicitante->puesto;
         }
         if ($tipo_firma === 'firma_jefe') {
             $this->tipo_firma_siguiente = 'firma_finanzas';
+            $this->supervisor = $firmas->jefe->name;
+            $this->puesto = $firmas->jefe->puesto;
         }
         if ($tipo_firma === 'firma_finanzas') {
             $this->tipo_firma_siguiente = 'firma_compras';
+            $this->supervisor = $firmas->responsableFinanzas->name;
+            $this->puesto = $firmas->responsableFinanzas->puesto;
         }
         if ($tipo_firma === 'firma_compras') {
             $this->tipo_firma_siguiente = 'firma_solicitante';
+            $this->supervisor = $firmas->comprador->name;
+            $this->puesto = $firmas->comprador->puesto;
         }
         if ($tipo_firma === 'rechazado_requisicion') {
             $this->tipo_firma_siguiente = 'requisicion_rechazado';
@@ -78,18 +90,18 @@ class RequisicionesEmail extends Mailable
         try {
             $img_route = $url;
             $logo_base = file_get_contents($img_route);
-            $img = 'data:image/png;base64,'.base64_encode($logo_base);
+            $img = 'data:image/png;base64,' . base64_encode($logo_base);
 
             return $img;
         } catch (\Exception $e) {
             try {
                 $img_route = $url;
                 $logo_base = Storage::get($img_route);
-                $img = 'data:image/png;base64,'.base64_encode($logo_base);
+                $img = 'data:image/png;base64,' . base64_encode($logo_base);
 
                 return $img;
             } catch (\Throwable $th) {
-                $img = 'data:image/png;base64,'.'';
+                $img = 'data:image/png;base64,' . '';
 
                 return $img;
             }
@@ -110,6 +122,7 @@ class RequisicionesEmail extends Mailable
                 'organizacion' => $this->organizacion,
                 'tipo_firma' => $this->tipo_firma,
                 'tipo_firma_siguiente' => $this->tipo_firma_siguiente,
+                'puesto' => $this->puesto,
 
                 'logo' => $this->getBase64($this->organizacion->logotipo),
                 'img_twitter' => $this->getBase64(asset('img/twitter.png')),
