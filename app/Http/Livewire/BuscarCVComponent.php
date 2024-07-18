@@ -180,7 +180,7 @@ class BuscarCVComponent extends Component
             ->when($this->general, function ($query) {
                 $query->where('name', 'ILIKE', "%{$this->general}%");
             })
-            ->fastPaginate(18);
+            ->orderByDesc('id')->cursorPaginate();
 
         return view('livewire.buscar-c-v-component', [
             'empleadosCV' => $empleadosCV,

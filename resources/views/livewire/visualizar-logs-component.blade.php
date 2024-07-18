@@ -63,7 +63,7 @@
                                             <strong>Password</strong>
                                             <br>
                                         @else
-                                            <strong>{{ $key }}:</strong> {{ $value }}<br>
+                                            {{--  <strong>{{ $key }}:</strong> {{ $value }}<br>  --}}
                                         @endif
                                     @endforeach
                                 </p>
@@ -77,7 +77,7 @@
                                             <strong>Password</strong>
                                             <br>
                                         @else
-                                            <strong>{{ $key }}:</strong> {{ $value }}<br>
+                                            {{--  <strong>{{ $key }}:</strong> {{ $value }}<br>  --}}
                                         @endif
                                     @endforeach
                                 </p>

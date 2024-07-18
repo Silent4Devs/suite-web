@@ -261,7 +261,7 @@ class SedeController extends Controller
     {
         abort_if(Gate::denies('sedes_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         //$sede = Sede::getAll();
-        $sede = Sede::fastPaginate();
+        $sede = Sede::orderByDesc('id')->cursorPaginate(15);
         $organizacions = Organizacion::getAll();
         $teams = Team::get();
         $numero_sedes = Sede::getAll()->count();
