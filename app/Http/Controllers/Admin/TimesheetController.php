@@ -300,11 +300,11 @@ class TimesheetController extends Controller
         $usuario = User::getCurrentUser();
         $organizacion = Organizacion::getFirst();
 
-        $semanasAtras = $usuario->empleado->semanas_min_timesheet;
+        $semanasAtras = $usuario->empleado->semanas_min_timesheet ? $usuario->empleado->semanas_min_timesheet : 4;
 
         $today = Carbon::now();
 
-        $firstDay = $today->copy()->subWeeks($usuario->empleado->semanas_min_timesheet);
+        $firstDay = $today->copy()->subWeeks($semanasAtras);
         $endDay = $today->copy()->addWeeks($organizacion->semanas_adicionales);
         $firstDayFormatted = $firstDay->format('Y/m/d');
         $endDayFormatted = $endDay->format('Y/m/d');
