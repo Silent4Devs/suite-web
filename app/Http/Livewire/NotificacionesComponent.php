@@ -70,14 +70,16 @@ class NotificacionesComponent extends Component
 
     public function getUnreadNotifications()
     {
-        $this->lista_notificaciones = Auth::user()->unreadNotifications()->where('data', 'not like', '%"tipo_notificacion":"task"%')->fastPaginate(10);
+        $this->lista_notificaciones = Auth::user()->unreadNotifications()->where('data', 'not like', '%"tipo_notificacion":"task"%')->orderByDesc('id')
+        ->cursorPaginate(12);
 
         return response()->noContent();
     }
 
     public function getReadedNotifications()
     {
-        $this->lista_notificaciones = Auth::user()->readNotifications()->where('data', 'not like', '%"tipo_notificacion":"task"%')->fastPaginate(10);
+        $this->lista_notificaciones = Auth::user()->readNotifications()->where('data', 'not like', '%"tipo_notificacion":"task"%')->orderByDesc('id')
+        ->cursorPaginate(12);
 
         return response()->noContent();
     }

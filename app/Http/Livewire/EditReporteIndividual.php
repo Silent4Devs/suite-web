@@ -93,7 +93,7 @@ class EditReporteIndividual extends Component
         if ($this->reporte != null) {
             $datas = AuditoriaInternasHallazgos::with('clausula', 'clasificacion')->where('auditoria_internas_id', '=', $this->id_auditoria)
                 ->where('reporte_id', '=', $this->reporte->id)
-                ->paginate($this->pagination);
+                ->orderByDesc('id')->cursorPaginate($this->pagination);
 
             $clasificacionIds = $this->clasificaciones->pluck('id');
 

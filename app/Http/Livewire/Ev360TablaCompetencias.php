@@ -32,7 +32,7 @@ class Ev360TablaCompetencias extends Component
     {
         $competencias = collect();
         if ($this->showTable) {
-            $competencias = Competencia::search($this->search)->simplePaginate($this->perPage);
+            $competencias = Competencia::search($this->search)->orderByDesc('id')->cursorPaginate($this->perPage);
         }
         $tipos = TipoCompetencia::getAll();
 

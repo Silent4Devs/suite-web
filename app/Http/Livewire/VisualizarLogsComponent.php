@@ -17,8 +17,7 @@ class VisualizarLogsComponent extends Component
     public function render()
     {
         $articles = Audit::select('id', 'user_id', 'event', 'old_values', 'new_values', 'url', 'tags', 'created_at', 'updated_at')->with('user:id,name')
-            ->orderByDesc('id')
-            ->fastPaginate(100);
+            ->orderByDesc('id')->cursorPaginate(100);
 
         return view('livewire.visualizar-logs-component', compact('articles'));
     }

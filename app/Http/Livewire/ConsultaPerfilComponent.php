@@ -157,7 +157,7 @@ class ConsultaPerfilComponent extends Component
                 $qGeneral->where('puesto', 'ILIKE', "%{$this->general}%");
             })
 
-            ->fastPaginate(21);
+            ->orderByDesc('id')->cursorPaginate(15);
 
         $this->puesto = null;
 
