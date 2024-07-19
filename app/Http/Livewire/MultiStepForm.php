@@ -166,7 +166,7 @@ class MultiStepForm extends Component
         $grupos_evaluados = GruposEvaluado::getAll();
         $catalogo_rangos_objetivos = CatalogoRangosObjetivos::get();
 
-        $competencias = Competencia::search($this->search)->simplePaginate($this->perPage);
+        $competencias = Competencia::search($this->search)->orderByDesc('id')->cursorPaginate($this->perPage);
         $tipos = TipoCompetencia::getAll();
 
         return view('livewire.multi-step-form', ['evaluacion' => $evaluacion, 'areas' => $areas, 'empleados' => $empleados, 'grupos_evaluados' => $grupos_evaluados, 'competencias' => $competencias, 'tipos' => $tipos, 'catalogo_rangos_objetivos' => $catalogo_rangos_objetivos]);
