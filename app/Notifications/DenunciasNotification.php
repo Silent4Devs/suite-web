@@ -2,25 +2,25 @@
 
 namespace App\Notifications;
 
-use App\Models\IncidentesSeguridad;
+use App\Models\Denuncias;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Auth;
 
-class IncidentesDeSeguridadNotification extends Notification
+class DenunciasNotification extends Notification
 {
     use Queueable;
 
-    public $incidentesSeguridad;
+    public $denuncias;
     public $tipo_consulta;
     public $tabla;
     public $slug;
 
-    public function __construct(IncidentesSeguridad $incidentesSeguridad, $tipo_consulta, $tabla, $slug)
+    public function __construct(Denuncias $denuncias, $tipo_consulta, $tabla, $slug)
     {
-        $this->incidentesSeguridad = $incidentesSeguridad;
+        $this->denuncias = $denuncias;
         $this->tipo_consulta = $tipo_consulta;
         $this->tabla = $tabla;
         $this->slug = $slug;
@@ -42,8 +42,8 @@ class IncidentesDeSeguridadNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            'id' => $this->incidentesSeguridad->id,
-            'folio' => $this->incidentesSeguridad->folio,
+            'id' => $this->denuncias->id,
+            'folio' => $this->denuncias->folio,
             'time' => Carbon::now(),
             'type' => $this->tipo_consulta,
             'tabla' => $this->tabla,
