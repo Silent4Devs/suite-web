@@ -84,8 +84,7 @@ class PortalComunicacionController extends Controller
 
         // $comite_existe = Comiteseguridad::getAll()->count();
         $nuevos = $empleados->whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->get();
-        $comunicados = ComunicacionSgi::getAllwithImagenesBlog()->makeHidden(['descripcion', 'created_at', 'updated_at', 'imagenes_comunicacion'])->take(4);
-
+        $comunicados = ComunicacionSgi::getAllwithImagenesBlog()->makeHidden(['descripcion', 'created_at', 'updated_at', 'imagenes_comunicacion']);
         foreach ($comunicados as $key_comunicados => $comunicado) {
             $comunicado->texto_descripcion = $comunicado->descripcion;
             $comunicado->tipo_imagen = $comunicado->imagenes_comunicacion->first()->tipo;
@@ -93,7 +92,13 @@ class PortalComunicacionController extends Controller
             $comunicado->ruta_imagen = encodeSpecialCharacters($ruta_comunicado);
         }
 
-        $noticias = ComunicacionSgi::getAllwithImagenesCarrousel()->makeHidden(['descripcion', 'created_at', 'updated_at', 'imagenes_comunicacion'])->take(3);
+        $imagesCommunications = $comunicados->filter(function ($item){
+            return $item->tipo_imagen === 'imagen';
+        });
+
+        $comunicados = $imagesCommunications->take(4);
+
+        $noticias = ComunicacionSgi::getAllwithImagenesCarrousel()->makeHidden(['descripcion', 'created_at', 'updated_at', 'imagenes_comunicacion']);
 
         foreach ($noticias as $key_noticia => $noticia) {
             $noticia->texto_descripcion = $noticia->descripcion;
@@ -102,7 +107,16 @@ class PortalComunicacionController extends Controller
             $noticia->ruta_imagen = encodeSpecialCharacters($ruta_noticia);
         }
 
-        $cumpleaños = Cache::remember('Portal_cumpleaños_'.$authId, 3600, function () use ($hoy) {
+        $imagesNews = $noticias->filter(function ($item){
+            return $item->tipo_imagen === 'imagen';
+        });
+
+        $noticias = $imagesNews->take(3);
+
+        // dd($noticias);
+
+
+        $cumpleaños = Cache::remember('Portal_cumpleaños_' . $authId, 3600, function () use ($hoy, $empleados) {
             return Empleado::alta()->select('id', 'name', 'area_id', 'puesto_id', 'foto', 'cumpleaños', 'estatus')->whereMonth('cumpleaños', '=', $hoy->format('m'))->get()->makeHidden([
                 'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
                 'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet',
@@ -178,6 +192,9 @@ class PortalComunicacionController extends Controller
         // });
         // dd($comunicacionSgis, $comunicacionSgis_carrusel, $empleado_asignado, $aniversarios_contador_circulo, $politica_existe, $comite_existe, $nuevos, $cumpleaños, $user);
         // dd($cumpleaños);
+
+        // dd($comunicados,$noticias);
+
 
         return response(json_encode(
             [
