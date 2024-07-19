@@ -2,25 +2,26 @@
 
 namespace App\Events;
 
-use App\Models\IncidentesSeguridad;
+
+use App\Models\Mejoras;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class IncidentesDeSeguridadEvent implements ShouldBroadcast
+class MejorasEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $incidentesSeguridad;
+    public $mejoras;
     public $tipo_consulta;
     public $tabla;
     public $slug;
 
-    public function __construct(IncidentesSeguridad $incidentesSeguridad, $tipo_consulta, $tabla, $slug)
+    public function __construct(Mejoras $mejoras, $tipo_consulta, $tabla, $slug)
     {
-        $this->incidentesSeguridad = $incidentesSeguridad;
+        $this->mejoras = $mejoras;
         $this->tipo_consulta = $tipo_consulta;
         $this->tabla = $tabla;
         $this->slug = $slug;
