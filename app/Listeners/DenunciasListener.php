@@ -4,12 +4,13 @@ namespace App\Listeners;
 
 use App\Models\AprobadorSeleccionado;
 use App\Models\User;
-use App\Notifications\IncidentesDeSeguridadNotification;
+use App\Notifications\DenunciasNotification;
+use App\Notifications\QuejasNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Notification;
 
-class IncidentesDeSeguridadListener implements ShouldQueue
+class DenunciasListener implements ShouldQueue
 {
     use InteractsWithQueue;
 
@@ -33,12 +34,12 @@ class IncidentesDeSeguridadListener implements ShouldQueue
      */
     public function handle($event)
     {
-        $incidente = $event->incidentesSeguridad; // Asegúrate de que $event->incidentesDeSeguridad es del tipo correcto
+        $denuncias = $event->denuncias; // Asegúrate de que $event->quejas es del tipo correcto
         $tipo_consulta = 'update'; // Asigna el valor correspondiente
-        $tabla = 'incidentes_de_seguridads'; // Asigna el valor correspondiente
-        $slug = 'Incidente de Seguridad'; // Asigna el valor correspondiente
+        $tabla = 'denuncias'; // Asigna el valor correspondiente
+        $slug = 'Denuncia'; // Asigna el valor correspondiente
 
-        $aprobadores_query = AprobadorSeleccionado::where('seguridad_id', $event->incidentesSeguridad->id)->get();
+        $aprobadores_query = AprobadorSeleccionado::where('denuncias_id', $event->denuncias->id)->get();
 
         // Extraer los IDs de los aprobadores
         $aprobadoresIds = [];
@@ -55,7 +56,8 @@ class IncidentesDeSeguridadListener implements ShouldQueue
         // Obtener los usuarios correspondientes
         $usuarios = User::whereIn('id', $aprobadoresIds)->get();
 
+
         // Enviar la notificación a cada usuario
-        Notification::send($usuarios, new IncidentesDeSeguridadNotification($incidente, $tipo_consulta, $tabla, $slug));
+        Notification::send($usuarios, new DenunciasNotification($denuncias, $tipo_consulta, $tabla, $slug));
     }
 }
