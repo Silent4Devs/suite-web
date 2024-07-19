@@ -7,16 +7,21 @@
         <div class="row">
             <div class="col-md-3 form-group">
                 <label for="inicioCarga">Inicio de carga de objetivos</label>
-                <input id="inicioCarga" wire:model.lazy="fecha_inicio" type="date" class="form-control">
+                <input id="inicioCarga" wire:model.lazy="fecha_inicio" type="date" class="form-control"
+                    @if ($periodo_habilitado) disabled @endif>
             </div>
             <div class="col-md-3 form-group">
                 <label for="finCarga">Fin de carga objetivos</label>
-                <input id="finCarga" wire:model.lazy="fecha_fin" type="date" class="form-control">
+                <input id="finCarga" wire:model.lazy="fecha_fin" type="date" class="form-control"
+                    @if ($periodo_habilitado) disabled @endif>
             </div>
             <div class="col-md-3 form-group">
-                <label for="inicioCarga">Habilitar</label>
-                <input id="habilitar" type="checkbox" class="form-control" wire:model="periodo_habilitado"
-                    wire:change="habilitarCargaObjetivos($event.target.checked)">
+                <label for="habilitar">Habilitar</label>
+                <div class="custom-control custom-switch custom-switch-lg">
+                    <input type="checkbox" class="custom-control-input" id="habilitar" wire:model="periodo_habilitado"
+                        wire:change="habilitarCargaObjetivos($event.target.checked)">
+                    <label class="custom-control-label" for="habilitar"></label>
+                </div>
             </div>
             <div class="col-md-3 form-group">
                 <br>
