@@ -4,12 +4,14 @@ namespace App\Listeners;
 
 use App\Models\AprobadorSeleccionado;
 use App\Models\User;
-use App\Notifications\IncidentesDeSeguridadNotification;
+use App\Notifications\MejorasNotification;
+use App\Notifications\RiesgoNotification;
+use App\Notifications\SugerenciasNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Notification;
 
-class IncidentesDeSeguridadListener implements ShouldQueue
+class SugerenciasListener implements ShouldQueue
 {
     use InteractsWithQueue;
 
@@ -33,12 +35,12 @@ class IncidentesDeSeguridadListener implements ShouldQueue
      */
     public function handle($event)
     {
-        $incidente = $event->incidentesSeguridad; // Asegúrate de que $event->incidentesDeSeguridad es del tipo correcto
+        $sugerencias = $event->sugerencias; // Asegúrate de que $event->sugerencias es del tipo correcto
         $tipo_consulta = 'update'; // Asigna el valor correspondiente
-        $tabla = 'incidentes_de_seguridads'; // Asigna el valor correspondiente
-        $slug = 'Incidente de Seguridad'; // Asigna el valor correspondiente
+        $tabla = 'sugerencias'; // Asigna el valor correspondiente
+        $slug = 'Sugerencia'; // Asigna el valor correspondiente
 
-        $aprobadores_query = AprobadorSeleccionado::where('seguridad_id', $event->incidentesSeguridad->id)->get();
+        $aprobadores_query = AprobadorSeleccionado::where('sugerencias_id', $event->sugerencias->id)->get();
 
         // Extraer los IDs de los aprobadores
         $aprobadoresIds = [];
@@ -55,7 +57,8 @@ class IncidentesDeSeguridadListener implements ShouldQueue
         // Obtener los usuarios correspondientes
         $usuarios = User::whereIn('id', $aprobadoresIds)->get();
 
+
         // Enviar la notificación a cada usuario
-        Notification::send($usuarios, new IncidentesDeSeguridadNotification($incidente, $tipo_consulta, $tabla, $slug));
+        Notification::send($usuarios, new SugerenciasNotification($sugerencias, $tipo_consulta, $tabla, $slug));
     }
 }
