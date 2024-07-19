@@ -14,7 +14,7 @@ class TransferFile extends Command
 
     protected $description = 'Transfer new files to FTP server';
 
-    protected $maxRetries = 3; // Maximum number of retries for each file
+    protected $maxRetries = 6; // Maximum number of retries for each file
 
     public function __construct()
     {
