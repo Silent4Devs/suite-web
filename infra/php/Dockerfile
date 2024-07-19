@@ -30,8 +30,7 @@ RUN apk add --no-cache \
     sudo \
     zip \
     unzip \
-    libsodium-dev \
-    ftp
+    libsodium-dev
 
 # Install php extensions
 RUN chmod +x /usr/local/bin/install-php-extensions && \
