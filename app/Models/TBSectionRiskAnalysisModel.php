@@ -24,6 +24,6 @@ class TBSectionRiskAnalysisModel extends Model
 
     public function questions()
     {
-        return $this->belongsToMany(TBSectionAR_QuestionARModel::class, 'sections_ar_questions_ar_pivote', 'section_id', 'question_id');
+        return $this->belongsToMany(TBQuestionRiskAnalysisModel::class, 'sections_ar_questions_ar_pivote', 'section_id', 'question_id');
     }
 }

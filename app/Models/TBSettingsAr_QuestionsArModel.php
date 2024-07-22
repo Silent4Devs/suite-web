@@ -22,6 +22,6 @@ class TBSettingsAr_QuestionsArModel extends Model
 
     public function question()
     {
-        return $this->belongsTo(questions_risk_analysis::class, 'question_id');
+        return $this->belongsTo(TBQuestionRiskAnalysisModel::class, 'question_id');
     }
 }

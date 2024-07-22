@@ -361,12 +361,12 @@
                         <div style="position: absolute; right: 0px;">
                             <div class="d-flex options">
                                 <div class="caja-options card card-body" style="border-radius: 0px !important;">
-                                    <div class="d-flex align-items-center">
+                                    <a class="d-flex align-items-center" href="{{ route('admin.show-risk-analysis', $register->id) }}">
                                         <i class="material-symbols-outlined icon-option">
                                             visibility
                                             </i>
                                         <p class="m-0">Ver</p>
-                                    </div>
+                                    </a>
                                     <div class="d-flex align-items-center">
                                         <i class="material-symbols-outlined icon-option">
                                             edit

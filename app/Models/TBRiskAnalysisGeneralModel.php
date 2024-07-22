@@ -29,7 +29,7 @@ class TBRiskAnalysisGeneralModel extends Model
 
     public function elaboro()
     {
-        return $this->belongsTo(Empleado::class, 'id_elaboro')->alta();
+        return $this->belongsTo(Empleado::class, 'elaboro_id')->alta();
     }
 
     public function norma()
