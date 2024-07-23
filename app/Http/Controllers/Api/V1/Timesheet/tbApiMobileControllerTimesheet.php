@@ -35,7 +35,7 @@ use Illuminate\Validation\Rule;
 use PDF;
 use Throwable;
 
-class TimesheetApiController extends Controller
+class tbApiMobileControllerTimesheet extends Controller
 {
     use ObtenerOrganizacion;
 

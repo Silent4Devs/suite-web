@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
 use RealRashid\SweetAlert\Facades\Alert;
 
-class SolicitudDayOffApiController extends Controller
+class tbApiMobileControllerSolicitudDayOff extends Controller
 {
     use ObtenerOrganizacion;
 

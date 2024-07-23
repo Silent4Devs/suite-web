@@ -18,7 +18,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
 
-class PortalComunicacionController extends Controller
+class tbApiMobileControllerPortalComunicacion extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -92,7 +92,7 @@ class PortalComunicacionController extends Controller
             $comunicado->ruta_imagen = encodeSpecialCharacters($ruta_comunicado);
         }
 
-        $imagesCommunications = $comunicados->filter(function ($item){
+        $imagesCommunications = $comunicados->filter(function ($item) {
             return $item->tipo_imagen === 'imagen';
         });
 
@@ -107,7 +107,7 @@ class PortalComunicacionController extends Controller
             $noticia->ruta_imagen = encodeSpecialCharacters($ruta_noticia);
         }
 
-        $imagesNews = $noticias->filter(function ($item){
+        $imagesNews = $noticias->filter(function ($item) {
             return $item->tipo_imagen === 'imagen';
         });
 

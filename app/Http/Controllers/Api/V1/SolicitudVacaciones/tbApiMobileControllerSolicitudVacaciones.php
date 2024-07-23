@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
 use RealRashid\SweetAlert\Facades\Alert;
 
-class SolicitudVacacionesApiController extends Controller
+class tbApiMobileControllerSolicitudVacaciones extends Controller
 {
     use ObtenerOrganizacion;
 
