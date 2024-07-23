@@ -26,10 +26,7 @@ class EvaluacionesDesempenoController extends Controller
 
     public function editBorrador($id_evaluacion)
     {
-        $evaluaciones = EvaluacionDesempeno::with('periodos', 'evaluados')->find($id_evaluacion);
-        dd($evaluaciones);
-
-        return view('admin.recursos-humanos.evaluaciones-desempeno.index', compact('evaluaciones'));
+        return view('admin.recursos-humanos.evaluaciones-desempeno.edit-borrador', compact('id_evaluacion'));
     }
 
     public function dashboardGeneral()
@@ -92,7 +89,7 @@ class EvaluacionesDesempenoController extends Controller
         $acceso_objetivos = in_array($currentUser->id, $evaluadoresObjetivos);
         $acceso_competencias = in_array($currentUser->id, $evaluadoresCompetencias);
 
-        if (! $acceso_objetivos && ! $acceso_competencias) {
+        if (!$acceso_objetivos && !$acceso_competencias) {
             return redirect()->route('admin.inicio-Usuario.index');
         }
 
@@ -161,15 +158,15 @@ class EvaluacionesDesempenoController extends Controller
             $imageEvaluado = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $signatureEvaluado));
             $imageEvaluador = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $signatureEvaluador));
 
-            if (! Storage::exists('public/evaluacionesDesempeno/evaluacion/'.$evaluacion->id.'/firmas/periodo'.'/'.$periodo->nombre_evaluacion.'/evaluado'.'/'.$evaluado->name.'/evaluador'.'/'.$evaluador->name)) {
-                Storage::makeDirectory('public/evaluacionesDesempeno/evaluacion/'.$evaluacion->id.'/firmas/periodo'.'/'.$periodo->nombre_evaluacion.'/evaluado'.'/'.$evaluado->name.'/evaluador'.'/'.$evaluador->name, 0755, true);
+            if (!Storage::exists('public/evaluacionesDesempeno/evaluacion/' . $evaluacion->id . '/firmas/periodo' . '/' . $periodo->nombre_evaluacion . '/evaluado' . '/' . $evaluado->name . '/evaluador' . '/' . $evaluador->name)) {
+                Storage::makeDirectory('public/evaluacionesDesempeno/evaluacion/' . $evaluacion->id . '/firmas/periodo' . '/' . $periodo->nombre_evaluacion . '/evaluado' . '/' . $evaluado->name . '/evaluador' . '/' . $evaluador->name, 0755, true);
             }
 
-            $filenameEvaluado = '/evaluacion'.$evaluacion->id.'firmaevaluado'.$evaluado->name.'.png';
-            $filenameEvaluador = '/evaluacion'.$evaluacion->id.'firmaevaluador'.$evaluador->name.'.png';
+            $filenameEvaluado = '/evaluacion' . $evaluacion->id . 'firmaevaluado' . $evaluado->name . '.png';
+            $filenameEvaluador = '/evaluacion' . $evaluacion->id . 'firmaevaluador' . $evaluador->name . '.png';
 
-            Storage::put('public/evaluacionesDesempeno/evaluacion/'.$evaluacion->id.'/firmas/periodo'.'/'.$periodo->nombre_evaluacion.'/evaluado'.'/'.$evaluado->name.'/evaluador'.'/'.$evaluador->name.$filenameEvaluado, $imageEvaluado);
-            Storage::put('public/evaluacionesDesempeno/evaluacion/'.$evaluacion->id.'/firmas/periodo'.'/'.$periodo->nombre_evaluacion.'/evaluado'.'/'.$evaluado->name.'/evaluador'.'/'.$evaluador->name.$filenameEvaluador, $imageEvaluador);
+            Storage::put('public/evaluacionesDesempeno/evaluacion/' . $evaluacion->id . '/firmas/periodo' . '/' . $periodo->nombre_evaluacion . '/evaluado' . '/' . $evaluado->name . '/evaluador' . '/' . $evaluador->name . $filenameEvaluado, $imageEvaluado);
+            Storage::put('public/evaluacionesDesempeno/evaluacion/' . $evaluacion->id . '/firmas/periodo' . '/' . $periodo->nombre_evaluacion . '/evaluado' . '/' . $evaluado->name . '/evaluador' . '/' . $evaluador->name . $filenameEvaluador, $imageEvaluador);
 
             if ($evaluacion->activar_competencias && $evaluacion->activar_objetivos) {
                 $evldrObj = $evVal->evaluadoresObjetivos->where('periodo_id', $id_periodo)
@@ -189,7 +186,7 @@ class EvaluacionesDesempenoController extends Controller
                     'firma_evaluado' => $filenameEvaluado,
                     'firma_evaluador' => $filenameEvaluador,
                 ]);
-            } elseif ($evaluacion->activar_competencias && ! $evaluacion->activar_objetivos) {
+            } elseif ($evaluacion->activar_competencias && !$evaluacion->activar_objetivos) {
                 $evldrObj = $evVal->evaluadoresObjetivos->where('periodo_id', $id_periodo)
                     ->where('evaluador_desempeno_id', $evaluador->id)
                     ->where('evaluado_desempeno_id', $evVal->id)
@@ -199,7 +196,7 @@ class EvaluacionesDesempenoController extends Controller
                     'firma_evaluado' => $filenameEvaluado,
                     'firma_evaluador' => $filenameEvaluador,
                 ]);
-            } elseif (! $evaluacion->activar_competencias && $evaluacion->activar_objetivos) {
+            } elseif (!$evaluacion->activar_competencias && $evaluacion->activar_objetivos) {
                 $evldrComp = $evVal->evaluadoresCompetencias->where('periodo_id', $id_periodo)
                     ->where('evaluador_desempeno_id', $evaluador->id)
                     ->where('evaluado_desempeno_id', $evVal->id)

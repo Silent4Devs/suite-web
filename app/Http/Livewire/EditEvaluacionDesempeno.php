@@ -23,11 +23,14 @@ use App\Models\RH\GruposEvaluado;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+
 use Livewire\Component;
 
-class CreateEvaluacionDesempeno extends Component
+class EditEvaluacionDesempeno extends Component
 {
     use LivewireAlert;
+
+    public $evaluacion;
 
     public $paso = 1;
 
@@ -137,8 +140,10 @@ class CreateEvaluacionDesempeno extends Component
         $this->emit('select2');
     }
 
-    public function mount()
+    public function mount($id_evaluacion)
     {
+        $this->evaluacion = EvaluacionDesempeno::find($id_evaluacion);
+
         // Obtén la colección de empleados y conviértela a un array con solo id y name
         $empleadosCollection = Empleado::getIdNameAll();
 
@@ -152,36 +157,215 @@ class CreateEvaluacionDesempeno extends Component
 
         $this->areas = Area::getIdNameAll()->sortBy('area');
         $this->grupos = GruposEvaluado::getAll();
+
+        $this->cargarDatosPaso1();
+        // Avanzar al siguiente paso
+        if (!($this->evaluacion->periodos->isEmpty())) {
+            $this->cargarDatosPaso2();
+        }
     }
 
     public function render()
     {
-        return view('livewire.create-evaluacion-desempeno');
+        return view('livewire.edit-evaluacion-desempeno');
+    }
+
+    public function cargarDatosPaso1()
+    {
+        $this->nombre_evaluacion = $this->evaluacion->nombre;
+        $this->descripcion_evaluacion = $this->evaluacion->descripcion;
+        $this->activar_objetivos = $this->evaluacion->activar_objetivos;
+        $this->porcentaje_objetivos = $this->evaluacion->porcentaje_objetivos;
+        $this->activar_competencias = $this->evaluacion->activar_competencias;
+        $this->porcentaje_competencias = $this->evaluacion->porcentaje_competencias;
+    }
+
+    public function cargarDatosPaso2()
+    {
+        // dd($this->evaluacion->periodos);
+
+        $this->arreglo_periodos = null;
+
+        $this->periodo_evaluacion = $this->evaluacion->tipo_periodo;
+
+        foreach ($this->evaluacion->periodos as $key_periodo => $periodo) {
+            $this->arreglo_periodos[] = [
+                'nombre_evaluacion' => $periodo->nombre_evaluacion,
+                'fecha_inicio' => $periodo->fecha_inicio,
+                'fecha_fin' => $periodo->fecha_fin,
+                'habilitar' =>  $periodo->habilitado,
+            ];
+        }
+
+        $this->seleccionPeriodoBorrador($this->evaluacion->tipo_periodo);
+        // 'tipo_periodo',
+        // 'estatus',
+    }
+
+    public function cargarEvaluadosEdit()
+    {
+        $emps = Empleado::select(
+            'id',
+            'name',
+            'area_id',
+            'supervisor_id',
+            'puesto_id',
+            'foto'
+        )->with(['objetivos', 'children:id,name', 'supervisor:id,name', 'area:id,area', 'puestoRelacionado:id,puesto'])->where('estatus', 'alta')->whereNull('deleted_at')->get();
+
+        foreach ($emps as $emp) {
+            $this->colaboradores[] =
+                [
+                    'id' => $emp->id,
+                    'name' => $emp->name,
+                ];
+        }
+
+        foreach ($this->evaluacion->evaluados as $key => $evaluado) {
+            $eva = $emps->find($evaluado->evaluado_desempeno_id);
+            $this->array_evaluados[$key] =
+                [
+                    'id' => $eva->id,
+                    'name' => $eva->name,
+                    'avatar' => $eva->avatar,
+                    'area' => $eva->area->area,
+                    'competencias' => $eva->competencias_asignadas,
+                    'objetivos' => $eva->objetivos_asignados,
+                    'supervisor_id' => $eva->supervisor->id ?? null,
+                ];
+
+            $this->listaEmpleadosSinCompetencias = collect();
+            $this->listaIDSinCompetencias = collect();
+            $this->listaEmpleadosSinObjetivos = collect();
+            $this->listaIDSinObjetivos = collect();
+            $this->listaEmpleadosObjetivosPendiente = collect();
+            $this->listaIDObjetivosPendiente = collect();
+            $this->totalEmpleadosSinCompetencias = 0;
+            $this->totalEmpleadosSinObjetivos = 0;
+            $this->totalEmpleadosObjetivosPendiente = 0;
+            $this->hayEmpleadosSinCompetencias = false;
+            $this->hayEmpleadosSinObjetivos = false;
+            $this->hayEmpleadosObjetivosPendiente = false;
+
+            foreach ($this->array_evaluados as $evaluadoL) {
+                if ($evaluadoL['competencias'] == 0) {
+                    $this->hayEmpleadosSinCompetencias = true;
+                    $this->totalEmpleadosSinCompetencias++;
+                    $this->listaEmpleadosSinCompetencias->push(['name' => $evaluadoL['name'], 'avatar' => $evaluadoL['avatar']]);
+                    $this->listaIDSinCompetencias->push($evaluadoL['id']);
+                } elseif ($evaluadoL['objetivos']['cuenta'] == 0) {
+                    $this->hayEmpleadosSinObjetivos = true;
+                    $this->totalEmpleadosSinObjetivos++;
+                    $this->listaEmpleadosSinObjetivos->push(['name' => $evaluadoL['name'], 'avatar' => $evaluadoL['avatar']]);
+                    $this->listaIDSinObjetivos->push($evaluadoL['id']);
+                } elseif ($evaluadoL['objetivos']['pendientes'] == true) {
+                    $this->hayEmpleadosObjetivosPendiente = true;
+                    $this->totalEmpleadosObjetivosPendiente++;
+                    $this->listaEmpleadosObjetivosPendiente->push(['name' => $evaluadoL['name'], 'avatar' => $evaluadoL['avatar']]);
+                    $this->listaIDObjetivosPendiente->push($evaluadoL['id']);
+                }
+            }
+
+            if ($this->totalEmpleadosSinCompetencias > 0) {
+                $this->alert('warning', 'Sin Competencias', [
+                    'position' => 'center',
+                    'timer' => '600000',
+                    'toast' => false,
+                    'text' => 'Existen colaboradores sin competencias asignadas, no podra crear la evaluación si los colaboradores no tienen competencias para evaluar',
+                    'showConfirmButton' => true,
+                    'onConfirmed' => '',
+                    'confirmButtonText' => 'Confirmar',
+                    'timerProgressBar' => true,
+                ]);
+            } elseif ($this->totalEmpleadosSinObjetivos > 0) {
+                $this->alert('warning', 'Sin Objetivos', [
+                    'position' => 'center',
+                    'timer' => '600000',
+                    'toast' => false,
+                    'text' => 'Existen colaboradores sin objetivos asignados, no podra crear la evaluación si los colaboradores no tienen objetivos para evaluar',
+                    'showConfirmButton' => true,
+                    'onConfirmed' => '',
+                    'confirmButtonText' => 'Confirmar',
+                    'timerProgressBar' => true,
+                ]);
+            } elseif ($this->totalEmpleadosObjetivosPendiente > 0) {
+                $this->alert('warning', 'Objetivos Pendientes', [
+                    'position' => 'center',
+                    'timer' => '600000',
+                    'toast' => false,
+                    'text' => 'Existen colaboradores con objetivos asignados pendientes de revisar, no podra crear la evaluación si los colaboradores tienen objetivos con estatus pendientes.',
+                    'showConfirmButton' => true,
+                    'onConfirmed' => '',
+                    'confirmButtonText' => 'Confirmar',
+                    'timerProgressBar' => true,
+                ]);
+            } else {
+                $this->bloquear_evaluacion = false;
+            }
+
+            if ($this->activar_objetivos == true && $this->activar_competencias == true) {
+
+                foreach ($evaluado->evaluadoresObjetivos as $key_evaluadorO => $evaluadorObjetivos) {
+
+                    if ($evaluadoL['id'] != $evaluadorObjetivos->evaluador_desempeno_id) {
+                        $this->array_evaluadores[$key]['evaluador_objetivos'][] = [
+                            $evaluadorObjetivos->evaluador_desempeno_id,
+                        ];
+
+                        $this->array_porcentaje_evaluadores[$key]['porcentaje_evaluador_objetivos'][] =
+                            $evaluadorObjetivos->porcentaje_objetivos;
+                    }
+                    // dump($evaluado->evaluado_evaluacion_id != $evaluadorObjetivos->evaluador_desempeno_id);
+                }
+                foreach ($evaluado->evaluadoresCompetencias as $key_evaluadorC => $evaluadorCompetencias) {
+                    if ($evaluadoL['id'] != $evaluadorCompetencias->evaluador_desempeno_id) {
+                        $this->array_evaluadores[$key]['evaluador_competencias'][] = [
+                            $evaluadorCompetencias->evaluador_desempeno_id,
+                        ];
+
+                        $this->array_porcentaje_evaluadores[$key]['porcentaje_evaluador_competencias'][] =
+                            [
+                                $evaluadorCompetencias->porcentaje_competencias,
+                            ];
+                    }
+                    // dump($evaluado->evaluado_evaluacion_id != $evaluadorCompetencias->evaluador_desempeno_id);
+                }
+                // dd(
+                // $this->array_evaluadores,
+                // $this->array_porcentaje_evaluadores
+                // );
+            } elseif ($this->activar_objetivos == true && $this->activar_competencias == false) {
+
+                foreach ($evaluado->evaluadoresObjetivos as $key_evaluadorO => $evaluadorObjetivos) {
+                    if ($evaluado->evaluado_evaluacion_id != $evaluadorObjetivos->evaluador_desempeno_id) {
+                        $this->array_evaluadores[$key]['evaluador_objetivos'][] = [
+                            $evaluadorObjetivos->evaluador_desempeno_id,
+                        ];
+
+                        $this->array_porcentaje_evaluadores[$key]['porcentaje_evaluador_objetivos'][] =
+                            $evaluadorObjetivos->porcentaje_objetivos;
+                    }
+                }
+            } elseif ($this->activar_objetivos == false && $this->activar_competencias == true) {
+                foreach ($evaluado->evaluadoresCompetencias as $key_evaluadorC => $evaluadorCompetencias) {
+                    if ($evaluado->evaluado_evaluacion_id != $evaluadorCompetencias->evaluador_desempeno_id) {
+                        $this->array_evaluadores[$key]['evaluador_competencias'][] = [
+                            $evaluadorCompetencias->evaluador_desempeno_id,
+                        ];
+
+                        $this->array_porcentaje_evaluadores[$key]['porcentaje_evaluador_competencias'][] =
+                            [
+                                $evaluadorCompetencias->porcentaje_competencias,
+                            ];
+                    }
+                }
+            }
+        }
     }
 
     public function retroceder()
     {
         $this->paso--;
-    }
-
-    public function agregarPeriodo()
-    {
-        $numeroDePeriodos = count($this->arreglo_periodos) + 1; // Obtener el número actual de períodos y agregar 1
-
-        $this->arreglo_periodos[] = [
-            'nombre_evaluacion' => 'T' . $numeroDePeriodos,
-            'fecha_inicio' => null,
-            'fecha_fin' => null,
-            'habilitar' => false, // Solo el primer periodo habilitado
-        ];
-    }
-
-    public function eliminarPeriodo($index)
-    {
-        if (isset($this->arreglo_periodos[$index])) {
-            unset($this->arreglo_periodos[$index]);
-            $this->arreglo_periodos = array_values($this->arreglo_periodos); // Reindexar el array
-        }
     }
 
     public function primerPaso()
@@ -293,7 +477,6 @@ class CreateEvaluacionDesempeno extends Component
             'porcentaje_competencias' => $this->porcentaje_competencias,
         ];
 
-        // Avanzar al siguiente paso
         $this->paso = 2;
     }
 
@@ -302,16 +485,16 @@ class CreateEvaluacionDesempeno extends Component
         $this->datosPaso2 = [];
 
         foreach ($this->arreglo_periodos as $key => $ap) {
-            $fechaInicio = $ap['fecha_inicio'];
-            $fechaFin = $ap['fecha_fin'];
-            $habilitar = $key === 0;
+            $fechaInicio = $key === 0 ? $ap['fecha_inicio'] : null;
+            $fechaFin = $key === 0 ? $ap['fecha_fin'] : null;
+            $habilitar = $key === 0 ? true : false;
 
             // Validar que la primera posición tenga fechas
             if ($key === 0 && (empty($fechaInicio) || empty($fechaFin))) {
                 // Emitir alerta si faltan las fechas
                 $this->alert('warning', 'Faltan fechas en el primer período', [
                     'position' => 'center',
-                    'timer' => 6000,
+                    'timer' => '6000',
                     'toast' => false,
                     'text' => 'Por favor complete las fechas de inicio y fin en el primer período.',
                     'showConfirmButton' => true,
@@ -323,13 +506,13 @@ class CreateEvaluacionDesempeno extends Component
             }
 
             // Validar que la fecha de inicio no sea posterior a la fecha de fin
-            if (!empty($fechaInicio) && !empty($fechaFin) && $fechaInicio > $fechaFin) {
+            if ($key === 0 && $fechaInicio > $fechaFin) {
                 // Emitir alerta si la fecha de inicio es posterior a la fecha de fin
-                $this->alert('warning', 'Fechas inválidas', [
+                $this->alert('warning', 'Fechas inválidas en el primer período', [
                     'position' => 'center',
-                    'timer' => 6000,
+                    'timer' => '6000',
                     'toast' => false,
-                    'text' => 'La fecha de inicio no puede ser posterior a la fecha de fin.',
+                    'text' => 'La fecha de inicio no puede ser posterior a la fecha de fin en el primer período.',
                     'showConfirmButton' => true,
                     'confirmButtonText' => 'Confirmar',
                     'timerProgressBar' => true,
@@ -346,7 +529,13 @@ class CreateEvaluacionDesempeno extends Component
             ];
         }
 
-        $this->paso = 3;
+
+        if (isset($this->evaluacion->evaluados)) {
+            $this->cargarEvaluadosEdit();
+            $this->paso = 4;
+        } else {
+            $this->paso = 3;
+        }
     }
 
     public function tercerPaso()
@@ -682,6 +871,35 @@ class CreateEvaluacionDesempeno extends Component
         }
     }
 
+    public function seleccionPeriodoBorrador($periodo)
+    {
+        $this->mensual = $this->bimestral = $this->trimestral = $this->semestral = $this->anualmente = $this->abierta = false;
+
+        // Configurar el período seleccionado
+        switch ($periodo) {
+            case 'mensual':
+                $this->mensual = true;
+                break;
+            case 'bimestral':
+                $this->bimestral = true;
+                break;
+            case 'trimestral':
+                $this->trimestral = true;
+                break;
+            case 'semestral':
+                $this->semestral = true;
+                break;
+            case 'anualmente':
+            case 'abierta':
+                $this->anualmente = ($periodo == 'anualmente');
+                $this->abierta = ($periodo == 'abierta');
+                break;
+            default:
+                // Periodo no válido
+                return;
+        }
+    }
+
     public function seleccionarEvaluados($valor)
     {
         $this->select_evaluados = $valor;
@@ -700,7 +918,7 @@ class CreateEvaluacionDesempeno extends Component
             'puesto_id',
             'foto'
         )->with(['objetivos', 'children:id,name', 'supervisor:id,name', 'area:id,area', 'puestoRelacionado:id,puesto'])->where('estatus', 'alta')->whereNull('deleted_at')->get();
-        // dump($emps);
+
         foreach ($emps as $emp) {
             $this->colaboradores[] =
                 [
@@ -708,7 +926,7 @@ class CreateEvaluacionDesempeno extends Component
                     'name' => $emp->name,
                 ];
         }
-        // dump('colaboradores');
+
         foreach ($evaluados as $key => $id_evaluado) {
             $eva = $emps->find($id_evaluado);
             $this->array_evaluados[$key] =
@@ -734,27 +952,23 @@ class CreateEvaluacionDesempeno extends Component
             $this->hayEmpleadosSinCompetencias = false;
             $this->hayEmpleadosSinObjetivos = false;
             $this->hayEmpleadosObjetivosPendiente = false;
-            // dd($this->array_evaluados);
+
             foreach ($this->array_evaluados as $evaluadoL) {
-                // dd($evaluadoL['competencias']);
                 if ($evaluadoL['competencias'] == 0) {
                     $this->hayEmpleadosSinCompetencias = true;
                     $this->totalEmpleadosSinCompetencias++;
                     $this->listaEmpleadosSinCompetencias->push(['name' => $evaluadoL['name'], 'avatar' => $evaluadoL['avatar']]);
                     $this->listaIDSinCompetencias->push($evaluadoL['id']);
-                    // dd($this->listaEmpleadosSinCompetencias);
                 } elseif ($evaluadoL['objetivos']['cuenta'] == 0) {
                     $this->hayEmpleadosSinObjetivos = true;
                     $this->totalEmpleadosSinObjetivos++;
                     $this->listaEmpleadosSinObjetivos->push(['name' => $evaluadoL['name'], 'avatar' => $evaluadoL['avatar']]);
                     $this->listaIDSinObjetivos->push($evaluadoL['id']);
-                    // dd($this->listaEmpleadosSinObjetivos);
                 } elseif ($evaluadoL['objetivos']['pendientes'] == true) {
                     $this->hayEmpleadosObjetivosPendiente = true;
                     $this->totalEmpleadosObjetivosPendiente++;
                     $this->listaEmpleadosObjetivosPendiente->push(['name' => $evaluadoL['name'], 'avatar' => $evaluadoL['avatar']]);
                     $this->listaIDObjetivosPendiente->push($evaluadoL['id']);
-                    // dd($this->listaEmpleadosObjetivosPendiente);
                 }
             }
 
@@ -865,29 +1079,77 @@ class CreateEvaluacionDesempeno extends Component
     {
         // Validar antes de guardar
         if (!$this->validarPasoActual()) {
-            $this->guardarHastaPasoAnterior();
-
-            return redirect(route('admin.rh.evaluaciones-desempeno.index'))->with('warning', 'Datos incompletos, borrador guardado hasta el paso anterior.');
+            if ($this->paso > 1) {
+                $this->guardarHastaPasoAnterior();
+                return redirect(route('admin.rh.evaluaciones-desempeno.index'))->with('warning', 'Datos incompletos, borrador guardado hasta el paso anterior.');
+            }
         }
 
         // Comienza o continúa el borrador de la evaluación
-        $evaluacion = EvaluacionDesempeno::create([
-            'nombre' => $this->datosPaso1['nombre'] ?? $this->nombre_evaluacion,
-            'descripcion' => $this->datosPaso1['descripcion'] ?? '',
-            'activar_objetivos' => $this->datosPaso1['activar_objetivos'] ?? 0,
-            'porcentaje_objetivos' => $this->datosPaso1['porcentaje_objetivos'] ?? 0,
-            'activar_competencias' => $this->datosPaso1['activar_competencias'] ?? 0,
-            'porcentaje_competencias' => $this->datosPaso1['porcentaje_competencias'] ?? 0,
-            'tipo_periodo' => $this->periodo_evaluacion ?? null,
-            'estatus' => 0, // Estatus de borrador
-            'autor_id' => User::getCurrentUser()->empleado->id,
-        ]);
+        $this->evaluacion->updateOrCreate(
+            [
+                'id' => $this->evaluacion->id,
+            ],
+            [
+                'nombre' => $this->datosPaso1['nombre'] ?? $this->nombre_evaluacion,
+                'descripcion' => $this->datosPaso1['descripcion'] ?? $this->descripcion_evaluacion,
+                'activar_objetivos' => $this->datosPaso1['activar_objetivos'] ?? $this->activar_objetivos,
+                'porcentaje_objetivos' => $this->datosPaso1['porcentaje_objetivos'] ?? $this->porcentaje_objetivos,
+                'activar_competencias' => $this->datosPaso1['activar_competencias'] ?? $this->activar_competencias,
+                'porcentaje_competencias' => $this->datosPaso1['porcentaje_competencias'] ?? $this->porcentaje_competencias,
+                'tipo_periodo' => $this->periodo_evaluacion ?? null,
+                'estatus' => 0, // Estatus de borrador
+            ]
+        );
 
         // Guardar el paso actual en la evaluación (por ejemplo, paso 1, 2, 3, etc.)
-        $evaluacion->update(['paso_actual' => $this->paso]);
+        $this->evaluacion->update(['paso_actual' => $this->paso]);
 
         // Guardar los datos del paso actual
         switch ($this->paso) {
+            case 1:
+                // Paso 1 ya guardado arriba
+                break;
+
+            case 2:
+                $this->guardarPaso2($this->evaluacion);
+                break;
+
+            case 3:
+                $this->guardarPaso2($this->evaluacion);
+                $this->guardarPaso3($this->evaluacion);
+                break;
+
+            case 4:
+                $this->guardarPaso2($this->evaluacion);
+                $this->guardarPaso3($this->evaluacion);
+                $this->guardarPaso4($this->evaluacion);
+                break;
+        }
+
+        // Redirigir a la vista de índice con un mensaje de éxito
+        return redirect(route('admin.rh.evaluaciones-desempeno.index'))->with('success', 'Borrador guardado correctamente.');
+    }
+
+    private function guardarHastaPasoAnterior()
+    {
+        // Comienza o continúa el borrador de la evaluación
+        $evaluacion = EvaluacionDesempeno::create(
+            [
+                'nombre' => $this->datosPaso1['nombre'] ?? '',
+                'descripcion' => $this->datosPaso1['descripcion'] ?? '',
+                'activar_objetivos' => $this->datosPaso1['activar_objetivos'] ?? 0,
+                'porcentaje_objetivos' => $this->datosPaso1['porcentaje_objetivos'] ?? 0,
+                'activar_competencias' => $this->datosPaso1['activar_competencias'] ?? 0,
+                'porcentaje_competencias' => $this->datosPaso1['porcentaje_competencias'] ?? 0,
+                'tipo_periodo' => $this->periodo_evaluacion ?? null,
+                'estatus' => 0, // Estatus de borrador
+                'autor_id' => User::getCurrentUser()->empleado->id,
+            ]
+        );
+
+        // Guardar hasta el paso anterior
+        switch ($this->paso - 1) {
             case 1:
                 // Paso 1 ya guardado arriba
                 break;
@@ -900,24 +1162,17 @@ class CreateEvaluacionDesempeno extends Component
                 $this->guardarPaso2($evaluacion);
                 $this->guardarPaso3($evaluacion);
                 break;
-
-            case 4:
-                $this->guardarPaso2($evaluacion);
-                $this->guardarPaso3($evaluacion);
-                $this->guardarPaso4($evaluacion);
-                break;
         }
 
-        // Redirigir a la vista de índice con un mensaje de éxito
-        return redirect(route('admin.rh.evaluaciones-desempeno.index'))
-            ->with('success', 'Borrador guardado correctamente.');
+        // Redirigir a la vista de índice con un mensaje de advertencia
+        return redirect(route('admin.rh.evaluaciones-desempeno.index'))->with('warning', 'Datos incompletos, borrador guardado hasta el paso anterior.');
     }
 
     private function validarPasoActual()
     {
         switch ($this->paso) {
             case 1:
-                if (empty($this->nombre_evaluacion)) {
+                if (empty($this->datosPaso1['nombre']) && empty($this->nombre_evaluacion)) {
                     $this->alert('warning', 'Nombre de Evaluación Requerido', [
                         'position' => 'center',
                         'timer' => 6000,
@@ -927,74 +1182,8 @@ class CreateEvaluacionDesempeno extends Component
                         'confirmButtonText' => 'Entendido',
                         'timerProgressBar' => true,
                     ]);
+
                     return false;
-                }
-
-                if (!$this->activar_objetivos && !$this->activar_competencias) {
-                    $this->alert('warning', 'Selección Requerida', [
-                        'position' => 'center',
-                        'timer' => 6000,
-                        'toast' => false,
-                        'text' => 'Debe seleccionar al menos una opción: objetivos, competencias, o ambos.',
-                        'showConfirmButton' => true,
-                        'confirmButtonText' => 'Entendido',
-                        'timerProgressBar' => true,
-                    ]);
-                    return false;
-                }
-
-                if ($this->activar_objetivos && $this->activar_competencias) {
-                    if (($this->porcentaje_objetivos + $this->porcentaje_competencias) != 100) {
-                        $this->alert('warning', 'Porcentaje Incorrecto', [
-                            'position' => 'center',
-                            'timer' => 6000,
-                            'toast' => false,
-                            'text' => 'La suma de los porcentajes de objetivos y competencias debe ser igual a 100%.',
-                            'showConfirmButton' => true,
-                            'confirmButtonText' => 'Entendido',
-                            'timerProgressBar' => true,
-                        ]);
-                        return false;
-                    }
-
-                    if ($this->porcentaje_objetivos == 0 || $this->porcentaje_competencias == 0) {
-                        $this->alert('warning', 'Porcentaje Incorrecto', [
-                            'position' => 'center',
-                            'timer' => 6000,
-                            'toast' => false,
-                            'text' => 'Los porcentajes de objetivos y competencias no pueden ser 0 si ambos están seleccionados.',
-                            'showConfirmButton' => true,
-                            'confirmButtonText' => 'Entendido',
-                            'timerProgressBar' => true,
-                        ]);
-                        return false;
-                    }
-                } elseif ($this->activar_objetivos && !$this->activar_competencias) {
-                    if ($this->porcentaje_objetivos != 100) {
-                        $this->alert('warning', 'Porcentaje Incorrecto', [
-                            'position' => 'center',
-                            'timer' => 6000,
-                            'toast' => false,
-                            'text' => 'El porcentaje de objetivos debe ser igual a 100%.',
-                            'showConfirmButton' => true,
-                            'confirmButtonText' => 'Entendido',
-                            'timerProgressBar' => true,
-                        ]);
-                        return false;
-                    }
-                } elseif (!$this->activar_objetivos && $this->activar_competencias) {
-                    if ($this->porcentaje_competencias != 100) {
-                        $this->alert('warning', 'Porcentaje Incorrecto', [
-                            'position' => 'center',
-                            'timer' => 6000,
-                            'toast' => false,
-                            'text' => 'El porcentaje de competencias debe ser igual a 100%.',
-                            'showConfirmButton' => true,
-                            'confirmButtonText' => 'Entendido',
-                            'timerProgressBar' => true,
-                        ]);
-                        return false;
-                    }
                 }
                 break;
 
@@ -1009,6 +1198,7 @@ class CreateEvaluacionDesempeno extends Component
                         'confirmButtonText' => 'Entendido',
                         'timerProgressBar' => true,
                     ]);
+
                     return false;
                 }
 
@@ -1022,29 +1212,57 @@ class CreateEvaluacionDesempeno extends Component
                         'confirmButtonText' => 'Entendido',
                         'timerProgressBar' => true,
                     ]);
-                    return false;
-                }
 
-                if ($this->datosPaso2[0]['fecha_inicio'] > $this->datosPaso2[0]['fecha_fin']) {
-                    $this->alert('warning', 'Fechas de evaluación inválidas', [
-                        'position' => 'center',
-                        'timer' => 6000,
-                        'toast' => false,
-                        'text' => 'La fecha de inicio no puede ser posterior a la fecha de fin.',
-                        'showConfirmButton' => true,
-                        'confirmButtonText' => 'Entendido',
-                        'timerProgressBar' => true,
-                    ]);
                     return false;
                 }
                 break;
 
             case 3:
-                // Agrega las validaciones del tercer paso aquí
+                if (empty($this->array_evaluados)) {
+                    $this->alert('warning', 'Debe seleccionar evaluados.', [
+                        'position' => 'center',
+                        'timer' => 6000,
+                        'toast' => false,
+                        'text' => 'Debe seleccionar al menos un evaluado.',
+                        'showConfirmButton' => true,
+                        'confirmButtonText' => 'Entendido',
+                        'timerProgressBar' => true,
+                    ]);
+
+                    return false;
+                }
                 break;
 
             case 4:
-                // Agrega las validaciones del cuarto paso aquí
+                if (empty($this->array_evaluados)) {
+                    $this->alert('warning', 'Debe seleccionar evaluados.', [
+                        'position' => 'center',
+                        'timer' => 6000,
+                        'toast' => false,
+                        'text' => 'Debe seleccionar al menos un evaluado.',
+                        'showConfirmButton' => true,
+                        'confirmButtonText' => 'Entendido',
+                        'timerProgressBar' => true,
+                    ]);
+
+                    return false;
+                }
+
+                foreach ($this->datosPaso2 as $p) {
+                    if (empty($p['id'])) {
+                        $this->alert('warning', 'ID de periodo requerido', [
+                            'position' => 'center',
+                            'timer' => 6000,
+                            'toast' => false,
+                            'text' => 'Debe proporcionar un ID para cada periodo.',
+                            'showConfirmButton' => true,
+                            'confirmButtonText' => 'Entendido',
+                            'timerProgressBar' => true,
+                        ]);
+
+                        return false;
+                    }
+                }
                 break;
         }
 

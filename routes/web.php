@@ -498,6 +498,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::get('recursos-humanos/evaluacion-desempeno/config-evaluaciones', 'RH\EvaluacionesDesempenoController@configEvaluaciones')->name('rh.evaluaciones-desempeno.config-evaluaciones');
 
         Route::get('recursos-humanos/evaluacion-desempeno/create-evaluacion', 'RH\EvaluacionesDesempenoController@createEvaluacion')->name('rh.evaluaciones-desempeno.create-evaluacion');
+        Route::get('recursos-humanos/evaluacion-desempeno/edit-borrador/{evaluacion}', 'RH\EvaluacionesDesempenoController@editBorrador')->name('rh.evaluaciones-desempeno.edit-borrador');
         Route::get('recursos-humanos/evaluacion-desempeno/evaluacion/{evaluacion}/cuestionario/{evaluado}/{periodo}', 'RH\EvaluacionesDesempenoController@cuestionarioEvaluacionDesempeno')->name('rh.evaluaciones-desempeno.cuestionario');
         Route::post('recursos-humanos/evaluacion-desempeno/evaluacion/{evaluacion}/storeFirmaEvaluacion/{evaluado}/{periodo}', 'RH\EvaluacionesDesempenoController@storeFirmasEvaluacion')->name('rh.evaluaciones-desempeno.storeFirmasEvaluacion');
 
