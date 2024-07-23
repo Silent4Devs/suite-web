@@ -12,10 +12,10 @@ document.querySelector("body").addEventListener("click", () => {
     document.querySelector("body").classList.remove("animate-active");
 });
 
-// document.getElementById("btn_modal_aviso").addEventListener("click", () => {
-//     document.getElementById("modal_aviso").classList.add("visible");
-// });
+document.getElementById("btn_modal_aviso").addEventListener("click", () => {
+    document.getElementById("modal_aviso").classList.add("visible");
+});
 
-// document.getElementById("btn_closed_modal").addEventListener("click", () => {
-//     document.getElementById("modal_aviso").classList.remove("visible");
-// });
+document.getElementById("btn_closed_modal").addEventListener("click", () => {
+    document.getElementById("modal_aviso").classList.remove("visible");
+});

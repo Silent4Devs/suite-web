@@ -115,6 +115,7 @@ button {
     min-width: var(--aside-width);
     background-color: rgb(216 216 224 / 50%);
 
+    position: relative;
     display: grid;
     place-items: center;
     padding: 40px;
@@ -392,4 +393,32 @@ body.animate-active {
 
 .modal_body p {
     text-align: justify;
+}
+
+.text-instrucction-mail {
+    font-size: 14px;
+    color: #768192;
+}
+
+/* datos invalidos ---------- */
+.invalid-feedback {
+    position: absolute;
+    bottom: 20px;
+    width: calc(var(--aside-width) - 80px);
+    padding: 15px;
+    border-radius: 4px;
+    font-size: 11px;
+    background-color: #efd0d0;
+    color: #930000;
+    text-align: center;
+}
+
+.is-invalid {
+    animation: invalidInput 3s;
+}
+
+@keyframes invalidInput {
+    from {
+        border: 1px solid red;
+    }
 }

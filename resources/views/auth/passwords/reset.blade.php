@@ -1,5 +1,4 @@
 @extends('layouts.app')
-@section('classBody', 'fromx')
 @section('content')
     @if (session('message'))
         <div class="alert alert-info" role="alert">
@@ -20,7 +19,7 @@
     <form method="POST" action="{{ route('password.request') }}" style="height: 513px">
         @csrf
 
-
+        <img class="logo_silent rounded-circle" style="width: 100px" src="{{ $logotipo }}" />
         <h3 class="mt-2" style="color: #345183; font-weight: normal; font-size:24px;">Reestablecer Contraseña</h3>
         <p class="text-muted mt-4" style="text-align: left">Introduce tu nueva contraseña, una vez realizada esta
             acción oprime el botón
