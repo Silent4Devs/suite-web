@@ -1,7 +1,7 @@
 <div class="d-flex align-items-center justify-content-between">
     <div style="{{ $place == 'notificaciones-page' ? 'flex-basis: calc(80% - 5px)' : 'flex-basis:100%' }}">
         <a class="dropdown-item text-secondary"
-            href="{{ route('admin.incidentes-de-seguridads.show', $last_unread_notification->data['id']) }}">
+            href="{{ route('admin.minutasaltadireccions.revision', $last_unread_notification->data['id']) }}">
             @switch(" ".$last_unread_notification->data['type']) {{-- Se concatena un espacio porque el autoformateado lo agrega en el case --}}
                 @case(' create')
                     <div class="d-flex align-items-center justify-content-start">
@@ -13,7 +13,7 @@
                             <i class="pr-2 fas fa-tasks text-success"></i>
                         @endif
                         &nbsp;&nbsp;
-                        <p class="p-0 m-0">Nuevo {{ $last_unread_notification->data['slug'] }} creado</p>
+                        <p class="p-0 m-0">La {{ $last_unread_notification->data['slug'] }} {{ $last_unread_notification->data['id']}}  a solicitado su firma</p>
                     </div>
                 @break
 
@@ -28,9 +28,7 @@
                         @endif
                         &nbsp;&nbsp;
                         <p class="p-0 m-0">
-                            El {{ $last_unread_notification->data['slug'] }} con folio
-                            {{ $last_unread_notification->data['folio'] ?? '' }} ha
-                            sido actualizado
+                            <p class="p-0 m-0">La {{ $last_unread_notification->data['slug'] }} {{ $last_unread_notification->data['id']}}  a solicitado su firma</p>
                         </p>
                     </div>
                 @break
@@ -46,9 +44,9 @@
                         @endif
                         &nbsp;&nbsp;
                         <p class="p-0 m-0">
-                            El {{ $last_unread_notification->data['slug'] }} con folio
-                            {{ $last_unread_notification->data['folio'] ?? '' }} ha
-                            sido eliminado
+                            La {{ $last_unread_notification->data['slug'] }} con fecha
+                            {{ $last_unread_notification->data['deleted_at'] ?? '' }} ha
+                            sido eliminada
                         </p>
                     </div>
                 @break
@@ -56,7 +54,6 @@
                 @default
             @endswitch
         </a>
-
     </div>
     @if ($place == 'notificaciones-page')
         <div class="text-muted" style="flex-basis: calc(15% - 2px)">
