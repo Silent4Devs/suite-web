@@ -544,7 +544,8 @@
                                                                     <option value="" selected>Seleccione un Evaluador
                                                                     </option>
                                                                     @foreach ($colaboradores as $colaborador)
-                                                                        <option value="{{ $colaborador['id'] }}">
+                                                                        <option value="{{ $colaborador['id'] }}"
+                                                                            {{ $evldr_obj == $colaborador['id'] ? 'selected' : '' }}>
                                                                             {{ $colaborador['name'] }}
                                                                         </option>
                                                                     @endforeach
