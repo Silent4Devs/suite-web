@@ -4,14 +4,15 @@ namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Http\JsonResponse;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Laravel\Sanctum\PersonalAccessToken;
 use Laravel\Sanctum\Sanctum;
+use Laravel\Sanctum\PersonalAccessToken;
 
-class AuthController extends Controller
+class UserAuthController extends Controller
 {
+
     public function login(Request $request)
     {
         $request->validate([
@@ -35,7 +36,6 @@ class AuthController extends Controller
         function encodeSpecialCharacters($url)
         {
             // Handle spaces
-            // $url = str_replace(' ', '%20', $url);
             // Encode other special characters, excluding /, \, and :
             $url = preg_replace_callback('/[^A-Za-z0-9_\-\.~\/\\\:]/', function ($matches) {
                 return rawurlencode($matches[0]);
@@ -68,39 +68,26 @@ class AuthController extends Controller
 
         $supervisor = $user->empleado->es_supervisor;
 
-        // $permisos_usuario = [];
-
-        // foreach ($user->roles as $role) {
-
-        //     $roles[]["nombre_rol"] = $role->title;
-
-        //     foreach ($role->permissions as $key => $permiso) {
-        //         $permisos_usuario[]["permiso"] = $permiso->title;
-        //     }
-        // }
-        // dd($roles);
         //Genera un nuevo token para el usuario
         $token = $user->createToken('auth_token')->plainTextToken;
+
+        $expiration = config('sanctum.expiration');
+
+        $expiration = Carbon::now()->addMinutes($expiration)->timestamp;
+
 
         //devuelve una respuesta JSON con el token generado y el tipo de token
         return response()->json([
             'access_token' => $token,
             'user' => $user->toArray(),
             'supervisor' => $supervisor,
-            // 'roles' => $roles,
-            // 'permisos' => $permisos_usuario,
+            'expiration' => $expiration ,
         ]);
     }
 
-    public function logout(): JsonResponse
+    public function logout()
     {
         $token = request()->bearerToken();
-
-        // return response()->json([
-        //     'status' => 'Success',
-        //     'message' => 'Hasta la proxima',
-        //     'data' => $token,
-        // ], 204);
 
         if (!$token) {
             return response()->json([
@@ -122,4 +109,27 @@ class AuthController extends Controller
             'data' => null,
         ], 200);
     }
+
+    public function checkToken(Request $request)
+    {
+        // Obtener el token de la solicitud
+        $token = $request->bearerToken();
+
+        // Verificar si el token existe y sigue siendo válido
+        $tokenInstance = PersonalAccessToken::findToken($token);
+
+        if ($tokenInstance && !$tokenInstance->isExpired()) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Token is valid'
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Token is invalid or expired'
+            ], 200);
+        }
+    }
+
+
 }

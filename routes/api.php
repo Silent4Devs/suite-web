@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\API\Auth\AuthController;
+use App\Http\Controllers\Api\Auth\UserAuthController;
 use App\Http\Controllers\Api\InicioUsuario\InicioUsuarioController;
 use App\Http\Controllers\Api\V1\SolicitudDayOff\SolicitudDayOffApiController;
 use App\Http\Controllers\Api\V1\SolicitudVacaciones\SolicitudVacacionesApiController;
@@ -12,12 +12,11 @@ use App\Http\Controllers\Api\V1\ContadorSolicitudes\ContadorSolicitudesApiContro
 use App\Http\Controllers\Api\V1\SolicitudPermisoGoceSueldo\SolicitudPermisoGoceSueldoApiController;
 use App\Http\Controllers\Api\V1\Timesheet\TimesheetApiController;
 
-Route::post('v1/login', [AuthController::class, 'login']);
-
-Route::post('api/v1/logout', [AuthController::class, 'logout']);
+Route::post('/loginMobile', [UserAuthController::class, 'login']);
+Route::post('checkToken', [UserAuthController::class, 'checkToken']);
 
 Route::group(['prefix' => 'api/v1', 'as' => 'api.', 'namespace' => 'Api\v1', 'middleware' => 'auth:sanctum'], function () {
-    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/logout', [UserAuthController::class, 'logout']);
     Route::get('inicioUsuario', [InicioUsuarioController::class, 'index']);
 
     Route::get('portal-comunicacion', [PortalComunicacionController::class, 'index']);
