@@ -370,6 +370,7 @@
                             @if ($firma->firma)
                                 <div class="text-center">
                                     <img src="{{ $firma->firma_ruta }}" alt="firma" style="width: 400px;"> <br>
+                                    <span>{{ \Carbon\Carbon::parse($firma->aprobador->created_at)->format('d/m/Y') }}</span><br>
                                     <span>{{ $firma->aprobador->name }}</span>
                                 </div>
                             @endif
