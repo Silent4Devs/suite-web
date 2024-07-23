@@ -25,15 +25,15 @@ class EvaluacionDesempeno extends Model
     ];
 
     protected $appends =
-        [
-            'areas_evaluacion',
-            'estatus_palabra',
-            'total_evaluaciones',
-            'total_evaluaciones_completadas',
-            'porcentaje_evaluaciones_completadas',
-            'cuenta_evaluados_evaluaciones_totales',
-            'cuenta_evaluados_evaluaciones_completadas_totales',
-        ];
+    [
+        'areas_evaluacion',
+        'estatus_palabra',
+        'total_evaluaciones',
+        'total_evaluaciones_completadas',
+        'porcentaje_evaluaciones_completadas',
+        'cuenta_evaluados_evaluaciones_totales',
+        'cuenta_evaluados_evaluaciones_completadas_totales',
+    ];
 
     const BORRADOR = 0;
 
@@ -107,10 +107,14 @@ class EvaluacionDesempeno extends Model
     {
         $evaluacion = self::find($this->id);
 
-        $periodos = $evaluacion->periodos->count();
-        $periodos_completados = $evaluacion->periodos->where('finalizado', true)->count();
+        $porcentaje = 0;
 
-        $porcentaje = ($periodos_completados / $periodos) * 100;
+        $periodos = $evaluacion->periodos->count();
+
+        if ($periodos > 0) {
+            $periodos_completados = $evaluacion->periodos->where('finalizado', true)->count();
+            $porcentaje = ($periodos_completados / $periodos) * 100;
+        }
 
         return $porcentaje;
     }
