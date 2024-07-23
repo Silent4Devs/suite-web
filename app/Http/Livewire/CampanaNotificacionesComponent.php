@@ -35,6 +35,7 @@ class CampanaNotificacionesComponent extends Component
         'echo:notificaciones-campana,QuejasEvent' => 'getTotalNotificaciones',
         'echo:notificaciones-campana,DenunciasEvent' => 'getTotalNotificaciones',
         'echo:notificaciones-campana,MejorasEvent' => 'getTotalNotificaciones',
+        'echo:notificaciones-campana,SugerenciasEvent' => 'getTotalNotificaciones',
         'NotificationMarkedAsReadList' => 'getTotalNotificaciones',
     ];
 

@@ -32,6 +32,7 @@ class ListaCampanaNotificacionesComponent extends Component
         'echo:notificaciones-campana,QuejasEvent' => 'render',
         'echo:notificaciones-campana,DenunciasEvent' => 'render',
         'echo:notificaciones-campana,MejorasEvent' => 'render',
+        'echo:notificaciones-campana,SugerenciasEvent' => 'render',
         'NotificationMarkedAsReadList' => 'render',
     ];
 

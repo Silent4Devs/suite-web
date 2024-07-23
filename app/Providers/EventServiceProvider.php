@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Events\AccionCorrectivaEvent;
 use App\Events\AlcancesEvent;
 use App\Events\AuditoriaAnualEvent;
+use App\Events\ContratoEvent;
 use App\Events\CoursesEvent;
 use App\Events\DenunciasEvent;
 use App\Events\DocumentoEvent;
@@ -13,6 +14,7 @@ use App\Events\EvaluacionEvent;
 use App\Events\IncidentesDeSeguridadEvent;
 use App\Events\MatrizRequisitosEvent;
 use App\Events\MejorasEvent;
+use App\Events\MinutasEvent;
 use App\Events\PlanImplementacionEvent;
 use App\Events\PoliticasSgiEvent;
 use App\Events\QuejasEvent;
@@ -31,6 +33,7 @@ use App\Listeners\AccionCorrectivaListener;
 use App\Listeners\AlcancesListener;
 use App\Listeners\AuditoriaAnualListener;
 use App\Listeners\BroadcastUserLoginNotification;
+use App\Listeners\ContratosListener;
 use App\Listeners\CoursesListener;
 use App\Listeners\DenunciasListener;
 use App\Listeners\DocumentoListener;
@@ -39,6 +42,7 @@ use App\Listeners\EvaluacionListener;
 use App\Listeners\IncidentesDeSeguridadListener;
 use App\Listeners\MatrizRequisitosListener;
 use App\Listeners\MejorasListener;
+use App\Listeners\MinutasListener;
 use App\Listeners\PlanImplementacionListener;
 use App\Listeners\PoliticasSgiListener;
 use App\Listeners\QuejasListener;
@@ -318,6 +322,12 @@ class EventServiceProvider extends ServiceProvider
         ],
         EvaluacionEvent::class => [
             EvaluacionListener::class,
+        ],
+        ContratoEvent::class => [
+            ContratosListener::class,
+        ],
+        MinutasEvent::class => [
+            MinutasListener::class,
         ],
     ];
 
