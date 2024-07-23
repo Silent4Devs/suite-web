@@ -17,6 +17,7 @@ use App\Events\MejorasEvent;
 use App\Events\MinutasEvent;
 use App\Events\PlanImplementacionEvent;
 use App\Events\PoliticasSgiEvent;
+use App\Events\PuestosEvent;
 use App\Events\QuejasEvent;
 use App\Events\RecursosEvent;
 use App\Events\RegistroMejoraEvent;
@@ -45,6 +46,7 @@ use App\Listeners\MejorasListener;
 use App\Listeners\MinutasListener;
 use App\Listeners\PlanImplementacionListener;
 use App\Listeners\PoliticasSgiListener;
+use App\Listeners\PuestosListener;
 use App\Listeners\QuejasListener;
 use App\Listeners\RecursosListener;
 use App\Listeners\RegistroMejoraListener;
@@ -328,6 +330,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         MinutasEvent::class => [
             MinutasListener::class,
+        ],
+        PuestosEvent::class => [
+            PuestosListener::class,
         ],
     ];
 
