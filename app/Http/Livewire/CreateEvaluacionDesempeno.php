@@ -865,8 +865,9 @@ class CreateEvaluacionDesempeno extends Component
     {
         // Validar antes de guardar
         if (!$this->validarPasoActual()) {
-            // No guardar nada si el paso actual no pasa la validación
-            return;
+            $this->guardarHastaPasoAnterior();
+
+            return redirect(route('admin.rh.evaluaciones-desempeno.index'))->with('warning', 'Datos incompletos, borrador guardado hasta el paso anterior.');
         }
 
         // Comienza o continúa el borrador de la evaluación

@@ -43,7 +43,8 @@
     "tucker-eric/eloquentfilter": "^3.2",
     "vladimir-yuldashev/laravel-queue-rabbitmq": "^14.0",
     "vxm/laravel-async": "^4.1",
-    "yajra/laravel-datatables-oracle": "^10.0"
+    "yajra/laravel-datatables-oracle": "^10.0",
+    "league/flysystem-ftp": "^3.28"
   },
   "require-dev": {
     "barryvdh/laravel-ide-helper": "^3.0",

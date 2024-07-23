@@ -153,11 +153,15 @@
             <div class="col-md-12 form-group">
                 <label for="">Asignar Aprobadores</label>
                 <select name="aprobadores_firma[]" id="aprobadores" multiple class="form-control">
+                    @if ($firma)
                     @foreach ($firma->aprobadores as $aprobador)
                         <option value="{{ $aprobador->id }}">
                             {{ $aprobador->name }}
                         </option>
                     @endforeach
+                    @else
+                        <option value="">No aprobadores available</option>
+                    @endif
                 </select>
             </div>
         </div>

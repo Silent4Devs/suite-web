@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Events\MejorasEvent;
 use App\Models\Mejoras;
 use Illuminate\Support\Facades\Cache;
 
@@ -14,6 +15,7 @@ class MejorasObserver
      */
     public function created(Mejoras $mejoras)
     {
+        event(new MejorasEvent($mejoras, 'create', 'mejoras', 'Mejora'));
         $this->forgetCache();
     }
 
@@ -24,6 +26,7 @@ class MejorasObserver
      */
     public function updated(Mejoras $mejoras)
     {
+        event(new MejorasEvent($mejoras, 'update', 'mejoras', 'Mejora'));
         $this->forgetCache();
     }
 
@@ -34,28 +37,10 @@ class MejorasObserver
      */
     public function deleted(Mejoras $mejoras)
     {
+        event(new MejorasEvent($mejoras, 'delete', 'mejoras', 'Mejora'));
         $this->forgetCache();
     }
 
-    /**
-     * Handle the Mejoras "restored" event.
-     *
-     * @return void
-     */
-    public function restored(Mejoras $mejoras)
-    {
-        $this->forgetCache();
-    }
-
-    /**
-     * Handle the Mejoras "force deleted" event.
-     *
-     * @return void
-     */
-    public function forceDeleted(Mejoras $mejoras)
-    {
-        $this->forgetCache();
-    }
 
     private function forgetCache()
     {

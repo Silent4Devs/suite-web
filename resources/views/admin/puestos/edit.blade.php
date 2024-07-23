@@ -21,6 +21,8 @@
                                         [
                                             'id' => 'aprobadores_firma',
                                             'style' => 'width: 20px; height: 20px; vertical-align: middle;',
+                                            'data-target' => '#modalConfirmAprob',
+                                            'data-toggle' => 'modal',
                                         ],
                                     ) !!}
                                 </div>
@@ -828,6 +830,7 @@
                                 @if ($firma->firma)
                                     <div class="text-center">
                                         <img src="{{ $firma->firma_ruta }}" alt="firma" style="width: 400px;"> <br>
+                                        <span>{{ \Carbon\Carbon::parse($firma->aprobador->created_at)->format('d/m/Y') }}</span><br>
                                         <span>{{ $firma->aprobador->name }}</span>
                                     </div>
                                 @endif
@@ -887,6 +890,38 @@
             });
         </script>
     @endcan
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalConfirmAprob" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+
+                    <div class="text-center my-5" style="color: rgb(230, 166, 16);">
+                        <i class="material-symbols-outlined" style="font-size: 100px;">
+                            error
+                        </i>
+                    </div>
+
+                    <p class="text-center" style="font-size: 18px;">
+                        <strong>
+                            ¿Está seguro de modificar la acción?
+                        </strong>
+                        <br>
+                        Esto quedará en el historial de movimientos
+                    </p>
+
+                    <div class="text-center mt-5">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Ok.</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 

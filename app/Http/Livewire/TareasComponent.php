@@ -63,14 +63,14 @@ class TareasComponent extends Component
 
     public function getUnreadTasks()
     {
-        $this->lista_tareas = Auth::user()->unreadNotifications()->where('data', 'like', '%"tipo_notificacion":"task"%')->fastPaginate(10);
+        $this->lista_tareas = Auth::user()->unreadNotifications()->where('data', 'like', '%"tipo_notificacion":"task"%')->orderByDesc('id')->cursorPaginate();
 
         return response()->noContent();
     }
 
     public function getReadedTasks()
     {
-        $this->lista_tareas = Auth::user()->readNotifications()->where('data', 'like', '%"tipo_notificacion":"task"%')->fastPaginate(10);
+        $this->lista_tareas = Auth::user()->readNotifications()->where('data', 'like', '%"tipo_notificacion":"task"%')->orderByDesc('id')->cursorPaginate();
 
         return response()->noContent();
     }

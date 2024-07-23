@@ -3,6 +3,36 @@
     <link rel="stylesheet" href="{{ asset('css/evaluations/evaluations.css') }}{{ config('app.cssVersion') }}">
 @endsection
 @section('content')
+    <style>
+        .custom-switch-xl .custom-control-label::before {
+            left: -6.75rem;
+            /* Triple the original left offset */
+            width: 10.5rem;
+            /* Triple the original width */
+            height: 5.25rem;
+            /* Triple the original height */
+            border-radius: 5.25rem;
+            /* Triple the original border-radius */
+        }
+
+        .custom-switch-xl .custom-control-label::after {
+            top: calc(0.375rem + 6px);
+            /* Triple the original top offset */
+            left: calc(-6.75rem + 6px);
+            /* Triple the original left offset */
+            width: calc(5.25rem - 12px);
+            /* Triple the original width */
+            height: calc(5.25rem - 12px);
+            /* Triple the original height */
+            border-radius: 5.25rem;
+            /* Triple the original border-radius */
+        }
+
+        .custom-switch-xl .custom-control-input:checked~.custom-control-label::after {
+            transform: translateX(5.25rem);
+            /* Triple the original translateX */
+        }
+    </style>
     {{-- {{ Breadcrumbs::render('capital-humano') }} --}}
 
     <h5 class="titulo_general_funcion"> Carga de Objetivos: {{ $empleado->name }} </h5>

@@ -29,6 +29,7 @@ use App\Traits\ObtenerOrganizacion;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
@@ -84,6 +85,21 @@ class TimesheetController extends Controller
             'estatus',
             'empleado_name'
         ));
+    }
+
+    private function forgetCache()
+    {
+        //Borrar cache de Timesheet
+        Cache::forget('Timesheet:timesheet-' . auth()->user()->empleado->id);
+        Cache::forget('Timesheet:timesheet_horas_all');
+        Cache::forget('Timesheet:timesheet_all');
+        Cache::forget('Timesheet:timesheet_estatus');
+        Cache::forget('Timesheet:timesheet_reportes');
+
+        //Borrar cache TimesheetHoras
+        Cache::forget('TimesheetHoras:timesheethoras_all');
+        Cache::forget('TimesheetHoras:timesheet_data_all');
+        Cache::forget('TimesheetHoras:timesheet_data_proy_tarea');
     }
 
     public function misRegistros($estatus = 'todos')
@@ -300,11 +316,11 @@ class TimesheetController extends Controller
         $usuario = User::getCurrentUser();
         $organizacion = Organizacion::getFirst();
 
-        $semanasAtras = $usuario->empleado->semanas_min_timesheet;
+        $semanasAtras = $usuario->empleado->semanas_min_timesheet ? $usuario->empleado->semanas_min_timesheet : 4;
 
         $today = Carbon::now();
 
-        $firstDay = $today->copy()->subWeeks($usuario->empleado->semanas_min_timesheet);
+        $firstDay = $today->copy()->subWeeks($semanasAtras);
         $endDay = $today->copy()->addWeeks($organizacion->semanas_adicionales);
         $firstDayFormatted = $firstDay->format('Y/m/d');
         $endDayFormatted = $endDay->format('Y/m/d');
@@ -375,7 +391,7 @@ class TimesheetController extends Controller
                 // catch exception and rollback transaction
                 catch (Throwable $e) {
                     DB::rollback();
-
+                    $this->forgetCache();
                     // throw $e;
                     return response()->json(['status' => 400]);
                 }
