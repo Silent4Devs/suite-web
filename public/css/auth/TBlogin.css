@@ -43,9 +43,19 @@ button {
 }
 
 .btn-animation-stop {
-    position: absolute;
+    position: fixed;
     bottom: 3px;
     left: 3px;
+
+    animation: btnAnimationStop 0.3s;
+    animation-delay: 3s;
+    animation-fill-mode: both;
+}
+
+@keyframes btnAnimationStop {
+    to {
+        opacity: 0;
+    }
 }
 
 .btn-animation-stop img {
@@ -426,31 +436,36 @@ body.animate-active {
 }
 
 /* responisve -------- */
-@media(width <= 850px){
+@media(width <=850px) {
+
     .box-title-tbj,
     .text-by,
-    .text-bienvenidos
-    {
+    .text-bienvenidos {
         display: none;
     }
-    .present-tbj{
+
+    .present-tbj {
         width: 20%;
         position: absolute;
         height: 100dvh;
     }
-    .aside-tbj{
+
+    .aside-tbj {
         min-width: 100%;
         width: 100%;
         background-color: rgb(255 255 255 / 82%);
     }
-    .animate-active .aside-tbj{
+
+    .animate-active .aside-tbj {
         animation: asideEnterMobile 1s;
         animation-fill-mode: both;
-        animation-delay: 5s;
+        animation-delay: 3.3s;
     }
+
     @keyframes asideEnterMobile {
-        from{
+        from {
             opacity: 0;
+            transform: translateX(50%);
         }
     }
 }
