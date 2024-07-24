@@ -108,6 +108,8 @@ button {
     font-size: 24px;
     margin-top: 40px;
     font-weight: lighter;
+    text-align: center;
+    padding: 0px 10px;
 }
 
 .aside-tbj {
@@ -420,5 +422,35 @@ body.animate-active {
 @keyframes invalidInput {
     from {
         border: 1px solid red;
+    }
+}
+
+/* responisve -------- */
+@media(width <= 850px){
+    .box-title-tbj,
+    .text-by,
+    .text-bienvenidos
+    {
+        display: none;
+    }
+    .present-tbj{
+        width: 20%;
+        position: absolute;
+        height: 100dvh;
+    }
+    .aside-tbj{
+        min-width: 100%;
+        width: 100%;
+        background-color: rgb(255 255 255 / 82%);
+    }
+    .animate-active .aside-tbj{
+        animation: asideEnterMobile 1s;
+        animation-fill-mode: both;
+        animation-delay: 5s;
+    }
+    @keyframes asideEnterMobile {
+        from{
+            opacity: 0;
+        }
     }
 }
