@@ -138,9 +138,9 @@ class ContratosController extends AppBaseController
             'identificador' => 'required_if:creacion_proyecto,true|string|max:255',
             'tipo' => 'required_if:creacion_proyecto,true|string|max:255',
             'proyecto_name' => 'required_if:creacion_proyecto,true|string|max:255',
-            'sede_id' => 'required_if:creacion_proyecto,true|integer|exists:sedes,id',
-            'fecha_inicio_proyecto' => 'required_if:creacion_proyecto,true|date',
-            'fecha_fin_proyecto' => 'required_if:creacion_proyecto,true|date|after_or_equal:fecha_inicio_proyecto',
+            'sede_id' => 'nullable|integer|exists:sedes,id', //required_if:creacion_proyecto,true|
+            'fecha_inicio_proyecto' => 'nullable|date', //required_if:creacion_proyecto,true|
+            'fecha_fin_proyecto' => 'nullable|date|after_or_equal:fecha_inicio_proyecto', //required_if:creacion_proyecto,true|
             'horas_proyecto' => 'nullable|integer|min:0',
         ], [
             'no_proyecto.int' => 'Debe seleccionar un proyecto o crear uno.',
