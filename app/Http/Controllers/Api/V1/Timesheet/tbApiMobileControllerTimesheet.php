@@ -39,7 +39,18 @@ class tbApiMobileControllerTimesheet extends Controller
 {
     use ObtenerOrganizacion;
 
-    public function show($id)
+    public function encodeSpecialCharacters($url)
+    {
+        // Handle spaces
+        // $url = str_replace(' ', '%20', $url);
+        // Encode other special characters, excluding /, \, and :
+        $url = preg_replace_callback('/[^A-Za-z0-9_\-\.~\/\\\:]/', function ($matches) {
+            return rawurlencode($matches[0]);
+        }, $url);
+        return $url;
+    }
+
+    public function tbFunctionShow($id)
     {
         // $id_empleado = User::getCurrentUser()->empleado->id;
 
@@ -107,7 +118,7 @@ class tbApiMobileControllerTimesheet extends Controller
         // }
     }
 
-    public function obtenerEquipo($childrens)
+    public function tbFunctionObtenerEquipo($childrens)
     {
         $equipo_a_cargo = collect();
 
@@ -115,25 +126,14 @@ class tbApiMobileControllerTimesheet extends Controller
             $equipo_a_cargo->push($evaluador->id);
 
             if (count($evaluador->children)) {
-                $equipo_a_cargo->push($this->obtenerEquipo($evaluador->children));
+                $equipo_a_cargo->push($this->tbFunctionObtenerEquipo($evaluador->children));
             }
         }
 
         return $equipo_a_cargo->flatten(1)->toArray();
     }
 
-    public  function encodeSpecialCharacters($url)
-    {
-        // Handle spaces
-        // $url = str_replace(' ', '%20', $url);
-        // Encode other special characters, excluding /, \, and :
-        $url = preg_replace_callback('/[^A-Za-z0-9_\-\.~\/\\\:]/', function ($matches) {
-            return rawurlencode($matches[0]);
-        }, $url);
-        return $url;
-    }
-
-    public function aprobaciones(Request $request)
+    public function tbFunctionAprobaciones(Request $request)
     {
         // abort_if(Gate::denies('timesheet_administrador_aprobar_rechazar_horas_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $habilitarTodos = $request->habilitarTodos ? true : false;
@@ -176,7 +176,7 @@ class tbApiMobileControllerTimesheet extends Controller
         $usuario->id_puesto_empleado = $usuario->empleado->puesto_id;
         $usuario->nombre_puesto_empleado = $usuario->empleado->puesto;
 
-        $equipo_a_cargo = $this->obtenerEquipo($usuario->empleado->children);
+        $equipo_a_cargo = $this->tbFunctionObtenerEquipo($usuario->empleado->children);
         array_push($equipo_a_cargo, $usuario->empleado->id);
         if ($habilitarTodos) {
             $aprobaciones = Timesheet::with('empleado')->where('estatus', 'pendiente')
@@ -226,7 +226,7 @@ class tbApiMobileControllerTimesheet extends Controller
         ]), 200)->header('Content-Type', 'application/json');
     }
 
-    public function aprobar(Request $request, $id)
+    public function tbFunctionAprobar(Request $request, $id)
     {
         // abort_if(Gate::denies('timesheet_administrador_aprobar_horas'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $respuesta = $request->input('respuesta');
@@ -253,7 +253,7 @@ class tbApiMobileControllerTimesheet extends Controller
         return json_encode(['éxito', 'Guardado con éxito'], 200);
     }
 
-    public function rechazar(Request $request, $id)
+    public function tbFunctionRechazar(Request $request, $id)
     {
         // abort_if(Gate::denies('timesheet_administrador_aprobar_horas'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $respuesta = $request->input('respuesta');
@@ -280,7 +280,7 @@ class tbApiMobileControllerTimesheet extends Controller
         return json_encode(['éxito', 'Guardado con éxito'], 200);
     }
 
-    public function contadorPendientesTimesheetAprobador()
+    public function tbFunctionContadorPendientesTimesheetAprobador()
     {
         $usuario = User::getCurrentUser();
         // papelera, aprobado, rechazado, pendiente

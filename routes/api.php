@@ -7,8 +7,8 @@ use App\Http\Controllers\Api\V1\SolicitudVacaciones\tbApiMobileControllerSolicit
 use App\Http\Controllers\Api\V1\PortalComunicacion\tbApiMobileControllerPortalComunicacion;
 use App\Http\Controllers\Api\v1\AnalisisRiesgo\FormulasController;
 use App\Http\Controllers\Api\V1\AnalisisRiesgo\templateAnalisisRiesgoController;
-use App\Http\Controllers\Api\V1\Comunicados\ComunicadosApiController;
-use App\Http\Controllers\Api\V1\ContadorSolicitudes\ContadorSolicitudesApiController;
+use App\Http\Controllers\Api\V1\Comunicados\tbApiMobileControllerComunicados;
+use App\Http\Controllers\Api\V1\ContadorSolicitudes\tbApiMobileControllerContadorSolicitudes;
 use App\Http\Controllers\Api\V1\SolicitudPermisoGoceSueldo\tbApiMobileControllerSolicitudPermisoGoceSueldo;
 use App\Http\Controllers\Api\V1\Timesheet\tbApiMobileControllerTimesheet;
 
@@ -19,56 +19,66 @@ Route::group(['prefix' => 'api/v1', 'as' => 'api.', 'namespace' => 'Api\v1', 'mi
     Route::post('/logout', [UserAuthController::class, 'logout']);
     Route::get('inicioUsuario', [InicioUsuarioController::class, 'index']);
 
-    Route::get('portal-comunicacion', [tbApiMobileControllerPortalComunicacion::class, 'index']);
-    Route::get('comunicados', [ComunicadosApiController::class, 'index']);
+    Route::get('portal-comunicacion', [tbApiMobileControllerPortalComunicacion::class, 'tbFunctionIndex']);
+    Route::get('comunicados', [tbApiMobileControllerComunicados::class, 'tbFunctionIndex']);
 
-    Route::get('counterSolicitud', [ContadorSolicitudesApiController::class, 'contadorSolicitudes']);
-    Route::get('counterGeneralSolicitud', [ContadorSolicitudesApiController::class, 'contadorGeneralSolicitudes']);
+    Route::get('counterSolicitud', [tbApiMobileControllerContadorSolicitudes::class, 'tbFunctionContadorSolicitudes']);
+    Route::get('counterGeneralSolicitud', [tbApiMobileControllerContadorSolicitudes::class, 'tbFunctionContadorGeneralSolicitudes']);
 
-    Route::get('solicitud-dayoff', [tbApiMobileControllerSolicitudDayOff::class, 'index']);
-    Route::get('solicitud-dayoff/create', [tbApiMobileControllerSolicitudDayOff::class, 'create']);
-    Route::post('solicitud-dayoff/store', [tbApiMobileControllerSolicitudDayOff::class, 'store']);
-    Route::get('solicitud-dayoff/{id}/show', [tbApiMobileControllerSolicitudDayOff::class, 'show']);
-    Route::get('solicitud-dayoff/aprobacion', [tbApiMobileControllerSolicitudDayOff::class, 'aprobacion']);
-    Route::get('solicitud-dayoff/{id}/respuesta', [tbApiMobileControllerSolicitudDayOff::class, 'respuesta']);
-    Route::post('solicitud-dayoff/{id}/update', [tbApiMobileControllerSolicitudDayOff::class, 'update']);
-    Route::get('solicitud-dayoff/archivo', [tbApiMobileControllerSolicitudDayOff::class, 'archivo']);
-    Route::get('solicitud-dayoff-vistaGlobal', [tbApiMobileControllerSolicitudDayOff::class, 'vistaGlobal']);
-    Route::get('solicitud-dayoff/{id}/showVistaGlobal', [tbApiMobileControllerSolicitudDayOff::class, 'showVistaGlobal']);
-    Route::get('solicitud-dayoff/{id}/showArchivo', [tbApiMobileControllerSolicitudDayOff::class, 'showArchivo']);
-    Route::delete('solicitud-dayoff/{id}/destroy', [tbApiMobileControllerSolicitudDayOff::class, 'destroy']);
+    Route::prefix('solicitud-dayoff')->group(function () {
+        Route::get('', [tbApiMobileControllerSolicitudDayOff::class, 'tbFunctionIndex']);
+        Route::post('/store', [tbApiMobileControllerSolicitudDayOff::class, 'tbFunctionStore']);
+        Route::get('/{id}/show', [tbApiMobileControllerSolicitudDayOff::class, 'tbFunctionShow']);
+        Route::get('/aprobacion', [tbApiMobileControllerSolicitudDayOff::class, 'tbFunctionAprobacion']);
+        Route::get('/{id}/respuesta', [tbApiMobileControllerSolicitudDayOff::class, 'tbFunctionRespuesta']);
+        Route::post('/{id}/update', [tbApiMobileControllerSolicitudDayOff::class, 'tbFunctionUpdate']);
+        Route::get('/archivo', [tbApiMobileControllerSolicitudDayOff::class, 'tbFunctionArchivo']);
+        Route::get('/{id}/showVistaGlobal', [tbApiMobileControllerSolicitudDayOff::class, 'tbFunctionShowVistaGlobal']);
+        Route::get('/{id}/showArchivo', [tbApiMobileControllerSolicitudDayOff::class, 'tbFunctionShowArchivo']);
+        Route::delete('/{id}/destroy', [tbApiMobileControllerSolicitudDayOff::class, 'tbFunctionDestroy']);
+    });
+    //No funciona correctamente con /
+    Route::get('solicitud-dayoff-vistaGlobal', [tbApiMobileControllerSolicitudDayOff::class, 'tbFunctionVistaGlobal']);
 
-    Route::get('solicitud-vacaciones', [tbApiMobileControllerSolicitudVacaciones::class, 'index']);
-    Route::get('solicitud-vacaciones/create', [tbApiMobileControllerSolicitudVacaciones::class, 'create']);
-    Route::get('solicitud-vacaciones/{id}/show', [tbApiMobileControllerSolicitudVacaciones::class, 'show']);
-    Route::post('solicitud-vacaciones/store', [tbApiMobileControllerSolicitudVacaciones::class, 'store']);
-    Route::get('solicitud-vacaciones/aprobacion', [tbApiMobileControllerSolicitudVacaciones::class, 'aprobacion']);
-    Route::get('solicitud-vacaciones/{id}/respuesta', [tbApiMobileControllerSolicitudVacaciones::class, 'respuesta']);
-    Route::post('solicitud-vacaciones/{id}/update', [tbApiMobileControllerSolicitudVacaciones::class, 'update']);
-    Route::get('solicitud-vacaciones/archivo', [tbApiMobileControllerSolicitudVacaciones::class, 'archivo']);
-    Route::get('solicitud-vacaciones-vistaGlobal', [tbApiMobileControllerSolicitudVacaciones::class, 'vistaGlobal']);
-    Route::get('solicitud-vacaciones/{id}/showVistaGlobal', [tbApiMobileControllerSolicitudVacaciones::class, 'showVistaGlobal']);
-    Route::get('solicitud-vacaciones/{id}/archivoShow', [tbApiMobileControllerSolicitudVacaciones::class, 'archivoShow']);
-    Route::delete('solicitud-vacaciones/{id}/destroy', [tbApiMobileControllerSolicitudVacaciones::class, 'destroy']);
+    Route::prefix('solicitud-vacaciones')->group(function () {
+        Route::get('', [tbApiMobileControllerSolicitudVacaciones::class, 'tbFunctionIndex']);
+        Route::get('/create', [tbApiMobileControllerSolicitudVacaciones::class, 'tbFunctionCreate']);
+        Route::post('/store', [tbApiMobileControllerSolicitudVacaciones::class, 'tbFunctionStore']);
+        Route::get('/{id}/show', [tbApiMobileControllerSolicitudVacaciones::class, 'tbFunctionShow']);
+        Route::post('/{id}/update', [tbApiMobileControllerSolicitudVacaciones::class, 'tbFunctionUpdate']);
+        Route::delete('/{id}/destroy', [tbApiMobileControllerSolicitudVacaciones::class, 'tbFunctionDestroy']);
+        Route::get('/aprobacion', [tbApiMobileControllerSolicitudVacaciones::class, 'tbFunctionAprobacion']);
+        Route::get('/{id}/respuesta', [tbApiMobileControllerSolicitudVacaciones::class, 'tbFunctionRespuesta']);
+        Route::get('/archivo', [tbApiMobileControllerSolicitudVacaciones::class, 'tbFunctionArchivo']);
+        Route::get('/{id}/archivoShow', [tbApiMobileControllerSolicitudVacaciones::class, 'tbFunctionArchivoShow']);
+        Route::get('/{id}/showVistaGlobal', [tbApiMobileControllerSolicitudVacaciones::class, 'tbFunctionShowVistaGlobal']);
+    });
+    //No funciona correctamente con /
+    Route::get('solicitud-vacaciones-vistaGlobal', [tbApiMobileControllerSolicitudVacaciones::class, 'tbFunctionVistaGlobal']);
 
-    Route::get('solicitud-permisos', [tbApiMobileControllerSolicitudPermisoGoceSueldo::class, 'index']);
-    Route::get('solicitud-permisos/catalogoPermisos', [tbApiMobileControllerSolicitudPermisoGoceSueldo::class, 'catalogoPermisos']);
-    Route::get('solicitud-permisos/{id}/show', [tbApiMobileControllerSolicitudPermisoGoceSueldo::class, 'show']);
-    Route::post('solicitud-permisos/store', [tbApiMobileControllerSolicitudPermisoGoceSueldo::class, 'store']);
-    Route::get('solicitud-permisos/aprobacion', [tbApiMobileControllerSolicitudPermisoGoceSueldo::class, 'aprobacion']);
-    Route::get('solicitud-permisos/{id}/respuesta', [tbApiMobileControllerSolicitudPermisoGoceSueldo::class, 'respuesta']);
-    Route::post('solicitud-permisos/{id}/update', [tbApiMobileControllerSolicitudPermisoGoceSueldo::class, 'update']);
-    Route::get('solicitud-permisos/archivo', [tbApiMobileControllerSolicitudPermisoGoceSueldo::class, 'archivo']);
+    Route::prefix('solicitud-permisos')->group(function () {
+        Route::get('', [tbApiMobileControllerSolicitudPermisoGoceSueldo::class, 'index']);
+        Route::get('/catalogoPermisos', [tbApiMobileControllerSolicitudPermisoGoceSueldo::class, 'catalogoPermisos']);
+        Route::get('/{id}/show', [tbApiMobileControllerSolicitudPermisoGoceSueldo::class, 'show']);
+        Route::post('/store', [tbApiMobileControllerSolicitudPermisoGoceSueldo::class, 'store']);
+        Route::get('/aprobacion', [tbApiMobileControllerSolicitudPermisoGoceSueldo::class, 'aprobacion']);
+        Route::get('/{id}/respuesta', [tbApiMobileControllerSolicitudPermisoGoceSueldo::class, 'respuesta']);
+        Route::post('/{id}/update', [tbApiMobileControllerSolicitudPermisoGoceSueldo::class, 'update']);
+        Route::get('/archivo', [tbApiMobileControllerSolicitudPermisoGoceSueldo::class, 'archivo']);
+        Route::get('/{id}/showVistaGlobal', [tbApiMobileControllerSolicitudPermisoGoceSueldo::class, 'showVistaGlobal']);
+        Route::get('/{id}/archivoShow', [tbApiMobileControllerSolicitudPermisoGoceSueldo::class, 'archivoShow']);
+        Route::delete('/{id}/destroy', [tbApiMobileControllerSolicitudPermisoGoceSueldo::class, 'destroy']);
+    });
+    //No funciona correctamente con /
     // Route::get('solicitud-permisos-vistaGlobal', [tbApiMobileControllerSolicitudPermisoGoceSueldo::class, 'vistaGlobal']);
-    Route::get('solicitud-permisos/{id}/showVistaGlobal', [tbApiMobileControllerSolicitudPermisoGoceSueldo::class, 'showVistaGlobal']);
-    Route::get('solicitud-permisos/{id}/archivoShow', [tbApiMobileControllerSolicitudPermisoGoceSueldo::class, 'archivoShow']);
-    Route::delete('solicitud-permisos/{id}/destroy', [tbApiMobileControllerSolicitudPermisoGoceSueldo::class, 'destroy']);
 
-    Route::get('timesheet/show/{id}', [tbApiMobileControllerTimesheet::class, 'show']);
-    Route::get('timesheet/aprobaciones', [tbApiMobileControllerTimesheet::class, 'aprobaciones']);
-    Route::post('timesheet/aprobar/{id}', [tbApiMobileControllerTimesheet::class, 'aprobar']);
-    Route::post('timesheet/rechazar/{id}', [tbApiMobileControllerTimesheet::class, 'rechazar']);
-    Route::get('timesheet/contadorRegistrosPendientes', [tbApiMobileControllerTimesheet::class, 'contadorPendientesTimesheetAprobador']);
+    Route::prefix('timesheet')->group(function () {
+        Route::get('/show/{id}', [tbApiMobileControllerTimesheet::class, 'tbFunctionShow']);
+        Route::get('/aprobaciones', [tbApiMobileControllerTimesheet::class, 'tbFunctionAprobaciones']);
+        Route::post('/aprobar/{id}', [tbApiMobileControllerTimesheet::class, 'tbFunctionAprobar']);
+        Route::post('/rechazar/{id}', [tbApiMobileControllerTimesheet::class, 'tbFunctionRechazar']);
+        Route::get('/contadorRegistrosPendientes', [tbApiMobileControllerTimesheet::class, 'tbFunctionContadorPendientesTimesheetAprobador']);
+    });
 });
 // Route::apiResource('api/v1/test', templateAnalisisRiesgoController::class);
 // Route::delete('api/v1/test/section/delete/{id}', [templateAnalisisRiesgoController::class, 'destroySection']);

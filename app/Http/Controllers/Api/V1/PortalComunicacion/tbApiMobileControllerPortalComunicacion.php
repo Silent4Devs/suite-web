@@ -25,7 +25,7 @@ class tbApiMobileControllerPortalComunicacion extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function tbFunctionIndex()
     {
         // abort_if(Gate::denies('portal_de_comunicaccion_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -158,7 +158,7 @@ class tbApiMobileControllerPortalComunicacion extends Controller
             $cumple->id_puesto = $cumple->puestoRelacionado->id;
             $cumple->nombre_puesto = $cumple->puesto;
 
-            $cumple->fecha_cumpleanos = $this->convertircumpleanos($cumple->cumpleaños);
+            $cumple->fecha_cumpleanos = $this->tbFunctionConvertirCumpleanos($cumple->cumpleaños);
 
             if ($cumple->foto == null || $cumple->foto == '0') {
                 if ($cumple->genero == 'H') {
@@ -214,7 +214,7 @@ class tbApiMobileControllerPortalComunicacion extends Controller
         ), 200)->header('Content-Type', 'application/json');
     }
 
-    public function convertircumpleanos($fecha)
+    public function tbFunctionConvertirCumpleanos($fecha)
     {
         $dia_cumpleanos = Carbon::parse($fecha)->format('d');
         $mes_fecha = Carbon::parse($fecha)->format('m');

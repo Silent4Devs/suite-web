@@ -18,14 +18,14 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
 
-class ComunicadosApiController extends Controller
+class tbApiMobileControllerComunicados extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function tbFunctionIndex()
     {
         // abort_if(Gate::denies('portal_de_comunicaccion_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $hoy = Carbon::now();
@@ -45,82 +45,6 @@ class ComunicadosApiController extends Controller
                 'comunicados' => $comunicados,
             ],
         ), 200)->header('Content-Type', 'application/json');
-    }
-
-    public function convertircumpleanos($fecha)
-    {
-        $dia_cumpleanos = Carbon::parse($fecha)->format('d');
-        $mes_fecha = Carbon::parse($fecha)->format('m');
-
-        switch ($mes_fecha) {
-            case '01':
-                # code...
-                $mes_cumpleanos = "Enero";
-                break;
-
-            case '02':
-                # code...
-                $mes_cumpleanos = "Febrero";
-                break;
-
-            case '03':
-                # code...
-                $mes_cumpleanos = "Marzo";
-                break;
-
-            case '04':
-                # code...
-                $mes_cumpleanos = "Abril";
-                break;
-
-            case '05':
-                # code...
-                $mes_cumpleanos = "Mayo";
-                break;
-
-            case '06':
-                # code...
-                $mes_cumpleanos = "Junio";
-                break;
-
-            case '07':
-                # code...
-                $mes_cumpleanos = "Julio";
-                break;
-
-            case '08':
-                # code...
-                $mes_cumpleanos = "Agosto";
-                break;
-
-            case '09':
-                # code...
-                $mes_cumpleanos = "Septiembre";
-                break;
-
-            case '10':
-                # code...
-                $mes_cumpleanos = "Octubre";
-                break;
-
-            case '11':
-                # code...
-                $mes_cumpleanos = "Noviembre";
-                break;
-
-            case '12':
-                # code...
-                $mes_cumpleanos = "Diciembre";
-                break;
-
-            default:
-                # code...
-                break;
-        }
-
-        // dd($mes_fecha, $mes_cumpleanos);
-        $fecha_cumpleanos = $dia_cumpleanos . " de " . $mes_cumpleanos;
-        return $fecha_cumpleanos;
     }
 
     /**
