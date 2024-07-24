@@ -9,45 +9,24 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ trans('panel.site_title') }}</title>
 
-    <!-- Principal Styles -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/global/loader.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/global/custom.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/file-manager/css/file-manager.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/yearpicker.css') }}">
-    @vite(['public/css/app.css'])
-    @vite(['public/css/global/style.css'])
-    @vite(['public/css/global/admin.css'])
-    @vite(['public/css/rds.css'])
-    {{-- <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/global/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/global/admin.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/rds.css') }}"> --}}
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/global/responsive.css') }}">
+
+    @vite(['resources/sass/app.scss'])
+
     @yield('css')
     @yield('styles')
     <!-- End Principal Styles -->
 
     <!-- Fonts -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined" rel="stylesheet">
-    <link rel="stylesheet" href="https://storage.googleapis.com/non-spec-apps/mio-icons/latest/outline.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
         integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined" rel="stylesheet" />
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,300,0,0" />
     <!-- End Fonts -->
 
     <!-- Extra Styles -->
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css">
-    <!-- x-editable -->
-    <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css"
-        rel="stylesheet" />
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/jquery-editable/jquery-ui-datepicker/css/redmond/jquery-ui-1.10.3.custom.min.css"
         integrity="sha512-4E8WH1J08+TC3LLRtjJdA8OlggQvj5LN+TciGGwJWaQtFXj0BoZPKT9gIHol283GiUfpKPVk54LJfur5jfiRxA=="
@@ -69,8 +48,6 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- End Extra Styles -->
 
-    <link rel="stylesheet" href="{{ asset('css/admin.css') }}{{ config('app.cssVersion') }}">
-    <link rel="stylesheet" href="{{ asset('css/rds.css') }}{{ config('app.cssVersion') }}">
     @yield('styles')
     @livewireStyles
 
@@ -80,7 +57,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/favicon_tabantaj_v2.png') }}">
 </head>
 
-<body style="zoom: 99%">
+<body>
     <div id="loading">
         <img id="loading-image" src="https://i.pinimg.com/originals/07/24/88/0724884440e8ddd0896ff557b75a222a.gif"
             alt="Loading...">
@@ -585,7 +562,6 @@
                 @yield('content')
             </main>
         </div>
-
     </div>
     <form id="logoutform" action="{{ route('logout') }}" method="POST" style="display: none;">
         {{ csrf_field() }}
@@ -673,15 +649,9 @@
     <!--<script src="{{ asset('js/validations.js') }}"></script>-->
     <script src="{{ asset('js/app.js') }}"></script>
     @yield('js')
-    <script src="https://unpkg.com/@coreui/coreui@3.4.0/dist/js/coreui.bundle.min.js"></script>
-    <script src="https://unpkg.com/@popperjs/core@2"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous">
     </script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.bootstrap.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.7.0/js/dataTables.buttons.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
@@ -701,11 +671,9 @@
     <script src="//cdn.ckeditor.com/4.16.0/full/ckeditor.js"></script>
     <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/index.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
     <script defer src="//unpkg.com/alpinejs" defer></script>
     <script src="{{ asset('js/main.js') }}"></script>
     <!-- x editable -->
-    <script defer src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js">
     </script>
     <!-- termina sección de script -->
 
