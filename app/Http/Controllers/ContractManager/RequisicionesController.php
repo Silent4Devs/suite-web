@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\ContractManager;
 
+use App\Events\RequisicionesEvent;
 use App\Http\Controllers\Controller;
 use App\Mail\RequisicionesEmail;
 use App\Mail\RequisicionesFirmaDuplicadaEmail;
@@ -182,10 +183,14 @@ class RequisicionesController extends Controller
      */
     public function destroy($id)
     {
+        $requisicion = KatbolRequsicion::find($id);
 
-        KatbolRequsicion::destroy($id);
+        if ($requisicion) {
+            $requisicion->delete();
+            return response()->json(['redirect' => route('contract_manager.requisiciones')]);
+        }
 
-        return redirect('/contract_manager/requisiciones');
+        return redirect()->route('contract_manager.requisiciones')->with('error', 'Requisición no encontrada');
     }
 
     /**
