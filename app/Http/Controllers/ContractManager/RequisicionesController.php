@@ -182,9 +182,10 @@ class RequisicionesController extends Controller
      */
     public function destroy($id)
     {
+
         KatbolRequsicion::destroy($id);
 
-        return redirect(route('contract_manager.requisiciones'));
+        return redirect('/contract_manager/requisiciones');
     }
 
     /**
