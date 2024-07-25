@@ -154,23 +154,46 @@
 
     <script>
         function mostrarAlerta(url) {
-            Swal.fire({
-                title: '¿Estás seguro?',
-                text: 'No podrás deshacer esta acción',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Sí, eliminar',
-                cancelButtonText: 'Cancelar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Coloca aquí la lógica para eliminar el elemento
-                    // Esto puede incluir una solicitud AJAX al servidor o cualquier otra lógica de eliminación
-                    // Una vez que el elemento se haya eliminado, puedes mostrar un mensaje de éxito
-                    Swal.fire('¡Eliminado!', 'El elemento ha sido eliminado.', 'success');
-                    window.location.href = url;
-                }
-            });
-        }
+        console.log('URL para eliminar:', url);
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: 'No podrás deshacer esta acción',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(url, {
+                    method: 'GET', // Cambia a 'DELETE' si es necesario
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire('¡Eliminado!', 'El elemento ha sido eliminado.', 'success')
+                        .then(() => {
+                            window.location.reload(); // Refresca la página
+                        });
+                    } else {
+                        window.location.reload();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    window.location.reload();
+                });
+            }
+        });
+    }
 
         function mostrarAlerta2(url) {
             Swal.fire({
