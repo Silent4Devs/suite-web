@@ -124,20 +124,18 @@ class RequisicionesCreateComponent extends Component
         $this->productos = KatbolProducto::where('archivo', false)->get();
         $this->organizacion = Organizacion::getFirst();
 
-        if ($this->sucursales->isEmpty()) {
-            $this->emit('sin_registros', 'Sucursales');
-        }
-        if ($this->proveedores->isEmpty()) {
-            $this->emit('sin_registros', 'Proveedores');
-        }
-        if ($this->compradores->isEmpty()) {
-            $this->emit('sin_registros', 'Compradores');
-        }
-        if ($this->contratos->isEmpty()) {
-            $this->emit('sin_registros', 'Contratos');
-        }
-        if ($this->productos->isEmpty()) {
-            $this->emit('sin_registros', 'Productos');
+        $collections = [
+            'sucursales' => 'Sucursales',
+            'proveedores' => 'Proveedores',
+            'compradores' => 'Compradores',
+            'contratos' => 'Contratos',
+            'productos' => 'Productos',
+        ];
+
+        foreach ($collections as $property => $name) {
+            if ($this->$property->isEmpty()) {
+                $this->emit('sin_registros', $name);
+            }
         }
 
         return view('livewire.requisiciones-create-component');
