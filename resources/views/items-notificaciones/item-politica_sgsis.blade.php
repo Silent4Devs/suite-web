@@ -29,7 +29,7 @@
                         &nbsp;&nbsp;
                         <p class="p-0 m-0">
                             La {{ $last_unread_notification->data['slug'] }} con fecha
-                            {{ \Carbon\Carbon::parse($last_unread_notification->data['updated_at'])->format('d M Y, h:i A') ?? '' }} ha
+                            {{ \Carbon\Carbon::parse($last_unread_notification->data['updated_at'] ?? null)->format('d M Y, h:i A') ?? '' }} ha
                             sido actualizada
                         </p>
                     </div>
@@ -47,11 +47,20 @@
                         &nbsp;&nbsp;
                         <p class="p-0 m-0">
                             La {{ $last_unread_notification->data['slug'] }} con fecha
-                            {{ \Carbon\Carbon::parse($last_unread_notification->data['deleted_at'])->format('d M Y, h:i A') ?? '' }} ha
+                            {{ \Carbon\Carbon::parse($last_unread_notification->data['deleted_at'] ?? null)->format('d M Y, h:i A') ?? '' }} ha
                             sido eliminada
                         </p>
                     </div>
                 @break
+
+
+                @case(' aprobado')
+                <div class="d-flex align-items-center justify-content-start">
+                    <p class="p-0 m-0">
+                        La {{ $last_unread_notification->data['slug'] }} ha sido aprobada
+                    </p>
+                </div>
+            @break
 
                 @default
             @endswitch
