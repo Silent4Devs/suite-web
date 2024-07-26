@@ -471,21 +471,6 @@ class CreateEvaluacionDesempeno extends Component
     {
         if (!($this->bloquear_evaluacion)) {
             // Verificar que la suma de los porcentajes de los evaluadores sea igual a 100% para cada evaluado
-            foreach ($this->array_porcentaje_evaluadores as $key => $porcentajes) {
-                $suma_porcentajes_objetivos = array_sum($porcentajes['porcentaje_evaluador_objetivos']);
-                $suma_porcentajes_competencias = array_sum($porcentajes['porcentaje_evaluador_competencias']);
-
-                if ($suma_porcentajes_objetivos !== 100 || $suma_porcentajes_competencias !== 100) {
-                    $this->alert('error', 'La suma de los porcentajes de los evaluadores debe ser igual a 100% para cada evaluado', [
-                        'position' => 'center',
-                        'timer' => 5000,
-                        'toast' => true,
-                        'text' => 'Por favor, asegúrese de que los porcentajes estén correctamente distribuidos.',
-                    ]);
-
-                    return;
-                }
-            }
 
             // Crear la evaluación de desempeño
             $evaluacion = EvaluacionDesempeno::create([
@@ -521,6 +506,25 @@ class CreateEvaluacionDesempeno extends Component
                         'fecha_fin' => $p['fecha_fin'],
                         'habilitado' => $p['habilitar'],
                     ]);
+                }
+            }
+
+            foreach ($this->array_porcentaje_evaluadores as $key => $porcentajes) {
+                $suma_porcentajes_objetivos = array_sum($porcentajes['porcentaje_evaluador_objetivos'] ?? []);
+                $suma_porcentajes_competencias = array_sum($porcentajes['porcentaje_evaluador_competencias'] ?? []);
+
+                if ($evaluacion->activar_objetivos && $evaluacion->activar_competencias) {
+                    if ($suma_porcentajes_objetivos !== 100 || $suma_porcentajes_competencias !== 100) {
+                        return $this->mostrarErrorPorcentajes();
+                    }
+                } elseif ($evaluacion->activar_objetivos) {
+                    if ($suma_porcentajes_objetivos !== 100) {
+                        return $this->mostrarErrorPorcentajes();
+                    }
+                } elseif ($evaluacion->activar_competencias) {
+                    if ($suma_porcentajes_competencias !== 100) {
+                        return $this->mostrarErrorPorcentajes();
+                    }
                 }
             }
 
@@ -620,6 +624,18 @@ class CreateEvaluacionDesempeno extends Component
                 'timerProgressBar' => true,
             ]);
         }
+    }
+
+    private function mostrarErrorPorcentajes()
+    {
+        $this->alert('error', 'La suma de los porcentajes de los evaluadores debe ser igual a 100% para cada evaluado', [
+            'position' => 'center',
+            'timer' => 5000,
+            'toast' => true,
+            'text' => 'Por favor, asegúrese de que los porcentajes estén correctamente distribuidos.',
+        ]);
+
+        return false;
     }
 
     public function crearCuestionario($evaluacion)
@@ -835,22 +851,22 @@ class CreateEvaluacionDesempeno extends Component
                     ];
             } elseif ($this->activar_objetivos == true && $this->activar_competencias == false) {
 
-                $this->array_evaluadores[] =
+                $this->array_evaluadores[$key] =
                     [
                         'evaluador_objetivos' => [isset($eva->supervisor->id) ? $eva->supervisor->id : ''],
                     ];
 
-                $this->array_porcentaje_evaluadores = [
+                $this->array_porcentaje_evaluadores[$key] = [
                     'porcentaje_evaluador_objetivos' => [100],
                 ];
             } elseif ($this->activar_objetivos == false && $this->activar_competencias == true) {
 
-                $this->array_evaluadores[] =
+                $this->array_evaluadores[$key] =
                     [
                         'evaluador_competencias' => [isset($eva->supervisor->id) ? $eva->supervisor->id : ''],
                     ];
 
-                $this->array_porcentaje_evaluadores = [
+                $this->array_porcentaje_evaluadores[$key] = [
                     'porcentaje_evaluador_competencias' => [100],
                 ];
             }
