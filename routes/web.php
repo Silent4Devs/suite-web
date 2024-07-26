@@ -485,7 +485,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::get('recursos-humanos/evaluacion-desempeno/configuracion', 'RH\ObjetivosPeriodoController@config')->name('ev360-objetivos-periodo.config');
         Route::get('recursos-humanos/evaluacion-desempeno/index', 'RH\EvaluacionesDesempenoController@index')->name('rh.evaluaciones-desempeno.index');
         Route::delete('recursos-humanos/evaluacion-desempeno/{evaluacion}/destroy', 'RH\EvaluacionesDesempenoController@destroy')->name('rh.evaluaciones-desempeno.borrar');
-        Route::get('recursos-humanos/evaluacion-desempeno/{evaluacion}/editBorrador', 'RH\EvaluacionesDesempenoController@editBorrador')->name('rh.evaluaciones-desempeno.editBorrador');
 
         Route::get('recursos-humanos/evaluacion-desempeno/dashboard-general', 'RH\EvaluacionesDesempenoController@dashboardGeneral')->name('rh.evaluaciones-desempeno.dashboard-general');
         Route::get('recursos-humanos/evaluacion-desempeno/{evaluacion}/dashboard-evaluacion', 'RH\EvaluacionesDesempenoController@dashboardEvaluacion')->name('rh.evaluaciones-desempeno.dashboard-evaluacion');
