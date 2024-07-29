@@ -96,7 +96,9 @@ class tbApiMobileControllerPortalComunicacion extends Controller
             return $item->tipo_imagen === 'imagen';
         });
 
-        $comunicados = $imagesCommunications->take(4);
+        foreach ($imagesCommunications->take(4) as $imageCommunication) {
+            $comunication[] = $imageCommunication;
+        }
 
         $noticias = ComunicacionSgi::getAllwithImagenesCarrousel()->makeHidden(['descripcion', 'created_at', 'updated_at', 'imagenes_comunicacion']);
 
@@ -111,10 +113,9 @@ class tbApiMobileControllerPortalComunicacion extends Controller
             return $item->tipo_imagen === 'imagen';
         });
 
-        $noticias = $imagesNews->take(3);
-
-        // dd($noticias);
-
+        foreach ($imagesNews->take(3) as $imageNews) {
+            $news[] = $imageNews;
+        }
 
         $cumpleaños = Cache::remember('Portal_cumpleaños_' . $authId, 3600, function () use ($hoy, $empleados) {
             return Empleado::alta()->select('id', 'name', 'area_id', 'puesto_id', 'foto', 'cumpleaños', 'estatus')->whereMonth('cumpleaños', '=', $hoy->format('m'))->get()->makeHidden([
@@ -200,8 +201,8 @@ class tbApiMobileControllerPortalComunicacion extends Controller
             [
                 'documentos' => $documentos_publicados,
                 'hoy' => $fecha_hoy,
-                'comunicados' => $comunicados,
-                'noticias' => $noticias,
+                'comunicados' => $comunication,
+                'noticias' => $news,
                 'empleado_asignado' => $empleado_asignado,
                 // 'aniversarios' => $aniversarios,
                 // 'aniversarios_contador_circulo' => $aniversarios_contador_circulo,
