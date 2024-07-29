@@ -14,7 +14,7 @@
                         {{ $view == 'create' ? 'Agregar' : 'Actualizar' }} Quien Recibe Información</h5>
 
                     <input id="cuestionario_id" name="cuestionario_id" type="hidden" value=" {{ $cuestionario_id }}"
-                        wire:model.defer="cuestionario_id">
+                        wire:model="cuestionario_id">
 
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -23,7 +23,7 @@
                 <div class="modal-body">
                     <div class="form-group col-sm-12 col-md-12 col-lg-12">
                         <label class="required" for="interno_externo"><i class="bi bi-signpost-split-fill iconos-crear"></i>Interno / Externo:</label>
-                        <select name="interno_externo" class="form-control {{ $errors->has('interno_externo') ? 'is-invalid' : '' }}"  wire:model.defer="interno_externo" >
+                        <select name="interno_externo" class="form-control {{ $errors->has('interno_externo') ? 'is-invalid' : '' }}"  wire:model="interno_externo" >
                             <option selected>Seleccione</option>
                             <option value="1">Interno</option>
                             <option value="2">Externo</option>
@@ -39,7 +39,7 @@
                                 class="fas fa-user-tag iconos-crear"></i>Nombre:</label>
                         <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text"
                            value="{{ old('nombe', '') }}"
-                            wire:model.defer="nombre" placeholder="...">
+                            wire:model="nombre" placeholder="...">
                         @if ($errors->has('nombre'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('nombre') }}
@@ -52,7 +52,7 @@
                                 class="fas fa-user-tag iconos-crear"></i>Puesto:</label>
                         <input class="form-control {{ $errors->has('puesto') ? 'is-invalid' : '' }}" type="text"
                             value="{{ old('puesto', '') }}"
-                            wire:model.defer="puesto" placeholder="...">
+                            wire:model="puesto" placeholder="...">
                         @if ($errors->has('puesto'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('puesto') }}
@@ -65,7 +65,7 @@
                             electrónico:</label>
                         <input class="form-control {{ $errors->has('correo_electronico') ? 'is-invalid' : '' }}" type="text"
                             value="{{ old('correo_electronico', '') }}"
-                            wire:model.defer="correo_electronico" placeholder="...">
+                            wire:model="correo_electronico" placeholder="...">
                         @if ($errors->has('correo_electronico'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('correo_electronico') }}
@@ -78,7 +78,7 @@
                                 class="fas fa-user-tag iconos-crear"></i>Extención:</label>
                         <input class="form-control {{ $errors->has('extencion') ? 'is-invalid' : '' }}" type="number"
                             value="{{ old('extencion', '') }}"
-                            wire:model.defer="extencion" placeholder="...">
+                            wire:model="extencion" placeholder="...">
                         @if ($errors->has('extencion'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('extencion') }}
@@ -91,7 +91,7 @@
                                 class="fas fa-user-tag iconos-crear"></i>Ubicación:</label>
                         <input class="form-control {{ $errors->has('ubicacion') ? 'is-invalid' : '' }}" type="text"
                              value="{{ old('ubicacion', '') }}"
-                            wire:model.defer="ubicacion" placeholder="...">
+                            wire:model="ubicacion" placeholder="...">
                         @if ($errors->has('ubicacion'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('ubicacion') }}

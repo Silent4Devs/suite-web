@@ -263,12 +263,12 @@
                                                 </div>
                                                 <div class="drag-area">
                                                     <input type="file" id="file" name="file"
-                                                        wire:model="file"
+                                                        wire:model.live="file"
                                                         wire:change="asignarObjArchivo({{ $obj_evld->id }})">
                                                 </div>
                                                 {{-- <div class="row">
                                                         <input type="file" id="file" name="file"
-                                                            wire:model="file"
+                                                            wire:model.live="file"
                                                             wire:change="asignarObjArchivo({{ $obj_evld->id }})">
                                                     </div> --}}
 

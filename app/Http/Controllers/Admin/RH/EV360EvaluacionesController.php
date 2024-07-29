@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin\RH;
 
 use App\Http\Controllers\Controller;
-use App\Http\Livewire\Ev360ResumenTabla;
-use App\Http\Livewire\Ev360ResumenTablaParametros;
+use App\Livewire\Ev360ResumenTabla;
+use App\Livewire\Ev360ResumenTablaParametros;
 use App\Mail\RH\Evaluaciones\CitaEvaluadorEvaluado;
 use App\Mail\RH\Evaluaciones\RecordatorioEvaluadores;
 use App\Models\Area;

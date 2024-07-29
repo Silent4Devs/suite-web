@@ -210,7 +210,7 @@
                         <div class="form-group col-md-4 anima-focus">
                             <select class="form-control" name="modificar_obj_evaluador_{{ $key_evaluador }}"
                                 id="modificar_obj_evaluador_{{ $key_evaluador }}"
-                                wire:model.defer="array_mod_evaluadores_objetivos.{{ $key }}.{{ $key_evaluador }}.id_empleado_evaluador">
+                                wire:model="array_mod_evaluadores_objetivos.{{ $key }}.{{ $key_evaluador }}.id_empleado_evaluador">
                                 <option value={{ $evaluador['id_empleado_evaluador'] }} default>
                                     {{ $evaluador['nombre_evaluador'] }}</option>
                                 @foreach ($modificar_empleados as $me)
@@ -226,7 +226,7 @@
                             <input class="form-control" type="number" placeholder="" class="form-input"
                                 id="porcentaje_modificar_obj_evaluador_{{ $key_evaluador }}"
                                 name="porcentaje_modificar_obj_evaluador_{{ $key_evaluador }}"
-                                wire:model.defer="array_mod_evaluadores_objetivos.{{ $key }}.{{ $key_evaluador }}.porcentaje_objetivos">
+                                wire:model="array_mod_evaluadores_objetivos.{{ $key }}.{{ $key_evaluador }}.porcentaje_objetivos">
                             <label for="porcentaje_modificar_obj_evaluador_{{ $key_evaluador }}">Porcentaje</label>
                         </div>
                         <div class="col-md-4">
@@ -258,7 +258,7 @@
                         <div class="form-group col-md-4 anima-focus">
                             <select class="form-control" name="modificar_comp_evaluador_{{ $key_evaluador }}"
                                 id="modificar_comp_evaluador_{{ $key_evaluador }}"
-                                wire:model.defer="array_mod_evaluadores_competencias.{{ $key }}.{{ $key_evaluador }}.id_empleado_evaluador">
+                                wire:model="array_mod_evaluadores_competencias.{{ $key }}.{{ $key_evaluador }}.id_empleado_evaluador">
                                 <option value={{ $evaluador['id_empleado_evaluador'] }} default>
                                     {{ $evaluador['nombre_evaluador'] }}</option>
                                 @foreach ($modificar_empleados as $me)
@@ -274,7 +274,7 @@
                             <input class="form-control" type="number" placeholder="" class="form-input"
                                 id="porcentaje_modificar_comp_evaluador_{{ $key_evaluador }}"
                                 name="porcentaje_modificar_comp_evaluador_{{ $key_evaluador }}"
-                                wire:model.defer="array_mod_evaluadores_competencias.{{ $key }}.{{ $key_evaluador }}.porcentaje_competencias">
+                                wire:model="array_mod_evaluadores_competencias.{{ $key }}.{{ $key_evaluador }}.porcentaje_competencias">
                             <label for="porcentaje_modificar_comp_evaluador_{{ $key_evaluador }}">Porcentaje</label>
                         </div>
                         <div class="col-md-4">

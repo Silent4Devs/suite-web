@@ -3,7 +3,7 @@
 @if ($evaluacion->activar_objetivos)
     {{-- Codigo primera vez que carga --}}
     <script>
-        document.addEventListener('livewire:load', function() {
+        document.addEventListener('livewire:init', function() {
 
             const tipos = @json($resObj['nombres'][$periodo_seleccionado]);
             const resultados = @json($resObj['resultados'][$periodo_seleccionado]);
@@ -31,7 +31,7 @@
     </script>
 
     <script>
-        document.addEventListener('livewire:load', function() {
+        document.addEventListener('livewire:init', function() {
             Livewire.on('cumplimientoObj', (cumpObj) => {
 
                 document.getElementById('cumplimientoObjetivos').remove();
@@ -64,7 +64,7 @@
     </script>
 
     <script>
-        document.addEventListener('livewire:load', function() {
+        document.addEventListener('livewire:init', function() {
 
             const escalas = @json($escalas['nombres']);
             const colores = @json($escalas['colores']);
@@ -94,7 +94,7 @@
     </script>
 
     <script>
-        document.addEventListener('livewire:load', function() {
+        document.addEventListener('livewire:init', function() {
             Livewire.on('escalasObj', (escObj) => {
 
                 document.getElementById('escalas').remove();
@@ -130,7 +130,7 @@
 
 @if ($evaluacion->activar_competencias)
     <script>
-        document.addEventListener('livewire:load', function() {
+        document.addEventListener('livewire:init', function() {
 
             const competencias = @json($resComp['nombres'][$periodo_seleccionado]);
             const resultados = @json($resComp['resultados'][$periodo_seleccionado]);
@@ -158,7 +158,7 @@
     </script>
 
     <script>
-        document.addEventListener('livewire:load', function() {
+        document.addEventListener('livewire:init', function() {
             Livewire.on('cumplimientoComp', (cumpComp) => {
 
                 document.getElementById('cumplimientoCompetencias').remove();
@@ -192,7 +192,7 @@
     </script>
 
     <script>
-        document.addEventListener('livewire:load', function() {
+        document.addEventListener('livewire:init', function() {
 
             const competencias = @json($resComp['nombres'][$periodo_seleccionado]);
             const resultados = @json($resComp['resultado_competencia'][$periodo_seleccionado]);
@@ -227,7 +227,7 @@
     </script>
 
     <script>
-        document.addEventListener('livewire:load', function() {
+        document.addEventListener('livewire:init', function() {
             Livewire.on('cumplimientoRadarComp', (cumpCompRadar) => {
 
                 document.getElementById('cumplimientoCompetenciasRadar').remove();

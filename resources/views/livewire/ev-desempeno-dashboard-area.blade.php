@@ -336,7 +336,7 @@
 
         <div class="row">
             <div class="col-md-3 form-group">
-                <select name="colaborador_tabla" id="colaborador_tabla" wire:model.defer="select_colaborador_tabla"
+                <select name="colaborador_tabla" id="colaborador_tabla" wire:model="select_colaborador_tabla"
                     class="form-control">
                     <option value="todos">Colaborador</option>
                     @foreach ($evaluacion->evaluados as $evaluado)
@@ -560,7 +560,7 @@
 
         @if ($evaluacion->activar_objetivos)
             <script>
-                document.addEventListener('livewire:load', function() {
+                document.addEventListener('livewire:init', function() {
 
                     const tipos = @json($resObj['nombres'][$periodo_seleccionado]);
                     const resultados = @json($resObj['resultados'][$periodo_seleccionado]);
@@ -588,7 +588,7 @@
             </script>
 
             <script>
-                document.addEventListener('livewire:load', function() {
+                document.addEventListener('livewire:init', function() {
                     Livewire.on('cumplimientoObj', (cumpObj) => {
 
                         document.getElementById('cumplimientoObjetivos').remove();
@@ -621,7 +621,7 @@
             </script>
 
             <script>
-                document.addEventListener('livewire:load', function() {
+                document.addEventListener('livewire:init', function() {
 
                     const escalas = @json($escalas['nombres'][$periodo_seleccionado]);
                     const colores = @json($escalas['colores'][$periodo_seleccionado]);
@@ -651,7 +651,7 @@
             </script>
 
             <script>
-                document.addEventListener('livewire:load', function() {
+                document.addEventListener('livewire:init', function() {
                     Livewire.on('escalasObj', (escObj) => {
 
                         document.getElementById('escalas').remove();
@@ -687,7 +687,7 @@
 
         @if ($evaluacion->activar_competencias)
             <script>
-                document.addEventListener('livewire:load', function() {
+                document.addEventListener('livewire:init', function() {
 
                     const competencias = @json($resComp['nombres'][$periodo_seleccionado]);
                     const resultados = @json($resComp['resultados'][$periodo_seleccionado]);
@@ -715,7 +715,7 @@
             </script>
 
             <script>
-                document.addEventListener('livewire:load', function() {
+                document.addEventListener('livewire:init', function() {
                     Livewire.on('cumplimientoComp', (cumpComp) => {
 
                         console.log(cumpComp);
