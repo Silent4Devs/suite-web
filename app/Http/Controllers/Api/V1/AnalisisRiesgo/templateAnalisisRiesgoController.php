@@ -40,7 +40,6 @@ class templateAnalisisRiesgoController extends Controller
         $imagenes = $request->file('image');
         $templateId = $sections[0]->template_id;
         $sectionId = $sections[0]->id;
-
         if (! empty($imagenes)) {
             $this->saveImage($questions, $imagenes);
         }
@@ -172,6 +171,7 @@ class templateAnalisisRiesgoController extends Controller
             $id = $question->id;
             $exist = intval($id);
             if (! $exist) {
+
                 DB::beginTransaction();
                 try {
                     $questionCreate = TBQuestionTemplateAnalisisRiesgoModel::create([
@@ -198,8 +198,6 @@ class templateAnalisisRiesgoController extends Controller
                     DB::commit();
                 } catch (\Throwable $th) {
                     DB::rollback();
-
-                    // return json_encode(['error' => $th ], 500);
                     continue;
                 }
             } else {
@@ -568,6 +566,7 @@ class templateAnalisisRiesgoController extends Controller
 
     public function saveSelectDataQuestion($dataQuestions, $questionCreateId)
     {
+        // dd($dataQuestions);
         foreach ($dataQuestions as $dataQuestion) {
             DB::beginTransaction();
             try {
@@ -585,6 +584,7 @@ class templateAnalisisRiesgoController extends Controller
                 DB::commit();
             } catch (\Throwable $th) {
                 //throw $th;
+                // dd($th);
                 DB::rollback();
 
                 continue;

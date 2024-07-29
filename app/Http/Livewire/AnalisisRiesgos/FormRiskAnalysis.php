@@ -12,7 +12,15 @@ class FormRiskAnalysis extends Component
     public $riskAnalysisId;
     public $settignsTable = [];
     public $sections;
+    public $questionsAnswer = [];
 
+    protected $listeners = ['formData'];
+
+    public function formData($data)
+    {
+        $this->questionsAnswer = $data;
+        // dd($this->questionsAnswer);
+    }
 
     public function mount($RiskAnalysisId)
     {
@@ -36,8 +44,9 @@ class FormRiskAnalysis extends Component
 
         $sectionsRegisters = TBSectionRiskAnalysisModel::select('id','title','position','risk_analysis_id')
             ->where('risk_analysis_id', $this->riskAnalysisId)
-            ->first();
+            ->get();
 
+        //Header Settings Table
         foreach ($questionSettigns as $questionSettign) {
             $questionSettign->title = $questionSettign->question->title;
             array_push($this->settignsTable, $questionSettign);
@@ -48,10 +57,12 @@ class FormRiskAnalysis extends Component
             array_push($this->settignsTable, $formulaRegister);
         }
 
+        // Questions Form
         $this->sections = $sectionsRegisters;
 
+        // Question Answers
 
-        // dd($sectionsRegisters->questions);
+        // dd($this->sections[0]->questions[0]->dataQuestions);
 
         return view('livewire.analisis-riesgos.form-risk-analysis');
     }

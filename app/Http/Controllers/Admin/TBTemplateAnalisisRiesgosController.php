@@ -46,6 +46,7 @@ class TBTemplateAnalisisRiesgosController extends Controller
                 'template_id' => $template->id,
             ]);
 
+
             DB::commit();
             $id = $template->id;
 
