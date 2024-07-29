@@ -371,7 +371,8 @@
 
                 <div class="row">
                     <div class="col-6 text-left my-4">
-                        <a wire:click.prevent="guardarBorrador" class="btn btn-success" style="width: 170px;">Guardar
+                        <a id="btn-borrador-paso3" wire:click.prevent="guardarBorrador" class="btn btn-success"
+                            style="width: 170px;">Guardar
                             Borrador</a>
                     </div>
 
@@ -675,7 +676,16 @@
 
                     <div class="col-6 text-right my-4">
                         <a wire:click.prevent="retroceder" class="btn btn-outline-primary" style="width: 170px;">ATRÁS</a>
-                        <a wire:click.prevent="cuartoPaso" class="btn btn-success" style="width: 170px;">SIGUIENTE</a>
+                        <a
+                            @if ($bloquear_evaluacion) class="btn btn-success disabled"
+        style="width: 170px; pointer-events: none; opacity: 0.5;"
+    @else
+        wire:click.prevent="cuartoPaso"
+        class="btn btn-success"
+        style="width: 170px;" @endif>
+                            FINALIZAR
+                        </a>
+
                     </div>
                 </div>
             </div>
@@ -708,6 +718,12 @@
 
                 document.addEventListener('click', (e) => {
                     if (e.target && e.target.id == 'btn-paso3') {
+                        e.preventDefault();
+                        console.log(dataEmpleados);
+                        @this.set('empleados_seleccionados', dataEmpleados);
+                    }
+
+                    if (e.target && e.target.id == 'btn-borrador-paso3') {
                         e.preventDefault();
                         console.log(dataEmpleados);
                         @this.set('empleados_seleccionados', dataEmpleados);

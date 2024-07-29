@@ -28,7 +28,7 @@
                         &nbsp;&nbsp;
                         <p class="p-0 m-0">
                             El {{ $last_unread_notification->data['slug'] }} con fecha
-                            {{ $last_unread_notification->data['updated_at'] ?? '' }} ha
+                            {{ \Carbon\Carbon::parse($last_unread_notification->data['updated_at'] ?? null)->format('d M Y, h:i A') ?? '' }} ha
                             sido actualizada
                         </p>
                     </div>
@@ -46,7 +46,7 @@
                         &nbsp;&nbsp;
                         <p class="p-0 m-0">
                             El {{ $last_unread_notification->data['slug'] }} con fecha
-                            {{ $last_unread_notification->data['deleted_at'] ?? '' }} ha
+                            {{ \Carbon\Carbon::parse($last_unread_notification->data['deleted_at'] ?? null)->format('d M Y, h:i A') ?? '' }} ha
                             sido eliminada
                         </p>
                     </div>

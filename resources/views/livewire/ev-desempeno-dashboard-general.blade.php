@@ -261,12 +261,16 @@
                                 <i class="fa-solid fa-ellipsis-vertical"></i>
                             </button>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item"
-                                    href="{{ route('admin.rh.evaluaciones-desempeno.dashboard-evaluacion', $evaluacion->id) }}">
-                                    <i class="fa-solid fa-eye"></i>&nbsp;Dashboard</a>
-                                {{-- <a class="dropdown-item"
-                                    href="{{ asset('admin/entendimiento-organizacions-foda-edit') }}/{{ $evaluacion->id }}">
-                                    <i class="fa-solid fa-pencil"></i>&nbsp;Editar</a> --}}
+                                @if ($evaluacion->estatus == 1 || $evaluacion->estatus == 3)
+                                    <a class="dropdown-item"
+                                        href="{{ route('admin.rh.evaluaciones-desempeno.dashboard-evaluacion', $evaluacion->id) }}">
+                                        <i class="fa-solid fa-eye"></i>&nbsp;Dashboard</a>
+                                @endif
+                                @if ($evaluacion->estatus == 0)
+                                    <a class="dropdown-item"
+                                        href="{{ route('admin.rh.evaluaciones-desempeno.edit-borrador', $evaluacion->id) }}">
+                                        <i class="fa-solid fa-pencil"></i>&nbsp;Editar</a>
+                                @endif
                                 <a class="dropdown-item delete-item" onclick="deleteItem({{ $evaluacion->id }})">
                                     <i class="fa-solid fa-trash"></i>&nbsp;Eliminar</a>
                             </div>

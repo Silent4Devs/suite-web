@@ -937,6 +937,32 @@
         </script>
 
         <script>
+            document.addEventListener('livewire:load', function() {
+                Livewire.on('sin_registros', (nombre_modulo) => {
+                    Swal.fire({
+                        // title: 'No es posible acceder a esta vista.',
+                        imageUrl: `{{ asset('img/errors/cara-roja-triste.svg') }}`, // Replace with the path to your image
+                        imageWidth: 100, // Set the width of the image as needed
+                        imageHeight: 100,
+                        html: `<h4 style="color:red;">Modulo sin registros</h4>
+<br><p>El modulo: ` + nombre_modulo + ` no tiene registros.</p><br>
+<p>Es necesario agregar registros para crear una requisición.</p>`,
+                        // icon: '{{ session('status') === 'success' ? 'success' : 'error' }}',
+                        showCancelButton: false,
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'Entendido.',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Redirect to another view after user clicks OK
+                            window.location.href =
+                                '{{ route('contract_manager.requisiciones') }}';
+                        }
+                    });
+                });
+            });
+        </script>
+
+        <script>
             $(".not-select2").select2('destroy');
         </script>
         <script>

@@ -14,7 +14,7 @@ class RequisicionesObserver
      */
     public function created(Requsicion $requisiciones)
     {
-        event(new RequisicionesEvent($requisiciones, 'create', 'requisiciones', 'Requisiciones'));
+        event(new RequisicionesEvent($requisiciones, 'create', 'requisiciones', 'Requisicion'));
     }
 
     /**
@@ -24,6 +24,6 @@ class RequisicionesObserver
      */
     public function deleted(Requsicion $requisiciones)
     {
-        event(new RequisicionesEvent($requisiciones, 'delete', 'requisiciones', 'Requisiciones'));
+        event(new RequisicionesEvent($requisiciones, 'delete', 'requisiciones', 'Requisicion'));
     }
 }

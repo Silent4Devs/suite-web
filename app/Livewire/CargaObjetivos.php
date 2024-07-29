@@ -118,75 +118,87 @@ class CargaObjetivos extends Component
 
     public function notificarCarga()
     {
-        try {
-            $permisos = PermisosCargaObjetivos::select('id', 'perfil', 'permisos_asignacion', 'permiso_objetivos', 'permiso_escala')
-                ->orderBy('id')
-                ->get();
+        if ($this->periodo_habilitado) {
+            try {
+                $permisos = PermisosCargaObjetivos::select('id', 'perfil', 'permisos_asignacion', 'permiso_objetivos', 'permiso_escala')
+                    ->orderBy('id')
+                    ->get();
 
-            $administrador = $permisos->where('perfil', 'Administrador')->first();
-            $jefeInmediato = $permisos->where('perfil', 'Jefe Inmediato')->first();
-            $colaborador = $permisos->where('perfil', 'Colaborador')->first();
+                $administrador = $permisos->where('perfil', 'Administrador')->first();
+                $jefeInmediato = $permisos->where('perfil', 'Jefe Inmediato')->first();
+                $colaborador = $permisos->where('perfil', 'Colaborador')->first();
 
-            $empleados = Empleado::getAltaDataColumns();
+                $empleados = Empleado::getAltaDataColumns();
 
-            if ($colaborador->permisos_asignacion) {
-                $correos_colaborador = $empleados->pluck('email')->toArray();
-                $correos_colaborador = array_unique($correos_colaborador);
-            }
-
-            if ($jefeInmediato->permisos_asignacion) {
-                $correos_jefeInmediato = [];
-
-                foreach ($empleados as $key_jefe => $empleado) {
-                    if ($empleado->es_supervisor) {
-                        $correos_jefeInmediato[] = $empleado->email;
-                    }
+                if ($colaborador->permisos_asignacion) {
+                    $correos_colaborador = $empleados->pluck('email')->toArray();
+                    $correos_colaborador = array_unique($correos_colaborador);
                 }
 
-                $correos_jefeInmediato = array_unique($correos_jefeInmediato);
-            }
+                if ($jefeInmediato->permisos_asignacion) {
+                    $correos_jefeInmediato = [];
 
-            if ($administrador->permisos_asignacion) {
-                $usuarios = User::getAllWithEmpleado();
-                $correos_administrador = [];
-
-                foreach ($usuarios as $key_usuario => $usuario) {
-                    if ($usuario->is_Admin && $usuario->empleado) {
-                        $correos_administrador[] = $usuario->empleado->email;
+                    foreach ($empleados as $key_jefe => $empleado) {
+                        if ($empleado->es_supervisor) {
+                            $correos_jefeInmediato[] = $empleado->email;
+                        }
                     }
+
+                    $correos_jefeInmediato = array_unique($correos_jefeInmediato);
                 }
 
-                $correos_administrador = array_unique($correos_administrador);
+                if ($administrador->permisos_asignacion) {
+                    $usuarios = User::getAllWithEmpleado();
+                    $correos_administrador = [];
+
+                    foreach ($usuarios as $key_usuario => $usuario) {
+                        if ($usuario->is_Admin && $usuario->empleado) {
+                            $correos_administrador[] = $usuario->empleado->email;
+                        }
+                    }
+
+                    $correos_administrador = array_unique($correos_administrador);
+                }
+
+                // Opcional: Combina todos los correos y elimina duplicados
+                $all_correos = array_unique(array_merge(
+                    $correos_colaborador ?? [],
+                    $correos_jefeInmediato ?? [],
+                    $correos_administrador ?? []
+                ));
+
+                // Enviar correos
+                foreach ($all_correos as $email) {
+                    Mail::to(removeUnicodeCharacters($email))->queue(new CorreoCargaObjetivos($this->fecha_inicio, $this->fecha_fin));
+                }
+
+                $this->alert('success', 'Notificación Exitosa.', [
+                    'position' => 'center',
+                    'timer' => '6000',
+                    'toast' => true,
+                    'text' => 'Se ha notificado correctamente sobre el periodo de carga de objetivos.',
+                    'showConfirmButton' => false,
+                    'onConfirmed' => '',
+                    'confirmButtonText' => 'Entendido',
+                ]);
+            } catch (\Throwable $th) {
+                //throw $th;
+                $this->alert('error', 'Notificación Fallida.', [
+                    'position' => 'center',
+                    'timer' => '6000',
+                    'toast' => true,
+                    'text' => 'Ha habido un error al intentar notificar a los colaboradores.',
+                    'showConfirmButton' => false,
+                    'onConfirmed' => '',
+                    'confirmButtonText' => 'Entendido',
+                ]);
             }
-
-            // Opcional: Combina todos los correos y elimina duplicados
-            $all_correos = array_unique(array_merge(
-                $correos_colaborador ?? [],
-                $correos_jefeInmediato ?? [],
-                $correos_administrador ?? []
-            ));
-
-            // Enviar correos
-            foreach ($all_correos as $email) {
-                Mail::to(removeUnicodeCharacters($email))->queue(new CorreoCargaObjetivos($this->fecha_inicio, $this->fecha_fin));
-            }
-
-            $this->alert('success', 'Notificación Exitosa.', [
+        } else {
+            $this->alert('warning', 'Sin Periodo Habilitado.', [
                 'position' => 'center',
                 'timer' => '6000',
                 'toast' => true,
-                'text' => 'Se ha notificado correctamente sobre el periodo de carga de objetivos.',
-                'showConfirmButton' => false,
-                'onConfirmed' => '',
-                'confirmButtonText' => 'Entendido',
-            ]);
-        } catch (\Throwable $th) {
-            //throw $th;
-            $this->alert('error', 'Notificación Fallida.', [
-                'position' => 'center',
-                'timer' => '6000',
-                'toast' => true,
-                'text' => 'Ha habido un error al intentar notificar a los colaboradores.',
+                'text' => 'No se puede enviar ningun correo, ya que no hay ningun periodo de carga de objetivos habilitado.',
                 'showConfirmButton' => false,
                 'onConfirmed' => '',
                 'confirmButtonText' => 'Entendido',
@@ -197,7 +209,7 @@ class CargaObjetivos extends Component
     public function habilitarCargaObjetivos($valor)
     {
         if ($valor) {
-            if (! empty($this->fecha_inicio) && ! empty($this->fecha_fin)) {
+            if (!empty($this->fecha_inicio) && !empty($this->fecha_fin)) {
                 if ($this->fecha_inicio < $this->fecha_fin) {
 
                     PeriodoCargaObjetivos::create([
@@ -227,6 +239,7 @@ class CargaObjetivos extends Component
                     ]);
                 }
             } else {
+                $this->periodo_habilitado = false;
                 $this->alert('warning', 'Fechas de periodo', [
                     'position' => 'center',
                     'timer' => '5000',

@@ -16,6 +16,8 @@ use App\Models\RH\ObjetivoEmpleado;
 use App\Models\RH\TipoObjetivo;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
@@ -108,6 +110,14 @@ class FormularioObjetivosDesempenoEmpleados extends Component
         'array_escalas_objetivos.*.color' => 'required|string|max:7',
     ];
 
+    private function forgetCache()
+    {
+        Cache::forget('ObjetivoEmpleado:get_all_with_objetivo');
+        Cache::forget('Empleados:empleados_alta_all_area');
+        Cache::forget('Empleados:empleados_alta_all_evaluaciones');
+        Cache::forget('Empleados:empleados_all_objetivos_empleado');
+    }
+
     public function mount($id_empleado)
     {
         $this->id_emp = $id_empleado;
@@ -141,9 +151,6 @@ class FormularioObjetivosDesempenoEmpleados extends Component
 
     public function render()
     {
-        // $this->front_usuario = User::getCurrentUser();
-        // $this->front_empleado = Empleado::getaltaAllObjetivoSupervisorChildren()->find($this->id_emp);
-
         $this->objetivos = ObjetivoEmpleado::getAllwithObjetivo()
             ->where('empleado_id', '=', $this->id_emp)
             ->where('papelera', false);
@@ -151,6 +158,15 @@ class FormularioObjetivosDesempenoEmpleados extends Component
         $this->cuentaObjetivosPendientes();
 
         return view('livewire.formulario-objetivos-desempeno-empleados');
+    }
+
+    public function cuentaObjetivosPendientes()
+    {
+        $this->cuentaObjPend = ObjetivoEmpleado::with(['objetivo' => function ($query) {
+            $query->with(['tipo', 'metrica']);
+        }])->whereHas('objetivo', function ($query) {
+            $query->where('esta_aprobado', '=', 0);
+        })->count();
     }
 
     public function formularioMostraOcultar()
@@ -162,14 +178,46 @@ class FormularioObjetivosDesempenoEmpleados extends Component
         }
     }
 
-    public function cuentaObjetivosPendientes()
+    public function resetInputsUnidad()
     {
-        $this->cuentaObjPend = ObjetivoEmpleado::with(['objetivo' => function ($query) {
-            $query->with(['tipo', 'metrica']);
-        }])->whereHas('objetivo', function ($query) {
-            $query->where('esta_aprobado', '=', 0);
-        })->count();
-        // dd($cuentaObjPend);
+        $this->nombre_edit_unidad = '';
+        $this->minimo_edit_unidad = 0;
+        $this->maximo_edit_unidad = 0;
+    }
+
+    public function resetInputsEditUnidad()
+    {
+        $this->nombre_unidad = '';
+        $this->minimo_unidad = 0;
+        $this->maximo_unidad = 0;
+    }
+
+    public function resetInputsObjetivo()
+    {
+        $this->objetivo_estrategico = '';
+        $this->descripcion = '';
+        $this->KPI = '';
+        $this->select_categoria = '';
+        $this->select_unidad = '';
+    }
+
+    public function resetInputsPeriodos()
+    {
+        $this->ev360 = false;
+        $this->mensual = false;
+        $this->bimestral = false;
+        $this->trimestral = false;
+        $this->semestral = false;
+        $this->anualmente = false;
+        $this->abierta = false;
+    }
+
+    public function resetInputsEscalas()
+    {
+        foreach ($this->array_escalas_objetivos as $key => $e) {
+            $this->array_escalas_objetivos[$key]['condicional'] = 0;
+            $this->array_escalas_objetivos[$key]['valor'] = 0;
+        }
     }
 
     public function enviarCorreo()
@@ -182,7 +230,15 @@ class FormularioObjetivosDesempenoEmpleados extends Component
 
             Mail::to(removeUnicodeCharacters($mail_supervisor))->queue(new CorreoObjetivosPendientes($empleado, $this->cuentaObjPend));
         } catch (\Throwable $th) {
-            dd($th);
+            $this->alert('error', 'Error al Enviar Correo', [
+                'position' => 'center',
+                'timer' => 6000,
+                'toast' => false,
+                'text' => 'Ha habido un error al intentar enviar el correo, se enviara cuando el servicio vuelva a estar disponible.',
+                'showConfirmButton' => true,
+                'confirmButtonText' => 'Entendido',
+                'timerProgressBar' => true,
+            ]);
         }
     }
 
@@ -206,7 +262,15 @@ class FormularioObjetivosDesempenoEmpleados extends Component
                 $this->render();
             }
         } catch (\Throwable $th) {
-            dd($th);
+            $this->alert('error', 'Error al Enviar Correo', [
+                'position' => 'center',
+                'timer' => 6000,
+                'toast' => false,
+                'text' => 'Ha habido un error al intentar enviar el correo, se enviara cuando el servicio vuelva a estar disponible.',
+                'showConfirmButton' => true,
+                'confirmButtonText' => 'Entendido',
+                'timerProgressBar' => true,
+            ]);
         }
     }
 
@@ -235,90 +299,151 @@ class FormularioObjetivosDesempenoEmpleados extends Component
             $estatus = 0;
         }
 
-        $objetivo = Objetivo::create([
-            'nombre' => $this->objetivo_estrategico,
-            'descripcion' => $this->descripcion,
-            'tipo_id' => $this->select_categoria,
-            'KPI' => $this->KPI,
-            'metrica_id' => $this->select_unidad,
-            'empleado_id' => $this->id_emp,
-            'estatus' => $estatus,
-        ]);
+        DB::beginTransaction();
 
-        ObjetivoEmpleado::create([
-            'empleado_id' => $this->id_emp,
-            'objetivo_id' => $objetivo->id,
-            'completado' => false,
-            'en_curso' => false,
-            'papelera' => false,
-            'ev360' => $this->ev360,
-            'mensual' => $this->mensual,
-            'bimestral' => $this->bimestral,
-            'trimestral' => $this->trimestral,
-            'semestral' => $this->semestral,
-            'anualmente' => $this->anualmente,
-            'abierta' => $this->abierta,
-        ]);
+        try {
+            $objetivo = Objetivo::create([
+                'nombre' => $this->objetivo_estrategico,
+                'descripcion' => $this->descripcion,
+                'tipo_id' => $this->select_categoria,
+                'KPI' => $this->KPI,
+                'metrica_id' => $this->select_unidad,
+                'empleado_id' => $this->id_emp,
+                'estatus' => $estatus,
+            ]);
 
-        // Validar que cada posición es mayor que todas sus predecesoras
-        $numEscalas = count($this->array_escalas_objetivos);
-        for ($i = 1; $i < $numEscalas; $i++) {
-            for ($j = 0; $j < $i; $j++) {
-                if ($this->array_escalas_objetivos[$i]['valor'] <= $this->array_escalas_objetivos[$j]['valor']) {
-                    $this->alert('error', 'Error de validación', [
-                        'position' => 'center',
-                        'timer' => 6000,
-                        'toast' => false,
-                        'text' => 'Cada posición debe ser mayor que todas sus predecesoras.',
-                        'showConfirmButton' => true,
-                        'confirmButtonText' => 'Entendido',
-                        'timerProgressBar' => true,
-                    ]);
+            ObjetivoEmpleado::create([
+                'empleado_id' => $this->id_emp,
+                'objetivo_id' => $objetivo->id,
+                'completado' => false,
+                'en_curso' => false,
+                'papelera' => false,
+                'ev360' => $this->ev360,
+                'mensual' => $this->mensual,
+                'bimestral' => $this->bimestral,
+                'trimestral' => $this->trimestral,
+                'semestral' => $this->semestral,
+                'anualmente' => $this->anualmente,
+                'abierta' => $this->abierta,
+            ]);
 
-                    return;
+            $numEscalas = count($this->array_escalas_objetivos);
+            for ($i = 0; $i < $numEscalas; $i++) {
+                for ($j = 0; $j < $numEscalas; $j++) {
+                    if ($i != $j && $this->array_escalas_objetivos[$i]['valor'] == $this->array_escalas_objetivos[$j]['valor'] && $this->array_escalas_objetivos[$i]['condicional'] == $this->array_escalas_objetivos[$j]['condicional']) {
+                        $this->alert('error', 'Error de validación', [
+                            'position' => 'center',
+                            'timer' => 6000,
+                            'toast' => false,
+                            'text' => 'No pueden existir escalas con el mismo valor y condición.',
+                            'showConfirmButton' => true,
+                            'confirmButtonText' => 'Entendido',
+                            'timerProgressBar' => true,
+                        ]);
+                        DB::rollback();
+                        $this->forgetCache();
+                        return;
+                    }
                 }
             }
-        }
 
-        // Validar que cada posición es menor que todas sus sucesoras
-        for ($i = 0; $i < $numEscalas - 1; $i++) {
-            for ($j = $i + 1; $j < $numEscalas; $j++) {
-                if ($this->array_escalas_objetivos[$i]['valor'] >= $this->array_escalas_objetivos[$j]['valor']) {
-                    $this->alert('error', 'Error de validación', [
-                        'position' => 'center',
-                        'timer' => 6000,
-                        'toast' => false,
-                        'text' => 'Cada posición debe ser menor que todas sus sucesoras.',
-                        'showConfirmButton' => true,
-                        'confirmButtonText' => 'Entendido',
-                        'timerProgressBar' => true,
-                    ]);
-
-                    return;
+            // Determinar la lógica de validación basada en los valores mínimo y máximo
+            if ($this->minimo_objetivo < $this->maximo_objetivo) {
+                for ($i = 1; $i < $numEscalas; $i++) {
+                    for ($j = 0; $j < $i; $j++) {
+                        if ($this->array_escalas_objetivos[$i]['valor'] < $this->array_escalas_objetivos[$j]['valor']) {
+                            $this->alert('error', 'Error de validación', [
+                                'position' => 'center',
+                                'timer' => 6000,
+                                'toast' => false,
+                                'text' => 'Cada posición debe ser mayor o igual que todas sus predecesoras.',
+                                'showConfirmButton' => true,
+                                'confirmButtonText' => 'Entendido',
+                                'timerProgressBar' => true,
+                            ]);
+                            DB::rollback();
+                            $this->forgetCache();
+                            return;
+                        }
+                    }
+                }
+            } else {
+                for ($i = 1; $i < $numEscalas; $i++) {
+                    for ($j = 0; $j < $i; $j++) {
+                        if ($this->array_escalas_objetivos[$i]['valor'] > $this->array_escalas_objetivos[$j]['valor']) {
+                            $this->alert('error', 'Error de validación', [
+                                'position' => 'center',
+                                'timer' => 6000,
+                                'toast' => false,
+                                'text' => 'Cada posición debe ser menor o igual que todas sus predecesoras.',
+                                'showConfirmButton' => true,
+                                'confirmButtonText' => 'Entendido',
+                                'timerProgressBar' => true,
+                            ]);
+                            DB::rollback();
+                            $this->forgetCache();
+                            return;
+                        }
+                    }
                 }
             }
-        }
 
-        // Guardar las escalas
-        foreach ($this->array_escalas_objetivos as $key => $esc_obj) {
-            EscalasObjetivosDesempeno::create([
-                'id_objetivo_desempeno' => $objetivo->id,
-                'condicion' => $esc_obj['condicional'],
-                'valor' => $esc_obj['valor'],
-                'parametro' => $esc_obj['parametro'],
-                'color' => $esc_obj['color'],
+            // Guardar las escalas
+            foreach ($this->array_escalas_objetivos as $key => $esc_obj) {
+                EscalasObjetivosDesempeno::create([
+                    'id_objetivo_desempeno' => $objetivo->id,
+                    'condicion' => $esc_obj['condicional'],
+                    'valor' => $esc_obj['valor'],
+                    'parametro' => $esc_obj['parametro'],
+                    'color' => $esc_obj['color'],
+                ]);
+            }
+
+            DB::commit();
+
+            $this->resetInputsObjetivo();
+            $this->resetInputsPeriodos();
+            $this->resetInputsEscalas();
+
+            $this->alert('success', 'Objetivo Creado', [
+                'position' => 'center',
+                'timer' => 6000,
+                'toast' => false,
+                'text' => 'El objetivo ha sido creado con éxito.',
+                'showConfirmButton' => true,
+                'confirmButtonText' => 'Entendido',
+                'timerProgressBar' => true,
+            ]);
+        } catch (\Throwable $th) {
+            DB::rollback();
+            $this->forgetCache();
+
+            $this->alert('error', 'Error al crear Objetivo', [
+                'position' => 'center',
+                'timer' => 6000,
+                'toast' => false,
+                'text' => 'Ha habido un error al crear el objetivo, por favor corrobore su información e intentelo de nuevo.',
+                'showConfirmButton' => true,
+                'confirmButtonText' => 'Entendido',
+                'timerProgressBar' => true,
             ]);
         }
+    }
 
-        $this->resetInputsObjetivo();
-        $this->resetInputsPeriodos();
-        $this->resetInputsEscalas();
 
-        $this->alert('success', 'Objetivo Creado', [
+    public function enviarPapelera($id_obj)
+    {
+        $objetivo = ObjetivoEmpleado::find($id_obj);
+
+        $objetivo->update([
+            'papelera' => true,
+        ]);
+
+        $this->alert('success', 'Objetivo Desechado', [
             'position' => 'center',
             'timer' => 6000,
             'toast' => false,
-            'text' => 'El objetivo ha sido creado con éxito.',
+            'text' => 'El objetivo ha sido enviado a la papelera.',
             'showConfirmButton' => true,
             'confirmButtonText' => 'Entendido',
             'timerProgressBar' => true,
@@ -383,48 +508,6 @@ class FormularioObjetivosDesempenoEmpleados extends Component
         ]);
     }
 
-    public function resetInputsUnidad()
-    {
-        $this->nombre_edit_unidad = '';
-        $this->minimo_edit_unidad = 0;
-        $this->maximo_edit_unidad = 0;
-    }
-
-    public function resetInputsEditUnidad()
-    {
-        $this->nombre_unidad = '';
-        $this->minimo_unidad = 0;
-        $this->maximo_unidad = 0;
-    }
-
-    public function resetInputsObjetivo()
-    {
-        $this->objetivo_estrategico = '';
-        $this->descripcion = '';
-        $this->KPI = '';
-        $this->select_categoria = '';
-        $this->select_unidad = '';
-    }
-
-    public function resetInputsPeriodos()
-    {
-        $this->ev360 = false;
-        $this->mensual = false;
-        $this->bimestral = false;
-        $this->trimestral = false;
-        $this->semestral = false;
-        $this->anualmente = false;
-        $this->abierta = false;
-    }
-
-    public function resetInputsEscalas()
-    {
-        foreach ($this->array_escalas_objetivos as $key => $e) {
-            $this->array_escalas_objetivos[$key]['condicional'] = 0;
-            $this->array_escalas_objetivos[$key]['valor'] = 0;
-        }
-    }
-
     public function updatedSelectUnidad()
     {
         $unidadSeleccionada = $this->unidades->find($this->select_unidad);
@@ -443,24 +526,5 @@ class FormularioObjetivosDesempenoEmpleados extends Component
             $this->minimo_objetivo = $unidadSeleccionada->valor_minimo;
             $this->maximo_objetivo = $unidadSeleccionada->valor_maximo;
         }
-    }
-
-    public function enviarPapelera($id_obj)
-    {
-        $objetivo = ObjetivoEmpleado::find($id_obj);
-
-        $objetivo->update([
-            'papelera' => true,
-        ]);
-
-        $this->alert('success', 'Objetivo Desechado', [
-            'position' => 'center',
-            'timer' => 6000,
-            'toast' => false,
-            'text' => 'El objetivo ha sido enviado a la papelera.',
-            'showConfirmButton' => true,
-            'confirmButtonText' => 'Entendido',
-            'timerProgressBar' => true,
-        ]);
     }
 }
