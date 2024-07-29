@@ -1,7 +1,7 @@
 @import "bootstrap/scss/bootstrap";
 @import "vars";
 
-// normal
+// normal --------------
 html *{
     box-sizing: border-box;
 }
@@ -20,7 +20,7 @@ button{
     cursor: pointer;
 }
 
-// rds
+// rds ------------------
 body {
     background-color: #EFF1F5;
     background-image: url('../img/fondo-rds.png');
@@ -618,4 +618,4 @@ header.mostrar-menu {
     transition: 0.3s 0.3s;
 }
 
-
+// admin ------------------- 
