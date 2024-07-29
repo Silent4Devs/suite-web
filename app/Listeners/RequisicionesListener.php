@@ -73,7 +73,7 @@ class RequisicionesListener implements ShouldQueue
             }
         } else {
             // Obtén la lista y los IDs de los empleados
-            $lista = ListaDistribucion::with('participantes')->where('id', 7)->first();
+            $lista = ListaDistribucion::with('participantes')->where('id', 8)->first();
 
             $participantes = ParticipantesListaDistribucion::where('modulo_id', $lista->id)->where('empleado_id', $supervisor->empleado_id)->first();
 

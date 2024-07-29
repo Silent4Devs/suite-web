@@ -541,6 +541,8 @@ class PoliticaSgsiController extends Controller
             'proceso_id' => $aprobacion->id,
         ]);
 
+        event(new PoliticasSgiEvent($politica, 'rechazado', 'politica_sgsis', 'Politica'));
+
         $aprobacion->update([
             'estatus' => 'Rechazado',
         ]);
