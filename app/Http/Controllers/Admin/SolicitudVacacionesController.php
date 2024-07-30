@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Events\SolicitudVacacionesEvent;
 use App\Http\Controllers\Controller;
 use App\Mail\RespuestaVacaciones as MailRespuestaVacaciones;
 use App\Mail\SolicitudVacaciones as MailSolicitudVacaciones;
@@ -304,7 +305,9 @@ class SolicitudVacacionesController extends Controller
         return view('admin.solicitudVacaciones.show', compact('vacacion'));
     }
 
-    public function edit($id) {}
+    public function edit($id)
+    {
+    }
 
     public function update(Request $request, $id)
     {
@@ -506,6 +509,8 @@ class SolicitudVacacionesController extends Controller
 
         if ($request->ajax()) {
             $query = SolicitudVacaciones::with('empleado')->where('autoriza', '=', $data)->where('aprobacion', '=', 1)->orderByDesc('id')->get();
+
+            event(new SolicitudVacacionesEvent($query, 'aprobacion', 'solicitud_vacaciones', 'Vacaciones Aprobadas'));
             $table = datatables()::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');

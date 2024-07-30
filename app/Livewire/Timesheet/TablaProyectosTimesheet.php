@@ -82,7 +82,7 @@ class TablaProyectosTimesheet extends Component
 
         $this->proyectos = $this->proyectos->sortByDesc('is_num');
 
-        $this->dispatch('cerrarModal');
+        // $this->dispatch('cerrarModal');
 
         //$this->sedes = Sede::getAll();
 
@@ -90,7 +90,7 @@ class TablaProyectosTimesheet extends Component
 
         $this->clientes = TimesheetCliente::getAllOrderBy('nombre');
 
-        $this->dispatch('scriptTabla');
+        // $this->dispatch('scriptTabla');
 
         return view('livewire.timesheet.tabla-proyectos-timesheet');
     }
