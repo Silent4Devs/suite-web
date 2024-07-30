@@ -21,7 +21,7 @@ use App\Models\PlanImplementacion;
 use App\Models\Recurso;
 use Livewire\Component;
 
- extends Component
+class AuditoriasSGI extends Component
 {
     public $tabOption = 0;
 
