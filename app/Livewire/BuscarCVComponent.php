@@ -111,11 +111,13 @@ class BuscarCVComponent extends Component
         $this->dispatch('tagify');
     }
 
-    public function mount() {}
+    public function mount()
+    {
+    }
 
     public function render()
     {
-        if (! $this->isPersonal) {
+        if (!$this->isPersonal) {
             $this->empleados = Empleado::getAltaEmpleados();
         }
 
@@ -182,11 +184,10 @@ class BuscarCVComponent extends Component
             })
             ->orderByDesc('id')->cursorPaginate();
 
-        return view('', [
+        return view('livewire.buscar-c-v-component', [
             'empleadosCV' => $empleadosCV,
             'lista_docs' => ListaDocumentoEmpleado::getAll(),
         ]);
-
     }
 
     public function mostrarCurriculum($empleadoID)

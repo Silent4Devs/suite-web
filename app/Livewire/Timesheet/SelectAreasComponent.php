@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use App\Models\Area;
 use Livewire\Component;
 
-namespace App\Livewire\Timesheet extends Component
+class SelectAreasComponent extends Component
 {
     protected $listeners = ['render' => 'render'];
 
@@ -13,6 +13,6 @@ namespace App\Livewire\Timesheet extends Component
     {
         $areas = Area::getAll();
 
-        return view('class SelectAreasComponent', compact('areas'));
+        return view('livewire.timesheet.select-areas-component', compact('areas'));
     }
 }
