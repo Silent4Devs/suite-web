@@ -3,7 +3,6 @@
 namespace App\Listeners;
 
 use App\Models\User;
-use App\Notifications\TimesheetNotification;
 use App\Notifications\TimesheetProyectoNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;

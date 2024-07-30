@@ -30,7 +30,6 @@ class TimeSheetProyectoObserver
         $this->forgetCache();
     }
 
-
     private function forgetCache()
     {
         Cache::forget('TimesheetProyecto:timesheetproyecto_all');

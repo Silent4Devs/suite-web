@@ -2,7 +2,6 @@
 
 namespace App\Notifications;
 
-use App\Models\Timesheet;
 use App\Models\TimesheetProyecto;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
