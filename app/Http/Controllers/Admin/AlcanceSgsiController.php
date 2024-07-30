@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\AlcancesEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyAlcanceSgsiRequest;
 use App\Mail\DeterminacionAlcance\NotificacionAprobacionAlcance;
@@ -112,7 +113,7 @@ class AlcanceSgsiController extends Controller
 
         $modulo = ListaDistribucion::with('participantes.empleado')->where('modelo', '=', $this->modelo)->first();
 
-        if (! isset($modulo)) {
+        if (!isset($modulo)) {
             $listavacia = 'vacia';
         } elseif ($modulo->participantes->isEmpty()) {
             $listavacia = 'vacia';
@@ -227,7 +228,7 @@ class AlcanceSgsiController extends Controller
             // Buscar el modelo usando el ID
             $alcanceSgsi = AlcanceSgsi::findOrFail($id);
 
-            if (! $alcanceSgsi) {
+            if (!$alcanceSgsi) {
                 abort(404);
             }
 
@@ -277,7 +278,7 @@ class AlcanceSgsiController extends Controller
         try {
             $alcances = AlcanceSgsi::find($id);
 
-            if (! $alcances) {
+            if (!$alcances) {
                 abort(404);
             }
             $organizacions = Organizacion::getFirst();
@@ -422,12 +423,14 @@ class AlcanceSgsiController extends Controller
 
     public function aprobado($id, Request $request)
     {
-        // dd($id, $request->all());
+
         $aprobador = User::getCurrentUser()->empleado->id;
 
         $alcance = AlcanceSgsi::find($id);
 
         $modulo = ListaDistribucion::where('modelo', '=', $this->modelo)->first();
+
+        event(new AlcancesEvent($alcance, 'aprobado', 'alcance_sgsis', 'Alcance'));
 
         $proceso_general = ProcesosListaDistribucion::with('participantes')
             ->where('modulo_id', '=', $modulo->id)
@@ -502,11 +505,12 @@ class AlcanceSgsiController extends Controller
 
     public function rechazado($id, Request $request)
     {
-        // dd($id, $request->all());
+
         $alcance = AlcanceSgsi::with('empleado')->find($id);
         $modulo = ListaDistribucion::where('modelo', '=', $this->modelo)->first();
         $aprobacion = ProcesosListaDistribucion::with('participantes')->where('proceso_id', '=', $id)->where('modulo_id', '=', $modulo->id)->first();
-        // dd($aprobacion);
+
+        event(new AlcancesEvent($alcance, 'rechazado', 'alcance_sgsis', 'Alcance'));
 
         $comentario = ComentariosProcesosListaDistribucion::create([
             'comentario' => $request->comentario,
