@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\EntendimientoOrganizacionEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroyEntendimientoOrganizacionRequest;
@@ -131,7 +132,7 @@ class EntendimientoOrganizacionController extends Controller
             'estatus' => 'Borrador',
         ]);
 
-        if (! is_null($request->participantes)) {
+        if (!is_null($request->participantes)) {
             $this->vincularParticipantes($request->participantes, $foda);
         }
 
@@ -189,7 +190,7 @@ class EntendimientoOrganizacionController extends Controller
         ]);
 
         $entendimientoOrganizacion->update($request->all());
-        if (! is_null($request->participantes)) {
+        if (!is_null($request->participantes)) {
             $this->vincularParticipantes($request->participantes, $entendimientoOrganizacion);
         }
 
@@ -331,7 +332,7 @@ class EntendimientoOrganizacionController extends Controller
 
         $listavacia = 'cumple';
 
-        if (! isset($modulo)) {
+        if (!isset($modulo)) {
             $listavacia = 'vacia';
         } elseif ($modulo->participantes->isEmpty()) {
             $listavacia = 'vacia';
@@ -486,6 +487,8 @@ class EntendimientoOrganizacionController extends Controller
 
         $modulo = ListaDistribucion::where('modelo', '=', $this->modelo)->first();
 
+        event(new EntendimientoOrganizacionEvent($foda, 'aprobado', 'entendimiento_organizacions', 'Foda'));
+
         $proceso_general = ProcesosListaDistribucion::with('participantes')
             ->where('modulo_id', '=', $modulo->id)
             ->where('proceso_id', '=', $id)
@@ -560,11 +563,11 @@ class EntendimientoOrganizacionController extends Controller
 
     public function rechazado($id, Request $request)
     {
-        // dd($id, $request->all());
         $foda = EntendimientoOrganizacion::with('empleado')->find($id);
         $modulo = ListaDistribucion::where('modelo', '=', $this->modelo)->first();
         $aprobacion = ProcesosListaDistribucion::with('participantes')->where('proceso_id', '=', $id)->where('modulo_id', '=', $modulo->id)->first();
-        // dd($aprobacion);
+
+        event(new EntendimientoOrganizacionEvent($foda, 'rechazado', 'entendimiento_organizacions', 'Foda'));
 
         $comentario = ComentariosProcesosListaDistribucion::create([
             'comentario' => $request->comentario,
