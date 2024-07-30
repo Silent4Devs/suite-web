@@ -22,9 +22,9 @@
                 </div>
                 @endif
             </div>
-            <form wire:submit.prevent="askAsisten">
+            <form wire:submit="askAsisten">
                 <div class="box-input-user-chatbot">
-                    <input wire:model.lazy="search" class="scroll_estilo" style="border: 2px solid #add8e6; padding: 5px; border-radius: 4px; outline: none;">
+                    <input wire:model.blur="search" class="scroll_estilo" style="border: 2px solid #add8e6; padding: 5px; border-radius: 4px; outline: none;">
                     <button type="submit" class="btn">Enviar</button>
                 </div>
             </form>

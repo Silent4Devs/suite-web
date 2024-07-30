@@ -7,7 +7,7 @@
             <hr class="my-4">
         </div>
 
-        <form wire:submit.prevent="submitForm(Object.fromEntries(new FormData($event.target)))">
+        <form wire:submit="submitForm(Object.fromEntries(new FormData($event.target)))">
             <div class="row">
                 @foreach ($categoria as $key => $p)
                     {{-- <div class="row"> --}}

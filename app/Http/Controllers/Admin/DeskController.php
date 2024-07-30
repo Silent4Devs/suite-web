@@ -6,7 +6,8 @@ use App\Events\DenunciasEvent;
 use App\Events\IncidentesDeSeguridadEvent;
 use App\Events\MejorasEvent;
 use App\Events\QuejasEvent;
-use App\Events\SeguridadEvent;
+use App\Events\RiesgosEvent;
+use App\Events\SugerenciasEvent;
 use App\Http\Controllers\Controller;
 use App\Mail\AceptacionAccionCorrectivaEmail;
 use App\Mail\AtencionQuejaAtendidaEmail;
@@ -30,7 +31,6 @@ use App\Models\EvidenciasQuejasClientesCerrado;
 use App\Models\EvidenciasSeguridad;
 use App\Models\FirmaCentroAtencion;
 use App\Models\FirmaModule;
-use App\Models\IncidentesDeSeguridad;
 use App\Models\IncidentesSeguridad;
 use App\Models\Mejoras;
 use App\Models\Organizacion;
@@ -46,8 +46,6 @@ use App\Models\TimesheetProyecto;
 use App\Models\User;
 use App\Traits\ObtenerOrganizacion;
 use Auth;
-use App\Events\RiesgosEvent;
-use App\Events\SugerenciasEvent;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -277,7 +275,7 @@ class DeskController extends Controller
             $existingRecord->delete();
         }
 
-        $aprobadorSeleccionado = new AprobadorSeleccionado();
+        $aprobadorSeleccionado = new AprobadorSeleccionado;
 
         // Asignar cada campo individualmente
         $aprobadorSeleccionado->modulo_id = $modulo;
@@ -325,7 +323,6 @@ class DeskController extends Controller
             'subcategoria_id' => $request->subcategoria_id,
         ]);
 
-
         if ($incidentesSeguridad->estatus === 'Cerrado' || $incidentesSeguridad->estatus === 'No procedente') {
 
             $existingRecord = AprobadorSeleccionado::where('seguridad_id', $incidentesSeguridad->id)->first();
@@ -334,7 +331,7 @@ class DeskController extends Controller
                 $existingRecord->delete();
             }
 
-            $aprobadorSeleccionado = new AprobadorSeleccionado();
+            $aprobadorSeleccionado = new AprobadorSeleccionado;
 
             // Asignar cada campo individualmente
             $aprobadorSeleccionado->modulo_id = $modulo;
@@ -360,13 +357,13 @@ class DeskController extends Controller
 
         $documento = $incidentesSeguridad->evidencia;
 
-        if ($request->file('evidencia') != null or !empty($request->file('evidencia'))) {
+        if ($request->file('evidencia') != null or ! empty($request->file('evidencia'))) {
             foreach ($request->file('evidencia') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_documento = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
+                $name_documento = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
 
-                $new_name_documento = 'Seguridad_file_' . $incidentesSeguridad->id . '_' . $name_documento . '.' . $extension;
+                $new_name_documento = 'Seguridad_file_'.$incidentesSeguridad->id.'_'.$name_documento.'.'.$extension;
 
                 $route = 'public/evidencias_seguridad';
 
@@ -554,7 +551,7 @@ class DeskController extends Controller
             $existingRecord->delete();
         }
 
-        $aprobadorSeleccionado = new AprobadorSeleccionado();
+        $aprobadorSeleccionado = new AprobadorSeleccionado;
 
         // Asignar cada campo individualmente
         $aprobadorSeleccionado->modulo_id = $modulo;
@@ -602,7 +599,7 @@ class DeskController extends Controller
                 $existingRecord->delete();
             }
 
-            $aprobadorSeleccionado = new AprobadorSeleccionado();
+            $aprobadorSeleccionado = new AprobadorSeleccionado;
 
             // Asignar cada campo individualmente
             $aprobadorSeleccionado->modulo_id = $modulo;
@@ -768,7 +765,7 @@ class DeskController extends Controller
             $existingRecord->delete();
         }
 
-        $aprobadorSeleccionado = new AprobadorSeleccionado();
+        $aprobadorSeleccionado = new AprobadorSeleccionado;
 
         // Asignar cada campo individualmente
         $aprobadorSeleccionado->modulo_id = $modulo;
@@ -818,7 +815,7 @@ class DeskController extends Controller
                 $existingRecord->delete();
             }
 
-            $aprobadorSeleccionado = new AprobadorSeleccionado();
+            $aprobadorSeleccionado = new AprobadorSeleccionado;
 
             // Asignar cada campo individualmente
             $aprobadorSeleccionado->modulo_id = $modulo;
@@ -982,7 +979,7 @@ class DeskController extends Controller
             $existingRecord->delete();
         }
 
-        $aprobadorSeleccionado = new AprobadorSeleccionado();
+        $aprobadorSeleccionado = new AprobadorSeleccionado;
 
         // Asignar cada campo individualmente
         $aprobadorSeleccionado->modulo_id = $modulo;
@@ -1027,7 +1024,7 @@ class DeskController extends Controller
                 $existingRecord->delete();
             }
 
-            $aprobadorSeleccionado = new AprobadorSeleccionado();
+            $aprobadorSeleccionado = new AprobadorSeleccionado;
 
             // Asignar cada campo individualmente
             $aprobadorSeleccionado->modulo_id = $modulo;
@@ -1201,7 +1198,7 @@ class DeskController extends Controller
             $existingRecord->delete();
         }
 
-        $aprobadorSeleccionado = new AprobadorSeleccionado();
+        $aprobadorSeleccionado = new AprobadorSeleccionado;
 
         // Asignar cada campo individualmente
         $aprobadorSeleccionado->modulo_id = $modulo;
@@ -1246,7 +1243,7 @@ class DeskController extends Controller
                 $existingRecord->delete();
             }
 
-            $aprobadorSeleccionado = new AprobadorSeleccionado();
+            $aprobadorSeleccionado = new AprobadorSeleccionado;
 
             // Asignar cada campo individualmente
             $aprobadorSeleccionado->modulo_id = $modulo;
@@ -1404,7 +1401,7 @@ class DeskController extends Controller
             $existingRecord->delete();
         }
 
-        $aprobadorSeleccionado = new AprobadorSeleccionado();
+        $aprobadorSeleccionado = new AprobadorSeleccionado;
 
         // Asignar cada campo individualmente
         $aprobadorSeleccionado->modulo_id = $modulo;
@@ -1447,7 +1444,7 @@ class DeskController extends Controller
                 $existingRecord->delete();
             }
 
-            $aprobadorSeleccionado = new AprobadorSeleccionado();
+            $aprobadorSeleccionado = new AprobadorSeleccionado;
 
             // Asignar cada campo individualmente
             $aprobadorSeleccionado->modulo_id = $modulo;
@@ -1601,13 +1598,13 @@ class DeskController extends Controller
 
         $image = null;
 
-        if ($request->file('evidencia') != null or !empty($request->file('evidencia'))) {
+        if ($request->file('evidencia') != null or ! empty($request->file('evidencia'))) {
             foreach ($request->file('evidencia') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
+                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
 
-                $new_name_image = 'Queja_file_' . $quejasClientes->id . '_' . $name_image . '.' . $extension;
+                $new_name_image = 'Queja_file_'.$quejasClientes->id.'_'.$name_image.'.'.$extension;
 
                 $route = 'public/evidencias_quejas_clientes';
 
@@ -1735,13 +1732,13 @@ class DeskController extends Controller
 
         $documento = null;
 
-        if ($request->file('evidencia') != null or !empty($request->file('evidencia'))) {
+        if ($request->file('evidencia') != null or ! empty($request->file('evidencia'))) {
             foreach ($request->file('evidencia') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_documento = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
+                $name_documento = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
 
-                $new_name_documento = 'Queja_file_' . $quejasClientes->id . '_' . $name_documento . '.' . $extension;
+                $new_name_documento = 'Queja_file_'.$quejasClientes->id.'_'.$name_documento.'.'.$extension;
 
                 $route = 'public/evidencias_quejas_clientes';
 
@@ -1758,13 +1755,13 @@ class DeskController extends Controller
 
         $image = null;
 
-        if ($request->file('cierre') != null or !empty($request->file('cierre'))) {
+        if ($request->file('cierre') != null or ! empty($request->file('cierre'))) {
             foreach ($request->file('cierre') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
+                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
 
-                $new_name_image = 'Queja_file_' . $quejasClientes->id . '_' . $name_image . '.' . $extension;
+                $new_name_image = 'Queja_file_'.$quejasClientes->id.'_'.$name_image.'.'.$extension;
 
                 $route = 'public/evidencias_quejas_clientes_cerrado';
 
@@ -1794,7 +1791,7 @@ class DeskController extends Controller
 
         if ($notificar_atencion_queja_no_aprobada) {
             if ($cerrar_ticket == false) {
-                if (!$quejasClientes->email_env_resolucion_rechazada) {
+                if (! $quejasClientes->email_env_resolucion_rechazada) {
                     if ($quejasClientes->registro != null && $quejasClientes->responsableAtencion != null) {
                         $quejasClientes->update([
                             'email_env_resolucion_rechazada' => true,
@@ -1807,7 +1804,7 @@ class DeskController extends Controller
 
         if ($notificar_atencion_queja_no_aprobada) {
             if ($cerrar_ticket) {
-                if (!$quejasClientes->email_env_resolucion_aprobada) {
+                if (! $quejasClientes->email_env_resolucion_aprobada) {
                     if ($quejasClientes->registro != null && $quejasClientes->responsableAtencion != null) {
                         $quejasClientes->update([
                             'email_env_resolucion_aprobada' => true,
@@ -1818,8 +1815,8 @@ class DeskController extends Controller
             }
         }
 
-        if (!$email_realizara_accion_inmediata) {
-            if (!is_null($quejasClientes->acciones_tomara_responsable)) {
+        if (! $email_realizara_accion_inmediata) {
+            if (! is_null($quejasClientes->acciones_tomara_responsable)) {
                 if ($quejasClientes->registro != null && $quejasClientes->responsableAtencion != null) {
                     $quejasClientes->update([
                         'email_realizara_accion_inmediata' => true,
@@ -1830,7 +1827,7 @@ class DeskController extends Controller
         }
 
         if ($notificar_registro_queja) {
-            if (!$quejasClientes->correo_enviado_registro) {
+            if (! $quejasClientes->correo_enviado_registro) {
                 if ($quejasClientes->registro != null && $quejasClientes->responsableAtencion != null) {
                     $quejasClientes->update([
                         'correo_enviado_registro' => true,
@@ -1851,7 +1848,7 @@ class DeskController extends Controller
                 $query->where('acciones_correctivas_aprobacionables_id', $quejasClientes->id);
             })->exists();
 
-            if (!$existeAC) {
+            if (! $existeAC) {
                 $accion_correctiva = AccionCorrectiva::create([
                     'tema' => $request->titulo,
                     'causaorigen' => 'Queja de un cliente',
@@ -1878,7 +1875,7 @@ class DeskController extends Controller
                 $quejasClientes->accionCorrectivaAprobacional()->sync($accion_correctiva->id);
             }
 
-            if (!$quejasClientes->correoEnviado) {
+            if (! $quejasClientes->correoEnviado) {
                 $quejasClientes->update([
                     'correoEnviado' => true,
                 ]);
@@ -2187,7 +2184,7 @@ class DeskController extends Controller
 
             return response()->json(['isValid' => true]);
         } elseif ($request->tipo_validacion == 'queja-atencion') {
-            if (!is_null($quejasClientes->responsable_atencion_queja_id)) {
+            if (! is_null($quejasClientes->responsable_atencion_queja_id)) {
                 if ($quejasClientes->responsable_atencion_queja_id != User::getCurrentUser()->empleado->id) {
                     $this->validateRequestRegistroQuejaCliente($request);
                     $this->validateRequestAnalisisQuejaCliente($request);

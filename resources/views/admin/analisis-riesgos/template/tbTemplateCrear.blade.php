@@ -451,7 +451,7 @@
     </script>
 
     <script>
-        document.addEventListener('livewire:load', function () {
+        document.addEventListener('livewire:init', function () {
             let validacion1, validacion2;
 
             Livewire.on('validateEscala', function (newValue) {

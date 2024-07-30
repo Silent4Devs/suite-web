@@ -2,14 +2,9 @@
 
 namespace App\Listeners;
 
-use App\Models\AprobadorFirmaContrato;
-use App\Models\AprobadorSeleccionado;
 use App\Models\FirmaModule;
-use App\Models\RiesgoIdentificado;
 use App\Models\User;
 use App\Notifications\ContratoNotification;
-use App\Notifications\IncidentesDeSeguridadNotification;
-use App\Notifications\RiesgoNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Notification;

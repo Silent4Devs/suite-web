@@ -239,7 +239,7 @@ class MatrizRequisitoLegalesController extends Controller
 
     public function createPlanAccion(MatrizRequisitoLegale $id)
     {
-        $planImplementacion = new PlanImplementacion();
+        $planImplementacion = new PlanImplementacion;
         $modulo = $id;
         $modulo_name = 'Matríz de Requisitos Legales';
         $referencia = $modulo->nombrerequisito;
@@ -264,7 +264,7 @@ class MatrizRequisitoLegalesController extends Controller
         ]);
 
         $matrizRequisitoLegal = $id;
-        $planImplementacion = new PlanImplementacion(); // Necesario se carga inicialmente el Diagrama Universal de Gantt
+        $planImplementacion = new PlanImplementacion; // Necesario se carga inicialmente el Diagrama Universal de Gantt
         $planImplementacion->tasks = [
             [
                 'id' => '1',

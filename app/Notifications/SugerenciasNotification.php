@@ -2,7 +2,6 @@
 
 namespace App\Notifications;
 
-use App\Models\Mejoras;
 use App\Models\Sugerencias;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
@@ -15,8 +14,11 @@ class SugerenciasNotification extends Notification
     use Queueable;
 
     public $sugerencias;
+
     public $tipo_consulta;
+
     public $tabla;
+
     public $slug;
 
     public function __construct(Sugerencias $sugerencias, $tipo_consulta, $tabla, $slug)

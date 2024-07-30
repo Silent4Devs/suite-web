@@ -397,7 +397,7 @@
 @section('scripts')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.js"></script>{{-- <script>
-        // document.addEventListener('livewire:load', function() {
+        // document.addEventListener('livewire:init', function() {
         //     Dropzone.options.myDropzone = {
         //         paramName: "file",
         //         maxFilesize: 2, // MB
@@ -415,7 +415,7 @@
         //     };
         // });
     </script> --}} {{-- <script>
-        document.addEventListener('livewire:load', function() {
+        document.addEventListener('livewire:init', function() {
             Livewire.on('fileUploaded', function(filePath) {
                 // Update Livewire component state with uploaded file path
                 @this.set('filePath', filePath);
@@ -423,7 +423,7 @@
         });
     </script> --}}
     <script>
-        document.addEventListener('livewire:load', function() {
+        document.addEventListener('livewire:init', function() {
             // Get file input element
             const fileInput = document.getElementById('fileInput');
 

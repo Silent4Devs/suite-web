@@ -90,7 +90,7 @@ class TimesheetController extends Controller
     private function forgetCache()
     {
         //Borrar cache de Timesheet
-        Cache::forget('Timesheet:timesheet-' . auth()->user()->empleado->id);
+        Cache::forget('Timesheet:timesheet-'.auth()->user()->empleado->id);
         Cache::forget('Timesheet:timesheet_horas_all');
         Cache::forget('Timesheet:timesheet_all');
         Cache::forget('Timesheet:timesheet_estatus');
@@ -392,6 +392,7 @@ class TimesheetController extends Controller
                 catch (Throwable $e) {
                     DB::rollback();
                     $this->forgetCache();
+
                     // throw $e;
                     return response()->json(['status' => 400]);
                 }

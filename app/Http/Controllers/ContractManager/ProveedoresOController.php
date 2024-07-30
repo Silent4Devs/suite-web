@@ -71,7 +71,7 @@ class ProveedoresOController extends Controller
                 'rfc.max' => 'El campo rfc no puede exceder los 255 caracteres.',
             ]);
 
-            $proveedores = new ProveedorOC();
+            $proveedores = new ProveedorOC;
             $proveedores->nombre = $request->nombre;
             $proveedores->razon_social = $request->razon_social;
             $proveedores->rfc = $request->rfc;

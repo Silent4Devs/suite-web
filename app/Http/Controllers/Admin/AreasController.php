@@ -97,7 +97,7 @@ class AreasController extends Controller
         $direccion_exists = Area::select('id_reporta')->whereNull('id_reporta')->exists();
         $areas = Area::with('areas')->get();
         $empleados = Empleado::getaltaAll();
-        $area = new Area();
+        $area = new Area;
 
         return view('admin.areas.create', compact('grupoareas', 'direccion_exists', 'areas', 'empleados', 'area'));
     }

@@ -14,8 +14,11 @@ class QuejasNotification extends Notification
     use Queueable;
 
     public $quejas;
+
     public $tipo_consulta;
+
     public $tabla;
+
     public $slug;
 
     public function __construct(Quejas $quejas, $tipo_consulta, $tabla, $slug)

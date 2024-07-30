@@ -4,7 +4,6 @@ namespace App\Observers;
 
 use App\Events\IncidentesDeSeguridadEvent;
 use App\Models\IncidentesDeSeguridad;
-use Illuminate\Support\Facades\Queue;
 
 class IncidentesDeSeguridadObserver
 {

@@ -14,8 +14,11 @@ class DenunciasEvent implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $denuncias;
+
     public $tipo_consulta;
+
     public $tabla;
+
     public $slug;
 
     public function __construct(Denuncias $denuncias, $tipo_consulta, $tabla, $slug)

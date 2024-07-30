@@ -148,7 +148,7 @@ class SolicitudVacacionesController extends Controller
             $finVacaciones = $inicio_vacaciones->addYear($año);
             $finVacaciones = $finVacaciones->format('d-m-Y');
             $autoriza = $usuario->empleado->supervisor_id;
-            $vacacion = new SolicitudVacaciones();
+            $vacacion = new SolicitudVacaciones;
             $dias_disponibles = null;
             $organizacion = Organizacion::getFirst();
             $dias_pendientes = null;
@@ -166,7 +166,7 @@ class SolicitudVacacionesController extends Controller
         $finVacaciones = $inicio_vacaciones->addYear($año);
         $finVacaciones = $finVacaciones->format('d-m-Y');
         $autoriza = $usuario->empleado->supervisor_id;
-        $vacacion = new SolicitudVacaciones();
+        $vacacion = new SolicitudVacaciones;
 
         $dias_disponibles = $this->diasDisponibles();
         $organizacion = Organizacion::getFirst();
@@ -236,7 +236,7 @@ class SolicitudVacacionesController extends Controller
         $finVacaciones = $inicio_vacaciones->addYear($año);
         $finVacaciones = $finVacaciones->format('d-m-Y');
         $autoriza = $usuario->empleado->supervisor_id;
-        $vacacion = new SolicitudVacaciones();
+        $vacacion = new SolicitudVacaciones;
         $dias_disponibles = $this->diasDisponiblesAñopasado();
         $organizacion = Organizacion::getFirst();
         $dias_pendientes = SolicitudVacaciones::where('empleado_id', '=', $usuario->empleado->id)->where('aprobacion', '=', 1)->where('año', '=', $año)->sum('dias_solicitados');

@@ -81,7 +81,7 @@ class ClausulasAuditoriasController extends Controller
         ]);
 
         // dd('validacion');
-        $nuevaClausulas = new ClausulasAuditorias();
+        $nuevaClausulas = new ClausulasAuditorias;
         $nuevaClausulas->create([
             'identificador' => $request->identificador,
             'nombre_clausulas' => $request->nombre,

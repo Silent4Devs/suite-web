@@ -60,7 +60,7 @@ class SucursalController extends Controller
         try {
             DB::beginTransaction();
 
-            $sucursales = new Sucursal();
+            $sucursales = new Sucursal;
             $sucursales->descripcion = $request->descripcion;
             $sucursales->rfc = $request->rfc;
             $sucursales->empresa = $request->empresa;

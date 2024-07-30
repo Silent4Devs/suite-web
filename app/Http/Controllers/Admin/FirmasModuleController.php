@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Events\IncidentesDeSeguridadEvent;
-use App\Events\SeguridadEvent;
 use App\Http\Controllers\Controller;
 use App\Models\Denuncias;
 use App\Models\FirmaCentroAtencion;
@@ -89,7 +87,7 @@ class FirmasModuleController extends Controller
 
         // Convertir la cadena de participantes a un array si es una cadena delimitada
         $participantes = [];
-        if (!empty($firma_module->participantes)) {
+        if (! empty($firma_module->participantes)) {
             $cleanString = str_replace(['[', ']', '"'], '', $firma_module->participantes);
             $participantes = explode(',', $cleanString);
             $participantes = array_map('trim', $participantes);
@@ -131,7 +129,7 @@ class FirmasModuleController extends Controller
                 $base64Image = substr($base64Image, strpos($base64Image, ',') + 1);
                 $type = strtolower($type[1]); // png, jpg, gif
 
-                if (!in_array($type, ['jpg', 'jpeg', 'gif', 'png'])) {
+                if (! in_array($type, ['jpg', 'jpeg', 'gif', 'png'])) {
                     throw new \Exception('Tipo de imagen inválido');
                 }
             } else {
@@ -147,21 +145,21 @@ class FirmasModuleController extends Controller
             }
 
             // Generar un nombre único para la imagen
-            $imageName = uniqid() . '.' . $type;
+            $imageName = uniqid().'.'.$type;
             // Guardar la imagen en el sistema de archivos
 
-            $ruta_carpeta = storage_path('app/public/seguridad/' . $seguridad->id . '/firma');
+            $ruta_carpeta = storage_path('app/public/seguridad/'.$seguridad->id.'/firma');
 
-            if (!is_dir($ruta_carpeta)) {
+            if (! is_dir($ruta_carpeta)) {
                 mkdir($ruta_carpeta, 0777, true);
             }
 
             chmod($ruta_carpeta, 0777);
 
-            Storage::put('public/seguridad/' . $seguridad->id . '/firma/' . $imageName, $image);
+            Storage::put('public/seguridad/'.$seguridad->id.'/firma/'.$imageName, $image);
 
             // Obtener la URL de la imagen guardada
-            $imageUrl = Storage::url('public/seguridad/' . $seguridad->id . '/firma/' . $imageName);
+            $imageUrl = Storage::url('public/seguridad/'.$seguridad->id.'/firma/'.$imageName);
 
             $firmaModule = FirmaCentroAtencion::create([
                 'modulo_id' => 1,
@@ -200,7 +198,7 @@ class FirmasModuleController extends Controller
                 $base64Image = substr($base64Image, strpos($base64Image, ',') + 1);
                 $type = strtolower($type[1]); // png, jpg, gif
 
-                if (!in_array($type, ['jpg', 'jpeg', 'gif', 'png'])) {
+                if (! in_array($type, ['jpg', 'jpeg', 'gif', 'png'])) {
                     throw new \Exception('Tipo de imagen inválido');
                 }
             } else {
@@ -216,21 +214,21 @@ class FirmasModuleController extends Controller
             }
 
             // Generar un nombre único para la imagen
-            $imageName = uniqid() . '.' . $type;
+            $imageName = uniqid().'.'.$type;
             // Guardar la imagen en el sistema de archivos
 
-            $ruta_carpeta = storage_path('app/public/riesgos/' . $riesgo->id . '/firma');
+            $ruta_carpeta = storage_path('app/public/riesgos/'.$riesgo->id.'/firma');
 
-            if (!is_dir($ruta_carpeta)) {
+            if (! is_dir($ruta_carpeta)) {
                 mkdir($ruta_carpeta, 0777, true);
             }
 
             chmod($ruta_carpeta, 0777);
 
-            Storage::put('public/riesgos/' . $riesgo->id . '/firma/' . $imageName, $image);
+            Storage::put('public/riesgos/'.$riesgo->id.'/firma/'.$imageName, $image);
 
             // Obtener la URL de la imagen guardada
-            $imageUrl = Storage::url('public/riesgos/' . $riesgo->id . '/firma/' . $imageName);
+            $imageUrl = Storage::url('public/riesgos/'.$riesgo->id.'/firma/'.$imageName);
 
             $firmaModule = FirmaCentroAtencion::create([
                 'modulo_id' => $modulo,
@@ -269,7 +267,7 @@ class FirmasModuleController extends Controller
                 $base64Image = substr($base64Image, strpos($base64Image, ',') + 1);
                 $type = strtolower($type[1]); // png, jpg, gif
 
-                if (!in_array($type, ['jpg', 'jpeg', 'gif', 'png'])) {
+                if (! in_array($type, ['jpg', 'jpeg', 'gif', 'png'])) {
                     throw new \Exception('Tipo de imagen inválido');
                 }
             } else {
@@ -285,21 +283,21 @@ class FirmasModuleController extends Controller
             }
 
             // Generar un nombre único para la imagen
-            $imageName = uniqid() . '.' . $type;
+            $imageName = uniqid().'.'.$type;
             // Guardar la imagen en el sistema de archivos
 
-            $ruta_carpeta = storage_path('app/public/mejoras/' . $mejoras->id . '/firma');
+            $ruta_carpeta = storage_path('app/public/mejoras/'.$mejoras->id.'/firma');
 
-            if (!is_dir($ruta_carpeta)) {
+            if (! is_dir($ruta_carpeta)) {
                 mkdir($ruta_carpeta, 0777, true);
             }
 
             chmod($ruta_carpeta, 0777);
 
-            Storage::put('public/mejoras/' . $mejoras->id . '/firma/' . $imageName, $image);
+            Storage::put('public/mejoras/'.$mejoras->id.'/firma/'.$imageName, $image);
 
             // Obtener la URL de la imagen guardada
-            $imageUrl = Storage::url('public/mejoras/' . $mejoras->id . '/firma/' . $imageName);
+            $imageUrl = Storage::url('public/mejoras/'.$mejoras->id.'/firma/'.$imageName);
 
             $firmaModule = FirmaCentroAtencion::create([
                 'modulo_id' => $modulo,
@@ -337,7 +335,7 @@ class FirmasModuleController extends Controller
                 $base64Image = substr($base64Image, strpos($base64Image, ',') + 1);
                 $type = strtolower($type[1]); // png, jpg, gif
 
-                if (!in_array($type, ['jpg', 'jpeg', 'gif', 'png'])) {
+                if (! in_array($type, ['jpg', 'jpeg', 'gif', 'png'])) {
                     throw new \Exception('Tipo de imagen inválido');
                 }
             } else {
@@ -353,21 +351,21 @@ class FirmasModuleController extends Controller
             }
 
             // Generar un nombre único para la imagen
-            $imageName = uniqid() . '.' . $type;
+            $imageName = uniqid().'.'.$type;
             // Guardar la imagen en el sistema de archivos
 
-            $ruta_carpeta = storage_path('app/public/denuncias/' . $denuncia->id . '/firma');
+            $ruta_carpeta = storage_path('app/public/denuncias/'.$denuncia->id.'/firma');
 
-            if (!is_dir($ruta_carpeta)) {
+            if (! is_dir($ruta_carpeta)) {
                 mkdir($ruta_carpeta, 0777, true);
             }
 
             chmod($ruta_carpeta, 0777);
 
-            Storage::put('public/denuncias/' . $denuncia->id . '/firma/' . $imageName, $image);
+            Storage::put('public/denuncias/'.$denuncia->id.'/firma/'.$imageName, $image);
 
             // Obtener la URL de la imagen guardada
-            $imageUrl = Storage::url('public/denuncias/' . $denuncia->id . '/firma/' . $imageName);
+            $imageUrl = Storage::url('public/denuncias/'.$denuncia->id.'/firma/'.$imageName);
 
             $firmaModule = FirmaCentroAtencion::create([
                 'modulo_id' => $modulo,
@@ -406,7 +404,7 @@ class FirmasModuleController extends Controller
                 $base64Image = substr($base64Image, strpos($base64Image, ',') + 1);
                 $type = strtolower($type[1]); // png, jpg, gif
 
-                if (!in_array($type, ['jpg', 'jpeg', 'gif', 'png'])) {
+                if (! in_array($type, ['jpg', 'jpeg', 'gif', 'png'])) {
                     throw new \Exception('Tipo de imagen inválido');
                 }
             } else {
@@ -422,21 +420,21 @@ class FirmasModuleController extends Controller
             }
 
             // Generar un nombre único para la imagen
-            $imageName = uniqid() . '.' . $type;
+            $imageName = uniqid().'.'.$type;
             // Guardar la imagen en el sistema de archivos
 
-            $ruta_carpeta = storage_path('app/public/quejas/' . $quejas->id . '/firma');
+            $ruta_carpeta = storage_path('app/public/quejas/'.$quejas->id.'/firma');
 
-            if (!is_dir($ruta_carpeta)) {
+            if (! is_dir($ruta_carpeta)) {
                 mkdir($ruta_carpeta, 0777, true);
             }
 
             chmod($ruta_carpeta, 0777);
 
-            Storage::put('public/quejas/' . $quejas->id . '/firma/' . $imageName, $image);
+            Storage::put('public/quejas/'.$quejas->id.'/firma/'.$imageName, $image);
 
             // Obtener la URL de la imagen guardada
-            $imageUrl = Storage::url('public/quejas/' . $quejas->id . '/firma/' . $imageName);
+            $imageUrl = Storage::url('public/quejas/'.$quejas->id.'/firma/'.$imageName);
 
             $firmaModule = FirmaCentroAtencion::create([
                 'modulo_id' => $modulo,
@@ -474,7 +472,7 @@ class FirmasModuleController extends Controller
                 $base64Image = substr($base64Image, strpos($base64Image, ',') + 1);
                 $type = strtolower($type[1]); // png, jpg, gif
 
-                if (!in_array($type, ['jpg', 'jpeg', 'gif', 'png'])) {
+                if (! in_array($type, ['jpg', 'jpeg', 'gif', 'png'])) {
                     throw new \Exception('Tipo de imagen inválido');
                 }
             } else {
@@ -490,21 +488,21 @@ class FirmasModuleController extends Controller
             }
 
             // Generar un nombre único para la imagen
-            $imageName = uniqid() . '.' . $type;
+            $imageName = uniqid().'.'.$type;
             // Guardar la imagen en el sistema de archivos
 
-            $ruta_carpeta = storage_path('app/public/sugerencias/' . $sugerencias->id . '/firma');
+            $ruta_carpeta = storage_path('app/public/sugerencias/'.$sugerencias->id.'/firma');
 
-            if (!is_dir($ruta_carpeta)) {
+            if (! is_dir($ruta_carpeta)) {
                 mkdir($ruta_carpeta, 0777, true);
             }
 
             chmod($ruta_carpeta, 0777);
 
-            Storage::put('public/sugerencias/' . $sugerencias->id . '/firma/' . $imageName, $image);
+            Storage::put('public/sugerencias/'.$sugerencias->id.'/firma/'.$imageName, $image);
 
             // Obtener la URL de la imagen guardada
-            $imageUrl = Storage::url('public/sugerencias/' . $sugerencias->id . '/firma/' . $imageName);
+            $imageUrl = Storage::url('public/sugerencias/'.$sugerencias->id.'/firma/'.$imageName);
 
             $firmaModule = FirmaCentroAtencion::create([
                 'modulo_id' => $modulo,
@@ -532,7 +530,7 @@ class FirmasModuleController extends Controller
             $base64Image = substr($base64Image, strpos($base64Image, ',') + 1);
             $type = strtolower($type[1]); // png, jpg, gif
 
-            if (!in_array($type, ['jpg', 'jpeg', 'gif', 'png'])) {
+            if (! in_array($type, ['jpg', 'jpeg', 'gif', 'png'])) {
                 throw new \Exception('Tipo de imagen inválido');
             }
         } else {
@@ -548,21 +546,21 @@ class FirmasModuleController extends Controller
         }
 
         // Generar un nombre único para la imagen
-        $imageName = uniqid() . '.' . $type;
+        $imageName = uniqid().'.'.$type;
         // Guardar la imagen en el sistema de archivos
 
-        $ruta_carpeta = storage_path('app/public/minuta/' . $minuta->id . '/firma');
+        $ruta_carpeta = storage_path('app/public/minuta/'.$minuta->id.'/firma');
 
-        if (!is_dir($ruta_carpeta)) {
+        if (! is_dir($ruta_carpeta)) {
             mkdir($ruta_carpeta, 0777, true);
         }
 
         chmod($ruta_carpeta, 0777);
 
-        Storage::put('public/minuta/' . $minuta->id . '/firma/' . $imageName, $image);
+        Storage::put('public/minuta/'.$minuta->id.'/firma/'.$imageName, $image);
 
         // Obtener la URL de la imagen guardada
-        $imageUrl = Storage::url('public/minuta/' . $minuta->id . '/firma/' . $imageName);
+        $imageUrl = Storage::url('public/minuta/'.$minuta->id.'/firma/'.$imageName);
 
         $firmaModule = FirmaCentroAtencion::create([
             'modulo_id' => 3,
