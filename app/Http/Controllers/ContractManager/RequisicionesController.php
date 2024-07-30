@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\ContractManager;
 
-use App\Events\RequisicionesEvent;
 use App\Http\Controllers\Controller;
 use App\Mail\RequisicionesEmail;
 use App\Mail\RequisicionesFirmaDuplicadaEmail;
@@ -18,7 +17,6 @@ use App\Models\FirmasRequisiciones;
 use App\Models\ListaDistribucion;
 use App\Models\Organizacion;
 use App\Models\User;
-use App\Models\User as ModelsUser;
 use App\Traits\ObtenerOrganizacion;
 use Gate;
 use Illuminate\Http\Request;
@@ -97,7 +95,7 @@ class RequisicionesController extends Controller
 
             $requisicion = KatbolRequsicion::with('sucursal', 'comprador.user', 'contrato')->find($id);
 
-            if (!$requisicion) {
+            if (! $requisicion) {
                 abort(404);
             }
 
@@ -182,6 +180,7 @@ class RequisicionesController extends Controller
 
         if ($requisicion) {
             $requisicion->delete();
+
             return response()->json(['redirect' => route('contract_manager.requisiciones')]);
         }
 
@@ -473,7 +472,7 @@ class RequisicionesController extends Controller
                 $tipo_firma = 'firma_solicitante';
                 $alerta = $this->validacionLista($tipo_firma);
             } else {
-                $mensaje = 'No tiene permisos para firmar<br> En espera del solicitante directo: <br> <strong>' . $firma_siguiente->solicitante->name . '</strong>';
+                $mensaje = 'No tiene permisos para firmar<br> En espera del solicitante directo: <br> <strong>'.$firma_siguiente->solicitante->name.'</strong>';
 
                 return view('contract_manager.requisiciones.error', compact('mensaje'));
             }
@@ -482,7 +481,7 @@ class RequisicionesController extends Controller
                 $tipo_firma = 'firma_jefe';
                 $alerta = $this->validacionLista($tipo_firma);
             } else {
-                $mensaje = 'No tiene permisos para firmar<br> En espera del jefe directo: <br> <strong>' . $firma_siguiente->jefe->name . '</strong>';
+                $mensaje = 'No tiene permisos para firmar<br> En espera del jefe directo: <br> <strong>'.$firma_siguiente->jefe->name.'</strong>';
 
                 return view('contract_manager.requisiciones.error', compact('mensaje'));
             }
@@ -490,7 +489,7 @@ class RequisicionesController extends Controller
             if ($user->empleado->id == $firma_siguiente->responsable_finanzas_id) { //responsable_finanzas_id
                 $tipo_firma = 'firma_finanzas';
             } else {
-                $mensaje = 'No tiene permisos para firmar<br> En espera de finanzas:' . $firma_siguiente->responsableFinanzas->name;
+                $mensaje = 'No tiene permisos para firmar<br> En espera de finanzas:'.$firma_siguiente->responsableFinanzas->name;
 
                 return view('contract_manager.requisiciones.error', compact('mensaje'));
             }
@@ -498,7 +497,7 @@ class RequisicionesController extends Controller
             if (($user->empleado->id == $comprador->user->empleado->id) && ($user->empleado->id == $firma_siguiente->responsable_finanzas_id)) { //comprador_id
                 $tipo_firma = 'firma_compras';
             } else {
-                $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>' . $comprador->user->name . '</strong>';
+                $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>'.$comprador->user->name.'</strong>';
 
                 return view('contract_manager.requisiciones.error', compact('mensaje'));
             }
@@ -671,6 +670,7 @@ class RequisicionesController extends Controller
             $buttonFinanzas = false;
             $buttonCompras = false;
             toast('Filtro por solicitante aplicado!', 'success');
+
             return view('contract_manager.requisiciones.aprobadores', compact('requisiciones', 'buttonFinanzas', 'buttonSolicitante', 'buttonJefe', 'buttonCompras', 'empleadoActual', 'sustitutosLD'));
         } else {
             $id = User::getCurrentUser()->id;
@@ -690,6 +690,7 @@ class RequisicionesController extends Controller
             $buttonFinanzas = false;
             $buttonCompras = false;
             toast('Filtro por solicitante aplicado!', 'success');
+
             return view('contract_manager.requisiciones.aprobadores', compact('requisiciones', 'buttonFinanzas', 'buttonSolicitante', 'buttonJefe', 'buttonCompras', 'empleadoActual', 'sustitutosLD'));
         }
     }

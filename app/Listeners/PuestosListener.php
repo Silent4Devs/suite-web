@@ -3,9 +3,7 @@
 namespace App\Listeners;
 
 use App\Models\FirmaModule;
-use App\Models\Minutasaltadireccion;
 use App\Models\User;
-use App\Notifications\MinutasNotification;
 use App\Notifications\PuestosNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;

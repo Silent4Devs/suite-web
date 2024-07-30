@@ -68,7 +68,7 @@ class Escalas extends Component
         $getData = TBTemplateAr_EscalaArModel::find($this->template_id);
         $this->min = $getData->valor_min;
         $this->max = $getData->valor_max;
-        if (!$getData->getEscalas->isEmpty()) {
+        if (! $getData->getEscalas->isEmpty()) {
             $this->edit = true;
             $newCollect = [];
             foreach ($getData->getEscalas as $register) {
@@ -128,7 +128,7 @@ class Escalas extends Component
                         ]);
                     }
                 }
-                if (!empty($newRegisters)) {
+                if (! empty($newRegisters)) {
                     foreach ($newRegisters as $escala) {
                         TBEscalaAnalisisRiesgoModel::create([
                             'nombre' => $escala['nombre'],

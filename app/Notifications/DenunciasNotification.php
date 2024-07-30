@@ -14,8 +14,11 @@ class DenunciasNotification extends Notification
     use Queueable;
 
     public $denuncias;
+
     public $tipo_consulta;
+
     public $tabla;
+
     public $slug;
 
     public function __construct(Denuncias $denuncias, $tipo_consulta, $tabla, $slug)

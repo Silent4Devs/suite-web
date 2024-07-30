@@ -288,6 +288,7 @@ class FormularioObjetivosDesempenoEmpleados extends Component
                 'confirmButtonText' => 'Entendido',
                 'timerProgressBar' => true,
             ]);
+
             return;
         }
 
@@ -342,6 +343,7 @@ class FormularioObjetivosDesempenoEmpleados extends Component
                         ]);
                         DB::rollback();
                         $this->forgetCache();
+
                         return;
                     }
                 }
@@ -363,6 +365,7 @@ class FormularioObjetivosDesempenoEmpleados extends Component
                             ]);
                             DB::rollback();
                             $this->forgetCache();
+
                             return;
                         }
                     }
@@ -382,6 +385,7 @@ class FormularioObjetivosDesempenoEmpleados extends Component
                             ]);
                             DB::rollback();
                             $this->forgetCache();
+
                             return;
                         }
                     }
@@ -429,7 +433,6 @@ class FormularioObjetivosDesempenoEmpleados extends Component
             ]);
         }
     }
-
 
     public function enviarPapelera($id_obj)
     {

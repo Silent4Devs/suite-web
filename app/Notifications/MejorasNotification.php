@@ -14,8 +14,11 @@ class MejorasNotification extends Notification
     use Queueable;
 
     public $mejoras;
+
     public $tipo_consulta;
+
     public $tabla;
+
     public $slug;
 
     public function __construct(Mejoras $mejoras, $tipo_consulta, $tabla, $slug)

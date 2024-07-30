@@ -462,7 +462,7 @@ class EvDesempenoDashboardPersonal extends Component
 
         $validacion = empty($this->grafica_objetivos['resultados'][$periodo ?? $this->periodo_seleccionado]);
 
-        if ($this->evaluacion->activar_objetivos && !$validacion) {
+        if ($this->evaluacion->activar_objetivos && ! $validacion) {
             $suma_objetivos = array_sum($this->grafica_objetivos['resultados'][$periodo ?? $this->periodo_seleccionado]);
             $n_objetivos = count($this->grafica_objetivos['resultados'][$periodo ?? $this->periodo_seleccionado]);
             $this->promedio_objetivos = round(($suma_objetivos / $n_objetivos) * $this->evaluacion->porcentaje_objetivos / 100, 2);
@@ -472,7 +472,7 @@ class EvDesempenoDashboardPersonal extends Component
             $this->promedio_objetivos = 0;
         }
 
-        if ($this->evaluacion->activar_competencias && !$validacion) {
+        if ($this->evaluacion->activar_competencias && ! $validacion) {
             $suma_competencias = array_sum($this->resComp['resultados'][$periodo ?? $this->periodo_seleccionado]);
             $n_competencias = count($this->resComp['resultados'][$periodo ?? $this->periodo_seleccionado]);
             $this->promedio_competencias = round(($suma_competencias / $n_competencias) * $this->evaluacion->porcentaje_competencias / 100, 2);

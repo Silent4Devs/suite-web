@@ -8,6 +8,7 @@ use Livewire\Component;
 class EditTablaContratos extends Component
 {
     public $contratos;
+
     public $contrato;
 
     public $contrato_ampliado;

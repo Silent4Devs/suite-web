@@ -26,7 +26,6 @@ class EntendimientoOrganizacionObserver
         $this->forgetCache();
     }
 
-
     /**
      * Handle the EntendimientoOrganizacion "deleted" event.
      */

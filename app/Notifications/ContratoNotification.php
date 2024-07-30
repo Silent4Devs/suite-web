@@ -14,8 +14,11 @@ class ContratoNotification extends Notification
     use Queueable;
 
     public $contratos;
+
     public $tipo_consulta;
+
     public $tabla;
+
     public $slug;
 
     public function __construct(Contrato $contratos, $tipo_consulta, $tabla, $slug)

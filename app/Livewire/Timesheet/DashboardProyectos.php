@@ -203,7 +203,7 @@ class DashboardProyectos extends Component
                 $datos_dash = TimesheetProyecto::getAll($this->proy_id)->where('id', '=', $this->proy_id);
                 $area_individual = Area::select('area')->where('id', '=', $this->area_id);
 
-                if (!isset($area_individual->area)) {
+                if (! isset($area_individual->area)) {
                     $area_individual = 'Sin definir';
                 } else {
                     $area_individual = $area_individual->area;

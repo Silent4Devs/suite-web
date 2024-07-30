@@ -75,13 +75,12 @@ class UserAuthController extends Controller
 
         $expiration = Carbon::now()->addMinutes($expiration)->timestamp;
 
-
         //devuelve una respuesta JSON con el token generado y el tipo de token
         return response()->json([
             'access_token' => $token,
             'user' => $user->toArray(),
             'supervisor' => $supervisor,
-            'expiration' => $expiration ,
+            'expiration' => $expiration,
         ]);
     }
 

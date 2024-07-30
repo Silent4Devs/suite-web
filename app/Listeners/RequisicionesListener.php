@@ -40,10 +40,8 @@ class RequisicionesListener implements ShouldQueue
         $user = auth()->user();
         $email = 'lourdes.abadia@silent4business.com';
 
-
         $supervisor = User::where('email', trim(removeUnicodeCharacters($user->empleado->supervisor->email)))->first();
         $disponibilidad = DisponibilidadEmpleados::where('empleado_id', $supervisor->empleado_id)->first();
-
 
         if ($disponibilidad->disponibilidad === 1) {
             Notification::send($supervisor, new RequisicionesNotification($event->requisiciones, $event->tipo_consulta, $event->tabla, $event->slug));
