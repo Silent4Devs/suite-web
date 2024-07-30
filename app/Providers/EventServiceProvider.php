@@ -29,6 +29,7 @@ use App\Events\SolicitudVacacionesEvent;
 use App\Events\SugerenciasEvent;
 use App\Events\TaskRecursosEvent;
 use App\Events\TimesheetEvent;
+use App\Events\TimesheetProyectoEvent;
 use App\Listeners\AccionCorrectivaListener;
 use App\Listeners\AlcancesListener;
 use App\Listeners\AuditoriaAnualListener;
@@ -57,6 +58,7 @@ use App\Listeners\SolicitudVacacionesListener;
 use App\Listeners\SugerenciasListener;
 use App\Listeners\TaskRecursosListener;
 use App\Listeners\TimesheetListener;
+use App\Listeners\TimesheetProyectoListener;
 use App\Models\AccionCorrectiva;
 use App\Models\Activo;
 use App\Models\activoConfidencialidad;
@@ -300,6 +302,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         TimesheetEvent::class => [
             TimesheetListener::class,
+        ],
+        TimesheetProyectoEvent::class => [
+            TimesheetProyectoListener::class,
         ],
         CoursesEvent::class => [
             CoursesListener::class,
