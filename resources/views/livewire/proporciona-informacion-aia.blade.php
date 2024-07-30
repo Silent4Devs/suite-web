@@ -48,12 +48,12 @@
                     </td>
                     <td style="min-width:40px;">
                         <i class="fas fa-edit"
-                            wire:click.prevent="$emit('editarFuenteInformacionAia',{{ $data->id }})">
+                            wire:click.prevent="$dispatch('editarFuenteInformacionAia',{{ $data->id }})">
                         </i>
                         {{-- <i class="fas fa-project-diagram"
-                            wire:click.prevent="$emit('agregarNormas',{{ $data->id }})"> </i> --}}
+                            wire:click.prevent="$dispatch('agregarNormas',{{ $data->id }})"> </i> --}}
                         <i class="fas fa-trash-alt text-danger"
-                            wire:click.prevent="$emit('eliminarFuenteInformacionAia',{{ $data->id }})"> </i>
+                            wire:click.prevent="$dispatch('eliminarFuenteInformacionAia',{{ $data->id }})"> </i>
                     </td>
                     {{-- <td> @livewire('edit-partes-interesadas',['id_requisito'=>$data->id])</td> --}}
                 </tr>

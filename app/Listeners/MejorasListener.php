@@ -5,7 +5,6 @@ namespace App\Listeners;
 use App\Models\AprobadorSeleccionado;
 use App\Models\User;
 use App\Notifications\MejorasNotification;
-use App\Notifications\RiesgoNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Notification;
@@ -55,7 +54,6 @@ class MejorasListener implements ShouldQueue
 
         // Obtener los usuarios correspondientes
         $usuarios = User::whereIn('id', $aprobadoresIds)->get();
-
 
         // Enviar la notificación a cada usuario
         Notification::send($usuarios, new MejorasNotification($mejoras, $tipo_consulta, $tabla, $slug));

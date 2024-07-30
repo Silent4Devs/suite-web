@@ -92,7 +92,7 @@ class PortalComunicacionController extends Controller
             $comunicado->ruta_imagen = encodeSpecialCharacters($ruta_comunicado);
         }
 
-        $imagesCommunications = $comunicados->filter(function ($item){
+        $imagesCommunications = $comunicados->filter(function ($item) {
             return $item->tipo_imagen === 'imagen';
         });
 
@@ -107,7 +107,7 @@ class PortalComunicacionController extends Controller
             $noticia->ruta_imagen = encodeSpecialCharacters($ruta_noticia);
         }
 
-        $imagesNews = $noticias->filter(function ($item){
+        $imagesNews = $noticias->filter(function ($item) {
             return $item->tipo_imagen === 'imagen';
         });
 
@@ -115,8 +115,7 @@ class PortalComunicacionController extends Controller
 
         // dd($noticias);
 
-
-        $cumpleaños = Cache::remember('Portal_cumpleaños_' . $authId, 3600, function () use ($hoy, $empleados) {
+        $cumpleaños = Cache::remember('Portal_cumpleaños_'.$authId, 3600, function () use ($hoy) {
             return Empleado::alta()->select('id', 'name', 'area_id', 'puesto_id', 'foto', 'cumpleaños', 'estatus')->whereMonth('cumpleaños', '=', $hoy->format('m'))->get()->makeHidden([
                 'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
                 'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet',
@@ -194,7 +193,6 @@ class PortalComunicacionController extends Controller
         // dd($cumpleaños);
 
         // dd($comunicados,$noticias);
-
 
         return response(json_encode(
             [

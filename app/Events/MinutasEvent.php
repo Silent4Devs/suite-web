@@ -14,8 +14,11 @@ class MinutasEvent implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $minutas;
+
     public $tipo_consulta;
+
     public $tabla;
+
     public $slug;
 
     public function __construct(Minutasaltadireccion $minutas, $tipo_consulta, $tabla, $slug)

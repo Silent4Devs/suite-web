@@ -2,7 +2,6 @@
 
 namespace App\Notifications;
 
-use App\Models\ContractManager\Contrato;
 use App\Models\Minutasaltadireccion;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
@@ -15,8 +14,11 @@ class MinutasNotification extends Notification
     use Queueable;
 
     public $minutas;
+
     public $tipo_consulta;
+
     public $tabla;
+
     public $slug;
 
     public function __construct(Minutasaltadireccion $minutas, $tipo_consulta, $tabla, $slug)

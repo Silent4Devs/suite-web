@@ -9,7 +9,7 @@
 
 @push('scripts')
     <script>
-        document.addEventListener('livewire:load', function() {
+        document.addEventListener('livewire:init', function() {
             var canvas = document.getElementById('signatureCanvas');
             var context = canvas.getContext('2d');
 

@@ -24,7 +24,7 @@
                                 x-on:livewire-upload-error="isUploading = false"
                                 x-on:livewire-upload-progress="progress = $event.detail.progress">
                                 <!-- File Input -->
-                                <input type="file" wire:model="lista" id="listaA" class="d-none">
+                                <input type="file" wire:model.live="lista" id="listaA" class="d-none">
                                 @error('lista') <small class="error text-danger">{{ $message }}</small> @enderror
                                 <!-- Progress Bar -->
                                 <div x-show="isUploading">

@@ -16,7 +16,7 @@
                 <!-- File Input -->
 
                 <input type="file" multiple class="form-control" id="files" accept="image/*,.pdf"
-                    wire:model.defer="files">
+                    wire:model="files">
                 <!-- Progress Bar -->
                 <div x-show="isUploading">
                     <div class="progress">

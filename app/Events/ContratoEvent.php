@@ -14,8 +14,11 @@ class ContratoEvent implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $contratos;
+
     public $tipo_consulta;
+
     public $tabla;
+
     public $slug;
 
     public function __construct(Contrato $contratos, $tipo_consulta, $tabla, $slug)

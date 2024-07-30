@@ -69,7 +69,7 @@
                                                         <div class="form-group anima-focus">
                                                             <input type="text" name="nombre_evaluacion[]" disabled
                                                                 id="nombre_evaluacion_{{ $index }}"
-                                                                wire:model="array_periodos.{{ $index }}.nombre_evaluacion"
+                                                                wire:model.live="array_periodos.{{ $index }}.nombre_evaluacion"
                                                                 class="form-control"
                                                                 value="{{ $ap->nombre_evaluacion }}">
                                                             <label for="">Evaluación*</label>
@@ -78,7 +78,7 @@
                                                     <td>
                                                         <div class="form-group anima-focus">
                                                             <input type="date" placeholder="" disabled
-                                                                wire:model="array_periodos.{{ $index }}.fecha_inicio"
+                                                                wire:model.live="array_periodos.{{ $index }}.fecha_inicio"
                                                                 class="form-control" value="{{ $ap->fecha_inicio }}">
                                                             <label for="">Inicio de la evaluación</label>
                                                         </div>
@@ -86,7 +86,7 @@
                                                     <td>
                                                         <div class="form-group anima-focus">
                                                             <input type="date" placeholder="" disabled
-                                                                wire:model="array_periodos.{{ $index }}.fecha_fin"
+                                                                wire:model.live="array_periodos.{{ $index }}.fecha_fin"
                                                                 class="form-control" value="{{ $ap->fecha_fin }}">
                                                             <label for="">Fin de la evaluación</label>
                                                         </div>
@@ -94,7 +94,7 @@
                                                     <td>
                                                         <div class="form-group">
                                                             <input type="checkbox" class="form-control" disabled
-                                                                wire:model="array_periodos.{{ $index }}.habilitado">
+                                                                wire:model.live="array_periodos.{{ $index }}.habilitado">
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -104,7 +104,7 @@
                                                         <div class="form-group anima-focus">
                                                             <input type="text" name="nombre_evaluacion[]"
                                                                 id="nombre_evaluacion_{{ $index }}"
-                                                                wire:model="array_periodos.{{ $index }}.nombre_evaluacion"
+                                                                wire:model.live="array_periodos.{{ $index }}.nombre_evaluacion"
                                                                 class="form-control"
                                                                 value="{{ $ap->nombre_evaluacion }}">
                                                             <label for="">Evaluación*</label>
@@ -114,7 +114,7 @@
                                                         @if ($dia_actual >= $ap->fecha_inicio)
                                                             <div class="form-group anima-focus">
                                                                 <input type="date" placeholder=""
-                                                                    wire:model="array_periodos.{{ $index }}.fecha_inicio"
+                                                                    wire:model.live="array_periodos.{{ $index }}.fecha_inicio"
                                                                     class="form-control"
                                                                     value="{{ $ap->fecha_inicio }}" disabled>
                                                                 <label for="">Inicio de la evaluación</label>
@@ -122,7 +122,7 @@
                                                         @else
                                                             <div class="form-group anima-focus">
                                                                 <input type="date" placeholder=""
-                                                                    wire:model="array_periodos.{{ $index }}.fecha_inicio"
+                                                                    wire:model.live="array_periodos.{{ $index }}.fecha_inicio"
                                                                     class="form-control"
                                                                     value="{{ $ap->fecha_inicio }}">
                                                                 <label for="">Inicio de la evaluación</label>
@@ -132,7 +132,7 @@
                                                     <td>
                                                         <div class="form-group anima-focus">
                                                             <input type="date" placeholder=""
-                                                                wire:model="array_periodos.{{ $index }}.fecha_fin"
+                                                                wire:model.live="array_periodos.{{ $index }}.fecha_fin"
                                                                 class="form-control" value="{{ $ap->fecha_fin }}">
                                                             <label for="">Fin de la evaluación</label>
                                                         </div>
@@ -140,7 +140,7 @@
                                                     <td>
                                                         <div class="form-group">
                                                             <input type="checkbox" class="form-control"
-                                                                wire:model="array_periodos.{{ $index }}.habilitado">
+                                                                wire:model.live="array_periodos.{{ $index }}.habilitado">
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -360,7 +360,7 @@
 
         <div class="card card-body" style="background-color: #BF9CC4;">
             <div class="form-group">
-                <select name="area_select" id="area_select" wire:model="area_select" class="form-control"
+                <select name="area_select" id="area_select" wire:model.live="area_select" class="form-control"
                     style="background-color: #fff;">
                     <option value="" selected disabled>Área</option>
                     @foreach ($opciones_area_select as $key => $opas)
@@ -480,7 +480,7 @@
 
         <div class="row">
             <div class="col-md-3 form-group">
-                <select name="area_tabla" id="area_tabla" wire:model.defer="select_area_tabla" class="form-control">
+                <select name="area_tabla" id="area_tabla" wire:model="select_area_tabla" class="form-control">
                     <option value="todos">Área</option>
                     @foreach ($opciones_area_select as $key => $opas)
                         <option value="{{ $opas['id'] }}">{{ $opas['area'] }}</option>
@@ -488,7 +488,7 @@
                 </select>
             </div>
             <div class="col-md-3 form-group">
-                <select name="colaborador_tabla" id="colaborador_tabla" wire:model.defer="select_colaborador_tabla"
+                <select name="colaborador_tabla" id="colaborador_tabla" wire:model="select_colaborador_tabla"
                     class="form-control">
                     <option value="todos">Colaborador</option>
                     @foreach ($evaluacion->evaluados as $evaluado)
@@ -791,7 +791,7 @@
         @if ($evaluacion->activar_objetivos)
             {{-- Codigo primera vez que carga --}}
             <script>
-                document.addEventListener('livewire:load', function() {
+                document.addEventListener('livewire:init', function() {
 
                     const areas = @json($resArea['nombres'][$periodo_seleccionado]);
                     const data = @json($resArea['resultados'][$periodo_seleccionado]);
@@ -820,7 +820,7 @@
             </script>
             {{-- Codigo cambio de filtros --}}
             <script>
-                document.addEventListener('livewire:load', function() {
+                document.addEventListener('livewire:init', function() {
                     Livewire.on('objetivosArea', (objArea) => {
 
                         document.getElementById('resultadosxarea').remove();
@@ -853,7 +853,7 @@
             </script>
 
             <script>
-                document.addEventListener('livewire:load', function() {
+                document.addEventListener('livewire:init', function() {
 
                     const tipos = @json($resObj['nombres'][$periodo_seleccionado]);
                     const resultados = @json($resObj['resultados'][$periodo_seleccionado]);
@@ -881,7 +881,7 @@
             </script>
 
             <script>
-                document.addEventListener('livewire:load', function() {
+                document.addEventListener('livewire:init', function() {
                     Livewire.on('cumplimientoObj', (cumpObj) => {
 
                         document.getElementById('cumplimientoObjetivos').remove();
@@ -914,7 +914,7 @@
             </script>
 
             <script>
-                document.addEventListener('livewire:load', function() {
+                document.addEventListener('livewire:init', function() {
 
                     const escalas = @json($escalas['nombres'][$periodo_seleccionado]);
                     const colores = @json($escalas['colores'][$periodo_seleccionado]);
@@ -944,7 +944,7 @@
             </script>
 
             <script>
-                document.addEventListener('livewire:load', function() {
+                document.addEventListener('livewire:init', function() {
                     Livewire.on('escalasObj', (escObj) => {
 
                         document.getElementById('escalas').remove();
@@ -980,7 +980,7 @@
 
         @if ($evaluacion->activar_competencias)
             <script>
-                document.addEventListener('livewire:load', function() {
+                document.addEventListener('livewire:init', function() {
 
                     const competencias = @json($resComp['nombres'][$periodo_seleccionado]);
                     const resultados = @json($resComp['resultados'][$periodo_seleccionado]);
@@ -1008,7 +1008,7 @@
             </script>
 
             <script>
-                document.addEventListener('livewire:load', function() {
+                document.addEventListener('livewire:init', function() {
                     Livewire.on('cumplimientoComp', (cumpComp) => {
 
                         console.log(cumpComp);

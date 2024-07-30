@@ -41,7 +41,6 @@ class PuestosObserver
         $this->forgetCache();
     }
 
-
     private function forgetCache()
     {
         Cache::forget('Puestos:Puestos_all');

@@ -2,7 +2,6 @@
 
 namespace App\Events;
 
-
 use App\Models\RiesgoIdentificado;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -15,8 +14,11 @@ class RiesgosEvent implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $riesgos;
+
     public $tipo_consulta;
+
     public $tabla;
+
     public $slug;
 
     public function __construct(RiesgoIdentificado $riesgos, $tipo_consulta, $tabla, $slug)

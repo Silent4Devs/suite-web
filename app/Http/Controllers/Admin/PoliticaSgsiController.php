@@ -96,7 +96,7 @@ class PoliticaSgsiController extends Controller
         $modulo = ListaDistribucion::with('participantes')->where('modelo', '=', $this->modelo)->first();
 
         $listavacia = 'cumple';
-        if (!isset($modulo)) {
+        if (! isset($modulo)) {
             $listavacia = 'vacia';
         } elseif ($modulo->participantes->isEmpty()) {
             $listavacia = 'vacia';
@@ -212,7 +212,7 @@ class PoliticaSgsiController extends Controller
                 'fecha_revision' => 'required',
             ]);
 
-            if (!$politicaSgsi) {
+            if (! $politicaSgsi) {
                 abort(404);
             }
 
@@ -238,7 +238,7 @@ class PoliticaSgsiController extends Controller
         try {
             abort_if(Gate::denies('politica_sistema_gestion_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-            if (!is_numeric($id)) {
+            if (! is_numeric($id)) {
                 abort(404);
             }
 
@@ -295,7 +295,7 @@ class PoliticaSgsiController extends Controller
             $politicaSgsis = PoliticaSgsi::where('estatus', 'Aprobado')->get();
 
             foreach ($politicaSgsis as $polsgsis) {
-                if (!isset($polsgsis->reviso)) {
+                if (! isset($polsgsis->reviso)) {
                     $polsgsis->revisobaja = PoliticaSgsi::with('revisobaja')->first();
                     $polsgsis->estemp = 'baja';
                 } else {
@@ -390,7 +390,7 @@ class PoliticaSgsiController extends Controller
 
         $politicaSgsi = PoliticaSgsi::find($id);
 
-        if (!$politicaSgsi) {
+        if (! $politicaSgsi) {
             abort(404);
         }
 

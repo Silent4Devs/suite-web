@@ -6,7 +6,7 @@
     </div>
 </div>
 
-<form wire:submit.prevent="store">
+<form wire:submit="store">
 
     @include('livewire.ampliacion-contratos.form')
 

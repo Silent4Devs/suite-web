@@ -3,9 +3,7 @@
 namespace App\Listeners;
 
 use App\Models\AprobadorSeleccionado;
-use App\Models\RiesgoIdentificado;
 use App\Models\User;
-use App\Notifications\IncidentesDeSeguridadNotification;
 use App\Notifications\RiesgoNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -56,7 +54,6 @@ class RiesgosListener implements ShouldQueue
 
         // Obtener los usuarios correspondientes
         $usuarios = User::whereIn('id', $aprobadoresIds)->get();
-
 
         // Enviar la notificación a cada usuario
         Notification::send($usuarios, new RiesgoNotification($riesgos, $tipo_consulta, $tabla, $slug));
