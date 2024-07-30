@@ -137,7 +137,7 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
 
                 // Initialize with default values
                 $this->calificacion_escala[$infoObjetivo->id] = 'Sin evaluar';
-                $this->evaluacion_colors[$infoObjetivo->id . '-tx-color'] = $infoObjetivo->escalas[0]->color;
+                $this->evaluacion_colors[$infoObjetivo->id.'-tx-color'] = $infoObjetivo->escalas[0]->color;
 
                 $currentCondition = null; // Track the currently assigned condition
 
@@ -166,8 +166,8 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
                                 $obj_esc->valor
                             ) {
                                 $this->calificacion_autoescala[$obj_evld->id] = $obj_esc->parametro;
-                                $this->autoevaluacion_colors[$obj_evld->id . '-bg-color'] = $this->hexToRgba($obj_esc->color);
-                                $this->autoevaluacion_colors[$obj_evld->id . '-tx-color'] = $obj_esc->color;
+                                $this->autoevaluacion_colors[$obj_evld->id.'-bg-color'] = $this->hexToRgba($obj_esc->color);
+                                $this->autoevaluacion_colors[$obj_evld->id.'-tx-color'] = $obj_esc->color;
                             }
                             break;
                         case '2':
@@ -176,8 +176,8 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
                                 $obj_esc->valor
                             ) {
                                 $this->calificacion_autoescala[$obj_evld->id] = $obj_esc->parametro;
-                                $this->autoevaluacion_colors[$obj_evld->id . '-bg-color'] = $this->hexToRgba($obj_esc->color);
-                                $this->autoevaluacion_colors[$obj_evld->id . '-tx-color'] = $obj_esc->color;
+                                $this->autoevaluacion_colors[$obj_evld->id.'-bg-color'] = $this->hexToRgba($obj_esc->color);
+                                $this->autoevaluacion_colors[$obj_evld->id.'-tx-color'] = $obj_esc->color;
                                 // dd($this->calificacion_autoescala);
                             }
                             break;
@@ -187,8 +187,8 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
                                 $obj_esc->valor
                             ) {
                                 $this->calificacion_autoescala[$obj_evld->id] = $obj_esc->parametro;
-                                $this->autoevaluacion_colors[$obj_evld->id . '-bg-color'] = $this->hexToRgba($obj_esc->color);
-                                $this->autoevaluacion_colors[$obj_evld->id . '-tx-color'] = $obj_esc->color;
+                                $this->autoevaluacion_colors[$obj_evld->id.'-bg-color'] = $this->hexToRgba($obj_esc->color);
+                                $this->autoevaluacion_colors[$obj_evld->id.'-tx-color'] = $obj_esc->color;
                             }
                             break;
                         case '4':
@@ -197,8 +197,8 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
                                 $obj_esc->valor
                             ) {
                                 $this->calificacion_autoescala[$obj_evld->id] = $obj_esc->parametro;
-                                $this->autoevaluacion_colors[$obj_evld->id . '-bg-color'] = $this->hexToRgba($obj_esc->color);
-                                $this->autoevaluacion_colors[$obj_evld->id . '-tx-color'] = $obj_esc->color;
+                                $this->autoevaluacion_colors[$obj_evld->id.'-bg-color'] = $this->hexToRgba($obj_esc->color);
+                                $this->autoevaluacion_colors[$obj_evld->id.'-tx-color'] = $obj_esc->color;
                             }
                             break;
                         case '5':
@@ -207,14 +207,14 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
                                 $obj_esc->valor
                             ) {
                                 $this->calificacion_autoescala[$obj_evld->id] = $obj_esc->parametro;
-                                $this->autoevaluacion_colors[$obj_evld->id . '-bg-color'] = $this->hexToRgba($obj_esc->color);
-                                $this->autoevaluacion_colors[$obj_evld->id . '-tx-color'] = $obj_esc->color;
+                                $this->autoevaluacion_colors[$obj_evld->id.'-bg-color'] = $this->hexToRgba($obj_esc->color);
+                                $this->autoevaluacion_colors[$obj_evld->id.'-tx-color'] = $obj_esc->color;
                             }
                             break;
                         default:
                             $this->calificacion_autoescala[$obj_evld->infoObjetivo->id] = $obj_evld->infoObjetivo->escalas[0]->parametro;
-                            $this->autoevaluacion_colors[$obj_evld->id . '-bg-color'] = $this->hexToRgba($obj_esc->color);
-                            $this->autoevaluacion_colors[$obj_evld->id . '-tx-color'] = $obj_esc->color;
+                            $this->autoevaluacion_colors[$obj_evld->id.'-bg-color'] = $this->hexToRgba($obj_esc->color);
+                            $this->autoevaluacion_colors[$obj_evld->id.'-tx-color'] = $obj_esc->color;
                             break;
                     }
                 }
@@ -243,7 +243,7 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
     private function setValues($objetivoId, $parametro, $color)
     {
         $this->calificacion_escala[$objetivoId] = $parametro;
-        $this->evaluacion_colors[$objetivoId . '-tx-color'] = $color;
+        $this->evaluacion_colors[$objetivoId.'-tx-color'] = $color;
     }
 
     public function evaluarObjetivo($id_objetivo, $valor)
@@ -267,9 +267,9 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
     public function updatedFile()
     {
         try {
-            $ruta_evidencias = 'public/evaluaciones_desempeno/evaluacion/' . $this->evaluacion->id . '/evidencia/objetivo/' . $this->id_obj_arch . '/evaluado' . '/' . $this->evaluado->id;
+            $ruta_evidencias = 'public/evaluaciones_desempeno/evaluacion/'.$this->evaluacion->id.'/evidencia/objetivo/'.$this->id_obj_arch.'/evaluado'.'/'.$this->evaluado->id;
 
-            if (!Storage::exists($ruta_evidencias)) {
+            if (! Storage::exists($ruta_evidencias)) {
                 Storage::makeDirectory($ruta_evidencias, 0775, true);
             }
 
@@ -311,7 +311,7 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
         $archivo = EvidenciaObjCuestionarioEvDesempeno::findOrFail($id_archivo_mostrar);
 
         $ruta_evidencias =
-            'storage/evaluaciones_desempeno/evaluacion/' . $this->evaluacion->id . '/evidencia/objetivo/' . $id_archivo_obj . '/evaluado' . '/' . $this->evaluado->id . '/' . $archivo->nombre_archivo;
+            'storage/evaluaciones_desempeno/evaluacion/'.$this->evaluacion->id.'/evidencia/objetivo/'.$id_archivo_obj.'/evaluado'.'/'.$this->evaluado->id.'/'.$archivo->nombre_archivo;
 
         $extension = pathinfo($ruta_evidencias, PATHINFO_EXTENSION);
 
@@ -369,11 +369,11 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
 
     public function alertaGuardadoCorrecto($alerta)
     {
-        $this->alert('success', $alerta . ' Guardada', [
+        $this->alert('success', $alerta.' Guardada', [
             'position' => 'top-end',
             'timer' => '4000',
             'toast' => true,
-            'text' => 'La ' . $alerta . ' se ha guardado correctamente.',
+            'text' => 'La '.$alerta.' se ha guardado correctamente.',
         ]);
         $this->sendDataToParent();
     }

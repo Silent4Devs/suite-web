@@ -209,7 +209,7 @@ class CargaObjetivos extends Component
     public function habilitarCargaObjetivos($valor)
     {
         if ($valor) {
-            if (!empty($this->fecha_inicio) && !empty($this->fecha_fin)) {
+            if (! empty($this->fecha_inicio) && ! empty($this->fecha_fin)) {
                 if ($this->fecha_inicio < $this->fecha_fin) {
 
                     PeriodoCargaObjetivos::create([

@@ -14,8 +14,11 @@ class PuestosNotification extends Notification
     use Queueable;
 
     public $puestos;
+
     public $tipo_consulta;
+
     public $tabla;
+
     public $slug;
 
     public function __construct(Puesto $puestos, $tipo_consulta, $tabla, $slug)

@@ -35,7 +35,6 @@ class MinutasAltaDireccionObserver
         $this->forgetCache();
     }
 
-
     private function forgetCache()
     {
         Cache::forget('MinutasAltaDireccion:minutas_alta_direccion_all');

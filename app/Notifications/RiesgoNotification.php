@@ -14,8 +14,11 @@ class RiesgoNotification extends Notification
     use Queueable;
 
     public $riesgos;
+
     public $tipo_consulta;
+
     public $tabla;
+
     public $slug;
 
     public function __construct(RiesgoIdentificado $riesgos, $tipo_consulta, $tabla, $slug)

@@ -41,7 +41,6 @@ class MejorasObserver
         $this->forgetCache();
     }
 
-
     private function forgetCache()
     {
         Cache::forget('mejoras_all');

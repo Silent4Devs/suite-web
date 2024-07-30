@@ -498,13 +498,13 @@ class EvDesempenoDashboardEvaluacion extends Component
                     if ($porcentaje_evaluadores_objetivos != 100) {
                         $errores['evaluadoresObj'][] = $evaluado->empleado->name;
                     }
-                } elseif ($this->evaluacion->activar_objetivos && !$this->evaluacion->activar_competencias) {
+                } elseif ($this->evaluacion->activar_objetivos && ! $this->evaluacion->activar_competencias) {
                     $porcentaje_evaluadores_objetivos = $evaluado->evaluadoresObjetivos($p['id_periodo'])->where('evaluador_desempeno_id', '!=', $evaluado->empleado->id)->sum('porcentaje_objetivos');
 
                     if ($porcentaje_evaluadores_objetivos != 100) {
                         $errores['evaluadoresObj'][] = $evaluado->empleado->name;
                     }
-                } elseif (!$this->evaluacion->activar_objetivos && $this->evaluacion->activar_competencias) {
+                } elseif (! $this->evaluacion->activar_objetivos && $this->evaluacion->activar_competencias) {
                     $porcentaje_evaluadores_competencias = $evaluado->evaluadoresCompetencias($p['id_periodo'])->where('evaluador_desempeno_id', '!=', $evaluado->empleado->id)->sum('porcentaje_competencias');
 
                     if ($porcentaje_evaluadores_competencias != 100) {
@@ -513,7 +513,7 @@ class EvDesempenoDashboardEvaluacion extends Component
                 }
             }
 
-            if (!empty($errores['evaluadoresComp']) || !empty($errores['evaluadoresObj'])) {
+            if (! empty($errores['evaluadoresComp']) || ! empty($errores['evaluadoresObj'])) {
                 $modificarPeriodo = false;
                 $cambioExitoso = false;
                 break;

@@ -44,8 +44,6 @@ class RiesgoIdentificadoObserver
         $this->forgetCache();
     }
 
-
-
     private function forgetCache()
     {
         Cache::forget('riesgo_identificado_all');

@@ -58,7 +58,7 @@ class EvaluacionAnalisisBrechasLivewire extends Component
 
         $analisisBrecha = AnalisisBrechasIso::with('evaluacionAnalisisBrechas')->find($this->analisisId);
 
-        if (!$analisisBrecha) {
+        if (! $analisisBrecha) {
             abort(404); // O redirige a una página de error personalizada
         }
         // dd($analisisBrecha->evaluacionAnalisisBrechas);
@@ -82,10 +82,10 @@ class EvaluacionAnalisisBrechasLivewire extends Component
                     $this->selectedValues[$pregunta->id]['option1'] = old("selectedValues.{$pregunta->id}.option1", $pregunta->respuesta->parametro->id ?? null);
                     $this->oldSelectedValues[$pregunta->id]['option1'] = $this->selectedValues[$pregunta->id]['option1'];
 
-                    $this->evidenciaValues[$pregunta->id] = old('recomendacionValues.' . $pregunta->id, $pregunta->respuesta->evidencia ?? '');
+                    $this->evidenciaValues[$pregunta->id] = old('recomendacionValues.'.$pregunta->id, $pregunta->respuesta->evidencia ?? '');
                     $this->oldEvidenciaValues[$pregunta->id] = $this->evidenciaValues[$pregunta->id];
 
-                    $this->recomendacionValues[$pregunta->id] = old('recomendacionValues.' . $pregunta->id, $pregunta->respuesta->recomendacion ?? '');
+                    $this->recomendacionValues[$pregunta->id] = old('recomendacionValues.'.$pregunta->id, $pregunta->respuesta->recomendacion ?? '');
                     $this->oldRecomendacionValues[$pregunta->id] = $this->recomendacionValues[$pregunta->id];
                 }
             }
