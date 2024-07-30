@@ -1726,7 +1726,7 @@ class EmpleadoController extends Controller
     public function exportExcel()
     {
         abort_if(Gate::denies('bd_empleados_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $export = new EmpleadosGeneralExport();
+        $export = new EmpleadosGeneralExport;
 
         return Excel::download($export, 'Empleados.xlsx');
     }

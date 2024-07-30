@@ -127,7 +127,7 @@ class SolicitudDayOffApiController extends Controller
         $tipo_conteo = $regla_aplicada->tipo_conteo;
 
         $autoriza = $usuario->empleado->supervisor_id;
-        $vacacion = new DayOff();
+        $vacacion = new DayOff;
         $dias_disponibles = $this->diasDisponibles();
         // $organizacion = Organizacion::getFirst(); Innecesario
         $dias_pendientes = SolicitudDayOff::where('empleado_id', '=', $usuario->empleado->id)->where('aprobacion', '=', 1)->where('año', '=', $año)->sum('dias_solicitados');

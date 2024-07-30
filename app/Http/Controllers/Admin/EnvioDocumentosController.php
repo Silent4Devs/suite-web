@@ -82,7 +82,7 @@ class EnvioDocumentosController extends Controller
     {
         abort_if(Gate::denies('solicitud_mensajeria_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $operadores = EnvioDocumentosAjustes::getFirstWithCoordinadorMensajero();
-        $solicitud = new EnvioDocumentos();
+        $solicitud = new EnvioDocumentos;
         $solicita = User::getCurrentUser()->empleado->supervisor_id;
         $fecha_solicitud = Carbon::now();
         $fecha_solicitud = $fecha_solicitud->format('d-m-Y');

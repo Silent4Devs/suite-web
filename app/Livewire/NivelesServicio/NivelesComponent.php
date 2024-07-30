@@ -242,14 +242,14 @@ class NivelesComponent extends Component
         /*$dataEnt = new EvaluacionServiciosData();
         $res = $dataEnt->TraerDatos($id_evaluacion, $periodo_evaluacion, $revisiones, $nombre, $metrica, $unidad);
         EvaluacionServicio::insert($res);*/
-        $dataEnt = new EvaluacionServiciosData();
+        $dataEnt = new EvaluacionServiciosData;
         $res = $dataEnt->conteoFechas($id_evaluacion, $periodo_evaluacion, $revisiones);
         EvaluacionServicio::insert($res);
     }
 
     public function updateEvaluacion($id_evaluacion, $periodo_evaluacion, $revisiones, $nombre, $metrica, $unidad)
     {
-        $dataEnt = new EvaluacionServiciosData();
+        $dataEnt = new EvaluacionServiciosData;
         $res = $dataEnt->ActualizarDatos($id_evaluacion, $periodo_evaluacion, $revisiones, $nombre, $metrica, $unidad);
         //EvaluacionServicio::insert($res);
     }

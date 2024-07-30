@@ -195,7 +195,7 @@ class RequisicionesCreateComponent extends Component
 
         for ($i = 1; $i <= $this->products_servs_count; $i++) {
             if (isset($data['especificaciones_'.$i])) {
-                $producto_req = new KatbolProductoRequisicion();
+                $producto_req = new KatbolProductoRequisicion;
                 $producto_req->espesificaciones = $data['especificaciones_'.$i];
                 $producto_req->cantidad = $data['cantidad_'.$i];
                 $producto_req->producto_id = $data['producto_'.$i];
@@ -232,7 +232,7 @@ class RequisicionesCreateComponent extends Component
 
                     if ($this->selectOption[$prove_count] === 'sugerido') {
                         // nuevo proveedor
-                        $proveedor_req = new KatbolProveedorRequisicion();
+                        $proveedor_req = new KatbolProveedorRequisicion;
                         $proveedor_req->proveedor = isset($data['proveedor_'.$i]) ? $data['proveedor_'.$i] : null;
                         $proveedor_req->detalles = isset($data['detalles_'.$i]) ? $data['detalles_'.$i] : null;
                         $proveedor_req->tipo = isset($data['tipo_'.$i]) ? $data['tipo_'.$i] : null;

@@ -275,7 +275,7 @@ class DeskController extends Controller
             $existingRecord->delete();
         }
 
-        $aprobadorSeleccionado = new AprobadorSeleccionado();
+        $aprobadorSeleccionado = new AprobadorSeleccionado;
 
         // Asignar cada campo individualmente
         $aprobadorSeleccionado->modulo_id = $modulo;
@@ -331,7 +331,7 @@ class DeskController extends Controller
                 $existingRecord->delete();
             }
 
-            $aprobadorSeleccionado = new AprobadorSeleccionado();
+            $aprobadorSeleccionado = new AprobadorSeleccionado;
 
             // Asignar cada campo individualmente
             $aprobadorSeleccionado->modulo_id = $modulo;
@@ -551,7 +551,7 @@ class DeskController extends Controller
             $existingRecord->delete();
         }
 
-        $aprobadorSeleccionado = new AprobadorSeleccionado();
+        $aprobadorSeleccionado = new AprobadorSeleccionado;
 
         // Asignar cada campo individualmente
         $aprobadorSeleccionado->modulo_id = $modulo;
@@ -599,7 +599,7 @@ class DeskController extends Controller
                 $existingRecord->delete();
             }
 
-            $aprobadorSeleccionado = new AprobadorSeleccionado();
+            $aprobadorSeleccionado = new AprobadorSeleccionado;
 
             // Asignar cada campo individualmente
             $aprobadorSeleccionado->modulo_id = $modulo;
@@ -765,7 +765,7 @@ class DeskController extends Controller
             $existingRecord->delete();
         }
 
-        $aprobadorSeleccionado = new AprobadorSeleccionado();
+        $aprobadorSeleccionado = new AprobadorSeleccionado;
 
         // Asignar cada campo individualmente
         $aprobadorSeleccionado->modulo_id = $modulo;
@@ -815,7 +815,7 @@ class DeskController extends Controller
                 $existingRecord->delete();
             }
 
-            $aprobadorSeleccionado = new AprobadorSeleccionado();
+            $aprobadorSeleccionado = new AprobadorSeleccionado;
 
             // Asignar cada campo individualmente
             $aprobadorSeleccionado->modulo_id = $modulo;
@@ -979,7 +979,7 @@ class DeskController extends Controller
             $existingRecord->delete();
         }
 
-        $aprobadorSeleccionado = new AprobadorSeleccionado();
+        $aprobadorSeleccionado = new AprobadorSeleccionado;
 
         // Asignar cada campo individualmente
         $aprobadorSeleccionado->modulo_id = $modulo;
@@ -1024,7 +1024,7 @@ class DeskController extends Controller
                 $existingRecord->delete();
             }
 
-            $aprobadorSeleccionado = new AprobadorSeleccionado();
+            $aprobadorSeleccionado = new AprobadorSeleccionado;
 
             // Asignar cada campo individualmente
             $aprobadorSeleccionado->modulo_id = $modulo;
@@ -1198,7 +1198,7 @@ class DeskController extends Controller
             $existingRecord->delete();
         }
 
-        $aprobadorSeleccionado = new AprobadorSeleccionado();
+        $aprobadorSeleccionado = new AprobadorSeleccionado;
 
         // Asignar cada campo individualmente
         $aprobadorSeleccionado->modulo_id = $modulo;
@@ -1243,7 +1243,7 @@ class DeskController extends Controller
                 $existingRecord->delete();
             }
 
-            $aprobadorSeleccionado = new AprobadorSeleccionado();
+            $aprobadorSeleccionado = new AprobadorSeleccionado;
 
             // Asignar cada campo individualmente
             $aprobadorSeleccionado->modulo_id = $modulo;
@@ -1401,7 +1401,7 @@ class DeskController extends Controller
             $existingRecord->delete();
         }
 
-        $aprobadorSeleccionado = new AprobadorSeleccionado();
+        $aprobadorSeleccionado = new AprobadorSeleccionado;
 
         // Asignar cada campo individualmente
         $aprobadorSeleccionado->modulo_id = $modulo;
@@ -1444,7 +1444,7 @@ class DeskController extends Controller
                 $existingRecord->delete();
             }
 
-            $aprobadorSeleccionado = new AprobadorSeleccionado();
+            $aprobadorSeleccionado = new AprobadorSeleccionado;
 
             // Asignar cada campo individualmente
             $aprobadorSeleccionado->modulo_id = $modulo;

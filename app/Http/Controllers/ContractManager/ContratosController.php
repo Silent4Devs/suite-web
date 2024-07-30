@@ -375,7 +375,7 @@ class ContratosController extends AppBaseController
 
         // EntregaMensual::insert($res);
 
-        $dataCieCont = new CierreContratoData();
+        $dataCieCont = new CierreContratoData;
         $cie = $dataCieCont->TraerDatos($contrato->id);
 
         CierreContrato::insert($cie);

@@ -73,7 +73,7 @@ class ComiteseguridadController extends Controller
     public function create()
     {
         abort_if(Gate::denies('comformacion_comite_seguridad_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $id = new Comiteseguridad();
+        $id = new Comiteseguridad;
 
         return view('admin.comiteseguridads.create', compact('id'));
     }

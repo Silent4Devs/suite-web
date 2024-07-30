@@ -101,7 +101,7 @@ class TransferFile extends Command
     {
         $email = env('RECEIVE_BACKUP');
         if ($email) {
-            Mail::to(removeUnicodeCharacters($email))->queue(new BackupNotification());
+            Mail::to(removeUnicodeCharacters($email))->queue(new BackupNotification);
             $this->info("Email notification queued for '{$email}'.");
         } else {
             $this->error('RECEIVE_BACKUP environment variable is not set.');

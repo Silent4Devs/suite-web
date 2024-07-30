@@ -30,7 +30,7 @@ class CourseGoals extends Component
     public function mount($course)
     {
         $this->course = $course;
-        $this->goal = new Goal();
+        $this->goal = new Goal;
     }
 
     public function render()
@@ -67,7 +67,7 @@ class CourseGoals extends Component
 
         $this->goal->save();
 
-        $this->goal = new Goal();
+        $this->goal = new Goal;
 
         $this->course = Course::getAll()->find($this->course->id);
         $this->render_alerta('success', 'Meta actualizada exitosamente');

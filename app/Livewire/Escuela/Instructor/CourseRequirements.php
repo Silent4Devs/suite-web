@@ -30,7 +30,7 @@ class CourseRequirements extends Component
     public function mount($course)
     {
         $this->course = $course;
-        $this->requirement = new Requirement();
+        $this->requirement = new Requirement;
     }
 
     public function render()
@@ -67,7 +67,7 @@ class CourseRequirements extends Component
 
         $this->requirement->save();
 
-        $this->requirement = new Requirement();
+        $this->requirement = new Requirement;
 
         $this->course = Course::getAll()->find($this->course->id);
         $this->render_alerta('success', 'Requisito actualizada exitosamente');
