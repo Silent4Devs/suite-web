@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Events\SolicitudDayofEvent;
 use App\Http\Controllers\Controller;
 use App\Mail\RespuestaDayOff as MailRespuestaDayoff;
 use App\Mail\SolicitudDayOff as MailSolicitudDayoff;
@@ -352,6 +353,9 @@ class SolicitudDayOffController extends Controller
 
         if ($request->ajax()) {
             $query = SolicitudDayOff::with('empleado')->where('autoriza', '=', $data)->where('aprobacion', '=', 1)->orderByDesc('id')->get();
+
+            event(new SolicitudDayofEvent($query, 'aprobacion', 'solicitud_dayoff', 'DayOff Aprobado'));
+
             $table = datatables()::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');

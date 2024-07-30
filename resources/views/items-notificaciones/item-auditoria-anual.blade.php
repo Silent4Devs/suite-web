@@ -9,7 +9,7 @@
                         @if (!empty($last_unread_notification->data['avatar_ruta']))
                             <img src="{{ asset($last_unread_notification->data['avatar_ruta']) }}" alt=""
                                 class="rounded-circle" style="width: 50px; height: 50px;">
-                            {{ $last_unread_notification->data['name'] }}.:
+                            {{ $last_unread_notification->data['name'] }}:
                         @else
                             <i class="pr-2 fas fa-tasks text-success"></i>
                         @endif
@@ -23,7 +23,7 @@
                         @if (!empty($last_unread_notification->data['avatar_ruta']))
                             <img src="{{ asset($last_unread_notification->data['avatar_ruta']) }}" alt=""
                                 class="rounded-circle" style="width: 50px; height: 50px;">
-                            {{ $last_unread_notification->data['name'] }}.:
+                            {{ $last_unread_notification->data['name'] }}:
                         @else
                             <i class="pr-2 fas fa-tools text-info"></i>
                         @endif
@@ -41,7 +41,7 @@
                         @if (!empty($last_unread_notification->data['avatar_ruta']))
                             <img src="{{ asset($last_unread_notification->data['avatar_ruta']) }}" alt=""
                                 class="rounded-circle" style="width: 50px; height: 50px;">
-                            {{ $last_unread_notification->data['name'] }}.:
+                            {{ $last_unread_notification->data['name'] }}:
                         @else
                             <i class="pr-2 fas fa-tools text-danger"></i>
                         @endif
