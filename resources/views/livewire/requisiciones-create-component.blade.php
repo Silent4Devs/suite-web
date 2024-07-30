@@ -39,150 +39,263 @@
         <div class="tab-pane fade show {{ $active }}" id="home" role="tabpanel" aria-labelledby="home-tab">
             <div id="home" class="tab-content">
                 <form method="POST"
-                    wire:submit="servicioStore(Object.fromEntries(new FormData($event.target)))"
+                    wire:submit.prevent="servicioStore(Object.fromEntries(new FormData($event.target)))"
                     enctype="multipart/form-data">
                     <div class="card card-body">
                         <h3 class="titulo-form">Solicitud de requisición</h3>
                         <hr style="margin: 30px 0px;">
 
-                        <div class="row">
+                        <div class="row mb-3">
                             <div class="col s12 l3">
-                                <label for="" class="txt-tamaño">
-
-                                    Fecha solicitud <font class="asterisco">*</font>
-                                </label>
-                                <input id="fecha-solicitud-input" class="browser-default" type="date" name="fecha"
-                                    required>
+                                <div class="anima-focus">
+                                    <input id="fecha_solicitud" name="fecha_solicitud" wire:model="fecha_solicitud"
+                                        class="form-control" type="date">
+                                    <label for="fecha_solicitud">
+                                        Fecha solicitud <font class="asterisco">*</font>
+                                    </label>
+                                </div>
+                                <div>
+                                    @error('fecha_solicitud')
+                                        <span class="error">{{ $message }}</span>
+                                    @enderror
+                                </div>
                             </div>
                             <div class="col s12 l3">
-                                <label for="" class="txt-tamaño">
-
-                                    Razón Social <font class="asterisco">*</font>
-                                </label>
-                                <select required class="browser-default" name="sucursal_id">
-                                    <option value="" selected disabled></option>
-                                    @foreach ($sucursales as $sucursal)
-                                        <option value="{{ $sucursal->id }}">{{ $sucursal->descripcion }}</option>
-                                    @endforeach
-                                </select>
+                                <div class="anima-focus">
+                                    <select class="form-control" name="sucursal_id" id="sucursal_id"
+                                        wire:model="sucursal_id">
+                                        <option value="" selected disabled>Seleccione Razón Social</option>
+                                        @foreach ($sucursales as $sucursal)
+                                            <option value="{{ $sucursal->id }}">{{ $sucursal->descripcion }}</option>
+                                        @endforeach
+                                    </select>
+                                    <label for="sucursal_id">
+                                        Razón Social <font class="asterisco">*</font>
+                                    </label>
+                                </div>
+                                <div>
+                                    @error('sucursal_id')
+                                        <span class="error">{{ $message }}</span>
+                                    @enderror
+                                </div>
                             </div>
                             <div class="col s12 l3">
-                                <label for="" class="txt-tamaño">
-
-                                    Solicita <font class="asterisco">*</font>
-                                </label>
-                                <input id="user_print" name="user" value="{{ Auth::user()->name }}" readonly
-                                    style="background: #eaf0f1" class="browser-default" type="text">
+                                <div class="anima-focus">
+                                    <input class="form-control" id="user_name" name="user_name" wire:model="user_name"
+                                        readonly style="background: #eaf0f1" type="text">
+                                    <label for="user_name">
+                                        Solicita <font class="asterisco">*</font>
+                                    </label>
+                                </div>
+                                <div>
+                                    @error('user_name')
+                                        <span class="error">{{ $message }}</span>
+                                    @enderror
+                                </div>
                             </div>
                             <div class="col s12 l3">
-                                <label for="" class="txt-tamaño">
-
-                                    Área que solicita <font class="asterisco">*</font>
-                                </label>
-                                <input id="area_print" name="area"
-                                    value="@isset(auth()->user()->empleado->area) {{ auth()->user()->empleado->area->area }} @endisset"
-                                    readonly style="background: #eaf0f1" class="browser-default" type="text">
+                                <div class="anima-focus">
+                                    <input id="user_area" name="user_area" wire:model="user_area" readonly
+                                        style="background: #eaf0f1" class="form-control" type="text">
+                                    <label for="area">
+                                        Área que solicita <font class="asterisco">*</font>
+                                    </label>
+                                </div>
+                                <div>
+                                    @error('user_area')
+                                        <span class="error">{{ $message }}</span>
+                                    @enderror
+                                </div>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col s12 l6">
-                                <label for="" class="txt-tamaño">
-
-                                    Referencia (Título de la requisición) <font class="asterisco">*</font>
-                                </label>
-                                <input class="browser-default" type="text" value="" maxlength="255"
-                                    name="descripcion" required>
+                                <div class="anima-focus">
+                                    <input class="form-control" type="text" value="" maxlength="255"
+                                        name="descripcion" id="descripcion" wire:model="descripcion">
+                                    <label for="descripcion">
+                                        Referencia (Título de la requisición) <font class="asterisco">*</font>
+                                    </label>
+                                </div>
+                                <div>
+                                    @error('descripcion')
+                                        <span class="error">{{ $message }}</span>
+                                    @enderror
+                                </div>
                             </div>
 
                             <div class="col s12 l3">
-                                <label for="" class="txt-tamaño">
-
-                                    Comprador <font class="asterisco">*</font>
-                                </label>
-                                <select required class="browser-default" name="comprador_id">
-                                    <option value="" selected disabled></option>
-                                    @foreach ($compradores as $comprador)
-                                        <option value="{{ $comprador->id }}">
-                                            @isset($comprador->user->name)
-                                                {{ $comprador->user->name }}
-                                            @endisset
-                                        </option>
-                                    @endforeach
-                                </select>
+                                <div class="anima-focus">
+                                    <select class="form-control" name="comprador_id" id="comprador_id"
+                                        wire:model="comprador_id">
+                                        <option value="" selected disabled>Seleccione Comprador</option>
+                                        @foreach ($compradores as $comprador)
+                                            <option value="{{ $comprador->id }}">
+                                                @isset($comprador->user->name)
+                                                    {{ $comprador->user->name }}
+                                                @endisset
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <label for="comprador_id">
+                                        Comprador <font class="asterisco">*</font>
+                                    </label>
+                                </div>
+                                <div>
+                                    @error('comprador_id')
+                                        <span class="error">{{ $message }}</span>
+                                    @enderror
+                                </div>
                             </div>
                             <div class="col s12 l3">
-                                <label for="tipo_contrato" class="txt-tamaño">Proyecto<font class="asterisco">*
-                                    </font></label>
-                                <select required class="browser-default  select_contratos" name="contrato_id">
-                                    <option value="" selected disabled data-no="" data-servicio=""
-                                        data-proveedor=""></option>
-                                    @foreach ($contratos as $contrato)
-                                        <option value="{{ $contrato->id }}" data-no="{{ $contrato->no_proyecto }}"
-                                            data-servicio="{{ $contrato->no_contrato }}"
-                                            data-proveedor="{{ $contrato->nombre_servicio }}">
-                                            {{ $contrato->no_proyecto }} / {{ $contrato->no_contrato }} -
-                                            {{ $contrato->nombre_servicio }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @if ($errors->has('contrato_id'))
-                                    <div class="invalid-feedback red-text">
-                                        {{ $errors->first('contrato_id') }}
-                                    </div>
-                                @endif
+                                <div class="anima-focus">
+                                    <select class="form-control" name="contrato_id" id="contrato_id"
+                                        wire:model="contrato_id">
+                                        <option value="" selected disabled data-no="" data-servicio=""
+                                            data-proveedor="">Seleccione Contrato</option>
+                                        @foreach ($contratos as $contrato)
+                                            <option value="{{ $contrato->id }}"
+                                                data-no="{{ $contrato->no_proyecto }}"
+                                                data-servicio="{{ $contrato->no_contrato }}"
+                                                data-proveedor="{{ $contrato->nombre_servicio }}">
+                                                {{ $contrato->no_proyecto }} / {{ $contrato->no_contrato }} -
+                                                {{ $contrato->nombre_servicio }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <label for="contrato_id">Proyecto<font class="asterisco">*
+                                        </font></label>
+                                </div>
+                                @error('comprador_id')
+                                    <span class="error">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                     </div>
 
-                    <div class="caja-card-product caja-cards-inner" wire:ignore>
-                        <div id="product-serv-1" class="card card-body card-inner card-product" data-count="1">
+                    <div class="card card-body card-inner card-product">
+                        <div class="col s12">
+                            <div class="flex" style="justify-content: space-between">
+                                <h3 class="sub-titulo-form">Captura del producto o servicio</h3>
+                            </div>
+                        </div>
+                        <div class="row mt-4 mb-3">
+                            <div class="col s12 l4">
+                                <div class="anima-focus">
+                                    <input type="text" id="cantidad_oblig" name="cantidad_oblig"
+                                        wire:model="cantidad_oblig" pattern="[0-9]+"
+                                        title="Por favor, ingrese solo números enteros."
+                                        class="model-cantidad form-control">
+                                    <label for="cantidad_oblig">
+                                        Cantidad <font class="asterisco">*</font>
+                                    </label>
+                                </div>
+                                @error('cantidad_oblig')
+                                    <span class="error">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="col s12 l8">
+                                <div class="anima-focus">
+                                    <select class="model-producto form-control not-select2" id="producto_oblig"
+                                        name="producto_oblig" wire:model="producto_oblig">
+                                        <option value="" selected disabled>Seleccione un Producto o Servicio
+                                        </option>
+                                        @foreach ($productos as $producto)
+                                            <option value="{{ $producto->id }}">{{ $producto->descripcion }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <label for="producto_oblig">
+                                        Producto o servicio <font class="asterisco">*</font>
+                                    </label>
+                                </div>
+                                @error('producto_oblig')
+                                    <span class="error">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12 l12">
+                                <div class="anima-focus">
+                                    <textarea class="model-especificaciones form-control" maxlength="500" id="especificaciones_oblig"
+                                        name="especificaciones_oblig" wire:model="especificaciones_oblig"></textarea>
+                                    <label for="especificaciones_oblig">
+                                        Especificaciones del producto o servicio <font class="asterisco">*</font>
+                                    </label>
+                                </div>
+                                @error('especificaciones_oblig')
+                                    <span class="error">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+
+                    @foreach ($array_productos as $key => $producto)
+                        <div class="card card-body card-inner card-product">
                             <div class="col s12">
                                 <div class="flex" style="justify-content: space-between">
                                     <h3 class="sub-titulo-form">Captura del producto o servicio</h3>
                                     <i class="fa-regular fa-trash-can btn-deleted-card btn-deletd-product"
-                                        title="Eliminar producto" onclick="deleteProduct()"></i>
+                                        title="Eliminar producto"
+                                        wire:click="removeProductos({{ $key }})"></i>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row mt-4 mb-3">
                                 <div class="col s12 l4">
-                                    <label for="" class="txt-tamaño">
-                                        Cantidad <font class="asterisco">*</font>
-                                    </label>
-                                    <input type="text" name="cantidad_1" pattern="[0-9]+"
-                                        title="Por favor, ingrese solo números enteros."
-                                        class="model-cantidad browser-default" required>
+                                    <div class="anima-focus">
+                                        <input type="text" id="cantidad_oblig" name="cantidad_oblig"
+                                            wire:model="array_productos.{{ $key }}.cantidad"
+                                            pattern="[0-9]+" title="Por favor, ingrese solo números enteros."
+                                            class="model-cantidad form-control">
+                                        <label for="cantidad_oblig">
+                                            Cantidad <font class="asterisco">*</font>
+                                        </label>
+                                    </div>
+                                    @error('cantidad_oblig')
+                                        <span class="error">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 <div class="col s12 l8">
-                                    <label for="" class="txt-tamaño">
-
-                                        Producto o servicio <font class="asterisco">*</font>
-                                    </label>
-                                    <select class="model-producto browser-default not-select2" name="producto_1"
-                                        required>
-                                        <option value="" selected disabled></option>
-                                        @foreach ($productos as $producto)
-                                            <option value="{{ $producto->id }}">{{ $producto->descripcion }}</option>
-                                        @endforeach
-                                    </select>
+                                    <div class="anima-focus">
+                                        <select class="model-producto form-control not-select2" id="producto_oblig"
+                                            name="producto_oblig"
+                                            wire:model="array_productos.{{ $key }}.producto">
+                                            <option value="" selected disabled>Seleccione un Producto o Servicio
+                                            </option>
+                                            @foreach ($productos as $producto)
+                                                <option value="{{ $producto->id }}">{{ $producto->descripcion }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        <label for="producto_oblig">
+                                            Producto o servicio <font class="asterisco">*</font>
+                                        </label>
+                                    </div>
+                                    @error('producto_oblig')
+                                        <span class="error">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col s12 l12">
-                                    <label for="" class="txt-tamaño">
-
-                                        Especificaciones del producto o servicio <font class="asterisco">*</font>
-                                    </label>
-                                    <textarea class="model-especificaciones browser-default" maxlength="500" name="especificaciones_1" required></textarea>
+                                    <div class="anima-focus">
+                                        <textarea class="model-especificaciones form-control" maxlength="500" id="especificaciones_oblig" name=""
+                                            wire:model="array_productos.{{ $key }}.especificaciones"></textarea>
+                                        <label for="especificaciones_oblig">
+                                            Especificaciones del producto o servicio <font class="asterisco">*</font>
+                                        </label>
+                                    </div>
+                                    @error('especificaciones_oblig')
+                                        <span class="error">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
-
-
                         </div>
-                    </div>
+                    @endforeach
 
                     <div class="my-4" style="display:flex; justify-content: space-between;">
-                        <div class="btn btn-add-card" onclick="addCardProductos('servicio')">
+                        <div class="btn btn-add-card" wire:click="addProductos()">
                             <i class="fa-regular fa-square-plus"></i>
                             AGREGAR SERVICIOS Y PRODUCTOS
                         </div>
@@ -197,7 +310,7 @@
         <div class="tab-pane fade active show" id="profile" role="tabpanel" aria-labelledby="profile-tab">
             <div id="profile" class="tab-content" {{ !$habilitar_proveedores ? ' style=display:none; ' : '' }}>
                 <form id="form-proveedores"
-                    wire:submit="proveedoresStore(Object.fromEntries(new FormData($event.target)))"
+                    wire:submit.prevent="proveedoresStore(Object.fromEntries(new FormData($event.target)))"
                     action="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="card card-body">
@@ -225,12 +338,12 @@
                                 </div>
                                 <div class="row">
                                     <div class="col s12 l12">
-                                        <label for="" class="txt-tamaño">
+                                        <label for="">
 
                                             Proveedor <font class="asterisco">*</font>
                                         </label>
-                                        <select class="browser-default not-select2"
-                                            wire:model.blur='selectedInput.{{ $i }}'
+                                        <select class="form-control not-select2"
+                                            wire:model.lazy='selectedInput.{{ $i }}'
                                             name="proveedor_{{ $i }}" required>
                                             <option value="">Seleccione una opción</option>
                                             @foreach ($proveedores as $proveedor)
@@ -241,21 +354,20 @@
                                         </select>
                                         <div class="row">
                                             <div class="col s12 l6">
-                                                <label for="" class="txt-tamaño">
+                                                <label for="">
 
                                                     Fecha inicio*
                                                 </label>
                                                 <input type="date" id="fechaInicio"
-                                                    class="browser-default modal-start"
+                                                    class="form-control modal-start"
                                                     name="contacto_fecha_inicio_{{ $i }}" required>
                                             </div>
                                             <div class="col s12 l6">
-                                                <label for="" class="txt-tamaño">
+                                                <label for="">
 
                                                     Fecha fin*
                                                 </label>
-                                                <input type="date" id="fechaFin"
-                                                    class="browser-default modal-end"
+                                                <input type="date" id="fechaFin" class="form-control modal-end"
                                                     name="contacto_fecha_fin_{{ $i }}" required>
                                             </div>
                                         </div>
@@ -269,8 +381,8 @@
                                     @if ($this->selectedInput[$i] == 'otro')
                                         <div class="row">
                                             <div class="col s12 l12">
-                                                <select class="browser-default"
-                                                    wire:model.blur='selectOption.{{ $i }}'
+                                                <select class="form-control"
+                                                    wire:model.lazy='selectOption.{{ $i }}'
                                                     name="proveedor_otro{{ $i }}" required>
                                                     <option selected value="indistinto">Indistinto</option>
                                                     <option value="sugerido">Sugerido</option>
@@ -281,35 +393,35 @@
                                             @if ($this->selectOption[$i] === 'sugerido')
                                                 <div class="row">
                                                     <div class="col s12 l6">
-                                                        <label for="" class="txt-tamaño">
+                                                        <label for="">
 
                                                             Detalles del producto <font class="asterisco">*</font>
                                                         </label>
-                                                        <input type="text" required class="browser-default modal-detalles"
+                                                        <input type="text" required class="form-control modal-detalles"
                                                             name="detalles_{{ $i }}">
                                                     </div>
                                                     <div class="col s12 l3">
                                                         <input type="radio" class="modal-tipo"
                                                             name="tipo_{{ $i }}" value="fisico" required>
-                                                        <label for="tipo_{{ $i }}" class="txt-tamaño">
+                                                        <label for="tipo_{{ $i }}">
                                                             Proveedor Físico
                                                         </label>
                                                     </div>
                                                     <div class="col s12 l3">
                                                         <input type="radio" class="modal-tipo-2"
                                                             name="tipo_{{ $i }}" value="online" required>
-                                                        <label for="" class="txt-tamaño">
+                                                        <label for="">
                                                             Proveedor Online
                                                         </label>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col s12 l12">
-                                                        <label for="" class="txt-tamaño">
+                                                        <label for="">
 
                                                             Comentarios <font class="asterisco">*</font>
                                                         </label>
-                                                        <textarea class="browser-default modal-comentario" name="comentarios_{{ $i }}" required></textarea>
+                                                        <textarea class="form-control modal-comentario" name="comentarios_{{ $i }}" required></textarea>
                                                     </div>
                                                 </div>
                                                 <div class="row">
@@ -317,31 +429,31 @@
                                                         <h3 class="sub-titulo-form">Datos de contacto</h3>
                                                     </div>
                                                     <div class="col s12 l6">
-                                                        <label for="" class="txt-tamaño">
+                                                        <label for="">
 
                                                             Nombre del contacto*
                                                         </label>
-                                                        <input type="text" class="browser-default modal-nombre"
+                                                        <input type="text" class="form-control modal-nombre"
                                                             name="contacto_{{ $i }}" required>
                                                     </div>
                                                     <div class="col s12 l3">
-                                                        <label for="" class="txt-tamaño">
+                                                        <label for="">
 
                                                             Teléfono*
                                                         </label>
 
                                                         <input id="phone" type="text"
                                                             name="contacto_telefono_{{ $i }}"
-                                                            class="browser-default modal-telefono" pattern="\x2b[0-9]+"
+                                                            class="form-control modal-telefono" pattern="\x2b[0-9]+"
                                                             size="20" placeholder="+54976284353" required>
                                                     </div>
                                                     <div class="col s12 l3">
-                                                        <label for="" class="txt-tamaño">
+                                                        <label for="">
 
                                                             Correo Electrónico*
                                                         </label>
                                                         <input type="email" id="foo"
-                                                            class="browser-default modal-correo"
+                                                            class="form-control modal-correo"
                                                             placeholder="example@example.com"
                                                             name="contacto_correo_{{ $i }}" required>
 
@@ -350,24 +462,24 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col s12 l12">
-                                                        <label for="" class="txt-tamaño">
+                                                        <label for="">
 
                                                             URL*
                                                         </label>
-                                                        <input type="url" class="browser-default modal-url"
+                                                        <input type="url" class="form-control modal-url"
                                                             name="contacto_url_{{ $i }}">
                                                     </div>
                                                 </div>
                                                 <br>
                                                 <div class="row">
                                                     <div class="col s12 l12">
-                                                        <label for="" class="txt-tamaño">
+                                                        <label for="">
                                                             Carga de cotizaciones <font class="asterisco">*</font>
                                                         </label>
                                                         <input type="file" required
                                                             class="modal-cotizacion form-control-file"
                                                             name="cotizacion_{{ $i }}"
-                                                            wire:model.live="cotizaciones.{{ $i }}"
+                                                            wire:model="cotizaciones.{{ $i }}"
                                                             data-count="{{ $i }}"
                                                             accept=".pdf, .docx, .pptx, .point, .xml, .jpeg, .jpg, .png, .xlsx, .xlsm, .csv">
                                                     </div>
@@ -529,7 +641,7 @@
                                                                     </div>
                                                                     <div class="chat-input">
                                                                         <input type="text" id="question"
-                                                                            wire:model.blur="question">
+                                                                            wire:model.lazy="question">
                                                                         <button type="submit"
                                                                             wire:click.prevent="askQuestion">Enviar</button>
                                                                     </div>
@@ -819,7 +931,7 @@
                             </div>
                         </div>
                     </div>
-                    <form method="POST" wire:submit="Firmar(Object.fromEntries(new FormData($event.target)))"
+                    <form method="POST" wire:submit.prevent="Firmar(Object.fromEntries(new FormData($event.target)))"
                         enctype="multipart/form-data">
                         <div class="card card-body">
                             <div class="">
@@ -911,7 +1023,7 @@
 
     @section('scripts')
         <script>
-            document.addEventListener('livewire:init', function() {
+            document.addEventListener('livewire:load', function() {
                 Livewire.on('sin_responsables', function() {
                     Swal.fire({
                         // title: 'No es posible acceder a esta vista.',
