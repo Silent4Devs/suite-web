@@ -24,7 +24,7 @@
             <button class="btn btn-dark screenshot d-none" title="Capturar"><i class="bi bi-camera"></i></button>
         </div>
     </div>
-    <input type="hidden" id="snapshoot" readonly autocomplete="off" wire:model.defer="foto" name="snap_foto"
+    <input type="hidden" id="snapshoot" readonly autocomplete="off" wire:model="foto" name="snap_foto"
         class="imageCrop" enctype="multipart/form-data">
 </div>
 @error('foto')
