@@ -919,7 +919,7 @@ class EV360EvaluacionesController extends Controller
             $cons_evaluacion = Evaluacion::with('rangos')->find($evaluacion);
 
             if (optional($cons_evaluacion->rangos)->isNotEmpty()) {
-                $ev360ResumenTabla = new Ev360ResumenTablaParametros();
+                $ev360ResumenTabla = new Ev360ResumenTablaParametros;
                 $informacion_obtenida = $ev360ResumenTabla->obtenerInformacionDeLaConsultaPorEvaluado($evaluacion, $evaluado);
                 // dd($informacion_obtenida);
                 $calificaciones = $this->desglosarCalificaciones($informacion_obtenida);
@@ -1051,7 +1051,7 @@ class EV360EvaluacionesController extends Controller
                     'maxParam',
                 ));
             } else {
-                $ev360ResumenTabla = new Ev360ResumenTabla();
+                $ev360ResumenTabla = new Ev360ResumenTabla;
                 $informacion_obtenida = $ev360ResumenTabla->obtenerInformacionDeLaConsultaPorEvaluado($evaluacion, $evaluado);
                 $calificaciones = $this->desglosarCalificaciones($informacion_obtenida);
                 $nombresObjetivos = [];
@@ -1187,7 +1187,7 @@ class EV360EvaluacionesController extends Controller
             $cons_evaluacion = Evaluacion::with('rangos')->find($evaluacion);
 
             if (optional($cons_evaluacion->rangos)->isNotEmpty()) {
-                $ev360ResumenTabla = new Ev360ResumenTablaParametros();
+                $ev360ResumenTabla = new Ev360ResumenTablaParametros;
                 $informacion_obtenida = $ev360ResumenTabla->obtenerInformacionDeLaConsultaPorEvaluado($evaluacion, $evaluado);
 
                 $calificaciones = $this->desglosarCalificaciones($informacion_obtenida);
@@ -1320,7 +1320,7 @@ class EV360EvaluacionesController extends Controller
                     'escalas',
                 ));
             } else {
-                $ev360ResumenTabla = new Ev360ResumenTabla();
+                $ev360ResumenTabla = new Ev360ResumenTabla;
                 $informacion_obtenida = $ev360ResumenTabla->obtenerInformacionDeLaConsultaPorEvaluado($evaluacion, $evaluado);
                 $calificaciones = $this->desglosarCalificaciones($informacion_obtenida);
                 $nombresObjetivos = [];
@@ -1867,7 +1867,7 @@ class EV360EvaluacionesController extends Controller
             $rangosColores = optional($evaluacion->rangos)->pluck('color', 'parametro')->all();
             $maxValue = $this->findClosestValueToMax($rangosResultados);
 
-            $ev360ResumenTabla = new Ev360ResumenTablaParametros();
+            $ev360ResumenTabla = new Ev360ResumenTablaParametros;
 
             foreach ($evaluados as $evaluado) {
                 $evaluado->load(['area' => function ($query) {
@@ -1928,7 +1928,7 @@ class EV360EvaluacionesController extends Controller
                 $rangosResultados->put('aceptable', 100);
                 $rangosResultados->put('sobresaliente', 100);
             }
-            $ev360ResumenTabla = new Ev360ResumenTabla();
+            $ev360ResumenTabla = new Ev360ResumenTabla;
             foreach ($evaluados as $evaluado) {
                 $evaluado->load(['area' => function ($query) {
                     $query->select('id', 'area');
@@ -2026,7 +2026,7 @@ class EV360EvaluacionesController extends Controller
             $q->where('evaluado_id', $empleado->id);
         })->get();
         $lista_evaluaciones = collect();
-        $ev360ResumenTabla = new Ev360ResumenTabla();
+        $ev360ResumenTabla = new Ev360ResumenTabla;
         foreach ($evaluacione as $evaluacion) {
             $lista_evaluaciones->push([
                 'id' => $evaluacion->id,

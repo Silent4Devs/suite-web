@@ -64,7 +64,7 @@ class ConsultaDeEvaluciones extends Component
     public function render()
     {
         $evaluacionController = new EV360EvaluacionesController;
-        $ev360ResumenTabla = new Ev360ResumenTabla();
+        $ev360ResumenTabla = new Ev360ResumenTabla;
         $this->informacion_obtenida = $ev360ResumenTabla->obtenerInformacionDeLaConsultaPorEvaluado($this->evaluacion, $this->evaluado);
         $this->calificaciones = $evaluacionController->desglosarCalificaciones($this->informacion_obtenida);
         $this->calificaciones_autoevaluacion_competencias = $this->calificaciones['calificaciones_autoevaluacion_competencias'];
@@ -99,7 +99,7 @@ class ConsultaDeEvaluciones extends Component
             'evaluacion2' => 'required',
         ]);
         // dd($this->evaluacion1);
-        $ev360ResumenTabla = new Ev360ResumenTabla();
+        $ev360ResumenTabla = new Ev360ResumenTabla;
         $evaluacionController = new EV360EvaluacionesController;
         $this->informacion_obtenida_compare_first = $ev360ResumenTabla->obtenerInformacionDeLaConsultaPorEvaluado($this->evaluacion1, $this->evaluado);
         $this->informacion_obtenida_compare = $ev360ResumenTabla->obtenerInformacionDeLaConsultaPorEvaluado($this->evaluacion2, $this->evaluado);

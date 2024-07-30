@@ -62,7 +62,7 @@ class CalendarioOficialController extends Controller
     public function create(Request $request)
     {
         abort_if(Gate::denies('dias_festivos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $calendario = new CalendarioOficial();
+        $calendario = new CalendarioOficial;
 
         return view('admin.calendario-oficial.create', compact('calendario'));
     }

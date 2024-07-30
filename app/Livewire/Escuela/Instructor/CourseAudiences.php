@@ -30,7 +30,7 @@ class CourseAudiences extends Component
     public function mount($course)
     {
         $this->course = $course;
-        $this->audience = new Audience();
+        $this->audience = new Audience;
     }
 
     public function render()
@@ -67,7 +67,7 @@ class CourseAudiences extends Component
 
         $this->audience->save();
 
-        $this->audience = new Audience();
+        $this->audience = new Audience;
 
         $this->course = Course::getAll()->find($this->course->id);
         $this->render_alerta('success', 'Audiencia actualizada exitosamente');

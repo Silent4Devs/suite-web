@@ -147,7 +147,7 @@ class GenerarPdfComponent extends Component
             .$control_documento->version.self::NUEVA_LINEA.self::NUEVA_LINEA.
             Carbon::now()->format('d-m-Y');
 
-        $phpWord = new \PhpOffice\PhpWord\PhpWord();
+        $phpWord = new \PhpOffice\PhpWord\PhpWord;
         $documentProtection = $phpWord->getSettings()->getDocumentProtection();
         $documentProtection->setEditing(DocProtect::READ_ONLY);
         $documentProtection->setPassword(self::PASSWORD_WORD);

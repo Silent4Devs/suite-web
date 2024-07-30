@@ -33,7 +33,7 @@ class CreateMatrizRequisitosLegales extends Component
 
     public function mount()
     {
-        $this->alcance_s1 = new Collection();
+        $this->alcance_s1 = new Collection;
     }
 
     public function render()

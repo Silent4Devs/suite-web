@@ -156,7 +156,7 @@ class RequisicionesEditComponent extends Component
 
         for ($i = 1; $i <= $this->products_servs_count; $i++) {
             if (isset($data['cantidad_'.$i])) {
-                $producto_req = new ContractManagerProductoRequisicion();
+                $producto_req = new ContractManagerProductoRequisicion;
 
                 $producto_req->espesificaciones = $data['especificaciones_'.$i];
                 $producto_req->cantidad = $data['cantidad_'.$i];
@@ -222,7 +222,7 @@ class RequisicionesEditComponent extends Component
             for ($i = 0; $i <= $this->proveedores_count; $i++) {
                 if (isset($data['detalles_'.$i])) {
                     // nuevo proveedor
-                    $proveedor_req = new ContractManagerProveedorRequisicion();
+                    $proveedor_req = new ContractManagerProveedorRequisicion;
                     $proveedor_req->proveedor = $data['proveedor_'.$i];
                     $proveedor_req->detalles = $data['detalles_'.$i];
                     $proveedor_req->tipo = $data['tipo_'.$i];

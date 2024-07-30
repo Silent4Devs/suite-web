@@ -211,7 +211,7 @@ class InformacionDocumetadaController extends Controller
     {
         abort_if(Gate::denies('informacion_documetada_create') && Gate::denies('informacion_documetada_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $model = new InformacionDocumetada();
+        $model = new InformacionDocumetada;
         $model->id = $request->input('crud_id', 0);
         $model->exists = true;
         $media = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');

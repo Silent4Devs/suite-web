@@ -99,7 +99,7 @@ class SedeController extends Controller
     public function store(StoreSedeRequest $request)
     {
         abort_if(Gate::denies('sedes_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $client = new \GuzzleHttp\Client();
+        $client = new \GuzzleHttp\Client;
         $geocoder = new \Spatie\Geocoder\Geocoder($client);
         $geocoder->setApiKey(config('geocoder.key'));
         $result = $geocoder->getCoordinatesForAddress($request->direccion);

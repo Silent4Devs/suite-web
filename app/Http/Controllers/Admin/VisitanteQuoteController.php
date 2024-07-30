@@ -22,7 +22,7 @@ class VisitanteQuoteController extends Controller
         if (VisitanteQuote::count() > 0) {
             $quote = VisitanteQuote::first();
         } else {
-            $quote = new VisitanteQuote();
+            $quote = new VisitanteQuote;
         }
 
         return view('admin.visitantes.quotes.index', compact('quote'));

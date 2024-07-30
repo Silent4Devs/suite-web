@@ -111,13 +111,11 @@ class BuscarCVComponent extends Component
         $this->dispatch('tagify');
     }
 
-    public function mount()
-    {
-    }
+    public function mount() {}
 
     public function render()
     {
-        if (!$this->isPersonal) {
+        if (! $this->isPersonal) {
             $this->empleados = Empleado::getAltaEmpleados();
         }
 

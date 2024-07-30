@@ -124,7 +124,7 @@ class DeclaracionAplicabilidadConcentradoIsoController extends Controller
         // dd($A5, $A5No, $A6, $A6No, $A7, $A7No, $A8, $A8No);
         // dd($gapa5, $gapa6, $gapa7, $gapa8);
         $total = 93 - $conteoNoaplica;
-        $Porc = new PorcentajeDecApl2022();
+        $Porc = new PorcentajeDecApl2022;
 
         $porcentajeDecApl = $Porc->GapDecAplPorc($total, $conteoAprobado);
 

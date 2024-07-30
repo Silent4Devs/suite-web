@@ -160,7 +160,7 @@ class ArchivosController extends Controller
     {
         abort_if(Gate::denies('archivo_create') && Gate::denies('archivo_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $model = new Archivo();
+        $model = new Archivo;
         $model->id = $request->input('crud_id', 0);
         $model->exists = true;
         $media = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');

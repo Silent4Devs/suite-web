@@ -212,7 +212,7 @@ class MaterialSgsiController extends Controller
     {
         abort_if(Gate::denies('material_sgsi_agregar') && Gate::denies('material_sgsi_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $model = new MaterialSgsi();
+        $model = new MaterialSgsi;
         $model->id = $request->input('crud_id', 0);
         $model->exists = true;
         $media = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');

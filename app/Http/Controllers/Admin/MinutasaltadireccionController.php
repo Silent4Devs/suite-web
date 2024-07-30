@@ -302,7 +302,7 @@ class MinutasaltadireccionController extends Controller
                         'historic' => [],
                     ];
 
-                    $planImplementacion = new PlanImplementacion(); // Necesario se carga inicialmente el Diagrama Universal de Gantt
+                    $planImplementacion = new PlanImplementacion; // Necesario se carga inicialmente el Diagrama Universal de Gantt
                     $planImplementacion->tasks = $tasks;
                     $planImplementacion->canAdd = true;
                     $planImplementacion->canWrite = true;
@@ -695,7 +695,7 @@ class MinutasaltadireccionController extends Controller
 
     public function storeCKEditorImages(Request $request)
     {
-        $model = new Minutasaltadireccion();
+        $model = new Minutasaltadireccion;
         $model->id = $request->input('crud_id', 0);
         $model->exists = true;
         $media = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
@@ -713,7 +713,7 @@ class MinutasaltadireccionController extends Controller
 
     public function createPlanAccion(Minutasaltadireccion $id)
     {
-        $planImplementacion = new PlanImplementacion();
+        $planImplementacion = new PlanImplementacion;
         $modulo = $id;
         $modulo_name = 'Matríz de Requisitos Legales';
         $referencia = $modulo->nombrerequisito;
@@ -736,7 +736,7 @@ class MinutasaltadireccionController extends Controller
             'objetivo.required' => 'Debes de definir un objetivo para el Plan de Trabajo',
         ]);
 
-        $planImplementacion = new PlanImplementacion(); // Necesario se carga inicialmente el Diagrama Universal de Gantt
+        $planImplementacion = new PlanImplementacion; // Necesario se carga inicialmente el Diagrama Universal de Gantt
         $planImplementacion->tasks = [];
         $planImplementacion->canAdd = true;
         $planImplementacion->canWrite = true;
