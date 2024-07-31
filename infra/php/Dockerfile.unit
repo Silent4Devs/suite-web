@@ -1,4 +1,6 @@
-FROM php:8.3-alpine
+# Start with the NGINX Unit base image
+FROM nginx/unit:1.29.1-php8.1
+#FROM php:8.2-fpm-alpine
 
 # Add docker-php-extension-installer script
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
@@ -56,17 +58,35 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
     excimer \
     pcntl \
     posix \
-    amqp
+    amqp \
+    ftp
 
-COPY . /var/www
-#COPY .env.example /var/www/.env
+# Enable phpredis extension
+#RUN echo "extension=redis.so" > /usr/local/etc/php/conf.d/docker-php-ext-redis.ini
 
-WORKDIR /var/www
+# Set up working directory
+WORKDIR /var/www/html
 
-RUN apk add jq
+# Copy Laravel application files into the container
+COPY . /var/www/html
 
-RUN wget -O/usr/local/bin/frankenphp $(wget -O- https://api.github.com/repos/dunglas/frankenphp/releases/latest | jq '.assets[] | select(.name=="frankenphp-linux-x86_64") | .browser_download_url' -r) && chmod +x /usr/local/bin/frankenphp
+# Copy NGINX Unit configuration file
+COPY unit-config.json /docker-entrypoint.d/
 
-RUN composer install --no-dev
+RUN chown -R www-data:www-data /var/www \
+    && chmod 755 -R /var/www
 
-ENTRYPOINT ["php", "artisan", "octane:start", "--server=frankenphp", "--port=9804", "--workers=16", "--host=0.0.0.0"]
+# Install npm
+RUN npm install -g npm@latest
+
+# Healthcheck
+HEALTHCHECK --interval=15m --timeout=3s \
+    CMD curl --fail http://localhost/ || exit 1
+
+# Expose ports 80 and 443
+EXPOSE 80
+EXPOSE 443
+EXPOSE 8080
+
+# Start NGINX Unit
+CMD ["unitd", "--no-daemon", "--control", "0.0.0.0:8080"]
