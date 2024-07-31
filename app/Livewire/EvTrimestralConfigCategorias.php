@@ -46,7 +46,7 @@ class EvTrimestralConfigCategorias extends Component
 
     public function removeCategoria($keyIndex, $id_borrar = null)
     {
-        if (! empty($id_borrar)) {
+        if (!empty($id_borrar)) {
             $tipo = TipoObjetivo::find($id_borrar);
             $tipo->delete();
         }
@@ -59,11 +59,6 @@ class EvTrimestralConfigCategorias extends Component
     {
         return view('livewire.ev-trimestral-config-categorias');
     }
-
-    // public function submitForm($data)
-    // {
-    //     dd($data);
-    // }
 
     public function editRegistro($entrada, $campo, $id_edit, $key)
     {
@@ -85,15 +80,36 @@ class EvTrimestralConfigCategorias extends Component
             $this->categoria[$key]['id'] = $nuevotipo->id;
             $this->categoria[$key][$campo] = $entrada;
 
-            $this->alert('success', 'Cambio Guardado', [
-                'position' => 'top-right',
-                'timer' => '3000',
-                'toast' => true,
-                'text' => 'Se guardo correctamente',
-                'width' => '250',
-            ]);
-
             // dd($nuevotipo, $this->categoria[$key]);
         }
+    }
+
+    public function agregarCategoria($key)
+    {
+
+        $TO = TipoObjetivo::updateOrCreate(
+            ['id' => $this->categoria[$key]['id']],
+            [
+                'nombre' => $this->categoria[$key]['nombre'],
+                'descripcion' => $this->categoria[$key]['descripcion'],
+            ]
+        );
+
+        // $this->categoria[] = [
+        //     'id' => $tipo->id,
+        //     'nombre' => $tipo->nombre,
+        //     'descripcion' => $tipo->descripcion,
+        //     'ocupado' => $tipo->tipo_ocupado,
+        // ];
+
+        $this->categoria[$key]['id'] = $TO->id;
+
+        $this->alert('success', 'Cambio Guardado', [
+            'position' => 'top-right',
+            'timer' => '3000',
+            'toast' => true,
+            'text' => 'Se guardo correctamente',
+            'width' => '250',
+        ]);
     }
 }
