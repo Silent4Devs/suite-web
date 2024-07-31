@@ -71,7 +71,7 @@ WORKDIR /var/www/html
 COPY . /var/www/html
 
 # Copy NGINX Unit configuration file
-COPY unit-config.json /docker-entrypoint.d/
+COPY unitconfig.json /docker-entrypoint.d/
 
 RUN chown -R www-data:www-data /var/www \
     && chmod 755 -R /var/www
