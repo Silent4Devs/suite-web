@@ -229,6 +229,7 @@ services:
       - "5601:5601"
     environment:
       - ELASTICSEARCH_URL=http://elasticsearch:9200
+      - ELASTIC_PACKAGE_REGISTRY_URL=elastic-package-registry:8080
     volumes:
       - ./infra/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
     depends_on:
@@ -265,6 +266,14 @@ services:
         max-file: "100"
     networks:
       - tabantajnetwork
+
+  elastic-package-registry:
+    image: docker.elastic.co/package-registry/distribution:8.11.1
+    ports:
+      - "8080:8080"
+    networks:
+      - tabantajnetwork
+
 
 volumes:
   tabantaj-db:
