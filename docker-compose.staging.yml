@@ -36,20 +36,20 @@ services:
       - tabantajnetwork
     mem_limit: 6g
 
-  pgadmin-tabantaj:
-    depends_on:
-      - postgres-tabantaj
-    image: dpage/pgadmin4:latest
-    ports:
-      - "5480:80"
-    env_file:
-      - .env
-    restart: unless-stopped
-    tty: true
-    volumes:
-      - pgadmin-data:/var/lib/pgadmin
-    networks:
-      - tabantajnetwork
+  # pgadmin-tabantaj:
+  #   depends_on:
+  #     - postgres-tabantaj
+  #   image: dpage/pgadmin4:latest
+  #   ports:
+  #     - "5480:80"
+  #   env_file:
+  #     - .env
+  #   restart: unless-stopped
+  #   tty: true
+  #   volumes:
+  #     - pgadmin-data:/var/lib/pgadmin
+  #   networks:
+  #     - tabantajnetwork
 
   php:
     #uncomment this if you will use only docker compose
@@ -195,13 +195,13 @@ services:
       xpack.security.enabled: false
     ports:
       - "9200:9200"
-      - "9300:9300"
     ulimits:
       memlock:
         soft: -1
         hard: -1
     networks:
       - tabantajnetwork
+
 
   logstash:
     image: logstash:8.11.1
@@ -220,15 +220,15 @@ services:
     networks:
       - tabantajnetwork
 
-  Kibana:
+  kibana:
     image: kibana:8.11.1
     container_name: kibana
     restart: always
     ports:
       - "5601:5601"
     environment:
-      - ELASTICSEARCH_URL=http://elasticsearch:9200
-      - ELASTIC_PACKAGE_REGISTRY_URL=elastic-package-registry:8080
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      # - ELASTIC_PACKAGE_REGISTRY_URL=elastic-package-registry:8080
     volumes:
       - ./infra/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
     depends_on:
@@ -289,6 +289,7 @@ volumes:
     driver: local
   elastic-data-vl:
     driver: local
+  esdata:
   # elasticsearch:
   #   driver: local
   # elasticsearch-logs:
@@ -296,6 +297,7 @@ volumes:
 
 networks:
   tabantajnetwork:
+    driver: bridge
 #elasticsearch-logs-tabantaj:
 #   image: docker.elastic.co/elasticsearch/elasticsearch:8.8.1
 #   container_name: elasticsearch-logs-tabantaj
