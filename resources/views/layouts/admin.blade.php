@@ -17,6 +17,8 @@
 
     @vite(['resources/sass/app.scss'])
 
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
+
     @yield('css')
     @yield('styles')
     <!-- End Principal Styles -->
@@ -235,24 +237,17 @@
     <script defer src="//unpkg.com/alpinejs" defer></script>
     <script src="{{ asset('js/main.js') }}"></script>
     <!-- x editable -->
-    </script>
-    <!-- termina sección de script -->
-
-
-    <script async>
-        document.onreadystatechange = function() {
-            if (document.readyState !== "complete") {
-                document.querySelector(
-                    "body").style.visibility = "hidden";
-                document.querySelector(
-                    "#loading").style.visibility = "visible";
-            } else {
-                document.querySelector(
-                    "#loading").style.display = "none";
-                document.querySelector(
-                    "body").style.visibility = "visible";
-            }
-        };
+    itable.min.js">
+    "body").style.visibility = "hidden";
+    document.querySelector(
+    "#loading").style.visibility = "visible";
+    } else {
+    document.querySelector(
+    "#loading").style.display = "none";
+    document.querySelector(
+    "body").style.visibility = "visible";
+    }
+    };
     </script>
     <script defer>
         function imprimirElemento(elemento) {
