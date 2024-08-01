@@ -1,10 +1,19 @@
 <header>
     <div class="content-header-blue">
         <div class="caja-inicio-options-header">
-            <button class="btn-menu-header" style="height: 40px;" onclick="menuHeader();">
-                <div class="line-menu">
-                    <hr>
+            <button class="btn-menu-header" onclick="menuHeader();">
+                <div class="points-menu-header">
+                    <div class="point-menu-header"></div>
+                    <div class="point-menu-header"></div>
+                    <div class="point-menu-header"></div>
+                    <div class="point-menu-header"></div>
+                    <div class="point-menu-header"></div>
+                    <div class="point-menu-header"></div>
+                    <div class="point-menu-header"></div>
+                    <div class="point-menu-header"></div>
+                    <div class="point-menu-header"></div>
                 </div>
+                <div class="close-menu-header"></div>
             </button>
             <a href="{{ url('/admin/portal-comunicacion') }}"><img src="{{ asset('img/logo-ltr.png') }}"
                     alt="Logo Tabantaj" style="height: 40px;"></a>
