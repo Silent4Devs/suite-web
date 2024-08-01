@@ -6,11 +6,13 @@ use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class TiposObjetivosSistema extends Model implements Auditable
 {
     use ClearsResponseCache, \OwenIt\Auditing\Auditable;
     use HasFactory;
+    use SoftDeletes;
 
     protected $table = 'tipo_objetivo_sistema';
 

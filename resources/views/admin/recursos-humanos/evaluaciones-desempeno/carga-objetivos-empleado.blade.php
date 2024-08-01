@@ -318,4 +318,32 @@
             let table = $('.table').DataTable(dtOverrideGlobals);
         });
     </script>
+
+    <script>
+        document.
+        addEventListener
+            (
+                'livewire:load',
+                function() {
+                    initializeDataTable
+                        ();
+                });
+        document.
+        addEventListener
+            (
+                'livewire:update',
+                function() {
+                    initializeDataTable
+                        ();
+                });
+
+        function
+        initializeDataTable() {
+            $(
+                '#your-table-id'
+            ).
+            DataTable
+                ();
+        }
+    </script>
 @endsection

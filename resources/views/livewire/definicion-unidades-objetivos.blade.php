@@ -15,7 +15,6 @@
                     <div class="col-12">
                         <div class="form-row  mt-3 mb-3">
                             <div class="col-4">
-                                {{ $key }}
                                 <div class="anima-focus mb-3 ">
                                     <input type="text" id="estatus_arreglo_{{ $key }}"
                                         name="estatus_arreglo_{{ $key }}" class="form-control" placeholder=""

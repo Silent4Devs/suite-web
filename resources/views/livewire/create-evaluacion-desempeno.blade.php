@@ -74,7 +74,8 @@
                                 <div class="p-4 rounded-lg d-flex align-items-center justify-content-between"
                                     style="background-color: #BB68A8;">
                                     <div class="d-flex align-items-center" style="gap: 10px;">
-                                        <input type="checkbox" name="activar_competencias" wire:model.live="activar_competencias">
+                                        <input type="checkbox" name="activar_competencias"
+                                            wire:model.live="activar_competencias">
                                         <label for="activar_competencias" style="color: #fff;" class="mb-0"> Competencias
                                         </label>
                                     </div>

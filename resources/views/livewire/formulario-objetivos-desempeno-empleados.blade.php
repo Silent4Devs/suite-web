@@ -314,8 +314,12 @@
             <hr class="my-4">
         </div>
 
+        <div wire:loading>
+            <h1>Guardando</h1>
+        </div>
+
         <div class="datatable-rds">
-            <table class="table datatable">
+            <table class="table datatable" id="your-table-id'">
                 <thead>
                     <tr>
                         <th>Categoría</th>
