@@ -1,11 +1,11 @@
 server.host: "0.0.0.0"
-elasticsearch.hosts: ["http://elasticsearch:9200"]
+elasticsearch.hosts: [ "http://elasticsearch:9200" ]
 #elasticsearch.username: "your_elasticsearch_username"  # If authentication is enabled
 #elasticsearch.password: "your_elasticsearch_password"  # If authentication is enabled
 
 # Logging settings
-logging.dest: stdout
-logging.verbose: true
+# logging.dest: stdout
+# logging.verbose: true
 
 # Advanced settings
 server.basePath: "/kibana"  # Optional setting to proxy Kibana through a different path
