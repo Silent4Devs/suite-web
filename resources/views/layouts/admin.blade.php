@@ -15,9 +15,9 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('vendor/file-manager/css/file-manager.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/yearpicker.css') }}">
 
-    @vite(['resources/sass/app.scss'])
-
+    {{-- @vite(['resources/sass/app.scss']) --}}
     <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
+
 
     @yield('css')
     @yield('styles')
