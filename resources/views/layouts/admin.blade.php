@@ -9,41 +9,21 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ trans('panel.site_title') }}</title>
 
-    <!-- Principal Styles -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/global/loader.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/global/custom.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/file-manager/css/file-manager.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/yearpicker.css') }}">
-
-    {{-- @vite(['resources/sass/app.scss']) --}}
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
-
-
     @yield('css')
     @yield('styles')
     <!-- End Principal Styles -->
 
     <!-- Fonts -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined" rel="stylesheet">
-    <link rel="stylesheet" href="https://storage.googleapis.com/non-spec-apps/mio-icons/latest/outline.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
         integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined" rel="stylesheet" />
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,300,0,0" />
     <!-- End Fonts -->
 
     <!-- Extra Styles -->
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css">
-    <!-- x-editable -->
-    <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css"
-        rel="stylesheet" />
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/jquery-editable/jquery-ui-datepicker/css/redmond/jquery-ui-1.10.3.custom.min.css"
         integrity="sha512-4E8WH1J08+TC3LLRtjJdA8OlggQvj5LN+TciGGwJWaQtFXj0BoZPKT9gIHol283GiUfpKPVk54LJfur5jfiRxA=="
@@ -68,8 +48,9 @@
     @yield('styles')
     @livewireStyles
 
-    @vite(['resources/js/app.js'])
     {{-- Laravel vite --}}
+    @vite(['resources/sass/app.scss'])
+    @vite(['resources/js/app.js'])
 
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/favicon_tabantaj_v2.png') }}">
 </head>
@@ -237,17 +218,24 @@
     <script defer src="//unpkg.com/alpinejs" defer></script>
     <script src="{{ asset('js/main.js') }}"></script>
     <!-- x editable -->
-    itable.min.js">
-    "body").style.visibility = "hidden";
-    document.querySelector(
-    "#loading").style.visibility = "visible";
-    } else {
-    document.querySelector(
-    "#loading").style.display = "none";
-    document.querySelector(
-    "body").style.visibility = "visible";
-    }
-    };
+    </script>
+    <!-- termina sección de script -->
+
+
+    <script async>
+        document.onreadystatechange = function() {
+            if (document.readyState !== "complete") {
+                document.querySelector(
+                    "body").style.visibility = "hidden";
+                document.querySelector(
+                    "#loading").style.visibility = "visible";
+            } else {
+                document.querySelector(
+                    "#loading").style.display = "none";
+                document.querySelector(
+                    "body").style.visibility = "visible";
+            }
+        };
     </script>
     <script defer>
         function imprimirElemento(elemento) {
