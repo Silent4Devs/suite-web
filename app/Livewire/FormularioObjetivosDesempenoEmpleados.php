@@ -442,15 +442,15 @@ class FormularioObjetivosDesempenoEmpleados extends Component
             'papelera' => true,
         ]);
 
-        $this->alert('success', 'Objetivo Desechado', [
-            'position' => 'center',
-            'timer' => 6000,
-            'toast' => false,
-            'text' => 'El objetivo ha sido enviado a la papelera.',
-            'showConfirmButton' => true,
-            'confirmButtonText' => 'Entendido',
-            'timerProgressBar' => true,
-        ]);
+        // $this->alert('success', 'Objetivo Desechado', [
+        //     'position' => 'center',
+        //     'timer' => 6000,
+        //     'toast' => false,
+        //     'text' => 'El objetivo ha sido enviado a la papelera.',
+        //     'showConfirmButton' => true,
+        //     'confirmButtonText' => 'Entendido',
+        //     'timerProgressBar' => true,
+        // ]);
     }
 
     public function crearUnidad()
