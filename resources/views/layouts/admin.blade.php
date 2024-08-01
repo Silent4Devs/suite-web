@@ -9,6 +9,11 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ trans('panel.site_title') }}</title>
 
+    <!-- Principal Styles -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/global/loader.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/global/custom.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/file-manager/css/file-manager.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/yearpicker.css') }}">
 
     @vite(['resources/sass/app.scss'])
 
