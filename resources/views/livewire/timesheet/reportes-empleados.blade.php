@@ -61,7 +61,7 @@
                 <table id="timesheet_empleados_lista"
                     class="table w-100 datatable_timesheet_empleados_reportes tabla-fixed"
                     data-semanas="{{ $semanas_totales_calendario }}">
-                    <thead class="w-100" style="position: sticky !important; top: 250px;">
+                    <thead class="w-100">
                         <tr>
                             <th class="cde-foto">Foto</th>
                             <th class="cde-nombre" style="text-align: right;">Nombre </th>
