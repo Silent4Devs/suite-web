@@ -1,9 +1,13 @@
 {{-- Form Maker inputs --}}
+    @php
+        $test = true;
+    @endphp
     @switch($question->type)
+
         @case('1')
             <div>
                 <div class="form-group pl-0 mb-0 anima-focus">
-                    <input class="form-control" placeholder="" name="qs-{{$question->id}}" maxlength="255" required="{{$question->obligatory}}" >
+                    <input class="form-control" placeholder="" name="qs-{{$question->id}}" maxlength="255" required="{{$question->obligatory}}">
                 </div>
             </div>
             @break
@@ -71,7 +75,7 @@
         @case('12')
             <div>
                 <div class="form-group pl-0 mb-0 anima-focus">
-                    <input class="form-control" placeholder="" name="qs-{{$question->id}}" maxlength="255" required="{{$question->obligatory}}">
+                    <input class="form-control" placeholder="" name="qs-{{$question->id}}" maxlength="255" required="{{$question->obligatory}}" value="{{$test ? 1:2}}">
                 </div>
             </div>
             @break
