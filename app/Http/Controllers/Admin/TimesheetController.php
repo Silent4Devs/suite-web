@@ -698,24 +698,24 @@ class TimesheetController extends Controller
     {
         abort_if(Gate::denies('timesheet_administrador_proyectos_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
-            $request->validate(
-                [
-                    'identificador' => [
-                        'max:255',
-                        'required',
-                        Rule::unique('timesheet_proyectos')->where(function ($query) use ($request) {
-                            return $query->where('tipo', $request->tipo);
-                        }),
-                    ],
-                    // 'proyecto_name' => 'required|max:255',
-                    // 'cliente_id' => 'required',
-                    // 'sede_id' => 'nullable',
-                    // 'tipo' => 'required',
-                ],
-                [
-                    'identificador.unique' => 'El ID ya esta en uso',
-                ],
-            );
+            // $request->validate(
+            //     [
+            //         'identificador' => [
+            //             'max:255',
+            //             'required',
+            //             Rule::unique('timesheet_proyectos')->where(function ($query) use ($request) {
+            //                 return $query->where('tipo', $request->tipo);
+            //             }),
+            //         ],
+            //         'proyecto_name' => 'required|max:255',
+            //         'cliente_id' => 'required',
+            //         'sede_id' => 'nullable',
+            //         'tipo' => 'required',
+            //     ],
+            //     [
+            //         'identificador.unique' => 'El ID ya esta en uso',
+            //     ],
+            //  );
             if ($request->fecha_fin) {
                 $request->validate(
                     [
