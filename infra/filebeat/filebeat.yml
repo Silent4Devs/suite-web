@@ -15,3 +15,11 @@ logging.metrics.enable: false
 logging:
   files:
     rotationeverybytes: 12582912
+
+
+filebeat.inputs:
+- type: log
+  paths:
+    - /path/to/your/laravel/log/laravel.log
+  fields:
+    type: laravel
