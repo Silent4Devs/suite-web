@@ -20,8 +20,24 @@
             @livewire('global-search-component', ['lugar' => 'header'])
         </div>
         @if ($empleado)
-            <ul class="ml-auto c-header-nav">
-                <li style="position: relative; right:2rem;">
+            <ul class="ml-auto c-header-nav gap-3">
+                <li>
+                    <i id="fullscreen-btn" class="material-symbols-outlined" style="cursor: pointer;">
+                        fullscreen
+                    </i>
+                    <script>
+                        document.getElementById("fullscreen-btn").addEventListener("click", function(e) {
+                            if (!document.fullscreenElement) {
+                                document.documentElement.requestFullscreen();
+                                e.target.innerHTML = "fullscreen_exit";
+                            } else {
+                                document.exitFullscreen();
+                                e.target.innerHTML = "fullscreen";
+                            }
+                        });
+                    </script>
+                </li>
+                <li style="position: relative;">
                     @livewire('campana-notificaciones-component')
                 </li>
                 <li class="c-header-nav-item dropdown show">
@@ -29,18 +45,13 @@
                         aria-haspopup="true" aria-expanded="false">
                         <div style="width:100%; display: flex; align-items: center;">
                             @if ($empleado)
-                                <div style="width: 40px; overflow:hidden;" class="mr-2">
-                                    <img class="img_empleado" style=""
+                                <div style="overflow:hidden; border-radius: 100px; background-color: #91addc;"
+                                    class="mr-2">
+                                    <img class="img_empleado" style="width: 30px; height: 30px;"
                                         src="{{ asset('storage/empleados/imagenes/' . '/' . $empleado->avatar) }}"
                                         alt="{{ $empleado->name }}">
-                                </div>
-                                <div class="d-mobile-none">
-                                    <span class="mr-2" style="font-weight: bold;">
-                                        {{ $empleado ? explode(' ', $empleado->name)[0] : '' }}
-                                    </span>
-                                    {{-- <p class="m-0" style="font-size: 8px">
-                                        {{ $usuario->empleado ? Str::limit($usuario->empleado->puesto, 30, '...') : '' }}
-                                    </p> --}}
+
+                                    <i class="material-symbols-outlined mx-2">settings</i>
                                 </div>
                             @else
                                 <i class="fas fa-user-circle iconos_cabecera" style="font-size: 33px;"></i>
@@ -59,51 +70,63 @@
                             </div>
                         </div>
                     @else
-                        <div class="p-3 mt-3 text-center dropdown-menu dropdown-menu-right hide"
+                        <div class="mt-3 text-center dropdown-menu dropdown-menu-right hide py-0"
                             style="width:300px; box-shadow: 0px 3px 6px 1px #00000029; border-radius: 4px; border:none;">
-                            <div class="p-2">
-                                <p class="m-0 mt-2 text-muted" style="font-size:14px">Hola,
+                            <div class="d-flex align-items-center justify-content-center gap-2 py-3"
+                                style=" background-color: #cfdbe4;">
+                                <div class="img-person">
+                                    <img src="{{ $empleado->avatar_ruta }}" alt="{{ $empleado->name }}">
+                                </div>
+                                <span style="font-size:18px;" class="color-tbj">
                                     <strong>{{ $empleado->name }}</strong>
-                                </p>
+                                </span>
                             </div>
-                            <div class="px-3 mt-1 d-flex justify-content-center">
-                                @if (file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
-                                    @can('profile_password_edit')
-                                        <a style="all: unset; color: #747474; cursor: pointer;"
-                                            class=" {{ request()->is('profile/password') || request()->is('profile/password/*') ? 'active' : '' }}"
-                                            href="{{ route('profile.password.edit') }}">
-                                            <i class="bi bi-gear"></i>
-                                            Configurar Perfil
-                                        </a>
-                                    @endcan
-                                @endif
-                                &nbsp;&nbsp;&nbsp;&nbsp;
-                                <font style="color: #747474;">|</font>
-                                &nbsp;&nbsp;&nbsp;&nbsp;
-                                <a style="all: unset; color: #747474; cursor: pointer;"
-                                    onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
-                                    <i class="bi bi-box-arrow-right"></i> Salir
-                                </a>
-                            </div>
-                            <div class="p-2 mt-1 d-flex justify-content-center">
-                                <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input" id="customSwitch1"
-                                        {{ $empleado->disponibilidad->disponibilidad == 1 ? 'checked' : '' }}
-                                        onchange="handleSwitchChange(event)">
-                                    <label class="custom-control-label" for="customSwitch1">
-                                        @switch($empleado->disponibilidad->disponibilidad)
-                                            @case(1)
-                                                Activo
-                                            @break
+                            <div class="p-4 text-start">
+                                <div>
+                                    @if (file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
+                                        @can('profile_password_edit')
+                                            <a style="all: unset; color: #747474; cursor: pointer;"
+                                                class=" {{ request()->is('profile/password') || request()->is('profile/password/*') ? 'active' : '' }}"
+                                                href="{{ route('profile.password.edit') }}">
+                                                <i class="bi bi-gear"></i>
+                                                Configuración de perfil
+                                            </a>
+                                        @endcan
+                                    @endif
+                                </div>
+                                <div class="mt-3">
+                                    <a style="all: unset; color: #747474; cursor: pointer;"
+                                        onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
+                                        <i class="bi bi-box-arrow-right"></i>
+                                        Cerrar sesión
+                                    </a>
+                                </div>
+                                <div class="mt-3">
+                                    <a style="all: unset; color: #747474; cursor: pointer;">
+                                        <i class="bi bi-pencil-square"></i>
+                                        Personalización visual
+                                    </a>
+                                </div>
+                                <div class="mt-3 text-end">
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input" id="customSwitch1"
+                                            {{ $empleado->disponibilidad->disponibilidad == 1 ? 'checked' : '' }}
+                                            onchange="handleSwitchChange(event)">
+                                        <label class="custom-control-label" for="customSwitch1">
+                                            @switch($empleado->disponibilidad->disponibilidad)
+                                                @case(1)
+                                                    Activo
+                                                @break
 
-                                            @case(2)
-                                                Ausente
-                                            @break
+                                                @case(2)
+                                                    Ausente
+                                                @break
 
-                                            @default
-                                                Activo
-                                        @endswitch
-                                    </label>
+                                                @default
+                                                    Activo
+                                            @endswitch
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                         </div>

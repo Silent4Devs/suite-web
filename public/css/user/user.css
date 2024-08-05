@@ -21,7 +21,7 @@
 }
 
 .info-blue-user {
-    background-color: #306BA9;
+    background-color: var(--color-tbj);
     text-align: center;
     color: #fff !important;
     padding: 60px 35px;
@@ -38,7 +38,7 @@
     align-items: center;
     justify-content: center;
     gap: 20px;
-    color: #306BA9;
+    color: var(--color-tbj);
 }
 
 .title-user-card {
@@ -56,11 +56,11 @@
 .caja-info-user-main div {}
 
 .caja-info-user-main span {
-    color: #306BA9;
+    color: var(--color-tbj);
 }
 
 .caja-equipo {
-    color: #306BA9;
+    color: var(--color-tbj);
 }
 
 .caja-btns-op-equipo-user {
@@ -75,7 +75,7 @@
     background-color: #fff;
     box-shadow: 0px 3px 6px #00000029;
     border-radius: 8px;
-    color: #306BA9;
+    color: var(--color-tbj);
     justify-content: center;
     align-items: center;
 }

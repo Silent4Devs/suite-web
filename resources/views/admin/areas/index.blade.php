@@ -77,7 +77,7 @@
 
 <form method="POST" id="form_id" style="position: relative; left: 10rem; " action="{{ route('admin.areas.pdf') }}">
     @csrf
-    <button class="boton-transparentev2" type="submit" style="color: #306BA9;">
+    <button class="boton-transparentev2" type="submit" style="color: var(--color-tbj);">
         IMPRIMIR <img src="{{ asset('imprimir.svg') }}" alt="Importar" class="icon">
     </button>
 </form>

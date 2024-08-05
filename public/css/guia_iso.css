@@ -47,7 +47,7 @@ li.active-paso {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #306BA9;
+    background-color: var(--color-tbj);
 }
 
 .info-iso {

@@ -2,7 +2,7 @@
     <style>
         .menu-slider {
             width: 900px;
-            color: #306BA9;
+            color: var(--color-tbj);
             margin: 0px auto;
             display: flex;
             justify-content: center;
@@ -50,7 +50,7 @@
             justify-content: center;
             flex-direction: column;
             gap: 10px;
-            color: #306BA9;
+            color: var(--color-tbj);
             text-decoration: none !important;
             padding-top: 6px;
         }

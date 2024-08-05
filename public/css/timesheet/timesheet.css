@@ -112,7 +112,7 @@ table {
     border: #D2D2D2 1px solid;
     border-radius: 100px;
     padding: 3px 10px;
-    color: #306BA9;
+    color: var(--color-tbj);
 }
 
 .tabla-llenar-horas tbody tr:first-child td {

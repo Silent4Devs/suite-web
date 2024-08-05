@@ -1,7 +1,7 @@
 <div>
     <form wire:submit.prevent="submitForm(Object.fromEntries(new FormData($event.target)))">
         <div class="card card-body mt-5">
-            <div style="color:#306BA9; font-size:16px;">Datos Generales</div>
+            <div style="color:var(--color-tbj); font-size:16px;">Datos Generales</div>
             <hr style="">
             <div class="row">
                 <div class="col-md-6">
@@ -35,7 +35,7 @@
         </div>
 
         <div class="card card-body mt-5">
-            <div class="col-m-12" style="color:#306BA9; font-size:16px;">
+            <div class="col-m-12" style="color:var(--color-tbj); font-size:16px;">
                 Define el valor de los parámetros con los que se evaluará tu cuestionario
             </div>
             <div class="col-m-12 mt-3" style="font: italic 14px Roboto;">
@@ -170,10 +170,10 @@
         <div class="card card-body" style="padding-top: 15px; padding-bottom:15px;">
             <div class="form-row">
                 <div class="col-md-9 titulo-card-template"
-                    style="font-family: roboto; color: #306BA9; font-size: 16px;">
+                    style="font-family: roboto; color: var(--color-tbj); font-size: 16px;">
                     Define cuantas secciones tendrá tu cuestionario
                 </div>
-                <div class="col-md-2" style="font:roboto;color:#306BA9; font-size:14px; text-align:right;">
+                <div class="col-md-2" style="font:roboto;color:var(--color-tbj); font-size:14px; text-align:right;">
                     <p>Añadir Sección</p>
                 </div>
                 {{-- Establece cuantas secciones habra --}}
@@ -257,7 +257,7 @@
             </div>
             <div class="card card-body mt-5">
                 <div class="row">
-                    <div class="col-9" style="color:#306BA9; font-size:16px;">Formulario
+                    <div class="col-9" style="color:var(--color-tbj); font-size:16px;">Formulario
                     </div>
                     <div class="col-3" style="justify-content: right;">
                         <button class="btn btn-link" wire:click.prevent="addPreguntaSeccion1">
@@ -371,7 +371,7 @@
             </div>
             <div class="card card-body mt-5">
                 <div class="row">
-                    <div class="col-9" style="color:#306BA9; font-size:16px;">Formulario
+                    <div class="col-9" style="color:var(--color-tbj); font-size:16px;">Formulario
                     </div>
                     <div class="col-3" style="justify-content: right;">
                         <button class="btn btn-link" wire:click.prevent="addPreguntaSeccion2">
@@ -482,7 +482,7 @@
 
             <div class="card card-body mt-5">
                 <div class="row" style="justify-content: right;">
-                    <div class="col-9" style="color:#306BA9; font-size:16px;">Formulario
+                    <div class="col-9" style="color:var(--color-tbj); font-size:16px;">Formulario
                     </div>
                     <div class="col-3">
                         <button class="btn btn-link" wire:click.prevent="addPreguntaSeccion3">
@@ -592,7 +592,7 @@
 
             <div class="card card-body mt-5">
                 <div class="row" style="justify-content: right;">
-                    <div class="col-9" style="color:#306BA9; font-size:16px;">Formulario
+                    <div class="col-9" style="color:var(--color-tbj); font-size:16px;">Formulario
                     </div>
                     <div class="col-3">
                         <button class="btn btn-link" wire:click.prevent="addPreguntaSeccion4">
