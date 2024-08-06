@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
 use RealRashid\SweetAlert\Facades\Alert;
 
-class SolicitudPermisoGoceSueldoApiController extends Controller
+class tbApiMobileControllerSolicitudPermisoGoceSueldo extends Controller
 {
     use ObtenerOrganizacion;
 
