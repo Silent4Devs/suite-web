@@ -316,6 +316,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         ]);
 
         Route::resource('incidentes-dayoff', 'IncidentesDayOffController')->names([
+            'index' => 'incidentes-dayoff.index',
             'create' => 'incidentes-dayoff.create',
             'store' => 'incidentes-dayoff.store',
             'show' => 'incidentes-dayoff.show',
