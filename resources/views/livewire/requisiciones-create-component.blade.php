@@ -325,346 +325,235 @@
                         </p>
                     </div>
                     <div class="caja-card-proveedor caja-cards-inner">
-                        @for ($i = 0; $i <= $proveedores_count; $i++)
-                            <div id="proveedor-card-{{ $i }}"
-                                class="card card-body card-inner card-proveedor" data-count="{{ $i }}">
+                        @foreach ($array_proveedores as $keyP => $proveedor)
+                            <div id="proveedor-card-{{ $keyP }}"
+                                class="card card-body card-inner card-proveedor" data-count="{{ $keyP }}">
                                 <div class="row">
                                     <div class="col s12 ">
                                         <div class="flex" style="justify-content: space-between">
                                             <h3 class="sub-titulo-form">Captura del Proveedor</h3>
-                                            {{-- <i class="fa-regular fa-trash-can btn-deleted-card btn-deletd-proveedor" title="Eliminar proveedor" onclick="deleteProveedor()"></i> --}}
+                                            @if ($keyP > 0)
+                                                <i class="fa-regular fa-trash-can btn-deleted-card btn-deletd-proveedor"
+                                                    title="Eliminar proveedor"
+                                                    wire:click.prevent="removeProveedor({{ $keyP }})"
+                                                    wire:confirm="¿Desea eliminar este registro proveedor?"></i>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row mt-3 mb-3">
                                     <div class="col s12 l12">
-                                        <label for="">
-
+                                        <label for="proveedor_{{ $keyP }}">
                                             Proveedor <font class="asterisco">*</font>
                                         </label>
                                         <select class="form-control not-select2"
-                                            wire:model.lazy='selectedInput.{{ $i }}'
-                                            name="proveedor_{{ $i }}" required>
+                                            wire:model.lazy='array_proveedores.{{ $keyP }}.proveedor_id'
+                                            name="proveedor_{{ $keyP }}" required>
                                             <option value="">Seleccione una opción</option>
+                                            <option value="otro">Otro</option>
                                             @foreach ($proveedores as $proveedor)
                                                 <option value="{{ $proveedor->id }}">{{ $proveedor->nombre }} -
                                                     {{ $proveedor->rfc }}</option>
                                             @endforeach
-                                            <option selected value="otro">Otro</option>
                                         </select>
-                                        <div class="row">
-                                            <div class="col s12 l6">
-                                                <label for="">
-
-                                                    Fecha inicio*
-                                                </label>
-                                                <input type="date" id="fechaInicio"
-                                                    class="form-control modal-start"
-                                                    name="contacto_fecha_inicio_{{ $i }}" required>
-                                            </div>
-                                            <div class="col s12 l6">
-                                                <label for="">
-
-                                                    Fecha fin*
-                                                </label>
-                                                <input type="date" id="fechaFin" class="form-control modal-end"
-                                                    name="contacto_fecha_fin_{{ $i }}" required>
-                                            </div>
-                                        </div>
-                                        <div wire:loading>
-                                            <i class="fas fa-spinner fa-spin"></i> Cargando...
-                                        </div>
                                     </div>
                                 </div>
+                                <div class="row mt-3 mb-3">
+                                    <div class="col s12 l6 anima-focus">
+                                        <input type="date" id="fechaInicio"
+                                            wire:model= "array_proveedores.{{ $keyP }}.fechaInicio"
+                                            class="form-control modal-start"
+                                            name="contacto_fecha_inicio_{{ $keyP }}" required>
+                                        <label for="contacto_fecha_inicio_{{ $keyP }}">
+                                            Fecha inicio*
+                                        </label>
+                                    </div>
+                                    <div class="col s12 l6 anima-focus">
+                                        <input type="date" id="fechaFin"
+                                            wire:model= "array_proveedores.{{ $keyP }}.fechaFin"
+                                            class="form-control modal-end"
+                                            name="contacto_fecha_fin_{{ $keyP }}" required>
+                                        <label for="contacto_fecha_fin_{{ $keyP }}">
+                                            Fecha fin*
+                                        </label>
+                                    </div>
+                                </div>
+                                <div wire:loading>
+                                    <i class="fas fa-spinner fa-spin"></i> Cargando...
+                                </div>
+
                                 <br>
-                                @isset($this->selectedInput[$i])
-                                    @if ($this->selectedInput[$i] == 'otro')
-                                        <div class="row">
-                                            <div class="col s12 l12">
-                                                <select class="form-control"
-                                                    wire:model.lazy='selectOption.{{ $i }}'
-                                                    name="proveedor_otro{{ $i }}" required>
-                                                    <option selected value="indistinto">Indistinto</option>
-                                                    <option value="sugerido">Sugerido</option>
-                                                </select>
+                                @if ($array_proveedores[$keyP]['proveedor_id'] == 'otro')
+                                    <div class="row mb-1">
+                                        <div class="col s12 l12 anima-focus">
+                                            <select class="form-control"
+                                                wire:model.lazy='array_proveedores.{{ $keyP }}.select_otro'
+                                                name="proveedor_otro{{ $keyP }}" required>
+                                                <option value="" disabled>Seleccione una Opción</option>
+                                                <option value="indistinto">Indistinto</option>
+                                                <option value="sugerido">Sugerido</option>
+                                            </select>
+                                            <label for="proveedor_otro{{ $keyP }}">Tipo de Proveedor</label>
+                                        </div>
+                                    </div>
+                                    @if ($array_proveedores[$keyP]['select_otro'] === 'sugerido')
+                                        <div class="row mt-3 mb-3">
+                                            <div class="col s12 l6 anima-focus">
+                                                <input type="text" required class="form-control modal-detalles"
+                                                    wire:model.lazy='array_proveedores.{{ $keyP }}.detalles'
+                                                    placeholder="" id="detalles_{{ $keyP }}"
+                                                    name="detalles_{{ $keyP }}">
+                                                <label for="detalles_{{ $keyP }}">
+                                                    Detalles del producto <font class="asterisco">*</font>
+                                                </label>
+                                            </div>
+                                            <div class="col s12 l3">
+                                                <input type="radio" class="modal-tipo"
+                                                    name="tipo_{{ $keyP }}"
+                                                    wire:model='array_proveedores.{{ $keyP }}.tipo'
+                                                    value="fisico" required>
+                                                <label for="tipo_{{ $keyP }}">
+                                                    Proveedor Físico
+                                                </label>
+                                            </div>
+                                            <div class="col s12 l3">
+                                                <input type="radio" class="modal-tipo-2"
+                                                    id="tipo_{{ $keyP }}"
+                                                    wire:model='array_proveedores.{{ $keyP }}.tipo'
+                                                    name="tipo_{{ $keyP }}" value="online" required>
+                                                <label for="tipo_{{ $keyP }}">
+                                                    Proveedor Online
+                                                </label>
                                             </div>
                                         </div>
-                                        @isset($this->selectOption[$i])
-                                            @if ($this->selectOption[$i] === 'sugerido')
-                                                <div class="row">
-                                                    <div class="col s12 l6">
-                                                        <label for="">
+                                        <div class="row mt-3 mb-3">
+                                            <div class="col s12 l12 anima-focus">
+                                                <textarea wire:model='array_proveedores.{{ $keyP }}.comentarios' class="form-control modal-comentario"
+                                                    id="comentarios_{{ $keyP }}" name="comentarios_{{ $keyP }}" required></textarea>
+                                                <label for="comentarios_{{ $keyP }}">
+                                                    Comentarios <font class="asterisco">*</font>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3 mb-3">
+                                            <div class="col s12 l12 anima-focus">
+                                                <h3 class="sub-titulo-form">Datos de contacto</h3>
+                                            </div>
+                                            <div class="col s12 l6 anima-focus">
+                                                <input type="text"
+                                                    wire:model='array_proveedores.{{ $keyP }}.nombre_contacto'
+                                                    class="form-control modal-nombre"
+                                                    id="contacto_{{ $keyP }}" placeholder=""
+                                                    name="contacto_{{ $keyP }}" required>
+                                                <label for="contacto_{{ $keyP }}">
+                                                    Nombre del contacto*
+                                                </label>
+                                            </div>
+                                            <div class="col s12 l3 anima-focus">
+                                                <input id="phone" type="text"
+                                                    wire:model='array_proveedores.{{ $keyP }}.telefono_contacto'
+                                                    id="contacto_telefono_{{ $keyP }}"
+                                                    name="contacto_telefono_{{ $keyP }}"
+                                                    class="form-control modal-telefono" pattern="\x2b[0-9]+"
+                                                    size="20" placeholder="" required>
+                                                <label for="contacto_telefono_{{ $keyP }}">
+                                                    Teléfono*
+                                                </label>
+                                            </div>
+                                            <div class="col s12 l3 anima-focus">
+                                                <input type="email" id="foo"
+                                                    class="form-control modal-correo" placeholder=""
+                                                    wire:model='array_proveedores.{{ $keyP }}.correo_contacto'
+                                                    id="contacto_correo_{{ $keyP }}"
+                                                    name="contacto_correo_{{ $keyP }}" required>
+                                                <label for="contacto_correo_{{ $keyP }}">
+                                                    Correo Electrónico*
+                                                </label>
 
-                                                            Detalles del producto <font class="asterisco">*</font>
-                                                        </label>
-                                                        <input type="text" required class="form-control modal-detalles"
-                                                            name="detalles_{{ $i }}">
-                                                    </div>
-                                                    <div class="col s12 l3">
-                                                        <input type="radio" class="modal-tipo"
-                                                            name="tipo_{{ $i }}" value="fisico" required>
-                                                        <label for="tipo_{{ $i }}">
-                                                            Proveedor Físico
-                                                        </label>
-                                                    </div>
-                                                    <div class="col s12 l3">
-                                                        <input type="radio" class="modal-tipo-2"
-                                                            name="tipo_{{ $i }}" value="online" required>
-                                                        <label for="">
-                                                            Proveedor Online
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col s12 l12">
-                                                        <label for="">
+                                                <h1 id="emailV"></h1>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-1 mb-1">
+                                            <div class="col s12 l12 anima-focus">
+                                                <input type="url" class="form-control modal-url" placeholder=""
+                                                    wire:model='array_proveedores.{{ $keyP }}.url_contacto'
+                                                    id="contacto_url_{{ $keyP }}"
+                                                    name="contacto_url_{{ $keyP }}">
+                                                <label for="contacto_url_{{ $keyP }}">
+                                                    URL*
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col s12 l12 anima-focus">
+                                                <input type="file" required
+                                                    class="modal-cotizacion form-control-file"
+                                                    wire:model='array_proveedores.{{ $keyP }}.archivo'
+                                                    id="cotizacion_{{ $keyP }}"
+                                                    name="cotizacion_{{ $keyP }}"
+                                                    data-count="{{ $keyP }}"
+                                                    accept=".pdf, .docx, .pptx, .point, .xml, .jpeg, .jpg, .png, .xlsx, .xlsm, .csv">
+                                                <label for="">
+                                                    Carga de cotizaciones <font class="asterisco">*</font>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <button class="btn btn-primary" wire:click.prevent="openChat">
+                                            Robot
+                                            <i class="fa-solid fa-robot"></i>
+                                            <span wire:loading wire:target="openChat">
+                                                <i class="fas fa-spinner fa-spin"></i> Cargando...
+                                            </span>
+                                        </button>
 
-                                                            Comentarios <font class="asterisco">*</font>
-                                                        </label>
-                                                        <textarea class="form-control modal-comentario" name="comentarios_{{ $i }}" required></textarea>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col s12 l12">
-                                                        <h3 class="sub-titulo-form">Datos de contacto</h3>
-                                                    </div>
-                                                    <div class="col s12 l6">
-                                                        <label for="">
+                                        <div>
+                                            @if ($chatOpen)
+                                                <div class="chat-wrapper">
+                                                    <div class="chat-box">
+                                                        <div class="chat-frame">
+                                                            <div class="chat-header">
+                                                                <h3>Chat Bot</h3>
+                                                                <button class="close-btn"
+                                                                    wire:click="closeChat">&times;</button>
+                                                            </div>
+                                                            <div class="chat-content">
+                                                                <!-- Mensajes del chat -->
+                                                                @if ($saludo)
+                                                                    <p>Hola, ¿cómo puedo ayudarte hoy?</p>
+                                                                @endif
 
-                                                            Nombre del contacto*
-                                                        </label>
-                                                        <input type="text" class="form-control modal-nombre"
-                                                            name="contacto_{{ $i }}" required>
-                                                    </div>
-                                                    <div class="col s12 l3">
-                                                        <label for="">
-
-                                                            Teléfono*
-                                                        </label>
-
-                                                        <input id="phone" type="text"
-                                                            name="contacto_telefono_{{ $i }}"
-                                                            class="form-control modal-telefono" pattern="\x2b[0-9]+"
-                                                            size="20" placeholder="+54976284353" required>
-                                                    </div>
-                                                    <div class="col s12 l3">
-                                                        <label for="">
-
-                                                            Correo Electrónico*
-                                                        </label>
-                                                        <input type="email" id="foo"
-                                                            class="form-control modal-correo"
-                                                            placeholder="example@example.com"
-                                                            name="contacto_correo_{{ $i }}" required>
-
-                                                        <h1 id="emailV"></h1>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col s12 l12">
-                                                        <label for="">
-
-                                                            URL*
-                                                        </label>
-                                                        <input type="url" class="form-control modal-url"
-                                                            name="contacto_url_{{ $i }}">
-                                                    </div>
-                                                </div>
-                                                <br>
-                                                <div class="row">
-                                                    <div class="col s12 l12">
-                                                        <label for="">
-                                                            Carga de cotizaciones <font class="asterisco">*</font>
-                                                        </label>
-                                                        <input type="file" required
-                                                            class="modal-cotizacion form-control-file"
-                                                            name="cotizacion_{{ $i }}"
-                                                            wire:model="cotizaciones.{{ $i }}"
-                                                            data-count="{{ $i }}"
-                                                            accept=".pdf, .docx, .pptx, .point, .xml, .jpeg, .jpg, .png, .xlsx, .xlsm, .csv">
-                                                    </div>
-                                                </div>
-                                                <br>
-                                                <button class="btn btn-primary" wire:click.prevent="openChat">
-                                                    Robot
-                                                    <i class="fa-solid fa-robot"></i>
-                                                    <span wire:loading wire:target="openChat">
-                                                        <i class="fas fa-spinner fa-spin"></i> Cargando...
-                                                    </span>
-                                                </button>
-                                                <style>
-                                                    .chat-wrapper {
-                                                        position: fixed;
-                                                        bottom: 20px;
-                                                        right: 20px;
-                                                        width: 500px;
-                                                        /* Aumenta el ancho de la caja */
-                                                        height: 350px;
-                                                        /* Aumenta el alto de la caja */
-                                                        display: flex;
-                                                        align-items: center;
-                                                        justify-content: center;
-                                                    }
-
-                                                    .chat-box {
-                                                        width: 100%;
-                                                        height: 100%;
-                                                        background: rgba(255, 255, 255, 0.8);
-                                                        /* Transparente */
-                                                        border: 1px solid #ddd;
-                                                        border-radius: 20px;
-                                                        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-                                                        display: flex;
-                                                        flex-direction: column;
-                                                        z-index: 1000;
-                                                        overflow: hidden;
-                                                        /* Para asegurar que los bordes redondeados se mantengan */
-                                                    }
-
-                                                    .chat-frame {
-                                                        flex: 1;
-                                                        margin: 10px;
-                                                        /* Espacio para crear el efecto de marco */
-                                                        border-radius: 20px;
-                                                        overflow: hidden;
-                                                        display: flex;
-                                                        flex-direction: column;
-                                                        background: rgba(255, 255, 255, 0.9);
-                                                        /* Fondo transparente del marco */
-                                                    }
-
-                                                    .chat-header {
-                                                        display: flex;
-                                                        justify-content: space-between;
-                                                        align-items: center;
-                                                        padding: 15px 20px;
-                                                        background: rgba(74, 144, 226, 0.9);
-                                                        color: white;
-                                                        position: relative;
-                                                    }
-
-                                                    .chat-header h3 {
-                                                        margin: 0;
-                                                        flex: 1;
-                                                        text-align: center;
-                                                    }
-
-
-                                                    .close-btn {
-                                                        background: none;
-                                                        border: none;
-                                                        color: white;
-                                                        font-size: 1.5em;
-                                                        cursor: pointer;
-                                                    }
-
-                                                    .chat-content {
-                                                        flex: 1;
-                                                        padding: 20px;
-                                                        overflow-y: auto;
-                                                        background: rgba(249, 249, 249, 0.9);
-                                                        display: flex;
-                                                        flex-direction: column;
-                                                    }
-
-                                                    .chat-input {
-                                                        display: flex;
-                                                        padding: 10px;
-                                                        border-top: 1px solid #ddd;
-                                                        background: rgba(245, 245, 245, 0.9);
-                                                    }
-
-                                                    .chat-input input {
-                                                        flex: 1;
-                                                        padding: 10px;
-                                                        border: 1px solid #ddd;
-                                                        border-radius: 20px;
-                                                        margin-right: 10px;
-                                                    }
-
-                                                    .chat-input button {
-                                                        padding: 10px 20px;
-                                                        border: none;
-                                                        border-radius: 20px;
-                                                        background: #4A90E2;
-                                                        color: white;
-                                                        cursor: pointer;
-                                                    }
-
-                                                    .chat-input button:hover {
-                                                        background: #357ABD;
-                                                    }
-
-                                                    .message {
-                                                        margin-bottom: 15px;
-                                                        padding: 10px;
-                                                        border-radius: 20px;
-                                                        max-width: 80%;
-                                                    }
-
-                                                    .bot-message {
-                                                        background: #e1f5fe;
-                                                        color: #0277bd;
-                                                    }
-
-                                                    .user-message {
-                                                        background: #c8e6c9;
-                                                        color: #388e3c;
-                                                        align-self: flex-end;
-                                                    }
-                                                </style>
-
-                                                <div>
-                                                    @if ($chatOpen)
-                                                        <div class="chat-wrapper">
-                                                            <div class="chat-box">
-                                                                <div class="chat-frame">
-                                                                    <div class="chat-header">
-                                                                        <h3>Chat Bot</h3>
-                                                                        <button class="close-btn"
-                                                                            wire:click="closeChat">&times;</button>
+                                                                @if ($respuesta = $this->respuesta['response'] ?? null)
+                                                                    <div class="response">
+                                                                        <p>{{ $respuesta }}</p>
                                                                     </div>
-                                                                    <div class="chat-content">
-                                                                        <!-- Mensajes del chat -->
-                                                                        @if ($saludo)
-                                                                            <p>Hola, ¿cómo puedo ayudarte hoy?</p>
-                                                                        @endif
-
-                                                                        @if ($respuesta = $this->respuesta['response'] ?? null)
-                                                                            <div class="response">
-                                                                                <p>{{ $respuesta }}</p>
-                                                                            </div>
-                                                                        @endif
-                                                                        <span wire:loading wire:target="askQuestion">
-                                                                            <i class="fas fa-spinner fa-spin"></i> Cargando...
-                                                                        </span>
-                                                                    </div>
-                                                                    <div class="chat-input">
-                                                                        <input type="text" id="question"
-                                                                            wire:model.lazy="question">
-                                                                        <button type="submit"
-                                                                            wire:click.prevent="askQuestion">Enviar</button>
-                                                                    </div>
-                                                                </div>
+                                                                @endif
+                                                                <span wire:loading wire:target="askQuestion">
+                                                                    <i class="fas fa-spinner fa-spin"></i> Cargando...
+                                                                </span>
+                                                            </div>
+                                                            <div class="chat-input">
+                                                                <input type="text" id="question"
+                                                                    wire:model.lazy="question">
+                                                                <button type="submit"
+                                                                    wire:click.prevent="askQuestion">Enviar</button>
                                                             </div>
                                                         </div>
-                                                    @endif
+                                                    </div>
                                                 </div>
                                             @endif
-                                        @endisset
+                                        </div>
                                     @endif
-                                @endisset
-
+                                @endif
                             </div>
-                        @endfor
+                        @endforeach
                     </div>
 
                     <div class="my-4" style="display:flex; justify-content: space-between;">
-                        <div class="btn btn-add-card" onclick="addCardProveedores('proveedor')">
+                        <button type="button" class="btn btn-add-card" wire:click.prevent="agregarProveedor()">
                             <i class="fa-regular fa-square-plus icon-prior"></i>
                             AGREGAR PROVEEDOR
-                        </div>
-
+                        </button>
                         <button class="btn btn-primary" type="submit">
                             Siguiente <i class="fa-solid fa-chevron-right icon-next"></i>
                         </button>
@@ -1404,7 +1293,6 @@
                     }
                 })
             }
-
 
             function deleteProduct() {
                 document.querySelector('.card-product:hover').remove();
