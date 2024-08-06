@@ -20,6 +20,6 @@ logging:
 filebeat.inputs:
 - type: log
   paths:
-    - /path/to/your/laravel/log/laravel.log
+    - /storage/laravel/log/laravel.log
   fields:
     type: laravel

@@ -173,7 +173,7 @@ class IncidentesDayOffController extends Controller
         if (empty($vacacion)) {
             Alert::warning('warning', 'Data not found');
 
-            return redirect(route('admin.incidentes-dayoff'));
+            return redirect(route('admin.incidentes-dayoff.index'));
         }
 
         $empleados_seleccionados = $vacacion->empleados->pluck('id')->toArray();
@@ -249,7 +249,6 @@ class IncidentesDayOffController extends Controller
 
     public function destroy($id)
     {
-        dd($id);
         abort_if(Gate::denies('incidentes_dayoff_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vacaciones = IncidentesDayoff::find($id);
         $vacaciones->delete();
