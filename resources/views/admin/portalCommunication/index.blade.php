@@ -3,9 +3,7 @@
     <link rel="stylesheet" href="{{ asset('css/portalCommunication/index.css') }}{{ config('css/app.cssVersion') }}">
 @endsection
 @section('content')
-    @include('partials.menu-slider')
     <div>
-
         @if ($user->empleado)
             <div class="d-flex justify-content-center align-items-center" style="gap: 25px;">
                 <div class="img-person" style="width: 100px; height: 100px;">

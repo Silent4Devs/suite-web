@@ -3,7 +3,7 @@
     <link rel="stylesheet" href="{{ asset('css/profile/inicio_usuario.css') }}{{ config('app.cssVersion') }}">
 @endsection
 @section('content')
-    @include('partials.menu-slider')
+
     <div class="d-flex" style="gap: 30px;">
         <div class="w-100">
             <div class="header-card-iu">
@@ -89,7 +89,7 @@
                     <i class="material-symbols-outlined">contacts</i>
                     Mi&nbsp;equipo
                 </button>
-                <button class="btn tab-my-actives"  onclick="miCard('#user-activos')">
+                <button class="btn tab-my-actives" onclick="miCard('#user-activos')">
                     <i class="material-symbols-outlined">devices</i>
                     Mis&nbsp;activos
                 </button>
@@ -302,5 +302,5 @@
 @endsection
 
 @section('scripts')
-<script src = {{asset('js/profile/tabs.js')}}></script>
+    <script src={{ asset('js/profile/tabs.js') }}></script>
 @endsection

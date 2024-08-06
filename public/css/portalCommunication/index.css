@@ -16,7 +16,7 @@
 
 .title-card-portal-c {
     font-size: 26px;
-    color: #3086AF;
+    color: var(--color-tbj);
     margin-bottom: 35px;
 }
 
@@ -105,7 +105,7 @@
 }
 
 .caja-doc-etiquetas span {
-    color: #3086AF;
+    color: var(--color-tbj);
     font-size: 10px;
     padding: 1px 7px;
     background-color: #fff;

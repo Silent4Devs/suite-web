@@ -63,7 +63,7 @@
 .a_reporte h4 {
     margin-top: 16px;
     /*font-weight: bold;*/
-    color: #3086AF;
+    color: var(--color-tbj);
 }
 
 .a_reporte p {

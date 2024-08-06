@@ -190,7 +190,7 @@ body.c-dark-theme .btn-outline-secondary {
 
 .indicador_numero {
     position: absolute;
-    background-color: #3086AF;
+    background-color: var(--color-tbj);
     color: #fff !important;
     display: flex;
     align-items: center;

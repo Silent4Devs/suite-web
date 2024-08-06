@@ -45,7 +45,7 @@
                         aria-haspopup="true" aria-expanded="false">
                         <div style="width:100%; display: flex; align-items: center;">
                             @if ($empleado)
-                                <div style="overflow:hidden; border-radius: 100px; background-color: #91addc;"
+                                <div style="overflow:hidden; border-radius: 100px; background-color: #00000045;"
                                     class="mr-2">
                                     <img class="img_empleado" style="width: 30px; height: 30px;"
                                         src="{{ asset('storage/empleados/imagenes/' . '/' . $empleado->avatar) }}"
@@ -136,7 +136,7 @@
         @endif
     </div>
     <div class="menu-hedare-window">
-        <div class="item-content-menu-header" style="background-color: #EEF6FF; min-width: 280px;">
+        {{-- <div class="item-content-menu-header" style="background-color: #EEF6FF; min-width: 280px;">
             <div class="logo-org-header">
                 <img src="{{ asset($logotipo) }}">
             </div>
@@ -199,7 +199,7 @@
                     </a>
                 </li>
             </ul>
-        </div>
+        </div> --}}
         @if (
             $usuario->can('clausulas_auditorias_acceder') ||
                 $usuario->can('capacitaciones_acceder') ||
@@ -288,6 +288,65 @@
                             <span>Gestión de Talento</span>
                         </a>
                     @endcan
+
+
+
+                    @can('mi_perfil_acceder')
+                        <a href="{{ route('admin.inicio-Usuario.index') }}">
+                            <div class="caja-icon-mod-header" style="background: #bfdbff;">
+                                <i class="bi bi-file-person-fill"></i>
+                            </div>
+                            <span>Mi perfil</span>
+                        </a>
+                    @endcan
+                    @can('portal_de_comunicaccion_acceder')
+                        <a href="{{ route('admin.portal-comunicacion.index') }}">
+                            <div class="caja-icon-mod-header" style="background: #ffd1bf;">
+                                <i class="bi bi-newspaper"></i>
+                            </div>
+                            <span>Comunicación</span>
+                        </a>
+                    @endcan
+                    @can('calendario_corporativo_acceder')
+                        <a href="{{ route('admin.systemCalendar') }}">
+                            <div class="caja-icon-mod-header" style="background: #e1bfff;">
+                                <i class="bi bi-calendar3"></i>
+                            </div>
+                            <span>Calendario</span>
+                        </a>
+                    @endcan
+                    @can('documentos_publicados_acceder')
+                        <a href="{{ route('admin.documentos.publicados') }}">
+                            <div class="caja-icon-mod-header" style="background: #bffdff;">
+                                <i class="bi bi-folder"></i>
+                            </div>
+                            <span>Documentos</span>
+                        </a>
+                    @endcan
+                    @can('planes_de_accion_acceder')
+                        <a href="{{ route('admin.planes-de-accion.index') }}">
+                            <div class="caja-icon-mod-header" style="background: #ffbfe1;">
+                                <i class="bi bi-file-earmark-check"></i>
+                            </div>
+                            <span>Planes de Trabajo</span>
+                        </a>
+                    @endcan
+                    @can('centro_de_atencion_acceder')
+                        <a href="{{ route('admin.desk.index') }}">
+                            <div class="caja-icon-mod-header" style="background: #bfffe3;">
+                                <i class="bi bi-person-workspace"></i>
+                            </div>
+                            <span>Centro de atención</span>
+                        </a>
+                    @endcan
+
+                    <a href="{{ route('admin.timesheet-create') }}">
+                        <div class="caja-icon-mod-header" style="background: #bfebff;">
+                            <i class="bi bi-calendar-plus"></i>
+                        </div>
+                        <span>Timesheet</span>
+                    </a>
+
                 </div>
             </div>
         @endif
@@ -318,8 +377,7 @@
                 $usuario->can('roles_acceder') ||
                 $usuario->can('usuarios_acceder') ||
                 $usuario->can('configurar_soporte_acceder'))
-            <div class="item-content-menu-header line-left caja-menu-admin-header overflow-hidden"
-                style="background-color: #fff; min-width: 280px;">
+            <div class="item-content-menu-header line-left caja-menu-admin-header overflow-hidden">
                 <span class="title-item-menu-header">ADMINISTRACIÓN</span>
                 <div class="overflow-auto scroll_estilo" style="max-height:400px;  width: 120%;">
                     <ul class="menu-list-admin-header ">
@@ -478,10 +536,10 @@
                 </div>
             </div>
         @endif
-        <div class="item-content-menu-header caja-img-escritorio-header"
+        {{-- <div class="item-content-menu-header caja-img-escritorio-header"
             style="background-color: #e7ecef; padding: 0px;">
             <img src="{{ asset('img/escritorio-header.webp') }}" alt="" class="img-escritorio-header">
-        </div>
+        </div> --}}
     </div>
     <div class="bg-black-header-menu" onclick="menuHeader();"></div>
 </header>

@@ -16,7 +16,7 @@
             <div class="registro rounded pt-2 pl-4 pr-4">
                 <div class="row justify-content-start">
                     <div class="col-9">
-                        <h4 style="color:#3086AF;">{{ $item->name }}</h4>
+                        <h4 style="color:var(--color-tbj);">{{ $item->name }}</h4>
                     </div>
                     <div class="col-3 d-flex justify-content-end">
                         <i wire:click="edit({{ $item }})"
@@ -39,7 +39,7 @@
                         <input wire:model.debounce.800ms="name" class="form-control" placeholder="">
                         <label for="name">Agregar el nombre del requisito*</label>
                         @error('name')
-                                <span class="text-danger">{{ $message }}</span>
+                            <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
                     <div class="col-3 col-3 d-flex justify-content-end">
