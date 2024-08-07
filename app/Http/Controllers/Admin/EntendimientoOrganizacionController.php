@@ -132,7 +132,7 @@ class EntendimientoOrganizacionController extends Controller
             'estatus' => 'Borrador',
         ]);
 
-        if (! is_null($request->participantes)) {
+        if (!is_null($request->participantes)) {
             $this->vincularParticipantes($request->participantes, $foda);
         }
 
@@ -190,7 +190,7 @@ class EntendimientoOrganizacionController extends Controller
         ]);
 
         $entendimientoOrganizacion->update($request->all());
-        if (! is_null($request->participantes)) {
+        if (!is_null($request->participantes)) {
             $this->vincularParticipantes($request->participantes, $entendimientoOrganizacion);
         }
 
@@ -332,7 +332,7 @@ class EntendimientoOrganizacionController extends Controller
 
         $listavacia = 'cumple';
 
-        if (! isset($modulo)) {
+        if (!isset($modulo)) {
             $listavacia = 'vacia';
         } elseif ($modulo->participantes->isEmpty()) {
             $listavacia = 'vacia';
@@ -416,9 +416,11 @@ class EntendimientoOrganizacionController extends Controller
 
     public function solicitudAprobacion($id_foda)
     {
-        // $modelo = 'EntendimientoOrganizacion';
+
         $foda = EntendimientoOrganizacion::find($id_foda);
-        // dd($foda);
+
+        event(new EntendimientoOrganizacionEvent($foda, 'solicitudAprobacion', 'entendimiento_organizacions', 'Foda'));
+
         $lista = ListaDistribucion::with('participantes')->where('modelo', '=', $this->modelo)->first();
 
         // $no_niveles = $lista->niveles;

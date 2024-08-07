@@ -64,7 +64,7 @@
                    @endif
                    &nbsp;&nbsp;
                     <p class="p-0 m-0">
-                        La {{ $last_unread_notification->data['slug'] }} {{ $last_unread_notification->data['id'] }}  ha sido aprobada  el  {{ date('Y-m-d, h:i A') }}
+                        EL {{ $last_unread_notification->data['slug'] }} {{ $last_unread_notification->data['id'] }}  ha sido aprobada  el  {{ date('Y-m-d, h:i A') }}
                     </p>
                 </div>
                 @break
@@ -80,7 +80,23 @@
                 @endif
                     &nbsp;&nbsp;
                     <p class="p-0 m-0">
-                        La {{ $last_unread_notification->data['slug'] }} {{ $last_unread_notification->data['id'] }}  ha sido rechazada  el {{ date('Y-m-d, h:i A') }}
+                        El {{ $last_unread_notification->data['slug'] }} {{ $last_unread_notification->data['id'] }}  ha sido rechazada  el {{ date('Y-m-d, h:i A') }}
+                    </p>
+                </div>
+                @break
+
+                @case(' solicitudAprobacion')
+                <div class="d-flex align-items-center justify-content-start">
+                    @if (!empty($last_unread_notification->data['avatar_ruta']))
+                    <img src="{{ asset($last_unread_notification->data['avatar_ruta']) }}" alt=""
+                        class="rounded-circle" style="width: 50px; height: 50px;">
+                    {{ $last_unread_notification->data['name'] }}:
+                @else
+                    <i class="pr-2 fas fa-tools text-danger"></i>
+                @endif
+                    &nbsp;&nbsp;
+                    <p class="p-0 m-0">
+                        El {{ $last_unread_notification->data['slug'] }} {{ $last_unread_notification->data['id'] }}  ha  solicitado su aprobacion
                     </p>
                 </div>
                 @break
