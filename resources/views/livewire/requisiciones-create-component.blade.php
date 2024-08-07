@@ -491,9 +491,8 @@
                                                     wire:model='array_proveedores.{{ $keyP }}.archivo'
                                                     id="cotizacion_{{ $keyP }}"
                                                     name="cotizacion_{{ $keyP }}"
-                                                    data-count="{{ $keyP }}"
                                                     accept=".pdf, .docx, .pptx, .point, .xml, .jpeg, .jpg, .png, .xlsx, .xlsm, .csv">
-                                                <label for="">
+                                                <label for="cotizacion_{{ $keyP }}">
                                                     Carga de cotizaciones <font class="asterisco">*</font>
                                                 </label>
                                             </div>
