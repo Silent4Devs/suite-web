@@ -175,7 +175,9 @@
         </button>
     </div>
     <div class="options-global">
-        <i class="material-symbols-outlined">keyboard_arrow_up</i>
+        <button class="btn">
+            <i class="material-symbols-outlined">keyboard_arrow_up</i>
+        </button>
     </div>
 </div>
 <script>
