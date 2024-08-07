@@ -604,15 +604,18 @@ header.mostrar-menu {
 }
 
 /* menu global --------------- */
-.menu-global-position-left .menu-global-tbj{
-    position: fixed;
-    left: -685px;
-    top: 450px;
-}
-.c-wrapper{
+.c-wrapper {
     margin-top: 60px;
 }
-.menu-global-tbj{
+
+.menu-global-position-left .c-wrapper {
+    width: calc(100% - 100px);
+    margin-left: 90px;
+    margin-top: 0px;
+}
+
+
+.menu-global-tbj {
     width: 100%;
     position: relative;
     background-color: #fff;
@@ -623,21 +626,44 @@ header.mostrar-menu {
     position: fixed;
     top: 60px;
 }
-.title-page-global{
+
+.menu-global-position-left .menu-global-tbj {
+    width: 100px;
+    flex-direction: column;
+    height: calc(100% - 60px);
+    align-items: center;
+    justify-content: center;
+}
+
+.menu-global-position-left.menu-global-hidden .menu-global-tbj {
+    transform: translateX(-40px);
+}
+
+.title-page-global {
     color: var(--color-tbj);
     min-width: 250px;
     padding-left: 30px;
     font-size: 20px;
     font-weight: bolder;
 }
-.options-global{
+
+.menu-global-position-left .title-page-global {
+    display: none;
+}
+
+.options-global {
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 0px 20px;
     width: 100%;
 }
-.options-global i{
+
+.menu-global-position-left .options-global {
+    margin-top: 30px;
+}
+
+.options-global i {
     font-size: 40px;
 }
 
@@ -648,6 +674,12 @@ header.mostrar-menu {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.menu-global-position-left .menu-slider {
+    width: 100%;
+    flex-direction: column;
+    height: 70% !important;
 }
 
 .btn-menu-ar {
@@ -661,6 +693,11 @@ header.mostrar-menu {
     background-color: rgba(0, 0, 0, 0);
 }
 
+.menu-global-position-left .btn-menu-ar {
+    display: none;
+}
+
+
 .caja-items-menu-slider {
     width: 100%;
     display: flex;
@@ -672,6 +709,10 @@ header.mostrar-menu {
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     scroll-behavior: smooth;
+}
+
+.menu-global-position-left .caja-items-menu-slider {
+    flex-direction: column;
 }
 
 .item-ms {
@@ -715,4 +756,21 @@ header.mostrar-menu {
 .caja-items-menu-slider::-webkit-scrollbar {
     width: 0px;
     height: 0px;
+}
+
+.menu-global-position-left .caja-items-menu-slider::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+}
+
+.menu-global-position-left .btn-menu-global-show {
+    transform: rotate(-90deg);
+}
+
+.menu-global-position-left .btn-menu-global-show i {
+    transform: rotate(90px);
+}
+
+.menu-global-hidden {
+    /* ñ */
 }

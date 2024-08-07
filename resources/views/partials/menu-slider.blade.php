@@ -6,7 +6,7 @@
         <button class="btn-menu-ar" onclick="menuSileder('retreat');">
             <i class="material-symbols-outlined">arrow_back_ios</i>
         </button>
-        <div class="caja-items-menu-slider">
+        <div class="caja-items-menu-slider scroll_estilo">
 
             @can('mi_organizacion_acceder')
                 <div class="item-ms">
@@ -175,7 +175,8 @@
         </button>
     </div>
     <div class="options-global">
-        <button class="btn">
+        <button class="btn btn-menu-global-show"
+            onclick="document.querySelector('body').classList.toggle('menu-global-hidden')">
             <i class="material-symbols-outlined">keyboard_arrow_up</i>
         </button>
     </div>

@@ -77,7 +77,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/favicon_tabantaj_v2.png') }}">
 </head>
 
-<body class="">
+<body class="menu-global-position-left postion-rigth-menu-global">
     <div id="loading">
         <img id="loading-image" src="https://i.pinimg.com/originals/07/24/88/0724884440e8ddd0896ff557b75a222a.gif"
             alt="Loading...">
