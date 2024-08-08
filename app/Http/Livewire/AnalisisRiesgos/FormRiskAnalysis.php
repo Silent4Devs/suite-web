@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire\AnalisisRiesgos;
 
+use App\Models\TBAnswerRASheetRAModel;
+use App\Models\TBAnswerSheetRiskAnalysisModel;
 use App\Models\TBPeriodRiskAnalysisModel;
 use App\Models\TBPeriodSheetRiskAnalysisModel;
 use App\Models\TBSectionRiskAnalysisModel;
@@ -11,7 +13,6 @@ use App\Models\TBSheetRiskAnalysisModel;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
-use Maatwebsite\Excel\Sheet;
 
 class FormRiskAnalysis extends Component
 {
@@ -26,9 +27,19 @@ class FormRiskAnalysis extends Component
     public $answersTable = [];
     public $verifyAnswers;
     public $sheetTables;
+    public $sheetActive;
     // public $sectionsRegisters;
 
-    protected $listeners = ['formData'];
+    protected $listeners = ['formDataInitialRisk'];
+
+    public function test($value)
+    {
+        $this->sheetActive = $value;
+
+        $sheet = TBSheetRiskAnalysisModel::find($value);
+        // dd($sheet->answersSheet->contains(1));
+        // dd($value);
+    }
 
     public function createSheet()
     {
@@ -99,10 +110,25 @@ class FormRiskAnalysis extends Component
         }
     }
 
-    public function formData($data)
+    public function formDataInitialRisk($dataForm)
     {
-        $this->questionsAnswer = $data;
-        dd($this->questionsAnswer);
+        // dd($this->sheetActive);
+
+        $pattern = '/qs-(\d+)/';
+        foreach ($dataForm as $key => $value) {
+            if (preg_match($pattern, $key, $matches)) {
+                $number = intval($matches[1]);
+                $answerRegister = TBAnswerSheetRiskAnalysisModel::create([
+                    'question_id' => $number,
+                    'value' => $value,
+                ]);
+                TBAnswerRASheetRAModel::create([
+                    'sheet_id' => $this->sheetActive,
+                    'answer_id' => $answerRegister->id,
+                ]);
+            }
+        }
+        $this->emit('closeModal');
     }
 
     public function mount($RiskAnalysisId)
@@ -150,32 +176,45 @@ class FormRiskAnalysis extends Component
             $existSheets = TBPeriodSheetRiskAnalysisModel::where('period_id', $period->id)->exists();
             if ($existSheets) {
                 $sheetsTable = TBPeriodSheetRiskAnalysisModel::where('period_id', $period->id)->get();
-                // dd($sheetsTable[0]->sheet);
-                // dd($answersSheetTable[0]->sheet->answersSheet);
                 $this->verifyAnswers = true;
 
                 foreach ($sheetsTable as $sheetTable) {
                     $empty1 = [];
                     $empty2 = [];
                     if ($sheetTable->sheet->answersSheet->count()) {
+                        // dd($sheetTable->sheet->answersSheet);
                         foreach ($sheetTable->sheet->answersSheet as $answerSheet) {
+                            // dump($answerSheet);
                             foreach ($this->questionSettigns as $questionSetting) {
+                                // dump($questionSetting->question_id, $answerSheet->question_id);
                                 if ($questionSetting->question_id === $answerSheet->question_id) {
-                                    $this->answersTable[] = $answerSheet;
-                                } else {
-                                    $this->answersTable[] = [];
+                                    array_push($empty1,$answerSheet);
                                 }
+                                // else {
+                                //     $this->answersTable[] = [];
+                                // }
+                                // dd($empty1);
                             }
-                            foreach ($this->formulasSettings as $formulasSetting) {
-                                if ($formulasSetting->question_id === $answerSheet->question_id) {
-                                    $this->answersTable[] = $answerSheet;
-                                } else {
-                                    $this->answersTable[] = [];
-                                }
-                            }
-                        }
-                    } else {
 
+                            foreach ($this->formulasSettings as $formulasSetting) {
+
+                                // dd($formulasSetting->formula->question_id);
+                                if ($formulasSetting->formula->question_id === $answerSheet->question_id) {
+                                    // dd($answerSheet);
+                                    array_push($empty2,$answerSheet);
+                                }
+                                // else {
+                                //     $this->answersTable[] = [];
+                                // }
+                            }
+
+                        }
+
+                        $result = array_merge($empty1, $empty2);
+                        // dd($result);
+                        $sheetTable->sheet->answersTable = $result;
+
+                    } else {
                         foreach ($this->questionSettigns as $questionSetting) {
                             $empty1[] = [];
                         }

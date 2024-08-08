@@ -50,7 +50,8 @@
                     @foreach ($sheetTables as $sheetTable )
                     <tr>
                         @foreach ( $sheetTable->sheet->answersTable as $answerTable )
-                            @isset($sheetTable->sheet->answersTable->value)
+                        {{-- @dump($answerTable->value) --}}
+                        @isset($answerTable->value)
                                     <td>
                                         {{ $answerTable->value }}
                                     </td>
@@ -64,7 +65,7 @@
                             <div>
                                 <div class="d-flex align-items-start options">
                                     <div class="caja-options card card-body" style="border-radius: 0px !important; position: absolute;">
-                                        <a type="button" data-toggle="modal" data-target="#formRiskAnalysis">
+                                        <a type="button" data-toggle="modal" data-target="#formRiskAnalysis" wire:click="test({{$sheetTable->id}})">
                                             <p class="m-0">Evaluar/editar formulario</p>
                                         </a>
                                         <a type="button" data-toggle="modal" data-target="#formRiskAnalysis">
@@ -115,6 +116,7 @@
                                                     <label>
                                                         @if ($question->type != 10)
                                                             {{ $question->title }}
+                                                            {{$question->id}}
                                                             <span
                                                                 style="color:#FF0000">{{ $question->obligatory ? '*' : null }}</span>
                                                         @endif
@@ -187,21 +189,19 @@
     </div>
 
     <script>
-        function submitForm() {
-            e.preventDefault();
-            const form = document.getElementById('Form');
-            const formData = new FormData(form);
+        // function submitForm() {
+        //     e.preventDefault();
+        //     const form = document.getElementById('Form');
+        //     const formData = new FormData(form);
 
-            const data = {};
-            formData.forEach((value, key) => {
-                data[key] = value;
-            });
+        //     const data = {};
+        //     formData.forEach((value, key) => {
+        //         data[key] = value;
+        //     });
 
-            Livewire.emit('formData', data);
-        };
+        //     Livewire.emit('formDataInitialRisk', data);
+        // };
         document.getElementById('submitButton').addEventListener('click', function(e) {
-            // e.preventefault();
-            // Obtén el formulario
             const form = document.getElementById('Form');
             const formData = new FormData(form);
 
@@ -211,7 +211,7 @@
             });
 
             if (form.checkValidity()) {
-                Livewire.emit('formData', data);
+                Livewire.emit('formDataInitialRisk', data);
             }
         });
     </script>
@@ -229,6 +229,31 @@
             let table = $('.datatable-risk-analysis').DataTable(dtOverrideGlobals);
         });
     </script>
+
+    {{-- <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Selecciona todos los inputs cuyo atributo name empiece con 'input'
+            let inputs = document.querySelectorAll('input[name^="qs-fm-"]');
+            console.log("inputs ra")
+            console.log(inputs)
+            inputs.forEach(function(input) {
+                console.log('input')
+                dataProperty = input.dataset.formula;
+                console.log(dataProperty)
+
+                input.value = "22"
+
+                // input.addEventListener('input', function() {
+                //     // Aquí va el script que quieres ejecutar
+                //     console.log('El valor de ' + input.name + ' ha cambiado a: ' + input.value);
+                //     // // Ejemplo de más acciones:
+                //     // if (input.value === 'hello') {
+                //     //     alert('¡Hola desde ' + input.name + '!');
+                //     // }
+                // });
+            });
+        })
+    </script> --}}
 
     @yield('js')
     <script>
@@ -260,6 +285,15 @@
                     }
                 });
             })
+        });
+    </script>
+    <script>
+        document.addEventListener('livewire:load', function () {
+            Livewire.on('closeModal', function () {
+                $('#formRiskAnalysis').modal('hide');
+                $('body').removeClass('modal-open');
+                $('.modal-backdrop').remove();
+            });
         });
     </script>
 </div>

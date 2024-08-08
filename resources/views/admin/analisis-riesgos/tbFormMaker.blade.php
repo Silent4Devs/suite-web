@@ -3,14 +3,16 @@
         $test = true;
     @endphp
     @switch($question->type)
-
+        {{-- short answer --}}
         @case('1')
             <div>
                 <div class="form-group pl-0 mb-0 anima-focus">
-                    <input class="form-control" placeholder="" name="qs-{{$question->id}}" maxlength="255" required="{{$question->obligatory}}">
+                    <input class="form-control" placeholder="" name="qs-{{$question->id}}" maxlength="255" required="{{$question->obligatory}}" value="{{$question->value ? 1:2}}">
                 </div>
             </div>
             @break
+
+        {{-- large answer --}}
         @case('2')
             <div>
                 <div class="form-group pl-0 mb-0 anima-focus">
@@ -18,6 +20,8 @@
                 </div>
             </div>
             @break
+
+        {{-- numeric answer --}}
         @case('3')
             <div>
                 <div class="form-group pl-0 mb-0 anima-focus">
@@ -26,9 +30,13 @@
                 <strong style="font-style: italic; font-size:11px;">Tu valor debe encontrase entre el {{$question->dataQuestions[0]->minimum}} y el {{$question->dataQuestions[0]->maximum}}</strong>
             </div>
             @break
+
+        {{-- catalog intern answer --}}
         @case('4')
             select
             @break
+
+        {{-- single select --}}
         @case('5')
             @foreach ($question->dataQuestions as $dataQuestion )
                 <div class="form-check">
@@ -39,6 +47,8 @@
                 </div>
             @endforeach
             @break
+
+        {{-- multiple select --}}
         @case('6')
             @foreach ($question->dataQuestions as $dataQuestion )
             <div class="form-check">
@@ -49,33 +59,53 @@
             </div>
             @endforeach
             @break
+
+        {{-- select --}}
         @case('7')
-            <select class="form-control" name="qs-{{$question->id}}" required="{{$question->obligatory}}">
+            <select class="form-control" name="qs-{{$question->id}}" required="{{$question->obligatory}}" >
                 <option selected value="" disabled>Selecciona una opción</option>
                 @foreach ($question->dataQuestions as $dataQuestion )
                 <option value="{{$dataQuestion->id}}"> {{$dataQuestion->title}}</option>
                 @endforeach
             </select>
             @break
+
+        {{-- date input --}}
         @case('8')
             <div class="form-group pl-0 mb-0 anima-focus">
                 <input type="date" class="form-control" placeholder="" name="qs-{{$question->id}}" required="{{$question->obligatory}}">
             </div>
             @break
+
+        {{-- time input --}}
         @case('9')
             <div class="form-group pl-0 mb-0 anima-focus">
                 <input type="time" class="form-control" placeholder="" name="qs-{{$question->id}}" required="{{$question->obligatory}}">
             </div>
             @break
+
+        {{-- image --}}
         @case('10')
             <div class="fileContainer" >
                 <img src="{{ asset('storage/analisis_riesgo/template/questions/'.$question->dataQuestions[0]->url)}}"  class="img-fluid fileImg"/>
             </div>
             @break
+
+        {{-- formula input --}}
+        @case('11')
+            <div>
+                {{-- @dump($question->formula) --}}
+                <div>
+                    <div class="form-group pl-0 mb-0 anima-focus">
+                        <input class="form-control" placeholder="" name="qs-{{$question->id}}" maxlength="255" required="{{$question->obligatory}}" data-formula="{{$question->formula->formula}}">
+                    </div>
+                </div>
+            </div>
+            @break
         @case('12')
             <div>
                 <div class="form-group pl-0 mb-0 anima-focus">
-                    <input class="form-control" placeholder="" name="qs-{{$question->id}}" maxlength="255" required="{{$question->obligatory}}" value="{{$test ? 1:2}}">
+                    <input class="form-control" placeholder="" name="qs-{{$question->id}}" maxlength="255" required="{{$question->obligatory}}" value="{{$question->value ? 1:2}}" >
                 </div>
             </div>
             @break
@@ -93,6 +123,8 @@
                 </div>
             </div>
             @break
+
+        {{-- divisa input --}}
         @case('15')
             <div>
                 <div class="form-group pl-0 mb-0 anima-focus">
@@ -103,4 +135,5 @@
             @default
 
     @endswitch
+
 
