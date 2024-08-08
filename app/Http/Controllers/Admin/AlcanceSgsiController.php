@@ -113,7 +113,7 @@ class AlcanceSgsiController extends Controller
 
         $modulo = ListaDistribucion::with('participantes.empleado')->where('modelo', '=', $this->modelo)->first();
 
-        if (! isset($modulo)) {
+        if (!isset($modulo)) {
             $listavacia = 'vacia';
         } elseif ($modulo->participantes->isEmpty()) {
             $listavacia = 'vacia';
@@ -228,7 +228,7 @@ class AlcanceSgsiController extends Controller
             // Buscar el modelo usando el ID
             $alcanceSgsi = AlcanceSgsi::findOrFail($id);
 
-            if (! $alcanceSgsi) {
+            if (!$alcanceSgsi) {
                 abort(404);
             }
 
@@ -278,7 +278,7 @@ class AlcanceSgsiController extends Controller
         try {
             $alcances = AlcanceSgsi::find($id);
 
-            if (! $alcances) {
+            if (!$alcances) {
                 abort(404);
             }
             $organizacions = Organizacion::getFirst();
@@ -300,8 +300,7 @@ class AlcanceSgsiController extends Controller
         // dd($alcance);
         $lista = ListaDistribucion::with('participantes')->where('modelo', '=', $this->modelo)->first();
 
-        // $no_niveles = $lista->niveles;
-        // dd($lista, $no_niveles);
+        event(new AlcancesEvent($alcance, 'solicitudAprobacion', 'alcance_sgsis', 'Alcance'));
 
         $proceso = ProcesosListaDistribucion::updateOrCreate(
             [
