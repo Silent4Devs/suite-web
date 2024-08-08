@@ -16,6 +16,7 @@ use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 use RealRashid\SweetAlert\Facades\Alert;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -24,6 +25,8 @@ class UsersController extends Controller
     public function index(Request $request)
     {
         abort_if(Gate::denies('usuarios_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        Log::channel('logstash')->info('Index Usuarios.');
 
         $existsVinculoEmpleadoAdmin = User::getExists();
 
@@ -135,7 +138,7 @@ class UsersController extends Controller
             abort_if(Gate::denies('usuarios_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
             $registro = User::find($id);
 
-            if (! $registro) {
+            if (!$registro) {
                 return response()->json(['status' => 'error', 'message' => 'Registro no encontrado.'], 404);
             }
 
@@ -162,10 +165,10 @@ class UsersController extends Controller
     {
         if ($request->ajax()) {
             $nombre = $request->nombre;
-            $usuarios = User::getAll()->where('name', 'LIKE', '%'.$nombre.'%')->take(5);
+            $usuarios = User::getAll()->where('name', 'LIKE', '%' . $nombre . '%')->take(5);
             $lista = "<ul class='list-group' id='empleados-lista'>";
             foreach ($usuarios as $usuario) {
-                $lista .= "<button type='button' class='list-group-item list-group-item-action' onClick='seleccionarUsuario(".$usuario.");'>".$usuario->name.'</button>';
+                $lista .= "<button type='button' class='list-group-item list-group-item-action' onClick='seleccionarUsuario(" . $usuario . ");'>" . $usuario->name . '</button>';
             }
             $lista .= '</ul>';
 
@@ -197,7 +200,7 @@ class UsersController extends Controller
             $message = "Verificación por dos factores habilitada para el usuario {$user->name}";
         }
 
-        $user->two_factor = ! $user->two_factor;
+        $user->two_factor = !$user->two_factor;
 
         $user->save();
 
@@ -212,7 +215,7 @@ class UsersController extends Controller
             $message = "El usuario {$user->name} ha sido desbloqueado";
         }
 
-        $user->is_active = ! $user->is_active;
+        $user->is_active = !$user->is_active;
 
         $user->save();
 
