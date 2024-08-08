@@ -440,6 +440,14 @@ class RequisicionesCreateComponent extends Component
                 ]);
             }
 
+            $firmas_requi = FirmasRequisiciones::create([
+                'requisicion_id' => $this->requisicionCreada->id,
+                'solicitante_id' =>  $this->user->empleado->id,
+                // 'jefe_id' => $responsable->id,
+                // 'responsable_finanzas_id' => $responsable->id,
+                // 'comprador_id' => $comprador->user->empleado->id,
+            ]);
+
             $this->alert('success', 'Requisicion Creada con exito');
             DB::commit();
             $this->dataFirma();
@@ -454,7 +462,7 @@ class RequisicionesCreateComponent extends Component
 
     public function dataFirma()
     {
-        $this->habilitar_proveedores = false;
+        // $this->habilitar_proveedores = false;
 
         $this->productos_view = KatbolProductoRequisicion::where('requisiciones_id', $this->requisicion_id)->get();
         $this->proveedores_view = KatbolProveedorRequisicion::where('requisiciones_id', $this->requisicion_id)->get();
