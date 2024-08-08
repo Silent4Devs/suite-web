@@ -1,7 +1,7 @@
 <div class="d-flex align-items-center justify-content-between">
     <div style="{{ $place == 'notificaciones-page' ? 'flex-basis: calc(80% - 5px)' : 'flex-basis:100%' }}">
         <a class="dropdown-item text-secondary"
-            href="{{ route('admin.solicitud-vacaciones.show', $last_unread_notification->data['id']) }}">
+            href="{{ route('admin.solicitud-vacaciones.aprobacion') }}">
             @switch(" ".$last_unread_notification->data['type']) {{-- Se concatena un espacio porque el autoformateado lo agrega en el case --}}
                 @case(' create')
                     <div class="d-flex align-items-center justify-content-start">
@@ -13,7 +13,7 @@
                             <i class="pr-2 fas fa-tasks text-success"></i>
                         @endif
                         &nbsp;&nbsp;
-                        <p class="p-0 m-0">Nueva {{ $last_unread_notification->data['slug'] }} creado</p>
+                        <p class="p-0 m-0">Nueva {{ $last_unread_notification->data['slug'] }} creado y necesita su aprobación.</p>
                     </div>
                 @break
 
