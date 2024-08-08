@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Events\PermisoEvent;
 use App\Models\PermisosGoceSueldo;
 use Illuminate\Support\Facades\Cache;
 
@@ -12,7 +13,7 @@ class PermisosGoceSueldoObserver
      */
     public function created(PermisosGoceSueldo $permisosGoceSueldo): void
     {
-        //
+        event(new PermisoEvent($permisosGoceSueldo, 'create', 'permisos_goce_sueldo', 'permiso'));
         $this->forgetCache();
     }
 
@@ -21,7 +22,7 @@ class PermisosGoceSueldoObserver
      */
     public function updated(PermisosGoceSueldo $permisosGoceSueldo): void
     {
-        //
+        event(new PermisoEvent($permisosGoceSueldo, 'update', 'permisos_goce_sueldo', 'permiso'));
         $this->forgetCache();
     }
 
@@ -30,25 +31,7 @@ class PermisosGoceSueldoObserver
      */
     public function deleted(PermisosGoceSueldo $permisosGoceSueldo): void
     {
-        //
-        $this->forgetCache();
-    }
-
-    /**
-     * Handle the PermisosGoceSueldo "restored" event.
-     */
-    public function restored(PermisosGoceSueldo $permisosGoceSueldo): void
-    {
-        //
-        $this->forgetCache();
-    }
-
-    /**
-     * Handle the PermisosGoceSueldo "force deleted" event.
-     */
-    public function forceDeleted(PermisosGoceSueldo $permisosGoceSueldo): void
-    {
-        //
+        event(new PermisoEvent($permisosGoceSueldo, 'delete', 'permisos_goce_sueldo', 'permiso'));
         $this->forgetCache();
     }
 

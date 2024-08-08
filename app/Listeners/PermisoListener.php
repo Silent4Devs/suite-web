@@ -5,12 +5,13 @@ namespace App\Listeners;
 use App\Models\Empleado;
 use App\Models\ListaInformativa;
 use App\Models\User;
-use App\Notifications\SolicitudDayofNotification;
+use App\Notifications\PermisoNotification;
+use App\Notifications\SolicitudPermisoNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Notification;
 
-class SolicitudDayofListener implements ShouldQueue
+class PermisoListener implements ShouldQueue
 {
     use InteractsWithQueue;
 
@@ -34,17 +35,16 @@ class SolicitudDayofListener implements ShouldQueue
      */
     public function handle($event)
     {
+        $modulo_permisos = 4;
 
-        $modulo_day = 2;
-
-        $lista = ListaInformativa::with('participantes')->where('id', $modulo_day)->first();
+        $lista = ListaInformativa::with('participantes')->where('id', $modulo_permisos)->first();
 
         foreach ($lista->participantes as $participantes) {
             $empleados = Empleado::where('id', $participantes->empleado_id)->first();
 
-            $user = User::where('email', trim(removeUnicodeCharacters($empleados->email)))->first();
+            $user = User::where('email', trim(removeUnicodeCharacters($empleados->email)))->get();
 
-            Notification::send($user, new SolicitudDayofNotification($event->solicitud_dayof, $event->tipo_consulta, $event->tabla, $event->slug));
+            Notification::send($user, new PermisoNotification($event->permiso, $event->tipo_consulta, $event->tabla, $event->slug));
         }
     }
 }
