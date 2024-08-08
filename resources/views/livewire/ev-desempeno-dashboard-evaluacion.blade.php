@@ -791,7 +791,7 @@
         @if ($evaluacion->activar_objetivos)
             {{-- Codigo primera vez que carga --}}
             <script>
-                document.addEventListener('livewire:init', function() {
+                document.addEventListener('livewire:initialized', function() {
 
                     const areas = @json($resArea['nombres'][$periodo_seleccionado]);
                     const data = @json($resArea['resultados'][$periodo_seleccionado]);
@@ -820,7 +820,7 @@
             </script>
             {{-- Codigo cambio de filtros --}}
             <script>
-                document.addEventListener('livewire:init', function() {
+                document.addEventListener('livewire:initialized', function() {
                     Livewire.on('objetivosArea', (objArea) => {
 
                         document.getElementById('resultadosxarea').remove();
@@ -853,7 +853,7 @@
             </script>
 
             <script>
-                document.addEventListener('livewire:init', function() {
+                document.addEventListener('livewire:initialized', function() {
 
                     const tipos = @json($resObj['nombres'][$periodo_seleccionado]);
                     const resultados = @json($resObj['resultados'][$periodo_seleccionado]);
@@ -881,7 +881,7 @@
             </script>
 
             <script>
-                document.addEventListener('livewire:init', function() {
+                document.addEventListener('livewire:initialized', function() {
                     Livewire.on('cumplimientoObj', (cumpObj) => {
 
                         document.getElementById('cumplimientoObjetivos').remove();
@@ -914,7 +914,7 @@
             </script>
 
             <script>
-                document.addEventListener('livewire:init', function() {
+                document.addEventListener('livewire:initialized', function() {
 
                     const escalas = @json($escalas['nombres'][$periodo_seleccionado]);
                     const colores = @json($escalas['colores'][$periodo_seleccionado]);
@@ -944,7 +944,7 @@
             </script>
 
             <script>
-                document.addEventListener('livewire:init', function() {
+                document.addEventListener('livewire:initialized', function() {
                     Livewire.on('escalasObj', (escObj) => {
 
                         document.getElementById('escalas').remove();
@@ -980,7 +980,7 @@
 
         @if ($evaluacion->activar_competencias)
             <script>
-                document.addEventListener('livewire:init', function() {
+                document.addEventListener('livewire:initialized', function() {
 
                     const competencias = @json($resComp['nombres'][$periodo_seleccionado]);
                     const resultados = @json($resComp['resultados'][$periodo_seleccionado]);
@@ -1008,7 +1008,7 @@
             </script>
 
             <script>
-                document.addEventListener('livewire:init', function() {
+                document.addEventListener('livewire:initialized', function() {
                     Livewire.on('cumplimientoComp', (cumpComp) => {
 
                         console.log(cumpComp);
