@@ -1,15 +1,6 @@
 @extends('layouts.admin')
 @section('content')
 <livewire:catalogue-training.catalogue-training/>
-{{-- <script>
-    Swal.fire({
-  position: "top-end",
-  icon: "success",
-  title: "Your work has been saved",
-  showConfirmButton: false,
-  timer: 1500
-});
-</script> --}}
 
 <script>
     document.addEventListener('saved', event => {

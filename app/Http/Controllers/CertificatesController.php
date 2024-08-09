@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 class CertificatesController extends Controller
 {
     //
-    public function CatalogueTraining()
+    public function TypeCatalogueTraining()
     {
-        return view('admin.catalogueTraining.tbIndex');
+        return view('admin.typeCatalogueTraining.tbIndex');
     }
 }

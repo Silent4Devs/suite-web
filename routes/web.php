@@ -192,7 +192,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         //Modulo Capital Humano
         // Route::middleware('cacheResponse')->get('capital-humano', 'RH\CapitalHumanoController@index')->name('capital-humano.index');
         Route::get('capital-humano', 'RH\CapitalHumanoController@index')->name('capital-humano.index');
-        Route::get('catalogueTraining', [CertificatesController::class, 'CatalogueTraining']);
+        Route::get('catalogueTraining', [CertificatesController::class, 'TypeCatalogueTraining'])->name('catalogue-training.index');
 
         //Control de Ausencias
         Route::get('ajustes-dayoff', 'AusenciasController@ajustesDayoff')->name('ajustes-dayoff');

@@ -168,14 +168,21 @@
                 <h3 class="text-center"><strong>Perfil Profesional</strong></h3>
                 <ul>
                     {{-- @can('lista_de_perfiles_de_puesto_acceder') --}}
-                        <li><a href="{{ route('admin.puestos.index') }}">
+                        <li><a href="{{ route('admin.catalogue-training.index') }}">
                                 <div>
                                     <i class="bi bi-briefcase"></i>
                                     <br>
-                                    Catálogo de Capacitaciones
+                                    Catálogo Tipo de Capacitaciones
                                 </div>
                             </a></li>
                     {{-- @endcan --}}
+                    <li><a href="{{ route('admin.puestos.index') }}">
+                        <div>
+                            <i class="bi bi-briefcase"></i>
+                            <br>
+                            Catálogo de Capacitaciones
+                        </div>
+                    </a></li>
                     {{-- @can('competencias_por_puesto_acceder') --}}
                         <li>
                             <a href="{{ route('admin.ev360-competencias-por-puesto.index') }}">
