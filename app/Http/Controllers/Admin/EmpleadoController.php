@@ -76,7 +76,7 @@ class EmpleadoController extends Controller
                 return $empleado;
             });
 
-        Log::channel('logstash')->info('Index Empleados.');
+        // Log::channel('logstash')->info('Index Empleados.');
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
