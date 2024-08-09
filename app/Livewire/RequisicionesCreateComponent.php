@@ -35,6 +35,8 @@ class RequisicionesCreateComponent extends Component
 
     public $paso = 1;
 
+    public $test = "display: none;";
+
     public $sucursales;
 
     public $compradores;
@@ -291,6 +293,8 @@ class RequisicionesCreateComponent extends Component
         $this->habilitar_proveedores = true;
         $this->dispatch('cambiarTab', 'profile');
         $this->active = 'desActive';
+
+        $this->paso = 2;
     }
 
     public function proveedoresStore()
@@ -372,7 +376,9 @@ class RequisicionesCreateComponent extends Component
         }
 
         $this->crearRequisicion($dataProvedoresIndistintoCatalogo, $dataProveedoresSugeridos, $dataProvedoresCatalogo);
-
+        $this->paso = 3;
+        $this->test = "display: block;";
+        $this->dispatch('probando');
         $this->habilitar_proveedores = true;
     }
 
@@ -559,7 +565,7 @@ class RequisicionesCreateComponent extends Component
                 }
             }
 
-            $firmas_requi = FirmasRequisiciones::where('requisicion_id', $this->nueva_requisicion->id)->first();
+            $firmas_requi = FirmasRequisiciones::where('requisicion_id', $this->requisicionCreada->id)->first();
 
             $firmas_requi->update([
                 'jefe_id' => $responsable->id,
@@ -568,9 +574,9 @@ class RequisicionesCreateComponent extends Component
             ]);
 
             if ($responsable->id == $this->user->empleado->id) {
-                Mail::to(trim($this->removeUnicodeCharacters($supervisor)))->queue(new RequisicionesFirmaDuplicadaEmail($this->nueva_requisicion, $organizacion, $tipo_firma));
+                Mail::to(trim($this->removeUnicodeCharacters($supervisor)))->queue(new RequisicionesFirmaDuplicadaEmail($this->requisicionCreada, $organizacion, $tipo_firma));
             } else {
-                Mail::to(trim($this->removeUnicodeCharacters($supervisor)))->queue(new RequisicionesEmail($this->nueva_requisicion, $organizacion, $tipo_firma));
+                Mail::to(trim($this->removeUnicodeCharacters($supervisor)))->queue(new RequisicionesEmail($this->requisicionCreada, $organizacion, $tipo_firma));
             }
 
             return redirect(route('contract_manager.requisiciones'));
