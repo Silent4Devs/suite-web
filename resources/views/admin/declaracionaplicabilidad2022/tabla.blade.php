@@ -41,7 +41,7 @@
                 <tbody></tbody>
             </table>
             <div>
-                <a href="{{ route('admin.iso27001.index') }}" class="btn btn-success">Regresar</a>
+                <a href="{{ route('admin.iso27001.guia') }}" class="btn btn-success">Regresar</a>
             </div>
         </div>
     </div>

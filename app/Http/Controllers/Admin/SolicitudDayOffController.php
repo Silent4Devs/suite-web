@@ -354,8 +354,6 @@ class SolicitudDayOffController extends Controller
         if ($request->ajax()) {
             $query = SolicitudDayOff::with('empleado')->where('autoriza', '=', $data)->where('aprobacion', '=', 1)->orderByDesc('id')->get();
 
-            event(new SolicitudDayofEvent($query, 'aprobacion', 'solicitud_dayoff', 'DayOff Aprobado'));
-
             $table = datatables()::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
