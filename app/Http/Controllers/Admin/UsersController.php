@@ -36,7 +36,7 @@ class UsersController extends Controller
             return view('users.tbUsersIndex', compact('users', 'existsVinculoEmpleadoAdmin', 'empleados'));
         } catch (\Exception $e) {
             // Registrar el error en los logs
-            Log::error('Error al crear usuario: ' . $e->getMessage(), [
+            Log::channel('logstash')->info('Error al crear usuario: ' . $e->getMessage(), [
                 'exception' => $e,
                 'input' => $request->all(),
             ]);
