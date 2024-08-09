@@ -24,17 +24,26 @@ class UsersController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(Gate::denies('usuarios_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        try {
+            abort_if(Gate::denies('usuarios_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        Log::channel('logstash')->info('Index Usuarios.');
+            $existsVinculoEmpleadoAdmin = User::getExists();
 
-        $existsVinculoEmpleadoAdmin = User::getExists();
+            $users = User::getUserWithRole();
 
-        $users = User::getUserWithRole();
+            $empleados = Empleado::getAltaDataColumns()->sortBy('name');
 
-        $empleados = Empleado::getAltaDataColumns()->sortBy('name');
+            return view('users.tbUsersIndex', compact('users', 'existsVinculoEmpleadoAdmin', 'empleados'));
+        } catch (\Exception $e) {
+            // Registrar el error en los logs
+            Log::channel('logstash')->info('Error al crear usuario: ' . $e->getMessage(), [
+                'exception' => $e,
+                'input' => $request->all(),
+            ]);
 
-        return view('users.tbUsersIndex', compact('users', 'existsVinculoEmpleadoAdmin', 'empleados'));
+            // Retornar una respuesta de error al cliente
+            return response()->json(['message' => 'Error al crear el usuario'], 500);
+        }
     }
 
     public function getUsersIndex(Request $request)

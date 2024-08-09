@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Events\SolicitudPermisoEvent;
 use App\Http\Controllers\Controller;
 use App\Mail\RespuestaPermisoGoceSueldo as MailRespuestaPermisoGoceSueldo;
 use App\Mail\SolicitudPermisoGoceSueldo as MailSolicitudPermisoGoceSueldo;

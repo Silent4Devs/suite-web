@@ -2,6 +2,8 @@
 
 namespace App\Listeners;
 
+use App\Models\Empleado;
+use App\Models\ListaInformativa;
 use App\Models\User;
 use App\Notifications\SolicitudPermisoNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -32,12 +34,16 @@ class SolicitudPermisoListener implements ShouldQueue
      */
     public function handle($event)
     {
+        $modulo_permisos = 4;
 
-        $user = auth()->user();
-        if ($user->empleado && $user->empleado->supervisor) {
-            // Obtener al supervisor por su dirección de correo electrónico
-            $supervisor = User::where('email', trim(removeUnicodeCharacters($user->empleado->supervisor->email)))->first();
+        $lista = ListaInformativa::with('participantes')->where('id', $modulo_permisos)->first();
+
+        foreach ($lista->participantes as $participantes) {
+            $empleados = Empleado::where('id', $participantes->empleado_id)->first();
+
+            $user = User::where('email', trim(removeUnicodeCharacters($empleados->email)))->get();
+
+            Notification::send($user, new SolicitudPermisoNotification($event->permiso, $event->tipo_consulta, $event->tabla, $event->slug));
         }
-        Notification::send($supervisor, new SolicitudPermisoNotification($event->permiso, $event->tipo_consulta, $event->tabla, $event->slug));
     }
 }
