@@ -2,7 +2,6 @@
 
 namespace App\Events;
 
-
 use App\Models\Sugerencias;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -15,8 +14,11 @@ class SugerenciasEvent implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $sugerencias;
+
     public $tipo_consulta;
+
     public $tabla;
+
     public $slug;
 
     public function __construct(Sugerencias $sugerencias, $tipo_consulta, $tabla, $slug)

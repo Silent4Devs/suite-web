@@ -18,6 +18,15 @@ class EntendimientoOrganizacionObserver
     }
 
     /**
+     * Handle the Documento "updated" event.
+     */
+    public function aprobado(EntendimientoOrganizacion $entendimiento): void
+    {
+        event(new EntendimientoOrganizacionEvent($entendimiento, 'aprobado', 'entendimiento_organizacions', 'Foda'));
+        $this->forgetCache();
+    }
+
+    /**
      * Handle the EntendimientoOrganizacion "deleted" event.
      */
     public function deleted(EntendimientoOrganizacion $entendimiento): void

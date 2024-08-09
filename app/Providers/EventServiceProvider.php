@@ -15,6 +15,7 @@ use App\Events\IncidentesDeSeguridadEvent;
 use App\Events\MatrizRequisitosEvent;
 use App\Events\MejorasEvent;
 use App\Events\MinutasEvent;
+use App\Events\PermisoEvent;
 use App\Events\PlanImplementacionEvent;
 use App\Events\PoliticasSgiEvent;
 use App\Events\PuestosEvent;
@@ -23,13 +24,13 @@ use App\Events\RecursosEvent;
 use App\Events\RegistroMejoraEvent;
 use App\Events\RequisicionesEvent;
 use App\Events\RiesgosEvent;
-use App\Events\SeguridadEvent;
 use App\Events\SolicitudDayofEvent;
 use App\Events\SolicitudPermisoEvent;
 use App\Events\SolicitudVacacionesEvent;
 use App\Events\SugerenciasEvent;
 use App\Events\TaskRecursosEvent;
 use App\Events\TimesheetEvent;
+use App\Events\TimesheetProyectoEvent;
 use App\Listeners\AccionCorrectivaListener;
 use App\Listeners\AlcancesListener;
 use App\Listeners\AuditoriaAnualListener;
@@ -44,6 +45,7 @@ use App\Listeners\IncidentesDeSeguridadListener;
 use App\Listeners\MatrizRequisitosListener;
 use App\Listeners\MejorasListener;
 use App\Listeners\MinutasListener;
+use App\Listeners\PermisoListener;
 use App\Listeners\PlanImplementacionListener;
 use App\Listeners\PoliticasSgiListener;
 use App\Listeners\PuestosListener;
@@ -52,18 +54,17 @@ use App\Listeners\RecursosListener;
 use App\Listeners\RegistroMejoraListener;
 use App\Listeners\RequisicionesListener;
 use App\Listeners\RiesgosListener;
-use App\Listeners\SeguridadListener;
 use App\Listeners\SolicitudDayofListener;
 use App\Listeners\SolicitudPermisoListener;
 use App\Listeners\SolicitudVacacionesListener;
 use App\Listeners\SugerenciasListener;
 use App\Listeners\TaskRecursosListener;
 use App\Listeners\TimesheetListener;
+use App\Listeners\TimesheetProyectoListener;
 use App\Models\AccionCorrectiva;
 use App\Models\Activo;
 use App\Models\activoConfidencialidad;
 use App\Models\AlcanceSgsi;
-use App\Models\AprobadorSeleccionado;
 use App\Models\Area;
 use App\Models\AuditoriaAnual;
 use App\Models\AuditoriaInterna;
@@ -88,7 +89,6 @@ use App\Models\Escuela\Section;
 use App\Models\EvaluacionDesempeno;
 use App\Models\EvidenciasDocumentosEmpleados;
 use App\Models\ExperienciaEmpleados;
-use App\Models\FirmaCentroAtencion;
 use App\Models\IncidentesDayoff;
 use App\Models\IncidentesDeSeguridad;
 use App\Models\IncidentesSeguridad;
@@ -150,7 +150,6 @@ use App\Observers\AccionCorrectivaObserver;
 use App\Observers\ActivoConfidencialObserver;
 use App\Observers\ActivosObserver;
 use App\Observers\AlcancesObserver;
-use App\Observers\AprobadorSeleccionadoObserver;
 use App\Observers\AreasObserver;
 use App\Observers\AuditoriaAnualObserver;
 use App\Observers\AuditoriaInternaObserver;
@@ -171,7 +170,6 @@ use App\Observers\EvaluacionesDesempenoObserver;
 use App\Observers\EvaluacionObserver;
 use App\Observers\EvidenciasDocumentosEmpleadosObserver;
 use App\Observers\ExperienciaEmpleadosObserver;
-use App\Observers\FirmaCentroAtencionObserver;
 use App\Observers\GruposEvaluadoObserver;
 use App\Observers\IncidentesDayoffObserver;
 use App\Observers\IncidentesDeSeguridadObserver;
@@ -307,6 +305,9 @@ class EventServiceProvider extends ServiceProvider
         TimesheetEvent::class => [
             TimesheetListener::class,
         ],
+        TimesheetProyectoEvent::class => [
+            TimesheetProyectoListener::class,
+        ],
         CoursesEvent::class => [
             CoursesListener::class,
         ],
@@ -318,6 +319,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         SolicitudPermisoEvent::class => [
             SolicitudPermisoListener::class,
+        ],
+        PermisoEvent::class => [
+            PermisoListener::class,
         ],
         PlanImplementacionEvent::class => [
             PlanImplementacionListener::class,

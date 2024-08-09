@@ -39,7 +39,7 @@
         <div class="tab-pane fade show {{ $active }}" id="home" role="tabpanel" aria-labelledby="home-tab">
             <div id="home" class="tab-content">
                 <form method="POST"
-                    wire:submit.prevent="servicioStore(Object.fromEntries(new FormData($event.target)))"
+                    wire:submit="servicioStore(Object.fromEntries(new FormData($event.target)))"
                     enctype="multipart/form-data">
                     <div class="card card-body">
                         <h3 class="titulo-form">Solicitud de requisición</h3>
@@ -197,7 +197,7 @@
         <div class="tab-pane fade active show" id="profile" role="tabpanel" aria-labelledby="profile-tab">
             <div id="profile" class="tab-content" {{ !$habilitar_proveedores ? ' style=display:none; ' : '' }}>
                 <form id="form-proveedores"
-                    wire:submit.prevent="proveedoresStore(Object.fromEntries(new FormData($event.target)))"
+                    wire:submit="proveedoresStore(Object.fromEntries(new FormData($event.target)))"
                     action="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="card card-body">
@@ -230,7 +230,7 @@
                                             Proveedor <font class="asterisco">*</font>
                                         </label>
                                         <select class="browser-default not-select2"
-                                            wire:model.lazy='selectedInput.{{ $i }}'
+                                            wire:model.blur='selectedInput.{{ $i }}'
                                             name="proveedor_{{ $i }}" required>
                                             <option value="">Seleccione una opción</option>
                                             @foreach ($proveedores as $proveedor)
@@ -270,7 +270,7 @@
                                         <div class="row">
                                             <div class="col s12 l12">
                                                 <select class="browser-default"
-                                                    wire:model.lazy='selectOption.{{ $i }}'
+                                                    wire:model.blur='selectOption.{{ $i }}'
                                                     name="proveedor_otro{{ $i }}" required>
                                                     <option selected value="indistinto">Indistinto</option>
                                                     <option value="sugerido">Sugerido</option>
@@ -367,7 +367,7 @@
                                                         <input type="file" required
                                                             class="modal-cotizacion form-control-file"
                                                             name="cotizacion_{{ $i }}"
-                                                            wire:model="cotizaciones.{{ $i }}"
+                                                            wire:model.live="cotizaciones.{{ $i }}"
                                                             data-count="{{ $i }}"
                                                             accept=".pdf, .docx, .pptx, .point, .xml, .jpeg, .jpg, .png, .xlsx, .xlsm, .csv">
                                                     </div>
@@ -529,7 +529,7 @@
                                                                     </div>
                                                                     <div class="chat-input">
                                                                         <input type="text" id="question"
-                                                                            wire:model.lazy="question">
+                                                                            wire:model.blur="question">
                                                                         <button type="submit"
                                                                             wire:click.prevent="askQuestion">Enviar</button>
                                                                     </div>
@@ -819,7 +819,7 @@
                             </div>
                         </div>
                     </div>
-                    <form method="POST" wire:submit.prevent="Firmar(Object.fromEntries(new FormData($event.target)))"
+                    <form method="POST" wire:submit="Firmar(Object.fromEntries(new FormData($event.target)))"
                         enctype="multipart/form-data">
                         <div class="card card-body">
                             <div class="">
@@ -911,7 +911,7 @@
 
     @section('scripts')
         <script>
-            document.addEventListener('livewire:load', function() {
+            document.addEventListener('livewire:init', function() {
                 Livewire.on('sin_responsables', function() {
                     Swal.fire({
                         // title: 'No es posible acceder a esta vista.',
@@ -921,6 +921,32 @@
                         html: `<h4 style="color:red;">Colaboradores no disponibles</h4>
         <br><p>Los colaboradores asignados se encuentran ausentes.</p><br>
         <p>Es necesario acercarse con el administrador para solicitar que se agregue  un responsable, de lo contrario no podra firmar la requisición.</p>`,
+                        // icon: '{{ session('status') === 'success' ? 'success' : 'error' }}',
+                        showCancelButton: false,
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'Entendido.',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Redirect to another view after user clicks OK
+                            window.location.href =
+                                '{{ route('contract_manager.requisiciones') }}';
+                        }
+                    });
+                });
+            });
+        </script>
+
+        <script>
+            document.addEventListener('livewire:load', function() {
+                Livewire.on('sin_registros', (nombre_modulo) => {
+                    Swal.fire({
+                        // title: 'No es posible acceder a esta vista.',
+                        imageUrl: `{{ asset('img/errors/cara-roja-triste.svg') }}`, // Replace with the path to your image
+                        imageWidth: 100, // Set the width of the image as needed
+                        imageHeight: 100,
+                        html: `<h4 style="color:red;">Modulo sin registros</h4>
+<br><p>El modulo: ` + nombre_modulo + ` no tiene registros.</p><br>
+<p>Es necesario agregar registros para crear una requisición.</p>`,
                         // icon: '{{ session('status') === 'success' ? 'success' : 'error' }}',
                         showCancelButton: false,
                         confirmButtonColor: '#3085d6',

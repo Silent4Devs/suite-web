@@ -72,6 +72,7 @@
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}{{ config('app.cssVersion') }}">
     <link rel="stylesheet" href="{{ asset('css/rds.css') }}{{ config('app.cssVersion') }}">
     @yield('styles')
+
     @livewireStyles
 
     @vite(['resources/js/app.js'])
@@ -644,7 +645,7 @@
         </a>
     </div>
 
-    <livewire:asistente />
+    {{-- <livewire:asistente /> --}}
 
     <!-- inicia sección de script -->
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>

@@ -42,7 +42,7 @@ class TiposObjetivosSistemaController extends Controller
     public function create()
     {
         // abort_if(Gate::denies('tipo_objetivo_sistema_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $tiposObjetivosSistema = new TiposObjetivosSistema();
+        $tiposObjetivosSistema = new TiposObjetivosSistema;
 
         return view('admin.tiposObjetivosSistema.create', compact('tiposObjetivosSistema'));
     }

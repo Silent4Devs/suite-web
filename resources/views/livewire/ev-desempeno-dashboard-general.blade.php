@@ -57,7 +57,7 @@
             </div>
             <div class="col-2">
                 <div class="anima-focus">
-                    <select class="form-control" name="ano_anual" id="ano_anual" wire:model="ano_anual">
+                    <select class="form-control" name="ano_anual" id="ano_anual" wire:model.live="ano_anual">
                         <option value="todos" selected>Todos</option>
                         @foreach ($anos_evaluaciones as $key => $ano)
                             <option value="{{ $ano }}">{{ $ano }}</option>
@@ -80,7 +80,7 @@
                             <div class="row mt-2 mb-2">
                                 <div class="col-3">
                                     <input type="checkbox" id="general_anual" class="form-check-input"
-                                        style="transform: scale(2);" wire:model="general_anual">
+                                        style="transform: scale(2);" wire:model.live="general_anual">
                                 </div>
                                 <div class="col-9">
                                     <div class="text-wrap">
@@ -93,7 +93,7 @@
                             <div class="row mt-2 mb-2">
                                 <div class="col-3">
                                     <input type="checkbox" id="objetivos_anual" class="form-check-input"
-                                        style="transform: scale(2);" wire:model="objetivos_anual">
+                                        style="transform: scale(2);" wire:model.live="objetivos_anual">
                                 </div>
                                 <div class="col-9">
                                     <div class="text-wrap">
@@ -106,7 +106,7 @@
                             <div class="row mt-2 mb-2">
                                 <div class="col-3">
                                     <input type="checkbox" id="competencias_anual" class="form-check-input"
-                                        style="transform: scale(2);" wire:model="competencias_anual">
+                                        style="transform: scale(2);" wire:model.live="competencias_anual">
                                 </div>
                                 <div class="col-9">
                                     <div class="text-wrap">
@@ -120,7 +120,7 @@
             </div>
             <div class="col-2">
                 <div class="anima-focus">
-                    <select class="form-control" name="area_anual" id="area_anual" wire:model="area_anual">
+                    <select class="form-control" name="area_anual" id="area_anual" wire:model.live="area_anual">
                         <option value="todas">Todas</option>
                         @foreach ($areas as $key => $area)
                             <option value="{{ $area->id }}">{{ $area->area }}</option>
@@ -146,7 +146,7 @@
             </div>
             <div class="col-2">
                 <div class="anima-focus">
-                    <select class="form-control" name="mes_mensual" id="mes_mensual" wire:model="mes_mensual">
+                    <select class="form-control" name="mes_mensual" id="mes_mensual" wire:model.live="mes_mensual">
                         <option value="ninguno" selected>Seleccione un Mes del Año elegido</option>
                         @foreach ($meses_evaluaciones as $key => $mes)
                             <option value="{{ $key }}">{{ $mes }}</option>
@@ -169,7 +169,7 @@
                             <div class="row mt-2 mb-2">
                                 <div class="col-3">
                                     <input type="checkbox" id="general_mensual" class="form-check-input"
-                                        style="transform: scale(2);" wire:model="general_mensual">
+                                        style="transform: scale(2);" wire:model.live="general_mensual">
                                 </div>
                                 <div class="col-9">
                                     <div class="text-wrap">
@@ -182,7 +182,7 @@
                             <div class="row mt-2 mb-2">
                                 <div class="col-3">
                                     <input type="checkbox" id="objetivos_mensual" class="form-check-input"
-                                        style="transform: scale(2);" wire:model="objetivos_mensual">
+                                        style="transform: scale(2);" wire:model.live="objetivos_mensual">
                                 </div>
                                 <div class="col-9">
                                     <div class="text-wrap">
@@ -195,7 +195,7 @@
                             <div class="row mt-2 mb-2">
                                 <div class="col-3">
                                     <input type="checkbox" id="competencias_mensual" class="form-check-input"
-                                        style="transform: scale(2);" wire:model="competencias_mensual">
+                                        style="transform: scale(2);" wire:model.live="competencias_mensual">
                                 </div>
                                 <div class="col-9">
                                     <div class="text-wrap">
@@ -209,7 +209,7 @@
             </div>
             <div class="col-2">
                 <div class="anima-focus">
-                    <select class="form-control" name="area_mensual" id="area_mensual" wire:model="area_mensual">
+                    <select class="form-control" name="area_mensual" id="area_mensual" wire:model.live="area_mensual">
                         <option value="todas">Todas</option>
                         @foreach ($areas as $key => $area)
                             <option value="{{ $area->id }}">{{ $area->area }}</option>
@@ -261,12 +261,16 @@
                                 <i class="fa-solid fa-ellipsis-vertical"></i>
                             </button>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item"
-                                    href="{{ route('admin.rh.evaluaciones-desempeno.dashboard-evaluacion', $evaluacion->id) }}">
-                                    <i class="fa-solid fa-eye"></i>&nbsp;Dashboard</a>
-                                {{-- <a class="dropdown-item"
-                                    href="{{ asset('admin/entendimiento-organizacions-foda-edit') }}/{{ $evaluacion->id }}">
-                                    <i class="fa-solid fa-pencil"></i>&nbsp;Editar</a> --}}
+                                @if ($evaluacion->estatus == 1 || $evaluacion->estatus == 3)
+                                    <a class="dropdown-item"
+                                        href="{{ route('admin.rh.evaluaciones-desempeno.dashboard-evaluacion', $evaluacion->id) }}">
+                                        <i class="fa-solid fa-eye"></i>&nbsp;Dashboard</a>
+                                @endif
+                                @if ($evaluacion->estatus == 0)
+                                    <a class="dropdown-item"
+                                        href="{{ route('admin.rh.evaluaciones-desempeno.edit-borrador', $evaluacion->id) }}">
+                                        <i class="fa-solid fa-pencil"></i>&nbsp;Editar</a>
+                                @endif
                                 <a class="dropdown-item delete-item" onclick="deleteItem({{ $evaluacion->id }})">
                                     <i class="fa-solid fa-trash"></i>&nbsp;Eliminar</a>
                             </div>
@@ -427,7 +431,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
-        document.addEventListener('livewire:load', function() {
+        document.addEventListener('livewire:init', function() {
             const data = @json($datos_evaluaciones_anuales);
             const general_anual = @json($general_anual);
             const objetivos_anual = @json($objetivos_anual);
@@ -485,7 +489,7 @@
     </script>
     {{-- Codigo cambio de filtros --}}
     <script>
-        document.addEventListener('livewire:load', function() {
+        document.addEventListener('livewire:init', function() {
             Livewire.on('dataAnual', (datosAnuales) => {
                 const anosAnual = datosAnuales.labels;
 
@@ -543,7 +547,7 @@
     </script>
 
     <script>
-        document.addEventListener('livewire:load', function() {
+        document.addEventListener('livewire:init', function() {
 
             const anos = @json($anos_evaluaciones);
             const data = @json($datos_evaluaciones_anuales);
@@ -580,7 +584,7 @@
     </script>
 
     <script>
-        document.addEventListener('livewire:load', function() {
+        document.addEventListener('livewire:init', function() {
             Livewire.on('dataMensual', (datosMensuales) => {
                 const mesSeleccionado = datosMensuales.labels[0]; // Solo un mes
                 const datosMes = datosMensuales.data[mesSeleccionado];

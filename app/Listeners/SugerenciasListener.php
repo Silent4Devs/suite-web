@@ -4,8 +4,6 @@ namespace App\Listeners;
 
 use App\Models\AprobadorSeleccionado;
 use App\Models\User;
-use App\Notifications\MejorasNotification;
-use App\Notifications\RiesgoNotification;
 use App\Notifications\SugerenciasNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -56,7 +54,6 @@ class SugerenciasListener implements ShouldQueue
 
         // Obtener los usuarios correspondientes
         $usuarios = User::whereIn('id', $aprobadoresIds)->get();
-
 
         // Enviar la notificación a cada usuario
         Notification::send($usuarios, new SugerenciasNotification($sugerencias, $tipo_consulta, $tabla, $slug));

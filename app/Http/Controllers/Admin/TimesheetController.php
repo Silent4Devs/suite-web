@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\TimesheetEvent;
 use App\Http\Controllers\Controller;
 use App\Jobs\NuevoProyectoJob;
 use App\Mail\TimesheetHorasSobrepasadas;
@@ -90,7 +91,7 @@ class TimesheetController extends Controller
     private function forgetCache()
     {
         //Borrar cache de Timesheet
-        Cache::forget('Timesheet:timesheet-' . auth()->user()->empleado->id);
+        Cache::forget('Timesheet:timesheet-'.auth()->user()->empleado->id);
         Cache::forget('Timesheet:timesheet_horas_all');
         Cache::forget('Timesheet:timesheet_all');
         Cache::forget('Timesheet:timesheet_estatus');
@@ -392,6 +393,7 @@ class TimesheetController extends Controller
                 catch (Throwable $e) {
                     DB::rollback();
                     $this->forgetCache();
+
                     // throw $e;
                     return response()->json(['status' => 400]);
                 }
@@ -696,24 +698,24 @@ class TimesheetController extends Controller
     {
         abort_if(Gate::denies('timesheet_administrador_proyectos_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
-            $request->validate(
-                [
-                    'identificador' => [
-                        'max:255',
-                        'required',
-                        Rule::unique('timesheet_proyectos')->where(function ($query) use ($request) {
-                            return $query->where('tipo', $request->tipo);
-                        }),
-                    ],
-                    'proyecto_name' => 'required|max:255',
-                    'cliente_id' => 'required',
-                    'sede_id' => 'nullable',
-                    'tipo' => 'required',
-                ],
-                [
-                    'identificador.unique' => 'El ID ya esta en uso',
-                ],
-            );
+            // $request->validate(
+            //     [
+            //         'identificador' => [
+            //             'max:255',
+            //             'required',
+            //             Rule::unique('timesheet_proyectos')->where(function ($query) use ($request) {
+            //                 return $query->where('tipo', $request->tipo);
+            //             }),
+            //         ],
+            //         'proyecto_name' => 'required|max:255',
+            //         'cliente_id' => 'required',
+            //         'sede_id' => 'nullable',
+            //         'tipo' => 'required',
+            //     ],
+            //     [
+            //         'identificador.unique' => 'El ID ya esta en uso',
+            //     ],
+            //  );
             if ($request->fecha_fin) {
                 $request->validate(
                     [
@@ -726,6 +728,7 @@ class TimesheetController extends Controller
                     ],
                 );
             }
+
             $nuevo_proyecto = TimesheetProyecto::create([
                 'identificador' => $request->identificador,
                 'proyecto' => $request->proyecto_name,
@@ -779,10 +782,6 @@ class TimesheetController extends Controller
                     'id_proyecto' => $nuevo_proyecto->id,
                 ]);
             }
-
-            // return redirect('admin/timesheet/proyecto-empleados/'.$nuevo_proyecto->id);
-
-            // return redirect('admin/timesheet/proyectos/create');
 
             return response()->json([
                 'success' => true,
@@ -955,6 +954,8 @@ class TimesheetController extends Controller
         abort_if(Gate::denies('mi_timesheet_horas_rechazadas_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $papelera = Timesheet::where('estatus', 'papelera')->where('empleado_id', User::getCurrentUser()->empleado->id)->get();
 
+        event(new TimesheetEvent($papelera, 'papelera', 'timesheet', 'Timesheet Papelera'));
+
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
@@ -1000,6 +1001,8 @@ class TimesheetController extends Controller
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
+        event(new TimesheetEvent($aprobaciones, 'aprobaciones', 'timesheet', 'Timesheet Aprobado'));
+
         return view('admin.timesheet.aprobaciones', compact('aprobaciones', 'logo_actual', 'empresa_actual', 'habilitarTodos'));
     }
 
@@ -1021,6 +1024,8 @@ class TimesheetController extends Controller
                 ->where('aprobador_id', $usuario->empleado->id)
                 ->get();
         }
+
+        event(new TimesheetEvent($aprobados, 'aprobados', 'timesheet', 'Timesheet Aprobado'));
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -1048,6 +1053,8 @@ class TimesheetController extends Controller
                 ->get();
         }
 
+        event(new TimesheetEvent($rechazos, 'rechazos', 'timesheet', 'Timesheet Rechazado'));
+
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
@@ -1059,6 +1066,8 @@ class TimesheetController extends Controller
     {
         abort_if(Gate::denies('timesheet_administrador_aprobar_horas'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $aprobar = Timesheet::find($id);
+
+        event(new TimesheetEvent($aprobar, 'aprobar', 'timesheet', 'Timesheet Aprobado'));
         $aprobar->update([
             'estatus' => 'aprobado',
             'comentarios' => $request->comentarios,
@@ -1084,6 +1093,8 @@ class TimesheetController extends Controller
     {
         abort_if(Gate::denies('timesheet_administrador_aprobar_horas'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $rechazar = Timesheet::find($id);
+
+        event(new TimesheetEvent($rechazar, 'rechazar', 'timesheet', 'Timesheet Rechazado'));
         $rechazar->update([
             'estatus' => 'rechazado',
             'comentarios' => $request->comentarios,

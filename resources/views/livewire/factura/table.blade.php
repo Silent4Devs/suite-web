@@ -1,7 +1,7 @@
 <div class="row" style="margin-top: 15px; margin-bottom: 20px;">
     <div class="col l6">
         <label for="search">Busca un número de factura</label>
-        <input type="text" class="form-control" wire:model="search" placeholder="Busca un número de factura">
+        <input type="text" class="form-control" wire:model.live="search" placeholder="Busca un número de factura">
         {{-- <span>Usted está buscando: <strong>{{ $search }}</strong></span> --}}
     </div>
 
@@ -9,7 +9,7 @@
         style="margin-bottom: 0; margin-top: 1.87rem; display: flex; align-items: center; justify-content: center">
         <div class="col l3" style="margin: 0; text-align: end"><span>Mostrar</span></div>
         <div class="col l3" style="margin: 0">
-            <select class="select_pagination" wire:model="pagination">
+            <select class="select_pagination" wire:model.live="pagination">
                 <option value="5">5</option>
                 <option value="10">10</option>
                 <option value="20">20</option>
@@ -200,7 +200,7 @@
                                 </a>
                             </td>
                             <td>
-                                <button wire:click="$emit('triggerDeleteFactura',{{ $factura->id }})"
+                                <button wire:click="$dispatch('triggerDeleteFactura',{{ $factura->id }})"
                                     class="btn red">
                                     <i class="material-icons">delete</i>
                                 </button>

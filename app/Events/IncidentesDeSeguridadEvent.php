@@ -14,8 +14,11 @@ class IncidentesDeSeguridadEvent implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $incidentesSeguridad;
+
     public $tipo_consulta;
+
     public $tabla;
+
     public $slug;
 
     public function __construct(IncidentesSeguridad $incidentesSeguridad, $tipo_consulta, $tabla, $slug)

@@ -61,6 +61,7 @@ class InicioUsuarioController extends Controller
         abort_if(Gate::denies('mi_perfil_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $hoy = Carbon::now();
+
         $hoy->toDateString();
 
         Async::batchRun(

@@ -14,8 +14,11 @@ class PuestosEvent implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $puestos;
+
     public $tipo_consulta;
+
     public $tabla;
+
     public $slug;
 
     public function __construct(Puesto $puestos, $tipo_consulta, $tabla, $slug)

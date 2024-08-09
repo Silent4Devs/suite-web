@@ -3,7 +3,6 @@
 namespace App\Events;
 
 use App\Models\Quejas;
-use App\Models\RiesgoIdentificado;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
@@ -15,8 +14,11 @@ class QuejasEvent implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $quejas;
+
     public $tipo_consulta;
+
     public $tabla;
+
     public $slug;
 
     public function __construct(Quejas $quejas, $tipo_consulta, $tabla, $slug)

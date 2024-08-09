@@ -44,7 +44,6 @@ class DenunciasObserver
         $this->forgetCache();
     }
 
-
     private function forgetCache()
     {
         Cache::forget('denuncias_all');

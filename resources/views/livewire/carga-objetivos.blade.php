@@ -59,7 +59,7 @@
         </div>
         <div class="row">
             <div class="col-md-3 form-group anima-focus">
-                <select id="area" wire:model="select_area" class="form-control">
+                <select id="area" wire:model.live="select_area" class="form-control">
                     <option selected value="0">Todos</option>
                     @foreach ($areas as $area)
                         <option value="{{ $area->id }}">{{ $area->area }}</option>
@@ -68,7 +68,7 @@
                 <label for="area">Área</label>
             </div>
             <div class="col-md-3 form-group anima-focus">
-                <select id="puesto" wire:model="select_puesto" class="form-control">
+                <select id="puesto" wire:model.live="select_puesto" class="form-control">
                     <option selected value="0">Todos</option>
                     @foreach ($puestos as $puesto)
                         <option value="{{ $puesto->id }}">{{ $puesto->puesto }}</option>
@@ -77,7 +77,7 @@
                 <label for="puesto">Puesto</label>
             </div>
             <div class="col-md-3 form-group anima-focus">
-                <select id="perfil" wire:model="select_perfil" class="form-control">
+                <select id="perfil" wire:model.live="select_perfil" class="form-control">
                     <option selected value="0">Todos</option>
                     @foreach ($perfiles as $perfil)
                         <option value="{{ $perfil->id }}">{{ $perfil->nombre }}</option>
@@ -86,7 +86,7 @@
                 <label for="perfil">Perfil</label>
             </div>
             <div class="col-md-3 form-group anima-focus">
-                <select id="colaborador" wire:model="select_colaborador" class="form-control">
+                <select id="colaborador" wire:model.live="select_colaborador" class="form-control">
                     <option selected value="0">Todos</option>
                     @foreach ($empleados as $empleado)
                         <option value="{{ $empleado->id }}">{{ $empleado->name }}</option>

@@ -61,7 +61,7 @@ class ProductoController extends Controller
             DB::beginTransaction();
 
             // Intenta insertar un nuevo usuario en la tabla 'usuarios'
-            $productos = new Producto();
+            $productos = new Producto;
             $productos->descripcion = $request->descripcion;
             $productos->clave = $request->clave;
             $productos->save();

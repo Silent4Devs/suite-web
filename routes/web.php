@@ -253,6 +253,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::get('vista-global-permisos-goce-sueldo', 'PermisosGoceSueldoController@vistaGlobal')->name('vista-global-permisos-goce-sueldo');
         Route::delete('permisos-goce-sueldo/destroy', 'PermisosGoceSueldoController@massDestroy')->name('permisos-goce-sueldo.massDestroy');
         Route::resource('permisos-goce-sueldo', 'PermisosGoceSueldoController')->names([
+            'index' => 'permisos-goce-sueldo.index',
             'create' => 'permisos-goce-sueldo.create',
             'store' => 'permisos-goce-sueldo.store',
             'show' => 'permisos-goce-sueldo.show',
@@ -324,6 +325,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         ]);
 
         Route::resource('incidentes-dayoff', 'IncidentesDayOffController')->names([
+            'index' => 'incidentes-dayoff.index',
             'create' => 'incidentes-dayoff.create',
             'store' => 'incidentes-dayoff.store',
             'show' => 'incidentes-dayoff.show',
@@ -493,7 +495,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::get('recursos-humanos/evaluacion-desempeno/configuracion', 'RH\ObjetivosPeriodoController@config')->name('ev360-objetivos-periodo.config');
         Route::get('recursos-humanos/evaluacion-desempeno/index', 'RH\EvaluacionesDesempenoController@index')->name('rh.evaluaciones-desempeno.index');
         Route::delete('recursos-humanos/evaluacion-desempeno/{evaluacion}/destroy', 'RH\EvaluacionesDesempenoController@destroy')->name('rh.evaluaciones-desempeno.borrar');
-        Route::get('recursos-humanos/evaluacion-desempeno/{evaluacion}/editBorrador', 'RH\EvaluacionesDesempenoController@editBorrador')->name('rh.evaluaciones-desempeno.editBorrador');
 
         Route::get('recursos-humanos/evaluacion-desempeno/dashboard-general', 'RH\EvaluacionesDesempenoController@dashboardGeneral')->name('rh.evaluaciones-desempeno.dashboard-general');
         Route::get('recursos-humanos/evaluacion-desempeno/{evaluacion}/dashboard-evaluacion', 'RH\EvaluacionesDesempenoController@dashboardEvaluacion')->name('rh.evaluaciones-desempeno.dashboard-evaluacion');
@@ -1708,7 +1709,7 @@ Route::group(['prefix' => 'iso9001'], function () {
 //### NOTIFICACIONES ###
 //#####################
 
-// Route::get('/notificaciones', [\App\Http\Livewire\NotificacionesComponent::class, '__invoke'])->name('notificaciones');
+// Route::get('/notificaciones', [\App\Livewire\NotificacionesComponent::class, '__invoke'])->name('notificaciones');
 Route::get('/notificaciones', 'NotificacionesController@index')->name('notificaciones');
 Route::get('/tareas', 'TareasNotificacionesController@index')->name('tareas');
 
