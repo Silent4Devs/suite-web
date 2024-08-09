@@ -500,7 +500,7 @@ class DeskController extends Controller
 
         $activos = Activo::getAll();
 
-        $areas = Area::getAll();
+        $areas = Area::getIdNameAll();
 
         $aprobadores = AprobadorSeleccionado::where('riesgos_id', $riesgos->id)->first();
 
@@ -513,7 +513,7 @@ class DeskController extends Controller
 
         $sedes = Sede::getAll();
 
-        $empleados = Empleado::getaltaAll();
+        $empleados = Empleado::getIDaltaAll();
 
         $firmaModules = FirmaModule::where('modulo_id', $modulo)->where('submodulo_id', $submodulo)->first();
 
@@ -688,226 +688,226 @@ class DeskController extends Controller
 
         return redirect()->route('admin.desk.index');
     }
+//
+    // public function indexQueja()
+    // {
+    //     abort_if(Gate::denies('centro_atencion_quejas_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-    public function indexQueja()
-    {
-        abort_if(Gate::denies('centro_atencion_quejas_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+    //     $quejas = Quejas::with('quejo')->where('archivado', false)->get();
 
-        $quejas = Quejas::with('quejo')->where('archivado', false)->get();
+    //     return datatables()->of($quejas)->toJson();
+    // }
 
-        return datatables()->of($quejas)->toJson();
-    }
+    // public function editQuejas(Request $request, $id_quejas)
+    // {
+    //     abort_if(Gate::denies('centro_atencion_quejas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-    public function editQuejas(Request $request, $id_quejas)
-    {
-        abort_if(Gate::denies('centro_atencion_quejas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+    //     $modulo = 1;
 
-        $modulo = 1;
+    //     $submodulo = 3;
 
-        $submodulo = 3;
+    //     $quejas = Quejas::findOrfail(intval($id_quejas))->load('evidencias_quejas');
 
-        $quejas = Quejas::findOrfail(intval($id_quejas))->load('evidencias_quejas');
+    //     $procesos = Proceso::getAll();
 
-        $procesos = Proceso::getAll();
+    //     $activos = Activo::getAll();
 
-        $activos = Activo::getAll();
+    //     $analisis = AnalisisSeguridad::where('formulario', '=', 'queja')->where('quejas_id', intval($id_quejas))->first();
 
-        $analisis = AnalisisSeguridad::where('formulario', '=', 'queja')->where('quejas_id', intval($id_quejas))->first();
+    //     $areas = Area::getAll();
 
-        $areas = Area::getAll();
+    //     $sedes = Sede::getAll();
 
-        $sedes = Sede::getAll();
+    //     $empleados = Empleado::getaltaAll();
 
-        $empleados = Empleado::getaltaAll();
+    //     $aprobadores = AprobadorSeleccionado::where('quejas_id', $quejas->id)->first();
 
-        $aprobadores = AprobadorSeleccionado::where('quejas_id', $quejas->id)->first();
+    //     $aprobadoresArray = [];
 
-        $aprobadoresArray = [];
+    //     if ($aprobadores) {
+    //         // Convierte el campo aprobadores de JSON a array
+    //         $aprobadoresArray = json_decode($aprobadores->aprobadores, true);
+    //     }
 
-        if ($aprobadores) {
-            // Convierte el campo aprobadores de JSON a array
-            $aprobadoresArray = json_decode($aprobadores->aprobadores, true);
-        }
+    //     $firmaModules = FirmaModule::where('modulo_id', $modulo)->where('submodulo_id', $submodulo)->first();
 
-        $firmaModules = FirmaModule::where('modulo_id', $modulo)->where('submodulo_id', $submodulo)->first();
+    //     if ($firmaModules) {
+    //         $participantesIds = json_decode($firmaModules->participantes, true); // Decodificar como array
 
-        if ($firmaModules) {
-            $participantesIds = json_decode($firmaModules->participantes, true); // Decodificar como array
+    //         if ($participantesIds) {
+    //             $firmaModules->empleados = User::whereIn('id', $participantesIds)
+    //                 ->get();
+    //         } else {
+    //             $firmaModules->empleados = collect();
+    //         }
+    //     }
 
-            if ($participantesIds) {
-                $firmaModules->empleados = User::whereIn('id', $participantesIds)
-                    ->get();
-            } else {
-                $firmaModules->empleados = collect();
-            }
-        }
+    //     $participantsSelected = false;
 
-        $participantsSelected = false;
+    //     $firmas = FirmaCentroAtencion::with('empleado')->where('modulo_id', $modulo)->where('submodulo_id', $submodulo)->where('id_quejas', $quejas->id)->get();
 
-        $firmas = FirmaCentroAtencion::with('empleado')->where('modulo_id', $modulo)->where('submodulo_id', $submodulo)->where('id_quejas', $quejas->id)->get();
+    //     $firma_validacion = FirmaCentroAtencion::where('modulo_id', $modulo)->where('submodulo_id', $submodulo)->where('id_quejas', $quejas->id)->first();
 
-        $firma_validacion = FirmaCentroAtencion::where('modulo_id', $modulo)->where('submodulo_id', $submodulo)->where('id_quejas', $quejas->id)->first();
+    //     return view('admin.desk.quejas.edit', compact('quejas', 'procesos', 'empleados', 'areas', 'activos', 'sedes', 'analisis', 'firmaModules', 'firmas', 'aprobadores', 'aprobadoresArray', 'participantsSelected', 'firma_validacion'));
+    // }
 
-        return view('admin.desk.quejas.edit', compact('quejas', 'procesos', 'empleados', 'areas', 'activos', 'sedes', 'analisis', 'firmaModules', 'firmas', 'aprobadores', 'aprobadoresArray', 'participantsSelected', 'firma_validacion'));
-    }
+    // public function updateQuejas(Request $request, $id_quejas)
+    // {
+    //     abort_if(Gate::denies('centro_atencion_quejas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-    public function updateQuejas(Request $request, $id_quejas)
-    {
-        abort_if(Gate::denies('centro_atencion_quejas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+    //     $quejas = Quejas::findOrfail(intval($id_quejas));
 
-        $quejas = Quejas::findOrfail(intval($id_quejas));
+    //     $modulo = 1;
 
-        $modulo = 1;
+    //     $submodulo = 3;
 
-        $submodulo = 3;
+    //     $existingRecord = AprobadorSeleccionado::where('modulo_id', $modulo)->where('submodulo_id', $submodulo)->where('user_id', Auth::id())->where('quejas_id', $quejas->id)->first();
 
-        $existingRecord = AprobadorSeleccionado::where('modulo_id', $modulo)->where('submodulo_id', $submodulo)->where('user_id', Auth::id())->where('quejas_id', $quejas->id)->first();
+    //     // Si existe, eliminarlo
+    //     if ($existingRecord) {
+    //         $existingRecord->delete();
+    //     }
 
-        // Si existe, eliminarlo
-        if ($existingRecord) {
-            $existingRecord->delete();
-        }
+    //     $aprobadorSeleccionado = new AprobadorSeleccionado();
 
-        $aprobadorSeleccionado = new AprobadorSeleccionado();
+    //     // Asignar cada campo individualmente
+    //     $aprobadorSeleccionado->modulo_id = $modulo;
+    //     $aprobadorSeleccionado->submodulo_id = $submodulo;
+    //     $aprobadorSeleccionado->user_id = Auth::id();
+    //     $aprobadorSeleccionado->seguridad_id = null;
+    //     $aprobadorSeleccionado->mejoras_id = null;
+    //     $aprobadorSeleccionado->riesgos_id = null;
+    //     $aprobadorSeleccionado->sugerencias_id = null;
+    //     $aprobadorSeleccionado->quejas_id = $quejas->id;
+    //     $aprobadorSeleccionado->denuncias_id = null;
+    //     $aprobadorSeleccionado->aprobadores = json_encode($request->participantes);
 
-        // Asignar cada campo individualmente
-        $aprobadorSeleccionado->modulo_id = $modulo;
-        $aprobadorSeleccionado->submodulo_id = $submodulo;
-        $aprobadorSeleccionado->user_id = Auth::id();
-        $aprobadorSeleccionado->seguridad_id = null;
-        $aprobadorSeleccionado->mejoras_id = null;
-        $aprobadorSeleccionado->riesgos_id = null;
-        $aprobadorSeleccionado->sugerencias_id = null;
-        $aprobadorSeleccionado->quejas_id = $quejas->id;
-        $aprobadorSeleccionado->denuncias_id = null;
-        $aprobadorSeleccionado->aprobadores = json_encode($request->participantes);
+    //     $aprobadorSeleccionado->save();
 
-        $aprobadorSeleccionado->save();
+    //     $empleadoIds = $request->participantes ?? [];
 
-        $empleadoIds = $request->participantes ?? [];
+    //     // Obtener empleados desde la base de datos
+    //     $empleados = User::select('id', 'name', 'email')->whereIn('id', $empleadoIds)->get();
 
-        // Obtener empleados desde la base de datos
-        $empleados = User::select('id', 'name', 'email')->whereIn('id', $empleadoIds)->get();
+    //     $status = 'quejas';
 
-        $status = 'quejas';
+    //     $organizacion = Organizacion::first();
 
-        $organizacion = Organizacion::first();
+    //     $quejas->update([
+    //         'titulo' => $request->titulo,
+    //         'estatus' => $request->estatus,
+    //         'fecha' => $request->fecha,
+    //         'sede' => $request->sede,
+    //         'ubicacion' => $request->ubicacion,
+    //         'descripcion' => $request->descripcion,
+    //         'area_quejado' => $request->area_quejado,
+    //         'colaborador_quejado' => $request->colaborador_quejado,
+    //         'proceso_quejado' => $request->proceso_quejado,
+    //         'externo_quejado' => $request->externo_quejado,
+    //         'comentarios' => $request->comentarios,
+    //         'fecha_cierre' => $request->fecha_cierre,
 
-        $quejas->update([
-            'titulo' => $request->titulo,
-            'estatus' => $request->estatus,
-            'fecha' => $request->fecha,
-            'sede' => $request->sede,
-            'ubicacion' => $request->ubicacion,
-            'descripcion' => $request->descripcion,
-            'area_quejado' => $request->area_quejado,
-            'colaborador_quejado' => $request->colaborador_quejado,
-            'proceso_quejado' => $request->proceso_quejado,
-            'externo_quejado' => $request->externo_quejado,
-            'comentarios' => $request->comentarios,
-            'fecha_cierre' => $request->fecha_cierre,
+    //     ]);
 
-        ]);
+    //     if ($quejas->estatus === 'cerrado' || $quejas->estatus === 'cancelado') {
 
-        if ($quejas->estatus === 'cerrado' || $quejas->estatus === 'cancelado') {
+    //         $existingRecord = AprobadorSeleccionado::where('quejas_id', $quejas->id)->first();
 
-            $existingRecord = AprobadorSeleccionado::where('quejas_id', $quejas->id)->first();
+    //         // Si existe, eliminarlo
+    //         if ($existingRecord) {
+    //             $existingRecord->delete();
+    //         }
 
-            // Si existe, eliminarlo
-            if ($existingRecord) {
-                $existingRecord->delete();
-            }
+    //         $aprobadorSeleccionado = new AprobadorSeleccionado();
 
-            $aprobadorSeleccionado = new AprobadorSeleccionado();
+    //         // Asignar cada campo individualmente
+    //         $aprobadorSeleccionado->modulo_id = $modulo;
+    //         $aprobadorSeleccionado->submodulo_id = $submodulo;
+    //         $aprobadorSeleccionado->user_id = Auth::id();
+    //         $aprobadorSeleccionado->seguridad_id = null;
+    //         $aprobadorSeleccionado->mejoras_id = null;
+    //         $aprobadorSeleccionado->riesgos_id = null;
+    //         $aprobadorSeleccionado->sugerencias_id = null;
+    //         $aprobadorSeleccionado->quejas_id = $quejas->id;
+    //         $aprobadorSeleccionado->denuncias_id = null;
+    //         $aprobadorSeleccionado->aprobadores = json_encode($request->participantes);
 
-            // Asignar cada campo individualmente
-            $aprobadorSeleccionado->modulo_id = $modulo;
-            $aprobadorSeleccionado->submodulo_id = $submodulo;
-            $aprobadorSeleccionado->user_id = Auth::id();
-            $aprobadorSeleccionado->seguridad_id = null;
-            $aprobadorSeleccionado->mejoras_id = null;
-            $aprobadorSeleccionado->riesgos_id = null;
-            $aprobadorSeleccionado->sugerencias_id = null;
-            $aprobadorSeleccionado->quejas_id = $quejas->id;
-            $aprobadorSeleccionado->denuncias_id = null;
-            $aprobadorSeleccionado->aprobadores = json_encode($request->participantes);
+    //         $aprobadorSeleccionado->save();
 
-            $aprobadorSeleccionado->save();
+    //         // Enviar correos electrónicos
+    //         foreach ($empleados as $empleado) {
+    //             Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new SolicitudAprobacion($empleado, $status, $quejas->id, $organizacion));
+    //         }
 
-            // Enviar correos electrónicos
-            foreach ($empleados as $empleado) {
-                Mail::to(trim($this->removeUnicodeCharacters($empleado->email)))->queue(new SolicitudAprobacion($empleado, $status, $quejas->id, $organizacion));
-            }
+    //         event(new QuejasEvent($quejas, 'update', 'quejas', 'Queja'));
+    //     }
 
-            event(new QuejasEvent($quejas, 'update', 'quejas', 'Queja'));
-        }
+    //     // return redirect()->route('admin.desk.quejas-edit', $id_quejas)->with('success', 'Reporte actualizado');
+    //     return redirect()->route('admin.desk.index')->with('success', 'Reporte actualizado');
+    // }
 
-        // return redirect()->route('admin.desk.quejas-edit', $id_quejas)->with('success', 'Reporte actualizado');
-        return redirect()->route('admin.desk.index')->with('success', 'Reporte actualizado');
-    }
+    // public function updateAnalisisQuejas(Request $request, $id_quejas)
+    // {
+    //     $analisis_seguridad = AnalisisSeguridad::findOrfail(intval($id_quejas));
+    //     $analisis_seguridad->update([
+    //         'problema_diagrama' => $request->problema_diagrama,
+    //         'problema_porque' => $request->problema_porque,
+    //         'causa_ideas' => $request->causa_ideas,
+    //         'causa_porque' => $request->causa_porque,
+    //         'ideas' => $request->ideas,
+    //         'porque_1' => $request->porque_1,
+    //         'porque_2' => $request->porque_2,
+    //         'porque_3' => $request->porque_3,
+    //         'porque_4' => $request->porque_4,
+    //         'porque_5' => $request->porque_5,
+    //         'control_a' => $request->control_a,
+    //         'control_b' => $request->control_b,
+    //         'proceso_a' => $request->proceso_a,
+    //         'proceso_b' => $request->proceso_b,
+    //         'personas_a' => $request->personas_a,
+    //         'personas_b' => $request->personas_b,
+    //         'tecnologia_a' => $request->tecnologia_a,
+    //         'tecnologia_b' => $request->tecnologia_b,
+    //         'metodos_a' => $request->metodos_a,
+    //         'metodos_b' => $request->metodos_b,
+    //         'ambiente_a' => $request->ambiente_a,
+    //         'ambiente_b' => $request->ambiente_b,
+    //         'fecha_cierre' => $request->fecha_cierre,
+    //     ]);
 
-    public function updateAnalisisQuejas(Request $request, $id_quejas)
-    {
-        $analisis_seguridad = AnalisisSeguridad::findOrfail(intval($id_quejas));
-        $analisis_seguridad->update([
-            'problema_diagrama' => $request->problema_diagrama,
-            'problema_porque' => $request->problema_porque,
-            'causa_ideas' => $request->causa_ideas,
-            'causa_porque' => $request->causa_porque,
-            'ideas' => $request->ideas,
-            'porque_1' => $request->porque_1,
-            'porque_2' => $request->porque_2,
-            'porque_3' => $request->porque_3,
-            'porque_4' => $request->porque_4,
-            'porque_5' => $request->porque_5,
-            'control_a' => $request->control_a,
-            'control_b' => $request->control_b,
-            'proceso_a' => $request->proceso_a,
-            'proceso_b' => $request->proceso_b,
-            'personas_a' => $request->personas_a,
-            'personas_b' => $request->personas_b,
-            'tecnologia_a' => $request->tecnologia_a,
-            'tecnologia_b' => $request->tecnologia_b,
-            'metodos_a' => $request->metodos_a,
-            'metodos_b' => $request->metodos_b,
-            'ambiente_a' => $request->ambiente_a,
-            'ambiente_b' => $request->ambiente_b,
-            'fecha_cierre' => $request->fecha_cierre,
-        ]);
+    //     return redirect()->route('admin.desk.quejas-edit', $analisis_seguridad->quejas_id)->with('success', 'Reporte actualizado');
+    // }
 
-        return redirect()->route('admin.desk.quejas-edit', $analisis_seguridad->quejas_id)->with('success', 'Reporte actualizado');
-    }
+    // public function archivadoQueja(Request $request, $incidente)
+    // {
 
-    public function archivadoQueja(Request $request, $incidente)
-    {
+    //     if ($request->ajax()) {
+    //         $queja = Quejas::findOrfail(intval($incidente));
+    //         $queja->update([
+    //             'archivado' => true,
+    //         ]);
 
-        if ($request->ajax()) {
-            $queja = Quejas::findOrfail(intval($incidente));
-            $queja->update([
-                'archivado' => true,
-            ]);
+    //         return response()->json(['success' => true]);
+    //     }
+    // }
 
-            return response()->json(['success' => true]);
-        }
-    }
+    // public function archivoQueja()
+    // {
+    //     $quejas = Quejas::getAll()->where('archivado', true);
 
-    public function archivoQueja()
-    {
-        $quejas = Quejas::getAll()->where('archivado', true);
+    //     return view('admin.desk.quejas.archivo', compact('quejas'));
+    // }
 
-        return view('admin.desk.quejas.archivo', compact('quejas'));
-    }
+    // public function recuperarArchivadoQueja($id)
+    // {
+    //     $queja = Quejas::find($id);
 
-    public function recuperarArchivadoQueja($id)
-    {
-        $queja = Quejas::find($id);
+    //     $queja->update([
+    //         'archivado' => false,
+    //     ]);
 
-        $queja->update([
-            'archivado' => false,
-        ]);
-
-        return redirect()->route('admin.desk.index');
-    }
+    //     return redirect()->route('admin.desk.index');
+    // }
 
     public function indexDenuncia()
     {

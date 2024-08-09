@@ -464,7 +464,7 @@
                             </div>
 
                             <form method="POST" class="col-12"
-                                action="{{ route('admin.desk.analisis_queja-update', $analisis->id) }}">
+                                action="{{ route('admin.reportes-quejas-update', $analisis->id) }}">
                                 @csrf
 
                                 <div class="col-12" style="position: relative;">
