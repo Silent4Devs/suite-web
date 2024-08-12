@@ -75,16 +75,7 @@
 
     </div>
 
-    <div class="card card-body">
-        <div class="row">
-            <div class="col-md-6">
-                <div id="map-position-cl" style="width: 100%; height: 300px;"></div>
-            </div>
-            <div class="col-md-6">
-                <div id="map-position-cl-v2" style="width: 100%; height: 300px;"></div>
-            </div>
-        </div>
-    </div>
+    @livewire('analisis-riesgos.head-map-risk-two')
 
     @livewire('analisis-riesgos.form-risk-analysis', ['RiskAnalysisId' => $riskAnalysisId])
 @endsection
@@ -96,40 +87,56 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.0/TweenMax.min.js"></script>
     <script>
         $(document).ready(function() {
+            var columnsCount = 5;
+
+            var celdas = [];
+            var colorsCeldas = [];
+
+            for (let i = 0; i < columnsCount; i++) {
+                for (let ii = 0; ii < columnsCount; ii++) {
+                    celdas.push([i, ii, i + 1]);
+                }
+
+                colorsCeldas.push('#' + Math.floor(Math.random() * 16777215).toString(16));
+            }
+
+            // celdas = [
+            //     [0, 0, 1],
+            //     [0, 1, 1],
+            //     [0, 2, 2],
+            //     [0, 3, 3],
+            //     [1, 0, 1],
+            //     [1, 1, 2],
+            //     [1, 2, 3],
+            //     [1, 3, 4],
+            //     [2, 0, 2],
+            //     [2, 1, 3],
+            //     [2, 2, 4],
+            //     [2, 3, 4],
+            //     [3, 0, 3],
+            //     [3, 1, 4],
+            //     [3, 2, 4],
+            //     [3, 3, 4]
+            // ]
+
+            console.log(celdas, colorsCeldas);
+
             var chartDom = document.getElementById('map-position-cl');
             var myChart = echarts.init(chartDom);
             var option;
 
             // prettier-ignore
             const hours = [
-                '1a', '2a', '3a', '4a'
+                // '1a', '2a', '3a', '4a'
             ];
             // prettier-ignore
             const days = [
-                '1', '2', '3', '4',
+                // '1', '2', '3', '4',
             ];
             // prettier-ignore
-            const data = [
-                    [0, 0, 1],
-                    [0, 1, 1],
-                    [0, 2, 2],
-                    [0, 3, 3],
-                    [1, 0, 1],
-                    [1, 1, 2],
-                    [1, 2, 3],
-                    [1, 3, 4],
-                    [2, 0, 2],
-                    [2, 1, 3],
-                    [2, 2, 4],
-                    [2, 3, 4],
-                    [3, 0, 3],
-                    [3, 1, 4],
-                    [3, 2, 4],
-                    [3, 3, 4]
-                ]
-                .map(function(item) {
-                    return [item[1], item[0], item[2] || '-'];
-                });
+            const data = celdas.map(function(item) {
+                return [item[1], item[0], item[2] || '-'];
+            });
             option = {
                 tooltip: {
                     position: 'top'
@@ -177,7 +184,7 @@
                     orient: 'horizontal',
                     left: 'center',
                     inRange: {
-                        color: ['#4BCFA2', '#F2C322', '#FF8C34', '#FC5375']
+                        color: colorsCeldas,
                     }
                     // padding:5,
                     // top: '5%'
