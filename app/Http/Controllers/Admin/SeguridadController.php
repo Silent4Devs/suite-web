@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+
 use App\Http\Controllers\Controller;
 
 use App\Events\IncidentesDeSeguridadEvent;
@@ -99,9 +100,9 @@ class SeguridadController extends Controller
             foreach ($request->file('evidencia') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
+                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
 
-                $new_name_image = 'Seguridad_file_'.$incidentes_seguridad->id.'_'.$name_image.'.'.$extension;
+                $new_name_image = 'Seguridad_file_' . $incidentes_seguridad->id . '_' . $name_image . '.' . $extension;
 
                 $route = 'public/evidencias_seguridad';
 
@@ -186,6 +187,13 @@ class SeguridadController extends Controller
 
         return view('admin.desk.seguridad.edit', compact('incidentesSeguridad', 'activos', 'empleados', 'sedes', 'areas', 'procesos', 'subcategorias', 'categorias', 'analisis', 'firmaModules', 'firmas', 'aprobadores', 'aprobadoresArray', 'participantsSelected', 'firma_validacion'));
     }
+
+
+    public function removeUnicodeCharacters($string)
+    {
+        return preg_replace('/[^\x00-\x7F]/u', '', $string);
+    }
+
     public function updateSeguridad(Request $request, $id_incidente)
     {
         abort_if(Gate::denies('centro_atencion_incidentes_de_seguridad_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');

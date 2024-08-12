@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+
 use App\Http\Controllers\Controller;
 
 use App\Models\Activo;
@@ -27,6 +28,11 @@ class DenunciasController extends Controller
         $sedes = Sede::getAll();
 
         return view('admin.inicioUsuario.formularios.denuncias', compact('empleados', 'sedes'));
+    }
+
+    public function removeUnicodeCharacters($string)
+    {
+        return preg_replace('/[^\x00-\x7F]/u', '', $string);
     }
 
     public function storeDenuncias(Request $request)
@@ -63,9 +69,9 @@ class DenunciasController extends Controller
             foreach ($request->file('evidencia') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
+                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
 
-                $new_name_image = 'Denuncia_file_'.$denuncias->id.'_'.$name_image.'.'.$extension;
+                $new_name_image = 'Denuncia_file_' . $denuncias->id . '_' . $name_image . '.' . $extension;
 
                 $route = 'public/evidencias_denuncias';
 
