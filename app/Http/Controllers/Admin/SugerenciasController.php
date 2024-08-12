@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+
 use App\Http\Controllers\Controller;
 
 use App\Models\Activo;
@@ -16,6 +17,7 @@ use App\Models\Sugerencias;
 use App\Models\User;
 use Carbon\Carbon;
 use App\Events\SugerenciasEvent;
+use App\Mail\SolicitudAprobacion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Response;
@@ -35,6 +37,11 @@ class SugerenciasController extends Controller
         $procesos = Proceso::getAll();
 
         return view('admin.inicioUsuario.formularios.sugerencias', compact('areas', 'empleados', 'procesos'));
+    }
+
+    public function removeUnicodeCharacters($string)
+    {
+        return preg_replace('/[^\x00-\x7F]/u', '', $string);
     }
 
     public function storeSugerencias(Request $request)
@@ -176,8 +183,8 @@ class SugerenciasController extends Controller
             'descripcion' => $request->descripcion,
             'estatus' => $request->estatus,
             'fecha_cierre' => $request->estatus === 'cancelado'
-            ? Carbon::now()->format('Y-m-d H:i:s')
-            : Carbon::createFromFormat('d-m-Y h:i:s a', $request->fecha_cierre, 'en_US')->format('Y-m-d H:i:s'),
+                ? Carbon::now()->format('Y-m-d H:i:s')
+                : Carbon::createFromFormat('d-m-Y h:i:s a', $request->fecha_cierre, 'en_US')->format('Y-m-d H:i:s'),
 
         ]);
 
