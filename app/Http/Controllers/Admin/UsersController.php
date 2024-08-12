@@ -36,13 +36,13 @@ class UsersController extends Controller
             return view('users.tbUsersIndex', compact('users', 'existsVinculoEmpleadoAdmin', 'empleados'));
         } catch (\Exception $e) {
             // Registrar el error en los logs
-            Log::channel('logstash')->info('Error al crear usuario: ' . $e->getMessage(), [
+            Log::channel('logstash')->info('Error al cargar usuarios: ' . $e->getMessage(), [
                 'exception' => $e,
                 'input' => $request->all(),
             ]);
 
             // Retornar una respuesta de error al cliente
-            return response()->json(['message' => 'Error al crear el usuario'], 500);
+            return response()->json(['message' => 'Error al cargar usuarios'], 500);
         }
     }
 
