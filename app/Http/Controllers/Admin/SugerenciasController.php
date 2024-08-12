@@ -14,6 +14,7 @@ use App\Models\Organizacion;
 use App\Models\Proceso;
 use App\Models\Sugerencias;
 use App\Models\User;
+use Carbon\Carbon;
 use App\Events\SugerenciasEvent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -174,7 +175,10 @@ class SugerenciasController extends Controller
             'titulo' => $request->titulo,
             'descripcion' => $request->descripcion,
             'estatus' => $request->estatus,
-            'fecha_cierre' => $request->fecha_cierre,
+            'fecha_cierre' => $request->estatus === 'cancelado'
+            ? Carbon::now()->format('Y-m-d H:i:s')
+            : Carbon::createFromFormat('d-m-Y h:i:s a', $request->fecha_cierre, 'en_US')->format('Y-m-d H:i:s'),
+
         ]);
 
         if ($sugerencias->estatus === 'cerrado' || $sugerencias->estatus === 'cancelado') {
