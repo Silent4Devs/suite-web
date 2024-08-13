@@ -15,6 +15,7 @@ use App\Events\IncidentesDeSeguridadEvent;
 use App\Events\MatrizRequisitosEvent;
 use App\Events\MejorasEvent;
 use App\Events\MinutasEvent;
+use App\Events\PermisoEvent;
 use App\Events\PlanImplementacionEvent;
 use App\Events\PoliticasSgiEvent;
 use App\Events\PuestosEvent;
@@ -44,6 +45,7 @@ use App\Listeners\IncidentesDeSeguridadListener;
 use App\Listeners\MatrizRequisitosListener;
 use App\Listeners\MejorasListener;
 use App\Listeners\MinutasListener;
+use App\Listeners\PermisoListener;
 use App\Listeners\PlanImplementacionListener;
 use App\Listeners\PoliticasSgiListener;
 use App\Listeners\PuestosListener;
@@ -70,8 +72,13 @@ use App\Models\Calendario;
 use App\Models\CalendarioOficial;
 use App\Models\CategoriaCapacitacion;
 use App\Models\ComunicacionSgi;
+use App\Models\ContractManager\CentroCosto;
+use App\Models\ContractManager\Comprador;
 use App\Models\ContractManager\Contrato;
+use App\Models\ContractManager\Moneda;
+use App\Models\ContractManager\Producto;
 use App\Models\ContractManager\ProveedorIndistinto;
+use App\Models\ContractManager\ProveedorOC;
 use App\Models\ContractManager\Requsicion;
 use App\Models\ContractManager\Sucursal;
 use App\Models\DeclaracionAplicabilidad;
@@ -155,7 +162,9 @@ use App\Observers\CalendarioObserver;
 use App\Observers\CatalogoRangosObjetivosObserver;
 use App\Observers\CategoriaCapacitacionObserver;
 use App\Observers\CategoryObserver;
+use App\Observers\CentroCostoObserver;
 use App\Observers\CompetenciaObserver;
+use App\Observers\CompradorObserver;
 use App\Observers\ComunicadoSgiObserver;
 use App\Observers\ContratoObserver;
 use App\Observers\CourseObserver;
@@ -187,6 +196,7 @@ use App\Observers\MejorasObserver;
 use App\Observers\MetricasObjetivoObserver;
 use App\Observers\MinutasAltaDireccionObserver;
 use App\Observers\ModelosObserver;
+use App\Observers\MonedaObserver;
 use App\Observers\ObjetivoEmpleadoObserver;
 use App\Observers\OrganizacionObserver;
 use App\Observers\ParticipantesListaDistribucionObserver;
@@ -197,6 +207,8 @@ use App\Observers\PlanBaseActividadesObserver;
 use App\Observers\PlanImplementacionObserver;
 use App\Observers\PoliticaSgsiObserver;
 use App\Observers\ProcesosObserver;
+use App\Observers\ProductoObserver;
+use App\Observers\ProveedorOCObserver;
 use App\Observers\PuestosObserver;
 use App\Observers\QuejasClienteObserver;
 use App\Observers\QuejasObserver;
@@ -318,6 +330,9 @@ class EventServiceProvider extends ServiceProvider
         SolicitudPermisoEvent::class => [
             SolicitudPermisoListener::class,
         ],
+        PermisoEvent::class => [
+            PermisoListener::class,
+        ],
         PlanImplementacionEvent::class => [
             PlanImplementacionListener::class,
         ],
@@ -345,7 +360,11 @@ class EventServiceProvider extends ServiceProvider
         IncidentesDeSeguridad::observe(IncidentesDeSeguridadObserver::class);
         AlcanceSgsi::observe(AlcancesObserver::class);
         Requsicion::observe(RequisicionesObserver::class);
+        CentroCosto::observe(CentroCostoObserver::class);
+        Comprador::observe(CompradorObserver::class);
         MatrizRequisitoLegale::observe(MastrizRequisitosObserver::class);
+        Moneda::observe(MonedaObserver::class);
+        ProveedorOC::observe(ProveedorOCObserver::class);
         AuditoriaAnual::observe(AuditoriaAnualObserver::class);
         AccionCorrectiva::observe(AccionCorrectivaObserver::class);
         Registromejora::observe(RegistroMejoraObserver::class);
@@ -400,6 +419,7 @@ class EventServiceProvider extends ServiceProvider
         ComunicacionSgi::observe(ComunicadoSgiObserver::class);
         Course::observe(CourseObserver::class);
         Contrato::observe(ContratoObserver::class);
+        Producto::observe(ProductoObserver::class);
         PerfilEmpleado::observe(PerfilEmpleadoObserver::class);
         IncidentesVacaciones::observe(IncidentesVacacionesObserver::class);
         IncidentesDayoff::observe(IncidentesDayoffObserver::class);

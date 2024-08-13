@@ -17,14 +17,14 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
 
-class PortalComunicacionController extends Controller
+class tbApiMobileControllerPortalComunicacion extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function tbFunctionIndex()
     {
         // abort_if(Gate::denies('portal_de_comunicaccion_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -96,7 +96,9 @@ class PortalComunicacionController extends Controller
             return $item->tipo_imagen === 'imagen';
         });
 
-        $comunicados = $imagesCommunications->take(4);
+        foreach ($imagesCommunications->take(4) as $imageCommunication) {
+            $comunication[] = $imageCommunication;
+        }
 
         $noticias = ComunicacionSgi::getAllwithImagenesCarrousel()->makeHidden(['descripcion', 'created_at', 'updated_at', 'imagenes_comunicacion']);
 
@@ -111,11 +113,11 @@ class PortalComunicacionController extends Controller
             return $item->tipo_imagen === 'imagen';
         });
 
-        $noticias = $imagesNews->take(3);
+        foreach ($imagesNews->take(3) as $imageNews) {
+            $news[] = $imageNews;
+        }
 
-        // dd($noticias);
-
-        $cumpleaños = Cache::remember('Portal_cumpleaños_'.$authId, 3600, function () use ($hoy) {
+        $cumpleaños = Cache::remember('Portal_cumpleaños_' . $authId, 3600, function () use ($hoy, $empleados) {
             return Empleado::alta()->select('id', 'name', 'area_id', 'puesto_id', 'foto', 'cumpleaños', 'estatus')->whereMonth('cumpleaños', '=', $hoy->format('m'))->get()->makeHidden([
                 'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
                 'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet',
@@ -157,7 +159,7 @@ class PortalComunicacionController extends Controller
             $cumple->id_puesto = $cumple->puestoRelacionado->id;
             $cumple->nombre_puesto = $cumple->puesto;
 
-            $cumple->fecha_cumpleanos = $this->convertircumpleanos($cumple->cumpleaños);
+            $cumple->fecha_cumpleanos = $this->tbFunctionConvertirCumpleanos($cumple->cumpleaños);
 
             if ($cumple->foto == null || $cumple->foto == '0') {
                 if ($cumple->genero == 'H') {
@@ -198,8 +200,8 @@ class PortalComunicacionController extends Controller
             [
                 'documentos' => $documentos_publicados,
                 'hoy' => $fecha_hoy,
-                'comunicados' => $comunicados,
-                'noticias' => $noticias,
+                'comunicados' => $comunication,
+                'noticias' => $news,
                 'empleado_asignado' => $empleado_asignado,
                 // 'aniversarios' => $aniversarios,
                 // 'aniversarios_contador_circulo' => $aniversarios_contador_circulo,
@@ -212,7 +214,7 @@ class PortalComunicacionController extends Controller
         ), 200)->header('Content-Type', 'application/json');
     }
 
-    public function convertircumpleanos($fecha)
+    public function tbFunctionConvertirCumpleanos($fecha)
     {
         $dia_cumpleanos = Carbon::parse($fecha)->format('d');
         $mes_fecha = Carbon::parse($fecha)->format('m');

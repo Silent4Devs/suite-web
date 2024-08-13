@@ -9,11 +9,11 @@ use App\Models\SolicitudVacaciones;
 use App\Models\User;
 use App\Traits\ObtenerOrganizacion;
 
-class ContadorSolicitudesApiController extends Controller
+class tbApiMobileControllerContadorSolicitudes extends Controller
 {
     use ObtenerOrganizacion;
 
-    public function contadorSolicitudes()
+    public function tbFunctionContadorSolicitudes()
     {
         $usuario = User::getCurrentUser();
 
@@ -28,7 +28,7 @@ class ContadorSolicitudesApiController extends Controller
         ]), 200)->header('Content-Type', 'application/json');
     }
 
-    public function contadorGeneralSolicitudes()
+    public function tbFunctionContadorGeneralSolicitudes()
     {
         $usuario = User::getCurrentUser();
 
@@ -40,6 +40,5 @@ class ContadorSolicitudesApiController extends Controller
         return response(json_encode([
             'solicitudes_pendientes' => $solicitudes_pendientes,
         ]), 200)->header('Content-Type', 'application/json');
-        // return view('admin.solicitudVacaciones.aprobacion-menu', compact('solicitud_dayoff', 'solicitud_vacacion', 'solicitud_permiso'));
     }
 }

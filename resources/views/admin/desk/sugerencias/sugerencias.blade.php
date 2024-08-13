@@ -196,16 +196,28 @@
                     columns: [
                         // {data: 'id'},
                         {
-                            data: 'folio'
+                            data: 'folio',
+                            render: function(data, type, row, meta) {
+                                return data ? data : '';
+                            }
                         },
                         {
-                            data: 'estatus'
+                            data: 'estatus',
+                            render: function(data, type, row, meta) {
+                                return data ? data : '';
+                            }
                         },
                         {
-                            data: 'fecha_reporte'
+                            data: 'fecha_reporte',
+                            render: function(data, type, row, meta) {
+                                return data ? data : '';
+                            }
                         },
                         {
-                            data: 'fecha_cierre'
+                            data: 'fecha_cierre',
+                            render: function(data, type, row, meta) {
+                                return data ? data : '';
+                            }
                         },
                         {
                             data: 'id',
@@ -228,16 +240,28 @@
                             }
                         },
                         {
-                            data: 'titulo'
+                            data: 'titulo',
+                            render: function(data, type, row, meta) {
+                                return data ? data : '';
+                            }
                         },
                         {
-                            data: 'area_sugerencias'
+                            data: 'area_sugerencias',
+                            render: function(data, type, row, meta) {
+                                return data ? data : '';
+                            }
                         },
                         {
-                            data: 'proceso_sugerencias'
+                            data: 'proceso_sugerencias',
+                            render: function(data, type, row, meta) {
+                                return data ? data : '';
+                            }
                         },
                         {
-                            data: 'descripcion'
+                            data: 'descripcion',
+                            render: function(data, type, row, meta) {
+                                return data ? data : '';
+                            }
                         },
                         {
                             data: 'id',
