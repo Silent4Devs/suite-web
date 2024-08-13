@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Events\SolicitudVacacionesEvent;
 use App\Http\Controllers\Controller;
 use App\Mail\RespuestaVacaciones as MailRespuestaVacaciones;
 use App\Mail\SolicitudVacaciones as MailSolicitudVacaciones;

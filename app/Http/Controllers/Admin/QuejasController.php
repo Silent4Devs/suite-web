@@ -3,19 +3,18 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-
 use App\Models\Activo;
 use App\Models\AnalisisSeguridad;
 use App\Models\Area;
 use App\Models\Empleado;
 use App\Models\EvidenciasQueja;
-use App\Models\Sede;
-use App\Models\User;
 use App\Models\Proceso;
 use App\Models\Quejas;
-use Illuminate\Support\Facades\Gate;
+use App\Models\Sede;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
 
 class QuejasController extends Controller
 {
@@ -83,9 +82,9 @@ class QuejasController extends Controller
             foreach ($request->file('evidencia') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
+                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
 
-                $new_name_image = 'Queja_file_' . $quejas->id . '_' . $name_image . '.' . $extension;
+                $new_name_image = 'Queja_file_'.$quejas->id.'_'.$name_image.'.'.$extension;
 
                 $route = 'public/evidencias_quejas';
 
@@ -102,6 +101,7 @@ class QuejasController extends Controller
 
         return redirect()->route('admin.desk.index')->with('success', 'Reporte generado');
     }
+
     public function indexQueja()
     {
         abort_if(Gate::denies('centro_atencion_quejas_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -110,6 +110,7 @@ class QuejasController extends Controller
 
         return datatables()->of($quejas)->toJson();
     }
+
     public function editQuejas(Request $request, $id_quejas)
     {
         abort_if(Gate::denies('centro_atencion_quejas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -180,7 +181,7 @@ class QuejasController extends Controller
             $existingRecord->delete();
         }
 
-        $aprobadorSeleccionado = new AprobadorSeleccionado();
+        $aprobadorSeleccionado = new AprobadorSeleccionado;
 
         // Asignar cada campo individualmente
         $aprobadorSeleccionado->modulo_id = $modulo;
@@ -230,7 +231,7 @@ class QuejasController extends Controller
                 $existingRecord->delete();
             }
 
-            $aprobadorSeleccionado = new AprobadorSeleccionado();
+            $aprobadorSeleccionado = new AprobadorSeleccionado;
 
             // Asignar cada campo individualmente
             $aprobadorSeleccionado->modulo_id = $modulo;

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-
 use App\Models\Activo;
 use App\Models\AnalisisSeguridad;
 use App\Models\AprobadorSeleccionado;
@@ -12,10 +11,9 @@ use App\Models\Empleado;
 use App\Models\EvidenciasDenuncia;
 use App\Models\Sede;
 use App\Models\User;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-
+use Illuminate\Support\Facades\Gate;
 
 class DenunciasController extends Controller
 {
@@ -69,9 +67,9 @@ class DenunciasController extends Controller
             foreach ($request->file('evidencia') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
+                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
 
-                $new_name_image = 'Denuncia_file_' . $denuncias->id . '_' . $name_image . '.' . $extension;
+                $new_name_image = 'Denuncia_file_'.$denuncias->id.'_'.$name_image.'.'.$extension;
 
                 $route = 'public/evidencias_denuncias';
 
@@ -88,6 +86,7 @@ class DenunciasController extends Controller
 
         return redirect()->route('admin.desk.index')->with('success', 'Reporte generado');
     }
+
     public function indexDenuncia()
     {
         abort_if(Gate::denies('centro_atencion_denuncias_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -161,7 +160,7 @@ class DenunciasController extends Controller
             $existingRecord->delete();
         }
 
-        $aprobadorSeleccionado = new AprobadorSeleccionado();
+        $aprobadorSeleccionado = new AprobadorSeleccionado;
 
         // Asignar cada campo individualmente
         $aprobadorSeleccionado->modulo_id = $modulo;
@@ -206,7 +205,7 @@ class DenunciasController extends Controller
                 $existingRecord->delete();
             }
 
-            $aprobadorSeleccionado = new AprobadorSeleccionado();
+            $aprobadorSeleccionado = new AprobadorSeleccionado;
 
             // Asignar cada campo individualmente
             $aprobadorSeleccionado->modulo_id = $modulo;

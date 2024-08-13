@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-use App\Http\Controllers\Controller;
 
-use App\Mail\AtencionQuejaAtendidaEmail;
+use App\Http\Controllers\Controller;
 use App\Mail\AceptacionAccionCorrectivaEmail;
+use App\Mail\AtencionQuejaAtendidaEmail;
 use App\Mail\CierreQuejaAceptadaEmail;
 use App\Mail\NotificacionResponsableQuejaEmail;
 use App\Mail\ResolucionQuejaRechazadaEmail;
@@ -23,8 +23,8 @@ use App\Models\TimesheetCliente;
 use App\Models\TimesheetProyecto;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
 
 class QuejasClienteController extends Controller
@@ -114,13 +114,13 @@ class QuejasClienteController extends Controller
 
         $image = null;
 
-        if ($request->file('evidencia') != null or !empty($request->file('evidencia'))) {
+        if ($request->file('evidencia') != null or ! empty($request->file('evidencia'))) {
             foreach ($request->file('evidencia') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
+                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
 
-                $new_name_image = 'Queja_file_' . $quejasClientes->id . '_' . $name_image . '.' . $extension;
+                $new_name_image = 'Queja_file_'.$quejasClientes->id.'_'.$name_image.'.'.$extension;
 
                 $route = 'public/evidencias_quejas_clientes';
 
@@ -248,13 +248,13 @@ class QuejasClienteController extends Controller
 
         $documento = null;
 
-        if ($request->file('evidencia') != null or !empty($request->file('evidencia'))) {
+        if ($request->file('evidencia') != null or ! empty($request->file('evidencia'))) {
             foreach ($request->file('evidencia') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_documento = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
+                $name_documento = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
 
-                $new_name_documento = 'Queja_file_' . $quejasClientes->id . '_' . $name_documento . '.' . $extension;
+                $new_name_documento = 'Queja_file_'.$quejasClientes->id.'_'.$name_documento.'.'.$extension;
 
                 $route = 'public/evidencias_quejas_clientes';
 
@@ -271,13 +271,13 @@ class QuejasClienteController extends Controller
 
         $image = null;
 
-        if ($request->file('cierre') != null or !empty($request->file('cierre'))) {
+        if ($request->file('cierre') != null or ! empty($request->file('cierre'))) {
             foreach ($request->file('cierre') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
+                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
 
-                $new_name_image = 'Queja_file_' . $quejasClientes->id . '_' . $name_image . '.' . $extension;
+                $new_name_image = 'Queja_file_'.$quejasClientes->id.'_'.$name_image.'.'.$extension;
 
                 $route = 'public/evidencias_quejas_clientes_cerrado';
 
@@ -307,7 +307,7 @@ class QuejasClienteController extends Controller
 
         if ($notificar_atencion_queja_no_aprobada) {
             if ($cerrar_ticket == false) {
-                if (!$quejasClientes->email_env_resolucion_rechazada) {
+                if (! $quejasClientes->email_env_resolucion_rechazada) {
                     if ($quejasClientes->registro != null && $quejasClientes->responsableAtencion != null) {
                         $quejasClientes->update([
                             'email_env_resolucion_rechazada' => true,
@@ -320,7 +320,7 @@ class QuejasClienteController extends Controller
 
         if ($notificar_atencion_queja_no_aprobada) {
             if ($cerrar_ticket) {
-                if (!$quejasClientes->email_env_resolucion_aprobada) {
+                if (! $quejasClientes->email_env_resolucion_aprobada) {
                     if ($quejasClientes->registro != null && $quejasClientes->responsableAtencion != null) {
                         $quejasClientes->update([
                             'email_env_resolucion_aprobada' => true,
@@ -331,8 +331,8 @@ class QuejasClienteController extends Controller
             }
         }
 
-        if (!$email_realizara_accion_inmediata) {
-            if (!is_null($quejasClientes->acciones_tomara_responsable)) {
+        if (! $email_realizara_accion_inmediata) {
+            if (! is_null($quejasClientes->acciones_tomara_responsable)) {
                 if ($quejasClientes->registro != null && $quejasClientes->responsableAtencion != null) {
                     $quejasClientes->update([
                         'email_realizara_accion_inmediata' => true,
@@ -343,7 +343,7 @@ class QuejasClienteController extends Controller
         }
 
         if ($notificar_registro_queja) {
-            if (!$quejasClientes->correo_enviado_registro) {
+            if (! $quejasClientes->correo_enviado_registro) {
                 if ($quejasClientes->registro != null && $quejasClientes->responsableAtencion != null) {
                     $quejasClientes->update([
                         'correo_enviado_registro' => true,
@@ -364,7 +364,7 @@ class QuejasClienteController extends Controller
                 $query->where('acciones_correctivas_aprobacionables_id', $quejasClientes->id);
             })->exists();
 
-            if (!$existeAC) {
+            if (! $existeAC) {
                 $accion_correctiva = AccionCorrectiva::create([
                     'tema' => $request->titulo,
                     'causaorigen' => 'Queja de un cliente',
@@ -391,7 +391,7 @@ class QuejasClienteController extends Controller
                 $quejasClientes->accionCorrectivaAprobacional()->sync($accion_correctiva->id);
             }
 
-            if (!$quejasClientes->correoEnviado) {
+            if (! $quejasClientes->correoEnviado) {
                 $quejasClientes->update([
                     'correoEnviado' => true,
                 ]);
@@ -700,7 +700,7 @@ class QuejasClienteController extends Controller
 
             return response()->json(['isValid' => true]);
         } elseif ($request->tipo_validacion == 'queja-atencion') {
-            if (!is_null($quejasClientes->responsable_atencion_queja_id)) {
+            if (! is_null($quejasClientes->responsable_atencion_queja_id)) {
                 if ($quejasClientes->responsable_atencion_queja_id != User::getCurrentUser()->empleado->id) {
                     $this->validateRequestRegistroQuejaCliente($request);
                     $this->validateRequestAnalisisQuejaCliente($request);
@@ -830,4 +830,3 @@ class QuejasClienteController extends Controller
         return view('admin.desk.quejas-clientes.show', compact('quejasClientes', 'id_quejas'));
     }
 }
-

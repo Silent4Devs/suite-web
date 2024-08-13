@@ -37,6 +37,7 @@ class tbApiMobileControllerSolicitudVacaciones extends Controller
         $url = preg_replace_callback('/[^A-Za-z0-9_\-\.~\/\\\:]/', function ($matches) {
             return rawurlencode($matches[0]);
         }, $url);
+
         return $url;
     }
 
@@ -558,7 +559,7 @@ class tbApiMobileControllerSolicitudVacaciones extends Controller
         $finVacaciones = $inicio_vacaciones->addYear($año);
         $finVacaciones = $finVacaciones->format('d-m-Y');
         $autoriza = $usuario->empleado->supervisor_id;
-        $vacacion = new SolicitudVacaciones();
+        $vacacion = new SolicitudVacaciones;
         $dias_disponibles = $this->tbFunctionDiasDisponiblesAñoPasado();
         $organizacion = Organizacion::getFirst();
         $dias_pendientes = SolicitudVacaciones::where('empleado_id', '=', $usuario->empleado->id)->where('aprobacion', '=', 1)->where('año', '=', $año)->sum('dias_solicitados');
@@ -815,14 +816,14 @@ class tbApiMobileControllerSolicitudVacaciones extends Controller
 
         $vacacion->empleado->makeHidden([
             'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
-            'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor'
+            'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor',
         ]);
 
         $vacacion->empleado->nombre_area = $vacacion->empleado->area->area;
         $vacacion->empleado->nombre_puesto = $vacacion->empleado->puesto;
 
         $vacacion->empleado->makeHidden([
-            'puestoRelacionado', 'area_id', 'puesto_id'
+            'puestoRelacionado', 'area_id', 'puesto_id',
         ]);
 
         return response(json_encode([
