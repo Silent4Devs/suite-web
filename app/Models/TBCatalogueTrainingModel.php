@@ -18,6 +18,15 @@ class TBCatalogueTrainingModel extends Model
     protected $fillable = [
         'id',
         'name',
-        'default'
+        'issuing_company',
+        'mark',
+        'manufacturer',
+        'norma',
+        'type_id',
     ];
+
+    public function category()
+    {
+        return $this->hasOne(TBTypeCatalogueTrainingModel::class, 'id', 'type_id');
+    }
 }

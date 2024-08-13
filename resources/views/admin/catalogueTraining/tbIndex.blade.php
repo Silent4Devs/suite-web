@@ -1,39 +1,36 @@
 @extends('layouts.admin')
 @section('content')
-<livewire:catalogue-training.catalogue-training/>
-
-<script>
-    document.addEventListener('saved', event => {
-        Swal.fire({
-            position: "top-center",
-            icon: "success",
-            title: "Registro guardado",
-            showConfirmButton: false,
-            timer: 1000
-        });
-
-});
-</script>
-{{-- <script>
-    document.addEventListener('deleteMessage', event => {
-        Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!"
-        }).then((result) => {
-        if (result.isConfirmed) {
-            @this.call('delete');
+    <livewire:catalogue-training.catalogue-training/>
+    <script>
+        document.addEventListener('saved', event => {
             Swal.fire({
-            title: "Deleted!",
-            text: "Your file has been deleted.",
-            icon: "success"
+                position: "top-center",
+                icon: "success",
+                title: "Registro guardado exitosamente",
+                showConfirmButton: false,
+                timer: 1500
             });
-        }
         });
-    });
-</script> --}}
+        document.addEventListener('edited', event => {
+            Swal.fire({
+                position: "top-center",
+                icon: "success",
+                title: "Registro editado exitosamente",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        });
+    </script>
+    <script>
+    <script>
+        document.addEventListener('nameValidation', event => {
+            Swal.fire({
+                position: "top-center",
+                icon: "error",
+                title: "El nombre de la capacitación ya esta registrado",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        });
+    </script>
 @endsection

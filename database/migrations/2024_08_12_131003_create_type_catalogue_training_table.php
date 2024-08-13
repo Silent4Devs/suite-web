@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('catalogue_training', function (Blueprint $table) {
+        Schema::create('type_catalogue_training', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->boolean('default');
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('catalogue_training');
+        Schema::dropIfExists('type_catalogue_training');
     }
 };

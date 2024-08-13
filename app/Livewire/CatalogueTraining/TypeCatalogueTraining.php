@@ -2,7 +2,7 @@
 
 namespace App\Livewire\CatalogueTraining;
 
-use App\Models\TBCatalogueTrainingModel;
+use App\Models\TBTypeCatalogueTrainingModel;
 use Carbon\Carbon;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
@@ -30,7 +30,7 @@ class TypeCatalogueTraining extends Component
 
     public function deleteMessage($id)
     {
-        $register = TBCatalogueTrainingModel::findOrFail($id);
+        $register = TBTypeCatalogueTrainingModel::findOrFail($id);
         $this->deleteRegister = $register;
         $this->dispatch('deleteMessage');
     }
@@ -38,7 +38,7 @@ class TypeCatalogueTraining extends Component
     public function edit($id)
     {
         $this->status = false;
-        $register = TBCatalogueTrainingModel::findOrFail($id);
+        $register = TBTypeCatalogueTrainingModel::findOrFail($id);
         $this->name = $register->name;
         $this->editRegister = $register;
     }
@@ -55,7 +55,7 @@ class TypeCatalogueTraining extends Component
     public function save()
     {
         $this->validate();
-        TBCatalogueTrainingModel::create([
+        TBTypeCatalogueTrainingModel::create([
             'name' => $this->name,
             'default' => false,
         ]);
@@ -70,7 +70,7 @@ class TypeCatalogueTraining extends Component
 
     public function render()
     {
-        $registers = TBCatalogueTrainingModel::orderBy('id')->get();
+        $registers = TBTypeCatalogueTrainingModel::orderBy('id')->get();
         foreach($registers as $register){
             $date = Carbon::parse($register->created_at)->format('d-m-Y');
             $register->date = $date;
@@ -78,8 +78,4 @@ class TypeCatalogueTraining extends Component
         $this->registers = $registers;
         return view('livewire.catalogue-training.type-catalogue-training');
     }
-    // public function render()
-    // {
-    //     return view('livewire.catalogue-training.type-catalogue-training');
-    // }
 }
