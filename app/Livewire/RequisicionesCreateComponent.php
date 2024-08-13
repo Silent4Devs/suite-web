@@ -135,7 +135,7 @@ class RequisicionesCreateComponent extends Component
 
     public $requisicionCreada = null;
 
-    protected $listeners = ['actualizarCountProveedores' => 'actualizarCountProveedores'];
+    protected $listeners = ['actualizarCountProveedores' => 'actualizarCountProveedores', 'redirigirFaltantes' => 'redirigirFaltantes'];
 
     public $filename;
 
@@ -186,7 +186,8 @@ class RequisicionesCreateComponent extends Component
 
         foreach ($collections as $property => $name) {
             if ($this->$property->isEmpty()) {
-                $this->dispatch('sin_registros', $name);
+                $this->alertaRegistrosFaltantes($name);
+                // $this->dispatch('sin_registros', $name);
             }
         }
 
@@ -214,6 +215,46 @@ class RequisicionesCreateComponent extends Component
     public function hydrate()
     {
         $this->dispatch('select2');
+    }
+
+    public function alertaRegistrosFaltantes($name)
+    {
+        $this->alert('warning', 'Sin Registros', [
+            'position' => 'center',
+            'timer' => '', // Mantén la alerta visible hasta que el usuario interactúe
+            'backdrop' => true, // Desactiva la interacción con el fondo
+            'allowOutsideClick' => false, // Evita cerrar la alerta al hacer clic fuera de ella
+            'toast' => false, // Desactivar el modo toast para permitir el backdrop
+            'showConfirmButton' => true,
+            'width' => '1000px', // Asegúrate de que el ancho esté en píxeles
+            'onConfirmed' => 'redirigirFaltantes',
+            'timerProgressBar' => false,
+            'text' => 'No hay registros en la selección de ' . $name . ', contacte al administrador.',
+            'confirmButtonText' => 'Entendido.',
+        ]);
+    }
+
+    public function alertaResponsablesFaltantes()
+    {
+        $this->alert('warning', 'Colaboradores no disponibles', [
+            'position' => 'center',
+            'timer' => '', // Mantén la alerta visible hasta que el usuario interactúe
+            'backdrop' => true, // Desactiva la interacción con el fondo
+            'allowOutsideClick' => false, // Evita cerrar la alerta al hacer clic fuera de ella
+            'toast' => false, // Desactivar el modo toast para permitir el backdrop
+            'showConfirmButton' => true,
+            'width' => '1000px', // Asegúrate de que el ancho esté en píxeles
+            'onConfirmed' => 'redirigirFaltantes',
+            'timerProgressBar' => false,
+            'text' => 'Los colaboradores asignados se encuentran ausentes. Es necesario acercarse con el administrador para solicitar que se agregue  un responsable, de lo contrario no podra firmar la requisición.',
+            'confirmButtonText' => 'Entendido.',
+        ]);
+    }
+
+    public function redirigirFaltantes()
+    {
+        redirect(route('contract_manager.requisiciones'));
+        // Do something
     }
 
     public function addProductos()
@@ -456,14 +497,14 @@ class RequisicionesCreateComponent extends Component
 
             $this->alert('success', 'Requisicion Creada con exito');
             DB::commit();
-            $this->dataFirma();
-            $this->dispatch('cambiarTab', 'contact');
-            $this->disabled = 'disabled';
         } catch (Throwable $e) {
             $this->forgetCache();
             DB::rollback();
             dd($e);
         }
+        $this->dataFirma();
+        $this->dispatch('cambiarTab', 'contact');
+        $this->disabled = 'disabled';
     }
 
     public function dataFirma()
@@ -512,7 +553,8 @@ class RequisicionesCreateComponent extends Component
         }
 
         if (empty($responsable)) {
-            $this->dispatch('sin_responsables');
+            $this->alertaResponsablesFaltantes();
+            // $this->dispatch('sin_responsables');
         }
     }
 

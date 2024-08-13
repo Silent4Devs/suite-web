@@ -263,7 +263,6 @@
                         data: 'id',
                         name: 'actions',
                         render: function(data, type, row, meta) {
-                            let requisiciones = @json($requisiciones);
                             let urlButtonArchivar = `/contract_manager/orden-compra/archivar/${data}`;
                             let urlButtonEdit = `/contract_manager/orden-compra/${data}/edit`;
                             let urlButtonShow = `/contract_manager/orden-compra/show/${data}`;

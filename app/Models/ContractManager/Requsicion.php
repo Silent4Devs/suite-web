@@ -83,8 +83,35 @@ class Requsicion extends Model implements Auditable
     //Redis methods
     public static function getAll()
     {
-        return Cache::remember('organizacion_all', 3600 * 24, function () {
-            return self::get();
+        return Cache::remember('Requisiciones:all', 3600 * 8, function () {
+            return self::orderByDesc('id')->get();
+        });
+    }
+
+    public static function getArchivoFalseAll()
+    {
+        return Cache::remember('Requisiciones:archivo_false_all', 3600 * 8, function () {
+            return self::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto', 'provedores_requisiciones', 'provedores_indistintos_requisiciones', 'provedores_requisiciones_catalogo', 'registroFirmas')->where('archivo', false)->orderByDesc('id')->get();
+        });
+    }
+
+    public static function getOCAll()
+    {
+        return Cache::remember('Requisiciones:ordenes_compra_false', 3600 * 8, function () {
+            return self::with('contrato', 'provedores_requisiciones')->where([
+                ['firma_solicitante', '!=', null],
+                ['firma_jefe', '!=', null],
+                ['firma_finanzas', '!=', null],
+                ['firma_compras', '!=', null],
+            ])->where('archivo', false)->orderByDesc('id')
+                ->get();
+        });
+    }
+
+    public static function getArchivoTrueAll()
+    {
+        return Cache::remember('Requisiciones:archivo_true_all', 3600 * 8, function () {
+            return self::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto', 'provedores_requisiciones', 'provedores_indistintos_requisiciones', 'provedores_requisiciones_catalogo', 'registroFirmas')->where('archivo', true)->orderByDesc('id')->get();
         });
     }
 
@@ -153,7 +180,7 @@ class Requsicion extends Model implements Auditable
             $tipo = 'RQ-';
         }
 
-        $codigo = $tipo.sprintf('%02d-%04d', $parte1, $parte2);
+        $codigo = $tipo . sprintf('%02d-%04d', $parte1, $parte2);
 
         return $codigo;
     }

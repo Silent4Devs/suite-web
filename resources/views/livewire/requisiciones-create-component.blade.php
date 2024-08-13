@@ -189,7 +189,7 @@
                             <div class="row mt-4 mb-3">
                                 <div class="col s12 l4">
                                     <div class="anima-focus">
-                                        <input type="text" id="cantidad_oblig" name="cantidad_oblig"
+                                        <input type="number" id="cantidad_oblig" name="cantidad_oblig"
                                             wire:model="cantidad_oblig" pattern="[0-9]+"
                                             title="Por favor, ingrese solo números enteros."
                                             class="model-cantidad form-control">
@@ -252,7 +252,7 @@
                                 <div class="row mt-4 mb-3">
                                     <div class="col s12 l4">
                                         <div class="anima-focus">
-                                            <input type="text" id="cantidad_oblig" name="cantidad_oblig"
+                                            <input type="number" id="cantidad_oblig" name="cantidad_oblig"
                                                 wire:model="array_productos.{{ $key }}.cantidad"
                                                 pattern="[0-9]+" title="Por favor, ingrese solo números enteros."
                                                 class="model-cantidad form-control">
