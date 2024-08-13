@@ -39,11 +39,11 @@ class DefinicionUnidadesObjetivos extends Component
     public function removeUnidad($keyndex)
     {
         $borrarPM = MetricasObjetivo::find($this->parametros[$keyndex]['id']);
-
-        $borrarPM->delete();
+        if ($borrarPM != null) {
+            $borrarPM->delete();
+        }
 
         unset($this->parametros[$keyndex]);
-        $this->parametros = array_values($this->parametros);
 
         $this->alert('success', 'Unidad eliminada con éxito.', [
             'position' => 'center',

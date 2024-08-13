@@ -1,14 +1,14 @@
 <div class="d-flex align-items-center justify-content-between">
     <div style="{{ $place == 'notificaciones-page' ? 'flex-basis: calc(80% - 5px)' : 'flex-basis:100%' }}">
         <a class="dropdown-item text-secondary"
-            href="{{ route('admin.incidentes-de-seguridads.show', $last_unread_notification->data['id']) }}">
+        href="{{ route('admin.desk.seguridad-edit', $last_unread_notification->data['id']) }}">
             @switch(" ".$last_unread_notification->data['type']) {{-- Se concatena un espacio porque el autoformateado lo agrega en el case --}}
                 @case(' create')
                     <div class="d-flex align-items-center justify-content-start">
                         @if (!empty($last_unread_notification->data['avatar_ruta']))
                             <img src="{{ asset($last_unread_notification->data['avatar_ruta']) }}" alt=""
                                 class="rounded-circle" style="width: 50px; height: 50px;">
-                            {{ $last_unread_notification->data['name'] }}.:
+                            {{ $last_unread_notification->data['name'] }}:
                         @else
                             <i class="pr-2 fas fa-tasks text-success"></i>
                         @endif
@@ -22,7 +22,7 @@
                         @if (!empty($last_unread_notification->data['avatar_ruta']))
                             <img src="{{ asset($last_unread_notification->data['avatar_ruta']) }}" alt=""
                                 class="rounded-circle" style="width: 50px; height: 50px;">
-                            {{ $last_unread_notification->data['name'] }}.:
+                            {{ $last_unread_notification->data['name'] }}:
                         @else
                             <i class="pr-2 fas fa-tools text-info"></i>
                         @endif
@@ -40,7 +40,7 @@
                         @if (!empty($last_unread_notification->data['avatar_ruta']))
                             <img src="{{ asset($last_unread_notification->data['avatar_ruta']) }}" alt=""
                                 class="rounded-circle" style="width: 50px; height: 50px;">
-                            {{ $last_unread_notification->data['name'] }}.:
+                            {{ $last_unread_notification->data['name'] }}:
                         @else
                             <i class="pr-2 fas fa-tools text-danger"></i>
                         @endif

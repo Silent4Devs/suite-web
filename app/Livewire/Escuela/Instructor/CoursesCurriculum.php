@@ -26,7 +26,7 @@ class CoursesCurriculum extends Component
     public function mount(Course $course)
     {
         $this->course = $course;
-        $this->section = new Section();
+        $this->section = new Section;
     }
 
     public function render()
@@ -81,7 +81,7 @@ class CoursesCurriculum extends Component
         $this->validate();
 
         $this->section->save();
-        $this->section = new Section();
+        $this->section = new Section;
 
         $this->course = Course::getAll()->find($this->course->id);
         $this->render_alerta('success', 'Registro actualizado exitosamente');

@@ -15,6 +15,7 @@ use App\Events\IncidentesDeSeguridadEvent;
 use App\Events\MatrizRequisitosEvent;
 use App\Events\MejorasEvent;
 use App\Events\MinutasEvent;
+use App\Events\PermisoEvent;
 use App\Events\PlanImplementacionEvent;
 use App\Events\PoliticasSgiEvent;
 use App\Events\PuestosEvent;
@@ -29,6 +30,7 @@ use App\Events\SolicitudVacacionesEvent;
 use App\Events\SugerenciasEvent;
 use App\Events\TaskRecursosEvent;
 use App\Events\TimesheetEvent;
+use App\Events\TimesheetProyectoEvent;
 use App\Listeners\AccionCorrectivaListener;
 use App\Listeners\AlcancesListener;
 use App\Listeners\AuditoriaAnualListener;
@@ -43,6 +45,7 @@ use App\Listeners\IncidentesDeSeguridadListener;
 use App\Listeners\MatrizRequisitosListener;
 use App\Listeners\MejorasListener;
 use App\Listeners\MinutasListener;
+use App\Listeners\PermisoListener;
 use App\Listeners\PlanImplementacionListener;
 use App\Listeners\PoliticasSgiListener;
 use App\Listeners\PuestosListener;
@@ -57,6 +60,7 @@ use App\Listeners\SolicitudVacacionesListener;
 use App\Listeners\SugerenciasListener;
 use App\Listeners\TaskRecursosListener;
 use App\Listeners\TimesheetListener;
+use App\Listeners\TimesheetProyectoListener;
 use App\Models\AccionCorrectiva;
 use App\Models\Activo;
 use App\Models\activoConfidencialidad;
@@ -311,6 +315,9 @@ class EventServiceProvider extends ServiceProvider
         TimesheetEvent::class => [
             TimesheetListener::class,
         ],
+        TimesheetProyectoEvent::class => [
+            TimesheetProyectoListener::class,
+        ],
         CoursesEvent::class => [
             CoursesListener::class,
         ],
@@ -322,6 +329,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         SolicitudPermisoEvent::class => [
             SolicitudPermisoListener::class,
+        ],
+        PermisoEvent::class => [
+            PermisoListener::class,
         ],
         PlanImplementacionEvent::class => [
             PlanImplementacionListener::class,

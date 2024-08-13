@@ -44,7 +44,7 @@ class CoursesLesson extends Component
     public function mount(Section $section)
     {
         $this->section = $section;
-        $this->lesson = new Lesson();
+        $this->lesson = new Lesson;
     }
 
     public function render()
@@ -132,7 +132,7 @@ class CoursesLesson extends Component
 
     public function cancel()
     {
-        $this->lesson = new Lesson();
+        $this->lesson = new Lesson;
         $this->resetValidation();
         $this->reset('name', 'platform_id', 'url');
     }

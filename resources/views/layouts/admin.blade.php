@@ -72,6 +72,7 @@
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}{{ config('app.cssVersion') }}">
     <link rel="stylesheet" href="{{ asset('css/rds.css') }}{{ config('app.cssVersion') }}">
     @yield('styles')
+
     @livewireStyles
 
     @vite(['resources/js/app.js'])

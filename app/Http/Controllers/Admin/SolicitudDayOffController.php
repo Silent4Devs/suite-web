@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Events\SolicitudDayofEvent;
 use App\Http\Controllers\Controller;
 use App\Mail\RespuestaDayOff as MailRespuestaDayoff;
 use App\Mail\SolicitudDayOff as MailSolicitudDayoff;
@@ -125,7 +126,7 @@ class SolicitudDayOffController extends Controller
         $tipo_conteo = $regla_aplicada->tipo_conteo;
 
         $autoriza = $usuario->empleado->supervisor_id;
-        $vacacion = new DayOff();
+        $vacacion = new DayOff;
         $dias_disponibles = $this->diasDisponibles();
         $organizacion = Organizacion::getFirst();
         $dias_pendientes = SolicitudDayOff::where('empleado_id', '=', $usuario->empleado->id)->where('aprobacion', '=', 1)->where('año', '=', $año)->sum('dias_solicitados');
@@ -352,6 +353,7 @@ class SolicitudDayOffController extends Controller
 
         if ($request->ajax()) {
             $query = SolicitudDayOff::with('empleado')->where('autoriza', '=', $data)->where('aprobacion', '=', 1)->orderByDesc('id')->get();
+
             $table = datatables()::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');

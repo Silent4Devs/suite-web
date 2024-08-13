@@ -44,7 +44,7 @@ class Questions extends Component
             'answers' => 'required',
             'question' => 'required',
             'answers.*.answer' => 'required',
-            'answers' => [new AnswersValidationRule()],
+            'answers' => [new AnswersValidationRule],
         ];
     }
 

@@ -60,7 +60,7 @@ class CentroCostosController extends Controller
         try {
             DB::beginTransaction();
 
-            $centro = new CentroCosto();
+            $centro = new CentroCosto;
             $centro->descripcion = $request->descripcion;
             $centro->clave = $request->clave;
             $centro->save();

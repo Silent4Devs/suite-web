@@ -83,7 +83,7 @@ class AnalisisAIAController extends Controller
     public function create()
     {
         abort_if(Gate::denies('matriz_bia_cuestionario_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $cuestionario = new AnalisisAIA();
+        $cuestionario = new AnalisisAIA;
 
         return view('admin.analysisAia.create', compact('cuestionario'));
     }

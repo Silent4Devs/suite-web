@@ -21,7 +21,7 @@ use App\Models\PlanImplementacion;
 use App\Models\Recurso;
 use Livewire\Component;
 
- extends Component
+class AuditoriasSGI extends Component
 {
     public $tabOption = 0;
 
@@ -228,7 +228,7 @@ use Livewire\Component;
         $nombre_organizacion = Organizacion::getFirst();
         $nombre_organizacion = $nombre_organizacion ? $nombre_organizacion->empresa : 'la Organización';
 
-        return view('', [
+        return view('livewire.dashboard.auditorias-sgi', [
             'plan_base' => $plan_base,
             'auditorias_anual' => $auditorias_anual,
             'recursos' => $recursos,
@@ -251,10 +251,6 @@ use Livewire\Component;
             'encursoCountAC' => $encursoCountAC,
             'enesperaCountAC' => $enesperaCountAC,
             'sinatenderCountAC' => $sinatenderCountAC,
-            // 'observacion' => $observacion,
-            // 'noconformayor' => $noconformayor,
-            // 'oportunidadmejora' => $oportunidadmejora,
-            // 'noconformenor' => $noconformenor,
             'empleado' => $empleado,
             'clausid' => $clausid,
             'contexto' => $contexto,

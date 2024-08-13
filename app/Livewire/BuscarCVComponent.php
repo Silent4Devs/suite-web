@@ -182,11 +182,10 @@ class BuscarCVComponent extends Component
             })
             ->orderByDesc('id')->cursorPaginate();
 
-        return view('', [
+        return view('livewire.buscar-c-v-component', [
             'empleadosCV' => $empleadosCV,
             'lista_docs' => ListaDocumentoEmpleado::getAll(),
         ]);
-
     }
 
     public function mostrarCurriculum($empleadoID)

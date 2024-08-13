@@ -199,7 +199,7 @@ class ListaDistribucionController extends Controller
             $errorMessage = 'No puede haber niveles sin colaboradores asignados';
 
             // Manually add error message to $errors bag
-            $errors = new \Illuminate\Support\MessageBag();
+            $errors = new \Illuminate\Support\MessageBag;
             $errors->add('nivel_null', $errorMessage);
 
             // Redirect back with the input data and errors

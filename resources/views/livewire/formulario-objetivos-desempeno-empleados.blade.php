@@ -165,20 +165,20 @@
                                 {{-- This is the content of the modal. --}}
                                 <div class="row">
                                     <div class="col-12 form-group anima-focus">
-                                        <input wire:model.live="nombre_edit_unidad" id="nombre_edit_unidad" type="text"
-                                            class="form-control" placeholder="">
+                                        <input wire:model.live="nombre_edit_unidad" id="nombre_edit_unidad"
+                                            type="text" class="form-control" placeholder="">
                                         <label for="nombre_edit_unidad">Unidad</label>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-6 form-group anima-focus">
-                                        <input wire:model.live="minimo_edit_unidad" id="minimo_edit_unidad" type="number"
-                                            class="form-control" placeholder="">
+                                        <input wire:model.live="minimo_edit_unidad" id="minimo_edit_unidad"
+                                            type="number" class="form-control" placeholder="">
                                         <label for="minimo_edit_unidad">Valor Minimo</label>
                                     </div>
                                     <div class="col-6 form-group anima-focus">
-                                        <input wire:model.live="maximo_edit_unidad" id="maximo_edit_unidad" type="number"
-                                            class="form-control" placeholder="">
+                                        <input wire:model.live="maximo_edit_unidad" id="maximo_edit_unidad"
+                                            type="number" class="form-control" placeholder="">
                                         <label for="maximo_edit_unidad">Valor Maximo</label>
                                     </div>
                                 </div>
@@ -314,8 +314,12 @@
             <hr class="my-4">
         </div>
 
+        <div wire:loading>
+            <h1>Guardando</h1>
+        </div>
+
         <div class="datatable-rds">
-            <table class="table datatable">
+            <table class="table datatable" id="your-table-id'">
                 <thead>
                     <tr>
                         <th>Categoría</th>
