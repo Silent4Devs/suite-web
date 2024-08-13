@@ -3,7 +3,7 @@
         <div class="d-flex align-items-center">
             <div class="caja-buscador-header" wire:loading.remove>
                 <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="search" class="" placeholder="Buscar ..." wire:model="search">
+                <input type="search" class="" placeholder="" wire:model="search">
             </div>
 
             {{-- <div class="spinner-border text-red ml-2" role="status" wire:loading wire:target="search">

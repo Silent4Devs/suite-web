@@ -175,7 +175,7 @@
         </button>
     </div>
     <div class="options-global">
-        <button class="btn btn-menu-global-show"
+        <button class="btn-menu-global-show"
             onclick="document.querySelector('body').classList.toggle('menu-global-hidden')">
             <i class="material-symbols-outlined">keyboard_arrow_up</i>
         </button>

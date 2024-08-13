@@ -77,7 +77,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/favicon_tabantaj_v2.png') }}">
 </head>
 
-<body class="menu-global-position-left postion-rigth-menu-global">
+<body class="menu-global-position-bottom">
     <div id="loading">
         <img id="loading-image" src="https://i.pinimg.com/originals/07/24/88/0724884440e8ddd0896ff557b75a222a.gif"
             alt="Loading...">
@@ -103,7 +103,10 @@
 
     @include('partials.menu-slider')
 
+    @include('partials.custom-design')
+
     {{-- @include('partials.menu') --}}
+
     <div class="c-wrapper" id="contenido_body_general_wrapper">
         <div class="c-body">
             <main class="c-main" style="zoom: 90%;">
