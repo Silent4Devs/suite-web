@@ -1886,8 +1886,8 @@ Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'name
     Route::delete('requisiciones/eliminar-registro', 'RequisicionesController@eliminarProveedores')->name('eliminarProveedores');
     Route::get('requisiciones/aprobadores', 'RequisicionesController@indexAprobadores')->name('requisiciones.indexAprobadores');
     Route::post('requisiciones/list/get', 'RequisicionesController@getRequisicionIndex')->name('requisiciones.getRequisicionIndex');
-    Route::post('requisiciones-aprobadores/list/get', 'RequisicionesController@getRequisicionIndexAprobador')->name('requisiciones.getRequisicionIndexAprobador');
-    Route::post('requisiciones-solicitante/list/get', 'RequisicionesController@getRequisicionIndexSolicitante')->name('requisiciones.getRequisicionIndexSolicitante');
+    // Route::post('requisiciones-aprobadores/list/get', 'RequisicionesController@getRequisicionIndexAprobador')->name('requisiciones.getRequisicionIndexAprobador');
+    // Route::post('requisiciones-solicitante/list/get', 'RequisicionesController@getRequisicionIndexSolicitante')->name('requisiciones.getRequisicionIndexSolicitante');
     Route::get('requisiciones/show/{id}', 'RequisicionesController@show')->name('requisiciones.show');
     Route::get('requisiciones/edit/{id}', 'RequisicionesController@edit')->name('requisiciones.edit');
     Route::get('requisiciones/create', 'RequisicionesController@create')->name('requisiciones.create');
