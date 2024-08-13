@@ -112,6 +112,12 @@ return [
             'path' => storage_path('logs/laravel.log'),
         ],
 
+        'logstash' => [
+            'driver' => 'custom',
+            'via' => App\Logging\CreateLogstashLogger::class,
+            'level' => 'debug',
+        ],
+
     ],
 
 ];

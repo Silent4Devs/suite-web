@@ -336,6 +336,8 @@ class PoliticaSgsiController extends Controller
 
         $lista = ListaDistribucion::with('participantes')->where('modelo', '=', $this->modelo)->first();
 
+        event(new PoliticasSgiEvent($politica, 'solicitudAprobacion', 'politica_sgsis', 'Politica'));
+
         $proceso = ProcesosListaDistribucion::updateOrCreate(
             [
                 'modulo_id' => $lista->id,
@@ -419,10 +421,12 @@ class PoliticaSgsiController extends Controller
                                 $part->participante->numero_orden == $j && $part->estatus == 'Pendiente'
                                 && $part->participante->empleado_id == User::getCurrentUser()->empleado->id
                             ) {
-
                                 return view('admin.politicaSgsis.revision', compact('politicaSgsi', 'acceso_restringido'));
                                 break;
-                            } else {
+                            } elseif (
+                                ! ($part->estatus == 'Pendiente')
+                                && ! ($part->participante->empleado_id == User::getCurrentUser()->empleado->id)
+                            ) {
                                 $acceso_restringido = 'turno';
 
                                 return view('admin.politicaSgsis.revision', compact('politicaSgsi', 'acceso_restringido'));
@@ -432,8 +436,6 @@ class PoliticaSgsiController extends Controller
                         $part->participante->nivel == 0 && $part->estatus == 'Pendiente'
                         && $part->participante->empleado_id == User::getCurrentUser()->empleado->id
                     ) {
-
-                        // dd($politicaSgsi);
                         return view('admin.politicaSgsis.revision', compact('politicaSgsi', 'acceso_restringido'));
                         break;
                     }
@@ -599,20 +601,38 @@ class PoliticaSgsiController extends Controller
     {
         $lista = ListaDistribucion::with('participantes')->where('modelo', '=', $this->modelo)->first();
 
+        $proceso_actualizado = ProcesosListaDistribucion::with('participantes')
+            ->where('id', '=', $proceso->id)
+            ->with([
+                'modulo' => function ($query) {
+                    $query->where('modelo', '=', $this->modelo);
+                },
+            ])
+            ->first();
+
         $no_niveles = $lista->niveles;
 
+        $breakLoop = false;
+
         for ($i = 1; $i <= $no_niveles; $i++) {
-            foreach ($proceso->participantes as $part) {
+            foreach ($proceso_actualizado->participantes as $part) {
                 if ($part->participante->nivel == $i && $part->estatus == 'Pendiente') {
                     for ($j = 1; $j <= 5; $j++) {
                         if ($part->participante->numero_orden == $j && $part->estatus == 'Pendiente') {
                             $emailAprobador = $part->participante->empleado->email;
                             // dd($emailAprobador);
                             Mail::to(removeUnicodeCharacters($emailAprobador))->queue(new NotificacionSolicitudAprobacionPolitica($politica->id, $politica->nombre_politica));
+                            $breakLoop = true;
                             break;
                         }
                     }
+                    if ($breakLoop) {
+                        break;
+                    }
                 }
+            }
+            if ($breakLoop) {
+                break;
             }
         }
     }

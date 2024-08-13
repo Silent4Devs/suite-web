@@ -2,6 +2,8 @@
 
 namespace App\Listeners;
 
+use App\Models\Empleado;
+use App\Models\ListaInformativa;
 use App\Models\User;
 use App\Notifications\TimesheetProyectoNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -32,8 +34,16 @@ class TimesheetProyectoListener implements ShouldQueue
      */
     public function handle($event)
     {
-        $user = User::getCurrentUser();
-        $supervisor = User::where('email', trim(removeUnicodeCharacters($user->empleado->supervisor->email)))->first();
-        Notification::send($supervisor, new TimesheetProyectoNotification($event->timeshet_proyecto, $event->tipo_consulta, $event->tabla, $event->slug));
+        $modulo_day = 3;
+
+        $lista = ListaInformativa::with('participantes')->where('id', $modulo_day)->first();
+
+        foreach ($lista->participantes as $participantes) {
+            $empleados = Empleado::where('id', $participantes->empleado_id)->first();
+
+            $user = User::where('email', trim(removeUnicodeCharacters($empleados->email)))->first();
+
+            Notification::send($user, new TimesheetProyectoNotification($event->timeshet_proyecto, $event->tipo_consulta, $event->tabla, $event->slug));
+        }
     }
 }

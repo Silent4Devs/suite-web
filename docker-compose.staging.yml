@@ -15,7 +15,7 @@ services:
     depends_on:
       - php
       - postgres-tabantaj
-      - redis-tabantaj
+      # - redis-tabantaj
     networks:
       - tabantajnetwork
 
@@ -57,114 +57,114 @@ services:
     networks:
       - tabantajnetwork
 
-  queue-worker:
-    build:
-      context: "./infra/php/"
-      dockerfile: Dockerfile
-    volumes:
-      - .:/var/www/html
-    command: php artisan queue:work --tries=3
-    depends_on:
-      - php
-    container_name: queue-worker-tabantaj
-    restart: unless-stopped
-    tty: true
-    environment:
-      CONTAINER_ROLE: queue
-    networks:
-      - tabantajnetwork
+  # queue-worker:
+  #   build:
+  #     context: "./infra/php/"
+  #     dockerfile: Dockerfile
+  #   volumes:
+  #     - .:/var/www/html
+  #   command: php artisan queue:work --tries=3
+  #   depends_on:
+  #     - php
+  #   container_name: queue-worker-tabantaj
+  #   restart: unless-stopped
+  #   tty: true
+  #   environment:
+  #     CONTAINER_ROLE: queue
+  #   networks:
+  #     - tabantajnetwork
 
-  schedule-worker:
-    build:
-      context: "./infra/php/"
-      dockerfile: Dockerfile
-    depends_on:
-      - php
-    restart: unless-stopped
-    tty: true
-    container_name: schedule-worker-tabantaj
-    volumes:
-      - .:/var/www/html
-    command: php artisan schedule:work
-    environment:
-      CONTAINER_ROLE: scheduler
-    networks:
-      - tabantajnetwork
+  # schedule-worker:
+  #   build:
+  #     context: "./infra/php/"
+  #     dockerfile: Dockerfile
+  #   depends_on:
+  #     - php
+  #   restart: unless-stopped
+  #   tty: true
+  #   container_name: schedule-worker-tabantaj
+  #   volumes:
+  #     - .:/var/www/html
+  #   command: php artisan schedule:work
+  #   environment:
+  #     CONTAINER_ROLE: scheduler
+  #   networks:
+  #     - tabantajnetwork
 
-  redis-tabantaj:
-    image: redis:alpine
-    container_name: redis-tabantaj
-    restart: unless-stopped
-    tty: true
-    volumes:
-      - ./infra/redis/redis.conf:/usr/local/etc/redis/redis.conf # Mount the Redis configuration file
-    networks:
-      - tabantajnetwork
-    mem_limit: 2g
+  # redis-tabantaj:
+  #   image: redis:alpine
+  #   container_name: redis-tabantaj
+  #   restart: unless-stopped
+  #   tty: true
+  #   volumes:
+  #     - ./infra/redis/redis.conf:/usr/local/etc/redis/redis.conf # Mount the Redis configuration file
+  #   networks:
+  #     - tabantajnetwork
+  #   mem_limit: 2g
 
-  rdadmin-tabantaj:
-    image: erikdubbelboer/phpredisadmin:latest
-    container_name: rdadmin-tabantaj
-    restart: unless-stopped
-    tty: true
-    ports:
-      - 6360:80
-    env_file:
-      - .env
-    networks:
-      - tabantajnetwork
+  # rdadmin-tabantaj:
+  #   image: erikdubbelboer/phpredisadmin:latest
+  #   container_name: rdadmin-tabantaj
+  #   restart: unless-stopped
+  #   tty: true
+  #   ports:
+  #     - 6360:80
+  #   env_file:
+  #     - .env
+  #   networks:
+  #     - tabantajnetwork
 
-  rabbitmq-tabantaj:
-    image: rabbitmq:3-management-alpine
-    container_name: rabbit-tabantaj
-    env_file:
-      - .env
-    ports:
-      - 5672:5672
-      - 15672:15672
-    restart: unless-stopped
-    tty: true
-    networks:
-      - tabantajnetwork
-    volumes:
-      - rabbitmq_data:/var/lib/rabbitmq
+  # rabbitmq-tabantaj:
+  #   image: rabbitmq:3-management-alpine
+  #   container_name: rabbit-tabantaj
+  #   env_file:
+  #     - .env
+  #   ports:
+  #     - 5672:5672
+  #     - 15672:15672
+  #   restart: unless-stopped
+  #   tty: true
+  #   networks:
+  #     - tabantajnetwork
+  #   volumes:
+  #     - rabbitmq_data:/var/lib/rabbitmq
 
-  goservices:
-    image: ghcr.io/silent4devs/goservices:latest
-    container_name: goservices
-    restart: unless-stopped
-    tty: true
-    ports:
-      - "3300:3300"
-    volumes:
-      - goservices_data:/goservices
-    networks:
-      - tabantajnetwork
+  # goservices:
+  #   image: ghcr.io/silent4devs/goservices:latest
+  #   container_name: goservices
+  #   restart: unless-stopped
+  #   tty: true
+  #   ports:
+  #     - "3300:3300"
+  #   volumes:
+  #     - goservices_data:/goservices
+  #   networks:
+  #     - tabantajnetwork
 
-  reportservice:
-    image: ghcr.io/silent4devs/reportservice:latest
-    container_name: reportservice
-    restart: unless-stopped
-    tty: true
-    ports:
-      - "3301:3301"
-    volumes:
-      - reportservice_data:/reportservice
-    networks:
-      - tabantajnetwork
+  # reportservice:
+  #   image: ghcr.io/silent4devs/reportservice:latest
+  #   container_name: reportservice
+  #   restart: unless-stopped
+  #   tty: true
+  #   ports:
+  #     - "3301:3301"
+  #   volumes:
+  #     - reportservice_data:/reportservice
+  #   networks:
+  #     - tabantajnetwork
 
-  mailhog-service:
-    image: mailhog/mailhog # Reemplaza "imagen:tag" con la imagen y etiqueta correctas de Maihog
-    container_name: maihog-container # El nombre del contenedor
-    restart: unless-stopped
-    tty: true
-    ports:
-      - "1025:1025" # Reemplaza "puerto_host" y "puerto_contenedor" con los puertos necesarios
-      - "8025:8025"
-    volumes:
-      - mailhog_data:/mailhog_data # Reemplaza "./ruta/local" con la ruta local y "/ruta/contenedor" con la ruta dentro del contenedor
-    networks:
-      - tabantajnetwork
+  # mailhog-service:
+  #   image: mailhog/mailhog # Reemplaza "imagen:tag" con la imagen y etiqueta correctas de Maihog
+  #   container_name: maihog-container # El nombre del contenedor
+  #   restart: unless-stopped
+  #   tty: true
+  #   ports:
+  #     - "1025:1025" # Reemplaza "puerto_host" y "puerto_contenedor" con los puertos necesarios
+  #     - "8025:8025"
+  #   volumes:
+  #     - mailhog_data:/mailhog_data # Reemplaza "./ruta/local" con la ruta local y "/ruta/contenedor" con la ruta dentro del contenedor
+  #   networks:
+  #     - tabantajnetwork
 
   elasticsearch:
     image: elasticsearch:8.11.1
@@ -251,27 +251,27 @@ services:
     networks:
       - tabantajnetwork
 
-  elastic-package-registry:
-    image: docker.elastic.co/package-registry/distribution:8.11.1
-    ports:
-      - "8080:8080"
-    networks:
-      - tabantajnetwork
+  # elastic-package-registry:
+  #   image: docker.elastic.co/package-registry/distribution:8.11.1
+  #   ports:
+  #     - "8080:8080"
+  #   networks:
+  #     - tabantajnetwork
 
 
 volumes:
   tabantaj-db:
     driver: local
-  rabbitmq_data:
-    driver: local
-  pgadmin-data:
-    driver: local
-  goservices_data:
-    driver: local
-  reportservice_data:
-    driver: local
-  mailhog_data:
-    driver: local
+  # rabbitmq_data:
+  #   driver: local
+  # pgadmin-data:
+  #   driver: local
+  # goservices_data:
+  #   driver: local
+  # reportservice_data:
+  #   driver: local
+  # mailhog_data:
+  #   driver: local
   elastic-data-vl:
     driver: local
   # elasticsearch:

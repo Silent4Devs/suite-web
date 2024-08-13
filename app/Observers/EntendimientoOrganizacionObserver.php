@@ -20,9 +20,9 @@ class EntendimientoOrganizacionObserver
     /**
      * Handle the Documento "updated" event.
      */
-    public function updated(EntendimientoOrganizacion $entendimiento): void
+    public function aprobado(EntendimientoOrganizacion $entendimiento): void
     {
-        event(new EntendimientoOrganizacionEvent($entendimiento, 'update', 'entendimiento_organizacions', 'Entendimiento'));
+        event(new EntendimientoOrganizacionEvent($entendimiento, 'aprobado', 'entendimiento_organizacions', 'Foda'));
         $this->forgetCache();
     }
 
