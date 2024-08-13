@@ -36,7 +36,7 @@ class UsersController extends Controller
             return view('users.tbUsersIndex', compact('users', 'existsVinculoEmpleadoAdmin', 'empleados'));
         } catch (\Exception $e) {
             // Registrar el error en los logs
-            Log::channel('logstash')->info('Error al cargar usuarios: ' . $e->getMessage(), [
+            Log::channel('logstash')->info('Error al cargar usuarios: '.$e->getMessage(), [
                 'exception' => $e,
                 'input' => $request->all(),
             ]);
@@ -147,7 +147,7 @@ class UsersController extends Controller
             abort_if(Gate::denies('usuarios_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
             $registro = User::find($id);
 
-            if (!$registro) {
+            if (! $registro) {
                 return response()->json(['status' => 'error', 'message' => 'Registro no encontrado.'], 404);
             }
 
@@ -174,10 +174,10 @@ class UsersController extends Controller
     {
         if ($request->ajax()) {
             $nombre = $request->nombre;
-            $usuarios = User::getAll()->where('name', 'LIKE', '%' . $nombre . '%')->take(5);
+            $usuarios = User::getAll()->where('name', 'LIKE', '%'.$nombre.'%')->take(5);
             $lista = "<ul class='list-group' id='empleados-lista'>";
             foreach ($usuarios as $usuario) {
-                $lista .= "<button type='button' class='list-group-item list-group-item-action' onClick='seleccionarUsuario(" . $usuario . ");'>" . $usuario->name . '</button>';
+                $lista .= "<button type='button' class='list-group-item list-group-item-action' onClick='seleccionarUsuario(".$usuario.");'>".$usuario->name.'</button>';
             }
             $lista .= '</ul>';
 
@@ -209,7 +209,7 @@ class UsersController extends Controller
             $message = "Verificación por dos factores habilitada para el usuario {$user->name}";
         }
 
-        $user->two_factor = !$user->two_factor;
+        $user->two_factor = ! $user->two_factor;
 
         $user->save();
 
@@ -224,7 +224,7 @@ class UsersController extends Controller
             $message = "El usuario {$user->name} ha sido desbloqueado";
         }
 
-        $user->is_active = !$user->is_active;
+        $user->is_active = ! $user->is_active;
 
         $user->save();
 

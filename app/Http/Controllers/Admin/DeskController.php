@@ -2,55 +2,19 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Events\DenunciasEvent;
-use App\Events\IncidentesDeSeguridadEvent;
-use App\Events\MejorasEvent;
-use App\Events\QuejasEvent;
-use App\Events\RiesgosEvent;
-use App\Events\SugerenciasEvent;
 use App\Http\Controllers\Controller;
-use App\Mail\AceptacionAccionCorrectivaEmail;
-use App\Mail\AtencionQuejaAtendidaEmail;
-use App\Mail\CierreQuejaAceptadaEmail;
-use App\Mail\NotificacionResponsableQuejaEmail;
-use App\Mail\ResolucionQuejaRechazadaEmail;
-use App\Mail\SeguimientoQuejaClienteEmail;
-use App\Mail\SolicitarCierreQuejaEmail;
-use App\Mail\SolicitudAprobacion;
-use App\Models\AccionCorrectiva;
-use App\Models\Activo;
-use App\Models\AnalisisQuejasClientes;
-use App\Models\AnalisisSeguridad;
-use App\Models\AprobadorSeleccionado;
-use App\Models\Area;
-use App\Models\CategoriaIncidente;
 use App\Models\Denuncias;
-use App\Models\Empleado;
-use App\Models\EvidenciaQuejasClientes;
-use App\Models\EvidenciasQuejasClientesCerrado;
-use App\Models\EvidenciasSeguridad;
-use App\Models\FirmaCentroAtencion;
-use App\Models\FirmaModule;
 use App\Models\IncidentesSeguridad;
 use App\Models\Mejoras;
-use App\Models\Organizacion;
-use App\Models\Proceso;
 use App\Models\Quejas;
 use App\Models\QuejasCliente;
 use App\Models\RiesgoIdentificado;
-use App\Models\Sede;
-use App\Models\SubcategoriaIncidente;
 use App\Models\Sugerencias;
-use App\Models\TimesheetCliente;
-use App\Models\TimesheetProyecto;
-use App\Models\User;
 use App\Traits\ObtenerOrganizacion;
-use Auth;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Mail; //mejora apunta a este modelo
+
+//mejora apunta a este modelo
 
 class DeskController extends Controller
 {

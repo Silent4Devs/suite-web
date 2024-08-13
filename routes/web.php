@@ -1,19 +1,19 @@
 <?php
 
-use App\Http\Controllers\Admin\QuejasController;
-use App\Http\Controllers\Admin\QuejasClienteController;
-use App\Http\Controllers\Admin\DenunciasController;
-use App\Http\Controllers\Admin\MejorasController;
-use App\Http\Controllers\Admin\SugerenciasController;
-use App\Http\Controllers\Admin\SeguridadController;
-use App\Http\Controllers\Admin\RiesgosController;
 use App\Http\Controllers\Admin\DashboardAuditoriasSGIController;
+use App\Http\Controllers\Admin\DenunciasController;
 use App\Http\Controllers\Admin\DocumentosController;
 use App\Http\Controllers\Admin\EmpleadoController;
 use App\Http\Controllers\Admin\Escuela\CapacitacionesController;
 use App\Http\Controllers\Admin\GrupoAreaController;
 use App\Http\Controllers\Admin\InicioUsuarioController;
+use App\Http\Controllers\Admin\MejorasController;
 use App\Http\Controllers\Admin\PortalComunicacionController;
+use App\Http\Controllers\Admin\QuejasClienteController;
+use App\Http\Controllers\Admin\QuejasController;
+use App\Http\Controllers\Admin\RiesgosController;
+use App\Http\Controllers\Admin\SeguridadController;
+use App\Http\Controllers\Admin\SugerenciasController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ExportExcelReport;
 use App\Http\Controllers\QueueCorreo;

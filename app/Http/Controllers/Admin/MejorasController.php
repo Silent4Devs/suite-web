@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-use App\Http\Controllers\Controller;
 
 use App\Events\MejorasEvent;
+use App\Http\Controllers\Controller;
+use App\Mail\SolicitudAprobacion;
 use App\Models\Activo;
 use App\Models\AnalisisSeguridad;
 use App\Models\AprobadorSeleccionado;
@@ -12,14 +13,13 @@ use App\Models\Empleado;
 use App\Models\FirmaCentroAtencion;
 use App\Models\FirmaModule;
 use App\Models\Mejoras;
-use App\Models\Proceso;
 use App\Models\Organizacion;
-use App\Mail\SolicitudAprobacion;
+use App\Models\Proceso;
 use App\Models\User;
 use Auth;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
 
 // CENTRO DE ATENCION: MejorasController
@@ -68,11 +68,12 @@ class MejorasController extends Controller
 
         return redirect()->route('admin.desk.index')->with('success', 'Reporte generado');
     }
+
     public function indexMejora()
     {
         abort_if(Gate::denies('centro_atencion_mejoras_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $mejoras = Mejoras::select('estatus','fecha_cierre','descripcion','beneficios','titulo','area_mejora','proceso_mejora','tipo','otro')->with('mejoro:id,name,foto')->where('archivado', false)->get();
+        $mejoras = Mejoras::select('estatus', 'fecha_cierre', 'descripcion', 'beneficios', 'titulo', 'area_mejora', 'proceso_mejora', 'tipo', 'otro')->with('mejoro:id,name,foto')->where('archivado', false)->get();
 
         return datatables()->of($mejoras)->toJson();
     }
@@ -154,7 +155,7 @@ class MejorasController extends Controller
             $existingRecord->delete();
         }
 
-        $aprobadorSeleccionado = new AprobadorSeleccionado();
+        $aprobadorSeleccionado = new AprobadorSeleccionado;
 
         // Asignar cada campo individualmente
         $aprobadorSeleccionado->modulo_id = $modulo;
@@ -199,7 +200,7 @@ class MejorasController extends Controller
                 $existingRecord->delete();
             }
 
-            $aprobadorSeleccionado = new AprobadorSeleccionado();
+            $aprobadorSeleccionado = new AprobadorSeleccionado;
 
             // Asignar cada campo individualmente
             $aprobadorSeleccionado->modulo_id = $modulo;

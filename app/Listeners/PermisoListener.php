@@ -6,7 +6,6 @@ use App\Models\Empleado;
 use App\Models\ListaInformativa;
 use App\Models\User;
 use App\Notifications\PermisoNotification;
-use App\Notifications\SolicitudPermisoNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Notification;

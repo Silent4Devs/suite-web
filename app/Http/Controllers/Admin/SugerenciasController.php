@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\SugerenciasEvent;
 use App\Http\Controllers\Controller;
-
+use App\Mail\SolicitudAprobacion;
 use App\Models\Activo;
 use App\Models\AnalisisSeguridad;
 use App\Models\AprobadorSeleccionado;
@@ -15,14 +16,12 @@ use App\Models\Organizacion;
 use App\Models\Proceso;
 use App\Models\Sugerencias;
 use App\Models\User;
-use Carbon\Carbon;
-use App\Events\SugerenciasEvent;
-use App\Mail\SolicitudAprobacion;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Mail;
 use Auth;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
 
 class SugerenciasController extends Controller
 {
@@ -74,6 +73,7 @@ class SugerenciasController extends Controller
 
         return redirect()->route('admin.desk.index')->with('success', 'Reporte generado');
     }
+
     public function indexSugerencia()
     {
         abort_if(Gate::denies('centro_atencion_sugerencias_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -151,7 +151,7 @@ class SugerenciasController extends Controller
             $existingRecord->delete();
         }
 
-        $aprobadorSeleccionado = new AprobadorSeleccionado();
+        $aprobadorSeleccionado = new AprobadorSeleccionado;
 
         // Asignar cada campo individualmente
         $aprobadorSeleccionado->modulo_id = $modulo;
@@ -197,7 +197,7 @@ class SugerenciasController extends Controller
                 $existingRecord->delete();
             }
 
-            $aprobadorSeleccionado = new AprobadorSeleccionado();
+            $aprobadorSeleccionado = new AprobadorSeleccionado;
 
             // Asignar cada campo individualmente
             $aprobadorSeleccionado->modulo_id = $modulo;

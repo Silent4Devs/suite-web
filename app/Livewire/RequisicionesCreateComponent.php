@@ -35,7 +35,7 @@ class RequisicionesCreateComponent extends Component
 
     public $paso = 1;
 
-    public $test = "display: none;";
+    public $test = 'display: none;';
 
     public $sucursales;
 
@@ -55,7 +55,7 @@ class RequisicionesCreateComponent extends Component
     public $fecha_solicitud;
 
     #[Validate('required|int')]
-    public $sucursal_id = "";
+    public $sucursal_id = '';
 
     #[Validate('required')]
     public $user_name;
@@ -67,19 +67,19 @@ class RequisicionesCreateComponent extends Component
     public $descripcion;
 
     #[Validate('required|int')]
-    public $comprador_id = "";
+    public $comprador_id = '';
 
     #[Validate('required|int')]
-    public $contrato_id = "";
+    public $contrato_id = '';
 
     #[Validate('required|int|min:1')]
     public $cantidad_oblig = 0;
 
     #[Validate('required|int')]
-    public $producto_oblig = "";
+    public $producto_oblig = '';
 
     #[Validate('required|max:500')]
-    public $especificaciones_oblig = "";
+    public $especificaciones_oblig = '';
 
     public $array_productos = [];
 
@@ -192,10 +192,10 @@ class RequisicionesCreateComponent extends Component
         }
 
         $this->array_proveedores[] = [
-            'proveedor_id' => "",
+            'proveedor_id' => '',
             'fechaInicio' => null,
             'fechaFin' => null,
-            'select_otro' => "",
+            'select_otro' => '',
             'detalles' => null,
             'tipo' => null,
             'comentarios' => null,
@@ -203,7 +203,7 @@ class RequisicionesCreateComponent extends Component
             'telefono_contacto' => null,
             'correo_contacto' => null,
             'url_contacto' => null,
-            'archivo' => null
+            'archivo' => null,
         ];
     }
 
@@ -229,7 +229,7 @@ class RequisicionesCreateComponent extends Component
             'width' => '1000px', // Asegúrate de que el ancho esté en píxeles
             'onConfirmed' => 'redirigirFaltantes',
             'timerProgressBar' => false,
-            'text' => 'No hay registros en la selección de ' . $name . ', contacte al administrador.',
+            'text' => 'No hay registros en la selección de '.$name.', contacte al administrador.',
             'confirmButtonText' => 'Entendido.',
         ]);
     }
@@ -261,8 +261,8 @@ class RequisicionesCreateComponent extends Component
     {
         $this->array_productos[] = [
             'cantidad' => 0,
-            'producto' => "",
-            'especificaciones' => "",
+            'producto' => '',
+            'especificaciones' => '',
         ];
     }
 
@@ -274,10 +274,10 @@ class RequisicionesCreateComponent extends Component
     public function agregarProveedor()
     {
         $this->array_proveedores[] = [
-            'proveedor_id' => "",
+            'proveedor_id' => '',
             'fechaInicio' => null,
             'fechaFin' => null,
-            'select_otro' => "",
+            'select_otro' => '',
             'detalles' => null,
             'tipo' => null,
             'comentarios' => null,
@@ -285,7 +285,7 @@ class RequisicionesCreateComponent extends Component
             'telefono_contacto' => null,
             'correo_contacto' => null,
             'url_contacto' => null,
-            'archivo' => null
+            'archivo' => null,
         ];
     }
 
@@ -349,8 +349,8 @@ class RequisicionesCreateComponent extends Component
 
         foreach ($this->array_proveedores as $keyProv => $proveedor) {
 
-            if ($proveedor["proveedor_id"] == "otro") {
-                if ($proveedor["select_otro"] == "indistinto") {
+            if ($proveedor['proveedor_id'] == 'otro') {
+                if ($proveedor['select_otro'] == 'indistinto') {
                     $dataProvedoresIndistintoCatalogo[] = [
                         // 'requisicion_id' => $this->nueva_requisicion->id,
                         'fecha_inicio' => $proveedor['fechaInicio'],
@@ -362,7 +362,7 @@ class RequisicionesCreateComponent extends Component
                     //     'fecha_inicio' => $data['fechaInicio'],
                     //     'fecha_fin' => $data['fechaFin'],
                     // ]);
-                } elseif ($proveedor["select_otro"] == "sugerido") {
+                } elseif ($proveedor['select_otro'] == 'sugerido') {
                     // KatbolProveedorRequisicion
                     // $name = 'requisicion_' . $this->requisicion_id . 'cotizacion_' . $cotizacion_count . '_' . uniqid() . '.' . $proveedor['archivo']->getClientOriginalExtension();
                     // dd($proveedor);
@@ -383,7 +383,7 @@ class RequisicionesCreateComponent extends Component
                     ];
                 }
             } else {
-                $proveedor_catalogo = KatbolProveedorOC::where('id', $proveedor['proveedor_id'],)->first();
+                $proveedor_catalogo = KatbolProveedorOC::where('id', $proveedor['proveedor_id'])->first();
                 $dataProvedoresCatalogo[] = [
                     // 'requisicion_id' => $this->nueva_requisicion->id,
                     'proveedor_id' => $proveedor['proveedor_id'],
@@ -418,7 +418,7 @@ class RequisicionesCreateComponent extends Component
 
         $this->crearRequisicion($dataProvedoresIndistintoCatalogo, $dataProveedoresSugeridos, $dataProvedoresCatalogo);
         $this->paso = 3;
-        $this->test = "display: block;";
+        $this->test = 'display: block;';
         $this->dispatch('probando');
         $this->habilitar_proveedores = true;
     }
@@ -461,7 +461,7 @@ class RequisicionesCreateComponent extends Component
             }
 
             foreach ($dataProveedoresSugeridos as $key => $provSug) {
-                $name = 'requisicion_' . $this->requisicion_id . 'cotizacion_' . $key + 1 . '_' . uniqid() . '.' . $provSug['extArchivo'];
+                $name = 'requisicion_'.$this->requisicion_id.'cotizacion_'.$key + 1 .'_'.uniqid().'.'.$provSug['extArchivo'];
                 KatbolProveedorRequisicion::create([
                     'requisiciones_id' => $this->requisicionCreada->id,
                     'proveedor' => $provSug['proveedor'],
@@ -489,7 +489,7 @@ class RequisicionesCreateComponent extends Component
 
             $firmas_requi = FirmasRequisiciones::create([
                 'requisicion_id' => $this->requisicionCreada->id,
-                'solicitante_id' =>  $this->user->empleado->id,
+                'solicitante_id' => $this->user->empleado->id,
                 // 'jefe_id' => $responsable->id,
                 // 'responsable_finanzas_id' => $responsable->id,
                 // 'comprador_id' => $comprador->user->empleado->id,

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Events\SolicitudDayofEvent;
 use App\Http\Controllers\Controller;
 use App\Mail\RespuestaDayOff as MailRespuestaDayoff;
 use App\Mail\SolicitudDayOff as MailSolicitudDayoff;
