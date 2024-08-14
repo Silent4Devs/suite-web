@@ -3,7 +3,7 @@
 @if ($evaluacion->activar_objetivos)
     {{-- Codigo primera vez que carga --}}
     <script>
-        document.addEventListener('livewire:init', function() {
+        document.addEventListener('livewire:initialized', function() {
 
             const tipos = @json($resObj['nombres'][$periodo_seleccionado]);
             const resultados = @json($resObj['resultados'][$periodo_seleccionado]);
@@ -31,9 +31,9 @@
     </script>
 
     <script>
-        document.addEventListener('livewire:init', function() {
-            Livewire.on('cumplimientoObj', (cumpObj) => {
-
+        document.addEventListener('livewire:initialized', function() {
+            @this.on('cumplimientoObj', (cumpObjWrapper) => {
+                const cumpObj = cumpObjWrapper.cumpObj;
                 document.getElementById('cumplimientoObjetivos').remove();
                 let canvas = document.createElement("canvas");
                 canvas.id = "cumplimientoObjetivos";
@@ -64,7 +64,7 @@
     </script>
 
     <script>
-        document.addEventListener('livewire:init', function() {
+        document.addEventListener('livewire:initialized', function() {
 
             const escalas = @json($escalas['nombres']);
             const colores = @json($escalas['colores']);
@@ -94,9 +94,9 @@
     </script>
 
     <script>
-        document.addEventListener('livewire:init', function() {
-            Livewire.on('escalasObj', (escObj) => {
-
+        document.addEventListener('livewire:initialized', function() {
+            @this.on('escalasObj', (escObjWrapper) => {
+                const escObj = escObjWrapper.escObj;
                 document.getElementById('escalas').remove();
                 let canvas = document.createElement("canvas");
                 canvas.id = "escalas";
@@ -130,7 +130,7 @@
 
 @if ($evaluacion->activar_competencias)
     <script>
-        document.addEventListener('livewire:init', function() {
+        document.addEventListener('livewire:initialized', function() {
 
             const competencias = @json($resComp['nombres'][$periodo_seleccionado]);
             const resultados = @json($resComp['resultados'][$periodo_seleccionado]);
@@ -158,9 +158,9 @@
     </script>
 
     <script>
-        document.addEventListener('livewire:init', function() {
-            Livewire.on('cumplimientoComp', (cumpComp) => {
-
+        document.addEventListener('livewire:initialized', function() {
+            @this.on('cumplimientoComp', (cumpCompWrapper) => {
+                const cumpComp = cumpCompWrapper.cumpComp;
                 document.getElementById('cumplimientoCompetencias').remove();
                 let canvas = document.createElement("canvas");
                 canvas.id = "cumplimientoCompetencias";
@@ -192,7 +192,7 @@
     </script>
 
     <script>
-        document.addEventListener('livewire:init', function() {
+        document.addEventListener('livewire:initialized', function() {
 
             const competencias = @json($resComp['nombres'][$periodo_seleccionado]);
             const resultados = @json($resComp['resultado_competencia'][$periodo_seleccionado]);
@@ -227,9 +227,9 @@
     </script>
 
     <script>
-        document.addEventListener('livewire:init', function() {
-            Livewire.on('cumplimientoRadarComp', (cumpCompRadar) => {
-
+        document.addEventListener('livewire:initialized', function() {
+            @this.on('cumplimientoRadarComp', (cumpCompRadarWrapper) => {
+                const cumpCompRadar = cumpCompRadarWrapper.cumpCompRadar;
                 document.getElementById('cumplimientoCompetenciasRadar').remove();
                 let canvas = document.createElement("canvas");
                 canvas.id = "cumplimientoCompetenciasRadar";
@@ -326,7 +326,7 @@
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                Livewire.emit('deleteEvaluadorObjetivos', idRegistroEvaluador, keyPeriodo, keyEvluador);
+                Livewire.dispatch('deleteEvaluadorObjetivos', idRegistroEvaluador, keyPeriodo, keyEvluador);
             }
         });
     }
@@ -344,7 +344,7 @@
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                Livewire.emit('deleteEvaluadorCompetencias', idRegistroEvaluador, keyPeriodo, keyEvluador);
+                Livewire.dispatch('deleteEvaluadorCompetencias', idRegistroEvaluador, keyPeriodo, keyEvluador);
             }
         });
     }

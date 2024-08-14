@@ -584,7 +584,7 @@ class EvDesempenoDashboardPersonal extends Component
             ];
     }
 
-    public function removeEvaluadorPeriodoObjetivos($idRegistroEvaluador, $keyPeriodo, $keyEvaluador)
+    public function removeEvaluadorPeriodoObjetivos($idRegistroEvaluador = null, $keyPeriodo, $keyEvaluador)
     {
         // Perform your deletion logic here
         // For example:
@@ -599,7 +599,7 @@ class EvDesempenoDashboardPersonal extends Component
         // Then, you can emit an event to notify the frontend if needed
     }
 
-    public function removeEvaluadorPeriodoCompetencias($idRegistroEvaluador, $keyPeriodo, $keyEvaluador)
+    public function removeEvaluadorPeriodoCompetencias($idRegistroEvaluador = null, $keyPeriodo, $keyEvaluador)
     {
         // Perform your deletion logic here
         // For example:

@@ -821,15 +821,20 @@
             {{-- Codigo cambio de filtros --}}
             <script>
                 document.addEventListener('livewire:initialized', function() {
-                    Livewire.on('objetivosArea', (objArea) => {
-
+                    @this.on('objetivosArea', (objAreaWrapper) => {
+                        const objArea = objAreaWrapper.objArea; // Acceder al objeto correcto
+                        console.log('Evento recibido:', objArea);
+                        console.log('Paso 1: Remover canvas existente');
                         document.getElementById('resultadosxarea').remove();
+
+                        console.log('Paso 2: Crear nuevo canvas');
                         let canvas = document.createElement("canvas");
                         canvas.id = "resultadosxarea";
                         canvas.style.width = '100%';
                         canvas.style.height = '100%';
                         document.getElementById("contenedor-principal").appendChild(canvas);
 
+                        console.log('Paso 3: Crear nueva gráfica', objArea.labels, objArea.data);
                         let grafica_objetivos_area = new Chart(document.getElementById('resultadosxarea'), {
                             type: 'bar',
                             data: {
@@ -848,6 +853,8 @@
                                 }
                             }
                         });
+
+                        console.log('Gráfica creada con éxito');
                     });
                 });
             </script>
@@ -857,7 +864,7 @@
 
                     const tipos = @json($resObj['nombres'][$periodo_seleccionado]);
                     const resultados = @json($resObj['resultados'][$periodo_seleccionado]);
-                    console.log(tipos, resultados);
+
                     var ctx2 = document.getElementById('cumplimientoObjetivos').getContext('2d');
                     ChartCO = new Chart(ctx2, {
                         type: 'bar',
@@ -882,8 +889,8 @@
 
             <script>
                 document.addEventListener('livewire:initialized', function() {
-                    Livewire.on('cumplimientoObj', (cumpObj) => {
-
+                    @this.on('cumplimientoObj', (cumpObjWrapper) => {
+                        const cumpObj = cumpObjWrapper.cumpObj;
                         document.getElementById('cumplimientoObjetivos').remove();
                         let canvas = document.createElement("canvas");
                         canvas.id = "cumplimientoObjetivos";
@@ -945,7 +952,8 @@
 
             <script>
                 document.addEventListener('livewire:initialized', function() {
-                    Livewire.on('escalasObj', (escObj) => {
+                    @this.on('escalasObj', (escObjWrapper) => {
+                        const escObj = escObjWrapper.escObj;
 
                         document.getElementById('escalas').remove();
                         let canvas = document.createElement("canvas");
@@ -984,7 +992,7 @@
 
                     const competencias = @json($resComp['nombres'][$periodo_seleccionado]);
                     const resultados = @json($resComp['resultados'][$periodo_seleccionado]);
-                    console.log(competencias, resultados);
+
                     var ctx4 = document.getElementById('cumplimientoCompetencias').getContext('2d');
                     ChartCO = new Chart(ctx4, {
                         type: 'bar',
@@ -1009,10 +1017,8 @@
 
             <script>
                 document.addEventListener('livewire:initialized', function() {
-                    Livewire.on('cumplimientoComp', (cumpComp) => {
-
-                        console.log(cumpComp);
-
+                    @this.on('cumplimientoComp', (cumpCompWrapper) => {
+                        const cumpComp = cumpCompWrapper.cumpComp;
                         document.getElementById('cumplimientoCompetencias').remove();
                         let canvas = document.createElement("canvas");
                         canvas.id = "cumplimientoCompetencias";
@@ -1021,7 +1027,7 @@
                         document.getElementById("contenedor-competencias").appendChild(canvas);
 
                         let grafica_objetivos_area = new Chart(document.getElementById(
-                            'cumplimientoCompetencias'), {
+                        'cumplimientoCompetencias'), {
                             type: 'bar',
                             data: {
                                 labels: cumpComp.labels,

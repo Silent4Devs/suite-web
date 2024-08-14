@@ -560,7 +560,7 @@
 
         @if ($evaluacion->activar_objetivos)
             <script>
-                document.addEventListener('livewire:init', function() {
+                document.addEventListener('livewire:initialized', function() {
 
                     const tipos = @json($resObj['nombres'][$periodo_seleccionado]);
                     const resultados = @json($resObj['resultados'][$periodo_seleccionado]);
@@ -588,9 +588,9 @@
             </script>
 
             <script>
-                document.addEventListener('livewire:init', function() {
-                    Livewire.on('cumplimientoObj', (cumpObj) => {
-
+                document.addEventListener('livewire:initialized', function() {
+                    @this.on('cumplimientoObj', (cumpObjWrapper) => {
+                        const cumpObj = cumpObjWrapper.cumpObj;
                         document.getElementById('cumplimientoObjetivos').remove();
                         let canvas = document.createElement("canvas");
                         canvas.id = "cumplimientoObjetivos";
@@ -621,7 +621,7 @@
             </script>
 
             <script>
-                document.addEventListener('livewire:init', function() {
+                document.addEventListener('livewire:initialized', function() {
 
                     const escalas = @json($escalas['nombres'][$periodo_seleccionado]);
                     const colores = @json($escalas['colores'][$periodo_seleccionado]);
@@ -651,8 +651,9 @@
             </script>
 
             <script>
-                document.addEventListener('livewire:init', function() {
-                    Livewire.on('escalasObj', (escObj) => {
+                document.addEventListener('livewire:initialized', function() {
+                    @this.on('escalasObj', (escObjWrapper) => {
+                        const escObj = escObjWrapper.escObj;
 
                         document.getElementById('escalas').remove();
                         let canvas = document.createElement("canvas");
@@ -687,7 +688,7 @@
 
         @if ($evaluacion->activar_competencias)
             <script>
-                document.addEventListener('livewire:init', function() {
+                document.addEventListener('livewire:initialized', function() {
 
                     const competencias = @json($resComp['nombres'][$periodo_seleccionado]);
                     const resultados = @json($resComp['resultados'][$periodo_seleccionado]);
@@ -715,10 +716,9 @@
             </script>
 
             <script>
-                document.addEventListener('livewire:init', function() {
-                    Livewire.on('cumplimientoComp', (cumpComp) => {
-
-                        console.log(cumpComp);
+                document.addEventListener('livewire:initialized', function() {
+                    @this.on('cumplimientoComp', (cumpCompWrapper) => {
+                        const cumpComp = cumpCompWrapper.cumpComp;
 
                         document.getElementById('cumplimientoCompetencias').remove();
                         let canvas = document.createElement("canvas");
