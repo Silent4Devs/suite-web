@@ -229,7 +229,7 @@ class RequisicionesCreateComponent extends Component
             'width' => '1000px', // Asegúrate de que el ancho esté en píxeles
             'onConfirmed' => 'redirigirFaltantes',
             'timerProgressBar' => false,
-            'text' => 'No hay registros en la selección de '.$name.', contacte al administrador.',
+            'text' => 'No hay registros en la selección de ' . $name . ', contacte al administrador.',
             'confirmButtonText' => 'Entendido.',
         ]);
     }
@@ -316,20 +316,6 @@ class RequisicionesCreateComponent extends Component
                 'producto' => $this->producto_oblig,
                 'especificaciones' => $this->especificaciones_oblig,
             ];
-
-        // dd(
-        //     $this->nueva_requisicion,
-        //     $this->array_productos
-        // );
-
-        //Poner despues
-        // $firmas_requi = FirmasRequisiciones::create([
-        //     'requisicion_id' => $this->nueva_requisicion->id,
-        //     'solicitante_id' => $this->user->empleado->id,
-        //     // 'jefe_id' => $responsable->id,
-        //     // 'responsable_finanzas_id' => $responsable->id,
-        //     // 'comprador_id' => $comprador->user->empleado->id,
-        // ]);
 
         $this->habilitar_proveedores = true;
         $this->dispatch('cambiarTab', 'profile');
@@ -461,7 +447,7 @@ class RequisicionesCreateComponent extends Component
             }
 
             foreach ($dataProveedoresSugeridos as $key => $provSug) {
-                $name = 'requisicion_'.$this->requisicion_id.'cotizacion_'.$key + 1 .'_'.uniqid().'.'.$provSug['extArchivo'];
+                $name = 'requisicion_' . $this->requisicion_id . 'cotizacion_' . $key + 1 . '_' . uniqid() . '.' . $provSug['extArchivo'];
                 KatbolProveedorRequisicion::create([
                     'requisiciones_id' => $this->requisicionCreada->id,
                     'proveedor' => $provSug['proveedor'],

@@ -37,7 +37,7 @@ class RequisicionesListener implements ShouldQueue
      */
     public function handle($event)
     {
-        $user = auth()->user();
+        $user = User::getCurrentUser();
         $email = 'lourdes.abadia@silent4business.com';
 
         $supervisor = User::where('email', trim(removeUnicodeCharacters($user->empleado->supervisor->email)))->first();
