@@ -1,4 +1,4 @@
-FROM php:8.3-alpine
+FROM php:8.2-alpine
 
 # Add docker-php-extension-installer script
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
@@ -29,6 +29,7 @@ RUN apk add --no-cache \
     zlib-dev \
     sudo \
     zip \
+    xml \
     unzip \
     libsodium-dev
 
@@ -63,10 +64,11 @@ COPY . /var/www
 
 WORKDIR /var/www
 
-RUN apk add jq
+# Install PHP dependencies including Laravel Octane
+RUN composer install --no-dev --optimize-autoloader
 
-RUN wget -O/usr/local/bin/frankenphp $(wget -O- https://api.github.com/repos/dunglas/frankenphp/releases/latest | jq '.assets[] | select(.name=="frankenphp-linux-x86_64") | .browser_download_url' -r) && chmod +x /usr/local/bin/frankenphp
+# Expose the port RoadRunner will run on
+EXPOSE 9000
 
-RUN composer install --no-dev
-
-ENTRYPOINT ["php", "artisan", "octane:start", "--server=frankenphp", "--port=9804", "--workers=16", "--host=0.0.0.0"]
+# Define the command to run Octane
+CMD ["php", "artisan", "octane:start", "--server=roadrunner"]
