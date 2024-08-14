@@ -1,19 +1,19 @@
 <?php
 
-use App\Http\Controllers\Admin\QuejasController;
-use App\Http\Controllers\Admin\QuejasClienteController;
-use App\Http\Controllers\Admin\DenunciasController;
-use App\Http\Controllers\Admin\MejorasController;
-use App\Http\Controllers\Admin\SugerenciasController;
-use App\Http\Controllers\Admin\SeguridadController;
-use App\Http\Controllers\Admin\RiesgosController;
 use App\Http\Controllers\Admin\DashboardAuditoriasSGIController;
+use App\Http\Controllers\Admin\DenunciasController;
 use App\Http\Controllers\Admin\DocumentosController;
 use App\Http\Controllers\Admin\EmpleadoController;
 use App\Http\Controllers\Admin\Escuela\CapacitacionesController;
 use App\Http\Controllers\Admin\GrupoAreaController;
 use App\Http\Controllers\Admin\InicioUsuarioController;
+use App\Http\Controllers\Admin\MejorasController;
 use App\Http\Controllers\Admin\PortalComunicacionController;
+use App\Http\Controllers\Admin\QuejasClienteController;
+use App\Http\Controllers\Admin\QuejasController;
+use App\Http\Controllers\Admin\RiesgosController;
+use App\Http\Controllers\Admin\SeguridadController;
+use App\Http\Controllers\Admin\SugerenciasController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ExportExcelReport;
 use App\Http\Controllers\QueueCorreo;
@@ -1886,8 +1886,8 @@ Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'name
     Route::delete('requisiciones/eliminar-registro', 'RequisicionesController@eliminarProveedores')->name('eliminarProveedores');
     Route::get('requisiciones/aprobadores', 'RequisicionesController@indexAprobadores')->name('requisiciones.indexAprobadores');
     Route::post('requisiciones/list/get', 'RequisicionesController@getRequisicionIndex')->name('requisiciones.getRequisicionIndex');
-    Route::post('requisiciones-aprobadores/list/get', 'RequisicionesController@getRequisicionIndexAprobador')->name('requisiciones.getRequisicionIndexAprobador');
-    Route::post('requisiciones-solicitante/list/get', 'RequisicionesController@getRequisicionIndexSolicitante')->name('requisiciones.getRequisicionIndexSolicitante');
+    // Route::post('requisiciones-aprobadores/list/get', 'RequisicionesController@getRequisicionIndexAprobador')->name('requisiciones.getRequisicionIndexAprobador');
+    // Route::post('requisiciones-solicitante/list/get', 'RequisicionesController@getRequisicionIndexSolicitante')->name('requisiciones.getRequisicionIndexSolicitante');
     Route::get('requisiciones/show/{id}', 'RequisicionesController@show')->name('requisiciones.show');
     Route::get('requisiciones/edit/{id}', 'RequisicionesController@edit')->name('requisiciones.edit');
     Route::get('requisiciones/create', 'RequisicionesController@create')->name('requisiciones.create');

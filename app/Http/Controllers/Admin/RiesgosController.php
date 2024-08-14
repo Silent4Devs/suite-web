@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-use App\Http\Controllers\Controller;
 
+use App\Events\RiesgosEvent;
+use App\Http\Controllers\Controller;
 use App\Models\Activo;
 use App\Models\AnalisisSeguridad;
 use App\Models\AprobadorSeleccionado;
@@ -13,19 +14,14 @@ use App\Models\FirmaCentroAtencion;
 use App\Models\FirmaModule;
 use App\Models\Organizacion;
 use App\Models\Proceso;
-use App\Models\Quejas;
 use App\Models\RiesgoIdentificado;
 use App\Models\Sede;
 use App\Models\User;
-use App\Events\RiesgosEvent;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Mail;
 use Auth;
-
-
-
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
 
 // CENTRO DE ATENCION: Controlador de riesgos
 class RiesgosController extends Controller
@@ -94,6 +90,7 @@ class RiesgosController extends Controller
 
         return redirect()->route('admin.desk.index')->with('success', 'Reporte generado');
     }
+
     public function indexRiesgo()
     {
         abort_if(Gate::denies('centro_atencion_riesgos_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -102,6 +99,7 @@ class RiesgosController extends Controller
 
         return datatables()->of($riesgo)->toJson();
     }
+
     public function editRiesgos(Request $request, $id_riesgos)
     {
         abort_if(Gate::denies('centro_atencion_riesgos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -174,7 +172,7 @@ class RiesgosController extends Controller
             $existingRecord->delete();
         }
 
-        $aprobadorSeleccionado = new AprobadorSeleccionado();
+        $aprobadorSeleccionado = new AprobadorSeleccionado;
 
         // Asignar cada campo individualmente
         $aprobadorSeleccionado->modulo_id = $modulo;
@@ -222,7 +220,7 @@ class RiesgosController extends Controller
                 $existingRecord->delete();
             }
 
-            $aprobadorSeleccionado = new AprobadorSeleccionado();
+            $aprobadorSeleccionado = new AprobadorSeleccionado;
 
             // Asignar cada campo individualmente
             $aprobadorSeleccionado->modulo_id = $modulo;

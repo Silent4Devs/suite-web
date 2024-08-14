@@ -30,6 +30,7 @@
         </div>
     </div>
     <div class="col-sm-12 col-lg-6 col-md-6 col-12">
+        <br>
         <div class="form-group anima-focus">
             <input type="text" class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" id="nombre"
                 aria-describedby="nombreHelp" placeholder="" name="nombre" value="{{ old('nombre', $competencia->nombre) }}">

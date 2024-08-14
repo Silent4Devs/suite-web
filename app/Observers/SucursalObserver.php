@@ -49,7 +49,7 @@ class SucursalObserver
 
     private function forgetCache()
     {
-        Cache::forget('Sucursales:Sucursales_al');
+        Cache::forget('Sucursales:Sucursales_all');
         Cache::forget('Sucursales:Sucursales_archivo_false');
         Cache::forget('Sucursales:Sucursales_archivo_true');
         Cache::forget('Sucursales:Sucursales_pluck_id');
