@@ -13,7 +13,7 @@
     @include('partials.flashMessages')
     <h5 class="col-12 titulo_general_funcion">Orden De Compra</h5>
     <button type="button" class="btn  tb-btn-primary" id="filtrarBtn4"
-        style="position: relative; left: 79rem;">Aprobadores</button>
+        style="position: relative; left: 68rem;">Aprobadores</button>
     <div class="mt-5 card">
         <div class="card-body datatable-fix">
 
@@ -174,7 +174,7 @@
                         name: 'referencia'
                     },
                     {
-                        data: 'proveedor_catalogo',
+                        data: 'proveedor_catalogo_oc',
                         render: function(data, type, row) {
                             // Verifica si 'data' es null o undefined
                             if (data === null || typeof data === 'undefined') {
@@ -183,7 +183,7 @@
                                     .length > 0) {
                                     return row.proveedores_requisiciones[0].contacto;
                                 } else {
-                                    return 'Indistinto'; // Puedes personalizar el mensaje
+                                    return 'Pendiente';
                                 }
                             } else {
                                 return data; // Valor no es null ni undefined
