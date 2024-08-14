@@ -14,8 +14,8 @@ class RequisicionesObserver
     public function created(Requsicion $requsicion): void
     {
         //
-        event(new RequisicionesEvent($requsicion, 'create', 'requisiciones', 'Requisicion'));
         $this->forgetCache();
+        event(new RequisicionesEvent($requsicion, 'create', 'requisiciones', 'Requisicion'));
     }
 
     /**
@@ -33,8 +33,8 @@ class RequisicionesObserver
     public function deleted(Requsicion $requsicion): void
     {
         //
-        event(new RequisicionesEvent($requsicion, 'delete', 'requisiciones', 'Requisicion'));
         $this->forgetCache();
+        event(new RequisicionesEvent($requsicion, 'delete', 'requisiciones', 'Requisicion'));
     }
 
     /**
@@ -57,11 +57,9 @@ class RequisicionesObserver
 
     public function forgetCache()
     {
-        Cache::forget(
-            'Requisiciones:all',
-            'Requisiciones:archivo_false_all',
-            'Requisiciones:archivo_true_all',
-            'Requisiciones:ordenes_compra_false',
-        );
+        Cache::forget('Requisiciones:all');
+        Cache::forget('Requisiciones:archivo_false_all');
+        Cache::forget('Requisiciones:ordenes_compra_false');
+        Cache::forget('Requisiciones:archivo_true_all');
     }
 }
