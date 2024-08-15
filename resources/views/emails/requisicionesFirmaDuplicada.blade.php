@@ -72,9 +72,9 @@
                                             <br>De lo
                                             contrario dé clic en el siguiente link.
                                             <a class="link"
-                                                href="{{ route('contract_manager.requisiciones.firmar', ['tipo_firma' => $tipo_firma_siguiente, 'id' => $requisicion->id]) }}"
+                                                href="{{ route('contract_manager.requisiciones.firmarAprobadores', ['id' => $requisicion->id]) }}"
                                                 style="display: block; font-size: 13px;">
-                                                {{ route('contract_manager.requisiciones.firmar', ['tipo_firma' => $tipo_firma_siguiente, 'id' => $requisicion->id]) }}
+                                                {{ route('contract_manager.requisiciones.firmarAprobadores', ['id' => $requisicion->id]) }}
                                             </a>
                                         </p>
                                         <p style="font-size: 14px; margin-top: 30px;">
