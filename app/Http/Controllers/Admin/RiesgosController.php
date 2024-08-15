@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-use App\Http\Controllers\Controller;
 
+use App\Events\RiesgosEvent;
+use App\Http\Controllers\Controller;
 use App\Models\Activo;
 use App\Models\AnalisisSeguridad;
 use App\Models\AprobadorSeleccionado;
@@ -13,19 +14,15 @@ use App\Models\FirmaCentroAtencion;
 use App\Models\FirmaModule;
 use App\Models\Organizacion;
 use App\Models\Proceso;
-use App\Models\Quejas;
 use App\Models\RiesgoIdentificado;
 use App\Models\Sede;
 use App\Models\User;
-use App\Events\RiesgosEvent;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Mail;
 use Auth;
-
-
-
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
 
 // CENTRO DE ATENCION: Controlador de riesgos
 class RiesgosController extends Controller
@@ -94,6 +91,7 @@ class RiesgosController extends Controller
 
         return redirect()->route('admin.desk.index')->with('success', 'Reporte generado');
     }
+
     public function indexRiesgo()
     {
         abort_if(Gate::denies('centro_atencion_riesgos_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -102,6 +100,7 @@ class RiesgosController extends Controller
 
         return datatables()->of($riesgo)->toJson();
     }
+
     public function editRiesgos(Request $request, $id_riesgos)
     {
         abort_if(Gate::denies('centro_atencion_riesgos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -174,7 +173,7 @@ class RiesgosController extends Controller
             $existingRecord->delete();
         }
 
-        $aprobadorSeleccionado = new AprobadorSeleccionado();
+        $aprobadorSeleccionado = new AprobadorSeleccionado;
 
         // Asignar cada campo individualmente
         $aprobadorSeleccionado->modulo_id = $modulo;
@@ -199,11 +198,13 @@ class RiesgosController extends Controller
 
         $organizacion = Organizacion::first();
 
+        $fecha = $request->estatus === 'cancelado' ? Carbon::now()->format('Y-m-d H:i:s') : ($request->fecha_cierre ? Carbon::createFromFormat('d-m-Y, h:i:s a', $request->fecha_cierre, 'UTC')->format('Y-m-d H:i:s') : null);
+
         $riesgos->update([
             'titulo' => $request->titulo,
             'fecha' => $request->fecha,
             'estatus' => $request->estatus,
-            'fecha_cierre' => $request->fecha_cierre,
+            'fecha_cierre' => $fecha,
             'sede' => $request->sede,
             'ubicacion' => $request->ubicacion,
             'descripcion' => $request->descripcion,
@@ -222,7 +223,7 @@ class RiesgosController extends Controller
                 $existingRecord->delete();
             }
 
-            $aprobadorSeleccionado = new AprobadorSeleccionado();
+            $aprobadorSeleccionado = new AprobadorSeleccionado;
 
             // Asignar cada campo individualmente
             $aprobadorSeleccionado->modulo_id = $modulo;

@@ -9,7 +9,6 @@ use App\Models\DayOff;
 use App\Models\Empleado;
 use App\Models\IncidentesDayoff;
 use App\Models\ListaInformativa;
-use App\Models\Organizacion;
 use App\Models\SolicitudDayOff;
 use App\Models\User;
 use App\Traits\ObtenerOrganizacion;

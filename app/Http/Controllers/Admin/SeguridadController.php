@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-
 use App\Events\IncidentesDeSeguridadEvent;
+use App\Http\Controllers\Controller;
 use App\Mail\SolicitudAprobacion;
 use App\Models\Activo;
 use App\Models\AnalisisSeguridad;
@@ -15,16 +14,16 @@ use App\Models\Empleado;
 use App\Models\EvidenciasSeguridad;
 use App\Models\FirmaCentroAtencion;
 use App\Models\FirmaModule;
+use App\Models\IncidentesSeguridad;
 use App\Models\Organizacion;
 use App\Models\Proceso;
 use App\Models\Sede;
 use App\Models\SubcategoriaIncidente;
-use App\Models\IncidentesSeguridad;
 use App\Models\User;
 use Auth;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
 
 class SeguridadController extends Controller
@@ -100,9 +99,9 @@ class SeguridadController extends Controller
             foreach ($request->file('evidencia') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
+                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
 
-                $new_name_image = 'Seguridad_file_' . $incidentes_seguridad->id . '_' . $name_image . '.' . $extension;
+                $new_name_image = 'Seguridad_file_'.$incidentes_seguridad->id.'_'.$name_image.'.'.$extension;
 
                 $route = 'public/evidencias_seguridad';
 
@@ -119,6 +118,7 @@ class SeguridadController extends Controller
 
         return redirect()->route('admin.desk.index')->with('success', 'Reporte generado');
     }
+
     public function indexSeguridad()
     {
         abort_if(Gate::denies('centro_atencion_incidentes_de_seguridad_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -127,6 +127,7 @@ class SeguridadController extends Controller
 
         return datatables()->of($incidentes_seguridad)->toJson();
     }
+
     public function editSeguridad(Request $request, $id_incidente)
     {
         abort_if(Gate::denies('centro_atencion_incidentes_de_seguridad_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -188,7 +189,6 @@ class SeguridadController extends Controller
         return view('admin.desk.seguridad.edit', compact('incidentesSeguridad', 'activos', 'empleados', 'sedes', 'areas', 'procesos', 'subcategorias', 'categorias', 'analisis', 'firmaModules', 'firmas', 'aprobadores', 'aprobadoresArray', 'participantsSelected', 'firma_validacion'));
     }
 
-
     public function removeUnicodeCharacters($string)
     {
         return preg_replace('/[^\x00-\x7F]/u', '', $string);
@@ -219,7 +219,7 @@ class SeguridadController extends Controller
             $existingRecord->delete();
         }
 
-        $aprobadorSeleccionado = new AprobadorSeleccionado();
+        $aprobadorSeleccionado = new AprobadorSeleccionado;
 
         // Asignar cada campo individualmente
         $aprobadorSeleccionado->modulo_id = $modulo;
@@ -267,7 +267,6 @@ class SeguridadController extends Controller
             'subcategoria_id' => $request->subcategoria_id,
         ]);
 
-
         if ($incidentesSeguridad->estatus === 'Cerrado' || $incidentesSeguridad->estatus === 'No procedente') {
 
             $existingRecord = AprobadorSeleccionado::where('seguridad_id', $incidentesSeguridad->id)->first();
@@ -276,7 +275,7 @@ class SeguridadController extends Controller
                 $existingRecord->delete();
             }
 
-            $aprobadorSeleccionado = new AprobadorSeleccionado();
+            $aprobadorSeleccionado = new AprobadorSeleccionado;
 
             // Asignar cada campo individualmente
             $aprobadorSeleccionado->modulo_id = $modulo;
@@ -302,13 +301,13 @@ class SeguridadController extends Controller
 
         $documento = $incidentesSeguridad->evidencia;
 
-        if ($request->file('evidencia') != null or !empty($request->file('evidencia'))) {
+        if ($request->file('evidencia') != null or ! empty($request->file('evidencia'))) {
             foreach ($request->file('evidencia') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_documento = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
+                $name_documento = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
 
-                $new_name_documento = 'Seguridad_file_' . $incidentesSeguridad->id . '_' . $name_documento . '.' . $extension;
+                $new_name_documento = 'Seguridad_file_'.$incidentesSeguridad->id.'_'.$name_documento.'.'.$extension;
 
                 $route = 'public/evidencias_seguridad';
 

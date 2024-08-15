@@ -30,6 +30,7 @@ class Mejoras extends Model implements Auditable
         'proceso_mejora',
         'tipo',
         'otro',
+        'empleado_mejoro_id'
     ];
 
     protected $appends = ['folio', 'fecha_creacion', 'fecha_de_cierre', 'fecha_reporte', 'beneficio_html', 'descripcion_html'];

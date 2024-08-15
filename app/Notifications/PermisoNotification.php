@@ -3,7 +3,6 @@
 namespace App\Notifications;
 
 use App\Models\PermisosGoceSueldo;
-use App\Models\SolicitudPermisoGoceSueldo;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;

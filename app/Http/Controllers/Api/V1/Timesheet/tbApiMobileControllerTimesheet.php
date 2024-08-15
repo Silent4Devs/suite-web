@@ -28,6 +28,7 @@ class tbApiMobileControllerTimesheet extends Controller
         $url = preg_replace_callback('/[^A-Za-z0-9_\-\.~\/\\\:]/', function ($matches) {
             return rawurlencode($matches[0]);
         }, $url);
+
         return $url;
     }
 
