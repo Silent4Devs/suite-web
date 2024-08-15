@@ -63,6 +63,7 @@ class Requsicion extends Model implements Auditable
         'estado_orden',
         'estado_orden_dos',
         'proveedor_catalogo',
+        'proveedor_catalogo_oc',
         'proveedor_catalogo_id',
         'ids_proveedores',
         'proveedoroc_id',
