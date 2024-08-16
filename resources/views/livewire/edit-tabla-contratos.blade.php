@@ -102,7 +102,8 @@
                             <td style="text-align: center">
                                 <p style="width:100%; text-align:center;">
                                     <label style="width:100% !important;">
-                                        <input type="checkbox" wire:model="contrato_ampliado" class="checkbox" />
+                                        <input type="checkbox" wire:model="contrato_ampliado"
+                                            wire:change="cambioContratoAmpliado" class="checkbox" />
                                         <span></span>
                                     </label>
                                 </p>
@@ -111,7 +112,7 @@
                                 <p style="width:100%; text-align:center;">
                                     <label style="width:100% !important;">
                                         <input type="checkbox" wire:model="convenio_modificatorio"
-                                            class="checkbox_convenios" />
+                                            wire:change="cambioConvenioModificatorio" class="checkbox_convenios" />
                                         <span></span>
                                     </label>
                                 </p>
@@ -120,6 +121,101 @@
                     </tbody>
                 </table>
             </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="col s12 m12">
+            <div class="card card-body">
+                <h5 class="mb-0 d-inline-block">Facturación</h5>
+                <hr class="hr-custom-title">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <p class="grey-text tablaparra">No. pagos</p>
+                                </th>
+                                <th>
+                                    <p class="grey-text tablaparra">Tipo</p>
+                                </th>
+                                <th>
+                                    <p class="grey-text tablaparra">Nombre servicio</p>
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr class="black-text">
+                                <td>{{ $contratos->no_pagos }}</td>
+                                <td>{{ $contratos->tipo_contrato }}</td>
+                                <td>{{ $contratos->nombre_servicio }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col s12 m12">
+        <div class="card card-body">
+            @livewire('factura.factura-component', ['contrato_id' => $contratos->id, 'show_contrato' => false, 'contrato_total' => $contratos->monto_pago])
+        </div>
+    </div>
+
+    <div class="col s12 m12">
+        <div class="card card-body">
+            <h5 class="mb-0 d-inline-block">Niveles de servicio</h5>
+            <hr class="hr-custom-title">
+            @livewire('niveles-servicio.niveles-component', ['contrato_id' => $contratos->id, 'show_contrato' => false])
+        </div>
+    </div>
+
+    <div class="col s12 m12">
+        <div class="card card-body">
+            <h5 class="mb-0 d-inline-block">Entregables mensuales</h5>
+            <hr class="hr-custom-title">
+            @livewire('entregable-mensual.entregablecomponent', ['contrato_id' => $contratos->id, 'show_contrato' => false])
+        </div>
+    </div>
+
+    <div class="col s12 m12">
+        <div class="card card-body">
+            <h5 class="mb-0 d-inline-block">Cierre proyecto</h5>
+            <hr class="hr-custom-title">
+            @livewire('cierre-contratos.cierrecomponent', ['contrato_id' => $contratos->id, 'show_contrato' => false])
+        </div>
+    </div>
+
+    @if ($contratos->contrato_ampliado)
+        <div class="col s12 m12" id="ampliacion_contrato_lista">
+            <div class="card card-body">
+                <h5 class="mb-0 d-inline-block">Ampliación de contrato</h5>
+                <hr class="hr-custom-title">
+                @livewire('ampliacion-contratos.ampliacion-component', [
+                    'contrato_id' => $contratos->id,
+                    'show_contrato' => false,
+                    'fecha_fin_contrato' => $contratos->fecha_fin,
+                ])
+            </div>
+        </div>
+    @endif
+
+    @if ($contratos->convenio_modificatorio)
+        <div class="col s12 m12" id="convenio_contrato_lista">
+            <div class="card card-body">
+                <h5 class="mb-0 d-inline-block">Convenios Modificatorios</h5>
+                <hr class="hr-custom-title">
+                @livewire('convenios-modificatorios-contratos.convenio-modificatorio-component', ['contrato_id' => $contratos->id, 'show_contrato' => false])
+            </div>
+        </div>
+    @endif
+
+    <div class="col s12 m12">
+        <div class="card card-body">
+            <h5 class="mb-0 d-inline-block">Cédula de cumplimiento</h5>
+            <hr class="hr-custom-title">
+            @livewire('cedula-cumplimiento.cedula-cumplimiento-component', ['contrato_id' => $contratos->id, 'show_contrato' => false])
         </div>
     </div>
 </div>
