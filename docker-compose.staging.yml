@@ -16,9 +16,10 @@ services:
       - php
       - postgres-tabantaj
       # - redis-tabantaj
-    # networks:
-    #   - tabantajnetwork
-    network_mode: host
+    networks:
+      - tabantajnetwork
+    networks:
+      - tabantajnetwork
 
   postgres-tabantaj:
     image: postgres:16-alpine
@@ -35,7 +36,8 @@ services:
       - "5432:5432"
     # networks:
     #   - tabantajnetwork
-    network_mode: host
+    networks:
+      - tabantajnetwork
     mem_limit: 6g
 
   php:
@@ -56,7 +58,8 @@ services:
       - .:/var/www/html
     ports:
       - 9000:80
-    network_mode: host
+    networks:
+      - tabantajnetwork
     # networks:
     #   - tabantajnetwork
 
@@ -74,7 +77,8 @@ services:
     tty: true
     environment:
       CONTAINER_ROLE: queue
-    network_mode: host
+    networks:
+      - tabantajnetwork
     # networks:
     #   - tabantajnetwork
 
@@ -92,7 +96,8 @@ services:
     command: php artisan schedule:work
     environment:
       CONTAINER_ROLE: scheduler
-    network_mode: host
+    networks:
+      - tabantajnetwork
     # networks:
     #   - tabantajnetwork
 
@@ -103,7 +108,8 @@ services:
     tty: true
     volumes:
       - ./infra/redis/redis.conf:/usr/local/etc/redis/redis.conf # Mount the Redis configuration file
-    network_mode: host
+    networks:
+      - tabantajnetwork
     # networks:
     #   - tabantajnetwork
     mem_limit: 2g
@@ -117,7 +123,8 @@ services:
       - 6360:80
     env_file:
       - .env
-    network_mode: host
+    networks:
+      - tabantajnetwork
     # networks:
     #   - tabantajnetwork
 
@@ -131,7 +138,8 @@ services:
       - 15672:15672
     restart: unless-stopped
     tty: true
-    network_mode: host
+    networks:
+      - tabantajnetwork
     # networks:
     #   - tabantajnetwork
     volumes:
@@ -146,7 +154,8 @@ services:
       - "3300:3300"
     volumes:
       - goservices_data:/goservices
-    network_mode: host
+    networks:
+      - tabantajnetwork
     # networks:
     #   - tabantajnetwork
 
@@ -159,7 +168,8 @@ services:
       - "3301:3301"
     volumes:
       - reportservice_data:/reportservice
-    network_mode: host
+    networks:
+      - tabantajnetwork
     # networks:
     #   - tabantajnetwork
 
@@ -173,7 +183,8 @@ services:
       - "8025:8025"
     volumes:
       - mailhog_data:/mailhog_data # Reemplaza "./ruta/local" con la ruta local y "/ruta/contenedor" con la ruta dentro del contenedor
-    network_mode: host
+    networks:
+      - tabantajnetwork
     # networks:
     #   - tabantajnetwork
 
@@ -195,7 +206,8 @@ services:
       memlock:
         soft: -1
         hard: -1
-    network_mode: host
+    networks:
+      - tabantajnetwork
     # networks:
     #   - tabantajnetwork
 
@@ -213,7 +225,8 @@ services:
       - "9600:9600"
     environment:
       LS_JAVA_OPTS: "-Xmx256m -Xms256m"
-    network_mode: host
+    networks:
+      - tabantajnetwork
     # networks:
     #   - tabantajnetwork
 
@@ -260,7 +273,8 @@ services:
       options:
         max-size: "12m"
         max-file: "100"
-    network_mode: host
+    networks:
+      - tabantajnetwork
     # networks:
     #   - tabantajnetwork
 
@@ -268,7 +282,8 @@ services:
     image: docker.elastic.co/package-registry/distribution:8.11.1
     ports:
       - "8080:8080"
-    network_mode: host
+    networks:
+      - tabantajnetwork
     # networks:
     #   - tabantajnetwork
 
