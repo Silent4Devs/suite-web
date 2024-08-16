@@ -18,8 +18,6 @@ services:
       # - redis-tabantaj
     networks:
       - tabantajnetwork
-    networks:
-      - tabantajnetwork
 
   postgres-tabantaj:
     image: postgres:16-alpine
