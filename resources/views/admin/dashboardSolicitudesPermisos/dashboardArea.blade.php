@@ -1,65 +1,541 @@
 @extends('layouts.admin')
 @section('css')
-    <link rel="stylesheet"
-        href="{{ asset('css/dahsboardSolicitudesPermisos/dahsboardSolicitudesPermisos.css') }}{{ config('app.cssVersion') }}">
+    <link rel="stylesheet" href="{{ asset('css/dashboardPermisos/dahsboardPermisos.css') }}{{ config('app.cssVersion') }}">
 @endsection
 @section('content')
     {{-- {{ Breadcrumbs::render('Reglas-DayOff') }} --}}
 
     <h5 class="titulo_general_funcion">Solicitudes: <span style="font-weight: lighter;">Dashboard</span></h5>
 
+    <div class="d-flex gap-3">
+        <div class="card card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="d-flex align-items-center justify-content-between gap-1 mr-5">
+                        <span style="font-size: 25px;">Directivo</span>
+                        <div>
+                            <strong>Nombre del colaborador</strong> <br>
+                            <span>Karen</span>
+                        </div>
+                        <div class="img-person" style="width: 80px; height: 80px;">
+                            <img src="" alt="">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <hr class="line-vertical" style="height: 100%;">
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label for="">Área</label>
+                        <select name="area" id="area" class="form-control"></select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card card-body text-center justify-content-center" style="max-width: 200px; cursor:pointer;">
+            <strong>Reporte</strong>
+            <i class="material-symbols-outlined" style="font-size: 60px; color:#006DDB;">print</i>
+        </div>
+    </div>
+
     <div class="row">
-        <div class="col-md-6">
-            <div class="d-flex align-items-center">
-                <span>Directivo</span>
-                <div>
-                    <strong>Nombre del colaborador</strong> <br>
-                    <span>Karen</span>
+        <div class="col-md-4">
+            <div class="card-indicator-permiso" style="background-color: #428BEC;">
+                <div class="d-flex align-items-center gap-3">
+                    <i class="material-symbols-outlined">water_lux</i>
+                    <span>
+                        Vacaciones por mes
+                    </span>
                 </div>
-                <div class="img-person">
-                    <img src="" alt="">
+                <span>
+                    <strong>70</strong>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card-indicator-permiso" style="background-color: #2972D4;">
+                <div class="d-flex align-items-center gap-3">
+                    <i class="material-symbols-outlined">work_history</i>
+                    <span>
+                        Day por mes
+                    </span>
                 </div>
+                <span>
+                    <strong>70</strong>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card-indicator-permiso" style="background-color: #1757AB;">
+                <div class="d-flex align-items-center gap-3">
+                    <i class="material-symbols-outlined">license</i>
+                    <span>
+                        Permisos por mes
+                    </span>
+                </div>
+                <span>
+                    <strong>70</strong>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card-indicator-permiso" style="background-color: #78BB50;">
+                <div class="d-flex align-items-center gap-3">
+                    <i class="material-symbols-outlined">check_circle</i>
+                    <span>
+                        Aprobadas por mes
+                    </span>
+                </div>
+                <span>
+                    <strong>70</strong>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card-indicator-permiso" style="background-color: #FFA200;">
+                <div class="d-flex align-items-center gap-3">
+                    <i class="material-symbols-outlined">assignment_late</i>
+                    <span>
+                        Por aprobar por mes
+                    </span>
+                </div>
+                <span>
+                    <strong>70</strong>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card-indicator-permiso" style="background-color: #E90046;">
+                <div class="d-flex align-items-center gap-3">
+                    <i class="material-symbols-outlined">block</i>
+                    <span>
+                        Rechazadas por mes
+                    </span>
+                </div>
+                <span>
+                    <strong>70</strong>
+                </span>
             </div>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-4">
-            vc
-        </div>
-        <div class="col-md-4">
-            day
-        </div>
-        <div class="col-md-4">
-            per
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-4">
-            apro
-        </div>
-        <div class="col-md-4">
-            por
-        </div>
-        <div class="col-md-4">
-            rech
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="ccol-md-6">
-            calendar
-        </div>
+    <div class="row mt-4">
         <div class="col-md-6">
-            agenda
+
+            <div class="card card-body">
+                <div class="calendar calendar-first" id="calendar_first" style="">
+                    <div class="calendar_header">
+                        <h2></h2>
+                        <button class="switch-month switch-left btn">
+                            <i class="fa fa-chevron-left"></i>
+                        </button>
+                        <button class="switch-month switch-right btn">
+                            <i class="fa fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    <div class="calendar_weekdays"></div>
+                    <div class="calendar_content"></div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-6 d-flex">
+            <div class="card card-body">
+                agenda
+            </div>
         </div>
     </div>
 
     <div class="card card-body">
-        table
+        <div class="datatable-fix datatable-rds">
+            <table class="datatable-historial">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Tipo de solicitud</th>
+                        <th>Inicio</th>
+                        <th>Fin</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center gap-4">
+                                <div class="img-person">
+                                    <img src="" alt="">
+                                </div>
+
+                                <span>Name</span>
+                            </div>
+                        </td>
+                        <td>
+                            Vacaciones
+                        </td>
+                        <td>
+                            12/12/2024
+                        </td>
+                        <td>
+                            12/12/2024
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card card-body">
+        <div id="chart-container-solicitudes-areas" style="width: 100%; height: 300px;"></div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card card-body">
+                <div id="chart-container-solicitudes-global" style="width: 100%; height: 300px;"></div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card card-body">
+                <div id="chart-container-solicitudes-tipos" style="width: 100%; height: 300px;"></div>
+            </div>
+        </div>
     </div>
 @endsection
 
 @section('scripts')
     @parent
+    <script src="https://fastly.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
+
+    <script src="{{ asset('js/calendar-comunicado.js') }}"></script>
+    <script src="{{ asset('js/calendario-comunicacion.js') }}"></script>
+
+    <script>
+        let currentTime = new Date();
+        let options = {
+            timeStyle: 'short',
+            hour12: true
+        };
+        let hora_complete = currentTime.toLocaleTimeString('en-US', options);
+        let [hora, med] = hora_complete.split(' ');
+
+        document.getElementById('hora-portal').innerHTML = hora;
+        document.getElementById('med-portal>').innerHTML = med;
+
+        const fechaActual = new Date();
+
+        // Opciones para el formato de fecha
+        const opcionesFecha = {
+            month: 'long',
+            day: 'numeric',
+            weekday: 'long'
+        };
+
+        // Convertir la fecha actual a formato humano en español
+        const fechaHumana = fechaActual.toLocaleDateString('es-ES', opcionesFecha).replace(' de ', ' ');
+
+        // Mostrar la fecha en la consola
+        document.getElementById('fecha-completa').innerHTML = fechaHumana;
+
+        function carruselPortal(tipo) {
+            if (tipo == 'advance') {
+                console.log('iso');
+                document.querySelector('.carrusel-portal:hover .caja-items-carrusel-portal').scrollLeft += 400;
+            }
+            if (tipo == 'retreat') {
+                document.querySelector('.carrusel-portal:hover .caja-items-carrusel-portal').scrollLeft -= 400;
+            }
+        }
+
+        $(document).ready(function() {
+            // Reemplaza '82a605d0' y '010461c49fd2f4a8f1968e0236b802fa' con tus credenciales de WeatherUnlocked
+            const appId = '82a605d0';
+            const apiKey = '010461c49fd2f4a8f1968e0236b802fa';
+
+            // Coordenadas para una ubicación específica (51.50, -0.12 es Londres, puedes cambiarlo)
+            const latitude = 51.50;
+            const longitude = -0.12;
+
+            // URL de la API de WeatherUnlocked para obtener datos del tiempo en una ubicación específica
+            const apiUrl =
+                `http://api.weatherunlocked.com/api/current/${latitude},${longitude}?app_id=${appId}&app_key=${apiKey}`;
+
+            // Realiza la solicitud a la API utilizando jQuery AJAX
+            $.ajax({
+                url: apiUrl,
+                method: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    // Muestra la información del tiempo en el elemento con id 'weather-info'
+                    console.log(data);
+                },
+                error: function(error) {
+                    console.error('Error al obtener datos del tiempo:', error);
+                }
+            });
+        });
+    </script>
+
+    <script>
+        $(function() {
+            let dtButtons = [{
+                    extend: 'csvHtml5',
+                    title: `Comite Seguridad ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Exportar CSV',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible'],
+                        orthogonal: "empleadoText"
+
+                    }
+                },
+                {
+                    extend: 'excelHtml5',
+                    title: `Comite Seguridad ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Exportar Excel',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible'],
+                        orthogonal: "empleadoText"
+
+                    }
+                },
+                {
+                    extend: 'print',
+                    title: `Comite Seguridad ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Imprimir',
+                    customize: function(doc) {
+                        let logo_actual = @json($logo_actual);
+                        let empresa_actual = @json($empresa_actual);
+
+                        var now = new Date();
+                        var jsDate = now.getDate() + '-' + (now.getMonth() + 1) + '-' + now.getFullYear();
+                        $(doc.document.body).prepend(`
+                <div class="row mt-5 mb-4 col-12 ml-0" style="border: 2px solid #ccc; border-radius: 5px">
+                    <div class="col-2 p-2" style="border-right: 2px solid #ccc">
+                            <img class="img-fluid" style="max-width:120px" src="${logo_actual}"/>
+                        </div>
+                        <div class="col-7 p-2" style="text-align: center; border-right: 2px solid #ccc">
+                            <p>${empresa_actual}</p>
+                            <strong style="color:#345183">CONFORMACIÓN DEL COMITÉ</strong>
+                        </div>
+                        <div class="col-3 p-2">
+                            Fecha: ${jsDate}
+                        </div>
+                    </div>
+                `);
+
+                        $(doc.document.body).find('table')
+                            .css('font-size', '12px')
+                            .css('margin-top', '15px')
+                        // .css('margin-bottom', '60px')
+                        $(doc.document.body).find('th').each(function(index) {
+                            $(this).css('font-size', '18px');
+                            $(this).css('color', '#fff');
+                            $(this).css('background-color', 'blue');
+                        });
+                    },
+                    title: '',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible']
+                    }
+                },
+                {
+                    extend: 'colvis',
+                    text: '<i class="fas fa-filter" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Seleccionar Columnas',
+                },
+                {
+                    extend: 'colvisGroup',
+                    text: '<i class="fas fa-eye" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    show: ':hidden',
+                    titleAttr: 'Ver todo',
+                },
+                {
+                    extend: 'colvisRestore',
+                    text: '<i class="fas fa-undo" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Restaurar a estado anterior',
+                }
+
+            ];
+
+            let dtOverrideGlobals = {
+                buttons: dtButtons,
+                order: [
+                    [0, 'desc']
+                ],
+            };
+
+            let table = $('.datatable-historial').DataTable(dtOverrideGlobals);
+        });
+    </script>
+
+    <script>
+        var dom = document.getElementById('chart-container-solicitudes-areas');
+        var myChart = echarts.init(dom, null, {
+            renderer: 'canvas',
+            useDirtyRect: false
+        });
+        var app = {};
+
+        var option;
+
+        option = {
+            legend: {},
+            tooltip: {},
+            dataset: {
+                source: [
+                    ['product', '2015', '2016', '2017'],
+                    ['Matcha Latte', 43.3, 85.8, 93.7],
+                    ['Milk Tea', 83.1, 73.4, 55.1],
+                    ['Cheese Cocoa', 86.4, 65.2, 82.5],
+                    ['Walnut Brownie', 72.4, 53.9, 39.1]
+                ]
+            },
+            xAxis: {
+                type: 'category'
+            },
+            yAxis: {},
+            // Declare several bar series, each will be mapped
+            // to a column of dataset.source by default.
+            series: [{
+                type: 'bar'
+            }, {
+                type: 'bar'
+            }, {
+                type: 'bar'
+            }]
+        };
+
+        if (option && typeof option === 'object') {
+            myChart.setOption(option);
+        }
+
+        window.addEventListener('resize', myChart.resize);
+    </script>
+
+    <script>
+        var dom = document.getElementById('chart-container-solicitudes-global');
+        var myChart = echarts.init(dom, null, {
+            renderer: 'canvas',
+            useDirtyRect: false
+        });
+        var app = {};
+
+        var option;
+
+        option = {
+            tooltip: {
+                trigger: 'item'
+            },
+            legend: {
+                top: '5%',
+                left: 'center'
+            },
+            series: [{
+                name: 'Access From',
+                type: 'pie',
+                radius: ['40%', '70%'],
+                avoidLabelOverlap: false,
+                itemStyle: {
+                    borderRadius: 10,
+                    borderColor: '#fff',
+                    borderWidth: 2
+                },
+                label: {
+                    show: false,
+                    position: 'center'
+                },
+                emphasis: {
+                    label: {
+                        show: true,
+                        fontSize: 40,
+                        fontWeight: 'bold'
+                    }
+                },
+                labelLine: {
+                    show: false
+                },
+                data: [{
+                        value: 1048,
+                        name: 'Search Engine'
+                    },
+                    {
+                        value: 735,
+                        name: 'Direct'
+                    },
+                    {
+                        value: 580,
+                        name: 'Email'
+                    },
+                    {
+                        value: 484,
+                        name: 'Union Ads'
+                    },
+                    {
+                        value: 300,
+                        name: 'Video Ads'
+                    }
+                ]
+            }]
+        };
+
+        if (option && typeof option === 'object') {
+            myChart.setOption(option);
+        }
+
+        window.addEventListener('resize', myChart.resize);
+    </script>
+
+    <script>
+        var dom = document.getElementById('chart-container-solicitudes-tipos');
+        var myChart = echarts.init(dom, null, {
+            renderer: 'canvas',
+            useDirtyRect: false
+        });
+        var app = {};
+
+        var option;
+
+        option = {
+            legend: {},
+            tooltip: {},
+            dataset: {
+                source: [
+                    ['product', '2015', '2016', '2017'],
+                    ['Matcha Latte', 43.3, 85.8, 93.7],
+                    ['Milk Tea', 83.1, 73.4, 55.1],
+                    ['Cheese Cocoa', 86.4, 65.2, 82.5],
+                    ['Walnut Brownie', 72.4, 53.9, 39.1]
+                ]
+            },
+            xAxis: {
+                type: 'category'
+            },
+            yAxis: {},
+            // Declare several bar series, each will be mapped
+            // to a column of dataset.source by default.
+            series: [{
+                type: 'bar'
+            }, {
+                type: 'bar'
+            }, {
+                type: 'bar'
+            }]
+        };
+
+        if (option && typeof option === 'object') {
+            myChart.setOption(option);
+        }
+
+        window.addEventListener('resize', myChart.resize);
+    </script>
 @endsection
