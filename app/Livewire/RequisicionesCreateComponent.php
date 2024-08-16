@@ -63,6 +63,9 @@ class RequisicionesCreateComponent extends Component
     #[Validate('required')]
     public $user_area;
 
+    #[Validate('required')]
+    public $user_email;
+
     #[Validate('required|max:255')]
     public $descripcion;
 
@@ -175,6 +178,7 @@ class RequisicionesCreateComponent extends Component
 
         $this->user_name = $this->user->name;
         $this->user_area = $this->user->empleado->area->area;
+        $this->user_email = $this->user->empleado->email;
 
         $collections = [
             'sucursales' => 'Sucursales',
@@ -308,6 +312,7 @@ class RequisicionesCreateComponent extends Component
             'comprador_id' => $this->comprador_id,
             'contrato_id' => $this->contrato_id,
             'id_user' => $this->user->id,
+            'email' => $this->user_email,
         ];
 
         $this->array_productos[] =
@@ -316,20 +321,6 @@ class RequisicionesCreateComponent extends Component
                 'producto' => $this->producto_oblig,
                 'especificaciones' => $this->especificaciones_oblig,
             ];
-
-        // dd(
-        //     $this->nueva_requisicion,
-        //     $this->array_productos
-        // );
-
-        //Poner despues
-        // $firmas_requi = FirmasRequisiciones::create([
-        //     'requisicion_id' => $this->nueva_requisicion->id,
-        //     'solicitante_id' => $this->user->empleado->id,
-        //     // 'jefe_id' => $responsable->id,
-        //     // 'responsable_finanzas_id' => $responsable->id,
-        //     // 'comprador_id' => $comprador->user->empleado->id,
-        // ]);
 
         $this->habilitar_proveedores = true;
         $this->dispatch('cambiarTab', 'profile');
@@ -433,6 +424,7 @@ class RequisicionesCreateComponent extends Component
                     'fecha' => $this->nueva_requisicion['fecha'],
                     'sucursal_id' => $this->nueva_requisicion['sucursal_id'],
                     'user' => $this->nueva_requisicion['user'],
+                    'email' => $this->nueva_requisicion['email'],
                     'area' => $this->nueva_requisicion['area'],
                     'referencia' => $this->nueva_requisicion['referencia'],
                     'comprador_id' => $this->nueva_requisicion['comprador_id'],
@@ -476,6 +468,11 @@ class RequisicionesCreateComponent extends Component
                     'fecha_fin' => $provSug['fecha_fin'],
                     'cotizacion' => $name,
                 ]);
+
+                $this->requisicionCreada->update([
+                    'proveedor_catalogo' => $this->proveedores_catalogo->nombre,
+                    'proveedoroc_id' => $this->proveedores_catalogo->id,
+                ]);
             }
 
             foreach ($dataProvedoresCatalogo as $key => $provCat) {
@@ -486,6 +483,10 @@ class RequisicionesCreateComponent extends Component
                     'fecha_fin' => $provCat['fecha_fin'],
                 ]);
             }
+
+            $proveedores_escogidos = KatbolProvedorRequisicionCatalogo::where('requisicion_id', $this->requisicionCreada->id)->pluck('proveedor_id')->toArray();
+
+            $this->proveedores_show = KatbolProveedorOC::whereIn('id', $proveedores_escogidos)->get();
 
             $firmas_requi = FirmasRequisiciones::create([
                 'requisicion_id' => $this->requisicionCreada->id,

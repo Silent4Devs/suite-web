@@ -165,7 +165,7 @@ class OrdenCompraController extends Controller
             'dias_credito' => $request->dias_credito,
             'moneda' => $request->moneda,
             'cambio' => $request->cambio,
-            'proveedor_id' => $request->proveedor_id,
+            'proveedoroc_id' => $request->proveedor_id,
             'direccion_envio_proveedor' => $request->direccion_envio,
             'credito_proveedor' => $request->credito_proveedor,
 
@@ -202,7 +202,11 @@ class OrdenCompraController extends Controller
             ]);
         }
 
-        $proveedor = KatbolProveedorOC::find($request->proveedor_id);
+        $proveedor = KatbolProveedorOC::where('id', $request->proveedor_id)->first();
+
+        $requisicion->update([
+            'proveedor_catalogo_oc' => $proveedor->nombre,
+        ]);
 
         $proveedor->update([
             'direccion' => $request->direccion,
@@ -235,7 +239,7 @@ class OrdenCompraController extends Controller
             $requisicion = KatbolRequsicion::find($id);
             $organizacion = Organizacion::getFirst();
             $contrato = KatbolContrato::where('id', $requisicion->contrato_id)->first();
-            $proveedores = KatbolProveedorOC::where('id', $requisicion->proveedor_id)->get();
+            $proveedores = KatbolProveedorOC::where('id', $requisicion->proveedoroc_id)->get();
             $user = User::find($requisicion->id_finanzas_oc);
 
             if ($user) {
@@ -405,7 +409,7 @@ class OrdenCompraController extends Controller
         $numero = $requisiciones->total;
         $letras = $f->format($numero);
 
-        $proveedores = KatbolProveedorOC::where('id', $requisiciones->proveedor_id)->first();
+        $proveedores = KatbolProveedorOC::where('id', $requisiciones->proveedoroc_id)->first();
         $pdf = PDF::loadView('orden_compra_pdf', compact('firma_finanzas_name', 'requisiciones', 'organizacion', 'proveedores', 'letras'));
         $pdf->setPaper('A4', 'portrait');
 
@@ -539,7 +543,7 @@ class OrdenCompraController extends Controller
         $organizacion = Organizacion::getFirst();
         $contrato = KatbolContrato::where('id', $requisicion->contrato_id)->first();
 
-        $proveedores_show = KatbolProvedorRequisicionCatalogo::where('requisicion_id', $requisicion->id)->pluck('proveedor_id')->toArray();
+        $proveedores_show = KatbolProvedorRequisicionCatalogo::where('requisicion_id', $requisicion->id)->pluck('proveedoroc_id')->toArray();
 
         $proveedor_indistinto = KatbolProveedorIndistinto::where('requisicion_id', $requisicion->id)->first();
 

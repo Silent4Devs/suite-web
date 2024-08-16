@@ -26,12 +26,12 @@ class TablaContratos extends Component
         return view('livewire.tabla-contratos');
     }
 
-    public function updatedContratoAmpliado()
+    public function cambioContratoAmpliado()
     {
         $this->contratos->update(['contrato_ampliado' => $this->contrato_ampliado]);
     }
 
-    public function updatedConvenioModificatorio()
+    public function cambioConvenioModificatorio()
     {
         $this->contratos->update(['convenio_modificatorio' => $this->convenio_modificatorio]);
     }

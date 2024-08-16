@@ -188,8 +188,6 @@ class SugerenciasController extends Controller
                 : ($request->fecha_cierre ? Carbon::createFromFormat('d-m-Y, h:i:s a', $request->fecha_cierre, 'UTC')->format('Y-m-d H:i:s') : null),
         ]);
 
-
-
         if ($sugerencias->estatus === 'cerrado' || $sugerencias->estatus === 'cancelado') {
 
             $existingRecord = AprobadorSeleccionado::where('sugerencias_id', $sugerencias->id)->first();
