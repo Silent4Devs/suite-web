@@ -17,6 +17,7 @@ use App\Models\Proceso;
 use App\Models\RiesgoIdentificado;
 use App\Models\Sede;
 use App\Models\User;
+use App\Http\Requests\StoreRiesgosRequest;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
