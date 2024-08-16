@@ -169,6 +169,7 @@ class RequisicionesListener implements ShouldQueue
                 break;
             }
         }
+
         return $responsable;
     }
 }

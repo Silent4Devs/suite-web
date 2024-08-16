@@ -483,7 +483,7 @@ class RequisicionesController extends Controller
                 $tipo_firma = 'firma_solicitante';
                 $alerta = $this->validacionLista($tipo_firma);
             } else {
-                $mensaje = 'No tiene permisos para firmar<br> En espera del solicitante directo: <br> <strong>' . $firma_siguiente->solicitante->name . '</strong>';
+                $mensaje = 'No tiene permisos para firmar<br> En espera del solicitante directo: <br> <strong>'.$firma_siguiente->solicitante->name.'</strong>';
 
                 return view('contract_manager.requisiciones.error', compact('mensaje'));
             }
@@ -492,7 +492,7 @@ class RequisicionesController extends Controller
                 $tipo_firma = 'firma_jefe';
                 $alerta = $this->validacionLista($tipo_firma);
             } else {
-                $mensaje = 'No tiene permisos para firmar<br> En espera del jefe directo: <br> <strong>' . $firma_siguiente->jefe->name . '</strong>';
+                $mensaje = 'No tiene permisos para firmar<br> En espera del jefe directo: <br> <strong>'.$firma_siguiente->jefe->name.'</strong>';
 
                 return view('contract_manager.requisiciones.error', compact('mensaje'));
             }
@@ -500,7 +500,7 @@ class RequisicionesController extends Controller
             if ($user->empleado->id == $firma_siguiente->responsable_finanzas_id) { //responsable_finanzas_id
                 $tipo_firma = 'firma_finanzas';
             } else {
-                $mensaje = 'No tiene permisos para firmar<br> En espera de finanzas:' . $firma_siguiente->responsableFinanzas->name;
+                $mensaje = 'No tiene permisos para firmar<br> En espera de finanzas:'.$firma_siguiente->responsableFinanzas->name;
 
                 return view('contract_manager.requisiciones.error', compact('mensaje'));
             }
@@ -508,7 +508,7 @@ class RequisicionesController extends Controller
             if (($user->empleado->id == $comprador->user->id) && ($user->empleado->id == $firma_siguiente->comprador_id)) { //comprador_id
                 $tipo_firma = 'firma_compras';
             } else {
-                $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>' . $comprador->user->name . '</strong>';
+                $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>'.$comprador->user->name.'</strong>';
 
                 return view('contract_manager.requisiciones.error', compact('mensaje'));
             }
@@ -590,11 +590,13 @@ class RequisicionesController extends Controller
             $requisicion->update([
                 'archivo' => true,
             ]);
+
             return redirect(route('contract_manager.requisiciones.archivo'));
         } else {
             $requisicion->update([
                 'archivo' => false,
             ]);
+
             return redirect(route('contract_manager.requisiciones'));
         }
     }
