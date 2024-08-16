@@ -87,7 +87,7 @@ class MejorasController extends Controller
 
         $submodulo = 2;
 
-        $mejoras = Mejoras::where('id',intval($id_mejoras))->first();
+        $mejoras = Mejoras::where('id', intval($id_mejoras))->first();
         // dd($id_mejoras, $mejoras);
 
         $activos = Activo::getAll();
@@ -95,8 +95,6 @@ class MejorasController extends Controller
         $empleados = Empleado::getIdNameAll();
 
         $aprobadores = AprobadorSeleccionado::where('mejoras_id', $mejoras->id)->first();
-
-
 
         $aprobadoresArray = [];
 
