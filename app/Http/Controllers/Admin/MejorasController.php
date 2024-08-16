@@ -73,20 +73,22 @@ class MejorasController extends Controller
     {
         abort_if(Gate::denies('centro_atencion_mejoras_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $mejoras = Mejoras::select('estatus', 'fecha_cierre', 'descripcion', 'beneficios', 'titulo', 'area_mejora', 'proceso_mejora', 'tipo', 'otro')->with('mejoro:id,name,foto')->where('archivado', false)->get();
+        $mejoras = Mejoras::getAll();
 
         return datatables()->of($mejoras)->toJson();
     }
 
     public function editMejoras(Request $request, $id_mejoras)
     {
+
         abort_if(Gate::denies('centro_atencion_mejoras_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $modulo = 1;
 
         $submodulo = 2;
 
-        $mejoras = Mejoras::findOrfail(intval($id_mejoras));
+        $mejoras = Mejoras::where('id', intval($id_mejoras))->first();
+        // dd($id_mejoras, $mejoras);
 
         $activos = Activo::getAll();
 

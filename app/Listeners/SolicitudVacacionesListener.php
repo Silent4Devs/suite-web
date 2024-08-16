@@ -34,9 +34,7 @@ class SolicitudVacacionesListener implements ShouldQueue
      */
     public function handle($event)
     {
-        $modulo_vacaciones = 1;
-
-        $lista = ListaInformativa::with('participantes')->where('id', $modulo_vacaciones)->first();
+        $lista = ListaInformativa::with('participantes')->where('modelo', 'SolicitudVacaciones')->first();
 
         foreach ($lista->participantes as $participantes) {
             $empleados = Empleado::where('id', $participantes->empleado_id)->first();
