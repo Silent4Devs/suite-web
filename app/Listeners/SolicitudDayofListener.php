@@ -34,10 +34,7 @@ class SolicitudDayofListener implements ShouldQueue
      */
     public function handle($event)
     {
-
-        $modulo_day = 2;
-
-        $lista = ListaInformativa::with('participantes')->where('id', $modulo_day)->first();
+        $lista = ListaInformativa::with('participantes')->where('modelo', 'SolicitudDayOff')->first();
 
         foreach ($lista->participantes as $participantes) {
             $empleados = Empleado::where('id', $participantes->empleado_id)->first();
