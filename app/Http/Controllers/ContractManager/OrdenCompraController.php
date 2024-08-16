@@ -245,7 +245,7 @@ class OrdenCompraController extends Controller
             $requisicion = KatbolRequsicion::find($id);
             $organizacion = Organizacion::getFirst();
             $contrato = KatbolContrato::where('id', $requisicion->contrato_id)->first();
-            $proveedores = KatbolProveedorOC::where('id', $requisicion->proveedoroc_id)->get();
+            $proveedores = KatbolProveedorOC::where('id', $requisicion->proveedor_id)->get();
             $user = User::find($requisicion->id_finanzas_oc);
 
             if ($user) {
@@ -479,7 +479,7 @@ class OrdenCompraController extends Controller
         $organizacion = Organizacion::getFirst();
         $contrato = KatbolContrato::where('id', $requisicion->contrato_id)->first();
 
-        $proveedores_show = KatbolProvedorRequisicionCatalogo::where('requisicion_id', $requisicion->id)->pluck('proveedoroc_id')->toArray();
+        $proveedores_show = KatbolProvedorRequisicionCatalogo::where('requisicion_id', $requisicion->id)->pluck('proveedor_id')->toArray();
 
         $proveedor_indistinto = KatbolProveedorIndistinto::where('requisicion_id', $requisicion->id)->first();
 
