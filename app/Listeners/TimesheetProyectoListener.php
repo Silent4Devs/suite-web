@@ -34,9 +34,7 @@ class TimesheetProyectoListener implements ShouldQueue
      */
     public function handle($event)
     {
-        $modulo_day = 3;
-
-        $lista = ListaInformativa::with('participantes')->where('id', $modulo_day)->first();
+        $lista = ListaInformativa::with('participantes')->where('modelo', 'TimesheetProyecto')->first();
 
         foreach ($lista->participantes as $participantes) {
             $empleados = Empleado::where('id', $participantes->empleado_id)->first();

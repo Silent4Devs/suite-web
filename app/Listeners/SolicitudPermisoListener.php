@@ -34,9 +34,7 @@ class SolicitudPermisoListener implements ShouldQueue
      */
     public function handle($event)
     {
-        $modulo_permisos = 4;
-
-        $lista = ListaInformativa::with('participantes')->where('id', $modulo_permisos)->first();
+        $lista = ListaInformativa::with('participantes')->where('modelo', 'SolicitudPermisoGoceSueldo')->first();
 
         foreach ($lista->participantes as $participantes) {
             $empleados = Empleado::where('id', $participantes->empleado_id)->first();
