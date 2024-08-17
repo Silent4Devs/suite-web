@@ -315,7 +315,7 @@
 </script>
 
 <script>
-    function confirmDeleteEvaluadorObjetivos(idRegistroEvaluador, keyPeriodo, keyEvluador) {
+    function confirmDeleteEvaluadorObjetivos(keyPeriodo, keyEvaluador) {
         Swal.fire({
             title: 'Are you sure?',
             text: 'You are about to delete this evaluator from the period. This action cannot be undone.',
@@ -326,14 +326,17 @@
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                Livewire.dispatch('deleteEvaluadorObjetivos', idRegistroEvaluador, keyPeriodo, keyEvluador);
+                Livewire.dispatch('deleteEvaluadorObjetivos', {
+                    keyPeriodo,
+                    keyEvaluador
+                });
             }
         });
     }
 </script>
 
 <script>
-    function confirmDeleteEvaluadorCompetencias(idRegistroEvaluador, keyPeriodo, keyEvluador) {
+    function confirmDeleteEvaluadorCompetencias(keyPeriodo, keyEvaluador) {
         Swal.fire({
             title: 'Are you sure?',
             text: 'You are about to delete this evaluator from the period. This action cannot be undone.',
@@ -344,7 +347,10 @@
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                Livewire.dispatch('deleteEvaluadorCompetencias', idRegistroEvaluador, keyPeriodo, keyEvluador);
+                Livewire.dispatch('deleteEvaluadorCompetencias', {
+                    keyPeriodo,
+                    keyEvaluador
+                });
             }
         });
     }
