@@ -10,10 +10,14 @@ use App\Models\Empleado;
 use App\Models\EvaluacionDesempeno;
 use App\Models\EvaluadoresEvaluacionCompetenciasDesempeno;
 use App\Models\EvaluadoresEvaluacionObjetivosDesempeno;
+use Illuminate\Support\Facades\Validator;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
 class EvDesempenoDashboardPersonal extends Component
 {
+    use LivewireAlert;
+
     public $id_evaluacion;
 
     public $id_evaluado;
@@ -90,6 +94,8 @@ class EvDesempenoDashboardPersonal extends Component
     public $array_mod_evaluadores_competencias = [];
 
     protected $listeners = [
+        'modificarEvaluadoresPeriodoObjetivos' => 'modificarEvaluadoresPeriodoObjetivos',
+        'modificarEvaluadoresPeriodoCompetencias' => 'modificarEvaluadoresPeriodoCompetencias',
         'deleteEvaluadorObjetivos' => 'removeEvaluadorPeriodoObjetivos',
         'deleteEvaluadorCompetencias' => 'removeEvaluadorPeriodoCompetencias',
     ];
@@ -564,6 +570,7 @@ class EvDesempenoDashboardPersonal extends Component
 
     public function agregarEvaluadorPeriodoObjetivos($keyPeriodo)
     {
+        // dd($keyPeriodo);
         $this->array_mod_evaluadores_objetivos[$keyPeriodo][] =
             [
                 'id_registro_evaluador' => 0,
@@ -571,6 +578,7 @@ class EvDesempenoDashboardPersonal extends Component
                 'nombre_evaluador' => 'Sin Asignar',
                 'porcentaje_objetivos' => 0,
             ];
+        // dd($this->array_mod_evaluadores_objetivos[$keyPeriodo]);
     }
 
     public function agregarEvaluadorPeriodoCompetencias($keyPeriodo)
@@ -584,14 +592,16 @@ class EvDesempenoDashboardPersonal extends Component
             ];
     }
 
-    public function removeEvaluadorPeriodoObjetivos($idRegistroEvaluador, $keyPeriodo, $keyEvaluador)
+    public function removeEvaluadorPeriodoObjetivos($keyPeriodo, $keyEvaluador)
     {
         // Perform your deletion logic here
         // For example:
-        if ($idRegistroEvaluador != 0) {
+        $borrarRegistro = $this->array_mod_evaluadores_objetivos[$keyPeriodo][$keyEvaluador];
+        // dd($keyPeriodo, $keyEvaluador, $borrarRegistro);
+        if ($borrarRegistro["id_registro_evaluador"] != 0) {
             unset($this->array_mod_evaluadores_objetivos[$keyPeriodo][$keyEvaluador]);
             $this->array_mod_evaluadores_objetivos = array_values($this->array_mod_evaluadores_objetivos);
-            EvaluadoresEvaluacionObjetivosDesempeno::find($idRegistroEvaluador)->delete();
+            EvaluadoresEvaluacionObjetivosDesempeno::find($borrarRegistro["id_registro_evaluador"])->delete();
         } else {
             unset($this->array_mod_evaluadores_objetivos[$keyPeriodo][$keyEvaluador]);
             $this->array_mod_evaluadores_objetivos = array_values($this->array_mod_evaluadores_objetivos);
@@ -599,14 +609,16 @@ class EvDesempenoDashboardPersonal extends Component
         // Then, you can emit an event to notify the frontend if needed
     }
 
-    public function removeEvaluadorPeriodoCompetencias($idRegistroEvaluador, $keyPeriodo, $keyEvaluador)
+    public function removeEvaluadorPeriodoCompetencias($keyPeriodo, $keyEvaluador)
     {
         // Perform your deletion logic here
         // For example:
-        if ($idRegistroEvaluador != 0) {
+        $borrarRegistro = $this->array_mod_evaluadores_competencias[$keyPeriodo][$keyEvaluador];
+        // dd($keyPeriodo, $keyEvaluador, $borrarRegistro);
+        if ($borrarRegistro["id_registro_evaluador"] != 0) {
             unset($this->array_mod_evaluadores_competencias[$keyPeriodo][$keyEvaluador]);
             $this->array_mod_evaluadores_competencias = array_values($this->array_mod_evaluadores_competencias);
-            EvaluadoresEvaluacionCompetenciasDesempeno::find($idRegistroEvaluador)->delete();
+            EvaluadoresEvaluacionCompetenciasDesempeno::find($borrarRegistro["id_registro_evaluador"])->delete();
         } else {
             unset($this->array_mod_evaluadores_competencias[$keyPeriodo][$keyEvaluador]);
             $this->array_mod_evaluadores_competencias = array_values($this->array_mod_evaluadores_competencias);
@@ -614,31 +626,122 @@ class EvDesempenoDashboardPersonal extends Component
         // Then, you can emit an event to notify the frontend if needed
     }
 
-    public function modificarEvaluadoresPeriodoObjetivos($keyPeriodo)
+    public function modificarEvaluadoresPeriodoObjetivos($keyObj)
     {
-        foreach ($this->array_mod_evaluadores_objetivos[$keyPeriodo] as $key => $evaluador) {
-            EvaluadoresEvaluacionObjetivosDesempeno::updateOrCreate([
-                'id' => $evaluador['id_registro_evaluador'],
+        $evaluadores = $this->array_mod_evaluadores_objetivos[$keyObj];
+        $totalPorcentaje = 0;
+        $error = false; // Bandera para detectar errores
+
+        foreach ($evaluadores as $evaluador) {
+            $validator = Validator::make($evaluador, [
+                'id_registro_evaluador' => 'nullable|integer',
+                'id_empleado_evaluador' => 'required|integer|min:1',
+                'porcentaje_objetivos' => 'required|numeric|min:0.01|max:100|regex:/^\d+(\.\d{1,2})?$/',
             ], [
-                'evaluado_desempeno_id' => $this->id_evaluado,
-                'evaluador_desempeno_id' => $evaluador['id_empleado_evaluador'],
-                'periodo_id' => $this->array_periodos[$keyPeriodo]['id_periodo'],
-                'porcentaje_objetivos' => $evaluador['porcentaje_objetivos'],
+                'id_empleado_evaluador.min' => 'Debe seleccionar un colaborador', // Mensaje personalizado
             ]);
+
+            if ($validator->fails()) {
+                // Disparamos el evento de validación con los mensajes de error
+                $this->dispatch('validacionObjetivos', [
+                    'title' => 'Validación Incorrecta',
+                    'text' => implode(', ', $validator->errors()->all()),
+                    'icon' => 'error',
+                ]);
+
+                $error = true;
+                break; // Salimos del loop si hay un error
+            }
+
+            $totalPorcentaje += $evaluador['porcentaje_objetivos'];
+        }
+
+        // Validación de que la suma total sea igual a 100
+        if (!$error && round($totalPorcentaje, 2) !== 100.00) {
+            $this->dispatch('validacionObjetivos', [
+                'title' => 'Error en la suma de porcentajes',
+                'text' => 'La suma del porcentaje de los objetivos debe ser igual a 100.',
+                'icon' => 'error',
+            ]);
+            return;
+        }
+
+        // Si no hay errores, procesamos la actualización
+        if (!$error) {
+            foreach ($evaluadores as $evaluador) {
+                EvaluadoresEvaluacionObjetivosDesempeno::updateOrCreate([
+                    'id' => $evaluador['id_registro_evaluador'],
+                ], [
+                    'evaluado_desempeno_id' => $this->id_evaluado,
+                    'evaluador_desempeno_id' => $evaluador['id_empleado_evaluador'],
+                    'periodo_id' => $this->array_periodos[$keyObj]['id_periodo'],
+                    'porcentaje_objetivos' => $evaluador['porcentaje_objetivos'],
+                ]);
+            }
+            $this->dispatch('evaluadoresObjetivosModificados');
+            $evld_tabla = EvaluacionDesempeno::with('evaluados')->find($this->id_evaluacion);
+            $this->cargaDatos();
+            $this->arreglosEvaluadores();
         }
     }
 
-    public function modificarEvaluadoresPeriodoCompetencias($keyPeriodo)
+
+    public function modificarEvaluadoresPeriodoCompetencias($keyComp)
     {
-        foreach ($this->array_mod_evaluadores_competencias[$keyPeriodo] as $key => $evaluador) {
-            EvaluadoresEvaluacionCompetenciasDesempeno::updateOrCreate([
-                'id' => $evaluador['id_registro_evaluador'],
+        $evaluadores = $this->array_mod_evaluadores_competencias[$keyComp];
+        $totalPorcentaje = 0;
+        $error = false; // Bandera para detectar errores
+
+        foreach ($evaluadores as $evaluador) {
+            $validator = Validator::make($evaluador, [
+                'id_registro_evaluador' => 'nullable|integer',
+                'id_empleado_evaluador' => 'required|integer|min:1',
+                'porcentaje_competencias' => 'required|numeric|min:0.01|max:100|regex:/^\d+(\.\d{1,2})?$/',
             ], [
-                'evaluado_desempeno_id' => $this->id_evaluado,
-                'evaluador_desempeno_id' => $evaluador['id_empleado_evaluador'],
-                'periodo_id' => $this->array_periodos[$keyPeriodo]['id_periodo'],
-                'porcentaje_competencias' => $evaluador['porcentaje_competencias'],
+                'id_empleado_evaluador.min' => 'Debe seleccionar un colaborador', // Mensaje personalizado
             ]);
+
+            if ($validator->fails()) {
+                // Disparamos el evento de validación con los mensajes de error
+                $this->dispatch('validacionCompetencias', [
+                    'title' => 'Validación Incorrecta',
+                    'text' => implode(', ', $validator->errors()->all()),
+                    'icon' => 'error',
+                ]);
+
+                $error = true;
+                break; // Salimos del loop si hay un error
+            }
+
+            $totalPorcentaje += $evaluador['porcentaje_competencias'];
+        }
+
+        // Validación de que la suma total sea igual a 100
+        if (!$error && round($totalPorcentaje, 2) !== 100.00) {
+            $this->dispatch('validacionCompetencias', [
+                'title' => 'Error en la suma de porcentajes',
+                'text' => 'La suma del porcentaje de las competencias  debe ser igual a 100.',
+                'icon' => 'error',
+            ]);
+            return;
+        }
+
+        // Si no hay errores, procesamos la actualización
+        if (!$error) {
+            foreach ($evaluadores as $key => $evaluador) {
+                EvaluadoresEvaluacionCompetenciasDesempeno::updateOrCreate([
+                    'id' => $evaluador['id_registro_evaluador'],
+                ], [
+                    'evaluado_desempeno_id' => $this->id_evaluado,
+                    'evaluador_desempeno_id' => $evaluador['id_empleado_evaluador'],
+                    'periodo_id' => $this->array_periodos[$keyComp]['id_periodo'],
+                    'porcentaje_competencias' => $evaluador['porcentaje_competencias'],
+                ]);
+            }
+            $this->dispatch('evaluadoresCompetenciasModificados');
+            $evld_tabla = EvaluacionDesempeno::with('evaluados')->find($this->id_evaluacion);
+            $this->cargaDatos();
+            $this->arreglosEvaluadores();
         }
     }
 }

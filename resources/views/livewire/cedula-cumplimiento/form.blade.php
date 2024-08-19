@@ -1,3 +1,4 @@
+<div>
     <div class="row" style="margin: 0; padding-top: 10px">
         <span style="padding-left: 5px; font-size: 16px">
             <p class="grey-text" style="font-size:17px;font-weight:bold;">Periodo de ampliación del contrato</p>
@@ -42,8 +43,8 @@
             <div class="distancia form-group col-md-6">
                 <label for="" class="txt-tamaño">Cumple<font class="asterisco">*</font></label>
                 <div class="custom-control custom-switch">
-                    <input type="checkbox" wire:model.live="cumple_cedula" class="custom-control-input" id="cumple_cedula"
-                        name="cumple_cedula">
+                    <input type="checkbox" wire:model.live="cumple_cedula" class="custom-control-input"
+                        id="cumple_cedula" name="cumple_cedula">
                     <label class="custom-control-label" for="cumple_cedula">No/Sí</label>
                 </div>
                 {{-- <label for="" class="txt-tamaño">Cumple<font class="asterisco">*</font></label>
@@ -58,25 +59,26 @@
             </div>
         </div>
     </div>
+</div>
 
-    <script>
+<script>
+    // $('#cumple').on('change', function(
+    //     e) { // mantienen el valor del input al enviar con livewire
+    //     @this.set('cumple', e.target.value);
+    // });
+    $(document).ready(function() {
         // $('#cumple').on('change', function(
         //     e) { // mantienen el valor del input al enviar con livewire
         //     @this.set('cumple', e.target.value);
         // });
-        $(document).ready(function() {
-            // $('#cumple').on('change', function(
-            //     e) { // mantienen el valor del input al enviar con livewire
-            //     @this.set('cumple', e.target.value);
-            // });
 
-            window.addEventListener('cedulaEventChanged', event => {
-                //Datepicker
-                //console.log("Evento");
-                $('.collapsible').collapsible();
-                //$('.modal').modal();
-                // $('.select-dropdown').formSelect();
-            });
-
+        window.addEventListener('cedulaEventChanged', event => {
+            //Datepicker
+            //console.log("Evento");
+            $('.collapsible').collapsible();
+            //$('.modal').modal();
+            // $('.select-dropdown').formSelect();
         });
-    </script>
+
+    });
+</script>
