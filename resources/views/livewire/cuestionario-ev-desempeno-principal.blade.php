@@ -71,6 +71,12 @@
                         <canvas id="signature-pad-evaluado" class="signature-pad" width="450" height="250"
                             style="border: 1px solid black;"></canvas>
                     </div>
+                    <div class="row" style="justify-content: center; display: flex; margin-top: 10px;">
+                        <button id="save" type="button" class="btn btn-outline-primary"
+                            identificador-evaluacion="{{ $evaluacionDesempeno->id }}"
+                            identificador-evaluado="{{ $evaluado->evaluado_desempeno_id }}"
+                            identificador-periodo="{{ $periodo }}">Confirmar</button>
+                    </div>
                 @elseif (!$autoevaluacion && $dataFromChild1 == 100 && $dataFromChild2 == 100)
                     <div class="row">
                         <div class="col-6">
@@ -104,6 +110,12 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row" style="justify-content: center; display: flex; margin-top: 10px;">
+                        <button id="save" type="button" class="btn btn-outline-primary"
+                            identificador-evaluacion="{{ $evaluacionDesempeno->id }}"
+                            identificador-evaluado="{{ $evaluado->evaluado_desempeno_id }}"
+                            identificador-periodo="{{ $periodo }}">Confirmar</button>
+                    </div>
                 @endif
             @elseif(
                 $evaluacionDesempeno->activar_competencias &&
@@ -123,6 +135,12 @@
                     <div class="d-flex justify-content-center">
                         <canvas id="signature-pad-evaluado" class="signature-pad" width="450" height="250"
                             style="border: 1px solid black;"></canvas>
+                    </div>
+                    <div class="row" style="justify-content: center; display: flex; margin-top: 10px;">
+                        <button id="save" type="button" class="btn btn-outline-primary"
+                            identificador-evaluacion="{{ $evaluacionDesempeno->id }}"
+                            identificador-evaluado="{{ $evaluado->evaluado_desempeno_id }}"
+                            identificador-periodo="{{ $periodo }}">Confirmar</button>
                     </div>
                 @elseif (!$autoevaluacion && $dataFromChild2 == 100)
                     <div class="row">
@@ -157,6 +175,12 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row" style="justify-content: center; display: flex; margin-top: 10px;">
+                        <button id="save" type="button" class="btn btn-outline-primary"
+                            identificador-evaluacion="{{ $evaluacionDesempeno->id }}"
+                            identificador-evaluado="{{ $evaluado->evaluado_desempeno_id }}"
+                            identificador-periodo="{{ $periodo }}">Confirmar</button>
+                    </div>
                 @endif
             @elseif(
                 !$evaluacionDesempeno->activar_competencias &&
@@ -176,6 +200,12 @@
                     <div class="d-flex justify-content-center">
                         <canvas id="signature-pad-evaluado" class="signature-pad" width="450" height="250"
                             style="border: 1px solid black;"></canvas>
+                    </div>
+                    <div class="row" style="justify-content: center; display: flex; margin-top: 10px;">
+                        <button id="save" type="button" class="btn btn-outline-primary"
+                            identificador-evaluacion="{{ $evaluacionDesempeno->id }}"
+                            identificador-evaluado="{{ $evaluado->evaluado_desempeno_id }}"
+                            identificador-periodo="{{ $periodo }}">Confirmar</button>
                     </div>
                 @elseif (!$autoevaluacion && $dataFromChild1 == 100)
                     <div class="row">
@@ -210,14 +240,14 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row" style="justify-content: center; display: flex; margin-top: 10px;">
+                        <button id="save" type="button" class="btn btn-outline-primary"
+                            identificador-evaluacion="{{ $evaluacionDesempeno->id }}"
+                            identificador-evaluado="{{ $evaluado->evaluado_desempeno_id }}"
+                            identificador-periodo="{{ $periodo }}">Confirmar</button>
+                    </div>
                 @endif
             @endif
-            <div class="row" style="justify-content: center; display: flex; margin-top: 10px;">
-                <button id="save" type="button" class="btn btn-outline-primary"
-                    identificador-evaluacion="{{ $evaluacionDesempeno->id }}"
-                    identificador-evaluado="{{ $evaluado->evaluado_desempeno_id }}"
-                    identificador-periodo="{{ $periodo }}">Confirmar</button>
-            </div>
         </div>
     </div>
 </div>

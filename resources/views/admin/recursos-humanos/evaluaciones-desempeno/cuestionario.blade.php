@@ -392,36 +392,11 @@
         }
     </style>
 
-    @livewire('cuestionario-ev-desempeno-principal', ['evD' => $evaluacionDesempeno, 'evld' => $evaluado, 'per' => $periodo, 'ao' => $acceso_objetivos, 'ac' => $acceso_competencias])
+    @livewire('cuestionario-ev-desempeno-principal', ['evD' => $evaluacionDesempeno->id, 'evld' => $evaluado->id, 'per' => $periodo, 'ao' => $acceso_objetivos, 'ac' => $acceso_competencias])
 @endsection
 @section('scripts')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.js"></script>{{-- <script>
-        // document.addEventListener('livewire:init', function() {
-        //     Dropzone.options.myDropzone = {
-        //         paramName: "file",
-        //         maxFilesize: 2, // MB
-        //         dictDefaultMessage: "Drag & drop files here or click to upload",
-        //         acceptedFiles: ".jpg, .jpeg, .png, .gif",
-        //         addRemoveLinks: true,
-        //         init: function() {
-        //             this.on("success", function(file, response) {
-        //                 Livewire.emit('fileUploaded', response);
-        //             });
-        //             this.on("error", function(file, response) {
-        //                 console.error("Error uploading file:", response);
-        //             });
-        //         }
-        //     };
-        // });
-    </script> --}} {{-- <script>
-        document.addEventListener('livewire:init', function() {
-            Livewire.on('fileUploaded', function(filePath) {
-                // Update Livewire component state with uploaded file path
-                @this.set('filePath', filePath);
-            });
-        });
-    </script> --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.js"></script>
     <script>
         document.addEventListener('livewire:init', function() {
             // Get file input element
