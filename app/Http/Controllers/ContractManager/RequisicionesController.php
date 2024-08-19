@@ -409,14 +409,13 @@ class RequisicionesController extends Controller
     public function archivo()
     {
         $user = User::getCurrentUser();
-        $empleadoActual = $user->empleado;
 
         $proveedor_indistinto = KatbolProveedorIndistinto::pluck('requisicion_id')->first();
 
         if ($user->roles->contains('title', 'Admin')) {
             $requisiciones = KatbolRequsicion::getArchivoTrueAll();
         } else {
-            $requisiciones = KatbolRequsicion::requisicionesArchivadas($empleadoActual->id);
+            $requisiciones = KatbolRequsicion::getArchivoTrueAll()->where('id_user', $user->id);
         }
 
         return view('contract_manager.requisiciones.archivo', compact('requisiciones', 'proveedor_indistinto'));
@@ -591,16 +590,15 @@ class RequisicionesController extends Controller
             $requisicion->update([
                 'archivo' => true,
             ]);
+
+            return redirect(route('contract_manager.requisiciones.archivo'));
         } else {
             $requisicion->update([
                 'archivo' => false,
             ]);
+
+            return redirect(route('contract_manager.requisiciones'));
         }
-
-        $requisiciones = KatbolRequsicion::where('archivo', true)->get();
-        $proveedor_indistinto = KatbolProveedorIndistinto::pluck('requisicion_id')->first();
-
-        return view('contract_manager.requisiciones.archivo', compact('requisiciones', 'proveedor_indistinto'));
     }
 
     /**

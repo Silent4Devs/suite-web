@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Events\QuejasEvent;
+use App\Http\Controllers\Controller;
 use App\Models\Activo;
 use App\Models\AnalisisSeguridad;
 use App\Models\AprobadorSeleccionado;

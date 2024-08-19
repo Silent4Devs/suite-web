@@ -34,9 +34,7 @@ class PoliticasSgiListener implements ShouldQueue
      */
     public function handle($event)
     {
-        $modulo_politicas = 3;
-
-        $lista = ListaDistribucion::with('participantes')->where('id', $modulo_politicas)->first();
+        $lista = ListaDistribucion::with('participantes')->where('modelo', 'PoliticaSgsi')->first();
 
         foreach ($lista->participantes as $participantes) {
             $empleados = Empleado::where('id', $participantes->empleado_id)->first();

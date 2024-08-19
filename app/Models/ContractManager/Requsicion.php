@@ -136,15 +136,15 @@ class Requsicion extends Model implements Auditable
                             $coleccion->push($req);
                         }
 
-                        if (!is_null($registro->solicitante_id) && $registro->jefe_id == $id_empleado && is_null($registro->responsable_finanzas_id) && is_null($registro->comprador_id)) {
+                        if (! is_null($registro->solicitante_id) && $registro->jefe_id == $id_empleado && is_null($registro->responsable_finanzas_id) && is_null($registro->comprador_id)) {
                             $coleccion->push($req);
                         }
 
-                        if (!is_null($registro->solicitante_id) && is_null($registro->jefe_id) && $registro->responsable_finanzas_id == $id_empleado && is_null($registro->comprador_id)) {
+                        if (! is_null($registro->solicitante_id) && is_null($registro->jefe_id) && $registro->responsable_finanzas_id == $id_empleado && is_null($registro->comprador_id)) {
                             $coleccion->push($req);
                         }
 
-                        if (!is_null($registro->solicitante_id) && is_null($registro->jefe_id) && is_null($registro->responsable_finanzas_id) && $registro->comprador_id == $id_empleado) {
+                        if (! is_null($registro->solicitante_id) && is_null($registro->jefe_id) && is_null($registro->responsable_finanzas_id) && $registro->comprador_id == $id_empleado) {
                             $coleccion->push($req);
                         }
                     }
@@ -152,7 +152,7 @@ class Requsicion extends Model implements Auditable
                 break;
 
             case 'solicitante':
-                # code...
+                // code...
                 foreach ($requisiciones as $req) {
                     // Verificamos si la relación `registroFirmas` existe y no es null
                     if ($req->registroFirmas) {
@@ -166,13 +166,13 @@ class Requsicion extends Model implements Auditable
                 break;
 
             case 'jefe':
-                # code...
+                // code...
                 foreach ($requisiciones as $req) {
                     // Verificamos si la relación `registroFirmas` existe y no es null
                     if ($req->registroFirmas) {
                         $registro = $req->registroFirmas;
 
-                        if (!is_null($registro->solicitante_id) && $registro->jefe_id == $id_empleado && is_null($registro->responsable_finanzas_id) && is_null($registro->comprador_id)) {
+                        if (! is_null($registro->solicitante_id) && $registro->jefe_id == $id_empleado && is_null($registro->responsable_finanzas_id) && is_null($registro->comprador_id)) {
                             $coleccion->push($req);
                         }
                     }
@@ -180,13 +180,13 @@ class Requsicion extends Model implements Auditable
                 break;
 
             case 'finanzas':
-                # code...
+                // code...
                 foreach ($requisiciones as $req) {
                     // Verificamos si la relación `registroFirmas` existe y no es null
                     if ($req->registroFirmas) {
                         $registro = $req->registroFirmas;
 
-                        if (!is_null($registro->solicitante_id) && is_null($registro->jefe_id) && $registro->responsable_finanzas_id == $id_empleado && is_null($registro->comprador_id)) {
+                        if (! is_null($registro->solicitante_id) && is_null($registro->jefe_id) && $registro->responsable_finanzas_id == $id_empleado && is_null($registro->comprador_id)) {
                             $coleccion->push($req);
                         }
                     }
@@ -194,13 +194,13 @@ class Requsicion extends Model implements Auditable
                 break;
 
             case 'comprador':
-                # code...
+                // code...
                 foreach ($requisiciones as $req) {
                     // Verificamos si la relación `registroFirmas` existe y no es null
                     if ($req->registroFirmas) {
                         $registro = $req->registroFirmas;
 
-                        if (!is_null($registro->solicitante_id) && is_null($registro->jefe_id) && is_null($registro->responsable_finanzas_id) && $registro->comprador_id == $id_empleado) {
+                        if (! is_null($registro->solicitante_id) && is_null($registro->jefe_id) && is_null($registro->responsable_finanzas_id) && $registro->comprador_id == $id_empleado) {
                             $coleccion->push($req);
                         }
                     }
@@ -216,15 +216,15 @@ class Requsicion extends Model implements Auditable
                             $coleccion->push($req);
                         }
 
-                        if (!is_null($registro->solicitante_id) && $registro->jefe_id == $id_empleado && is_null($registro->responsable_finanzas_id) && is_null($registro->comprador_id)) {
+                        if (! is_null($registro->solicitante_id) && $registro->jefe_id == $id_empleado && is_null($registro->responsable_finanzas_id) && is_null($registro->comprador_id)) {
                             $coleccion->push($req);
                         }
 
-                        if (!is_null($registro->solicitante_id) && is_null($registro->jefe_id) && $registro->responsable_finanzas_id == $id_empleado && is_null($registro->comprador_id)) {
+                        if (! is_null($registro->solicitante_id) && is_null($registro->jefe_id) && $registro->responsable_finanzas_id == $id_empleado && is_null($registro->comprador_id)) {
                             $coleccion->push($req);
                         }
 
-                        if (!is_null($registro->solicitante_id) && is_null($registro->jefe_id) && is_null($registro->responsable_finanzas_id) && $registro->comprador_id == $id_empleado) {
+                        if (! is_null($registro->solicitante_id) && is_null($registro->jefe_id) && is_null($registro->responsable_finanzas_id) && $registro->comprador_id == $id_empleado) {
                             $coleccion->push($req);
                         }
                     }
@@ -254,15 +254,15 @@ class Requsicion extends Model implements Auditable
                     $coleccion->push($req);
                 }
 
-                if (!is_null($registro->solicitante_id) && $registro->jefe_id == $id_empleado && is_null($registro->responsable_finanzas_id) && is_null($registro->comprador_id)) {
+                if (! is_null($registro->solicitante_id) && $registro->jefe_id == $id_empleado && is_null($registro->responsable_finanzas_id) && is_null($registro->comprador_id)) {
                     $coleccion->push($req);
                 }
 
-                if (!is_null($registro->solicitante_id) && is_null($registro->jefe_id) && $registro->responsable_finanzas_id == $id_empleado && is_null($registro->comprador_id)) {
+                if (! is_null($registro->solicitante_id) && is_null($registro->jefe_id) && $registro->responsable_finanzas_id == $id_empleado && is_null($registro->comprador_id)) {
                     $coleccion->push($req);
                 }
 
-                if (!is_null($registro->solicitante_id) && is_null($registro->jefe_id) && is_null($registro->responsable_finanzas_id) && $registro->comprador_id == $id_empleado) {
+                if (! is_null($registro->solicitante_id) && is_null($registro->jefe_id) && is_null($registro->responsable_finanzas_id) && $registro->comprador_id == $id_empleado) {
                     $coleccion->push($req);
                 }
             }
@@ -337,7 +337,7 @@ class Requsicion extends Model implements Auditable
             $tipo = 'RQ-';
         }
 
-        $codigo = $tipo . sprintf('%02d-%04d', $parte1, $parte2);
+        $codigo = $tipo.sprintf('%02d-%04d', $parte1, $parte2);
 
         return $codigo;
     }

@@ -31,7 +31,8 @@
                             <td style="text-align: center !important">
                                 <p>
                                     <label>
-                                        <input type="checkbox" name="contrato_ampliado" wire:model="contrato_ampliado"
+                                        <input type="checkbox" name="contrato_ampliado"
+                                            wire:change="cambioContratoAmpliado" wire:model="contrato_ampliado"
                                             class="checkbox" />
                                         <span></span>
                                     </label>
@@ -41,7 +42,8 @@
                                 <p>
                                     <label>
                                         <input type="checkbox" name="convenio_modificatorio"
-                                            wire:model="convenio_modificatorio" class="checkbox_convenio" />
+                                            wire:model="convenio_modificatorio"
+                                            wire:change="cambioConvenioModificatorio" class="checkbox_convenio" />
                                         <span></span>
                                     </label>
                                 </p>
