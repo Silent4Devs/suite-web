@@ -231,14 +231,9 @@ class InicioUsuarioController extends Controller
         $supervisor = null;
         $mis_objetivos = collect();
 
-        $carga_objetivos_activo = PeriodoCargaObjetivos::first();
+        // $carga_objetivos_activo = PeriodoCargaObjetivos::first();
 
-        $permisos =  PermisosCargaObjetivos::get();
-        dd();
-        $permisos->perfil;
-        $permisos->permisos_asignacion;
-        $permisos->permiso_objetivos;
-        $permisos->permiso_escala;
+        // $permisos =  PermisosCargaObjetivos::get();
 
         if ($empleado) {
             $revisiones = RevisionDocumento::with('documento')->where('empleado_id', $empleado->id)->where('archivado', 0)->get();
@@ -1019,9 +1014,7 @@ class InicioUsuarioController extends Controller
         return redirect()->route('admin.desk.index')->with('success', 'Reporte generado');
     }
 
-    public function evidenciaSeguridad()
-    {
-    }
+    public function evidenciaSeguridad() {}
 
     public function riesgos()
     {
