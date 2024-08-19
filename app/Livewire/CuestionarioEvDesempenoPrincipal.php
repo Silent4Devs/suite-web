@@ -9,16 +9,27 @@ use Livewire\Component;
 class CuestionarioEvDesempenoPrincipal extends Component
 {
     public $evaluacionDesempeno;
+
     public $evaluado;
+
     public $periodo;
+
     public $acceso_objetivos;
+
     public $acceso_competencias;
+
     public $autoevaluacion = false;
+
     public $objetivos_evaluado;
+
     public $objetivos_autoevaluado;
+
     public $competencias_evaluado;
+
     public $competencias_autoevaluado;
+
     public $dataFromChild1 = null;
+
     public $dataFromChild2 = null;
 
     protected $listeners = ['dataFromChild1', 'dataFromChild2'];
@@ -66,7 +77,7 @@ class CuestionarioEvDesempenoPrincipal extends Component
 
     private function buscarEvaluacion($evaluador, $evaluado, $tipo)
     {
-        $metodo = 'evaluadores' . $tipo;
+        $metodo = 'evaluadores'.$tipo;
         $busqueda_evaluador = $evaluado->$metodo($this->periodo)->where('evaluador_desempeno_id', $evaluador->id)->first();
         $busqueda_autoevaluador = $evaluado->$metodo($this->periodo)->where('evaluador_desempeno_id', $evaluado->evaluado_desempeno_id)->first();
 
@@ -97,7 +108,7 @@ class CuestionarioEvDesempenoPrincipal extends Component
 
     private function calcularProgreso($propiedad, $destino)
     {
-        if ($this->evaluacionDesempeno->{'activar_' . str_replace('_evaluado', '', $propiedad)}) {
+        if ($this->evaluacionDesempeno->{'activar_'.str_replace('_evaluado', '', $propiedad)}) {
             $total = $this->$propiedad->count();
             $contestadas = $this->$propiedad->where('estatus_calificado', true)->count();
             $this->$destino = round((($contestadas / $total) * 100), 2);
