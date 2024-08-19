@@ -317,13 +317,13 @@
 <script>
     function confirmDeleteEvaluadorObjetivos(keyPeriodo, keyEvaluador) {
         Swal.fire({
-            title: 'Are you sure?',
-            text: 'You are about to delete this evaluator from the period. This action cannot be undone.',
+            title: 'Eliminar Evaluador - Objetivos',
+            text: '¿Seguro que desea eliminar al evaluador?',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
+            confirmButtonText: '¡Sí, confirmar!'
         }).then((result) => {
             if (result.isConfirmed) {
                 Livewire.dispatch('deleteEvaluadorObjetivos', {
@@ -338,13 +338,13 @@
 <script>
     function confirmDeleteEvaluadorCompetencias(keyPeriodo, keyEvaluador) {
         Swal.fire({
-            title: 'Are you sure?',
-            text: 'You are about to delete this evaluator from the period. This action cannot be undone.',
+            title: 'Eliminar Evaluador - Competencias',
+            text: '¿Seguro que desea eliminar al evaluador?',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
+            confirmButtonText: '¡Sí, confirmar!'
         }).then((result) => {
             if (result.isConfirmed) {
                 Livewire.dispatch('deleteEvaluadorCompetencias', {
