@@ -26,6 +26,8 @@ use App\Models\ListaDocumentoEmpleado;
 use App\Models\Mejoras;
 use App\Models\Organizacion;
 use App\Models\PanelInicioRule;
+use App\Models\PeriodoCargaObjetivos;
+use App\Models\PermisosCargaObjetivos;
 use App\Models\PlanImplementacion;
 use App\Models\Proceso;
 use App\Models\Puesto;
@@ -227,6 +229,10 @@ class InicioUsuarioController extends Controller
         $equipo_trabajo = collect();
         $supervisor = null;
         $mis_objetivos = collect();
+
+        // $carga_objetivos_activo = PeriodoCargaObjetivos::first();
+
+        // $permisos =  PermisosCargaObjetivos::get();
 
         if ($empleado) {
             $revisiones = RevisionDocumento::with('documento')->where('empleado_id', $empleado->id)->where('archivado', 0)->get();

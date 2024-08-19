@@ -209,7 +209,8 @@
             </div>
             <div class="col-2">
                 <div class="anima-focus">
-                    <select class="form-control" name="area_mensual" id="area_mensual" wire:model.live="area_mensual">
+                    <select class="form-control" name="area_mensual" id="area_mensual"
+                        wire:model.live="area_mensual">
                         <option value="todas">Todas</option>
                         @foreach ($areas as $key => $area)
                             <option value="{{ $area->id }}">{{ $area->area }}</option>
@@ -431,7 +432,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
-        document.addEventListener('livewire:init', function() {
+        document.addEventListener('livewire:initialized', function() {
             const data = @json($datos_evaluaciones_anuales);
             const general_anual = @json($general_anual);
             const objetivos_anual = @json($objetivos_anual);
@@ -489,8 +490,10 @@
     </script>
     {{-- Codigo cambio de filtros --}}
     <script>
-        document.addEventListener('livewire:init', function() {
-            Livewire.on('dataAnual', (datosAnuales) => {
+        document.addEventListener('livewire:initialized', function() {
+            @this.on('dataAnual', (datosAnualesWrapper) => {
+                const datosAnuales = datosAnualesWrapper.datosAnuales;
+
                 const anosAnual = datosAnuales.labels;
 
                 const datasets = [];
@@ -547,7 +550,7 @@
     </script>
 
     <script>
-        document.addEventListener('livewire:init', function() {
+        document.addEventListener('livewire:initialized', function() {
 
             const anos = @json($anos_evaluaciones);
             const data = @json($datos_evaluaciones_anuales);
@@ -584,8 +587,10 @@
     </script>
 
     <script>
-        document.addEventListener('livewire:init', function() {
-            Livewire.on('dataMensual', (datosMensuales) => {
+        document.addEventListener('livewire:initialized', function() {
+            @this.on('dataMensual', (datosMensualesWrapper) => {
+                const datosMensuales = datosMensualesWrapper.datosMensuales;
+
                 const mesSeleccionado = datosMensuales.labels[0]; // Solo un mes
                 const datosMes = datosMensuales.data[mesSeleccionado];
 
