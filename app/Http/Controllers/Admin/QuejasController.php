@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Events\QuejasEvent;
 use App\Http\Controllers\Controller;
+use App\Mail\SolicitudAprobacion;
 use App\Models\Activo;
 use App\Models\AnalisisSeguridad;
 use App\Models\AprobadorSeleccionado;
@@ -21,7 +22,7 @@ use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
-
+use Illuminate\Support\Facades\Mail;
 class QuejasController extends Controller
 {
     public function quejas()
