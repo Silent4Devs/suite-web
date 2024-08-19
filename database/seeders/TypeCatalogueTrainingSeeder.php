@@ -15,6 +15,10 @@ class TypeCatalogueTrainingSeeder extends Seeder
     {
         $catalogue = [
             [
+                'name' => 'Certificación',
+                'default' => true,
+            ],
+            [
                 'name' => 'Curso',
                 'default' => true,
             ],

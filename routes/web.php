@@ -195,6 +195,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         // capacitaciones
         Route::get('TypeCatalogueTraining', [CertificatesController::class, 'TypeCatalogueTraining'])->name('type-catalogue-training.index');
         Route::get('catalogueTraining', [CertificatesController::class, 'CatalogueTraining'])->name('catalogue-training.index');
+        Route::get('userTraining',[CertificatesController::class, 'UserTraining'])->name('user-training.index');
         //Control de Ausencias
         Route::get('ajustes-dayoff', 'AusenciasController@ajustesDayoff')->name('ajustes-dayoff');
         Route::get('ajustes-vacaciones', 'AusenciasController@ajustesVacaciones')->name('ajustes-vacaciones');

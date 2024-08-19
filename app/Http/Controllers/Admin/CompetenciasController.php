@@ -236,7 +236,6 @@ class CompetenciasController extends Controller
 
             $isEditAdmin = false;
             $idiomas = Language::get();
-
             return view('admin.empleados.edit', compact('isEditAdmin', 'empleado', 'idiomas'));
         } else {
             abort_if(Gate::denies('mi_perfil_mis_datos_ver_perfil_profesional'), Response::HTTP_FORBIDDEN, '403 Forbidden');

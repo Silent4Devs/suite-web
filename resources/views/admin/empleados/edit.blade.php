@@ -267,7 +267,7 @@
                 </div>
                 <label id="urlFormEmpleados"
                     data-url="{{ route('admin.empleados.updateFromCurriculum', $empleado) }}"></label>
-                @include('admin.empleados.components._competencias_form')
+                @include('admin.empleados.components._competencias_form', ['id' => $empleado->id])
                 <div class="text-right form-group col-12">
                     <a href="{{ route('admin.miCurriculum', $empleado) }}"  class="btn" id="btn_cancelar" style="color:#057BE2;">Cancelar</a>
                     <button class="btn btn-danger" type="submit" id="btnGuardar">
@@ -3150,4 +3150,34 @@
             });
         }
     </script>
+
+<script>
+    document.addEventListener('saved', event => {
+        Swal.fire({
+            position: "top-center",
+            icon: "success",
+            title: "Registro guardado exitosamente",
+            showConfirmButton: false,
+            timer: 1500
+        });
+    });
+    document.addEventListener('edited', event => {
+        Swal.fire({
+            position: "top-center",
+            icon: "success",
+            title: "Registro editado exitosamente",
+            showConfirmButton: false,
+            timer: 1500
+        });
+    });
+    document.addEventListener('error', event => {
+        Swal.fire({
+            position: "top-center",
+            icon: "error",
+            title: "Ocurrió un problema inténtalo más tarde",
+            showConfirmButton: false,
+            timer: 1500
+        });
+    });
+</script>
 @endsection

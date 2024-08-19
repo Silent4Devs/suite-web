@@ -26,7 +26,7 @@ class UsersController extends Controller
     {
         abort_if(Gate::denies('usuarios_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        Log::channel('logstash')->info('Index Usuarios.');
+        // Log::channel('logstash')->info('Index Usuarios.');
 
         $existsVinculoEmpleadoAdmin = User::getExists();
 

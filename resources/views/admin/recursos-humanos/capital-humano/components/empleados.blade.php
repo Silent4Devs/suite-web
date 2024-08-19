@@ -185,15 +185,22 @@
                             </div>
                         </a></li>
                     @endcan
+                    <li><a href="{{ route('admin.capital.expedientes-profesionales') }}">
+                        <div>
+                            <i class="bi bi-person-rolodex"></i>
+                            <br>
+                            Perfiles Profesionales
+                        </div>
+                    </a></li>
                     {{-- @can('competencias_por_puesto_acceder') --}}
-                        <li>
+                        {{-- <li>
                             <a href="{{ route('admin.ev360-competencias-por-puesto.index') }}">
                                 <div>
                                     <i class="bi bi-bookmark-star"></i><br>
                                     Perfil Profesional
                                 </div>
                             </a>
-                        </li>
+                        </li> --}}
                     {{-- @endcan --}}
                     {{-- @can('consulta_perfiles_de_puesto_acceder')
                         <li><a href="{{ route('admin.consulta-puestos') }}">

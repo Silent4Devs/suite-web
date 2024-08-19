@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('mark');
             $table->string('manufacturer');
             $table->string('norma');
+            $table->string('status');
             $table->unsignedBigInteger('type_id')->nullable();
             $table->foreign('type_id')->references('id')->on('type_catalogue_training')->onDelete('cascade');
             $table->timestamps();

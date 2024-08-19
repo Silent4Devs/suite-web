@@ -16,4 +16,9 @@ class CertificatesController extends Controller
     {
         return view('admin.CatalogueTraining.tbIndex');
     }
+
+    public function UserTraining()
+    {
+        return view('admin.training.tbIndex');
+    }
 }

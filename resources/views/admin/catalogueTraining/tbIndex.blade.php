@@ -20,9 +20,6 @@
                 timer: 1500
             });
         });
-    </script>
-    <script>
-    <script>
         document.addEventListener('nameValidation', event => {
             Swal.fire({
                 position: "top-center",

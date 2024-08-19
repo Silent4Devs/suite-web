@@ -20,4 +20,9 @@ class TBTypeCatalogueTrainingModel extends Model
         'name',
         'default'
     ];
+
+    public function catalogue()
+    {
+        return $this->hasMany(TBCatalogueTrainingModel::class, 'type_id')->where('status', 'approved');
+    }
 }

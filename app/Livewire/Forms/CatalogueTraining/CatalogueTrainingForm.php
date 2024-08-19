@@ -15,6 +15,26 @@ class CatalogueTrainingForm extends Form
     public $norma;
     public $type_id;
 
+    public function userStore()
+    {
+        $existing = TBCatalogueTrainingModel::where('name', $this->name)->where('type_id', $this->type_id)->exists();
+            if($existing){
+                return false;
+            }else {
+                TBCatalogueTrainingModel::create([
+                    'name' => $this->name,
+                    'issuing_company' => $this->issuing_company,
+                    'mark' => $this->mark,
+                    'manufacturer' => $this->manufacturer,
+                    'norma' => $this->norma,
+                    'type_id' => $this->type_id,
+                    'status' => 'pending',
+                ]);
+                $this->reset();
+                return true;
+            }
+    }
+
     public function update($id)
     {
         $existing = TBCatalogueTrainingModel::where('name', $this->name)->where('type_id', $this->type_id)->exists();
@@ -36,6 +56,7 @@ class CatalogueTrainingForm extends Form
             return true;
         }
     }
+
     public function fillData(array $data)
     {
         $this->fill($data);
@@ -54,25 +75,10 @@ class CatalogueTrainingForm extends Form
                     'manufacturer' => $this->manufacturer,
                     'norma' => $this->norma,
                     'type_id' => $this->type_id,
+                    'status' => 'approved',
                 ]);
                 $this->reset();
                 return true;
             }
-
-
     }
-
-    // public function verify($status)
-    // {
-    //     if($status === 'create'){
-    //         $existing = TBCatalogueTrainingModel::where('name', $this->name)->where('type_id', $this->type_id)->exists();
-    //         if($existing){
-    //             return false;
-    //         }else {
-    //            return $this->store();
-    //         }
-    //     }else {
-
-    //     }
-    // }
 }
