@@ -222,16 +222,19 @@ class EvDesempenoDashboardGeneral extends Component
             $promedioObj = $cuenta_obj > 0 ? ($suma_anual_obj / $cuenta_obj) : 0;
             if ($this->objetivos_anual) {
                 $this->datos_evaluaciones_anuales[$key_ano]['objetivos'] = $promedioObj;
+                $this->datos_evaluaciones_anuales[$key_ano]['colorObjetivos'] = '#8C91D6';
             }
 
             $promedioComp = $cuenta_comp > 0 ? ($suma_anual_comp / $cuenta_comp) : 0;
             if ($this->competencias_anual) {
                 $this->datos_evaluaciones_anuales[$key_ano]['competencias'] = $promedioComp;
+                $this->datos_evaluaciones_anuales[$key_ano]['colorCompetencias'] = '#BB68A8';
             }
 
             if ($this->general_anual) {
                 $promedioGen = $promedioObj + $promedioComp;
                 $this->datos_evaluaciones_anuales[$key_ano]['general'] = $promedioGen;
+                $this->datos_evaluaciones_anuales[$key_ano]['colorGeneral'] = '#36B0BE';
             }
         }
     }
@@ -347,16 +350,19 @@ class EvDesempenoDashboardGeneral extends Component
             $promedioObj = $cuenta_obj > 0 ? ($suma_mensual_obj / $cuenta_obj) : 0;
             if ($this->objetivos_mensual) {
                 $this->datos_evaluaciones_mensuales[$mesPalabra]['objetivos'] = $promedioObj;
+                $this->datos_evaluaciones_mensuales[$mesPalabra]['colorObjetivos'] = '#8C91D6';
             }
 
             $promedioComp = $cuenta_comp > 0 ? ($suma_mensual_comp / $cuenta_comp) : 0;
             if ($this->competencias_mensual) {
                 $this->datos_evaluaciones_mensuales[$mesPalabra]['competencias'] = $promedioComp;
+                $this->datos_evaluaciones_mensuales[$mesPalabra]['colorCompetencias'] = '#BB68A8';
             }
 
             if ($this->general_mensual) {
                 $promedioGen = $promedioObj + $promedioComp;
                 $this->datos_evaluaciones_mensuales[$mesPalabra]['general'] = $promedioGen;
+                $this->datos_evaluaciones_mensuales[$mesPalabra]['colorGeneral'] = '#36B0BE';
             }
         }
     }

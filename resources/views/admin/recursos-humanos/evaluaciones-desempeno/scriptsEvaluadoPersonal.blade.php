@@ -1,5 +1,15 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+<script>
+    function generarColorAleatorio() {
+        let color = '#' + Math.floor(Math.random() * 16777215).toString(16).toUpperCase();
+        while (color.length < 7) {
+            color = color + '0';
+        }
+        return color;
+    }
+</script>
+
 @if ($evaluacion->activar_objetivos)
     {{-- Codigo primera vez que carga --}}
     <script>
@@ -16,6 +26,7 @@
                     datasets: [{
                         label: 'Porcentaje de cumplimiento',
                         data: resultados,
+                        backgroundColor: generarColorAleatorio(),
                         borderWidth: 1
                     }]
                 },
@@ -48,6 +59,7 @@
                         datasets: [{
                             label: 'Porcentaje de cumplimiento',
                             data: cumpObj.data,
+                            backgroundColor: generarColorAleatorio(),
                             borderWidth: 1
                         }]
                     },
@@ -143,6 +155,7 @@
                     datasets: [{
                         label: 'Porcentaje de cumplimiento',
                         data: resultados,
+                        backgroundColor: '#BB68A8', // Color de las barras
                         borderWidth: 1
                     }]
                 },
@@ -176,6 +189,7 @@
                         datasets: [{
                             label: 'Porcentaje de cumplimiento',
                             data: cumpComp.data,
+                            backgroundColor: '#BB68A8', // Color de las barras
                             borderWidth: 1
                         }]
                     },
@@ -266,53 +280,6 @@
         });
     </script>
 @endif
-<script>
-    // Your JavaScript file or script tag
-
-    document.addEventListener('DOMContentLoaded', function() {
-        // Get all toggle buttons
-        const toggleButtonsObjetivos = document.querySelectorAll('.toggle-button-objetivos');
-
-        toggleButtonsObjetivos.forEach(function(button) {
-            // Add click event listener to each button
-            button.addEventListener('click', function() {
-                const index = this.getAttribute('data-index');
-                const hiddenDiv = document.getElementById('hidden-div-objetivos-' + index);
-
-                // Toggle the display of the corresponding hidden div
-                if (hiddenDiv.style.display === 'none') {
-                    hiddenDiv.style.display = 'block';
-                } else {
-                    hiddenDiv.style.display = 'none';
-                }
-            });
-        });
-    });
-</script>
-
-<script>
-    // Your JavaScript file or script tag
-
-    document.addEventListener('DOMContentLoaded', function() {
-        // Get all toggle buttons
-        const toggleButtonsCompetencias = document.querySelectorAll('.toggle-button-competencias');
-
-        toggleButtonsCompetencias.forEach(function(button) {
-            // Add click event listener to each button
-            button.addEventListener('click', function() {
-                const index = this.getAttribute('data-index');
-                const hiddenDiv = document.getElementById('hidden-div-competencias-' + index);
-
-                // Toggle the display of the corresponding hidden div
-                if (hiddenDiv.style.display === 'none') {
-                    hiddenDiv.style.display = 'block';
-                } else {
-                    hiddenDiv.style.display = 'none';
-                }
-            });
-        });
-    });
-</script>
 
 <script>
     function confirmDeleteEvaluadorObjetivos(keyPeriodo, keyEvaluador) {
@@ -323,13 +290,13 @@
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: '¡Sí, confirmar!'
+            confirmButtonText: '¡Sí, confirmar!',
             cancelButtonText: 'Cancelar',
         }).then((result) => {
             if (result.isConfirmed) {
                 Livewire.dispatch('deleteEvaluadorObjetivos', {
                     keyPeriodo,
-                    keyEvaluador
+                    keyEvaluador,
                 });
             }
         });

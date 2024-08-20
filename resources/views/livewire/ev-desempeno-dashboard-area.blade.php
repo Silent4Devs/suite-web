@@ -556,6 +556,16 @@
         </div>
     </div>
     @section('scripts')
+        <script>
+            function generarColorAleatorio() {
+                let color = '#' + Math.floor(Math.random() * 16777215).toString(16).toUpperCase();
+                while (color.length < 7) {
+                    color = color + '0';
+                }
+                return color;
+            }
+        </script>
+
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
         @if ($evaluacion->activar_objetivos)
@@ -564,7 +574,7 @@
 
                     const tipos = @json($resObj['nombres'][$periodo_seleccionado]);
                     const resultados = @json($resObj['resultados'][$periodo_seleccionado]);
-                    console.log(tipos, resultados);
+
                     var ctx2 = document.getElementById('cumplimientoObjetivos').getContext('2d');
                     ChartCO = new Chart(ctx2, {
                         type: 'bar',
@@ -572,6 +582,7 @@
                             labels: tipos,
                             datasets: [{
                                 label: 'Porcentaje de cumplimiento',
+                                backgroundColor: generarColorAleatorio(),
                                 data: resultados,
                                 borderWidth: 1
                             }]
@@ -605,6 +616,7 @@
                                 datasets: [{
                                     label: 'Porcentaje de cumplimiento',
                                     data: cumpObj.data,
+                                    backgroundColor: generarColorAleatorio(),
                                     borderWidth: 1
                                 }]
                             },
@@ -701,6 +713,7 @@
                             datasets: [{
                                 label: 'Porcentaje de cumplimiento',
                                 data: resultados,
+                                backgroundColor: '#BB68A8', // Color de las barras
                                 borderWidth: 1
                             }]
                         },
@@ -734,6 +747,7 @@
                                 labels: cumpComp.labels,
                                 datasets: [{
                                     label: 'Porcentaje de cumplimiento',
+                                    backgroundColor: '#BB68A8', // Color de las barras
                                     data: cumpComp.data,
                                     borderWidth: 1
                                 }]

@@ -51,4 +51,10 @@ class CuestionarioObjetivoEvDesempeno extends Model
     {
         return $this->hasMany(EvidenciaObjCuestionarioEvDesempeno::class, 'pregunta_cuest_obj_ev_des_id', 'id');
     }
+
+    public function evidenciasDelEvaluado()
+    {
+        $evidencia = self::where('id', '!=', $this->id)->where('objetivo_id', $this->objetivo_id)->where('evaluacion_desempeno_id', $this->evaluacion_desempeno_id)->where('evaluado_desempeno_id', $this->evaluado_desempeno_id)->get();
+        dd('Algo', $this->id, $evidencia);
+    }
 }
