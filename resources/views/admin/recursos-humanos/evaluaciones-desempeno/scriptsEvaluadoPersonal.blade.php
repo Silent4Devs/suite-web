@@ -324,6 +324,7 @@
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: '¡Sí, confirmar!'
+            cancelButtonText: 'Cancelar',
         }).then((result) => {
             if (result.isConfirmed) {
                 Livewire.dispatch('deleteEvaluadorObjetivos', {
@@ -344,7 +345,8 @@
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: '¡Sí, confirmar!'
+            confirmButtonText: '¡Sí, confirmar!',
+            cancelButtonText: 'Cancelar',
         }).then((result) => {
             if (result.isConfirmed) {
                 Livewire.dispatch('deleteEvaluadorCompetencias', {

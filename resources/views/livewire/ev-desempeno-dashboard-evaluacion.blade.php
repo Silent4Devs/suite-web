@@ -1001,6 +1001,7 @@
                             datasets: [{
                                 label: 'Porcentaje de cumplimiento',
                                 data: resultados,
+                                backgroundColor: '#BB68A8', // Color de las barras
                                 borderWidth: 1
                             }]
                         },
@@ -1034,6 +1035,7 @@
                                 datasets: [{
                                     label: 'Porcentaje de cumplimiento',
                                     data: cumpComp.data,
+                                    backgroundColor: '#BB68A8', // Color de las barras
                                     borderWidth: 1
                                 }]
                             },
