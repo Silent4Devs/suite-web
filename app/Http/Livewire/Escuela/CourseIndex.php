@@ -16,6 +16,8 @@ class CourseIndex extends Component
 
     public $category_id;
 
+    protected $queryString = ['page'];
+
     public $level_id;
 
     public $selectioncategory;
@@ -24,13 +26,13 @@ class CourseIndex extends Component
 
     public function render()
     {
-        // dd("test");
+
         $categories = Category::getAll();
         $levels = Level::getAll();
         $courses = Course::where('status', 3)
             ->category($this->category_id)
             ->level($this->level_id)
-            ->latest('id')->paginate(8);
+            ->latest('id')->paginate(3);
 
         foreach ($courses as $course) {
             $courses_lessons = $course->lessons;
@@ -45,7 +47,6 @@ class CourseIndex extends Component
             } else {
                 $course->lesson_introduction = null;
             }
-
         }
 
         return view('livewire.escuela.course-index', compact('courses', 'categories', 'levels'));
