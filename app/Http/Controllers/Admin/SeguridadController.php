@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Carbon\Carbon;
 use App\Events\IncidentesDeSeguridadEvent;
 use App\Http\Controllers\Controller;
 use App\Mail\SolicitudAprobacion;
@@ -123,7 +124,7 @@ class SeguridadController extends Controller
     {
         abort_if(Gate::denies('centro_atencion_incidentes_de_seguridad_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $incidentes_seguridad = IncidentesSeguridad::where('archivado', false)->get();
+        $incidentes_seguridad = IncidentesSeguridad::getAll();
 
         return datatables()->of($incidentes_seguridad)->toJson();
     }
@@ -245,6 +246,10 @@ class SeguridadController extends Controller
 
         $organizacion = Organizacion::first();
 
+        $fecha_cierre = ($request->estatus === 'No procedente' || $request->estatus === 'Cerrado')
+        ? Carbon::now()->format('Y-m-d H:i:s')
+        : ($request->fecha_cierre ? Carbon::createFromFormat('d-m-Y H:i:s', $request->fecha_cierre, 'UTC')->format('Y-m-d H:i:s') : null);
+
         $incidentesSeguridad->update([
             'titulo' => $request->titulo,
             'estatus' => $request->estatus,
@@ -253,7 +258,7 @@ class SeguridadController extends Controller
             'sede' => $request->sede,
             'ubicacion' => $request->ubicacion,
             'descripcion' => $request->descripcion,
-            'fecha_cierre' => $request->fecha_cierre,
+            'fecha_cierre' => $fecha_cierre,
             'areas_afectados' => $request->areas_afectados,
             'procesos_afectados' => $request->procesos_afectados,
             'activos_afectados' => $request->activos_afectados,
