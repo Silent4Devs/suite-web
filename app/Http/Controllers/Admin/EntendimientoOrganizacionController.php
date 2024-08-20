@@ -591,7 +591,7 @@ class EntendimientoOrganizacionController extends Controller
         Mail::to(removeUnicodeCharacters($emailresponsable))->queue(new NotificacionRechazoAnalisisFODALider($foda->id, $analisis_foda));
 
         foreach ($aprobacion->participantes as $participante) {
-            Mail::to(removeUnicodeCharacters($participante->email))->queue(new NotificacionRechazoAnalisisFODA($foda->id, $analisis_foda));
+            Mail::to(removeUnicodeCharacters($participante->participante->empleado->email))->queue(new NotificacionRechazoAnalisisFODA($foda->id, $analisis_foda));
         }
 
         return redirect(route('admin.entendimiento-organizacions.index'));
