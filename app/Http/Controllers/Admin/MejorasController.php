@@ -266,10 +266,7 @@ class MejorasController extends Controller
     public function archivadoMejora(Request $request, $incidente)
     {
         if ($request->ajax()) {
-            $mejora = Mejoras::findOrfail(intval($incidente));
-            $mejora->update([
-                'archivado' => true,
-            ]);
+            Mejoras::where('id', $incidente)->update(['archivado' => true]);
 
             return response()->json(['success' => true]);
         }
@@ -284,10 +281,7 @@ class MejorasController extends Controller
 
     public function recuperarArchivadoMejora($id)
     {
-        $mejora = Mejoras::find($id);
-        $mejora->update([
-            'archivado' => false,
-        ]);
+        Mejoras::where('id', $id)->update(['archivado' => false]);
 
         return redirect()->route('admin.desk.index');
     }
