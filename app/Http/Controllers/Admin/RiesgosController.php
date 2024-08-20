@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Events\RiesgosEvent;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreRiesgosRequest;
 use App\Models\Activo;
 use App\Models\AnalisisSeguridad;
 use App\Models\AprobadorSeleccionado;
@@ -17,7 +18,6 @@ use App\Models\Proceso;
 use App\Models\RiesgoIdentificado;
 use App\Models\Sede;
 use App\Models\User;
-use App\Http\Requests\StoreRiesgosRequest;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -110,7 +110,8 @@ class RiesgosController extends Controller
 
         $submodulo = 4;
 
-        $riesgos = RiesgoIdentificado::findOrfail(intval($id_riesgos))->load('evidencias_riesgos');
+        $riesgos = RiesgoIdentificado::findOrfail(intval($id_riesgos))->load('evidencias_riesgos')->load('reporto');
+
 
         $analisis = AnalisisSeguridad::where('formulario', '=', 'riesgo')->where('riesgos_id', intval($id_riesgos))->first();
         if (is_null($analisis)) {
@@ -153,7 +154,7 @@ class RiesgosController extends Controller
         $firmas = FirmaCentroAtencion::with('empleado')->where('modulo_id', $modulo)->where('submodulo_id', $submodulo)->where('id_riesgos', $riesgos->id)->get();
 
         $firma_validacion = FirmaCentroAtencion::where('modulo_id', $modulo)->where('submodulo_id', $submodulo)->where('id_riesgos', $riesgos->id)->first();
-
+        dd($riesgos);
         return view('admin.desk.riesgos.edit', compact('riesgos', 'procesos', 'empleados', 'areas', 'activos', 'sedes', 'analisis', 'firmaModules', 'firmas', 'aprobadores', 'aprobadoresArray', 'participantsSelected', 'firma_validacion'));
     }
 

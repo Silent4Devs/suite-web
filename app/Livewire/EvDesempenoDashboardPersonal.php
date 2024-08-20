@@ -598,10 +598,10 @@ class EvDesempenoDashboardPersonal extends Component
         // For example:
         $borrarRegistro = $this->array_mod_evaluadores_objetivos[$keyPeriodo][$keyEvaluador];
         // dd($keyPeriodo, $keyEvaluador, $borrarRegistro);
-        if ($borrarRegistro["id_registro_evaluador"] != 0) {
+        if ($borrarRegistro['id_registro_evaluador'] != 0) {
             unset($this->array_mod_evaluadores_objetivos[$keyPeriodo][$keyEvaluador]);
             $this->array_mod_evaluadores_objetivos = array_values($this->array_mod_evaluadores_objetivos);
-            EvaluadoresEvaluacionObjetivosDesempeno::find($borrarRegistro["id_registro_evaluador"])->delete();
+            EvaluadoresEvaluacionObjetivosDesempeno::find($borrarRegistro['id_registro_evaluador'])->delete();
         } else {
             unset($this->array_mod_evaluadores_objetivos[$keyPeriodo][$keyEvaluador]);
             $this->array_mod_evaluadores_objetivos = array_values($this->array_mod_evaluadores_objetivos);
@@ -615,10 +615,10 @@ class EvDesempenoDashboardPersonal extends Component
         // For example:
         $borrarRegistro = $this->array_mod_evaluadores_competencias[$keyPeriodo][$keyEvaluador];
         // dd($keyPeriodo, $keyEvaluador, $borrarRegistro);
-        if ($borrarRegistro["id_registro_evaluador"] != 0) {
+        if ($borrarRegistro['id_registro_evaluador'] != 0) {
             unset($this->array_mod_evaluadores_competencias[$keyPeriodo][$keyEvaluador]);
             $this->array_mod_evaluadores_competencias = array_values($this->array_mod_evaluadores_competencias);
-            EvaluadoresEvaluacionCompetenciasDesempeno::find($borrarRegistro["id_registro_evaluador"])->delete();
+            EvaluadoresEvaluacionCompetenciasDesempeno::find($borrarRegistro['id_registro_evaluador'])->delete();
         } else {
             unset($this->array_mod_evaluadores_competencias[$keyPeriodo][$keyEvaluador]);
             $this->array_mod_evaluadores_competencias = array_values($this->array_mod_evaluadores_competencias);
@@ -657,17 +657,18 @@ class EvDesempenoDashboardPersonal extends Component
         }
 
         // Validación de que la suma total sea igual a 100
-        if (!$error && round($totalPorcentaje, 2) !== 100.00) {
+        if (! $error && round($totalPorcentaje, 2) !== 100.00) {
             $this->dispatch('validacionObjetivos', [
                 'title' => 'Error en la suma de porcentajes',
                 'text' => 'La suma del porcentaje de los objetivos debe ser igual a 100.',
                 'icon' => 'error',
             ]);
+
             return;
         }
 
         // Si no hay errores, procesamos la actualización
-        if (!$error) {
+        if (! $error) {
             foreach ($evaluadores as $evaluador) {
                 EvaluadoresEvaluacionObjetivosDesempeno::updateOrCreate([
                     'id' => $evaluador['id_registro_evaluador'],
@@ -684,7 +685,6 @@ class EvDesempenoDashboardPersonal extends Component
             $this->arreglosEvaluadores();
         }
     }
-
 
     public function modificarEvaluadoresPeriodoCompetencias($keyComp)
     {
@@ -717,17 +717,18 @@ class EvDesempenoDashboardPersonal extends Component
         }
 
         // Validación de que la suma total sea igual a 100
-        if (!$error && round($totalPorcentaje, 2) !== 100.00) {
+        if (! $error && round($totalPorcentaje, 2) !== 100.00) {
             $this->dispatch('validacionCompetencias', [
                 'title' => 'Error en la suma de porcentajes',
                 'text' => 'La suma del porcentaje de las competencias  debe ser igual a 100.',
                 'icon' => 'error',
             ]);
+
             return;
         }
 
         // Si no hay errores, procesamos la actualización
-        if (!$error) {
+        if (! $error) {
             foreach ($evaluadores as $key => $evaluador) {
                 EvaluadoresEvaluacionCompetenciasDesempeno::updateOrCreate([
                     'id' => $evaluador['id_registro_evaluador'],
