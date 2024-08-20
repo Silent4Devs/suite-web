@@ -364,31 +364,31 @@
 
                             <div class="mt-2 form-group col-4">
                                 <label class="form-label"><i class="fas fa-user-tie iconos-crear"></i>Nombre</label>
-                                <div class="form-control">{{ Str::limit($riesgos->reporto->name, 30, '...') }}</div>
+                                <div class="form-control">{{ Str::limit(isset($riesgos->reporto->name), 30, '...') }}</div>
                             </div>
 
 
 
                             <div class="mt-2 form-group col-4">
                                 <label class="form-label"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
-                                <div class="form-control">{{ $riesgos->reporto->puesto }}</div>
+                                <div class="form-control">{{ isset($riesgos->reporto->puesto) }}</div>
                             </div>
 
                             <div class="mt-2 form-group col-4">
                                 <label class="form-label"><i
                                         class="fas fa-puzzle-piece iconos-crear"></i></i>Área</label>
-                                <div class="form-control">{{ $riesgos->reporto->area->area }}</div>
+                                <div class="form-control">{{ isset($riesgos->reporto->area->area) }}</div>
                             </div>
 
                             <div class="mt-2 form-group col-6">
                                 <label class="form-label"><i class="fas fa-envelope iconos-crear"></i>Correo
                                     electrónico</label>
-                                <div class="form-control">{{ $riesgos->reporto->email }}</div>
+                                <div class="form-control">{{ isset($riesgos->reporto->email) }}</div>
                             </div>
 
                             <div class="mt-2 form-group col-6">
                                 <label class="form-label"><i class="fas fa-phone iconos-crear"></i>Teléfono</label>
-                                <div class="form-control">{{ $riesgos->reporto->telefono }}</div>
+                                <div class="form-control">{{ isset($riesgos->reporto->telefono) }}</div>
                             </div>
 
 
