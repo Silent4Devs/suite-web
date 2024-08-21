@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Events\AccionCorrectivaEvent;
 use App\Events\AlcancesEvent;
 use App\Events\AuditoriaAnualEvent;
+use App\Events\CatalogueCertificatesEvent;
 use App\Events\ContratoEvent;
 use App\Events\CoursesEvent;
 use App\Events\DenunciasEvent;
@@ -34,6 +35,7 @@ use App\Listeners\AccionCorrectivaListener;
 use App\Listeners\AlcancesListener;
 use App\Listeners\AuditoriaAnualListener;
 use App\Listeners\BroadcastUserLoginNotification;
+use App\Listeners\CatalogueCertificateListener;
 use App\Listeners\ContratosListener;
 use App\Listeners\CoursesListener;
 use App\Listeners\DenunciasListener;
@@ -133,6 +135,7 @@ use App\Models\SolicitudPermisoGoceSueldo;
 use App\Models\SolicitudVacaciones;
 use App\Models\SubcategoriaActivo;
 use App\Models\Sugerencias;
+use App\Models\TBCatalogueTrainingModel;
 use App\Models\Timesheet;
 use App\Models\TimesheetCliente;
 use App\Models\TimesheetProyecto;
@@ -155,6 +158,7 @@ use App\Observers\CalendarioObserver;
 use App\Observers\CatalogoRangosObjetivosObserver;
 use App\Observers\CategoriaCapacitacionObserver;
 use App\Observers\CategoryObserver;
+use App\Observers\CertificatesObserver;
 use App\Observers\CompetenciaObserver;
 use App\Observers\ComunicadoSgiObserver;
 use App\Observers\ContratoObserver;
@@ -333,6 +337,10 @@ class EventServiceProvider extends ServiceProvider
         PuestosEvent::class => [
             PuestosListener::class,
         ],
+        CatalogueCertificatesEvent::class => [
+            CatalogueCertificateListener::class,
+        ],
+
     ];
 
     /**
@@ -429,5 +437,6 @@ class EventServiceProvider extends ServiceProvider
         Category::observe(CategoryObserver::class);
         Level::observe(LevelObserver::class);
         EvaluacionDesempeno::observe(EvaluacionesDesempenoObserver::class);
+        TBCatalogueTrainingModel::observe(CertificatesObserver::class);
     }
 }
