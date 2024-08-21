@@ -123,14 +123,13 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
         }
 
         foreach ($this->objetivos_evaluado as $key_objetivo => $obj_evld) {
-            dump($obj_evld->evidenciasDelEvaluado);
-            foreach ($obj_evld->evidencias as $key_evidencia => $evid) {
-                dd($evid);
+            foreach ($obj_evld->evidencias_evaluado as $key_evidencia => $evid) {
                 $this->obj_evidencias[$key_objetivo][$key_evidencia] = [
-                    'id' => $evid->id,
-                    'pregunta_cuest_obj_ev_des_id' => $evid->pregunta_cuest_obj_ev_des_id,
-                    'nombre_archivo' => $evid->nombre_archivo,
-                    'comentarios' => $evid->comentarios,
+                    'id' => $evid['id'],
+                    'id_objetivo' => $evid['id_objetivo'],
+                    'pregunta_cuest_obj_ev_des_id' => $evid['pregunta_cuest_obj_ev_des_id'],
+                    'nombre_archivo' => $evid['nombre_archivo'],
+                    'comentarios' => $evid['comentarios'],
                 ];
             }
 

@@ -22,6 +22,8 @@ class CuestionarioObjetivoEvDesempeno extends Model
         'aplicabilidad',
     ];
 
+    protected $appends = ['evidencias_evaluado'];
+
     public function infoObjetivo()
     {
         return $this->belongsTo(CatalogoObjetivosEvDesempeno::class, 'objetivo_id', 'id');
@@ -52,9 +54,21 @@ class CuestionarioObjetivoEvDesempeno extends Model
         return $this->hasMany(EvidenciaObjCuestionarioEvDesempeno::class, 'pregunta_cuest_obj_ev_des_id', 'id');
     }
 
-    public function evidenciasDelEvaluado()
+    public function getEvidenciasEvaluadoAttribute()
     {
-        $evidencia = self::where('id', '!=', $this->id)->where('objetivo_id', $this->objetivo_id)->where('evaluacion_desempeno_id', $this->evaluacion_desempeno_id)->where('evaluado_desempeno_id', $this->evaluado_desempeno_id)->get();
-        dd('Algo', $this->id, $evidencia);
+        // Filtra las evidencias de acuerdo a los criterios y luego aplana las colecciones de evidencias
+        $collectEvidencias = self::where('objetivo_id', $this->objetivo_id)
+            ->where('evaluacion_desempeno_id', $this->evaluacion_desempeno_id)
+            ->where('evaluado_desempeno_id', $this->evaluado_desempeno_id)
+            ->get()
+            ->flatMap(function ($evidencia) {
+                // Verifica si hay evidencias y mapea cada una agregando el 'id_objetivo'
+                return collect($evidencia->evidencias)->map(function ($item) use ($evidencia) {
+                    // Agregamos el 'id_objetivo' al array de atributos del objeto evidencia
+                    return array_merge($item->toArray(), ['id_objetivo' => $evidencia->id]);
+                });
+            });
+
+        return $collectEvidencias;
     }
 }
