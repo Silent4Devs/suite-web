@@ -57,7 +57,18 @@
                     </span>
                 </div>
                 <span>
-                    <strong>70</strong>
+                    <strong>
+                        @if ($areaSeleccionada === 'all')
+                            {{ $vacacionesMounth->count() }}
+                        @else
+                            @php
+                                $vacacionesMounth = $vacacionesMounth->filter(function ($vacation) {
+                                    return $vacation->empleado->area_id === $areaSeleccionada;
+                                });
+                            @endphp
+                            {{ $vacacionesMounth->count() }}
+                        @endif
+                    </strong>
                 </span>
             </div>
         </div>
@@ -70,7 +81,18 @@
                     </span>
                 </div>
                 <span>
-                    <strong>70</strong>
+                    <strong>
+                        @if ($areaSeleccionada == 'all')
+                            {{ $dayOffMounth->count() }}
+                        @else
+                            @php
+                                $dayOffMounth = $dayOffMounth->filter(function ($dayOff) {
+                                    return $dayOff->empleado->area_id === $areaSeleccionada;
+                                });
+                            @endphp
+                            {{ $dayOffMounth->count() }}
+                        @endif
+                    </strong>
                 </span>
             </div>
         </div>
@@ -83,7 +105,18 @@
                     </span>
                 </div>
                 <span>
-                    <strong>70</strong>
+                    <strong>
+                        @if ($areaSeleccionada === 'all')
+                            {{ $permisoMounth->count() }}
+                        @else
+                            @php
+                                $permisoMounth = $permisoMounth->filter(function ($permiso) {
+                                    // return $permiso->empleado->area_id === $areaSeleccionada;
+                                });
+                            @endphp
+                            {{ $permisoMounth->count() }}
+                        @endif
+                    </strong>
                 </span>
             </div>
         </div>
@@ -215,26 +248,72 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>
-                            <div class="d-flex align-items-center gap-4">
-                                <div class="img-person">
-                                    <img src="" alt="">
-                                </div>
+                    @foreach ($vacacionesMounth as $vacTable)
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center gap-4">
+                                    <div class="img-person">
+                                        <img src="" alt="">
+                                    </div>
 
-                                <span>Name</span>
-                            </div>
-                        </td>
-                        <td>
-                            Vacaciones
-                        </td>
-                        <td>
-                            12/12/2024
-                        </td>
-                        <td>
-                            12/12/2024
-                        </td>
-                    </tr>
+                                    <span>{{ $vacTable->name }}</span>
+                                </div>
+                            </td>
+                            <td>
+                                Vacaciones
+                            </td>
+                            <td>
+                                {{ $vacTable->fecha_inicio }}
+                            </td>
+                            <td>
+                                {{ $vacTable->fecha_fin }}
+                            </td>
+                        </tr>
+                    @endforeach
+                    @foreach ($dayOffMounth as $vacTable)
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center gap-4">
+                                    <div class="img-person">
+                                        <img src="" alt="">
+                                    </div>
+
+                                    <span>{{ $dayTable->name }}</span>
+                                </div>
+                            </td>
+                            <td>
+                                Vacaciones
+                            </td>
+                            <td>
+                                {{ $dayTable->fecha_inicio }}
+                            </td>
+                            <td>
+                                {{ $dayTable->fecha_fin }}
+                            </td>
+                        </tr>
+                    @endforeach
+                    @foreach ($permisoMounth as $dayTable)
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center gap-4">
+                                    <div class="img-person">
+                                        <img src="" alt="">
+                                    </div>
+
+                                    <span>{{ $dayTable->name }}</span>
+                                </div>
+                            </td>
+                            <td>
+                                Vacaciones
+                            </td>
+                            <td>
+                                {{ $dayTable->fecha_inicio }}
+                            </td>
+                            <td>
+                                {{ $dayTable->fecha_fin }}
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
