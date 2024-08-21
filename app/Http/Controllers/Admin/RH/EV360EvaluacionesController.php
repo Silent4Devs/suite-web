@@ -527,7 +527,7 @@ class EV360EvaluacionesController extends Controller
                     array_push($lista_evaluados, [[
                         'id' => $evaluado->id,
                         'name' => $evaluado->name,
-                        'area' => $evaluado->area->area,
+                        'area' => !empty($evaluado->area->area) ? $evaluado->area->area : 'Sin área',
                         'evaluadores' => $evaluadores,
                         'total_evaluaciones' => $total_evaluaciones,
                         'contestadas' => $contestadas,
@@ -1880,7 +1880,7 @@ class EV360EvaluacionesController extends Controller
                 $lista_evaluados->push([
                     'evaluado' => $evaluado->name,
                     'puesto' => $evaluado->puesto,
-                    'area' => $evaluado->area->area,
+                    'area' => !empty($evaluado->area->area) ? $evaluado->area->area : 'Sin área',
                     'informacion_evaluacion' => $ev360ResumenTabla->obtenerInformacionDeLaConsultaPorEvaluado($evaluacion->id, $evaluado->id),
                 ]);
             }
@@ -1941,7 +1941,7 @@ class EV360EvaluacionesController extends Controller
                 $lista_evaluados->push([
                     'evaluado' => $evaluado->name,
                     'puesto' => $evaluado->puesto,
-                    'area' => $evaluado->area->area,
+                    'area' => !empty($evaluado->area->area) ? $evaluado->area->area : 'Sin área',
                     'informacion_evaluacion' => $ev360ResumenTabla->obtenerInformacionDeLaConsultaPorEvaluado($evaluacion->id, $evaluado->id),
                 ]);
             }
