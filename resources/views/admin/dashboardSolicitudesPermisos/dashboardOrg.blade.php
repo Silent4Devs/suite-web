@@ -1,6 +1,8 @@
 @extends('layouts.admin')
 @section('css')
     <link rel="stylesheet" href="{{ asset('css/dashboardPermisos/dahsboardPermisos.css') }}{{ config('app.cssVersion') }}">
+    <link rel="stylesheet" href="{{ asset('css/dashboardPermisos/mobiscroll.javascript.min.css') }}">
+    <script src="{{ asset('js/dashboardSolicitudes/mobiscroll.javascript.min.js') }}"></script>
 @endsection
 @section('content')
     {{-- {{ Breadcrumbs::render('Reglas-DayOff') }} --}}
@@ -28,7 +30,13 @@
                 <div class="col-md-5">
                     <div class="form-group">
                         <label for="">Área</label>
-                        <select name="area" id="area" class="form-control"></select>
+                        <select name="area" id="area" class="form-control" onchange="redirectToPage()">
+                            <option value="all">Todas las Áreas</option>
+                            @foreach ($areasToSelect as $area)
+                                <option value="{{ $area->id }}" {{ $areaSeleccionada == $area->id ? 'selected' : '' }}>
+                                    {{ $area->area }}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
             </div>
@@ -144,7 +152,53 @@
         </div>
         <div class="col-md-6 d-flex">
             <div class="card card-body">
-                agenda
+
+
+                <div mbsc-page class="demo-daily-agenda-with-week-calendar">
+                    <div style="height:100%">
+                        <div id="demo-daily-agenda"></div>
+
+                    </div>
+                </div>
+
+
+                <script>
+                    mobiscroll.setOptions({
+                        locale: mobiscroll
+                            .localeEs, // Specify language like: locale: mobiscroll.localePl or omit setting to use default
+                        theme: 'ios', // Specify theme like: theme: 'ios' or omit setting to use default
+                        themeVariant: 'light', // More info about themeVariant: https://mobiscroll.com/docs/javascript/eventcalendar/api#opt-themeVariant
+                    });
+
+                    var inst = mobiscroll.eventcalendar('#demo-daily-agenda', {
+                        view: { // More info about view: https://mobiscroll.com/docs/javascript/eventcalendar/api#opt-view
+                            calendar: {
+                                type: 'week'
+                            },
+                            agenda: {
+                                type: 'day'
+                            },
+                        },
+                        onEventClick: function(
+                            args
+                        ) { // More info about onEventClick: https://mobiscroll.com/docs/javascript/eventcalendar/api#event-onEventClick
+                            mobiscroll.toast({
+                                message: args.event.title,
+                            });
+                        },
+                    });
+
+                    mobiscroll.getJson(
+                        'https://trial.mobiscroll.com/events/?vers=5',
+                        function(events) {
+                            inst.setEvents(events);
+                        },
+                        'jsonp',
+                    );
+                </script>
+
+
+
             </div>
         </div>
     </div>
@@ -206,6 +260,59 @@
 
 @section('scripts')
     @parent
+    <script>
+        function redirectToPage() {
+            var select = document.getElementById("area");
+            var selectedValue = 'all';
+            selectedValue = select.value;
+
+
+
+            if (selectedValue) { // Verifica que una opción esté seleccionada
+
+                var baseUrl = @json(asset('admin/dashboardPermisos/dashboardOrg')) + '/' + selectedValue; // URL base
+                window.location.href = baseUrl;
+            }
+        }
+    </script>
+    </script>
+    <script>
+        mobiscroll.setOptions({
+            locale: mobiscroll
+                .localeEs, // Specify language like: locale: mobiscroll.localePl or omit setting to use default
+            theme: 'ios', // Specify theme like: theme: 'ios' or omit setting to use default
+            themeVariant: 'light' // More info about themeVariant: https://mobiscroll.com/docs/jquery/eventcalendar/api#opt-themeVariant
+        });
+
+        $(function() {
+            var inst = $('#demo-daily-events')
+                .mobiscroll()
+                .eventcalendar({
+
+                    view: { // More info about view: https://mobiscroll.com/docs/jquery/eventcalendar/api#opt-view
+                        calendar: {
+                            type: 'week'
+                        },
+                        agenda: {
+                            type: 'day'
+                        },
+                    },
+                    onEventClick: function(
+                        args
+                    ) { // More info about onEventClick: https://mobiscroll.com/docs/jquery/eventcalendar/api#event-onEventClick
+                        mobiscroll.toast({
+
+                            message: args.event.title,
+                        });
+                    },
+                })
+                .mobiscroll('getInst');
+
+            $.getJSON('https://trial.mobiscroll.com/events/?vers=5&callback=?', function(events) {
+                inst.setEvents(events);
+            });
+        });
+    </script>
     <script src="https://fastly.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
 
     <script src="{{ asset('js/calendar-comunicado.js') }}"></script>

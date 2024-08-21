@@ -228,7 +228,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         ]);
 
         // dashboard permisos
-        Route::get('dashboardPermisos/dashboardArea', 'DashboardPermisos@dashboardArea');
+        Route::get('dashboardPermisos/dashboardOrg/{id}', 'DashboardPermisosController@dashboardOrg')->name('dashboardPermisos.dashboardOrg');
 
         Route::get('lista-distribucion', 'ListaDistribucionController@index')->name('lista-distribucion.index');
         Route::get('lista-distribucion/{id}/edit', 'ListaDistribucionController@edit')->name('lista-distribucion.edit');
