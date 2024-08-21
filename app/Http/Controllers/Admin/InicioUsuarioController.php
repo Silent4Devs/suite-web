@@ -43,6 +43,7 @@ use App\Models\RH\ObjetivoRespuesta;
 use App\Models\RiesgoIdentificado;
 use App\Models\Sede;
 use App\Models\SolicitudDayOff;
+use App\Models\EvaluacionDesempeno;
 use App\Models\SolicitudPermisoGoceSueldo;
 use App\Models\SolicitudVacaciones;
 use App\Models\SubcategoriaIncidente;
@@ -264,8 +265,8 @@ class InicioUsuarioController extends Controller
 
         $permisos =  PermisosCargaObjetivos::get();
 
-        $fechaInicio = $carga_objetivos_activo->fecha_inicio;
-        $fechaFin = $carga_objetivos_activo->fecha_fin;
+        $fechaInicio = $carga_objetivos_activo->fecha_inicio ?? null;
+        $fechaFin = $carga_objetivos_activo->fecha_fin ?? null;
 
         $hoyCargaObjetivos = $hoy->between($fechaInicio, $fechaFin);
 
