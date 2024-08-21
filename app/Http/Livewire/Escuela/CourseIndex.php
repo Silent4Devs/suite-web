@@ -32,7 +32,7 @@ class CourseIndex extends Component
         $courses = Course::where('status', 3)
             ->category($this->category_id)
             ->level($this->level_id)
-            ->latest('id')->paginate(3);
+            ->latest('id')->paginate(6);
 
         foreach ($courses as $course) {
             $courses_lessons = $course->lessons;
