@@ -24,10 +24,16 @@ class TBCatalogueTrainingModel extends Model
         'norma',
         'type_id',
         'status',
+        'empleado_id',
     ];
 
     public function category()
     {
         return $this->belongsTo(TBTypeCatalogueTrainingModel::class, 'type_id');
+    }
+
+    public function empleado()
+    {
+        return $this->belongsTo(Empleado::class, 'empleado_id');
     }
 }

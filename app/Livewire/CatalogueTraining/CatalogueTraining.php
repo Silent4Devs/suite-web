@@ -48,7 +48,7 @@ class CatalogueTraining extends Component
 
     public function render()
     {
-        $registers = TBCatalogueTrainingModel::orderBy('id')->get();
+        $registers = TBCatalogueTrainingModel::where('status','approved')->orderBy('id')->get();
         $typesCatalogue = TBTypeCatalogueTrainingModel::orderBy('name')->get();
 
         $this->registers = $registers;

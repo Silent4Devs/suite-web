@@ -3170,6 +3170,15 @@
             timer: 1500
         });
     });
+    document.addEventListener('requestApprove', event => {
+        Swal.fire({
+            position: "top-center",
+            icon: "success",
+            title: "Registro se ha enviado a aprobación",
+            showConfirmButton: false,
+            timer: 1500
+        });
+    });
     document.addEventListener('error', event => {
         Swal.fire({
             position: "top-center",

@@ -20,7 +20,9 @@ return new class extends Migration
             $table->string('norma');
             $table->string('status');
             $table->unsignedBigInteger('type_id')->nullable();
+            $table->unsignedBigInteger('empleado_id')->nullable();
             $table->foreign('type_id')->references('id')->on('type_catalogue_training')->onDelete('cascade');
+            $table->foreign('empleado_id')->references('id')->on('empleados')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });
