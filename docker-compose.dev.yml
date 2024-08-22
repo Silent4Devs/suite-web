@@ -50,22 +50,6 @@ services:
       - tabantajnetwork
     mem_limit: 6g
 
-  # pgadmin-tabantaj:
-  #   depends_on:
-  #     - postgres-tabantaj
-  #   image: dpage/pgadmin4:latest
-  #   ports:
-  #     - "5480:80"
-  #   environment:
-  #     - PGADMIN_DEFAULT_PASSWORD=VnRE!Jib7W9@qeBN
-  #     - PGADMIN_DEFAULT_EMAIL=soporte.desarrollo@silent4business.com
-  #   restart: unless-stopped
-  #   tty: true
-  #   volumes:
-  #     - pgadmin-data:/var/lib/pgadmin
-  #   networks:
-  #     - tabantajnetwork
-
   php:
     #uncomment this if you will use only docker compose
     build:
@@ -138,48 +122,50 @@ services:
       - tabantajnetwork
     mem_limit: 3g
 
-  # rdadmin-tabantaj:
-  #   image: erikdubbelboer/phpredisadmin:latest
-  #   container_name: rdadmin-tabantaj
-  #   restart: unless-stopped
-  #   tty: true
-  #   ports:
-  #     - 6360:80
-  #   environment:
-  #     - REDIS_1_HOST=redis-tabantaj # Replace with your Redis container name
-  #     - REDIS_1_PORT=6379 # Replace with your Redis container port
-  #     #- REDIS_1_AUTH=silent11!
-  #   networks:
-  #     - tabantajnetwork
+  rabbitmq-tabantaj:
+    image: rabbitmq:3-management-alpine
+    container_name: rabbit-tabantaj
+    env_file:
+      - .env
+    ports:
+      - 5672:5672
+      - 15672:15672
+    restart: unless-stopped
+    tty: true
+    networks:
+      - tabantajnetwork
+    # networks:
+    #   - tabantajnetwork
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
 
-  # rabbitmq-tabantaj:
-  #   image: rabbitmq:3-management-alpine
-  #   container_name: rabbit-tabantaj
-  #   environment:
-  #     - RABBITMQ_DEFAULT_USER=desarrollo
-  #     - RABBITMQ_DEFAULT_PASS=Password123.
-  #     - RABBITMQ_DEFAULT_VHOST=desarrollo # Add this line
-  #   ports:
-  #     - 5672:5672
-  #     - 15672:15672
-  #   restart: unless-stopped
-  #   tty: true
-  #   networks:
-  #     - tabantajnetwork
-  #   volumes:
-  #     - rabbitmq_data:/var/lib/rabbitmq
+  goservices:
+    image: ghcr.io/silent4devs/goservices:latest
+    container_name: goservices
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3300:3300"
+    volumes:
+      - goservices_data:/goservices
+    networks:
+      - tabantajnetwork
+    # networks:
+    #   - tabantajnetwork
 
-  # goservices:
-  #   image: ghcr.io/silent4devs/goservices:latest
-  #   container_name: goservices
-  #   restart: unless-stopped
-  #   tty: true
-  #   ports:
-  #     - "3300:3300"
-  #   volumes:
-  #     - goservices_data:/goservices
-  #   networks:
-  #     - tabantajnetwork
+  reportservice:
+    image: ghcr.io/silent4devs/reportservice:latest
+    container_name: reportservice
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3301:3301"
+    volumes:
+      - reportservice_data:/reportservice
+    networks:
+      - tabantajnetwork
+    # networks:
+    #   - tabantajnetwork
 
 volumes:
   tabantaj-database:
