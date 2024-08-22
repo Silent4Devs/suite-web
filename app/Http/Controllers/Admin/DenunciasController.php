@@ -267,10 +267,7 @@ class DenunciasController extends Controller
     public function archivadoDenuncia(Request $request, $incidente)
     {
         if ($request->ajax()) {
-            $denuncia = Denuncias::findOrfail(intval($incidente));
-            $denuncia->update([
-                'archivado' => true,
-            ]);
+            Denuncias::where('id', $incidente)->update(['archivado' => true]);
 
             return response()->json(['success' => true]);
         }
@@ -285,10 +282,7 @@ class DenunciasController extends Controller
 
     public function recuperarArchivadoDenuncia($id)
     {
-        $queja = Denuncias::find($id);
-        $queja->update([
-            'archivado' => false,
-        ]);
+        Denuncias::where('id', $id)->update(['archivado' => false]);
 
         return redirect()->route('admin.desk.index');
     }
