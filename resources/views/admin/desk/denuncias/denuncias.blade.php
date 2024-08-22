@@ -285,7 +285,7 @@
                                 if ((row.estatus == 'cerrado') || (row.estatus == 'cancelado')) {
 
                                     html += `
-                                            <button class="btn archivar" onclick='ArchivarDenuncia("/admin/desk/${data}/archivarDenuncias"); return false;' style="margin-top:-10px">
+                                            <button class="btn" onclick='ArchivarDenuncia("/admin/desk/${data}/archivarDenuncias"); return false;' style="margin-top:-10px">
                                                 <i class="fas fa-archive" ></i></a>
                                             </button>
 				       					</div>`;
