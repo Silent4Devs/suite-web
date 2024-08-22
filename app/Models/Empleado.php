@@ -685,6 +685,11 @@ class Empleado extends Model implements Auditable
         return $this->belongsTo(self::class, 'supervisor_id', 'id')->select('id', 'name', 'area_id');
     }
 
+    public function subordinados()
+    {
+        return $this->hasMany(self::class, 'supervisor_id', 'id')->alta()->select('id', 'name', 'foto', 'area_id', 'puesto_id', 'n_empleado', 'perfil_empleado_id');
+    }
+
     public function onlyChildren()
     {
         return $this->hasMany(self::class, 'supervisor_id', 'id')->select('id', 'name', 'foto');
