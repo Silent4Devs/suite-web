@@ -3,6 +3,8 @@
     <link rel="stylesheet" href="{{ asset('css/dashboardPermisos/dahsboardPermisos.css') }}{{ config('app.cssVersion') }}">
     <link rel="stylesheet" href="{{ asset('css/dashboardPermisos/mobiscroll.javascript.min.css') }}">
     <script src="{{ asset('js/dashboardSolicitudes/mobiscroll.javascript.min.js') }}"></script>
+
+    <script src="https://fastly.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
 @endsection
 @section('content')
     {{-- {{ Breadcrumbs::render('Reglas-DayOff') }} --}}
@@ -34,7 +36,8 @@
                             <option value="all">Todas las Áreas</option>
                             @foreach ($areasToSelect as $area)
                                 <option value="{{ $area->id }}" {{ $areaSeleccionada == $area->id ? 'selected' : '' }}>
-                                    {{ $area->area }}</option>
+                                    {{ $area->area }}
+                                </option>
                             @endforeach
                         </select>
                     </div>
@@ -63,7 +66,7 @@
                         @else
                             @php
                                 $vacacionesMounth = $vacacionesMounth->filter(function ($vacation) {
-                                    return $vacation->empleado->area_id === $areaSeleccionada;
+                                    // return $vacation->empleado->area_id === $areaSeleccionada;
                                 });
                             @endphp
                             {{ $vacacionesMounth->count() }}
@@ -87,7 +90,7 @@
                         @else
                             @php
                                 $dayOffMounth = $dayOffMounth->filter(function ($dayOff) {
-                                    return $dayOff->empleado->area_id === $areaSeleccionada;
+                                    // return $dayOff->empleado->area_id === $areaSeleccionada;
                                 });
                             @endphp
                             {{ $dayOffMounth->count() }}
@@ -131,7 +134,7 @@
                     </span>
                 </div>
                 <span>
-                    <strong>70</strong>
+                    <strong>0</strong>
                 </span>
             </div>
         </div>
@@ -144,7 +147,7 @@
                     </span>
                 </div>
                 <span>
-                    <strong>70</strong>
+                    <strong>0</strong>
                 </span>
             </div>
         </div>
@@ -157,7 +160,7 @@
                     </span>
                 </div>
                 <span>
-                    <strong>70</strong>
+                    <strong>0</strong>
                 </span>
             </div>
         </div>
@@ -190,7 +193,6 @@
                 <div mbsc-page class="demo-daily-agenda-with-week-calendar">
                     <div style="height:100%">
                         <div id="demo-daily-agenda"></div>
-
                     </div>
                 </div>
 
@@ -222,7 +224,7 @@
                     });
 
                     mobiscroll.getJson(
-                        'https://trial.mobiscroll.com/events/?vers=5',
+                        // 'https://trial.mobiscroll.com/events/?vers=5',
                         function(events) {
                             inst.setEvents(events);
                         },
@@ -319,26 +321,23 @@
         </div>
     </div>
 
-    <div class="card card-body">
-        <div id="chart-container-solicitudes-areas" style="width: 100%; height: 300px;"></div>
-    </div>
+    @livewire('dashboard-permisos.graph-areas', ['user' => 'd'])
 
     <div class="row">
         <div class="col-md-6">
-            <div class="card card-body">
-                <div id="chart-container-solicitudes-global" style="width: 100%; height: 300px;"></div>
-            </div>
+            @livewire('dashboard-permisos.graph-dona', ['user' => 'd'])
         </div>
         <div class="col-md-6">
-            <div class="card card-body">
-                <div id="chart-container-solicitudes-tipos" style="width: 100%; height: 300px;"></div>
-            </div>
+            @livewire('dashboard-permisos.graph-types', ['user' => 'd'])
         </div>
     </div>
 @endsection
 
 @section('scripts')
     @parent
+    <script src="{{ asset('js/calendar-comunicado.js') }}"></script>
+    <script src="{{ asset('js/calendario-comunicacion.js') }}"></script>
+
     <script>
         function redirectToPage() {
             var select = document.getElementById("area");
@@ -354,7 +353,7 @@
             }
         }
     </script>
-    </script>
+
     <script>
         mobiscroll.setOptions({
             locale: mobiscroll
@@ -392,10 +391,6 @@
             });
         });
     </script>
-    <script src="https://fastly.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
-
-    <script src="{{ asset('js/calendar-comunicado.js') }}"></script>
-    <script src="{{ asset('js/calendario-comunicacion.js') }}"></script>
 
     <script>
         let currentTime = new Date();
@@ -562,166 +557,5 @@
 
             let table = $('.datatable-historial').DataTable(dtOverrideGlobals);
         });
-    </script>
-
-    <script>
-        var dom = document.getElementById('chart-container-solicitudes-areas');
-        var myChart = echarts.init(dom, null, {
-            renderer: 'canvas',
-            useDirtyRect: false
-        });
-        var app = {};
-
-        var option;
-
-        option = {
-            legend: {},
-            tooltip: {},
-            dataset: {
-                source: [
-                    ['product', '2015', '2016', '2017'],
-                    ['Matcha Latte', 43.3, 85.8, 93.7],
-                    ['Milk Tea', 83.1, 73.4, 55.1],
-                    ['Cheese Cocoa', 86.4, 65.2, 82.5],
-                    ['Walnut Brownie', 72.4, 53.9, 39.1]
-                ]
-            },
-            xAxis: {
-                type: 'category'
-            },
-            yAxis: {},
-            // Declare several bar series, each will be mapped
-            // to a column of dataset.source by default.
-            series: [{
-                type: 'bar'
-            }, {
-                type: 'bar'
-            }, {
-                type: 'bar'
-            }]
-        };
-
-        if (option && typeof option === 'object') {
-            myChart.setOption(option);
-        }
-
-        window.addEventListener('resize', myChart.resize);
-    </script>
-
-    <script>
-        var dom = document.getElementById('chart-container-solicitudes-global');
-        var myChart = echarts.init(dom, null, {
-            renderer: 'canvas',
-            useDirtyRect: false
-        });
-        var app = {};
-
-        var option;
-
-        option = {
-            tooltip: {
-                trigger: 'item'
-            },
-            legend: {
-                top: '5%',
-                left: 'center'
-            },
-            series: [{
-                name: 'Access From',
-                type: 'pie',
-                radius: ['40%', '70%'],
-                avoidLabelOverlap: false,
-                itemStyle: {
-                    borderRadius: 10,
-                    borderColor: '#fff',
-                    borderWidth: 2
-                },
-                label: {
-                    show: false,
-                    position: 'center'
-                },
-                emphasis: {
-                    label: {
-                        show: true,
-                        fontSize: 40,
-                        fontWeight: 'bold'
-                    }
-                },
-                labelLine: {
-                    show: false
-                },
-                data: [{
-                        value: 1048,
-                        name: 'Search Engine'
-                    },
-                    {
-                        value: 735,
-                        name: 'Direct'
-                    },
-                    {
-                        value: 580,
-                        name: 'Email'
-                    },
-                    {
-                        value: 484,
-                        name: 'Union Ads'
-                    },
-                    {
-                        value: 300,
-                        name: 'Video Ads'
-                    }
-                ]
-            }]
-        };
-
-        if (option && typeof option === 'object') {
-            myChart.setOption(option);
-        }
-
-        window.addEventListener('resize', myChart.resize);
-    </script>
-
-    <script>
-        var dom = document.getElementById('chart-container-solicitudes-tipos');
-        var myChart = echarts.init(dom, null, {
-            renderer: 'canvas',
-            useDirtyRect: false
-        });
-        var app = {};
-
-        var option;
-
-        option = {
-            legend: {},
-            tooltip: {},
-            dataset: {
-                source: [
-                    ['product', '2015', '2016', '2017'],
-                    ['Matcha Latte', 43.3, 85.8, 93.7],
-                    ['Milk Tea', 83.1, 73.4, 55.1],
-                    ['Cheese Cocoa', 86.4, 65.2, 82.5],
-                    ['Walnut Brownie', 72.4, 53.9, 39.1]
-                ]
-            },
-            xAxis: {
-                type: 'category'
-            },
-            yAxis: {},
-            // Declare several bar series, each will be mapped
-            // to a column of dataset.source by default.
-            series: [{
-                type: 'bar'
-            }, {
-                type: 'bar'
-            }, {
-                type: 'bar'
-            }]
-        };
-
-        if (option && typeof option === 'object') {
-            myChart.setOption(option);
-        }
-
-        window.addEventListener('resize', myChart.resize);
     </script>
 @endsection
