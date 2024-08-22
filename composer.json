@@ -19,7 +19,7 @@
         "jenssegers/date": "^4.0",
         "laragear/preload": "^1.1",
         "laravel/framework": "^10.0",
-        "laravel/octane": "^2.4",
+        "laravel/octane": "^2.5",
         "laravel/sanctum": "^3.0",
         "laravel/ui": "^4.0",
         "laravelcollective/html": "^6.2",

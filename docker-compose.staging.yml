@@ -1,4 +1,3 @@
-version: "3.8"
 services:
   # nginx-tabantaj:
   #   image: nginx:stable-alpine
@@ -55,30 +54,35 @@ services:
   php:
     #uncomment this if you will use only docker compose
     build:
-      context: "./infra/php/"
-      dockerfile: Dockerfile.unit
+      context: "."
+      dockerfile: Dockerfile.prod
     #     # target: php-production  # Specify the target build stage if applicable
     #     # args:
     #     # - BUILD_ENV=production  # Pass any necessary build arguments
     # #container_name: php-tabantaj
     #uncomment this if you will use only docker compose
     #image: johnvo95/tabantaj_php-tabantaj:latest
+    entrypoint: php artisan octane:frankenphp --workers=2 --max-requests=250 --https --http-redirect
     container_name: php-tabantaj
     restart: unless-stopped
     tty: true
     volumes:
-      - .:/var/www/html
+      - .:/app
+      - caddy_data:/data
+      - caddy_config:/config
     ports:
-      - 8080:8080
+      - 80:8000
+      - 443:443
+      - 443:443/udp
     networks:
       - tabantajnetwork
 
   queue-worker:
     build:
-      context: "./infra/php/"
-      dockerfile: Dockerfile.unit
+      context: "."
+      dockerfile: Dockerfile.prod
     volumes:
-      - .:/var/www/html
+      - .:/app
     command: php artisan queue:work --tries=3
     depends_on:
       - php
@@ -92,15 +96,15 @@ services:
 
   schedule-worker:
     build:
-      context: "./infra/php/"
-      dockerfile: Dockerfile.unit
+      context: "."
+      dockerfile: Dockerfile.prod
     depends_on:
       - php
     restart: unless-stopped
     tty: true
     container_name: schedule-worker-tabantaj
     volumes:
-      - .:/var/www/html
+      - .:/app
     command: php artisan schedule:work
     environment:
       CONTAINER_ROLE: scheduler
@@ -221,21 +225,21 @@ services:
     networks:
       - tabantajnetwork
 
-  Kibana:
-    image: kibana:8.11.1
-    container_name: kibana
-    restart: always
-    ports:
-      - "5601:5601"
-    environment:
-      - ELASTICSEARCH_URL=http://elasticsearch:9200
-      - ELASTIC_PACKAGE_REGISTRY_URL=elastic-package-registry:8080
-    volumes:
-      - ./infra/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
-    depends_on:
-      - elasticsearch
-    networks:
-      - tabantajnetwork
+  # Kibana:
+  #   image: kibana:8.11.1
+  #   container_name: kibana
+  #   restart: always
+  #   ports:
+  #     - "5601:5601"
+  #   environment:
+  #     - ELASTICSEARCH_URL=http://elasticsearch:9200
+  #     - ELASTIC_PACKAGE_REGISTRY_URL=elastic-package-registry:8080
+  #   volumes:
+  #     - ./infra/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
+  #   depends_on:
+  #     - elasticsearch
+  #   networks:
+  #     - tabantajnetwork
 
   filebeat:
     image: elastic/filebeat:8.11.1
@@ -277,6 +281,10 @@ services:
 
 volumes:
   tabantaj-db:
+    driver: local
+  caddy_data:
+    driver: local
+  caddy_config:
     driver: local
   rabbitmq_data:
     driver: local

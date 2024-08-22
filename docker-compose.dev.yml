@@ -1,36 +1,35 @@
-version: "3.8"
 services:
-  nginx-tabantaj:
-    image: nginx:stable-alpine
-    container_name: nginx-tabantaj
-    restart: unless-stopped
-    tty: true
-    ports:
-      - 80:80
-      - 443:443
-      - 8080:8080
-    volumes:
-      - .:/var/www/html
-      - ./infra/nginx/nginx.conf:/etc/nginx/default.conf
-    depends_on:
-      - php
-      - postgres-tabantaj
-      - redis-tabantaj
-    env_file:
-      - .env
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "30m"
-        max-file: "1"
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:80"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 20s
-    networks:
-      - tabantajnetwork
+  # nginx-tabantaj:
+  #   image: nginx:stable-alpine
+  #   container_name: nginx-tabantaj
+  #   restart: unless-stopped
+  #   tty: true
+  #   ports:
+  #     - 80:80
+  #     - 443:443
+  #     - 8080:8080
+  #   volumes:
+  #     - .:/var/www/html
+  #     - ./infra/nginx/nginx.conf:/etc/nginx/default.conf
+  #   depends_on:
+  #     - php
+  #     - postgres-tabantaj
+  #     - redis-tabantaj
+  #   env_file:
+  #     - .env
+  #   logging:
+  #     driver: "json-file"
+  #     options:
+  #       max-size: "30m"
+  #       max-file: "1"
+  #   healthcheck:
+  #     test: ["CMD", "curl", "-f", "http://localhost:80"]
+  #     interval: 30s
+  #     timeout: 10s
+  #     retries: 3
+  #     start_period: 20s
+  #   networks:
+  #     - tabantajnetwork
 
   postgres-tabantaj:
     image: postgres:16-alpine
@@ -51,26 +50,26 @@ services:
       - tabantajnetwork
     mem_limit: 6g
 
-  pgadmin-tabantaj:
-    depends_on:
-      - postgres-tabantaj
-    image: dpage/pgadmin4:latest
-    ports:
-      - "5480:80"
-    environment:
-      - PGADMIN_DEFAULT_PASSWORD=VnRE!Jib7W9@qeBN
-      - PGADMIN_DEFAULT_EMAIL=soporte.desarrollo@silent4business.com
-    restart: unless-stopped
-    tty: true
-    volumes:
-      - pgadmin-data:/var/lib/pgadmin
-    networks:
-      - tabantajnetwork
+  # pgadmin-tabantaj:
+  #   depends_on:
+  #     - postgres-tabantaj
+  #   image: dpage/pgadmin4:latest
+  #   ports:
+  #     - "5480:80"
+  #   environment:
+  #     - PGADMIN_DEFAULT_PASSWORD=VnRE!Jib7W9@qeBN
+  #     - PGADMIN_DEFAULT_EMAIL=soporte.desarrollo@silent4business.com
+  #   restart: unless-stopped
+  #   tty: true
+  #   volumes:
+  #     - pgadmin-data:/var/lib/pgadmin
+  #   networks:
+  #     - tabantajnetwork
 
   php:
     #uncomment this if you will use only docker compose
     build:
-      context: "./infra/php/"
+      context: "."
       dockerfile: Dockerfile
     #     # target: php-production  # Specify the target build stage if applicable
     #     # args:
@@ -78,22 +77,27 @@ services:
     # #container_name: php-tabantaj
     #uncomment this if you will use only docker compose
     #image: johnvo95/tabantaj_php-tabantaj:latest
+    entrypoint: php artisan octane:frankenphp --workers=1 --max-requests=250
     container_name: php-tabantaj
     restart: unless-stopped
     tty: true
     volumes:
-      - .:/var/www/html
+      - .:/app
+      - caddy_data:/data
+      - caddy_config:/config
     ports:
-      - 9000:80
+      - 80:8000
+      - 443:443
+      - 443:443/udp
     networks:
       - tabantajnetwork
 
   queue-worker:
     build:
-      context: "./infra/php/"
+      context: "."
       dockerfile: Dockerfile
     volumes:
-      - .:/var/www/html
+      - .:/app
     command: php artisan queue:work --tries=3
     depends_on:
       - php
@@ -107,7 +111,7 @@ services:
 
   schedule-worker:
     build:
-      context: "./infra/php/"
+      context: "."
       dockerfile: Dockerfile
     depends_on:
       - php
@@ -115,7 +119,7 @@ services:
     tty: true
     container_name: schedule-worker-tabantaj
     volumes:
-      - .:/var/www/html
+      - .:/app
     command: php artisan schedule:work
     environment:
       CONTAINER_ROLE: scheduler
@@ -134,19 +138,19 @@ services:
       - tabantajnetwork
     mem_limit: 3g
 
-  rdadmin-tabantaj:
-    image: erikdubbelboer/phpredisadmin:latest
-    container_name: rdadmin-tabantaj
-    restart: unless-stopped
-    tty: true
-    ports:
-      - 6360:80
-    environment:
-      - REDIS_1_HOST=redis-tabantaj # Replace with your Redis container name
-      - REDIS_1_PORT=6379 # Replace with your Redis container port
-      #- REDIS_1_AUTH=silent11!
-    networks:
-      - tabantajnetwork
+  # rdadmin-tabantaj:
+  #   image: erikdubbelboer/phpredisadmin:latest
+  #   container_name: rdadmin-tabantaj
+  #   restart: unless-stopped
+  #   tty: true
+  #   ports:
+  #     - 6360:80
+  #   environment:
+  #     - REDIS_1_HOST=redis-tabantaj # Replace with your Redis container name
+  #     - REDIS_1_PORT=6379 # Replace with your Redis container port
+  #     #- REDIS_1_AUTH=silent11!
+  #   networks:
+  #     - tabantajnetwork
 
   # rabbitmq-tabantaj:
   #   image: rabbitmq:3-management-alpine
@@ -165,27 +169,31 @@ services:
   #   volumes:
   #     - rabbitmq_data:/var/lib/rabbitmq
 
-  goservices:
-    image: ghcr.io/silent4devs/goservices:latest
-    container_name: goservices
-    restart: unless-stopped
-    tty: true
-    ports:
-      - "3300:3300"
-    volumes:
-      - goservices_data:/goservices
-    networks:
-      - tabantajnetwork
+  # goservices:
+  #   image: ghcr.io/silent4devs/goservices:latest
+  #   container_name: goservices
+  #   restart: unless-stopped
+  #   tty: true
+  #   ports:
+  #     - "3300:3300"
+  #   volumes:
+  #     - goservices_data:/goservices
+  #   networks:
+  #     - tabantajnetwork
 
 volumes:
   tabantaj-database:
     driver: local
+  caddy_data:
+    driver: local
+  caddy_config:
+    driver: local
   # rabbitmq_data:
   #   driver: local
-  pgadmin-data:
-    driver: local
-  goservices_data:
-    driver: local
+  # pgadmin-data:
+  #   driver: local
+  # goservices_data:
+  #   driver: local
   # elasticsearch:
   #   driver: local
   # elasticsearch-logs:
