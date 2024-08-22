@@ -4,11 +4,11 @@
     {{ Breadcrumbs::render('expedientes-profesionales') }}
 
     <h5 class="col-12 titulo_general_funcion">Perfiles Profesionales </h5>
-    <div class="mt-5 card">
-        <div class="card-body">
+    {{-- <div class="mt-5 card">
+        <div class="card-body"> --}}
             @livewire('buscar-c-v-component', ['areas' => $areas,'isPersonal'=>false])
-        </div>
-    </div>
+        {{-- </div>
+    </div> --}}
 @endsection
 <script>
     window.addEventListener('popstate', function(event) {

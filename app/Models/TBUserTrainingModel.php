@@ -40,4 +40,9 @@ class TBUserTrainingModel extends Model
         return $this->belongsTo(TBCatalogueTrainingModel::class, 'name_id');
     }
 
+    public function empleado()
+    {
+        return $this->belongsTo(Empleado::class, 'empleado_id');
+    }
+
 }

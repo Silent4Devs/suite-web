@@ -149,7 +149,7 @@
                                 {{$register->end_date}}
                             </td>
                             <td>
-                                {{$register->validity}}
+                                {{$register->validity ? $register->validity: 'sin datos registrados' }}
                             </td>
                             <td>
                                 @if ($register->evidence_id)
