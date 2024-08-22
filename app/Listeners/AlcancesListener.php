@@ -34,9 +34,7 @@ class AlcancesListener implements ShouldQueue
      */
     public function handle($event)
     {
-        $modulo_alcances = 2;
-
-        $lista = ListaDistribucion::with('participantes')->where('id', $modulo_alcances)->first();
+        $lista = ListaDistribucion::with('participantes')->where('modelo', 'AlcanceSgsi')->first();
 
         foreach ($lista->participantes as $participantes) {
             $empleados = Empleado::where('id', $participantes->empleado_id)->first();

@@ -183,22 +183,34 @@
                     buttons: dtButtons,
                     columns: [
                         {
-                            data: 'folio'
+                            data: 'folio',
+                            render: function(data, type, row, meta) {
+                            return data ? data : ''; }
                         },
                         {
-                            data: 'anonimo'
+                            data: 'anonimo',
+                            render: function(data, type, row, meta) {
+                            return data ? data : ''; }
                         },
                         {
-                            data: 'estatus'
+                            data: 'estatus',
+                            render: function(data, type, row, meta) {
+                            return data ? data : ''; }
                         },
                         {
-                            data: 'fecha_creacion'
+                            data: 'fecha_creacion',
+                            render: function(data, type, row, meta) {
+                            return data ? data : ''; }
                         },
                         {
-                            data: 'fecha_reporte'
+                            data: 'fecha_reporte',
+                            render: function(data, type, row, meta) {
+                            return data ? data : ''; }
                         },
                         {
-                            data: 'fecha_de_cierre'
+                            data: 'fecha_de_cierre',
+                            render: function(data, type, row, meta) {
+                            return data ? data : ''; }
                         },
                         {
                             data: 'name',
@@ -273,7 +285,7 @@
                                 if ((row.estatus == 'cerrado') || (row.estatus == 'cancelado')) {
 
                                     html += `
-                                            <button class="btn archivar" onclick='ArchivarDenuncia("/admin/desk/${data}/archivarDenuncias"); return false;' style="margin-top:-10px">
+                                            <button class="btn" onclick='ArchivarDenuncia("/admin/desk/${data}/archivarDenuncias"); return false;' style="margin-top:-10px">
                                                 <i class="fas fa-archive" ></i></a>
                                             </button>
 				       					</div>`;

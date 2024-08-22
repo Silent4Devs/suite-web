@@ -165,20 +165,20 @@
                                 {{-- This is the content of the modal. --}}
                                 <div class="row">
                                     <div class="col-12 form-group anima-focus">
-                                        <input wire:model.live="nombre_edit_unidad" id="nombre_edit_unidad" type="text"
-                                            class="form-control" placeholder="">
+                                        <input wire:model.live="nombre_edit_unidad" id="nombre_edit_unidad"
+                                            type="text" class="form-control" placeholder="">
                                         <label for="nombre_edit_unidad">Unidad</label>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-6 form-group anima-focus">
-                                        <input wire:model.live="minimo_edit_unidad" id="minimo_edit_unidad" type="number"
-                                            class="form-control" placeholder="">
+                                        <input wire:model.live="minimo_edit_unidad" id="minimo_edit_unidad"
+                                            type="number" class="form-control" placeholder="">
                                         <label for="minimo_edit_unidad">Valor Minimo</label>
                                     </div>
                                     <div class="col-6 form-group anima-focus">
-                                        <input wire:model.live="maximo_edit_unidad" id="maximo_edit_unidad" type="number"
-                                            class="form-control" placeholder="">
+                                        <input wire:model.live="maximo_edit_unidad" id="maximo_edit_unidad"
+                                            type="number" class="form-control" placeholder="">
                                         <label for="maximo_edit_unidad">Valor Maximo</label>
                                     </div>
                                 </div>
@@ -348,7 +348,8 @@
 
                                     @case(2)
                                         <span class="badge badge-danger">Rechazado
-                                            <i class="fas fa-comment ml-1" title="${row.objetivo.comentarios_aprobacion}"></i>
+                                            <i class="fas fa-comment ml-1"
+                                                title="{{ $obj->objetivo->comentarios_aprobacion }}"></i>
                                         </span>
                                     @break
 
@@ -364,7 +365,6 @@
                                     <a
                                         wire:click.prevent="revision({{ $obj->objetivo->id }}, 'rechazar')">Rechazar</a>
                                 @endif
-
                             </td>
                             <td>
                                 <div class="dropdown btn-options-foda-card">
@@ -374,7 +374,7 @@
                                     </button>
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item"
-                                            wire:click.prevent="enviarPapelera({{ $obj->id }})">Enviar a la
+                                            onclick="confirmarEnvioPapelera({{ $obj->id }})">Enviar a la
                                             Papelera</a>
                                     </div>
                                 </div>
@@ -388,4 +388,35 @@
     <div>
         <a href="{{ route('admin.ev360-objetivos-periodo.config') }}" class="btn btn-outline-primary">Regresar</a>
     </div>
+
+    @livewireStyles
+    @livewireScripts
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            window.confirmarEnvioPapelera = function(objetivoId) {
+                window.dispatchEvent(new CustomEvent('confirmarEnvioPapelera', {
+                    detail: {
+                        objetivoId
+                    }
+                }));
+            };
+
+            window.addEventListener('confirmarEnvioPapelera', event => {
+                Swal.fire({
+                    title: 'Enviar a Papelera',
+                    text: "¿Esta seguro que desea enviar este objetivo a la papelera?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, enviar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Livewire.dispatch('enviarPapelera', [event.detail.objetivoId]);
+                    }
+                });
+            });
+        });
+    </script>
 </div>

@@ -13,14 +13,14 @@ use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class ComunicadosApiController extends Controller
+class tbApiMobileControllerComunicados extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function tbFunctionIndex()
     {
         // abort_if(Gate::denies('portal_de_comunicaccion_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $hoy = Carbon::now();

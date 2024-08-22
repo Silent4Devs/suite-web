@@ -80,6 +80,8 @@ class EvaluacionesDesempenoController extends Controller
         $evaluacionDesempeno = EvaluacionDesempeno::findOrFail($evaluacion);
         $evaluado = $evaluacionDesempeno->evaluados()->find($evaluado);
 
+        $periodo = intval($periodo);
+
         if (empty($evaluacionDesempeno) || empty($evaluado)) {
             return redirect()->route('admin.inicio-Usuario.index');
         }

@@ -22,7 +22,7 @@
                                     <i class="fa-solid fa-ellipsis-vertical"></i>
                                 </button>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" wire:click.prevent="restaurarPapelera({{ $obj->id }})">
+                                    <a class="dropdown-item" onclick="confirmarRestauracion({{ $obj->id }})">
                                         <i class="fa-solid fa-pencil"></i>&nbsp;Restaurar</a>
                                     <a class="dropdown-item delete-item"
                                         wire:click.prevent="eliminarObjetivo({{ $obj->id }})">
@@ -36,4 +36,66 @@
         </table>
     </div>
     {{-- The whole world belongs to you. --}}
+    @livewireStyles
+    @livewireScripts
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            window.confirmarRestauracion = function(objetivoId) {
+                window.dispatchEvent(new CustomEvent('confirmarRestauracion', {
+                    detail: {
+                        objetivoId
+                    }
+                }));
+            };
+
+            window.addEventListener('confirmarRestauracion', event => {
+                console.log(1);
+                Swal.fire({
+                    title: 'Restaurar Objetivo',
+                    text: "¿Esta seguro que desea restaurar este objetivo?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, restaurar.'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        console.log(2);
+                        Livewire.dispatch('restaurarPapelera', [event.detail.objetivoId]);
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            window.confirmarEliminacion = function(objetivoId) {
+                window.dispatchEvent(new CustomEvent('confirmarEliminacion', {
+                    detail: {
+                        objetivoId
+                    }
+                }));
+            };
+
+            window.addEventListener('confirmarEliminacion', event => {
+                console.log(1);
+                Swal.fire({
+                    title: 'Eliminar Objetivo',
+                    text: "¿Esta seguro que desea Eliminar este objetivo?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, Eliminar.'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        console.log(2);
+                        Livewire.dispatch('eliminarObjetivo', [event.detail.objetivoId]);
+                    }
+                });
+            });
+        });
+    </script>
 </div>

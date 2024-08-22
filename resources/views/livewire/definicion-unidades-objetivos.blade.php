@@ -11,35 +11,9 @@
                     <hr class="my-4">
                 </div>
 
-                {{-- <p>
-                    Rango <br>
-                    Especifica el valor mínimo y máximo que tendrá la escala de medición
-                </p>
-
-                <div class="d-flex" style="gap: 10px;">
-                    <div class="form-group anima-focus" style="width: 100px;">
-                        <input type="text" class="form-control" placeholder="" wire:model="minimo" name="minimo"
-                            wire:change="definirLimite('minimo', $event.target.value)">
-                        <label for="">Mínimo*</label>
-                    </div>
-                    <div class="form-group anima-focus" style="width: 100px;">
-                        <input type="text" class="form-control" placeholder="" wire:model="maximo" name="maximo"
-                            wire:change="definirLimite('maximo', $event.target.value)">
-                        <label for="">Máximo*</label>
-                    </div>
-                </div> --}}
-
                 @foreach ($parametros as $key => $p)
                     <div class="col-12">
                         <div class="form-row  mt-3 mb-3">
-                            {{-- <div class="col-1">
-                                <div class="anima-focus mb-3 ">
-                                    <input type="number" id="valor_estatus_arreglo_{{ $key }}"
-                                        name="valor_estatus_arreglo_{{ $key }}" class="form-control" placeholder=""
-                                        min="{{ $minimo }}" max="{{ $maximo }}">
-                                    <label for="valor_estatus_arreglo_{{ $key }}">Valor</label>
-                                </div>
-                            </div> --}}
                             <div class="col-4">
                                 <div class="anima-focus mb-3 ">
                                     <input type="text" id="estatus_arreglo_{{ $key }}"

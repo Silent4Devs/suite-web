@@ -135,15 +135,27 @@ class PoliticaSgsiController extends Controller
 
     public function create()
     {
+       try {
         abort_if(Gate::denies('politica_sistema_gestion_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $empleados = Empleado::getAltaEmpleadosWithArea();
 
         return view('admin.politicaSgsis.create', compact('empleados'));
+
+        } catch (\Exception $e) {
+            Log::channel('logstash')->info('Error al crear politica: '.$e->getMessage(), [
+                'exception' => $e,
+                'input' => $request->all(),
+            ]);
+
+            // Retornar una respuesta de error al cliente
+            return response()->json(['message' => 'Error al crear politica'], 500);
+        }
     }
 
     public function store(StorePoliticaSgsiRequest $request)
     {
+       try {
         abort_if(Gate::denies('politica_sistema_gestion_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $request->validate([
@@ -168,6 +180,16 @@ class PoliticaSgsiController extends Controller
         $politicaSgsi->estatus = 'Pendiente';
 
         return redirect()->route('admin.politica-sgsis.index')->with('success', 'Guardado con éxito');
+
+        } catch (\Exception $e) {
+            Log::channel('logstash')->info('Error al guardar politica: '.$e->getMessage(), [
+                'exception' => $e,
+                'input' => $request->all(),
+            ]);
+
+            // Retornar una respuesta de error al cliente
+            return response()->json(['message' => 'Error al guardar politica'], 500);
+        }
     }
 
     public function edit($id)
@@ -195,6 +217,13 @@ class PoliticaSgsiController extends Controller
 
             return view('admin.politicaSgsis.edit', compact('politicaSgsi', 'empleados', 'fecha_publicacion', 'fecha_revision', 'comentarios'));
         } catch (\Exception $e) {
+            
+            Log::channel('logstash')->info('Error al editar politica: '.$e->getMessage(), [
+                'exception' => $e,
+                'input' => $request->all(),
+            ]);
+
+            // Retornar una respuesta de error al cliente
             abort(404);
         }
     }
@@ -229,6 +258,13 @@ class PoliticaSgsiController extends Controller
 
             return redirect()->route('admin.politica-sgsis.index')->with('success', 'Editado con éxito');
         } catch (\Exception $e) {
+
+            Log::channel('logstash')->info('Error al actualizar politica: '.$e->getMessage(), [
+                'exception' => $e,
+                'input' => $request->all(),
+            ]);
+
+            // Retornar una respuesta de error al cliente
             abort(404);
         }
     }
@@ -248,17 +284,36 @@ class PoliticaSgsiController extends Controller
 
             return view('admin.politicaSgsis.show', compact('politicaSgsi'));
         } catch (\Exception $e) {
+            Log::channel('logstash')->info('Error al mostrar politica: '.$e->getMessage(), [
+                'exception' => $e,
+                'input' => $request->all(),
+            ]);
+
+            // Retornar una respuesta de error al cliente
             abort(404);
         }
     }
 
     public function destroy(PoliticaSgsi $politicaSgsi)
     {
+        try {
+
         abort_if(Gate::denies('politica_sistema_gestion_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $politicaSgsi->delete();
 
         return back()->with('deleted', 'Registro eliminado con éxito');
+
+        } catch (\Exception $e) {
+
+            Log::channel('logstash')->info('Error al eliminar politica: '.$e->getMessage(), [
+                'exception' => $e,
+                'input' => $request->all(),
+            ]);
+
+            // Retornar una respuesta de error al cliente
+            abort(404);
+        }
     }
 
     public function massDestroy(MassDestroyPoliticaSgsiRequest $request)
@@ -335,6 +390,8 @@ class PoliticaSgsiController extends Controller
         $politica = PoliticaSgsi::find($id_politica);
 
         $lista = ListaDistribucion::with('participantes')->where('modelo', '=', $this->modelo)->first();
+
+        event(new PoliticasSgiEvent($politica, 'solicitudAprobacion', 'politica_sgsis', 'Politica'));
 
         $proceso = ProcesosListaDistribucion::updateOrCreate(
             [
@@ -419,10 +476,12 @@ class PoliticaSgsiController extends Controller
                                 $part->participante->numero_orden == $j && $part->estatus == 'Pendiente'
                                 && $part->participante->empleado_id == User::getCurrentUser()->empleado->id
                             ) {
-
                                 return view('admin.politicaSgsis.revision', compact('politicaSgsi', 'acceso_restringido'));
                                 break;
-                            } else {
+                            } elseif (
+                                ! ($part->estatus == 'Pendiente')
+                                && ! ($part->participante->empleado_id == User::getCurrentUser()->empleado->id)
+                            ) {
                                 $acceso_restringido = 'turno';
 
                                 return view('admin.politicaSgsis.revision', compact('politicaSgsi', 'acceso_restringido'));
@@ -432,8 +491,6 @@ class PoliticaSgsiController extends Controller
                         $part->participante->nivel == 0 && $part->estatus == 'Pendiente'
                         && $part->participante->empleado_id == User::getCurrentUser()->empleado->id
                     ) {
-
-                        // dd($politicaSgsi);
                         return view('admin.politicaSgsis.revision', compact('politicaSgsi', 'acceso_restringido'));
                         break;
                     }
@@ -563,7 +620,7 @@ class PoliticaSgsiController extends Controller
         Mail::to(removeUnicodeCharacters($emailresponsable))->queue(new NotificacionRechazoPoliticaLider($politica->id, $politica->nombre_politica));
 
         foreach ($aprobacion->participantes as $participante) {
-            Mail::to(removeUnicodeCharacters($participante->email))->queue(new NotificacionRechazoPolitica($politica->nombre_politica));
+            Mail::to(removeUnicodeCharacters($participante->participante->empleado->email))->queue(new NotificacionRechazoPolitica($politica->nombre_politica));
         }
 
         return redirect(route('admin.politica-sgsis.index'));
@@ -599,20 +656,38 @@ class PoliticaSgsiController extends Controller
     {
         $lista = ListaDistribucion::with('participantes')->where('modelo', '=', $this->modelo)->first();
 
+        $proceso_actualizado = ProcesosListaDistribucion::with('participantes')
+            ->where('id', '=', $proceso->id)
+            ->with([
+                'modulo' => function ($query) {
+                    $query->where('modelo', '=', $this->modelo);
+                },
+            ])
+            ->first();
+
         $no_niveles = $lista->niveles;
 
+        $breakLoop = false;
+
         for ($i = 1; $i <= $no_niveles; $i++) {
-            foreach ($proceso->participantes as $part) {
+            foreach ($proceso_actualizado->participantes as $part) {
                 if ($part->participante->nivel == $i && $part->estatus == 'Pendiente') {
                     for ($j = 1; $j <= 5; $j++) {
                         if ($part->participante->numero_orden == $j && $part->estatus == 'Pendiente') {
                             $emailAprobador = $part->participante->empleado->email;
                             // dd($emailAprobador);
                             Mail::to(removeUnicodeCharacters($emailAprobador))->queue(new NotificacionSolicitudAprobacionPolitica($politica->id, $politica->nombre_politica));
+                            $breakLoop = true;
                             break;
                         }
                     }
+                    if ($breakLoop) {
+                        break;
+                    }
                 }
+            }
+            if ($breakLoop) {
+                break;
             }
         }
     }

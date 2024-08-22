@@ -34,9 +34,7 @@ class EntendimientoOrganizacionListener implements ShouldQueue
      */
     public function handle($event)
     {
-        $modulo_entend = 1;
-
-        $lista = ListaDistribucion::with('participantes')->where('id', $modulo_entend)->first();
+        $lista = ListaDistribucion::with('participantes')->where('modelo', 'EntendimientoOrganizacion')->first();
 
         foreach ($lista->participantes as $participantes) {
             $empleados = Empleado::where('id', $participantes->empleado_id)->first();
