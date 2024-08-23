@@ -22,6 +22,7 @@
                 </div>
                 @endif
             </div>
+            <!-- <button wire:click="askAsistenText" class="btn">guardas</button> -->
             <form wire:submit="askAsisten">
                 <div class="box-input-user-chatbot">
                     <input wire:model.blur="search" class="scroll_estilo" style="border: 2px solid #add8e6; padding: 5px; border-radius: 4px; outline: none;">
