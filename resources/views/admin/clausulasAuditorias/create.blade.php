@@ -16,7 +16,7 @@
                     <p style="font-size: 18px; color: #788BAC;"><strong>Cláusula</strong></p>
                 </div>
             </div>
-            <form method="POST" action="{{ route('admin.auditoria-clausula.store') }}">
+            <form id="clausulaForm" method="POST" action="{{ route('admin.auditoria-clausula.store') }}">
                 @csrf
                 <div class="row">
                     <div class="distancia form-group col-md-6">
@@ -56,4 +56,51 @@
             </form>
         </div>
     </div>
+
+    <script>
+        document.getElementById('clausulaForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Evita que el formulario se envíe normalmente
+
+            let form = this;
+            let formData = new FormData(form);
+
+            fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute(
+                            'content')
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        Swal.fire({
+                            title: '¡Éxito!',
+                            text: data.message,
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        }).then(() => {
+                            window.location.href = data
+                                .redirect_url; // Redirigir después de cerrar SweetAlert
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Error',
+                            text: data.message,
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                })
+                .catch(error => {
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Ocurrió un error inesperado.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                });
+        });
+    </script>
 @endsection

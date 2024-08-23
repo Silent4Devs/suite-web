@@ -8,6 +8,7 @@ use App\Models\ClausulasAuditorias;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
+use Throwable;
 use Yajra\DataTables\Facades\DataTables;
 
 class ClausulasAuditoriasController extends Controller
@@ -63,7 +64,6 @@ class ClausulasAuditoriasController extends Controller
      */
     public function create()
     {
-        //
         abort_if(Gate::denies('clausulas_auditorias_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('admin.clausulasAuditorias.create');
@@ -74,21 +74,30 @@ class ClausulasAuditoriasController extends Controller
      */
     public function store(Request $request)
     {
-        //
         abort_if(Gate::denies('clausulas_auditorias_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             'nombre' => 'required',
         ]);
 
-        // dd('validacion');
-        $nuevaClausulas = new ClausulasAuditorias;
-        $nuevaClausulas->create([
-            'identificador' => $request->identificador,
-            'nombre_clausulas' => $request->nombre,
-            'descripcion' => $request->descripcion,
-        ]);
+        try {
+            $nuevaClausulas = new ClausulasAuditorias;
+            $nuevaClausulas->create([
+                'identificador' => $request->identificador,
+                'nombre_clausulas' => $request->nombre,
+                'descripcion' => $request->descripcion,
+            ]);
 
-        return redirect(route('admin.auditoria-clausula'));
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Cláusula creada. La cláusula fue creada exitosamente.',
+                'redirect_url' => route('admin.auditoria-clausula') // Ruta de redirección
+            ]);
+        } catch (Throwable $th) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Hubo un problema al crear la cláusula. Inténtalo nuevamente.'
+            ]);
+        }
     }
 
     /**
@@ -121,16 +130,26 @@ class ClausulasAuditoriasController extends Controller
         $request->validate([
             'nombre' => 'required',
         ]);
-        // dd('validacion');
-        $editClausula = ClausulasAuditorias::find($id);
 
-        $editClausula->update([
-            'identificador' => $request->identificador,
-            'nombre_clausulas' => $request->nombre,
-            'descripcion' => $request->descripcion,
-        ]);
+        try {
+            $editClausula = ClausulasAuditorias::find($id);
 
-        return redirect(route('admin.auditoria-clausula'));
+            $editClausula->update([
+                'identificador' => $request->identificador,
+                'nombre_clausulas' => $request->nombre,
+                'descripcion' => $request->descripcion,
+            ]);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Cláusula modificada. La clasificación fue modificada exitosamente.',
+                'redirect_url' => route('admin.auditoria-clausula') // Ruta de redirección
+            ]);
+        } catch (Throwable $th) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Hubo un problema al modificar la clasificación. Inténtalo nuevamente.'
+            ]);
+        }
     }
 
     /**
