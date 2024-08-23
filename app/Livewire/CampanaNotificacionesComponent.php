@@ -39,6 +39,7 @@ class CampanaNotificacionesComponent extends Component
         'echo:notificaciones-campana,MinutasEvent' => 'getTotalNotificaciones',
         'echo:notificaciones-campana,PuestosEvent' => 'getTotalNotificaciones',
         'echo:notificaciones-campana,TimesheetProyectoEvent' => 'getTotalNotificaciones',
+        'echo:notificaciones-campana,CatalogueCertificatesEvent' => 'getTotalNotificaciones',
         'NotificationMarkedAsReadList' => 'getTotalNotificaciones',
     ];
 
