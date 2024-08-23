@@ -57,6 +57,8 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
 
 COPY composer.json ./
 COPY composer.lock ./
+RUN composer update
+RUN composer dump-autoload
 RUN composer install --no-dev --no-interaction --no-autoloader --no-scripts
 
 # Set working directory
