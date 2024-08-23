@@ -106,12 +106,6 @@ class SedeController extends Controller
         $request['latitude'] = $result['lat'];
         $request['longitud'] = $result['lng'];
 
-        if (strlen($request->input('sede')) > 255 || strlen($request->input('descripcion')) > 255 || strlen($request->input('direccion')) > 255) {
-            $mensajeError = 'Intentelo de nuevo, Ingrese  todos los campos';
-
-            return Redirect::back()->with('mensajeError', $mensajeError);
-        }
-
         $sede = Sede::create($request->all());
 
         if ($request->hasFile('foto_sedes')) {
@@ -167,16 +161,9 @@ class SedeController extends Controller
     {
         abort_if(Gate::denies('sedes_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $sede = Sede::getbyId($id);
-        $image = $sede->foto_sedes;
+            $sede = Sede::getbyId($id);
+            $image = $sede->foto_sedes;
 
-        if (strlen($request->input('sede')) > 255 || strlen($request->input('descripcion')) > 255 || strlen($request->input('direccion')) > 255) {
-            $mensajeError = 'Intentelo de nuevo, Ingrese  todos los campos con caracteres menores a 255';
-
-            return Redirect::back()->with('mensajeError', $mensajeError);
-        }
-
-        if ($request->hasFile('foto_sedes')) {
             // Check and delete the existing image if it exists
             $existingImagePath = 'sedes/imagenes/'.$sede->foto_sedes;
 
@@ -184,52 +171,14 @@ class SedeController extends Controller
                 Storage::disk('public')->delete($existingImagePath);
             }
 
-            // Process the new image
-            $file = $request->file('foto_sedes');
-            $extension = $file->getClientOriginalExtension();
-            $name_image = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-            $new_name_image = 'UID_'.$sede->id.'_'.$name_image.'.png';
+            $sede->update([
+                'sede' => $request->sede,
+                'foto_sedes' => $request->foto_sede,
+                'direccion' => $request->direccion,
+                'descripcion' => $request->descripcion
+            ]);
 
-            // Call the ImageService to consume the external API
-            $apiResponse = ImageService::consumeImageCompresorApi($file);
-
-            // Verificar si la solicitud fue exitosa
-            if ($apiResponse['status'] == 200) {
-                $rutaGuardada = '/sedes/imagenes/'.$new_name_image;
-                file_put_contents(storage_path('app/public/'.$rutaGuardada), $apiResponse['body']);
-
-                $sede->update([
-                    'sede' => $request->sede,
-                    'foto_sedes' => $request->foto_sede,
-                    'direccion' => $request->direccion,
-                    'descripcion' => $request->descripcion,
-                    'foto_sedes' => $new_name_image,
-                ]);
-
-                return redirect()->route('admin.sedes.index')->with('success', 'Editado con éxito');
-            } else {
-                $mensajeError = 'Error al recibir la imagen de la API externa: '.$apiResponse['body'];
-
-                return Redirect::back()->with('mensajeError', $mensajeError);
-            }
-
-        } else {
-
-            $mensajeError = 'Intentelo de nuevo, Ingrese  todos los campos';
-
-            return Redirect::back()->with('mensajeError', $mensajeError);
-        }
-
-        $sede->update([
-
-            'sede' => $request->sede,
-            'foto_sedes' => $request->foto_sede,
-            'direccion' => $request->direccion,
-            'descripcion' => $request->descripcion,
-            'foto_sedes' => $new_name_image,
-        ]);
-
-        return redirect()->route('admin.sedes.index')->with('success', 'Editado con éxito');
+            return redirect()->route('admin.sedes.index')->with('success', 'Editado con éxito');
     }
 
     public function show(Sede $sede)
