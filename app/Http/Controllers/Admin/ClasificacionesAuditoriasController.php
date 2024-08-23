@@ -8,6 +8,7 @@ use App\Models\ClasificacionesAuditorias;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
+use Throwable;
 use Yajra\DataTables\Facades\DataTables;
 
 class ClasificacionesAuditoriasController extends Controller
@@ -80,14 +81,25 @@ class ClasificacionesAuditoriasController extends Controller
         $request->validate([
             'nombre' => 'required',
         ]);
-        // dd('validacion');
-        $nuevaClasificacion = ClasificacionesAuditorias::create([
-            'identificador' => $request->identificador,
-            'nombre_clasificaciones' => $request->nombre,
-            'descripcion' => $request->descripcion,
-        ]);
 
-        return redirect(route('admin.auditoria-clasificacion'));
+        try {
+            $nuevaClasificacion = ClasificacionesAuditorias::create([
+                'identificador' => $request->identificador,
+                'nombre_clasificaciones' => $request->nombre,
+                'descripcion' => $request->descripcion,
+            ]);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Clasificación creada. La clasificación fue creada exitosamente.',
+                'redirect_url' => route('admin.auditoria-clasificacion') // Ruta de redirección
+            ]);
+        } catch (Throwable $th) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Hubo un problema al crear la clasificación. Inténtalo nuevamente.'
+            ]);
+        }
     }
 
     /**
@@ -121,15 +133,26 @@ class ClasificacionesAuditoriasController extends Controller
             'nombre' => 'required',
         ]);
         // dd('validacion');
-        $editClasificacion = ClasificacionesAuditorias::find($id);
+        try {
+            $editClasificacion = ClasificacionesAuditorias::find($id);
 
-        $editClasificacion->update([
-            'identificador' => $request->identificador,
-            'nombre_clasificaciones' => $request->nombre,
-            'descripcion' => $request->descripcion,
-        ]);
+            $editClasificacion->update([
+                'identificador' => $request->identificador,
+                'nombre_clasificaciones' => $request->nombre,
+                'descripcion' => $request->descripcion,
+            ]);
 
-        return redirect(route('admin.auditoria-clasificacion'));
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Clasificación modificar. La clasificación fue modificar exitosamente.',
+                'redirect_url' => route('admin.auditoria-clasificacion') // Ruta de redirección
+            ]);
+        } catch (Throwable $th) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Hubo un problema al modificar la clasificación. Inténtalo nuevamente.'
+            ]);
+        }
     }
 
     /**

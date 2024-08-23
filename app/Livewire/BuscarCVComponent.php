@@ -2,8 +2,15 @@
 
 namespace App\Livewire;
 
+use App\Models\Area;
 use App\Models\Empleado;
 use App\Models\ListaDocumentoEmpleado;
+use App\Models\TBCatalogueTrainingModel;
+use App\Models\TBEvidenceTrainingModel;
+use App\Models\TBTypeCatalogueTrainingModel;
+use App\Models\TBUserTrainingModel;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Storage;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -15,182 +22,162 @@ class BuscarCVComponent extends Component
 
     protected $paginationTheme = 'bootstrap';
 
-    public $areas;
 
-    public $empleado_id;
-
-    public $area_id;
-
-    public $empleado_experiencia;
-
-    public $empleado_educacion;
-
-    public $empleado_certificaciones;
-
-    public $empleado_cursos;
-
-    public $foto_organizacion;
-
-    public $empleados;
 
     public $isPersonal;
-
-    public $curriculums;
-
-    public $empresaExperiencia;
-
-    public $puestoExperiencia;
-
-    public $descripcionExperiencia;
-
-    public $certificacion;
-
-    public $curso;
-
     public $empleadoModel;
+    public $documents;
+    public $categories;
+    public $names;
+    public $employedCv;
+    public $catalog;
+    public $areas;
+    public $employess;
+    public $issuingCompanies;
+    public $normas;
+    public $type_id;
+    public $name_id;
+    public $area_id;
+    public $employ_id;
+    public $issuingCompanyId;
+    public $normaId;
 
-    public $general;
-
-    public $lista_docs;
-
-    protected $queryString = [
-        'area_id' => ['except' => ''],
-        'empleado_id' => ['except' => ''],
-        'empresaExperiencia' => ['except' => ''],
-        'puestoExperiencia' => ['except' => ''],
-        'descripcionExperiencia' => ['except' => ''],
-        'certificacion' => ['except' => ''],
-        'curso' => ['except' => ''],
-        'general' => ['except' => ''],
-    ];
-
-    public function clean()
+    public function resetFilter()
     {
-        $this->empleado_id = '';
-        $this->area_id = '';
-        $this->empleados = Empleado::getAltaEmpleados();
-        //$this->conteo = '';
-        $this->callAlert('info', 'Los filtros se han restablecido', true, 'La información volvio a su estado original');
-    }
-
-    public function updatedAreaId($value)
-    {
-        if ($value == '') {
+        // $this->reset(
+            $this->type_id = null;
+            $this->name_id = null;
             $this->area_id = null;
-            $this->empleados = Empleado::getaltaAll();
-        } else {
-            $this->area_id = $value;
-            $this->empleado_id = null;
-            $this->empleados = Empleado::getaltaAll()->where('area_id', $this->area_id);
+            $this->employ_id = null;
+            $this->issuingCompanyId = null;
+            $this->normaId = null;
+        // );
+
+        $this->employedCv = $this->catalog;
+        $this->names = null;
+    }
+
+    public function filterNorma()
+    {
+        $this->filters();
+    }
+
+    public function filterIssuingCompany(){
+        $this->filters();
+    }
+
+    public function filterEmploy()
+    {
+        // dd($this->employ_id);
+        $this->filters();
+    }
+
+    public function filterArea()
+    {
+        $this->filters();
+    }
+
+    public function filterName()
+    {
+        $this->filters();
+    }
+
+    public function getCatalogueName()
+    {
+        $type_id = intval($this->type_id);
+        foreach($this->categories as $category){
+            if($category->id === $type_id){
+                $this->names = $category->catalogue;
+                break;
+            }
         }
-        $this->dispatch('tagify');
+
+        $this->name_id = null;
+        $this->filters();
+
     }
 
-    public function updatedEmpleadoId($value)
-    {
-        if ($value == '') {
-            $this->empleado_id = null;
-        } else {
-            $this->empleado_id = $value;
+    public function filters(){
+        $query = TBUserTrainingModel::query();
+        if($this->type_id){
+            $query->where('type_id', $this->type_id);
         }
-        $this->dispatch('tagify');
+
+        if($this->name_id){
+            $query->where('name_id', $this->name_id);
+        }
+
+        if ($this->area_id) {
+            $query->whereHas('empleado', function ($query) {
+                $query->where('area_id', $this->area_id);
+            });
+        }
+
+        if ($this->employ_id) {
+            $query->whereHas('empleado', function ($query) {
+                $query->where('id', $this->employ_id);
+            });
+        }
+
+        if($this->issuingCompanyId){
+            $query->whereHas('getName', function ($query) {
+                $query->where('issuing_company', 'LIKE', '%' . $this->issuingCompanyId . '%');
+            });
+        }
+
+        if($this->normaId){
+            $query->whereHas('getName', function ($query) {
+                $query->where('norma', 'LIKE', '%' . $this->normaId . '%');
+            });
+        }
+
+        $this->employedCv = $query->get();
     }
 
-    public function updatedGeneral()
+    public function downloadEvidencie($id)
     {
-        $this->dispatch('tagify');
+        $evidenceRegister = TBEvidenceTrainingModel::findOrFail($id);
+        $filePath = $evidenceRegister->ubication . '/'. $evidenceRegister->name;
+
+        if (Storage::exists($filePath)) {
+            return Storage::download($filePath);
+        }
     }
 
-    public function updatedCurso()
+    public function mount($isPersonal)
     {
-        $this->dispatch('tagify');
+        $this->isPersonal = $isPersonal;
+        if(!$this->isPersonal){
+            $this->employedCv = TBUserTrainingModel::get();
+            $this->catalog = $this->employedCv;
+            $this->categories = TBTypeCatalogueTrainingModel::get();
+            $this->areas = Area::get();
+            $this->issuingCompanies = collect();
+            $this->employess = Empleado::getaltaAll();
+            $this->issuingCompanies = TBCatalogueTrainingModel::select('issuing_company')
+            ->distinct()
+            ->pluck('issuing_company');
+            $this->normas = TBCatalogueTrainingModel::select('norma')
+            ->distinct()
+            ->pluck('norma');
+        }
     }
-
-    public function updatedCertificacion()
-    {
-        $this->dispatch('tagify');
-    }
-
-    public function mount() {}
 
     public function render()
     {
-        if (! $this->isPersonal) {
-            $this->empleados = Empleado::getAltaEmpleados();
-        }
 
-        // $empleadosCV = Empleado::alta()
-        //     ->with('empleado_certificaciones', 'empleado_cursos', 'empleado_experiencia')
-        //     ->when($this->empleado_id, function ($q3) {
-        //         $q3->where('id', $this->empleado_id);
-        //     })
-        //     ->when($this->area_id, function ($q4) {
-        //         $q4->where('area_id', $this->area_id);
-        //     })
-        //     ->when($this->certificacion, function ($q) {
-        //         $q->whereHas('empleado_certificaciones', function ($query) {
-        //             $certificaciones = explode(',', $this->certificacion);
-        //             $query->where(function ($queryArr) use ($certificaciones) {
-        //                 foreach ($certificaciones as $busqueda) {
-        //                     $queryArr->orWhere('nombre', 'ILIKE', "%{$busqueda}%");
-        //                 }
-        //             });
-        //         });
-        //     })
-        //     ->when($this->curso, function ($qCurso) {
-        //         $qCurso->whereHas('empleado_cursos', function ($queryCurso) {
-        //             $queryCurso->where('curso_diploma', 'ILIKE', "%{$this->curso}%");
-        //         });
-        //     })
-        //     ->when($this->general, function ($qGeneral) {
-        //         $qGeneral->where('name', 'ILIKE', "%{$this->general}%");
-        //     })
-        //     ->fastPaginate(18);
-        // $this->empleado_id = null;
 
-        // $this->lista_docs = ListaDocumentoEmpleado::getAll();
-
-        // return view('livewire.buscar-c-v-component', [
-        //     'empleadosCV' => $empleadosCV,
-        // ]);
-
-        $empleadosCV = Empleado::alta()
-            ->with('empleado_certificaciones', 'empleado_cursos', 'empleado_experiencia')
-            ->when($this->empleado_id, function ($query) {
-                $query->where('id', $this->empleado_id);
-            })
-            ->when($this->area_id, function ($query) {
-                $query->where('area_id', $this->area_id);
-            })
-            ->when($this->certificacion, function ($query) {
-                $certificaciones = explode(',', $this->certificacion);
-                $query->whereHas('empleado_certificaciones', function ($subQuery) use ($certificaciones) {
-                    $subQuery->where(function ($queryArr) use ($certificaciones) {
-                        foreach ($certificaciones as $busqueda) {
-                            $queryArr->orWhere('nombre', 'ILIKE', "%{$busqueda}%");
-                        }
-                    });
-                });
-            })
-            ->when($this->curso, function ($query) {
-                $query->whereHas('empleado_cursos', function ($subQuery) {
-                    $subQuery->where('curso_diploma', 'ILIKE', "%{$this->curso}%");
-                });
-            })
-            ->when($this->general, function ($query) {
-                $query->where('name', 'ILIKE', "%{$this->general}%");
-            })
-            ->orderByDesc('id')->cursorPaginate();
-
-        return view('livewire.buscar-c-v-component', [
-            'empleadosCV' => $empleadosCV,
-            'lista_docs' => ListaDocumentoEmpleado::getAll(),
-        ]);
+            return view('livewire.buscar-c-v-component');
+            // 'empleadosCV' => $empleadosCV,
+        //     'lista_docs' => ListaDocumentoEmpleado::getAll(),
+        // ]
+    // );
     }
 
     public function mostrarCurriculum($empleadoID)
     {
         $this->empleadoModel = Empleado::getEmpleadoCurriculum($empleadoID)->find($empleadoID);
+        $this->documents = TBUserTrainingModel::where('empleado_id',$empleadoID)->get();
         $this->dispatch('tagify');
     }
 

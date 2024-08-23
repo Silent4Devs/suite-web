@@ -19,9 +19,10 @@
             <button id="btnGuardarResumen" class="mr-3 btn btn-sm btn-success">Guardar</button>
         </div>
     </div>
+    <livewire:training.training :id='$id'/>
+    {{-- ['$id' => $empleado->id] --}}
 
-
-    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
+    {{-- <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
         <span style="font-size: 17px; font-weight: bold;">
             Certificaciones</span>
     </div>
@@ -67,14 +68,10 @@
             <div class="mt-3 col-sm-12 form-group">
                 <label for="evidencia"><i class="fas fa-folder-open iconos-crear"></i>Adjuntar
                     Certificado</label>
-                {{-- <div class="custom-file">
-                    <input type="file" name="documento" class="form-control custom-file-input" id="evidencia">
-                    <span class="errors documento_error text-danger"></span>
-                </div> --}}
+
 
                 <div class="custom-file">
                     <input type="file" name="documento" id="evidencia" aria-describedby="inputGroupFileAddon01">
-                    {{-- <label class="custom-file-label" for="evidencia">Seleccionar archivo</label> --}}
                     <span class="errors documento_error text-danger"></span>
                 </div>
             </div>
@@ -105,10 +102,10 @@
         </table>
     </div>
 
-    <input type="hidden" name="certificado" value="" id="certificado">
+    <input type="hidden" name="certificado" value="" id="certificado"> --}}
 
 
-    <div class="mb-3 w-100 " style="border-bottom: solid 2px #345183;">
+    {{-- <div class="mb-3 w-100 " style="border-bottom: solid 2px #345183;">
         <span style="font-size: 17px; font-weight: bold;">
             Capacitaciones</span>
     </div>
@@ -151,13 +148,7 @@
                     name="fecha_fin" id="fecha_fin" value="{{ old('fecha_fin', '') }}">
                 <span class="errors fecha_fin_error text-danger"></span>
             </div>
-            {{-- <div class="form-group col-sm-3">
-                <label for="duracion"><i class="fas fa-clock iconos-crear"></i>Duración
-                    (Hrs)</label>
-                <input class="form-control {{ $errors->has('duracion') ? 'is-invalid' : '' }}" type="number"
-                    name="duracion" id="duracion" value="{{ old('duracion', '') }}">
-                <span class="errors duracion_error text-danger"></span>
-            </div> --}}
+
             <div class="mt-3 col-sm-12 form-group">
                 <label for="file"><i class="fas fa-folder-open iconos-crear"></i>Adjuntar
                     Archivo</label>
@@ -171,8 +162,7 @@
             <button id="btn-suscribir-curso" type="submit" class="mr-3 btn btn-sm btn-success"
                 style="float: right; position: relative;">
                 Agregar
-                {{-- <i id="suscribiendo" class="fas fa-cog fa-spin text-muted"
-    style="position: absolute; top: 3px;left: 8px;"></i> --}}
+
             </button>
         </div>
     </div>
@@ -197,7 +187,7 @@
     </div>
 
 
-    <input type="hidden" name="curso" value="" id="curso">
+    <input type="hidden" name="curso" value="" id="curso"> --}}
 
 
 
