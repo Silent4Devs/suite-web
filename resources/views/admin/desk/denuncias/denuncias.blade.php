@@ -327,7 +327,7 @@
                             success: function(response) {
 
                                 if (response.success) {
-                                    tabla_denuncias_desk.ajax.reload();
+                                    tabla_denuncias_desk.ajax.reload(null, false);
                                     Swal.fire(
                                         'Denuncia Archivada',
                                         '',

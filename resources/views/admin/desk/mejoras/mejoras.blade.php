@@ -327,16 +327,16 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
-                            type: "POST",
+                            type: "post",
                             url: url,
                             data: {
                                 _token: '{{ csrf_token() }}'
                             },
                             dataType: "json",
                             success: function(response) {
-                                console.log(response);
+
                                 if (response.success) {
-                                    tabla_mejoras_desk.ajax.reload();
+                                    tabla_mejoras_desk.ajax.reload(null,false);
                                     Swal.fire(
                                         'Mejora Archivada',
                                         '',

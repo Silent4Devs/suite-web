@@ -23,7 +23,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
-
+use Carbon\Carbon;
 class QuejasController extends Controller
 {
     public function quejas()
@@ -214,6 +214,8 @@ class QuejasController extends Controller
 
         $organizacion = Organizacion::first();
 
+        $fecha = $request->estatus === 'cancelado' ? Carbon::now()->format('Y-m-d H:i:s') : ($request->fecha_cierre ? Carbon::createFromFormat('d-m-Y, h:i:s a', $request->fecha_cierre, 'UTC')->format('Y-m-d H:i:s') : null);
+
         $quejas->update([
             'titulo' => $request->titulo,
             'estatus' => $request->estatus,
@@ -226,7 +228,7 @@ class QuejasController extends Controller
             'proceso_quejado' => $request->proceso_quejado,
             'externo_quejado' => $request->externo_quejado,
             'comentarios' => $request->comentarios,
-            'fecha_cierre' => $request->fecha_cierre,
+            'fecha_cierre' => $fecha,
 
         ]);
 
@@ -303,10 +305,7 @@ class QuejasController extends Controller
     {
 
         if ($request->ajax()) {
-            $queja = Quejas::findOrfail(intval($incidente));
-            $queja->update([
-                'archivado' => true,
-            ]);
+            Quejas::where('id', $incidente)->update(['archivado' => true]);
 
             return response()->json(['success' => true]);
         }
@@ -314,18 +313,14 @@ class QuejasController extends Controller
 
     public function archivoQueja()
     {
-        $quejas = Quejas::getAll()->where('archivado', true);
+        $quejas = Quejas::where('archivado', true)->get();
 
         return view('admin.desk.quejas.archivo', compact('quejas'));
     }
 
     public function recuperarArchivadoQueja($id)
     {
-        $queja = Quejas::find($id);
-
-        $queja->update([
-            'archivado' => false,
-        ]);
+        Mejoras::where('id', $id)->update(['archivado' => false]);
 
         return redirect()->route('admin.desk.index');
     }
