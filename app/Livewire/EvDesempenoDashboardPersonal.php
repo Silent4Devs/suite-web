@@ -680,7 +680,9 @@ class EvDesempenoDashboardPersonal extends Component
                 ]);
             }
             $this->dispatch('evaluadoresObjetivosModificados');
-            $evld_tabla = EvaluacionDesempeno::with('evaluados')->find($this->id_evaluacion);
+            // $evld_tabla = EvaluacionDesempeno::with('evaluados')->find($this->id_evaluacion);
+            $this->array_mod_evaluadores_objetivos = null;
+            $this->array_mod_evaluadores_competencias = null;
             $this->cargaDatos();
             $this->arreglosEvaluadores();
         }
@@ -740,7 +742,9 @@ class EvDesempenoDashboardPersonal extends Component
                 ]);
             }
             $this->dispatch('evaluadoresCompetenciasModificados');
-            $evld_tabla = EvaluacionDesempeno::with('evaluados')->find($this->id_evaluacion);
+            // $evld_tabla = EvaluacionDesempeno::with('evaluados')->find($this->id_evaluacion);
+            $this->array_mod_evaluadores_objetivos = null;
+            $this->array_mod_evaluadores_competencias = null;
             $this->cargaDatos();
             $this->arreglosEvaluadores();
         }

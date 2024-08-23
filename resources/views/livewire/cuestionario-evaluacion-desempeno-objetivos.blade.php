@@ -281,7 +281,7 @@
                                                             <div class="col-3">
                                                                 <a class="btn-link" data-toggle="modal"
                                                                     data-target="#modalArchivo"
-                                                                    wire:click="mostrarArchivo({{ $obj_evld->id }},{{ $evidencia['id'] }})">{{ $evidencia['nombre_archivo'] }}</a>
+                                                                    wire:click="mostrarArchivo({{ $evidencia['id_objetivo'] }},{{ $evidencia['id'] }})">{{ $evidencia['nombre_archivo'] }}</a>
                                                             </div>
                                                             <div class="col-8">
                                                                 <div class="form-group">

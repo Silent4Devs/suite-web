@@ -205,7 +205,7 @@
                                                             <label
                                                                 for="porcentaje_modificar_obj_evaluador_{{ $key_evaluador }}">Porcentaje</label>
                                                         </div>
-                                                        @if ($key_evaluador)
+                                                        @if ($key_evaluador > 0)
                                                             <div class="col-md-4">
                                                                 <button type="button" class="btn btn-primary"
                                                                     onclick="confirmDeleteEvaluadorObjetivos({{ $key }}, {{ $key_evaluador }})">

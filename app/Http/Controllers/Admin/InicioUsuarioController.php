@@ -135,14 +135,14 @@ class InicioUsuarioController extends Controller
                     $task->canAdd = $task->canAdd == 'true' ? true : false;
                     $task->canWrite = $task->canWrite == 'true' ? true : false;
                     $task->duration = intval($task->duration);
-                    if (! isset($task->progress) || empty($task->progress)) {
+                    if (!isset($task->progress) || empty($task->progress)) {
                         $task->progress = 0;
                     } else {
                         $task->progress = intval($task->progress);
                     }
                     $task->canDelete = $task->canDelete == 'true' ? true : false;
-                    isset($task->level) ? $task->level = intval($task->level) : $task->level = 0;
-                    isset($task->collapsed) ? $task->collapsed = $task->collapsed == 'true' ? true : false : $task->collapsed = false;
+                    isset($task->level) ? ($task->level = intval($task->level)) : ($task->level = 0);
+                    isset($task->collapsed) ? ($task->collapsed = $task->collapsed == 'true' ? true : false) : ($task->collapsed = false);
                     $task->canAddIssue = $task->canAddIssue == 'true' ? true : false;
                     $task->endIsMilestone = $task->endIsMilestone == 'true' ? true : false;
                     $task->startIsMilestone = $task->startIsMilestone == 'true' ? true : false;
@@ -185,7 +185,7 @@ class InicioUsuarioController extends Controller
             }
         }
 
-        $auditoria_internas = new AuditoriaInterna;
+        $auditoria_internas = new AuditoriaInterna();
         $recursos = collect();
         $mis_quejas = collect();
         $mis_quejas_count = 0;
@@ -199,16 +199,20 @@ class InicioUsuarioController extends Controller
         $solicitud_dayoff = 0;
         $solicitud_permiso = 0;
         $solicitudes_pendientes = 0;
-        $cacheKey = 'AuditoriaInterna:auditoria_internas_'.$usuario->id;
+        $cacheKey = 'AuditoriaInterna:auditoria_internas_' . $usuario->id;
         $auditoria_internas = Cache::remember($cacheKey, 3600 * 8, function () use ($empleado) {
             return AuditoriaInterna::where(function ($query) use ($empleado) {
-                $query->whereHas('equipo', function ($subquery) use ($empleado) {
-                    $subquery->where('auditoria_interno_empleado.empleado_id', $empleado->id);
-                })->orWhere('lider_id', $empleado->id);
-            })->distinct()->get();
+                $query
+                    ->whereHas('equipo', function ($subquery) use ($empleado) {
+                        $subquery->where('auditoria_interno_empleado.empleado_id', $empleado->id);
+                    })
+                    ->orWhere('lider_id', $empleado->id);
+            })
+                ->distinct()
+                ->get();
         });
 
-        $cacheKeyRecursos = 'Recursos:recursos_'.$usuario->id;
+        $cacheKeyRecursos = 'Recursos:recursos_' . $usuario->id;
         $recursos = Cache::remember($cacheKeyRecursos, 3600 * 8, function () use ($empleado) {
             return Recurso::whereHas('empleados', function ($query) use ($empleado) {
                 $query->where('empleados.id', $empleado->id);
@@ -231,58 +235,11 @@ class InicioUsuarioController extends Controller
         $supervisor = null;
         $mis_objetivos = collect();
 
-        //Evaluaciones desempeno
-        $redirigirEvaluacion = false;
-        $evDes = EvaluacionDesempeno::where('estatus', 1)->get();
-
-        $id_evaluado = null;
-        $id_periodo = null;
-        $id_evaluacion = null;
-
-        foreach ($evDes as $keyEv => $evD) {
-            $periodosEv = $evD->periodos->where('habilitado', true)->where('finalizado', false);
-
-            foreach ($periodosEv as $keyP => $p) {
-                $hoyContestarEvaluacion = $hoy->between($p->fecha_inicio, $p->fecha_fin);
-                if ($hoyContestarEvaluacion) {
-                    foreach ($evD->evaluados as $keyEval => $evaluado) {
-                        // $evaluado->nombres_evaluadores;
-                        $evaluador = in_array($empleado->id, $evaluado->nombres_evaluadores);
-                        if ($evaluador) {
-                            $redirigirEvaluacion = true;
-                            $id_evaluado = $evaluado->id;
-                            $id_periodo = $p->id;
-                            $id_evaluacion = $evD->id;
-                        }
-                    }
-                }
-            }
-        }
-
-        $mostrarCargaObjetivos = false;
-        $carga_objetivos_activo = PeriodoCargaObjetivos::first();
-
-        $permisos =  PermisosCargaObjetivos::get();
-
-        $fechaInicio = $carga_objetivos_activo->fecha_inicio ?? null;
-        $fechaFin = $carga_objetivos_activo->fecha_fin ?? null;
-
-        $hoyCargaObjetivos = $hoy->between($fechaInicio, $fechaFin);
-
-        $perfilAdministrador = $permisos->where('perfil', "Administrador")->first();
-        $perfilJefeInmediato = $permisos->where('perfil', "Jefe Inmediato")->first();
-        $perfilColaborador = $permisos->where('perfil', "Colaborador")->first();
-
-        if ($hoyCargaObjetivos && $perfilAdministrador->permisos_asignacion == true && $usuario->roles->contains('title', 'Admin')) {
-            $mostrarCargaObjetivos = true;
-        } elseif ($hoyCargaObjetivos && $perfilJefeInmediato->permisos_asignacion == true && $empleado->es_supervisor) {
-            $mostrarCargaObjetivos = true;
-        } elseif ($hoyCargaObjetivos && ($perfilColaborador->permisos_asignacion || $perfilColaborador->permiso_objetivos || $perfilColaborador->permiso_escalas)) {
-            $mostrarCargaObjetivos = true;
-        }
-
         if ($empleado) {
-            $revisiones = RevisionDocumento::with('documento')->where('empleado_id', $empleado->id)->where('archivado', 0)->get();
+            $revisiones = RevisionDocumento::with('documento')
+                ->where('empleado_id', $empleado->id)
+                ->where('archivado', 0)
+                ->get();
 
             $contador_revisiones = $revisiones->where('estatus', Documento::SOLICITUD_REVISION)->count();
             $mis_documentos = Documento::getWithMacroproceso($empleado->id);
@@ -291,25 +248,27 @@ class InicioUsuarioController extends Controller
             if ($last_evaluacion) {
                 $evaluaciones = EvaluadoEvaluador::whereHas('evaluacion', function ($q) use ($last_evaluacion) {
                     $q->where(function ($query) {
-                        $query->where('estatus', Evaluacion::ACTIVE)
-                            ->orWhere('estatus', Evaluacion::CLOSED);
+                        $query->where('estatus', Evaluacion::ACTIVE)->orWhere('estatus', Evaluacion::CLOSED);
                     })
                         ->where('fecha_inicio', '<=', Carbon::now())
                         // ->where('fecha_fin', '>', Carbon::now())
                         ->where('id', $last_evaluacion->id);
-                })->with('empleado_evaluado', 'evaluador')->where('evaluador_id', $empleado->id)
+                })
+                    ->with('empleado_evaluado', 'evaluador')
+                    ->where('evaluador_id', $empleado->id)
                     ->where('evaluado_id', '!=', $empleado->id)
                     ->where('evaluado', false)
                     ->get();
                 $mis_evaluaciones = EvaluadoEvaluador::whereHas('evaluacion', function ($q) use ($last_evaluacion) {
                     $q->where(function ($query) {
-                        $query->where('estatus', Evaluacion::ACTIVE)
-                            ->orWhere('estatus', Evaluacion::CLOSED);
+                        $query->where('estatus', Evaluacion::ACTIVE)->orWhere('estatus', Evaluacion::CLOSED);
                     })
                         ->where('fecha_inicio', '<=', Carbon::now())
                         // ->where('fecha_fin', '>', Carbon::now())
                         ->where('id', $last_evaluacion->id);
-                })->with('empleado_evaluado', 'evaluador')->where('evaluador_id', $empleado->id)
+                })
+                    ->with('empleado_evaluado', 'evaluador')
+                    ->where('evaluador_id', $empleado->id)
                     ->where('evaluado_id', $empleado->id)
                     ->first();
             }
@@ -320,7 +279,9 @@ class InicioUsuarioController extends Controller
                         ->where('fecha_inicio', '<=', Carbon::now())
                         ->where('fecha_fin', '>', Carbon::now())
                         ->where('id', $last_evaluacion->id);
-                })->with('empleado_evaluado', 'evaluador')->where('evaluador_id', $empleado->id)
+                })
+                    ->with('empleado_evaluado', 'evaluador')
+                    ->where('evaluador_id', $empleado->id)
                     ->where('evaluado_id', '!=', $empleado->id)
                     ->where('evaluado', false)
                     ->get();
@@ -329,7 +290,9 @@ class InicioUsuarioController extends Controller
                         ->where('fecha_inicio', '<=', Carbon::now())
                         ->where('fecha_fin', '>', Carbon::now())
                         ->where('id', $last_evaluacion->id);
-                })->with('empleado_evaluado', 'evaluador')->where('evaluador_id', $empleado->id)
+                })
+                    ->with('empleado_evaluado', 'evaluador')
+                    ->where('evaluador_id', $empleado->id)
                     ->where('evaluado_id', '!=', $empleado->id)
                     ->first();
             }
@@ -350,8 +313,10 @@ class InicioUsuarioController extends Controller
 
         $panel_rules = PanelInicioRule::getAll();
 
-        if (! is_null($empleado)) {
-            $activos = Activo::select('*')->where('id_responsable', '=', $empleado->id)->get();
+        if (!is_null($empleado)) {
+            $activos = Activo::select('*')
+                ->where('id_responsable', '=', $empleado->id)
+                ->get();
             if ($empleado->cumpleaños) {
                 $cumpleaños_usuario = Carbon::parse($empleado->cumpleaños)->format('d-m');
             } else {
@@ -376,14 +341,16 @@ class InicioUsuarioController extends Controller
         $competencias = collect();
 
         if ($empleado) {
-            $competencias = Empleado::with(
-                ['puestoRelacionado' => function ($q) {
-                    $q->with(['competencias' => function ($q) {
-                        $q->with('competencia');
-                    }]);
-                }]
-            )->find($empleado->id)->puestoRelacionado;
-            $competencias = ! is_null($competencias) ? $competencias->competencias : collect();
+            $competencias = Empleado::with([
+                'puestoRelacionado' => function ($q) {
+                    $q->with([
+                        'competencias' => function ($q) {
+                            $q->with('competencia');
+                        },
+                    ]);
+                },
+            ])->find($empleado->id)->puestoRelacionado;
+            $competencias = !is_null($competencias) ? $competencias->competencias : collect();
 
             $quejas = Quejas::getAll()->where('empleado_quejo_id', $empleado->id);
             $denuncias = Denuncias::getAll()->where('empleado_denuncio_id', $empleado->id);
@@ -399,67 +366,164 @@ class InicioUsuarioController extends Controller
             $mis_sugerencias = $sugerencias;
             $mis_sugerencias_count = $sugerencias->count();
 
-            $solicitud_vacacion = SolicitudVacaciones::where('autoriza', $empleado->id)->where('aprobacion', 1)->count();
-            $solicitud_dayoff = SolicitudDayOff::where('autoriza', $empleado->id)->where('aprobacion', 1)->count();
-            $solicitud_permiso = SolicitudPermisoGoceSueldo::where('autoriza', $empleado->id)->where('aprobacion', 1)->count();
+            $solicitud_vacacion = SolicitudVacaciones::where('autoriza', $empleado->id)
+                ->where('aprobacion', 1)
+                ->count();
+            $solicitud_dayoff = SolicitudDayOff::where('autoriza', $empleado->id)
+                ->where('aprobacion', 1)
+                ->count();
+            $solicitud_permiso = SolicitudPermisoGoceSueldo::where('autoriza', $empleado->id)
+                ->where('aprobacion', 1)
+                ->count();
             $solicitudes_pendientes = $solicitud_vacacion + $solicitud_dayoff + $solicitud_permiso;
             // $solicitudes_pendientes = 1;
         }
 
-        return view('admin.inicioUsuario.index', compact(
-            'empleado',
-            'solicitudes_pendientes',
-            'usuario',
-            'competencias',
-            'recursos',
-            'actividades',
-            'documentos_publicados',
-            'auditorias_anual',
-            'revisiones',
-            'mis_documentos',
-            'contador_actividades',
-            'contador_revisiones',
-            'contador_recursos',
-            'auditoria_internas',
-            'evaluaciones',
-            'oficiales',
-            'mis_evaluaciones',
-            'como_evaluador',
-            'equipo_a_cargo',
-            'equipo_trabajo',
-            'supervisor',
-            'mis_objetivos',
-            'last_evaluacion',
-            'panel_rules',
-            'activos',
-            'eventos',
-            'cumpleaños_usuario',
-            'cumpleaños_felicitados_like_contador',
-            'cumpleaños_felicitados_comentarios',
-            'cumples_aniversarios',
-            'cumpleaños_felicitados_like_usuarios',
-            'esLider',
-            'organizacion',
-            'usuarioVinculadoConEmpleado',
-            'mis_quejas',
-            'mis_quejas_count',
-            'mis_denuncias',
-            'mis_denuncias_count',
-            'mis_propuestas',
-            'mis_propuestas_count',
-            'mis_sugerencias',
-            'mis_sugerencias_count',
-            'existsEmpleado',
-            'existsOrganizacion',
-            'existsVinculoEmpleadoAdmin',
-            'existsAreas',
-            'existsPuesto',
-            'redirigirEvaluacion',
-            'id_periodo',
-            'id_evaluacion',
-            'id_evaluado',
-            'mostrarCargaObjetivos',
-        ));
+        $redirigirEvaluacion = false;
+
+        try {
+            //Evaluaciones desempeno
+            $evDes = EvaluacionDesempeno::where('estatus', 1)->get();
+
+            $id_evaluado = null;
+            $id_periodo = null;
+            $id_evaluacion = null;
+
+            foreach ($evDes as $keyEv => $evD) {
+                $periodosEv = $evD->periodos->where('habilitado', true)->where('finalizado', false);
+
+                $areasEv = $evD->areas_evaluacion;
+
+                foreach ($periodosEv as $keyP => $p) {
+                    $hoyContestarEvaluacion = $hoy->between($p->fecha_inicio, $p->fecha_fin);
+                    if ($hoyContestarEvaluacion) {
+                        foreach ($evD->evaluados as $keyEval => $evaluado) {
+                            // $evaluado->nombres_evaluadores;
+                            $evaluador = in_array($empleado->id, $evaluado->nombres_evaluadores);
+                            if ($evaluador) {
+                                $redirigirEvaluacion = true;
+                                $id_evaluado = $evaluado->id;
+                                $id_periodo = $p->id;
+                                $id_evaluacion = $evD->id;
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+
+        $mostrarCargaObjetivos = false;
+
+        try {
+            //code...
+            //Carga de objetivos propios
+            $carga_objetivos_activo = PeriodoCargaObjetivos::first();
+
+            $permisos = PermisosCargaObjetivos::get();
+
+            $fechaInicio = $carga_objetivos_activo->fecha_inicio;
+            $fechaFin = $carga_objetivos_activo->fecha_fin;
+
+            $hoyCargaObjetivos = $hoy->between($fechaInicio, $fechaFin);
+
+            $perfilAdministrador = $permisos->where('perfil', 'Administrador')->first();
+            $perfilJefeInmediato = $permisos->where('perfil', 'Jefe Inmediato')->first();
+            $perfilColaborador = $permisos->where('perfil', 'Colaborador')->first();
+
+            if ($hoyCargaObjetivos && $perfilAdministrador->permisos_asignacion == true && $usuario->roles->contains('title', 'Admin')) {
+                $mostrarCargaObjetivos = true;
+            } elseif ($hoyCargaObjetivos && $perfilJefeInmediato->permisos_asignacion == true && $empleado->es_supervisor) {
+                $mostrarCargaObjetivos = true;
+            } elseif ($hoyCargaObjetivos && ($perfilColaborador->permisos_asignacion || $perfilColaborador->permiso_objetivos || $perfilColaborador->permiso_escalas)) {
+                $mostrarCargaObjetivos = true;
+            }
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+
+        $mostrarCargaObjetivosArea = false;
+
+        try {
+            //code...
+            //Carga de objetivos area
+            $carga_objetivos_activo_area = PeriodoCargaObjetivos::first();
+
+            $permisosArea = PermisosCargaObjetivos::get();
+
+            $fechaInicioArea = $carga_objetivos_activo_area->fecha_inicio;
+            $fechaFinArea = $carga_objetivos_activo_area->fecha_fin;
+
+            $hoyCargaObjetivosArea = $hoy->between($fechaInicioArea, $fechaFinArea);
+
+            $perfilJefeInmediatoArea = $permisosArea->where('perfil', 'Jefe Inmediato')->first();
+
+            if ($hoyCargaObjetivosArea && $perfilJefeInmediatoArea->permisos_asignacion == true && $empleado->es_supervisor) {
+                $mostrarCargaObjetivosArea = true;
+            }
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+
+        return view(
+            'admin.inicioUsuario.index',
+            compact(
+                'empleado',
+                'solicitudes_pendientes',
+                'usuario',
+                'competencias',
+                'recursos',
+                'actividades',
+                'documentos_publicados',
+                'auditorias_anual',
+                'revisiones',
+                'mis_documentos',
+                'contador_actividades',
+                'contador_revisiones',
+                'contador_recursos',
+                'auditoria_internas',
+                'evaluaciones',
+                'oficiales',
+                'mis_evaluaciones',
+                'como_evaluador',
+                'equipo_a_cargo',
+                'equipo_trabajo',
+                'supervisor',
+                'mis_objetivos',
+                'last_evaluacion',
+                'panel_rules',
+                'activos',
+                'eventos',
+                'cumpleaños_usuario',
+                'cumpleaños_felicitados_like_contador',
+                'cumpleaños_felicitados_comentarios',
+                'cumples_aniversarios',
+                'cumpleaños_felicitados_like_usuarios',
+                'esLider',
+                'organizacion',
+                'usuarioVinculadoConEmpleado',
+                'mis_quejas',
+                'mis_quejas_count',
+                'mis_denuncias',
+                'mis_denuncias_count',
+                'mis_propuestas',
+                'mis_propuestas_count',
+                'mis_sugerencias',
+                'mis_sugerencias_count',
+                'existsEmpleado',
+                'existsOrganizacion',
+                'existsVinculoEmpleadoAdmin',
+                'existsAreas',
+                'existsPuesto',
+                'redirigirEvaluacion',
+                'id_periodo',
+                'id_evaluacion',
+                'id_evaluado',
+                'mostrarCargaObjetivos',
+                'mostrarCargaObjetivosArea',
+            ),
+        );
     }
 
     public function obtenerEquipo($childrens)
@@ -510,15 +574,18 @@ class InicioUsuarioController extends Controller
     {
         abort_if(Gate::denies('mi_perfil_mis_reportes_realizar_reporte_de_queja'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $request->validate([
-            'titulo' => 'required|max:255',
-            'ubicacion' => 'required|max:255',
-            'descripcion' => 'required|max:550',
-        ], [
-            'titulo.max' => 'El campo título no puede exceder los 255 caracteres.',
-            'ubicacion.max' => 'El campo ubicación no puede exceder los 255 caracteres.',
-            'descripcion.max' => 'El campo descripción no puede exceder los 550 caracteres.',
-        ]);
+        $request->validate(
+            [
+                'titulo' => 'required|max:255',
+                'ubicacion' => 'required|max:255',
+                'descripcion' => 'required|max:550',
+            ],
+            [
+                'titulo.max' => 'El campo título no puede exceder los 255 caracteres.',
+                'ubicacion.max' => 'El campo ubicación no puede exceder los 255 caracteres.',
+                'descripcion.max' => 'El campo descripción no puede exceder los 550 caracteres.',
+            ],
+        );
 
         $quejas = Quejas::create([
             'anonimo' => $request->anonimo,
@@ -544,13 +611,13 @@ class InicioUsuarioController extends Controller
 
         $image = null;
 
-        if ($request->file('evidencia') != null or ! empty($request->file('evidencia'))) {
+        if ($request->file('evidencia') != null or !empty($request->file('evidencia'))) {
             foreach ($request->file('evidencia') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
+                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
 
-                $new_name_image = 'Queja_file_'.$quejas->id.'_'.$name_image.'.'.$extension;
+                $new_name_image = 'Queja_file_' . $quejas->id . '_' . $name_image . '.' . $extension;
 
                 $route = 'public/evidencias_quejas';
 
@@ -582,13 +649,16 @@ class InicioUsuarioController extends Controller
     public function storeDenuncias(Request $request)
     {
         abort_if(Gate::denies('mi_perfil_mis_reportes_realizar_reporte_de_denuncia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $request->validate([
-            'ubicacion' => 'required|max:255',
-            'descripcion' => 'required|max:550',
-        ], [
-            'descripcion.max' => 'El campo título no puede exceder los 550 caracteres.',
-            'ubicacion.max' => 'El campo descripción no puede exceder los 255 caracteres.',
-        ]);
+        $request->validate(
+            [
+                'ubicacion' => 'required|max:255',
+                'descripcion' => 'required|max:550',
+            ],
+            [
+                'descripcion.max' => 'El campo título no puede exceder los 550 caracteres.',
+                'ubicacion.max' => 'El campo descripción no puede exceder los 255 caracteres.',
+            ],
+        );
 
         $denuncias = Denuncias::create([
             'anonimo' => $request->anonimo,
@@ -609,13 +679,13 @@ class InicioUsuarioController extends Controller
 
         $image = null;
 
-        if ($request->file('evidencia') != null or ! empty($request->file('evidencia'))) {
+        if ($request->file('evidencia') != null or !empty($request->file('evidencia'))) {
             foreach ($request->file('evidencia') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
+                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
 
-                $new_name_image = 'Denuncia_file_'.$denuncias->id.'_'.$name_image.'.'.$extension;
+                $new_name_image = 'Denuncia_file_' . $denuncias->id . '_' . $name_image . '.' . $extension;
 
                 $route = 'public/evidencias_denuncias';
 
@@ -694,13 +764,16 @@ class InicioUsuarioController extends Controller
     {
         abort_if(Gate::denies('mi_perfil_mis_reportes_realizar_reporte_de_sugerencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $request->validate([
-            'titulo' => 'required|max:255',
-            'descripcion' => 'required|max:550',
-        ], [
-            'titulo.max' => 'El campo título no puede exceder los 255 caracteres.',
-            'descripcion.max' => 'El campo descripción no puede exceder los 550 caracteres.',
-        ]);
+        $request->validate(
+            [
+                'titulo' => 'required|max:255',
+                'descripcion' => 'required|max:550',
+            ],
+            [
+                'titulo.max' => 'El campo título no puede exceder los 255 caracteres.',
+                'descripcion.max' => 'El campo descripción no puede exceder los 550 caracteres.',
+            ],
+        );
 
         $sugerencias = Sugerencias::create([
             'empleado_sugirio_id' => User::getCurrentUser()->empleado->id,
@@ -773,7 +846,6 @@ class InicioUsuarioController extends Controller
         if ($incidente_procedente) {
             $incidentes_seguridad->update([
                 'estatus' => 'Sin atender',
-
             ]);
         } else {
             $incidentes_seguridad->update([
@@ -788,13 +860,13 @@ class InicioUsuarioController extends Controller
 
         $image = null;
 
-        if ($request->file('evidencia') != null or ! empty($request->file('evidencia'))) {
+        if ($request->file('evidencia') != null or !empty($request->file('evidencia'))) {
             foreach ($request->file('evidencia') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
+                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
 
-                $new_name_image = 'Seguridad_file_'.$incidentes_seguridad->id.'_'.$name_image.'.'.$extension;
+                $new_name_image = 'Seguridad_file_' . $incidentes_seguridad->id . '_' . $name_image . '.' . $extension;
 
                 $route = 'public/evidencias_seguridad';
 
@@ -812,7 +884,9 @@ class InicioUsuarioController extends Controller
         return redirect()->route('admin.desk.index')->with('success', 'Reporte generado');
     }
 
-    public function evidenciaSeguridad() {}
+    public function evidenciaSeguridad()
+    {
+    }
 
     public function riesgos()
     {
@@ -855,13 +929,13 @@ class InicioUsuarioController extends Controller
 
         $image = null;
 
-        if ($request->file('evidencia') != null or ! empty($request->file('evidencia'))) {
+        if ($request->file('evidencia') != null or !empty($request->file('evidencia'))) {
             foreach ($request->file('evidencia') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
+                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
 
-                $new_name_image = 'Riesgo_file_'.$riesgos->id.'_'.$name_image.'.'.$extension;
+                $new_name_image = 'Riesgo_file_' . $riesgos->id . '_' . $name_image . '.' . $extension;
 
                 $route = 'public/evidencias_riesgos';
 
@@ -957,8 +1031,8 @@ class InicioUsuarioController extends Controller
                     $task->duration = intval($task->duration);
                     $task->progress = intval($task->progress);
                     $task->canDelete = $task->canDelete == 'true' ? true : false;
-                    isset($task->level) ? $task->level = intval($task->level) : $task->level = 0;
-                    isset($task->collapsed) ? $task->collapsed = $task->collapsed == 'true' ? true : false : $task->collapsed = false;
+                    isset($task->level) ? ($task->level = intval($task->level)) : ($task->level = 0);
+                    isset($task->collapsed) ? ($task->collapsed = $task->collapsed == 'true' ? true : false) : ($task->collapsed = false);
                     $task->canAddIssue = $task->canAddIssue == 'true' ? true : false;
                     $task->endIsMilestone = $task->endIsMilestone == 'true' ? true : false;
                     $task->startIsMilestone = $task->startIsMilestone == 'true' ? true : false;
@@ -1111,9 +1185,14 @@ class InicioUsuarioController extends Controller
         $lista_docs_model = ListaDocumentoEmpleado::getAll();
         $lista_docs = collect();
         foreach ($lista_docs_model as $doc) {
-            $documentos_empleado = $evidendiasdocumentos->where('empleado_id', $id_empleado)->where('lista_documentos_empleados_id', $doc->id)->first();
+            $documentos_empleado = $evidendiasdocumentos
+                ->where('empleado_id', $id_empleado)
+                ->where('lista_documentos_empleados_id', $doc->id)
+                ->first();
             if ($documentos_empleado) {
-                $documento = EvidenciaDocumentoEmpleadoArchivo::where('evidencias_documentos_empleados_id', $documentos_empleado->id)->where('archivado', false)->first();
+                $documento = EvidenciaDocumentoEmpleadoArchivo::where('evidencias_documentos_empleados_id', $documentos_empleado->id)
+                    ->where('archivado', false)
+                    ->first();
                 if ($documento) {
                     $doc_viejo = $documento->ruta_documento;
                     $nombre_doc = $documento->documento;
@@ -1126,14 +1205,16 @@ class InicioUsuarioController extends Controller
                 $nombre_doc = null;
             }
 
-            $lista_docs->push((object) [
-                'id' => $doc->id,
-                'documento' => $doc->documento,
-                'tipo' => $doc->tipo,
-                'empleado' => $documentos_empleado,
-                'ruta_documento' => $doc_viejo,
-                'nombre_doc' => $nombre_doc,
-            ]);
+            $lista_docs->push(
+                (object) [
+                    'id' => $doc->id,
+                    'documento' => $doc->documento,
+                    'tipo' => $doc->tipo,
+                    'empleado' => $documentos_empleado,
+                    'ruta_documento' => $doc_viejo,
+                    'nombre_doc' => $nombre_doc,
+                ],
+            );
         }
 
         // dd($lista_docs);
@@ -1145,13 +1226,15 @@ class InicioUsuarioController extends Controller
     {
         // dd($request->all());
         if ($request->name == 'file') {
-            $fileName = time().$request->file('value')->getClientOriginalName();
+            $fileName = time() . $request->file('value')->getClientOriginalName();
             // dd($request->file('value'));
             $empleado = Empleado::getAll()->find($request->empleadoId);
-            $request->file('value')->storeAs('public/expedientes/'.Str::slug($empleado->name), $fileName);
+            $request->file('value')->storeAs('public/expedientes/' . Str::slug($empleado->name), $fileName);
             $expediente = EvidenciasDocumentosEmpleados::updateOrCreate(['empleado_id' => $request->empleadoId, 'lista_documentos_empleados_id' => $request->documentoId], [$request->name => $request->value]);
 
-            $doc_viejo = EvidenciaDocumentoEmpleadoArchivo::where('evidencias_documentos_empleados_id', $expediente->id)->where('archivado', false)->first();
+            $doc_viejo = EvidenciaDocumentoEmpleadoArchivo::where('evidencias_documentos_empleados_id', $expediente->id)
+                ->where('archivado', false)
+                ->first();
             if ($doc_viejo) {
                 $doc_viejo->update([
                     'archivado' => true,

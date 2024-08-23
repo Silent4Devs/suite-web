@@ -441,8 +441,11 @@
             // Extract keys (years) and values (data points)
             const anos = Object.keys(data);
             const objetivos = anos.map(year => data[year]['objetivos']);
+            const colorObjetivos = anos.map(year => data[year]['colorObjetivos']);
             const competencias = anos.map(year => data[year]['competencias']);
+            const colorCompetencias = anos.map(year => data[year]['colorCompetencias']);
             const general = anos.map(year => data[year]['general']);
+            const colorGeneral = anos.map(year => data[year]['colorGeneral']);
 
             // Construct datasets based on boolean values
             const datasets = [];
@@ -451,6 +454,7 @@
                 datasets.push({
                     label: 'Objetivos',
                     data: objetivos,
+                    backgroundColor: colorObjetivos,
                     borderWidth: 1
                 });
             }
@@ -459,6 +463,7 @@
                 datasets.push({
                     label: 'Competencias',
                     data: competencias,
+                    backgroundColor: colorCompetencias,
                     borderWidth: 1
                 });
             }
@@ -467,6 +472,7 @@
                 datasets.push({
                     label: 'General',
                     data: general,
+                    backgroundColor: colorGeneral,
                     borderWidth: 1
                 });
             }
@@ -499,27 +505,34 @@
                 const datasets = [];
                 if (datosAnuales.filtro_objetivos_anual) {
                     const objetivosAnual = anosAnual.map(ano => datosAnuales.data[ano].objetivos);
+                    const colorObjetivosAnual = anosAnual.map(ano => datosAnuales.data[ano].colorObjetivos);
                     datasets.push({
                         label: 'Objetivos',
                         data: objetivosAnual,
+                        backgroundColor: colorObjetivosAnual,
                         borderWidth: 1
                     });
                 }
 
                 if (datosAnuales.filtro_competencias_anual) {
                     const competenciasAnual = anosAnual.map(ano => datosAnuales.data[ano].competencias);
+                    const colorCompetenciasAnual = anosAnual.map(ano => datosAnuales.data[ano]
+                        .colorCompetencias);
                     datasets.push({
                         label: 'Competencias',
                         data: competenciasAnual,
+                        backgroundColor: colorCompetenciasAnual,
                         borderWidth: 1
                     });
                 }
 
                 if (datosAnuales.filtro_general_anual) {
                     const generalAnual = anosAnual.map(ano => datosAnuales.data[ano].general);
+                    const colorGeneralAnual = anosAnual.map(ano => datosAnuales.data[ano].colorGeneral);
                     datasets.push({
                         label: 'General',
                         data: generalAnual,
+                        backgroundColor: colorGeneralAnual,
                         borderWidth: 1
                     });
                 }
@@ -597,33 +610,33 @@
                 const datasets = [];
                 if (datosMensuales.filtro_objetivos_mensual) {
                     const objetivosMensual = datosMes?.objetivos || 0;
+                    const colorObjetivosMensual = datosMes?.colorObjetivos || 0;
                     datasets.push({
                         label: 'Objetivos',
                         data: [objetivosMensual],
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: colorObjetivosMensual,
                         borderWidth: 1
                     });
                 }
 
                 if (datosMensuales.filtro_competencias_mensual) {
                     const competenciasMensual = datosMes?.competencias || 0;
+                    const colorCompetenciasMensual = datosMes?.colorCompetencias || 0;
                     datasets.push({
                         label: 'Competencias',
                         data: [competenciasMensual],
-                        backgroundColor: 'rgba(153, 102, 255, 0.2)',
-                        borderColor: 'rgba(153, 102, 255, 1)',
+                        backgroundColor: colorCompetenciasMensual,
                         borderWidth: 1
                     });
                 }
 
                 if (datosMensuales.filtro_general_mensual) {
                     const generalMensual = datosMes?.general || 0;
+                    const colorGeneralMensual = datosMes?.colorGeneral || 0;
                     datasets.push({
                         label: 'General',
                         data: [generalMensual],
-                        backgroundColor: 'rgba(255, 159, 64, 0.2)',
-                        borderColor: 'rgba(255, 159, 64, 1)',
+                        backgroundColor: colorGeneralMensual,
                         borderWidth: 1
                     });
                 }
