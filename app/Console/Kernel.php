@@ -61,7 +61,7 @@ class Kernel extends ConsoleKernel
             ->sentryMonitor();
 
         //dump automatico de base de datos
-        $schedule->command('php artisan snapshot:cleanup --keep=15')
+        $schedule->command('php artisan snapshot:cleanup --keep=7')
             ->timezone('America/Mexico_City')
             //->days([2, 5])
             ->daily()
