@@ -786,12 +786,22 @@
         </div>
     </div>
     @section('scripts')
+        <script>
+            function generarColorAleatorio() {
+                let color = '#' + Math.floor(Math.random() * 16777215).toString(16).toUpperCase();
+                while (color.length < 7) {
+                    color = color + '0';
+                }
+                return color;
+            }
+        </script>
+
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
         @if ($evaluacion->activar_objetivos)
             {{-- Codigo primera vez que carga --}}
             <script>
-                document.addEventListener('livewire:init', function() {
+                document.addEventListener('livewire:initialized', function() {
 
                     const areas = @json($resArea['nombres'][$periodo_seleccionado]);
                     const data = @json($resArea['resultados'][$periodo_seleccionado]);
@@ -803,6 +813,7 @@
                             labels: areas,
                             datasets: [{
                                 label: 'Porcentaje de cumplimiento',
+                                backgroundColor: '#3EAFBC',
                                 data: data,
                                 borderWidth: 1
                             }]
@@ -820,16 +831,21 @@
             </script>
             {{-- Codigo cambio de filtros --}}
             <script>
-                document.addEventListener('livewire:init', function() {
-                    Livewire.on('objetivosArea', (objArea) => {
-
+                document.addEventListener('livewire:initialized', function() {
+                    @this.on('objetivosArea', (objAreaWrapper) => {
+                        const objArea = objAreaWrapper.objArea; // Acceder al objeto correcto
+                        console.log('Evento recibido:', objArea);
+                        console.log('Paso 1: Remover canvas existente');
                         document.getElementById('resultadosxarea').remove();
+
+                        console.log('Paso 2: Crear nuevo canvas');
                         let canvas = document.createElement("canvas");
                         canvas.id = "resultadosxarea";
                         canvas.style.width = '100%';
                         canvas.style.height = '100%';
                         document.getElementById("contenedor-principal").appendChild(canvas);
 
+                        console.log('Paso 3: Crear nueva gráfica', objArea.labels, objArea.data);
                         let grafica_objetivos_area = new Chart(document.getElementById('resultadosxarea'), {
                             type: 'bar',
                             data: {
@@ -837,6 +853,7 @@
                                 datasets: [{
                                     label: 'Porcentaje de cumplimiento',
                                     data: objArea.data,
+                                    backgroundColor: '#3EAFBC',
                                     borderWidth: 1
                                 }]
                             },
@@ -848,16 +865,18 @@
                                 }
                             }
                         });
+
+                        console.log('Gráfica creada con éxito');
                     });
                 });
             </script>
 
             <script>
-                document.addEventListener('livewire:init', function() {
+                document.addEventListener('livewire:initialized', function() {
 
                     const tipos = @json($resObj['nombres'][$periodo_seleccionado]);
                     const resultados = @json($resObj['resultados'][$periodo_seleccionado]);
-                    console.log(tipos, resultados);
+
                     var ctx2 = document.getElementById('cumplimientoObjetivos').getContext('2d');
                     ChartCO = new Chart(ctx2, {
                         type: 'bar',
@@ -866,6 +885,7 @@
                             datasets: [{
                                 label: 'Porcentaje de cumplimiento',
                                 data: resultados,
+                                backgroundColor: generarColorAleatorio(),
                                 borderWidth: 1
                             }]
                         },
@@ -881,9 +901,9 @@
             </script>
 
             <script>
-                document.addEventListener('livewire:init', function() {
-                    Livewire.on('cumplimientoObj', (cumpObj) => {
-
+                document.addEventListener('livewire:initialized', function() {
+                    @this.on('cumplimientoObj', (cumpObjWrapper) => {
+                        const cumpObj = cumpObjWrapper.cumpObj;
                         document.getElementById('cumplimientoObjetivos').remove();
                         let canvas = document.createElement("canvas");
                         canvas.id = "cumplimientoObjetivos";
@@ -898,6 +918,7 @@
                                 datasets: [{
                                     label: 'Porcentaje de cumplimiento',
                                     data: cumpObj.data,
+                                    backgroundColor: generarColorAleatorio(),
                                     borderWidth: 1
                                 }]
                             },
@@ -914,7 +935,7 @@
             </script>
 
             <script>
-                document.addEventListener('livewire:init', function() {
+                document.addEventListener('livewire:initialized', function() {
 
                     const escalas = @json($escalas['nombres'][$periodo_seleccionado]);
                     const colores = @json($escalas['colores'][$periodo_seleccionado]);
@@ -944,8 +965,9 @@
             </script>
 
             <script>
-                document.addEventListener('livewire:init', function() {
-                    Livewire.on('escalasObj', (escObj) => {
+                document.addEventListener('livewire:initialized', function() {
+                    @this.on('escalasObj', (escObjWrapper) => {
+                        const escObj = escObjWrapper.escObj;
 
                         document.getElementById('escalas').remove();
                         let canvas = document.createElement("canvas");
@@ -980,11 +1002,11 @@
 
         @if ($evaluacion->activar_competencias)
             <script>
-                document.addEventListener('livewire:init', function() {
+                document.addEventListener('livewire:initialized', function() {
 
                     const competencias = @json($resComp['nombres'][$periodo_seleccionado]);
                     const resultados = @json($resComp['resultados'][$periodo_seleccionado]);
-                    console.log(competencias, resultados);
+
                     var ctx4 = document.getElementById('cumplimientoCompetencias').getContext('2d');
                     ChartCO = new Chart(ctx4, {
                         type: 'bar',
@@ -993,6 +1015,7 @@
                             datasets: [{
                                 label: 'Porcentaje de cumplimiento',
                                 data: resultados,
+                                backgroundColor: '#BB68A8', // Color de las barras
                                 borderWidth: 1
                             }]
                         },
@@ -1008,11 +1031,9 @@
             </script>
 
             <script>
-                document.addEventListener('livewire:init', function() {
-                    Livewire.on('cumplimientoComp', (cumpComp) => {
-
-                        console.log(cumpComp);
-
+                document.addEventListener('livewire:initialized', function() {
+                    @this.on('cumplimientoComp', (cumpCompWrapper) => {
+                        const cumpComp = cumpCompWrapper.cumpComp;
                         document.getElementById('cumplimientoCompetencias').remove();
                         let canvas = document.createElement("canvas");
                         canvas.id = "cumplimientoCompetencias";
@@ -1028,6 +1049,7 @@
                                 datasets: [{
                                     label: 'Porcentaje de cumplimiento',
                                     data: cumpComp.data,
+                                    backgroundColor: '#BB68A8', // Color de las barras
                                     borderWidth: 1
                                 }]
                             },

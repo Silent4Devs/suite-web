@@ -1,4 +1,4 @@
-FROM php:8.3-alpine
+FROM php:8.2-fpm-alpine
 
 # Add docker-php-extension-installer script
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
@@ -56,17 +56,24 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
     excimer \
     pcntl \
     posix \
-    amqp
+    amqp \
+    ftp
 
-COPY . /var/www
-#COPY .env.example /var/www/.env
+# Enable phpredis extension
+#RUN echo "extension=redis.so" > /usr/local/etc/php/conf.d/docker-php-ext-redis.ini
 
-WORKDIR /var/www
+# Copy custom php.ini
+COPY php.ini /usr/local/etc/php/php.ini
 
-RUN apk add jq
+# Copy custom www.conf
+COPY www.conf /usr/local/etc/php-fpm.d/www.conf
 
-RUN wget -O/usr/local/bin/frankenphp $(wget -O- https://api.github.com/repos/dunglas/frankenphp/releases/latest | jq '.assets[] | select(.name=="frankenphp-linux-x86_64") | .browser_download_url' -r) && chmod +x /usr/local/bin/frankenphp
+RUN chown -R www-data:www-data /var/www \
+    && chmod 755 -R /var/www
 
-RUN composer install --no-dev
+# Install npm
+RUN npm install -g npm@latest
 
-ENTRYPOINT ["php", "artisan", "octane:start", "--server=frankenphp", "--port=9804", "--workers=16", "--host=0.0.0.0"]
+# Healthcheck
+HEALTHCHECK --interval=15m --timeout=3s \
+    CMD curl --fail http://localhost/ || exit 1

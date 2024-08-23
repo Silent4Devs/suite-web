@@ -2,8 +2,8 @@
 
 namespace App\Logging;
 
-use Monolog\Logger;
 use Monolog\Handler\SocketHandler;
+use Monolog\Logger;
 
 class CreateLogstashLogger
 {
@@ -11,6 +11,7 @@ class CreateLogstashLogger
     {
         $log = new Logger('logstash');
         $log->pushHandler(new SocketHandler('tcp://localhost:5044', Logger::DEBUG));
+
         return $log;
     }
 }

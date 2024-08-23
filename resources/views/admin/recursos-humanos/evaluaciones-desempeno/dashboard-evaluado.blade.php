@@ -4,7 +4,6 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/dashboardPersonal') }}{{ config('app.cssVersion') }}">
 @endsection
 @section('content')
-    {{-- {{ Breadcrumbs::render('capital-humano') }} --}}
     @livewire('ev-desempeno-dashboard-personal', ['id_evaluacion' => $id_evaluacion, 'id_evaluado' => $id_evaluado])
 @endsection
 

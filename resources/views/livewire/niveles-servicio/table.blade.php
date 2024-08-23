@@ -156,7 +156,7 @@
                             </td>
                             <td>
 
-                                <button wire:click="$dispatch('triggerDeleteNiveles',{{ $tem->id }})" class="btn red">
+                                <button wire:click="destroy({{ $tem->id }})" class="btn red">
                                     <i class="material-icons">delete</i>
                                 </button>
 

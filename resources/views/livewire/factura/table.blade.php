@@ -200,7 +200,7 @@
                                 </a>
                             </td>
                             <td>
-                                <button wire:click="$dispatch('triggerDeleteFactura',{{ $factura->id }})"
+                                <button wire:click="destroy({{ $factura->id }})"
                                     class="btn red">
                                     <i class="material-icons">delete</i>
                                 </button>

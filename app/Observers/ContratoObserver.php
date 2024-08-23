@@ -37,6 +37,6 @@ class ContratoObserver
 
     private function forgetCache()
     {
-        Cache::forget('Courses:courses_all');
+        Cache::forget('Contratos:contratos_all');
     }
 }

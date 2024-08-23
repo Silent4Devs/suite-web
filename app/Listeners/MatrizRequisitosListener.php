@@ -34,9 +34,7 @@ class MatrizRequisitosListener implements ShouldQueue
      */
     public function handle($event)
     {
-        $modulo_matriz = 4;
-
-        $lista = ListaDistribucion::with('participantes')->where('id', $modulo_matriz)->first();
+        $lista = ListaDistribucion::with('participantes')->where('modelo', 'MatrizRequisitoLegale')->first();
 
         foreach ($lista->participantes as $participantes) {
             $empleados = Empleado::where('id', $participantes->empleado_id)->first();
