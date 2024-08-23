@@ -235,6 +235,7 @@
                 </div>
             </a>
 
+            @if ($mostrarCargaObjetivos)
             <a
                 href="{{ route('admin.rh.evaluaciones-desempeno.carga-objetivos-empleado', ['empleado' => $empleado->id]) }}">
                 <div class="item-ob-ev" style="background-color: #2478B8;">
@@ -247,6 +248,22 @@
                     </div>
                 </div>
             </a>
+            @endif
+
+            @if ($mostrarCargaObjetivosArea)
+            <a
+                href="{{ route('admin.rh.evaluaciones-desempeno.carga-objetivos-area', ['area' => $empleado->area_id]) }}">
+                <div class="item-ob-ev" style="background-color: #117994;">
+                    <div class="img-ob-ev">
+                        <img src="{{ asset('img/reunion.png') }}" alt="">
+                    </div>
+                    <div class="info-ob-ev">
+                        <h5>Equipo: Mis Objetivos</h5>
+                        <p><small>Habilitado</small></p>
+                    </div>
+                </div>
+            </a>
+            @endif
 
             <a href="" class="d-none">
                 <div class="item-ob-ev" style="background-color: #249AB8;">

@@ -65,7 +65,7 @@ class Area extends Model implements Auditable
         'empleados_id',
     ];
 
-    protected $appends = ['grupo_name', 'foto_ruta'];
+    protected $appends = ['grupo_name', 'foto_ruta', 'utilizada'];
 
     //Redis methods
     public static function getExists()
@@ -207,6 +207,11 @@ class Area extends Model implements Auditable
         }
 
         return $foto_url;
+    }
+
+    public function getUtilizadaAttribute()
+    {
+        return $this->empleados->count() > 0;
     }
 
     public function lider()

@@ -786,6 +786,16 @@
         </div>
     </div>
     @section('scripts')
+        <script>
+            function generarColorAleatorio() {
+                let color = '#' + Math.floor(Math.random() * 16777215).toString(16).toUpperCase();
+                while (color.length < 7) {
+                    color = color + '0';
+                }
+                return color;
+            }
+        </script>
+
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
         @if ($evaluacion->activar_objetivos)
@@ -803,6 +813,7 @@
                             labels: areas,
                             datasets: [{
                                 label: 'Porcentaje de cumplimiento',
+                                backgroundColor: '#3EAFBC',
                                 data: data,
                                 borderWidth: 1
                             }]
@@ -842,6 +853,7 @@
                                 datasets: [{
                                     label: 'Porcentaje de cumplimiento',
                                     data: objArea.data,
+                                    backgroundColor: '#3EAFBC',
                                     borderWidth: 1
                                 }]
                             },
@@ -873,6 +885,7 @@
                             datasets: [{
                                 label: 'Porcentaje de cumplimiento',
                                 data: resultados,
+                                backgroundColor: generarColorAleatorio(),
                                 borderWidth: 1
                             }]
                         },
@@ -905,6 +918,7 @@
                                 datasets: [{
                                     label: 'Porcentaje de cumplimiento',
                                     data: cumpObj.data,
+                                    backgroundColor: generarColorAleatorio(),
                                     borderWidth: 1
                                 }]
                             },
@@ -1028,7 +1042,7 @@
                         document.getElementById("contenedor-competencias").appendChild(canvas);
 
                         let grafica_objetivos_area = new Chart(document.getElementById(
-                        'cumplimientoCompetencias'), {
+                            'cumplimientoCompetencias'), {
                             type: 'bar',
                             data: {
                                 labels: cumpComp.labels,

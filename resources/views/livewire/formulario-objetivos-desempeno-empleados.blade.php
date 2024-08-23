@@ -57,7 +57,7 @@
                                     class="form-control" placeholder="">
                                     <option value="">Seleccione Unidad</option>
                                     @foreach ($unidades as $unidad)
-                                        <option value="{{ $unidad->id }}">{{ $unidad->definicion }}</option>
+                                        <option value={{ $unidad->id }}>{{ $unidad->definicion }}</option>
                                     @endforeach
                                 </select>
                                 <label for="unidad-medida" class="required">Unidad de medida</label>
