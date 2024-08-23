@@ -55,9 +55,9 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
     amqp \
     ftp
 
-# INSTALL AND UPDATE COMPOSER
-COPY --from=composer /usr/bin/composer /usr/bin/composer
-RUN composer self-update --2
+COPY composer.json ./
+COPY composer.lock ./
+RUN composer install --no-dev --no-interaction --no-autoloader --no-scripts
 
 # Set working directory
 WORKDIR /app
@@ -71,6 +71,8 @@ RUN composer install
 # Ensure permissions are correct
 RUN chown -R www-data:www-data /app \
     && chmod 755 -R /app
+
+RUN composer dump-autoload --optimize
 
 EXPOSE 80 443 8000
 
