@@ -17,7 +17,6 @@ RUN apk add --no-cache \
     libzip-dev \
     libpq-dev \
     make \
-    #mysql-client \
     nodejs \
     npm \
     oniguruma-dev \
@@ -37,14 +36,11 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
     install-php-extensions \
     @composer \
     redis-stable \
-    #imagick-stable \
-    #xdebug-stable \
     bcmath \
     calendar \
     exif \
     gd \
     intl \
-    #pdo_mysql \
     pdo_pgsql \
     pcntl \
     soap \
@@ -58,14 +54,19 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
     posix \
     amqp \
     ftp
- 
+
 # Set working directory
 WORKDIR /app
- 
-RUN chown -R www-data:www-data /var/www \
-    && chmod 755 -R /var/www
 
+# Copy application files
 COPY . /app
+
+# Install PHP dependencies using Composer
+RUN composer install --no-dev --optimize-autoloader --no-interaction
+
+# Ensure permissions are correct
+RUN chown -R www-data:www-data /app \
+    && chmod 755 -R /app
 
 EXPOSE 80 443 8000
 
