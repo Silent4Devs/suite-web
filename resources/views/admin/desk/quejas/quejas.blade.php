@@ -297,7 +297,7 @@
 
                                     html += `
 
-                                        <button class="btn archivar" onclick='ArchivarQueja("/admin/desk/${data}/archivarQuejas"); return false;' style="margin-top:-10px">
+                                        <button class="btn" onclick='ArchivarQueja("/admin/desk/${data}/archivarQuejas"); return false;' style="margin-top:-10px">
 				       						<i class="fas fa-archive" ></i></a>
 				       					</button>
 
@@ -340,7 +340,7 @@
                             success: function(response) {
 
                                 if (response.success) {
-                                    tabla_quejas_desk.ajax.reload();
+                                    tabla_quejas_desk.ajax.reload(null,false);
                                     Swal.fire(
                                         'Queja Archivada',
                                         '',
