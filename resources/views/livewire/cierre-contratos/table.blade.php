@@ -92,14 +92,12 @@
                         <td>{{ $em->observaciones }}</td>
                         @if (!$show_contrato)
                             <td>
-                                <a href="#form_cierre">
                                     <button wire:click="edit({{ $em->id }})" class="btn blue">
-                                        <i class="material-icons">create</i>
+                                        <i class="material-icons">editar</i>
                                     </button>
-                                </a>
                             </td>
                             <td>
-                                <button wire:click="$dispatch('triggerDeleteCierre',{{ $em->id }})" class="btn red">
+                                <button wire:click="destroy({{ $em->id }})" class="btn red">
                                     <i class="material-icons">delete</i>
                                 </button>
                             </td>

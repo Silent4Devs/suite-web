@@ -2,18 +2,24 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\DenunciasEvent;
 use App\Http\Controllers\Controller;
 use App\Models\Activo;
 use App\Models\AnalisisSeguridad;
 use App\Models\AprobadorSeleccionado;
 use App\Models\Denuncias;
 use App\Models\Empleado;
+use App\Models\FirmaCentroAtencion;
+use App\Models\FirmaModule;
+use App\Models\Organizacion;
 use App\Models\EvidenciasDenuncia;
 use App\Models\Sede;
 use App\Models\User;
+use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
+use Carbon\Carbon;
 
 class DenunciasController extends Controller
 {
@@ -185,6 +191,8 @@ class DenunciasController extends Controller
 
         $organizacion = Organizacion::first();
 
+        $fecha = $request->estatus === 'cancelado' ? Carbon::now()->format('Y-m-d H:i:s') : ($request->fecha_cierre ? Carbon::createFromFormat('d-m-Y, h:i:s a', $request->fecha_cierre, 'UTC')->format('Y-m-d H:i:s') : null);
+
         $denuncias->update([
             'anonimo' => $request->anonimo,
             'descripcion' => $request->descripcion,
@@ -193,7 +201,7 @@ class DenunciasController extends Controller
             'area_denunciado' => $request->area_denunciado,
             'tipo' => $request->tipo,
             'estatus' => $request->estatus,
-            'fecha_cierre' => $request->fecha_cierre,
+            'fecha_cierre' => $fecha,
         ]);
 
         if ($denuncias->estatus === 'cerrado' || $denuncias->estatus === 'cancelado') {
