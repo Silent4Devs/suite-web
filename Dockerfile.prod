@@ -67,14 +67,9 @@ WORKDIR /app
 # Copy application files
 COPY . /app
 
-# INSTALL YOUR DEPENDENCIES
-RUN composer install
-
 # Ensure permissions are correct
 RUN chown -R www-data:www-data /app \
     && chmod 755 -R /app
-
-RUN composer dump-autoload --optimize
 
 EXPOSE 80 443 8000
 
