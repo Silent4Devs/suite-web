@@ -1,4 +1,4 @@
-FROM php:8.3-alpine
+FROM dunglas/frankenphp:latest-builder-php8.2-alpine
 
 # Add docker-php-extension-installer script
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
@@ -17,7 +17,6 @@ RUN apk add --no-cache \
     libzip-dev \
     libpq-dev \
     make \
-    #mysql-client \
     nodejs \
     npm \
     oniguruma-dev \
@@ -37,14 +36,11 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
     install-php-extensions \
     @composer \
     redis-stable \
-    #imagick-stable \
-    #xdebug-stable \
     bcmath \
     calendar \
     exif \
     gd \
     intl \
-    #pdo_mysql \
     pdo_pgsql \
     pcntl \
     soap \
@@ -56,17 +52,24 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
     excimer \
     pcntl \
     posix \
-    amqp
+    amqp \
+    ftp
 
-COPY . /var/www
-#COPY .env.example /var/www/.env
+# Set working directory
+WORKDIR /app
 
-WORKDIR /var/www
+# Copy application files
+COPY . /app
 
-RUN apk add jq
+# Install PHP dependencies using Composer
+RUN composer install --no-dev --optimize-autoloader --no-interaction
 
-RUN wget -O/usr/local/bin/frankenphp $(wget -O- https://api.github.com/repos/dunglas/frankenphp/releases/latest | jq '.assets[] | select(.name=="frankenphp-linux-x86_64") | .browser_download_url' -r) && chmod +x /usr/local/bin/frankenphp
+# Ensure permissions are correct
+RUN chown -R www-data:www-data /app \
+    && chmod 755 -R /app
 
-RUN composer install --no-dev
+EXPOSE 80 443 8000
 
-ENTRYPOINT ["php", "artisan", "octane:start", "--server=frankenphp", "--port=9804", "--workers=16", "--host=0.0.0.0"]
+# Healthcheck
+HEALTHCHECK --interval=15m --timeout=3s \
+    CMD curl --fail http://localhost/ || exit 1

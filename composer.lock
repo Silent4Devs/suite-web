@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8299e2c2010f963040c2abed61a34d68",
+    "content-hash": "43abb808a72c3c2896a9d3a8dd924acd",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -2671,16 +2671,16 @@
         },
         {
             "name": "laravel/octane",
-            "version": "v2.5.3",
+            "version": "v2.5.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/octane.git",
-                "reference": "2b5b4d08982cb33a692d467ca96c5bb2f0fcd9ae"
+                "reference": "d7b8991270eb57eef83be7de62ba04c1289dd65b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/octane/zipball/2b5b4d08982cb33a692d467ca96c5bb2f0fcd9ae",
-                "reference": "2b5b4d08982cb33a692d467ca96c5bb2f0fcd9ae",
+                "url": "https://api.github.com/repos/laravel/octane/zipball/d7b8991270eb57eef83be7de62ba04c1289dd65b",
+                "reference": "d7b8991270eb57eef83be7de62ba04c1289dd65b",
                 "shasum": ""
             },
             "require": {
@@ -2757,7 +2757,7 @@
                 "issues": "https://github.com/laravel/octane/issues",
                 "source": "https://github.com/laravel/octane"
             },
-            "time": "2024-08-05T13:53:57+00:00"
+            "time": "2024-08-09T12:25:04+00:00"
         },
         {
             "name": "laravel/prompts",
@@ -7763,6 +7763,56 @@
                 }
             ],
             "time": "2023-12-25T11:46:58+00:00"
+        },
+        {
+            "name": "spiral/roadrunner",
+            "version": "v2024.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/roadrunner-server/roadrunner.git",
+                "reference": "9f770b1d89c50f332c197139b6fb279b0d47d1e3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/roadrunner-server/roadrunner/zipball/9f770b1d89c50f332c197139b6fb279b0d47d1e3",
+                "reference": "9f770b1d89c50f332c197139b6fb279b0d47d1e3",
+                "shasum": ""
+            },
+            "type": "metapackage",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Anton Titov / Wolfy-J",
+                    "email": "wolfy.jd@gmail.com"
+                },
+                {
+                    "name": "Valery Piashchynski",
+                    "homepage": "https://github.com/rustatian"
+                },
+                {
+                    "name": "RoadRunner Community",
+                    "homepage": "https://github.com/roadrunner-server/roadrunner/graphs/contributors"
+                }
+            ],
+            "description": "RoadRunner: High-performance PHP application server and process manager written in Go and powered with plugins",
+            "homepage": "https://roadrunner.dev/",
+            "support": {
+                "chat": "https://discord.gg/V6EK4he",
+                "docs": "https://roadrunner.dev/docs",
+                "forum": "https://forum.roadrunner.dev/",
+                "issues": "https://github.com/roadrunner-server/roadrunner/issues",
+                "source": "https://github.com/roadrunner-server/roadrunner/tree/v2024.2.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sponsors/roadrunner-server",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-07-25T13:11:40+00:00"
         },
         {
             "name": "symfony/console",
@@ -15115,5 +15165,5 @@
         "php": "^8.1"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }
