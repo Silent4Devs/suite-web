@@ -218,9 +218,10 @@ class CompetenciasController extends Controller
 
             $empleado->load('idiomas');
             $lista_docs = ListaDocumentoEmpleado::getAll();
+            $empleadosCV = 1;
             $documents = TBUserTrainingModel::where('empleado_id',$empleado->id)->get();
 
-            return view('admin.competencia.mi-cv', compact('empleado', 'lista_docs', 'documents'));
+            return view('admin.competencia.mi-cv', compact('empleado', 'lista_docs', 'documents','empleadosCV'));
         } else {
             abort_if(Gate::denies('mi_perfil_mis_datos_ver_perfil_profesional'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 

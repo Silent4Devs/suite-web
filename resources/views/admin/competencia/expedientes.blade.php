@@ -6,7 +6,7 @@
     <h5 class="col-12 titulo_general_funcion">Perfiles Profesionales </h5>
     {{-- <div class="mt-5 card">
         <div class="card-body"> --}}
-            @livewire('buscar-c-v-component', ['areas' => $areas,'isPersonal'=>false])
+            @livewire('buscar-c-v-component', ['isPersonal'=>false])
         {{-- </div>
     </div> --}}
 @endsection

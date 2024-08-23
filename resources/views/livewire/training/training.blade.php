@@ -93,9 +93,12 @@
                         <input type="file" id="pdf" wire:model.live="form.document" {{$status === "edit" ? "required": null}}>
                     </label>
                 </div>
-                <button class="btn btn-primary"
-                    style="height: 45px; background-color: #E2E2E2 ; border: 1px solid #707070; border-radius: 4px; color:#575757;"
-                    type="submit"> {{$status === "create" ? "Agregar" : "Editar" }}</button>
+
+                <div class="col-12 d-flex justify-content-end mt-3">
+                    <button class="btn btn-primary"
+                        style="height: 45px; background-color: #057BE2; color:#FFFFFF; border: 1px solid #707070; border-radius: 4px;"
+                        type="submit"> {{$status === "create" ? "Agregar" : "Editar" }}</button>
+                </div>
             </form>
         </div>
     </div>
