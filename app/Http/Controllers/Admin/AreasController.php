@@ -31,56 +31,7 @@ class AreasController extends Controller
     public function index(Request $request)
     {
         abort_if(Gate::denies('crear_area_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        // if ($request->ajax()) {
-        //     $query = Area::orderByDesc('id')->get();
-        //     $table = Datatables::of($query);
-
-        //     $table->addColumn('placeholder', '&nbsp;');
-        //     $table->addColumn('actions', '&nbsp;');
-
-        //     $table->editColumn('actions', function ($row) {
-        //         $viewGate = 'crear_area_ver';
-        //         $editGate = 'crear_area_editar';
-        //         $deleteGate = 'crear_area_eliminar';
-        //         $crudRoutePart = 'areas';
-
-        //         return view('partials.datatablesActions', compact(
-        //             'viewGate',
-        //             'editGate',
-        //             'deleteGate',
-        //             'crudRoutePart',
-        //             'row'
-        //         ));
-        //     });
-
-        //     $table->editColumn('id', function ($row) {
-        //         return $row->id ? $row->id : '';
-        //     });
-        //     $table->editColumn('area', function ($row) {
-        //         return $row->area ? $row->area : '';
-        //     });
-        //     $table->editColumn('foto_ruta', function ($row) {
-        //         return $row->foto_ruta ? $row->foto_ruta : '';
-        //     });
-
-        //     $table->editColumn('grupo', function ($row) {
-        //         return $row->grupo ? $row->grupo->nombre : '';
-        //     });
-        //     $table->editColumn(
-        //         'reporta',
-        //         function ($row) {
-        //             return $row->supervisor ? $row->supervisor->area : '';
-        //         }
-        //     );
-        //     $table->editColumn('descripcion', function ($row) {
-        //         return $row->descripcion ? $row->descripcion : '';
-        //     });
-        //     $table->rawColumns(['actions', 'placeholder']);
-
-        //     return $table->make(true);
-        // }
-
+        
         $direccion_exists = Area::select('id_reporta')->whereNull('id_reporta')->exists();
         $areas = Area::getAll();
         $teams = Team::get();
