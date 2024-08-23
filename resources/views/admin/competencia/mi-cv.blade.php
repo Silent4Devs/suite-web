@@ -20,7 +20,7 @@
             <div class="mt-4 text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
                 CURRICULUM VITAE
             </div>
-            @livewire('buscar-c-v-component',['isPersonal'=>true,'empleadoModel'=>$empleado])
+            @livewire('buscar-c-v-component',['isPersonal'=>true,'empleadoModel'=>$empleado, 'documents'=>$documents, '$empleadosCV'=>$empleadosCV])
         </div>
     </div>
 
