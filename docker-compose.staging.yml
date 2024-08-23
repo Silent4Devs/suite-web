@@ -49,7 +49,7 @@ services:
     # #container_name: php-tabantaj
     #uncomment this if you will use only docker compose
     #image: johnvo95/tabantaj_php-tabantaj:latest
-    entrypoint: php artisan octane:frankenphp --workers=2 --max-requests=250 --https --http-redirect
+    entrypoint: php artisan octane:frankenphp --workers=2 --max-requests=250
     container_name: php-tabantaj
     restart: unless-stopped
     tty: true
