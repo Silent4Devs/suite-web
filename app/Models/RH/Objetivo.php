@@ -20,14 +20,14 @@ class Objetivo extends Model implements Auditable
 
     protected $guarded = ['id'];
 
-protected $fillable=[
-    'nombre',
-'descripcion',
-'tipo_id',
-'KPI',
-'metrica_id',
-'esta_aprobado',
-];
+    protected $fillable = [
+        'nombre',
+        'descripcion',
+        'tipo_id',
+        'KPI',
+        'metrica_id',
+        'esta_aprobado',
+    ];
 
     const APROBADO = 1;
 

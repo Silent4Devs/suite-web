@@ -280,7 +280,7 @@ class Requsicion extends Model implements Auditable
 
         $coleccion = collect();
 
-        $ordenes =  $requisiciones->where('firma_compras', '!=', null);
+        $ordenes = $requisiciones->where('firma_compras', '!=', null);
 
         switch ($filtro) {
             case 'general':
@@ -289,7 +289,7 @@ class Requsicion extends Model implements Auditable
                     if ($ord->registroFirmas) {
                         $registro = $ord->registroFirmas;
 
-                        if ($registro->comprador_id == $id_empleado && is_null($ord->firma_comprador_orden)  && is_null($ord->firma_solicitante_orden) && is_null($ord->firma_finanzas_orden)) {
+                        if ($registro->comprador_id == $id_empleado && is_null($ord->firma_comprador_orden) && is_null($ord->firma_solicitante_orden) && is_null($ord->firma_finanzas_orden)) {
                             $coleccion->push($ord);
                         }
 
@@ -297,7 +297,7 @@ class Requsicion extends Model implements Auditable
                             $coleccion->push($ord);
                         }
 
-                        if (! is_null($ord->firma_comprador_orden) && !is_null($ord->firma_solicitante_orden) && $registro->responsable_finanzas_id == $id_empleado && is_null($ord->firma_finanzas_orden)) {
+                        if (! is_null($ord->firma_comprador_orden) && ! is_null($ord->firma_solicitante_orden) && $registro->responsable_finanzas_id == $id_empleado && is_null($ord->firma_finanzas_orden)) {
                             $coleccion->push($ord);
                         }
                     }
@@ -311,7 +311,7 @@ class Requsicion extends Model implements Auditable
                     if ($ord->registroFirmas) {
                         $registro = $ord->registroFirmas;
 
-                        if ($registro->comprador_id == $id_empleado && is_null($ord->firma_comprador_orden)  && is_null($ord->firma_solicitante_orden) && is_null($ord->firma_finanzas_orden)) {
+                        if ($registro->comprador_id == $id_empleado && is_null($ord->firma_comprador_orden) && is_null($ord->firma_solicitante_orden) && is_null($ord->firma_finanzas_orden)) {
                             $coleccion->push($ord);
                         }
                     }
@@ -339,13 +339,12 @@ class Requsicion extends Model implements Auditable
                     if ($ord->registroFirmas) {
                         $registro = $ord->registroFirmas;
 
-                        if (! is_null($ord->firma_comprador_orden) && !is_null($ord->firma_solicitante_orden) && $registro->responsable_finanzas_id == $id_empleado && is_null($ord->firma_finanzas_orden)) {
+                        if (! is_null($ord->firma_comprador_orden) && ! is_null($ord->firma_solicitante_orden) && $registro->responsable_finanzas_id == $id_empleado && is_null($ord->firma_finanzas_orden)) {
                             $coleccion->push($ord);
                         }
                     }
                 }
                 break;
-
 
             default:
                 foreach ($ordenes as $ord) {
@@ -353,7 +352,7 @@ class Requsicion extends Model implements Auditable
                     if ($ord->registroFirmas) {
                         $registro = $ord->registroFirmas;
 
-                        if ($registro->comprador_id == $id_empleado && is_null($ord->firma_comprador_orden)  && is_null($ord->firma_solicitante_orden) && is_null($ord->firma_finanzas_orden)) {
+                        if ($registro->comprador_id == $id_empleado && is_null($ord->firma_comprador_orden) && is_null($ord->firma_solicitante_orden) && is_null($ord->firma_finanzas_orden)) {
                             $coleccion->push($ord);
                         }
 
@@ -361,7 +360,7 @@ class Requsicion extends Model implements Auditable
                             $coleccion->push($ord);
                         }
 
-                        if (! is_null($ord->firma_comprador_orden) && !is_null($ord->firma_solicitante_orden) && $registro->responsable_finanzas_id == $id_empleado && is_null($ord->firma_finanzas_orden)) {
+                        if (! is_null($ord->firma_comprador_orden) && ! is_null($ord->firma_solicitante_orden) && $registro->responsable_finanzas_id == $id_empleado && is_null($ord->firma_finanzas_orden)) {
                             $coleccion->push($ord);
                         }
                     }
@@ -438,7 +437,7 @@ class Requsicion extends Model implements Auditable
             $tipo = 'RQ-';
         }
 
-        $codigo = $tipo . sprintf('%02d-%04d', $parte1, $parte2);
+        $codigo = $tipo.sprintf('%02d-%04d', $parte1, $parte2);
 
         return $codigo;
     }

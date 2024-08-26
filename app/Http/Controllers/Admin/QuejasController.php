@@ -19,11 +19,12 @@ use App\Models\Quejas;
 use App\Models\Sede;
 use App\Models\User;
 use Auth;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
-use Carbon\Carbon;
+
 class QuejasController extends Controller
 {
     public function quejas()

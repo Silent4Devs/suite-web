@@ -37,9 +37,7 @@ use App\Models\Quejas;
 use App\Models\Recurso;
 use App\Models\RevisionDocumento;
 use App\Models\RH\Evaluacion;
-use App\Models\RH\EvaluacionRepuesta;
 use App\Models\RH\EvaluadoEvaluador;
-use App\Models\RH\ObjetivoRespuesta;
 use App\Models\RiesgoIdentificado;
 use App\Models\Sede;
 use App\Models\SolicitudDayOff;
@@ -135,7 +133,7 @@ class InicioUsuarioController extends Controller
                     $task->canAdd = $task->canAdd == 'true' ? true : false;
                     $task->canWrite = $task->canWrite == 'true' ? true : false;
                     $task->duration = intval($task->duration);
-                    if (!isset($task->progress) || empty($task->progress)) {
+                    if (! isset($task->progress) || empty($task->progress)) {
                         $task->progress = 0;
                     } else {
                         $task->progress = intval($task->progress);
@@ -185,7 +183,7 @@ class InicioUsuarioController extends Controller
             }
         }
 
-        $auditoria_internas = new AuditoriaInterna();
+        $auditoria_internas = new AuditoriaInterna;
         $recursos = collect();
         $mis_quejas = collect();
         $mis_quejas_count = 0;
@@ -199,7 +197,7 @@ class InicioUsuarioController extends Controller
         $solicitud_dayoff = 0;
         $solicitud_permiso = 0;
         $solicitudes_pendientes = 0;
-        $cacheKey = 'AuditoriaInterna:auditoria_internas_' . $usuario->id;
+        $cacheKey = 'AuditoriaInterna:auditoria_internas_'.$usuario->id;
         $auditoria_internas = Cache::remember($cacheKey, 3600 * 8, function () use ($empleado) {
             return AuditoriaInterna::where(function ($query) use ($empleado) {
                 $query
@@ -212,7 +210,7 @@ class InicioUsuarioController extends Controller
                 ->get();
         });
 
-        $cacheKeyRecursos = 'Recursos:recursos_' . $usuario->id;
+        $cacheKeyRecursos = 'Recursos:recursos_'.$usuario->id;
         $recursos = Cache::remember($cacheKeyRecursos, 3600 * 8, function () use ($empleado) {
             return Recurso::whereHas('empleados', function ($query) use ($empleado) {
                 $query->where('empleados.id', $empleado->id);
@@ -313,7 +311,7 @@ class InicioUsuarioController extends Controller
 
         $panel_rules = PanelInicioRule::getAll();
 
-        if (!is_null($empleado)) {
+        if (! is_null($empleado)) {
             $activos = Activo::select('*')
                 ->where('id_responsable', '=', $empleado->id)
                 ->get();
@@ -350,7 +348,7 @@ class InicioUsuarioController extends Controller
                     ]);
                 },
             ])->find($empleado->id)->puestoRelacionado;
-            $competencias = !is_null($competencias) ? $competencias->competencias : collect();
+            $competencias = ! is_null($competencias) ? $competencias->competencias : collect();
 
             $quejas = Quejas::getAll()->where('empleado_quejo_id', $empleado->id);
             $denuncias = Denuncias::getAll()->where('empleado_denuncio_id', $empleado->id);
@@ -611,13 +609,13 @@ class InicioUsuarioController extends Controller
 
         $image = null;
 
-        if ($request->file('evidencia') != null or !empty($request->file('evidencia'))) {
+        if ($request->file('evidencia') != null or ! empty($request->file('evidencia'))) {
             foreach ($request->file('evidencia') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
+                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
 
-                $new_name_image = 'Queja_file_' . $quejas->id . '_' . $name_image . '.' . $extension;
+                $new_name_image = 'Queja_file_'.$quejas->id.'_'.$name_image.'.'.$extension;
 
                 $route = 'public/evidencias_quejas';
 
@@ -679,13 +677,13 @@ class InicioUsuarioController extends Controller
 
         $image = null;
 
-        if ($request->file('evidencia') != null or !empty($request->file('evidencia'))) {
+        if ($request->file('evidencia') != null or ! empty($request->file('evidencia'))) {
             foreach ($request->file('evidencia') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
+                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
 
-                $new_name_image = 'Denuncia_file_' . $denuncias->id . '_' . $name_image . '.' . $extension;
+                $new_name_image = 'Denuncia_file_'.$denuncias->id.'_'.$name_image.'.'.$extension;
 
                 $route = 'public/evidencias_denuncias';
 
@@ -860,13 +858,13 @@ class InicioUsuarioController extends Controller
 
         $image = null;
 
-        if ($request->file('evidencia') != null or !empty($request->file('evidencia'))) {
+        if ($request->file('evidencia') != null or ! empty($request->file('evidencia'))) {
             foreach ($request->file('evidencia') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
+                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
 
-                $new_name_image = 'Seguridad_file_' . $incidentes_seguridad->id . '_' . $name_image . '.' . $extension;
+                $new_name_image = 'Seguridad_file_'.$incidentes_seguridad->id.'_'.$name_image.'.'.$extension;
 
                 $route = 'public/evidencias_seguridad';
 
@@ -884,9 +882,7 @@ class InicioUsuarioController extends Controller
         return redirect()->route('admin.desk.index')->with('success', 'Reporte generado');
     }
 
-    public function evidenciaSeguridad()
-    {
-    }
+    public function evidenciaSeguridad() {}
 
     public function riesgos()
     {
@@ -929,13 +925,13 @@ class InicioUsuarioController extends Controller
 
         $image = null;
 
-        if ($request->file('evidencia') != null or !empty($request->file('evidencia'))) {
+        if ($request->file('evidencia') != null or ! empty($request->file('evidencia'))) {
             foreach ($request->file('evidencia') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
+                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
 
-                $new_name_image = 'Riesgo_file_' . $riesgos->id . '_' . $name_image . '.' . $extension;
+                $new_name_image = 'Riesgo_file_'.$riesgos->id.'_'.$name_image.'.'.$extension;
 
                 $route = 'public/evidencias_riesgos';
 
@@ -1226,10 +1222,10 @@ class InicioUsuarioController extends Controller
     {
         // dd($request->all());
         if ($request->name == 'file') {
-            $fileName = time() . $request->file('value')->getClientOriginalName();
+            $fileName = time().$request->file('value')->getClientOriginalName();
             // dd($request->file('value'));
             $empleado = Empleado::getAll()->find($request->empleadoId);
-            $request->file('value')->storeAs('public/expedientes/' . Str::slug($empleado->name), $fileName);
+            $request->file('value')->storeAs('public/expedientes/'.Str::slug($empleado->name), $fileName);
             $expediente = EvidenciasDocumentosEmpleados::updateOrCreate(['empleado_id' => $request->empleadoId, 'lista_documentos_empleados_id' => $request->documentoId], [$request->name => $request->value]);
 
             $doc_viejo = EvidenciaDocumentoEmpleadoArchivo::where('evidencias_documentos_empleados_id', $expediente->id)
