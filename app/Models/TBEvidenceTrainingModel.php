@@ -16,6 +16,6 @@ class TBEvidenceTrainingModel extends Model
     protected $fillable = [
         'id',
         'name',
-        'ubication'
+        'ubication',
     ];
 }

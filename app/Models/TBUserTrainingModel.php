@@ -27,7 +27,7 @@ class TBUserTrainingModel extends Model
         'validity',
         'validityStatus',
         'evidence_id',
-        'empleado_id'
+        'empleado_id',
     ];
 
     public function category()
@@ -44,5 +44,4 @@ class TBUserTrainingModel extends Model
     {
         return $this->belongsTo(Empleado::class, 'empleado_id');
     }
-
 }

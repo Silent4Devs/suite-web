@@ -6,14 +6,12 @@ use App\Livewire\Forms\CatalogueTraining\CatalogueTrainingForm;
 use App\Livewire\Forms\Certificates\TrainingForm;
 use App\Mail\CertificatesMail;
 use App\Models\ControlListaDistribucion;
-use App\Models\EntendimientoOrganizacion;
 use App\Models\ListaDistribucion;
 use App\Models\ProcesosListaDistribucion;
 use App\Models\TBCatalogueTrainingModel;
 use App\Models\TBEvidenceTrainingModel;
 use App\Models\TBTypeCatalogueTrainingModel;
 use App\Models\TBUserTrainingModel;
-use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
@@ -26,16 +24,25 @@ use Livewire\WithFileUploads;
 class Training extends Component
 {
     use WithFileUploads;
+
     // use Http;
     public TrainingForm $form;
+
     public CatalogueTrainingForm $modalForm;
+
     public $types;
+
     public Collection $names;
+
     public $empleado_id;
+
     public $registers;
+
     public $status = 'create';
+
     public $id;
-    public $modelo="TBCatalogueTrainingModel";
+
+    public $modelo = 'TBCatalogueTrainingModel';
 
     public function solicitudAprobacion($id)
     {
@@ -98,7 +105,7 @@ class Training extends Component
     public function downloadEvidencie($id)
     {
         $evidenceRegister = TBEvidenceTrainingModel::findOrFail($id);
-        $filePath = $evidenceRegister->ubication . '/'. $evidenceRegister->name;
+        $filePath = $evidenceRegister->ubication.'/'.$evidenceRegister->name;
 
         if (Storage::exists($filePath)) {
             return Storage::download($filePath);
@@ -108,10 +115,10 @@ class Training extends Component
     public function edit()
     {
         $succes = $this->form->update($this->id);
-        if($succes){
+        if ($succes) {
             $this->dispatch('edited');
             $this->status = 'create';
-        }else {
+        } else {
             $this->dispatch('error');
         }
     }
@@ -126,17 +133,17 @@ class Training extends Component
         $register->type_id = strval($register->type_id);
         $register->startDate = $register->start_date;
         $register->endDate = $register->end_date;
-        $register->validityStatus = $register->validityStatus ? 'Vigente':'Vencido';
+        $register->validityStatus = $register->validityStatus ? 'Vigente' : 'Vencido';
         $this->form->fillData($register->toArray());
     }
 
     public function saveModal()
     {
         $succes = $this->modalForm->userStore();
-        if($succes){
+        if ($succes) {
             $this->dispatch('requestApprove');
             $this->solicitudAprobacion($succes);
-        }else {
+        } else {
             $this->dispatch('error');
         }
     }
@@ -145,9 +152,9 @@ class Training extends Component
     {
         $this->form->empleado_id = $this->empleado_id;
         $succes = $this->form->store();
-        if($succes){
+        if ($succes) {
             $this->dispatch('saved');
-        }else {
+        } else {
             $this->dispatch('error');
         }
     }
@@ -155,27 +162,27 @@ class Training extends Component
     public function verifyStatus()
     {
         $date = Carbon::now();
-        if($date >=$this->form->validity){
-            $this->form->validityStatus = "Vencido";
-        }else {
-            $this->form->validityStatus = "Vigente";
+        if ($date >= $this->form->validity) {
+            $this->form->validityStatus = 'Vencido';
+        } else {
+            $this->form->validityStatus = 'Vigente';
         }
     }
 
     public function chanceChecked()
     {
-        $this->form->isChecked = !$this->form->isChecked;
-        if($this->form->isChecked === false){
-            $this->form->validity = "";
-            $this->form->validityStatus = "";
+        $this->form->isChecked = ! $this->form->isChecked;
+        if ($this->form->isChecked === false) {
+            $this->form->validity = '';
+            $this->form->validityStatus = '';
         }
     }
 
     public function getCatalogueName()
     {
         $type_id = intval($this->form->type_id);
-        foreach($this->types as $type){
-            if($type->id === $type_id){
+        foreach ($this->types as $type) {
+            if ($type->id === $type_id) {
                 $this->names = $type->catalogue;
                 break;
             }
@@ -190,13 +197,13 @@ class Training extends Component
 
     public function render()
     {
-        $types = TBTypeCatalogueTrainingModel::orderBy('name','asc')->get();
-        $registers = TBUserTrainingModel::where('empleado_id',$this->empleado_id)->orderBy('id')->get();
+        $types = TBTypeCatalogueTrainingModel::orderBy('name', 'asc')->get();
+        $registers = TBUserTrainingModel::where('empleado_id', $this->empleado_id)->orderBy('id')->get();
         $this->types = $types;
-        foreach($registers as $register){
+        foreach ($registers as $register) {
             $register->start_date = Carbon::parse($register->start_date)->format('d-m-Y');
             $register->end_date = Carbon::parse($register->end_date)->format('d-m-Y');
-            if($register->validity){
+            if ($register->validity) {
                 $register->validity = Carbon::parse($register->validity)->format('d-m-Y');
             }
         }

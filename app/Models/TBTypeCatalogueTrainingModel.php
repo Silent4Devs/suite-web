@@ -18,7 +18,7 @@ class TBTypeCatalogueTrainingModel extends Model
     protected $fillable = [
         'id',
         'name',
-        'default'
+        'default',
     ];
 
     public function catalogue()

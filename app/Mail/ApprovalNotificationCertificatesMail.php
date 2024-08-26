@@ -3,10 +3,7 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
 class ApprovalNotificationCertificatesMail extends Mailable
@@ -30,6 +27,6 @@ class ApprovalNotificationCertificatesMail extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.certificates.approve-notification-certificates')->subject('Nombre de Certificación Aprobado: '. $this->name);
+        return $this->view('mails.certificates.approve-notification-certificates')->subject('Nombre de Certificación Aprobado: '.$this->name);
     }
 }

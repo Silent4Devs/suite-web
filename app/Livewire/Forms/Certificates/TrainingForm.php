@@ -5,27 +5,32 @@ namespace App\Livewire\Forms\Certificates;
 use App\Models\Empleado;
 use App\Models\TBEvidenceTrainingModel;
 use App\Models\TBUserTrainingModel;
-use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use Livewire\Attributes\Validate;
-use Livewire\Form;
 use Illuminate\Support\Str;
+use Livewire\Form;
 
 class TrainingForm extends Form
 {
     public $type_id;
+
     public $name_id;
+
     public $startDate;
+
     public $endDate;
+
     public $empleado_id;
 
     // type certification
     public $credential_id;
+
     public $credential_url;
+
     public $validity;
+
     public $validityStatus;
+
     public $isChecked = false;
 
     //Document
@@ -43,10 +48,10 @@ class TrainingForm extends Form
             $name = preg_replace('/[^A-Za-z0-9 ]/', '', $name);
             // Remove space between characters from text
             $name = str_replace(' ', '', $name);
-            if (!Storage::exists($folder)) {
+            if (! Storage::exists($folder)) {
                 Storage::makeDirectory($folder);
             }
-            $fileName = $name . "-" . $uuid . '.' . $this->document->getClientOriginalExtension();
+            $fileName = $name.'-'.$uuid.'.'.$this->document->getClientOriginalExtension();
             $this->document->storeAs($folder, $fileName);
 
             $documentCreate = TBEvidenceTrainingModel::create([
@@ -75,13 +80,15 @@ class TrainingForm extends Form
                 'validity' => $this->validity,
                 'validityStatus' => $this->validityStatus === 'Vencido' ? false : true,
                 'evidence_id' => $document_id,
-                'empleado_id' => $this->empleado_id
+                'empleado_id' => $this->empleado_id,
             ]);
             DB::commit();
             $this->reset();
+
             return true;
         } catch (\Throwable $th) {
             DB::rollback();
+
             return false;
         }
     }
@@ -108,13 +115,15 @@ class TrainingForm extends Form
                 'validity' => $this->validity,
                 'validityStatus' => $this->validityStatus === 'Vencido' ? false : true,
                 'evidence_id' => $document_id,
-                'empleado_id' => $this->empleado_id
+                'empleado_id' => $this->empleado_id,
             ]);
             DB::commit();
             $this->reset();
+
             return true;
         } catch (\Throwable $th) {
             DB::rollback();
+
             return false;
         }
     }

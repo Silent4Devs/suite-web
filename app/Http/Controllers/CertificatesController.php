@@ -17,7 +17,8 @@ use Illuminate\Support\Facades\Mail;
 
 class CertificatesController extends Controller
 {
-    private $modelo = "TBCatalogueTrainingModel";
+    private $modelo = 'TBCatalogueTrainingModel';
+
     //
     public function TypeCatalogueTraining()
     {
@@ -37,11 +38,11 @@ class CertificatesController extends Controller
 
     public function revision($id)
     {
-        $modelo = "TBCatalogueTrainingModel";
+        $modelo = 'TBCatalogueTrainingModel';
 
         $catalogueTraining = TBCatalogueTrainingModel::find($id);
 
-        if (!$catalogueTraining) {
+        if (! $catalogueTraining) {
             abort(404);
         }
 
@@ -72,8 +73,8 @@ class CertificatesController extends Controller
                                 return view('admin.catalogueTraining.tbApprove', compact('catalogueTraining', 'acceso_restringido'));
                                 break;
                             } elseif (
-                                !($part->estatus == 'Pendiente')
-                                && !($part->participante->empleado_id == User::getCurrentUser()->empleado->id)
+                                ! ($part->estatus == 'Pendiente')
+                                && ! ($part->participante->empleado_id == User::getCurrentUser()->empleado->id)
                             ) {
                                 $acceso_restringido = 'turno';
 
@@ -94,6 +95,7 @@ class CertificatesController extends Controller
             return view('admin.catalogueTraining.tbApprove', compact('catalogueTraining', 'acceso_restringido'));
         } else {
             $acceso_restringido = 'aprobado';
+
             return view('admin.catalogueTraining.tbApprove', compact('catalogueTraining', 'acceso_restringido'));
         }
     }
@@ -161,12 +163,13 @@ class CertificatesController extends Controller
             ]);
             $this->confirmacionAprobacion($proceso_general, $catalogueTraining);
         }
+
         return redirect(route('admin.portal-comunicacion.index'));
     }
 
     public function correosAprobacion($proceso, $catalogueTraining)
     {
-            $emailAprobado = $catalogueTraining->empleado->email;
+        $emailAprobado = $catalogueTraining->empleado->email;
         Mail::to(removeUnicodeCharacters($emailAprobado))->queue(new ApprovalNotificationCertificatesMail($catalogueTraining->id, $catalogueTraining->name));
         $procesoAprobado = ProcesosListaDistribucion::with('participantes')->find($proceso->id);
         foreach ($procesoAprobado->participantes as $part) {

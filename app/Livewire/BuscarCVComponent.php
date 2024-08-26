@@ -9,7 +9,6 @@ use App\Models\TBCatalogueTrainingModel;
 use App\Models\TBEvidenceTrainingModel;
 use App\Models\TBTypeCatalogueTrainingModel;
 use App\Models\TBUserTrainingModel;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
@@ -22,35 +21,49 @@ class BuscarCVComponent extends Component
 
     protected $paginationTheme = 'bootstrap';
 
-
-
     public $isPersonal;
+
     public $empleadoModel;
+
     public $documents;
+
     public $categories;
+
     public $names;
+
     public $employedCv;
+
     public $catalog;
+
     public $areas;
+
     public $employess;
+
     public $issuingCompanies;
+
     public $normas;
+
     public $type_id;
+
     public $name_id;
+
     public $area_id;
+
     public $employ_id;
+
     public $issuingCompanyId;
+
     public $normaId;
 
     public function resetFilter()
     {
         // $this->reset(
-            $this->type_id = null;
-            $this->name_id = null;
-            $this->area_id = null;
-            $this->employ_id = null;
-            $this->issuingCompanyId = null;
-            $this->normaId = null;
+        $this->type_id = null;
+        $this->name_id = null;
+        $this->area_id = null;
+        $this->employ_id = null;
+        $this->issuingCompanyId = null;
+        $this->normaId = null;
         // );
 
         $this->employedCv = $this->catalog;
@@ -62,7 +75,8 @@ class BuscarCVComponent extends Component
         $this->filters();
     }
 
-    public function filterIssuingCompany(){
+    public function filterIssuingCompany()
+    {
         $this->filters();
     }
 
@@ -85,8 +99,8 @@ class BuscarCVComponent extends Component
     public function getCatalogueName()
     {
         $type_id = intval($this->type_id);
-        foreach($this->categories as $category){
-            if($category->id === $type_id){
+        foreach ($this->categories as $category) {
+            if ($category->id === $type_id) {
                 $this->names = $category->catalogue;
                 break;
             }
@@ -97,13 +111,14 @@ class BuscarCVComponent extends Component
 
     }
 
-    public function filters(){
+    public function filters()
+    {
         $query = TBUserTrainingModel::query();
-        if($this->type_id){
+        if ($this->type_id) {
             $query->where('type_id', $this->type_id);
         }
 
-        if($this->name_id){
+        if ($this->name_id) {
             $query->where('name_id', $this->name_id);
         }
 
@@ -119,15 +134,15 @@ class BuscarCVComponent extends Component
             });
         }
 
-        if($this->issuingCompanyId){
+        if ($this->issuingCompanyId) {
             $query->whereHas('getName', function ($query) {
-                $query->where('issuing_company', 'LIKE', '%' . $this->issuingCompanyId . '%');
+                $query->where('issuing_company', 'LIKE', '%'.$this->issuingCompanyId.'%');
             });
         }
 
-        if($this->normaId){
+        if ($this->normaId) {
             $query->whereHas('getName', function ($query) {
-                $query->where('norma', 'LIKE', '%' . $this->normaId . '%');
+                $query->where('norma', 'LIKE', '%'.$this->normaId.'%');
             });
         }
 
@@ -137,7 +152,7 @@ class BuscarCVComponent extends Component
     public function downloadEvidencie($id)
     {
         $evidenceRegister = TBEvidenceTrainingModel::findOrFail($id);
-        $filePath = $evidenceRegister->ubication . '/'. $evidenceRegister->name;
+        $filePath = $evidenceRegister->ubication.'/'.$evidenceRegister->name;
 
         if (Storage::exists($filePath)) {
             return Storage::download($filePath);
@@ -147,7 +162,7 @@ class BuscarCVComponent extends Component
     public function mount($isPersonal)
     {
         $this->isPersonal = $isPersonal;
-        if(!$this->isPersonal){
+        if (! $this->isPersonal) {
             $this->employedCv = TBUserTrainingModel::get();
             $this->catalog = $this->employedCv;
             $this->categories = TBTypeCatalogueTrainingModel::get();
@@ -155,29 +170,28 @@ class BuscarCVComponent extends Component
             $this->issuingCompanies = collect();
             $this->employess = Empleado::getaltaAll();
             $this->issuingCompanies = TBCatalogueTrainingModel::select('issuing_company')
-            ->distinct()
-            ->pluck('issuing_company');
+                ->distinct()
+                ->pluck('issuing_company');
             $this->normas = TBCatalogueTrainingModel::select('norma')
-            ->distinct()
-            ->pluck('norma');
+                ->distinct()
+                ->pluck('norma');
         }
     }
 
     public function render()
     {
 
-
-            return view('livewire.buscar-c-v-component');
-            // 'empleadosCV' => $empleadosCV,
+        return view('livewire.buscar-c-v-component');
+        // 'empleadosCV' => $empleadosCV,
         //     'lista_docs' => ListaDocumentoEmpleado::getAll(),
         // ]
-    // );
+        // );
     }
 
     public function mostrarCurriculum($empleadoID)
     {
         $this->empleadoModel = Empleado::getEmpleadoCurriculum($empleadoID)->find($empleadoID);
-        $this->documents = TBUserTrainingModel::where('empleado_id',$empleadoID)->get();
+        $this->documents = TBUserTrainingModel::where('empleado_id', $empleadoID)->get();
         $this->dispatch('tagify');
     }
 

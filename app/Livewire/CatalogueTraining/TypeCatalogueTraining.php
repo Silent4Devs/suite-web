@@ -10,17 +10,19 @@ use Livewire\Component;
 class TypeCatalogueTraining extends Component
 {
     #[Validate('required')]
-    public $name = "";
+    public $name = '';
 
     public $registers;
-    public $status = true;
-    public $editRegister;
-    public $deleteRegister;
 
+    public $status = true;
+
+    public $editRegister;
+
+    public $deleteRegister;
 
     public function clearInput()
     {
-        $this->reset('name','status','editRegister');
+        $this->reset('name', 'status', 'editRegister');
     }
 
     public function delete()
@@ -65,17 +67,18 @@ class TypeCatalogueTraining extends Component
 
     public function form()
     {
-        $this->status ? $this->save():$this->update() ;
+        $this->status ? $this->save() : $this->update();
     }
 
     public function render()
     {
         $registers = TBTypeCatalogueTrainingModel::orderBy('id')->get();
-        foreach($registers as $register){
+        foreach ($registers as $register) {
             $date = Carbon::parse($register->created_at)->format('d-m-Y');
             $register->date = $date;
         }
         $this->registers = $registers;
+
         return view('livewire.catalogue-training.type-catalogue-training');
     }
 }

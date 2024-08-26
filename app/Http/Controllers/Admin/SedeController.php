@@ -161,24 +161,24 @@ class SedeController extends Controller
     {
         abort_if(Gate::denies('sedes_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-            $sede = Sede::getbyId($id);
-            $image = $sede->foto_sedes;
+        $sede = Sede::getbyId($id);
+        $image = $sede->foto_sedes;
 
-            // Check and delete the existing image if it exists
-            $existingImagePath = 'sedes/imagenes/'.$sede->foto_sedes;
+        // Check and delete the existing image if it exists
+        $existingImagePath = 'sedes/imagenes/'.$sede->foto_sedes;
 
-            if ($sede->foto_sedes && Storage::disk('public')->exists($existingImagePath)) {
-                Storage::disk('public')->delete($existingImagePath);
-            }
+        if ($sede->foto_sedes && Storage::disk('public')->exists($existingImagePath)) {
+            Storage::disk('public')->delete($existingImagePath);
+        }
 
-            $sede->update([
-                'sede' => $request->sede,
-                'foto_sedes' => $request->foto_sede,
-                'direccion' => $request->direccion,
-                'descripcion' => $request->descripcion
-            ]);
+        $sede->update([
+            'sede' => $request->sede,
+            'foto_sedes' => $request->foto_sede,
+            'direccion' => $request->direccion,
+            'descripcion' => $request->descripcion,
+        ]);
 
-            return redirect()->route('admin.sedes.index')->with('success', 'Editado con éxito');
+        return redirect()->route('admin.sedes.index')->with('success', 'Editado con éxito');
     }
 
     public function show(Sede $sede)
