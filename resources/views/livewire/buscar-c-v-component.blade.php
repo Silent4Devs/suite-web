@@ -268,7 +268,7 @@
                         @if (!$isPersonal)
                             <div x-show="!open">
                                 <div class="row justify-content-center">
-                                    <div class="col-12">
+                                    <div class="col-10">
                                         <button class="btn btn-sm btn_cancelar" x-on:click="open = true"><i
                                                 class="fas fa-arrow-left"></i> Regresar</button>
 
@@ -277,6 +277,11 @@
                                             Imprimir
                                         </button>
                                     </div>
+                                    @can('profile_professional_edit')
+                                    <div class="col-2 justify-content-end">
+                                            <a class="btn btn-sm btn-success" href="{{ route('admin.editarCompetencias',$empleadoModel) }}"  role="button">Editar</a>
+                                    </div>
+                                    @endcan
                                     <div class="mt-4 col-sm-12 col-md-12">
                                         <div id="imp1" class="card" style="background-color:#EDEEF0"
                                             style="position-relative; height:auto">

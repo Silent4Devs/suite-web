@@ -15,7 +15,7 @@ class CatalogueTrainingLDSeeder extends Seeder
         $modulos = [
             [
                 'modulo' => 'Certificaciones',
-                'submodulo' => 'catalogo de certificaciones',
+                'submodulo' => 'Catálogo de certificaciones',
                 'modelo' => 'TBCatalogueTrainingModel',
                 'niveles' => 1,
             ],
