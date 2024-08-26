@@ -78,14 +78,15 @@ class ClasificacionesAuditoriasController extends Controller
     public function store(Request $request)
     {
         abort_if(Gate::denies('clasificaciones_auditorias_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $request->validate([
-            'nombre' => 'required',
+        $validatedData = $request->validate([
+            'identificador' => 'unique:clasificaciones_auditorias,identificador', // Ignora el actual en la validación
+            'nombre' => 'required|unique:clasificaciones_auditorias,nombre_clasificaciones',
         ]);
 
         try {
             $nuevaClasificacion = ClasificacionesAuditorias::create([
-                'identificador' => $request->identificador,
-                'nombre_clasificaciones' => $request->nombre,
+                'identificador' => $validatedData['identificador'],
+                'nombre_clasificaciones' => $validatedData['nombre'],
                 'descripcion' => $request->descripcion,
             ]);
 
@@ -97,8 +98,8 @@ class ClasificacionesAuditoriasController extends Controller
         } catch (Throwable $th) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Hubo un problema al crear la clasificación. Inténtalo nuevamente.'
-            ]);
+                'message' => 'Hubo un problema al modificar la clasificación. Inténtalo nuevamente.'
+            ], 500);
         }
     }
 
@@ -129,31 +130,37 @@ class ClasificacionesAuditoriasController extends Controller
     public function update($id, Request $request)
     {
         abort_if(Gate::denies('clasificaciones_auditorias_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $request->validate([
-            'nombre' => 'required',
+
+        // Validación
+
+        $validatedData = $request->validate([
+            'identificador' => 'unique:clasificaciones_auditorias,identificador,' . $id . '', // Ignora el actual en la validación
+            'nombre' => 'required|unique:clasificaciones_auditorias,nombre_clasificaciones,' . $id . '',
         ]);
-        // dd('validacion');
+
         try {
-            $editClasificacion = ClasificacionesAuditorias::find($id);
+            $editClasificacion = ClasificacionesAuditorias::findOrFail($id); // Usa findOrFail para manejar el caso en que no se encuentre el registro
 
             $editClasificacion->update([
-                'identificador' => $request->identificador,
-                'nombre_clasificaciones' => $request->nombre,
+                'identificador' => $validatedData['identificador'],
+                'nombre_clasificaciones' => $validatedData['nombre'],
                 'descripcion' => $request->descripcion,
             ]);
 
             return response()->json([
                 'status' => 'success',
-                'message' => 'Clasificación modificar. La clasificación fue modificar exitosamente.',
+                'message' => 'Clasificación modificada. La clasificación fue modificada exitosamente.',
                 'redirect_url' => route('admin.auditoria-clasificacion') // Ruta de redirección
             ]);
         } catch (Throwable $th) {
+            // Manejo de errores inesperados
             return response()->json([
                 'status' => 'error',
                 'message' => 'Hubo un problema al modificar la clasificación. Inténtalo nuevamente.'
-            ]);
+            ], 500);
         }
     }
+
 
     /**
      * Remove the specified resource from storage.
