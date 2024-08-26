@@ -80,21 +80,21 @@ class AreasController extends Controller
             $new_name_image = 'UID_'.$area->id.'_'.$hash_name.'.png';
 
             // Call the ImageService to consume the external API
-            $apiResponse = ImageService::consumeImageCompresorApi($file);
+            // $apiResponse = ImageService::consumeImageCompresorApi($file);
 
-            // Compress and save the image
-            if ($apiResponse['status'] == 200) {
-                $rutaGuardada = '/app/public/areas/'.$new_name_image;
-                file_put_contents(storage_path($rutaGuardada), $apiResponse['body']);
+            // // Compress and save the image
+            // if ($apiResponse['status'] == 200) {
+            //     $rutaGuardada = '/app/public/areas/'.$new_name_image;
+            //     file_put_contents(storage_path($rutaGuardada), $apiResponse['body']);
 
-                $area->update([
-                    'foto_area' => $new_name_image,
-                ]);
-            } else {
-                $mensajeError = 'Error al recibir la imagen de la API externa: '.$apiResponse['body'];
+            //     $area->update([
+            //         'foto_area' => $new_name_image,
+            //     ]);
+            // } else {
+            //     $mensajeError = 'Error al recibir la imagen de la API externa: '.$apiResponse['body'];
 
-                return Redirect::back()->with('error', $mensajeError);
-            }
+            //     return Redirect::back()->with('error', $mensajeError);
+            // }
         } else {
             $area->update([
                 'foto_area' => null,
@@ -154,21 +154,21 @@ class AreasController extends Controller
             }
 
             // Call the ImageService to consume the external API
-            $apiResponse = ImageService::consumeImageCompresorApi($file);
+            // $apiResponse = ImageService::consumeImageCompresorApi($file);
 
-            // Compress and save the image
-            if ($apiResponse['status'] == 200) {
-                $rutaGuardada = '/app/public/areas/'.$new_name_image;
-                file_put_contents(storage_path($rutaGuardada), $apiResponse['body']);
 
-                $area->update([
-                    'foto_area' => $new_name_image,
-                ]);
-            } else {
-                $mensajeError = 'Error al recibir la imagen de la API externa: '.$apiResponse['body'];
+            // // Compress and save the image
+            // if ($apiResponse['status'] == 200) {
+            //     $rutaGuardada = '/app/public/areas/' . $new_name_image;
+            //     file_put_contents(storage_path($rutaGuardada), $apiResponse['body']);
 
-                return Redirect::back()->with('error', $mensajeError);
-            }
+            //     $area->update([
+            //         'foto_area' => $new_name_image,
+            //     ]);
+            // } else {
+            //     $mensajeError = 'Error al recibir la imagen de la API externa: ' . $apiResponse['body'];
+            //     return Redirect::back()->with('error', $mensajeError);
+            // }
         } else {
             $area->update([
                 'foto_area' => null,
