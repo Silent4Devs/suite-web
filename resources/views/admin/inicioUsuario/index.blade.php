@@ -128,6 +128,11 @@
                                         <a href="mailto:{{ $empleado_cargo->email }}">
                                             <i class="bi bi-envelope"></i>
                                         </a>
+                                        <a href="{{ route('admin.editarCompetencias', $empleado_cargo) }}">
+                                            <i class="material-symbols-outlined">
+                                                contract_edit
+                                            </i>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
