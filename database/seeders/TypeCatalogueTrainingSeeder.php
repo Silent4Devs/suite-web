@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\TBTypeCatalogueTrainingModel;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class TypeCatalogueTrainingSeeder extends Seeder
@@ -50,7 +49,7 @@ class TypeCatalogueTrainingSeeder extends Seeder
                 'name' => 'Foro',
                 'default' => true,
             ],
-            ];
+        ];
         TBTypeCatalogueTrainingModel::insert($catalogue);
     }
 }

@@ -302,7 +302,6 @@ class FormularioObjetivosDesempenoEmpleados extends Component
             $estatus = 0;
         }
 
-
         try {
             DB::beginTransaction();
             $objetivo = Objetivo::create([
@@ -430,9 +429,9 @@ class FormularioObjetivosDesempenoEmpleados extends Component
             ]);
         }
 
-                    $this->resetInputsObjetivo();
-            $this->resetInputsPeriodos();
-            $this->resetInputsEscalas();
+        $this->resetInputsObjetivo();
+        $this->resetInputsPeriodos();
+        $this->resetInputsEscalas();
 
     }
 

@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\TBTypeCatalogueTrainingModel;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class CatalogueTrainingSeeder extends Seeder
@@ -15,7 +14,7 @@ class CatalogueTrainingSeeder extends Seeder
     {
         $catalogue = [
             [
-                'name'=>'Certificación',
+                'name' => 'Certificación',
                 'default' => true,
             ],
             [
@@ -50,7 +49,7 @@ class CatalogueTrainingSeeder extends Seeder
                 'name' => 'Foro',
                 'default' => true,
             ],
-            ];
-            TBTypeCatalogueTrainingModel::insert($catalogue);
+        ];
+        TBTypeCatalogueTrainingModel::insert($catalogue);
     }
 }

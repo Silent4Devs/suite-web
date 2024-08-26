@@ -135,12 +135,12 @@ class PoliticaSgsiController extends Controller
 
     public function create()
     {
-       try {
-        abort_if(Gate::denies('politica_sistema_gestion_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        try {
+            abort_if(Gate::denies('politica_sistema_gestion_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $empleados = Empleado::getAltaEmpleadosWithArea();
+            $empleados = Empleado::getAltaEmpleadosWithArea();
 
-        return view('admin.politicaSgsis.create', compact('empleados'));
+            return view('admin.politicaSgsis.create', compact('empleados'));
 
         } catch (\Exception $e) {
             Log::channel('logstash')->info('Error al crear politica: '.$e->getMessage(), [
@@ -155,31 +155,31 @@ class PoliticaSgsiController extends Controller
 
     public function store(StorePoliticaSgsiRequest $request)
     {
-       try {
-        abort_if(Gate::denies('politica_sistema_gestion_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        try {
+            abort_if(Gate::denies('politica_sistema_gestion_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $request->validate([
-            'nombre_politica' => 'required',
-            'politicasgsi' => 'required',
-            'fecha_publicacion' => 'required|date',
-            'fecha_revision' => 'required|date',
-        ]);
+            $request->validate([
+                'nombre_politica' => 'required',
+                'politicasgsi' => 'required',
+                'fecha_publicacion' => 'required|date',
+                'fecha_revision' => 'required|date',
+            ]);
 
-        $politicaSgsi = PoliticaSgsi::create([
-            'nombre_politica' => $request->input('nombre_politica'),
-            'politicasgsi' => $request->input('politicasgsi'),
-            'fecha_publicacion' => $request->input('fecha_publicacion'),
-            'fecha_revision' => $request->input('fecha_revision'),
-            'estatus' => 'Pendiente',
-            'id_reviso_politica' => User::getCurrentUser()->empleado->id,
-        ]);
+            $politicaSgsi = PoliticaSgsi::create([
+                'nombre_politica' => $request->input('nombre_politica'),
+                'politicasgsi' => $request->input('politicasgsi'),
+                'fecha_publicacion' => $request->input('fecha_publicacion'),
+                'fecha_revision' => $request->input('fecha_revision'),
+                'estatus' => 'Pendiente',
+                'id_reviso_politica' => User::getCurrentUser()->empleado->id,
+            ]);
 
-        //envio de corrreo
-        $this->solicitudAprobacion($politicaSgsi->id);
+            //envio de corrreo
+            $this->solicitudAprobacion($politicaSgsi->id);
 
-        $politicaSgsi->estatus = 'Pendiente';
+            $politicaSgsi->estatus = 'Pendiente';
 
-        return redirect()->route('admin.politica-sgsis.index')->with('success', 'Guardado con éxito');
+            return redirect()->route('admin.politica-sgsis.index')->with('success', 'Guardado con éxito');
 
         } catch (\Exception $e) {
             Log::channel('logstash')->info('Error al guardar politica: '.$e->getMessage(), [
@@ -217,7 +217,7 @@ class PoliticaSgsiController extends Controller
 
             return view('admin.politicaSgsis.edit', compact('politicaSgsi', 'empleados', 'fecha_publicacion', 'fecha_revision', 'comentarios'));
         } catch (\Exception $e) {
-            
+
             Log::channel('logstash')->info('Error al editar politica: '.$e->getMessage(), [
                 'exception' => $e,
                 'input' => $request->all(),
@@ -298,11 +298,11 @@ class PoliticaSgsiController extends Controller
     {
         try {
 
-        abort_if(Gate::denies('politica_sistema_gestion_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            abort_if(Gate::denies('politica_sistema_gestion_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $politicaSgsi->delete();
+            $politicaSgsi->delete();
 
-        return back()->with('deleted', 'Registro eliminado con éxito');
+            return back()->with('deleted', 'Registro eliminado con éxito');
 
         } catch (\Exception $e) {
 

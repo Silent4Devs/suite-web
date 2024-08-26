@@ -22,7 +22,6 @@ use Intervention\Image\Facades\Image;
 use Maatwebsite\Excel\Facades\Excel;
 use PDF;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class AreasController extends Controller
 {
@@ -31,7 +30,7 @@ class AreasController extends Controller
     public function index(Request $request)
     {
         abort_if(Gate::denies('crear_area_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        
+
         $direccion_exists = Area::select('id_reporta')->whereNull('id_reporta')->exists();
         $areas = Area::getAll();
         $teams = Team::get();
@@ -78,21 +77,21 @@ class AreasController extends Controller
             $file = $request->file('foto_area');
             //$name_image = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
             $hash_name = pathinfo($file->hashName(), PATHINFO_FILENAME);
-            $new_name_image = 'UID_' . $area->id . '_' . $hash_name . '.png';
+            $new_name_image = 'UID_'.$area->id.'_'.$hash_name.'.png';
 
             // Call the ImageService to consume the external API
             $apiResponse = ImageService::consumeImageCompresorApi($file);
 
             // Compress and save the image
             if ($apiResponse['status'] == 200) {
-                $rutaGuardada = '/app/public/areas/' . $new_name_image;
+                $rutaGuardada = '/app/public/areas/'.$new_name_image;
                 file_put_contents(storage_path($rutaGuardada), $apiResponse['body']);
 
                 $area->update([
                     'foto_area' => $new_name_image,
                 ]);
             } else {
-                $mensajeError = 'Error al recibir la imagen de la API externa: ' . $apiResponse['body'];
+                $mensajeError = 'Error al recibir la imagen de la API externa: '.$apiResponse['body'];
 
                 return Redirect::back()->with('error', $mensajeError);
             }
@@ -146,9 +145,9 @@ class AreasController extends Controller
             //Si existe la imagen entonces se elimina al editarla
             $file = $request->file('foto_area');
 
-            $filePath = '/app/public/areas/' . $area->foto_area;
+            $filePath = '/app/public/areas/'.$area->foto_area;
             $hash_name = pathinfo($file->hashName(), PATHINFO_FILENAME);
-            $new_name_image = 'UID_' . $area->id . '_' . $hash_name . '.png';
+            $new_name_image = 'UID_'.$area->id.'_'.$hash_name.'.png';
 
             if (Storage::disk('public')->exists($filePath)) {
                 Storage::disk('public')->delete($filePath);
@@ -159,14 +158,14 @@ class AreasController extends Controller
 
             // Compress and save the image
             if ($apiResponse['status'] == 200) {
-                $rutaGuardada = '/app/public/areas/' . $new_name_image;
+                $rutaGuardada = '/app/public/areas/'.$new_name_image;
                 file_put_contents(storage_path($rutaGuardada), $apiResponse['body']);
 
                 $area->update([
                     'foto_area' => $new_name_image,
                 ]);
             } else {
-                $mensajeError = 'Error al recibir la imagen de la API externa: ' . $apiResponse['body'];
+                $mensajeError = 'Error al recibir la imagen de la API externa: '.$apiResponse['body'];
 
                 return Redirect::back()->with('error', $mensajeError);
             }
@@ -234,7 +233,7 @@ class AreasController extends Controller
         $grupos = Grupo::with('areas')->orderBy('id')->get();
         $organizacionDB = Organizacion::getFirst();
         $organizacion = ! is_null($organizacionDB) ? Organizacion::getFirst()->empresa : 'la organización';
-        $org_foto = ! is_null($organizacionDB) ? url('images/' . DB::table('organizacions')->select('logotipo')->first()->logotipo) : url('img/Silent4Business-Logo-Color.png');
+        $org_foto = ! is_null($organizacionDB) ? url('images/'.DB::table('organizacions')->select('logotipo')->first()->logotipo) : url('img/Silent4Business-Logo-Color.png');
         $areas_sin_grupo = Area::whereDoesntHave('grupo')->get();
         $organizacion = Organizacion::getFirst();
 

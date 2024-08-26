@@ -10,19 +10,23 @@ use Livewire\Component;
 class CatalogueTraining extends Component
 {
     public CatalogueTrainingForm $form;
+
     public $registers;
+
     public $typesCatalogue;
+
     public $status = 'create';
+
     public $id;
 
     public function edit()
     {
         $this->id;
         $succes = $this->form->update($this->id);
-        if($succes){
+        if ($succes) {
             $this->dispatch('edited');
             $this->status = 'create';
-        }else {
+        } else {
             $this->dispatch('nameValidation');
         }
     }
@@ -39,16 +43,16 @@ class CatalogueTraining extends Component
     public function save()
     {
         $succes = $this->form->store();
-        if($succes){
+        if ($succes) {
             $this->dispatch('saved');
-        }else {
+        } else {
             $this->dispatch('nameValidation');
         }
     }
 
     public function render()
     {
-        $registers = TBCatalogueTrainingModel::where('status','approved')->orderBy('id')->get();
+        $registers = TBCatalogueTrainingModel::where('status', 'approved')->orderBy('id')->get();
         $typesCatalogue = TBTypeCatalogueTrainingModel::orderBy('name')->get();
 
         $this->registers = $registers;

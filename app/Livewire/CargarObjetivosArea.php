@@ -2,19 +2,13 @@
 
 namespace App\Livewire;
 
-use Livewire\Component;
-
-use App\Mail\CorreoCargaObjetivos;
 use App\Models\Area;
 use App\Models\Empleado;
-use App\Models\PerfilEmpleado;
 use App\Models\PeriodoCargaObjetivos;
-use App\Models\PermisosCargaObjetivos;
-use App\Models\Puesto;
 use App\Models\RH\Objetivo;
 use App\Models\User;
-use Illuminate\Support\Facades\Mail;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Component;
 
 class CargarObjetivosArea extends Component
 {
@@ -22,9 +16,9 @@ class CargarObjetivosArea extends Component
 
     public $empleados;
 
-public $area=null;
+    public $area = null;
 
-public $colaboradores= null;
+    public $colaboradores = null;
 
     public $total_colaboradores = 0;
 
@@ -47,10 +41,10 @@ public $colaboradores= null;
     public function mount($id_area)
     {
         $this->area = Area::where('id', $id_area)->first();
-        $this->emp= User::getCurrentUser()->empleado;
+        $this->emp = User::getCurrentUser()->empleado;
 
         // $this->colaboradores = Empleado::getaltaAllObjetivosGenerales()->where('area_id', $this->area->id)->sortBy('name');
-        $this->colaboradores=$this->emp->subordinados;
+        $this->colaboradores = $this->emp->subordinados;
         // dd($this->emp->subordinados);
         $periodo = PeriodoCargaObjetivos::first();
         $this->fecha_inicio = $periodo->fecha_inicio ?? null;
@@ -98,6 +92,4 @@ public $colaboradores= null;
         $this->total_sin_objetivos = 0;
         $this->total_obj_pend = 0;
     }
-
 }
-

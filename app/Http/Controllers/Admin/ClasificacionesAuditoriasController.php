@@ -93,12 +93,12 @@ class ClasificacionesAuditoriasController extends Controller
             return response()->json([
                 'status' => 'success',
                 'message' => 'Clasificación creada. La clasificación fue creada exitosamente.',
-                'redirect_url' => route('admin.auditoria-clasificacion') // Ruta de redirección
+                'redirect_url' => route('admin.auditoria-clasificacion'), // Ruta de redirección
             ]);
         } catch (Throwable $th) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Hubo un problema al modificar la clasificación. Inténtalo nuevamente.'
+                'message' => 'Hubo un problema al modificar la clasificación. Inténtalo nuevamente.',
             ], 500);
         }
     }
@@ -135,7 +135,7 @@ class ClasificacionesAuditoriasController extends Controller
 
         $validatedData = $request->validate([
             // 'identificador' => 'unique:clasificaciones_auditorias,identificador,' . $id . '', // Ignora el actual en la validación
-            'nombre' => 'required|unique:clasificaciones_auditorias,nombre_clasificaciones,' . $id . '',
+            'nombre' => 'required|unique:clasificaciones_auditorias,nombre_clasificaciones,'.$id.'',
         ]);
 
         try {
@@ -150,17 +150,16 @@ class ClasificacionesAuditoriasController extends Controller
             return response()->json([
                 'status' => 'success',
                 'message' => 'Clasificación modificada. La clasificación fue modificada exitosamente.',
-                'redirect_url' => route('admin.auditoria-clasificacion') // Ruta de redirección
+                'redirect_url' => route('admin.auditoria-clasificacion'), // Ruta de redirección
             ]);
         } catch (Throwable $th) {
             // Manejo de errores inesperados
             return response()->json([
                 'status' => 'error',
-                'message' => 'Hubo un problema al modificar la clasificación. Inténtalo nuevamente.'
+                'message' => 'Hubo un problema al modificar la clasificación. Inténtalo nuevamente.',
             ], 500);
         }
     }
-
 
     /**
      * Remove the specified resource from storage.

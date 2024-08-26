@@ -118,11 +118,12 @@ class EvaluacionesDesempenoController extends Controller
         return view('admin.recursos-humanos.evaluaciones-desempeno.carga-objetivos-empleado', compact('empleado', 'organizacion'));
     }
 
-    public function cargaObjetivosArea($AreaID){
-        $empleado=User::getCurrentUser()->empleado;
+    public function cargaObjetivosArea($AreaID)
+    {
+        $empleado = User::getCurrentUser()->empleado;
         if (($empleado->area_id == $AreaID) && $empleado->es_supervisor) {
             return view('admin.recursos-humanos.evaluacion-360.objetivos-periodo.cargar-por-area', compact('AreaID'));
-        }else{
+        } else {
             return view('admin.inicioUsuario.index');
         }
     }
