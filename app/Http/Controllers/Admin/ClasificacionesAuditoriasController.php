@@ -79,7 +79,7 @@ class ClasificacionesAuditoriasController extends Controller
     {
         abort_if(Gate::denies('clasificaciones_auditorias_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $validatedData = $request->validate([
-            // 'identificador' => 'unique:clasificaciones_auditorias,identificador', // Ignora el actual en la validación
+            'identificador' => 'unique:clasificaciones_auditorias,identificador', // Ignora el actual en la validación
             'nombre' => 'required|unique:clasificaciones_auditorias,nombre_clasificaciones',
         ]);
 
@@ -134,7 +134,7 @@ class ClasificacionesAuditoriasController extends Controller
         // Validación
 
         $validatedData = $request->validate([
-            // 'identificador' => 'unique:clasificaciones_auditorias,identificador,' . $id . '', // Ignora el actual en la validación
+            'identificador' => 'unique:clasificaciones_auditorias,identificador,'.$id.'', // Ignora el actual en la validación
             'nombre' => 'required|unique:clasificaciones_auditorias,nombre_clasificaciones,'.$id.'',
         ]);
 

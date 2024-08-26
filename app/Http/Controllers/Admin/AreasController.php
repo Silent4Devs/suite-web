@@ -156,7 +156,6 @@ class AreasController extends Controller
             // Call the ImageService to consume the external API
             // $apiResponse = ImageService::consumeImageCompresorApi($file);
 
-
             // // Compress and save the image
             // if ($apiResponse['status'] == 200) {
             //     $rutaGuardada = '/app/public/areas/' . $new_name_image;
