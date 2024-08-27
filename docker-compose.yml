@@ -203,7 +203,7 @@ services:
       - "/:/host:ro"
       - "/var/run/docker.sock:/var/run/docker.sock"
     environment:
-      NRIA_LICENSE_KEY: "4125e930d3e3d4e0ee11b9017af9447dFFFFNRAL"
+      NRIA_LICENSE_KEY: "e88a6e276f60039c25d5a7eeb030f922FFFFNRAL"
     restart: unless-stopped
     networks:
       - tabantajnetwork
@@ -220,7 +220,7 @@ services:
     pid: host
     privileged: true
     environment:
-      NRIA_LICENSE_KEY: "4125e930d3e3d4e0ee11b9017af9447dFFFFNRAL"
+      NRIA_LICENSE_KEY: "e88a6e276f60039c25d5a7eeb030f922FFFFNRAL"
     restart: unless-stopped
     networks:
       - tabantajnetwork
