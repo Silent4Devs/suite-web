@@ -221,7 +221,7 @@ services:
     privileged: true
     environment:
       NRIA_LICENSE_KEY: "e88a6e276f60039c25d5a7eeb030f922FFFFNRAL"
-      NRI_USER_KEY: "NRAK-TTOSMJXX2QTZ6CPVPOKVONLJ54X"
+      #NRI_USER_KEY: "NRAK-TTOSMJXX2QTZ6CPVPOKVONLJ54X"
     restart: unless-stopped
     networks:
       - tabantajnetwork
