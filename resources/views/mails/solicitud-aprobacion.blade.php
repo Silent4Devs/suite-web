@@ -69,7 +69,7 @@
                                     <blockquote>{{ $historialRevisionDocumento->comentarios }}</blockquote>
                                 </div>
 
-                                <a href="{{ route('revisiones.revisar', $revision->id) }}"
+                                <a href="{{ route('admin.revisiones.revisar', $revision->id) }}"
                                     style="outline: none; text-decoration: none; font-size: small; font-family: Arial, Helvetica, sans-serif; background-color: #358765; padding: 10px; border-radius: 10px; color: white;">
                                     Revisar Documento
                                 </a>
