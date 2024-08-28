@@ -19,7 +19,7 @@
                         <span style="font-size: 25px;">Directivo</span>
                         <div>
                             <strong>Nombre del colaborador</strong> <br>
-                            <span>Karen</span>
+                            <span>{{ $currentUser->empleado->name }}</span>
                         </div>
                         <div class="img-person" style="width: 80px; height: 80px;">
                             <img src="" alt="">
@@ -65,8 +65,10 @@
                             {{ $vacacionesMounth->count() }}
                         @else
                             @php
-                                $vacacionesMounth = $vacacionesMounth->filter(function ($vacation) {
-                                    // return $vacation->empleado->area_id === $areaSeleccionada;
+                                $vacacionesMounth = $vacacionesMounth->filter(function ($vacation) use (
+                                    $areaSeleccionada,
+                                ) {
+                                    return $vacation->empleado->area_id === $areaSeleccionada;
                                 });
                             @endphp
                             {{ $vacacionesMounth->count() }}
@@ -89,8 +91,8 @@
                             {{ $dayOffMounth->count() }}
                         @else
                             @php
-                                $dayOffMounth = $dayOffMounth->filter(function ($dayOff) {
-                                    // return $dayOff->empleado->area_id === $areaSeleccionada;
+                                $dayOffMounth = $dayOffMounth->filter(function ($dayOff) use ($areaSeleccionada) {
+                                    return $dayOff->empleado->area_id === $areaSeleccionada;
                                 });
                             @endphp
                             {{ $dayOffMounth->count() }}
@@ -113,8 +115,8 @@
                             {{ $permisoMounth->count() }}
                         @else
                             @php
-                                $permisoMounth = $permisoMounth->filter(function ($permiso) {
-                                    // return $permiso->empleado->area_id === $areaSeleccionada;
+                                $permisoMounth = $permisoMounth->filter(function ($permiso) use ($areaSeleccionada) {
+                                    return $permiso->empleado->area_id === $areaSeleccionada;
                                 });
                             @endphp
                             {{ $permisoMounth->count() }}
@@ -195,45 +197,6 @@
                         <div id="demo-daily-agenda"></div>
                     </div>
                 </div>
-
-
-                <script>
-                    mobiscroll.setOptions({
-                        locale: mobiscroll
-                            .localeEs, // Specify language like: locale: mobiscroll.localePl or omit setting to use default
-                        theme: 'ios', // Specify theme like: theme: 'ios' or omit setting to use default
-                        themeVariant: 'light', // More info about themeVariant: https://mobiscroll.com/docs/javascript/eventcalendar/api#opt-themeVariant
-                    });
-
-                    var inst = mobiscroll.eventcalendar('#demo-daily-agenda', {
-                        view: { // More info about view: https://mobiscroll.com/docs/javascript/eventcalendar/api#opt-view
-                            calendar: {
-                                type: 'week'
-                            },
-                            agenda: {
-                                type: 'day'
-                            },
-                        },
-                        onEventClick: function(
-                            args
-                        ) { // More info about onEventClick: https://mobiscroll.com/docs/javascript/eventcalendar/api#event-onEventClick
-                            mobiscroll.toast({
-                                message: args.event.title,
-                            });
-                        },
-                    });
-
-                    mobiscroll.getJson(
-                        // 'https://trial.mobiscroll.com/events/?vers=5',
-                        function(events) {
-                            inst.setEvents(events);
-                        },
-                        'jsonp',
-                    );
-                </script>
-
-
-
             </div>
         </div>
     </div>
@@ -337,6 +300,41 @@
     @parent
     <script src="{{ asset('js/calendar-comunicado.js') }}"></script>
     <script src="{{ asset('js/calendario-comunicacion.js') }}"></script>
+
+    <script>
+        mobiscroll.setOptions({
+            locale: mobiscroll
+                .localeEs, // Specify language like: locale: mobiscroll.localePl or omit setting to use default
+            theme: 'ios', // Specify theme like: theme: 'ios' or omit setting to use default
+            themeVariant: 'light', // More info about themeVariant: https://mobiscroll.com/docs/javascript/eventcalendar/api#opt-themeVariant
+        });
+
+        var inst = mobiscroll.eventcalendar('#demo-daily-agenda', {
+            view: { // More info about view: https://mobiscroll.com/docs/javascript/eventcalendar/api#opt-view
+                calendar: {
+                    type: 'week'
+                },
+                agenda: {
+                    type: 'day'
+                },
+            },
+            onEventClick: function(
+                args
+            ) { // More info about onEventClick: https://mobiscroll.com/docs/javascript/eventcalendar/api#event-onEventClick
+                mobiscroll.toast({
+                    message: args.event.title,
+                });
+            },
+        });
+
+        mobiscroll.getJson(
+            'https://trial.mobiscroll.com/events/?vers=5',
+            function(events) {
+                inst.setEvents(events);
+            },
+            'jsonp',
+        );
+    </script>
 
     <script>
         function redirectToPage() {
