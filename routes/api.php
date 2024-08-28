@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\v1\AnalisisRiesgo\FormulasController;
 use App\Http\Controllers\Api\V1\AnalisisRiesgo\templateAnalisisRiesgoController;
 use App\Http\Controllers\Api\V1\Comunicados\tbApiMobileControllerComunicados;
 use App\Http\Controllers\Api\V1\ContadorSolicitudes\tbApiMobileControllerContadorSolicitudes;
+use App\Http\Controllers\Api\V1\Documentos\tbApiMobileControllerDocumentos;
 use App\Http\Controllers\Api\V1\PerfilUsuario\tbApiMobileControllerPerfilUsuario;
 use App\Http\Controllers\Api\V1\PortalComunicacion\tbApiMobileControllerPortalComunicacion;
 use App\Http\Controllers\Api\V1\SolicitudDayOff\tbApiMobileControllerSolicitudDayOff;
@@ -21,9 +22,13 @@ Route::group(['prefix' => 'api/v1', 'as' => 'api.', 'namespace' => 'Api\v1', 'mi
     Route::get('inicioUsuario', [InicioUsuarioController::class, 'index']);
 
     Route::get('perfilUsuario', [tbApiMobileControllerPerfilUsuario::class, 'tbFunctionPerfil']);
+    Route::get('equipoUsuario', [tbApiMobileControllerPerfilUsuario::class, 'tbFunctionEquipo']);
 
     Route::get('portal-comunicacion', [tbApiMobileControllerPortalComunicacion::class, 'tbFunctionIndex']);
     Route::get('comunicados', [tbApiMobileControllerComunicados::class, 'tbFunctionIndex']);
+
+    Route::get('documentos', [tbApiMobileControllerDocumentos::class, 'tbFunctionIndexUsuario']);
+    Route::get('revision', [tbApiMobileControllerDocumentos::class, 'handleApprovalOrRejection']);
 
     Route::get('counterSolicitud', [tbApiMobileControllerContadorSolicitudes::class, 'tbFunctionContadorSolicitudes']);
     Route::get('counterGeneralSolicitud', [tbApiMobileControllerContadorSolicitudes::class, 'tbFunctionContadorGeneralSolicitudes']);

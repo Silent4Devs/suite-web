@@ -108,6 +108,33 @@ class tbApiMobileControllerPerfilUsuario extends Controller
             'puestoRelacionado',
         ]);
 
+        return response(json_encode(
+            [
+                'empleado' => $empleado,
+            ],
+        ), 200)->header('Content-Type', 'application/json');
+    }
+
+    public function tbFunctionEquipo()
+    {
+        $empleado = Empleado::alta()->select(
+            'id',
+            'n_empleado',
+            'name',
+            'email',
+            'telefono_movil',
+            'area_id',
+            'puesto_id',
+            'foto',
+            'antiguedad',
+            'cumpleaños',
+            'estatus',
+            'supervisor_id',
+            'genero',
+            'sede_id',
+            'perfil_empleado_id',
+        )->where('id', User::getCurrentUser()->empleado->id)->first();
+
         $equipo_trabajo = $empleado->empleados_misma_area;
         $equipo_trabajo = Empleado::getaltaAll()->find($equipo_trabajo);
 
@@ -210,7 +237,6 @@ class tbApiMobileControllerPerfilUsuario extends Controller
 
         return response(json_encode(
             [
-                'empleado' => $empleado,
                 'equipo_trabajo' => $equipo_trabajo,
             ],
         ), 200)->header('Content-Type', 'application/json');
