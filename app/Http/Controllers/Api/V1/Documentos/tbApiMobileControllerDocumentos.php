@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\V1\Documentos;
 
+use App\Http\Controllers\Controller;
 use App\Mail\DocumentoAprobadoMail;
 use App\Mail\DocumentoNoPublicadoMail;
 use App\Mail\DocumentoPublicadoMail;
@@ -11,70 +12,112 @@ use App\Models\Documento;
 use App\Models\Empleado;
 use App\Models\HistorialRevisionDocumento;
 use App\Models\HistorialVersionesDocumento;
+use App\Models\Macroproceso;
 use App\Models\Proceso;
 use App\Models\RevisionDocumento;
+use App\Models\User;
+use App\Traits\ObtenerOrganizacion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
-class RevisionDocumentoController extends Controller
+class tbApiMobileControllerDocumentos extends Controller
 {
-    public function edit(RevisionDocumento $revisionDocumento)
+    use ObtenerOrganizacion;
+
+    public function tbFunctionIndexUsuario()
     {
-        $documento = Documento::find(intval($revisionDocumento->documento_id));
-        if (! $documento) {
-            abort_if(! $documento, 404);
-        }
-        $path_documentos_aprobacion = 'storage/Documentos en aprobacion';
-        switch ($documento->tipo) {
-            case 'politica':
-                $path_documentos_aprobacion .= '/politicas';
-                break;
-            case 'procedimiento':
-                $path_documentos_aprobacion .= '/procedimientos';
-                break;
-            case 'manual':
-                $path_documentos_aprobacion .= '/manuales';
-                break;
-            case 'plan':
-                $path_documentos_aprobacion .= '/planes';
-                break;
-            case 'instructivo':
-                $path_documentos_aprobacion .= '/instructivos';
-                break;
-            case 'reglamento':
-                $path_documentos_aprobacion .= '/reglamentos';
-                break;
-            case 'externo':
-                $path_documentos_aprobacion .= '/externos';
-                break;
-            case 'proceso':
-                $path_documentos_aprobacion .= '/procesos';
-                break;
-            case 'formato':
-                $path_documentos_aprobacion .= '/formatos';
-                break;
-            default:
-                $path_documentos_aprobacion .= '/procesos';
-                break;
+        function encodeSpecialCharacters($url)
+        {
+            // Handle spaces
+            // $url = str_replace(' ', '%20', $url);
+            // Encode other special characters, excluding /, \, and :
+            $url = preg_replace_callback('/[^A-Za-z0-9_\-\.~\/\\\:]/', function ($matches) {
+                return rawurlencode($matches[0]);
+            }, $url);
+
+            return $url;
         }
 
-        $empleado = Empleado::getaltaAll()->find(intval($revisionDocumento->empleado_id));
+        $empleado = User::getCurrentUser()->empleado;
 
-        return view('externos.revisiones.edit', compact('documento', 'empleado', 'path_documentos_aprobacion', 'revisionDocumento'));
+        $documentos = Documento::with('revisiones.empleadoMobile')->where('estatus', 2)->orderByDesc('id')->get();
+        // $documentos = Documento::with('revisor', 'elaborador', 'aprobador', 'responsable', 'revisiones', 'proceso', 'macroproceso')->orderByDesc('id')->get();
+
+        // dd($documentos);
+        foreach ($documentos as $keyDocumento => $documento) {
+            $documento->makeHidden(['created_at', 'updated_at', 'deleted_at']);
+            if (!$documento->revisiones->isEmpty()) {
+                foreach ($documento->revisiones as $keyrevision => $revision) {
+                    if ($revision->empleadoMobile) {
+                        if ($revision->empleadoMobile->foto == null || $revision->empleadoMobile->foto == '0') {
+                            $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
+                        } else {
+                            $ruta = asset('storage/empleados/imagenes/' . $revision->empleadoMobile->foto);
+                        }
+
+                        // Encode spaces in the URL
+                        $revision->id_empleado = $revision->empleadoMobile->id;
+                        $revision->nombre_empleado = $revision->empleadoMobile->name;
+                        $revision->ruta_foto = encodeSpecialCharacters($ruta);
+
+                        $revision->makeHidden(['empleadoMobile', 'created_at', 'updated_at', 'deleted_at']);
+                        $revision->empleadoMobile->makeHidden([
+                            'avatar',
+                            'avatar_ruta',
+                            'resourceId',
+                            'empleados_misma_area',
+                            'genero_formateado',
+                            'puesto',
+                            'declaraciones_responsable',
+                            'declaraciones_aprobador',
+                            'declaraciones_responsable2022',
+                            'declaraciones_aprobador2022',
+                            'fecha_ingreso',
+                            'saludo',
+                            'saludo_completo',
+                            'sede',
+                            'perfil',
+                            'actual_birdthday',
+                            'actual_aniversary',
+                            'obtener_antiguedad',
+                            'empleados_pares',
+                            'competencias_asignadas',
+                            'objetivos_asignados',
+                            'es_supervisor',
+                            'fecha_min_timesheet',
+                            'area',
+                            'supervisor',
+                            'area_id',
+                            'puesto_id',
+                            'foto',
+                            'puestoRelacionado',
+                        ]);
+                    }
+                }
+            }
+        }
+
+        // $macroprocesos = Macroproceso::getAll()->pluck('nombre')->toArray();
+        // $procesos = Proceso::pluck('nombre')->toArray();
+        // $macroprocesosAndProcesos = array_merge($macroprocesos, $procesos);
+
+        return response(json_encode([
+            'documentos' => $documentos,
+        ]), 200)->header('Content-Type', 'application/json');
     }
 
-    public function approve(Request $request)
+    public function aprobar($id)//Request $request
     {
-        if ($request->ajax()) {
-            $documento = RevisionDocumento::where('id', '=', intval($request->revision))->first();
+            $documento = RevisionDocumento::where('id', '=', $id)->first();
             $documento->update([
-                'comentarios' => $request->comentarios,
+                // 'comentarios' => $request->comentarios,
                 'estatus' => strval(Documento::APROBADO),
             ]);
-            $documentoOriginal = Documento::with('elaborador')->find($documento->documento_id);
-            $email = $documentoOriginal->elaborador->email;
 
+            $documentoOriginal = Documento::with('elaborador')->find($documento->documento_id);
+
+            $email = $documentoOriginal->elaborador->email;
             $this->sendMailApprove($email, $documentoOriginal, $documento);
             $this->allLevelSendAnswer($documento->documento_id, $documentoOriginal);
             if ($this->allSendAnswer($documento->documento_id)) {
@@ -165,21 +208,28 @@ class RevisionDocumentoController extends Controller
             }
 
             return response()->json(['approve' => true]);
-        }
+        // }
     }
 
-    public function reject(Request $request)
+    public function rechazar($id)
     {
-        if ($request->ajax()) {
-            $documento = RevisionDocumento::where('id', '=', intval($request->revision))->first();
+        // if ($request->ajax()) {
+            $documento = RevisionDocumento::where('id', '=', $id)->first();
 
             $documento->update([
-                'comentarios' => $request->comentarios,
+                // 'comentarios' => $request->comentarios,
                 'estatus' => strval(Documento::RECHAZADO),
             ]);
-            $documentoOriginal = Documento::find($documento->documento_id);
 
-            $email = $documento->empleado->email;
+            RevisionDocumento::where('nivel', $documento->nivel)
+            ->where('no_revision', $documento->no_revision)
+            ->where('documento_id', $documento->documento_id)
+            ->update(['estatus' => Documento::RECHAZADO]);
+
+            $documentoOriginal = Documento::with('elaborador')->find($documento->documento_id);
+
+            $email = $documentoOriginal->elaborador->email;
+
             $this->sendMailReject($email, $documentoOriginal, $documento);
             $this->allLevelSendAnswer($documento->documento_id, $documentoOriginal);
             if ($this->allSendAnswer($documento->documento_id)) {
@@ -273,7 +323,7 @@ class RevisionDocumentoController extends Controller
 
             return response()->json(['reject' => true]);
         }
-    }
+    // }
 
     public function sendMailApprove($mail, $documento, $revision)
     {
