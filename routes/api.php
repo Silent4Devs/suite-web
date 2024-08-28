@@ -28,7 +28,8 @@ Route::group(['prefix' => 'api/v1', 'as' => 'api.', 'namespace' => 'Api\v1', 'mi
     Route::get('comunicados', [tbApiMobileControllerComunicados::class, 'tbFunctionIndex']);
 
     Route::get('documentos', [tbApiMobileControllerDocumentos::class, 'tbFunctionIndexUsuario']);
-    Route::get('revision', [tbApiMobileControllerDocumentos::class, 'handleApprovalOrRejection']);
+    Route::post('revision/{id}/aprobar', [tbApiMobileControllerDocumentos::class, 'aprobar']);
+    Route::post('revision/{id}/rechazar', [tbApiMobileControllerDocumentos::class, 'rechazar']);
 
     Route::get('counterSolicitud', [tbApiMobileControllerContadorSolicitudes::class, 'tbFunctionContadorSolicitudes']);
     Route::get('counterGeneralSolicitud', [tbApiMobileControllerContadorSolicitudes::class, 'tbFunctionContadorGeneralSolicitudes']);
