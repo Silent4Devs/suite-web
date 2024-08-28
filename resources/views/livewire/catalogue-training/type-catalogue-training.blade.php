@@ -87,19 +87,20 @@
     <script>
         document.addEventListener('deleteMessage', event => {
             Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
+            title: "Eliminar este elemento",
+            text: "¿Estás seguro de querer eliminar este registro?",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
+            confirmButtonText: "Sí",
+            cancelButtonText: "No"
             }).then((result) => {
             if (result.isConfirmed) {
                 @this.call('delete');
                 Swal.fire({
-                title: "Deleted!",
-                text: "Your file has been deleted.",
+                title: "Eliminado",
+                text: "El registro se eliminó exitosamente",
                 icon: "success"
                 });
             }
