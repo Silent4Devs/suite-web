@@ -37,10 +37,6 @@ Route::get('insertarFirmadoresFinanzas', [QueueCorreo::class, 'insertarFirmadore
 Route::get('/', [LoginController::class, 'showLoginForm']);
 Route::get('/usuario-bloqueado', [UsuarioBloqueado::class, 'usuarioBloqueado'])->name('users.usuario-bloqueado');
 
-Route::post('/revisiones/approve', 'RevisionDocumentoController@approve')->name('revisiones.approve');
-Route::post('/revisiones/reject', 'RevisionDocumentoController@reject')->name('revisiones.reject');
-Route::get('/revisiones/{revisionDocumento}', 'RevisionDocumentoController@edit')->name('revisiones.revisar');
-
 Route::post('/minutas/revisiones/approve', 'RevisionMinutasController@approve')->name('minutas.revisiones.approve');
 Route::post('/minutas/revisiones/reject', 'RevisionMinutasController@reject')->name('minutas.revisiones.reject');
 Route::get('/minutas/revisiones/{revisionMinuta}', 'RevisionMinutasController@edit')->name('minutas.revisiones.revisar');
@@ -1618,6 +1614,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::resource('servicios', 'ServiciosController')->except('destroy');
 
         //Revisiones Documentos
+        Route::post('/revisiones/approve', 'RevisionDocumentoController@approve')->name('revisiones.approve');
+        Route::post('/revisiones/reject', 'RevisionDocumentoController@reject')->name('revisiones.reject');
+        Route::get('/revisiones/{revisionDocumento}', 'RevisionDocumentoController@edit')->name('revisiones.revisar');
+
         Route::get('/revisiones/archivo', 'RevisionDocumentoController@archivo')->name('revisiones.archivo');
         Route::post('/revisiones/archivar', 'RevisionDocumentoController@archivar')->name('revisiones.archivar');
         Route::post('/revisiones/desarchivar', 'RevisionDocumentoController@desarchivar')->name('revisiones.desarchivar');
