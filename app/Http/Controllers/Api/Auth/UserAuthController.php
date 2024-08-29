@@ -131,5 +131,39 @@ class UserAuthController extends Controller
         }
     }
 
+    public function refreshToken(Request $request)
+    {
+        $token = $request->bearerToken();
+        $tokenInstance = PersonalAccessToken::findToken($token);
 
+        if (!$tokenInstance) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Invalid token',
+            ], 401);
+        }
+
+        $expiration = config('sanctum.expiration');
+
+        if ($expiration && !$tokenInstance->isExpired()) {
+            // Token expired, generate a new token and delete the old one
+            $user = $tokenInstance->tokenable; // Assuming tokenable is a User model
+            // Revoke the old token
+            $tokenInstance->delete();
+
+            // Create a new token
+            $newToken = $user->createToken('auth_token')->plainTextToken;
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Token refreshed',
+                'token' => $newToken,
+            ], 200);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Token is still valid',
+        ], 200);
+    }
 }
