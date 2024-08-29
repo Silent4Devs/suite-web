@@ -23,9 +23,10 @@ class EvaluationsTable extends Component
 
     public function render()
     {
-        return view('livewire.escuela.instructor.evaluations-table', [
-            'evaluaciones' => Evaluation::where('course_id', $this->course->id)->orWhereIn('section_id', $this->course->lessons->pluck('id')->toArray())->paginate(10),
-        ]);
+        $evaluaciones = Evaluation::where('course_id', $this->course->id)->paginate(10);
+        // $evaluaciones = Evaluation::where('course_id', $this->course->id)->orWhereIn('section_id', $this->course->lessons->pluck('id')->toArray())->paginate(10);
+
+        return view('livewire.escuela.instructor.evaluations-table', compact('evaluaciones'));
     }
 
     public function destroy($evaluacion_id)
