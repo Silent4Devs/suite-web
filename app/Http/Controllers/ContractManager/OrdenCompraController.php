@@ -310,7 +310,7 @@ class OrdenCompraController extends Controller
         }
 
         $organizacion = Organizacion::getFirst();
-        // Mail::to($userEmail)->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
+        Mail::to($userEmail)->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
 
         return redirect(route('contract_manager.orden-compra'));
     }
