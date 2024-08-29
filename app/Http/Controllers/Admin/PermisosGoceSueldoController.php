@@ -69,7 +69,7 @@ class PermisosGoceSueldoController extends Controller
     public function create()
     {
         abort_if(Gate::denies('reglas_goce_sueldo_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $vacacion = new PermisosGoceSueldo();
+        $vacacion = new PermisosGoceSueldo;
 
         return view('admin.permisosGoceSueldo.create', compact('vacacion'));
     }

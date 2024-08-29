@@ -2,7 +2,7 @@
     <label class="required" for="email"><i class="far fa-envelope iconos-crear"></i>Correo
         electrónico</label>
     <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="email"
-        wire:model.debounce.700ms="empleadoemail" id="email" placeholder="example@tabantaj.com"
+        wire:model.live.debounce.700ms="empleadoemail" id="email" placeholder="example@tabantaj.com"
         value="{{ $empleadoemail }}" required>
 
     <p class="text-primary errores">{{ $disponiblemessage }}</p>

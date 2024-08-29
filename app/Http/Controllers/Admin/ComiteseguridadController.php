@@ -73,7 +73,7 @@ class ComiteseguridadController extends Controller
     public function create()
     {
         abort_if(Gate::denies('comformacion_comite_seguridad_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $id = new Comiteseguridad();
+        $id = new Comiteseguridad;
 
         return view('admin.comiteseguridads.create', compact('id'));
     }
@@ -131,17 +131,6 @@ class ComiteseguridadController extends Controller
 
         return redirect()->route('admin.comiteseguridads.index')->with('success', 'Editado con éxito');
     }
-
-    // public function show(Comiteseguridad $comiteseguridad)
-    // {
-    //     abort_if(Gate::denies('comformacion_comite_seguridad_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-    //     $datas = MiembrosComiteSeguridad::where('comite_id', '=', $comiteseguridad->id)->with('asignacion')->get();
-
-    //     $comiteseguridad->load('miembros');
-
-    //     return view('admin.comiteseguridads.show', compact('comiteseguridad', 'datas'));
-    // }
 
     public function show($id)
     {

@@ -47,7 +47,7 @@ class PlanesAccionController extends Controller
     {
         abort_if(Gate::denies('planes_de_accion_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $planImplementacion = new PlanImplementacion();
+        $planImplementacion = new PlanImplementacion;
 
         return view('admin.workPlan.create', compact('planImplementacion', 'modulo', 'referencia'));
     }
@@ -55,7 +55,7 @@ class PlanesAccionController extends Controller
     public function createPlanTrabajoBase($modulo, $referencia = null)
     {
         abort_if(Gate::denies('planes_de_accion_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $planImplementacion = new PlanImplementacion();
+        $planImplementacion = new PlanImplementacion;
 
         return view('admin.workPlan.createPlanTrabajoBase', compact('planImplementacion', 'modulo', 'referencia'));
     }
@@ -153,7 +153,7 @@ class PlanesAccionController extends Controller
 
             $assigs = [];
 
-            $planImplementacion = new PlanImplementacion(); // Necesario se carga inicialmente el Diagrama Universal de Gantt
+            $planImplementacion = new PlanImplementacion; // Necesario se carga inicialmente el Diagrama Universal de Gantt
             $planImplementacion->tasks = $tasks;
             $planImplementacion->canAdd = true;
             $planImplementacion->canWrite = true;

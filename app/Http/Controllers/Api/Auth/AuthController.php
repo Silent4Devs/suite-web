@@ -20,7 +20,7 @@ class AuthController extends Controller
         ]);
 
         //valida las credenciales del usuario
-        if (!Auth::attempt($request->only('email', 'password'))) {
+        if (! Auth::attempt($request->only('email', 'password'))) {
             return response()->json([
                 'message' => 'Invalid access credentials',
             ], 401);
@@ -40,6 +40,7 @@ class AuthController extends Controller
             $url = preg_replace_callback('/[^A-Za-z0-9_\-\.~\/\\\:]/', function ($matches) {
                 return rawurlencode($matches[0]);
             }, $url);
+
             return $url;
         }
 
@@ -52,7 +53,7 @@ class AuthController extends Controller
                 $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
             }
         } else {
-            $ruta = asset('storage/empleados/imagenes/' . $user->empleado->foto);
+            $ruta = asset('storage/empleados/imagenes/'.$user->empleado->foto);
         }
 
         // Encode spaces in the URL
@@ -102,7 +103,7 @@ class AuthController extends Controller
         //     'data' => $token,
         // ], 204);
 
-        if (!$token) {
+        if (! $token) {
             return response()->json([
                 'status' => 'Error',
                 'message' => 'Token not provided',

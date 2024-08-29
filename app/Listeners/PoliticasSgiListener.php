@@ -6,10 +6,16 @@ use App\Models\Empleado;
 use App\Models\ListaDistribucion;
 use App\Models\User;
 use App\Notifications\PoliticasSgiNotification;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Notification;
 
-class PoliticasSgiListener
+class PoliticasSgiListener implements ShouldQueue
 {
+    use InteractsWithQueue;
+
+    public $tries = 5;
+
     /**
      * Create the event listener.
      *
@@ -28,9 +34,7 @@ class PoliticasSgiListener
      */
     public function handle($event)
     {
-        $modulo_politicas = 3;
-
-        $lista = ListaDistribucion::with('participantes')->where('id', $modulo_politicas)->first();
+        $lista = ListaDistribucion::with('participantes')->where('modelo', 'PoliticaSgsi')->first();
 
         foreach ($lista->participantes as $participantes) {
             $empleados = Empleado::where('id', $participantes->empleado_id)->first();

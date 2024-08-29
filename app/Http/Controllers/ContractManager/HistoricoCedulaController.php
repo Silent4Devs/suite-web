@@ -15,7 +15,7 @@ class HistoricoCedulaController extends Controller
      */
     public function index($cedula_id)
     {
-        $items_historico = HistoricoCedulaCumplimiento::where('id_cedula', '=', $cedula_id)->paginate(10);
+        $items_historico = HistoricoCedulaCumplimiento::where('id_cedula', '=', $cedula_id)->orderByDesc('id')->cursorPaginate(15);
 
         return view('livewire.cedula-cumplimiento.historico-component', compact('items_historico'));
     }

@@ -175,7 +175,7 @@ class ListaInformativaController extends Controller
             $errorMessage = 'La lista informativa debe contener al menos un colaborador.';
 
             // Manually add error message to $errors bag
-            $errors = new \Illuminate\Support\MessageBag();
+            $errors = new \Illuminate\Support\MessageBag;
             $errors->add('nivel_null', $errorMessage);
 
             // Redirect back with the input data and errors

@@ -59,7 +59,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/4.1.0/css/fixedColumns.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.css" rel="stylesheet">
+    {{-- <link href="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.css" rel="stylesheet"> --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.css"
         integrity="sha512-MQXduO8IQnJVq1qmySpN87QQkiR1bZHtorbJBD0tzy7/0U9+YIC93QWHeGTEoojMVHWWNkoCp8V6OzVSYrX0oQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -72,6 +72,7 @@
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}{{ config('app.cssVersion') }}">
     <link rel="stylesheet" href="{{ asset('css/rds.css') }}{{ config('app.cssVersion') }}">
     @yield('styles')
+
     @livewireStyles
 
     @vite(['resources/js/app.js'])
@@ -86,6 +87,7 @@
             alt="Loading...">
     </div>
     @php
+
         use App\Models\Organizacion;
         use App\Models\User;
         use App\Models\Empleado;
@@ -402,11 +404,6 @@
                                         <i class="material-symbols-outlined i-direct">keyboard_arrow_down</i>
                                     </a>
                                     <ul>
-                                        @can('lista_distribucion_acceder')
-                                            <li><a href="{{ asset('admin/lista-distribucion') }}">Lista de
-                                                    distribución</a>
-                                            </li>
-                                        @endcan
                                         @can('clausulas_auditorias_acceder')
                                             <li><a href="{{ route('admin.auditoria-clasificacion') }}">Clasificación</a>
                                             </li>
@@ -437,6 +434,11 @@
                                         @can('crear_area_acceder')
                                             <li><a href="{{ route('admin.areas.index') }}">Crear Áreas</a></li>
                                         @endcan
+                                        @can('lista_distribucion_acceder')
+                                            <li><a href="{{ asset('admin/lista-distribucion') }}">Lista de
+                                                    distribución</a>
+                                            </li>
+                                        @endcan
                                         @can('lista_informativa_acceder')
                                             <li>
                                                 <a href="{{ route('admin.lista-informativa.index') }}">Lista Informativa</a>
@@ -463,6 +465,8 @@
                                         @can('glosario_acceder')
                                             <li><a href="{{ route('admin.glosarios.index') }}">Glosario</a></li>
                                         @endcan
+
+                                        <li><a href="{{ route('admin.module_firmas') }}">Firmas</a></li>
                                     </ul>
                                 </li>
                             @endcan
@@ -641,8 +645,10 @@
         </a>
     </div>
 
+    {{-- <livewire:asistente /> --}}
+
     <!-- inicia sección de script -->
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    {{-- <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script> --}}
     {{-- Librerías para visualizar en campo el dolar --}}
     <script async src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     {{-- Notificaciones push desktop --}}
@@ -697,7 +703,7 @@
     <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/index.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
-    <script defer src="//unpkg.com/alpinejs" defer></script>
+    {{-- <script defer src="//unpkg.com/alpinejs" defer></script> --}}
     <script src="{{ asset('js/main.js') }}"></script>
     <!-- x editable -->
     <script defer src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js">

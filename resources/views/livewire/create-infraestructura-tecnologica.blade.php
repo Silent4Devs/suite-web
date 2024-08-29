@@ -15,7 +15,7 @@
                         {{ $view == 'create' ? 'Agregar' : 'Actualizar' }} Infraestructura Tecnológica </h5>
 
                     <input id="cuestionario_id" name="cuestionario_id" type="hidden" value=" {{ $cuestionario_id }}"
-                        wire:model.defer="cuestionario_id">
+                        wire:model="cuestionario_id">
 
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -26,8 +26,8 @@
                         <label class="required" for="escenario"><i class="bi bi-signpost-split-fill iconos-crear"></i>Escenario:</label>
                         {{-- <input class="form-control {{ $errors->has('escenario') ? 'is-invalid' : '' }}" type="text"
                            value="{{ old('escenario', '') }}"
-                            wire:model.defer="nescenario" placeholder="..."> --}}
-                        <select name="escenario" class="form-control {{ $errors->has('escenario') ? 'is-invalid' : '' }}"  wire:model.defer="escenario" >
+                            wire:model="nescenario" placeholder="..."> --}}
+                        <select name="escenario" class="form-control {{ $errors->has('escenario') ? 'is-invalid' : '' }}"  wire:model="escenario" >
                             <option selected>Seleccione</option>
                             <option value="1">En Operación Normal</option>
                             <option value="2">En Contingencia</option>
@@ -43,7 +43,7 @@
                         <label class="required" for="sistemas"> <i
                                 class="fas fa-user-tag iconos-crear"></i>Sistemas:</label>
                         <input class="form-control {{ $errors->has('sistemas') ? 'is-invalid' : '' }}" type="text"
-                            value="{{ old('sistemas', '') }}" wire:model.defer="sistemas" placeholder="...">
+                            value="{{ old('sistemas', '') }}" wire:model="sistemas" placeholder="...">
                         @if ($errors->has('sistemas'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('sistemas') }}
@@ -56,7 +56,7 @@
                                 class="fas fa-user-tag iconos-crear"></i>Aplicativos / Utilerías:</label>
                         <input class="form-control {{ $errors->has('aplicativos') ? 'is-invalid' : '' }}"
                             type="text" value="{{ old('aplicativos', '') }}"
-                            wire:model.defer="aplicativos" placeholder="...">
+                            wire:model="aplicativos" placeholder="...">
                         @if ($errors->has('aplicativos'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('aplicativos') }}
@@ -68,7 +68,7 @@
                         <label class="required" for="base_datos"> <i
                                 class="fas fa-user-tag iconos-crear"></i>Bases de Datos:</label>
                         <input class="form-control {{ $errors->has('base_datos') ? 'is-invalid' : '' }}" type="text"
-                            value="{{ old('base_datos', '') }}" wire:model.defer="base_datos" placeholder="...">
+                            value="{{ old('base_datos', '') }}" wire:model="base_datos" placeholder="...">
                         @if ($errors->has('base_datos'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('base_datos') }}
@@ -80,7 +80,7 @@
                         <label class="required" for="otro"> <i
                                 class="fas fa-user-tag iconos-crear"></i>Otro:</label>
                         <input class="form-control {{ $errors->has('otro') ? 'is-invalid' : '' }}" type="text"
-                            value="{{ old('otro', '') }}" wire:model.defer="otro" placeholder="...">
+                            value="{{ old('otro', '') }}" wire:model="otro" placeholder="...">
                         @if ($errors->has('otro'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('otro') }}

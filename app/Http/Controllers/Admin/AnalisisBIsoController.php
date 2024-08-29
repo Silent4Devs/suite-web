@@ -55,7 +55,7 @@ class AnalisisBIsoController extends Controller
         $gap1satisfactorios = GapUnoConcentratoIso::select('id')->where('valoracion', '1')->where('id_analisis_brechas', '=', request()->id)->count();
         $gap1parcialmente = GapUnoConcentratoIso::select('id')->where('valoracion', '2')->where('id_analisis_brechas', '=', request()->id)->count();
         $gap1nocumple = GapUnoConcentratoIso::select('id')->where('valoracion', '=', '3')->where('id_analisis_brechas', '=', request()->id)->count();
-        $gapunoPorc = new Porcentaje2022();
+        $gapunoPorc = new Porcentaje2022;
         $porcentajeGap1 = $gapunoPorc->GapUnoPorc($gap1porcentaje);
         // dd($porcentajeGap1);
         // dd($gap1porcentaje, $gap1satisfactorios, $gap1parcialmente, $gap1nocumple);

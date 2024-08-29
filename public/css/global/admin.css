@@ -1007,7 +1007,7 @@ table.dataTable tr th {
 /* ------------------------ */
 
 .ventana_menu ul {
-    margin-top: 100px !important;
+    margin-top: 40px !important;
 }
 
 .dt-button-collection.dropdown-menu {
@@ -1440,4 +1440,8 @@ table td {
 
 .progress-bar.bg-warning {
     background-color: #FFCB80 !important;
+}
+
+.cke_notifications_area{
+    display: none !important;
 }

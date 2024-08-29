@@ -219,7 +219,7 @@ class ActividadesRiesgosController extends Controller
                 ]);
                 $modelo->planes()->sync($planEdit);
             } else {
-                $planImplementacion = new PlanImplementacion(); // Necesario se carga inicialmente el Diagrama Universal de Gantt
+                $planImplementacion = new PlanImplementacion; // Necesario se carga inicialmente el Diagrama Universal de Gantt
                 $planImplementacion->tasks = $tasks;
                 $planImplementacion->canAdd = true;
                 $planImplementacion->canWrite = true;

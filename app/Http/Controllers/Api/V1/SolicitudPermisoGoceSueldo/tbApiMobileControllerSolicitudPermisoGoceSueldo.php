@@ -7,7 +7,6 @@ use App\Mail\RespuestaDayOff as MailRespuestaPermisoGoceSueldo;
 use App\Mail\SolicitudPermisoGoceSueldo as MailSolicitudPermisoGoceSueldo;
 use App\Models\Empleado;
 use App\Models\ListaInformativa;
-use App\Models\Organizacion;
 use App\Models\PermisosGoceSueldo;
 use App\Models\SolicitudPermisoGoceSueldo;
 use App\Models\User;
@@ -34,7 +33,6 @@ class tbApiMobileControllerSolicitudPermisoGoceSueldo extends Controller
 
         foreach ($solicitudesPermisos as $key_solicitud => $solicitante) {
 
-
             switch ($solicitante->aprobacion) {
                 case 1:
                     $solicitante->estatus = 'Pendiente';
@@ -54,14 +52,14 @@ class tbApiMobileControllerSolicitudPermisoGoceSueldo extends Controller
             if ($solicitante && $solicitante->empleado) {
                 $solicitante->empleado->makeHidden([
                     'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
-                    'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor'
+                    'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor',
                 ]);
 
                 $solicitante->empleado->nombre_area = $solicitante->empleado->area->area;
                 $solicitante->empleado->nombre_puesto = $solicitante->empleado->puesto;
 
                 $solicitante->empleado->makeHidden([
-                    'puestoRelacionado', 'area_id', 'puesto_id'
+                    'puestoRelacionado', 'area_id', 'puesto_id',
                 ]);
             }
         }
@@ -73,7 +71,7 @@ class tbApiMobileControllerSolicitudPermisoGoceSueldo extends Controller
         return response(json_encode([
             'logo_actual' => $logo_actual,
             'empresa_actual' => $empresa_actual,
-            'solicitudesPermisos' => $solicitudesPermisos
+            'solicitudesPermisos' => $solicitudesPermisos,
         ]), 200)->header('Content-Type', 'application/json');
     }
 
@@ -83,25 +81,25 @@ class tbApiMobileControllerSolicitudPermisoGoceSueldo extends Controller
         // $vacacion = new SolicitudPermisoGoceSueldo();
         // $autoriza = User::getCurrentUser();
         $permisos = PermisosGoceSueldo::get()->makeHidden([
-            "created_at",
-            "updated_at",
-            "deleted_at"
+            'created_at',
+            'updated_at',
+            'deleted_at',
         ]);
 
         foreach ($permisos as $key => $permiso) {
             if ($permiso->tipo_permiso == 1) {
-                $permiso->categoria_permisos = "Permisos conforme a la ley";
-            } else if ($permiso->tipo_permiso == 2) {
-                $permiso->categoria_permisos = "Permisos otorgados por la empresa";
+                $permiso->categoria_permisos = 'Permisos conforme a la ley';
+            } elseif ($permiso->tipo_permiso == 2) {
+                $permiso->categoria_permisos = 'Permisos otorgados por la empresa';
             } else {
-                $permiso->categoria_permisos = "No definido";
+                $permiso->categoria_permisos = 'No definido';
             }
         }
 
         return response(json_encode([
             // 'vacacion' => $vacacion,
             // 'autoriza' => $autoriza,
-            'permisos' => $permisos
+            'permisos' => $permisos,
         ]), 200)->header('Content-Type', 'application/json');
     }
 
@@ -144,6 +142,7 @@ class tbApiMobileControllerSolicitudPermisoGoceSueldo extends Controller
         } else {
             Mail::to(removeUnicodeCharacters($supervisor->email))->queue(new MailSolicitudPermisoGoceSueldo($solicitante, $supervisor, $solicitud));
         }
+
         // Alert::success('éxito', 'Información añadida con éxito');
         // return redirect()->route('admin.solicitud-dayoff.index');
         return json_encode(['data' => 'La solicitud fue creada exitosamente.'], 200);
@@ -180,7 +179,7 @@ class tbApiMobileControllerSolicitudPermisoGoceSueldo extends Controller
         if ($vacacion && $vacacion->empleado) {
             $empleado = $vacacion->empleado->makeHidden([
                 'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
-                'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor'
+                'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor',
             ]);
 
             if ($empleado->foto == null || $empleado->foto == '0') {
@@ -192,7 +191,7 @@ class tbApiMobileControllerSolicitudPermisoGoceSueldo extends Controller
                     $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
                 }
             } else {
-                $ruta = asset('storage/empleados/imagenes/' . $empleado->foto);
+                $ruta = asset('storage/empleados/imagenes/'.$empleado->foto);
             }
 
             // Encode spaces in the URL
@@ -204,23 +203,21 @@ class tbApiMobileControllerSolicitudPermisoGoceSueldo extends Controller
             $empleado->nombre_puesto = $empleado->puesto;
 
             $empleado->makeHidden([
-                'puestoRelacionado', 'area_id', 'puesto_id', 'foto'
+                'puestoRelacionado', 'area_id', 'puesto_id', 'foto',
             ]);
 
             $vacacion->makeHidden([
-                'empleado'
+                'empleado',
             ]);
         }
 
         return response(json_encode([
             'vacacion' => $vacacion,
-            'empleado' => $empleado
+            'empleado' => $empleado,
         ]), 200)->header('Content-Type', 'application/json');
     }
 
-    public function edit(Request $request, $id)
-    {
-    }
+    public function edit(Request $request, $id) {}
 
     public function update(Request $request, $id)
     {
@@ -259,6 +256,7 @@ class tbApiMobileControllerSolicitudPermisoGoceSueldo extends Controller
         } else {
             Mail::to(removeUnicodeCharacters($solicitante->email))->queue(new MailRespuestaPermisoGoceSueldo($solicitante, $supervisor, $solicitud));
         }
+
         // Alert::success('éxito', 'Información añadida con éxito');
         // return redirect(route('admin.solicitud-dayoff.aprobacion'));
         return json_encode(['data' => 'Se ha enviado la respuesta de la solicitud.'], 200);
@@ -281,6 +279,7 @@ class tbApiMobileControllerSolicitudPermisoGoceSueldo extends Controller
         $url = preg_replace_callback('/[^A-Za-z0-9_\-\.~\/\\\:]/', function ($matches) {
             return rawurlencode($matches[0]);
         }, $url);
+
         return $url;
     }
 
@@ -313,7 +312,7 @@ class tbApiMobileControllerSolicitudPermisoGoceSueldo extends Controller
             if ($solicitante && $solicitante->empleado) {
                 $solicitante->empleado->makeHidden([
                     'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
-                    'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor'
+                    'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor',
                 ]);
 
                 if ($solicitante->foto == null || $solicitante->foto == '0') {
@@ -325,7 +324,7 @@ class tbApiMobileControllerSolicitudPermisoGoceSueldo extends Controller
                         $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
                     }
                 } else {
-                    $ruta = asset('storage/empleados/imagenes/' . $solicitante->foto);
+                    $ruta = asset('storage/empleados/imagenes/'.$solicitante->foto);
                 }
 
                 // Encode spaces in the URL
@@ -337,7 +336,7 @@ class tbApiMobileControllerSolicitudPermisoGoceSueldo extends Controller
                 $solicitante->empleado->nombre_puesto = $solicitante->empleado->puesto;
 
                 $solicitante->empleado->makeHidden([
-                    'puestoRelacionado', 'area_id', 'puesto_id'
+                    'puestoRelacionado', 'area_id', 'puesto_id',
                 ]);
             }
         }
@@ -349,7 +348,7 @@ class tbApiMobileControllerSolicitudPermisoGoceSueldo extends Controller
         return response(json_encode([
             'logo_actual' => $logo_actual,
             'empresa_actual' => $empresa_actual,
-            'solicitudesPermisos' => $solicitudesPermisos
+            'solicitudesPermisos' => $solicitudesPermisos,
         ]), 200)->header('Content-Type', 'application/json');
     }
 
@@ -377,7 +376,7 @@ class tbApiMobileControllerSolicitudPermisoGoceSueldo extends Controller
         if ($vacacion && $vacacion->empleado) {
             $empleado = $vacacion->empleado->makeHidden([
                 'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
-                'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor'
+                'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor',
             ]);
 
             if ($empleado->foto == null || $empleado->foto == '0') {
@@ -389,7 +388,7 @@ class tbApiMobileControllerSolicitudPermisoGoceSueldo extends Controller
                     $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
                 }
             } else {
-                $ruta = asset('storage/empleados/imagenes/' . $empleado->foto);
+                $ruta = asset('storage/empleados/imagenes/'.$empleado->foto);
             }
 
             $empleado->ruta_foto = $this->encodeSpecialCharacters($ruta);
@@ -398,11 +397,11 @@ class tbApiMobileControllerSolicitudPermisoGoceSueldo extends Controller
             $empleado->nombre_puesto = $empleado->puesto;
 
             $empleado->makeHidden([
-                'puestoRelacionado', 'area_id', 'puesto_id'
+                'puestoRelacionado', 'area_id', 'puesto_id',
             ]);
 
             $vacacion->makeHidden([
-                'empleado'
+                'empleado',
             ]);
         }
 
@@ -418,7 +417,7 @@ class tbApiMobileControllerSolicitudPermisoGoceSueldo extends Controller
         return response(json_encode([
             'empleado' => $empleado,
             'vacacion' => $vacacion,
-            'año' => $año
+            'año' => $año,
         ]), 200)->header('Content-Type', 'application/json');
     }
 
@@ -454,14 +453,14 @@ class tbApiMobileControllerSolicitudPermisoGoceSueldo extends Controller
             if ($solicitante && $solicitante->empleado) {
                 $solicitante->empleado->makeHidden([
                     'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
-                    'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor'
+                    'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor',
                 ]);
 
                 $solicitante->empleado->nombre_area = $solicitante->empleado->area->area;
                 $solicitante->empleado->nombre_puesto = $solicitante->empleado->puesto;
 
                 $solicitante->empleado->makeHidden([
-                    'puestoRelacionado', 'area_id', 'puesto_id'
+                    'puestoRelacionado', 'area_id', 'puesto_id',
                 ]);
             }
         }
@@ -473,7 +472,7 @@ class tbApiMobileControllerSolicitudPermisoGoceSueldo extends Controller
         return response(json_encode([
             'logo_actual' => $logo_actual,
             'empresa_actual' => $empresa_actual,
-            'solicitudesPermisos' => $solicitudesPermisos
+            'solicitudesPermisos' => $solicitudesPermisos,
         ]), 200)->header('Content-Type', 'application/json');
     }
 
@@ -506,14 +505,14 @@ class tbApiMobileControllerSolicitudPermisoGoceSueldo extends Controller
 
         $vacacion->empleado->makeHidden([
             'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
-            'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor'
+            'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor',
         ]);
 
         $vacacion->empleado->nombre_area = $vacacion->empleado->area->area;
         $vacacion->empleado->nombre_puesto = $vacacion->empleado->puesto;
 
         $vacacion->empleado->makeHidden([
-            'puestoRelacionado', 'area_id', 'puesto_id'
+            'puestoRelacionado', 'area_id', 'puesto_id',
         ]);
 
         return response(json_encode([
@@ -550,14 +549,14 @@ class tbApiMobileControllerSolicitudPermisoGoceSueldo extends Controller
 
         $vacacion->empleado->makeHidden([
             'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
-            'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor'
+            'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor',
         ]);
 
         $vacacion->empleado->nombre_area = $vacacion->empleado->area->area;
         $vacacion->empleado->nombre_puesto = $vacacion->empleado->puesto;
 
         $vacacion->empleado->makeHidden([
-            'puestoRelacionado', 'area_id', 'puesto_id'
+            'puestoRelacionado', 'area_id', 'puesto_id',
         ]);
 
         return response(json_encode([

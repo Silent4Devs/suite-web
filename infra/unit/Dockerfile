@@ -1,76 +1,20 @@
-# Use unit:php as the base image
-FROM unit:php8.2
+FROM ubuntu:xenial
 
-# Prepare workfir
-# RUN mkdir -p /var/www/html
-# WORKDIR /var/www/html
+RUN set -xe \
+    && apt-get -y update \
+    && apt-get -y install --no-install-recommends curl php php7.0-opcache \
+    && curl http://nginx.org/keys/nginx_signing.key | apt-key add - \
+    && echo "deb http://nginx.org/packages/mainline/ubuntu/ xenial nginx"  | tee -a /etc/apt/sources.list \
+    && echo "deb-src http://nginx.org/packages/mainline/ubuntu/ xenial nginx" | tee -a /etc/apt/sources.list \
+    && apt-get -y update \
+    && apt-get -y install unit \
+    && unitd --version
 
-# Set timezone
-ENV TZ=America/Mexico_City
+WORKDIR /www/laravel
 
-# Add docker-php-extension-installer script
-ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
+COPY ./src /www/laravel
+COPY opcache.ini /etc/php/7.0/embed/conf.d/
 
-# Install dependencies
-RUN apt-get update && apt-get install -y \
-    bash \
-    curl \
-    libfreetype6-dev \
-    g++ \
-    gcc \
-    git \
-    libicu-dev \
-    #libicu63 \
-    libc-dev \
-    libzip-dev \
-    libpq-dev \
-    make \
-    #mysql-client \
-    nodejs \
-    npm \
-    libonig-dev \
-    yarn \
-    openssh-client \
-    libpq5 \
-    postgresql-client \
-    rsync \
-    zlib1g-dev \
-    sudo \
-    zip \
-    unzip \
-    libsodium-dev \
-    cron
+RUN chown -R www-data:www-data /www/laravel/storage /www/laravel/bootstrap
 
-# Install php extensions
-RUN chmod +x /usr/local/bin/install-php-extensions && \
-    install-php-extensions \
-    @composer \
-    redis-stable \
-    #imagick-stable \
-    #xdebug-stable \
-    bcmath \
-    calendar \
-    exif \
-    gd \
-    intl \
-    #pdo_mysql \
-    pdo_pgsql \
-    pcntl \
-    soap \
-    zip \
-    apcu \
-    opcache \
-    sockets \
-    sodium \
-    excimer \
-    pcntl \
-    posix
-
-COPY config.json /docker-entrypoint.d/config.json
-
-COPY entrypoint.sh /docker-entrypoint.d/entrypoint.sh
-# If you want to include entrypoint.sh, uncomment the line above
-
-RUN chmod +x /docker-entrypoint.d/entrypoint.sh
-# If entrypoint.sh needs execution permission,
-EXPOSE 9090 443
+CMD ["unitd", "--no-daemon"]

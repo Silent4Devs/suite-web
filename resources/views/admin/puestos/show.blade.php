@@ -358,4 +358,76 @@
         </div>
 
     </div>
+
+    @if (isset($aprobacionFirmaPuestoHisotricoLast->firma_check) ? $aprobacionFirmaPuestoHisotricoLast->firma_check : false)
+        @if ($aprobacionFirmaPuesto->count())
+            <div class="col-12">
+                <div class="card card-body">
+                    <h5 class="text-center">Aprobaciones firmadas</h5>
+                    <div class="d-flex flex-wrap gap-4 mt-4 justify-content-center"
+                        style="width: 100%; max-width: 1000px; margin: auto;">
+                        @foreach ($aprobacionFirmaPuesto as $firma)
+                            @if ($firma->firma)
+                                <div class="text-center">
+                                    <img src="{{ $firma->firma_ruta }}" alt="firma" style="width: 400px;"> <br>
+                                    <span>{{ \Carbon\Carbon::parse($firma->aprobador->created_at)->format('d/m/Y') }}</span><br>
+                                    <span>{{ $firma->aprobador->name }}</span>
+                                </div>
+                            @endif
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        @endif
+    @endif
+    <style>
+        #firma_aprobador canvas {
+            border: 1px solid #bbb;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/lemonadejs/dist/lemonade.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@lemonadejs/signature/dist/index.min.js"></script>
+    @if (isset($aprobacionFirmaPuestoHisotricoLast->firma_check) ? $aprobacionFirmaPuestoHisotricoLast->firma_check : false)
+        @if ($firmar)
+            <div class="col-12">
+                <div class="card card-body">
+                    <form action="{{ route('admin.puestos-aprobacion.aprobacion-firma-puesto') }}" method="POST">
+                        @csrf
+                        <div class="d-flex gap-4 align-items-center flex-column">
+                            <div>
+                                <h5>Ingrese su firma para la aprobación del registro</h5>
+                            </div>
+                            <div id="firma_aprobador" class="" style="width: auto;"></div>
+                            <input type="hidden" name="firma_base" value="" id="firma-input">
+                            <input type="hidden" name="puesto_id" value="{{ $puesto->id }}">
+                            <div class="d-flex gap-5">
+                                <div id="resetCanvas" class="btn btn-outline-secondary">Limpiar</div>
+                                <button class="btn btn-primary">Guardar firma</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        @endif
+    @endif
+    <script>
+        // Get the element to render signature component inside
+        const firma_aprobador = document.getElementById("firma_aprobador");
+        const resetCanvas = document.getElementById("resetCanvas");
+        resetCanvas.addEventListener("click", () => {
+            // console.log(component.getImage());
+            component.value = [];
+            document.getElementById('firma-input').value = component.getImage();
+        });
+        document.querySelector('#firma_aprobador').onmouseup = function() {
+            document.getElementById('firma-input').value = component.getImage();
+        }
+        // Call signature with the firma_aprobador element and the options object, saving its reference in a variable
+        const component = Signature(firma_aprobador, {
+            width: 700,
+            height: 300,
+            instructions: ""
+        });
+    </script>
+
 @endsection

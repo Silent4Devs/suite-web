@@ -267,7 +267,7 @@
                 </div>
                 <label id="urlFormEmpleados"
                     data-url="{{ route('admin.empleados.updateFromCurriculum', $empleado) }}"></label>
-                @include('admin.empleados.components._competencias_form')
+                @include('admin.empleados.components._competencias_form', ['id' => $empleado->id])
                 <div class="text-right form-group col-12">
                     <a href="{{ route('admin.miCurriculum', $empleado) }}"  class="btn" id="btn_cancelar" style="color:#057BE2;">Cancelar</a>
                     <button class="btn btn-danger" type="submit" id="btnGuardar">
@@ -430,45 +430,7 @@
             })
         })
     </script>
-    {{-- <script>
-        class Documentos {
-            constructor() {
-                this.url = "{{ route('admin.empleado.documentos', $empleado) }}";
-                this.pdfFile = "{{ asset('img/pdf-file.png') }}";
-                this.assetDocumentosUrl = "{{ asset('storage/documentos_empleados/') }}";
-            }
-            async render() {
-                const response = await fetch(this.url);
-                const data = await response.json();
-                let html = `<div class="row">`
-                data.documentos.forEach(element => {
-                    html += `
-                    <div class="col-md-2 col-2" style="position: relative;" id="contendorDocumento">
-                        <a href="${this.assetDocumentosUrl}/${element.documentos}" target="_blank" title="Visualizar">
-                        <img class="img-fluid" src="${this.pdfFile}">
-                        <p class="text-muted" style="font-size: 9pt;text-align: center;">${element.documentos}</p>
-                        </a>
-                        <i data-documento-id="${element.id}" class="fas fa-times-circle" style="cursor:pointer;position: absolute;top: 13px;font-size: 12pt;right: 26px;color: #4a4a4a;"></i>
-                    </div>
-                    `
-                });
-                html += `</div>`;
-                document.getElementById('documentosGrid').innerHTML = html;
-                console.log(data);
-            }
-        }
-        document.addEventListener('DOMContentLoaded', function() {
-            const documentos = new Documentos();
-            documentos.render();
 
-            const documentosGrid = document.getElementById('documentosGrid');
-            documentosGrid.addEventListener('click', function(e) {
-                if (e.target.tagName == 'I') {
-                    console.log(e.target.getAttribute('data-documento-id'));
-                }
-            })
-        })
-    </script> --}}
     <script>
         $(document).ready(function() {
 
@@ -2982,7 +2944,7 @@
         });
     </script>
 
-    <script type="text/javascript">
+    {{-- <script type="text/javascript">
         $(function() {
             // var dtOverrideGlobals = {
             //     buttons: [],
@@ -3149,5 +3111,44 @@
 
             });
         }
+    </script> --}}
+
+    <script>
+        document.addEventListener('saved', event => {
+            Swal.fire({
+                position: "top-center",
+                icon: "success",
+                title: "Registro guardado exitosamente",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        });
+        document.addEventListener('edited', event => {
+            Swal.fire({
+                position: "top-center",
+                icon: "success",
+                title: "Registro editado exitosamente",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        });
+        document.addEventListener('requestApprove', event => {
+            Swal.fire({
+                position: "top-center",
+                icon: "success",
+                title: "Registro se ha enviado a aprobación",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        });
+        document.addEventListener('error', event => {
+            Swal.fire({
+                position: "top-center",
+                icon: "error",
+                title: "Ocurrió un problema inténtalo más tarde",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        });
     </script>
 @endsection

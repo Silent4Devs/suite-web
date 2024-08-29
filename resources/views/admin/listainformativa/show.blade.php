@@ -25,7 +25,7 @@
     }
 </style>
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/listainformativa.css') }}{{config('app.cssVersion')}}" @endsection
+<link rel="stylesheet" href="{{ asset('css/listainformativa.css') }}{{ config('app.cssVersion') }}" @endsection
     @section('content')
     @include('admin.listainformativa.estilos')
 
@@ -37,8 +37,8 @@
                 </div>
                 <div class="col-10" style="position: relative; top: 3rem;">
                     <h5>Crea tu propio grupo de distribución de correo</h6>
-                        <p>En esta sección puedes generar las listas informativas de correos, 
-                            en las cuales se informaran a los colaboradores 
+                        <p>En esta sección puedes generar las listas informativas de correos,
+                            en las cuales se informaran a los colaboradores
                             sobre los procesos en estos submodulos.</p>
                 </div>
             </div>
@@ -113,7 +113,7 @@
                                                 </option>
                                             @endforeach
                                         </select>
-                                        <label for="nivel2" style="color:#057BE2;">Colaboradores</label>
+                                        <label for="nivel2" style="color:#057BE2;">Usuarios</label>
                                     </div>
                                 </div>
                         </div>
@@ -208,7 +208,7 @@
             }
 
             var avatar = $(option.element).data('avatar');
-            var avatarHtml = `<img src="${avatar}" class="img_empleado" />`;
+            var avatarHtml = `<img src="${avatar}" class="img_empleado" style="margin-left: 20px;" />`;
             var avatarText = option.text;
 
             var formattedResult = $('<span>' + avatarHtml + ' ' + avatarText + '</span>');

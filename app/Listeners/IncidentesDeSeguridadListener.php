@@ -2,12 +2,19 @@
 
 namespace App\Listeners;
 
+use App\Models\AprobadorSeleccionado;
 use App\Models\User;
 use App\Notifications\IncidentesDeSeguridadNotification;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Notification;
 
-class IncidentesDeSeguridadListener
+class IncidentesDeSeguridadListener implements ShouldQueue
 {
+    use InteractsWithQueue;
+
+    public $tries = 5;
+
     /**
      * Create the event listener.
      *
@@ -26,13 +33,29 @@ class IncidentesDeSeguridadListener
      */
     public function handle($event)
     {
-        User::select('users.id', 'users.name', 'users.email', 'role_user.role_id')
-            ->join('role_user', 'role_user.user_id', '=', 'users.id')
-            ->where('role_user.role_id', '=', '1')
-            ->where('users.id', '!=', auth()->id())
-            ->get()
-            ->each(function (User $user) use ($event) {
-                Notification::send($user, new IncidentesDeSeguridadNotification($event->incidentesDeSeguridad, $event->tipo_consulta, $event->tabla, $event->slug));
-            });
+        $incidente = $event->incidentesSeguridad; // Asegúrate de que $event->incidentesDeSeguridad es del tipo correcto
+        $tipo_consulta = 'update'; // Asigna el valor correspondiente
+        $tabla = 'incidentes_de_seguridads'; // Asigna el valor correspondiente
+        $slug = 'Incidente de Seguridad'; // Asigna el valor correspondiente
+
+        $aprobadores_query = AprobadorSeleccionado::where('seguridad_id', $event->incidentesSeguridad->id)->get();
+
+        // Extraer los IDs de los aprobadores
+        $aprobadoresIds = [];
+        foreach ($aprobadores_query as $aprobador) {
+            $ids = json_decode($aprobador->aprobadores, true);
+            if (is_array($ids)) {
+                $aprobadoresIds = array_merge($aprobadoresIds, $ids);
+            }
+        }
+
+        // Asegurarse de que los IDs son únicos
+        $aprobadoresIds = array_unique($aprobadoresIds);
+
+        // Obtener los usuarios correspondientes
+        $usuarios = User::whereIn('id', $aprobadoresIds)->get();
+
+        // Enviar la notificación a cada usuario
+        Notification::send($usuarios, new IncidentesDeSeguridadNotification($incidente, $tipo_consulta, $tabla, $slug));
     }
 }

@@ -1,0 +1,1 @@
+LARAVEL_LOG \[%{TIMESTAMP_ISO8601:timestamp}\] %{WORD:loglevel}\.%{WORD}: %{GREEDYDATA:message}

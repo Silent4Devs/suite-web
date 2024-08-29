@@ -72,7 +72,7 @@ class AnalisisBrechaController extends Controller
                 $gap3aparcialmente = GapTre::select('id')->where('valoracion', '=', '2')->where('estado', '=', 'actuar')->where('analisis_brechas_id', '=', $row->id)->count();
                 $gap2noaplica = GapDo::select('id')->where('valoracion', '=', '4')->where('analisis_brechas_id', '=', $row->id)->count();
                 $total = 114 - $gap2noaplica;
-                $gapunoPorc = new Porcentaje();
+                $gapunoPorc = new Porcentaje;
                 $porcentajeGap1 = $gapunoPorc->GapUnoPorc($gap1porcentaje, $gap12porcentaje);
                 $porcentajeGap2 = $gapunoPorc->GapDosPorc($gap2porcentaje, $total, $gap2satisfactorio, $gap2parcialmente);
                 $porcentajeGap3 = $gapunoPorc->GapTresPorc($gap3porcentaje, $gap3satisfactorios, $gap3parcialmente, $gap31porcentaje, $gap3asatisfactorios, $gap3aparcialmente);
@@ -130,7 +130,7 @@ class AnalisisBrechaController extends Controller
 
         $analisisBrecha = AnalisisBrecha::create($request->all());
 
-        $dataCieCont = new GenerateAnalisisB();
+        $dataCieCont = new GenerateAnalisisB;
         $datosgapuno = $dataCieCont->TraerDatos($analisisBrecha->id);
         // dd($cie);
         GapUno::insert($datosgapuno);
@@ -169,7 +169,7 @@ class AnalisisBrechaController extends Controller
         $gap3aparcialmente = GapTre::select('id')->where('valoracion', '=', '2')->where('estado', '=', 'actuar')->where('analisis_brechas_id', '=', $analisisBrecha->id)->count();
         $gap2noaplica = GapDo::select('id')->where('valoracion', '=', '4')->where('analisis_brechas_id', '=', $analisisBrecha->id)->count();
         $total = 114 - $gap2noaplica;
-        $gapunoPorc = new Porcentaje();
+        $gapunoPorc = new Porcentaje;
         $porcentajeGap1 = $gapunoPorc->GapUnoPorc($gap1porcentaje, $gap12porcentaje);
         $porcentajeGap2 = $gapunoPorc->GapDosPorc($gap2porcentaje, $total, $gap2satisfactorio, $gap2parcialmente);
         $porcentajeGap3 = $gapunoPorc->GapTresPorc($gap3porcentaje, $gap3satisfactorios, $gap3parcialmente, $gap31porcentaje, $gap3asatisfactorios, $gap3aparcialmente);

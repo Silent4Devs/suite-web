@@ -9,6 +9,47 @@
                 <form method="POST" action="{{ route('admin.puestos.update', [$puesto->id]) }}" enctype="multipart/form-data">
                     @method('PUT')
                     @csrf
+                    <div class="row">
+                        <div class="row mt-4" style="margin-left: 10px; margin-right: 10px;">
+                            @if (!$firmado)
+                                <div class="col-12">
+                                    <label for="">Activar flujo de aprobación </label>
+                                    {!! Form::checkbox(
+                                        'firma_check',
+                                        1,
+                                        isset($aprobacionFirmaPuestoHisotricoLast->firma_check) ? $aprobacionFirmaPuestoHisotricoLast->firma_check : false,
+                                        [
+                                            'id' => 'aprobadores_firma',
+                                            'style' => 'width: 20px; height: 20px; vertical-align: middle;',
+                                            'data-target' => '#modalConfirmAprob',
+                                            'data-toggle' => 'modal',
+                                        ],
+                                    ) !!}
+                                </div>
+                            @endif
+                            @if (!$firmado)
+                                <div class="col-12 {{ isset($aprobacionFirmaPuestoHisotricoLast->firma_check) ? ($aprobacionFirmaPuestoHisotricoLast->firma_check ? '' : 'd-none') : 'd-none' }}"
+                                    id="aprobadores-firma-box">
+                                    <div class="form-group">
+                                        <label for="">Asignar Aprobadores</label>
+                                        <select name="aprobadores_firma[]" id="aprobadores" multiple
+                                            class="form-control select2">
+                                            @foreach ($firma->aprobadores as $aprobador)
+                                                <option value="{{ $aprobador->id }}"
+                                                    {{ $aprobacionFirmaPuesto->contains('aprobador_id', $aprobador->id) ? 'selected' : '' }}>
+                                                    {{ $aprobador->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            @else
+                                <div class="col-12">
+                                    <p>No es posible modificar el flujo de aprobación una vez iniciado</p>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
 
                     <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
                         <span style="font-size: 17px; font-weight: bold;">
@@ -777,8 +818,110 @@
                 </form>
             </div>
         </div>
+
+        @if (isset($aprobacionFirmaPuestoHisotricoLast->firma_check) ? $aprobacionFirmaPuestoHisotricoLast->firma_check : false)
+            @if ($aprobacionFirmaPuesto->count())
+                <div class="col-12">
+                    <div class="card card-body">
+                        <h5 class="text-center">Aprobaciones firmadas</h5>
+                        <div class="d-flex flex-wrap gap-4 mt-4 justify-content-center"
+                            style="width: 100%; max-width: 1000px; margin: auto;">
+                            @foreach ($aprobacionFirmaPuesto as $firma)
+                                @if ($firma->firma)
+                                    <div class="text-center">
+                                        <img src="{{ $firma->firma_ruta }}" alt="firma" style="width: 400px;"> <br>
+                                        <span>{{ \Carbon\Carbon::parse($firma->aprobador->created_at)->format('d/m/Y') }}</span><br>
+                                        <span>{{ $firma->aprobador->name }}</span>
+                                    </div>
+                                @endif
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            @endif
+        @endif
+        <style>
+            #firma_aprobador canvas {
+                border: 1px solid #bbb;
+            }
+        </style>
+        <script src="https://cdn.jsdelivr.net/npm/lemonadejs/dist/lemonade.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@lemonadejs/signature/dist/index.min.js"></script>
+        @if (isset($aprobacionFirmaPuestoHisotricoLast->firma_check) ? $aprobacionFirmaPuestoHisotricoLast->firma_check : false)
+            @if ($firmar)
+                <div class="col-12">
+                    <div class="card card-body">
+                        <form action="{{ route('admin.puestos-aprobacion.aprobacion-firma-puesto') }}" method="POST">
+                            @csrf
+                            <div class="d-flex gap-4 align-items-center flex-column">
+                                <div>
+                                    <h5>Ingrese su firma para la aprobación del registro</h5>
+                                </div>
+                                <div id="firma_aprobador" class="" style="width: auto;"></div>
+                                <input type="hidden" name="firma_base" value="" id="firma-input">
+                                <input type="hidden" name="puesto_id" value="{{ $puesto->id }}">
+                                <div class="d-flex gap-5">
+                                    <div id="resetCanvas" class="btn btn-outline-secondary">Limpiar</div>
+                                    <button class="btn btn-primary">Guardar firma</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            @endif
+        @endif
+        <script>
+            // Get the element to render signature component inside
+            const firma_aprobador = document.getElementById("firma_aprobador");
+            const resetCanvas = document.getElementById("resetCanvas");
+            resetCanvas.addEventListener("click", () => {
+                // console.log(component.getImage());
+                component.value = [];
+                document.getElementById('firma-input').value = component.getImage();
+            });
+            document.querySelector('#firma_aprobador').onmouseup = function() {
+                document.getElementById('firma-input').value = component.getImage();
+            }
+            // Call signature with the firma_aprobador element and the options object, saving its reference in a variable
+            const component = Signature(firma_aprobador, {
+                width: 700,
+                height: 300,
+                instructions: ""
+            });
+        </script>
     @endcan
 
+    <!-- Modal -->
+    <div class="modal fade" id="modalConfirmAprob" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+
+                    <div class="text-center my-5" style="color: rgb(230, 166, 16);">
+                        <i class="material-symbols-outlined" style="font-size: 100px;">
+                            error
+                        </i>
+                    </div>
+
+                    <p class="text-center" style="font-size: 18px;">
+                        <strong>
+                            ¿Está seguro de modificar la acción?
+                        </strong>
+                        <br>
+                        Esto quedará en el historial de movimientos
+                    </p>
+
+                    <div class="text-center mt-5">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Ok.</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 
@@ -1663,6 +1806,24 @@
                 });
 
             });
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#aprobadores").select2({
+                theme: "bootstrap4",
+            });
+        });
+
+        document.getElementById('aprobadores_firma').addEventListener('change', (e) => {
+            console.log(e.target.checked);
+            if (e.target.checked) {
+                document.getElementById('aprobadores-firma-box').classList.remove('d-none');
+            } else {
+                document.getElementById('aprobadores-firma-box').classList.add('d-none');
+            }
         });
     </script>
 @endsection

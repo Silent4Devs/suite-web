@@ -156,11 +156,9 @@
                                 @endcan
                                 &nbsp;&nbsp;&nbsp;
                                 @can('katbol_contratos_eliminar')
-                                    {!! Form::button('<i class="fas fa-trash text-danger"></i>', [
-                                        'type' => 'submit',
-                                        'style' => 'color:#2395AA; background: none; border: none; padding: 0; font: inherit; cursor: pointer;',
-                                        'onclick' => "return confirm('Esta seguro de eliminar el registro?')",
-                                    ]) !!}
+                                <a href="#" onclick="confirmDelete('{{ route('contract_manager.contratos-katbol.delete', [$contrato->id]) }}')" style="color:#e5760e;">
+                                <i class="fas fa-trash" title="Eliminar"></i>
+                                </a>
                                 @endcan
                             </div>
                             {!! Form::close() !!}
@@ -171,7 +169,7 @@
         </tbody>
     </table>
     {{-- <p class="lead">
-        <button id="json" class="btn btn-primary">TO JSON</button>
+        <button id="json" class="btn tb-btn-primary">TO JSON</button>
         <button id="csv" class="btn btn-info">TO CSV</button>
         <button id="pdf" class="btn btn-danger">TO PDF</button>
         <button id="txt" class="btn btn-success">TO TXT</button>
@@ -179,6 +177,23 @@
 </div>
 
 <script>
+    function confirmDelete(url) {
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: 'No podrás recuperar este ítem después de eliminarlo.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Redirigir a la URL de eliminación
+                window.location.href = url;
+            }
+        });
+    }
     document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("contratos-table").addEventListener("click", (e) => {
             let url = "{{ route('contract_manager.contratos-katbol.obtenerArchivos') }}"
@@ -219,7 +234,7 @@
                             <tr>
                                 <td>${contrato.no_contrato}</td>
                                 <td>${contrato.tipo_contrato}</td>
-                                <td><a href='${contrato.archivo}' download class="btn btn-primary">Download</a></td>
+                                <td><a href='${contrato.archivo}' download class="btn tb-btn-primary">Download</a></td>
                             </tr>
 
                         </tbody>
@@ -243,7 +258,7 @@
                                 <tr>
                                     <td>${factura.no_factura}</td>
                                     <td>${factura.concepto}</td>
-                                    <td><a href='${factura.archivo}' download class="btn btn-primary">Download</a></td>
+                                    <td><a href='${factura.archivo}' download class="btn tb-btn-primary">Download</a></td>
                                 </tr>
                                 `
                         });
@@ -268,7 +283,7 @@
                                 <tr>
                                     <td>${entregable.nombre_entregable}</td>
                                     <td>${entregable.descripcion}</td>
-                                    <td><a href='${entregable.archivo}' download class="btn btn-primary">Download</a></td>
+                                    <td><a href='${entregable.archivo}' download class="btn tb-btn-primary">Download</a></td>
                                 </tr>
                                 `
                         });
@@ -292,7 +307,7 @@
                                 <tr>
                                     <td>${convenio.no_convenio}</td>
                                     <td>${convenio.descripcion}</td>
-                                    <td><a href='${convenio.archivo}' download class="btn btn-primary">Download</a></td>
+                                    <td><a href='${convenio.archivo}' download class="btn tb-btn-primary">Download</a></td>
                                 </tr>
                                 `
                         });
