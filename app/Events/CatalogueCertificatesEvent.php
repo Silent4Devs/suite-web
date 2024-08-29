@@ -18,16 +18,18 @@ class CatalogueCertificatesEvent
     public $tabla;
 
     public $slug;
+    public $public;
 
     /**
      * Create a new event instance.
      */
-    public function __construct($certificate, $tipo_consulta, $tabla, $slug)
+    public function __construct($certificate, $tipo_consulta, $tabla, $slug, $public)
     {
         $this->certificate = $certificate;
         $this->tipo_consulta = $tipo_consulta;
         $this->tabla = $tabla;
         $this->slug = $slug;
+        $this->public = $public;
     }
 
     /**

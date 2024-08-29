@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Events\CatalogueCertificatesEvent;
 use App\Mail\ApprovalNotificationCertificatesMail;
 use App\Mail\CertificatesMail;
+use App\Mail\CertificationReminderMail;
 use App\Mail\RejectionNotificationCertificatesMail;
 use App\Models\ComentariosProcesosListaDistribucion;
 use App\Models\ControlListaDistribucion;
+use App\Models\Empleado;
 use App\Models\ListaDistribucion;
 use App\Models\ProcesosListaDistribucion;
 use App\Models\TBCatalogueTrainingModel;
@@ -108,7 +110,7 @@ class CertificatesController extends Controller
 
         $modulo = ListaDistribucion::where('modelo', '=', $this->modelo)->first();
 
-        event(new CatalogueCertificatesEvent($catalogueTraining, 'aprobado', 'catalogue_training', 'Certificado'));
+        event(new CatalogueCertificatesEvent($catalogueTraining, 'aprobado', 'catalogue_training', 'Certificado','LD'));
 
         $proceso_general = ProcesosListaDistribucion::with('participantes')
             ->where('modulo_id', '=', $modulo->id)
@@ -184,7 +186,7 @@ class CertificatesController extends Controller
         $modulo = ListaDistribucion::where('modelo', '=', $this->modelo)->first();
         $aprobacion = ProcesosListaDistribucion::with('participantes')->where('proceso_id', '=', $id)->where('modulo_id', '=', $modulo->id)->first();
 
-        event(new CatalogueCertificatesEvent($catalogueTraining, 'rechazado', 'catalogue_training', 'Certificado'));
+        event(new CatalogueCertificatesEvent($catalogueTraining, 'rechazado', 'catalogue_training', 'Certificado',"LD"));
 
         $comentario = ComentariosProcesosListaDistribucion::create([
             'comentario' => $request->comentario,
