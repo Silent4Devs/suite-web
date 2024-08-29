@@ -1,7 +1,7 @@
 <div class="d-flex align-items-center justify-content-between">
     <div style="{{ $place == 'notificaciones-page' ? 'flex-basis: calc(80% - 5px)' : 'flex-basis:100%' }}">
         <a class="dropdown-item text-secondary"
-            href="{{ route('admin.foda.revision', $last_unread_notification->data['id']) }}">
+            href="{{ route('admin.portal-comunicacion.index')}}">
             @switch(" ".$last_unread_notification->data['type']) {{-- Se concatena un espacio porque el autoformateado lo agrega en el case --}}
                 @case(' create')
                     <div class="d-flex align-items-center justify-content-start">
@@ -14,6 +14,19 @@
                         @endif
                         &nbsp;&nbsp;
                         <p class="p-0 m-0">Nueva {{ $last_unread_notification->data['slug'] }} creado</p>
+                    </div>
+                @break
+                @case(' store')
+                    <div class="d-flex align-items-center justify-content-start">
+                        @if (!empty($last_unread_notification->data['avatar_ruta']))
+                            <img src="{{ asset($last_unread_notification->data['avatar_ruta']) }}" alt=""
+                                class="rounded-circle" style="width: 50px; height: 50px;">
+                            {{ $last_unread_notification->data['name'] }}:
+                        @else
+                            <i class="pr-2 fas fa-tasks text-success"></i>
+                        @endif
+                        &nbsp;&nbsp;
+                        <p class="p-0 m-0">Se agrego una nueva certificación al catálogo </p>
                     </div>
                 @break
 
