@@ -52,9 +52,13 @@
                     </div>
                 </div>
             </div>
-
-
-            <div class="row">
+            <div class="d-flex justify-content-center gap-3">
+                <button class="btn btn-sm btn_cancelar " type="submit" id="rechazado">Rechazar</button>
+                <button class="btn btn-sm btn-success" type="submit" id="aprobado">
+                    Aprobar Solicitud
+                </button>
+            </div>
+            {{-- <div class="row">
                 <div class="text-center form-group col-12">
                     <button class="btn aprobar" id="aprobado" type="submit">
                         Aprobar Solicitud
@@ -67,7 +71,7 @@
                         Rechazar
                     </button>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </form>
 
