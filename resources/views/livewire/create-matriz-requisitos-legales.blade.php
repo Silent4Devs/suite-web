@@ -122,7 +122,7 @@
         </div>
         @endif
 
-    <form wire:submit='save'>
+    <form wire:submit.prevent='save'>
         <div class="mt-4 card" style="border-radius: 8px;">
             <div class="card-body pb-0">
                 <div class="row">

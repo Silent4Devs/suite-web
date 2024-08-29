@@ -21,7 +21,7 @@ class CreateMatrizRequisitosLegales extends Component
 
     public collection $alcance_s1;
 
-    public $alcance;
+    public $alcance = [];
 
     public $bandera = true;
 
@@ -69,6 +69,7 @@ class CreateMatrizRequisitosLegales extends Component
             'fechavigor' => $this->alcance['fechavigor'],
             'requisitoacumplir' => $this->alcance['requisitoacumplir'],
         ]);
+
         foreach ($this->alcance_s1 as $alcance1) {
             $array_requisito[] = MatrizRequisitoLegale::create([
                 'nombrerequisito' => $alcance1['nombrerequisito'],
