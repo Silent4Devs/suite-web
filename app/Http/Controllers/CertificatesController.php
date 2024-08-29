@@ -108,7 +108,7 @@ class CertificatesController extends Controller
 
         $modulo = ListaDistribucion::where('modelo', '=', $this->modelo)->first();
 
-        event(new CatalogueCertificatesEvent($catalogueTraining, 'aprobado', 'catalogue_training', 'Certificado'));
+        event(new CatalogueCertificatesEvent($catalogueTraining, 'aprobado', 'catalogue_training', 'Certificado', 'LD'));
 
         $proceso_general = ProcesosListaDistribucion::with('participantes')
             ->where('modulo_id', '=', $modulo->id)
@@ -184,7 +184,7 @@ class CertificatesController extends Controller
         $modulo = ListaDistribucion::where('modelo', '=', $this->modelo)->first();
         $aprobacion = ProcesosListaDistribucion::with('participantes')->where('proceso_id', '=', $id)->where('modulo_id', '=', $modulo->id)->first();
 
-        event(new CatalogueCertificatesEvent($catalogueTraining, 'rechazado', 'catalogue_training', 'Certificado'));
+        event(new CatalogueCertificatesEvent($catalogueTraining, 'rechazado', 'catalogue_training', 'Certificado', 'LD'));
 
         $comentario = ComentariosProcesosListaDistribucion::create([
             'comentario' => $request->comentario,

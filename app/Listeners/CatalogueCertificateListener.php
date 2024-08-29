@@ -30,16 +30,26 @@ class CatalogueCertificateListener implements ShouldQueue
     public function handle($event): void
     {
         $modulo_entend = 5;
+        if ($event->public === 'LD') {
+            $lista = ListaDistribucion::with('participantes')->where('id', $modulo_entend)->first();
 
-        $lista = ListaDistribucion::with('participantes')->where('id', $modulo_entend)->first();
+            foreach ($lista->participantes as $participantes) {
+                $empleados = Empleado::where('id', $participantes->empleado_id)->first();
 
-        foreach ($lista->participantes as $participantes) {
-            $empleados = Empleado::where('id', $participantes->empleado_id)->first();
+                $user = User::where('email', trim(removeUnicodeCharacters($empleados->email)))->first();
+                // dd($user);
 
-            $user = User::where('email', trim(removeUnicodeCharacters($empleados->email)))->first();
-            // dd($user);
-
-            Notification::send($user, new CatalogueCertificateNotification($event->certificate, $event->tipo_consulta, $event->tabla, $event->slug));
+                Notification::send($user, new CatalogueCertificateNotification($event->certificate, $event->tipo_consulta, $event->tabla, $event->slug));
+            }
+        } else {
+            User::select('users.id', 'users.name', 'users.email', 'role_user.role_id')
+                ->join('role_user', 'role_user.user_id', '=', 'users.id')
+                ->where('role_user.role_id', '=', '1')->where('users.id', '!=', auth()->id())
+                ->get()
+                ->each(function (User $user) use ($event) {
+                    Notification::send($user, new CatalogueCertificateNotification($event->certificate, $event->tipo_consulta, $event->tabla, $event->slug));
+                });
         }
+
     }
 }

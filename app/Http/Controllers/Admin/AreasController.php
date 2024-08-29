@@ -29,258 +29,258 @@ class AreasController extends Controller
 
     public function index(Request $request)
     {
-    try{
-        abort_if(Gate::denies('crear_area_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        try {
+            abort_if(Gate::denies('crear_area_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $direccion_exists = Area::select('id_reporta')->whereNull('id_reporta')->exists();
-        $areas = Area::getAll();
-        $teams = Team::get();
-        $grupoarea = Grupo::get();
-        $numero_areas = $areas->count();
+            $direccion_exists = Area::select('id_reporta')->whereNull('id_reporta')->exists();
+            $areas = Area::getAll();
+            $teams = Team::get();
+            $grupoarea = Grupo::get();
+            $numero_areas = $areas->count();
 
-        return view('admin.areas.index', compact('teams', 'direccion_exists', 'numero_areas', 'grupoarea', 'areas'));
-    } catch (\Exception $e) {
-        // Registrar el error en los logs
-        Log::channel('logstash')->info('Error al cargar areas: '.$e->getMessage(), [
-            'exception' => $e,
-            'input' => $request->all(),
-        ]);
+            return view('admin.areas.index', compact('teams', 'direccion_exists', 'numero_areas', 'grupoarea', 'areas'));
+        } catch (\Exception $e) {
+            // Registrar el error en los logs
+            Log::channel('logstash')->info('Error al cargar areas: '.$e->getMessage(), [
+                'exception' => $e,
+                'input' => $request->all(),
+            ]);
 
-        // Retornar una respuesta de error al cliente
-        return response()->json(['message' => 'Error al cargar areas'], 500);
-    }
+            // Retornar una respuesta de error al cliente
+            return response()->json(['message' => 'Error al cargar areas'], 500);
+        }
     }
 
     public function create()
     {
-    try{
-        abort_if(Gate::denies('crear_area_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        try {
+            abort_if(Gate::denies('crear_area_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $grupoareas = Grupo::get();
-        $direccion_exists = Area::select('id_reporta')->whereNull('id_reporta')->exists();
-        $areas = Area::with('areas')->get();
-        $empleados = Empleado::getaltaAll();
-        $area = new Area;
+            $grupoareas = Grupo::get();
+            $direccion_exists = Area::select('id_reporta')->whereNull('id_reporta')->exists();
+            $areas = Area::with('areas')->get();
+            $empleados = Empleado::getaltaAll();
+            $area = new Area;
 
-        return view('admin.areas.create', compact('grupoareas', 'direccion_exists', 'areas', 'empleados', 'area'));
-    } catch (\Exception $e) {
-        // Registrar el error en los logs
-        Log::channel('logstash')->info('Error al crear area: '.$e->getMessage(), [
-            'exception' => $e,
-            'input' => $request->all(),
-        ]);
+            return view('admin.areas.create', compact('grupoareas', 'direccion_exists', 'areas', 'empleados', 'area'));
+        } catch (\Exception $e) {
+            // Registrar el error en los logs
+            Log::channel('logstash')->info('Error al crear area: '.$e->getMessage(), [
+                'exception' => $e,
+                'input' => $request->all(),
+            ]);
 
-        // Retornar una respuesta de error al cliente
-        return response()->json(['message' => 'Error al crear area'], 500);
-    }
+            // Retornar una respuesta de error al cliente
+            return response()->json(['message' => 'Error al crear area'], 500);
+        }
     }
 
     public function store(Request $request)
     {
-    try{
-        abort_if(Gate::denies('crear_area_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $direccion_exists = Area::select('id_reporta')->whereNull('id_reporta')->exists();
+        try {
+            abort_if(Gate::denies('crear_area_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            $direccion_exists = Area::select('id_reporta')->whereNull('id_reporta')->exists();
 
-        $validateReporta = 'nullable|exists:areas,id';
-        if ($direccion_exists) {
-            $validateReporta = 'required|exists:areas,id';
-        }
-        $request->validate([
-            'area' => 'required|string|max:255',
-            'id_reporta' => $validateReporta,
-        ], [
-            'id_reporta.required' => 'El área a la que reporta es requerido',
-        ]);
-
-        $area = Area::create($request->all());
-
-        $image = null;
-
-        if ($request->hasFile('foto_area')) {
-            $file = $request->file('foto_area');
-            //$name_image = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-            $hash_name = pathinfo($file->hashName(), PATHINFO_FILENAME);
-            $new_name_image = 'UID_'.$area->id.'_'.$hash_name.'.png';
-
-            // Call the ImageService to consume the external API
-            // $apiResponse = ImageService::consumeImageCompresorApi($file);
-
-            // // Compress and save the image
-            // if ($apiResponse['status'] == 200) {
-            //     $rutaGuardada = '/app/public/areas/'.$new_name_image;
-            //     file_put_contents(storage_path($rutaGuardada), $apiResponse['body']);
-
-            //     $area->update([
-            //         'foto_area' => $new_name_image,
-            //     ]);
-            // } else {
-            //     $mensajeError = 'Error al recibir la imagen de la API externa: '.$apiResponse['body'];
-
-            //     return Redirect::back()->with('error', $mensajeError);
-            // }
-        } else {
-            $area->update([
-                'foto_area' => null,
+            $validateReporta = 'nullable|exists:areas,id';
+            if ($direccion_exists) {
+                $validateReporta = 'required|exists:areas,id';
+            }
+            $request->validate([
+                'area' => 'required|string|max:255',
+                'id_reporta' => $validateReporta,
+            ], [
+                'id_reporta.required' => 'El área a la que reporta es requerido',
             ]);
+
+            $area = Area::create($request->all());
+
+            $image = null;
+
+            if ($request->hasFile('foto_area')) {
+                $file = $request->file('foto_area');
+                //$name_image = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                $hash_name = pathinfo($file->hashName(), PATHINFO_FILENAME);
+                $new_name_image = 'UID_'.$area->id.'_'.$hash_name.'.png';
+
+                // Call the ImageService to consume the external API
+                // $apiResponse = ImageService::consumeImageCompresorApi($file);
+
+                // // Compress and save the image
+                // if ($apiResponse['status'] == 200) {
+                //     $rutaGuardada = '/app/public/areas/'.$new_name_image;
+                //     file_put_contents(storage_path($rutaGuardada), $apiResponse['body']);
+
+                //     $area->update([
+                //         'foto_area' => $new_name_image,
+                //     ]);
+                // } else {
+                //     $mensajeError = 'Error al recibir la imagen de la API externa: '.$apiResponse['body'];
+
+                //     return Redirect::back()->with('error', $mensajeError);
+                // }
+            } else {
+                $area->update([
+                    'foto_area' => null,
+                ]);
+            }
+
+            return redirect()->route('admin.areas.index')->with('success', 'Guardado con éxito');
+        } catch (\Exception $e) {
+            // Registrar el error en los logs
+            Log::channel('logstash')->info('Error al guardar area: '.$e->getMessage(), [
+                'exception' => $e,
+                'input' => $request->all(),
+            ]);
+
+            // Retornar una respuesta de error al cliente
+            return response()->json(['message' => 'Error al guardar area'], 500);
         }
-
-        return redirect()->route('admin.areas.index')->with('success', 'Guardado con éxito');
-    } catch (\Exception $e) {
-        // Registrar el error en los logs
-        Log::channel('logstash')->info('Error al guardar area: '.$e->getMessage(), [
-            'exception' => $e,
-            'input' => $request->all(),
-        ]);
-
-        // Retornar una respuesta de error al cliente
-        return response()->json(['message' => 'Error al guardar area'], 500);
-    }
     }
 
     public function edit(Area $area)
     {
-    try{
-        abort_if(Gate::denies('crear_area_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        try {
+            abort_if(Gate::denies('crear_area_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $grupoareas = Grupo::get();
-        $direccion_exists = Area::select('id_reporta')->whereNull('id_reporta')->exists();
-        $areas = Area::with('areas')->get();
-        $reportas = Empleado::getaltaAll();
+            $grupoareas = Grupo::get();
+            $direccion_exists = Area::select('id_reporta')->whereNull('id_reporta')->exists();
+            $areas = Area::with('areas')->get();
+            $reportas = Empleado::getaltaAll();
 
-        return view('admin.areas.edit', compact('grupoareas', 'direccion_exists', 'areas', 'area', 'reportas'));
-    } catch (\Exception $e) {
-        // Registrar el error en los logs
-        Log::channel('logstash')->info('Error al editar area: '.$e->getMessage(), [
-            'exception' => $e,
-            'input' => $request->all(),
-        ]);
+            return view('admin.areas.edit', compact('grupoareas', 'direccion_exists', 'areas', 'area', 'reportas'));
+        } catch (\Exception $e) {
+            // Registrar el error en los logs
+            Log::channel('logstash')->info('Error al editar area: '.$e->getMessage(), [
+                'exception' => $e,
+                'input' => $request->all(),
+            ]);
 
-        // Retornar una respuesta de error al cliente
-        return response()->json(['message' => 'Error al editar area'], 500);
-    }
+            // Retornar una respuesta de error al cliente
+            return response()->json(['message' => 'Error al editar area'], 500);
+        }
     }
 
     public function update(Request $request, $id)
     {
-    try{
-        abort_if(Gate::denies('crear_area_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $primer_nodo = Area::select('id', 'id_reporta')->whereNull('id_reporta')->first();
-        $direccion_exists = Area::select('id_reporta')->whereNull('id_reporta')->exists();
-        $validateReporta = 'nullable|exists:areas,id';
-        $area = Area::find($id);
+        try {
+            abort_if(Gate::denies('crear_area_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            $primer_nodo = Area::select('id', 'id_reporta')->whereNull('id_reporta')->first();
+            $direccion_exists = Area::select('id_reporta')->whereNull('id_reporta')->exists();
+            $validateReporta = 'nullable|exists:areas,id';
+            $area = Area::find($id);
 
-        if ($direccion_exists) {
-            if ($primer_nodo->id == intval($area->id)) {
-                $validateReporta = 'nullable|exists:areas,id';
-            } else {
-                $validateReporta = 'required|exists:areas,id';
-            }
-        }
-
-        $request->validate([
-            'area' => 'required|string|max:255',
-            'id_reporta' => $validateReporta,
-        ], [
-            'id_reporta.required' => 'El área a la que reporta es requerido',
-        ]);
-
-        $image = $area->foto_area;
-
-        if ($request->hasFile('foto_area')) {
-            //Si existe la imagen entonces se elimina al editarla
-            $file = $request->file('foto_area');
-
-            $filePath = '/app/public/areas/'.$area->foto_area;
-            $hash_name = pathinfo($file->hashName(), PATHINFO_FILENAME);
-            $new_name_image = 'UID_'.$area->id.'_'.$hash_name.'.png';
-
-            if (Storage::disk('public')->exists($filePath)) {
-                Storage::disk('public')->delete($filePath);
+            if ($direccion_exists) {
+                if ($primer_nodo->id == intval($area->id)) {
+                    $validateReporta = 'nullable|exists:areas,id';
+                } else {
+                    $validateReporta = 'required|exists:areas,id';
+                }
             }
 
-            // Call the ImageService to consume the external API
-            // $apiResponse = ImageService::consumeImageCompresorApi($file);
-
-            // // Compress and save the image
-            // if ($apiResponse['status'] == 200) {
-            //     $rutaGuardada = '/app/public/areas/' . $new_name_image;
-            //     file_put_contents(storage_path($rutaGuardada), $apiResponse['body']);
-
-            //     $area->update([
-            //         'foto_area' => $new_name_image,
-            //     ]);
-            // } else {
-            //     $mensajeError = 'Error al recibir la imagen de la API externa: ' . $apiResponse['body'];
-            //     return Redirect::back()->with('error', $mensajeError);
-            // }
-        } else {
-            $area->update([
-                'foto_area' => null,
+            $request->validate([
+                'area' => 'required|string|max:255',
+                'id_reporta' => $validateReporta,
+            ], [
+                'id_reporta.required' => 'El área a la que reporta es requerido',
             ]);
+
+            $image = $area->foto_area;
+
+            if ($request->hasFile('foto_area')) {
+                //Si existe la imagen entonces se elimina al editarla
+                $file = $request->file('foto_area');
+
+                $filePath = '/app/public/areas/'.$area->foto_area;
+                $hash_name = pathinfo($file->hashName(), PATHINFO_FILENAME);
+                $new_name_image = 'UID_'.$area->id.'_'.$hash_name.'.png';
+
+                if (Storage::disk('public')->exists($filePath)) {
+                    Storage::disk('public')->delete($filePath);
+                }
+
+                // Call the ImageService to consume the external API
+                // $apiResponse = ImageService::consumeImageCompresorApi($file);
+
+                // // Compress and save the image
+                // if ($apiResponse['status'] == 200) {
+                //     $rutaGuardada = '/app/public/areas/' . $new_name_image;
+                //     file_put_contents(storage_path($rutaGuardada), $apiResponse['body']);
+
+                //     $area->update([
+                //         'foto_area' => $new_name_image,
+                //     ]);
+                // } else {
+                //     $mensajeError = 'Error al recibir la imagen de la API externa: ' . $apiResponse['body'];
+                //     return Redirect::back()->with('error', $mensajeError);
+                // }
+            } else {
+                $area->update([
+                    'foto_area' => null,
+                ]);
+            }
+
+            $area->update([
+                'area' => $request->area,
+                'id_grupo' => $request->id_grupo,
+                'id_reporta' => $request->id_reporta,
+                'descripcion' => $request->descripcion,
+                'empleados_id' => $request->empleados_id,
+                'foto_area' => $new_name_image ?? null,
+
+            ]);
+
+            return redirect()->route('admin.areas.index')->with('success', 'Editado con éxito');
+        } catch (\Exception $e) {
+            // Registrar el error en los logs
+            Log::channel('logstash')->info('Error al actualizar area: '.$e->getMessage(), [
+                'exception' => $e,
+                'input' => $request->all(),
+            ]);
+
+            // Retornar una respuesta de error al cliente
+            return response()->json(['message' => 'Error al actualizar area'], 500);
         }
-
-        $area->update([
-            'area' => $request->area,
-            'id_grupo' => $request->id_grupo,
-            'id_reporta' => $request->id_reporta,
-            'descripcion' => $request->descripcion,
-            'empleados_id' => $request->empleados_id,
-            'foto_area' => $new_name_image ?? null,
-
-        ]);
-
-        return redirect()->route('admin.areas.index')->with('success', 'Editado con éxito');
-    } catch (\Exception $e) {
-        // Registrar el error en los logs
-        Log::channel('logstash')->info('Error al actualizar area: '.$e->getMessage(), [
-            'exception' => $e,
-            'input' => $request->all(),
-        ]);
-
-        // Retornar una respuesta de error al cliente
-        return response()->json(['message' => 'Error al actualizar area'], 500);
-    }
     }
 
     public function show(Area $area)
     {
-    try{
-        abort_if(Gate::denies('crear_area_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        try {
+            abort_if(Gate::denies('crear_area_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $area->load('team', 'grupo');
+            $area->load('team', 'grupo');
 
-        return view('admin.areas.show', compact('area'));
+            return view('admin.areas.show', compact('area'));
 
-    } catch (\Exception $e) {
-        // Registrar el error en los logs
-        Log::channel('logstash')->info('Error al ver area: '.$e->getMessage(), [
-            'exception' => $e,
-            'input' => $request->all(),
-        ]);
+        } catch (\Exception $e) {
+            // Registrar el error en los logs
+            Log::channel('logstash')->info('Error al ver area: '.$e->getMessage(), [
+                'exception' => $e,
+                'input' => $request->all(),
+            ]);
 
-        // Retornar una respuesta de error al cliente
-        return response()->json(['message' => 'Error al ver area'], 500);
-    }
+            // Retornar una respuesta de error al cliente
+            return response()->json(['message' => 'Error al ver area'], 500);
+        }
     }
 
     public function destroy(Area $area)
     {
-    try{
-        abort_if(Gate::denies('crear_area_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        try {
+            abort_if(Gate::denies('crear_area_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $area->delete();
+            $area->delete();
 
-        return back()->with('deleted', 'Registro eliminado con éxito');
-    } catch (\Exception $e) {
-        // Registrar el error en los logs
-        Log::channel('logstash')->info('Error al eliminar area: '.$e->getMessage(), [
-            'exception' => $e,
-            'input' => $request->all(),
-        ]);
+            return back()->with('deleted', 'Registro eliminado con éxito');
+        } catch (\Exception $e) {
+            // Registrar el error en los logs
+            Log::channel('logstash')->info('Error al eliminar area: '.$e->getMessage(), [
+                'exception' => $e,
+                'input' => $request->all(),
+            ]);
 
-        // Retornar una respuesta de error al cliente
-        return response()->json(['message' => 'Error al eliminar area'], 500);
-    }
+            // Retornar una respuesta de error al cliente
+            return response()->json(['message' => 'Error al eliminar area'], 500);
+        }
     }
 
     public function massDestroy(MassDestroyAreaRequest $request)
@@ -292,21 +292,21 @@ class AreasController extends Controller
 
     public function obtenerAreasPorGrupo()
     {
-    try{
-        $grupos = Grupo::with('areas')->orderByDesc('id')->get();
-        $numero_grupos = Grupo::count();
+        try {
+            $grupos = Grupo::with('areas')->orderByDesc('id')->get();
+            $numero_grupos = Grupo::count();
 
-        return view('admin.areas.areas-grupo', compact('grupos', 'numero_grupos'));
-    } catch (\Exception $e) {
-        // Registrar el error en los logs
-        Log::channel('logstash')->info('Error al obtener area por grupo: '.$e->getMessage(), [
-            'exception' => $e,
-            'input' => $request->all(),
-        ]);
+            return view('admin.areas.areas-grupo', compact('grupos', 'numero_grupos'));
+        } catch (\Exception $e) {
+            // Registrar el error en los logs
+            Log::channel('logstash')->info('Error al obtener area por grupo: '.$e->getMessage(), [
+                'exception' => $e,
+                'input' => $request->all(),
+            ]);
 
-        // Retornar una respuesta de error al cliente
-        return response()->json(['message' => 'Error al obtener area por grupo'], 500);
-    }
+            // Retornar una respuesta de error al cliente
+            return response()->json(['message' => 'Error al obtener area por grupo'], 500);
+        }
     }
 
     public function renderJerarquia(Request $request)
@@ -331,23 +331,23 @@ class AreasController extends Controller
     public function obtenerJerarquia(Request $request)
     {
 
-    try{
-        abort_if(Gate::denies('niveles_jerarquicos_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        try {
+            abort_if(Gate::denies('niveles_jerarquicos_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $areasTree = Area::with(['lider', 'supervisor.children', 'supervisor.supervisor', 'grupo', 'children.supervisor', 'children.children'])->whereNull('id_reporta')->first(); //Eager loading
+            $areasTree = Area::with(['lider', 'supervisor.children', 'supervisor.supervisor', 'grupo', 'children.supervisor', 'children.children'])->whereNull('id_reporta')->first(); //Eager loading
 
-        return json_encode($areasTree);
+            return json_encode($areasTree);
 
-    } catch (\Exception $e) {
-        // Registrar el error en los logs
-        Log::channel('logstash')->info('Error al obtener jerarquia: '.$e->getMessage(), [
-            'exception' => $e,
-            'input' => $request->all(),
-        ]);
+        } catch (\Exception $e) {
+            // Registrar el error en los logs
+            Log::channel('logstash')->info('Error al obtener jerarquia: '.$e->getMessage(), [
+                'exception' => $e,
+                'input' => $request->all(),
+            ]);
 
-        // Retornar una respuesta de error al cliente
-        return response()->json(['message' => 'Error al obtener jerarquia'], 500);
-    }
+            // Retornar una respuesta de error al cliente
+            return response()->json(['message' => 'Error al obtener jerarquia'], 500);
+        }
     }
 
     public function exportTo()
@@ -359,21 +359,21 @@ class AreasController extends Controller
 
     public function pdf()
     {
-    try{
-        $areas = Area::getAll();
-        $pdf = PDF::loadView('areas', compact('areas'));
-        $pdf->setPaper('A4', 'portrait');
+        try {
+            $areas = Area::getAll();
+            $pdf = PDF::loadView('areas', compact('areas'));
+            $pdf->setPaper('A4', 'portrait');
 
-        return $pdf->download('areas.pdf');
-    } catch (\Exception $e) {
-        // Registrar el error en los logs
-        Log::channel('logstash')->info('Error al descargar pdf del area: '.$e->getMessage(), [
-            'exception' => $e,
-            'input' => $request->all(),
-        ]);
+            return $pdf->download('areas.pdf');
+        } catch (\Exception $e) {
+            // Registrar el error en los logs
+            Log::channel('logstash')->info('Error al descargar pdf del area: '.$e->getMessage(), [
+                'exception' => $e,
+                'input' => $request->all(),
+            ]);
 
-        // Retornar una respuesta de error al cliente
-        return response()->json(['message' => 'Error al descargar pdf del area'], 500);
-    }
+            // Retornar una respuesta de error al cliente
+            return response()->json(['message' => 'Error al descargar pdf del area'], 500);
+        }
     }
 }

@@ -7,11 +7,11 @@ use App\Models\TBCatalogueTrainingModel;
 
 class CertificatesObserver
 {
-    public function created(TBCatalogueTrainingModel $certificate): void
-    {
-        event(new CatalogueCertificatesEvent($certificate, 'create', 'catalogue_training', 'Tipo de certificación'));
-        // $this->forgetCache();
-    }
+    // public function created(TBCatalogueTrainingModel $certificate): void
+    // {
+    //     event(new CatalogueCertificatesEvent($certificate, 'create', 'catalogue_training', 'Tipo de certificación','LD'));
+    //     // $this->forgetCache();
+    // }
 
     public function aprobado(TBCatalogueTrainingModel $certificate): void
     {

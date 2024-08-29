@@ -1309,7 +1309,7 @@
                                         </div>
                                     </div>
                                 @endforeach
-                                <button class="mt-4 btn btn-sm btn-outline-primary" id="addPeriodo"
+                                <button type="button" class="mt-4 btn btn-sm btn-outline-primary" id="addPeriodo"
                                     wire:click="addPeriodo()"><i class="mr-2 fas fa-plus"></i> Añadir Periodo</button>
                                 <hr>
                                 <label class="container-check">Enviar notificación por email a los evaluadores

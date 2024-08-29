@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Forms\CatalogueTraining;
 
+use App\Events\CatalogueCertificatesEvent;
 use App\Models\TBCatalogueTrainingModel;
 use App\Models\User;
 use Livewire\Form;
@@ -38,6 +39,7 @@ class CatalogueTrainingForm extends Form
                 'empleado_id' => $user->empleado->id,
             ]);
             $this->reset();
+            event(new CatalogueCertificatesEvent($register, 'create', 'catalogue_training', 'Tipo de certificación', 'LD'));
 
             return $register->id;
         }
@@ -77,7 +79,7 @@ class CatalogueTrainingForm extends Form
         if ($existing) {
             return false;
         } else {
-            TBCatalogueTrainingModel::create([
+            $catalogue = TBCatalogueTrainingModel::create([
                 'name' => $this->name,
                 'issuing_company' => $this->issuing_company,
                 'mark' => $this->mark,
@@ -87,6 +89,7 @@ class CatalogueTrainingForm extends Form
                 'status' => 'approved',
             ]);
             $this->reset();
+            event(new CatalogueCertificatesEvent($catalogue, 'store', 'catalogue_training', 'Tipo de certificación', 'ALL'));
 
             return true;
         }

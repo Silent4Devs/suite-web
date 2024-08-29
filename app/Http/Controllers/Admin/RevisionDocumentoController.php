@@ -3,19 +3,19 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Documento;
-use App\Models\RevisionDocumento;
-use App\Models\User;
-use Illuminate\Http\Request;
 use App\Mail\DocumentoAprobadoMail;
 use App\Mail\DocumentoNoPublicadoMail;
 use App\Mail\DocumentoPublicadoMail;
 use App\Mail\DocumentoRechazadoMail;
 use App\Mail\SolicitudAprobacionMail;
+use App\Models\Documento;
 use App\Models\Empleado;
 use App\Models\HistorialRevisionDocumento;
 use App\Models\HistorialVersionesDocumento;
 use App\Models\Proceso;
+use App\Models\RevisionDocumento;
+use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
@@ -117,8 +117,8 @@ class RevisionDocumentoController extends Controller
         $empleadoActual = User::getCurrentUser()->empleado;
         $empleado = Empleado::getaltaAll()->find(intval($revisionDocumento->empleado_id));
 
-        if($revisionDocumento->empleado_id == $empleadoActual->id){
-        $documento = Documento::find(intval($revisionDocumento->documento_id));
+        if ($revisionDocumento->empleado_id == $empleadoActual->id) {
+            $documento = Documento::find(intval($revisionDocumento->documento_id));
             if (! $documento) {
                 abort_if(! $documento, 404);
             }
@@ -157,7 +157,7 @@ class RevisionDocumentoController extends Controller
             }
 
             return view('externos.revisiones.edit', compact('documento', 'empleado', 'path_documentos_aprobacion', 'revisionDocumento'));
-        }else{
+        } else {
             return redirect(route('admin.inicio-Usuario.index'));
         }
     }
@@ -232,7 +232,7 @@ class RevisionDocumentoController extends Controller
                             'estatus' => strval(Documento::PUBLICADO),
                         ]);
 
-                        $this->publishDocumentInFolder($path_documentos_aprobacion . '/' . $documentoOriginal->archivo, $documentoOriginal);
+                        $this->publishDocumentInFolder($path_documentos_aprobacion.'/'.$documentoOriginal->archivo, $documentoOriginal);
 
                         HistorialVersionesDocumento::create([
                             'documento_id' => $documentoOriginal->id,
@@ -277,9 +277,9 @@ class RevisionDocumentoController extends Controller
             ]);
 
             RevisionDocumento::where('nivel', $documento->nivel)
-            ->where('no_revision', $documento->no_revision)
-            ->where('documento_id', $documento->documento_id)
-            ->update(['estatus' => 2]);
+                ->where('no_revision', $documento->no_revision)
+                ->where('documento_id', $documento->documento_id)
+                ->update(['estatus' => 2]);
 
             $documentoOriginal = Documento::find($documento->documento_id);
 
@@ -345,7 +345,7 @@ class RevisionDocumentoController extends Controller
                             'estatus' => strval(Documento::PUBLICADO),
                         ]);
 
-                        $this->publishDocumentInFolder($path_documentos_aprobacion . '/' . $documentoOriginal->archivo, $documentoOriginal);
+                        $this->publishDocumentInFolder($path_documentos_aprobacion.'/'.$documentoOriginal->archivo, $documentoOriginal);
 
                         HistorialVersionesDocumento::create([
                             'documento_id' => $documentoOriginal->id,
@@ -536,9 +536,9 @@ class RevisionDocumentoController extends Controller
                 break;
         }
 
-        $extension = pathinfo($path_documentos_publicados . '/' . $documento->archivo, PATHINFO_EXTENSION);
-        $nombre_documento = $documento->codigo . '-' . $documento->nombre . '-v' . $documento->version . '-publicado.' . $extension;
-        $ruta_publicacion = $path_documentos_publicados . '/' . $nombre_documento;
+        $extension = pathinfo($path_documentos_publicados.'/'.$documento->archivo, PATHINFO_EXTENSION);
+        $nombre_documento = $documento->codigo.'-'.$documento->nombre.'-v'.$documento->version.'-publicado.'.$extension;
+        $ruta_publicacion = $path_documentos_publicados.'/'.$nombre_documento;
         $documento->update([
             'archivo' => $nombre_documento,
         ]);
@@ -546,7 +546,7 @@ class RevisionDocumentoController extends Controller
             Storage::move($path_documento_aprobacion, $ruta_publicacion);
         }
 
-        $ruta_publicacion_documento_anterior = $path_documentos_publicados . '/' . $documento->codigo . '-' . $documento->nombre . '-v' . intval($documento->version - 1) . '-publicado.' . $extension;
+        $ruta_publicacion_documento_anterior = $path_documentos_publicados.'/'.$documento->codigo.'-'.$documento->nombre.'-v'.intval($documento->version - 1).'-publicado.'.$extension;
 
         //dd($ruta_publicacion);
         if ($documento->estatus == strval(Documento::PUBLICADO)) {
@@ -593,10 +593,10 @@ class RevisionDocumentoController extends Controller
                 break;
         }
 
-        $extension = pathinfo($path_documentos_versiones_anteriores . '/' . $documento->archivo, PATHINFO_EXTENSION);
+        $extension = pathinfo($path_documentos_versiones_anteriores.'/'.$documento->archivo, PATHINFO_EXTENSION);
 
-        $nombre_documento = $documento->codigo . '-' . $documento->nombre . '-v' . intval($documento->version - 1) . '.' . $extension;
-        $ruta_publicacion = $path_documentos_versiones_anteriores . '/' . $nombre_documento;
+        $nombre_documento = $documento->codigo.'-'.$documento->nombre.'-v'.intval($documento->version - 1).'.'.$extension;
+        $ruta_publicacion = $path_documentos_versiones_anteriores.'/'.$nombre_documento;
         if (Storage::exists($path_documento_version_anterior)) {
             Storage::move($path_documento_version_anterior, $ruta_publicacion);
         }
