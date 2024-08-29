@@ -12,6 +12,7 @@ use App\Models\ListaInformativa;
 use App\Models\Organizacion;
 use App\Models\Puesto;
 use App\Models\SolicitudDayOff;
+use App\Models\SolicitudPermisoGoceSueldo;
 use App\Models\SolicitudVacaciones;
 use App\Models\User;
 use App\Models\Vacaciones;
@@ -37,7 +38,6 @@ class tbApiMobileControllerSolicitudVacaciones extends Controller
         $url = preg_replace_callback('/[^A-Za-z0-9_\-\.~\/\\\:]/', function ($matches) {
             return rawurlencode($matches[0]);
         }, $url);
-
         return $url;
     }
 
@@ -70,14 +70,14 @@ class tbApiMobileControllerSolicitudVacaciones extends Controller
             if ($solicitante && $solicitante->empleado) {
                 $solicitante->empleado->makeHidden([
                     'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
-                    'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor',
+                    'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor'
                 ]);
 
                 $solicitante->empleado->nombre_area = $solicitante->empleado->area->area;
                 $solicitante->empleado->nombre_puesto = $solicitante->empleado->puesto;
 
                 $solicitante->empleado->makeHidden([
-                    'puestoRelacionado', 'area_id', 'puesto_id',
+                    'puestoRelacionado', 'area_id', 'puesto_id'
                 ]);
             }
         }
@@ -154,7 +154,7 @@ class tbApiMobileControllerSolicitudVacaciones extends Controller
             $finVacaciones = $inicio_vacaciones->addYear($año);
             $finVacaciones = $finVacaciones->format('d-m-Y');
             $autoriza = $usuario->empleado->supervisor_id;
-            $vacacion = new SolicitudVacaciones;
+            $vacacion = new SolicitudVacaciones();
             $dias_disponibles = null;
             $organizacion = Organizacion::getFirst();
             $dias_pendientes = null;
@@ -187,7 +187,7 @@ class tbApiMobileControllerSolicitudVacaciones extends Controller
         $finVacaciones = $inicio_vacaciones->addYear($año);
         $finVacaciones = $finVacaciones->format('d-m-Y');
         $autoriza = $usuario->empleado->supervisor_id;
-        $vacacion = new SolicitudVacaciones;
+        $vacacion = new SolicitudVacaciones();
 
         $dias_disponibles = $this->tbFunctionDiasDisponibles();
         $organizacion = Organizacion::getFirst();
@@ -317,7 +317,7 @@ class tbApiMobileControllerSolicitudVacaciones extends Controller
         if ($vacacion && $vacacion->empleado) {
             $empleado = $vacacion->empleado->makeHidden([
                 'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
-                'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor',
+                'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor'
             ]);
 
             if ($empleado->foto == null || $empleado->foto == '0') {
@@ -329,7 +329,7 @@ class tbApiMobileControllerSolicitudVacaciones extends Controller
                     $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
                 }
             } else {
-                $ruta = asset('storage/empleados/imagenes/'.$empleado->foto);
+                $ruta = asset('storage/empleados/imagenes/' . $empleado->foto);
             }
 
             // Encode spaces in the URL
@@ -341,17 +341,17 @@ class tbApiMobileControllerSolicitudVacaciones extends Controller
             $empleado->nombre_puesto = $empleado->puesto;
 
             $empleado->makeHidden([
-                'puestoRelacionado', 'area_id', 'puesto_id', 'foto',
+                'puestoRelacionado', 'area_id', 'puesto_id', 'foto'
             ]);
 
             $vacacion->makeHidden([
-                'empleado',
+                'empleado'
             ]);
         }
 
         return response(json_encode([
             'vacacion' => $vacacion,
-            'empleado' => $empleado,
+            'empleado' => $empleado
         ]), 200)->header('Content-Type', 'application/json');
         // return view('admin.solicitudDayoff.show', compact('vacacion'));
     }
@@ -559,7 +559,7 @@ class tbApiMobileControllerSolicitudVacaciones extends Controller
         $finVacaciones = $inicio_vacaciones->addYear($año);
         $finVacaciones = $finVacaciones->format('d-m-Y');
         $autoriza = $usuario->empleado->supervisor_id;
-        $vacacion = new SolicitudVacaciones;
+        $vacacion = new SolicitudVacaciones();
         $dias_disponibles = $this->tbFunctionDiasDisponiblesAñoPasado();
         $organizacion = Organizacion::getFirst();
         $dias_pendientes = SolicitudVacaciones::where('empleado_id', '=', $usuario->empleado->id)->where('aprobacion', '=', 1)->where('año', '=', $año)->sum('dias_solicitados');
@@ -595,7 +595,7 @@ class tbApiMobileControllerSolicitudVacaciones extends Controller
             if ($solicitante && $solicitante->empleado) {
                 $solicitante->empleado->makeHidden([
                     'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
-                    'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor',
+                    'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor'
                 ]);
 
                 if ($solicitante->foto == null || $solicitante->foto == '0') {
@@ -607,7 +607,7 @@ class tbApiMobileControllerSolicitudVacaciones extends Controller
                         $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
                     }
                 } else {
-                    $ruta = asset('storage/empleados/imagenes/'.$solicitante->foto);
+                    $ruta = asset('storage/empleados/imagenes/' . $solicitante->foto);
                 }
 
                 // Encode spaces in the URL
@@ -619,7 +619,7 @@ class tbApiMobileControllerSolicitudVacaciones extends Controller
                 $solicitante->empleado->nombre_puesto = $solicitante->empleado->puesto;
 
                 $solicitante->empleado->makeHidden([
-                    'puestoRelacionado', 'area_id', 'puesto_id',
+                    'puestoRelacionado', 'area_id', 'puesto_id'
                 ]);
             }
         }
@@ -639,7 +639,7 @@ class tbApiMobileControllerSolicitudVacaciones extends Controller
             'logo_actual' => $logo_actual,
             'empresa_actual' => $empresa_actual,
             'dias_disponibles' => $dias_disponibles,
-            'solicitudesVacaciones' => $solicitudesVacaciones,
+            'solicitudesVacaciones' => $solicitudesVacaciones
         ]), 200)->header('Content-Type', 'application/json');
     }
 
@@ -671,7 +671,7 @@ class tbApiMobileControllerSolicitudVacaciones extends Controller
         } elseif ($vacacion && $vacacion->empleado) {
             $empleado = $vacacion->empleado->makeHidden([
                 'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
-                'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor',
+                'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor'
             ]);
 
             if ($empleado->foto == null || $empleado->foto == '0') {
@@ -683,7 +683,7 @@ class tbApiMobileControllerSolicitudVacaciones extends Controller
                     $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
                 }
             } else {
-                $ruta = asset('storage/empleados/imagenes/'.$empleado->foto);
+                $ruta = asset('storage/empleados/imagenes/' . $empleado->foto);
             }
 
             $empleado->ruta_foto = $this->encodeSpecialCharacters($ruta);
@@ -692,11 +692,11 @@ class tbApiMobileControllerSolicitudVacaciones extends Controller
             $empleado->nombre_puesto = $empleado->puesto;
 
             $empleado->makeHidden([
-                'puestoRelacionado', 'area_id', 'puesto_id',
+                'puestoRelacionado', 'area_id', 'puesto_id'
             ]);
 
             $vacacion->makeHidden([
-                'empleado',
+                'empleado'
             ]);
         }
 
@@ -707,7 +707,7 @@ class tbApiMobileControllerSolicitudVacaciones extends Controller
         return response(json_encode([
             'empleado' => $empleado,
             'vacacion' => $vacacion,
-            'año' => $año,
+            'año' => $año
         ]), 200)->header('Content-Type', 'application/json');
 
         $solicitante = $vacacion->empleado_id;
@@ -726,7 +726,7 @@ class tbApiMobileControllerSolicitudVacaciones extends Controller
         return response(json_encode([
             'vacacion' => $vacacion,
             'dias_disponibles' => $dias_disponibles,
-            'año' => $año,
+            'año' => $año
         ]), 200)->header('Content-Type', 'application/json');
         // return view('admin.solicitudVacaciones.respuesta', compact('vacacion', 'dias_disponibles', 'año'));
     }
@@ -764,14 +764,14 @@ class tbApiMobileControllerSolicitudVacaciones extends Controller
             if ($solicitante && $solicitante->empleado) {
                 $solicitante->empleado->makeHidden([
                     'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
-                    'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor',
+                    'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor'
                 ]);
 
                 $solicitante->empleado->nombre_area = $solicitante->empleado->area->area;
                 $solicitante->empleado->nombre_puesto = $solicitante->empleado->puesto;
 
                 $solicitante->empleado->makeHidden([
-                    'puestoRelacionado', 'area_id', 'puesto_id',
+                    'puestoRelacionado', 'area_id', 'puesto_id'
                 ]);
             }
         }
@@ -783,7 +783,7 @@ class tbApiMobileControllerSolicitudVacaciones extends Controller
         return response(json_encode([
             'logo_actual' => $logo_actual,
             'empresa_actual' => $empresa_actual,
-            'solicitudesVacaciones' => $solicitudesVacaciones,
+            'solicitudesVacaciones' => $solicitudesVacaciones
         ]), 200)->header('Content-Type', 'application/json');
     }
 
@@ -816,14 +816,14 @@ class tbApiMobileControllerSolicitudVacaciones extends Controller
 
         $vacacion->empleado->makeHidden([
             'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
-            'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor',
+            'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor'
         ]);
 
         $vacacion->empleado->nombre_area = $vacacion->empleado->area->area;
         $vacacion->empleado->nombre_puesto = $vacacion->empleado->puesto;
 
         $vacacion->empleado->makeHidden([
-            'puestoRelacionado', 'area_id', 'puesto_id',
+            'puestoRelacionado', 'area_id', 'puesto_id'
         ]);
 
         return response(json_encode([
@@ -859,14 +859,14 @@ class tbApiMobileControllerSolicitudVacaciones extends Controller
             if ($solicitante && $solicitante->empleado) {
                 $solicitante->empleado->makeHidden([
                     'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
-                    'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor',
+                    'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor'
                 ]);
 
                 $solicitante->empleado->nombre_area = $solicitante->empleado->area->area;
                 $solicitante->empleado->nombre_puesto = $solicitante->empleado->puesto;
 
                 $solicitante->empleado->makeHidden([
-                    'puestoRelacionado', 'area_id', 'puesto_id',
+                    'puestoRelacionado', 'area_id', 'puesto_id'
                 ]);
             }
         }
@@ -911,14 +911,14 @@ class tbApiMobileControllerSolicitudVacaciones extends Controller
 
         $vacacion->empleado->makeHidden([
             'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
-            'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor',
+            'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor'
         ]);
 
         $vacacion->empleado->nombre_area = $vacacion->empleado->area->area;
         $vacacion->empleado->nombre_puesto = $vacacion->empleado->puesto;
 
         $vacacion->empleado->makeHidden([
-            'puestoRelacionado', 'area_id', 'puesto_id',
+            'puestoRelacionado', 'area_id', 'puesto_id'
         ]);
 
         return response(json_encode([

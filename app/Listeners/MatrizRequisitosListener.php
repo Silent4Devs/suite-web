@@ -6,16 +6,10 @@ use App\Models\Empleado;
 use App\Models\ListaDistribucion;
 use App\Models\User;
 use App\Notifications\MatrizRequisitosNotification;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Notification;
 
-class MatrizRequisitosListener implements ShouldQueue
+class MatrizRequisitosListener
 {
-    use InteractsWithQueue;
-
-    public $tries = 5;
-
     /**
      * Create the event listener.
      *
@@ -34,7 +28,9 @@ class MatrizRequisitosListener implements ShouldQueue
      */
     public function handle($event)
     {
-        $lista = ListaDistribucion::with('participantes')->where('modelo', 'MatrizRequisitoLegale')->first();
+        $modulo_matriz = 4;
+
+        $lista = ListaDistribucion::with('participantes')->where('id', $modulo_matriz)->first();
 
         foreach ($lista->participantes as $participantes) {
             $empleados = Empleado::where('id', $participantes->empleado_id)->first();

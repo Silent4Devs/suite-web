@@ -2,7 +2,6 @@
 
 namespace App\Events;
 
-use App\Models\IncidentesSeguridad;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
@@ -13,7 +12,7 @@ class IncidentesDeSeguridadEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $incidentesSeguridad;
+    public $incidentesDeSeguridad;
 
     public $tipo_consulta;
 
@@ -21,14 +20,19 @@ class IncidentesDeSeguridadEvent implements ShouldBroadcast
 
     public $slug;
 
-    public function __construct(IncidentesSeguridad $incidentesSeguridad, $tipo_consulta, $tabla, $slug)
+    public function __construct($incidentesDeSeguridad, $tipo_consulta, $tabla, $slug)
     {
-        $this->incidentesSeguridad = $incidentesSeguridad;
+        $this->incidentesDeSeguridad = $incidentesDeSeguridad;
         $this->tipo_consulta = $tipo_consulta;
         $this->tabla = $tabla;
         $this->slug = $slug;
     }
 
+    /**
+     * Get the channels the event should broadcast on.
+     *
+     * @return \Illuminate\Broadcasting\Channel|array
+     */
     public function broadcastOn()
     {
         return new Channel('notificaciones-campana');

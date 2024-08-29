@@ -2,7 +2,6 @@
 
 namespace App\Models\RH;
 
-use App\Models\EscalasObjetivosDesempeno;
 use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -19,15 +18,6 @@ class Objetivo extends Model implements Auditable
     protected $appends = ['imagen_ruta'];
 
     protected $guarded = ['id'];
-
-    protected $fillable = [
-        'nombre',
-        'descripcion',
-        'tipo_id',
-        'KPI',
-        'metrica_id',
-        'esta_aprobado',
-    ];
 
     const APROBADO = 1;
 
@@ -67,11 +57,5 @@ class Objetivo extends Model implements Auditable
     public function comentarios()
     {
         return $this->belongsToMany('App\Models\RH\ObjetivoComentario', 'ev360_objetivos_comentarios_pivot', 'objetivo_id', 'comentario_id');
-    }
-
-    public function escalas()
-    {
-        return $this->hasMany(EscalasObjetivosDesempeno::class, 'id_objetivo_desempeno', 'id');
-        // escalas_objetivos_desempenos
     }
 }

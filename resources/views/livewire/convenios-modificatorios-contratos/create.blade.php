@@ -4,7 +4,7 @@
     </div>
 </div>
 
-<form wire:submit="store">
+<form wire:submit.prevent="store">
 
     @include('livewire.convenios-modificatorios-contratos.form')
 

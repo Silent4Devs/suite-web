@@ -4,16 +4,10 @@ namespace App\Listeners;
 
 use App\Models\User;
 use App\Notifications\EvaluacionNotification;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Notification;
 
-class EvaluacionListener implements ShouldQueue
+class EvaluacionListener
 {
-    use InteractsWithQueue;
-
-    public $tries = 5;
-
     /**
      * Create the event listener.
      *
@@ -32,7 +26,6 @@ class EvaluacionListener implements ShouldQueue
      */
     public function handle($event)
     {
-        //corregir
         User::select('users.id', 'users.name', 'users.email', 'role_user.role_id')
             ->join('role_user', 'role_user.user_id', '=', 'users.id')
             ->where('role_user.role_id', '=', '1')->where('users.id', '!=', auth()->id())

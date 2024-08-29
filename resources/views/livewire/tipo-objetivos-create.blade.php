@@ -16,7 +16,7 @@
                         <div class="form-group">
                             <label for="nombre">Nombre: <span class="text-danger">*</span></label>
                             <input type="text" class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}"
-                                id="nombre" aria-describedby="nombre" wire:model="nombre"
+                                id="nombre" aria-describedby="nombre" wire:model.defer="nombre"
                                 value="{{ old('nombre') }}" autocomplete="off">
                             <small>Ingresa el nombre del tipo de objetivo</small>
                             @if ($errors->has('nombre'))
@@ -57,7 +57,7 @@
                                 </div>
                                 <span class="text-danger fotoPerspectiva_error error-ajax"></span>
                                 <input name="fotoPerspectiva" type="file" accept="image/png, image/jpeg"
-                                    class="form-control-file" id="fotoPerspectiva" wire:model="fotoPerspectiva"
+                                    class="form-control-file" id="fotoPerspectiva" wire:model.defer="fotoPerspectiva"
                                     hidden>
                             </div>
                         </div>

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\ContractManager;
 
 use App\Http\Controllers\Controller;
-use App\Mail\OrdenCompraAprobada;
 use App\Mail\RequisicionesEmail;
 use App\Models\ContractManager\CentroCosto as KatbolCentroCosto;
 use App\Models\ContractManager\Comprador as KatbolComprador;
@@ -14,8 +13,6 @@ use App\Models\ContractManager\ProvedorRequisicionCatalogo as KatbolProvedorRequ
 use App\Models\ContractManager\ProveedorIndistinto as KatbolProveedorIndistinto;
 use App\Models\ContractManager\ProveedorOC as KatbolProveedorOC;
 use App\Models\ContractManager\Requsicion as KatbolRequsicion;
-use App\Models\ListaDistribucion;
-use App\Models\ListaInformativa;
 use App\Models\Organizacion;
 use App\Models\User;
 use App\Traits\ObtenerOrganizacion;
@@ -31,8 +28,6 @@ class OrdenCompraController extends Controller
     use ObtenerOrganizacion;
 
     public $bandera = true;
-
-    public $modelo = 'OrdenCompra';
 
     /**
      * Display a listing of the resource.
@@ -50,22 +45,32 @@ class OrdenCompraController extends Controller
         $buttonFinanzas = false;
         $buttonCompras = false;
 
-        return view('contract_manager.ordenes-compra.index', compact('buttonSolicitante', 'buttonFinanzas', 'buttonCompras', 'empresa_actual', 'logo_actual'));
+        $proveedor_indistinto = KatbolProveedorIndistinto::getFirst()->pluck('requisicion_id');
+
+        $requisiciones = KatbolRequsicion::where([
+            ['firma_solicitante', '!=', null],
+            ['firma_jefe', '!=', null],
+            ['firma_finanzas', '!=', null],
+            ['firma_compras', '!=', null],
+        ])->where('archivo', false)->orderByDesc('id')
+            ->get();
+
+        return view('contract_manager.ordenes-compra.index', compact('buttonSolicitante', 'buttonFinanzas', 'buttonCompras', 'requisiciones', 'empresa_actual', 'logo_actual', 'proveedor_indistinto'));
     }
 
     public function getRequisicionIndex(Request $request)
     {
-        $user = User::getCurrentUser();
+        $id = User::getCurrentUser()->id;
 
-        if ($user->roles->contains('title', 'Admin')) {
-            $requisiciones = KatbolRequsicion::getOCAll();
+        $requisiciones = KatbolRequsicion::with('contrato')->where([
+            ['firma_solicitante', '!=', null],
+            ['firma_jefe', '!=', null],
+            ['firma_finanzas', '!=', null],
+            ['firma_compras', '!=', null],
+        ])->where('archivo', false)->orderByDesc('id')
+            ->get();
 
-            return datatables()->of($requisiciones)->toJson();
-        } else {
-            $requisiciones = KatbolRequsicion::getOCAll()->where('id_user', $user->id);
-
-            return datatables()->of($requisiciones)->toJson();
-        }
+        return datatables()->of($requisiciones)->toJson();
     }
 
     /**
@@ -99,9 +104,9 @@ class OrdenCompraController extends Controller
 
         try {
 
-            $requisicion = KatbolRequsicion::getArchivoFalseAll()->where('id', $id)->first();
+            $requisicion = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->find($id);
             $user = User::find($requisicion->id_finanzas_oc);
-            $proveedores = KatbolProveedorOC::getAll()->where('id', $requisicion->proveedor_id)->first();
+            $proveedores = KatbolProveedorOC::where('id', $requisicion->proveedoroc_id)->first();
 
             if ($user) {
                 $firma_finanzas_name = $user->name;
@@ -129,18 +134,19 @@ class OrdenCompraController extends Controller
      */
     public function edit($id)
     {
+
         try {
 
             abort_if(Gate::denies('katbol_ordenes_compra_modificar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-            $requisicion = KatbolRequsicion::getArchivoFalseAll()->where('id', $id)->first();
+            $requisicion = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->find($id);
             if (! $requisicion) {
                 abort(404);
             }
-            $proveedores = KatbolProveedorOC::getAll();
-            $proveedor = $proveedores->where('id', $requisicion->proveedor_id)->first();
+            $proveedores = KatbolProveedorOC::get();
+            $proveedor = $proveedores->where('id', $requisicion->proveedoroc_id)->first();
             $contratos = KatbolContrato::getAll();
-            $centro_costos = KatbolCentroCosto::getAll();
-            $monedas = KatbolMoneda::getAll();
+            $centro_costos = KatbolCentroCosto::get();
+            $monedas = KatbolMoneda::get();
             $contrato = $contratos->where('id', $requisicion->contrato_id)->first();
 
             return view('contract_manager.ordenes-compra.edit', compact('requisicion', 'proveedores', 'contratos', 'centro_costos', 'monedas', 'contrato'));
@@ -184,21 +190,21 @@ class OrdenCompraController extends Controller
         $data = $request->all();
         for ($i = 1; $i <= $request->count_productos; $i++) {
             $producto_nuevo = KatbolProductoRequisicion::create([
-                'cantidad' => $data['cantidad'.$i],
-                'producto_id' => $data['producto'.$i],
-                'centro_costo_id' => $data['centro_costo'.$i],
-                'espesificaciones' => $data['especificaciones'.$i],
-                'contrato_id' => $data['contrato'.$i],
+                'cantidad' => $data['cantidad' . $i],
+                'producto_id' => $data['producto' . $i],
+                'centro_costo_id' => $data['centro_costo' . $i],
+                'espesificaciones' => $data['especificaciones' . $i],
+                'contrato_id' => $data['contrato' . $i],
                 'requisiciones_id' => $requisicion->id,
-                'no_personas' => $data['no_personas'.$i],
-                'porcentaje_involucramiento' => $data['porcentaje_involucramiento'.$i],
-                'sub_total' => $data['sub_total'.$i],
-                'iva' => $data['iva'.$i],
-                'iva_retenido' => $data['iva_retenido'.$i],
-                'descuento' => $data['descuento'.$i],
-                'otro_impuesto' => $data['otro_impuesto'.$i],
-                'isr_retenido' => $data['isr_retenido'.$i],
-                'total' => $data['total'.$i],
+                'no_personas' => $data['no_personas' . $i],
+                'porcentaje_involucramiento' => $data['porcentaje_involucramiento' . $i],
+                'sub_total' => $data['sub_total' . $i],
+                'iva' => $data['iva' . $i],
+                'iva_retenido' => $data['iva_retenido' . $i],
+                'descuento' => $data['descuento' . $i],
+                'otro_impuesto' => $data['otro_impuesto' . $i],
+                'isr_retenido' => $data['isr_retenido' . $i],
+                'total' => $data['total' . $i],
             ]);
         }
 
@@ -269,46 +275,16 @@ class OrdenCompraController extends Controller
             'estado_orden' => 'curso',
         ]);
 
-        $copiasNivel = [];
-        $responsablesAusentes = [];
-        $correosCopia = [];
-
-        $organizacion = Organizacion::getFirst();
-        $userEmail = $requisicion->email;
-
         if ($tipo_firma == 'firma_solicitante_orden') {
             $fecha = date('d-m-Y');
             $requisicion->fecha_firma_solicitante_orden = $fecha;
             $requisicion->save();
+            $user = 'lourdes.abadia@silent4business.com';
+            $userEmail = $user;
 
-            $listaReq = ListaDistribucion::where('modelo', $this->modelo)->first();
-            $listaPart = $listaReq->participantes;
-            // dump($listaPart);
-            for ($i = 0; $i <= $listaReq->niveles; $i++) {
-                $responsableNivel = $listaPart->where('nivel', $i)->where('numero_orden', 1)->first();
+            $organizacion = Organizacion::getFirst();
 
-                if ($responsableNivel->empleado->disponibilidad->disponibilidad == 1) {
-
-                    $responsable = $responsableNivel->empleado;
-                    $userEmail = $responsable->email;
-
-                    $cN = $listaPart->where('nivel', $i)->where('numero_orden', '!=', 1);
-
-                    foreach ($cN as $key => $c) {
-                        $copiasNivel[] = $c->empleado->email;
-                    }
-
-                    break;
-                } else {
-                    $responsablesAusentes[] = $responsableNivel->empleado->email;
-                }
-            }
-
-            $correosCopia = array_merge($copiasNivel, $responsablesAusentes);
-
-            // $user = 'lourdes.abadia@silent4business.com';
-            Mail::to($userEmail)->cc($correosCopia)->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
-            // Mail::to('ldelgadillo@silent4business.com')->cc('aurora.soriano@silent4business.com')->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
+            Mail::to('ldelgadillo@silent4business.com')->cc('aurora.soriano@silent4business.com')->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
         }
         if ($tipo_firma == 'firma_comprador_orden') {
             $fecha = date('d-m-Y');
@@ -317,10 +293,7 @@ class OrdenCompraController extends Controller
 
             // correo de finanzas
             $userEmail = $requisicion->email;
-            $organizacion = Organizacion::getFirst();
-            Mail::to($userEmail)->cc($correosCopia)->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
         }
-
         if ($tipo_firma == 'firma_finanzas_orden') {
             $fecha = date('d-m-Y');
             $requisicion->fecha_firma_finanzas_orden = $fecha;
@@ -333,36 +306,11 @@ class OrdenCompraController extends Controller
                 'estado_orden' => 'fin',
             ]);
 
-            if (isset($requisicion->contrato->proyectoConvergencia->tipo)) {
-                if ($requisicion->contrato->proyectoConvergencia->tipo == 'Interno') {
-                    $tipo_orden = '	Ordenes de Compra - Internas';
-                    $orden_correo = 'Interno';
-                } elseif ($requisicion->contrato->proyectoConvergencia->tipo == 'Externo') {
-                    $tipo_orden = 'Ordenes de Compra - Externas';
-                    $orden_correo = 'Externo';
-                } else {
-                    $tipo_orden = 'Ordenes de Compra - Externas';
-                    $orden_correo = 'Externo';
-                }
-            } else {
-                $tipo_orden = 'Ordenes de Compra - Externas';
-                $orden_correo = 'Externo';
-            }
-
-            $listaInformativa = ListaInformativa::where('modelo', $this->modelo)->where('submodulo', $tipo_orden)->first();
-            foreach ($listaInformativa->participantes as $key => $informado) {
-                $correos_informados[] = $informado->empleado->email;
-            }
-
-            foreach ($listaInformativa->usuarios as $key => $informado) {
-                $correos_informados[] = $informado->usuario->email;
-            }
-
-            $organizacionInformado = Organizacion::getFirst();
-            Mail::to($correos_informados)->queue(new OrdenCompraAprobada($requisicion, $organizacionInformado, $orden_correo));
+            $userEmail = $requisicion->email;
         }
 
-        Mail::to($userEmail)->cc($correosCopia)->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
+        $organizacion = Organizacion::getFirst();
+        // Mail::to($userEmail)->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
 
         return redirect(route('contract_manager.orden-compra'));
     }
@@ -385,6 +333,7 @@ class OrdenCompraController extends Controller
             'estado_orden' => 'rechazado_oc',
         ]);
 
+        $userEmail = User::getCurrentUser()->email;
         $organizacion = Organizacion::getFirst();
         $tipo_firma = 'rechazado';
         Mail::to($requisicion->email)->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
@@ -394,6 +343,7 @@ class OrdenCompraController extends Controller
 
     public function pdf($id)
     {
+
         $requisiciones = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->find($id);
         $user = User::find($requisiciones->id_finanzas_oc);
 
@@ -418,81 +368,65 @@ class OrdenCompraController extends Controller
 
     public function filtrarPorEstado3()
     {
+        $requisiciones = KatbolRequsicion::where([
+            ['firma_solicitante', '!=', null],
+            ['firma_jefe', '!=', null],
+            ['firma_finanzas', '!=', null],
+            ['firma_compras', '!=', null],
+        ])->where('firma_comprador_orden', null)->get();
+
         $buttonSolicitante = false;
         $buttonFinanzas = false;
         $buttonCompras = true;
-        $user = User::getCurrentUser();
-        $empleadoActual = $user->empleado;
-
-        if ($user->roles->contains('title', 'Admin')) {
-            $requisiciones = KatbolRequsicion::getOCAll()->where('firma_comprador_orden', null);
-            toast('Filtro compradores aplicado!', 'success');
-        } else {
-            $requisiciones = KatbolRequsicion::ordenesCompraAprobador($empleadoActual->id, 'comprador');
-            toast('Filtro compradores aplicado!', 'success');
-        }
+        toast('Filtro compradores aplicado!', 'success');
 
         return view('contract_manager.ordenes-compra.aprobadores', compact('requisiciones', 'buttonSolicitante', 'buttonFinanzas', 'buttonCompras'));
     }
 
     public function filtrarPorEstado2()
     {
-
+        $requisiciones = KatbolRequsicion::where([
+            ['firma_solicitante', '!=', null],
+            ['firma_jefe', '!=', null],
+            ['firma_finanzas', '!=', null],
+            ['firma_compras', '!=', null],
+        ])->whereNotNull('firma_comprador_orden')->where('firma_solicitante_orden', null)->get();
         $buttonSolicitante = true;
         $buttonFinanzas = false;
         $buttonCompras = false;
-
-        $user = User::getCurrentUser();
-        $empleadoActual = $user->empleado;
-
-        if ($user->roles->contains('title', 'Admin')) {
-            $requisiciones = KatbolRequsicion::getOCAll()->whereNotNull('firma_comprador_orden')->where('firma_solicitante_orden', null);
-            toast('Filtro solicitante aplicado!', 'success');
-        } else {
-            $requisiciones = KatbolRequsicion::ordenesCompraAprobador($empleadoActual->id, 'solicitante');
-            toast('Filtro solicitante aplicado!', 'success');
-        }
+        toast('Filtro solicitante aplicado!', 'success');
 
         return view('contract_manager.ordenes-compra.aprobadores', compact('requisiciones', 'buttonSolicitante', 'buttonFinanzas', 'buttonCompras'));
     }
 
     public function filtrarPorEstado()
     {
-
+        $requisiciones = KatbolRequsicion::where([
+            ['firma_solicitante', '!=', null],
+            ['firma_jefe', '!=', null],
+            ['firma_finanzas', '!=', null],
+            ['firma_compras', '!=', null],
+        ])->whereNotNull('firma_solicitante_orden')->whereNotNull('firma_comprador_orden')->where('firma_finanzas_orden', null)->get();
         $buttonSolicitante = false;
         $buttonFinanzas = true;
         $buttonCompras = false;
-
-        $user = User::getCurrentUser();
-        $empleadoActual = $user->empleado;
-
-        if ($user->roles->contains('title', 'Admin')) {
-
-            $requisiciones = KatbolRequsicion::getOCAll()->whereNotNull('firma_solicitante_orden')->whereNotNull('firma_comprador_orden')->where('firma_finanzas_orden', null);
-            toast('Filtro finanzas aplicado!', 'success');
-        } else {
-            $requisiciones = KatbolRequsicion::ordenesCompraAprobador($empleadoActual->id, 'finanzas');
-            toast('Filtro finanzas aplicado!', 'success');
-        }
+        toast('Filtro finanzas aplicado!', 'success');
 
         return view('contract_manager.ordenes-compra.aprobadores', compact('requisiciones', 'buttonSolicitante', 'buttonFinanzas', 'buttonCompras'));
     }
 
     public function indexAprobadores()
     {
+        $requisiciones = KatbolRequsicion::where([
+            ['firma_solicitante', '!=', null],
+            ['firma_jefe', '!=', null],
+            ['firma_finanzas', '!=', null],
+            ['firma_compras', '!=', null],
+        ])->with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->orderByDesc('id')->get();
         $proveedor_indistinto = KatbolProveedorIndistinto::pluck('requisicion_id')->first();
         $buttonSolicitante = false;
         $buttonFinanzas = false;
         $buttonCompras = false;
-
-        $user = User::getCurrentUser();
-        $empleadoActual = $user->empleado;
-
-        if ($user->roles->contains('title', 'Admin')) {
-            $requisiciones = KatbolRequsicion::getOCAll();
-        } else {
-            $requisiciones = KatbolRequsicion::ordenesCompraAprobador($empleadoActual->id, 'general');
-        }
 
         return view('contract_manager.ordenes-compra.aprobadores', compact('requisiciones', 'proveedor_indistinto', 'buttonSolicitante', 'buttonFinanzas', 'buttonCompras'));
     }
@@ -500,7 +434,12 @@ class OrdenCompraController extends Controller
     public function firmarAprobadores($id)
     {
         $bandera = true;
-        $requisicion = KatbolRequsicion::getOCAll()->where('id', $id)->first();
+        $requisicion = KatbolRequsicion::where([
+            ['firma_solicitante', '!=', null],
+            ['firma_jefe', '!=', null],
+            ['firma_finanzas', '!=', null],
+            ['firma_compras', '!=', null],
+        ])->where('id', $id)->first();
 
         $user = User::getCurrentUser();
         $supervisor = User::find($requisicion->id_user)->empleado->supervisor->name;
@@ -512,13 +451,13 @@ class OrdenCompraController extends Controller
             if (removeUnicodeCharacters($comprador->user->email) === removeUnicodeCharacters($user->email)) {
                 $tipo_firma = 'firma_comprador_orden';
             } else {
-                return view('contract_manager.ordenes-compra.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del comprador directo: <br> <strong>'.$comprador->user->name.'</strong>');
+                return view('contract_manager.ordenes-compra.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del comprador directo: <br> <strong>' . $comprador->user->name . '</strong>');
             }
         } elseif ($requisicion->firma_solicitante_orden === null) {
             if (removeUnicodeCharacters($user->email) === removeUnicodeCharacters($solicitante->email)) {
                 $tipo_firma = 'firma_solicitante_orden';
             } else {
-                return view('contract_manager.ordenes-compra.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del solicitante directo: <br> <strong>'.$solicitante->name.'</strong>');
+                return view('contract_manager.ordenes-compra.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del solicitante directo: <br> <strong>' . $solicitante->name . '</strong>');
             }
         } elseif ($requisicion->firma_finanzas_orden === null) {
             if (removeUnicodeCharacters($user->email) === 'lourdes.abadia@silent4business.com' || removeUnicodeCharacters($user->email) === 'ldelgadillo@silent4business.com' || removeUnicodeCharacters($user->email) === 'aurora.soriano@silent4business.com') {
@@ -530,7 +469,7 @@ class OrdenCompraController extends Controller
             if (removeUnicodeCharacters($comprador->user->email) === removeUnicodeCharacters($user->email)) {
                 $tipo_firma = 'firma_comprador_orden';
             } else {
-                return view('contract_manager.ordenes-compra.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>'.$comprador->user->name.'</strong>');
+                return view('contract_manager.ordenes-compra.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>' . $comprador->user->name . '</strong>');
             }
         } else {
             $tipo_firma = 'firma_final_aprobadores';

@@ -214,10 +214,7 @@
                     columns: [
                         // {data: 'id'},
                         {
-                            data: 'folio',
-                            render: function(data, type, row, meta) {
-                                return data ? data : '';
-                            }
+                            data: 'folio'
                         },
                         {
                             data: 'cliente',
@@ -232,29 +229,16 @@
                             }
                         },
                         {
-                            data: 'nombre',
-                            render: function(data, type, row, meta) {
-                                return data ? data : '';
-                            }
-
+                            data: 'nombre'
                         },
                         {
-                            data: 'puesto',
-                            render: function(data, type, row, meta) {
-                                return data ? data : '';
-                            }
+                            data: 'puesto'
                         },
                         {
-                            data: 'telefono',
-                            render: function(data, type, row, meta) {
-                                return data ? data : '';
-                            }
+                            data: 'telefono'
                         },
                         {
-                            data: 'correo',
-                            render: function(data, type, row, meta) {
-                                return data ? data : '';
-                            }
+                            data: 'correo'
                         },
                         {
                             data: 'titulo',
@@ -263,52 +247,28 @@
                             }
                         },
                         {
-                            data: 'fecha_reporte',
-                            render: function(data, type, row, meta) {
-                                return data ? data : '';
-                            }
+                            data: 'fecha_reporte'
                         },
                         {
-                            data: 'fecha_de_cierre',
-                            render: function(data, type, row, meta) {
-                                return data ? data : '';
-                            }
+                            data: 'fecha_de_cierre'
                         },
                         {
-                            data: 'proceso_quejado',
-                            render: function(data, type, row, meta) {
-                                return data ? data : '';
-                            }
+                            data: 'proceso_quejado'
                         },
                         {
-                            data: 'ubicacion',
-                            render: function(data, type, row, meta) {
-                                return data ? data : '';
-                            }
+                            data: 'ubicacion'
                         },
                         {
-                            data: 'otro_quejado',
-                            render: function(data, type, row, meta) {
-                                return data ? data : '';
-                            }
+                            data: 'otro_quejado'
                         },
                         {
-                            data: 'descripcion',
-                            render: function(data, type, row, meta) {
-                                return data ? data : '';
-                            }
+                            data: 'descripcion'
                         },
                         {
                             data: 'estatus',
-                            render: function(data, type, row, meta) {
-                                return data ? data : '';
-                            }
                         },
                         {
                             data: 'prioridad',
-                            render: function(data, type, row, meta) {
-                                return data ? data : '';
-                            }
                         },
                         {
                             data: 'desea_levantar_ac',

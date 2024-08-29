@@ -6,16 +6,10 @@ use App\Models\Empleado;
 use App\Models\ListaDistribucion;
 use App\Models\User;
 use App\Notifications\AlcancesNotification;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Notification;
 
-class AlcancesListener implements ShouldQueue
+class AlcancesListener
 {
-    use InteractsWithQueue;
-
-    public $tries = 5;
-
     /**
      * Create the event listener.
      *
@@ -34,7 +28,9 @@ class AlcancesListener implements ShouldQueue
      */
     public function handle($event)
     {
-        $lista = ListaDistribucion::with('participantes')->where('modelo', 'AlcanceSgsi')->first();
+        $modulo_alcances = 2;
+
+        $lista = ListaDistribucion::with('participantes')->where('id', $modulo_alcances)->first();
 
         foreach ($lista->participantes as $participantes) {
             $empleados = Empleado::where('id', $participantes->empleado_id)->first();

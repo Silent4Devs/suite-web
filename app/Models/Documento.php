@@ -36,8 +36,7 @@ class Documento extends Model implements Auditable
     const DOCUMENTO_OBSOLETO = 5;
 
     public static $searchable = [
-        'nombre',
-        'codigo',
+        'nombre', 'codigo',
     ];
 
     protected $dates = ['fecha'];
@@ -87,7 +86,7 @@ class Documento extends Model implements Auditable
 
     public static function getWithMacroproceso($empleado_id)
     {
-        return Cache::remember('Documentos:Documentos_all_macroprocesos_' . $empleado_id, 3600 * 4, function () use ($empleado_id) {
+        return Cache::remember('Documentos:Documentos_all_macroprocesos_'.$empleado_id, 3600 * 4, function () use ($empleado_id) {
             return self::where('elaboro_id', $empleado_id)->get();
         });
     }
@@ -189,18 +188,13 @@ class Documento extends Model implements Auditable
                 break;
         }
 
-        return asset($path_documento . '/' . $this->archivo);
+        return asset($path_documento.'/'.$this->archivo);
     }
 
     //Relacion uno a muchos inversa
     public function empleado()
     {
         return $this->belongsTo(Empleado::class)->alta();
-    }
-
-    public function empleadoMobile()
-    {
-        return $this->belongsTo(Empleado::class)->alta()->select('id', 'name', 'foto');
     }
 
     public function revisores()
@@ -218,11 +212,6 @@ class Documento extends Model implements Auditable
         return $this->belongsTo(Empleado::class, 'reviso_id', 'id')->alta();
     }
 
-    public function revisorMobile()
-    {
-        return $this->belongsTo(Empleado::class, 'reviso_id', 'id')->alta()->select('id', 'name', 'foto');
-    }
-
     public function macroproceso()
     {
         return $this->belongsTo(Macroproceso::class, 'macroproceso_id', 'id');
@@ -233,29 +222,14 @@ class Documento extends Model implements Auditable
         return $this->belongsTo(Empleado::class, 'elaboro_id', 'id')->alta();
     }
 
-    public function elaboradorMobile()
-    {
-        return $this->belongsTo(Empleado::class, 'elaboro_id', 'id')->alta()->select('id', 'name', 'foto');
-    }
-
     public function aprobador()
     {
         return $this->belongsTo(Empleado::class, 'aprobo_id', 'id')->alta();
     }
 
-    public function aprobadorMobile()
-    {
-        return $this->belongsTo(Empleado::class, 'aprobo_id', 'id')->alta()->select('id', 'name', 'foto');
-    }
-
     public function responsable()
     {
         return $this->belongsTo(Empleado::class, 'responsable_id', 'id')->alta();
-    }
-
-    public function responsableMobile()
-    {
-        return $this->belongsTo(Empleado::class, 'responsable_id', 'id')->alta()->select('id', 'name', 'foto');
     }
 
     public function proceso()

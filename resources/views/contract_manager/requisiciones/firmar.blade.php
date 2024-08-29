@@ -4,30 +4,6 @@
 @section('titulo', 'Firmar Requisicion')
 <link rel="stylesheet" href="{{ asset('css/requisitions/requisitions.css') }}{{ config('app.cssVersion') }}">
 
-@if ($alerta)
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            Swal.fire({
-                // title: 'No es posible acceder a esta vista.',
-                imageUrl: `{{ asset('img/errors/cara-roja-triste.svg') }}`, // Replace with the path to your image
-                imageWidth: 100, // Set the width of the image as needed
-                imageHeight: 100,
-                html: `<h4 style="color:red;">Colaboradores no disponibles</h4>
-                        <br><p>Los colaboradores asignados se encuentran ausentes.</p><br>
-                        <p>Es necesario acercarse con el administrador para solicitar que se agregue un responsable, de lo contrario no podrá firmar la requisición.</p>`,
-                showCancelButton: false,
-                confirmButtonColor: '#3085d6',
-                confirmButtonText: 'Entendido.',
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Redirect to another view after user clicks OK
-                    window.location.href = '{{ route('contract_manager.requisiciones') }}';
-                }
-            });
-        });
-    </script>
-@endif
-
 <div class="card card-content caja-blue">
 
     <div>
@@ -279,7 +255,7 @@
                 <div class="flex-item">
                     @if ($requisicion->firma_solicitante)
                         <img src="{{ $requisicion->firma_solicitante }}" class="img-firma">
-                        <p>{{ $firma_siguiente->solicitante->name }}</p>
+                        <p>{{ $requisicion->user }}</p>
                         <p>{{ $requisicion->fecha_firma_solicitante_requi }}</p>
                     @else
                         <div style="height: 137px;"></div>
@@ -293,8 +269,8 @@
                     @if ($requisicion->firma_jefe)
                         <img src="{{ $requisicion->firma_jefe }}" class="img-firma">
                         <p>
-                            @isset($firma_siguiente->jefe->name)
-                                {{ $firma_siguiente->jefe->name }}
+                            @isset($supervisor)
+                                {{ $supervisor }}
                             @endisset
                         </p>
                         <p>{{ $requisicion->fecha_firma_jefe_requi }}</p>
@@ -311,7 +287,7 @@
                 <div class="flex-item">
                     @if ($requisicion->firma_finanzas)
                         <img src="{{ $requisicion->firma_finanzas }}" class="img-firma">
-                        <p>{{ $firma_siguiente->responsableFinanzas->name ?? '' }} </p>
+                        <p>{{ $firma_finanzas_name ?? '' }} </p>
                         <p>{{ $requisicion->fecha_firma_finanzas_requi }}</p>
                     @else
                         <div style="height: 137px;"></div>
@@ -384,8 +360,16 @@
                 action="{{ route('contract_manager.requisiciones.rechazada', ['id' => $requisicion->id]) }}">
                 @csrf
                 <div class="flex" style="position: relative; top: -1rem;  justify-content: space-between;">
+                    @if (
+                        !$requisicion->firma_solicitante &&
+                            !$requisicion->firma_jefe &&
+                            !$requisicion->firma_compras &&
+                            !$requisicion->firma_finanzas)
                         <button class="btn btn-primary" style="background: #454545 !important;">RECHAZAR
                             REQUISICIÓN</button>
+                    @else
+                        <div>&nbsp;</div>
+                    @endif
                     <div onclick="validar();" style="" class="btn btn-primary">Firmar</div>
                 </div>
             </form>

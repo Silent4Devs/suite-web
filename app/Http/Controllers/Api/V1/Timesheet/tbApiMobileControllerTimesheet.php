@@ -2,18 +2,37 @@
 
 namespace App\Http\Controllers\Api\V1\Timesheet;
 
+
 use App\Http\Controllers\Controller;
+use App\Jobs\NuevoProyectoJob;
+use App\Mail\TimesheetHorasSobrepasadas;
+use App\Mail\TimesheetHorasSolicitudAprobacion;
 use App\Mail\TimesheetSolicitudAprobada;
 use App\Mail\TimesheetSolicitudRechazada;
+use App\Models\Area;
+use App\Models\ContractManager\Fiscale;
 use App\Models\Empleado;
+use App\Models\ListaInformativa;
+use App\Models\Organizacion;
+use App\Models\Sede;
 use App\Models\Timesheet;
+use App\Models\TimesheetCliente;
 use App\Models\TimesheetHoras;
+use App\Models\TimesheetProyecto;
+use App\Models\TimesheetProyectoArea;
+use App\Models\TimesheetProyectoEmpleado;
+use App\Models\TimesheetTarea;
 use App\Models\User;
+use App\Services\TimesheetService;
 use App\Traits\ObtenerOrganizacion;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Validation\Rule;
+use PDF;
 use Throwable;
 
 class tbApiMobileControllerTimesheet extends Controller
@@ -28,7 +47,6 @@ class tbApiMobileControllerTimesheet extends Controller
         $url = preg_replace_callback('/[^A-Za-z0-9_\-\.~\/\\\:]/', function ($matches) {
             return rawurlencode($matches[0]);
         }, $url);
-
         return $url;
     }
 
@@ -41,7 +59,7 @@ class tbApiMobileControllerTimesheet extends Controller
 
         $timesheet->empleado->makeHidden([
             'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
-            'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor',
+            'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor'
         ]);
 
         if ($timesheet->empleado->foto == null || $timesheet->empleado->foto == '0') {
@@ -53,7 +71,7 @@ class tbApiMobileControllerTimesheet extends Controller
                 $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
             }
         } else {
-            $ruta = asset('storage/empleados/imagenes/'.$timesheet->empleado->foto);
+            $ruta = asset('storage/empleados/imagenes/' . $timesheet->empleado->foto);
         }
 
         // Encode spaces in the URL
@@ -121,20 +139,20 @@ class tbApiMobileControllerTimesheet extends Controller
         $habilitarTodos = $request->habilitarTodos ? true : false;
 
         $usuario = User::getCurrentUser()->makeHidden([
-            'empleado', 'email_verified_at',
-            'approved',
-            'verified',
-            'verified_at',
-            'verification_token',
-            'two_factor',
-            'two_factor_expires_at',
-            'created_at',
-            'updated_at',
-            'deleted_at',
-            'organizacion_id',
-            'area_id',
-            'puesto_id',
-            'team_id',
+            "empleado", "email_verified_at",
+            "approved",
+            "verified",
+            "verified_at",
+            "verification_token",
+            "two_factor",
+            "two_factor_expires_at",
+            "created_at",
+            "updated_at",
+            "deleted_at",
+            "organizacion_id",
+            "area_id",
+            "puesto_id",
+            "team_id"
         ]);
 
         if ($usuario->empleado->foto == null || $usuario->empleado->foto == '0') {
@@ -146,7 +164,7 @@ class tbApiMobileControllerTimesheet extends Controller
                 $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
             }
         } else {
-            $ruta = asset('storage/empleados/imagenes/'.$usuario->empleado->foto);
+            $ruta = asset('storage/empleados/imagenes/' . $usuario->empleado->foto);
         }
 
         $usuario->ruta_foto = $this->encodeSpecialCharacters($ruta);
@@ -175,7 +193,7 @@ class tbApiMobileControllerTimesheet extends Controller
 
             $aprobacion->empleado->makeHidden([
                 'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
-                'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor',
+                'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor'
             ]);
 
             if ($aprobacion->empleado->foto == null || $aprobacion->empleado->foto == '0') {
@@ -187,7 +205,7 @@ class tbApiMobileControllerTimesheet extends Controller
                     $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
                 }
             } else {
-                $ruta = asset('storage/empleados/imagenes/'.$aprobacion->empleado->foto);
+                $ruta = asset('storage/empleados/imagenes/' . $aprobacion->empleado->foto);
             }
 
             // Encode spaces in the URL
@@ -204,7 +222,7 @@ class tbApiMobileControllerTimesheet extends Controller
             'aprobaciones' => $aprobaciones,
             'logo_actual' => $logo_actual,
             'empresa_actual' => $empresa_actual,
-            'habilitarTodos' => $habilitarTodos,
+            'habilitarTodos' => $habilitarTodos
         ]), 200)->header('Content-Type', 'application/json');
     }
 
@@ -216,7 +234,7 @@ class tbApiMobileControllerTimesheet extends Controller
         $aprobar = Timesheet::find($id);
         $aprobar->update([
             'estatus' => 'aprobado',
-            'comentarios' => $respuesta['comentarios'],
+            'comentarios' => $respuesta["comentarios"],
         ]);
 
         $solicitante = Empleado::getDataColumns()->find($aprobar->empleado_id);
@@ -243,7 +261,7 @@ class tbApiMobileControllerTimesheet extends Controller
         $rechazar = Timesheet::find($id);
         $rechazar->update([
             'estatus' => 'rechazado',
-            'comentarios' => $respuesta['comentarios'],
+            'comentarios' => $respuesta["comentarios"],
         ]);
 
         $solicitante = Empleado::getDataColumns()->find($rechazar->empleado_id);

@@ -5,7 +5,7 @@
                 <br>
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" name="creacion_proyecto" id="creacion_proyecto"
-                        wire:model.live="creacion_proyecto" value="true">
+                        wire:model="creacion_proyecto" value="true">
                     <label class="form-check-label" for="creacion_proyecto">
                         Crear Proyecto para Contrato
                     </label>
@@ -44,7 +44,7 @@
                     <div class="form-group">
                         {!! Form::label('identificador_proyect', 'ID*', ['class' => 'asterisco']) !!}
                         <input type="text" id="identificador_proyect" placeholder=""
-                            wire:model.live.debounce.1000ms="identificador_proyect" wire:ignore
+                            wire:model.debounce.1000ms="identificador_proyect" wire:ignore
                             wire:change="verificarIdentificador($event.target.value)"
                             title="Por favor, no incluyas comas en el nombre de la tarea." name="identificador"
                             pattern="[^\.,]*" class="form-control" maxlength="254" required>
@@ -68,7 +68,7 @@
                 <div class="col-md-4">
                     <div class="form-group ">
                         {!! Form::label('tipo', 'Categoria del Proyecto*', ['class' => 'asterisco']) !!}
-                        <select class="form-control" name="tipo" id="tipo" wire:model.live="tipo" required>
+                        <select class="form-control" name="tipo" id="tipo" wire:model="tipo" required>
                             <option value="" selected>Seleccione una opción</option>
                             @foreach ($select_tipos as $tipo_it)
                                 <option value="{{ $tipo_it }}" {{ $tipo == $tipo_it ? 'selected' : '' }}>

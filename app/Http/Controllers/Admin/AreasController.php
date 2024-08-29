@@ -22,6 +22,7 @@ use Intervention\Image\Facades\Image;
 use Maatwebsite\Excel\Facades\Excel;
 use PDF;
 use Symfony\Component\HttpFoundation\Response;
+use Yajra\DataTables\Facades\DataTables;
 
 class AreasController extends Controller
 {
@@ -31,13 +32,61 @@ class AreasController extends Controller
     {
         abort_if(Gate::denies('crear_area_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        if ($request->ajax()) {
+            $query = Area::orderByDesc('id')->get();
+            $table = Datatables::of($query);
+
+            $table->addColumn('placeholder', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+
+            $table->editColumn('actions', function ($row) {
+                $viewGate = 'crear_area_ver';
+                $editGate = 'crear_area_editar';
+                $deleteGate = 'crear_area_eliminar';
+                $crudRoutePart = 'areas';
+
+                return view('partials.datatablesActions', compact(
+                    'viewGate',
+                    'editGate',
+                    'deleteGate',
+                    'crudRoutePart',
+                    'row'
+                ));
+            });
+
+            $table->editColumn('id', function ($row) {
+                return $row->id ? $row->id : '';
+            });
+            $table->editColumn('area', function ($row) {
+                return $row->area ? $row->area : '';
+            });
+            $table->editColumn('foto_ruta', function ($row) {
+                return $row->foto_ruta ? $row->foto_ruta : '';
+            });
+
+            $table->editColumn('grupo', function ($row) {
+                return $row->grupo ? $row->grupo->nombre : '';
+            });
+            $table->editColumn(
+                'reporta',
+                function ($row) {
+                    return $row->supervisor ? $row->supervisor->area : '';
+                }
+            );
+            $table->editColumn('descripcion', function ($row) {
+                return $row->descripcion ? $row->descripcion : '';
+            });
+            $table->rawColumns(['actions', 'placeholder']);
+
+            return $table->make(true);
+        }
+
         $direccion_exists = Area::select('id_reporta')->whereNull('id_reporta')->exists();
-        $areas = Area::getAll();
         $teams = Team::get();
         $grupoarea = Grupo::get();
-        $numero_areas = $areas->count();
+        $numero_areas = Area::count();
 
-        return view('admin.areas.index', compact('teams', 'direccion_exists', 'numero_areas', 'grupoarea', 'areas'));
+        return view('admin.areas.index', compact('teams', 'direccion_exists', 'numero_areas', 'grupoarea'));
     }
 
     public function create()
@@ -48,7 +97,7 @@ class AreasController extends Controller
         $direccion_exists = Area::select('id_reporta')->whereNull('id_reporta')->exists();
         $areas = Area::with('areas')->get();
         $empleados = Empleado::getaltaAll();
-        $area = new Area;
+        $area = new Area();
 
         return view('admin.areas.create', compact('grupoareas', 'direccion_exists', 'areas', 'empleados', 'area'));
     }
@@ -80,21 +129,23 @@ class AreasController extends Controller
             $new_name_image = 'UID_'.$area->id.'_'.$hash_name.'.png';
 
             // Call the ImageService to consume the external API
-            // $apiResponse = ImageService::consumeImageCompresorApi($file);
+            $apiResponse = ImageService::consumeImageCompresorApi($file);
 
-            // // Compress and save the image
-            // if ($apiResponse['status'] == 200) {
-            //     $rutaGuardada = '/app/public/areas/'.$new_name_image;
-            //     file_put_contents(storage_path($rutaGuardada), $apiResponse['body']);
+            // Compress and save the image
+            if ($apiResponse['status'] == 200) {
+                $rutaGuardada = '/app/public/areas/'.$new_name_image;
+                file_put_contents(storage_path($rutaGuardada), $apiResponse['body']);
 
-            //     $area->update([
-            //         'foto_area' => $new_name_image,
-            //     ]);
-            // } else {
-            //     $mensajeError = 'Error al recibir la imagen de la API externa: '.$apiResponse['body'];
+                $area->update([
+                    'foto_area' => $new_name_image,
+                ]);
 
-            //     return Redirect::back()->with('error', $mensajeError);
-            // }
+            } else {
+                $mensajeError = 'Error al recibir la imagen de la API externa: '.$apiResponse['body'];
+
+                return Redirect::back()->with('error', $mensajeError);
+            }
+
         } else {
             $area->update([
                 'foto_area' => null,
@@ -154,20 +205,22 @@ class AreasController extends Controller
             }
 
             // Call the ImageService to consume the external API
-            // $apiResponse = ImageService::consumeImageCompresorApi($file);
+            $apiResponse = ImageService::consumeImageCompresorApi($file);
 
-            // // Compress and save the image
-            // if ($apiResponse['status'] == 200) {
-            //     $rutaGuardada = '/app/public/areas/' . $new_name_image;
-            //     file_put_contents(storage_path($rutaGuardada), $apiResponse['body']);
+            // Compress and save the image
+            if ($apiResponse['status'] == 200) {
+                $rutaGuardada = '/app/public/areas/'.$new_name_image;
+                file_put_contents(storage_path($rutaGuardada), $apiResponse['body']);
 
-            //     $area->update([
-            //         'foto_area' => $new_name_image,
-            //     ]);
-            // } else {
-            //     $mensajeError = 'Error al recibir la imagen de la API externa: ' . $apiResponse['body'];
-            //     return Redirect::back()->with('error', $mensajeError);
-            // }
+                $area->update([
+                    'foto_area' => $new_name_image,
+                ]);
+
+            } else {
+                $mensajeError = 'Error al recibir la imagen de la API externa: '.$apiResponse['body'];
+
+                return Redirect::back()->with('error', $mensajeError);
+            }
         } else {
             $area->update([
                 'foto_area' => null,

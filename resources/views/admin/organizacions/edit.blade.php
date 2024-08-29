@@ -334,7 +334,7 @@
                     <div class="form-group col-sm-6">
                         <label for="valores"><i class="far fa-heart iconos-crear"></i>
                             {{ trans('cruds.organizacion.fields.valores') }}</label>
-                        <textarea class="form-control {{ $errors->has('valores') ? 'is-invalid' : '' }}" name="valores" 
+                        <textarea class="form-control {{ $errors->has('valores') ? 'is-invalid' : '' }}" name="valores" maxlength="550"
                             id="valores">{{ old('valores', $organizacion->valores) }}</textarea>
                         @if ($errors->has('valores'))
                             <div class="invalid-feedback">

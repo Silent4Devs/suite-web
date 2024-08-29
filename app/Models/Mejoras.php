@@ -20,19 +20,6 @@ class Mejoras extends Model implements Auditable
         'id',
     ];
 
-    protected $fillable = [
-        'estatus',
-        'fecha_cierre',
-        'descripcion',
-        'beneficios',
-        'titulo',
-        'area_mejora',
-        'proceso_mejora',
-        'tipo',
-        'otro',
-        'empleado_mejoro_id',
-    ];
-
     protected $appends = ['folio', 'fecha_creacion', 'fecha_de_cierre', 'fecha_reporte', 'beneficio_html', 'descripcion_html'];
 
     //Redis methods
@@ -40,7 +27,7 @@ class Mejoras extends Model implements Auditable
     {
         //retrieve all data or can pass columns to retrieve
         return Cache::remember('mejoras_all', 3600, function () {
-            return self::select('id', 'estatus', 'fecha_cierre', 'descripcion', 'beneficios', 'titulo', 'area_mejora', 'proceso_mejora', 'tipo', 'otro', 'archivado')->with('mejoro:id,name,foto')->where('archivado', false)->get();
+            return self::orderBy('id')->get();
         });
     }
 

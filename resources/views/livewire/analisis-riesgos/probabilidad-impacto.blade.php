@@ -18,7 +18,7 @@
                         <div class="col-3">
                             <div class="form-group pl-0 anima-focus">
                                 <input type="number"
-                                    class="form-control" placeholder="" name="min" wire:model="min" value="{{ old('min') }}">
+                                    class="form-control" placeholder="" name="min" wire:model.defer="min" value="{{ old('min') }}">
                                 <label for="min">Minimo*</label>
                                 @error('min')
                                     <div style="color: red;">{{ $message }}</div>
@@ -28,7 +28,7 @@
                         <div class="col-3">
                             <div class="form-group pl-0 anima-focus">
                                 <input type="number"
-                                    class="form-control" placeholder="" name="Maximo" wire:model="max">
+                                    class="form-control" placeholder="" name="Maximo" wire:model.defer="max">
                                 <label for="Maximo">Máximo*</label>
                                 {{-- @error('name') <span class="text-danger">{{ $message }}</span> @enderror --}}
                             </div>
@@ -46,13 +46,13 @@
                             <div class="row m-0 p-0">
                                 <div class="col-1" style="padding-left:0px; padding-right:0px;">
                                     <div class="color-picker" style="width: 100%;">
-                                        <input type="color" wire:model="prob_imp.{{ $key }}.color"
+                                        <input type="color" wire:model.defer="prob_imp.{{ $key }}.color"
                                             class="color-input form-control" title="Seleccione un color">
                                     </div>
                                 </div>
                                 <div class="col-3">
                                     <div class="form-group pl-0 anima-focus">
-                                        <input type="number" wire:model.live="prob_imp.{{ $key }}.valor"
+                                        <input type="number" wire:model="prob_imp.{{ $key }}.valor"
                                             class="form-control" placeholder="">
                                         <label for="valor">Valor</label>
                                         {{-- @error('name') <span class="text-danger">{{ $message }}</span> @enderror --}}
@@ -60,7 +60,7 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group pl-0 anima-focus">
-                                        <input wire:model.live="prob_imp.{{ $key }}.nombre" class="form-control"
+                                        <input wire:model="prob_imp.{{ $key }}.nombre" class="form-control"
                                             placeholder="">
                                         <label for="name">Nombre de la escala</label>
                                         {{-- @error('name') <span class="text-danger">{{ $message }}</span> @enderror --}}
@@ -79,13 +79,13 @@
                             <div class="row m-0 p-0">
                                 <div class="col-1" style="padding-left:0px; padding-right:0px;">
                                     <div class="color-picker" style="width: 100%;">
-                                        <input type="color" wire:model="prob_imp.{{ $key }}.color"
+                                        <input type="color" wire:model.defer="prob_imp.{{ $key }}.color"
                                             class="color-input form-control" title="Seleccione un color">
                                     </div>
                                 </div>
                                 <div class="col-3">
                                     <div class="form-group pl-0 anima-focus">
-                                        <input type="number" wire:model.live="prob_imp.{{ $key }}.valor"
+                                        <input type="number" wire:model="prob_imp.{{ $key }}.valor"
                                             class="form-control" placeholder="">
                                         <label for="valor">Valor</label>
                                         {{-- @error('name') <span class="text-danger">{{ $message }}</span> @enderror --}}
@@ -93,7 +93,7 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group pl-0 anima-focus">
-                                        <input wire:model.live="prob_imp.{{ $key }}.nombre" name="prob_imp[1][nombre]"
+                                        <input wire:model="prob_imp.{{ $key }}.nombre" name="prob_imp[1][nombre]"
                                             class="form-control" placeholder="" value="test">
                                         <label for="name">Nombre de la escala</label>
                                         {{-- @error('name') <span class="text-danger">{{ $message }}</span> @enderror --}}
@@ -102,7 +102,7 @@
                                 <div class="col-1"></div>
                                 <div class="col-1" style="padding-top: 10px;">
                                     @if ($key > 1 && $probImp['id'] !== 0)
-                                        <i wire:click="$dispatch('delete',{{ $probImp['id'] }},{{ $key }})"
+                                        <i wire:click="$emit('delete',{{ $probImp['id'] }},{{ $key }})"
                                             class="text-sm text-red-500 fas fa-trash-alt"></i>
                                     @elseif ($key > 1 && $probImp['id'] === 0)
                                         <i wire:click="removeInput({{ $key }})"

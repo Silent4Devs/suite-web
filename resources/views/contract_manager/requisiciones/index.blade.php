@@ -48,8 +48,7 @@
                             <td>RQ-00-00-{{ $requisicion->id }}</td>
                             <td>{{ $requisicion->fecha }}</td>
                             <td>{{ $requisicion->referencia }}</td>
-                            <td>{{ $requisicion->proveedor_catalogo ?? ($requisicion->provedores_requisiciones->first()->contacto ?? 'Indistinto') }}
-                            </td>
+                            <td>{{$requisicion->proveedor_catalogo  ?? $requisicion->provedores_requisiciones->first()->contacto  ?? 'Indistinto'  }}</td>
                             <td>
                                 @switch($requisicion->estado)
                                     @case('curso')
@@ -75,28 +74,29 @@
 
                             </td>
                             @php
-                                $user = Illuminate\Support\Facades\DB::table('users')
-                                    ->select('id', 'name')
-                                    ->where('id', $requisicion->id_user)
-                                    ->first();
+                            $user = Illuminate\Support\Facades\DB::table('users')
+                              ->select('id', 'name')
+                              ->where('id', $requisicion->id_user)
+                              ->first();
                             @endphp
                             <td>
                                 @switch(true)
                                     @case(is_null($requisicion->firma_solicitante))
-                                        <p>Solicitante: {{ $user->name ?? '' }}</p>
+                                        <p>Solicitante: {{$user->name ?? ''}}</p>
                                     @break
 
                                     @case(is_null($requisicion->firma_jefe))
-                                        @php
-                                            $employee = App\Models\User::find($requisicion->id_user)->empleado;
 
-                                            if ($employee !== null && $employee->supervisor !== null) {
-                                                $supervisorName = $employee->supervisor->name;
-                                            } else {
-                                                $supervisorName = 'N/A'; // Or any default value you prefer
-                                            }
-                                        @endphp
-                                        <p>Jefe: {{ $supervisorName ?? '' }} </p>
+                                    @php
+                                    $employee = App\Models\User::find($requisicion->id_user)->empleado;
+
+                                    if ($employee !== null && $employee->supervisor !== null) {
+                                        $supervisorName = $employee->supervisor->name;
+                                    } else {
+                                        $supervisorName = "N/A"; // Or any default value you prefer
+                                    }
+                                    @endphp
+                                        <p>Jefe: {{$supervisorName ?? ''}} </p>
                                     @break
 
                                     @case(is_null($requisicion->firma_finanzas))
@@ -104,12 +104,11 @@
                                     @break
 
                                     @case(is_null($requisicion->firma_compras))
-                                        @php
-                                            $comprador = App\Models\ContractManager\Comprador::with('user')
-                                                ->where('id', $requisicion->comprador_id)
-                                                ->first();
-                                        @endphp
-                                        <p>Comprador: {{ $comprador->name }}</p>
+
+                                    @php
+                                     $comprador = App\Models\ContractManager\Comprador::with('user')->where('id', $requisicion->comprador_id)->first();
+                                    @endphp
+                                    <p>Comprador: {{  $comprador->name }}</p>
                                     @break
 
                                     @default
@@ -155,7 +154,6 @@
 
     <script>
         function mostrarAlerta(url) {
-            console.log('URL para eliminar:', url);
             Swal.fire({
                 title: '¿Estás seguro?',
                 text: 'No podrás deshacer esta acción',
@@ -165,33 +163,11 @@
                 cancelButtonText: 'Cancelar'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    fetch(url, {
-                            method: 'GET', // Cambia a 'DELETE' si es necesario
-                            headers: {
-                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                                'Content-Type': 'application/json'
-                            }
-                        })
-                        .then(response => {
-                            if (!response.ok) {
-                                throw new Error('Network response was not ok ' + response.statusText);
-                            }
-                            return response.json();
-                        })
-                        .then(data => {
-                            if (data.success) {
-                                Swal.fire('¡Eliminado!', 'El elemento ha sido eliminado.', 'success')
-                                    .then(() => {
-                                        window.location.reload(); // Refresca la página
-                                    });
-                            } else {
-                                window.location.reload();
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Error:', error);
-                            window.location.reload();
-                        });
+                    // Coloca aquí la lógica para eliminar el elemento
+                    // Esto puede incluir una solicitud AJAX al servidor o cualquier otra lógica de eliminación
+                    // Una vez que el elemento se haya eliminado, puedes mostrar un mensaje de éxito
+                    Swal.fire('¡Eliminado!', 'El elemento ha sido eliminado.', 'success');
+                    window.location.href = url;
                 }
             });
         }

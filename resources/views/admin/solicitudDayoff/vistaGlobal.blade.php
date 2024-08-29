@@ -48,7 +48,7 @@
                             </fieldset>
                         </div>
                     </div>
-
+                    
                     <!-- Categoria Field -->
                     <div class="row">
                         <div class="form-group col-sm-6">
