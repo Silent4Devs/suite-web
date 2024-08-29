@@ -18,6 +18,7 @@ class CatalogueCertificatesEvent
     public $tabla;
 
     public $slug;
+
     public $public;
 
     /**

@@ -24,5 +24,4 @@ class CertificatesObserver
         // event(new EntendimientoOrganizacionEvent($entendimiento, 'delete', 'entendimiento_organizacions', 'Entendimiento'));
         // $this->forgetCache();
     }
-
 }

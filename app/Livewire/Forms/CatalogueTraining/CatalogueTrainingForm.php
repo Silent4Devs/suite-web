@@ -39,7 +39,8 @@ class CatalogueTrainingForm extends Form
                 'empleado_id' => $user->empleado->id,
             ]);
             $this->reset();
-            event(new CatalogueCertificatesEvent($register, 'create', 'catalogue_training', 'Tipo de certificación','LD'));
+            event(new CatalogueCertificatesEvent($register, 'create', 'catalogue_training', 'Tipo de certificación', 'LD'));
+
             return $register->id;
         }
     }
@@ -88,7 +89,7 @@ class CatalogueTrainingForm extends Form
                 'status' => 'approved',
             ]);
             $this->reset();
-            event(new CatalogueCertificatesEvent($catalogue, 'store', 'catalogue_training', 'Tipo de certificación','ALL'));
+            event(new CatalogueCertificatesEvent($catalogue, 'store', 'catalogue_training', 'Tipo de certificación', 'ALL'));
 
             return true;
         }

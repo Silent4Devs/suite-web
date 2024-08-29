@@ -30,10 +30,10 @@ class SendCertificateReminder extends Command
     public function handle()
     {
         $employes = Empleado::alta()->get();
-        foreach($employes as $employ){
-                $user = User::where('email', trim(removeUnicodeCharacters($employ->email)))->first();
-                $email = new CertificationReminderMail();
-                Mail::to(removeUnicodeCharacters($user->email))->queue($email);
-            }
+        foreach ($employes as $employ) {
+            $user = User::where('email', trim(removeUnicodeCharacters($employ->email)))->first();
+            $email = new CertificationReminderMail;
+            Mail::to(removeUnicodeCharacters($user->email))->queue($email);
+        }
     }
 }
