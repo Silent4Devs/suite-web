@@ -21,11 +21,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Log;
 
 class ActivosController extends Controller
 {
     public function index(Request $request)
     {
+     try{
         abort_if(Gate::denies('inventario_activos_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
@@ -132,10 +134,21 @@ class ActivosController extends Controller
         $activos_nuevo = Activo::getAll();
 
         return view('admin.activos.index', compact('tipoactivos', 'users', 'sedes', 'teams', 'subtipo', 'activos_nuevo'));
+    } catch (\Exception $e) {
+        // Registrar el error en los logs
+        Log::channel('logstash')->info('Error al obtener activos: '.$e->getMessage(), [
+            'exception' => $e,
+            'input' => $request->all(),
+        ]);
+
+        // Retornar una respuesta de error al cliente
+        return response()->json(['message' => 'Error al obtener activos'], 500);
+    }
     }
 
     public function create()
     {
+    try{
         abort_if(Gate::denies('inventario_activos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $tipoactivos = Tipoactivo::getAll()->pluck('tipo', 'id')->prepend(trans('global.pleaseSelect'), '');
@@ -157,10 +170,21 @@ class ActivosController extends Controller
         $tipos = Tipoactivo::getAll();
 
         return view('admin.activos.create', compact('tipoactivos', 'subtipos', 'duenos', 'ubicacions', 'empleados', 'area', 'marcas', 'modelos', 'tipos', 'procesos'));
+    } catch (\Exception $e) {
+        // Registrar el error en los logs
+        Log::channel('logstash')->info('Error al crear activos: '.$e->getMessage(), [
+            'exception' => $e,
+            'input' => $request->all(),
+        ]);
+
+        // Retornar una respuesta de error al cliente
+        return response()->json(['message' => 'Error al crear activos'], 500);
+    }
     }
 
     public function store(Request $request)
     {
+    try{
         abort_if(Gate::denies('inventario_activos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // dd($request->all());
 
@@ -218,10 +242,21 @@ class ActivosController extends Controller
         }
 
         return redirect()->route('admin.activos.index')->with('success', 'Guardado con éxito');
+    } catch (\Exception $e) {
+        // Registrar el error en los logs
+        Log::channel('logstash')->info('Error al guardar activos: '.$e->getMessage(), [
+            'exception' => $e,
+            'input' => $request->all(),
+        ]);
+
+        // Retornar una respuesta de error al cliente
+        return response()->json(['message' => 'Error al guardar activos'], 500);
+    }
     }
 
     public function edit(Activo $activo)
     {
+    try{
         abort_if(Gate::denies('inventario_activos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $tipoactivos = Tipoactivo::getAll()->pluck('tipo', 'id')->prepend(trans('global.pleaseSelect'), '');
@@ -247,10 +282,21 @@ class ActivosController extends Controller
 
         // dd($subcategoriaSeleccionado);
         return view('admin.activos.edit', compact('tipoactivos', 'subtipos', 'duenos', 'ubicacions', 'empleados', 'area', 'marcas', 'modelos', 'tipos', 'activo', 'procesos', 'categoriasSeleccionado', 'subcategoriaSeleccionado'));
+    } catch (\Exception $e) {
+        // Registrar el error en los logs
+        Log::channel('logstash')->info('Error al editar activos: '.$e->getMessage(), [
+            'exception' => $e,
+            'input' => $request->all(),
+        ]);
+
+        // Retornar una respuesta de error al cliente
+        return response()->json(['message' => 'Error al editar activos'], 500);
+    }
     }
 
     public function update(UpdateActivoRequest $request, Activo $activo)
     {
+    try{
         abort_if(Gate::denies('inventario_activos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $data = [];
@@ -289,24 +335,56 @@ class ActivosController extends Controller
         //  dd($activo);
 
         return redirect()->route('admin.activos.index')->with('success', 'Editado con éxito');
+    } catch (\Exception $e) {
+        // Registrar el error en los logs
+        Log::channel('logstash')->info('Error al actualizar activos: '.$e->getMessage(), [
+            'exception' => $e,
+            'input' => $request->all(),
+        ]);
+
+        // Retornar una respuesta de error al cliente
+        return response()->json(['message' => 'Error al actualizar activos'], 500);
+    }
     }
 
     public function show(Activo $activo)
     {
+    try{
         abort_if(Gate::denies('inventario_activos_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $activo->load('tipoactivo', 'subtipo', 'dueno', 'ubicacion', 'team', 'activoIncidentesDeSeguridads');
 
         return view('admin.activos.show', compact('activo'));
+    } catch (\Exception $e) {
+        // Registrar el error en los logs
+        Log::channel('logstash')->info('Error al ver activos: '.$e->getMessage(), [
+            'exception' => $e,
+            'input' => $request->all(),
+        ]);
+
+        // Retornar una respuesta de error al cliente
+        return response()->json(['message' => 'Error al ver activos'], 500);
+    }
     }
 
     public function destroy(Activo $activo)
     {
+    try{
         abort_if(Gate::denies('inventario_activos_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $activo->delete();
 
         return back()->with('deleted', 'Registro eliminado con éxito');
+    } catch (\Exception $e) {
+        // Registrar el error en los logs
+        Log::channel('logstash')->info('Error al eliminar activos: '.$e->getMessage(), [
+            'exception' => $e,
+            'input' => $request->all(),
+        ]);
+
+        // Retornar una respuesta de error al cliente
+        return response()->json(['message' => 'Error al eliminar activos'], 500);
+    }
     }
 
     public function massDestroy(MassDestroyActivoRequest $request)
@@ -318,6 +396,7 @@ class ActivosController extends Controller
 
     protected function downloadFile($src)
     {
+    try{
         if (is_file($src)) {
             $finfo = finfo_open(FILEINFO_MIME_TYPE);
             $content_type = finfo_file($finfo, $src);
@@ -335,9 +414,16 @@ class ActivosController extends Controller
             return false;
         }
 
-        // $path = storage_path('app/public/exportActivos/Responsiva.docx');
+    } catch (\Exception $e) {
+        // Registrar el error en los logs
+        Log::channel('logstash')->info('Error al descargar activos: '.$e->getMessage(), [
+            'exception' => $e,
+            'input' => $request->all(),
+        ]);
 
-        // return response()->download($path);
+        // Retornar una respuesta de error al cliente
+        return response()->json(['message' => 'Error al descargar activos'], 500);
+    }
     }
 
     public function DescargaFormato()
