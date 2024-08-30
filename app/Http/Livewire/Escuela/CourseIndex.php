@@ -24,6 +24,8 @@ class CourseIndex extends Component
 
     public $selectionlevel;
 
+    public $page = 1; // Definir la propiedad aquí
+
     public function render()
     {
 
