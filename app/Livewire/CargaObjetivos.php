@@ -168,9 +168,10 @@ class CargaObjetivos extends Component
                 ));
 
                 // Enviar correos
-                foreach ($all_correos as $email) {
+                foreach ($all_correos as $key_correo => $email) {
                     Mail::to(removeUnicodeCharacters($email))->queue(new CorreoCargaObjetivos($this->fecha_inicio, $this->fecha_fin));
                 }
+
 
                 $this->alert('success', 'Notificación Exitosa.', [
                     'position' => 'center',
