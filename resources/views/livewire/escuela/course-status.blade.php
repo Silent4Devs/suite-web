@@ -115,7 +115,7 @@
         </div>
     </div>
 
-    <div class="card card-body" style="width: 320px;">
+    <div class="card card-body" style="width: 550px;">
         <h4>{{ $course->title }}</h4>
         <div class="d-flex align-items-start" wire:ignore>
             <div class="img-person" style="min-width: 40px; min-height: 40px;">
@@ -145,7 +145,7 @@
             </div>
         </div>
 
-        <ul id="secciones-curso" style="list-style: none; cursor: pointer;">
+        <ul id="secciones-curso" style="list-style: none; cursor: pointer; position: relative; right: 2.5rem;">
             @foreach ($course->sections_order as $section)
                 <li class="seccion-li-orden" id="seccion-{{ $section->id }}">
                     <i style="font-size:10pt; cursor: pointer;" class="d-inline text-black-500 fas fa-play-circle">
@@ -162,11 +162,13 @@
                                                 <a class="cursor:pointer;"
                                                     wire:click="changeLesson({{ $lesson }})">{{ $lesson->name }}</a>
                                             </span>
+                                            <br>
                                         @else
                                             <span style="color:rgb(0, 179, 0);">
                                                 <a class="cursor:pointer;"
                                                     wire:click="changeLesson({{ $lesson }})">{{ $lesson->name }}</a>
                                             </span>
+                                            <br>
                                         @endif
                                     @else
                                         @if ($current->id == $lesson->id)
@@ -174,11 +176,13 @@
                                                 <a class="cursor:pointer;"
                                                     wire:click="changeLesson({{ $lesson }})">{{ $lesson->name }}</a>
                                             </span>
+                                            <br>
                                         @else
                                             <span class="">
                                                 <a class="cursor:pointer;"
                                                     wire:click="changeLesson({{ $lesson }})">{{ $lesson->name }}</a>
                                             </span>
+                                            <br>
                                         @endif
                                     @endif
                                 </div>
