@@ -128,6 +128,22 @@ class EvaluacionesDesempenoController extends Controller
         }
     }
 
+    public function cargarObjetivosNotificacion()
+    {
+        $usuario = User::getCurrentUser();
+        $empleado = $usuario->empleado;
+
+        $AreaID = $empleado->area_id;
+
+        if ($usuario->roles->contains('title', 'Admin')) {
+            return redirect(route('admin.ev360-objetivos-periodo.config'));
+        } elseif ($empleado->es_supervisor) {
+            return view('admin.recursos-humanos.evaluacion-360.objetivos-periodo.cargar-por-area', compact('AreaID'));
+        } else {
+            return redirect(route('admin.rh.evaluaciones-desempeno.carga-objetivos-empleado,', ['empleado' => $empleado->id]));
+        }
+    }
+
     public function objetivosImportar()
     {
         return view('admin.recursos-humanos.evaluaciones-desempeno.objetivos-importar');
@@ -170,15 +186,15 @@ class EvaluacionesDesempenoController extends Controller
             $imageEvaluado = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $signatureEvaluado));
             $imageEvaluador = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $signatureEvaluador));
 
-            if (! Storage::exists('public/evaluacionesDesempeno/evaluacion/'.$evaluacion->id.'/firmas/periodo'.'/'.$periodo->nombre_evaluacion.'/evaluado'.'/'.$evaluado->name.'/evaluador'.'/'.$evaluador->name)) {
-                Storage::makeDirectory('public/evaluacionesDesempeno/evaluacion/'.$evaluacion->id.'/firmas/periodo'.'/'.$periodo->nombre_evaluacion.'/evaluado'.'/'.$evaluado->name.'/evaluador'.'/'.$evaluador->name, 0755, true);
+            if (! Storage::exists('public/evaluacionesDesempeno/evaluacion/' . $evaluacion->id . '/firmas/periodo' . '/' . $periodo->nombre_evaluacion . '/evaluado' . '/' . $evaluado->name . '/evaluador' . '/' . $evaluador->name)) {
+                Storage::makeDirectory('public/evaluacionesDesempeno/evaluacion/' . $evaluacion->id . '/firmas/periodo' . '/' . $periodo->nombre_evaluacion . '/evaluado' . '/' . $evaluado->name . '/evaluador' . '/' . $evaluador->name, 0755, true);
             }
 
-            $filenameEvaluado = '/evaluacion'.$evaluacion->id.'firmaevaluado'.$evaluado->name.'.png';
-            $filenameEvaluador = '/evaluacion'.$evaluacion->id.'firmaevaluador'.$evaluador->name.'.png';
+            $filenameEvaluado = '/evaluacion' . $evaluacion->id . 'firmaevaluado' . $evaluado->name . '.png';
+            $filenameEvaluador = '/evaluacion' . $evaluacion->id . 'firmaevaluador' . $evaluador->name . '.png';
 
-            Storage::put('public/evaluacionesDesempeno/evaluacion/'.$evaluacion->id.'/firmas/periodo'.'/'.$periodo->nombre_evaluacion.'/evaluado'.'/'.$evaluado->name.'/evaluador'.'/'.$evaluador->name.$filenameEvaluado, $imageEvaluado);
-            Storage::put('public/evaluacionesDesempeno/evaluacion/'.$evaluacion->id.'/firmas/periodo'.'/'.$periodo->nombre_evaluacion.'/evaluado'.'/'.$evaluado->name.'/evaluador'.'/'.$evaluador->name.$filenameEvaluador, $imageEvaluador);
+            Storage::put('public/evaluacionesDesempeno/evaluacion/' . $evaluacion->id . '/firmas/periodo' . '/' . $periodo->nombre_evaluacion . '/evaluado' . '/' . $evaluado->name . '/evaluador' . '/' . $evaluador->name . $filenameEvaluado, $imageEvaluado);
+            Storage::put('public/evaluacionesDesempeno/evaluacion/' . $evaluacion->id . '/firmas/periodo' . '/' . $periodo->nombre_evaluacion . '/evaluado' . '/' . $evaluado->name . '/evaluador' . '/' . $evaluador->name . $filenameEvaluador, $imageEvaluador);
 
             if ($evaluacion->activar_competencias && $evaluacion->activar_objetivos) {
                 $evldrObj = $evVal->evaluadoresObjetivos->where('periodo_id', $id_periodo)

@@ -50,6 +50,99 @@
         </div>
     </div>
 
+    <div class="card card-body">
+        <div class="card-filtros-fodas mt-3">
+            <div class="row">
+                <div class="col-md-2">
+                    <label for="">Fecha</label>
+                    <input id="input-search-fechas" type="date" class="form-control" onchange="buscadorGlobal()">
+                </div>
+
+                <div class="col-md-8">
+                    <label for="">Buscar</label>
+                    <input id="input-search" type="text" class="form-control" onkeyup="buscadorGlobal()">
+                </div>
+            </div>
+        </div>
+
+        <div class="text-left mt-4">
+            <a href="{{ route('admin.rh.evaluaciones-desempeno.create-evaluacion') }}" class="btn btn-info"
+                style="background-color: #59BB87 !important; color:#fff !important;">
+                Crear Evaluación
+            </a>
+        </div>
+
+        <div class="caja-cards mt-5">
+            @foreach ($evaluaciones as $evaluacion)
+                <div class="card card-foda" style="min-height: 260px !important;">
+                    <div class="card-header">
+                        <strong> {{ Carbon\Carbon::parse($evaluacion->created_at)->format('d/m/Y') }}</strong>
+                        <div class="dropdown btn-options-foda-card">
+                            <button class="btn dropdown-toggle" type="button" data-toggle="dropdown"
+                                aria-expanded="false">
+                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                            </button>
+                            <div class="dropdown-menu">
+                                @if ($evaluacion->estatus == 1 || $evaluacion->estatus == 3)
+                                    <a class="dropdown-item"
+                                        href="{{ route('admin.rh.evaluaciones-desempeno.dashboard-evaluacion', $evaluacion->id) }}">
+                                        <i class="fa-solid fa-eye"></i>&nbsp;Dashboard</a>
+                                @endif
+                                @if ($evaluacion->estatus == 0)
+                                    <a class="dropdown-item"
+                                        href="{{ route('admin.rh.evaluaciones-desempeno.edit-borrador', $evaluacion->id) }}">
+                                        <i class="fa-solid fa-pencil"></i>&nbsp;Editar</a>
+                                @endif
+                                <a class="dropdown-item delete-item" onclick="deleteItem({{ $evaluacion->id }})">
+                                    <i class="fa-solid fa-trash"></i>&nbsp;Eliminar</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body" style="margin-top: 5px;">
+                        <h3>
+                            {{ $evaluacion->nombre }}
+                        </h3>
+                        @switch($evaluacion->estatus)
+                            @case(0)
+                                <span class="badge"
+                                    style="color: #FF9900; background-color: 'rgba(255, 200, 0, 0.2)'; border-radius: 7px; padding: 5px; font-weight: 300; font-size:16px;">
+                                    <small>Borrador</small>
+                                </span>
+                            @break
+
+                            @case(1)
+                                <span class="badge"
+                                    style="color: #039C55; background-color: 'rgba(3, 156, 85, 0.1)'; border-radius: 7px; padding: 5px; font-weight: 300; font-size:16px;">
+                                    <small>Activa</small>
+                                </span>
+                            @break
+
+                            @case(2)
+                                <span class="badge"
+                                    style="color: #FF0000; background-color: 'rgba(221, 4, 131, 0.1)'; border-radius: 7px; padding: 5px; font-weight: 300; font-size:16px;">
+                                    <small>Cancelada</small>
+                                </span>
+                            @break
+
+                            @case(3)
+                                <span class="badge"
+                                    style="color: #0080FF; background-color: 'rgba(0, 128, 255, 0.1)'; border-radius: 7px; padding: 5px; font-weight: 300; font-size:16px;">
+                                    <small>Finalizada</small>
+                                </span>
+                            @break
+
+                            @default
+                                <span class="badge"
+                                    style="color: #0080FF; background-color: 'rgba(0, 128, 255, 0.1)'; border-radius: 7px; padding: 5px; font-weight: 300; font-size:16px;">
+                                    <small>Borrador</small>
+                                </span>
+                        @endswitch
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+
     <div class="card card-body mt-3">
         <div class="row">
             <div class="col-6">
@@ -226,99 +319,6 @@
                     <canvas id="resultadosmensuales"></canvas>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <div class="card card-body">
-        <div class="card-filtros-fodas mt-3">
-            <div class="row">
-                <div class="col-md-2">
-                    <label for="">Fecha</label>
-                    <input id="input-search-fechas" type="date" class="form-control" onchange="buscadorGlobal()">
-                </div>
-
-                <div class="col-md-8">
-                    <label for="">Buscar</label>
-                    <input id="input-search" type="text" class="form-control" onkeyup="buscadorGlobal()">
-                </div>
-            </div>
-        </div>
-
-        <div class="text-left mt-4">
-            <a href="{{ route('admin.rh.evaluaciones-desempeno.create-evaluacion') }}" class="btn btn-info"
-                style="background-color: #59BB87 !important; color:#fff !important;">
-                Crear Evaluación
-            </a>
-        </div>
-
-        <div class="caja-cards mt-5">
-            @foreach ($evaluaciones as $evaluacion)
-                <div class="card card-foda" style="min-height: 260px !important;">
-                    <div class="card-header">
-                        <strong> {{ Carbon\Carbon::parse($evaluacion->created_at)->format('d/m/Y') }}</strong>
-                        <div class="dropdown btn-options-foda-card">
-                            <button class="btn dropdown-toggle" type="button" data-toggle="dropdown"
-                                aria-expanded="false">
-                                <i class="fa-solid fa-ellipsis-vertical"></i>
-                            </button>
-                            <div class="dropdown-menu">
-                                @if ($evaluacion->estatus == 1 || $evaluacion->estatus == 3)
-                                    <a class="dropdown-item"
-                                        href="{{ route('admin.rh.evaluaciones-desempeno.dashboard-evaluacion', $evaluacion->id) }}">
-                                        <i class="fa-solid fa-eye"></i>&nbsp;Dashboard</a>
-                                @endif
-                                @if ($evaluacion->estatus == 0)
-                                    <a class="dropdown-item"
-                                        href="{{ route('admin.rh.evaluaciones-desempeno.edit-borrador', $evaluacion->id) }}">
-                                        <i class="fa-solid fa-pencil"></i>&nbsp;Editar</a>
-                                @endif
-                                <a class="dropdown-item delete-item" onclick="deleteItem({{ $evaluacion->id }})">
-                                    <i class="fa-solid fa-trash"></i>&nbsp;Eliminar</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body" style="margin-top: 5px;">
-                        <h3>
-                            {{ $evaluacion->nombre }}
-                        </h3>
-                        @switch($evaluacion->estatus)
-                            @case(0)
-                                <span class="badge"
-                                    style="color: #FF9900; background-color: 'rgba(255, 200, 0, 0.2)'; border-radius: 7px; padding: 5px; font-weight: 300; font-size:16px;">
-                                    <small>Borrador</small>
-                                </span>
-                            @break
-
-                            @case(1)
-                                <span class="badge"
-                                    style="color: #039C55; background-color: 'rgba(3, 156, 85, 0.1)'; border-radius: 7px; padding: 5px; font-weight: 300; font-size:16px;">
-                                    <small>Activa</small>
-                                </span>
-                            @break
-
-                            @case(2)
-                                <span class="badge"
-                                    style="color: #FF0000; background-color: 'rgba(221, 4, 131, 0.1)'; border-radius: 7px; padding: 5px; font-weight: 300; font-size:16px;">
-                                    <small>Cancelada</small>
-                                </span>
-                            @break
-
-                            @case(3)
-                                <span class="badge"
-                                    style="color: #0080FF; background-color: 'rgba(0, 128, 255, 0.1)'; border-radius: 7px; padding: 5px; font-weight: 300; font-size:16px;">
-                                    <small>Finalizada</small>
-                                </span>
-                            @break
-
-                            @default
-                                <span class="badge"
-                                    style="color: #0080FF; background-color: 'rgba(0, 128, 255, 0.1)'; border-radius: 7px; padding: 5px; font-weight: 300; font-size:16px;">
-                                    <small>Borrador</small>
-                                </span>
-                        @endswitch
-                    </div>
-                </div>
-            @endforeach
         </div>
     </div>
 </div>
