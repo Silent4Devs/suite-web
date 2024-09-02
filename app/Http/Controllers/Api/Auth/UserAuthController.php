@@ -145,7 +145,7 @@ class UserAuthController extends Controller
 
         $expiration = config('sanctum.expiration');
 
-        if ($expiration && !$tokenInstance->isExpired()) {
+        if ($expiration ) {
             // Token expired, generate a new token and delete the old one
             $user = $tokenInstance->tokenable; // Assuming tokenable is a User model
             // Revoke the old token
@@ -154,10 +154,15 @@ class UserAuthController extends Controller
             // Create a new token
             $newToken = $user->createToken('auth_token')->plainTextToken;
 
+            $expiration = config('sanctum.expiration');
+
+            $expiration = Carbon::now()->addMinutes($expiration)->timestamp;
+
             return response()->json([
                 'status' => 'success',
                 'message' => 'Token refreshed',
                 'token' => $newToken,
+                'expiration' => $expiration ,
             ], 200);
         }
 
