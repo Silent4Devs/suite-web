@@ -129,6 +129,14 @@
                                                 Entra desde este link o bien desde el área de Mi Perfil en Tabantaj para
                                                 ajustar los objetivos de los colaboradores de tu área.
                                             </p>
+                                            <br>
+                                            <p
+                                                style="text-align: center; font-size:11pt;
+                                        color:#153643; margin-left:25px; margin-right:25px">
+                                                <a
+                                                    href="{{ route('admin.rh.evaluaciones-desempeno.carga-objetivos-notificacion') }}">Cargar
+                                                    Objetivos</a>
+                                            </p>
                                         </div>
                                     </td>
                                 </tr>
