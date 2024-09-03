@@ -97,7 +97,7 @@ class DenunciasController extends Controller
     {
         abort_if(Gate::denies('centro_atencion_denuncias_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $denuncias = Denuncias::with('denuncio', 'denunciado')->where('archivado', false)->get();
+        $denuncias = Denuncias::with('denuncio:id,name,foto,email,telefono', 'denunciado:id,name,foto,email,telefono')->where('archivado', false)->get();
 
         return datatables()->of($denuncias)->toJson();
     }
