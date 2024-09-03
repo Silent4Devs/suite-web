@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\Silent4University;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -65,6 +66,10 @@ class Kernel extends HttpKernel
         'primeros.pasos' => \App\Http\Middleware\PrimerosPasos::class,
         'version_iso_2013' => \App\Http\Middleware\VersionIso2013::class,
         'version_iso_2022' => \App\Http\Middleware\VersionIso2022::class,
+        'general_tabantaj' => \App\Http\Middleware\GeneralTabantaj::class,
+        'gestion_contractual' => \App\Http\Middleware\GestionContractual::class,
+        'silent_4_university' => \App\Http\Middleware\Silent4University::class,
+        'gestion_talento' => \App\Http\Middleware\GestionTalento::class,
         'doNotCacheResponse' => \Spatie\ResponseCache\Middlewares\DoNotCacheResponse::class,
         'cacheResponse' => \Spatie\ResponseCache\Middlewares\CacheResponse::class,
         // 'XssSanitization' => \App\Http\Middleware\XssSanitization::class,
