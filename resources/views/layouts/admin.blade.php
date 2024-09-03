@@ -67,7 +67,6 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- End Extra Styles -->
 
-    @yield('styles')
     @livewireStyles
 
     {{-- Laravel vite --}}

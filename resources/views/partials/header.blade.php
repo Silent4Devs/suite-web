@@ -22,6 +22,11 @@
         @if ($empleado)
             <ul class="ml-auto c-header-nav gap-3">
                 <li>
+                    <button class="" data-toggle="modal" data-target="#modalCustomLinks">
+                        <i class="material-symbols-outlined"> add_circle</i>
+                    </button>
+                </li>
+                <li>
                     <i id="fullscreen-btn" class="material-symbols-outlined" style="cursor: pointer;">
                         fullscreen
                     </i>
@@ -102,10 +107,11 @@
                                     </a>
                                 </div>
                                 <div class="mt-3">
-                                    <a style="all: unset; color: #747474; cursor: pointer;">
+                                    <button style="all: unset; color: #747474; cursor: pointer;"
+                                        onclick="document.querySelector('.content-custom-design').classList.remove('d-none')">
                                         <i class="bi bi-pencil-square"></i>
                                         Personalización visual
-                                    </a>
+                                    </button>
                                 </div>
                                 <div class="mt-3 text-end">
                                     <div class="custom-control custom-switch">
@@ -543,3 +549,63 @@
     </div>
     <div class="bg-black-header-menu" onclick="menuHeader();"></div>
 </header>
+
+<!-- Modal -->
+<div class="modal fade" id="modalCustomLinks" tabindex="-1" aria-labelledby="modalCustomLinksLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+                <h5 class="mt-3">Accesos directos</h5>
+
+                <div class="mt-5">
+                    <div class="d-flex jsutify-content-center flex-wrap gap-3">
+                        <button
+                            class="btn btn-acces-custom border d-flex align-items-center flex-column py-1 px-3 active"
+                            style="color: #606060;">
+                            <i class="bi bi-calendar-plus" style="font-size: 38px;"></i>
+                            <small style="font-size: 9px;">Timesheet</small>
+                        </button>
+
+                        <button class="btn btn-acces-custom border d-flex align-items-center flex-column py-1 px-3"
+                            style="color: #606060;">
+                            <i class="bi bi-calendar3" style="font-size: 38px;"></i>
+                            <small style="font-size: 9px;">Calendario</small>
+                        </button>
+
+                        <button class="btn btn-acces-custom border d-flex align-items-center flex-column py-1 px-3"
+                            style="color: #606060;">
+                            <i class="bi bi-folder" style="font-size: 38px;"></i>
+                            <small style="font-size: 9px;">Documentos</small>
+                        </button>
+
+                        <button class="btn btn-acces-custom border d-flex align-items-center flex-column py-1 px-3"
+                            style="color: #606060;">
+                            <i class="bi bi-file-earmark-check" style="font-size: 38px;"></i>
+                            <small style="font-size: 9px;">Planes de Trabajo</small>
+                        </button>
+
+                        <button class="btn btn-acces-custom border d-flex align-items-center flex-column py-1 px-3"
+                            style="color: #606060;">
+                            <i class="bi bi-person-workspace" style="font-size: 38px;"></i>
+                            <small style="font-size: 9px;">Centro de atención</small>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.querySelectorAll('.btn-acces-custom').forEach(element => {
+        element
+    });
+    document.querySelector('.btn-acces-custom').addEventListener('click', (e) => {
+        e.target.classList.toggle('active');
+    });
+</script>

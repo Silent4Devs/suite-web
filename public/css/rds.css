@@ -891,6 +891,11 @@ header.mostrar-menu {
     padding: 20px;
     color: #898989;
 }
+.btn-close-custom{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
 .item-color-tbj{
     width: 40px;
     height: 40px;
@@ -918,4 +923,22 @@ header.mostrar-menu {
     position: relative;
     border: 1px solid #8ec6ff;
     cursor: pointer;
+}
+
+.btn-acces-custom.active{
+    background-color: #b5f1d6 !important;
+}
+
+
+
+
+
+
+.dark *{
+    background-color: #2E2E2E !important;
+    color: #fff !important;
+}
+
+.transparente *{
+    opacity: 0.95 !important;
 }
