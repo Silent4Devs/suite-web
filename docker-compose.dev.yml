@@ -50,11 +50,26 @@ services:
       - tabantajnetwork
     mem_limit: 6g
 
+  composer:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+      args:
+        - UID=${UID:-1000}
+        - GID=${GID:-1000}
+    volumes:
+      - .:/app
+    depends_on:
+      - php
+    entrypoint: composer install --no-scripts --no-interaction --optimize-autoloader
+    networks:
+      - tabantajnetwork
+
   php:
     #uncomment this if you will use only docker compose
     build:
       context: "."
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.prod
     #     # target: php-production  # Specify the target build stage if applicable
     #     # args:
     #     # - BUILD_ENV=production  # Pass any necessary build arguments
@@ -67,8 +82,12 @@ services:
     tty: true
     volumes:
       - .:/app
+      - ./vendor:/app/vendor
       - caddy_data:/data
       - caddy_config:/config
+    depends_on:
+      - postgres-tabantaj
+    command: composer install
     ports:
       - 80:8000
       - 443:443
@@ -79,7 +98,7 @@ services:
   queue-worker:
     build:
       context: "."
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.prod
     volumes:
       - .:/app
     command: php artisan queue:work --tries=3
@@ -96,7 +115,7 @@ services:
   schedule-worker:
     build:
       context: "."
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.prod
     depends_on:
       - php
     restart: unless-stopped
@@ -122,50 +141,50 @@ services:
       - tabantajnetwork
     mem_limit: 3g
 
-  rabbitmq-tabantaj:
-    image: rabbitmq:3-management-alpine
-    container_name: rabbit-tabantaj
-    env_file:
-      - .env
-    ports:
-      - 5672:5672
-      - 15672:15672
-    restart: unless-stopped
-    tty: true
-    networks:
-      - tabantajnetwork
-    # networks:
-    #   - tabantajnetwork
-    volumes:
-      - rabbitmq_data:/var/lib/rabbitmq
+  # rabbitmq-tabantaj:
+  #   image: rabbitmq:3-management-alpine
+  #   container_name: rabbit-tabantaj
+  #   env_file:
+  #     - .env
+  #   ports:
+  #     - 5672:5672
+  #     - 15672:15672
+  #   restart: unless-stopped
+  #   tty: true
+  #   networks:
+  #     - tabantajnetwork
+  #   # networks:
+  #   #   - tabantajnetwork
+  #   volumes:
+  #     - rabbitmq_data:/var/lib/rabbitmq
 
-  goservices:
-    image: ghcr.io/silent4devs/goservices:latest
-    container_name: goservices
-    restart: unless-stopped
-    tty: true
-    ports:
-      - "3300:3300"
-    volumes:
-      - goservices_data:/goservices
-    networks:
-      - tabantajnetwork
-    # networks:
-    #   - tabantajnetwork
+  # goservices:
+  #   image: ghcr.io/silent4devs/goservices:latest
+  #   container_name: goservices
+  #   restart: unless-stopped
+  #   tty: true
+  #   ports:
+  #     - "3300:3300"
+  #   volumes:
+  #     - goservices_data:/goservices
+  #   networks:
+  #     - tabantajnetwork
+  #   # networks:
+  #   #   - tabantajnetwork
 
-  reportservice:
-    image: ghcr.io/silent4devs/reportservice:latest
-    container_name: reportservice
-    restart: unless-stopped
-    tty: true
-    ports:
-      - "3301:3301"
-    volumes:
-      - reportservice_data:/reportservice
-    networks:
-      - tabantajnetwork
-    # networks:
-    #   - tabantajnetwork
+  # reportservice:
+  #   image: ghcr.io/silent4devs/reportservice:latest
+  #   container_name: reportservice
+  #   restart: unless-stopped
+  #   tty: true
+  #   ports:
+  #     - "3301:3301"
+  #   volumes:
+  #     - reportservice_data:/reportservice
+  #   networks:
+  #     - tabantajnetwork
+  #   # networks:
+  #   #   - tabantajnetwork
 
 volumes:
   tabantaj-database:

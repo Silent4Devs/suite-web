@@ -1,4 +1,4 @@
-FROM php:8.2-fpm-alpine
+FROM dunglas/frankenphp:latest-builder-php8.2-alpine
 
 # Add docker-php-extension-installer script
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
@@ -17,7 +17,6 @@ RUN apk add --no-cache \
     libzip-dev \
     libpq-dev \
     make \
-    #mysql-client \
     nodejs \
     npm \
     oniguruma-dev \
@@ -37,14 +36,11 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
     install-php-extensions \
     @composer \
     redis-stable \
-    #imagick-stable \
-    #xdebug-stable \
     bcmath \
     calendar \
     exif \
     gd \
     intl \
-    #pdo_mysql \
     pdo_pgsql \
     pcntl \
     soap \
@@ -59,20 +55,17 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
     amqp \
     ftp
 
-# Enable phpredis extension
-#RUN echo "extension=redis.so" > /usr/local/etc/php/conf.d/docker-php-ext-redis.ini
+# Set working directory
+WORKDIR /app
 
-# Copy custom php.ini
-COPY php.ini /usr/local/etc/php/php.ini
+# Copy application files
+COPY . /app
 
-# Copy custom www.conf
-COPY www.conf /usr/local/etc/php-fpm.d/www.conf
+# Ensure permissions are correct
+RUN chown -R www-data:www-data /app \
+    && chmod 755 -R /app
 
-RUN chown -R www-data:www-data /var/www \
-    && chmod 755 -R /var/www
-
-# Install npm
-RUN npm install -g npm@latest
+EXPOSE 80 443 8000
 
 # Healthcheck
 HEALTHCHECK --interval=15m --timeout=3s \
