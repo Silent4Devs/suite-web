@@ -2,14 +2,16 @@
 
 use App\Http\Controllers\Api\Auth\UserAuthController;
 use App\Http\Controllers\Api\InicioUsuario\InicioUsuarioController;
-use App\Http\Controllers\Api\V1\SolicitudDayOff\tbApiMobileControllerSolicitudDayOff;
-use App\Http\Controllers\Api\V1\SolicitudVacaciones\tbApiMobileControllerSolicitudVacaciones;
-use App\Http\Controllers\Api\V1\PortalComunicacion\tbApiMobileControllerPortalComunicacion;
 use App\Http\Controllers\Api\v1\AnalisisRiesgo\FormulasController;
 use App\Http\Controllers\Api\V1\AnalisisRiesgo\templateAnalisisRiesgoController;
 use App\Http\Controllers\Api\V1\Comunicados\tbApiMobileControllerComunicados;
 use App\Http\Controllers\Api\V1\ContadorSolicitudes\tbApiMobileControllerContadorSolicitudes;
+use App\Http\Controllers\Api\V1\Documentos\tbApiMobileControllerDocumentos;
+use App\Http\Controllers\Api\V1\PerfilUsuario\tbApiMobileControllerPerfilUsuario;
+use App\Http\Controllers\Api\V1\PortalComunicacion\tbApiMobileControllerPortalComunicacion;
+use App\Http\Controllers\Api\V1\SolicitudDayOff\tbApiMobileControllerSolicitudDayOff;
 use App\Http\Controllers\Api\V1\SolicitudPermisoGoceSueldo\tbApiMobileControllerSolicitudPermisoGoceSueldo;
+use App\Http\Controllers\Api\V1\SolicitudVacaciones\tbApiMobileControllerSolicitudVacaciones;
 use App\Http\Controllers\Api\V1\Timesheet\tbApiMobileControllerTimesheet;
 
 Route::post('/loginMobile', [UserAuthController::class, 'login']);
@@ -17,10 +19,18 @@ Route::post('checkToken', [UserAuthController::class, 'checkToken']);
 
 Route::group(['prefix' => 'api/v1', 'as' => 'api.', 'namespace' => 'Api\v1', 'middleware' => 'auth:sanctum'], function () {
     Route::post('/logout', [UserAuthController::class, 'logout']);
+    Route::post('/refreshToken', [UserAuthController::class, 'refreshToken']);
     Route::get('inicioUsuario', [InicioUsuarioController::class, 'index']);
+
+    Route::get('perfilUsuario', [tbApiMobileControllerPerfilUsuario::class, 'tbFunctionPerfil']);
+    Route::get('equipoUsuario', [tbApiMobileControllerPerfilUsuario::class, 'tbFunctionEquipo']);
 
     Route::get('portal-comunicacion', [tbApiMobileControllerPortalComunicacion::class, 'tbFunctionIndex']);
     Route::get('comunicados', [tbApiMobileControllerComunicados::class, 'tbFunctionIndex']);
+
+    Route::get('documentos', [tbApiMobileControllerDocumentos::class, 'tbFunctionIndexUsuario']);
+    Route::post('revision/{id}/aprobar', [tbApiMobileControllerDocumentos::class, 'aprobar']);
+    Route::post('revision/{id}/rechazar', [tbApiMobileControllerDocumentos::class, 'rechazar']);
 
     Route::get('counterSolicitud', [tbApiMobileControllerContadorSolicitudes::class, 'tbFunctionContadorSolicitudes']);
     Route::get('counterGeneralSolicitud', [tbApiMobileControllerContadorSolicitudes::class, 'tbFunctionContadorGeneralSolicitudes']);
