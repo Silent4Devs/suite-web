@@ -134,8 +134,8 @@ class ClasificacionesAuditoriasController extends Controller
         // Validación
 
         $validatedData = $request->validate([
-            'identificador' => 'unique:clasificaciones_auditorias,identificador,'.$id.'', // Ignora el actual en la validación
-            'nombre' => 'required|unique:clasificaciones_auditorias,nombre_clasificaciones,'.$id.'',
+            'identificador' => 'unique:clasificaciones_auditorias,identificador,' . $id . '', // Ignora el actual en la validación
+            'nombre' => 'required|unique:clasificaciones_auditorias,nombre_clasificaciones,' . $id . '',
         ]);
 
         try {
@@ -167,10 +167,15 @@ class ClasificacionesAuditoriasController extends Controller
     public function destroy($id)
     {
         abort_if(Gate::denies('clasificaciones_auditorias_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $deleteClasificacion = ClasificacionesAuditorias::find($id);
 
-        $deleteClasificacion->delete();
+        if ($deleteClasificacion && $deleteClasificacion->delete()) {
+            // Redirige con un parámetro de éxito
+            return redirect()->route('admin.auditoria-clasificacion', ['status' => 'success', 'message' => 'Registro eliminado correctamente.']);
+        }
 
-        return redirect(route('admin.auditoria-clasificacion'));
+        // Redirige con un parámetro de error
+        return redirect()->route('admin.auditoria-clasificacion', ['status' => 'error', 'message' => 'Error al eliminar el registro.']);
     }
 }
