@@ -6,6 +6,7 @@ use App\Models\Escuela\Audience;
 use App\Models\Escuela\Course;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Attributes\Validate;
 use Livewire\Component;
 
 class CourseAudiences extends Component
@@ -16,16 +17,13 @@ class CourseAudiences extends Component
 
     public $course;
 
+    #[Validate('required', message: 'El campo es requerido')]
+    #[Validate('max:255', message: 'El campo debe ser menor a 255 caracteres')]
+    public $formName;
+
+    #[Validate('required', message: 'El campo es requerido')]
+    #[Validate('max:255', message: 'El campo debe ser menor a 255 caracteres')]
     public $name;
-
-    protected $rules = [
-        'audience.name' => 'required|max:255',
-    ];
-
-    protected $messages = [
-        'audience.name.required' => 'El campo nombre es obligatorio',
-        'audience.name.max' => 'El campo nombre es obligatorio',
-    ];
 
     public function mount($course)
     {
@@ -40,12 +38,7 @@ class CourseAudiences extends Component
 
     public function store()
     {
-        $this->validate([
-            'name' => 'required|max:255',
-        ], [
-            'name.required' => 'El campo nombre es obligatorio',
-            'name.max' => 'El campo nombre no debe ser mayor a 255 caracteres',
-        ]);
+        $this->validateOnly('name');
 
         $this->course->audiences()->create([
             'name' => $this->name,
@@ -59,11 +52,14 @@ class CourseAudiences extends Component
     public function edit(Audience $audience)
     {
         $this->audience = $audience;
+        $this->formName = $audience->name;
     }
 
     public function update()
     {
-        $this->validate();
+        $this->validateOnly('formName');
+
+        $this->audience->name = $this->formName;
 
         $this->audience->save();
 
