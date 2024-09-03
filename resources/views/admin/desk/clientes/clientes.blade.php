@@ -67,8 +67,6 @@
                         <thead>
                             <tr>
                                 <th style="min-width:60px;">Folio</th>
-                                <th style="min-width:200px;">Cliente</th>
-                                <th style="min-width:200px;">Proyecto</th>
                                 <th style="min-width:200px;">Nombre del Cliente</th>
                                 <th style="min-width:200px;">Puesto</th>
                                 <th style="min-width:200px;">Teléfono</th>
@@ -217,18 +215,6 @@
                             data: 'folio',
                             render: function(data, type, row, meta) {
                                 return data ? data : '';
-                            }
-                        },
-                        {
-                            data: 'cliente',
-                            render: function(data, type, row, meta) {
-                                return row.cliente.nombre
-                            }
-                        },
-                        {
-                            data: 'proyectos',
-                            render: function(data, type, row, meta) {
-                                return row.proyectos.proyecto
                             }
                         },
                         {

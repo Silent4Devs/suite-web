@@ -97,7 +97,7 @@ class RiesgosController extends Controller
     {
         abort_if(Gate::denies('centro_atencion_riesgos_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $riesgo = RiesgoIdentificado::with('reporto')->where('archivado', false)->get();
+        $riesgo = RiesgoIdentificado::with('reporto:id,name,foto')->where('archivado', false)->get();
 
         return datatables()->of($riesgo)->toJson();
     }
