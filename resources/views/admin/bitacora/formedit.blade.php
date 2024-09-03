@@ -156,12 +156,16 @@
                     <div class="form-group">
                         <label for="">Asignar Aprobadores</label>
                         <select name="aprobadores_firma[]" id="aprobadores" multiple class="form-control">
-                            @foreach ($firma->aprobadores as $aprobador)
-                                <option value="{{ $aprobador->id }}"
-                                    {{ $aprobacionFirmaContrato->contains('aprobador_id', $aprobador->id) ? 'selected' : '' }}>
-                                    {{ $aprobador->name }}
-                                </option>
-                            @endforeach
+                        @if ($firma && $firma->aprobadores)
+                        @foreach ($firma->aprobadores as $aprobador)
+                            <option value="{{ $aprobador->id }}"
+                                {{ $aprobacionFirmaContrato->contains('aprobador_id', $aprobador->id) ? 'selected' : '' }}>
+                                {{ $aprobador->name }}
+                            </option>
+                        @endforeach
+                        @else
+                            <option disabled>No hay aprobadores disponibles</option>
+                        @endif
                         </select>
                     </div>
                 </div>
