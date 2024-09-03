@@ -13,6 +13,7 @@ class CorreoCargaObjetivos extends Mailable
 
     // public $empleado;
     public $fecha_in;
+
     public $fecha_fin;
 
     public function __construct($fecha_in, $fecha_fin)

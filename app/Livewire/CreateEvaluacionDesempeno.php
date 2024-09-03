@@ -311,7 +311,7 @@ class CreateEvaluacionDesempeno extends Component
 
             for ($i = 1; $i <= $cantidad_periodos; $i++) {
                 $this->arreglo_periodos[] = [
-                    'nombre_evaluacion' => 'T' . $i,
+                    'nombre_evaluacion' => 'T'.$i,
                     'fecha_inicio' => null,
                     'fecha_fin' => null,
                     'habilitar' => ($i === 1), // Solo el primer periodo habilitado
@@ -325,7 +325,7 @@ class CreateEvaluacionDesempeno extends Component
         $numeroDePeriodos = count($this->arreglo_periodos) + 1; // Obtener el número actual de períodos y agregar 1
 
         $this->arreglo_periodos[] = [
-            'nombre_evaluacion' => 'T' . $numeroDePeriodos,
+            'nombre_evaluacion' => 'T'.$numeroDePeriodos,
             'fecha_inicio' => null,
             'fecha_fin' => null,
             'habilitar' => false, // Solo el primer periodo habilitado

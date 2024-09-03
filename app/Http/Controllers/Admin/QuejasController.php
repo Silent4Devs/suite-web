@@ -115,7 +115,7 @@ class QuejasController extends Controller
     {
         abort_if(Gate::denies('centro_atencion_quejas_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $quejas = Quejas::with('quejo')->where('archivado', false)->get();
+        $quejas = Quejas::with('quejo:id,name,foto')->where('archivado', false)->get();
 
         return datatables()->of($quejas)->toJson();
     }
