@@ -70,6 +70,8 @@ class Kernel extends HttpKernel
         'gestion_contractual' => \App\Http\Middleware\GestionContractual::class,
         'silent_4_university' => \App\Http\Middleware\Silent4University::class,
         'gestion_talento' => \App\Http\Middleware\GestionTalento::class,
+        'gestion_normativa' => \App\Http\Middleware\GestionNormativa::class,
+        'centro_atencion' => \App\Http\Middleware\CentroAtencion::class,
         'doNotCacheResponse' => \Spatie\ResponseCache\Middlewares\DoNotCacheResponse::class,
         'cacheResponse' => \Spatie\ResponseCache\Middlewares\CacheResponse::class,
         // 'XssSanitization' => \App\Http\Middleware\XssSanitization::class,

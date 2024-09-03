@@ -152,8 +152,7 @@
 
                 <div class="caja_secciones">
                     @can('centro_atencion_incidentes_de_seguridad_acceder')
-                        <section id="incidentes"
-                            class="{{ Auth::user()->can('incidentes_seguridad_access') ? 'caja_tab_reveldada' : '' }}">
+                        <section id="incidentes">
                             @include('admin.desk.seguridad.seguridad')
                         </section>
                     @endcan

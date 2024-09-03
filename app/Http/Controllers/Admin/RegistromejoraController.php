@@ -19,7 +19,7 @@ class RegistromejoraController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(Gate::denies('registromejora_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('registro_mejora_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = Registromejora::with(['nombre_reporta', 'responsableimplementacion', 'valida', 'team'])->select(sprintf('%s.*', (new Registromejora)->table));
@@ -29,9 +29,9 @@ class RegistromejoraController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'registromejora_show';
-                $editGate = 'registromejora_edit';
-                $deleteGate = 'registromejora_delete';
+                $viewGate = 'registro_mejora_acceder';
+                $editGate = 'registro_mejora_acceder';
+                $deleteGate = 'registro_mejora_acceder';
                 $crudRoutePart = 'registromejoras';
 
                 return view('partials.datatablesActions', compact(
@@ -92,7 +92,7 @@ class RegistromejoraController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('registromejora_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('registro_mejora_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $users = User::getAll();
 
         $nombre_reportas = $users->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
@@ -115,7 +115,7 @@ class RegistromejoraController extends Controller
 
     public function edit(Registromejora $registromejora)
     {
-        abort_if(Gate::denies('registromejora_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('registro_mejora_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $users = User::getAll();
         $nombre_reportas = $users->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
@@ -140,7 +140,7 @@ class RegistromejoraController extends Controller
 
     public function show(Registromejora $registromejora)
     {
-        abort_if(Gate::denies('registromejora_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('registro_mejora_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $registromejora->load('nombre_reporta', 'responsableimplementacion', 'valida', 'team', 'mejoraDmaics', 'mejoraPlanMejoras');
 
@@ -149,7 +149,7 @@ class RegistromejoraController extends Controller
 
     public function destroy(Registromejora $registromejora)
     {
-        abort_if(Gate::denies('registromejora_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('registro_mejora_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $registromejora->delete();
 

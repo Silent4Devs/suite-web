@@ -78,7 +78,7 @@ class CompetenciasController extends Controller
                 $links = [];
 
                 foreach ($row->certificados as $media) {
-                    $links[] = '<a href="'.$media->getUrl().'" target="_blank">'.trans('global.downloadFile').'</a>';
+                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
                 }
 
                 return implode(', ', $links);
@@ -111,7 +111,7 @@ class CompetenciasController extends Controller
         $competencium = Competencium::create($request->all());
 
         foreach ($request->input('certificados', []) as $file) {
-            $competencium->addMedia(storage_path('tmp/uploads/'.$file))->toMediaCollection('certificados');
+            $competencium->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('certificados');
         }
 
         if ($media = $request->input('ck-media', false)) {
@@ -150,7 +150,7 @@ class CompetenciasController extends Controller
 
         foreach ($request->input('certificados', []) as $file) {
             if (count($media) === 0 || ! in_array($file, $media)) {
-                $competencium->addMedia(storage_path('tmp/uploads/'.$file))->toMediaCollection('certificados');
+                $competencium->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('certificados');
             }
         }
 
@@ -274,7 +274,7 @@ class CompetenciasController extends Controller
 
         if ($request->hasFile('documentos')) {
             $file = $request->file('documentos');
-            if (Storage::putFileAs('public/expedientes/'.Str::slug($empleado->name), $file, $file->getClientOriginalName())) {
+            if (Storage::putFileAs('public/expedientes/' . Str::slug($empleado->name), $file, $file->getClientOriginalName())) {
                 $evidencia->update([
                     'documentos' => $file->getClientOriginalName(),
                 ]);
@@ -325,7 +325,7 @@ class CompetenciasController extends Controller
             // Get just ext
             $extension = $request->file('file')->getClientOriginalExtension();
             // Filename to store
-            $fileNameToStore = $filename.'_'.time().'.'.$extension;
+            $fileNameToStore = $filename . '_' . time() . '.' . $extension;
             // Upload Image
             $path = $request->file('file')->storeAs('public/cursos_empleados', $fileNameToStore);
 
@@ -382,7 +382,7 @@ class CompetenciasController extends Controller
             // Get just ext
             $extension = $request->file('documento')->getClientOriginalExtension();
             // Filename to store
-            $fileNameToStore = $filename.'_'.time().'.'.$extension;
+            $fileNameToStore = $filename . '_' . time() . '.' . $extension;
             // Upload Image
             $path = $request->file('documento')->storeAs('public/certificados_empleados', $fileNameToStore);
 
