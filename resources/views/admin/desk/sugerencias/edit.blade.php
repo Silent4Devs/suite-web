@@ -500,10 +500,6 @@
                             style="display: flex; justify-content: flex-start; align-items: center; position: relative;">
                             <h5 style="margin: 0; flex-grow: 1;"><b>Acciones para la Atención de la Sugerencia</b></h5>
                             <button class="btn btn-success btn_modal_form">Agregar actividad</button>
-                            @if (count($riesgos->planes))
-                                <a href="{{ route('admin.planes-de-accion.show', $riesgos->planes->first()->id) }}"
-                                    class="btn btn-success"><i class="mr-2 fas fa-stream"></i> Plan De Acción</a>
-                            @endif
                         </div>
                         <div class="mt-4 datatable-fix" style="width: 100%;">
                             <table id="tabla_plan_accion_sugerencias" class="table">
