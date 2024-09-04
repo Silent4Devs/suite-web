@@ -308,8 +308,8 @@ volumes:
   #   driver: local
   rabbitmq_data:
     driver: local
-  # pgadmin-data:
-  #   driver: local
+  pgadmin-data:
+    driver: local
   goservices_data:
     driver: local
   reportservice_data:
