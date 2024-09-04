@@ -20,7 +20,6 @@
     "laravel/sanctum": "^3.0",
     "laravel/ui": "^4.0",
     "laravelcollective/html": "^6.2",
-    "league/flysystem-ftp": "^3.28",
     "livewire/livewire": "^3.0",
     "maatwebsite/excel": "^3.1",
     "nuovo/spreadsheet-reader": "^0.5.11",
