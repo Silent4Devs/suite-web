@@ -34,20 +34,8 @@ class IncidentesSeguridad extends Model implements Auditable, HasMedia
     ];
 
     protected $fillable = [
-        'empleado_asignado_id',
-        'titulo',
-        'fecha',
-        'sede',
-        'ubicacion',
-        'descripcion',
-        'areas_afectados',
-        'procesos_afectados',
-        'activos_afectados',
         'empleado_reporto_id',
-        'procedente',
-        'justificacion',
-        'estatus',
-
+        'empleado_asignado_id',
     ];
 
     protected $appends = ['folio', 'archivo', 'fecha_creacion', 'fecha_cerrado'];

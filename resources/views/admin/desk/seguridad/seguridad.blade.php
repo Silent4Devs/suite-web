@@ -165,52 +165,40 @@
                     ajax: '/admin/desk/seguridad',
                     buttons: dtButtons,
                     columns: [{
-                            data: 'folio',
-                            render: function(data, type, row, meta) {
-                            return data ? data : ''; }
+                            data: 'folio'
                         },
                         {
-                            data: 'titulo',
-                            render: function(data, type, row, meta) {
-                            return data ? data : ''; }
+                            data: 'titulo'
                         },
                         {
-                            data: 'sede',
-                            render: function(data, type, row, meta) {
-                            return data ? data : ''; }
+                            data: 'sede'
                         },
                         {
-                            data: 'ubicacion',
-                            render: function(data, type, row, meta) {
-                            return data ? data : ''; }
+                            data: 'ubicacion'
                         },
                         {
-                            data: 'descripcion',
-                            render: function(data, type, row, meta) {
-                            return data ? data : ''; }
+                            data: 'descripcion'
                         },
                         {
                             data: 'areas_afectados',
                             render: function(data, type, row, meta) {
-                            return `${row.areas_afectados?row.areas_afectados :'n/a'}`;
+                                return `${row.areas_afectados?row.areas_afectados :'n/a'}`;
                             }
                         },
                         {
                             data: 'procesos_afectados',
                             render: function(data, type, row, meta) {
-                            return `${row.procesos_afectados?row.procesos_afectados :'n/a'}`;
+                                return `${row.procesos_afectados?row.procesos_afectados :'n/a'}`;
                             }
                         },
                         {
                             data: 'activos_afectados',
                             render: function(data, type, row, meta) {
-                            return `${row.activos_afectados?row.activos_afectados :'n/a'}`;
+                                return `${row.activos_afectados?row.activos_afectados :'n/a'}`;
                             }
                         },
                         {
-                            data: 'fecha_creacion',
-                            render: function(data, type, row, meta) {
-                            return data ? data : ''; }
+                            data: 'fecha_creacion'
                         },
                         {
                             data: 'name',

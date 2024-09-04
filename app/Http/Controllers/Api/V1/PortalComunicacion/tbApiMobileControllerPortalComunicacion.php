@@ -11,6 +11,7 @@ use App\Models\FelicitarCumpleaños;
 use App\Models\Organizacione;
 use App\Models\PoliticaSgsi;
 use App\Models\User;
+use Illuminate\Support\Arr;
 use Carbon\Carbon;
 use Gate;
 use Illuminate\Http\Request;
@@ -36,7 +37,6 @@ class tbApiMobileControllerPortalComunicacion extends Controller
             $url = preg_replace_callback('/[^A-Za-z0-9_\-\.~\/\\\:]/', function ($matches) {
                 return rawurlencode($matches[0]);
             }, $url);
-
             return $url;
         }
 
@@ -49,7 +49,7 @@ class tbApiMobileControllerPortalComunicacion extends Controller
 
         $user->foto_empleado = $user->empleado->avatar;
         $user->makeHidden([
-            'empleado',
+            'empleado'
         ]);
         $empleado_asignado = $user->n_empleado;
         $authId = $user->id;
@@ -70,7 +70,7 @@ class tbApiMobileControllerPortalComunicacion extends Controller
                     $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
                 }
             } else {
-                $ruta = asset('storage/empleados/imagenes/'.$documento->responsable->foto);
+                $ruta = asset('storage/empleados/imagenes/' . $documento->responsable->foto);
             }
 
             // Encode spaces in the URL
@@ -78,7 +78,7 @@ class tbApiMobileControllerPortalComunicacion extends Controller
 
             $documento->makeHidden([
                 'responsable',
-                'archivo_actual',
+                'archivo_actual'
             ]);
         }
 
@@ -88,7 +88,7 @@ class tbApiMobileControllerPortalComunicacion extends Controller
         foreach ($comunicados as $key_comunicados => $comunicado) {
             $comunicado->texto_descripcion = $comunicado->descripcion;
             $comunicado->tipo_imagen = $comunicado->imagenes_comunicacion->first()->tipo;
-            $ruta_comunicado = asset('storage/imagen_comunicado_SGI/'.$comunicado->imagenes_comunicacion->first()->imagen);
+            $ruta_comunicado = asset('storage/imagen_comunicado_SGI/' . $comunicado->imagenes_comunicacion->first()->imagen);
             $comunicado->ruta_imagen = encodeSpecialCharacters($ruta_comunicado);
         }
 
@@ -105,7 +105,7 @@ class tbApiMobileControllerPortalComunicacion extends Controller
         foreach ($noticias as $key_noticia => $noticia) {
             $noticia->texto_descripcion = $noticia->descripcion;
             $noticia->tipo_imagen = $noticia->imagenes_comunicacion->first()->tipo;
-            $ruta_noticia = asset('storage/imagen_comunicado_SGI/'.$noticia->imagenes_comunicacion->first()->imagen);
+            $ruta_noticia = asset('storage/imagen_comunicado_SGI/' . $noticia->imagenes_comunicacion->first()->imagen);
             $noticia->ruta_imagen = encodeSpecialCharacters($ruta_noticia);
         }
 
@@ -117,11 +117,11 @@ class tbApiMobileControllerPortalComunicacion extends Controller
             $news[] = $imageNews;
         }
 
-        $cumpleaños = Cache::remember('Portal_cumpleaños_'.$authId, 3600, function () use ($hoy) {
+        $cumpleaños = Cache::remember('Portal_cumpleaños_' . $authId, 3600, function () use ($hoy, $empleados) {
             return Empleado::alta()->select('id', 'name', 'area_id', 'puesto_id', 'foto', 'cumpleaños', 'estatus')->whereMonth('cumpleaños', '=', $hoy->format('m'))->get()->makeHidden([
                 'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
                 'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet',
-                'area', 'supervisor', 'puestoRelacionado',
+                'area', 'supervisor', 'puestoRelacionado'
             ]);
         });
 
@@ -140,7 +140,7 @@ class tbApiMobileControllerPortalComunicacion extends Controller
                     $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
                 }
             } else {
-                $ruta = asset('storage/empleados/imagenes/'.$nuevo->foto);
+                $ruta = asset('storage/empleados/imagenes/' . $nuevo->foto);
             }
 
             // Encode spaces in the URL
@@ -149,7 +149,7 @@ class tbApiMobileControllerPortalComunicacion extends Controller
             $nuevo->makeHidden([
                 'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
                 'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet',
-                'area', 'supervisor', 'area_id', 'puesto_id', 'foto', 'puestoRelacionado',
+                'area', 'supervisor', 'area_id', 'puesto_id', 'foto', 'puestoRelacionado'
             ]);
         }
 
@@ -170,7 +170,7 @@ class tbApiMobileControllerPortalComunicacion extends Controller
                     $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
                 }
             } else {
-                $ruta = asset('storage/empleados/imagenes/'.$cumple->foto);
+                $ruta = asset('storage/empleados/imagenes/' . $cumple->foto);
             }
 
             // Encode spaces in the URL
@@ -180,7 +180,7 @@ class tbApiMobileControllerPortalComunicacion extends Controller
                 'area_id',
                 'puesto_id',
                 'foto',
-                'cumpleaños',
+                'cumpleaños'
             ]);
         }
 
@@ -195,6 +195,7 @@ class tbApiMobileControllerPortalComunicacion extends Controller
         // dd($cumpleaños);
 
         // dd($comunicados,$noticias);
+
 
         return response(json_encode(
             [
@@ -221,73 +222,72 @@ class tbApiMobileControllerPortalComunicacion extends Controller
 
         switch ($mes_fecha) {
             case '01':
-                // code...
-                $mes_cumpleanos = 'Enero';
+                # code...
+                $mes_cumpleanos = "Enero";
                 break;
 
             case '02':
-                // code...
-                $mes_cumpleanos = 'Febrero';
+                # code...
+                $mes_cumpleanos = "Febrero";
                 break;
 
             case '03':
-                // code...
-                $mes_cumpleanos = 'Marzo';
+                # code...
+                $mes_cumpleanos = "Marzo";
                 break;
 
             case '04':
-                // code...
-                $mes_cumpleanos = 'Abril';
+                # code...
+                $mes_cumpleanos = "Abril";
                 break;
 
             case '05':
-                // code...
-                $mes_cumpleanos = 'Mayo';
+                # code...
+                $mes_cumpleanos = "Mayo";
                 break;
 
             case '06':
-                // code...
-                $mes_cumpleanos = 'Junio';
+                # code...
+                $mes_cumpleanos = "Junio";
                 break;
 
             case '07':
-                // code...
-                $mes_cumpleanos = 'Julio';
+                # code...
+                $mes_cumpleanos = "Julio";
                 break;
 
             case '08':
-                // code...
-                $mes_cumpleanos = 'Agosto';
+                # code...
+                $mes_cumpleanos = "Agosto";
                 break;
 
             case '09':
-                // code...
-                $mes_cumpleanos = 'Septiembre';
+                # code...
+                $mes_cumpleanos = "Septiembre";
                 break;
 
             case '10':
-                // code...
-                $mes_cumpleanos = 'Octubre';
+                # code...
+                $mes_cumpleanos = "Octubre";
                 break;
 
             case '11':
-                // code...
-                $mes_cumpleanos = 'Noviembre';
+                # code...
+                $mes_cumpleanos = "Noviembre";
                 break;
 
             case '12':
-                // code...
-                $mes_cumpleanos = 'Diciembre';
+                # code...
+                $mes_cumpleanos = "Diciembre";
                 break;
 
             default:
-                // code...
+                # code...
                 break;
         }
 
         // dd($mes_fecha, $mes_cumpleanos);
-        $fecha_cumpleanos = $dia_cumpleanos.' de '.$mes_cumpleanos;
-
+        $fecha_cumpleanos = $dia_cumpleanos . " de " . $mes_cumpleanos;
         return $fecha_cumpleanos;
     }
 

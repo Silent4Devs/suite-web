@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Events\DocumentoEvent;
 use App\Http\Controllers\Controller;
 use App\Mail\ConfirmacionSolicitudAprobacionMail;
 use App\Mail\SolicitudAprobacionMail;
@@ -468,7 +467,6 @@ class DocumentosController extends Controller
             $documento_id = intval($request->documentoCreado);
             $revisores1 = [];
             $documento = Documento::find($documento_id);
-            event(new DocumentoEvent($documento, 'publish', 'documentos', 'Documento'));
             $documento->load('elaborador', 'macroproceso');
             Mail::to(removeUnicodeCharacters($documento->elaborador->email))->queue(new ConfirmacionSolicitudAprobacionMail($documento));
             $numero_revision = RevisionDocumento::where('documento_id', $documento_id)->max('no_revision') ? intval(RevisionDocumento::where('documento_id', $documento_id)->max('no_revision')) + 1 : 1;
@@ -751,6 +749,7 @@ class DocumentosController extends Controller
         $macroprocesosAndProcesos = array_merge($macroprocesos, $procesos);
 
         $documentos = Documento::where('estatus', Documento::PUBLICADO)->get();
+        // $documentos = Documento::get();
 
         return view('admin.documentos.list-published', compact('documentos', 'organizacion', 'macroprocesosAndProcesos'));
     }

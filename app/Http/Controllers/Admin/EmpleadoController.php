@@ -40,7 +40,6 @@ use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -75,8 +74,6 @@ class EmpleadoController extends Controller
 
                 return $empleado;
             });
-
-        // Log::channel('logstash')->info('Index Empleados.');
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
@@ -1312,13 +1309,13 @@ class EmpleadoController extends Controller
         if ($areaIdChanged) {
             // El campo area_id ha sido modificado
             // Realiza las acciones necesarias...
-            $this->agregarHistorico($id, 'areas', 'Área', $oldValues['area_id'], $userId);
+            $this->agregarHistorico($id, 'areas', 'area', $oldValues['area_id'], $userId);
         }
 
         if ($puestoIdChanged) {
             // El campo puesto_id ha sido modificado
             // Realiza las acciones necesarias...
-            $this->agregarHistorico($id, 'puestos', 'Puesto', $oldValues['puesto_id'], $userId);
+            $this->agregarHistorico($id, 'puestos', 'puesto', $oldValues['puesto_id'], $userId);
         }
 
         $usuario = User::where('empleado_id', $empleado->id)->orWhere('n_empleado', $empleado->n_empleado)->first();
@@ -1729,7 +1726,7 @@ class EmpleadoController extends Controller
     public function exportExcel()
     {
         abort_if(Gate::denies('bd_empleados_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $export = new EmpleadosGeneralExport;
+        $export = new EmpleadosGeneralExport();
 
         return Excel::download($export, 'Empleados.xlsx');
     }

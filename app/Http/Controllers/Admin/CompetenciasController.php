@@ -17,7 +17,6 @@ use App\Models\Language;
 use App\Models\ListaDocumentoEmpleado;
 use App\Models\Organizacion;
 use App\Models\RH\Competencia;
-use App\Models\TBUserTrainingModel;
 use App\Models\Team;
 use App\Models\User;
 use Carbon\Carbon;
@@ -186,7 +185,7 @@ class CompetenciasController extends Controller
     {
         //        abort_if(Gate::denies('competencium_create') && Gate::denies('competencium_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $model = new Competencium;
+        $model = new Competencium();
         $model->id = $request->input('crud_id', 0);
         $model->exists = true;
         $media = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
@@ -217,10 +216,8 @@ class CompetenciasController extends Controller
 
             $empleado->load('idiomas');
             $lista_docs = ListaDocumentoEmpleado::getAll();
-            $empleadosCV = 1;
-            $documents = TBUserTrainingModel::where('empleado_id', $empleado->id)->get();
 
-            return view('admin.competencia.mi-cv', compact('empleado', 'lista_docs', 'documents', 'empleadosCV'));
+            return view('admin.competencia.mi-cv', compact('empleado', 'lista_docs'));
         } else {
             abort_if(Gate::denies('mi_perfil_mis_datos_ver_perfil_profesional'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 

@@ -16,6 +16,7 @@ class Documento extends Model implements Auditable
     use HasFactory, SoftDeletes;
 
     //REVISION DE DOCUMENTOS ESTATUS
+
     const SOLICITUD_REVISION = 1;
 
     const APROBADO = 2;
@@ -25,6 +26,7 @@ class Documento extends Model implements Auditable
     const RECHAZADO_EN_CONSECUENCIA_POR_NIVEL_ANTERIOR = 4;
 
     // DOCUMENTOS ESTATUS
+
     const EN_ELABORACION = 1;
 
     const EN_REVISION = 2;

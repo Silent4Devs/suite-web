@@ -117,18 +117,14 @@
     'route' => ['contract_manager.contratos-katbol.update', $contrato->id],
     'method' => 'PATCH',
     'enctype' => 'multipart/form-data',
-    'id' => 'update-form',
 ]) !!}
 @csrf
 
-<div class="card card-body">
+<div class="card card-content">
     <div class="row" style="margin-left: 10px; margin-right: 10px;">
         <div class="col s12" style="margin-top: 30px;">
             <h3 class="titulo-form">INSTRUCCIONES</h3>
-            <div class="d-flex justify-content-between">
-                <p class="instrucciones">Edite los datos del contrato</p>
-
-            </div>
+            <p class="instrucciones">Edite los datos del contrato</p>
         </div>
     </div>
 
@@ -301,33 +297,12 @@
             </select>
         </div>
 
-        @if ($contrato->proyectoConvergencia)
-            <div class="distancia form-group col-md-4">
-                <label for="no_proyecto" class="txt-tamaño">Número de proyecto</label>
-                <select class="form-control" name="no_proyecto" id="no_proyecto"
-                    @if ($show_contrato) disabled @endif>
-                    <option value="" selected>Seleccione un Número de proyecto</option>
-                    @foreach ($proyectos as $proyecto)
-                        <option data-id="{{ $proyecto->id }}" value="{{ $proyecto->identificador }}"
-                            @if ($contrato->proyectoConvergencia->id == $proyecto->id) selected @endif>
-                            {{ $proyecto->identificador }} - {{ $proyecto->proyecto }}
-                        </option>
-                    @endforeach
-                </select>
-                @if ($errors->has('no_proyecto'))
-                    <div class="invalid-feedback red-text">
-                        {{ $errors->first('no_proyecto') }}
-                    </div>
-                @endif
-            </div>
-        @else
-            <div class="distancia form-group col-md-4">
-                <label for="no_proyecto" class="txt-tamaño">
-                    Número de proyecto</label>
-                <input type="text" maxlength="250" name="no_proyecto" id="no_proyecto" class="form-control"
-                    value="{{ $contrato->no_proyecto }}" @if ($show_contrato) disabled @endif>
-            </div>
-        @endif
+        <div class="distancia form-group col-md-4">
+            <label for="no_proyecto" class="txt-tamaño">
+                Número de proyecto</label>
+            <input type="text" maxlength="250" name="no_proyecto" id="no_proyecto" class="form-control"
+                value="{{ $contrato->no_proyecto }}" @if ($show_contrato) disabled @endif>
+        </div>
 
         @if ($areas->count() > 0)
             <div class="distancia form-group col-md-4">
@@ -411,28 +386,29 @@
     </div>
 
     <div class="row" style="margin-left: 10px; margin-right: 10px;">
-        @if ($contrato->file_contrato != null)
-            <div class="distancia form-group col-md-6">
-                <label for="" class="txt-tamaño">
-                    Adjuntar Contrato
-                    <font class="asterisco">*</font>
-                </label>
-                <div class="file-field input-field">
-                    <div class="btn" {{ !$show_contrato ? 'onclick=mostrarAlerta()' : '' }}>
-                        <span>Documento Actual:</span>
-                    </div>
+        <div class="distancia form-group col-md-6">
+            <label for="" class="txt-tamaño">
+                Adjuntar Contrato
+                <font class="asterisco">*</font>
+            </label>
+            <div class="file-field input-field">
 
-                    <div class="file-path-wrapper">
-                        <input value="{{ $contrato->file_contrato }}" class="file-path validate form-control"
-                            type="text" placeholder="Elegir documento" {{ $show_contrato ? 'readonly' : '' }}
-                            readonly>
-                    </div>
-                    <a href="{{ asset(trim('storage/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/' . $contrato->file_contrato)) }}"
-                        target="_blank" class=" descarga_archivo" style="margin-left:20px;">
-                        Descargar archivo actual</a>
+                <div class="btn" {{ !$show_contrato ? 'onclick=mostrarAlerta()' : '' }}>
+                    <span>Documento Actual:</span>
+                </div>
+
+                <div class="file-path-wrapper">
+                    <input value="{{ $contrato->file_contrato }}" class="file-path validate form-control"
+                        type="text" placeholder="Elegir documento" {{ $show_contrato ? 'readonly' : '' }}
+                        readonly>
                 </div>
             </div>
-        @endif
+            @if ($contrato->file_contrato != null)
+                <a href="{{ asset(trim('storage/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/' . $contrato->file_contrato)) }}"
+                    target="_blank" class=" descarga_archivo" style="margin-left:20px;">
+                    Descargar archivo actual</a>
+            @endif
+        </div>
         <div class="distancia form-group col-md-6">
             @if (!$show_contrato)
                 <div class="fondo_delete">
@@ -523,7 +499,7 @@
                 de firma
                 <font class="asterisco">*</font>
             </label>
-            <input required type="date" name="fecha_firma" id="fecha_firma" class="form-control"
+            <input type="date" name="fecha_firma" id="fecha_firma" class="form-control"
                 value="{{ old('fecha_firma', $contrato->fecha_firma) }}"
                 @if ($show_contrato) disabled @endif>
             {{-- {!! Form::text('fecha_firma', $contrato->fecha_firma, [
@@ -908,31 +884,30 @@
         @endif
     </div>
     {{-- <div class="row"></div>
-    <div class="row">
-        <br>
-        <label class="txt-tamaño" for="firma">
-            Firma:</label>
-        <br/>
-        <br>
-        @if ($contratos->firma1 != null)
-            <p>Ya existe una firma registrada para este contrato</p>
-            <p>Si desea cambiar la firma registrada de click en el recuadro de abajo y
-                firme el espacio.</p><br>
-            <label class="txt-tamaño">Actualizar firma </label>
-            <input type="checkbox" style="pointer-events: auto; opacity: 1; width: 20px; height: 20px" unchecked
-            onclick="var input = document.getElementById('signature64');
-            if(this.checked){ input.disabled = false; input.focus();}else{input.disabled=true;}" />
-        @endif
-    </div>
-    <div class="col s12 m3 distancia"></div>
-    <div class="distancia form-group col-md-4">
-        <div id="signaturePad" >
-            <textarea id="signature64" name="signed" style="display:none" disabled="disabled"></textarea>
+        <div class="row">
+            <br>
+            <label class="txt-tamaño" for="firma">
+                Firma:</label>
+            <br/>
+            <br>
+            @if ($contratos->firma1 != null)
+                <p>Ya existe una firma registrada para este contrato</p>
+                <p>Si desea cambiar la firma registrada de click en el recuadro de abajo y
+                    firme el espacio.</p><br>
+                <label class="txt-tamaño">Actualizar firma </label>
+                <input type="checkbox" style="pointer-events: auto; opacity: 1; width: 20px; height: 20px" unchecked
+                onclick="var input = document.getElementById('signature64');
+                if(this.checked){ input.disabled = false; input.focus();}else{input.disabled=true;}" />
+            @endif
         </div>
-        <button id="clear" class="btn btn-danger btn-sm">Borrar firma</button>
-        <br/>
-    </div> --}}
-
+        <div class="col s12 m3 distancia"></div>
+        <div class="distancia form-group col-md-4">
+                <div id="signaturePad" >
+                    <textarea id="signature64" name="signed" style="display:none" disabled="disabled"></textarea>
+                </div>
+                <button id="clear" class="btn btn-danger btn-sm">Borrar firma</button>
+            <br/>
+        </div> --}}
 </div>
 <div class="form-group col-12 text-right mt-4" style="margin-left: 10px; margin-right: 10px;">
     <div class="col s12 right-align btn-grd distancia">
@@ -963,93 +938,6 @@
     </div>
 </div>
 
-@if ($aprobacionFirmaContrato->count())
-    <div class="col-12">
-        <div class="card card-body">
-            <h5 class="text-center">Aprobaciones firmadas</h5>
-            <div class="d-flex flex-wrap gap-4 mt-4 justify-content-center"
-                style="width: 100%; max-width: 1000px; margin: auto;">
-                @foreach ($aprobacionFirmaContrato as $firma)
-                    @if ($firma->firma)
-                        <div class="text-center">
-                            <img src="{{ $firma->firma_ruta }}" alt="firma" style="width: 400px;"> <br>
-                            <span>{{ \Carbon\Carbon::parse($firma->aprobador->created_at)->format('d/m/Y') }}</span><br>
-                            <span>{{ $firma->aprobador->name }}</span>
-                        </div>
-                    @endif
-                @endforeach
-            </div>
-        </div>
-    </div>
-@endif
-
-
-<style>
-    #firma_aprobador canvas {
-        border: 1px solid #bbb;
-    }
-</style>
-<script src="https://cdn.jsdelivr.net/npm/lemonadejs/dist/lemonade.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@lemonadejs/signature/dist/index.min.js"></script>
-@if ($firmar)
-    <div class="col-12">
-        <div class="card card-body">
-            <form action="{{ route('contract_manager.contratos-katbol.aprobacion-firma-contrato') }}" method="POST">
-                @csrf
-                <div class="d-flex gap-4 align-items-center flex-column">
-                    <div>
-                        <h5>Ingrese su firma para la aprobación del registro</h5>
-                    </div>
-                    <div id="firma_aprobador" class="" style="width: auto;"></div>
-                    <input type="hidden" name="firma_base" value="" id="firma-input">
-                    <input type="hidden" name="contrato_id" value="{{ $contrato->id }}">
-                    <div class="d-flex gap-5">
-                        <div id="resetCanvas" class="btn btn-outline-secondary">Limpiar</div>
-                        <button class="btn btn-primary">Guardar firma</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-@endif
-<script>
-    // Get the element to render signature component inside
-    const firma_aprobador = document.getElementById("firma_aprobador");
-    const resetCanvas = document.getElementById("resetCanvas");
-    resetCanvas.addEventListener("click", () => {
-        // console.log(component.getImage());
-        component.value = [];
-        document.getElementById('firma-input').value = component.getImage();
-    });
-    document.querySelector('#firma_aprobador').onmouseup = function() {
-        document.getElementById('firma-input').value = component.getImage();
-    }
-    // Call signature with the firma_aprobador element and the options object, saving its reference in a variable
-    const component = Signature(firma_aprobador, {
-        width: 700,
-        height: 300,
-        instructions: ""
-    });
-</script>
-
-
-
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-{{-- <script type="text/javascript">
-    function miFuncion() {
-        Swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            title: 'Registro actualizado con éxito.',
-            showConfirmButton: false,
-        }).then((result) => {
-            // Después de que el usuario interactúa con la alerta (o después de que se cierra),
-            // redirigir a la misma página
-            window.location.href = window.location.href;
-        });
-    }
-</script> --}}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/autonumeric/4.0.3/autoNumeric.js"></script>
@@ -1222,6 +1110,9 @@
     });
 </script>
 
+
+
+
 <script>
     $(document).ready(function() {
 
@@ -1372,6 +1263,7 @@
     });
 </script>
 
+
 <script>
     $("#dolares_filtro").select2('destroy');
 </script>
@@ -1472,63 +1364,5 @@
         //         }
         //     });
         // });
-    });
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $('#update-form').on('submit', function(e) {
-            e.preventDefault(); // Prevent the default form submission
-
-            // Create a FormData object from the form
-            var formData = new FormData(this);
-
-            $.ajax({
-                url: $(this).attr('action'), // Form action URL
-                method: $(this).attr('method'), // Form method
-                data: formData,
-                processData: false, // Prevent jQuery from automatically transforming the data into a query string
-                contentType: false, // Set the content type to false as jQuery will tell the server it's a query string request
-                success: function(response) {
-                    if (response.status === 'success') {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Éxito',
-                            text: response.message,
-                        });
-                    }
-                },
-                error: function(xhr) {
-                    var errorMessage = 'An error occurred. Please try again.';
-                    if (xhr.responseJSON && xhr.responseJSON.message) {
-                        errorMessage = xhr.responseJSON.message;
-                    }
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: errorMessage,
-                    });
-                }
-            });
-        });
-    });
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $("#aprobadores").select2({
-            theme: "bootstrap4",
-        });
-    });
-
-    document.getElementById('aprobadores_firma').addEventListener('change', (e) => {
-        console.log(e.target.checked);
-        if (e.target.checked) {
-            document.getElementById('aprobadores-firma-box').classList.remove('d-none');
-        } else {
-            document.getElementById('aprobadores-firma-box').classList.add('d-none');
-        }
     });
 </script>

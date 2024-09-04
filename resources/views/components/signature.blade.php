@@ -24,7 +24,7 @@
         penColor: 'rgb(0, 0, 0)'
     });
     signaturePad.addEventListener("afterUpdateStroke", (data) => {
-        let attributes = @json($attributes->get('wire:model.live'));
+        let attributes = @json($attributes->get('wire:model'));
         @this.set(attributes, signaturePad.toDataURL('image/png'), true);
 
     });

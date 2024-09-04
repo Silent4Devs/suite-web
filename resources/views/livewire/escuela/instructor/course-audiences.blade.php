@@ -30,7 +30,7 @@
 
     <article class="card shadow-none">
         <div class="card-body">
-            <form wire:submit="store" class="form-group">
+            <form wire:submit.prevent="store" class="form-group">
                 <div class="mt-2 row justify-content-start align-items-baseline">
                     <div class="form-group col-9 pl-0 anima-focus">
                         {{-- {!! Form::label('title', 'Agregar el nombre del requisito*', [

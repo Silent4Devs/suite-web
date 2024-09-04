@@ -1,16 +1,16 @@
 <div class="container-fluid">
     <h3 class="title-main-cursos" style="margin-top: 40px;">Catálogo de cursos</h3>
     <div class="caja-selects-catalogo">
-        <form wire:submit="resetFilters" id="todo">
+        <form wire:submit.prevent="resetFilters" id="todo">
             <select name="todo" id="todoSelect">
                 <option value="">Todos los cursos</option>
             </select>
             <button type="submit" id="guardarButtonT" style="display: none"></button>
         </form>
 
-        <form wire:submit="categoryFilter" id="formularioC">
-            <select name="category" wire:model.blur="selectioncategory" id="categorySelect">
-                <option value="0" selected="true">Categorias</option>
+        <form wire:submit.prevent="categoryFilter" id="formularioC">
+            <select name="category" wire:model.lazy="selectioncategory" id="categorySelect">
+                <option value="0" selected="true">Categorías</option>
                 @foreach ($categories as $category)
                     <option value="{{ $category->id }}" type="submit">{{ $category->name }}</option>
                 @endforeach
@@ -18,8 +18,8 @@
             <button type="submit" id="guardarButtonC" style="display: none"></button>
         </form>
 
-        <form wire:submit="levelFilter" id="formularioL">
-            <select name="level" id="levelSelect" wire:model.blur="selectionlevel">
+        <form wire:submit.prevent="levelFilter" id="formularioL">
+            <select name="level" id="levelSelect" wire:model.lazy="selectionlevel">
                 <option value="0">Niveles</option>
                 @foreach ($levels as $level)
                     <option value="{{ $level->id }}">{{ $level->name }}</option>
@@ -90,9 +90,9 @@
                     <div class="modal-dialog modal-dialog-centered modal-lg">
                         <div class="modal-content">
                             <div class="modal-header" style="border: none">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span class="material-symbols-outlined" style="font-size: 22px;">close</span>
-                                </button>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="window.location.reload();">
+                                <span class="material-symbols-outlined" style="font-size: 22px;">close</span>
+                            </button>
                             </div>
                             <div class="modal-body" style="padding-left: 41px; padding-right: 41px;">
                                 <div>
@@ -179,4 +179,38 @@
             document.getElementById('guardarButtonT').click();
         });
     </script>
+    <script>
+        // Función para guardar la posición de desplazamiento
+        function saveScrollPosition() {
+            localStorage.setItem('scrollPosition', window.scrollY);
+        }
+
+        // Función para restaurar la posición de desplazamiento
+        function restoreScrollPosition() {
+            const scrollPosition = localStorage.getItem('scrollPosition');
+            if (scrollPosition !== null) {
+                window.scrollTo(0, parseInt(scrollPosition, 10));
+                localStorage.removeItem('scrollPosition'); // Limpiar el valor después de restaurarlo
+            }
+        }
+
+        // Asignar el evento click a los enlaces de paginación
+        document.querySelectorAll('.pagination a').forEach(link => {
+            link.addEventListener('click', saveScrollPosition);
+        });
+
+        // Restaurar la posición de desplazamiento cuando la página se carga
+        window.addEventListener('load', restoreScrollPosition);
+    </script>
+   <script>
+    document.addEventListener('DOMContentLoaded', function () {
+    // Recargar la página al cerrar el modal
+    $(document).on('hidden.bs.modal', '.modal', function () {
+        console.log('Modal closed, reloading page...');
+        window.location.reload();
+    });
+    });
+</script>
+
+
 @endsection

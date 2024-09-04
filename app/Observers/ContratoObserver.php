@@ -2,7 +2,6 @@
 
 namespace App\Observers;
 
-use App\Events\ContratoEvent;
 use App\Models\ContractManager\Contrato;
 use Illuminate\Support\Facades\Cache;
 
@@ -13,7 +12,6 @@ class ContratoObserver
      */
     public function created(Contrato $contrato): void
     {
-        event(new ContratoEvent($contrato, 'create', 'contratos', 'Contratos'));
         $this->forgetCache();
     }
 
@@ -22,7 +20,6 @@ class ContratoObserver
      */
     public function updated(Contrato $contrato): void
     {
-        event(new ContratoEvent($contrato, 'update', 'contratos', 'Contratos'));
         $this->forgetCache();
     }
 
@@ -31,12 +28,27 @@ class ContratoObserver
      */
     public function deleted(Contrato $contrato): void
     {
-        event(new ContratoEvent($contrato, 'delete', 'contratos', 'Contratos'));
+        $this->forgetCache();
+    }
+
+    /**
+     * Handle the Contrato "restored" event.
+     */
+    public function restored(Contrato $contrato): void
+    {
+        $this->forgetCache();
+    }
+
+    /**
+     * Handle the Contrato "force deleted" event.
+     */
+    public function forceDeleted(Contrato $contrato): void
+    {
         $this->forgetCache();
     }
 
     private function forgetCache()
     {
-        Cache::forget('Contratos:contratos_all');
+        Cache::forget('Courses:courses_all');
     }
 }

@@ -243,7 +243,7 @@
 
                             if (row.borrado === false) {
                                 html += `
-                                    <a class="dropdown-item" onclick="confirmDelete(${row.id})">
+                                    <a class="dropdown-item" href="{{ url('admin/auditorias/clasificacion-auditorias/delete/${row.id}') }}">
                                         <i class="fa-solid fa-trash"></i>&nbsp;Eliminar</a>
                                 `;
                             } else {

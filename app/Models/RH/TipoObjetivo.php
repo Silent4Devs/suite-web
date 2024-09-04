@@ -15,7 +15,7 @@ class TipoObjetivo extends Model implements Auditable
 
     protected $table = 'ev360_tipo_objetivos';
 
-    protected $appends = ['imagen_ruta', 'tipo_ocupado'];
+    protected $appends = ['imagen_ruta'];
 
     protected $guarded = ['id'];
 
@@ -23,7 +23,7 @@ class TipoObjetivo extends Model implements Auditable
     public static function getAll()
     {
         return Cache::remember('TipoObjetivo_all', 3600 * 24, function () {
-            return self::orderBy('id')->get();
+            return self::get();
         });
     }
 
@@ -39,11 +39,5 @@ class TipoObjetivo extends Model implements Auditable
     public function objetivos()
     {
         return $this->hasMany('App\Models\RH\Objetivo', 'tipo_id', 'id');
-    }
-
-    public function getTipoOcupadoAttribute()
-    {
-        return Objetivo::where('tipo_id', $this->id)
-            ->exists();
     }
 }

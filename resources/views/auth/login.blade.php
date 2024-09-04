@@ -10,11 +10,10 @@
 <div id="login" class="fondo clase_animacion">
     <div class="caja_marca">
         <div class="marca">
-            <br>
+            <img class="d-mobile tabantaj-logo-mobile-login" src="{{ asset('img/auth/TBlogoLoginMobile.png') }}"><br>
             <img class="d-mobile-none" src="{{ asset('img/auth/TBlogoLogin.png') }}"><br>
             <p class="by d-mobile-none">By <strong>Silent</strong>for<strong>Business</strong></p>
-            <p class="bienvenidos d-mobile-none"><strong>Bienvenidos al</strong> Sistema Integral de Gestión Empresarial
-            </p>
+            <p class="bienvenidos d-mobile-none"><strong>Bienvenidos al</strong> Sistema Integral de Gestión Empresarial</p>
         </div>
     </div>
 

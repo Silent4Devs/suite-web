@@ -2,7 +2,7 @@
 
 namespace App\Notifications;
 
-use App\Models\IncidentesSeguridad;
+use App\Models\IncidentesDeSeguridad;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -13,7 +13,7 @@ class IncidentesDeSeguridadNotification extends Notification
 {
     use Queueable;
 
-    public $incidentesSeguridad;
+    public $incidentesDeSeguridad;
 
     public $tipo_consulta;
 
@@ -21,19 +21,36 @@ class IncidentesDeSeguridadNotification extends Notification
 
     public $slug;
 
-    public function __construct(IncidentesSeguridad $incidentesSeguridad, $tipo_consulta, $tabla, $slug)
+    /**
+     * Create a new notification instance.
+     *
+     * @return void
+     */
+    public function __construct(IncidentesDeSeguridad $incidentesDeSeguridad, $tipo_consulta, $tabla, $slug)
     {
-        $this->incidentesSeguridad = $incidentesSeguridad;
+        $this->incidentesDeSeguridad = $incidentesDeSeguridad;
         $this->tipo_consulta = $tipo_consulta;
         $this->tabla = $tabla;
         $this->slug = $slug;
     }
 
+    /**
+     * Get the notification's delivery channels.
+     *
+     * @param  mixed  $notifiable
+     * @return array
+     */
     public function via($notifiable)
     {
         return ['database'];
     }
 
+    /**
+     * Get the mail representation of the notification.
+     *
+     * @param  mixed  $notifiable
+     * @return \Illuminate\Notifications\Messages\MailMessage
+     */
     public function toMail($notifiable)
     {
         return (new MailMessage)
@@ -42,11 +59,17 @@ class IncidentesDeSeguridadNotification extends Notification
             ->line('Thank you for using our application!');
     }
 
+    /**
+     * Get the array representation of the notification.
+     *
+     * @param  mixed  $notifiable
+     * @return array
+     */
     public function toArray($notifiable)
     {
         return [
-            'id' => $this->incidentesSeguridad->id,
-            'folio' => $this->incidentesSeguridad->folio,
+            'id' => $this->incidentesDeSeguridad->id,
+            'folio' => $this->incidentesDeSeguridad->folio,
             'time' => Carbon::now(),
             'type' => $this->tipo_consulta,
             'tabla' => $this->tabla,
