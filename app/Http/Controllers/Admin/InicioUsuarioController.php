@@ -52,9 +52,9 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use VXM\Async\AsyncFacade as Async;
-use Illuminate\Support\Facades\Log;
 
 class InicioUsuarioController extends Controller
 {

@@ -129,8 +129,8 @@ class ClausulasAuditoriasController extends Controller
         //
         abort_if(Gate::denies('clausulas_auditorias_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $validatedData = $request->validate([
-            'identificador' => 'unique:clausulas_auditorias,identificador,' . $id . '', // Ignora el actual en la validación
-            'nombre' => 'required|unique:clausulas_auditorias,nombre_clausulas,' . $id . '',
+            'identificador' => 'unique:clausulas_auditorias,identificador,'.$id.'', // Ignora el actual en la validación
+            'nombre' => 'required|unique:clausulas_auditorias,nombre_clausulas,'.$id.'',
         ]);
 
         try {

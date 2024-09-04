@@ -25,7 +25,6 @@ class CourseRequirements extends Component
     #[Validate('max:255', message: 'El campo debe ser menor a 255 caracteres')]
     public $name;
 
-
     public function mount($course)
     {
         $this->course = $course;

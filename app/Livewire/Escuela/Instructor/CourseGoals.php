@@ -6,12 +6,11 @@ use App\Models\Escuela\Course;
 use App\Models\Escuela\Goal;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
-use Livewire\Component;
 use Livewire\Attributes\Validate;
+use Livewire\Component;
 
 class CourseGoals extends Component
 {
-
     use AuthorizesRequests, LivewireAlert;
 
     public Goal $goal;
@@ -24,7 +23,6 @@ class CourseGoals extends Component
 
     #[Validate('required', message: 'El campo es requerido')]
     #[Validate('max:255', message: 'El campo debe ser menor a 255 caracteres')]
-
     public $name;
 
     public function mount($course)
