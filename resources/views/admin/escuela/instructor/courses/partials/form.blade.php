@@ -5,6 +5,7 @@
             {!! Form::text('title', null, [
                 'class' => 'form-control ' . ($errors->has('title') ? ' border-red-600' : ''),
                 'placeholder' => '',
+                'id' => 'title',
             ]) !!}
             <label for="title">Titulo del curso*:</label>
             @error('title')
@@ -15,6 +16,7 @@
             {!! Form::text('slug', null, [
                 'class' => 'form-control' . ($errors->has('slug') ? ' border-red-600' : ''),
                 'placeholder' => '',
+                'id' => 'slug',
             ]) !!}
             <label for="slug">Slug del curso*:</label>
             @error('slug')
