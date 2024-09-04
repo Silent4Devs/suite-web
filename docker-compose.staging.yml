@@ -69,13 +69,6 @@ services:
       - .:/var/www/html
     ports:
       - 9000:80
-    labels:
-      com.datadoghq.ad.init_configs: "[{}]"
-      com.datadoghq.ad.instances: '[{"host":"%%host%%", "port": "%%port%%"}]'
-      com.datadoghq.ad.logs: '[{"source": "php", "service": "php-tabantaj"}]'
-      com.datadoghq.tags.env: "prod"
-      com.datadoghq.tags.service: "tabantaj"
-      com.datadoghq.tags.version: "1"
     networks:
       - tabantajnetwork
 
@@ -95,6 +88,7 @@ services:
       CONTAINER_ROLE: queue
     networks:
       - tabantajnetwork
+    mem_limit: 1g
 
   schedule-worker:
     build:
@@ -112,6 +106,7 @@ services:
       CONTAINER_ROLE: scheduler
     networks:
       - tabantajnetwork
+    mem_limit: 1g
 
   redis-tabantaj:
     image: redis:alpine
