@@ -50,6 +50,10 @@ class AnswerEvaluationUser extends Component
 
     public $percentageEvaluationUser;
 
+    public $course_id;
+
+    public $evaluacion_id;
+
     protected $rules = [
         'answer' => 'required',
     ];
@@ -177,6 +181,7 @@ class AnswerEvaluationUser extends Component
 
     public function render()
     {
+        // dd('s');
         $this->course = Course::getAll()->find($this->course_id);
         $evaluation = Evaluation::find($this->evaluacion_id);
         $this->getEvaluation($evaluation);
