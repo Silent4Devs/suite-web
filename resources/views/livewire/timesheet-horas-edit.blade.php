@@ -41,12 +41,9 @@
                     <tbody>
                         {{-- {{ $contador }} --}}
                         @php
-                            $i_hora = 0;
+                            $lastIndex = count($horas);
                         @endphp
-                        @foreach ($horas as $hora)
-                            @php
-                                $i_hora++;
-                            @endphp
+                        @foreach ($horas as $i_hora => $hora)
                             <tr id="tr_time_{{ $i_hora }}" data-model="{{ $hora->id }}" wire:ignore>
                                 <td wire:ignore>
                                     <input type="hidden" name="timesheet[{{ $i_hora }}][id_hora]"
@@ -163,7 +160,7 @@
                             </tr>
                         @endforeach
 
-                        @for ($i = $i_hora + 1; $i <= $contador; $i++)
+                        @for ($i = $lastIndex; $i <= $contador; $i++)
                             <tr id="tr_time_{{ $i }}" wire:ignore>
                                 <td wire:ignore>
                                     <input type="hidden" name="timesheet[{{ $i }}][id_hora]"
