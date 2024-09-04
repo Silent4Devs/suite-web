@@ -10,7 +10,6 @@ use Livewire\WithPagination;
 
 class CourseIndex extends Component
 {
-    // Añadí el use WithPagination para que cada que cambie de página unicamente se haga el cambio de cursos, en caso de no añadirse
     // se regarga la página completa cuando se cambie el número de página.
     use WithPagination;
 
