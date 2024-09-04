@@ -59,7 +59,7 @@ class InicioUsuarioController extends Controller
 {
     public function index()
     {
-        try {
+        // try {
             abort_if(Gate::denies('mi_perfil_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
             $hoy = Carbon::now();
@@ -516,22 +516,22 @@ class InicioUsuarioController extends Controller
                     'existsAreas',
                     'existsPuesto',
                     'redirigirEvaluacion',
-                    'id_periodo',
-                    'id_evaluacion',
-                    'id_evaluado',
+                    // 'id_periodo',
+                    // 'id_evaluacion',
+                    // 'id_evaluado',
                     'mostrarCargaObjetivos',
                     'mostrarCargaObjetivosArea',
                 ),
             );
 
-        } catch (\Throwable $e) {
-            Log::channel('logstash')->info('Error al cargar inicio de usuario: '.$e->getMessage(), [
-                'exception' => $e,
-            ]);
+        // } catch (\Throwable $e) {
+        //     Log::channel('logstash')->info('Error al cargar inicio de usuario: '.$e->getMessage(), [
+        //         'exception' => $e,
+        //     ]);
 
-            // Retornar una respuesta de error al cliente
-            return response()->json(['message' => 'Error al cargar inicio de usuario'], 500);
-        }
+        //     // Retornar una respuesta de error al cliente
+        //     return response()->json(['message' => 'Error al cargar inicio de usuario'], 500);
+        // }
     }
 
     //             return [
