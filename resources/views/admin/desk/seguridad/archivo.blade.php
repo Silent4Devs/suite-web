@@ -2,13 +2,10 @@
 @section('content')
     {{ Breadcrumbs::render('seguridad-archivo') }}
 
-   
+    <h5 class="titulo_general_funcion">Archivo Incidentes de Seguridad</h5>
 
-    <div class="pl-4 pr-4 mt-5 card">
 
-        <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-            <h3 class="mb-2 text-center text-white"><strong>Archivo Incidentes de Seguridad</strong></h3>
-        </div>
+    <div class=" card card-body">
         <div class="datatable-fix" style="width: 100%;">
             <table class="table tabla_incidentes_seguridad">
                 <thead>
@@ -84,7 +81,7 @@
                 </tbody>
             </table>
         </div><br>
-        <div class="form-group"  style="text-align: right;">
+        <div class="form-group" style="text-align: right;">
             <a class="btn_cancelar" href="{{ route('admin.desk.index') }}">
                 {{ trans('global.back_to_list') }}
             </a>
