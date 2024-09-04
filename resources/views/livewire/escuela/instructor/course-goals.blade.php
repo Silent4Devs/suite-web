@@ -4,9 +4,9 @@
     @foreach ($course->goals as $item)
                 @if ($goal->id == $item->id)
                         <div class="registro rounded p-2">
-                            <form wire:submit.prevent='update'>
-                                <input wire:model="goal.name" class="form-control">
-                                @error('goal.name') <span class="text-danger">{{ $message }}</span> @enderror
+                            <form wire:submit='update'>
+                                <input wire:model.live="formName" class="form-control">
+                                @error('formName') <span class="text-danger">{{ $message }}</span> @enderror
                             </form>
                         </div>
                 @else
