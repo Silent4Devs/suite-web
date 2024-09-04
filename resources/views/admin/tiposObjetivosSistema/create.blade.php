@@ -8,7 +8,7 @@
         <div class="card-body datatable-fix">
             <form action="{{ route('admin.tipos-objetivos.store') }}" method="post" enctype="multipart/form-data">
                 @csrf
-                @include('admin.tiposObjetivosSistema._form')
+                @include('admin.tipos_objetivos_sistema._form')
                 <div class="form-group text-right">
                     <a href="{{ route('admin.tipos-objetivos.index') }}" class="btn btn_cancelar">
                         {{ __('Cancelar') }}

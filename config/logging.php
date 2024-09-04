@@ -1,6 +1,5 @@
 <?php
 
-use App\Services\CustomFormatter;
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\SyslogUdpHandler;
@@ -46,24 +45,13 @@ return [
             'driver' => 'single',
             'path' => storage_path('logs/laravel.log'),
             'level' => 'debug',
-            'days' => 14,
         ],
-
-        // 'daily' => [
-        //     'driver' => 'daily',
-        //     'path' => storage_path('logs/laravel.log'),
-        //     'level' => 'debug',
-        //     'days' => 14,
-        // ],
-        //Logging to logstash
 
         'daily' => [
             'driver' => 'daily',
             'path' => storage_path('logs/laravel.log'),
-            'level' => env('LOG_LEVEL', 'debug'),
+            'level' => 'debug',
             'days' => 14,
-            'replace_placeholders' => true,
-            'formatter' => CustomFormatter::class, //The only change needed here
         ],
 
         'slack' => [
@@ -111,13 +99,6 @@ return [
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],
-
-        'logstash' => [
-            'driver' => 'custom',
-            'via' => App\Logging\CreateLogstashLogger::class,
-            'level' => 'debug',
-        ],
-
     ],
 
 ];

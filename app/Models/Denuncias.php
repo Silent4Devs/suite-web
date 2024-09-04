@@ -32,7 +32,6 @@ class Denuncias extends Model implements Auditable
         'fecha_cierre',
         'sede',
         'ubicacion',
-        'descripcion',
     ];
 
     //Redis methods

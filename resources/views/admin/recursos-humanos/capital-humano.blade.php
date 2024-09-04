@@ -68,10 +68,6 @@
             height: calc(100% - 40px);
 
         }
-
-        .ventana_menu ul {
-            margin-top: 0px !important;
-        }
     </style>
 
     {{-- {{ Breadcrumbs::render('capital-humano') }} --}}
@@ -94,7 +90,7 @@
             <a class="nav-link" id="nav-ev360-tab" data-type="ev360" data-toggle="tab" href="#nav-ev360" role="tab"
                 aria-controls="nav-ev360" aria-selected="false">
                 {{-- <i class="bi bi-card-checklist" style="font-size:20px;" style="text-decoration:none;"></i> --}}
-                Evaluación
+                Evaluación 360
             </a>
         </div>
     </nav>

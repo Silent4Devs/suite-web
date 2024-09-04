@@ -14,7 +14,6 @@ use App\Models\CalendarioOficial;
 use App\Models\Denuncias;
 use App\Models\Documento;
 use App\Models\Empleado;
-use App\Models\EvaluacionDesempeno;
 use App\Models\EvidenciaDocumentoEmpleadoArchivo;
 use App\Models\EvidenciasDenuncia;
 use App\Models\EvidenciasDocumentosEmpleados;
@@ -27,8 +26,6 @@ use App\Models\ListaDocumentoEmpleado;
 use App\Models\Mejoras;
 use App\Models\Organizacion;
 use App\Models\PanelInicioRule;
-use App\Models\PeriodoCargaObjetivos;
-use App\Models\PermisosCargaObjetivos;
 use App\Models\PlanImplementacion;
 use App\Models\Proceso;
 use App\Models\Puesto;
@@ -37,7 +34,9 @@ use App\Models\Quejas;
 use App\Models\Recurso;
 use App\Models\RevisionDocumento;
 use App\Models\RH\Evaluacion;
+use App\Models\RH\EvaluacionRepuesta;
 use App\Models\RH\EvaluadoEvaluador;
+use App\Models\RH\ObjetivoRespuesta;
 use App\Models\RiesgoIdentificado;
 use App\Models\Sede;
 use App\Models\SolicitudDayOff;
@@ -54,6 +53,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use VXM\Async\AsyncFacade as Async;
+use Illuminate\Support\Facades\Log;
 
 class InicioUsuarioController extends Controller
 {
@@ -524,7 +524,7 @@ class InicioUsuarioController extends Controller
                 ),
             );
 
-        } catch (\Throwable $th) {
+        } catch (\Throwable $e) {
             Log::channel('logstash')->info('Error al cargar inicio de usuario: '.$e->getMessage(), [
                 'exception' => $e,
                 'input' => $request->all(),
@@ -534,6 +534,21 @@ class InicioUsuarioController extends Controller
             return response()->json(['message' => 'Error al cargar inicio de usuario'], 500);
         }
     }
+
+    //             return [
+    //                 'competencia' => $competencia->competencia->nombre,
+    //                 'tipo_competencia' => $competencia->competencia->tipo_competencia,
+    //                 'calificacion' => $competencia->calificacion,
+    //                 'porcentaje' => $porcentaje,
+    //                 'evaluado' => $evaluador->evaluado,
+    //                 'peso' => $evaluador->peso,
+    //                 'meta' => $nivel_esperado,
+    //                 'firma_evaluador' => $evaluador->firma_evaluador,
+    //                 'firma_evaluado' => $evaluador->firma_evaluado,
+    //             ];
+    //         }),
+    //     ];
+    // }
 
     public function obtenerEquipo($childrens)
     {
@@ -583,18 +598,15 @@ class InicioUsuarioController extends Controller
     {
         abort_if(Gate::denies('mi_perfil_mis_reportes_realizar_reporte_de_queja'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $request->validate(
-            [
-                'titulo' => 'required|max:255',
-                'ubicacion' => 'required|max:255',
-                'descripcion' => 'required|max:550',
-            ],
-            [
-                'titulo.max' => 'El campo título no puede exceder los 255 caracteres.',
-                'ubicacion.max' => 'El campo ubicación no puede exceder los 255 caracteres.',
-                'descripcion.max' => 'El campo descripción no puede exceder los 550 caracteres.',
-            ],
-        );
+        $request->validate([
+            'titulo' => 'required|max:255',
+            'ubicacion' => 'required|max:255',
+            'descripcion' => 'required|max:550',
+        ], [
+            'titulo.max' => 'El campo título no puede exceder los 255 caracteres.',
+            'ubicacion.max' => 'El campo ubicación no puede exceder los 255 caracteres.',
+            'descripcion.max' => 'El campo descripción no puede exceder los 550 caracteres.',
+        ]);
 
         $quejas = Quejas::create([
             'anonimo' => $request->anonimo,
@@ -658,16 +670,13 @@ class InicioUsuarioController extends Controller
     public function storeDenuncias(Request $request)
     {
         abort_if(Gate::denies('mi_perfil_mis_reportes_realizar_reporte_de_denuncia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $request->validate(
-            [
-                'ubicacion' => 'required|max:255',
-                'descripcion' => 'required|max:550',
-            ],
-            [
-                'descripcion.max' => 'El campo título no puede exceder los 550 caracteres.',
-                'ubicacion.max' => 'El campo descripción no puede exceder los 255 caracteres.',
-            ],
-        );
+        $request->validate([
+            'ubicacion' => 'required|max:255',
+            'descripcion' => 'required|max:550',
+        ], [
+            'descripcion.max' => 'El campo título no puede exceder los 550 caracteres.',
+            'ubicacion.max' => 'El campo descripción no puede exceder los 255 caracteres.',
+        ]);
 
         $denuncias = Denuncias::create([
             'anonimo' => $request->anonimo,
@@ -737,7 +746,7 @@ class InicioUsuarioController extends Controller
         ]);
 
         $mejoras = Mejoras::create([
-            'empleado_mejoro_id' => optional(User::getCurrentUser()->empleado)->id ?? '',
+            'empleado_mejoro_id' => User::getCurrentUser()->empleado->id,
             'descripcion' => $request->descripcion,
             'beneficios' => $request->beneficios,
             'titulo' => $request->titulo,
@@ -773,16 +782,13 @@ class InicioUsuarioController extends Controller
     {
         abort_if(Gate::denies('mi_perfil_mis_reportes_realizar_reporte_de_sugerencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $request->validate(
-            [
-                'titulo' => 'required|max:255',
-                'descripcion' => 'required|max:550',
-            ],
-            [
-                'titulo.max' => 'El campo título no puede exceder los 255 caracteres.',
-                'descripcion.max' => 'El campo descripción no puede exceder los 550 caracteres.',
-            ],
-        );
+        $request->validate([
+            'titulo' => 'required|max:255',
+            'descripcion' => 'required|max:550',
+        ], [
+            'titulo.max' => 'El campo título no puede exceder los 255 caracteres.',
+            'descripcion.max' => 'El campo descripción no puede exceder los 550 caracteres.',
+        ]);
 
         $sugerencias = Sugerencias::create([
             'empleado_sugirio_id' => User::getCurrentUser()->empleado->id,
@@ -855,6 +861,7 @@ class InicioUsuarioController extends Controller
         if ($incidente_procedente) {
             $incidentes_seguridad->update([
                 'estatus' => 'Sin atender',
+
             ]);
         } else {
             $incidentes_seguridad->update([
@@ -1038,8 +1045,8 @@ class InicioUsuarioController extends Controller
                     $task->duration = intval($task->duration);
                     $task->progress = intval($task->progress);
                     $task->canDelete = $task->canDelete == 'true' ? true : false;
-                    isset($task->level) ? ($task->level = intval($task->level)) : ($task->level = 0);
-                    isset($task->collapsed) ? ($task->collapsed = $task->collapsed == 'true' ? true : false) : ($task->collapsed = false);
+                    isset($task->level) ? $task->level = intval($task->level) : $task->level = 0;
+                    isset($task->collapsed) ? $task->collapsed = $task->collapsed == 'true' ? true : false : $task->collapsed = false;
                     $task->canAddIssue = $task->canAddIssue == 'true' ? true : false;
                     $task->endIsMilestone = $task->endIsMilestone == 'true' ? true : false;
                     $task->startIsMilestone = $task->startIsMilestone == 'true' ? true : false;
@@ -1192,14 +1199,9 @@ class InicioUsuarioController extends Controller
         $lista_docs_model = ListaDocumentoEmpleado::getAll();
         $lista_docs = collect();
         foreach ($lista_docs_model as $doc) {
-            $documentos_empleado = $evidendiasdocumentos
-                ->where('empleado_id', $id_empleado)
-                ->where('lista_documentos_empleados_id', $doc->id)
-                ->first();
+            $documentos_empleado = $evidendiasdocumentos->where('empleado_id', $id_empleado)->where('lista_documentos_empleados_id', $doc->id)->first();
             if ($documentos_empleado) {
-                $documento = EvidenciaDocumentoEmpleadoArchivo::where('evidencias_documentos_empleados_id', $documentos_empleado->id)
-                    ->where('archivado', false)
-                    ->first();
+                $documento = EvidenciaDocumentoEmpleadoArchivo::where('evidencias_documentos_empleados_id', $documentos_empleado->id)->where('archivado', false)->first();
                 if ($documento) {
                     $doc_viejo = $documento->ruta_documento;
                     $nombre_doc = $documento->documento;
@@ -1212,16 +1214,14 @@ class InicioUsuarioController extends Controller
                 $nombre_doc = null;
             }
 
-            $lista_docs->push(
-                (object) [
-                    'id' => $doc->id,
-                    'documento' => $doc->documento,
-                    'tipo' => $doc->tipo,
-                    'empleado' => $documentos_empleado,
-                    'ruta_documento' => $doc_viejo,
-                    'nombre_doc' => $nombre_doc,
-                ],
-            );
+            $lista_docs->push((object) [
+                'id' => $doc->id,
+                'documento' => $doc->documento,
+                'tipo' => $doc->tipo,
+                'empleado' => $documentos_empleado,
+                'ruta_documento' => $doc_viejo,
+                'nombre_doc' => $nombre_doc,
+            ]);
         }
 
         // dd($lista_docs);
@@ -1239,9 +1239,7 @@ class InicioUsuarioController extends Controller
             $request->file('value')->storeAs('public/expedientes/'.Str::slug($empleado->name), $fileName);
             $expediente = EvidenciasDocumentosEmpleados::updateOrCreate(['empleado_id' => $request->empleadoId, 'lista_documentos_empleados_id' => $request->documentoId], [$request->name => $request->value]);
 
-            $doc_viejo = EvidenciaDocumentoEmpleadoArchivo::where('evidencias_documentos_empleados_id', $expediente->id)
-                ->where('archivado', false)
-                ->first();
+            $doc_viejo = EvidenciaDocumentoEmpleadoArchivo::where('evidencias_documentos_empleados_id', $expediente->id)->where('archivado', false)->first();
             if ($doc_viejo) {
                 $doc_viejo->update([
                     'archivado' => true,

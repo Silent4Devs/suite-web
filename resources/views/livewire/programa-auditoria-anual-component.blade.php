@@ -3,7 +3,7 @@
     x-on:livewire-upload-progress="progress = $event.detail.progress">
     <x-loading-indicator></x-loading-indicator>
     <!-- File Input -->
-    <input type="file" wire:model.blur="documento">
+    <input type="file" wire:model.lazy="documento">
     @error('documento')
         <span class="text-danger">{{ $message }}</span>
     @enderror

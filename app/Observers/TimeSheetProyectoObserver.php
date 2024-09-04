@@ -2,7 +2,6 @@
 
 namespace App\Observers;
 
-use App\Events\TimesheetProyectoEvent;
 use App\Models\TimeSheetProyecto;
 use Illuminate\Support\Facades\Cache;
 
@@ -15,7 +14,6 @@ class TimeSheetProyectoObserver
      */
     public function created(TimeSheetProyecto $timeSheetProyecto)
     {
-        event(new TimesheetProyectoEvent($timeSheetProyecto, 'createProyectos', 'timesheet_proyectos', 'Proyecto'));
         $this->forgetCache();
     }
 
@@ -26,7 +24,36 @@ class TimeSheetProyectoObserver
      */
     public function updated(TimeSheetProyecto $timeSheetProyecto)
     {
-        event(new TimesheetProyectoEvent($timeSheetProyecto, 'updateProyectos', 'timesheet_proyectos', 'Proyecto'));
+        $this->forgetCache();
+    }
+
+    /**
+     * Handle the TimeSheetProyecto "deleted" event.
+     *
+     * @return void
+     */
+    public function deleted(TimeSheetProyecto $timeSheetProyecto)
+    {
+        $this->forgetCache();
+    }
+
+    /**
+     * Handle the TimeSheetProyecto "restored" event.
+     *
+     * @return void
+     */
+    public function restored(TimeSheetProyecto $timeSheetProyecto)
+    {
+        $this->forgetCache();
+    }
+
+    /**
+     * Handle the TimeSheetProyecto "force deleted" event.
+     *
+     * @return void
+     */
+    public function forceDeleted(TimeSheetProyecto $timeSheetProyecto)
+    {
         $this->forgetCache();
     }
 

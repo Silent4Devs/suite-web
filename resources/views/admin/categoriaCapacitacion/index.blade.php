@@ -55,32 +55,28 @@
         </style>
 
         {{ Breadcrumbs::render('admin.CategoriaCapacitacion.index') }}
-        <h5 class="col-12 titulo_general_funcion" style= "margin-top: 0px">Categorías de capacitaciones</h5>
+        <h5 class="col-12 titulo_general_funcion">Categorías de capacitaciones</h5>
 
-            <div class="text-right" style="margin-top: 20px">
+            <div class="text-right">
                 <div class="d-flex justify-content-end">
                     <a href="{{ route('admin.categoria-capacitacion.create') }}" type="button" class="btn tb-btn-primary">Registrar Categoría de capacitacion</a>
                 </div>
-                <div class="col-12 text-left">
-                    <a type="button" class="btn" style="background-color:#b9eeb9; border: #fff; width:100px; margin-top:-5px;"
-                        href="{{ route('descarga-categoria-capacitaciones') }}">
-                        <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935" title="Exportar Excel"></i>
-                        Reporte
-                        </a>
             </div>
-
             @include('partials.flashMessages')
             <div class="datatable-fix datatable-rds">
                 <div class="d-flex justify-content-end">
-                   {{-- <a class="boton-transparente boton-sin-borde" id="btnImport">
-                        <img src="{{ asset('upload_file_FILL0_wght300_GRAD0_opsz24.svg') }}" alt="Importar" class="icon"> --}}
+                    <a class="boton-transparente boton-sin-borde" href="{{ route('descarga-categoriacapacitacion') }}">
+                        <img src="{{ asset('download_FILL0_wght300_GRAD0_opsz24.svg') }}" alt="Importar" class="icon">
+                    </a> &nbsp;&nbsp;&nbsp;
+                    <a class="boton-transparente boton-sin-borde" id="btnImport">
+                        <img src="{{ asset('upload_file_FILL0_wght300_GRAD0_opsz24.svg') }}" alt="Importar" class="icon">
                     </a>
                     @include('csvImport.modalcategoriacapacitacion', [
                         'model' => 'Vulnerabilidad',
                         'route' => 'admin.vulnerabilidads.parseCsvImport',
                     ])
                 </div>
-                <h3 class="title-table-rds" style="text-align: left;">Categorías de capacitaciones</h3>
+                <h3 class="title-table-rds"> Categorías de capacitaciones</h3>
                 <table class="datatable tbl-categorias" id="tbl-categorias">
                     <thead class="thead-dark">
                         <tr>

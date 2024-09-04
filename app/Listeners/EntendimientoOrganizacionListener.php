@@ -6,16 +6,10 @@ use App\Models\Empleado;
 use App\Models\ListaDistribucion;
 use App\Models\User;
 use App\Notifications\EntendimientoOrganizacionNotification;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Notification;
 
-class EntendimientoOrganizacionListener implements ShouldQueue
+class EntendimientoOrganizacionListener
 {
-    use InteractsWithQueue;
-
-    public $tries = 5;
-
     /**
      * Create the event listener.
      *
@@ -34,7 +28,9 @@ class EntendimientoOrganizacionListener implements ShouldQueue
      */
     public function handle($event)
     {
-        $lista = ListaDistribucion::with('participantes')->where('modelo', 'EntendimientoOrganizacion')->first();
+        $modulo_entend = 1;
+
+        $lista = ListaDistribucion::with('participantes')->where('id', $modulo_entend)->first();
 
         foreach ($lista->participantes as $participantes) {
             $empleados = Empleado::where('id', $participantes->empleado_id)->first();

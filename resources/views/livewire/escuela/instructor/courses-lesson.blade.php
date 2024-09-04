@@ -2,7 +2,7 @@
 
     @forelse ($section->lessons as $item)
 
-        <div class="card shadow-none " x-data="{ openElementId: @entangle('openElementId').live }" id="card{{$item->id}}" style="border: 1px solid #D8D8D8; border-radius:16px;" @close-collapse.window="openElementId = null">
+        <div class="card shadow-none " x-data="{ openElementId: @entangle('openElementId') }" id="card{{$item->id}}" style="border: 1px solid #D8D8D8; border-radius:16px;" @close-collapse.window="openElementId = null">
             <div class="card-header " style="border: none;">
                 <div class="row">
                     <div class="col-11 d-flex align-items-baseline" style="padding: 0px;">
@@ -37,10 +37,10 @@
                     </div>
                 </div>
                 <div wire:loading.remove>
-                    <form wire:submit="update" class="px-3 py-2 ">
+                    <form wire:submit.prevent="update" class="px-3 py-2 ">
                         <div class="row">
                             <div class="form-group col-8 anima-focus">
-                                <input wire:model="lesson.name" id="edit-lesson-name-{{ $section->id }}-{{$item->id}}"
+                                <input wire:model.defer="lesson.name" id="edit-lesson-name-{{ $section->id }}-{{$item->id}}"
                                     type="text" placeholder="" maxlength="250"
                                     class=" form-control @if ($errors->has('lesson.name')) invalid @endif">
                                 @error('lesson.name')
@@ -50,7 +50,7 @@
 
                             </div>
                             <div class="form-group col-4 anima-focus">
-                                <select wire:model="lesson.platform_id"
+                                <select wire:model.defer="lesson.platform_id"
                                     id="edit-lesson-platform-{{ $section->id }}-{{$item->id}}" type="text"
                                     class="w-full form-control @if ($errors->has('lesson.platform')) invalid @endif">
                                     @foreach ($platforms as $platform)
@@ -64,7 +64,7 @@
 
                             </div>
                             <div class="form-group col-12 anima-focus">
-                                <input wire:model="lesson.url" id="edit-lesson-url-{{ $section->id }}-{{$item->id}}"
+                                <input wire:model.defer="lesson.url" id="edit-lesson-url-{{ $section->id }}-{{$item->id}}"
                                     type="text" placeholder=""
                                     class="form-control w-full @if ($errors->has('lesson.url')) invalid @endif">
                                 @error('lesson.url')
@@ -109,7 +109,7 @@
         });
     </script>
     <script>
-        document.addEventListener('livewire:init', function () {
+        document.addEventListener('livewire:load', function () {
             Livewire.on('closeCollapse', function () {
                 window.dispatchEvent(new Event('close-collapse'));
             });

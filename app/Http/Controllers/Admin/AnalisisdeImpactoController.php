@@ -91,7 +91,7 @@ class AnalisisdeImpactoController extends Controller
     public function create()
     {
         abort_if(Gate::denies('matriz_bia_cuestionario_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $cuestionario = new AnalisisImpacto;
+        $cuestionario = new AnalisisImpacto();
 
         return view('admin.analysisImpact.create', compact('cuestionario'));
     }

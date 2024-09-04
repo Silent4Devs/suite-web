@@ -181,87 +181,46 @@
                     columns: [
                         // {data: 'id'},
                         {
-                            data: 'folio',
-                            render: function(data, type, row, meta) {
-                            return data ? data : '';
-                        }
+                            data: 'folio'
                         },
                         {
-                            data: 'titulo',
-                            render: function(data, type, row, meta) {
-                                return data ? data : '';
-                            }
+                            data: 'titulo'
                         },
                         {
-                            data: 'fecha_creacion',
-                            render: function(data, type, row, meta) {
-                                return data ? data : '';
-                            }
+                            data: 'fecha_creacion'
                         },
                         {
-                            data: 'fecha_reporte',
-                            render: function(data, type, row, meta) {
-                                return data ? data : '';
-                            }
+                            data: 'fecha_reporte'
                         },
                         {
-                            data: 'fecha_de_cierre',
-                            render: function(data, type, row, meta) {
-                                return data ? data : '';
-                            }
+                            data: 'fecha_de_cierre'
                         },
                         {
-                            data: 'descripcion',
-                            render: function(data, type, row, meta) {
-                                return data ? data : '';
-                            }
+                            data: 'descripcion'
                         },
                         {
-                            data: 'comentarios',
-                            render: function(data, type, row, meta) {
-                                return data ? data : '';
-                            }
+                            data: 'comentarios'
                         },
                         {
-                            data: 'estatus',
-                            render: function(data, type, row, meta) {
-                                return data ? data : '';
-                            }
+                            data: 'estatus'
                         },
                         {
-                            data: 'sede',
-                            render: function(data, type, row, meta) {
-                                return data ? data : '';
-                            }
+                            data: 'sede'
                         },
                         {
-                            data: 'ubicacion',
-                            render: function(data, type, row, meta) {
-                                return data ? data : '';
-                            }
+                            data: 'ubicacion'
                         },
                         {
-                            data: 'procesos_afectados',
-                            render: function(data, type, row, meta) {
-                                return data ? data : '';
-                            }
+                            data: 'procesos_afectados'
                         },
                         {
-                            data: 'areas_afectados',
-                            render: function(data, type, row, meta) {
-                                return data ? data : '';
-                            }
+                            data: 'areas_afectados'
                         },
                         {
-                            data: 'activos_afectados',
-                            render: function(data, type, row, meta) {
-                                return data ? data : '';
-                            }
+                            data: 'activos_afectados'
                         },
                         {
-                            data: 'fecha',
-                            render: function(data, type, row, meta) {
-                                return data ? data : ''; }
+                            data: 'fecha'
                         },
                         {
                             data: 'id',

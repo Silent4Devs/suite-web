@@ -87,7 +87,7 @@ class SolicitudPermisoGoceSueldoController extends Controller
     public function create()
     {
         abort_if(Gate::denies('solicitud_goce_sueldo_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $vacacion = new SolicitudPermisoGoceSueldo;
+        $vacacion = new SolicitudPermisoGoceSueldo();
         $autoriza = User::getCurrentUser()->empleado->supervisor_id;
         $permisos = PermisosGoceSueldo::get();
 

@@ -2,7 +2,6 @@
 
 namespace App\Observers;
 
-use App\Events\QuejasEvent;
 use App\Models\Quejas;
 use Illuminate\Support\Facades\Cache;
 
@@ -15,7 +14,6 @@ class QuejasObserver
      */
     public function created(Quejas $quejas)
     {
-        event(new QuejasEvent($quejas, 'create', 'quejas', 'Queja'));
         $this->forgetCache();
     }
 
@@ -26,7 +24,6 @@ class QuejasObserver
      */
     public function updated(Quejas $quejas)
     {
-        event(new QuejasEvent($quejas, 'update', 'quejas', 'Queja'));
         $this->forgetCache();
     }
 
@@ -37,7 +34,26 @@ class QuejasObserver
      */
     public function deleted(Quejas $quejas)
     {
-        event(new QuejasEvent($quejas, 'delete', 'quejas', 'Queja'));
+        $this->forgetCache();
+    }
+
+    /**
+     * Handle the Quejas "restored" event.
+     *
+     * @return void
+     */
+    public function restored(Quejas $quejas)
+    {
+        $this->forgetCache();
+    }
+
+    /**
+     * Handle the Quejas "force deleted" event.
+     *
+     * @return void
+     */
+    public function forceDeleted(Quejas $quejas)
+    {
         $this->forgetCache();
     }
 

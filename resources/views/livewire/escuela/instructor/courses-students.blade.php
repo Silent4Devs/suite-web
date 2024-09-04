@@ -73,7 +73,7 @@
 
 
     <script>
-        document.addEventListener('livewire:init', function() {
+        document.addEventListener('livewire:load', function() {
 
             document.querySelector('#seleccionar-todos-estudiantes').addEventListener("change", (e) => {
                 let checks = document.querySelectorAll('#datatable_students tbody td input');
